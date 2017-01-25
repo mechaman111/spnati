@@ -1,0 +1,1565 @@
+/************************************************************
+ This file contains all of the CSS that is shared by the
+ various game screens and elements.
+ ************************************************************/
+ 
+html {
+	width: 100%;
+	height: 100%;
+}
+ 
+body {
+	width: 100%;
+	height: 100%;
+    max-width: 1000px;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 14px;
+    color: #050505;
+	background-color: #050505;
+    background-image: url("../img/background1.png");
+	background-size: 1000px 100%;
+    background-position: center center;
+    background-repeat: repeat-x;
+}
+
+/************************************************************
+ * Bootstrap overrides.
+ ************************************************************/
+ 
+* {
+    box-sizing: border-box;
+}
+
+table {
+	border-collapse: initial;
+}
+ 
+body.modal-open {
+	margin-left: 0px;
+}
+
+.pagination {
+	margin: 5px 0px;
+}
+
+/************************************************************
+ * Global style classes.
+ ************************************************************/
+
+.bordered {
+	border: 2px solid #111111;
+	border-radius: 5px;
+}
+
+.shaded {
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4) inset, 
+				0px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.flare-bordered {
+	border: 2px solid black;
+	border-radius: 4px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4) inset, 
+				0px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.centred {
+	margin: 0px auto;
+}
+
+/************************************************************
+ * Screen classes.
+ ************************************************************/
+ 
+.screen-container {
+	position: absolute;
+	width: 100vw;
+	height: 75vw;
+	max-width: 133.33vh;
+	max-height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+    overflow: hidden;
+}
+
+.screen {
+	position: absolute;
+    top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: 0.5%;
+    overflow: hidden;
+}
+
+/**************************************************
+ * Positions
+ **************************************************/
+
+.farLeft {
+    left: -12.5%;
+}
+
+.left {
+    left: 0%;
+}
+
+.almostLeft {
+    left: 12.5%;
+}
+
+.halfLeft {
+    left: 25%;
+}
+
+.center {
+    left: 50%;
+}
+
+.farHalfLeft {
+    left: 75%;
+}
+
+.halfRight {
+    right: 25%;
+}
+
+.almostRight {
+    right: 12.5%;
+}
+
+.right {
+    right: 0%;
+}
+
+.farRight {
+    right: -12.5%;
+}
+
+/************************************************************
+ * Button classes.
+ ************************************************************/
+
+.smooth-button {
+	background: linear-gradient(#0088CC, #0066AA);
+	background-color: #0088CC;
+	color: black;
+}
+
+.smooth-button-red {
+	background: linear-gradient(#BB3333, #9F1616);
+	background-color: #BB3333;
+}
+
+.smooth-button-green {
+	background: linear-gradient(#33AA33, #168F16);
+    background-color: #33AA33;
+}
+
+.smooth-button:hover {
+	background: linear-gradient(#FFFFFF, #DDDDDD);
+	background-color: white;
+}
+
+.smooth-button:disabled {
+	background: linear-gradient(#DDDDDD, #BBBBBB);
+	background-color: white;
+}
+
+.dock-options-button {
+    height: 30px;
+    width: 20px;
+}
+
+.center-dock-button {
+	position: absolute;
+	height: 50px;
+	width: 100px;
+	top: 26%;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto;
+	box-sizing: border-box;
+	font-size: 20px;
+	opacity: 1;
+}
+
+.hide-table-button {
+	position: absolute;
+    width: 4%;
+    height: 5%;
+    left: 48%;
+    bottom: 22%;
+    background-color: rgba(155, 155, 155, 0.5);
+}
+
+.hide-table-button:hover {
+	background-color: rgba(155, 155, 155, 0.9);
+}
+
+.hide-table-button:active {
+    background-color: rgba(155, 155, 155, 0.75);
+}
+
+.select-slot-button {
+    width: 100%;
+    height: 61%;
+    margin-top: 1.2%;
+    font-size: 130%;
+}
+
+.full-select-slot-button {
+    width: 100%;
+    height: 100%;
+    font-size: 130%;
+}
+
+/************************************************************
+ * Classes for modals styled like the game table.
+ ************************************************************/
+
+.modal {
+    position: absolute;
+	width: 100vw;
+	height: 75vw;
+	max-width: 133.33vh;
+	max-height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+    overflow: hidden;
+    padding-left: 17px;
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+.modal-table-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0.5%;
+    overflow: hidden;
+	display: table;
+}
+
+.modal-cell-container {
+	width: 100%;
+	height: 100%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.table-modal .modal-dialog {
+	height: auto;
+	box-sizing: border-box;
+	margin: 0px auto;
+	padding: 5px;
+	background: linear-gradient(#333333, #222222);
+	background-color: #333333;
+	color: black;
+}
+
+.thin-modal-dialog {
+    width: 35%;
+}
+
+.average-modal-dialog {
+    width: 50%;
+}
+
+.wide-modal-dialog {
+    width: 65%;
+}
+
+.very-wide-modal-dialog {
+    width: 80%;
+}
+
+.table-modal .modal-dialog-surface {
+	width: 100%;
+	padding: 0.5%;
+	background: radient-gradient(#888888, #666666);
+	background-color: #777777;
+	box-sizing: border-box;
+    font-size: 100%;
+}
+
+.table-modal .modal-content {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+.table-modal .modal-header {
+	border: none;
+    font-size: 110%;
+    padding: 2%;
+}
+
+.table-modal .modal-title {
+	color: black;
+    font-size: 120%;
+}
+
+.table-modal .modal-subtitle {
+	color: black;
+    font-size: 100%;
+}
+
+.table-modal .modal-left {
+	text-align: left;
+}
+
+.table-modal .modal-body {
+    position: relative;
+    text-align: center;
+    padding: 1.5%;
+}
+
+.table-modal .modal-body-container {
+    width: 100%;
+    margin: 0px auto;
+    display: inline-block;
+}
+
+.table-modal .modal-body-stretch-container {
+    margin: 0px auto;
+    display: inline-block;
+}
+
+.table-modal .modal-body-full-container {
+    width: 100%;
+    margin: 0px auto;
+    display: inline-block;
+}
+
+.table-modal .modal-body-special-container {
+    margin: 0px auto;
+    display: inline-block;
+    width: 100%;
+}
+
+
+.table-modal .clothing-modal-container {
+    float: left;
+    width: 20%;
+    height: 100%;
+    margin: 0.5% 2.5%;
+}
+
+.table-modal .modal-clothing-image {
+	width: 100%;
+    height: 100%;
+    opacity: 0.4;
+	background-color: white;
+}
+
+.table-modal .modal-clothing-image:hover {
+	opacity: 0.7;
+}
+
+.table-modal .modal-selected-clothing-image {
+	opacity: 1;
+	background-color: white;
+}
+
+.table-modal .modal-selected-clothing-image:hover {
+    opacity: 1;
+}
+
+.table-modal .modal-footer {
+	text-align: center;
+	border: none;
+    padding: 0.5%;
+}
+
+.table-modal .modal-button {
+	height: 75%;
+	width: 25%;
+	padding: 2%;
+	font-size: 120%;
+}
+
+.pagination li a {
+	color: black;
+	background-color: #BBBBBB;
+	border-color: black;
+}
+
+.pagination li a:hover {
+	color: black;
+	background-color: #DDDDDD;
+	border-color: black;
+}
+
+.pagination .active a {
+	background-color: #439AD7;
+	border-color: white;
+}
+
+.pagination .active a:hover {
+	background-color: #63AAE7;
+	border-color: white;
+}
+
+.credit-table {
+	width: 100%;
+	font-size: 100%;
+}
+
+.credit-table td {
+	padding: 0px 10px;
+}
+
+.credit-modal-label {
+	padding: 2px 0px;
+	background-color: lightgrey;
+}
+
+.wide-textbox {
+    width: 70%;
+    font-size: 150%;
+    text-align: center;
+}
+
+/************************************************************
+ * All of the classes needed to make the dialogue bubbles 
+ * look the awesome way that they do.
+ ************************************************************/
+
+.dialogue-bubble-row {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top: 0;
+}
+
+/* the area around the dialogue bubble */
+.dialogue-bubble-area {
+	position: absolute;
+    display: table;
+    width: 24.5%;
+    top: 10%;
+    height: 90%;
+    margin: 0 0.25%;
+    padding: 1%;
+    text-align: center;
+    font-size: 120%;
+    background: #F5F5F5;
+}
+
+/* the body of the dialogue bubble */
+.dialogue-bubble {
+	display: table-cell;
+    width: 90%;
+    height: 90%;
+    margin: 1%;
+    vertical-align: middle;
+}
+
+.arrow-down:before, .arrow-down:after, .arrow-left:before, .arrow-left:after, .arrow-right:before, .arrow-right:after, .arrow-up:before, .arrow-up:after {
+	width: 0;
+	height: 0;
+	
+	content: "";
+	position: absolute;
+	
+	border-style: solid;
+	border-color: transparent;
+}
+
+.arrow-down:before, .arrow-down:after {
+	border-bottom: 0;
+}
+
+.arrow-left:before, .arrow-left:after {
+	border-left: 0;
+}
+
+.arrow-right:before, .arrow-right:after {
+	border-right: 0;
+}
+
+.arrow-up:before, .arrow-up:after {
+	border-top: 0;
+}
+
+/* the stroke of the bottom triangle */
+.arrow-down:before {
+	border-top-color: black;
+	border-width: 16px;
+    
+    bottom: -15px;
+	left: 50%;
+	margin-left: -15px;
+}
+
+/* the fill of the bottom triangle */
+.arrow-down:after {
+	border-top-color: #F5F5F5;
+	border-width: 15px;
+    
+    bottom: -12px;
+	left: 50%;
+	margin-left: -14px;
+}
+
+/* the stroke of the bottom triangle */
+.arrow-left:before {
+	border-right-color: black;
+	border-width: 16px;
+    
+    left: -15px;
+	top: 50%;
+	margin-top: -15px;
+}
+
+/* the fill of the bottom triangle */
+.arrow-left:after {
+	border-right-color: #F5F5F5;
+	border-width: 15px;
+    
+    left: -13px;
+	top: 50%;
+	margin-top: -14px;
+}
+
+/* the stroke of the bottom triangle */
+.arrow-right:before {
+	border-left-color: black;
+	border-width: 16px;
+    
+    left: 100%;
+	top: 50%;
+	margin-top: -15px;
+	margin-left: -2px;
+}
+
+/* the fill of the bottom triangle */
+.arrow-right:after {
+	border-left-color: #F5F5F5;
+	border-width: 15px;
+    
+    left: 100%;
+	top: 50%;
+	margin-top: -14px;
+	margin-left: -3px;
+}
+
+/* the stroke of the bottom triangle */
+.arrow-up:before {
+	border-bottom-color: black;
+	border-width: 16px;
+    
+    top: -15px;
+	left: 50%;
+	margin-left: -15px;
+}
+
+/* the fill of the bottom triangle */
+.arrow-up:after {
+	border-bottom-color: #F5F5F5;
+	border-width: 15px;
+    
+    top: -12px;
+	left: 50%;
+	margin-left: -14px;
+}
+ 
+/************************************************************
+ * Classes for opponent images.
+ ************************************************************/
+
+.image-row {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    bottom: 0;
+}
+
+.opponent-image-area {
+	position: absolute;
+    width: 50%;
+    height: 100%;
+}
+
+.opponent-image {
+	position: absolute;
+	width: auto;
+	height: 100%;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+/************************************************************
+ * Classes for the title screen.
+ ************************************************************/
+
+.banner-flair {
+    text-align: center;
+    font-size: 110%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#title-version-button {
+    position: absolute;
+    width: 12.5%;
+    height: 3.5%;
+    top: 17.25%;
+    left: 6.5%;
+    padding-top: 0.15%;
+}
+
+#title-credits-button {
+    position: absolute;
+    width: 12.5%;
+    height: 3.5%;
+    top: 17.25%;
+    right: 6.5%;
+    padding-top: 0.15%;
+}
+
+.title-banner-container {
+	position: absolute;
+    top: 4%;
+}
+ 
+.title-banner-area {
+    width: 100%;
+    height: 100%;
+	padding: 0.5%;
+    background: linear-gradient(#333333, #222222);
+    background-color: #333333;
+}
+
+.title-banner {
+    width: 100%;
+    height: 100%;
+	padding: 0.1%;
+    background: linear-gradient(#888888, #666666);
+	background-color: #888888;
+}
+
+.main-title-container {
+	position: absolute;
+    top: 20%;
+    left: 25%;
+    width: 50%;
+    bottom: 0;
+}
+ 
+.title-label {
+	padding: 0px;
+    margin-top: 5px;
+	margin-bottom: 0px;
+	text-align: center;
+	font-size: 160%;
+	color: #DD3333;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+
+.title-content-button {
+    background: #F0F0F0;
+}
+
+.title-content-button :hover {
+    background: #FFFFFF;
+}
+
+.title-content-button :active {
+    background: #F0F0F0;
+}
+
+#title-name-block {
+   position: absolute;
+    width: 80%;
+    height: 16%;
+    top: 0;
+    margin-left: 10%;
+}
+ 
+#player-name-field {
+	position: absolute;
+    width: 100%;
+    height: 60%;
+    text-align: center;
+    font-size: 200%;
+    background: rgba(240, 240, 240, 1);
+}
+
+#title-gender-block {
+    position: absolute;
+    width: 30%;
+    top: 16.5%;
+    margin-left: 10%;
+}
+
+#male-gender-button {
+    position: relative;
+    width: 45%;
+    top: 0;
+    right: 0;
+}
+
+#female-gender-button {
+    position: relative;
+    width: 45%;
+    top: 0;
+    right: 0;
+}
+
+.title-gender-image {
+	display: block;
+	width: 60px;
+	height: 60px;
+	margin: 5px auto;
+	background-color: white;
+}
+
+.title-size-block {
+    position: absolute;
+    width: 45%;
+    top: 16.5%;
+    right: 0;
+    margin-right: 7.25%;
+}
+
+.title-small-button {
+    position: relative;
+    width: 30%;
+}
+
+.title-medium-button {
+    position: relative;
+    width: 30%;
+}
+
+.title-large-button {
+    position: relative;
+    width: 30%;
+}
+
+#title-wardrobe-block {
+    position: absolute;
+    width: 80%;
+    top: 30%;
+    margin-left: 10%;
+}
+
+.title-clothing-container {
+    margin-top: 1%;
+	margin-left: 6.5%;
+}
+
+.title-clothing-heading {
+	width: 100px;
+	text-align: center;
+	padding: 0 5px;
+	margin: 0 10px;
+	font-size: 16px;
+	background: linear-gradient(lightgrey, #888888);
+	background-color: lightgrey;
+}
+
+#title-warning-label {
+	height: 20px;
+	color: red;
+	text-align: center;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000; 
+}
+
+.title-clothing-button {
+    position: relative;
+    width: 17.5%;
+}
+
+#title-start-edge {
+    position: absolute;
+    width: 36%;
+    height: 15%;
+    bottom: 6%;
+    left: 32%;
+    font-size: 200%;
+    padding: 0.5%;
+    background: linear-gradient(#222222, #111111);
+}
+
+#title-start-button {
+	position: absolute;
+    width: 97%;
+    height: 95%;
+    padding-left: 2%;
+    padding-right: 3%;
+    font-size: 200%;
+}
+
+.title-entrance-image {
+	margin-left: 4%;
+    margin-top: 4%;
+    width: 90%;
+}
+
+.version-label {
+	width: 150px;
+	background: radial-gradient(#DDDDDD, #AAAAAA);
+	background-color: #AAAAAA;
+	text-align: center;
+	font-size: 16px;
+	margin: 5px auto;
+	padding: 2px 5px;
+}
+
+.title-credit-button {
+	display: block;
+	width: 150px;
+	height: 28px;
+	font-size: 16px;
+	margin: 0 auto;
+}
+
+.title-next-button {
+	display: block;
+	width: 80px;
+	font-size: 22px;
+	height: 40px;
+	margin: 0 auto;
+	padding: 5px 10px 5px 10px;
+}
+
+.reddit-button {
+    position: absolute;
+    width: 3.65%;
+    height: 5%;
+    right: 1%;
+    top: 17%;
+}
+
+.reddit-logo {
+    width: 100%;
+    height: 100%;
+}
+
+#title-settings-button {
+    position: absolute;
+    width: 3.65%;
+    height: 5%;
+    left: 1%;
+    top: 17%;
+}
+
+#left-title-candy {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+}
+
+#right-title-candy {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+}
+
+.title-candy {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/************************************************************
+ * Classes for the main select screen.
+ ************************************************************/
+
+#main-select-area {
+    position: absolute;
+    width: 70%;
+    height: 12%;
+    left: 15%;
+    bottom: 3%;
+    background-color: #282828;
+}
+
+.main-select-button {
+	position: absolute;
+    width: 13%;
+    height: 94%;
+    font-size: 140%;
+    bottom: 3%;
+}
+
+#main-select-button {
+    position: absolute;
+    height: 120%;
+    width: 16%;
+    right: 42%;
+    bottom: -10%;
+    font-size: 180%;
+    padding-bottom: 0.1%;
+    text-align: center;
+}
+
+#main-select-button:disabled {
+    background: linear-gradient(#AAAAAA, #888888);
+    background-color: #AAAAAA;
+}
+
+#select-advance-top {
+    position: absolute;
+    width: 18%;
+    height: 16%;
+    top: -16%;
+    left: 41%;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #282828;
+}
+
+#select-advance-bottom {
+    position: absolute;
+    width: 18%;
+    height: 16%;
+    bottom: -16%;
+    left: 41%;
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    background-color: #282828;
+}
+
+#select-main-back-button {
+    left: 0.5%;
+}
+
+#select-group-button {
+    left: 14%;
+}
+
+#select-random-group-button {
+    left: 27.5%;
+}
+
+#select-random-female-button {
+    right: 27.5%;
+}
+
+#select-random-male-button {
+    right: 14%;
+}
+
+#select-random-button {
+    right: 0.5%;
+    right: 0.5%;
+}
+
+/************************************************************
+ * Classes for the individual and group select screens.
+ ************************************************************/
+
+.long-select-advance-top {
+    position: absolute;
+    width: 36%;
+    height: 16%;
+    top: -16%;
+    left: 32%;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #282828;
+}
+
+.long-select-advance-bottom {
+    position: absolute;
+    width: 36%;
+    height: 16%;
+    bottom: -16%;
+    left: 32%;
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    background-color: #282828;
+}
+
+.dialogue-bubble-area .stats-section {
+    position: relative;
+    width: 100%;
+    height: 23.5%;
+    margin-bottom: 1%;
+}
+
+.dialogue-bubble-area .stats-section-large {
+    position: relative;
+    width: 100%;
+    height: 47%;
+    margin-bottom: 1%;
+}
+
+.dialogue-bubble-area .stats-label {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    left: 0;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    font-size: 70%;
+    background: linear-gradient(#CCCCCC, #AAAAAA);
+    background-color: #CCCCCC;
+}
+
+.dialogue-bubble-area .stats-content {
+    position: absolute;
+    width: 75.75%;
+    height: 100%;
+    right: 0;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    font-size: 80%;
+    background: #F5F5F5;
+}
+
+#group-select-area {
+    position: absolute;
+    left: 37.5%;
+}
+
+#group-hide-button {
+    position: absolute;
+    width: 4%;
+    height: 5%;
+    left: 48%;
+    bottom: 15%;
+    background-color: rgba(155, 155, 155, 0.5);
+}
+
+#group-hide-button:hover {
+	background-color: rgba(155, 155, 155, 0.9);
+}
+
+#group-hide-button:active {
+    background-color: rgba(155, 155, 155, 0.75);
+}
+
+/************************************************************
+ * Classes for the selection area on the selection screen.
+ ************************************************************/
+
+.select-page-display {
+    display: table;
+    position: absolute;
+    width: 30%;
+    height: 45%;
+    bottom: 55%;
+    left: 35%;
+    text-align: center;
+    font-size: 130%;
+}
+
+.select-page-display .page-label {
+    display: table-cell;
+    position: absolute;
+    width: 35%;
+    height: 100%;
+    left: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding-top: 2%;
+    background: linear-gradient(#888888, #666666);
+	background-color: #888888;
+}
+
+.select-page-display .page-indicator {
+    display: table-cell;
+    position: absolute;
+    width: 32%;
+    height: 100%;
+    left: 34%;
+    text-align: center;
+    border-radius: 0px;
+    font-size: 120%;
+}
+
+.select-page-display .of-label {
+    display: table-cell;
+    position: absolute;
+    width: 35%;
+    height: 100%;
+    right: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding-top: 2%;
+    background: linear-gradient(#888888, #666666);
+	background-color: #888888;
+}
+
+.select-page-selection {
+    display: table;
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    bottom: 3%;
+    left: 35%;
+    text-align: center;
+    font-size: 130%;
+}
+
+.select-page-selection .first-page-button {
+    display: table-cell;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.select-page-selection .left-page-button {
+    display: table-cell;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    left: 19%;
+    bottom: 0;
+    border-radius: 0px;
+}
+
+.select-page-selection .go-page-button {
+    display: table-cell;
+    position: absolute;
+    width: 24%;
+    height: 100%;
+    left: 38%;
+    bottom: 0;
+    border-radius: 0px;
+}
+
+.select-page-selection .right-page-button {
+    display: table-cell;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    right: 19%;
+    bottom: 0;
+    border-radius: 0px;
+}
+
+.select-page-selection .last-page-button {
+    display: table-cell;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+/************************************************************
+ * Classes for the table on the main game screen.
+ ************************************************************/
+
+.game-table-surface {
+	width: 100%;
+	padding: 5px;
+	background: radial-gradient(#007000, #006000, #005000);
+	background-color: #006000;
+	box-sizing: border-box;
+    border: 2px solid black;
+	border-radius: 8px;
+}
+
+.game-table-surface-glass {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.game-table-surface-none {
+	background: rgba(255, 255, 255, 0.0);
+    border: 0px solid black;
+}
+
+.game-table-area {
+	width: 100%;
+	margin-bottom: 5px;
+	table-layout: fixed;
+}
+
+.opponent-area {
+	position: absolute;
+    width: 22%;
+    height: 11.5%;
+    bottom: 19%;
+    margin: 0 1.5%;
+    padding: 0.2% 0.25%;
+    background-color: rgba(40, 40, 40, 0.75);
+}
+
+.small-opponent-area {
+	position: absolute;
+    width: 22%;
+    height: 7.5%;
+    bottom: 20.5%;
+    margin: 0 1.5%;
+    padding: 0.2% 0.25%;
+    background-color: rgba(40, 40, 40, 0.75);
+}
+
+.opponent-name-label {
+	height: 33%;
+    text-align: center;
+    background-color: #F5F5F5;
+}
+
+.opponent-card-area {
+	width: 100%;
+    height: 62%;
+}
+
+.opponent-card-area :first-child {
+   margin-left: 0;
+}
+
+.opponent-card-area :last-child {
+   margin-right: 0;
+}
+
+.small-card-image {
+	float: left;
+    height: 100%;
+    width: 19.15%;
+    margin: 1.25% 0.5%;
+    background-color: #F5F5F5;
+}
+
+/************************************************************
+ * Classes for the human player section of the table on the 
+ * main game screen.
+ ************************************************************/
+
+.player-table-area {
+	width: auto;
+	margin: 0 auto;
+	margin-top: 5px;
+	box-sizing: border-box;
+	background: radial-gradient(#454545, #454545, #454545);
+    border: 2px solid black;
+}
+ 
+#game-home-button {
+    position: absolute;
+    left: 1.5%;
+    bottom: 8%;
+}
+
+#game-settings-button {
+    position: absolute;
+    left: 1.5%;
+    bottom: 2%;
+}
+ 
+.dock-options-button {
+	width: 4%;
+    height: 5%;
+    background-color: rgba(192, 51, 51, 0.5);
+}
+
+.dock-options-button:hover {
+    background-color: rgba(192, 51, 51, 0.9);
+}
+
+.dock-options-button:active {
+    background-color: rgba(192, 51, 51, 0.75);
+}
+
+.dock-options-button span {
+	margin-right: 1px;
+	margin-bottom: 2px;
+}
+
+.small-clothing-image {
+	width: 28%;
+    height: 47%;
+    margin-bottom: 3.5%;
+	background-color: white;
+}
+
+.clothing-float-right {
+    float: right;
+    margin-left: 3.5%;
+}
+
+.clothing-float-left {
+    float: left;
+    margin-right: 3.5%;
+}
+
+.player-area {
+	width: 100%;
+	padding: 0px;
+	background: transparent;
+	box-sizing: border-box;
+}
+
+#player-countdown {
+    position: absolute;
+    width: 4%;
+    height: 4%;
+    left: 48%;
+    bottom: 12.5%;
+    text-align: center;
+    font-size: 120%;
+    background-color: rgba(240, 240, 240, 1.0);
+}
+
+#player-game-clothing-area {
+    position: absolute;
+    width: 33%;
+    height: 15%;
+    left: 8.5%;
+    bottom: 2%;
+    background-color: rgba(40, 40, 40, 0.75);
+}
+
+.player-clothing-container {
+    position: absolute;
+    width: 55%;
+    height: 100%;
+    padding: 1.25%;
+}
+
+.player-card-area {
+	position: absolute;
+    width: 40%;
+    height: 15%;
+    right: 1.5%;
+    bottom: 2%;
+    padding: 0.3%;
+    background-color: rgba(40, 40, 40, 0.75);
+}
+
+.player-name-label {
+	position: absolute;
+    width: 65.5%;
+    height: 24%;
+    left: 17.25%; 
+    bottom: 3%;
+    text-align: center;
+    background-color: #F5F5F5;
+}
+
+#game-clothing-label {
+	position: absolute;
+    width: 65.5%;
+    height: 22%;
+    left: 17.25%; 
+    bottom: 28%;
+    font-size: 90%;
+    text-align: center;
+    background-color: #F5F5F5;
+}
+
+.large-card-image {
+	float: right;
+    height: 100%;
+    width: 19%;
+    margin: 0 0.5%;
+    background-color: #F5F5F5;
+}
+
+.dock-card {
+    position: absolute;
+    width: 8%;
+    height: 14%;
+    left: 45.5%;
+    bottom: 2%;
+}
+
+.hidden-large-card {
+    opacity: 0;
+}
+
+.shown-card {
+	opacity: 1;
+}
+
+.large-dealt-card {
+    width: 7.5%;
+    height: 14%;
+}
+
+.small-dealt-card {
+    width: 4%;
+    height: 6.5%;
+}
+
+#main-game-button {
+    position: absolute;
+    width: 12%;
+    height: 8%;
+    left: 44%;
+    bottom: 5%;
+    font-size: 140%;
+}
+
+/* remove the "clear" button that occurs in some MS browsers */
+#player-masturbation-timer-box::-ms-clear {
+	display: none;
+}
+
+/************************************************************
+ * Classes for the Epilogue screens.
+ ************************************************************/
+
+.epilogue-area {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	/*font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 24px;*/
+    color: #050505;
+	text-align: center;
+	background-color: #050505;
+    background-image: url("../img/background.png");
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* hacky solution with the top:px; getting the boxes lined up properly, but it seems to work */
+
+#epilogue-next-button {
+	float: left;
+	clear: left;
+	position: relative;
+	top: 10px;
+	left:10px;
+    z-index: 4
+}
+
+#epilogue-prev-button {
+	float: left;
+	clear: left;
+	position: relative;
+	top: 15px;
+	left:10px;
+    z-index: 4
+}
+
+#epilogue-restart-button {
+	float: left;
+	clear: left;
+	position: relative;
+	top: 20px;
+	left:10px;
+    z-index: 4
+}
+
+#epilogue-next-on-image {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80%;
+    height: 100%;
+    margin-left: 20%;
+}
+
+#epilogue-prev-on-image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 20%;
+    height: 100%;
+}
+
+#epilogue-modal-accept-button {
+	position: absolute;
+	bottom: 5%;
+	left: 5%;
+}
+
+#epilogue-modal-restart-button {
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+}
+
+.dialogue-bubble-area.modal-dialogue{
+	width: 100%;
+    background: #F5F5F5;
+}
+
+.table-modal .modal-button.epilogue-modal-button{
+	height: auto;
+}
+
+#epilogue-list {
+	list-style: none;
+	text-align: centred;
+	
+}
+
+.epilogue-entry {
+	padding: 2px 5px;
+}
+
+.epilogue-entry button {
+	color: black;
+	background: #BBBBBB;
+	border: 2px solid black;
+	border-radius: 5px;
+	padding: 2px 5px;
+	text-decoration: none;
+}
+
+.epilogue-entry.active button {
+	background-color: #439AD7;
+	border-color: white;
+}
+
+.epilogue-entry button:hover {
+	background: #DDDDDD;
+}
+
+/************************************************************
+ * Global override classes.
+ ************************************************************/
+
+.clear {
+	background: transparent;
+}
+
+.tight {
+	width: auto;
+}
+
+.never-hide {
+	visibility: visible;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
