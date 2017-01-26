@@ -51,6 +51,7 @@ var table = new Table();
  **********************************************************************/
 
 /* Screens */
+$warningScreen = $('#warning-screen');
 $titleScreen = $('#title-screen');
 $selectScreen = $('#main-select-screen');
 $individualSelectScreen = $('#individual-select-screen');
@@ -136,8 +137,14 @@ function initialSetup () {
 	loadSelectScreen();
 	
 	/* show the title screen */
-	$titleScreen.show();
+	$warningScreen.show();
     autoResizeFont();
+}
+
+
+function enterTitleScreen() {
+    $warningScreen.hide();
+    $titleScreen.show();
 }
 
 /************************************************************
