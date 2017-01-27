@@ -218,6 +218,7 @@ def write_xml(data, filename):
 
 	#f = open(filename)
 	o = ET.Element("opponent")
+	o.insert(0, ET.Comment("This file is machine generated. Please do not edit it directly or your changes may be lost."))
 	ET.SubElement(o, "first").text = data["first"]
 	ET.SubElement(o, "last").text = data["last"]
 	ET.SubElement(o, "label").text = data["label"]
