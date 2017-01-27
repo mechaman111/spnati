@@ -224,6 +224,12 @@ def write_xml(data, filename):
 	ET.SubElement(o, "gender").text = data["gender"]
 	ET.SubElement(o, "size").text = data["size"]
 	ET.SubElement(o, "timer").text = data["timer"]
+
+	#tags
+	tags_elem = ET.SubElement(o, "tags")
+	character_tags = data["character_tags"]
+	for tag in character_tags:
+		ET.SubElement(tags_elem, "tag").text = tag
 	
 	#start image
 	start = ET.SubElement(o, "start")
@@ -513,7 +519,14 @@ def read_player_file(filename):
 				d["clothes"].append(stripped)
 			else:
 				d["clothes"] = [stripped]
-		
+
+		#tags for the character i.e. blonde, athletic, cute
+		elif key == "tag":
+			if "character_tags" in d:
+				d["character_tags"].append(stripped)
+			else:
+				d["character_tags"] = [stripped]
+
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
