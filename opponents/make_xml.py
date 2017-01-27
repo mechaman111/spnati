@@ -195,7 +195,7 @@ def manual_prettify_xml(elem, level=0, isLast=False):
 	else:
 		elem.tail = "\n" + (level) * indent
 		
-	if elem.tag in ["stage", "wardrobe", "timer", "start", "behaviour", "epilogue", "screen", "text"]:
+	if elem.tag in ["stage", "wardrobe", "timer", "start", "behaviour", "epilogue", "screen", "text", "tags"]:
 		elem.tail = "\n" + elem.tail
 		
 	if elem.tag == "opponent":
