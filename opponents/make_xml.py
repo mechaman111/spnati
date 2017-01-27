@@ -304,7 +304,7 @@ def write_xml(data, filename):
 	
 	#manual prettify
 	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, xml_declaration=True)
+	ET.ElementTree(pretty_xml).write(filename, encoding='UTF-8', xml_declaration=True)
 
 #add an ending to the 
 def add_ending(ending, d):
@@ -563,7 +563,7 @@ def make_meta_xml(data, filename):
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
 	
 	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, xml_declaration=True)
+	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
 
 #read the input data, the write the xml files
 def make_xml(player_filename, out_filename, meta_filename=None):
