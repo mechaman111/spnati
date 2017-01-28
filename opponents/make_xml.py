@@ -228,7 +228,7 @@ def write_xml(data, filename):
 
 	#tags
 	tags_elem = ET.SubElement(o, "tags")
-	character_tags = data["character_tags"]
+	character_tags = set(data["character_tags"])
 	for tag in character_tags:
 		ET.SubElement(tags_elem, "tag").text = tag
 	
@@ -522,11 +522,23 @@ def read_player_file(filename):
 				d["clothes"] = [stripped]
 
 		#tags for the character i.e. blonde, athletic, cute
+		#tags can be written as either:
+		#	tag=blonde
+		#	tag=athletic
+		#or as
+		#	tags=blond, athletic
 		elif key == "tag":
 			if "character_tags" in d:
 				d["character_tags"].append(stripped)
 			else:
 				d["character_tags"] = [stripped]
+
+		elif key == "tags":
+			character_tags = [tag.strip() for tag in stripped.split(',')]
+			if "character_tags" in d:
+				d["character_tags"] = d["character_tags"] + character_tags
+			else:
+				d["character_tags"] = character_tags
 
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
