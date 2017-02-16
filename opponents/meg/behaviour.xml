@@ -23,10 +23,7 @@
 		<tag>video_game</tag>
 		<tag>video game</tag>
 	</tags>
-	
-	<!-- There should be a file with this listing all the tags in the official release, for at least 12 February, 2017.  -->
-	<!-- The ones I added are in parenthesis.  Sorry for the bloat! -->
-	
+		
 	<!-- Game Start Information -->
 	<start>
 		<state img="0-calm.png">
@@ -316,7 +313,7 @@
 					Sweet Jesus!  That's, that's huge!
 				</state>
 				<state img="0-shocked.png">
-					That's a monster!  And I should know, I'm chased by them daily.  Monsters, not pensis ... shut up, Meg.
+					That's a monster!  And I should know, I'm chased by them daily.  Monsters, not penises ... shut up, Meg.
 				</state>
 			</case>
 			
@@ -395,7 +392,7 @@
 					I <i>may</i> have already undressed you with my eyes.  Just sayin'.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="0-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -409,6 +406,22 @@
 				</state>
 				<state img="0-angry.png">
 					Oh good, a pointless piece of clothing.  I'm <i>so</i> turned on ...
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="0-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="0-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="0-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="0-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -461,6 +474,41 @@
 					Disappointing...
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="0-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="0-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="0-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="0-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="0-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="0-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="0-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="0-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -468,7 +516,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="0-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="0-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="0-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -478,12 +532,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="0-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="0-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="0-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="0-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -502,7 +562,23 @@
 					This turned out more exciting than I thought it'd be.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="0-coy.png">
+					Damn, looking good, ~name~.  How often do you work out?
+				</state>
+				<state img="0-shocked.png">
+					By the bullwhip of Indiana, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="0-interested.png">
+					Mmm, ~name~, I see you don't skip cardio.  We should go running sometime.
+				</state>
+				<state img="0-coy.png">
+					Now that's a well-taken care of body, ~name~.  I'm impressed.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="0-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -927,7 +1003,7 @@
 					Hard and fast, like someone with a chainsaw is chasing you.  What, that doesn't turn you on?
 				</state>
 				<state img="1-coy.png">
-					Pretend it's a python you need to strangle!
+					Pretend it's a python that owes you <i>a lot</i> of money!
 				</state>
 			</case>
 			<case tag="male_must_masturbate" filter="creepy">
@@ -990,7 +1066,7 @@
 					Yeah, ~name~, we're going to need some skin.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="1-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -1004,6 +1080,22 @@
 				</state>
 				<state img="1-angry.png">
 					<b>Boring!</b>  Get to the good stuff!
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="1-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="1-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="1-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="1-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -1056,6 +1148,41 @@
 					Disappointing...
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="1-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="1-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="1-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="1-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="1-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="1-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="1-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="1-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -1063,7 +1190,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="1-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="1-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="1-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -1073,12 +1206,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="1-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="1-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="1-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="1-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -1097,7 +1236,23 @@
 					This turned out more exciting than I thought it'd be.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="1-coy.png">
+					Oh, that body makes my heart aflutter.  How often do you work out?
+				</state>
+				<state img="1-shocked.png">
+					Criminy Christmas, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="1-interested.png">
+					Mmm, ~name~, I see you don't skip cardio.  You up for a 5k after this?
+				</state>
+				<state img="1-coy.png">
+					Now that's a well-taken care of body, ~name~.  Fair play.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="1-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -1295,7 +1450,7 @@
 			</case>
 			<case tag="okay_hand"> <!-- the character has an okay hand after the exchange -->
 				<state img="2-calm.png">
-					OK, this hand will need a poker face - wait, did I say out loud?
+					OK, this hand will need a poker face - wait, did I say that out loud?
 				</state>
 				<state img="2-calm.png">
 					Could be better.
@@ -1587,7 +1742,7 @@
 					Awkward for you, hot for us.  I approve!
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="2-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -1601,6 +1756,22 @@
 				</state>
 				<state img="2-angry.png">
 					Man, how do you still have your ~clothing~ on, ~name~?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="2-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="2-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="2-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="2-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -1656,6 +1827,41 @@
 					The Entity will not be pleased by your lack of skin.
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="2-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="2-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="2-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="2-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="2-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="2-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="2-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="2-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -1663,7 +1869,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="2-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="2-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="2-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -1673,12 +1885,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="2-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="2-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="2-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="2-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -1700,7 +1918,23 @@
 					This turned out more exciting than I thought it'd be.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="2-coy.png">
+					Now that's a toned body, ~name~.  What gym do you go to?
+				</state>
+				<state img="2-shocked.png">
+					Oh, Mylanta, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="2-interested.png">
+					Mmm, ~name~, I see you don't skip cardio.  Want to go running after this?
+				</state>
+				<state img="2-coy.png">
+					Trim, tone, definition ... yup, that's a complete package.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="2-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -1898,7 +2132,7 @@
 			</case>
 			<case tag="okay_hand"> <!-- the character has an okay hand after the exchange -->
 				<state img="3-calm.png">
-					OK, this hand will need a poker face - wait, did I say out loud?
+					OK, this hand will need a poker face - wait, did I say that out loud?
 				</state>
 				<state img="3-calm.png">
 					Could be better.
@@ -2185,7 +2419,7 @@
 					We're all waiting, ~name~.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="3-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -2199,6 +2433,22 @@
 				</state>
 				<state img="3-angry.png">
 					Just so you know, I was promised skin.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="3-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="3-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="3-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="3-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -2251,6 +2501,41 @@
 					Disappointing...
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="3-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="3-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="3-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="3-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="3-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="3-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="3-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="3-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -2258,7 +2543,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="3-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="3-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="3-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -2268,12 +2559,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="3-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="3-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="3-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="3-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -2292,7 +2589,23 @@
 					This turned out more exciting than I thought it'd be.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="3-coy.png">
+					Well, I see <i>someone</i> hits the gym regularly.
+				</state>
+				<state img="3-shocked.png">
+					Cheese and biscuits, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="3-interested.png">
+					Mmm, ~name~, I see you don't skip cardio.  What's your mile?
+				</state>
+				<state img="3-coy.png">
+					Man, ~name~, how long have you gone without a cheat day?
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="3-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -2490,7 +2803,7 @@
 			</case>
 			<case tag="okay_hand"> <!-- the character has an okay hand after the exchange -->
 				<state img="4-calm.png">
-					OK, this hand will need a poker face - wait, did I say out loud?
+					OK, this hand will need a poker face - wait, did I say that out loud?
 				</state>
 				<state img="4-calm.png">
 					Could be better.
@@ -2638,6 +2951,9 @@
 				<state img="4-angry.png">
 					Just so you know, I'm on a first name basis with A LOT of murderers.
 				</state>
+				<state img="4-angry.png">
+					And my lady boner's gone.
+				</state>
 			</case>
 			<case tag="male_removed_minor"> <!-- a male player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="4-calm.png">
@@ -2771,7 +3087,7 @@
 					We're all expecting boobage, just so you know.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="4-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -2785,6 +3101,22 @@
 				</state>
 				<state img="4-angry.png">
 					A noninclusive list of things which suck: ~name~.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="4-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="4-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="4-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="4-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -2805,7 +3137,7 @@
 				<state img="4-calm.png">
 					Hopefully this means next hand, boobage.
 				</state>
-				<state img="4-calm.png">
+				<state img="4-interested.png">
 					Right, just stand there, looking flustered.  Very nice.
 				</state>
 			</case>
@@ -2831,10 +3163,48 @@
 			<!-- female player stripping cases -->
 			<case tag="female_removed_accessory"> <!-- a female player has removed an accessory (hat, gloves, belt) -->
 				<state img="4-angry.png">
-					I'm close to losing my... and you take off ~clothing~... go so straight to hell.
+					I'm close to losing my... and you take off the ~clothing~... go so straight to hell.
 				</state>
 				<state img="4-angry.png">
 					I hang out daily with a misshapen Hillbilly with a chainsaw.  And he owes me a favor.
+				</state>
+				<state img="4-angry.png">
+					I think I just lost my erection.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="4-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="4-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="4-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="4-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="4-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="4-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="4-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" filter="silent">
@@ -2844,7 +3214,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="4-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="4-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="4-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -2854,12 +3230,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="4-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="4-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="4-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="4-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -2884,7 +3266,23 @@
 					It's probably a good thing I'll be removing my panties soon.  They're starting to get wet.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="4-coy.png">
+					I guess <i>someone</i> knows their way around a gym.
+				</state>
+				<state img="4-shocked.png">
+					Flight of the Valkyries, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="4-interested.png">
+					Well, ~name~, I, too, value cardio.  Well played.
+				</state>
+				<state img="4-coy.png">
+					Nice body, ~name~.  Care to share any tips?
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="4-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -2962,7 +3360,7 @@
 			</case>
 			<case tag="female_crotch_is_visible"> <!-- a female player's crotch has become visible -->
 				<state img="4-horny.png">
-					Guess ... I am into girls ...
+					Guess ... I <i>am</i> into girls ...
 				</state>
 				<state img="4-horny.png">
 					That's, um, kinda hot.
@@ -3227,6 +3625,9 @@
 				<state img="5-angry.png">
 					Just so you know, I'm on a first name basis with A LOT of murderers.
 				</state>
+				<state img="5-angry.png">
+					And my lady boner's gone.
+				</state>
 			</case>
 			<case tag="male_removed_minor"> <!-- a male player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="5-calm.png">
@@ -3357,7 +3758,7 @@
 					Yeah, I've kinda already undressed you in my mind, ~name~.  But don't let that stop you.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="5-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -3371,6 +3772,25 @@
 				</state>
 				<state img="5-angry.png">
 					I'd really like to know how that counts.
+				</state>
+				<state img="5-angry.png">
+					I think I just lost my erection.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="5-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="5-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="5-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="5-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -3411,10 +3831,45 @@
 			<!-- female player stripping cases -->
 			<case tag="female_removed_accessory"> <!-- a female player has removed an accessory (hat, gloves, belt) -->
 				<state img="5-angry.png">
-					I'm close to losing my... and you take off ~clothing~... go so straight to hell.
+					I'm close to losing my... and you take off the ~clothing~... go so straight to hell.
 				</state>
 				<state img="5-angry.png">
 					I hang out daily with a misshapen Hillbilly with a chainsaw.  And he owes me a favor.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="5-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="5-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="5-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="5-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="5-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="5-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="5-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" filter="silent">
@@ -3424,7 +3879,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="5-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="5-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="5-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -3434,12 +3895,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="5-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="5-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="5-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="5-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -3458,7 +3925,23 @@
 					This reminds me of high school gym.  In a good way.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="5-coy.png">
+					And with proper diet and exercise, you, too, can look like ~name~.
+				</state>
+				<state img="5-shocked.png">
+					Sands of Zanzibar, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="5-interested.png">
+					I know a runner when I see one.  You up for a sprint after?
+				</state>
+				<state img="5-coy.png">
+					Impressive body, ~name~.  I know tone like that takes work.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="5-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -3536,7 +4019,7 @@
 			</case>
 			<case tag="female_crotch_is_visible"> <!-- a female player's crotch has become visible -->
 				<state img="5-horny.png">
-					Guess ... I am into girls ...
+					Guess ... I <i>am</i> into girls ...
 				</state>
 				<state img="5-horny.png">
 					That's, um, kinda hot.
@@ -3559,7 +4042,7 @@
 			</case>
 			<case tag="female_must_masturbate" filter="princess">
 				<state img="5-horny.png">
-					A princess is about to start an internal space program for my pleasure?  Entity, you are about 20% cooler.
+					A princess is researching the viability of an internal space program?  Entity, you are about 20% cooler.
 				</state>
 			</case>
 			<case tag="female_start_masturbating"> <!-- a female player has started masturbating -->
@@ -3801,6 +4284,9 @@
 				<state img="6-angry.png">
 					Just so you know, I'm on a first name basis with A LOT of murderers.
 				</state>
+				<state img="6-angry.png">
+					And my lady boner's gone.
+				</state>
 			</case>
 			<case tag="male_removed_minor"> <!-- a male player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="6-calm.png">
@@ -3936,7 +4422,7 @@
 					~name~, I'm thinking <i>very</i> naughty thoughts right now.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="6-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -3950,6 +4436,22 @@
 				</state>
 				<state img="6-angry.png">
 					Seriously?  ~name~: Official Buzzkiller.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="6-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="6-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="6-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="6-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -4001,6 +4503,44 @@
 				<state img="6-angry.png">
 					I hang out daily with a misshapen Hillbilly with a chainsaw.  And he owes me a favor.
 				</state>
+				<state img="6-angry.png">
+					I think I just lost my erection.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="6-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="6-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="6-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="6-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="6-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="6-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="6-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
 			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="6-calm.png">
@@ -4009,7 +4549,13 @@
 			</case>
 			<case tag="female_removed_accessory" filter="princess">
 				<state img="6-happy.png">
-					The Princess will remove her ~clothing~?  What will her subjects think?
+					The Princess has removed her ~clothing~?  What will her subjects think?
+				</state>
+				<state img="6-shocked.png">
+					Breaking news: Princess ~name~ has revealed a tiny bit of skin.  More at 11!
+				</state>
+				<state img="6-happy.png">
+					Princess, don't you have, like, pressing matters of state to attend to?  What're you even doing here?
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="zoey">
@@ -4019,12 +4565,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="6-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="6-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="6-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="6-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -4049,7 +4601,23 @@
 					Are you trying to impersonate a moisterizer?  Cause it's working on me.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="6-coy.png">
+					Damn, girl, you've got nothing to be ashamed about with <i>that</i> body!
+				</state>
+				<state img="6-shocked.png">
+					By Odin's beard, ~name~!  We have <i>got</i> to work out together sometime!
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="6-interested.png">
+					Hey, another runner!  Up for a race after this?
+				</state>
+				<state img="6-coy.png">
+					With a body like that, ~name~, I'm going to have trouble keeping my hands to myself.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="6-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -4127,7 +4695,7 @@
 			</case>
 			<case tag="female_crotch_is_visible"> <!-- a female player's crotch has become visible -->
 				<state img="6-horny.png">
-					Guess ... I am into girls ...
+					Guess ... I <i>am</i> into girls ...
 				</state>
 				<state img="6-horny.png">
 					That's, um, kinda hot.
@@ -4520,7 +5088,7 @@
 					At least the eyes are off of me for a second ...
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="7-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -4534,6 +5102,22 @@
 				</state>
 				<state img="7-angry.png">
 					There are no words for my rage ... oh, wait, ~clothing~.  That works.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="7-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="7-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="7-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="7-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -4589,6 +5173,41 @@
 					I've decided to ignore you for the time being, ~name~.
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="7-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="7-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="7-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="7-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="7-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="7-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="7-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="7-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -4601,12 +5220,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="7-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="7-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="7-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="7-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -4631,7 +5256,23 @@
 					And now I'm horny again.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="7-coy.png">
+					So I learned I'm into girls, but I'm especially into <i>fit</i> girls!
+				</state>
+				<state img="7-shocked.png">
+					Holey moley, ~name~!  You'd make a good dog break its leash.
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="7-interested.png">
+					OK, I bet I could get off just <i>looking</i> at a body like that.
+				</state>
+				<state img="7-coy.png">
+					Stop teasing me with those defined curves, you saucy minx!
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="7-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -5090,7 +5731,7 @@
 					Hmm, ~name~, you're taking my mind off my own situation.
 				</state>
 			</case>
-			<case tag="female_must_strip" target="spooky">
+			<case tag="female_must_strip" target="spooky" targetstage="2">
 				<state img="8-awkward.png">
 					Spooky, who do you remind me of?  Oh, right, a murderous, teleporting Nurse.  That's ... a bit of a turn off, actually.
 				</state>
@@ -5104,6 +5745,22 @@
 				</state>
 				<state img="8-angry.png">
 					Well, you're off the Christmas card list, ~name~.
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="8-calm.png">
+					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+				</state>
+				<state img="8-calm.png">
+					Hey, here's an idea out of left field.  How about you put the <b>butcher knife</b> down?
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="8-calm.png">
+					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+				</state>
+				<state img="8-calm.png">
+					Hey Spooky, I can't help but notice you're <i>carrying a knife!</i>  I'm all for you losing <i>that</i>.
 				</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -5159,6 +5816,41 @@
 					Do you see this face?  What conclusions are you drawing from it?
 				</state>
 			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="1">
+				<state img="8-angry.png">
+					<b>Lame-ality!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="2">
+				<state img="8-angry.png">
+					Sonya, I will so "Forward, Forward, Back, Back, Block" you.
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="3">
+				<state img="8-angry.png">
+					I bet Cassie would be a lot more fun to play with ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="sonya" targetStage="4">
+				<state img="8-angry.png">
+					You landed Johnny Cage with lame-ass moves like these?
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="1">
+				<state img="8-angry.png">
+					Objection!
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="2">
+				<state img="8-angry.png">
+					I'll tell you where the contradiction is, Mia.  It's removing your ~clothing~ when we're playing <b>Strip Poker!</b>
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="mia" targetStage="3">
+				<state img="8-angry.png">
+					I'm starting to see why Phoenix is always so stressed out.
+				</state>
+			</case>
 			<case tag="female_removed_accessory" filter="silent">
 				<state img="8-calm.png">
 					I tried the mute protagonist thing, ~name~.  Talking is a lot more fun.
@@ -5171,12 +5863,18 @@
 			</case>
 			<case tag="female_removed_accessory" target="alice" targetStage="1">
 				<state img="8-calm.png">
-					Alice, why don't you lose the <b>knife</b>?  I see that enough in my day job.
+					Right, hiding any other pointy bits on you, Alice?
+				</state>
+				<state img="8-calm.png">
+					Well, now I can focus on the game, instead of Alice murdering us.
 				</state>
 			</case>
 			<case tag="female_removed_accessory" target="spooky" targetStage="1">
 				<state img="8-calm.png">
-					Yeah, Spooky, how 'bout we lose the knife?  I get anxious around sharp objects.
+					You may be adorable, Spooky, but I feel like you <i>might</i> still want to kill us all.
+				</state>
+				<state img="8-calm.png">
+					See, Spooky, you can still be really scary <i>without</i> pointy metal things I'm not sure you know how to use.
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -5201,7 +5899,23 @@
 					Embarrassed to horny in about 3 seconds.  Nice job, ~name~.
 				</state>
 			</case>
-			<case tag="female_removed_major" target ="lara"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
+			<case tag="female_removed_major" filter="athletic">
+				<state img="8-horny.png">
+					The muscles ... such a turn on ...
+				</state>
+				<state img="8-shocked.png">
+					I will straight up <b>mount</b> a body that toned, ~name~.
+				</state>
+			</case>
+			<case tag="female_removed_major" filter="sporty">
+				<state img="8-happy.png">
+					Seems like you got stamina on the track, but do you have it in the sack?
+				</state>
+				<state img="8-coy.png">
+					Your fitness equals my wetness, ~name~.  And you are <i>very</i> fit.
+				</state>
+			</case>
+			<case tag="female_removed_major" target="lara" targetstage="5"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="8-coy.png">
 					Lara, as a kid, I wanted to be you.  As an adult, I want to <i>do</i> you!
 				</state>
@@ -5502,6 +6216,16 @@
 					I'm doing this ... and that's what ... you give me ... ?
 				</state>
 			</case>
+			<case tag="female_removing_accessory" target="alice" targetStage="0">
+				<state img="9-sad.png">
+					Putting down the knife ... would put me a lot more at ease ...
+				</state>
+			</case>
+			<case tag="female_removing_accessory" target="spooky" targetStage="0">
+				<state img="9-sad.png">
+					Spooky ... that knife is a bit ... of a turn off ...
+				</state>
+			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="9-calm.png">
 					Come on ... ~name~ ... I'm losing a lot of water over ... here ...
@@ -5527,6 +6251,16 @@
 			<case tag="female_removed_accessory"> <!-- a female player has removed an accessory (hat, gloves, belt) -->
 				<state img="9-sad.png">
 					I'm un-ugh-dressing you ... with my mind ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="alice" targetStage="1">
+				<state img="9-happy.png">
+					OK, Alice ... that made <i>much</i> more comfortable ...
+				</state>
+			</case>
+			<case tag="female_removed_accessory" target="spooky" targetStage="1">
+				<state img="9-happy.png">
+					See ... you just my job ... a lot easier ...
 				</state>
 			</case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
@@ -5573,7 +6307,7 @@
 			</case>
 			<case tag="female_start_masturbating"> <!-- a female player has started masturbating -->
 				<state img="9-horny.png">
-					Why is ... hrm ... turning me on ... so much ...
+					Why is ... hrm ... that turning me on ... so much ...
 				</state>
 			</case>
 			<case tag="female_masturbating"> <!-- a female player is masturbating -->
@@ -5607,6 +6341,18 @@
 			<case tag="finished_masturbating"> <!-- this player is finished -->
 				<state img="10-finished.png">
 					Christ ... my fingers are sticky ... and I'm dripping all over the place!
+				</state>
+				<state img="10-finished.png">
+					Whew ... !  That was ... intense!
+				</state>
+				<state img="10-finished.png">
+					Man, I kind of got my juices everywhere, huh!
+				</state>
+				<state img="10-finished.png">
+					Well, if the Entity wanted to feed off misplaced hope, it is <i>sadly</i> mistaken!
+				</state>
+				<state img="10-finished.png">
+					Gosh ... whew!  I'm feeling this afterglow!
 				</state>
 			</case>
 			
@@ -5793,7 +6539,7 @@
 			</case>
 			<case tag="female_must_masturbate" filter="princess">
 				<state img="10-horny.png">
-					A princess is about to do herself?  I <i>could</i> sheen the jean machine again ...
+					A princess is about to drill for oil?  I <i>could</i> go again ...
 				</state>
 			</case>
 			<case tag="female_start_masturbating"> <!-- a female player has started masturbating -->
