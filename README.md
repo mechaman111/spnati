@@ -1,6 +1,6 @@
 **How do I play the game?**
 
-Strip Poker Night at the Inventory is an online game currently hosted at https://spnati.gitlab.io/. If you ever forget where it is, you can always follow the link on the sidebar.
+Strip Poker Night at the Inventory is an online game currently hosted at https://spnati.gitlab.io/. If you ever forget where it is, you can always follow the link on the subreddit sidebar.
 
 **Can I play the game offline?**
 
@@ -17,10 +17,6 @@ To see one of the character endings, you need to:
 2) Play against at least one opponent who has an epilogue. 
 
 Sadly, most opponents don't have endings. It's not that hard to make one, though - if your favorite character doesn't have one, why not make it?
-
-**Which characters have endings?**
-
-A list is maintained here: https://www.reddit.com/r/spnati/comments/5qw8re/ending_added_nagisa_furukawa_clannad/
 
 **How do I add the characters I see posted on Reddit?**
 
