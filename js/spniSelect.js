@@ -10,7 +10,7 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (folder, enabled, first, last, label, image, gender, height, source, artist, writer, description) {
+function createNewOpponent (folder, enabled, first, last, label, image, gender, height, source, artist, writer, description, ending) {
 	var newOpponentObject = {folder:folder,
 							 enabled:enabled,
                              first:first,
@@ -22,7 +22,8 @@ function createNewOpponent (folder, enabled, first, last, label, image, gender, 
 							 source:source,
                              artist:artist,
                              writer:writer,
-							 description:description};
+							 description:description,
+                             ending:ending};
 						  
 	return newOpponentObject;
 }
@@ -79,6 +80,7 @@ $individualSourceLabels = [$("#individual-source-label-1"), $("#individual-sourc
 $individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
 $individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
+$individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
 
 $individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
 $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#individual-button-3"), $("#individual-button-4")];
@@ -96,6 +98,7 @@ $groupSourceLabels = [$("#group-source-label-1"), $("#group-source-label-2"), $(
 $groupWriterLabels = [$("#group-writer-label-1"), $("#group-writer-label-2"), $("#group-writer-label-3"), $("#group-writer-label-4")];
 $groupArtistLabels = [$("#group-artist-label-1"), $("#group-artist-label-2"), $("#group-artist-label-3"), $("#group-artist-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
+$groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
 $groupNameLabel = $("#group-name-label");
@@ -108,6 +111,7 @@ $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
+
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -214,8 +218,10 @@ function loadOpponentMeta (folder) {
 			var artist = $(xml).find('artist').text();
 			var writer = $(xml).find('writer').text();
 			var description = $(xml).find('description').text();
+            var ending = $(xml).find('has_ending').text();
+            ending = ending === "true";
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description);
+			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending);
 			
 			/* add the opponent to the list */
 			loadedOpponents.push(opponent);
@@ -257,6 +263,13 @@ function updateIndividualSelectScreen () {
 			$individualWriterLabels[index].html(selectableOpponents[i].writer);
 			$individualArtistLabels[index].html(selectableOpponents[i].artist);
 			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
+            
+            if (selectableOpponents[i].ending) {
+                $individualBadges[index].show();
+            }
+            else {
+                $individualBadges[index].hide();
+            }
 			
 			$individualImages[index].attr('src', selectableOpponents[i].folder + selectableOpponents[i].image);
 			if (selectableOpponents[i].enabled == "true") {
@@ -276,6 +289,7 @@ function updateIndividualSelectScreen () {
 			$individualWriterLabels[index].html("");
 			$individualArtistLabels[index].html("");
 			$individualDescriptionLabels[index].html("");
+            $individualBadges[index].hide();
 			
 			$individualImages[index].attr('src', BLANK_PLAYER_IMAGE);
 			$individualButtons[index].attr('disabled', true);
@@ -326,8 +340,10 @@ function loadGroupMemberMeta (folder, groupID, member) {
 			var artist = $(xml).find('artist').text();
 			var writer = $(xml).find('writer').text();
 			var description = $(xml).find('description').text();
+            var ending = $(xml).find('has_ending').text();
+            ending = ending === "true";
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description);
+			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending);
 			
 			/* add the opponent information to the group */
 			loadedGroups[groupID].opponents[member] = opponent;
@@ -368,6 +384,13 @@ function updateGroupSelectScreen () {
 			$groupWriterLabels[i].html(opponent.writer);
 			$groupArtistLabels[i].html(opponent.artist);
 			$groupDescriptionLabels[i].html(opponent.description);
+            
+            if (opponent.ending) {
+                $groupBadges[i].show();
+            }
+            else {
+                $groupBadges[i].hide();
+            }
 			
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
 			$groupNameLabel.html(loadedGroups[groupPage].title);
@@ -388,6 +411,7 @@ function updateGroupSelectScreen () {
 			$groupWriterLabels[i].html("");
 			$groupArtistLabels[i].html("");
 			$groupDescriptionLabels[i].html("");
+            $groupBadges[i].hide();
 			
 			$groupImages[i].attr('src', BLANK_PLAYER_IMAGE);
 		}
