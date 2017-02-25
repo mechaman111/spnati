@@ -8,6 +8,11 @@
 	<gender>male</gender>    <!-- Gender (male or female) -->
 	<size>medium</size>      <!-- Size of Naughty Bits (penis if male, boobs if female) -->
     <timer>20</timer>        <!-- Time (in game phases) to 'Finish' -->
+    <tags>
+        <tag>athletic</tag>
+        <tag>straight</tag>
+        <tag>American</tag>
+    </tags>	
 	
 	
 	<!-- Game Start Dialogue -->
@@ -236,9 +241,15 @@
 				<state img="0-happy.png">I'm having fun already!</state>
 				<state img="0-interested.png">I won't lie - the way you take off your ~clothing~ is pretty sexy.</state>
 			</case>
+			<case tag="female_removing_minor" target="buffy" targetStage="2">
+				<state img="0-sassy.png">...How do you feel about shirt, no shirt?</state>
+			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="0-happy.png">You da man, ~name~!</state>
 				<state img="0-happy.png">&#9835; <i>whistles</i> &#9835;</state>
+			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="0-interested.png">I'm not sure how that's a disadvantage.</state>
 			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="0-interested.png">You are the worst poker player ever. It's part of your charm.</state>
@@ -268,12 +279,18 @@
 				<state img="0-interested.png">I like your smile. You should smile more.</state>
 				<state img="0-embarrassed.png">Why haven't I played this before?! ...Oh, right. Because nobody invites me.</state>
 			</case>
+			<case tag="female_removed_minor" target="buffy" targetStage="1">
+				<state img="0-interested.png">xxx</state>
+			</case>
 			<case tag="female_removed_minor" target="blackrose" targetStage="3">
 				<state img="0-interested.png">Well, okay, I will! But only because you asked so nicely.</state>
 			</case>
 			<case tag="female_removed_major"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="0-interested.png">Wow, you're a hottie.</state>
 				<state img="0-shocked.png">Some guys would harass super hot girls like you. But not me! I'm totally paralyzed.</state>
+			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="0-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
 			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="0-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
@@ -506,9 +523,15 @@
 				<state img="1-happy.png">I'm having fun already!</state>
 				<state img="1-interested.png">I won't lie - the way you take off your ~clothing~ is pretty sexy.</state>
 			</case>
+			<case tag="female_removing_minor" target="buffy" targetStage="2">
+				<state img="1-sassy.png">...How do you feel about shirt, no shirt?</state>
+			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="1-happy.png">You da man, ~name~!</state>
 				<state img="1-happy.png">&#9835; <i>whistles</i> &#9835;</state>
+			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="1-interested.png">I'm not sure how that's a disadvantage.</state>
 			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="1-interested.png">You are the worst poker player ever. It's part of your charm.</state>
@@ -541,6 +564,9 @@
 			<case tag="female_removed_major"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="1-interested.png">Now I'm more motivated than ever!</state>
 				<state img="1-sassy.png">If I told you that you had a beautiful body, would you hold it against me? Please?</state>
+			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="1-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
 			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="1-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
@@ -743,12 +769,18 @@
 				<state img="2-sassy.png">You're going to take off your bra, ~name~? ...What? I can dream.</state>
 				<state img="2-calm.png">Have you considered being a little bolder? Some of us like that sort of thing in a girl.</state>
 			</case>
+			<case tag="female_removing_minor" target="buffy" targetStage="2">
+				<state img="2-sassy.png">...How do you feel about shirt, no shirt?</state>
+			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="2-sassy.png">I feel a high-five coming on.</state>
 				<state img="2-happy.png">This is better than prom night! Which isn't actually saying much in my case.</state>
 			</case>
 			<case tag="female_removing_major" target="blackrose" targetStage="4">
 				<state img="2-sassy.png">That's what she said! ...Oh, wait.</state>
+			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="2-interested.png">I'm not sure how that's a disadvantage.</state>
 			</case>
 			<case tag="female_removing_major" target="daphne" targetStage="3">
 				<state img="2-sassy.png">Thank you, Fred!</state>
@@ -792,6 +824,9 @@
 				<state img="2-interested.png">You have <i>no</i> idea how crazy you make me.</state>
 				<state img="2-interested.png">You're the sexiest woman in the world to me right now.</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="2-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
+			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="2-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
 			</case>
@@ -810,6 +845,9 @@
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="2-interested.png">I've always thought of myself a bosom friend. And other parts, too.</state>
 				<state img="2-happy.png">Thank you, God!</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="2-interested.png">Sorry, Buff! I can't help it; it's in my nature.</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="2-shocked.png">Holy moly!</state>
@@ -1022,12 +1060,18 @@
 				<state img="3-sassy.png">Looking at your ~clothing~ makes me want to have sex. Of course, looking at <i>linoleum</i> makes me want to have sex.</state>
 				<state img="3-calm.png">Have you considered being a little bolder? Some of us like that sort of thing in a girl.</state>
 			</case>
+			<case tag="female_removing_minor" target="buffy" targetStage="2">
+				<state img="3-angry.png">Gettin' a mite wild there, Buffy. Might wanna tone it down a tad.</state>
+			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="3-sassy.png">I feel a high-five coming on.</state>
 				<state img="3-happy.png">This is better than prom night! Which isn't actually saying much in my case.</state>
 			</case>
 			<case tag="female_removing_major" target="blackrose" targetStage="4">
 				<state img="3-sassy.png">That's what she said! ...Oh, wait.</state>
+			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="3-interested.png">I'm not sure how that's a disadvantage.</state>
 			</case>
 			<case tag="female_removing_major" target="daphne" targetStage="3">
 				<state img="3-sassy.png">Thank you, Fred!</state>
@@ -1071,6 +1115,9 @@
 				<state img="3-shocked.png">Damn!</state>
 				<state img="3-interested.png">You're out of my league but I would date the shit out of you.</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="3-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
+			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="3-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
 			</case>
@@ -1089,6 +1136,9 @@
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="3-interested.png">I've always thought of myself a bosom friend. And other parts, too.</state>
 				<state img="3-happy.png">Thank you, God!</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="3-interested.png">Sorry, Buff! I can't help it; it's in my nature.</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="3-shocked.png">Holy moly!</state>
@@ -1276,6 +1326,9 @@
 				<state img="4-calm.png">You're really good at this.</state>
 				<state img="4-calm.png">That's all? I'm a man, you know. I have certain desires, certain needs...</state>
 			</case>
+			<case tag="female_removing_minor" target="buffy" targetStage="2">
+				<state img="4-angry.png">Gettin' a mite wild there, Buffy. Might wanna tone it down a tad.</state>
+			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="4-happy.png">I never thought I'd get to see this without a high-powered telescope! Um. Sometimes I shouldn't say words.</state>
 				<state img="4-happy.png">Have I mentioned how much I love this game?</state>
@@ -1330,6 +1383,9 @@
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="4-interested.png">Your boyfriend is one lucky man.</state>
 				<state img="4-interested.png">What vision of loveliness is this?</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="4-interested.png">Sorry, Buff! I can't help it; it's in my nature.</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="4-interested.png">Gotta love mature women.</state>
@@ -1567,6 +1623,9 @@
 				<state img="5-interested.png">Your boyfriend is one lucky man.</state>
 				<state img="5-interested.png">What vision of loveliness is this?</state>
 			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="5-interested.png">Sorry, Buff! I can't help it; it's in my nature.</state>
+			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="5-interested.png">Gotta love mature women.</state>
 			</case>
@@ -1752,6 +1811,9 @@
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="6-sassy.png">Your ~clothing~ must be really uncomfortable, ~name~.</state>
 			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="6-sassy.png">Wow, that <i>is</i> tight. And so are your pants!</state>
+			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="6-sassy.png">I showed you my hand, now show me your pair!</state>
 				<state img="6-happy.png">I take back everything bad I said about this game!</state>
@@ -1774,6 +1836,9 @@
 				<state img="6-happy.png">On behalf of all men everywhere, I'd just like to say 'thank you' to whoever invented this game.</state>
 				<state img="6-interested.png">I know <i>I'm</i> much more comfortable now.</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="6-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="6-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
 			</case>
@@ -1786,6 +1851,9 @@
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="6-happy.png">There <i>is</i> a God, and He is merciful!</state>
 				<state img="6-happy.png">Oh, yeah. Who's the mayor of Titty City? This guy!</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="6-sassy.png">Hey, what's a little drool between friends?</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="6-shocked.png">Wow. Just... wow.</state>
@@ -1982,6 +2050,9 @@
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="7-sassy.png">Your ~clothing~ must be really uncomfortable, ~name~.</state>
 			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="7-sassy.png">Wow, that <i>is</i> tight. And so are your pants!</state>
+			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="7-sassy.png">I showed you my hand, now show me your pair!</state>
 				<state img="7-happy.png">I take back everything bad I said about this game!</state>
@@ -2004,6 +2075,9 @@
 				<state img="7-interested.png">I know <i>I'm</i> much more comfortable now.</state>
 				<state img="7-happy.png">On behalf of all men everywhere, I'd just like to say 'thank you' to whoever invented this game.</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="7-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="7-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
 			</case>
@@ -2016,6 +2090,9 @@
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="7-happy.png">There <i>is</i> a God, and He is merciful!</state>
 				<state img="7-happy.png">Oh, yeah. Who's the mayor of Titty City? This guy!</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="7-sassy.png">Hey, what's a little drool between friends?</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="7-shocked.png">Wow. Just... wow.</state>
@@ -2173,16 +2250,19 @@
 				<state img="8-angry.png">Oh, COME ON!</state>
 			</case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
-				<state img="8-calm.png">xxx</state>
+				<state img="8-interested.png">If you're trying to tease me into a frenzy, it's working.</state>
 			</case>
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
-				<state img="8-interested.png">xxx</state>
+				<state img="8-interested.png">A little visual stimulation never hurt anyone.</state>
+			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="8-sassy.png">Wow, that <i>is</i> tight. And so are your pants!</state>
 			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="8-happy.png">Come to papa!</state>
 			</case>
 			<case tag="female_crotch_will_be_visible"> <!-- a female player's crotch will become visible -->
-				<state img="8-interested.png">xxx</state>
+				<state img="8-interested.png">This is so fucking hot!</state>
 			</case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
@@ -2198,11 +2278,17 @@
 			<case tag="female_removed_major"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="8-interested.png">xxx</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="8-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="8-interested.png">xxx</state>
 			</case>
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="8-interested.png">xxx</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="8-sassy.png">Hey, what's a little drool between friends?</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="8-shocked.png">Damn, girl!</state>
@@ -2345,6 +2431,9 @@
 			<case tag="female_removing_major"> <!-- a female player has to remove a major article of clothing (shirt, pants) -->
 				<state img="9-interested.png">xxx</state>
 			</case>
+			<case tag="female_removing_major" target="buffy" targetStage="5">
+				<state img="9-sassy.png">Wow, that <i>is</i> tight. And so are your pants!</state>
+			</case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
 				<state img="9-interested.png">Can I just say that I don't mind losing?</state>
 			</case>
@@ -2365,11 +2454,17 @@
 			<case tag="female_removed_major"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="9-interested.png">xxx</state>
 			</case>
+			<case tag="female_removed_major" target="buffy" targetStage="6">
+				<state img="9-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="9-interested.png">xxx</state>
 			</case>
 			<case tag="female_medium_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="9-interested.png">Now <i>that's</i> a sight for sore eyes (and other body parts).</state>
+			</case>
+			<case tag="female_medium_chest_is_visible" target="buffy">
+				<state img="9-sassy.png">Hey, what's a little drool between friends?</state>
 			</case>
 			<case tag="female_large_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="9-shocked.png">Damn, girl!</state>
