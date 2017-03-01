@@ -1,12 +1,13 @@
+
 #required for behaviour.xml
-first=Rebecca
-last=Lee
+first=Revy
+last=
 label=Revy
 gender=female
 size=medium
 #Number of phases to "finish"
 timer=23
-#tags=aggresive,American,athletic,badass,bisexual,cartoon,Chinese,confident,creepy,mean,sarcastic
+#tags=<tags><tag>aggresive</tag><tag>American</tag><tag>athletic</tag><tag>badass</tag><tag>bisexual</tag><tag>Chinese</tag><tag>confident</tag><tag>creepy</tag><tag>mean</tag><tag>sarcastic</tag></tags>
 
 #required for meta.xml
 #start picture
@@ -42,11 +43,13 @@ clothes=Panties,panties,important,lower
 
 #starting picture and text
 start=0-calm,My name's not important. The only thing that is important is how badly I'm about to beat you.
-start=0-calm,There better be rum here.
-start=0-calm,We're playing for money too, right? 
-start=0-calm,Lagoon Company's on a contract in this city, but I got time for a distraction. 
-start=0-annoyed,No smoking? Fuck yourself.
-start=0-sadistic,Oh yeah, don't mind the blood.
+#make_xml.py ignores subsequent start lines, but they can be added manually by pasting them in below the first one.
+#<state img="0-calm.png">There better be rum here.</state>
+#<state img="0-calm.png">We're playing for money too, right?</state>
+#<state img="0-calm.png">Lagoon Company's on a contract in this city, but I got time for a distraction.</state>
+#<state img="0-annoyed.png">No smoking? Fuck yourself.</state>
+#<state img="0-sadistic.png">Oh yeah, don't mind the blood.</state>
+
 
 ##individual behaviour
 #entries without a number are used when there are no stage-specific entries
@@ -102,7 +105,7 @@ swap_cards=sadistic,Do <i>not</i> fuck with me, Dealer. ~cards~.
 2-must_strip_losing=annoyed,Today is not my fucking day...
 2-stripping=strip,Is there seriously not any goddamn Bacardi?!
 2-stripping=strip,Can't believe I can't get a fuckin' drink...
-3-stripped=stripped It's not like there's anyone underage here, right? Even if there is, do you know how young I was when I had my first drink? Buncha pussies.
+3-stripped=stripped,It's not like there's anyone underage here, right? Even if there is, do you know how young I was when I had my first drink? Buncha pussies.
 
 #losing guns
 3-must_strip_winning=calm,Cheating can't win every hand. Yeah I'm cheating, fuck you gonna do about it? Cheat better than me? I'm Queen Bitch of poker cheats.
@@ -119,8 +122,8 @@ swap_cards=sadistic,Do <i>not</i> fuck with me, Dealer. ~cards~.
 4-must_strip_normal=annoyed,These cards are starting to piss me off.
 4-must_strip_normal=sadistic,You're starting to make me angry.
 4-must_strip_losing=pissed,Gotta be FUCKIN' KIDDING!
-4-stripping=,strip,I'm not a goddamn pussy like the rest of you! I won't count my belt or cigarette like you assholes would!
-5-stripped=,stripped,No, I didn't go commando today. Got a problem with that? 
+4-stripping=strip,I'm not a goddamn pussy like the rest of you! I won't count my belt or cigarette like you assholes would!
+5-stripped=stripped,No, I didn't go commando today. Got a problem with that? 
 
 #losing tank top/topless
 5-must_strip_winning=calm,You guys suck if I'm just now getting my tits out.
@@ -267,7 +270,7 @@ swap_cards=sadistic,Do <i>not</i> fuck with me, Dealer. ~cards~.
 0-male_removing_minor=calm,Ain't got any small shit left, do you?
 0-male_removed_minor=smug,We're making progress. 
 0-female_removing_minor=calm,Still waiting on those tits...
-0-female_removing_minor=calm,This taking too long.
+0-female_removing_minor=calm,This is taking too long.
 0-female_removed_minor=annoyed,...And I'm getting pretty fuckin' irritated. 
 
 #lost gloves
@@ -366,7 +369,7 @@ swap_cards=sadistic,Do <i>not</i> fuck with me, Dealer. ~cards~.
 5-male_removing_major=annoyed,I hate this back and forth bullshit, just lose and accept your fate.
 5-male_removed_major=annoyed,Some assholes just have to play the hero.
 5-female_removing_major=heart,This reminds me of the last time Eda and I played poker.
-5-female_removed_major=sadistic,The collateral damage alone costed more than Roanapur's GDP.
+5-female_removed_major=sadistic,The collateral damage alone cost more than Roanapur's GDP.
 
 #lost tank top/topless
 6-male_removing_major=annoyed,I know you cheated to get me topless, so I cheated right the fuck back. Only had to move my cards into my panties.
@@ -887,7 +890,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 #Chell
 #<case tag="female_removing_accessory" target="chell" targetStage=0><state img="0-smug.png">Hey mutie, can you read lips? I'M. GONNA. MAKE. YOU. SUCK. MY. DICK.</state><state img="0-smug.png">You don't talk, huh? Do you moan? Actually, don't answer that, I want to find out for myself.</state></case>
 #D.Va
-#<case tag="female_removing_accessory" target="d.va" targetStage=0><state img="0-interested">Korean, right? Can you ride a joystick and beat my highscore in Pacman?</state></case>
+#<case tag="female_removing_accessory" target="d.va" targetStage=0><state img="0-interested.png">Korean, right? Can you ride a joystick and beat my highscore in Pacman?</state></case>
 #Daisy
 #<case tag="female_removing_accessory" target="daisy" targetStage=0><state img="0-smug.png">How about that, a second-rate princess married to a knockoff Italian. Your relationship is dommed to be the pilot of a cancelled soap opera.</state><state img="0-interested.png">So is that crown real?</state></case>
 #Daphne
@@ -936,7 +939,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 #<case tag="female_removing_accessory" target="misty" targetStage=0><state img="0-sadistic.png">Whatever these 'pokemon' are, I bet they can't take a bullet.</state></case>
 #Nagisa
 #<case tag="female_removing_accessory" target="nagisa" targetStage=0><state img="0-calm.png">Kid, I don't know how the hell you got here but this isn't the kind of place for you. Go home.</state></case>
-#<case tag="female_removing_minor" target="nagisa" targetStage=2><state img="0-annoyed.png">Alright, I warned you. If you wanna play with the big girls you better be able to handle it. Just... don't cry. Please.</state></case>
+#<case tag="female_removing_minor" target="nagisa" targetStage=1><state img="0-annoyed.png">Alright, I warned you. If you wanna play with the big girls you better be able to handle it. Just... don't cry. Please.</state></case>
 #Nugi-chan
 #<case tag="female_removing_accessory" target="nugi-chan" targetStage=0><state img="0-smug.png">You're not the first maid I've fought, but from the looks of it you are the cuntiest.</state></case>
 #Pauling
@@ -944,15 +947,15 @@ ending=This is the title of the character's ending, and the start of a new endin
 #Peach
 #<case tag="female_removing_accessory" target="peach" targetStage=0><state img="0-sadistic.png">You're a princess? Never heard of the Toadstool Kingdom, but if you really area a princess I see a big ransom in my future.</state></case>
 #Penny
-#<case tag="female_removing_accessory" target="penny" targetStage=0><state img="0-interested">Shy <i>and</i> a red head? You're the kind of girl I love breaking.</state></case>
+#<case tag="female_removing_accessory" target="penny" targetStage=0><state img="0-interested.png">Shy <i>and</i> a red head? You're the kind of girl I love breaking.</state></case>
 #Piper
 #<case tag="female_removing_accessory" target="piper" targetStage=0><state img="0-smug.png">So you're a reporter? I got your next headline, 'Badass beats bunch of losers and makes them her bitch.'</state></case>
 #Raven
-#<case tag="female_removing_accessory" target="rave" targetStage=0><state img="0-annoyed.png">Hey you skinny goth bitch, if you <i>really</i> want something to cry about I'll be happy to oblige.</state></case>
+#<case tag="female_removing_accessory" target="raven" targetStage=0><state img="0-annoyed.png">Hey you skinny goth bitch, if you <i>really</i> want something to cry about I'll be happy to oblige.</state></case>
 #Rosalina
-#<case tag="female_removing_accessory" target="rosalina' targetStage=0><state img="0-smug.png">That's a nice crown, princess, you mind if I look at it real quick?</state><state img="0-annoyed.png">Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?</state></case>
+#<case tag="female_removing_accessory" target="rosalina" targetStage=0><state img="0-smug.png">That's a nice crown, princess, you mind if I look at it real quick?</state><state img="0-annoyed.png">Am I the only one getting the creeps from a loner woman fucking about with a bunch of baby stars?</state></case>
 #Ruby
-#<case tag="female_removing_accessory" target="ruby" targetStage=0><state img="0-interested.png">That's a nice trick with the roses. Do they shoot out when you cum?</state><state img="0-interested.png">A scyth that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.</state></case>
+#<case tag="female_removing_accessory" target="ruby" targetStage=0><state img="0-interested.png">That's a nice trick with the roses. Do they shoot out when you cum?</state><state img="0-interested.png">A scythe that turns into a big fucking gun? Kid, I don't say this about many people, but I like you.</state></case>
 #Ryu
 #<case tag="male_removing_accessory" target="ryu" targetStage=0><state img="0-smug.png">There's a reason hand to hand fighting is going away, dumbass, try to punch one of my bullets.</state><state img="0-interested.png">Hey, aren't you one of the guys from Mortal Kombat?</state><state img="0-calm.png">Does your boyfriend Ken know you're here?</state></case>
 #Samus
@@ -996,7 +999,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 #<case tag="female_chest_will_be_visible" filter="confident"><state img="0-interested.png">I always appreciate a slut who's practically begging to rip her shirt off!</state></case>
 #Blonde
 #<case tag="female_crotch_will_be_visible" filter="blonde"><state img="0-interested.png">You got some gold hiding in your panties, blondie?</state></case>
-#<case tag="female_crotch_is_visible" tag="lux" targetStage=8><state img="0-annoyed.png">You bitch, you don't have shit.</state></case>
+#<case tag="female_crotch_is_visible" target="lux" targetStage=8><state img="0-annoyed.png">You bitch, you don't have shit.</state></case>
 
 
 
@@ -1004,7 +1007,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 #Shy
 #<case tag="female_chest_will_be_visible" filter="shy"><state img="1-interested.png">Stop being so god damn coy. If you're gonna suck, own up to it and show your tits.</state></case>
 #Samus
-#<case tag="female_masturbating" target="samus" targetStage=6><state img="1-horny.png">I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.</state></case?
+#<case tag="female_masturbating" target="samus" targetStage=6><state img="1-horny.png">I don't think slut, whore, or skank is enough to define you. Nymphomaniac is the only thing I can think of and even that doesn't seem close.</state></case>
 
 #Paste into end of stage 2 (Lost boots)
 #Shy
@@ -1086,7 +1089,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 #Korra
 #<case tag="female_crotch_will_be_visible" target="korra"><state img="8-horny.png">Hey, why don't you try bending this cum in your mouth?</state></case>
 #Kyouko
-#<case tag="female_crotch_will_be_visible" target="kyoko"><state img="8-horny.png">Your pussy better not be burnt to a crisp...<state img="8-horny.png">I swear if you taste like fried chicken I'm outta here...</state></case>
+#<case tag="female_crotch_will_be_visible" target="kyoko"><state img="8-horny.png">Your pussy better not be burnt to a crisp...</state><state img="8-horny.png">I swear if you taste like fried chicken I'm outta here...</state></case>
 #Lara
 #<case tag="female_crotch_will_be_visible" target="lara"><state img="8-horny.png">I got a tunnel you can spelunk in...</state></case>
 #Leela
@@ -1120,13 +1123,13 @@ ending=This is the title of the character's ending, and the start of a new endin
 #Peach
 #<case tag="female_crotch_will_be_visible" target="peach"><state img="8-horny.png">C'mere so I can take a big fuckin' bite out of your peach...</state></case>
 #Penny
-#<case tag="female_crotch_will_be_visible" target="penny"><state img="8-horny">Quit being so fucking shy and stick something inside yourself!</state></case>
+#<case tag="female_crotch_will_be_visible" target="penny"><state img="8-horny.png">Quit being so fucking shy and stick something inside yourself!</state></case>
 #Piper
 #<case tag="female_crotch_will_be_visible" target="piper"><state img="8-horny.png">I'll kill you if you take a picture!</state></case>
 #Raven
-#<case tag="female_crotch_will_be_visible" target="rave"><state img="8-horny.png">Didn't even wear panties, what a slut...</state></case>
+#<case tag="female_crotch_will_be_visible" target="raven"><state img="8-horny.png">Didn't even wear panties. What a slut...</state></case>
 #Rosalina
-#<case tag="female_crotch_will_be_visible" target="rosalina"><state img="8-horny.png">You're fuckin' sluty for a princess, ya know that...?</state></case>
+#<case tag="female_crotch_will_be_visible" target="rosalina"><state img="8-horny.png">You're fuckin' slutty for a princess, ya know that...?</state></case>
 #Ruby
 #<case tag="female_crotch_will_be_visible" target="ruby"><state img="8-horny.png">I gotta be honest, you made me horny the moment you pulled your gun out.</state></case>
 #Ryu
@@ -1167,7 +1170,7 @@ ending=This is the title of the character's ending, and the start of a new endin
 
 #Paste into end of stage 9 (Finished)
 #Shy
-#<case tag="female_chest_will_be_visible" filter="shy"><state img="9-annoyed.png">Don't try to pull that shy shit. You just saw me go at it no fucking problem, and if I can do that you can take you damn tits out.</state></case>
+#<case tag="female_chest_will_be_visible" filter="shy"><state img="9-annoyed.png">Don't try to pull that shy shit. You just saw me go at it no fucking problem, and if I can do that you can take your damn tits out.</state></case>
 #Nagisa
 #<case tag="female_finished_masturbating" target="nagisa"><state img="9-calm.png">Hey kid. Nagisa. Sorry if I called you a cunt.</state></case>
 #Samus
