@@ -625,6 +625,7 @@ function handleGameOver() {
 		/* someone is still forfeiting */
 		var context = "Wait";
 		$mainButton.html("Wait");
+        console.log("ENDING...");
 		context = tickForfeitTimers(context);
 		if (context == "Wait") {
 			/* no one finished yet */

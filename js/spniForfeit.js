@@ -60,6 +60,8 @@ function blockingSleep(time){
  * been set.
  ************************************************************/
 function tickForfeitTimers (context) {
+    console.log("Ticking forfeit timers...");
+    
     var masturbatingPlayers = [];
 	var showMasturbatingThreshold = 0.2; //probability of doing a "this character is masturbating" event
 	var masturbationDelay = 400; //wait for 400ms so that the player can see what the characters are saying

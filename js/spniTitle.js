@@ -54,13 +54,13 @@ function loadClothing () {
 		clothingChoices.push(createNewClothing('Jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", 3, 1));
 		clothingChoices.push(createNewClothing('Shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", 2, 2));
 		clothingChoices.push(createNewClothing('T-Shirt', 't-shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", 1, 3));
-		clothingChoices.push(createNewClothing('Undershirt', 'undershirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", 0, 4));
+		clothingChoices.push(createNewClothing('Undershirt', 'undershirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", 0, 4));
 		
 		clothingChoices.push(createNewClothing('Headphones', 'headphones', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/headphones.png", 3, 5));
 		clothingChoices.push(createNewClothing('Belt', 'belt', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/belt.png", 3, 6));
 		clothingChoices.push(createNewClothing('Pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/pants.png", 2, 7));
 		clothingChoices.push(createNewClothing('Shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/shorts.png", 1, 8));
-		clothingChoices.push(createNewClothing('Boxers', 'boxers', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", 0, 9));
+		clothingChoices.push(createNewClothing('Boxers', 'boxers', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", 0, 9));
 		
 		clothingChoices.push(createNewClothing('Tie', 'tie', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/tie.png", 3, 10));
 		clothingChoices.push(createNewClothing('Gloves', 'gloves', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/gloves.png", 3, 11));
@@ -72,13 +72,13 @@ function loadClothing () {
 		clothingChoices.push(createNewClothing('Jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", 3, 1));
 		clothingChoices.push(createNewClothing('Shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", 2, 2));
 		clothingChoices.push(createNewClothing('Tank Top', 'tank top', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/tanktop.png", 1, 3));
-		clothingChoices.push(createNewClothing('Bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", 0, 4));
+		clothingChoices.push(createNewClothing('Bra', 'bra', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", 0, 4));
 		
 		clothingChoices.push(createNewClothing('Headphones', 'headphones', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/headphones.png", 3, 5));
 		clothingChoices.push(createNewClothing('Belt', 'belt', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/belt.png", 3, 6));
 		clothingChoices.push(createNewClothing('Pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/pants.png", 2, 7));
 		clothingChoices.push(createNewClothing('Skirt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/skirt.png", 1, 8));
-		clothingChoices.push(createNewClothing('Panties', 'panties', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 9));
+		clothingChoices.push(createNewClothing('Panties', 'panties', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 9));
 		
 		clothingChoices.push(createNewClothing('Necklace', 'necklace', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/necklace.png", 3, 10));
 		clothingChoices.push(createNewClothing('Gloves', 'gloves', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/gloves.png", 3, 11));
@@ -244,16 +244,7 @@ function validateTitleScreen () {
 	console.log(clothingCount);
 
 	/* ensure the player is wearing enough clothing */
-	if (clothingCount[0] < 1) {
-		$warningLabel.html("You must wear at least 1 article of clothing on your upper body.");
-		return;
-	} else if (clothingCount[1] < 1) {
-		$warningLabel.html( "You must wear at least 1 article of clothing on your lower body.");
-		return;
-	} else if (clothingCount[3] < 2) {
-		$warningLabel.html("You must be wearing at least 2 articles of clothing. Nudist.");
-		return;
-	} else if (clothingCount[3] > 8) {
+	if (clothingCount[3] > 8) {
 		$warningLabel.html("You cannot wear more than 8 articles of clothing. Cheater.");
 		return;
 	}
@@ -295,23 +286,11 @@ function wearClothing () {
 	for (var i = 0; i < position[0].length || i < position[1].length; i++) {
 		/* wear a lower article, if any remain */
 		if (i < position[1].length) {
-			if (position[1][i].type == IMPORTANT_ARTICLE) {
-				importantWorn[1] = true;
-			} else if (!importantWorn[1]) {
-				position[1][i].type = IMPORTANT_ARTICLE;
-			}
-			
 			players[HUMAN_PLAYER].clothing.push(position[1][i]);
 		}
 		
 		/* wear an upper article, if any remain */
 		if (i < position[0].length) {
-			if (position[0][i].type == IMPORTANT_ARTICLE) {
-				importantWorn[0] = true;
-			} else if (!importantWorn[0]) {
-				position[0][i].type = IMPORTANT_ARTICLE;
-			}
-			
 			players[HUMAN_PLAYER].clothing.push(position[0][i]);
 		}
 	}
