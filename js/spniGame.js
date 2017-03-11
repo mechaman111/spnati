@@ -86,6 +86,7 @@ var recentLoser = 0;
 var savedContext = "";
 var gameOver = false;
 var actualMainButtonState = false;
+var endWaitDisplay = 0;
                       
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -622,16 +623,24 @@ function handleGameOver() {
         actualMainButtonState = false;
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
+        endWaitDisplay = endWaitDisplay >= 3 ? 0 : endWaitDisplay + 1;
+        var dots = "";
+        for (var i = 0; i < endWaitDisplay; i++) {
+            dots += ".";
+        }
+        
 		/* someone is still forfeiting */
 		var context = "Wait";
-		$mainButton.html("Wait");
+		$mainButton.html("Wait" + dots);
+        $mainButton.attr('disabled', false);
         console.log("ENDING...");
 		context = tickForfeitTimers(context);
 		if (context == "Wait") {
 			/* no one finished yet */
-			window.setTimeout(handleGameOver, GAME_OVER_DELAY);
+			//window.setTimeout(handleGameOver, GAME_OVER_DELAY);
 		} else {
 			/* someone finished, wait for the button */
+            $mainButton.attr('disabled', true);
 		}
 	}
 }
@@ -724,7 +733,7 @@ function advanceGame () {
         completeStripPhase();
         $mainButton.attr('disabled', false);
         actualMainButtonState = false;
-    } else if (context == "Wait") {
+    } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
 		if (!gameOver) {

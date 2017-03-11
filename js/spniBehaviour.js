@@ -338,6 +338,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						if ("opponents/" + alsoPlaying + "/" === players[j].folder) {
 							totalPriority += 100; 	// priority
 							foundEm = true;
+                            break;
 						}
 					}
 				}
