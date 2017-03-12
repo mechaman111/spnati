@@ -38,7 +38,9 @@ It won't do anything, but you can request anything you want. Dozens of character
 
 Yes! We'd love you to. It's actually quite easy to make a character, just very time-consuming, and the players who are most interested in a character are usually the ones who are best suited to making them. It does not require any ability to code or make art.
 
-There's a good walkthrough of how to make a character here: https://www.reddit.com/r/spnati/comments/4zboc7/how_to_make_a_character/
+There's a beginner's walkthrough here: https://www.reddit.com/r/spnati/comments/5vsfas/the_beginners_guide_to_making_characters_for/
+
+There's also a more advanced walkthrough here: https://www.reddit.com/r/spnati/comments/4zboc7/how_to_make_a_character/
 
 **I can't do art. Can I still make a character?**
 
