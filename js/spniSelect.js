@@ -954,3 +954,59 @@ function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption($searchGenderOptions, gender);
 }
+
+/************************************************************
+ * Sorting Functions
+ ************************************************************/
+
+/** 
+ * Callback for Arrays.sort to sort an array of objects by the given field.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * Examples:
+ *   // sorts myArr by each element's first name (A-Z)
+ *   myArr.sort(sortOpponentsByField("first")); 
+ *   // sorts myArr by each element's last name (Z-A)
+ *   myArr.sort(sortOpponentsByField("-last")); 
+ */
+function sortOpponentsByField(field) {
+    // check for prefix
+    var order = 1; // 1 = forward, -1 = reversed
+    if (field[0] === "-") { 
+        order = -1;
+        field = field.substr(1);
+    }
+    
+    return function(opp1, opp2) {
+        var compare = 0;
+        if (opp1[field] < opp2[field]) {
+            compare = -1;
+        }
+        else if (opp1[field] > opp2[field]) {
+            compare = 1;
+        }
+        return order * compare;
+    }
+}
+
+/**
+ * Callback for Arrays.sort to sort an array of objects over multiple given fields.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * This should allow more flexibility in the sorting order.
+ * Example:
+ *   // sorts myArr by each element's number of layers (low to high), 
+ *   // and for elements whose layers are equivalent, sort them by first name (Z-A)
+ *   myArr.sort(sortOpponentsByMultipleFields("layers", "-first")); 
+ */
+function sortOpponentsByMultipleFields() {
+    var fields = arguments; // retrieve the args passed in
+    return function(opp1, opp2) {
+        var i = 0;
+        var compare = 0;
+        // if both elements have the same field, check the next ones
+        while (compare === 0 && i < fields.length) {
+            compare = sortOpponentsByField(fields[i])(opp1, opp2);
+            i++;
+        }
+        return compare;
+    }
+}
