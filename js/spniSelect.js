@@ -174,13 +174,15 @@ function loadListingFile () {
         type: "GET",
 		url: listingFile,
 		dataType: "text",
-		success: function(xml) {
+		success: function(xml) {           
 			/* start by parsing and loading the individual listings */
+            var oppDefaultIndex = 0; // keep track of an opponent's default placement
+            
 			$individualListings = $(xml).find('individuals');
 			$individualListings.find('opponent').each(function () {
 				var folder = $(this).text();
 				console.log("Reading \""+folder+"\" from listing file");
-				loadOpponentMeta(OPP + folder);
+				loadOpponentMeta(OPP + folder, oppDefaultIndex);
 			});
 			
 			/* end by parsing and loading the group listings */
@@ -202,7 +204,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (folder) {
+function loadOpponentMeta (folder, index=undefined) {
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
@@ -228,9 +230,17 @@ function loadOpponentMeta (folder) {
 			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending, layers);
 			
 			/* add the opponent to the list */
-			loadedOpponents.push(opponent);
-			selectableOpponents.push(opponent);
-	
+            if (index) { 
+                // enforces opponent default order according to listing file
+                // (instead of order being determined by when the AJAX call completes)
+                loadedOpponents[index] = opponent;       // will always contain default order
+                selectableOpponents[index] = opponent;   // order changes based on sort
+            }
+            else {
+                loadedOpponents.push(opponent);
+                selectableOpponents.push(opponent);
+            }
+            
 			/* load the individual select screen */
 			individualPage = 0;
 			updateIndividualSelectScreen();
