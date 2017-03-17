@@ -10,7 +10,9 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (folder, enabled, first, last, label, image, gender, height, source, artist, writer, description, ending, layers) {
+function createNewOpponent (folder, enabled, first, last, label, image, gender, 
+                            height, source, artist, writer, description, 
+                            ending, layers, release) {
 	var newOpponentObject = {folder:folder,
 							 enabled:enabled,
                              first:first,
@@ -24,7 +26,8 @@ function createNewOpponent (folder, enabled, first, last, label, image, gender, 
                              writer:writer,
 							 description:description,
                              ending:ending,
-                             layers:layers};
+                             layers:layers, 
+                             release:parseInt(release)};
 						  
 	return newOpponentObject;
 }
@@ -115,6 +118,7 @@ $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
+$sortingOptionsItems = $(".sort-dropdown-options li");
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -139,6 +143,13 @@ var loadedGroups = [];
 var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
+var sortingMode = "Featured";
+var sortingOptionsMap = {
+    "Newest" : sortOpponentsByMultipleFields("-release"), 
+    "Oldest" : sortOpponentsByMultipleFields("release"), 
+    "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
+    "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
+};
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -226,11 +237,15 @@ function loadOpponentMeta (folder, index=undefined) {
             var ending = $(xml).find('has_ending').text();
             ending = ending === "true";
             var layers = $(xml).find('layers').text();
+            var release = $(xml).find('release').text();
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending, layers);
+			var opponent = createNewOpponent(folder, enabled, first, last, 
+                                             label, pic, gender, height, from, 
+                                             artist, writer, description, 
+                                             ending, layers, release);
 			
 			/* add the opponent to the list */
-            if (index) { 
+            if (index === undefined) { 
                 // enforces opponent default order according to listing file
                 // (instead of order being determined by when the AJAX call completes)
                 loadedOpponents[index] = opponent;       // will always contain default order
@@ -936,7 +951,7 @@ function closeSearchModal() {
             continue;
         }
         
-        selectableOpponents.push(loadedOpponents[i]);
+        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
     }
     
     /* hide selected opponents */
@@ -952,13 +967,19 @@ function closeSearchModal() {
         }
     }
     
+    /* sort opponents */
+    // Since selectableOpponents is always reloaded here with featured order,  
+    // check if a different sorting mode is selected, and if yes, sort it.
+    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
+        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+    }
+    
     /* update max page indicator */
     $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
     
     // update
     updateIndividualSelectScreen();
 }
-
 
 function changeSearchGender(gender) {
     chosenGender = gender;
@@ -1020,3 +1041,9 @@ function sortOpponentsByMultipleFields() {
         return compare;
     }
 }
+
+/** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
+$sortingOptionsItems.on("click", function(e) {
+    sortingMode = $(this).find('a').html();
+    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+});
