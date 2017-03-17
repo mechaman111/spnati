@@ -375,7 +375,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var count = 0;
 				for (var q = 0; q < players.length; q++)
 				{
-					if (players[q].gender === eGender.MALE)
+					if (players[q] !== null && players[q].gender === eGender.MALE)
 					{
 						count++;
 					}
@@ -394,7 +394,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var count = 0;
 				for (var q = 0; q < players.length; q++)
 				{
-					if (players[q].gender === eGender.FEMALE)
+					if (players[q] !== null && players[q].gender === eGender.FEMALE)
 					{
 						count++;
 					}
