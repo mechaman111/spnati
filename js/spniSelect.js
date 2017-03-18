@@ -194,6 +194,7 @@ function loadListingFile () {
 				var folder = $(this).text();
 				console.log("Reading \""+folder+"\" from listing file");
 				loadOpponentMeta(OPP + folder, oppDefaultIndex);
+                oppDefaultIndex++;
 			});
 			
 			/* end by parsing and loading the group listings */
@@ -245,7 +246,7 @@ function loadOpponentMeta (folder, index=undefined) {
                                              ending, layers, release);
 			
 			/* add the opponent to the list */
-            if (index === undefined) { 
+            if (index !== undefined) { 
                 // enforces opponent default order according to listing file
                 // (instead of order being determined by when the AJAX call completes)
                 loadedOpponents[index] = opponent;       // will always contain default order
