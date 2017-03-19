@@ -10,7 +10,9 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (folder, enabled, first, last, label, image, gender, height, source, artist, writer, description, ending, layers) {
+function createNewOpponent (folder, enabled, first, last, label, image, gender, 
+                            height, source, artist, writer, description, 
+                            ending, layers, release) {
 	var newOpponentObject = {folder:folder,
 							 enabled:enabled,
                              first:first,
@@ -24,7 +26,8 @@ function createNewOpponent (folder, enabled, first, last, label, image, gender, 
                              writer:writer,
 							 description:description,
                              ending:ending,
-                             layers:layers};
+                             layers:layers, 
+                             release:parseInt(release)};
 						  
 	return newOpponentObject;
 }
@@ -115,6 +118,7 @@ $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
+$sortingOptionsItems = $(".sort-dropdown-options li");
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -139,6 +143,13 @@ var loadedGroups = [];
 var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
+var sortingMode = "Featured";
+var sortingOptionsMap = {
+    "Newest" : sortOpponentsByMultipleFields("-release"), 
+    "Oldest" : sortOpponentsByMultipleFields("release"), 
+    "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
+    "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
+};
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -174,13 +185,16 @@ function loadListingFile () {
         type: "GET",
 		url: listingFile,
 		dataType: "text",
-		success: function(xml) {
+		success: function(xml) {           
 			/* start by parsing and loading the individual listings */
+            var oppDefaultIndex = 0; // keep track of an opponent's default placement
+            
 			$individualListings = $(xml).find('individuals');
 			$individualListings.find('opponent').each(function () {
 				var folder = $(this).text();
 				console.log("Reading \""+folder+"\" from listing file");
-				loadOpponentMeta(OPP + folder);
+				loadOpponentMeta(OPP + folder, oppDefaultIndex);
+                oppDefaultIndex++;
 			});
 			
 			/* end by parsing and loading the group listings */
@@ -202,7 +216,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (folder) {
+function loadOpponentMeta (folder, index=undefined) {
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
@@ -224,13 +238,25 @@ function loadOpponentMeta (folder) {
             var ending = $(xml).find('has_ending').text();
             ending = ending === "true";
             var layers = $(xml).find('layers').text();
+            var release = $(xml).find('release').text();
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending, layers);
+			var opponent = createNewOpponent(folder, enabled, first, last, 
+                                             label, pic, gender, height, from, 
+                                             artist, writer, description, 
+                                             ending, layers, release);
 			
 			/* add the opponent to the list */
-			loadedOpponents.push(opponent);
-			selectableOpponents.push(opponent);
-	
+            if (index !== undefined) { 
+                // enforces opponent default order according to listing file
+                // (instead of order being determined by when the AJAX call completes)
+                loadedOpponents[index] = opponent;       // will always contain default order
+                selectableOpponents[index] = opponent;   // order changes based on sort
+            }
+            else {
+                loadedOpponents.push(opponent);
+                selectableOpponents.push(opponent);
+            }
+            
 			/* load the individual select screen */
 			individualPage = 0;
 			updateIndividualSelectScreen();
@@ -926,7 +952,7 @@ function closeSearchModal() {
             continue;
         }
         
-        selectableOpponents.push(loadedOpponents[i]);
+        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
     }
     
     /* hide selected opponents */
@@ -942,6 +968,13 @@ function closeSearchModal() {
         }
     }
     
+    /* sort opponents */
+    // Since selectableOpponents is always reloaded here with featured order,  
+    // check if a different sorting mode is selected, and if yes, sort it.
+    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
+        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+    }
+    
     /* update max page indicator */
     $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
     
@@ -949,8 +982,69 @@ function closeSearchModal() {
     updateIndividualSelectScreen();
 }
 
-
 function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption($searchGenderOptions, gender);
 }
+
+/************************************************************
+ * Sorting Functions
+ ************************************************************/
+
+/** 
+ * Callback for Arrays.sort to sort an array of objects by the given field.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * Examples:
+ *   // sorts myArr by each element's first name (A-Z)
+ *   myArr.sort(sortOpponentsByField("first")); 
+ *   // sorts myArr by each element's last name (Z-A)
+ *   myArr.sort(sortOpponentsByField("-last")); 
+ */
+function sortOpponentsByField(field) {
+    // check for prefix
+    var order = 1; // 1 = forward, -1 = reversed
+    if (field[0] === "-") { 
+        order = -1;
+        field = field.substr(1);
+    }
+    
+    return function(opp1, opp2) {
+        var compare = 0;
+        if (opp1[field] < opp2[field]) {
+            compare = -1;
+        }
+        else if (opp1[field] > opp2[field]) {
+            compare = 1;
+        }
+        return order * compare;
+    }
+}
+
+/**
+ * Callback for Arrays.sort to sort an array of objects over multiple given fields.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * This should allow more flexibility in the sorting order.
+ * Example:
+ *   // sorts myArr by each element's number of layers (low to high), 
+ *   // and for elements whose layers are equivalent, sort them by first name (Z-A)
+ *   myArr.sort(sortOpponentsByMultipleFields("layers", "-first")); 
+ */
+function sortOpponentsByMultipleFields() {
+    var fields = arguments; // retrieve the args passed in
+    return function(opp1, opp2) {
+        var i = 0;
+        var compare = 0;
+        // if both elements have the same field, check the next ones
+        while (compare === 0 && i < fields.length) {
+            compare = sortOpponentsByField(fields[i])(opp1, opp2);
+            i++;
+        }
+        return compare;
+    }
+}
+
+/** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
+$sortingOptionsItems.on("click", function(e) {
+    sortingMode = $(this).find('a').html();
+    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+});
