@@ -10,7 +10,9 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (folder, enabled, first, last, label, image, gender, height, source, artist, writer, description) {
+function createNewOpponent (folder, enabled, first, last, label, image, gender, 
+                            height, source, artist, writer, description, 
+                            ending, layers, release) {
 	var newOpponentObject = {folder:folder,
 							 enabled:enabled,
                              first:first,
@@ -22,7 +24,10 @@ function createNewOpponent (folder, enabled, first, last, label, image, gender, 
 							 source:source,
                              artist:artist,
                              writer:writer,
-							 description:description};
+							 description:description,
+                             ending:ending,
+                             layers:layers, 
+                             release:parseInt(release)};
 						  
 	return newOpponentObject;
 }
@@ -79,6 +84,8 @@ $individualSourceLabels = [$("#individual-source-label-1"), $("#individual-sourc
 $individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
 $individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
+$individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
+$individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
 
 $individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
 $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#individual-button-3"), $("#individual-button-4")];
@@ -96,6 +103,8 @@ $groupSourceLabels = [$("#group-source-label-1"), $("#group-source-label-2"), $(
 $groupWriterLabels = [$("#group-writer-label-1"), $("#group-writer-label-2"), $("#group-writer-label-3"), $("#group-writer-label-4")];
 $groupArtistLabels = [$("#group-artist-label-1"), $("#group-artist-label-2"), $("#group-artist-label-3"), $("#group-artist-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
+$groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
+$groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
 $groupNameLabel = $("#group-name-label");
@@ -108,6 +117,8 @@ $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
+
+$sortingOptionsItems = $(".sort-dropdown-options li");
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -132,6 +143,13 @@ var loadedGroups = [];
 var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
+var sortingMode = "Featured";
+var sortingOptionsMap = {
+    "Newest" : sortOpponentsByMultipleFields("-release"), 
+    "Oldest" : sortOpponentsByMultipleFields("release"), 
+    "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
+    "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
+};
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -167,13 +185,16 @@ function loadListingFile () {
         type: "GET",
 		url: listingFile,
 		dataType: "text",
-		success: function(xml) {
+		success: function(xml) {           
 			/* start by parsing and loading the individual listings */
+            var oppDefaultIndex = 0; // keep track of an opponent's default placement
+            
 			$individualListings = $(xml).find('individuals');
 			$individualListings.find('opponent').each(function () {
 				var folder = $(this).text();
 				console.log("Reading \""+folder+"\" from listing file");
-				loadOpponentMeta(OPP + folder);
+				loadOpponentMeta(OPP + folder, oppDefaultIndex);
+                oppDefaultIndex++;
 			});
 			
 			/* end by parsing and loading the group listings */
@@ -195,7 +216,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (folder) {
+function loadOpponentMeta (folder, index=undefined) {
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
@@ -214,13 +235,28 @@ function loadOpponentMeta (folder) {
 			var artist = $(xml).find('artist').text();
 			var writer = $(xml).find('writer').text();
 			var description = $(xml).find('description').text();
+            var ending = $(xml).find('has_ending').text();
+            ending = ending === "true";
+            var layers = $(xml).find('layers').text();
+            var release = $(xml).find('release').text();
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description);
+			var opponent = createNewOpponent(folder, enabled, first, last, 
+                                             label, pic, gender, height, from, 
+                                             artist, writer, description, 
+                                             ending, layers, release);
 			
 			/* add the opponent to the list */
-			loadedOpponents.push(opponent);
-			selectableOpponents.push(opponent);
-	
+            if (index !== undefined) { 
+                // enforces opponent default order according to listing file
+                // (instead of order being determined by when the AJAX call completes)
+                loadedOpponents[index] = opponent;       // will always contain default order
+                selectableOpponents[index] = opponent;   // order changes based on sort
+            }
+            else {
+                loadedOpponents.push(opponent);
+                selectableOpponents.push(opponent);
+            }
+            
 			/* load the individual select screen */
 			individualPage = 0;
 			updateIndividualSelectScreen();
@@ -257,6 +293,16 @@ function updateIndividualSelectScreen () {
 			$individualWriterLabels[index].html(selectableOpponents[i].writer);
 			$individualArtistLabels[index].html(selectableOpponents[i].artist);
 			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
+            
+            if (selectableOpponents[i].ending) {
+                $individualBadges[index].show();
+            }
+            else {
+                $individualBadges[index].hide();
+            }
+            
+            $individualLayers[index].show();
+            $individualLayers[index].attr("src", "opponents/layers" + selectableOpponents[i].layers + ".png");
 			
 			$individualImages[index].attr('src', selectableOpponents[i].folder + selectableOpponents[i].image);
 			if (selectableOpponents[i].enabled == "true") {
@@ -276,6 +322,8 @@ function updateIndividualSelectScreen () {
 			$individualWriterLabels[index].html("");
 			$individualArtistLabels[index].html("");
 			$individualDescriptionLabels[index].html("");
+            $individualBadges[index].hide();
+            $individualLayers[index].hide();
 			
 			$individualImages[index].attr('src', BLANK_PLAYER_IMAGE);
 			$individualButtons[index].attr('disabled', true);
@@ -326,8 +374,11 @@ function loadGroupMemberMeta (folder, groupID, member) {
 			var artist = $(xml).find('artist').text();
 			var writer = $(xml).find('writer').text();
 			var description = $(xml).find('description').text();
+            var ending = $(xml).find('has_ending').text();
+            ending = ending === "true";
+            var layers = $(xml).find('layers').text();
 
-			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description);
+			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending, layers);
 			
 			/* add the opponent information to the group */
 			loadedGroups[groupID].opponents[member] = opponent;
@@ -368,6 +419,16 @@ function updateGroupSelectScreen () {
 			$groupWriterLabels[i].html(opponent.writer);
 			$groupArtistLabels[i].html(opponent.artist);
 			$groupDescriptionLabels[i].html(opponent.description);
+            
+            if (opponent.ending) {
+                $groupBadges[i].show();
+            }
+            else {
+                $groupBadges[i].hide();
+            }
+            
+            $groupLayers[i].show();
+            $groupLayers[i].attr("src", "opponents/layers" + opponent.layers + ".png");
 			
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
 			$groupNameLabel.html(loadedGroups[groupPage].title);
@@ -388,6 +449,8 @@ function updateGroupSelectScreen () {
 			$groupWriterLabels[i].html("");
 			$groupArtistLabels[i].html("");
 			$groupDescriptionLabels[i].html("");
+            $groupBadges[i].hide();
+            $groupLayers[i].hide();
 			
 			$groupImages[i].attr('src', BLANK_PLAYER_IMAGE);
 		}
@@ -889,7 +952,7 @@ function closeSearchModal() {
             continue;
         }
         
-        selectableOpponents.push(loadedOpponents[i]);
+        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
     }
     
     /* hide selected opponents */
@@ -905,6 +968,13 @@ function closeSearchModal() {
         }
     }
     
+    /* sort opponents */
+    // Since selectableOpponents is always reloaded here with featured order,  
+    // check if a different sorting mode is selected, and if yes, sort it.
+    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
+        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+    }
+    
     /* update max page indicator */
     $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
     
@@ -912,8 +982,69 @@ function closeSearchModal() {
     updateIndividualSelectScreen();
 }
 
-
 function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption($searchGenderOptions, gender);
 }
+
+/************************************************************
+ * Sorting Functions
+ ************************************************************/
+
+/** 
+ * Callback for Arrays.sort to sort an array of objects by the given field.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * Examples:
+ *   // sorts myArr by each element's first name (A-Z)
+ *   myArr.sort(sortOpponentsByField("first")); 
+ *   // sorts myArr by each element's last name (Z-A)
+ *   myArr.sort(sortOpponentsByField("-last")); 
+ */
+function sortOpponentsByField(field) {
+    // check for prefix
+    var order = 1; // 1 = forward, -1 = reversed
+    if (field[0] === "-") { 
+        order = -1;
+        field = field.substr(1);
+    }
+    
+    return function(opp1, opp2) {
+        var compare = 0;
+        if (opp1[field] < opp2[field]) {
+            compare = -1;
+        }
+        else if (opp1[field] > opp2[field]) {
+            compare = 1;
+        }
+        return order * compare;
+    }
+}
+
+/**
+ * Callback for Arrays.sort to sort an array of objects over multiple given fields.
+ * Prefixing "-" to a field will cause the sort to be done in reverse.
+ * This should allow more flexibility in the sorting order.
+ * Example:
+ *   // sorts myArr by each element's number of layers (low to high), 
+ *   // and for elements whose layers are equivalent, sort them by first name (Z-A)
+ *   myArr.sort(sortOpponentsByMultipleFields("layers", "-first")); 
+ */
+function sortOpponentsByMultipleFields() {
+    var fields = arguments; // retrieve the args passed in
+    return function(opp1, opp2) {
+        var i = 0;
+        var compare = 0;
+        // if both elements have the same field, check the next ones
+        while (compare === 0 && i < fields.length) {
+            compare = sortOpponentsByField(fields[i])(opp1, opp2);
+            i++;
+        }
+        return compare;
+    }
+}
+
+/** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
+$sortingOptionsItems.on("click", function(e) {
+    sortingMode = $(this).find('a').html();
+    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+});

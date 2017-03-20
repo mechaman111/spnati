@@ -44,7 +44,7 @@ good_hand=happy,YAAAH!
 good_hand=happy,CHEEEYA!
 good_hand=happy,HIYAAAH!
 
-#The character thinks they have a bad hand
+#The character thinks they have an okay hand
 okay_hand=calm,Hyo.
 okay_hand=calm,Hya.
 okay_hand=calm,Dyo.
@@ -75,9 +75,7 @@ masturbating=happy,People watch me all the time... I'm just not usually doing th
 heavy_masturbating=heavy,...
 finishing_masturbating=finishing,HYAAAAAAAAAAH!!!
 finished_masturbating=finished,T-That... was exciting...
-#I don't think this line is actually used by the game.
-game_over_defeat=happy,C-Congratulations ~name~, I hope everyone had fun!
-game_over_victory=victory,HIYAAAA-- W-Wait... I won!?
+
 
 #situations where a male character is stripping
 male_human_must_strip=calm,...
@@ -135,7 +133,6 @@ female_finished_masturbating=shocked,HYAAAAH!
 
 
 
-
 #These responses are stage specific.
 #Refer to the above entries to see what sort of situations these refer to, and what the default images are.
 #Each situation has been repeated enough for the maximum eight items of clothing.
@@ -186,7 +183,6 @@ female_finished_masturbating=shocked,HYAAAAH!
 5-stripping=strip,I guess that's what this place is though... somewhere for us fictional characters to let our hair down for once...
 6-stripped=stripped,And take off most of our clothes...
 
-
 #losing seventh item of clothing
 6-must_strip_winning=nervous,I guess this game is already rated M... so why not?
 6-must_strip_normal=nervous,My games don't usually contain nudity...
@@ -195,6 +191,8 @@ female_finished_masturbating=shocked,HYAAAAH!
 7-stripped=stripped,But I guess there is no point in hiding it...
 
 #victory lines. one for each stage.
+game_over_defeat=happy,C-Congratulations ~name~, I hope everyone had fun!
+game_over_victory=victory,HIYAAAA-- W-Wait... I won!?
 0-game_over_victory=,
 1-game_over_victory=,
 2-game_over_victory=,
@@ -758,44 +756,28 @@ female_finished_masturbating=shocked,HYAAAAH!
 -1-female_finished_masturbating=horny,Today has been a good day...
 
 
-#ending data
-#this is optional. Delete it if you don't have an ending thought up yet.
-#you can also have multiple endings.
-#each one starts with the "ending" entry
-#the tabs aren't necessary, but make it easier to read.
-ending=This is the title of the character's ending, and the start of a new ending
-    ending_gender="male", "female", or "any". This is the gender of player that can see the ending
 
-    #each ending has a number of screens. each screen has an image, and one or more text boxes
-    #the entry "screen" marks the start of a new screen
-    screen=filename (including extension) of the background image for a screen. Also the start of a new screen
+#Paste into end of stage 5 (pants and boxers only)
+#<case tag="okay_hand" alsoPlaying="zelda"><state img="5-awkward.png">I wonder if I should tell Zelda how I feel...</state></case>
+#<case tag="bad_hand" alsoPlaying="streaming-chan"><state img="5-shocked.png">Don't let your viewers see my face! They might tell Nintendo...</state></case>
+#<case tag="male_medium_crotch_is_visible" alsoPlaying="zelda"><state img="5-shocked.png">I know that I was wearing a tunic earlier, but I'm not into guys, princess!</state></case>
 
-        #the text boxes in a screen
-        #the entry "text" starts a new text box
-        text=The text in the text box.
-        x=The x-position of the text box. Specifically, the position of the text box's left side. This can be a percentage, or the word "centered"
-        y=The y-position of the top of the text box. Must be a percentage.
-        width=The width of a text box. This is optional. Must be a percentage.
-        arrow="up", "down", "left", or "right". Gives the text box a dialogue arrow in the specified direction. Can be left out, if you don't want the text box to be an arrow.
+#Paste into end of stage 6 (boxers only)
+#<case tag="female_must_masturbate" target="zelda"><state img="6-strip.png">Princess Zelda, I know that this probably isn't the best time...</state></case>
+#<case tag="female_start_masturbating" target="zelda"><state img="6-horny.png">But I have always loved you!</state></case>
 
-    #this screen is an example
-    #the filename is the image you want to use
-    screen=example-filename.png
+#Paste into end of stage 7 (naked)
+#<case tag="female_must_masturbate" target="zelda"><state img="7-nervous.png">Princess Zelda, I know that this probably isn't the best time...</state></case>
+#<case tag="female_start_masturbating" target="zelda"><state img="7-horny.png">But I have always loved you!</state></case>
 
-        text=This is text that will be seen by the player. It has a width of 34% and an arrow pointing down.
-        x=10%
-        y=20%
-        width=34%
-        arrow=right
+#Paste into end of stage 8 (masturbating)
+#<case tag="female_must_masturbate" target="zelda"><state img="8-starting.png">Ah... Zelda... Princess...</state></case>
+#<case tag="female_start_masturbating" target="zelda"><state img="8-heavy.png">This is the best day of my life!</state></case>
 
-        text=This is a centered text box. It has the default width and an arrow pointing right.
-        x=centered
-        y=50%
-        arrow=right
+#Paste into end of stage 9 (finished)
+#<case tag="female_must_masturbate" target="zelda"><state img="9-nervous.png">Princess Zelda, I know that this probably isn't the best time...</state></case>
+#<case tag="female_start_masturbating" target="zelda"><state img="9-horny.png">But I have always loved you!</state></case>
 
-        text=This third text box has minimum amount of values specified. It uses the default width, and has no arrow.
-        x=75%
-        y=50%
 
-#if you want additional endings, start the new one with the "ending" line
+
 

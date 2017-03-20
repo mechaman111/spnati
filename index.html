@@ -20,7 +20,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.21.0
+      v11.25.0
     </button>
       
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -77,7 +77,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.20.0
+      v11.25.0
     </button>
       
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -130,7 +130,7 @@
       <!-- Player Wardrobe -->
       <div id='title-wardrobe-block'>
         <div class='title-label'>What are you wearing?</div>
-        <div id='title-warning-label'>Select 2 to 8 articles. At least 1 upper and 1 lower.</div>
+        <div id='title-warning-label'>Select 0 to 8 articles. Wear whatever you want.</div>
 
         <!-- Male Clothing -->
         <div id='male-clothing-container' class='title-clothing-container'>
@@ -334,7 +334,7 @@
         <div id="individual-description-label-1">
         </div>
       </div>
-      
+        
       
       <div id="individual-stats-page-2-1" class="bordered halfLeft dialogue-bubble-area">
         <div class="stats-section">
@@ -429,16 +429,24 @@
     <!-- Opponent Images -->
     <div class="image-row">
       <div class="farLeft opponent-image-area">
-        <img id="individual-image-1" class="opponent-image" src="opponents/elizabeth/start.png">
+        <img id="individual-image-1" class="opponent-image" src="opponents/elizabeth/start.png"> 
+        <img id="individual-badge-1" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="individual-layer-1" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="almostLeft opponent-image-area">
-        <img id="individual-image-2" class="opponent-image" src="opponents/lilith/start.png">
+        <img id="individual-image-2" class="opponent-image" src="opponents/lilith/start.png"> 
+        <img id="individual-badge-2" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="individual-layer-2" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="almostRight opponent-image-area">
         <img id="individual-image-3" class="opponent-image" src="opponents/zoey/start.png">
+        <img id="individual-badge-3" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="individual-layer-3" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="farRight opponent-image-area">
         <img id="individual-image-4" class="opponent-image" src="opponents/laura/start.png">
+        <img id="individual-badge-4" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="individual-layer-4" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
     </div>
     
@@ -650,15 +658,23 @@
     <div class="image-row">
       <div class="farLeft opponent-image-area">
         <img id="group-image-1" class="opponent-image" src="opponents/elizabeth/start.png">
+        <img id="group-badge-1" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="group-layer-1" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="almostLeft opponent-image-area">
         <img id="group-image-2" class="opponent-image" src="opponents/lilith/start.png">
+        <img id="group-badge-2" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="group-layer-2" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="almostRight opponent-image-area">
         <img id="group-image-3" class="opponent-image" src="opponents/zoey/start.png">
+        <img id="group-badge-3" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="group-layer-3" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
       <div class="farRight opponent-image-area">
         <img id="group-image-4" class="opponent-image" src="opponents/laura/start.png">
+        <img id="group-badge-4" class="badge-icon" src="opponents/epilogue_icon.png" hidden/>
+        <img id="group-layer-4" class="layer-icon" src="opponents/layers1.png" hidden/>
       </div>
     </div>
     
@@ -776,6 +792,25 @@
                             <input type="text" id="search-tag" class='bordered wide-textbox'/>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="width: 25%"><h4 class="modal-title modal-left">Sort By</h4></td>
+                        <td>
+                            <div class="dropdown">
+                                <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown" 
+                                  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span id="sort-dropdown-selection">Featured</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">
+                                  <li><a href="#">Featured</a></li>
+                                  <li><a href="#">Newest</a></li>
+                                  <li><a href="#">Oldest</a></li>
+                                  <li><a href="#">Most Layers</a></li>
+                                  <li><a href="#">Fewest Layers</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
                 
 				<div class="modal-body-container" style="padding-top:4%;">
@@ -880,6 +915,10 @@
                                         <li id="settings-background-8"><a href="#" onclick="setBackground(8)">Library</a></li>
                                         <li id="settings-background-9"><a href="#" onclick="setBackground(9)">Bathhouse</a></li>
                                         <li id="settings-background-10"><a href="#" onclick="setBackground(10)">Poolside</a></li>
+                                        <li id="settings-background-11"><a href="#" onclick="setBackground(11)">Hot Spring</a></li>
+                                        <li id="settings-background-12"><a href="#" onclick="setBackground(12)">Mansion</a></li>
+                                        <li id="settings-background-13"><a href="#" onclick="setBackground(13)">Purple Room</a></li>
+                                        <li id="settings-background-14"><a href="#" onclick="setBackground(14)">Showers</a></li>
 									</ul>
 								</nav>
 							</td>
@@ -1132,6 +1171,51 @@
 			</div>
 			<div class="modal-body">
 				<table class="modal-body-stretch-container" style="margin: 0 auto;">
+				    <tr>
+                      <td style="width:10%; padding-bottom: 1.5%">
+                        v11.25.0
+                      </td>
+                      <td style="width:5%"></td>
+                      <td style="width:85%; padding-bottom: 1.5%">
+                        Shantae, Seven of Nine, Meg Thomas, and Shazza have joined the game!
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width:10%; padding-bottom: 1.5%">
+                        v11.24.0
+                      </td>
+                      <td style="width:5%"></td>
+                      <td style="width:85%; padding-bottom: 1.5%">
+                        Lyn and Raven have joined the game!
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width:10%; padding-bottom: 1.5%">
+                        v11.23.0
+                      </td>
+                      <td style="width:5%"></td>
+                      <td style="width:85%; padding-bottom: 1.5%">
+                        Sonya, Buffy, and D.Va have joined the game!
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width:10%; padding-bottom: 1.5%">
+                        v11.22.0
+                      </td>
+                      <td style="width:5%"></td>
+                      <td style="width:85%; padding-bottom: 1.5%">
+                        Alice and Ruby have joined the game!
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width:10%; padding-bottom: 1.5%">
+                        v11.21.0
+                      </td>
+                      <td style="width:5%"></td>
+                      <td style="width:85%; padding-bottom: 1.5%">
+                        Warning screen added.
+                      </td>
+                    </tr>
                     <tr>
                       <td style="width:10%; padding-bottom: 1.5%">
                         v11.20.0
@@ -1150,70 +1234,6 @@
                         A bunch of new dialogue options for writers.
                       </td>
                     </tr>
-					<tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.19.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Nagisa has joined the game! Also, a dialogue target for "alsoPlaying" has been added.
-                      </td>
-                    </tr>
-					<tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.18.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Streaming-chan has joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.17.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        New dialogue target and filter options. As well as a simple search feature on the individual opponent selection page. Also Leela and Chell have joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                  <td style="width:10%; padding-bottom: 1.5%">
-					v11.16.0
-				  </td>
-                  <td style="width:5%"></td>
-                  <td style="width:85%; padding-bottom: 1.5%">
-                    Samus has joined the game!
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:10%; padding-bottom: 1.5%">
-          v11.15.0
-          </td>
-                  <td style="width:5%"></td>
-                  <td style="width:85%; padding-bottom: 1.5%">
-                    Harley Quinn has joined the game!
-                  </td>
-                </tr>
-        <tr>
-				<tr>
-                  <td style="width:10%; padding-bottom: 1.5%">
-					v11.14.0
-				  </td>
-                  <td style="width:5%"></td>
-                  <td style="width:85%; padding-bottom: 1.5%">
-                    Mercy has joined the game!
-                  </td>
-                </tr>
-				<tr>
-                  <td style="width:10%; padding-bottom: 1.5%">
-					v11.13.0
-				  </td>
-                  <td style="width:5%"></td>
-                  <td style="width:85%; padding-bottom: 1.5%">
-                    Mia Fey and Fred have joined the game!
-                  </td>
-                </tr>
 				</table>
 			</div>
 			<div class="modal-footer">

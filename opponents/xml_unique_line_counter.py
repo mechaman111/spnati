@@ -31,14 +31,14 @@ def parse(f):
     soup = BeautifulSoup(f_, 'html5lib')
     for c, s in enumerate(soup.find_all('state')):
         text_ = s.text.strip()
-        logger.debug('Found text: {}. Count: {}'.format(text_.encode('utf-8'), c))
+        logger.debug('Found text: {}. Line number: {}'.format(text_.encode('utf-8'), c))
         l_.append(text_)
     logger.debug('****  Count *****')
     d = dict(Counter(l_))
     ctr = 1
 
     for k, v in d.iteritems():
-        logger.info('{} --> Count: {}, Line count: {}'.format(k.encode('utf-8'), v, ctr))
+        logger.info('{} --> Frequency: {}, Line count: {}'.format(k.encode('utf-8'), v, ctr))
         ctr += 1
     logger.info('Unique dialogue count: {}'.format(len(d)))
 

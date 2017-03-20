@@ -316,29 +316,16 @@ function showStrippingModal () {
     $stripClothing.html("");
     selectedClothing = -1;
     
-    /* determine the highest layer of clothing left */
-	var highestLayer = 0;
-	for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-		if (players[HUMAN_PLAYER].clothing[i]) {
-			/* determine if this clothing has a higher layer */
-			if (players[HUMAN_PLAYER].clothing[i].layer > highestLayer) {
-				highestLayer = players[HUMAN_PLAYER].clothing[i].layer;
-			}
-		}
-	}
-    
     /* load the current layer of clothing into the modal */
     var currentClothingID = 0;
     for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
         if (players[HUMAN_PLAYER].clothing[i]) {
-		    if (players[HUMAN_PLAYER].clothing[i].layer == highestLayer) {
-				var clothingCard = 
-					"<div class='clothing-modal-container'><input type='image' id='"+currentClothingID+"' value='"+i+"' class='bordered modal-clothing-image' src="+
-					players[HUMAN_PLAYER].clothing[i].image+" onclick='selectClothingToStrip("+currentClothingID+")'/></div>";
-				
-				$stripClothing.append(clothingCard);
-                currentClothingID += 1;
-			}
+            var clothingCard = 
+                "<div class='clothing-modal-container'><input type='image' id='"+currentClothingID+"' value='"+i+"' class='bordered modal-clothing-image' src="+
+                players[HUMAN_PLAYER].clothing[i].image+" onclick='selectClothingToStrip("+currentClothingID+")'/></div>";
+
+            $stripClothing.append(clothingCard);
+            currentClothingID += 1;
         }
     }
     
@@ -399,9 +386,27 @@ function closeStrippingModal () {
         document.removeEventListener('keyup', clothing_keyUp, false);
         document.addEventListener('keyup', game_keyUp, false);
         
-        /* grab the removed article of clothing and determine its dialogue trigger */
+        /* grab the removed article of clothing */
         var removedClothing = players[HUMAN_PLAYER].clothing[selectedClothing];
         players[HUMAN_PLAYER].clothing[selectedClothing] = null;
+        
+        /* figure out if it should be important */
+        var flag = false;
+        if (removedClothing.layer != EXTRA_ARTICLE) {
+            for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
+                if (players[HUMAN_PLAYER].clothing[i] !== null && players[HUMAN_PLAYER].clothing[i].position === removedClothing.position) {
+                    console.log(players[HUMAN_PLAYER].clothing[i]);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        console.log(flag);
+        if (!flag) {
+            removedClothing.type = IMPORTANT_ARTICLE;
+        }
+        
+        /* determine its dialogue trigger */
         var dialogueTrigger = getClothingTrigger(HUMAN_PLAYER, removedClothing, true);
         console.log(removedClothing);
         /* display the remaining clothing */
