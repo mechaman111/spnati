@@ -195,7 +195,7 @@ def manual_prettify_xml(elem, level=0, isLast=False):
 	else:
 		elem.tail = "\n" + (level) * indent
 		
-	if elem.tag in ["stage", "wardrobe", "timer", "start", "behaviour", "epilogue", "screen", "text"]:
+	if elem.tag in ["stage", "wardrobe", "timer", "start", "behaviour", "epilogue", "screen", "text", "tags"]:
 		elem.tail = "\n" + elem.tail
 		
 	if elem.tag == "opponent":
@@ -218,12 +218,19 @@ def write_xml(data, filename):
 
 	#f = open(filename)
 	o = ET.Element("opponent")
+	o.insert(0, ET.Comment("This file is machine generated. Please do not edit it directly or your changes may be lost."))
 	ET.SubElement(o, "first").text = data["first"]
 	ET.SubElement(o, "last").text = data["last"]
 	ET.SubElement(o, "label").text = data["label"]
 	ET.SubElement(o, "gender").text = data["gender"]
 	ET.SubElement(o, "size").text = data["size"]
 	ET.SubElement(o, "timer").text = data["timer"]
+
+	#tags
+	tags_elem = ET.SubElement(o, "tags")
+	character_tags = set(data["character_tags"])
+	for tag in character_tags:
+		ET.SubElement(tags_elem, "tag").text = tag
 	
 	#start image
 	start = ET.SubElement(o, "start")
@@ -298,7 +305,7 @@ def write_xml(data, filename):
 	
 	#manual prettify
 	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, xml_declaration=True)
+	ET.ElementTree(pretty_xml).write(filename, encoding='UTF-8', xml_declaration=True)
 
 #add an ending to the 
 def add_ending(ending, d):
@@ -513,7 +520,26 @@ def read_player_file(filename):
 				d["clothes"].append(stripped)
 			else:
 				d["clothes"] = [stripped]
-		
+
+		#tags for the character i.e. blonde, athletic, cute
+		#tags can be written as either:
+		#	tag=blonde
+		#	tag=athletic
+		#or as
+		#	tags=blond, athletic
+		elif key == "tag":
+			if "character_tags" in d:
+				d["character_tags"].append(stripped)
+			else:
+				d["character_tags"] = [stripped]
+
+		elif key == "tags":
+			character_tags = [tag.strip() for tag in stripped.split(',')]
+			if "character_tags" in d:
+				d["character_tags"] = d["character_tags"] + character_tags
+			else:
+				d["character_tags"] = character_tags
+
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
@@ -550,7 +576,7 @@ def make_meta_xml(data, filename):
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
 	
 	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, xml_declaration=True)
+	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
 
 #read the input data, the write the xml files
 def make_xml(player_filename, out_filename, meta_filename=None):
