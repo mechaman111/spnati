@@ -75,6 +75,7 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="0-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="0-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="0-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="0-sassy.png">I'm warning you guys, I'm pretty good at poker.</state>
@@ -82,6 +83,20 @@
 				<state img="0-happy.png">Cool!</state>
 			</case>
 			<case tag="okay_hand"> <!-- this player has an okay hand after the exchange -->
+				<state img="0-calm.png">Very nice cards. Very not pathetic.</state>
+				<state img="0-calm.png">Poker is a game of psychology, you know.</state>
+				<state img="0-calm.png">Don't rush me... there's a lot of strategy going on here.</state>
+				<state img="0-calm.png">I won't cheat if you don't!</state>
+			</case>
+			<case tag="okay_hand" totalMales="1">
+				<state img="0-happy.png">I'm surrounded by beautiful women, at least some of whom are going to get naked. I think I've died and gone to Heaven.</state>
+				<state img="0-calm.png">Very nice cards. Very not pathetic.</state>
+				<state img="0-calm.png">Poker is a game of psychology, you know.</state>
+				<state img="0-calm.png">Don't rush me... there's a lot of strategy going on here.</state>
+				<state img="0-calm.png">I won't cheat if you don't!</state>
+			</case>
+			<case tag="okay_hand" totalMales="1">
+				<state img="0-calm.png">Hey, guys? Not to alarm anybody, but I think someone forgot to invite the femmes.</state>
 				<state img="0-calm.png">Very nice cards. Very not pathetic.</state>
 				<state img="0-calm.png">Poker is a game of psychology, you know.</state>
 				<state img="0-calm.png">Don't rush me... there's a lot of strategy going on here.</state>
@@ -232,7 +247,18 @@
 				<state img="0-calm.png">Huh. What are the odds of that?</state>
 				<state img="0-happy.png">Hey, this game may not suck!</state>
 			</case>
+			<case tag="female_human_must_strip" hasHand="High Card"> 
+				<state img="0-happy.png">The controversial 'high card' strategy pays off for Xander. Suck it, probability!</state>
+			</case>
 			<case tag="female_must_strip"> <!-- a female player will strip, but you don't know what they will remove -->
+				<state img="0-happy.png">Hey, this game may not suck!</state>
+				<state img="0-calm.png">Huh. What are the odds of that?</state>
+			</case>
+			<case tag="female_must_strip" hasHand="High Card"> 
+				<state img="0-happy.png">The controversial 'high card' strategy pays off for Xander. Suck it, probability!</state>
+			</case>
+			<case tag="female_must_strip" target="buffy">
+				<state img="0-happy.png">Buffy, Buffy, Buffy. Poker is a man's game!</state>
 				<state img="0-happy.png">Hey, this game may not suck!</state>
 				<state img="0-calm.png">Huh. What are the odds of that?</state>
 			</case>
@@ -243,11 +269,17 @@
 			<case tag="female_removing_accessory"> <!-- a female player has to remove an accessory (hat, gloves, belt) -->
 				<state img="0-happy.png">Hey, a win is a win.</state>
 			</case>
+            <case tag="female_removing_accessory" target="elena" targetStage="0">
+                <state img="0-sassy.png">Hey, the princess makes the rules, right?</state>
+            </case>
             <case tag="female_removing_accessory" target="d.va" targetStage="0">
                 <state img="0-sassy.png">Keep telling yourself that, D.Va.</state>
             </case>
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="0-sassy.png">Really? I bet you don't remember that you owe me twenty bucks either, D.Va.</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="0-happy.png">Is it your boobs? Please say boobs!</state>
             </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="0-happy.png">I'm having fun already!</state>
@@ -272,8 +304,17 @@
             <case tag="female_removing_major" target="dawn" targetStage="4">
                 <state img="0-sassy.png">I like this girl. Have I mentioned I like this girl?</state>
             </case>
+            <case tag="female_removing_major" target="elena" targetStage="3">
+                <state img="0-interested.png">I guess you <i>do</i>, your highness.</state>
+            </case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="0-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="0-interested.png">It feels weird for me too, Nagisa. Wait, no. Not weird. <i>Hot</i>. I mean it feels hot.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
-                <state img="0-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
+                <state img="0-sassy.png">May I congratulate you on a <i>magnificent</i> premiere?</state>
             </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="4">
                 <state img="0-embarrassed.png">Man, you're adorable. Like a... frightened puppy. I have the most confused boner right now.</state>
@@ -282,8 +323,14 @@
 				<state img="0-interested.png">You are the worst poker player ever. It's part of your charm.</state>
 				<state img="0-interested.png">I know it sounds cruel, but sometimes you gotta be cruel to be kind.</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="0-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="0-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="0-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_chest_will_be_visible" filter="shy">
 				<state img="0-interested.png">I want to feel bad about this, I really do. But it's, um, hard.</state>
@@ -317,6 +364,12 @@
 			<case tag="female_removed_accessory" target="daisy" targetStage="1">
 				<state img="0-happy.png">You sure know how to motivate a guy, Daisy!</state>
 			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="0-embarrassed.png">Is that a threat? Because I've been threatened by a <i>lot</i> of people, and I suddenly realize that doesn't say much about me.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elena" targetStage="2">
+                <state img="0-sassy.png">Riding a jaquin barefoot? Is that like 'making the beast with two backs'?</state>
+            </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="0-embarrassed.png">...Is it wrong if I'm turned on by your begging? It is, isn't it? Bad, <i>bad</i> Xander.</state>
             </case>
@@ -326,8 +379,14 @@
             <case tag="female_removed_accessory" target="leela" targetStage="1">
                 <state img="0-shocked.png">I, for one, would just like to say 'thank you' for putting your gun away, Leela.</state>
             </case>
+            <case tag="female_removed_accessory" target="lyn" targetStage="5">
+                <state img="0-embarrassed.png">Yes, it's your <i>hair</i> I've been staring at all this time.</state>
+            </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <state img="0-sassy.png">I dunno, Mercy... I've always preferred dirty girls.</state>
+            </case>
+            <case tag="female_removed_accessory" target="nagisa" targetStage="1">
+                <state img="0-sassy.png">I don't know why you're wearing a shirt, either! ...It was worth a try, right?</state>
             </case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="0-interested.png">I like your smile. You should smile more.</state>
@@ -345,6 +404,12 @@
             <case tag="female_removed_minor" target="lux" targetStage="3">
                 <state img="0-interested.png">Oh, I'm <i>very</i> friendly, Lux.</state>
             </case>
+			<case tag="female_removed_minor" target="meg" targetStage="2">
+				<state img="0-calm.png">Well, yes... but that's normal for me.</state>
+			</case>
+			<case tag="female_removed_minor" target="meg" targetStage="3">
+				<state img="0-calm.png">Not so much. But hey, don't give up.</state>
+			</case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="2">
                 <state img="0-angry.png">Honestly? Not particularly.</state>
             </case>
@@ -364,6 +429,12 @@
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="0-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
             </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="0-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="0-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="0-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
             </case>
@@ -373,12 +444,21 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="0-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="0-interested.png">That's good, Meg, because I'm probably going to be doing that a <i>lot</i>.</state>
+			</case>
+            <case tag="female_removed_major" target="nagisa" targetStage="4">
+                <state img="0-interested.png">A cute bra for a cute girl.</state>
+            </case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="0-interested.png">Daddy <i>like</i>.</state>
 			</case>
             <case tag="female_small_chest_is_visible" target="kim">
                 <state img="0-happy.png">Yes. Yes, I do, Kim.</state>
             </case>
+			<case tag="female_small_chest_is_visible" target="meg">
+				<state img="0-calm.png">My lips are sealed!</state>
+			</case>
             <case tag="female_small_chest_is_visible" target="misty">
                 <state img="0-angry.png">Hey! I thought we were in an insult-free zone, Misty.</state>
             </case>
@@ -454,6 +534,7 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="1-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="1-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="1-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="1-sassy.png">I'm warning you guys, I'm pretty good at poker.</state>
@@ -461,6 +542,13 @@
 				<state img="1-happy.png">Cool!</state>
 			</case>
 			<case tag="okay_hand"> <!-- this player has an okay hand after the exchange -->
+				<state img="1-calm.png">Very nice cards. Very not pathetic.</state>
+				<state img="1-calm.png">Poker is a game of psychology, you know.</state>
+				<state img="1-calm.png">Don't rush me... there's a lot of strategy going on here.</state>
+				<state img="1-calm.png">I won't cheat if you don't!</state>
+			</case>
+			<case tag="okay_hand" totalMales="1">
+				<state img="1-angry.png">I was promised casual nudity... I just expected that to mean 'boobs'. Silly me.</state>
 				<state img="1-calm.png">Very nice cards. Very not pathetic.</state>
 				<state img="1-calm.png">Poker is a game of psychology, you know.</state>
 				<state img="1-calm.png">Don't rush me... there's a lot of strategy going on here.</state>
@@ -531,9 +619,11 @@
 			<!-- Start of Male Player Pre Stripping Cases -->
 			<case tag="male_human_must_strip"> <!-- a male human player is about to strip, but you don't know what they will remove -->
 				<state img="1-happy.png">Rookie mistake, ~name~.</state>
+				<state img="1-happy.png">Is that all you got?</state>
 			</case>
 			<case tag="male_must_strip"> <!-- a male player will strip, but you don't know what they will remove -->
 				<state img="1-happy.png">Rookie mistake, ~name~.</state>
+				<state img="1-happy.png">Is that all you got?</state>
 			</case>
 			<case tag="male_removing_accessory"> <!-- a male player has to remove an accessory (hat, gloves, belt) -->
 				<state img="1-sassy.png">Your ~clothing~? Whoa, check out Mr. Excitement here!</state>
@@ -631,6 +721,12 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="1-sassy.png">Really? I bet you don't remember that you owe me twenty bucks either, D.Va.</state>
             </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="0">
+                <state img="1-sassy.png">Hey, the princess makes the rules, right?</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="1-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="1-happy.png">I'm having fun already!</state>
 				<state img="1-interested.png">I won't lie - the way you take off your ~clothing~ is pretty sexy.</state>
@@ -654,8 +750,17 @@
             <case tag="female_removing_major" target="dawn" targetStage="4">
                 <state img="1-sassy.png">I like this girl. Have I mentioned I like this girl?</state>
             </case>
+            <case tag="female_removing_major" target="elena" targetStage="3">
+                <state img="1-interested.png">I guess you <i>do</i>, your highness.</state>
+            </case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="1-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="1-interested.png">It feels weird for me too, Nagisa. Wait, no. Not weird. <i>Hot</i>. I mean it feels hot.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
-                <state img="1-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
+                <state img="1-sassy.png">May I congratulate you on a <i>magnificent</i> premiere?</state>
             </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="4">
                 <state img="1-embarrassed.png">Man, you're adorable. Like a... frightened puppy. I have the most confused boner right now.</state>
@@ -664,8 +769,14 @@
 				<state img="1-interested.png">You are the worst poker player ever. It's part of your charm.</state>
 				<state img="1-interested.png">I know it sounds cruel, but sometimes you gotta be cruel to be kind.</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="1-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="1-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="1-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_chest_will_be_visible" filter="shy"> <!-- a female player's chest will become visible -->
 				<state img="1-embarrassed.png">Sad ~name~.</state>
@@ -696,6 +807,12 @@
 			<case tag="female_removed_accessory" target="daisy" targetStage="1">
 				<state img="1-happy.png">You sure know how to motivate a guy, Daisy!</state>
 			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="1-embarrassed.png">Is that a threat? Because I've been threatened by a <i>lot</i> of people, and I suddenly realize that doesn't say much about me.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elena" targetStage="2">
+                <state img="1-sassy.png">Riding a jaquin barefoot? Is that like 'making the beast with two backs'?</state>
+            </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="1-embarrassed.png">...Is it wrong if I'm turned on by your begging? It is, isn't it? Bad, <i>bad</i> Xander.</state>
             </case>
@@ -705,8 +822,14 @@
             <case tag="female_removed_accessory" target="leela" targetStage="1">
                 <state img="1-shocked.png">I, for one, would just like to say 'thank you' for putting your gun away, Leela.</state>
             </case>
+            <case tag="female_removed_accessory" target="lyn" targetStage="5">
+                <state img="1-embarrassed.png">Yes, it's your <i>hair</i> I've been staring at all this time.</state>
+            </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <state img="1-sassy.png">I dunno, Mercy... I've always preferred dirty girls.</state>
+            </case>
+            <case tag="female_removed_accessory" target="nagisa" targetStage="1">
+                <state img="1-sassy.png">I don't know why you're wearing a shirt, either! ...It was worth a try, right?</state>
             </case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="1-interested.png">I like your smile. You should smile more.</state>
@@ -724,6 +847,12 @@
             <case tag="female_removed_minor" target="lux" targetStage="3">
                 <state img="1-interested.png">Oh, I'm <i>very</i> friendly, Lux.</state>
             </case>
+			<case tag="female_removed_minor" target="meg" targetStage="2">
+				<state img="1-calm.png">Well, yes... but that's normal for me.</state>
+			</case>
+			<case tag="female_removed_minor" target="meg" targetStage="3">
+				<state img="1-calm.png">Not so much. But hey, don't give up.</state>
+			</case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="2">
                 <state img="1-angry.png">Honestly? Not particularly.</state>
             </case>
@@ -743,6 +872,12 @@
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="1-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
             </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="1-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="1-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="1-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
             </case>
@@ -755,8 +890,14 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="1-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="1-interested.png">That's good, Meg, because I'm probably going to be doing that a <i>lot</i>.</state>
+			</case>
             <case tag="female_removed_major" target="mia" targetStage="4">
                 <state img="1-sassy.png">Oh, it is getting <i>hard</i> all right, Mia!</state>
+            </case>
+            <case tag="female_removed_major" target="nagisa" targetStage="4">
+                <state img="1-interested.png">A cute bra for a cute girl.</state>
             </case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="1-interested.png">Daddy <i>like</i>.</state>
@@ -764,6 +905,9 @@
             <case tag="female_small_chest_is_visible" target="kim">
                 <state img="1-happy.png">Yes. Yes, I do, Kim.</state>
             </case>
+			<case tag="female_small_chest_is_visible" target="meg">
+				<state img="1-calm.png">My lips are sealed!</state>
+			</case>
             <case tag="female_small_chest_is_visible" target="misty">
                 <state img="1-angry.png">Hey! I thought we were in an insult-free zone, Misty.</state>
             </case>
@@ -839,6 +983,7 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="2-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="2-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="2-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="2-sassy.png">I'm warning you guys, I'm pretty good at poker.</state>
@@ -986,6 +1131,15 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="2-sassy.png">Really? I bet you don't remember that you owe me twenty bucks either, D.Va.</state>
             </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="0">
+                <state img="2-sassy.png">Hey, the princess makes the rules, right?</state>
+            </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="5">
+                <state img="2-angry.png">Sadly, awfully, tragically... <i>yes</i>, it counts. Sigh.</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="2-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="2-sassy.png">You're going to take off your bra, ~name~? ...What? I can dream.</state>
 				<state img="2-calm.png">Have you considered being a little bolder? Some of us like that sort of thing in a girl.</state>
@@ -1012,8 +1166,17 @@
             <case tag="female_removing_major" target="dawn" targetStage="4">
                 <state img="2-sassy.png">I like this girl. Have I mentioned I like this girl?</state>
             </case>
+            <case tag="female_removing_major" target="elena" targetStage="3">
+                <state img="2-interested.png">I guess you <i>do</i>, your highness.</state>
+            </case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="2-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="2-interested.png">It feels weird for me too, Nagisa. Wait, no. Not weird. <i>Hot</i>. I mean it feels hot.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
-                <state img="2-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
+                <state img="2-sassy.png">May I congratulate you on a <i>magnificent</i> premiere?</state>
             </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="4">
                 <state img="2-embarrassed.png">Man, you're adorable. Like a... frightened puppy. I have the most confused boner right now.</state>
@@ -1022,8 +1185,14 @@
 				<state img="2-interested.png">Man, when did it get so hot in here?</state>
 				<state img="2-sassy.png">I gotta say: poker is a man's game.</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="2-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="2-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="2-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_chest_will_be_visible" filter="shy">
 				<state img="2-interested.png">I want to feel bad about this, I really do. But it's, um, hard.</state>
@@ -1070,6 +1239,12 @@
 			<case tag="female_removed_accessory" target="daisy" targetStage="1">
 				<state img="2-happy.png">You sure know how to motivate a guy, Daisy!</state>
 			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="2-embarrassed.png">Is that a threat? Because I've been threatened by a <i>lot</i> of people, and I suddenly realize that doesn't say much about me.</state>
+            </case>
+            <case tag="female_removed_accessory" target="elena" targetStage="2">
+                <state img="2-sassy.png">Riding a jaquin barefoot? Is that like 'making the beast with two backs'?</state>
+            </case>
 			<case tag="female_removed_accessory" target="blackrose" targetStage="2">
 				<state img="2-interested.png">You're really into this roleplaying thing, huh, BlackRose?</state>
 			</case>
@@ -1079,8 +1254,14 @@
             <case tag="female_removed_accessory" target="leela" targetStage="1">
                 <state img="2-shocked.png">I, for one, would just like to say 'thank you' for putting your gun away, Leela.</state>
             </case>
+            <case tag="female_removed_accessory" target="lyn" targetStage="5">
+                <state img="2-embarrassed.png">Yes, it's your <i>hair</i> I've been staring at all this time.</state>
+            </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <state img="2-sassy.png">I dunno, Mercy... I've always preferred dirty girls.</state>
+            </case>
+            <case tag="female_removed_accessory" target="nagisa" targetStage="1">
+                <state img="2-sassy.png">I don't know why you're wearing a shirt, either! ...It was worth a try, right?</state>
             </case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="2-calm.png">...Yay?</state>
@@ -1101,6 +1282,12 @@
             <case tag="female_removed_minor" target="lux" targetStage="3">
                 <state img="2-interested.png">Oh, I'm <i>very</i> friendly, Lux.</state>
             </case>
+			<case tag="female_removed_minor" target="meg" targetStage="2">
+				<state img="2-calm.png">Well, yes... but that's normal for me.</state>
+			</case>
+			<case tag="female_removed_minor" target="meg" targetStage="3">
+				<state img="2-calm.png">Not so much. But hey, don't give up.</state>
+			</case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="2">
                 <state img="2-angry.png">Honestly? Not particularly.</state>
             </case>
@@ -1111,6 +1298,9 @@
 			<case tag="female_removed_major" alsoPlaying="buffy">
 				<state img="2-interested.png">You have <i>no</i> idea how crazy you make me.</state>
 			</case>
+			<case tag="female_removed_major" target="blackrose" targetStage="6">
+				<state img="2-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
+			</case>
 			<case tag="female_removed_major" target="buffy" targetStage="6">
 				<state img="2-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
 			</case>
@@ -1120,13 +1310,16 @@
 			<case tag="female_removed_major" target="chara" targetStage="6">
 				<state img="2-shocked.png">Whoa. Did anyone else just experience deja vu?</state>
 			</case>
-			<case tag="female_removed_major" target="blackrose" targetStage="6">
-				<state img="2-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
-			</case>
 			<case tag="female_removed_major" target="daphne" targetStage="3">
 				<state img="2-calm.png">A trap? Come on, Daph. You're just bad at this, that's all.</state>
 			</case>
-            <case tag="female_removed_major" target="kyoko" targetStage="5">
+                <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="2-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="2-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
+			<case tag="female_removed_major" target="kyoko" targetStage="5">
                 <state img="2-interested.png">I'm not sure I should tell you what <i>I'm</i> imagining, Kyoko...</state>
             </case>
             <case tag="female_removed_major" target="lux" targetStage="5">
@@ -1135,8 +1328,14 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="2-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="2-interested.png">That's good, Meg, because I'm probably going to be doing that a <i>lot</i>.</state>
+			</case>
             <case tag="female_removed_major" target="mia" targetStage="4">
                 <state img="2-sassy.png">Oh, it is getting <i>hard</i> all right, Mia!</state>
+            </case>
+            <case tag="female_removed_major" target="nagisa" targetStage="4">
+                <state img="2-interested.png">A cute bra for a cute girl.</state>
             </case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="2-interested.png">Nice and firm! Big is overrated.</state>
@@ -1144,6 +1343,9 @@
             <case tag="female_small_chest_is_visible" target="kim">
                 <state img="2-happy.png">Yes. Yes, I do, Kim.</state>
             </case>
+			<case tag="female_small_chest_is_visible" target="meg">
+				<state img="2-calm.png">My lips are sealed!</state>
+			</case>
             <case tag="female_small_chest_is_visible" target="misty">
                 <state img="2-angry.png">Hey! I thought we were in an insult-free zone, Misty.</state>
             </case>
@@ -1182,6 +1384,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="2-calm.png">I won't tell anyone, Lux. I mean, who would believe me?</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="2-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="2-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="2-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -1239,6 +1444,7 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="3-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="3-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="3-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="3-sassy.png">I'm warning you guys, I'm pretty good at poker.</state>
@@ -1407,6 +1613,15 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="3-sassy.png">Really? I bet you don't remember that you owe me twenty bucks either, D.Va.</state>
             </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="0">
+                <state img="3-sassy.png">Hey, the princess makes the rules, right?</state>
+            </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="5">
+                <state img="3-angry.png">Sadly, awfully, tragically... <i>yes</i>, it counts. Sigh.</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="3-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="3-sassy.png">Looking at your ~clothing~ makes me want to have sex. Of course, looking at <i>linoleum</i> makes me want to have sex.</state>
 				<state img="3-calm.png">Have you considered being a little bolder? Some of us like that sort of thing in a girl.</state>
@@ -1433,6 +1648,15 @@
             <case tag="female_removing_major" target="dawn" targetStage="4">
                 <state img="3-sassy.png">I like this girl. Have I mentioned I like this girl?</state>
             </case>
+            <case tag="female_removing_major" target="elena" targetStage="3">
+                <state img="3-interested.png">I guess you <i>do</i>, your highness.</state>
+            </case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="3-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="3-sassy.png">It's adorable how embarrassed you're getting. And probably immoral.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
                 <state img="3-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
             </case>
@@ -1443,8 +1667,14 @@
 				<state img="3-interested.png">Man, when did it get so hot in here?</state>
 				<state img="3-sassy.png">I gotta say: poker is a man's game.</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="3-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="3-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="3-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_chest_will_be_visible" filter="shy">
 				<state img="3-embarrassed.png">Sad ~name~.</state>
@@ -1485,23 +1715,35 @@
 				<state img="3-calm.png">Shy much, ~name~?</state>
 				<state img="3-angry.png">I guess that's what I get for playing with Little Miss Modesty.</state>
 			</case>
+			<case tag="female_removed_accessory" target="blackrose" targetStage="2">
+				<state img="3-interested.png">You're really into this roleplaying thing, huh, BlackRose?</state>
+			</case>
 			<case tag="female_removed_accessory" target="buffy" targetStage="4">
 				<state img="3-sassy.png">Geez, Buff. You know I'm <i>already</i> crazy about you.</state>
 			</case>
 			<case tag="female_removed_accessory" target="daisy" targetStage="1">
 				<state img="3-happy.png">You sure know how to motivate a guy, Daisy!</state>
 			</case>
-			<case tag="female_removed_accessory" target="blackrose" targetStage="2">
-				<state img="3-interested.png">You're really into this roleplaying thing, huh, BlackRose?</state>
-			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="3-embarrassed.png">Oh yeah? Well, I don't need shoes to get my butt kicked! ...Can we pretend I didn't say that?</state>
+            </case>
+            <case tag="female_removed_accessory" target="elena" targetStage="2">
+                <state img="3-sassy.png">Riding a jaquin barefoot? Is that like 'making the beast with two backs'?</state>
+            </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="3-sassy.png">I'd pay good money to see you bend! Wait... you're talking about magic, aren't you, Korra? Darn it.</state>
             </case>
             <case tag="female_removed_accessory" target="leela" targetStage="1">
                 <state img="3-shocked.png">I, for one, would just like to say 'thank you' for putting your gun away, Leela.</state>
             </case>
+            <case tag="female_removed_accessory" target="lyn" targetStage="5">
+                <state img="3-embarrassed.png">Yes, it's your <i>hair</i> I've been staring at all this time.</state>
+            </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <state img="3-sassy.png">I dunno, Mercy... I've always preferred dirty girls.</state>
+            </case>
+            <case tag="female_removed_accessory" target="nagisa" targetStage="1">
+                <state img="3-embarrassed.png">Yeah... that's why I took mine off! Not because I was losing.</state>
             </case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="3-calm.png">...Yay?</state>
@@ -1522,12 +1764,18 @@
             <case tag="female_removed_minor" target="lux" targetStage="3">
                 <state img="3-interested.png">Oh, I'm <i>very</i> friendly, Lux.</state>
             </case>
+			<case tag="female_removed_minor" target="meg" targetStage="2">
+				<state img="3-calm.png">Well, yes... but that's normal for me.</state>
+			</case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="2">
                 <state img="3-angry.png">Honestly? Not particularly.</state>
             </case>
 			<case tag="female_removed_major"> <!-- a female player has removed a major article of clothing (shirt, pants) -->
 				<state img="3-shocked.png">Damn!</state>
 				<state img="3-interested.png">You're out of my league but I would date the shit out of you.</state>
+			</case>
+			<case tag="female_removed_major" target="blackrose" targetStage="6">
+				<state img="3-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
 			</case>
 			<case tag="female_removed_major" target="buffy" targetStage="6">
 				<state img="3-embarrassed.png">No, not the <i>lamest</i>... I mean, surely there's been worse... okay, yeah. It was pretty awful.</state>
@@ -1538,14 +1786,17 @@
 			<case tag="female_removed_major" target="chara" targetStage="6">
 				<state img="3-shocked.png">Whoa. Did anyone else just experience deja vu?</state>
 			</case>
-			<case tag="female_removed_major" target="blackrose" targetStage="6">
-				<state img="3-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
-			</case>
 			<case tag="female_removed_major" target="daphne" targetStage="3">
 				<state img="3-calm.png">A trap? Come on, Daph. You're just bad at this, that's all.</state>
 			</case>
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="3-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
+            </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="3-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="3-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
             </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="3-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
@@ -1559,8 +1810,14 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="3-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="3-interested.png">That's good, Meg, because I'm probably going to be doing that a <i>lot</i>.</state>
+			</case>
             <case tag="female_removed_major" target="mia" targetStage="4">
                 <state img="3-sassy.png">Oh, it is getting <i>hard</i> all right, Mia!</state>
+            </case>
+            <case tag="female_removed_major" target="nagisa" targetStage="4">
+                <state img="3-interested.png">A cute bra for a cute girl.</state>
             </case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="3-interested.png">Nice and firm! Big is overrated.</state>
@@ -1568,6 +1825,9 @@
             <case tag="female_small_chest_is_visible" target="kim">
                 <state img="3-happy.png">Yes. Yes, I do, Kim.</state>
             </case>
+			<case tag="female_small_chest_is_visible" target="meg">
+				<state img="3-calm.png">My lips are sealed!</state>
+			</case>
             <case tag="female_small_chest_is_visible" target="misty">
                 <state img="3-angry.png">Hey! I thought we were in an insult-free zone, Misty.</state>
             </case>
@@ -1606,9 +1866,12 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="3-calm.png">I won't tell anyone, Lux. I mean, who would believe me?</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="3-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
-				<state img="2-embarrassed.png">I can barely see anything through that bush.</state>
-				<state img="2-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
+				<state img="3-embarrassed.png">I can barely see anything through that bush.</state>
+				<state img="3-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
 			</case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
@@ -1663,6 +1926,7 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="4-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="4-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="4-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="4-sassy.png">I'm warning you guys, I'm pretty good at poker.</state>
@@ -1801,6 +2065,9 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="4-angry.png">If I'd known this would be filmed live... well, I still would have come, but I'd have worn more layers!</state>
             </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="4-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="4-calm.png">You're really good at this.</state>
 				<state img="4-calm.png">That's all? I'm a man, you know. I have certain desires, certain needs...</state>
@@ -1821,6 +2088,12 @@
 			<case tag="female_removing_major" target="daphne" targetStage="3">
 				<state img="4-sassy.png">Thank you, Fred!</state>
 			</case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="4-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="4-sassy.png">It's adorable how embarrassed you're getting. And probably immoral.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
                 <state img="4-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
             </case>
@@ -1831,8 +2104,14 @@
 				<state img="4-happy.png">It's like my whole life has been leading up to this moment!</state>
 				<state img="4-happy.png">This game just keeps getting better and better!</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="4-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="4-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="4-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_crotch_will_be_visible"> <!-- a female player's crotch will become visible -->
 				<state img="4-interested.png">This is going to be legendary!</state>
@@ -1866,6 +2145,12 @@
 			<case tag="female_removed_accessory" target="buffy" targetStage="4">
 				<state img="4-sassy.png">Geez, Buff. You know I'm <i>already</i> crazy about you.</state>
 			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="4-embarrassed.png">Oh yeah? Well, I don't need shoes to get my butt kicked! ...Can we pretend I didn't say that?</state>
+            </case>
+            <case tag="female_removed_accessory" target="elena" targetStage="2">
+                <state img="4-embarrassed.png">You're so cute and earnest, Elena. It's like playing strip poker with a sister.</state>
+            </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="4-embarrassed.png">...Is it wrong if I'm turned on by your begging? It is, isn't it? Bad, <i>bad</i> Xander.</state>
             </case>
@@ -1875,8 +2160,14 @@
             <case tag="female_removed_accessory" target="leela" targetStage="1">
                 <state img="4-shocked.png">I, for one, would just like to say 'thank you' for putting your gun away, Leela.</state>
             </case>
+            <case tag="female_removed_accessory" target="lyn" targetStage="5">
+                <state img="4-embarrassed.png">Yes, it's your <i>hair</i> I've been staring at all this time.</state>
+            </case>
             <case tag="female_removed_accessory" target="mercy" targetStage="1">
                 <state img="4-sassy.png">I dunno, Mercy... I've always preferred dirty girls.</state>
+            </case>
+            <case tag="female_removed_accessory" target="nagisa" targetStage="1">
+                <state img="4-embarrassed.png">Yeah... that's why I took mine off! Not because I was losing.</state>
             </case>
 			<case tag="female_removed_minor"> <!-- a female player has removed a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="4-sassy.png">What's the matter, afraid of getting naked with the Xand? I won't bite... unless you want me to.</state>
@@ -1891,6 +2182,9 @@
             <case tag="female_removed_minor" target="lux" targetStage="3">
                 <state img="4-interested.png">Oh, I'm <i>very</i> friendly, Lux.</state>
             </case>
+			<case tag="female_removed_minor" target="meg" targetStage="2">
+				<state img="4-calm.png">Well, yes... but that's normal for me.</state>
+			</case>
             <case tag="female_removed_minor" target="nugi-chan" targetStage="2">
                 <state img="4-angry.png">Honestly? Not particularly.</state>
             </case>
@@ -1910,6 +2204,12 @@
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="4-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
             </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="4-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="4-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="4-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
             </case>
@@ -1922,8 +2222,14 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="4-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="4-interested.png">That's good, Meg, because I'm probably going to be doing that a <i>lot</i>.</state>
+			</case>
             <case tag="female_removed_major" target="mia" targetStage="4">
                 <state img="4-sassy.png">Oh, it is getting <i>hard</i> all right, Mia!</state>
+            </case>
+            <case tag="female_removed_major" target="nagisa" targetStage="4">
+                <state img="4-interested.png">A cute bra for a cute girl.</state>
             </case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="4-interested.png">I bet those are really sensitive! ...Can I find out?</state>
@@ -1934,6 +2240,9 @@
             <case tag="female_small_chest_is_visible" target="kim">
                 <state img="4-happy.png">Yes. Yes, I do, Kim.</state>
             </case>
+			<case tag="female_small_chest_is_visible" target="meg">
+				<state img="4-calm.png">My lips are sealed!</state>
+			</case>
             <case tag="female_small_chest_is_visible" target="misty">
                 <state img="4-angry.png">Hey! I thought we were in an insult-free zone, Misty.</state>
             </case>
@@ -1972,6 +2281,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="4-calm.png">I won't tell anyone, Lux. I mean, who would believe me?</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="4-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="4-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="4-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -2034,14 +2346,17 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="5-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="5-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="5-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="5-happy.png">We're number one! Or I am, anyway.</state>
 				<state img="5-happy.png">I'm ready to show my hand! So, so ready.</state>
+				<state img="5-happy.png">Let's dance.</state>
 			</case>
 			<case tag="okay_hand"> <!-- this player has an okay hand after the exchange -->
 				<state img="5-calm.png">This game is trickier than James Bond movies made it out to be.</state>
 				<state img="5-calm.png">Just for the record: we get our clothes back later, right?</state>
+				<state img="5-calm.png">I was born ready! Also naked. Hmm.</state>
 			</case>
 			<case tag="bad_hand"> <!-- this player has a bad hand after the exchange -->
 				<state img="5-embarrassed.png">Did I mention that I hate this game?</state>
@@ -2071,11 +2386,11 @@
 			
 			<!-- Start of Male Player Pre Stripping Cases -->
 			<case tag="male_human_must_strip"> <!-- a male human player is about to strip, but you don't know what they will remove -->
-				<state img="5-sassy.png">Is failing your thing? You can be honest, I won't judge.</state>
+				<state img="5-happy.png">Take that, ~name~!</state>
 				<state img="5-sassy.png">Go on, ~name~. Make us proud.</state>
 			</case>
 			<case tag="male_must_strip"> <!-- a male player will strip, but you don't know what they will remove -->
-				<state img="5-sassy.png">Is failing your thing? You can be honest, I won't judge.</state>
+				<state img="5-happy.png">Take that, ~name~!</state>
 				<state img="5-sassy.png">Go on, ~name~. Make us proud.</state>
 			</case>
 			<case tag="male_removing_accessory"> <!-- a male player has to remove an accessory (hat, gloves, belt) -->
@@ -2161,6 +2476,9 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="5-angry.png">If I'd known this would be filmed live... well, I still would have come, but I'd have worn more layers!</state>
             </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="5-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="5-sassy.png">That's why I love you, ~name~! You just keep me guessing!</state>
 				<state img="5-calm.png">You remind me of Cordy. Rockin' bod, but getting her out of her clothes was like pulling teeth.</state>
@@ -2178,6 +2496,12 @@
 			<case tag="female_removing_major" target="daphne" targetStage="3">
 				<state img="5-sassy.png">Thank you, Fred!</state>
 			</case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="5-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
+            <case tag="female_removing_accessory" target="nagisa" targetStage="2">
+                <state img="5-sassy.png">It's adorable how embarrassed you're getting. And probably immoral.</state>
+            </case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
                 <state img="5-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
             </case>
@@ -2188,8 +2512,14 @@
 				<state img="5-happy.png">It's like my whole life has been leading up to this moment!</state>
 				<state img="5-happy.png">This game just keeps getting better and better!</state>
 			</case>
+			<case tag="female_chest_will_be_visible" "hasHand"="One Pair">
+				<state img="5-sassy.png">It's like poetry: I showed you my pair, and now you're showing me yours!</state>
+			</case>
             <case tag="female_chest_will_be_visible" target="misty">
                 <state img="5-sassy.png">'Better'. You mean this is <i>better</i> than the time the boys forced you to enter that bikini contest, Misty.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="nagisa">
+                <state img="5-sassy.png">I don't speak Japanese. Does that mean 'enjoy'? Because I'm enjoying this immensely.</state>
             </case>
 			<case tag="female_crotch_will_be_visible"> <!-- a female player's crotch will become visible -->
 				<state img="5-interested.png">This is going to be legendary!</state>
@@ -2224,6 +2554,9 @@
 			<case tag="female_removed_accessory" target="buffy" targetStage="4">
 				<state img="5-sassy.png">Geez, Buff. You know I'm <i>already</i> crazy about you.</state>
 			</case>
+            <case tag="female_removed_accessory" target="d.va" targetStage="2">
+                <state img="5-embarrassed.png">Oh yeah? Well, I don't need shoes to get my butt kicked! ...Can we pretend I didn't say that?</state>
+            </case>
             <case tag="female_removed_accessory" target="hermione" targetStage="4">
                 <state img="5-embarrassed.png">...Is it wrong if I'm turned on by your begging? It is, isn't it? Bad, <i>bad</i> Xander.</state>
             </case>
@@ -2252,17 +2585,23 @@
 				<state img="5-interested.png">There's not an imperfection on your body.</state>
 				<state img="5-sassy.png">Oh, don't stop there on <i>my</i> account.</state>
 			</case>
+			<case tag="female_removed_major" target="blackrose" targetStage="6">
+				<state img="5-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
+			</case>
 			<case tag="female_removed_major" target="chara" targetStage="4">
 				<state img="5-shocked.png">Lady, you have some <i>serious</i> childhood trauma to deal with.</state>
 			</case>
 			<case tag="female_removed_major" target="chara" targetStage="6">
 				<state img="5-shocked.png">Whoa. Did anyone else just experience deja vu?</state>
 			</case>
-			<case tag="female_removed_major" target="blackrose" targetStage="6">
-				<state img="5-embarrassed.png">Wha? Oh! Sorry, BlackRose. I'll just wipe that off.</state>
-			</case>
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="5-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
+            </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="5-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="5-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
             </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="5-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
@@ -2276,6 +2615,12 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="5-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="5-sassy.png">I hope you're OK with me staring at the rest of you, too.</state>
+			</case>
+			<case tag="female_removed_major" target="meg" targetStage="6">
+				<state img="5-calm.png">You know what they say: 'almost' only counts in horseshoes and hand grenades.</state>
+			</case>
             <case tag="female_removed_major" target="mia" targetStage="4">
                 <state img="5-sassy.png">Oh, it is getting <i>hard</i> all right, Mia!</state>
             </case>
@@ -2326,6 +2671,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="5-interested.png">My lips are sealed, Lux! Unless you'd rather they were parted.</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="5-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="5-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="5-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -2388,14 +2736,17 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="6-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="6-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="6-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="6-happy.png">We're number one! Or I am, anyway.</state>
 				<state img="6-happy.png">I'm ready to show my hand! So, so ready.</state>
+				<state img="6-happy.png">Let's dance.</state>
 			</case>
 			<case tag="okay_hand"> <!-- this player has an okay hand after the exchange -->
 				<state img="6-calm.png">This game is trickier than James Bond movies made it out to be.</state>
 				<state img="6-calm.png">Just for the record: we get our clothes back later, right?</state>
+				<state img="6-calm.png">I was born ready! Also naked. Hmm.</state>
 			</case>
 			<case tag="bad_hand"> <!-- this player has a bad hand after the exchange -->
 				<state img="6-embarrassed.png">Did I mention that I hate this game?</state>
@@ -2519,6 +2870,12 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="6-angry.png">If I'd known this would be filmed live... well, I still would have come, but I'd have worn more layers!</state>
             </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="5">
+                <state img="6-angry.png">Sadly, awfully, tragically... <i>yes</i>, it counts. Sigh.</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="6-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="6-shocked.png">You're gonna give me a heart attack if you keep teasing me like this.</state>
 				<state img="6-calm.png">You have <i>definitely</i> played this before.</state>
@@ -2535,6 +2892,9 @@
             <case tag="female_removing_major" target="dawn" targetStage="4">
                 <state img="6-sassy.png">Ah, a girl who knows what a man wants to hear.</state>
             </case>
+			<case tag="female_removing_major" target="meg" targetStage="5">
+				<state img="6-sassy.png">What if I judge them 'terrific'?</state>
+			</case>
 			<case tag="female_removing_major" target="nagisa" targetStage="3">
                 <state img="6-sassy.png">Don't think of us like strangers! Think of us like family! Strangely aroused family.</state>
             </case>
@@ -2542,7 +2902,7 @@
                 <state img="6-embarrassed.png">Man, you're adorable. Like a... frightened puppy. I have the most confused boner right now.</state>
             </case>
 			<case tag="female_chest_will_be_visible"> <!-- a female player's chest will become visible -->
-				<state img="6-sassy.png">I showed you my hand, now show me your pair!</state>
+				<state img="6-interested.png">Ah, the way to a man's heart!</state>
 				<state img="6-happy.png">I take back everything bad I said about this game!</state>
 			</case>
             <case tag="female_chest_will_be_visible" target="misty">
@@ -2568,6 +2928,9 @@
             </case>
             <case tag="female_crotch_will_be_visible" target="mia">
                 <state img="6-embarrassed.png">Can you blame a guy, Mia?</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" target="nagisa">
+                <state img="6-interested.png">...Nope. Nuh-uh. Not a chance. Sorry!</state>
             </case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
@@ -2608,6 +2971,12 @@
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="6-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
             </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="6-sassy.png">And I would <i>love</i> to give you one. Come here, D.Va!</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="6-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="6-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
             </case>
@@ -2617,6 +2986,12 @@
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="6-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="6-sassy.png">I hope you're OK with me staring at the rest of you, too.</state>
+			</case>
+			<case tag="female_removed_major" target="meg" targetStage="6">
+				<state img="6-calm.png">You know what they say: 'almost' only counts in horseshoes and hand grenades.</state>
+			</case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="6-interested.png">Just the right size to cup in one hand!</state>
 			</case>
@@ -2661,6 +3036,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="6-interested.png">My lips are sealed, Lux! Unless you'd rather they were parted.</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="6-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="6-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="6-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -2723,14 +3101,17 @@
 			<case tag="swap_cards"> <!-- this player is exchanging cards -->
 				<state img="7-calm.png">Yeah, gimme ~cards~!</state>
 				<state img="7-happy.png">Oh, I know this. ~cards~ cards, dealer.</state>
+				<state img="7-happy.png">I'm feeling lucky. Give me ~cards~.</state>
 			</case>
 			<case tag="good_hand"> <!-- this player has a good hand after the exchange -->
 				<state img="7-happy.png">We're number one! Or I am, anyway.</state>
 				<state img="7-happy.png">I'm ready to show my hand! So, so ready.</state>
+				<state img="7-happy.png">Let's dance.</state>
 			</case>
 			<case tag="okay_hand"> <!-- this player has an okay hand after the exchange -->
 				<state img="7-calm.png">This game is trickier than James Bond movies made it out to be.</state>
 				<state img="7-calm.png">Just for the record: we get our clothes back later, right?</state>
+				<state img="7-calm.png">I was born ready! Also naked. Hmm.</state>
 				<state img="7-angry.png">Hey! My eyes are up here!</state>
 			</case>
 			<case tag="okay_hand" alsoPlaying="buffy">
@@ -2777,11 +3158,11 @@
 			<!-- Start of Male Player Pre Stripping Cases -->
 			<case tag="male_human_must_strip"> <!-- a male human player is about to strip, but you don't know what they will remove -->
 				<state img="7-happy.png">If it means I don't lose this hand, woo! And might I add a big hoo!</state>
-				<state img="7-happy.png">Looks like you're not as good as you thought, ~name~.</state>
+				<state img="7-angry.png">This time, it's personal.</state>
 			</case>
 			<case tag="male_must_strip"> <!-- a male player will strip, but you don't know what they will remove -->
 				<state img="7-happy.png">If it means I don't lose this hand, woo! And might I add a big hoo!</state>
-				<state img="7-happy.png">Looks like you're not as good as you thought, ~name~.</state>
+				<state img="7-angry.png">This time, it's personal.</state>
 			</case>
 			<case tag="male_removing_accessory"> <!-- a male player has to remove an accessory (hat, gloves, belt) -->
 				<state img="7-angry.png">Ooo, gang, did ya hear that? ~name~'s taking off his ~clothing~! Mix in a little rectal surgery, and it's my best day ever!</state>
@@ -2871,6 +3252,12 @@
             <case tag="female_removing_accessory" target="d.va" targetStage="0" alsoPlaying="streaming-chan">
                 <state img="7-angry.png">If I'd known this would be filmed live... well, I still would have come, but I'd have worn more layers!</state>
             </case>
+            <case tag="female_removing_accessory" target="elena" targetStage="5">
+                <state img="7-angry.png">Sadly, awfully, tragically... <i>yes</i>, it counts. Sigh.</state>
+            </case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="7-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="7-angry.png">Do I want ~name~ to take off her ~clothing~ instead of something bigger? Well, that's a tough question to... No. Not a chance.</state>
 				<state img="7-angry.png">I'm just not gonna win here, am I?</state>
@@ -2918,6 +3305,9 @@
             <case tag="female_crotch_will_be_visible" target="mia">
                 <state img="7-embarrassed.png">Can you blame a guy, Mia?</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="nagisa">
+                <state img="7-interested.png">...Nope. Nuh-uh. Not a chance. Sorry!</state>
+            </case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
 			
@@ -2960,12 +3350,24 @@
             <case tag="female_removed_major" target="dawn" targetStage="5">
                 <state img="7-sassy.png">And may I say that I'm <i>very</i> grateful for that, Dawn?</state>
             </case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="7-embarrassed.png">You and me both, D.Va. You and me both.</state>
+			</case>
+            <case tag="female_removed_major" target="elena" targetStage="5">
+                <state img="7-happy.png">Your Abuelo might not approve, but <i>I</i> sure do, princess!</state>
+            </case>
             <case tag="female_removed_major" target="korra" targetStage="5">
                 <state img="7-sassy.png">You must be starting, because I'm heating up already, Korra!</state>
             </case>
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="7-interested.png">Yes, yes I am. Thanks for asking, May.</state>
             </case>
+			<case tag="female_removed_major" target="meg" targetStage="5">
+				<state img="7-sassy.png">I hope you're OK with me staring at the rest of you, too.</state>
+			</case>
+			<case tag="female_removed_major" target="meg" targetStage="6">
+				<state img="7-calm.png">You know what they say: 'almost' only counts in horseshoes and hand grenades.</state>
+			</case>
 			<case tag="female_small_chest_is_visible"> <!-- a female player's chest has become visible -->
 				<state img="7-interested.png">Just the right size to cup in one hand!</state>
 			</case>
@@ -3010,6 +3412,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="7-interested.png">My lips are sealed, Lux! Unless you'd rather they were parted.</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="7-shocked.png">Please don't cry! That's no fair! You're ruining a good leer here!</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="7-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="7-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -3091,11 +3496,11 @@
 			<!-- Start of Male Player Pre Stripping Cases -->
 			<case tag="male_human_must_strip"> <!-- a male human player is about to strip, but you don't know what they will remove -->
 				<state img="8-happy.png">Ha! In your face!</state>
-				<state img="8-happy.png">Take that!</state>
+				<state img="8-embarrassed.png">Hey, look! Literally anything else. Let's all pay attention to ~name~ stripping.</state>
 			</case>
 			<case tag="male_must_strip"> <!-- a male player will strip, but you don't know what they will remove -->
 				<state img="8-happy.png">Ha! In your face!</state>
-				<state img="8-happy.png">Take that!</state>
+				<state img="8-embarrassed.png">Hey, look! Literally anything else. Let's all pay attention to ~name~ stripping.</state>
 			</case>
 			<case tag="male_removing_accessory"> <!-- a male player has to remove an accessory (hat, gloves, belt) -->
 				<state img="8-angry.png">Your ~clothing~? I need a volunteer to hit ~name~.</state>
@@ -3171,6 +3576,9 @@
 			<case tag="female_removing_accessory"> <!-- a female player has to remove an accessory (hat, gloves, belt) -->
 				<state img="8-angry.png">Oh, COME ON!</state>
 			</case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="8-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="8-interested.png">If you're trying to tease me into a frenzy, it's working.</state>
 			</case>
@@ -3192,6 +3600,9 @@
             <case tag="female_crotch_will_be_visible" target="mercy">
                 <state img="8-angry.png">Okay, I want to be turned on, but this feels like being in a high school health class.</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="nagisa">
+                <state img="8-interested.png">...Nope. Nuh-uh. Not a chance. Sorry!</state>
+            </case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
 			
@@ -3211,6 +3622,9 @@
 			</case>
 			<case tag="female_removed_major" target="buffy" targetStage="6">
 				<state img="8-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="8-embarrassed.png">You and me both, D.Va. You and me both.</state>
 			</case>
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="8-interested.png">Yes, yes I am. Thanks for asking, May.</state>
@@ -3243,6 +3657,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="8-interested.png">My lips are sealed, Lux! Unless you'd rather they were parted.</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="8-shocked.png">Oh, no! You're starting to cry while I'm... I'm... I think I have a new fetish.</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="8-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="8-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
@@ -3390,6 +3807,9 @@
 				<state img="9-angry.png">Be still my heart. Oh, wait, it is.</state>
 				<state img="9-angry.png">One word: evil.</state>
 			</case>
+			<case tag="female_removing_accessory" target="lyn" targetStage="4">
+                <state img="9-happy.png">Is it your boobs? Please say boobs!</state>
+            </case>
 			<case tag="female_removing_minor"> <!-- a female player has to remove a minor article of clothing (belt, shoes, socks, jacket) -->
 				<state img="9-sassy.png">You completely beat me! Man, smart chicks are so hot.</state>
 				<state img="9-calm.png">And to think I gave up a sybaritic evening of television and stale chips for this.</state>
@@ -3422,6 +3842,9 @@
             <case tag="female_crotch_will_be_visible" target="mia">
                 <state img="9-embarrassed.png">Can you blame a guy, Mia?</state>
             </case>
+            <case tag="female_crotch_will_be_visible" target="nagisa">
+                <state img="9-interested.png">...Nope. Nuh-uh. Not a chance. Sorry!</state>
+            </case>
 			<!-- End of Female Player Pre Stripping Cases -->
 			
 			
@@ -3448,6 +3871,9 @@
 			</case>
 			<case tag="female_removed_major" target="buffy" targetStage="6">
 				<state img="9-interested.png">You don't have to be witty, Buff. We can appreciate your <i>other</i> qualities.</state>
+			</case>
+            <case tag="female_removed_major" target="d.va" targetStage="4">
+                <state img="9-embarrassed.png">You and me both, D.Va. You and me both.</state>
 			</case>
             <case tag="female_removed_major" target="may" targetStage="6">
                 <state img="9-interested.png">Yes, yes I am. Thanks for asking, May.</state>
@@ -3494,6 +3920,9 @@
             <case tag="female_crotch_is_visible" target="lux">
                 <state img="9-interested.png">My lips are sealed, Lux! Unless you'd rather they were parted.</state>
             </case>
+			<case tag="female_crotch_is_visible" target="nagisa">
+				<state img="9-shocked.png">Oh, no! You're starting to cry while I'm... I'm... I think I have a new fetish.</state>
+			</case>
 			<case tag="female_crotch_is_visible" filter="hairy">
 				<state img="9-embarrassed.png">I can barely see anything through that bush.</state>
 				<state img="9-shocked.png">Going <i>au naturel<i>, ~name~? I didn't expect that.</state>
