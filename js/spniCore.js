@@ -135,11 +135,34 @@ function initialSetup () {
     loadTitleScreen();
     selectTitleCandy();
 	loadSelectScreen();
+    loadConfigFile();
 	
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
 }
+
+
+function loadConfigFile () {
+	$.ajax({
+        type: "GET",
+		url: "config.xml",
+		dataType: "text",
+		success: function(xml) {           
+			var _debug = $(xml).find('debug').text();
+
+            if (_debug === "true") {
+                DEBUG = true;
+                console.log("Debugging is enabled");
+            }
+            else {
+                DEBUG = false;
+                console.log("Debugging is disabled");
+            }
+		}
+	});
+}
+
 
 
 function enterTitleScreen() {

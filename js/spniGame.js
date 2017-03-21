@@ -95,7 +95,6 @@ var actualMainButtonState = false;
 var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
-var debugEnable = 0;
                       
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -481,7 +480,7 @@ function completeRevealPhase () {
     /* figure out who has the lowest hand */
     recentLoser = determineLowestHand();
     
-    if (chosenDebug !== -1) {
+    if (chosenDebug !== -1 && DEBUG) {
         recentLoser = chosenDebug;
     }
     
@@ -807,33 +806,6 @@ function game_keyUp(e)
             showDebug = !showDebug;
             updateDebugState(showDebug);
         }
-        else if (e.keyCode == 75) {
-            debugEnable += 1;
-            return;
-        }
-        else if (e.keyCode == 65 && debugEnable === 1) {
-            debugEnable += 1;
-            return;
-        }
-        else if (e.keyCode == 78 && debugEnable === 2) {
-            debugEnable += 1;
-            return;
-        }
-        else if (e.keyCode == 84 && debugEnable === 3) {
-            debugEnable += 1;
-            return;
-        }
-        else if (e.keyCode == 69 && debugEnable === 4) {
-            debugEnable += 1;
-            return;
-        }
-        else if (e.keyCode == 76 && debugEnable === 5 && !DEBUG) {
-            DEBUG = true;
-            showDebug = true;
-            updateDebugState(showDebug);
-        }
-        
-        debugEnable = 0;
     }
 }
 
