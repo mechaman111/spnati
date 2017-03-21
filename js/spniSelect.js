@@ -73,6 +73,8 @@ $selectButtons = [$("#select-slot-button-1"),
                   $("#select-slot-button-3"),
                   $("#select-slot-button-4")];
 $selectMainButton = $("#main-select-button");
+$selectRandomButtons = [$("#select-random-button"), $("#select-random-female-button"), $("#select-random-male-button")];
+$selectRemoveAllButton = $("#select-remove-all-button");
  
 /* individual select screen */
 $individualSelectTable = $("#individual-select-table");
@@ -567,10 +569,6 @@ function clickedRandomGroupButton () {
 function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = [];
-	
-    for (var i = 1; i < players.length; i++) {
-        players[i] = null;
-    }
     
 	/* only add non-selected opponents from the list */
 	for (var i = 0; i < loadedOpponents.length; i++) {
@@ -607,6 +605,17 @@ function clickedRandomFillButton (predicate) {
 			loadedOpponentsCopy.splice(randomOpponent, 1);
 		}
 	}
+}
+
+/************************************************************
+ * The player clicked on the remove all button.
+ ************************************************************/
+function clickedRemoveAllButton () 
+{
+    for (var i = 1; i < 5; i++) {
+        players[i] = null;
+    }
+    updateSelectionVisuals();
 }
 
 /************************************************************
@@ -823,11 +832,30 @@ function updateSelectionVisuals () {
         }
     }
     
-    /* if all opponents are loaded, then enable progression */
+    /* if enough opponents are loaded, then enable progression */
     if (loaded >= 2) {
         $selectMainButton.attr('disabled', false);
     } else {
         $selectMainButton.attr('disabled', true);
+    }
+    
+    /* if all opponents are loaded, disable fill buttons */
+    if (loaded >= 4) {
+        for (var i = 0; i < $selectRandomButtons.length; i++) {
+            $selectRandomButtons[i].attr('disabled', true);
+        }  
+    }
+    else {
+        for (var i = 0; i < $selectRandomButtons.length; i++) {
+            $selectRandomButtons[i].attr('disabled', false);
+        }  
+    }
+    
+    /* if no opponents are loaded, disable remove all button */
+    if (loaded <= 0) {
+        $selectRemoveAllButton.attr('disabled', true);
+    } else {
+        $selectRemoveAllButton.attr('disabled', false);
     }
 }
  

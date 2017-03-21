@@ -534,6 +534,11 @@ function stripPlayer (player) {
 		/* the player has no clothes and will have to accept a forfeit */
 		players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
 		players[player].out = true;
+        
+        if (chosenDebug === player) {
+            chosenDebug = -1;
+            updateDebugState(showDebug);
+        }
 		
 		/* update behaviour */
 		if (player == HUMAN_PLAYER) {

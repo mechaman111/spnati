@@ -57,6 +57,11 @@ $cardButtons = [$("#player-0-card-1"),
 				$("#player-0-card-3"),
 				$("#player-0-card-4"),
 				$("#player-0-card-5")];
+$debugButtons = [$("#debug-button-0"),
+				 $("#debug-button-1"),
+				 $("#debug-button-2"),
+				 $("#debug-button-3"),
+				 $("#debug-button-4")];
 				
 /* restart modal */
 $restartModal = $("#restart-modal");
@@ -74,6 +79,7 @@ var CARD_SUGGEST = false;
 var AUTO_FORFEIT = false;
 var AUTO_FADE = true;
 var KEYBINDINGS_ENABLED = false;
+var DEBUG = false;
  
 /* colours */
 var currentColour = "#63AAE7"; 	/* indicates current turn */
@@ -87,6 +93,8 @@ var savedContext = "";
 var gameOver = false;
 var actualMainButtonState = false;
 var endWaitDisplay = 0;
+var showDebug = false;
+var chosenDebug = -1;
                       
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -471,6 +479,11 @@ function completeRevealPhase () {
     
     /* figure out who has the lowest hand */
     recentLoser = determineLowestHand();
+    
+    if (chosenDebug !== -1) {
+        recentLoser = chosenDebug;
+    }
+    
     console.log("Player "+recentLoser+" is the loser.");
     
     /* look for the unlikely case of an absolute tie */
@@ -630,18 +643,8 @@ function handleGameOver() {
         }
         
 		/* someone is still forfeiting */
-		var context = "Wait";
 		$mainButton.html("Wait" + dots);
         $mainButton.attr('disabled', false);
-        console.log("ENDING...");
-		context = tickForfeitTimers(context);
-		if (context == "Wait") {
-			/* no one finished yet */
-			//window.setTimeout(handleGameOver, GAME_OVER_DELAY);
-		} else {
-			/* someone finished, wait for the button */
-            $mainButton.attr('disabled', true);
-		}
 	}
 }
  
@@ -727,6 +730,11 @@ function advanceGame () {
         completeContinuePhase();
 		$mainButton.attr('disabled', false);
         actualMainButtonState = false;
+	} else if (context == "Cumming...") {
+		/* waiting for someone to finish */
+        if (AUTO_FADE) forceTableVisibility(false);
+		$mainButton.attr('disabled', true);
+        actualMainButtonState = false;
 	} else if (context == "Strip") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
@@ -792,6 +800,44 @@ function game_keyUp(e)
         }
         else if (e.keyCode == 53 && !$cardButtons[0].prop('disabled')) { // 5
             selectCard(0);
+        }
+        else if (e.keyCode == 67 && DEBUG) {
+            showDebug = !showDebug;
+            updateDebugState(showDebug);
+        }
+    }
+}
+
+
+function selectDebug(player) 
+{
+    if (chosenDebug === player) {
+        chosenDebug = -1;
+    }
+    else {
+        chosenDebug = player;
+    }
+    updateDebugState(showDebug);
+}
+
+
+function updateDebugState(show) 
+{
+    if (!show) {
+        for (var i = 0; i < $debugButtons.length; i++) {
+            $debugButtons[i].hide();
+        }
+    }
+    else {
+        for (var i = 0; i < $debugButtons.length; i++) {
+            if (players[i] !== null && !players[i].out) {
+                $debugButtons[i].show();
+                $debugButtons[i].removeClass("active");
+            }
+        }
+        
+        if (chosenDebug !== -1) {
+            $debugButtons[chosenDebug].addClass("active");
         }
     }
 }

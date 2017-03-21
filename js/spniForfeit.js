@@ -84,9 +84,9 @@ function tickForfeitTimers (context) {
 					context = null;
 					
 					/* set the button state */
-					$mainButton.html("Continue");
-					$mainButton.attr('disabled', false);
-					actualMainButtonState = false;
+					$mainButton.html("Cumming...");
+					$mainButton.attr('disabled', true);
+					actualMainButtonState = true;
 					
 					/* finish */
 					finishMasturbation(i);
@@ -117,9 +117,9 @@ function tickForfeitTimers (context) {
 					context = null;
 					
 					/* set the button state */
-					$mainButton.html("Continue");
-					$mainButton.attr('disabled', false);
-					actualMainButtonState = false;
+					$mainButton.html("Cumming...");
+					$mainButton.attr('disabled', true);
+					actualMainButtonState = true;
 					
 					/* hide everyone else's dialogue bubble */
 					for (var j = 1; j < players.length; j++) {

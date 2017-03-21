@@ -20,7 +20,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.25.0
+      v11.32.0
     </button>
       
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -77,7 +77,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.25.0
+      v11.32.0
     </button>
       
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -290,7 +290,11 @@
           Random Males
         </button>
         <button id='select-random-button' class='bordered main-select-button  smooth-button smooth-button-blue' onclick="clickedRandomFillButton()">
-          All Random
+          Random Fill
+        </button>
+          
+        <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()">
+          Remove All
         </button>
 
       </div>
@@ -749,82 +753,8 @@
 
 
 <!-- Start of Search Modal -->
-<div id="search-modal" class="modal table-modal fade">
-	<div class="modal-table-container">
-	<div class="modal-cell-container">
-	<div class="bordered modal-dialog wide-modal-dialog">
-	<div class="bordered modal-dialog-surface">
-		<!-- Start of Modal Content -->
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title text-center">Search Options</h4>
-			</div>
-			<div class="modal-body">
-                <table style="width:100%">
-                    <!-- Table Style -->
-                    <tr>
-                        <td style="width:25%"><h4 class="modal-title modal-left">Name Filter</h4></td>
-                        <td>
-                            <input type="text" id="search-name" class='bordered wide-textbox'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
-                        <td>
-                            <nav>
-                                <ul class="pagination">
-                                    <li id="search-gender-1" class="active"><a href="#"  onclick="changeSearchGender(1)">All</a></li>
-                                    <li id="search-gender-2"><a href="#" onclick="changeSearchGender(2)">Male</a></li>
-                                    <li id="search-gender-3"><a href="#" onclick="changeSearchGender(3)">Female</a></li>
-                                </ul>
-                            </nav>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>
-                        <td>
-                            <input type="text" id="search-source" class='bordered wide-textbox'/>
-                        </td>
-                    </tr>
-                    <tr hidden>
-                        <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
-                        <td>
-                            <input type="text" id="search-tag" class='bordered wide-textbox'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%"><h4 class="modal-title modal-left">Sort By</h4></td>
-                        <td>
-                            <div class="dropdown">
-                                <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown" 
-                                  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <span id="sort-dropdown-selection">Featured</span>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">
-                                  <li><a href="#">Featured</a></li>
-                                  <li><a href="#">Newest</a></li>
-                                  <li><a href="#">Oldest</a></li>
-                                  <li><a href="#">Most Layers</a></li>
-                                  <li><a href="#">Fewest Layers</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                
-				<div class="modal-body-container" style="padding-top:4%;">
-					<button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeSearchModal()">Search</button>
-				</div>
-			</div>
-		</div>
-		<!-- End of Modal Content -->
-	</div>
-	</div>
-	</div>
-	</div>
-</div>
-<!-- End of Search Modal -->
+<div id="search-modal" class="modal table-modal fade"> 	<div class="modal-table-container"> 	<div class="modal-cell-container"> 	<div class="bordered modal-dialog wide-modal-dialog"> 	<div class="bordered modal-dialog-surface"> 		<!-- Start of Modal Content --> 		<div class="modal-content"> 			<div class="modal-header"> 				<h4 class="modal-title text-center">Search Options</h4> 			</div> 			<div class="modal-body">                 <table style="width:100%">                     <!-- Table Style -->                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Name Filter</h4></td>                         <td>                             <input type="text" id="search-name" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>                         <td>                             <nav>                                 <ul class="pagination">                                     <li id="search-gender-1" class="active"><a href="#"  onclick="changeSearchGender(1)">All</a></li>                                     <li id="search-gender-2"><a href="#" onclick="changeSearchGender(2)">Male</a></li>                                     <li id="search-gender-3"><a href="#" onclick="changeSearchGender(3)">Female</a></li>                                 </ul>                             </nav>                         </td>                     </tr>                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>                         <td>                             <input type="text" id="search-source" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr hidden>                         <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>                         <td>                             <input type="text" id="search-tag" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr>                         <td style="width: 25%"><h4 class="modal-title modal-left">Sort By</h4></td>                         <td>                             <div class="dropdown">                                 <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown"                                   type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">                                     <span id="sort-dropdown-selection">Featured</span>                                     <span class="caret"></span>                                 </button>                                 <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">                                   <li><a href="#">Featured</a></li>                                   <li><a href="#">Newest</a></li>                                   <li><a href="#">Oldest</a></li>                                   <li><a href="#">Most Layers</a></li>                                   <li><a href="#">Fewest Layers</a></li>                                 </ul>                             </div>                         </td>                     </tr>                 </table>                 				<div class="modal-body-container" style="padding-top:4%;"> 					<button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeSearchModal()">Search</button> 				</div> 			</div> 		</div> 		<!-- End of Modal Content --> 	</div> 	</div> 	</div> 	</div> </div> <!-- End of Search Modal -->
+
     
     
 <!-- Start of Restart Modal -->
@@ -1079,71 +1009,9 @@
 		<div class="modal-content">
 			<div class="modal-header">
               <h3 class="modal-title text-center"><b>Credits</b></h3>
-				<h5 class="modal-subtitle text-center">If you have a problem with this list, for whatever reason, contact a mod on the subreddit to get the issue resolved.</h5>
-			</div>
+            </div>
 			<div class="modal-body">
-				<table class="modal-body-stretch-container" style="margin: 0 auto;">
-				<tr><td style="width:100%">
-					<table class="credit-table">
-						<tr>
-                            <td><b>josephkantel</b></td>
-                            <td>Main Programmer</td>
-						</tr>
-                        <tr>
-                            <td><b>undeadclown</b></td>
-                            <td>Dialogue Writer & Original Source</td>
-                        </tr>
-                        <tr>
-                            <td><b>krisslanza</b></td>
-                            <td>Dialogue Writer</td>
-                        </tr>
-                        <tr>
-                            <td><b>TeratonArm</b></td>
-                            <td>Dialogue Writer</td>
-                        </tr>
-                        <tr>
-                            <td><b>Hot-Legs</b></td>
-                            <td>Supporter</td>
-                        </tr>
-                        <tr>
-                            <td><b>Zombiqaz</b></td>
-                            <td>Programmer, Dialogue Writer, & Artist</td>
-                        </tr>
-                        <tr>
-                            <td><b>SPNATI</b></td>
-                            <td>Supporter</td>
-                        </tr>
-                        <tr>
-                            <td><b>DBZRulez</b></td>
-                            <td>Artist</td>
-                        </tr>
-                        <tr>
-                            <td><b>GlassOfCereal</b></td>
-                            <td>Artist</td>
-                        </tr>
-                        <tr>
-                            <td><b>JayJaysie</b></td>
-                            <td>Dialogue Writer & Artist</td>
-                        </tr>
-                        <tr>
-                            <td><b>throwaway3141598</b></td>
-                            <td>Dialogue Writer & Artist</td>
-                        </tr>
-                        <tr>
-                            <td><b>Sutorippu</b></td>
-                            <td>Nugi-chan Provider & Dialogue Writer</td>
-                        </tr>
-                        <tr>
-                            <td><b>DrankeyKrang</b></td>
-                            <td>Artist & Dialogue Writer</td>
-                        </tr>
-                        <tr>
-                            <td><b>spnatinoobprogrammer</b></td>
-                            <td>Programmer</td>
-                        </tr>
-					</table>
-				</td></tr>
-				</table>
+				Look, it's a lot of people. More people than can be listed in this tiny little window. A better list will be compiled in the future so that everyone can get the credit they deserve for this project.
 			</div>
 			<div class="modal-footer">
 				<button id="credit-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
@@ -1171,69 +1039,63 @@
 			</div>
 			<div class="modal-body">
 				<table class="modal-body-stretch-container" style="margin: 0 auto;">
-				    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.25.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Shantae, Seven of Nine, Meg Thomas, and Shazza have joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.24.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Lyn and Raven have joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.23.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Sonya, Buffy, and D.Va have joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.22.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Alice and Ruby have joined the game!
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.21.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Warning screen added.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.20.0
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        Jasmine and Korra have joined the game!
-                      </td>
-                    </tr>
-					<tr>
-                      <td style="width:10%; padding-bottom: 1.5%">
-                        v11.19.1
-                      </td>
-                      <td style="width:5%"></td>
-                      <td style="width:85%; padding-bottom: 1.5%">
-                        A bunch of new dialogue options for writers.
-                      </td>
-                    </tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.32.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        This update is a secret.
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.31.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        End game bug fix and a change to the random opponent options.
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.30.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        New opponent sorting options! Available on the selection screen in the search window (click the magnifying glass).
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.29.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Elena has joined the game!
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.28.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Caleb has joined the game!
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.27.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Revy has joined the game!
+                    </td></tr>
+                    
+				    <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.26.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Xander has joined the game!
+                    </td></tr>
+                    
 				</table>
 			</div>
 			<div class="modal-footer">
@@ -1303,6 +1165,9 @@
     <button id="game-settings-button" class="bordered smooth-button smooth-button-red dock-options-button" onclick="showOptionsModal()">
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
+    <button id="debug-button-0" class="bordered player-debug-button" onclick="selectDebug(0)" hidden>
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
     
     
     <!-- Game Table -->
@@ -1318,6 +1183,9 @@
           <img id="player-1-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-1-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="debug-button-1" class="bordered debug-button" onclick="selectDebug(1)" hidden>
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
       </div>
       <div id="game-opponent-area-2" class="bordered halfLeft opponent-area">
         <div id="game-name-label-2" class="bordered opponent-name-label">Opponent 2</div>
@@ -1328,6 +1196,9 @@
           <img id="player-2-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-2-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="debug-button-2" class="bordered debug-button" onclick="selectDebug(2)" hidden>
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
       </div>
       <div id="game-opponent-area-3" class="bordered halfRight opponent-area">
         <div id="game-name-label-3" class="bordered opponent-name-label">Opponent 3</div>
@@ -1338,6 +1209,9 @@
           <img id="player-3-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-3-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="debug-button-3" class="bordered debug-button" onclick="selectDebug(3)" hidden>
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
       </div>
       <div id="game-opponent-area-4" class="bordered right opponent-area">
         <div id="game-name-label-4" class="bordered opponent-name-label">Opponent 4</div>
@@ -1348,6 +1222,9 @@
           <img id="player-4-card-4" class="bordered small-card-image" src="img/blankcard.jpg">
           <img id="player-4-card-5" class="bordered small-card-image" src="img/blankcard.jpg">
         </div>
+        <button id="debug-button-4" class="bordered debug-button" onclick="selectDebug(4)" hidden>
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
       </div>
       
       <!-- Player Clothing and Label -->
