@@ -480,7 +480,7 @@ function completeRevealPhase () {
     /* figure out who has the lowest hand */
     recentLoser = determineLowestHand();
     
-    if (chosenDebug !== -1) {
+    if (chosenDebug !== -1 && DEBUG) {
         recentLoser = chosenDebug;
     }
     
@@ -782,6 +782,7 @@ function showRestartModal () {
  ************************************************************/
 function game_keyUp(e) 
 {
+    console.log(e);
     if (KEYBINDINGS_ENABLED) {
         if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
             advanceGame();
@@ -801,7 +802,7 @@ function game_keyUp(e)
         else if (e.keyCode == 53 && !$cardButtons[0].prop('disabled')) { // 5
             selectCard(0);
         }
-        else if (e.keyCode == 67 && DEBUG) {
+        else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;
             updateDebugState(showDebug);
         }
