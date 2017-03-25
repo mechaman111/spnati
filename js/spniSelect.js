@@ -218,7 +218,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (folder, index=undefined) {
+function loadOpponentMeta (folder, index) {    
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
