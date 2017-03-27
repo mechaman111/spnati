@@ -251,6 +251,10 @@ function validateTitleScreen () {
     
     /* dress the player */
     wearClothing();
+    
+    /* set human id */
+    players[HUMAN_PLAYER].folder = "opponents/human/";
+    
 	console.log(players[0]);
     
     screenTransition($titleScreen, $selectScreen);

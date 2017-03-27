@@ -169,6 +169,14 @@ function updateGameVisual (player) {
 
             /* update label */
             $gameLabels[player].html(players[player].label);
+            
+            /* check silence */
+            if (chosenState.silent) {
+                $gameBubbles[player-1].hide();
+            }
+            else {
+                $gameBubbles[player-1].show();
+            }
         } else {
             /* hide their dialogue bubble */
             $gameDialogues[player-1].html("");

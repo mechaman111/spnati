@@ -11,10 +11,11 @@
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
-function createNewState (dialogue, image, direction) {
+function createNewState (dialogue, image, direction, silent) {
 	var newStateObject = {dialogue:dialogue,
                           image:image,
-                          direction:direction};
+                          direction:direction,
+                          silent:silent};
 						  
 	return newStateObject;
 }
@@ -178,6 +179,7 @@ function parseDialogue (caseObject, replace, content) {
         var image = $(this).attr('img');
         var dialogue = $(this).html();
         var direction = $(this).attr('direction');
+        var silent = $(this).attr('silent');
         
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
@@ -185,7 +187,14 @@ function parseDialogue (caseObject, replace, content) {
 			}
 		}
         
-        states.push(createNewState(dialogue, image, direction));
+        if (silent !== null && typeof silent !== typeof undefined) {
+            silent = true;
+        }
+        else {
+            silent = false;
+        }
+        
+        states.push(createNewState(dialogue, image, direction, silent));
 	});
 	
 	return states;
@@ -269,7 +278,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			
 			// target (priority = 300)
 			if (opp !== null && typeof target !== typeof undefined && target !== false) {
-				target = "opponents/" + target + "/";
+                target = "opponents/" + target + "/";
 				if (target === opp.folder) {
 					totalPriority += 300; 	// priority
 				}
