@@ -343,7 +343,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var foundEm = false;
 				var j = 0;
 				for (j = 0; j < players.length && foundEm === false; j++) {
-					if (opp !== players[j]) {
+					if (players[j] !== null && opp !== players[j]) {
 						if ("opponents/" + alsoPlaying + "/" === players[j].folder) {
 							totalPriority += 100; 	// priority
 							foundEm = true;
