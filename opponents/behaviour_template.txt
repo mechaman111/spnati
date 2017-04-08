@@ -25,6 +25,8 @@ description=Description of the character for the More Info button
 #layers=2-8. This value is not inserted into meta.xml automatically.
 #release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
 
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-calm,This is what the character says after they've been selected
 
 
@@ -48,7 +50,7 @@ clothes=Panties,panties,important,lower
 
 #Notes on dialogue
 #All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
-#Where two lines are an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character must speak it.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
 #A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
 #Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
 #You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
@@ -946,3 +948,82 @@ ending=This is the title of the character's ending, and the start of a new endin
 		y=50%
 
 #if you want additional endings, start the new one with the "ending" line
+
+
+
+#CHARACTER-SPECIFIC LINES TO PASTE INTO behavior.xml
+#Lines can be targeted at specific characters at specific stages in the game. The best way to learn how to use these is to read these in an existing character's document.
+#There are a large number of case variables you can specify, and many can be used in conjunction if you want to get really specific, like a line to Link if he's the only male, he's removing his tunic, he had three of a kind, and Zelda is present and got a royal flush.
+# tag="situation" - This is what is happening in the game, using the same labels you used for the dialogue. This field is mandatory.
+# target="character" - This is where you put the character's name that you want to specifically target. This is optional, but you'll probably be using this, a filter, or an alsoPlaying. The tag name is the character's folder name, which is usually their first name. You can target the human player by targeting the "human" folder.
+# filter="tag" - Instead of using a specific target, you can target a group of people using a filter like "princess". These descriptor tags aren't to be confused with the "tag=" line above.
+# targetStage="0" - You can specify which stage the target is in when saying the line. If it's something that only happens once to a character, like a breast reveal, this is unnecessary. But if you use it on something more common like "female_must_strip", this will limit it to a particular occasion and will ensure that the line is only spoken once per game.
+# alsoPlaying="character" - This is used either by itself for a situation that doesn't have a target like "good_hand" or "heavy_masturbating", or it can be used in conjunction with a target or filter to ensure that the speaker, the target, and someone else are all playing.
+# alsoPlayingStage="0" - Just like targetStage, but for the alsoPlaying character.
+# alsoPlayingHand="One Pair" - You can even tailor the responses to what the alsoPlaying character has as a hand. Possibilities are: High Card, One Pair, Two Pair, Three of a Kind, Straight, Flush, Full House, Four of a Kind, Straight Flush, Royal Flush.
+# hasHand="Two Pair" - Like alsoPlayingHand, but for the character who is speaking.
+# oppHand="Three of a Kind" - Like alsoPlayingHand and hasHand, but for the targeted/filtered character
+# totalMales="1" - You can make some lines be spoken if only an exact number of males are playing. This includes the player character.
+# totalFemales="4" - Like the above option, but for females.
+# silent="" - You can add this to the case to make the dialogue box disappear entirely.
+# img="0-calm.png" - After state, the image name is specified. To make this work correctly, you must specify both the stage and add .png.
+
+#Because all of these are behind # symbols, make_xml.py will ignore these. They must be pasted in separately into the behaviour.xml after it is generated. Copy them to a blank document and to a find-replace on the # symbol to remove them all in one action, then copy each group into the appropriate section.
+#Below are some example lines for usage reference only. Please replace or delete the lines below, then delete this line so that nobody deletes the lines you replace them with.
+
+#Paste lines in this section into the end of stage 0 (fully dressed)
+#<case tag="female_removing_accessory" target="alice"><state img="0-IMAGENAMEHERE.png">Alice, I'm certain that you're going to remove your boots, apron, or stockings.</state></case>
+#<case tag="female_removed_accessory" target="amy_rose"><state img="0-IMAGENAMEHERE.png">Amy Rose, thanks for taking off your boots or bracelets. I can't tell which because I don't know what stage you're on.</state></case>
+#<case tag="female_removing_minor" target="annie"><state img="0-IMAGENAMEHERE.png">Because Annie doesn't have any minor-class items, she will never hear this line.</state></case>
+#<case tag="female_removed_minor" target="april"><state img="0-IMAGENAMEHERE.png">Hey, April, radical boots! You only have boots as a minor item, so I didn't have to use targetStage to know that!</state></case>
+
+#Paste lines in this section into the end of stage 1 (lost clothing piece one)
+#<case tag="female_removing_major" target="asuna"><state img="1-IMAGENAMEHERE.png">Asuna, you're removing your top or skirt, and I've only lost one item!</state></case>
+#<case tag="female_removing_major" target="blackrose"><state img="1-IMAGENAMEHERE.png">BlackRose, you finished removing your armor or top.</state></case>
+#<case tag="female_chest_will_be_visible" target="buffy"><state img="1-IMAGENAMEHERE.png">Let's see some breasts, Buffy!</state></case>
+#<case tag="female_small_chest_is_visible" target="chara"><state img="1-IMAGENAMEHERE.png">Chara, because you don't have a small chest anymore, you will never hear this line. I should've done my research!</state></case>
+#<case tag="female_small_chest_is_visible" target="chell"><state img="1-IMAGENAMEHERE.png">I know you can hear me, Chell. You've got small boobs!</state></case>
+#<case tag="female_medium_chest_is_visible" target="d.va"><state img="1-IMAGENAMEHERE.png">A tight bodysuit is nice, but nothing beats real nudity!</state></case>
+#<case tag="female_large_chest_is_visible" target="tifa"><state img="1-IMAGENAMEHERE.png">Just looking at you gives me back problems...</state></case>
+
+#Paste lines in this section into the end of stage 2 (lost clothing piece two)
+#<case tag="female_crotch_will_be_visible" target="daisy"><state img="2-IMAGENAMEHERE.png">You're racing right out of those panties, Daisy.</state></case>
+#<case tag="female_crotch_is_visible" target="daphne" alsoPlaying="fred"><state img="2-IMAGENAMEHERE.png">Fred, take a look. I know you want to.</state></case>
+#<case tag="female_must_masturbate" target="daria" alsoPlaying="jane"><state img="2-IMAGENAMEHERE.png">Jane, I'm curious. Is this the first time you're seeing Daria do this?</state></case>
+#<case tag="female_start_masturbating" target="dawn" alsoPlaying="misty" alsoPlayingStage="6"><state img="2-IMAGENAMEHERE.png">Nice start! Misty, you're one loss away from doing this too!</state></case>
+#<case tag="female_masturbating" target="elaine" alsoPlaying="twilight" alsoPlayingStage="8"><state img="2-IMAGENAMEHERE.png">You can copy Elaine if you're having trouble, Twilight Sparkle.</state></case>
+#<case tag="female_finished_masturbating" target="elena" alsoPlaying="streaming-chan"><state img="2-IMAGENAMEHERE.png">Do you archive your livestreams of masturbating princesses? I'm asking for a friend.</state></case>
+
+#Paste lines in this section into the end of stage 3 (lost clothing piece three)
+#<case tag="good_hand" alsoPlaying="elizabeth"><state img="3-IMAGENAMEHERE.png">My hand is awesome! What did you get, Elizabeth?</state></case>
+#<case tag="okay_hand" alsoPlaying="fred"><state img="3-IMAGENAMEHERE.png">Fred, I think I see a poorly-disguised ghost over there!</state></case>
+#<case tag="bad_hand" alsoPlaying="harley" alsoPlayingStage="harley"><state img="3-IMAGENAMEHERE.png">Harley, you haven't even lost a single hand! Are you cheating?</state></case>
+#<case tag="stripping" totalMales="4"><state img="3-IMAGENAMEHERE.png">I'm not used to stripping with so many guys around...</state></case>
+#<case tag="stripped" silent=""><state img="3-IMAGENAMEHERE.png">This is a silent line with no dialogue box, so don't type anything here. stripped is for when you just arrive in the stage and stripping is for when you're leaving it.</state></case>
+
+#Paste lines in this section into the end of stage 4 (lost clothing piece four)
+#<case tag="female_chest_will_be_visible" filter="shy"><state img="4-IMAGENAMEHERE.png">What are you so shy about? You're just exposing your breasts to total strangers for the first time.</state></case>
+#<case tag="female_crotch_will_be_visible" oppHand="Two Pair"><state img="4-IMAGENAMEHERE.png">Ouch! You're losing your ~clothing~ when you had two pair? Tough break...</state></case>
+
+#Paste lines in this section into the end of stage 5 (lost clothing piece five)
+#<case tag="female_removing_minor" target="hermione" targetStage="0"><state img="5-IMAGENAMEHERE.png">I'm guessing that you're going to take off your shoes.</state></case>
+#<case tag="female_removed_minor" target="hermione" targetStage="1"><state img="5-IMAGENAMEHERE.png">Yep, it was your shoes.</state></case>
+#<case tag="female_removing_minor" target="hermione" targetStage="1"><state img="5-IMAGENAMEHERE.png">I'm guessing that you're going to take off your stockings.</state></case>
+#<case tag="female_removing_minor" target="hermione" targetStage="2"><state img="5-IMAGENAMEHERE.png">I'm guessing that you're going to take off your sweater.</state></case>
+#<case tag="female_removing_accessory" target="hermione"><state img="5-IMAGENAMEHERE.png">You only have one accessory, so I guess your tie is next.</state></case>
+#<case tag="female_removing_major" target="hermione" targetStage="4"><state img="5-IMAGENAMEHERE.png">I'm guessing that you're going to take off your shirt.</state></case>
+#<case tag="female_removing_major" target="hermione" targetStage="5"><state img="5-IMAGENAMEHERE.png">I'm guessing that you're going to take off your skirt.</state></case>
+#<case tag="female_chest_will_be_visible" target="hermione"><state img="5-IMAGENAMEHERE.png">There's only one state of dress in which you can reveal your breasts. Let's see them.</state></case>
+#<case tag="female_crotch_will_be_visible" target="hermione"><state img="5-IMAGENAMEHERE.png">Panties time!</state></case>
+
+#Paste lines in this section into the end of stage 6 (lost clothing piece six)
+
+#Paste lines in this section into the end of stage 7 (lost clothing piece seven)
+
+#Paste lines in this section into the end of naked stage
+
+#Paste lines in this section into the end of masturbation stage
+#<case tag="female_must_masturbate" filter="innocent"><state img="?-IMAGENAMEHERE.png">Come over here and I can show you how that's done.</state></case>
+
+#Paste lines in this section into the end of finished stage
+#<case tag="female_finished_masturbating" target="jasmine" totalFemales="5"><state img="?-IMAGENAMEHERE.png">Did you enjoy the commoner experience, princess? Now let's watch these other girls compete.</state></case>
