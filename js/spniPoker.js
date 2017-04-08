@@ -327,11 +327,46 @@ function animateDealtCard (player, card) {
 	var top = offset.top - $gameHiddenArea.offset().top;
 	var left = offset.left - $gameHiddenArea.offset().left - 6;
 
-	$clonedCard.animate({top:top, left:left}, ANIM_TIME, function() {
+	// Skip animation time calculation if skipping animation
+	if (ANIM_TIME === 0) {
+		var animTime = 0;
+	} else {
+		// Set card speed according to desired time to deal card to farthest position
+		var speed = getFarthestDealDistance() / ANIM_TIME;
+		var distance = offsetDistance($clonedCard.offset(), {left: left, top: top});
+		var animTime = distance / speed;
+	}
+
+	$clonedCard.animate({top:top, left:left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
 		$cardCells[player][card].attr('src', UNKNOWN_CARD_IMAGE);
 		dealLock++;
 	});
+}
+
+/************************************************************
+ * Get the farthest distance between any player card and the dealer
+ ************************************************************/
+function getFarthestDealDistance()
+{
+	return offsetDistance($('#player-4-card-5').offset(), $('#hidden-large-card').offset());
+}
+
+/************************************************************
+ * Get the distance between 2 offsets (objects with top & left)
+ ************************************************************/
+function offsetDistance (offset1, offset2)
+{
+	return distance2d(offset1.left, offset1.top, offset2.left, offset2.top);
+}
+
+
+/************************************************************
+ * Pythagorean theorem for 2 dimensions
+ ************************************************************/
+function distance2d (x1, y1, x2, y2)
+{
+	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
 /**********************************************************************
