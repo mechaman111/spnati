@@ -2,6 +2,9 @@
 
 # To use: python xml_unique_line_counter.py --file C:\file_path_here\GitHub\spni.github.io\opponents\character_name\behaviour.xml
 # Verbose: python xml_unique_line_counter.py --file C:\file_path_here\GitHub\spni.github.io\opponents\character_name\behaviour.xml --verbose
+# To specify a different output directory:
+#   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -o path\to\save\output\file
+
 
 # Parser:
 # pip install html5lib
@@ -45,8 +48,19 @@ def parse(f):
 
 if __name__ == '__main__':
     verbose = None
+    output_dir = os.path.dirname(__file__)
 
-    log_file = os.path.join(os.path.dirname(__file__),"output.log")
+    argv = sys.argv[1:]
+    opts, args = getopt.getopt(argv, "d:vf:o:", ["download=", "verbose", "file=", "output="])
+    for opt, arg in opts:
+        if opt in ("-v", "--verbose"):
+            verbose = True
+        elif opt in ("-f", "--file"):
+            file_ = arg
+        elif opt in ("-o", "--output"):
+            output_dir = arg
+            
+    log_file = os.path.join(output_dir, "line_count.log")
     file_hndlr = logging.FileHandler(log_file)
     logger.addHandler(file_hndlr)
     console = logging.StreamHandler(stream=sys.stdout)
@@ -54,14 +68,6 @@ if __name__ == '__main__':
     ch = logging.Formatter('[%(levelname)s] %(message)s')
     console.setFormatter(ch)
     file_hndlr.setFormatter(ch)
-
-    argv = sys.argv[1:]
-    opts, args = getopt.getopt(argv, "d:vf:", ["download=", "verbose", "file="])
-    for opt, arg in opts:
-        if opt in ("-v", "--verbose"):
-            verbose = True
-        elif opt in ("-f", "--file"):
-            file_ = arg
 
     if verbose:
         logger.setLevel(logging.getLevelName('DEBUG'))
