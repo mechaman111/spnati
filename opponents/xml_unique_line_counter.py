@@ -4,12 +4,13 @@
 # Verbose: python xml_unique_line_counter.py --file C:\file_path_here\GitHub\spni.github.io\opponents\character_name\behaviour.xml --verbose
 # To specify a different output directory:
 #   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -o path\to\save\output\file
+# To have the lines appear by most frequent first:
+#   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -s
 
 
 # Parser:
 # pip install html5lib
 # pip install beautifulsoup4
-
 
 from bs4 import BeautifulSoup
 import os
@@ -19,7 +20,7 @@ import logging
 from collections import Counter
 
 logger = logging.getLogger(os.path.basename(__file__))
-
+sort_most_frequent = False
 
 def parse(f):
 
@@ -37,12 +38,18 @@ def parse(f):
         logger.debug('Found text: {}. Line number: {}'.format(text_.encode('utf-8'), c))
         l_.append(text_)
     logger.debug('****  Count *****')
-    d = dict(Counter(l_))
+    
+    d = Counter(l_)
     ctr = 1
-
-    for k, v in d.iteritems():
+    
+    line_iter_items = d.iteritems()
+    if sort_most_frequent: # if the "-s" flag is enabled, order by most frequent lines first
+        line_iter_items = d.most_common()
+    
+    for k, v in line_iter_items:
         logger.info('{} --> Frequency: {}, Line count: {}'.format(k.encode('utf-8'), v, ctr))
         ctr += 1
+        
     logger.info('Unique dialogue count: {}'.format(len(d)))
 
 
@@ -51,7 +58,7 @@ if __name__ == '__main__':
     output_dir = os.path.dirname(__file__)
 
     argv = sys.argv[1:]
-    opts, args = getopt.getopt(argv, "d:vf:o:", ["download=", "verbose", "file=", "output="])
+    opts, args = getopt.getopt(argv, "d:vf:o:s", ["download=", "verbose", "file=", "output=", "sortfreq"])
     for opt, arg in opts:
         if opt in ("-v", "--verbose"):
             verbose = True
@@ -59,9 +66,11 @@ if __name__ == '__main__':
             file_ = arg
         elif opt in ("-o", "--output"):
             output_dir = arg
+        elif opt in ("-s", "--sortfreq"):
+            sort_most_frequent = True
             
     log_file = os.path.join(output_dir, "line_count.log")
-    file_hndlr = logging.FileHandler(log_file)
+    file_hndlr = logging.FileHandler(log_file, mode='w')
     logger.addHandler(file_hndlr)
     console = logging.StreamHandler(stream=sys.stdout)
     logger.addHandler(console)
