@@ -43,27 +43,9 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 #default card behaviour
 #you can include multiple entries to give the character multiple lines and/or appearances in that situation.
 #This is what a character says while they're exchanging cards.
-#swap_cards=calm,Hey you, give me ~cards~ cards.
-#swap_cards=calm,Ugh, I'll take ~cards~ cards.
-#swap_cards=calm,I'm getting the hang of this! Give me ~cards~ new cards.
-
-#The character thinks they have a good hand
-#good_hand=happy,Oh, these are great cards! Um, right?
-#good_hand=happy,Yes!...I think.
-#good_hand=happy,A hand deserving of a princess.
-#good_hand=happy,Yes! Fear the almighty power of my cards! Cower as they pillage your homes and weep as they take your children from your very arms!
-#good_hand=happy, A+!
-
-#The character thinks they have an okay hand
-#okay_hand=calm,I don't really know what I'm doing. I think these are okay?
-#okay_hand=calm,Well, some of these have letters instead of numbers on them. Is that a good thing?
-#okay_hand=calm,Okay...I guess.
-#okay_hand=calm,Can I win with this hand?
-
-#The character thinks they have a bad hand
-#bad_hand=angry,Curses, I give up!
-#bad_hand=angry,Why am I even still playing? Curse you Ruby!
-#bad_hand=sad,I have...absolutely no idea what's going on...
+swap_cards=calm,Hey you, give me ~cards~ cards.
+swap_cards=calm,Ugh, I'll take ~cards~ cards.
+swap_cards=calm,I'm getting the hang of this! Give me ~cards~ new cards.
 
 #situations where another male character is stripping
 #male_human_must_strip=interested,Hah! you lose, ~name~!
@@ -76,7 +58,6 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 #male_removed_minor=calm,Okay, let's move on...
 
 #male_removing_major=angry,W-what are you doing? Don't take that off! I'm standing right here you pervert!
-#male_removed_major=calm,This is so wrong...
 
 #male_chest_will_be_visible=angry,Really? I don't care about your chest...
 #male_chest_is_visible=interested,Oh, um...not bad. Sun has you beat though. But both of you idiots should really keep your shirts on!
@@ -155,33 +136,44 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 0-good_hand=happy,Yes! Fear the  almighty power of my cards! Cower as they pillage your homes and weep as  they take your children from your very arms!
 0-okay_hand=calm, I hope I'm not the first to lose...
 0-okay_hand=calm, This game doesn't seem too hard...  Right?
+0-okay_hand=calm,I don't really know what I'm doing. I think these are okay?
+0-okay_hand=calm,Well, some of these have letters instead of numbers on them. Is that a good thing?
 0-bad_hand=sad,So, what happens if I lose again?
 0-bad_hand=sad,What are these things in the corners?  Are they supposed to be different?
 
 #lost one item
 1-good_hand=happy, I'm not sure, but I believe this is a good hand.
 1-good_hand=happy, I think I'm starting to get this game!
+1-good_hand=happy,Oh, these are great cards! Um, right?
 1-okay_hand=calm,Could be a bit worse.  I think.
 1-bad_hand=sad, I'm not sure these cards are good...
+1-bad_hand=angry,Curses, I give up!
+1-bad_hand=sad,I have...absolutely no idea what's going on...
 
 #lost two items
 2-good_hand=happy,These look like they might be good!
 2-good_hand=happy,Fit for a princess!  Or, heiress, even.
+2-good_hand=happy,A+!
 2-okay_hand=calm,These look alright, though I'm not sure...
-2-bad_hand=sad,My cards are amazing, why are you looking at me like that?  They are!
+2-okay_hand=calm,Okay...I guess.
+2-bad_hand=sad,My cards are amazing! Why are you looking at me like that?  They are!
 
 #lost three items
 3-good_hand=happy,Safe for now!  Haha!
 3-good_hand=happy,You won't see me losing this hand!
+3-good_hand=happy,Yes!...I think.
 3-okay_hand=calm,Let's hope this is good enough.
+3-okay_hand=calm,Can I win with this hand?
 3-bad_hand=sad,These cards aren't that great...
 
 #lost 4 items
 4-good_hand=happy,I'm not losing this round!
 4-good_hand=happy,I won't be the one to lose this time!
+4-good_hand=happy,A hand deserving of a princess.
 4-okay_hand=calm,I've done more with less.
 4-bad_hand=sad,Can I pay to change cards?  I have money.
 4-bad_hand=sad,I'm a heiress, I deserve better!
+4-bad_hand=angry,Why am I even still playing? Curse you Ruby!
 
 #lost 5 items
 5-good_hand=embarrassed,I won't lose!  My family won't have it!
@@ -191,23 +183,20 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-bad_hand=embarrassed,I'm serious, I have money to spare if someone wants to let me swap cards.
 5-bad_hand=embarrassed,I fight monsters as a career, but that's nothing compared to this...
 
-#lost 6 items
-6-good_hand=happy,Oh, my, I was worried for a second.
-6-good_hand=happy,Just what I needed!
-6-good_hand=happy,I've gathered enough to know I'm safe!
-6-okay_hand=sad,I really need these to pull through for me.
-6-okay_hand=embarrassed,Oh, please be enough!
-6-bad_hand=embarrassed,M-my cards are g-great!  I'm going to win... 
-6-bad_hand=embarrassed,Someone be worse someone be worse someone be worse...
-6-bad_hand=embarrassed,No no no no nooooo...
-
-#lost all clothing
-#using negative numbers counts back from the final stage
-#-3 is while nude, -2 is masturbating, -1 is finished
-#this lets you use the same numbers with different amounts of clothing
+#nude
+-3-good_hand=happy,Oh, my, I was worried for a second.
+-3-good_hand=happy,Just what I needed!
+-3-good_hand=happy,I've gathered enough to know I'm safe!
 -3-good_hand=happy,At least this hand seems good.
--3-okay_hand=embarrassed,This needs to be enough, it needs to!
+-3-okay_hand=sad,I really need these to pull through for me.
+-3-okay_hand=embarrassed,Oh, please be enough!
+-3-okay_hand=embarrassed,This needs to be enough! It needs to!
+-3-bad_hand=embarrassed,M-my cards are g-great!  I'm going to win... 
+-3-bad_hand=embarrassed,Someone be worse someone be worse someone be worse...
+-3-bad_hand=embarrassed,No no no no nooooo...
 -3-bad_hand=embarrassed,Oh, this is horrible!  I don't want to...
+
+
 
 #character is stripping situations
 #Losing Jewelry
@@ -219,7 +208,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 1-stripped=stripped,That jewelry is replacable with my wealth. So keep it.
 
 #Losing Boots
-1-must_strip_winning=loss,It's My Turn?
+1-must_strip_winning=loss,<i>It's My Turn?</i>
 1-must_strip_winning=loss,I lost that round? I was beginning to think I couldn't lose!
 1-must_strip_normal=loss,You win some you lose some I guess...
 1-must_strip_losing=loss,I lost again? I can't be this bad at poker! Someone must be cheating!
@@ -266,11 +255,11 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-must_strip_losing=loss,NO! N-O! Absolutely not! There's no way I'm doing this!
 5-stripping=strip,F-fine! I'll play by the stupid rules. Just...look away!
 5-stripping=strip,OKAY FINE! I'll take off my panties! But none of you can look! Don't you dare look at me naked!
-6-stripped=stripped,I can't believe I'm standing here naked...this was your plan all along, wasn't it?!
-6-stripped=stripped,Stop! Don't look! This shouldn't be happening! I want my clothes back now!
-6-stripped=stripped,I'm an heiress! I deserve better treatment! This isn't fair!
-6-stripped=stripped,I'm supposed to uphold a legacy... And I'm like this...
-6-stripped=stripped,I think I'd just die if Jaune was here...
+-3-stripped=stripped,I can't believe I'm standing here naked...this was your plan all along, wasn't it?!
+-3-stripped=stripped,Stop! Don't look! This shouldn't be happening! I want my clothes back now!
+-3-stripped=stripped,I'm an heiress! I deserve better treatment! This isn't fair!
+-3-stripped=stripped,I'm supposed to uphold a legacy... And I'm like this...
+-3-stripped=stripped,I think I'd just die if Jaune was here...
 
 ##other player must strip specific
 #Fully Clothed
@@ -337,18 +326,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_must_strip=embarrassed,Please, join me so I'm not alone...
 5-female_must_strip=calm,If you could lose again...
 
-#lost 6 items
-6-male_human_must_strip=calm,Don't think this gives you permission to look at me.
-6-male_human_must_strip=angry,You have no idea how much pleasure it gives me to see this. N-no wait, that came out wrong, not THAT kind of pleasure! You know what I meant!
-6-male_must_strip=shocked,Just don't look at me when you do that!
-6-male_must_strip=angry,I'm not the only one in this room! Look at someone else while you do that!
-6-male_must_strip=angry,This view isn't for you, so stop staring and start stripping!
-6-female_human_must_strip=sad,At least they might look at you instead of me...
-6-female_must_strip=embarrassed,Good, now everyone stop staring at me!
-6-female_must_strip=embarrassed,Help a girl out, please.  
-
-
-#lost all clothing items
+#nude
 -3-male_human_must_strip=calm,Don't think this gives you permission to look at me.
 -3-male_human_must_strip=angry,You  have no idea how much pleasure it gives me to see this. N-no wait, that  came out wrong, not THAT kind of pleasure! You know what I meant!
 -3-male_must_strip=shocked,Just don't look at me when you do that!
@@ -443,15 +421,6 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_removed_accessory=interested,I'm sitting here like some sort of doll, and you take your ~clothing~ off?
 5-female_removed_accessory=sad,I really can't believe you...
 
-#lost 6 items
-6-male_removing_accessory=shocked,How can you still have that much!?
-6-male_removing_accessory=angry,Do you toy with poor naked girls often?!
-6-male_removed_accessory=embarrassed,This is some sort of power fantasy, isn't it!?
-6-male_removed_accessory=sarcastic,I bet you're getting off to this, aren't you?
-6-female_removing_accessory=shocked,How can you still have that much!?
-6-female_removing_accessory=sad,Is this really how you treat a poor girl who lost all of her clothes?
-6-female_removed_accessory=embarrassed,Do you like humiliating other girls!?
-6-female_removed_accessory=sarcastic,This is just some kind of girl on girl bullying, isn't it?
 
 #nude
 -3-male_removing_accessory=shocked,How can you still have that much!?
@@ -461,7 +430,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 -3-female_removing_accessory=shocked,How can you still have that much!?
 -3-female_removing_accessory=sad,Is this really how you treat a poor girl who lost all of her clothes?
 -3-female_removed_accessory=embarrassed,Do you like humiliating other girls!?
--3-female_removed_accessory=sarcastic,This is just some kind of girl on girl bullying, isn't it?
+-3-female_removed_accessory=sarcastic,This is just some kind of girl-on-girl bullying, isn't it?
 
 
 #masturbating
@@ -507,7 +476,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 
 
 #lost 2 items
-2-male_removing_minor=calm,Easy does it, boy.  
+2-male_removing_minor=calm,Easy does it, boy.
 2-male_removed_minor=sarcastic,I feel like my friend Sun might like you.
 2-male_removed_minor=sarcastic,Yawn...
 2-female_removing_minor=happy,I'm starting to feel warm, myself.  
@@ -541,15 +510,6 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_removed_minor=angry,Hey come on, us girls are supposed to stick together! Can't you even the playing field?
 
 
-#lost 6 items
-6-male_removing_minor=angry,You are the worst!
-6-male_removed_minor=embarrassed,I'm starting to never want to be seen again...
-6-male_removed_minor=sarcastic,You're doing this on purpose, aren't you?
-6-female_removing_minor=embarrassed,Can't you help a girl out!?
-6-female_removing_minor=shocked,Hey, you're going to take off something bigger, r-right?
-6-female_removed_minor=sad,I want to go home...
-6-female_removed_minor=angry,That's just cruel!
-
 #naked
 -3-male_removing_minor=angry,You are the worst!
 -3-male_removing_minor=sad,Is that really all you're going to...
@@ -557,7 +517,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 -3-male_removed_minor=calm,Okay stay calm Weiss, just remember your training...but wait, I wasn't trained for this!
 -3-female_removing_minor=embarrassed,Can't you help a girl out!?
 -3-female_removing_minor=angry,How could you be so cruel? Just look at me!
--3-female_removed_minor=sad,I want to go home...
+-3-female_removing_minor=shocked,Hey, you're going to take off something bigger, r-right?
 -3-female_removed_minor=sarcastic,Hmph, what a great friend you are...
 
 #masturbating
@@ -589,6 +549,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 0-female_removed_major=calm,I'm not sure what I think of this...
 0-female_removed_major=sarcastic,Well this sure is...something.
 
+
 #lost 1 item
 1-male_removing_major=interested,And I only lost my necklace...
 1-male_removing_major=sarcastic,And all I lost were my earrings...
@@ -599,6 +560,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 1-female_removed_major=sad,I don't want to end up like her...
 1-female_removed-major=interested,Hopefully that won't be the last we see from you...at least for my sake.
 
+
 #lost 2 items
 2-male_removing_major=angry,Are you looking at my feet!?
 2-male_removing_major=shocked,Hey, are you really looking at my feet while taking that off?!
@@ -608,6 +570,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 2-female_removed_major=happy,I can't lose now.
 2-female_removed_major=sarcastic,And there goes another one...
 
+
 #lost 3 items
 3-male_removing_major=interested,What are you thinking of right now?
 3-male_removed_major=sarcastic,Wait, do I want to know?
@@ -615,6 +578,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 3-female_removing_major=happy, Yes! Eyes aren't on me anymore!
 3-female_removed_major=sarcastic,That stupid Neptune would love this.
 3-female_removed_major=sad,This game is so strange.
+
 
 #lost 4 items
 4-male_removing_major=interested,Oh, you're taking that off?  But that's...  and I'm...
@@ -624,6 +588,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 4-female_removed_major=interested,Okay, start focusing Weiss!
 4-female_removed_major=shocked,This game is really heating up, huh?
 
+
 #lost 5 items
 5-male_removing_major=shocked,Can't you look the other way?
 5-male_removed_major=embarrassed,Can't you stay looking that way?
@@ -632,13 +597,6 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_removed_major=interested,I don't want to lose anything else...
 5-female_removed_major=shocked,If I lose again like her, then...
 
-#lost 6 items
-6-male_removing_major=embarrassed, This isn't how my first time naked in front of a boy was supposed to go...
-6-male_removed_major=sad,Can you at least call me, "Princess?" He was supposed to call me his princess...
-6-female_removing_major=shocked,I can't believe this is happening.
-6-female_removing_major=happy,Okay, another girl on the path to nudity! Being naked is totally normal now...just got to keep telling myself that.
-6-female_removed_major=embarrassed,Why can't you just join me already so people stop looking?
-6-female_removed_major=sarcastic,Mirror... tell me something...  How on earth did this day come to this!?
 
 #nude
 -3-male_removing_major=embarrassed,This isn't how my first time naked in front of a boy was supposed to go...
@@ -647,6 +605,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 -3-female_removing_major=happy,Okay,  another girl on the path to nudity! Being naked is totally normal  now...just got to keep telling myself that.
 -3-female_removed_major=embarrassed,Why can't you just join me already so people stop looking?
 -3-female_removed_major=sarcastic,Mirror... tell me something...  How on earth did this day come to this!?
+
 
 #masturbating
 -2-male_removing_major=horny,More!
@@ -665,6 +624,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 -1-female_removing_major=angry,You really couldn't have done this like ten minutes ago?!
 -1-female_removed_major=embarrassed,I want to go hide in a closet for a year.
 -1-female_removed_major=sarcastic,Just another step towards sitting on the floor naked, like me! Um...yeah...
+
 
 ##another character is removing important clothes
 #fully clothed
@@ -686,6 +646,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 0-female_crotch_is_visible=shocked,I thought that was only for when you're married...
 0-female_crotch_is_visible=interested,This is so weird, to be seeing that...and not from the perspective of my mirror.
 
+
 #lost 1 item
 1-male_chest_will_be_visible=sad,Beacon has dulled my excitement around shirtless men.
 1-male_chest_is_visible=interested,But, still...  You aren't the worst.
@@ -694,12 +655,14 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 1-male_medium_crotch_is_visible=embarrassed,I can't bear to look...  
 1-male_large_crotch_is_visible=embarrassed,Does that... fit?  Oh, my god, did I just ask that...
 
+
 1-female_chest_will_be_visible=shocked,But I only...  lost my...
 1-female_small_chest_is_visible=interested,Perky, like... mine...  I need to stop talking sometimes...
 1-female_medium_chest_is_visible=calm,I'm glad I shower at my dorm...  I don't know how I'd do this on a daily basis.
 1-female_large_chest_is_visible=shocked,They're so...  oh, my...
 1-female_crotch_will_be_visible=shocked,I can't believe you're about to...
 1-female_crotch_is_visible=embarrassed,I won't look, I promise!
+
 
 #lost 2 items
 2-male_chest_will_be_visible=sarcastic,Better than Jaune.
@@ -717,6 +680,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 2-female_crotch_is_visible=happy,Try to be confident! You won't lose to stares!
 2-female_crotch_is_visible=sarcastic,I'm annoyed just to be standing here barefoot, and yet you... Wow!
 
+
 #lost 3 items
 3-male_chest_will_be_visible=happy,Work it, boy!
 3-male_chest_is_visible=sarcastic,Are you flexing on purpose?
@@ -732,6 +696,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 3-female_crotch_will_be_visible=sad,I'm only missing my jacket...
 3-female_crotch_is_visible=embarrassed,I don't want that to change now...
 3-female_crotch_is_visible=sarcastic,But who am I to complain...
+
 
 #lost 4 items
 4-male_chest_will_be_visible=embarrassed,Just pretend you're at the beach...
@@ -749,6 +714,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 4-female_crotch_is_visible=interested,Not that I don't feel bad for you, of course!  I'm sorry...
 4-female_crotch_is_visible=sad,But I'm this close to losing that too... No! I can't think like that!
 
+
 #lost 5 items
 5-male_chest_will_be_visible=angry,Don't think this gives you the right to look!
 5-male_chest_is_visible=angry,Guys can be shirtless whenever! Us girls are supposed to have decency!
@@ -764,21 +730,6 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_crotch_will_be_visible=embarrassed,Oh, my god...
 5-female_crotch_is_visible=sad,I'm next if I lose...
 
-#lost 6 items
-6-male_chest_will_be_visible=embarrassed,I thought I'd like this part better...
-6-male_chest_is_visible=interested,Maybe I'd like you more if I wasn't standing here stark naked...
-6-male_crotch_will_be_visible=calm,I would pay to not see you do what you're about to do.  
-6-male_small_crotch_is_visible=shocked,I thought naked girls made it bigger?  Oh, Weiss, stop talking like that!
-6-male_medium_crotch_is_visible=shocked,I don't have to... if I lose, right?  I can't do that!  I can't!
-6-male_medium_crotch_is_visible=shocked,W-why are you pointing it at me?! And why does it look so har-... N-nevermind, stop staring!
-6-male_large_crotch_is_visible=embarrassed,Please tell me that that won't come near me if I lose!  
-
-6-female_chest_will_be_visible=sad,At least I feel a bit better...
-6-female_small_chest_is_visible=happy,I'm already naked.  There's no shame in saying I think those look very nice.  
-6-female_medium_chest_is_visible=sarcastic,I know plenty of boys would who love to be in a situation like this... 
-6-female_large_chest_is_visible=embarrassed,I know plenty of boys would who love to be in a situation like this...  "Best of Both Worlds..."  Oh, my god, I need to stop talking...
-6-female_crotch_will_be_visible=sarcastic,I don't know which is worse...
-6-female_crotch_is_visible=embarrassed,Me missing my top, or me missing my bottoms...  But now there's one more...
 
 #nude
 -3-male_chest_will_be_visible=embarrassed,I thought I'd like this part better...
@@ -897,7 +848,7 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 4-female_start_masturbating=interested,Rubbing like that...
 4-female_masturbating=interested,You're hands are so...
 4-female_masturbating=happy,At least everyone's looking at you, now!
-4-female_finished_masturbating=embarrassed,I'm scared that when I go home I'll hear someone on my team doing what you just did...
+4-female_finished_masturbating=embarrassed,I'm scared that when I go home, I'll hear someone on my team doing what you just did...
 4-female_finished_masturbating=shocked,W-wow, are you usually that loud? Oh my gosh what am I thinking, that's such a weird question...
 
 #lost 5 items
@@ -915,25 +866,11 @@ start=0-calm,So is this some kind of card game? I wish that idiot Ruby would hav
 5-female_masturbating=embarrassed,No, I'm not getting into this, am I?
 5-female_finished_masturbating=embarrassed,That was... But I don't like girls...?
 
-#lost 6 items
-6-male_must_masturbate=sad,Could you please close your eyes?
-6-male_start_masturbating=embarrassed,He's not looking at you he's not looking at you he's not looking at you...
-6-male_masturbating=embarrassed,He's thinking of you.  He's thinking of taking your virginity...
-6-male_masturbating=sarcastic,He's doing it while watching me...he's masturbating to me...Oh gosh...
-6-male_masturbating=shocked,Oh no, am I starting to get we- No! No! That can't be right! I would never! Oh my gosh...
-6-male_finished_masturbating=embarrassed,Oh, my god, I feel like a slut...
-
-6-female_must_masturbate=shocked,I can't lose... Not if I have to do that...
-6-female_start_masturbating=embarrassed,This isn't something I thought I'd see...
-6-female_masturbating=horny,I'm starting to enjoy it, though...  
-6-female_masturbating=interested,She looks so... confident...
-6-female_finished_masturbating=shocked,Have I become corrupted?  How will I face my team again without them finding out!?
-
 #nude
 -3-male_must_masturbate=sad,Could you please close your eyes?
 -3-male_start_masturbating=embarrassed,He's not looking at you he's not looking at you he's not looking at you...
 -3-male_masturbating=embarrassed,He's thinking of you.  He's thinking of taking your virginity...
--3-male_masturbating=sarcastic,He's doing it while watching me...he's masturbating to me...Oh gosh...
+-3-male_masturbating=sarcastic,He's doing it while watching me... he's masturbating to <i>me</i>... Oh gosh...
 -3-male_masturbating=shocked,Oh no, am I starting to get we- No! No! That can't be right! I would never! Oh my gosh...
 -3-male_finished_masturbating=embarrassed,Oh, my god, I feel like a slut...
 
@@ -992,12 +929,10 @@ heavy_masturbating=heavy,I feel like I'm about to...Oh no, please stop! Not in f
 heavy_masturbating=heavy,I'm playing with myself...completely naked, and I'm about to...in front of all these people...No!
 finishing_masturbating=finishing,Oh no...oh no..I-I'm...I'm cumming!
 finishing_masturbating=finishing,OH OH OH THIS IS IT! I'M CUMMING!
-finished_masturbating=sad,I can't believe I did that. I can't believe I even said that word. I can't believe it...felt good.
-finished_masturbating=interested,Do you guys play this game often? Maybe I'll have to come back sometime...
-finished_masturbating=horny,Ohhh... Wow... That felt amazing... I can't help these juices running down my leg... Gross...
+finished_masturbating=finished,I can't believe I did that. I can't believe I even said that word. I can't believe it... <i>felt good</i>.
+finished_masturbating=finished,Ohhh... Wow... That felt amazing... I can't help these juices running down my leg... Gross...
 
-game_over_defeat=interested,I can't believe that just happened.  But it felt so wrong... and yet so good...  I don't even know anymore...  
-game_over_victory=happy,I'm so, so glad that I just won... I don't know what I'd do with myself if I had to...  Oh, forget it!  I'm safe for now.
+game_over_defeat=embarrassed,I can't believe that just happened.  But it felt so wrong... and yet so good...  I don't even know anymore...  
 
 #victory lines. one for each stage.
 0-game_over_victory=embarrassed,I can't believe I just watched all that...  I'm so glad I won.  I don't know if I could handle coming again...
@@ -1006,56 +941,269 @@ game_over_victory=happy,I'm so, so glad that I just won... I don't know what I'd
 3-game_over_victory=embarrassed,I can't believe I just watched all that...  I'm so glad I won.  I don't know if I could handle coming again...
 4-game_over_victory=embarrassed,I can't believe I just watched all that...  You're not allowed to tell anyone anything!
 5-game_over_victory=embarrassed,I can't believe I just watched all that...  You're not allowed to tell anyone anything!
-6-game_over_victory=embarrassed,I can't believe I just watched all that...  You're not allowed to tell anyone anything!
-7-game_over_victory=embarrassed,I can't believe I just watched all that...  You're not allowed to tell anyone anything
--3-game_over_victory=embarrassed,I can't believe I just watched all that...  You're not allowed to tell anyone anything!
-
+-3-game_over_victory=embarrassed,I'm so, so glad that I just won... I don't know what I'd do with myself if I had to...  Oh, forget it!  I'm safe for now.
 
 
 #PASTE INTO BEHAVIOUR.XML AT THE BOTTOM OF EACH STAGE
+
+#Stage 0 (fully dressed)
+#<case tag="female_removing_major" target="blake"><state img="0-shocked.png">Blake, what are you doing!?</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="0-shocked.png">Blake, I never thought I'd...</state><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="0-shocked.png">Blake, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state><state img="0-shocked.png">Oh, my... You...</state><state img="0-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="0-shocked.png">Blake, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="0-shocked.png">Wait, if she lost like that...</state><state img="0-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="0-shocked.png">I need a silence Glyph...</state><state img="0-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="blake"><state img="0-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="0-shocked.png">So loud...</state><state img="0-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="0-embarrassed.png">Your fingers were so fast...</state><state img="0-embarrassed.png">You haven't... while we were at home, right?</state></case>
 #<case tag="female_removing_major" target="ruby"><state img="0-shocked.png">Ruby, what are you doing!?</state></case>
-#<case tag="female_chest_will_be_visible" target="ruby"><state img="0-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="0-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="0-shocked.png">Ruby, I never thought I'd...</state><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="0-shocked.png">Ruby, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state><state img="0-shocked.png">Oh, my... You...</state><state img="0-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="0-shocked.png">Ruby, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="0-shocked.png">Wait, if she lost like that...</state><state img="0-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="0-shocked.png">I need a silence Glyph...</state><state img="0-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="0-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="0-shocked.png">So loud...</state><state img="0-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="0-embarrassed.png">Your fingers were so fast...</state><state img="0-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="0-shocked.png">Yang, what are you doing!?</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="0-shocked.png">Yang, I never thought I'd...</state><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="0-shocked.png">We live together, but I've never...</state><state img="0-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="0-shocked.png">Yang, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state><state img="0-shocked.png">Oh, my... You...</state><state img="0-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="0-shocked.png">Yang, I never thought I'd...</state><state img="0-shocked.png">I promise not to look, okay?</state><state img="0-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="0-shocked.png">Wait, if she lost like that...</state><state img="0-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="0-shocked.png">I need a silence Glyph...</state><state img="0-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="yang"><state img="0-embarrassed.png">I'm beginning to think I've heard you before...</state><state img="0-shocked.png">So loud...</state><state img="0-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="0-embarrassed.png">Your fingers were so fast...</state><state img="0-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
+#Stage 1
+#<case tag="female_removing_major" target="blake"><state img="1-shocked.png">I can't believe what I'm seeing! My team member...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="1-shocked.png">Blake, I never thought I'd...</state><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="1-shocked.png">Blake, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state><state img="1-shocked.png">Oh, my... You...</state><state img="1-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="1-shocked.png">Blake, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="1-shocked.png">Wait, if she lost like that...</state><state img="1-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="1-shocked.png">I need a silence Glyph...</state><state img="1-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="blake"><state img="1-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="1-shocked.png">So loud...</state><state img="1-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="1-embarrassed.png">Your fingers were so fast...</state><state img="1-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="1-shocked.png">I can't believe what I'm seeing! My team leader...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="1-shocked.png">Ruby, I never thought I'd...</state><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="1-shocked.png">Ruby, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state><state img="1-shocked.png">Oh, my... You...</state><state img="1-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="1-shocked.png">Ruby, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="1-shocked.png">Wait, if she lost like that...</state><state img="1-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="1-shocked.png">I need a silence Glyph...</state><state img="1-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="1-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="1-shocked.png">So loud...</state><state img="1-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="1-embarrassed.png">Your fingers were so fast...</state><state img="1-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="1-shocked.png">I can't believe what I'm seeing! My team member...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="1-shocked.png">Yang, I never thought I'd...</state><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="1-shocked.png">Yang, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state><state img="1-shocked.png">Oh, my... You...</state><state img="1-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="1-shocked.png">Yang, I never thought I'd...</state><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="1-shocked.png">Wait, if she lost like that...</state><state img="1-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="1-shocked.png">I need a silence Glyph...</state><state img="1-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="yang"><state img="1-embarrassed.png">I'm beginning to think I've heard you before...</state><state img="1-shocked.png">So loud...</state><state img="1-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="1-embarrassed.png">Your fingers were so fast...</state><state img="1-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
-#<case tag="female_removing_major" target="ruby"><state img="1-shocked.png">I can't believe what I'm seeing!  My team leader...</state></case>
-#<case tag="female_chest_will_be_visible" target="ruby"><state img="1-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="1-shocked.png">We live together, but I've never...</state><state img="1-shocked.png">This feels really wrong...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="1-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="1-shocked.png">I promise not to look, okay?</state><state img="1-shocked.png">I don't know about this game anymore...</state></case>
+#Stage 2
+#<case tag="female_removing_major" target="blake"><state img="2-shocked.png">Oh, my god, Blake!? I don't...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="2-shocked.png">Blake, I never thought I'd...</state><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="2-shocked.png">Blake, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state><state img="2-shocked.png">Oh, my... You...</state><state img="2-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="2-shocked.png">Blake, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="2-shocked.png">Wait, if she lost like that...</state><state img="2-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="2-shocked.png">I need a silence Glyph...</state><state img="2-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="blake"><state img="2-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="2-shocked.png">So loud...</state><state img="2-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="2-embarrassed.png">Your fingers were so fast...</state><state img="2-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="2-shocked.png">Oh, my god, Ruby!? I don't...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="2-shocked.png">Ruby, I never thought I'd...</state><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="2-shocked.png">Ruby, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state><state img="2-shocked.png">Oh, my... You...</state><state img="2-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="2-shocked.png">Ruby, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="2-shocked.png">Wait, if she lost like that...</state><state img="2-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="2-shocked.png">I need a silence Glyph...</state><state img="2-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="2-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="2-shocked.png">So loud...</state><state img="2-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="2-embarrassed.png">Your fingers were so fast...</state><state img="2-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="2-shocked.png">Oh, my god, Yang!? I don't...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="2-shocked.png">Yang, I never thought I'd...</state><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="2-shocked.png">Yang, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state><state img="2-shocked.png">Oh, my... You...</state><state img="2-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="2-shocked.png">Yang, I never thought I'd...</state><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="2-shocked.png">Wait, if she lost like that...</state><state img="2-shocked.png">Wait, what now?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="2-shocked.png">I need a silence Glyph...</state><state img="2-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="yang"><state img="2-embarrassed.png">I'm beginning to think I've heard you before...</state><state img="2-shocked.png">So loud...</state><state img="2-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="2-embarrassed.png">Your fingers were so fast...</state><state img="2-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
+#Stage 3
+#<case tag="female_removing_major" target="blake"><state img="3-shocked.png">Well... This is going to happen...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="3-shocked.png">Blake, I never thought I'd...</state><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="3-shocked.png">Blake, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state><state img="3-shocked.png">Oh, my... You...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="3-shocked.png">Blake, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="3-shocked.png">Wait, if she lost like that...</state><state img="3-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="3-shocked.png">I need a silence Glyph...</state><state img="3-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="blake"><state img="3-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="3-shocked.png">So loud...</state><state img="3-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="3-embarrassed.png">Your fingers were so fast...</state><state img="3-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="3-shocked.png">This is your fault for inviting me! But that doesn't mean I like it...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="3-shocked.png">Ruby, I never thought I'd...</state><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="3-shocked.png">Ruby, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state><state img="3-shocked.png">Oh, my... You...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="3-shocked.png">Ruby, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="3-shocked.png">Wait, if she lost like that...</state><state img="3-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="3-shocked.png">I need a silence Glyph...</state><state img="3-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="3-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="3-shocked.png">So loud...</state><state img="3-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="3-embarrassed.png">Your fingers were so fast...</state><state img="3-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="3-shocked.png">Well... This is going to happen...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="3-shocked.png">Yang, I never thought I'd...</state><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="3-shocked.png">Yang, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state><state img="3-shocked.png">Oh, my... You...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="3-shocked.png">Yang, I never thought I'd...</state><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="3-shocked.png">Wait, if she lost like that...</state><state img="3-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="3-shocked.png">I need a silence Glyph...</state><state img="3-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="yang"><state img="3-embarrassed.png">I'm beginning to think I've heard you before...</state><state img="3-shocked.png">So loud...</state><state img="3-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="3-embarrassed.png">Your fingers were so fast...</state><state img="3-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
-#<case tag="female_removing_major" target="ruby"><state img="2-shocked.png">Oh, my god, Ruby!?  I don't...</state></case>
-#<case tag="female_chest_will_be_visible" target="ruby"><state img="2-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="2-shocked.png">We live together, but I've never...</state><state img="2-shocked.png">This feels really wrong...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="2-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="2-shocked.png">I promise not to look, okay?</state><state img="2-shocked.png">I don't know about this game anymore...</state></case>
+#Stage 4
+#<case tag="female_removing_major" target="blake"><state img="4-shocked.png">We're together in this now... I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="4-shocked.png">Blake, I never thought I'd...</state><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="4-shocked.png">Blake, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state><state img="4-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="4-shocked.png">Blake, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="4-shocked.png">Wait, if she lost like that...</state><state img="4-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="4-shocked.png">I need a silence Glyph...</state><state img="4-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="blake"><state img="4-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="4-shocked.png">So loud...</state><state img="4-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="4-embarrassed.png">Your fingers were so fast...</state><state img="4-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="4-shocked.png">We're together in this now... I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="4-shocked.png">Ruby, I never thought I'd...</state><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="4-shocked.png">Ruby, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state><state img="4-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="4-shocked.png">Ruby, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="4-shocked.png">Wait, if she lost like that...</state><state img="4-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="4-shocked.png">I need a silence Glyph...</state><state img="4-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="4-embarrassed.png">I'm beginning to think I've heard Yang before...</state><state img="4-shocked.png">So loud...</state><state img="4-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="4-embarrassed.png">Your fingers were so fast...</state><state img="4-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="4-shocked.png">We're together in this now... I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="4-shocked.png">Yang, I never thought I'd...</state><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="4-shocked.png">Yang, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state><state img="4-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="4-shocked.png">Yang, I never thought I'd...</state><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="4-shocked.png">Wait, if she lost like that...</state><state img="4-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="4-shocked.png">I need a silence Glyph...</state><state img="4-shocked.png">Wait, have I heard that sound before?</state></case>
+#<case tag="female_masturbating" target="yang"><state img="4-embarrassed.png">I'm beginning to think I've heard you before...</state><state img="4-shocked.png">So loud...</state><state img="4-angry.png">Don't look at me like that!</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="4-embarrassed.png">Your fingers were so fast...</state><state img="4-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
+#Stage 5
+#<case tag="female_removing_major" target="blake"><state img="5-shocked.png">Stop looking at me, Blake! This isn't okay!</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="5-shocked.png">Blake, I never thought I'd...</state><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="5-shocked.png">Blake, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state><state img="5-shocked.png">Oh, my... You...</state><state img="5-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="5-shocked.png">Blake, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="5-shocked.png">Wait, if she lost like that...</state><state img="5-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="5-shocked.png">Are you looking at me?</state><state img="5-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="blake"><state img="5-angry.png">Don't look at me like that!</state><state img="5-shocked.png">Why are you staring!?</state><state img="5-angry.png">I don't think I wanted this...</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="5-embarrassed.png">Your fingers were so fast...</state><state img="5-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="5-shocked.png">Stop looking at me, Ruby! This isn't okay!</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="5-shocked.png">Ruby, I never thought I'd...</state><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="5-shocked.png">Ruby, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state><state img="5-shocked.png">Oh, my... You...</state><state img="5-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="5-shocked.png">Ruby, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="5-shocked.png">Wait, if she lost like that...</state><state img="5-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="5-shocked.png">Are you looking at me?</state><state img="5-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="5-angry.png">Don't look at me like that!</state><state img="5-shocked.png">Why are you staring!?</state><state img="5-angry.png">Are you happy now!?</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="5-embarrassed.png">Your fingers were so fast...</state><state img="5-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="5-shocked.png">Stop looking at me, Yang! This isn't okay!</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="5-shocked.png">Yang, I never thought I'd...</state><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="5-shocked.png">We live together, but I've never...</state><state img="5-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="5-shocked.png">Yang, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state><state img="5-shocked.png">Oh, my... You...</state><state img="5-shocked.png">I hope this won't affect our teamwork...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="5-shocked.png">Yang, I never thought I'd...</state><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="5-shocked.png">Wait, if she lost like that...</state><state img="5-shocked.png">Does that mean?</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="5-shocked.png">Are you looking at me?</state><state img="5-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="yang"><state img="5-angry.png">Don't look at me like that!</state><state img="5-shocked.png">Why are you staring!?</state><state img="5-angry.png">I don't think I wanted this...</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="5-embarrassed.png">Your fingers were so fast...</state><state img="5-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
-#<case tag="female_removing_major" target="ruby"><state img="3-shocked.png">This is your fault for inviting me!  But that doesn't mean I like it...</state></case>
-#<case tag="female_chest_will_be_visible" target="ruby"><state img="3-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="3-shocked.png">We live together, but I've never...</state><state img="3-shocked.png">This feels really wrong...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="3-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="3-shocked.png">I promise not to look, okay?</state><state img="3-shocked.png">I don't know about this game anymore...</state></case>
+#Stage 6/-3 (naked)
+#<case tag="female_removing_major" target="blake"><state img="6-sad.png">Together until the end, I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="6-shocked.png">At least we're in this together...</state><state img="6-shocked.png">Blake, I never thought I'd...</state><state img="6-shocked.png">We live together, but I've never...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="6-shocked.png">At least you're in better shape than me...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="6-shocked.png">Blake, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state><state img="6-shocked.png">Oh, my... You...</state><state img="6-shocked.png">I hope this won't affect our teamwork... At least we're together...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="6-shocked.png">Blake, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="6-shocked.png">Wait, if she lost like that...</state><state img="6-shocked.png">The two of us... Like this...</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="6-shocked.png">Are you looking at me?</state><state img="6-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="blake"><state img="6-angry.png">Don't look at me like that!</state><state img="6-shocked.png">Why are you staring!?</state><state img="6-sad.png">The Monos, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="6-embarrassed.png">Your fingers were so fast...</state><state img="6-embarrassed.png">You haven't... while we were at home, right?</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="6-sad.png">Together until the end, I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="6-shocked.png">At least we're in this together...</state><state img="6-shocked.png">Ruby, I never thought I'd...</state><state img="6-shocked.png">We live together, but I've never...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="6-shocked.png">At least you're in better shape than me...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="6-shocked.png">Ruby, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state><state img="6-shocked.png">Oh, my... You...</state><state img="6-shocked.png">I hope this won't affect our teamwork... At least we're together...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="6-shocked.png">Ruby, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="6-shocked.png">Wait, if she lost like that...</state><state img="6-shocked.png">The two of us... Like this...</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="6-shocked.png">Are you looking at me?</state><state img="6-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="6-angry.png">Don't look at me like that!</state><state img="6-shocked.png">Why are you staring!?</state><state img="6-sad.png">White Rose, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="6-embarrassed.png">Your fingers were so fast...</state><state img="6-embarrassed.png">Were those rose petals?</state></case>
+#<case tag="female_removing_major" target="yang"><state img="6-sad.png">Together until the end, I guess...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="6-shocked.png">At least we're in this together...</state><state img="6-shocked.png">Yang, I never thought I'd...</state><state img="6-shocked.png">We live together, but I've never...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="6-shocked.png">At least you're in better shape than me...</state><state img="6-shocked.png">This feels really wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="6-shocked.png">Yang, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state><state img="6-shocked.png">Oh, my... You...</state><state img="6-shocked.png">I hope this won't affect our teamwork... At least we're together...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="6-shocked.png">Yang, I never thought I'd...</state><state img="6-shocked.png">I promise not to look, okay?</state><state img="6-sad.png">Together until the end, I guess...</state><state img="6-sad.png">I guess this is teamwork...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="6-shocked.png">Wait, if she lost like that...</state><state img="6-shocked.png">The two of us... Like this...</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="6-shocked.png">Are you looking at me?</state><state img="6-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="yang"><state img="6-angry.png">Don't look at me like that!</state><state img="6-shocked.png">Why are you staring!?</state><state img="6-sad.png">Freezerburn, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="6-embarrassed.png">Your fingers were so fast...</state><state img="6-embarrassed.png">You haven't... while we were at home, right?</state></case>
 
+#Stage 7/-2 (masturbating)
+#<case tag="female_removing_major" target="blake"><state img="7-shocked.png">Don't you dare look at me! OH! </state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="7-shocked.png">At least we're in this together...</state><state img="7-shocked.png">Don't look at me!</state><state img="7-shocked.png">My team member shouldn't see me like this...</state><state img="7-shocked.png">Don't you DARE tell anyone!</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="7-shocked.png">Don't you DARE tell anyone else on RWBY that this happened!</state><state img="7-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="7-shocked.png">Blake, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state><state img="8-shocked.png">Blake, I never thought I'd...</state><state img="7-shocked.png">Not you! No...</state><state img="7-sad.png">Oh, my god, stop looking at me!</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="7-shocked.png">Blake, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="7-horny.png">It might not be so bad now...</state><state img="7-shocked.png">At least you can't say I was the only one!</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="7-shocked.png">Are you looking at me?</state><state img="7-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="blake"><state img="7-angry.png">I bet you love seeing an heiress like this!</state><state img="7-shocked.png">Why are you staring!?</state><state img="7-sad.png">The Monos, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="7-embarrassed.png">No fair...</state><state img="7-embarrassed.png">So easily!</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="7-shocked.png">Don't you dare look at me! OH!</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="7-shocked.png">At least we're in this together...</state><state img="7-shocked.png">Don't look at me!</state><state img="7-shocked.png">My leader shouldn't see me like this...</state><state img="7-shocked.png">Don't you DARE tell anyone!</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="7-shocked.png">Don't you DARE tell your sister that this happened!</state><state img="7-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="7-shocked.png">Ruby, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state><state img="7-shocked.png">Not you! No...</state><state img="7-sad.png">Oh, my god, stop looking at me!</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="7-shocked.png">Ruby, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="7-horny.png">It might not be so bad now...</state><state img="7-shocked.png">At least you can't say I was the only one!</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="7-shocked.png">Are you looking at me?</state><state img="7-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="7-angry.png">I bet you love seeing an heiress like this!</state><state img="7-shocked.png">Why are you staring!?</state><state img="7-sad.png">White Rose, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="7-embarrassed.png">No fair...</state><state img="7-embarrassed.png">So easily!</state></case>
+#<case tag="female_removing_major" target="yang"><state img="7-shocked.png">Don't you dare look at me! OH! </state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="7-shocked.png">At least we're in this together...</state><state img="7-shocked.png">Don't look at me!</state><state img="7-shocked.png">My team member shouldn't see me like this...</state><state img="7-shocked.png">Don't you DARE tell anyone!</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="7-shocked.png">Don't you DARE tell anyone else on RWBY that this happened!</state><state img="7-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="7-shocked.png">Yang, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state><state img="8-shocked.png">Yang, I never thought I'd...</state><state img="7-shocked.png">Not you! No...</state><state img="7-sad.png">Oh, my god, stop looking at me!</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="7-shocked.png">Yang, I never thought I'd...</state><state img="7-shocked.png">I promise not to look, okay?</state><state img="7-shocked.png">I don't know about this game anymore...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="7-horny.png">It might not be so bad now...</state><state img="7-shocked.png">At least you can't say I was the only one!</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="7-shocked.png">Are you looking at me?</state><state img="7-shocked.png">This is so filthy... Me like this, and you... like that...</state></case>
+#<case tag="female_masturbating" target="yang"><state img="7-angry.png">I bet you love seeing an heiress like this!</state><state img="7-shocked.png">Why are you staring!?</state><state img="7-sad.png">Freezerburn, here for everyone to see...</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="7-embarrassed.png">No fair...</state><state img="7-embarrassed.png">So easily!</state></case>
 
-#<case tag="female_removing_major" target="ruby"><state img="4-shocked.png">We're together in this now...  I guess...</state></case>
-<case tag="female_chest_will_be_visible" target="ruby"><state img="4-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="4-shocked.png">We live together, but I've never...</state><state img="4-shocked.png">This feels really wrong...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="4-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="4-shocked.png">I promise not to look, okay?</state><state img="4-shocked.png">I don't know about this game anymore...</state></case>
+#Stage 8/-3 (finished)
+#<case tag="female_removing_major" target="blake"><state img="8-shocked.png">I'll do whatever you want for a month, just please don't tell anyone what happened...</state></case>
+#<case tag="female_chest_will_be_visible" target="blake"><state img="8-shocked.png">Don't look at me like that!</state><state img="8-shocked.png">My team member shouldn't see me like this...</state><state img="8-shocked.png">This is going too far...</state></case>
+#<case tag="female_medium_chest_is_visible" target="blake"><state img="8-shocked.png">I didn't think I'd ever see those... And I didn't think I'd ever be in a situation like this...</state><state img="8-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="blake"><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me, and I won't look at you...</state><state img="8-shocked.png">I'm ashamed to say I feel a bit more comfortable...</state><state img="8-shocked.png">I never thought anything like this would happen... I feel so sticky...</state></case>
+#<case tag="female_crotch_is_visible" target="blake"><state img="8-shocked.png">Blake, I never thought I'd...</state><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me, and I won't look at you...</state></case>
+#<case tag="female_must_masturbate" target="blake"><state img="8-shocked.png">Just like me...</state><state img="8-shocked.png">I don't want to think about the noises...</state></case>
+#<case tag="female_start_masturbating" target="blake"><state img="8-shocked.png">At least I'm not alone...</state></case>
+#<case tag="female_masturbating" target="blake"><state img="8-angry.png">Please stop looking at me after you did that!</state><state img="8-shocked.png">Are you still thinking about me!?</state><state img="8-sad.png">This isn't anything like Checkmate... Wait, what did I just say?</state></case>
+#<case tag="female_finished_masturbating" target="blake"><state img="8-sarcastic.png">Who'd be happier, Jaune, Sun, or Yang?</state><state img="8-angry.png">This is what happens when we get in over our heads!</state></case>
+#<case tag="female_removing_major" target="ruby"><state img="8-shocked.png">I'll bake you cookies for a month, just please don't tell anyone what happened...</state></case>
+#<case tag="female_chest_will_be_visible" target="ruby"><state img="8-shocked.png">Don't look at me like that!</state><state img="8-shocked.png">My leader shouldn't see me like this...</state><state img="8-shocked.png">This is going too far...</state></case>
+#<case tag="female_small_chest_is_visible" target="ruby"><state img="8-shocked.png">I didn't think I'd ever see those... And I didn't think I'd ever be in a situation like this...</state><state img="8-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="ruby"><state img="8-shocked.png">Ruby, I never thought I'd...</state><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me, and I won't look at you...</state><state img="8-shocked.png">I'm ashamed to say I feel a bit more comfortable...</state><state img="8-shocked.png">I never thought anything like this would happen... I feel so sticky...</state></case>
+#<case tag="female_crotch_is_visible" target="ruby"><state img="8-shocked.png">Ruby, I never thought I'd...</state><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me, and I won't look at you...</state></case>
+#<case tag="female_must_masturbate" target="ruby"><state img="8-shocked.png">Just like me...</state><state img="8-shocked.png">I don't want to think about the noises...</state></case>
+#<case tag="female_start_masturbating" target="ruby"><state img="8-shocked.png">At least I'm not alone...</state><state img="8-sad.png">Is this what you wanted? Are you happy now?</state></case>
+#<case tag="female_masturbating" target="ruby"><state img="8-angry.png">Please stop looking at me after you did that!</state><state img="8-shocked.png">Are you still thinking about me!?</state><state img="8-sad.png">This isn't anything like our usual combo attacks... Wait, what did I just say?</state></case>
+#<case tag="female_finished_masturbating" target="ruby"><state img="8-sarcastic.png">Are you glad you invited me to this stupid game?</state><state img="8-angry.png">This is what happens when you get in over your head!</state></case>
+#<case tag="female_removing_major" target="yang"><state img="8-shocked.png">I'll do whatever you want for a month, just please don't tell anyone what happened...</state></case>
+#<case tag="female_chest_will_be_visible" target="yang"><state img="8-shocked.png">Don't look at me like that!</state><state img="8-shocked.png">My team member shouldn't see me like this...</state><state img="8-shocked.png">This is going too far...</state></case>
+#<case tag="female_large_chest_is_visible" target="yang"><state img="8-shocked.png">I didn't think I'd ever be in a situation like this...</state><state img="8-shocked.png">Everything about this feels wrong...</state></case>
+#<case tag="female_crotch_will_be_visible" target="yang"><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me...</state><state img="8-shocked.png">I'm ashamed to say I feel a bit more comfortable...</state><state img="8-shocked.png">I never thought anything like this would happen... I feel so sticky...</state></case>
+#<case tag="female_crotch_is_visible" target="yang"><state img="8-shocked.png">Yang, I never thought I'd...</state><state img="8-shocked.png">I promise not to look, okay?</state><state img="8-sad.png">I feel sick... Please don't look at me ...</state></case>
+#<case tag="female_must_masturbate" target="yang"><state img="8-shocked.png">Just like me...</state><state img="8-shocked.png">I don't want to think about the noises...</state></case>
+#<case tag="female_start_masturbating" target="yang"><state img="8-shocked.png">At least I'm not alone...</state></case>
+#<case tag="female_masturbating" target="yang"><state img="8-angry.png">Please stop looking at me after you did that!</state><state img="8-shocked.png">Are you still thinking about me!?</state><state img="8-sad.png">This isn't what Freezerburn is supposed to mean...</state></case>
+#<case tag="female_finished_masturbating" target="yang"><state img="8-sarcastic.png">Who'd be happier, Jaune, Neptune or Blake?</state><state img="8-angry.png">This is what happens when we get in over our heads!</state></case>
 
-
-#<case tag="female_removing_major" target="ruby"><state img="5-shocked.png">Stop looking at me, Ruby!  This isn't okay!</state></case>
-#<case tag="female_chest_will_be_visible" target="ruby"><state img="5-sad.png">At least we're in this together... Right?</state></case>
-#<case tag="small_chest_is_visible" target="ruby"><state img="5-shocked.png">Please say something...</state><state img="5-shocked.png">I don't want to think about what people would say...</state></case>
-#<case tag="female_crotch_will_be_visible" target="ruby"><state img="5-shocked.png">Ruby, I never thought I'd...</state></case>
-#<case tag="female_crotch_is_visible" target="ruby"><state img="5-shocked.png">I promise not to look, okay?</state><state img="5-shocked.png">I don't know about this game anymore...</state></case>
-
-
-#<case tag="female_removing_major" target="ruby"><state img="6-shocked.png">I'm sure someone's dreamed of this moment...  I sure wish it wasn't happening...</state></case>
-
-
-#<case tag="female_removing_major" target="ruby"><state img="7-shocked.png">Don't you dare look at me!  OH!!!</state><state img="-2-shocked.png">I'll bake you cookies for a month, just please don't tell anyone what happened...</state></case>
