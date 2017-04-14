@@ -1076,3 +1076,28 @@ $sortingOptionsItems.on("click", function(e) {
     sortingMode = $(this).find('a').html();
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
 });
+
+
+/************************************************************
+ * Dynamic dialogue and image counting functions
+ ************************************************************/
+
+/** Event handler for the credits button.*/
+$('.credits-btn').on('click', function(e) {
+    shownIndividuals.forEach(function(c) { 
+        $.ajax({ 
+            type: "GET", 
+            url: c.folder + "behaviour.xml", 
+            dataType: "text", 
+            success: function(xml) {
+                var lines = [];
+                var arr = $(xml).find('state').each(function(idx, data) {
+                    lines.push(data.textContent);
+                });
+                console.log(c.folder + ",", lines.filter(function(data, idx) {
+                    return idx == lines.lastIndexOf(data);
+                }).length);
+            }
+        });
+    });
+});
