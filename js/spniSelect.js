@@ -1113,7 +1113,7 @@ function updateOpponentCountStats(opponentArr) {
                 opp.posesImageCount = response.numPoses;
                 
                 // show line and image counts
-                console.log(opp.label + ": " + opp.uniqueLineCount);
+                console.log(opp.label + ": " + opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images");
             });
         }
         else {
@@ -1142,10 +1142,12 @@ function fetchBehaviour(path) {
  * properties numTotalLines, numUniqueLines, and numPoses.
  */
 function countLinesImages(xml) {
-    // parse all lines of dialogue
+    // parse all lines of dialogue and all images
     var lines = [];
+    var poses = [];
     $(xml).find('state').each(function(idx, data) {
         lines.push(data.textContent);
+        poses.push(data.getAttribute("img")); 
     });
     
     // count only unique lines of dialogue
@@ -1153,9 +1155,16 @@ function countLinesImages(xml) {
         return idx == lines.lastIndexOf(data);
     }).length;
     
+    // count unique number of poses used in dialogue
+    // note that this number may differ from actual image count if some images
+    // are never used, or if images that don't exist are used in the dialogue
+    var numUniqueUsedPoses = poses.filter(function(data, idx) {
+        return idx == poses.lastIndexOf(data);
+    }).length;
+    
     return {
         numTotalLines : lines.length,
         numUniqueLines : numUniqueDialogueLines,
-        numPoses : 0
+        numPoses : numUniqueUsedPoses
     };
 }
