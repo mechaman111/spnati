@@ -1089,13 +1089,18 @@ $('.credits-btn').on('click', function(e) {
     updateOpponentCountStats(shownIndividuals);
 });
 
+/**
+ * Loads and displays the number of unique dialogue lines and the number of pose images 
+ * into the character's player object for those currently on the selection screen.
+ * Only loads if the unique line count or image count is not known.
+ */
 function updateOpponentCountStats(opponentArr) {
     opponentArr.forEach(function(opp) {
         // load behaviour file if line/image count is not known
         if (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined) {
             console.log("Fetching counts for " + opp.label);
             // retrieve line and image counts
-            var countsPromise = Promise.resolve(fetchLineAndImageCount(opp.folder));
+            var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
             countsPromise.then(countLinesImages).then(function(response) {
                 console.log(response);
                 opp.uniqueLineCount = response.numUniqueLines;
@@ -1108,7 +1113,10 @@ function updateOpponentCountStats(opponentArr) {
     });
 }
 
-function fetchLineAndImageCount(path) {
+/**
+ * Fetches the behaviour.xml file of the specified opponent directory.
+ */
+function fetchBehaviour(path) {
     return $.ajax({
         type: "GET",
         url: path + "behaviour.xml",
@@ -1116,11 +1124,19 @@ function fetchLineAndImageCount(path) {
     });
 }
 
+/**
+ * Callback to parse the number of lines of dialogue and number of images
+ * given a character's behaviour XML. Returns the counts as an object with 
+ * properties numTotalLines, numUniqueLines, and numPoses.
+ */
 function countLinesImages(xml) {
+    // parse all lines of dialogue
     var lines = [];
     $(xml).find('state').each(function(idx, data) {
         lines.push(data.textContent);
     });
+    
+    // count only unique lines of dialogue
     var numUniqueDialogueLines = lines.filter(function(data, idx) {
         return idx == lines.lastIndexOf(data);
     }).length;
