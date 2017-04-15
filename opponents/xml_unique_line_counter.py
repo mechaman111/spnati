@@ -18,6 +18,7 @@ import sys
 import getopt
 import logging
 from collections import Counter
+from glob import glob
 
 logger = logging.getLogger(os.path.basename(__file__))
 sort_most_frequent = False
@@ -46,11 +47,13 @@ def parse(f):
     if sort_most_frequent: # if the "-s" flag is enabled, order by most frequent lines first
         line_iter_items = d.most_common()
     
+    logger.info('***** Dialogue count: {} *****'.format(f))
+    
     for k, v in line_iter_items:
         logger.info('{} --> Frequency: {}, Line count: {}'.format(k.encode('utf-8'), v, ctr))
         ctr += 1
         
-    logger.info('Unique dialogue count: {}'.format(len(d)))
+    logger.info('Unique dialogue count: {}\n'.format(len(d)))
 
 
 if __name__ == '__main__':
@@ -63,7 +66,7 @@ if __name__ == '__main__':
         if opt in ("-v", "--verbose"):
             verbose = True
         elif opt in ("-f", "--file"):
-            file_ = arg
+            file_ = glob(arg)
         elif opt in ("-o", "--output"):
             output_dir = arg
         elif opt in ("-s", "--sortfreq"):
@@ -83,4 +86,6 @@ if __name__ == '__main__':
     else:
         logger.setLevel(logging.getLevelName('INFO'))
     logger.debug('CLI args: {}'.format(opts))
-    parse(file_)
+    
+    for f in file_:
+        parse(f)
