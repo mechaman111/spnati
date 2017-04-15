@@ -748,6 +748,7 @@ function changeGroupPage (skip, page) {
 		groupPage += page;
 	}
 	updateGroupSelectScreen();
+    updateOpponentCountStats(shownGroup);
 }
 
 /************************************************************
@@ -1084,9 +1085,14 @@ $sortingOptionsItems.on("click", function(e) {
  * Dynamic dialogue and image counting functions
  ************************************************************/
 
-/** Event handler for the credits button. */
-$('.credits-btn').on('click', function(e) {
+/** Event handler for the individual selection screen credits button. */
+$('.individual-credits-btn').on('click', function(e) {
     updateOpponentCountStats(shownIndividuals);
+});
+
+/** Event handler for the group selection screen credits button. */
+$('.group-credits-btn').on('click', function(e) {
+    updateOpponentCountStats(shownGroup);
 });
 
 /**
@@ -1109,6 +1115,9 @@ function updateOpponentCountStats(opponentArr) {
                 // show line and image counts
                 console.log(opp.label + ": " + opp.uniqueLineCount);
             });
+        }
+        else {
+            console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
         }
     });
 }
