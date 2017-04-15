@@ -95,6 +95,8 @@ $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#
 $individualPageIndicator = $("#individual-page-indicator");
 $individualMaxPageIndicator = $("#individual-max-page-indicator");
 
+$individualCreditsButton = $('.individual-credits-btn');
+
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
 $groupNameLabels = [$("#group-name-label-1"), $("#group-name-label-2"), $("#group-name-label-3"), $("#group-name-label-4")];
@@ -114,6 +116,8 @@ $groupButton = $("#group-button");
 
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
+
+$groupCreditsButton = $('.group-credits-btn');
 
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
@@ -152,7 +156,8 @@ var sortingOptionsMap = {
     "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
 };
-var creditsShown = false;
+var individualCreditsShown = false;
+var groupCreditsShown = false;
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -635,7 +640,7 @@ function changeIndividualStats (target) {
         }
     }
     
-    creditsShown = (target == 2); // true when Credits button is clicked
+    individualCreditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -681,7 +686,7 @@ function changeIndividualPage (skip, page) {
     }
     
     updateIndividualSelectScreen();
-    updateOpponentCountStats(shownIndividuals);
+    updateIndividualCountStats();
 }
 
 /************************************************************
@@ -700,7 +705,7 @@ function changeGroupStats (target) {
         }
     }
     
-    creditsShown = (target == 2); // true when Credits button is clicked
+    groupCreditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -753,7 +758,7 @@ function changeGroupPage (skip, page) {
 		groupPage += page;
 	}
 	updateGroupSelectScreen();
-    updateOpponentCountStats(shownGroup);
+    updateGroupCountStats();
 }
 
 /************************************************************
@@ -1091,13 +1096,13 @@ $sortingOptionsItems.on("click", function(e) {
  ************************************************************/
 
 /** Event handler for the individual selection screen credits button. */
-$('.individual-credits-btn').on('click', function(e) {
-    updateOpponentCountStats(shownIndividuals);
+$individualCreditsButton.on('click', function(e) {
+    updateIndividualCountStats()
 });
 
 /** Event handler for the group selection screen credits button. */
-$('.group-credits-btn').on('click', function(e) {
-    updateOpponentCountStats(shownGroup);
+$groupCreditsButton.on('click', function(e) {
+    updateGroupCountStats();
 });
 
 /**
@@ -1106,10 +1111,6 @@ $('.group-credits-btn').on('click', function(e) {
  * Only loads if the unique line count or image count is not known.
  */
 function updateOpponentCountStats(opponentArr) {
-    if (!creditsShown) { // exit early if the credits are not being displayed
-        return;
-    }
-    
     opponentArr.forEach(function(opp) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
@@ -1132,6 +1133,20 @@ function updateOpponentCountStats(opponentArr) {
                 console.log("opp is null");
         }
     });
+}
+
+/** Dialogue/image count update function for the individual selection screen. */
+function updateIndividualCountStats() {
+    if (individualCreditsShown) {
+        updateOpponentCountStats(shownIndividuals);
+    }
+}
+
+/** Dialogue/image count update function for the group selection screen. */
+function updateGroupCountStats() {
+    if (groupCreditsShown) {
+        updateOpponentCountStats(shownGroup);
+    }
 }
 
 /**
