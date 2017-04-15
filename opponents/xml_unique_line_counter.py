@@ -2,9 +2,13 @@
 
 # To generate a unique line count for a single character (use -f or --file): 
 #   python xml_unique_line_counter.py -f path\to\character\behaviour.xml
-# Note that you can use wildcards to process multiple characters at once:
+# Note that you can use wildcards to process multiple related characters at once:
 #   python xml_unique_line_counter.py -f path\to\a*\behaviour.xml
-#   (This will process all character directories which begin with a)
+#   (This will process all character directories which begin with the letter 'a')
+# To generate a unique line count for multiple unrelated characters (use -F or --files):
+#   python xml_unique_line_counter.py -F "path\to\character1\behaviour.xml path\to\character2\behaviour.xml"
+#   (IMPORTANT: The paths must be enclosed in quotes AND the paths must NOT contain spaces)
+#   (You can also use wildcards with this flag as well)
 # To turn on verbose (debugging) output (use -v or --verbose):
 #   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -v
 # To specify a different output directory (use -o or --output):
@@ -65,12 +69,17 @@ if __name__ == '__main__':
     output_dir = os.path.dirname(__file__)
 
     argv = sys.argv[1:]
-    opts, args = getopt.getopt(argv, "d:vf:o:s", ["download=", "verbose", "file=", "output=", "sortfreq"])
+    opts, args = getopt.getopt(argv, "d:vf:F:o:s", ["download=", "verbose", "file=", "File=", "output=", "sortfreq"])
     for opt, arg in opts:
         if opt in ("-v", "--verbose"):
             verbose = True
         elif opt in ("-f", "--file"):
             file_ = glob(arg)
+        elif opt in ("-F", "--files"):
+            file_ = []
+            file_args = arg.split(" ")
+            for fa in file_args:
+                file_.extend(glob(fa))
         elif opt in ("-o", "--output"):
             output_dir = arg
         elif opt in ("-s", "--sortfreq"):
