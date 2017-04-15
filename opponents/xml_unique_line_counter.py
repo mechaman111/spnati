@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 
-# To use: python xml_unique_line_counter.py --file C:\file_path_here\GitHub\spni.github.io\opponents\character_name\behaviour.xml
-# Verbose: python xml_unique_line_counter.py --file C:\file_path_here\GitHub\spni.github.io\opponents\character_name\behaviour.xml --verbose
-# To specify a different output directory:
+# To generate a unique line count for a single character (use -f or --file): 
+#   python xml_unique_line_counter.py -f path\to\character\behaviour.xml
+# Note that you can use wildcards to process multiple characters at once:
+#   python xml_unique_line_counter.py -f path\to\a*\behaviour.xml
+#   (This will process all character directories which begin with a)
+# To turn on verbose (debugging) output (use -v or --verbose):
+#   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -v
+# To specify a different output directory (use -o or --output):
 #   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -o path\to\save\output\file
-# To have the lines appear by most frequent first:
+# To have the lines appear by most frequent first (use -s or --sortfreq):
 #   python xml_unique_line_counter.py -f path\to\character\behaviour.xml -s
-
 
 # Parser:
 # pip install html5lib
