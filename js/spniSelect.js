@@ -152,6 +152,7 @@ var sortingOptionsMap = {
     "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
 };
+var creditsShown = false;
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -633,6 +634,8 @@ function changeIndividualStats (target) {
             }
         }
     }
+    
+    creditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -696,6 +699,8 @@ function changeGroupStats (target) {
             }
         }
     }
+    
+    creditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -1101,6 +1106,10 @@ $('.group-credits-btn').on('click', function(e) {
  * Only loads if the unique line count or image count is not known.
  */
 function updateOpponentCountStats(opponentArr) {
+    if (!creditsShown) { // exit early if the credits are not being displayed
+        return;
+    }
+    
     opponentArr.forEach(function(opp) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
