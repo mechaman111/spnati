@@ -1021,6 +1021,7 @@ function closeSearchModal() {
     
     // update
     updateIndividualSelectScreen();
+    updateIndividualCountStats();
 }
 
 function changeSearchGender(gender) {
