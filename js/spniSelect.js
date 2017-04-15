@@ -1170,7 +1170,7 @@ function countLinesImages(xml) {
     var lines = [];
     var poses = [];
     $(xml).find('state').each(function(idx, data) {
-        lines.push(data.textContent);
+        lines.push(data.textContent.trim());
         poses.push(data.getAttribute("img")); 
     });
     
