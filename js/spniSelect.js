@@ -661,22 +661,24 @@ function individualScreenCallback (playerObject, slot) {
  * The player is changing the page on the individual screen.
  ************************************************************/
 function changeIndividualPage (skip, page) {
-	console.log("resigtered");
-	if (skip) {
-		if (page == -1) {
-			/* go to first page */
-			individualPage = 0;
-		} else if (page == 1) {
-			/* go to last page */
-			individualPage = Math.ceil(selectableOpponents.length/4)-1;
-		} else {
-			/* go to selected page */
-			individualPage = Number($individualPageIndicator.val()) - 1;
-		}
-	} else {
-		individualPage += page;
-	}
-	updateIndividualSelectScreen();
+    console.log("resigtered");
+    if (skip) {
+        if (page == -1) {
+            /* go to first page */
+            individualPage = 0;
+        } else if (page == 1) {
+            /* go to last page */
+            individualPage = Math.ceil(selectableOpponents.length/4)-1;
+        } else {
+            /* go to selected page */
+            individualPage = Number($individualPageIndicator.val()) - 1;
+        }
+    } else {
+        individualPage += page;
+    }
+    
+    updateIndividualSelectScreen();
+    updateOpponentCountStats(shownIndividuals);
 }
 
 /************************************************************
@@ -1082,22 +1084,50 @@ $sortingOptionsItems.on("click", function(e) {
  * Dynamic dialogue and image counting functions
  ************************************************************/
 
-/** Event handler for the credits button.*/
+/** Event handler for the credits button. */
 $('.credits-btn').on('click', function(e) {
-    shownIndividuals.forEach(function(c) { 
-        $.ajax({ 
-            type: "GET", 
-            url: c.folder + "behaviour.xml", 
-            dataType: "text", 
-            success: function(xml) {
-                var lines = [];
-                var arr = $(xml).find('state').each(function(idx, data) {
-                    lines.push(data.textContent);
-                });
-                console.log(c.folder + ",", lines.filter(function(data, idx) {
-                    return idx == lines.lastIndexOf(data);
-                }).length);
-            }
-        });
-    });
+    updateOpponentCountStats(shownIndividuals);
 });
+
+function updateOpponentCountStats(opponentArr) {
+    opponentArr.forEach(function(opp) {
+        // load behaviour file if line/image count is not known
+        if (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined) {
+            console.log("Fetching counts for " + opp.label);
+            // retrieve line and image counts
+            var countsPromise = Promise.resolve(fetchLineAndImageCount(opp.folder));
+            countsPromise.then(countLinesImages).then(function(response) {
+                console.log(response);
+                opp.uniqueLineCount = response.numUniqueLines;
+                opp.posesImageCount = response.numPoses;
+                
+                // show line and image counts
+                console.log(opp.label + ": " + opp.uniqueLineCount);
+            });
+        }
+    });
+}
+
+function fetchLineAndImageCount(path) {
+    return $.ajax({
+        type: "GET",
+        url: path + "behaviour.xml",
+        dataType: "text"
+    });
+}
+
+function countLinesImages(xml) {
+    var lines = [];
+    $(xml).find('state').each(function(idx, data) {
+        lines.push(data.textContent);
+    });
+    var numUniqueDialogueLines = lines.filter(function(data, idx) {
+        return idx == lines.lastIndexOf(data);
+    }).length;
+    
+    return {
+        numTotalLines : lines.length,
+        numUniqueLines : numUniqueDialogueLines,
+        numPoses : 0
+    };
+}
