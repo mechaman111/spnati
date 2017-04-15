@@ -1103,7 +1103,7 @@ $('.group-credits-btn').on('click', function(e) {
 function updateOpponentCountStats(opponentArr) {
     opponentArr.forEach(function(opp) {
         // load behaviour file if line/image count is not known
-        if (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined) {
+        if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
             console.log("Fetching counts for " + opp.label);
             // retrieve line and image counts
             var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
@@ -1117,7 +1117,10 @@ function updateOpponentCountStats(opponentArr) {
             });
         }
         else {
-            console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
+            if (opp)
+                console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
+            else
+                console.log("opp is null");
         }
     });
 }
