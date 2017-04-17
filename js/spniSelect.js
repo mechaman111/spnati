@@ -298,8 +298,8 @@ function updateIndividualSelectScreen () {
 			$individualPrefersLabels[index].html(selectableOpponents[i].label);
 			$individualSexLabels[index].html(selectableOpponents[i].gender);
 			$individualSourceLabels[index].html(selectableOpponents[i].source);
-			$individualWriterLabels[index].html(selectableOpponents[i].writer);
-			$individualArtistLabels[index].html(selectableOpponents[i].artist);
+			$individualWriterLabels[index].html(wordWrapHtml(selectableOpponents[i].writer));
+			$individualArtistLabels[index].html(wordWrapHtml(selectableOpponents[i].artist));
 			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
             
             if (selectableOpponents[i].ending) {
@@ -424,8 +424,8 @@ function updateGroupSelectScreen () {
 			$groupPrefersLabels[i].html(opponent.label);
 			$groupSexLabels[i].html(opponent.gender);
 			$groupSourceLabels[i].html(opponent.source);
-			$groupWriterLabels[i].html(opponent.writer);
-			$groupArtistLabels[i].html(opponent.artist);
+			$groupWriterLabels[i].html(wordWrapHtml(opponent.writer));
+			$groupArtistLabels[i].html(wordWrapHtml(opponent.artist));
 			$groupDescriptionLabels[i].html(opponent.description);
             
             if (opponent.ending) {
@@ -1091,6 +1091,19 @@ $sortingOptionsItems.on("click", function(e) {
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
 });
 
+/************************************************************
+ * Word wrapping Functions
+ ************************************************************/
+
+/**
+ * Inserts a fixed-size HTML element with the specified text to allow the content 
+ * to be either word-wrapped (if the text is long and spaces are present) 
+ * or word-broken (if text is long and no spaces are present).
+ */
+function wordWrapHtml(text) {
+    return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
+
+}
 
 /************************************************************
  * Dynamic dialogue and image counting functions
@@ -1192,4 +1205,3 @@ function countLinesImages(xml) {
         numUniqueLines : numUniqueDialogueLines,
         numPoses : numUniqueUsedPoses
     };
-}
