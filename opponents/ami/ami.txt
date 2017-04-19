@@ -1,0 +1,849 @@
+#required for behaviour.xml
+first=Kawashima
+last=Ami
+label=Ami
+gender=Female
+size=medium
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and British. See tag_list.txt for a list of tags.
+tag=confident
+tag=school_uniform
+tag=boob_envy
+tag=mean
+
+#required for meta.xml
+#select screen image
+pic=0-calm
+height=0'0"
+from=Toradora!
+writer=AzideBen
+artist=AzideBen
+description=Student at Ohashi High School.
+#hasending=false
+#layers=7
+#release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
+
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-happytoplay,Oh, I like strip poker. Let's play!
+
+
+#CLOTHING
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#How much they cover = important (covering nudity), major (a lot of skin), minor (small amount of skin), extra (accessories, boots, etc)
+#Ehat they cover = upper (upper body), lower (lower body), other (neither).
+#There must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
+#Below is an example of Rosalina's clothing. Please adjust these values to match your character's clothing.
+clothes=Shoes,shoes,extra,other
+clothes=Socks,socks,minor,other
+clothes=Blazer,blazer,major,upper
+clothes=Sweater,sweater,major,upper
+clothes=Skirt,skirt,major,lower
+clothes=Bra,bra,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
+#The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+#The lines written here are examples only and should be replaced.
+swap_cards=calm,May I have ~cards~ cards?
+swap_cards=calm,I'll take ~cards~.
+swap_cards=calm,~cards~ new cards, please.
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+#The character thinks they have a good hand
+good_hand=happy,Hah, piece of cake.
+good_hand=happy,Yes! Victory is mine.
+good_hand=happy,Look's like I'm safe, sorry everyone!
+
+#The character thinks they have an okay hand
+okay_hand=calm,I can work with these.
+okay_hand=calm,Not the best, but I can make these work.
+okay_hand=calm,Eh, I'll live.
+okay_hand=calm,Not bad.
+
+#The character thinks they have a bad hand
+bad_hand=angry,What's with these cards!?
+bad_hand=sad,Damn it.
+bad_hand=sad,Greeeat.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-good_hand=,Looks like I'm off to a good start, huh?
+0-okay_hand=,I think i'll be okay.
+0-bad_hand=sassy,Eh, I can afford to lose my shoes if needed.
+
+#lost 1 item
+1-good_hand=happy,Looking good, Ami, looking good.
+1-okay_hand=,Not bad.
+1-bad_hand=teasing,You might see some feet soon...
+
+#lost 2 items
+2-good_hand=confident,Good this the red uniform looks good on me, because I'm keeping it this round.
+2-okay_hand=indifferent,Eh, fair enough.
+2-bad_hand=teasing,Oh well, I can afford to drop the blazer.
+
+#lost 3 items
+3-good_hand=sassy,Looks like you won't see my boobs this round, anyone upset?
+3-good_hand=teasing,Sorry you guys won't see any skin this time. Want a peek?
+3-okay_hand=,I should be fine.
+3-bad_hand=sad,Well, I guess it can't be helped, huh.
+
+#lost 4 items
+4-good_hand=happy,My skirt's not going anywhere. Sorry!
+4-okay_hand=,Eh, I'm sure someone did worse than me.
+4-bad_hand=embarressed,Good thing I wore a matching set.
+
+#lost 5 items
+5-good_hand=sassy,My boobs remain for my eyes only this round. Sorry everyone.
+5-okay_hand=embarressed,You might see some skin, or you might not. Heh.
+5-bad_hand=angry,I should have wore my bracelet, ugh.
+
+#lost 6 items
+6-good_hand=relief,Okay, I'm still in this. Good.
+6-okay_hand=worried,I hope this is enough.
+6-bad_hand=angry,I got these kinds of cards at this time!?
+
+#lost all clothing
+-3-good_hand=victory,Yes! I'm still in this!
+-3-okay_hand=worried,Come on... this better be enough.
+-3-bad_hand=sad,Oh, come on...
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing first item of clothing
+0-must_strip_winning=happytostrip,Whatever will I do without my shoes?
+0-must_strip_normal=happytostrip,I can afford to lose my shoes.
+0-must_strip_losing=happytostrip,Fair enough.
+0-stripping=,No big deal.
+1-stripped=,The uniform socks are cute, aren't they?
+
+#losing second item of clothing
+1-must_strip_winning=happytostrip,I can humor you with some feet, I guess.
+1-must_strip_normal=happytostrip,I hope you think my feet are cute.
+1-must_strip_losing=indifferent,Oh well, I can afford to lose my socks.
+1-stripping=,I'll just slip these off, don't mind me.
+2-stripped=,All done! Good thing I polished my nails before.
+
+#losing third item of clothing
+2-must_strip_winning=teasing,Aw, I liked how the red complimented my hair.
+2-must_strip_normal=indifferent,Guess it's my turn. It was humid here anyway.
+2-must_strip_losing=teasing,Wow, it's like the deck wants me to get undressed fast!
+2-stripping=,Off you go. No big deal.
+3-stripped=,At least my skirt still matches.
+
+#losing fourth item of clothing
+3-must_strip_winning=happytostrip,Alright, alright, just don't stare too much. 
+3-must_strip_normal=teasing,Fair enough, my bra looks cute anyway.
+3-must_strip_losing=shocked,Me again? Oh well.
+3-stripping=,Alright, here goes.
+4-stripped=,See, it's it cute?
+
+#losing fifth item of clothing
+4-must_strip_winning=happytostrip,Guess I'll join the party.
+4-must_strip_normal=calm,Get ready for some leg action.
+4-must_strip_losing=indifferent,At least I wore my matching set.
+4-stripping=,I'll just slide this off.
+5-stripped=,Ever seen a model in only her underwear?
+
+#losing sixth item of clothing
+5-must_strip_winning=sassy,My turn huh? Don't break your necks.
+5-must_strip_normal=happytostrip,Alright, alright, time to let the boys out.
+5-must_strip_losing=embarressed,Oh boy, me first. Great.
+5-stripping=,I'll just undo this here...
+6-stripped=,Ta-da!
+
+#losing seventh item of clothing
+6-must_strip_winning=shocked,Finally my turn?
+6-must_strip_normal=defeat,It was inevitable, huh.
+6-must_strip_losing=angry,Wonderful...
+6-stripping=,Feast your eyes...
+7-stripped=,I hope all that junk food didn't do too much on me.
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_human_must_strip=happy,Sorry, ~name~!
+male_must_strip=happy,Woo, not me!
+female_human_must_strip=happy,Don't worry about it, ~name~!
+female_must_strip=happy,Try not to feel embarressed.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_human_must_strip=happytostrip,Let's go, ~name~!
+0-male_must_strip=happytostrip,We'll get to the good stuff soon, won't we?
+0-female_human_must_strip=interestedgeneric,Come on, ~name~.
+0-female_must_strip=interestedgeneric,You better start showing off before I do, I'm a hard act to follow.
+
+#lost 1 item
+1-male_human_must_strip=teasing,Soon, soon...
+1-male_must_strip=teasing,Soon, big boy.
+1-female_human_must_strip=happytostrip,Now we're talking.
+1-female_must_strip=happytostrip,Another one bites the dust.
+
+#lost 2 items
+2-male_human_must_strip=confident,Not it!
+2-male_must_strip=confident,Yay, not me!
+2-female_human_must_strip=teasing,Way to make this slightly more interesting.
+2-female_must_strip=confident,Excellent! Let's go, ~name~.
+
+#lost 3 items
+3-male_human_must_strip=sassy,Way to go, big boy.
+3-male_must_strip=sassy,Good, good.
+3-female_human_must_strip=interestedfemalesmaller,You better not look better than me.
+3-female_must_strip=interestedfemalesmaller,This is getting fun, huh?
+
+#lost 4 items
+4-male_human_must_strip=calm,I don't want to be the only one showing off.
+4-male_must_strip=calm,Is it getting hot in here?
+4-female_human_must_strip=calm,Show some skin, why don't you?
+4-female_must_strip=calm,I can't be the only one showing off, anyway.
+
+#lost 5 items
+5-male_human_must_strip=sassy,You should join me, though, I like to show off.
+5-male_must_strip=calm,Nice, nice.
+5-female_human_must_strip=sassy,You know the drill.
+5-female_must_strip=sassy,Don't think you're gonna look better than me.
+
+#lost 6 items
+6-male_human_must_strip=interestedplayer,I think I'm seeing something I like...
+6-male_must_strip=relief,Oh, thank god.
+6-female_human_must_strip=interestedfemalebigger,Don't think you can one-up me.
+6-female_must_strip=interestedfemalesmaller,Oooh, this is gonna be fun.
+
+
+#lost all clothing items
+-3-male_human_must_strip=embarressed,Yes, join me...
+-3-male_must_strip=embarressed,Not bad... not bad at all.
+-3-female_human_must_strip=embarressed,I like what I see.
+-3-female_must_strip=embarressed,Mmmm...
+
+#masturbating
+-2-male_human_must_strip=,Yes, show me what you got...
+-2-male_must_strip=,Oh, please indulge me...
+-2-female_human_must_strip=,Yes, take it off...
+-2-female_must_strip=,Oh, please, let me see!
+
+#finished
+-1-male_human_must_strip=,Hurry up and cum with me...
+-1-male_must_strip=,Let's go, chop chop!
+-1-female_human_must_strip=,Aren't you quite the pretty lady?
+-1-female_must_strip=,Come on, make a mess like I did already!
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_accessory=sad,How lame.
+male_removed_accessory=calm,Onward to the big stuff, hm?
+female_removing_accessory=sad,That's all?
+female_removed_accessory=calm,I hope you don't have too many small things, ~name~.
+
+#stage-specific lines that override the stage-generic ones
+
+##another character is removing accessories
+#fully clothed
+0-male_removing_accessory=calm,Can't expect much yet, I guess.
+0-male_removed_accessory=,Onwards to the next round.
+0-female_removing_accessory=happytostrip,Eh, just some buildup for the fun parts later.
+0-female_removing_accessory=indifferent,We'll get the easy stuff off you soon enough.
+0-female_removed_accessory=calm,Shall we continue?
+0-female_removed_accessory=calm,Next round, please.
+
+#lost 1 item
+1-male_removing_accessory=teasing,I hope you don't have too many accessories.
+1-male_removed_accessory=happytostrip,Woohoo.
+1-female_removing_accessory=sad,Booring, hurry up.
+1-female_removed_accessory=teasing,Relish the small stuff while you still have them. 
+
+
+#lost 2 items
+2-male_removing_accessory=confident,About time, huh?
+2-male_removed_accessory=teasing,You better take more off soon.
+2-female_removing_accessory=indifferent,Guess it's good to knock off the small stuff.
+2-female_removed_accessory=calm,I hope your next item is more fun.
+
+#lost 3 items
+3-male_removing_accessory=sad,Only an accessory?
+3-male_removed_accessory=calm,No big deal, I guess.
+3-female_removing_accessory=sad,Still on the small stuff?
+3-female_removed_accessory=calm,We should be moving on to the better stuff soon, right?
+
+#lost 4 items
+4-male_removing_accessory=embarressed,That's all?
+4-male_removed_accessory=indifferent,Oh well.
+4-female_removing_accessory=embarressed,I'm showing so much and that's all you got?
+4-female_removed_accessory=interestedfemalesmaller,You better lose faster.
+
+#lost 5 items
+5-male_removing_accessory=angry,You're doing well, aren't you?
+5-male_removed_accessory=annoyed,Ugh, I guess rules are rules.
+5-female_removing_accessory=annoyed,You're making this less interesting.
+5-female_removed_accessory=sigh,If only you'd save the small stuff for last.
+
+#lost 6 items
+6-male_removing_accessory=angry,Is that really it?
+6-male_removed_accessory=moveon,Hurry up.
+6-female_removing_accessory=angry,Lame.
+6-female_removed_accessory=moveon,Let's just get on with it.
+
+
+#nude
+-3-male_removing_accessory=angry,God damn it, that's all?
+-3-male_removed_accessory=worried,Can't believe this.
+-3-female_removing_accessory=angry,Show some good stuff already!
+-3-female_removed_accessory=worried,I can't believe I'm doing do bad.
+
+#masturbating
+-2-male_removing_accessory=,I'd be more annoyed if this didn't feel so good...
+-2-male_removed_accessory=,Hurry up, big boy.
+-2-female_removing_accessory=,Maybe getting to cum before you is a reward...
+-2-female_removed_accessory=,You have a long way to go before feeling this good...
+
+#finished
+-1-male_removing_accessory=,Show your stuff already.
+-1-male_removed_accessory=,Come on.
+-1-female_removing_accessory=,Maybe give us a little flash?
+-1-female_removed_accessory=,I might touch myself again once you get more undressed, you know.
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_minor=calm,Oh, this is fun.
+male_removed_minor=happy,We're getting somewhere, huh?
+female_removing_minor=calm,Very nice.
+female_removed_minor=happy,Let's get more off!
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=happy,Your turn again!
+0-male_removed_minor=happytostrip,You better be feeling worried.
+0-female_removing_minor=interestedgeneric,Ooh, another lifeline goes down.
+0-female_removed_minor=calm,If only I was in your position, right?
+
+#lost 1 item
+1-male_removing_minor=indifferent,At least it's not me.
+1-male_removed_minor=calm,Good, good.
+1-female_removing_minor=teasing,Is it wrong to say I'm glad you lost?
+1-female_removed_minor=happy,We're close to the good stuff, aren't we?
+
+#lost 2 items
+2-male_removing_minor=teasing,So, what's gonna come off?,
+2-male_removed_minor=confident,Eh, not bad.
+2-female_removing_minor=teasing,So, what have you got to lose?
+2-female_removed_minor=confident,You know, you might look better without that.
+
+#lost 3 items
+3-male_removing_minor=happy,Yeah, get on my level!
+3-male_removed_minor=calm,I think we're pretty even now.
+3-female_removing_minor=calm,What's it gonna be?
+3-female_removed_minor=sassy,Hey, looking good!
+
+#lost 4 items
+4-male_removing_minor=interestedgeneric,You're up, ~name~.
+4-male_removed_minor=disappointed,Is that all?
+4-female_removing_minor=interestedgeneric,Your turn, ~name~.
+4-female_removed_minor=confident,You'll get on my level soon enough.
+
+#lost 5 items
+5-male_removing_minor=disappointed,That's it?
+5-male_removed_minor=sigh,Ugh, you better lose faster.
+5-female_removing_minor=disappointed,Come on, get to the good stuff.
+5-female_removed_minor=sigh,Don't you feel just a bit jealous that everyone's looking at me?
+
+#lost 6 items
+6-male_removing_minor=veryangry,You're still on THAT?
+6-male_removed_minor=worried,Luck of the cards have definitley been on your side.
+6-female_removing_minor=defeat,Wow, aren't you lucky?
+6-female_removed_minor=moveon,Relish in the luck you have now, it might not happen next time.
+
+
+#naked
+-3-male_removing_minor=disbelief,I can't believe you're only on that.
+-3-male_removed_minor=sad,How lame.
+-3-female_removing_minor=disbelief,Wow, how bad am I doing?
+-3-female_removed_minor=embarressed,Did you guys maybe rig the game just to see me naked?
+
+#masturbating
+-2-male_removing_minor=,Ugh, you're doing nothing for me...
+-2-male_removed_minor=,I'll touch myself to you once you lose more...
+-2-female_removing_minor=,You don't wanna give me a peek while I'm doing this?
+-2-female_removed_minor=,So be it...
+
+#finished
+-1-male_removing_minor=,Wow, I did terrible this game compared to you.
+-1-male_removed_minor=,Next time, I'll do better.
+-1-female_removing_minor=,Oh god, how badly did I lose to you?
+-1-female_removed_minor=,This can't happen again.
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_major=calm,Oh, things are heating up, hm?
+male_removed_major=happy,You look better without it, ~name~.
+female_removing_major=interestedfemalesmaller,Another lifeline down. Worried, ~name~?
+female_removed_major=sassy,You look cute!
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=happytostrip,Oh no, someone's losing.
+0-male_removed_major=happy,Way to show some skin, hotshot!
+0-female_removing_major=happytostrip,Oh-ho, let's see what you got.
+0-female_removed_major=interestedgeneric,Not bad. Not as good as me, maybe, but not bad at all.
+
+#lost 1 item
+1-male_removing_major=teasing,This is what I've been waiting for.
+1-male_removed_major=calm,Hey, good stuff.
+1-female_removing_major=teasing,You know, you can put on my shoes if you don't wanna lose so badly.
+1-female_removed_major=happytostrip,Oh, I bet you wish I was in your position right now.
+
+#lost 2 items
+2-male_removing_major=teasing,Go big or go home.
+2-male_removed_major=confident,Not bad.
+2-female_removing_major=happy,Hey, now we're talking.
+2-female_removed_major=calm,You're on thin ice now, hah.
+
+#lost 3 items
+3-male_removing_major=sassy,Way to get on my level!
+3-male_removed_major=calm,Hope you know you're going down.
+3-female_removing_major=sassy,What's it gonna be?
+3-female_removed_major=happy,We're both making this game a little interesting now, huh? Moreso me, maybe.
+
+#lost 4 items
+4-male_removing_major=confident,Yeah, join me!
+4-male_removed_major=happytostrip,Not bad, not bad.
+4-female_removing_major=calm,Join me, ~name~.
+4-female_removed_major=happytostrip,Not bad, just don't try to steal my light.
+
+#lost 5 items
+5-male_removing_major=happytostrip,Let's see some skin.
+5-male_removed_major=calm,Not bad, boy toy.
+5-female_removing_major=sassy,Let's see what you got. Don't try to one up me, though.
+5-female_removed_major=embarressed,Doesn't seeing me undressed make you want to take some clothes off?
+
+#lost 6 items
+6-male_removing_major=happy,Oh boy, whatcha got?
+6-male_removed_major=calm,Not bad.
+6-female_removing_major=embarressed,Let's see if you can compare.
+6-female_removed_major=sassy,Almost as good as me. Almost.
+
+
+#nude
+-3-male_removing_major=horny,Look at me while you undress.
+-3-male_removed_major=interestedfemalesmaller,Aren't you confident?
+-3-female_removing_major=interestedfemalesmaller,What would it take for you to drop two pieces of clothing, hmm?
+-3-female_removed_major=sassy,I understand wanting to keep your clothes. I'm a tough act to follow.
+
+#masturbating
+-2-male_removing_major=,Ugh, take it off already!
+-2-male_removed_major=,More, please...
+-2-female_removing_major=,Yeah, give me something to touch myself to...
+-2-female_removed_major=,Mmmm, aren't you delicious?
+
+#finished
+-1-male_removing_major=,Oh, boy toy's turn.
+-1-male_removed_major=,Just a little more.
+-1-female_removing_major=,You probably look better without clothes.
+-1-female_removed_major=,You know, I might start touching myself again if you lose.
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_chest_will_be_visible=interested,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPC's, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=interested,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=horny,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPC's, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=calm,Ah, you weren't hiding much from us, huh?
+male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, very nice, ~name~.
+male_large_crotch_is_visible=interestedmale,Oh... oh my.
+
+female_chest_will_be_visible=interestedfemalesmaller,Woo, letting the puppies breath, are we?
+female_small_chest_is_visible=interestedfemalesmaller,How cute, ~name~.
+female_medium_chest_is_visible=interestedfemalesmaller,Not bad, ~name~. Almost as good as mine.
+female_large_chest_is_visible=interestedfemalebigger,...Show off.
+female_crotch_will_be_visible=shocked,Oh! The big reveal!
+female_crotch_is_visible=calm,Don't feel embarressed, ~name~.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=happy,Yeah, let's see what you're hiding under that shirt.
+0-male_chest_is_visible=interestedfemalesmaller,Not bad, not bad.
+0-male_crotch_will_be_visible=shocked,Ooh, I think I already see something I like...
+0-male_small_crotch_is_visible=indifferent,Pfft, okay then.
+0-male_medium_crotch_is_visible=interestedfemalesmaller,Not bad.
+0-male_large_crotch_is_visible=interestedmale,Oh... that's nice.
+
+0-female_chest_will_be_visible=interestedgeneric,Whatcha got hidden there, hmm?
+0-female_small_chest_is_visible=interestedfemalesmaller,How cute.
+0-female_medium_chest_is_visible=interestedgeneric,Oh, not bad, but not as good as mine.
+0-female_large_chest_is_visible=interestedfemalebigger,O-oh.
+0-female_crotch_will_be_visible=shocked,Already?
+0-female_crotch_is_visible=interestedfemalebigger,That's n-nice...
+
+#lost 1 item
+1-male_chest_will_be_visible=calm,Show your stuff, boy.
+1-male_chest_is_visible=interestedfemalesmaller,Mm...
+1-male_crotch_will_be_visible=shocked,So soon?
+1-male_small_crotch_is_visible=laugh,Pfft.
+1-male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, I like.
+1-male_large_crotch_is_visible=interestedmale,O-oh. Well now.
+
+1-female_chest_will_be_visible=happy,Woohoo, now we're talking
+1-female_small_chest_is_visible=interestedfemalesmaller,They're adorable.
+1-female_medium_chest_is_visible=interestedfemalesmaller,You know, if you drank more soy milk, you might pass me one day...
+1-female_large_chest_is_visible=interestedfemalebigger,You're lucky, aren't you...
+1-female_crotch_will_be_visible=laugh,Wow, you were really unlocky this game, huh.
+1-female_crotch_is_visible=embarressed,I feel weird for looking...
+
+#lost 2 items
+2-male_chest_will_be_visible=teasing,Oooh!
+2-male_chest_is_visible=calm,Yum...
+2-male_crotch_will_be_visible=calm,Whatcha got for us?
+2-male_small_crotch_is_visible=teasing,Aren't you a cutie?
+2-male_medium_crotch_is_visible=interestedfemalesmaller,Hm... I wonder...
+2-male_large_crotch_is_visible=interestedmale,It's so... wow...
+
+2-female_chest_will_be_visible=teasing,Show some skin, girl!
+2-female_small_chest_is_visible=interestedfemalesmaller,Are you sensative there?
+2-female_medium_chest_is_visible=interestedfemalesmaller,Aren't you lookin' good, hmm?
+2-female_large_chest_is_visible=interestedfemalebigger,N-nice chest.
+2-female_crotch_will_be_visible=shocked,Already?
+2-female_crotch_is_visible=interestedfemalebigger,Wow, o-okay...
+
+#lost 3 items
+3-male_chest_will_be_visible=calm,Have fun.
+3-male_chest_is_visible=interestedfemalesmaller,Mm, can I touch?
+3-male_crotch_will_be_visible=shocked,Oh, let's see!
+3-male_small_crotch_is_visible=laugh,Aww.
+3-male_medium_crotch_is_visible=shocked,Can... can I poke it?
+3-male_large_crotch_is_visible=interestedplayer,Can... can I touch it?
+
+3-female_chest_will_be_visible=teasing,Here, have a little compensation tease. Maybe you'll see more soon?
+3-female_small_chest_is_visible=interestedfemalesmaller,You know what they say, flat is justice.
+3-female_medium_chest_is_visible=interestedfemalesmaller,Delicious.
+3-female_large_chest_is_visible=interestedfemalebigger,They're... fine.
+3-female_crotch_will_be_visible=calm,You're not worried about people looking, are you?
+3-female_crotch_is_visible=embarressed,Oh... that's cute.
+
+#lost 4 items
+4-male_chest_will_be_visible=happy,You can see my chest, kinda, let's see yours!
+4-male_chest_is_visible=lick,How would you feel if I... licked it?
+4-male_crotch_will_be_visible=shocked,What kinda heat are you packing?
+4-male_small_crotch_is_visible=confident,Tsk, okay.
+4-male_medium_crotch_is_visible=lick,Mmm...
+4-male_large_crotch_is_visible=interestedmale,Whoa.
+
+4-female_chest_will_be_visible=sassy,Don't worry, I'm almost at that stage. Kinda.
+4-female_small_chest_is_visible=interestedfemalesmaller,How adorable.
+4-female_medium_chest_is_visible=interestedgeneric,Comendable.
+4-female_large_chest_is_visible=interestedfemalebigger,Well, you've definitley got it... don't flaunt it too much...
+4-female_crotch_will_be_visible=shocked,The big reveal?
+4-female_crotch_is_visible=calm,You don't have to feel embarressed.
+
+#lost 5 items
+5-male_chest_will_be_visible=sassy,Oops! Your turn.
+5-male_chest_is_visible=calm,That wasn't so bad, was it?
+5-male_crotch_will_be_visible=shocked,Oh, let's see now...
+5-male_small_crotch_is_visible=interestedfemalesmaller,Mm...
+5-male_medium_crotch_is_visible=interestedmale,By any chance, did seeing me... help?
+5-male_large_crotch_is_visible=interestedplayer,Whoa. I bet me losing would help, huh?
+
+5-female_chest_will_be_visible=,If it makes you feel any better, I'm next.
+5-female_small_chest_is_visible=interestedfemalesmaller,Cute, but don't feel bad if I steal the show next.
+5-female_medium_chest_is_visible=sassy,Ooh, bouncy.
+5-female_large_chest_is_visible=interestedfemalebigger,S-show off...
+5-female_crotch_will_be_visible=sassy,Your last lifeline's gone...
+5-female_crotch_is_visible=calm,Let's see what you've been hiding from us, ~name~.
+
+#lost 6 items
+6-male_chest_will_be_visible=happy,Hey, I did it, now you do it too!
+6-male_chest_is_visible=sassy,Twinning!
+6-male_crotch_will_be_visible=embarressed,I bet seeing me made you hard, didn't it ~name~?
+6-male_small_crotch_is_visible=interestedfemalesmaller,I can work with that.
+6-male_medium_crotch_is_visible=lick,I bet there's a few things you'd like me to do with that
+6-male_large_crotch_is_visible=interestedmale,Uh... c-can I rub it?
+
+6-female_chest_will_be_visible=,Don't steal my light, ~name~.
+6-female_small_chest_is_visible=embarressed,How would you react if I... teasted them, a little?
+6-female_medium_chest_is_visible=relief,Whew, you're on par, aren't you?
+6-female_large_chest_is_visible=angry,I can't even be mad at you for showing off because I do it too...
+6-female_crotch_will_be_visible=embarressed,Want me to take them off for you, ~name~?
+6-female_crotch_is_visible=interestedmale,I kinda wanna... touch it.
+
+
+#nude
+-3-male_chest_will_be_visible=happy,Get it off already!
+-3-male_chest_is_visible=embarressed,Mmm, aren't you yummy...
+-3-male_crotch_will_be_visible=embarressed,It's about time.
+-3-male_small_crotch_is_visible=sassy,On the bright side, you probably won't need lube.
+-3-male_medium_crotch_is_visible=Horny,Mm...
+-3-male_large_crotch_is_visible=disbelief,That's supposed to fit in girls?
+
+-3-female_chest_will_be_visible=happy,The more, the merrier!
+-3-female_small_chest_is_visible=sassy,No match for me!
+-3-female_medium_chest_is_visible=interestedfemalesmaller,I think everyone would like to see us have some fun togehter, ~name~.
+-3-female_large_chest_is_visible=worried,P-put your bra back on...
+-3-female_crotch_will_be_visible=calm,Let's see who's got the cleaner carpet.
+-3-female_crotch_is_visible=sassy,Well kept. Give any pointers?
+
+#masturbating
+-2-male_chest_will_be_visible=,Take it off already!
+-2-male_chest_is_visible=,Oh, I wanna touch it...
+-2-male_crotch_will_be_visible=,Let's see how hard I'm making you...
+-2-male_small_crotch_is_visible=,Need me to help you?
+-2-male_medium_crotch_is_visible=,Unf, the perfect material...
+-2-male_large_crotch_is_visible=,Wow... you're packing a lot of heat, huh hotshot?
+
+-2-female_chest_will_be_visible=,Let them free already! And maybe play with them a little...
+-2-female_small_chest_is_visible=,That's adorable...
+-2-female_small_chest_is_visible=,Can I give them a little lick?
+-2-female_medium_chest_is_visible=,Almost as good as mine...
+-2-female_large_chest_is_visible=,Doesn't your back hurt...?
+-2-female_crotch_will_be_visible=,Take them off quickly...
+-2-female_crotch_will_be_visible=,You don't need those anymore, ~name~.
+-2-female_crotch_is_visible=,I wouldn't penalize you for sticking a finger or two in, ~name~.
+-2-female_crotch_is_visible=,Ever try scissoring?
+
+#finished
+-1-male_chest_will_be_visible=,Maybe take two items off and get naked with me faster?
+-1-male_chest_is_visible=,I lost, but at least I have another show.
+-1-male_crotch_will_be_visible=,Mmm...
+-1-male_small_crotch_is_visible=,Heh, how cute.
+-1-male_medium_crotch_is_visible=,Yum...
+-1-male_large_crotch_is_visible=,Oh my... I might start again...
+
+-1-female_chest_will_be_visible=,Let the puppies run wild!
+-1-female_small_chest_is_visible=,There are definitley guys that like your kind of chest, you know.
+-1-female_medium_chest_is_visible=,Wanna rub 'em together? Hmm?
+-1-female_large_chest_is_visible=,Very nice.
+-1-female_crotch_will_be_visible=,You're still wearing them after I took mine off?
+-1-female_crotch_is_visible=,If you want, I'll start again when you start...
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_must_masturbate=interested,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=horny,What the character says when a male character has started masturbating.
+male_masturbating=horny,What the character says while a male character is masturbating.
+male_finished_masturbating=shocked,What the character says when a male character "finishes" masturbating.
+
+female_must_masturbate=interested,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=horny,What the character says when a female character has started masturbating.
+female_masturbating=horny,What the character says while a female character is masturbating.
+female_finished_masturbating=shocked,What the character says when a female character "finishes" masturbating.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=happytostrip,On one hand, you lost terribly. On the other, you get to have fun!
+0-male_start_masturbating=indifferent,Sorry I'm not providing much of a show for you, with all my clothes and all.
+0-male_masturbating=interestedgeneric,Don't feel embarressed if I watch, ~name~.
+0-male_finished_masturbating=happytostrip,You might consider starting again if I lose, right?
+
+0-female_must_masturbate=happytostrip,Hey, at least you made the game more fun for me.
+0-female_start_masturbating=teasing,Let me know if you need some help.
+0-female_masturbating=calm,That looks like fun, ~name~. Shame I might not indulge you all this game.
+0-female_finished_masturbating=,I'm almost a little jealous of you, ~name~.
+
+#lost 1 item
+1-male_must_masturbate=teasing,Wow, I must be doing great.
+1-male_start_masturbating=interestedfemalesmaller,Have fun there, big boy.
+1-male_masturbating=sassy,Looking good, ~name~!
+1-male_finished_masturbating=calm,You made quite the mess there, ~name~.
+
+1-female_must_masturbate=shocked,Already, huh? I've only just started.
+1-female_start_masturbating=sassy,Have fun, ~name~.
+1-female_masturbating=calm,~name~,you're making that look really fun.
+1-female_finished_masturbating=teasing,Had a good time, ~name~?
+
+#lost 2 items
+2-male_must_masturbate=interestedfemalesmaller,Well, get to it, ~name~.
+2-male_start_masturbating=teasing,~name~, if you want, you can use one of my socks.
+2-male_masturbating=calm,Want me to use my feet, ~name~?
+2-male_finished_masturbating=interestedfemalesmaller,Looks like you had fun, hm?
+
+2-female_must_masturbate=happy,Oooh, the best part.
+2-female_start_masturbating=calm,I'll do my best not to stare much.
+2-female_masturbating=teasing,Bet you would love it if I helped out, right ~name~?
+2-female_finished_masturbating=calm,Don't worry about cleaning up your mess.
+
+#lost 3 items
+3-male_must_masturbate=sassy,Welp, time for the climax. Literally.
+3-male_start_masturbating=interestedfemalesmaller,Enjoy yourself, ~name~.
+3-male_masturbating=supertease,Maybe I should help you out a little?
+3-male_finished_masturbating=calm,Did you enjoy yourself?
+
+3-female_must_masturbate=interestedfemalesmaller,You're at that stage and I still have most of my clothes.
+3-female_start_masturbating=supertease,Need a peek to get you going?
+3-female_masturbating=interestedmale,Oooh...
+3-female_finished_masturbating=embarressed,You almost of make me wanna take off more clothing, ~name~.
+
+#lost 4 items
+4-male_must_masturbate=calm,Go nuts, ~name~.
+4-male_start_masturbating=confident,Want me to undo my bra for a little peek?
+4-male_masturbating=lick,Mmm...
+4-male_finished_masturbating=interestedgeneric,You put on a good show, ~name~.
+
+4-female_must_masturbate=happy,Yay, another one down.
+4-female_start_masturbating=calm,Enjoy yourself, ~name~.
+4-female_masturbating=happy,I love your faces, ~name~.
+4-female_finished_masturbating=embarressed,Poor me, still here with all this clothing.
+
+#lost 5 items
+5-male_must_masturbate=happytostrip,Well, my full body is here to help you.
+5-male_start_masturbating=sassy,Don't stare too obviously though, ~name~. I'll wink at you if I notice.
+5-male_masturbating=,I like what I'm seeing, ~name~. Keep it up.
+5-male_finished_masturbating=,Will you do it again if I lose too, ~name~?
+
+5-female_must_masturbate=happy,Yes, one before me!
+5-female_start_masturbating=interestedgeneric,Would you like me to... touch you a little myself, ~name~?
+5-female_masturbating=interestedfemalesmaller,You make some cute faces, ~name~.
+5-female_masturbating=calm,You make some interesting sounds, ~name~.
+5-female_finished_masturbating=sassy,You know, I might have to join you soon.
+
+#lost 6 items
+6-male_must_masturbate=victory,Bet you wanna do naughty things to these, don't you ~name~?
+6-male_start_masturbating=horny,It's okay if I rub these a little while I watch... right?
+6-male_masturbating=horny,That looks so nice, ~name~...
+6-male_finished_masturbating=sad,Ugh, part of me wants to lose now.
+
+6-female_must_masturbate=victory,Wanna play with these aanndd with yourself, ~name~?
+6-female_start_masturbating=interestedfemalesmaller,You look cute in that position, ~name~.
+6-female_masturbating=horny,Kinda... hot... thanks, ~name~...
+6-female_masturbating=moveon,~name~, are you trying to rub in how good that feels?
+6-female_finished_masturbating=embarressed,You made a cute mess, ~name~.
+
+
+#nude
+-3-male_must_masturbate=happy,Yes, I didn't lose!
+-3-male_start_masturbating=sassy,Bet you wish I could join, huh ~name~?
+-3-male_masturbating=calm,Unfortunatley, I still have a round to lose before I can join ~name~.
+-3-male_finished_masturbating=horny,You put on quite a show, ~name~.
+
+-3-female_must_masturbate=happy,Woohoo, not it!
+-3-female_start_masturbating=sassy,Hey, ~name~, wanna scissor?
+-3-female_masturbating=embarressed,If I lose one more round, I'm gonna look a lot like ~name~ right now.
+-3-female_finished_masturbating=horny,That looked like a lot of fun, ~name~...
+
+#masturbating
+-2-male_must_masturbate=five,Someone else to join me, hm...?
+-2-male_start_masturbating=one,Look me in the eyes while you do it, cutie...
+-2-male_masturbating=three,It feels sooo good, doesn't it, ~name~?
+-2-male_finished_masturbating=one,It's rude to finish before a girl, you know...
+
+-2-female_must_masturbate=one,Oh, I always wanted to try mutual masturbation...
+-2-female_start_masturbating=,Look me in the eyes while you rub, ~name~...
+-2-female_masturbating=four,~name~, ever try scissoring...?
+-2-female_finished_masturbating=five,Aww, you finished first...
+
+#finished
+-1-male_must_masturbate=three,A shame I already finished, huh?
+-1-male_start_masturbating=one,Feel free to look at me while you do it.
+-1-male_masturbating=two,You should feel lucky, no one really gets to see me like this.
+-1-male_finished_masturbating=four,Have fun, stud?
+
+-1-female_must_masturbate=four,Want me to join?
+-1-female_start_masturbating=three,Enjoy yourself.
+-1-female_masturbating=one,You kind of make me want to do it again...
+-1-female_finished_masturbating=four,That was pretty hot, huh?
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat can repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+must_masturbate_first=lossembarressed,Me first, huh...? Prepare for a show, I guess...
+must_masturbate=losshappy,It's only fair I do my due diligence.
+start_masturbating=starting,D-don't stare too much...
+masturbating=calm,You guys looking at me is making this so much hotter...
+heavy_masturbating=heavy,Oh god, I'm close, oh god...
+finishing_masturbating=finishing,Aah! Oh my GOD, Im c-cumming... ahh...
+finished_masturbating=finished,S-sorry you guys had to see me like that, haha...
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+game_over_victory=calm,Was a pleasure playing with you all. Shame you didn't see me cum, hehe.
+#stage-specific lines that override the stage-generic one
+0-game_over_victory=shocked,I really didn't lose any clothing? We have to do a rematch, how boring!
+1-game_over_victory=shocked,Just my shoes? Should I handicap myself next game?
+2-game_over_victory=teasing,I mean, my feet are cute and all, but that's all?
+3-game_over_victory=laugh,Aww, you guys almost got to see some skin. Such a shame.
+4-game_over_victory=disappointed,Well played game, I guess.
+5-game_over_victory=happytostrip,I guess this should be enough for everyone, right? Good game.
+6-game_over_victory=victory,Aren't my boobs the best? I'll let runner up touch if they want.
+7-game_over_victory=,
+-3-game_over_victory=shocked,Wow, that was close, huh? Good game!
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=Good... good game, everyone...
