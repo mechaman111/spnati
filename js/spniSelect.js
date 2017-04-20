@@ -85,6 +85,8 @@ $individualHeightLabels = [$("#individual-height-label-1"), $("#individual-heigh
 $individualSourceLabels = [$("#individual-source-label-1"), $("#individual-source-label-2"), $("#individual-source-label-3"), $("#individual-source-label-4")];
 $individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
 $individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
+$individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individual-line-count-label-2"), $("#individual-line-count-label-3"), $("#individual-line-count-label-4")];
+$individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
 $individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
 $individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
@@ -526,6 +528,7 @@ function selectOpponentSlot (slot) {
 		
 		/* reload selection screen */
 		updateIndividualSelectScreen();
+        updateIndividualCountStats();
         
         /* switch screens */
 		screenTransition($selectScreen, $individualSelectScreen);
@@ -1102,7 +1105,6 @@ $sortingOptionsItems.on("click", function(e) {
  */
 function wordWrapHtml(text) {
     return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
-
 }
 
 /************************************************************
@@ -1125,10 +1127,10 @@ $groupCreditsButton.on('click', function(e) {
  * Only loads if the unique line count or image count is not known.
  */
 function updateOpponentCountStats(opponentArr) {
-    opponentArr.forEach(function(opp) {
+    opponentArr.forEach(function(opp, idx) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
-            console.log("Fetching counts for " + opp.label);
+            console.log("Fetching counts for " + opp.label + ", idx: " + idx);
             // retrieve line and image counts
             var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
             countsPromise.then(countLinesImages).then(function(response) {
@@ -1138,11 +1140,16 @@ function updateOpponentCountStats(opponentArr) {
                 
                 // show line and image counts
                 console.log(opp.label + ": " + opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images");
+                $individualLineCountLabels[idx].html(opp.uniqueLineCount);
+                $individualPoseCountLabels[idx].html(opp.posesImageCount);
             });
         }
         else {
-            if (opp)
+            if (opp) {
                 console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
+                $individualLineCountLabels[idx].html(opp.uniqueLineCount);
+                $individualPoseCountLabels[idx].html(opp.posesImageCount);
+            }
             else
                 console.log("opp is null");
         }
@@ -1205,3 +1212,4 @@ function countLinesImages(xml) {
         numUniqueLines : numUniqueDialogueLines,
         numPoses : numUniqueUsedPoses
     };
+}
