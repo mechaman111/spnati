@@ -1104,6 +1104,7 @@ $sortingOptionsItems.on("click", function(e) {
  * or word-broken (if text is long and no spaces are present).
  */
 function wordWrapHtml(text) {
+    text = text || "&nbsp;";
     return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
 }
 
