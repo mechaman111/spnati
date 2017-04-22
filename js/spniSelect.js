@@ -85,6 +85,7 @@ $individualHeightLabels = [$("#individual-height-label-1"), $("#individual-heigh
 $individualSourceLabels = [$("#individual-source-label-1"), $("#individual-source-label-2"), $("#individual-source-label-3"), $("#individual-source-label-4")];
 $individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
 $individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
+$individualCountBoxes = [$("#individual-counts-1"), $("#individual-counts-2"), $("#individual-counts-3"), $("#individual-counts-4")];
 $individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individual-line-count-label-2"), $("#individual-line-count-label-3"), $("#individual-line-count-label-4")];
 $individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
@@ -331,6 +332,7 @@ function updateIndividualSelectScreen () {
 			$individualSourceLabels[index].html("");
 			$individualWriterLabels[index].html("");
 			$individualArtistLabels[index].html("");
+            $individualCountBoxes[index].css("visibility", "hidden");
 			$individualDescriptionLabels[index].html("");
             $individualBadges[index].hide();
             $individualLayers[index].hide();
@@ -1132,6 +1134,7 @@ function updateOpponentCountStats(opponentArr) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
             console.log("Fetching counts for " + opp.label + ", idx: " + idx);
+            $individualCountBoxes[idx].css("visibility", "visible");
             // retrieve line and image counts
             var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
             countsPromise.then(countLinesImages).then(function(response) {
@@ -1148,11 +1151,16 @@ function updateOpponentCountStats(opponentArr) {
         else {
             if (opp) {
                 console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
+                $individualCountBoxes[idx].css("visibility", "visible");
                 $individualLineCountLabels[idx].html(opp.uniqueLineCount);
                 $individualPoseCountLabels[idx].html(opp.posesImageCount);
             }
-            else
+            else {
                 console.log("opp is null");
+                $individualCountBoxes[idx].css("visibility", "hidden");
+                $individualLineCountLabels[idx].html("");
+                $individualPoseCountLabels[idx].html("");
+            }
         }
     });
 }
