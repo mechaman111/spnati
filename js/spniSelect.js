@@ -109,6 +109,9 @@ $groupHeightLabels = [$("#group-height-label-1"), $("#group-height-label-2"), $(
 $groupSourceLabels = [$("#group-source-label-1"), $("#group-source-label-2"), $("#group-source-label-3"), $("#group-source-label-4")];
 $groupWriterLabels = [$("#group-writer-label-1"), $("#group-writer-label-2"), $("#group-writer-label-3"), $("#group-writer-label-4")];
 $groupArtistLabels = [$("#group-artist-label-1"), $("#group-artist-label-2"), $("#group-artist-label-3"), $("#group-artist-label-4")];
+$groupCountBoxes = [$("#group-counts-1"), $("#group-counts-2"), $("#group-counts-3"), $("#group-counts-4")];
+$groupLineCountLabels = [$("#group-line-count-label-1"), $("#group-line-count-label-2"), $("#group-line-count-label-3"), $("#group-line-count-label-4")];
+$groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-label-2"), $("#group-pose-count-label-3"), $("#group-pose-count-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
@@ -1129,12 +1132,12 @@ $groupCreditsButton.on('click', function(e) {
  * into the character's player object for those currently on the selection screen.
  * Only loads if the unique line count or image count is not known.
  */
-function updateOpponentCountStats(opponentArr) {
+function updateOpponentCountStats(opponentArr, uiElements) {
     opponentArr.forEach(function(opp, idx) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
             console.log("Fetching counts for " + opp.label + ", idx: " + idx);
-            $individualCountBoxes[idx].css("visibility", "visible");
+            uiElements.countBoxes[idx].css("visibility", "visible");
             // retrieve line and image counts
             var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
             countsPromise.then(countLinesImages).then(function(response) {
@@ -1144,22 +1147,22 @@ function updateOpponentCountStats(opponentArr) {
                 
                 // show line and image counts
                 console.log(opp.label + ": " + opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images");
-                $individualLineCountLabels[idx].html(opp.uniqueLineCount);
-                $individualPoseCountLabels[idx].html(opp.posesImageCount);
+                uiElements.lineLabels[idx].html(opp.uniqueLineCount);
+                uiElements.poseLabels[idx].html(opp.posesImageCount);
             });
         }
         else {
             if (opp) {
                 console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
-                $individualCountBoxes[idx].css("visibility", "visible");
-                $individualLineCountLabels[idx].html(opp.uniqueLineCount);
-                $individualPoseCountLabels[idx].html(opp.posesImageCount);
+                uiElements.countBoxes[idx].css("visibility", "visible");
+                uiElements.lineLabels[idx].html(opp.uniqueLineCount);
+                uiElements.poseLabels[idx].html(opp.posesImageCount);
             }
             else {
                 console.log("opp is null");
-                $individualCountBoxes[idx].css("visibility", "hidden");
-                $individualLineCountLabels[idx].html("");
-                $individualPoseCountLabels[idx].html("");
+                uiElements.countBoxes[idx].css("visibility", "hidden");
+                uiElements.lineLabels[idx].html("");
+                uiElements.poseLabels[idx].html("");
             }
         }
     });
@@ -1168,14 +1171,24 @@ function updateOpponentCountStats(opponentArr) {
 /** Dialogue/image count update function for the individual selection screen. */
 function updateIndividualCountStats() {
     if (individualCreditsShown) {
-        updateOpponentCountStats(shownIndividuals);
+        var individualUIElements = {
+            countBoxes : $individualCountBoxes,
+            lineLabels : $individualLineCountLabels,
+            poseLabels : $individualPoseCountLabels
+        };
+        updateOpponentCountStats(shownIndividuals, individualUIElements);
     }
 }
 
 /** Dialogue/image count update function for the group selection screen. */
 function updateGroupCountStats() {
     if (groupCreditsShown) {
-        updateOpponentCountStats(shownGroup);
+        var groupUIElements = {
+            countBoxes : $groupCountBoxes,
+            lineLabels : $groupLineCountLabels,
+            poseLabels : $groupPoseCountLabels
+        };
+        updateOpponentCountStats(shownGroup, groupUIElements);
     }
 }
 
