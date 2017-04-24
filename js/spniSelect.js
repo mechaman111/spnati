@@ -1136,30 +1136,39 @@ function updateOpponentCountStats(opponentArr, uiElements) {
     opponentArr.forEach(function(opp, idx) {
         // load behaviour file if line/image count is not known
         if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
-            console.log("Fetching counts for " + opp.label + ", idx: " + idx);
             uiElements.countBoxes[idx].css("visibility", "visible");
+                        
             // retrieve line and image counts
+            if (DEBUG) { 
+                console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx); 
+            }
             var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
             countsPromise.then(countLinesImages).then(function(response) {
-                console.log(response);
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
                 
                 // show line and image counts
-                console.log(opp.label + ": " + opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images");
+                if (DEBUG) { 
+                    console.log("[LineImageCount] Loaded " + opp.label + " from behaviour: " + 
+                      opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images"); 
+                }
                 uiElements.lineLabels[idx].html(opp.uniqueLineCount);
                 uiElements.poseLabels[idx].html(opp.posesImageCount);
             });
         }
         else {
+            // this character's counts were previously loaded
             if (opp) {
-                console.log("Counts for " + opp.label + " already fetched: " + opp.uniqueLineCount);
+                if (DEBUG) { 
+                    console.log("[LineImageCount] Loaded previous count for " + opp.label + ": " + 
+                      opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images)"); 
+                }
                 uiElements.countBoxes[idx].css("visibility", "visible");
                 uiElements.lineLabels[idx].html(opp.uniqueLineCount);
                 uiElements.poseLabels[idx].html(opp.posesImageCount);
             }
             else {
-                console.log("opp is null");
+                // there is no character in the slot
                 uiElements.countBoxes[idx].css("visibility", "hidden");
                 uiElements.lineLabels[idx].html("");
                 uiElements.poseLabels[idx].html("");
