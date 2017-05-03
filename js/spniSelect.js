@@ -85,6 +85,9 @@ $individualHeightLabels = [$("#individual-height-label-1"), $("#individual-heigh
 $individualSourceLabels = [$("#individual-source-label-1"), $("#individual-source-label-2"), $("#individual-source-label-3"), $("#individual-source-label-4")];
 $individualWriterLabels = [$("#individual-writer-label-1"), $("#individual-writer-label-2"), $("#individual-writer-label-3"), $("#individual-writer-label-4")];
 $individualArtistLabels = [$("#individual-artist-label-1"), $("#individual-artist-label-2"), $("#individual-artist-label-3"), $("#individual-artist-label-4")];
+$individualCountBoxes = [$("#individual-counts-1"), $("#individual-counts-2"), $("#individual-counts-3"), $("#individual-counts-4")];
+$individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individual-line-count-label-2"), $("#individual-line-count-label-3"), $("#individual-line-count-label-4")];
+$individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
 $individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
 $individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
@@ -95,6 +98,8 @@ $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#
 $individualPageIndicator = $("#individual-page-indicator");
 $individualMaxPageIndicator = $("#individual-max-page-indicator");
 
+$individualCreditsButton = $('.individual-credits-btn');
+
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
 $groupNameLabels = [$("#group-name-label-1"), $("#group-name-label-2"), $("#group-name-label-3"), $("#group-name-label-4")];
@@ -104,6 +109,9 @@ $groupHeightLabels = [$("#group-height-label-1"), $("#group-height-label-2"), $(
 $groupSourceLabels = [$("#group-source-label-1"), $("#group-source-label-2"), $("#group-source-label-3"), $("#group-source-label-4")];
 $groupWriterLabels = [$("#group-writer-label-1"), $("#group-writer-label-2"), $("#group-writer-label-3"), $("#group-writer-label-4")];
 $groupArtistLabels = [$("#group-artist-label-1"), $("#group-artist-label-2"), $("#group-artist-label-3"), $("#group-artist-label-4")];
+$groupCountBoxes = [$("#group-counts-1"), $("#group-counts-2"), $("#group-counts-3"), $("#group-counts-4")];
+$groupLineCountLabels = [$("#group-line-count-label-1"), $("#group-line-count-label-2"), $("#group-line-count-label-3"), $("#group-line-count-label-4")];
+$groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-label-2"), $("#group-pose-count-label-3"), $("#group-pose-count-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
@@ -114,6 +122,8 @@ $groupButton = $("#group-button");
 
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
+
+$groupCreditsButton = $('.group-credits-btn');
 
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
@@ -152,6 +162,8 @@ var sortingOptionsMap = {
     "Most Layers" : sortOpponentsByMultipleFields("-layers"), 
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"), 
 };
+var individualCreditsShown = false;
+var groupCreditsShown = false;
 
 /* consistence variables */
 var selectedSlot = 0;
@@ -323,6 +335,7 @@ function updateIndividualSelectScreen () {
 			$individualSourceLabels[index].html("");
 			$individualWriterLabels[index].html("");
 			$individualArtistLabels[index].html("");
+            $individualCountBoxes[index].css("visibility", "hidden");
 			$individualDescriptionLabels[index].html("");
             $individualBadges[index].hide();
             $individualLayers[index].hide();
@@ -520,6 +533,7 @@ function selectOpponentSlot (slot) {
 		
 		/* reload selection screen */
 		updateIndividualSelectScreen();
+        updateIndividualCountStats();
         
         /* switch screens */
 		screenTransition($selectScreen, $individualSelectScreen);
@@ -633,6 +647,8 @@ function changeIndividualStats (target) {
             }
         }
     }
+    
+    individualCreditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -661,22 +677,24 @@ function individualScreenCallback (playerObject, slot) {
  * The player is changing the page on the individual screen.
  ************************************************************/
 function changeIndividualPage (skip, page) {
-	console.log("resigtered");
-	if (skip) {
-		if (page == -1) {
-			/* go to first page */
-			individualPage = 0;
-		} else if (page == 1) {
-			/* go to last page */
-			individualPage = Math.ceil(selectableOpponents.length/4)-1;
-		} else {
-			/* go to selected page */
-			individualPage = Number($individualPageIndicator.val()) - 1;
-		}
-	} else {
-		individualPage += page;
-	}
-	updateIndividualSelectScreen();
+    console.log("resigtered");
+    if (skip) {
+        if (page == -1) {
+            /* go to first page */
+            individualPage = 0;
+        } else if (page == 1) {
+            /* go to last page */
+            individualPage = Math.ceil(selectableOpponents.length/4)-1;
+        } else {
+            /* go to selected page */
+            individualPage = Number($individualPageIndicator.val()) - 1;
+        }
+    } else {
+        individualPage += page;
+    }
+    
+    updateIndividualSelectScreen();
+    updateIndividualCountStats();
 }
 
 /************************************************************
@@ -694,6 +712,8 @@ function changeGroupStats (target) {
             }
         }
     }
+    
+    groupCreditsShown = (target == 2); // true when Credits button is clicked
 }
 
 /************************************************************
@@ -746,6 +766,7 @@ function changeGroupPage (skip, page) {
 		groupPage += page;
 	}
 	updateGroupSelectScreen();
+    updateGroupCountStats();
 }
 
 /************************************************************
@@ -1008,6 +1029,7 @@ function closeSearchModal() {
     
     // update
     updateIndividualSelectScreen();
+    updateIndividualCountStats();
 }
 
 function changeSearchGender(gender) {
@@ -1087,5 +1109,138 @@ $sortingOptionsItems.on("click", function(e) {
  * or word-broken (if text is long and no spaces are present).
  */
 function wordWrapHtml(text) {
+    text = text || "&nbsp;";
     return "<table class=\"wrap-text\"><tr><td>" + text + "</td></tr></table>";
+}
+
+/************************************************************
+ * Dynamic dialogue and image counting functions
+ ************************************************************/
+
+/** Event handler for the individual selection screen credits button. */
+$individualCreditsButton.on('click', function(e) {
+    updateIndividualCountStats()
+});
+
+/** Event handler for the group selection screen credits button. */
+$groupCreditsButton.on('click', function(e) {
+    updateGroupCountStats();
+});
+
+/**
+ * Loads and displays the number of unique dialogue lines and the number of pose images 
+ * into the character's player object for those currently on the selection screen.
+ * Only loads if the unique line count or image count is not known.
+ */
+function updateOpponentCountStats(opponentArr, uiElements) {
+    opponentArr.forEach(function(opp, idx) {
+        // load behaviour file if line/image count is not known
+        if (opp && (opp.uniqueLineCount === undefined || opp.posesImageCount === undefined)) {
+            uiElements.countBoxes[idx].css("visibility", "visible");
+                        
+            // retrieve line and image counts
+            if (DEBUG) { 
+                console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx); 
+            }
+            var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
+            countsPromise.then(countLinesImages).then(function(response) {
+                opp.uniqueLineCount = response.numUniqueLines;
+                opp.posesImageCount = response.numPoses;
+                
+                // show line and image counts
+                if (DEBUG) { 
+                    console.log("[LineImageCount] Loaded " + opp.label + " from behaviour: " + 
+                      opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images"); 
+                }
+                uiElements.lineLabels[idx].html(opp.uniqueLineCount);
+                uiElements.poseLabels[idx].html(opp.posesImageCount);
+            });
+        }
+        else {
+            // this character's counts were previously loaded
+            if (opp) {
+                if (DEBUG) { 
+                    console.log("[LineImageCount] Loaded previous count for " + opp.label + ": " + 
+                      opp.uniqueLineCount + " lines, " + opp.posesImageCount + " images)"); 
+                }
+                uiElements.countBoxes[idx].css("visibility", "visible");
+                uiElements.lineLabels[idx].html(opp.uniqueLineCount);
+                uiElements.poseLabels[idx].html(opp.posesImageCount);
+            }
+            else {
+                // there is no character in the slot
+                uiElements.countBoxes[idx].css("visibility", "hidden");
+                uiElements.lineLabels[idx].html("");
+                uiElements.poseLabels[idx].html("");
+            }
+        }
+    });
+}
+
+/** Dialogue/image count update function for the individual selection screen. */
+function updateIndividualCountStats() {
+    if (individualCreditsShown) {
+        var individualUIElements = {
+            countBoxes : $individualCountBoxes,
+            lineLabels : $individualLineCountLabels,
+            poseLabels : $individualPoseCountLabels
+        };
+        updateOpponentCountStats(shownIndividuals, individualUIElements);
+    }
+}
+
+/** Dialogue/image count update function for the group selection screen. */
+function updateGroupCountStats() {
+    if (groupCreditsShown) {
+        var groupUIElements = {
+            countBoxes : $groupCountBoxes,
+            lineLabels : $groupLineCountLabels,
+            poseLabels : $groupPoseCountLabels
+        };
+        updateOpponentCountStats(shownGroup, groupUIElements);
+    }
+}
+
+/**
+ * Fetches the behaviour.xml file of the specified opponent directory.
+ */
+function fetchBehaviour(path) {
+    return $.ajax({
+        type: "GET",
+        url: path + "behaviour.xml",
+        dataType: "text"
+    });
+}
+
+/**
+ * Callback to parse the number of lines of dialogue and number of images
+ * given a character's behaviour XML. Returns the counts as an object with 
+ * properties numTotalLines, numUniqueLines, and numPoses.
+ */
+function countLinesImages(xml) {
+    // parse all lines of dialogue and all images
+    var lines = [];
+    var poses = [];
+    $(xml).find('state').each(function(idx, data) {
+        lines.push(data.textContent.trim());
+        poses.push(data.getAttribute("img")); 
+    });
+    
+    // count only unique lines of dialogue
+    var numUniqueDialogueLines = lines.filter(function(data, idx) {
+        return idx == lines.lastIndexOf(data);
+    }).length;
+    
+    // count unique number of poses used in dialogue
+    // note that this number may differ from actual image count if some images
+    // are never used, or if images that don't exist are used in the dialogue
+    var numUniqueUsedPoses = poses.filter(function(data, idx) {
+        return idx == poses.lastIndexOf(data);
+    }).length;
+    
+    return {
+        numTotalLines : lines.length,
+        numUniqueLines : numUniqueDialogueLines,
+        numPoses : numUniqueUsedPoses
+    };
 }
