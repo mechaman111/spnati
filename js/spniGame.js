@@ -582,7 +582,7 @@ function endRound () {
     }
     
     /* if there is only one player left, end the game */
-    if (inGame == 1) {
+    if (inGame <= 1) {
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
