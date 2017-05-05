@@ -25,7 +25,7 @@ var HEAVY_FIRST_ROUND = 6
 var HEAVY_LAST_ROUND = 2
  
 /* forfeit timers */
-var timers = [0, 0, 0, 0];
+var timers = [0, 0, 0, 0, 0];
  
 /**********************************************************************
  *****                      Forfeit Functions                     *****
