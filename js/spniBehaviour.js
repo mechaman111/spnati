@@ -124,6 +124,7 @@ function loadBehaviour (folder, callFunction, slot) {
             var gender = $(xml).find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
             var size = $(xml).find('size').text();
             var timer = $(xml).find('timer').text();
+            var intelligence = $(xml).find('intelligence').text();
             
             var tags = $(xml).find('tags');
             var tagsArray = [];
@@ -133,7 +134,7 @@ function loadBehaviour (folder, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, [], false, "", Number(timer), tagsArray, 0, 0, [], xml);
+            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, [], false, "", Number(timer), tagsArray, 0, 0, [], xml);
             
             loadOpponentWardrobe(newPlayer);
             
