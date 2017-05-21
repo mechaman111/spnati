@@ -95,12 +95,13 @@ $previousScreen = null;
  * state (array of PlayerState objects), their sequential states.
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
-function createNewPlayer (folder, first, last, label, gender, size, clothing, out, forfeit, timer, tags, current, stage, state, xml) {
+function createNewPlayer (folder, first, last, label, gender, size, intelligence, clothing, out, forfeit, timer, tags, current, stage, state, xml) {
     var newPlayerObject = {folder:folder,
                            first:first,
                            last:last,
                            label:label,
 						   size:size,
+						   intelligence:intelligence,
                            gender:gender,
                            clothing:clothing,
                            out:out,
@@ -124,7 +125,7 @@ function createNewPlayer (folder, first, last, label, gender, size, clothing, ou
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, [], false, "", 20, 0, 0, [], null);
+    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.GOOD, [], false, "", 20, 0, 0, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
     
 	/* enable table opacity */

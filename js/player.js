@@ -24,6 +24,15 @@ var eSize = {
     LARGE  : "large"
 };
 
+/************************************************************
+ * An enumeration for player intelligence.
+ **/
+var eIntelligence = {
+    BAD  : "bad",
+    AVERAGE : "average",
+    GOOD  : "good"
+};
+
 
 /********************************************************************************
  * Player Object and Elements
@@ -39,6 +48,7 @@ function Player(id, slot)
     this.name = "";
     this.gender = eGender.FEMALE;
     this.size = eSize.MEDIUM;
+    this.intelligence = eIntelligence.AVERAGE
     //this.state = new PlayerState();
     //this.wardrobe = new Wardrobe();
     //this.hand = new PokerHand();
