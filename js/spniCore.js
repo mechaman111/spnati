@@ -125,7 +125,7 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.GOOD, [], false, "", 20, 0, 0, [], null);
+    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, [], false, "", 20, 0, 0, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
     
 	/* enable table opacity */
