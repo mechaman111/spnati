@@ -8,7 +8,7 @@ function GEnding(player, ending){
 	this.gender = $(ending).attr('gender');
 	this.image = player.folder + $(ending).find('screen').eq(0).attr('img');
 	this.title = $(ending).find('title').html();
-	this.unlocked = save.hasEnding(player.label, this.title);
+	this.unlocked = save.hasEnding(getFolderName(player.folder), this.title);
 	//Same as in spniEpilogue.js
 	this.screens = [];
 	var $end = this;
@@ -43,6 +43,17 @@ function GEnding(player, ending){
 		});
 		$end.screens.push({image:image, textBoxes:textBoxes});
 	});
+}
+
+function getFolderName(folder){
+	if(folder.startsWith('/')){
+		folder = folder.substr(1);
+	}
+	if(folder.endsWith('/')){
+		folder = folder.substr(0,folder.length-1);
+	}
+	folder = folder.substr(10);
+	return folder;
 }
 
  /**********************************************************************
@@ -223,6 +234,7 @@ function selectEnding(i){
 			$selectedEndingLabels[2].removeClass('female-style');
 			$selectedEndingLabels[2].removeClass('male-style');
 	}
+	getFolderName(ending.player.folder);
 }
 
 function doEpilogueFromGallery(){

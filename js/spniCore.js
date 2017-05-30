@@ -1,5 +1,5 @@
 /********************************************************************************
- This file contains the variables and functions that forms the core of the game. 
+ This file contains the variables and functions that forms the core of the game.
  Anything that is needed game-wide is kept here.
  ********************************************************************************/
 
@@ -58,6 +58,7 @@ $individualSelectScreen = $('#individual-select-screen');
 $groupSelectScreen = $('#group-select-screen');
 $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
+$galleryScreen = $('#gallery-screen');
 
 /* Modals */
 $searchModal = $('#search-modal');
@@ -74,13 +75,13 @@ $previousScreen = null;
  ********************************************************************************/
 
 
- 
+
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/
- 
+
 /************************************************************
- * Creates and returns a new player object based on the 
+ * Creates and returns a new player object based on the
  * supplied information.
  *
  * folder (string), the path to their folder
@@ -133,6 +134,7 @@ function initialSetup () {
 	$gameTable.css({opacity:1});
 	
     /* load the all content */
+	save.loadCookie();
     loadTitleScreen();
     selectTitleCandy();
 	loadSelectScreen();
@@ -227,8 +229,8 @@ function restartGame () {
     KEYBINDINGS_ENABLED = false;
 	
 	/* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", players[HUMAN_PLAYER].gender, players[HUMAN_PLAYER].size, players[HUMAN_PLAYER].clothing, false, "", 20, 0, 0, [], null);
-	
+    var humanPlayer = createNewPlayer("", "", "", "", players[HUMAN_PLAYER].gender, players[HUMAN_PLAYER].size, players[HUMAN_PLAYER].clothing, false, "", save.data.masturbationTimer, 0, 0, [], null);
+
 	/* clean slate */
 	clearState();
 	

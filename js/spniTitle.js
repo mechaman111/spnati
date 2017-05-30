@@ -260,7 +260,8 @@ function validateTitleScreen () {
     
     /* set human id */
     players[HUMAN_PLAYER].folder = "opponents/human/";
-    
+
+	save.savePlayer();
 	console.log(players[0]);
     
     screenTransition($titleScreen, $selectScreen);

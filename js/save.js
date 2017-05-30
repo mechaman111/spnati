@@ -35,7 +35,6 @@ function Save(){
 		if(cookie !== undefined){
 			this.data = mergeObjects(this.data, JSON.parse(cookie));
 		}
-		console.log(this.data.endings);
 		this.loadSave();
 	};
 
@@ -78,6 +77,11 @@ function Save(){
 		}
 		this.data.endings[character][title] = true;
 		this.saveCookie();
+		//Clear table of endings, so they are loaded agin when player visits gallery
+		allEndings = [];
+		anyEndings = [];
+		maleEndings = [];
+		femaleEndings = [];
 	}
 }
 
