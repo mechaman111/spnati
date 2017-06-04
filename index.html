@@ -182,8 +182,13 @@
         <button id='title-start-button' class='bordered smooth-button smooth-button-red' onclick="validateTitleScreen()">
           <img class='title-entrance-image' src='img/enter.png'/>
         </button>
-      </div>
-      
+	</div>
+	<div id='title-gallery-edge' class='bordered'>
+		<button id='title-gallery-button' class='bordered smooth-button smooth-button-red' onclick="loadGalleryScreen()">
+          <img class='title-gallery-image' src='img/gallery.svg'/>
+        </button>
+    </div>
+
     </div>
     
     
@@ -825,6 +830,51 @@
   </div>
 </div>
 
+<!-- Gallery Screen -->
+<div id="gallery-screen" class="screen-container" hidden>
+  <div class="screen">
+	  <div id="gallery-gender-block">
+		  <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
+		  <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
+		  <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
+		  <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
+	  </div>
+	  <div id="gallery-endings-block">
+		  <div class="gallery-ending" onclick="selectEnding(0)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(1)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(2)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(3)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(4)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(5)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(6)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(7)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(8)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(9)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(10)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(11)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(12)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(13)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(14)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(15)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(16)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(17)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(18)"></div>
+		  <div class="gallery-ending" onclick="selectEnding(19)"></div>
+	  </div>
+	  <div id="gallery-controls-block">
+		  <button id="gallery-main-back-button" class="bordered main-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+		  <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
+		  <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
+		  <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
+	  </div>
+	  <div id="gallery-selected-ending-block">
+		  <div id="selected-ending-previev"></div>
+		   <label id="selected-ending-title"></label>
+		  <label>Character: <span id="selected-ending-character"></span></label>
+		  <label>For: <span id="selected-ending-gender"></label>
+	  </div>
+  </div>
+</div>
 
 <!-- Start of Search Modal -->
 <div id="search-modal" class="modal table-modal fade"> 	<div class="modal-table-container"> 	<div class="modal-cell-container"> 	<div class="bordered modal-dialog wide-modal-dialog"> 	<div class="bordered modal-dialog-surface"> 		<!-- Start of Modal Content --> 		<div class="modal-content"> 			<div class="modal-header"> 				<h4 class="modal-title text-center">Search Options</h4> 			</div> 			<div class="modal-body">                 <table style="width:100%">                     <!-- Table Style -->                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Name Filter</h4></td>                         <td>                             <input type="text" id="search-name" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>                         <td>                             <nav>                                 <ul class="pagination">                                     <li id="search-gender-1" class="active"><a href="#"  onclick="changeSearchGender(1)">All</a></li>                                     <li id="search-gender-2"><a href="#" onclick="changeSearchGender(2)">Male</a></li>                                     <li id="search-gender-3"><a href="#" onclick="changeSearchGender(3)">Female</a></li>                                 </ul>                             </nav>                         </td>                     </tr>                     <tr>                         <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>                         <td>                             <input type="text" id="search-source" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr hidden>                         <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>                         <td>                             <input type="text" id="search-tag" class='bordered wide-textbox'/>                         </td>                     </tr>                     <tr>                         <td style="width: 25%"><h4 class="modal-title modal-left">Sort By</h4></td>                         <td>                             <div class="dropdown">                                 <button id="sort-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown"                                   type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">                                     <span id="sort-dropdown-selection">Featured</span>                                     <span class="caret"></span>                                 </button>                                 <ul class="dropdown-menu sort-dropdown-options" aria-labelledby="sort-option">                                   <li><a href="#">Featured</a></li>                                   <li><a href="#">Newest</a></li>                                   <li><a href="#">Oldest</a></li>                                   <li><a href="#">Most Layers</a></li>                                   <li><a href="#">Fewest Layers</a></li>                                 </ul>                             </div>                         </td>                     </tr>                 </table>                 				<div class="modal-body-container" style="padding-top:4%;"> 					<button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeSearchModal()">Search</button> 				</div> 			</div> 		</div> 		<!-- End of Modal Content --> 	</div> 	</div> 	</div> 	</div> </div> <!-- End of Search Modal -->
@@ -897,7 +947,6 @@
 		<div class="modal-content">
 			<div class="modal-header">
                 <h3 class="modal-title text-center"><b>Game Wide Settings</b></h3>
-				<h5 class="modal-subtitle text-center"><b>Please Note:</b> These settings don't save if you refresh the page.</h5>
 			</div>
 			<div class="modal-body">
 				<div class="modal-body-container" style="width:100%">
@@ -1452,11 +1501,13 @@
 <!-- Third Party JavaScript -->
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/js.cookie.js"></script>
 
 <!-- JavaScript Definitions -->
 <script src="js/player.js"></script>
 <script src="js/table.js"></script>
-    
+<script src="js/save.js"></script>
+
 <!-- My JavaScript -->
 <script src="js/spniCore.js"></script>
 <script src="js/spniTitle.js"></script>
@@ -1469,6 +1520,7 @@
 <script src="js/spniAI.js"></script>
 <script src="js/spniOption.js"></script>
 <script src="js/spniEpilogue.js"></script>
+<script src="js/spniGallery.js"></script>
 
 </body>
 </html>
