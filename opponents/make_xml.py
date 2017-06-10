@@ -434,6 +434,9 @@ def read_player_file(filename):
 	
 	d = {}
 	
+	#set default intelligence, if the writer doesn't set it
+	d["intelligence"] = "average"
+	
 	ending = dict()
 	
 	stage = -1
@@ -573,6 +576,15 @@ def make_meta_xml(data, filename):
 			if content == "":
 				content = "0-calm"
 			content += ".png"
+		
+		if value == "layers":
+			#the number of layers of clothing is taken directly from the clothing data
+			content = str(len(data["clothes"]))
+			
+		if value == "has_ending":
+			#say whether or not they have an ending based on whether they have any ending data or not
+			content = "true" if "endings" in data else "false"
+			
 		ET.SubElement(o, value).text = content
 		
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
