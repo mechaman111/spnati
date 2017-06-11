@@ -27,55 +27,55 @@ ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag
 #default images and text for most cases
 def get_cases_dictionary():
 	d = {}#male pre-strip scenes
-	d["male_human_must_strip"] = [("interested", "What are you going to take off, ~name~?")]
-	d["male_must_strip"] = [("interested", "What are you going to take off, ~name~?")]
-	d["male_removing_accessory"] = [("sad", "You're only taking off your ~clothing~, ~name~? That doesn't seem fair.")]
-	d["male_removing_minor"] = [("calm", "I guess you're ~clothing~ is something, at least.")]
-	d["male_removing_major"] = [("interested", "Finally getting ~name~ out of their ~clothing~!")]
-	d["male_chest_will_be_visible"] = [("interested", "I guess it's time to see that chest of yours, ~name~!")]
-	d["male_crotch_will_be_visible"] = [("horny", "I guess you have to show 'that' to me now, ~name~...")]
+	d["male_human_must_strip"] = [{"key":"male_human_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["male_must_strip"] = [{"key":"male_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["male_removing_accessory"] = [{"key":"male_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
+	d["male_removing_minor"] = [{"key":"male_removing_minor", "image":"calm", "text":"I guess you're ~clothing~ is something, at least."}]
+	d["male_removing_major"] = [{"key":"male_removing_major", "image":"interested", "text":"Finally getting ~name~ out of their ~clothing~!"}]
+	d["male_chest_will_be_visible"] = [{"key":"male_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see that chest of yours, ~name~!"}]
+	d["male_crotch_will_be_visible"] = [{"key":"male_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
 	
 	#male stripping
-	d["male_removed_accessory"] = [("calm", "At least you have less small stuff to take off now.")]
-	d["male_removed_minor"] = [("happy", "Maybe we can get you out of some large stuff now, ~name~.")]
-	d["male_removed_major"] = [("interested", "You look better without your ~clothing~, ~name~.")]
-	d["male_chest_is_visible"] = [("interested", "Nice chest, ~name~.")]
-	d["male_small_crotch_is_visible"] = [("calm", "That's... smaller than I was expecting... not that anything is wrong with that, ~name~.")]
-	d["male_medium_crotch_is_visible"] = [("awkward", "Well then... shall we continue the game?")]
-	d["male_large_crotch_is_visible"] = [("shocked", "That is massive! How do you even manage with that thing, ~name~?")]
+	d["male_removed_accessory"] = [{"key":"male_removed_accessory", "image":"calm", "text":"At least you have less small stuff to take off now."}]
+	d["male_removed_minor"] = [{"key":"male_removed_minor", "image":"happy", "text":"Maybe we can get you out of some large stuff now, ~name~."}]
+	d["male_removed_major"] = [{"key":"male_removed_major", "image":"interested", "text":"You look better without your ~clothing~, ~name~."}]
+	d["male_chest_is_visible"] = [{"key":"male_chest_is_visible", "image":"interested", "text":"Nice chest, ~name~."}]
+	d["male_small_crotch_is_visible"] = [{"key":"male_small_crotch_is_visible", "image":"calm", "text":"That's... smaller than I was expecting... not that anything is wrong with that, ~name~."}]
+	d["male_medium_crotch_is_visible"] = [{"key":"male_medium_crotch_is_visible", "image":"awkward", "text":"Well then... shall we continue the game?"}]
+	d["male_large_crotch_is_visible"] = [{"key":"male_large_crotch_is_visible", "image":"shocked", "text":"That is massive! How do you even manage with that thing, ~name~?"}]
 	
 	#male masturbating
-	d["male_must_masturbate"] = [("interested", "Time to show your skills, ~name~...")]
-	d["male_start_masturbating"] = [("horny", "You're going to have to go until you're done, ~name~...")]
-	d["male_masturbating"] = [("horny", "Keep going, ~name~...")]
-	d["male_finished_masturbating"] = [("shocked", "Wow... uh... I guess you're done then...")]
+	d["male_must_masturbate"] = [{"key":"male_must_masturbate", "image":"interested", "text":"Time to show your skills, ~name~..."}]
+	d["male_start_masturbating"] = [{"key":"male_start_masturbating", "image":"horny", "text":"You're going to have to go until you're done, ~name~..."}]
+	d["male_masturbating"] = [{"key":"male_masturbating", "image":"horny", "text":"Keep going, ~name~..."}]
+	d["male_finished_masturbating"] = [{"key":"male_finished_masturbating", "image":"shocked", "text":"Wow... uh... I guess you're done then..."}]
 	
 	#female pre-strip
-	d["female_human_must_strip"] = [("interested", "What are you going to take off, ~name~?")]
-	d["female_must_strip"] = [("interested", "What are you going to take off, ~name~?")]
-	d["female_removing_accessory"] = [("sad", "You're only taking off your ~clothing~, ~name~? That doesn't seem fair.")]
-	d["female_removing_minor"] = [("calm", "I guess you're ~clothing~ is something, at least.")]
-	d["female_removing_major"] = [("interested", "Finally getting ~name~ out of their ~clothing~!")]
-	d["female_chest_will_be_visible"] = [("interested", "I guess it's time to see those tits of yours, ~name~!")]
-	d["female_crotch_will_be_visible"] = [("horny", "I guess you have to show 'that' to me now, ~name~...")]
+	d["female_human_must_strip"] = [{"key":"female_human_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["female_must_strip"] = [{"key":"female_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["female_removing_accessory"] = [{"key":"female_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
+	d["female_removing_minor"] = [{"key":"female_removing_minor", "image":"calm", "text":"I guess you're ~clothing~ is something, at least."}]
+	d["female_removing_major"] = [{"key":"female_removing_major", "image":"interested", "text":"Finally getting ~name~ out of their ~clothing~!"}]
+	d["female_chest_will_be_visible"] = [{"key":"female_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see those tits of yours, ~name~!"}]
+	d["female_crotch_will_be_visible"] = [{"key":"female_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
 	
 	#female stripping
-	d["female_removed_accessory"] = [("calm", "At least you have less small stuff to take off now.")]
-	d["female_removed_minor"] = [("happy", "Maybe we can get you out of some large stuff now, ~name~.")]
-	d["female_removed_major"] = [("interested", "You look better without your ~clothing~, ~name~.")]
-	d["female_small_chest_is_visible"] = [("interested", "Those are nice, ~name~.")]
-	d["female_medium_chest_is_visible"] = [("horny", "Nice tits, ~name~.")]
-	d["female_large_chest_is_visible"] = [("shocked", "How do you even manage with those things, ~name~. Is your back okay?")]
-	d["female_crotch_is_visible"] = [("shocked", "It's so pretty, ~name~...")]
+	d["female_removed_accessory"] = [{"key":"female_removed_accessory", "image":"calm", "text":"At least you have less small stuff to take off now."}]
+	d["female_removed_minor"] = [{"key":"female_removed_minor", "image":"happy", "text":"Maybe we can get you out of some large stuff now, ~name~."}]
+	d["female_removed_major"] = [{"key":"female_removed_major", "image":"interested", "text":"You look better without your ~clothing~, ~name~."}]
+	d["female_small_chest_is_visible"] = [{"key":"female_small_chest_is_visible", "image":"interested", "text":"Those are nice, ~name~."}]
+	d["female_medium_chest_is_visible"] = [{"key":"female_medium_chest_is_visible", "image":"horny", "text":"Nice tits, ~name~."}]
+	d["female_large_chest_is_visible"] = [{"key":"female_large_chest_is_visible", "image":"shocked", "text":"How do you even manage with those things, ~name~. Is your back okay?"}]
+	d["female_crotch_is_visible"] = [{"key":"female_crotch_is_visible", "image":"shocked", "text":"It's so pretty, ~name~..."}]
 	
 	#female masturbating
-	d["female_must_masturbate"] = [("interested", "Time to show your skills, ~name~...")]
-	d["female_start_masturbating"] = [("horny", "You're going to have to go until you're done, ~name~...")]
-	d["female_masturbating"] = [("horny", "Keep going, ~name~...")]
-	d["female_finished_masturbating"] = [("shocked", "Wow... uh... I guess you're done then...")]
+	d["female_must_masturbate"] = [{"key":"female_must_masturbate", "image":"interested", "text":"Time to show your skills, ~name~..."}]
+	d["female_start_masturbating"] = [{"key":"female_start_masturbating", "image":"horny", "text":"You're going to have to go until you're done, ~name~..."}]
+	d["female_masturbating"] = [{"key":"female_masturbating", "image":"horny", "text":"Keep going, ~name~..."}]
+	d["female_finished_masturbating"] = [{"key":"female_finished_masturbating", "image":"shocked", "text":"Wow... uh... I guess you're done then..."}]
 	
 	#victory
-	d["game_over_victory"] = [("happy", "I WON!")]
+	d["game_over_victory"] = [{"key":"game_over_victory", "image":"happy", "text":"I WON!"}]
 	
 	return d
 
@@ -83,10 +83,10 @@ def get_cases_dictionary():
 def get_playing_cases_dictionary():
 	d = {}
 	#quality of hand
-	d["swap_cards"] = [("calm", "I'll exchange ~cards~ cards.")]
-	d["good_hand"] = [("happy", "I've got a good hand.")]
-	d["okay_hand"] = [("calm", "I've got an okay hand.")]
-	d["bad_hand"] = [("sad", "I've got a bad hand.")]
+	d["swap_cards"] = [{"key":"swap_cards", "image":"calm", "text":"I'll exchange ~cards~ cards."}]
+	d["good_hand"] = [{"key":"good_hand", "image":"happy", "text":"I've got a good hand."}]
+	d["okay_hand"] = [{"key":"okay_hand", "image":"calm", "text":"I've got an okay hand."}]
+	d["bad_hand"] = [{"key":"bad_hand", "image":"sad", "text":"I've got a bad hand."}]
 	
 	return d
 
@@ -95,52 +95,67 @@ def get_stripping_cases_dictionary():
 	d = {}
 	
 	#stripping
-	d["stripped"] = [("sad", "I miss my ~clothing~ already...")]
-	d["must_strip_winning"] = [("loss", "Well, I guess it had to be my turn eventually...")]
-	d["must_strip_normal"] = [("loss", "I guess I lost, huh?")]
-	d["must_strip_losing"] = [("loss", "I lost again? But... I have less clothes than everyone else!")]
-	d["stripping"] = [("strip", "I guess I'll just take off my ~clothing~...")]
+	d["stripped"] = [{"key":"stripped", "image":"sad", "text":"I miss my ~clothing~ already..."}]
+	d["must_strip_winning"] = [{"key":"must_strip_winning", "image":"loss", "text":"Well, I guess it had to be my turn eventually..."}]
+	d["must_strip_normal"] = [{"key":"must_strip_normal", "image":"loss", "text":"I guess I lost, huh?"}]
+	d["must_strip_losing"] = [{"key":"must_strip_losing", "image":"loss", "text":"I lost again? But... I have less clothes than everyone else!"}]
+	d["stripping"] = [{"key":"stripping", "image":"strip", "text":"I guess I'll just take off my ~clothing~..."}]
 	return d
 	
 #default images and text for being nude
 def get_nude_cases_dictionary():
 	d = {}
-	d["stripped"] = [("sad", "I miss my ~clothing~ already...")] #there's still a stripped case when they're nude
-	d["must_masturbate"] = [("loss", "I guess I lost...")]
-	d["must_masturbate_first"] = [("loss", "Y-You want me to do what?!")]
-	d["start_masturbating"] = [("starting", "I guess I have to do 'that' now, huh?")]
+	d["stripped"] = [{"key":"stripped", "image":"sad", "text":"I miss my ~clothing~ already..."}] #there's still a stripped case when they're nude
+	d["must_masturbate"] = [{"key":"must_masturbate", "image":"loss", "text":"I guess I lost..."}]
+	d["must_masturbate_first"] = [{"key":"must_masturbate_first", "image":"loss", "text":"Y-You want me to do what?!"}]
+	d["start_masturbating"] = [{"key":"start_masturbating", "image":"starting", "text":"I guess I have to do 'that' now, huh?"}]
 	
 	return d
 
 #default images and text for masturbating
 def get_masturbating_cases_dictionary():
 	d = {}
-	d["masturbating"] = [("calm", "How long do I have to keep going for?")]
-	d["heavy_masturbating"] = [("heavy", "Mmmmmmmm....")]
-	d["finishing_masturbating"] = [("finishing", "I'm cumming!")]
+	d["masturbating"] = [{"key":"masturbating", "image":"calm", "text":"How long do I have to keep going for?"}]
+	d["heavy_masturbating"] = [{"key":"heavy_masturbating", "image":"heavy", "text":"Mmmmmmmm...."}]
+	d["finishing_masturbating"] = [{"key":"finishing_masturbating", "image":"finishing", "text":"I'm cumming!"}]
 	return d
 
 #default images and text for being finished
 def get_finished_Cases_dictionary():
 	d = {}
-	d["finished_masturbating"] = [("finished", "I'm done...")]
-	d["game_over_defeat"] = [("calm", "Congrats, ~name~... I can't believe I lost...")]
+	d["finished_masturbating"] = [{"key":"finished_masturbating", "image":"finished", "text":"I'm done..."}]
+	d["game_over_defeat"] = [{"key":"game_over_defeat", "image":"calm", "text":"Congrats, ~name~... I can't believe I lost..."}]
 	return d
 
 #get a set of cases from the dictionaries. First try stage-specific from the character's data, then general entries from the character's data, then stage-specific from the default data, then general cases from the default data.
 def get_cases(player_dictionary, default_dictionary, key, stage):
+	image_formats = ["png", "jpg", "jpeg", "gif", "gifv"] #image file format extensions
 	out_list = []
 	full_key = "%d-%s" % (stage, key)
 	
+	result_list = list()
+	
+	def have_generic_line():
+		for line_data in result_list:
+			if "target" not in line_data and "filter" not in line_data and "targetstage" not in line_data:
+				return True
+		return False
+	
 	using_player = False
+	have_generic_entry = False
 	
 	#check character's data
 	if full_key in player_dictionary:
-		result_list = player_dictionary[full_key]
-		using_player = True
+		result_list += player_dictionary[full_key]
 		
-	elif key in player_dictionary:
-		result_list = player_dictionary[key]
+		#check if whe have a line that doesn't have any targets or filters
+		#because we need at least one line that doesn't have one
+		if have_generic_line():
+			have_generic_entry = True
+			using_player = True
+		
+	if (not have_generic_entry) and key in player_dictionary:
+		result_list += player_dictionary[key]
 		using_player = True
 	
 	backup_list = None
@@ -148,42 +163,114 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	#use the default data
 	if full_key in default_dictionary:
 		backup_list = default_dictionary[full_key]
-		if not using_player:
-			result_list = backup_list
+		if not have_generic_entry:
+			result_list += backup_list
+			if have_generic_line():
+				have_generic_entry = True
 		
 	elif key in default_dictionary:
 		backup_list = default_dictionary[key]
-		if not using_player:
-			result_list = backup_list
+		if not have_generic_entry:
+			result_list += backup_list
+			if have_generic_line():
+				have_generic_entry = True
+	
+	#debug
+	#if not using_player:
+		#print "not using player line for key %s, stage %d" % (key, stage)
 	
 	#convert image formats
-	for i, (image, text) in enumerate(result_list):
+	#print "result list", result_list #for debug purposes
+	for i, line_data in enumerate(result_list):
+		line_data = dict(line_data) #use a copy of the line_data entry
+		#because if we copy it then changing the stage number for images (below) for lines that don't have stage numbers
+		#will use the first stage number that doesn't have a stage-specific version for all the stages where the generic line is used
+	
+		image = line_data["image"]
+		text = line_data["text"]
 		if len(image) <= 0:
 			#if the character entry doesn't include an image, use default image
-			image = backup_list[i % len(backup_list)][0] #use i'th image in default dictionary, if possible. wrap around if backup list isn't long enough
+			image = backup_list[i % len(backup_list)]["image"] #use i'th image in default dictionary, if possible. wrap around if backup list isn't long enough
 		
 		#if the image name doesn't include a stage, prepend the current stage
 		if not image[0].isdigit():
 			image = "%d-%s" % (stage, image)
-		out_list.append( (image+".png", text) )
+		
+		#if no file extension, assume .png
+		if "." not in image:
+			image += ".png"
+		else:
+			name, extention = image.rsplit(".", 1)
+			if extention not in image_formats:
+				#if the image name doesn't end with a known image format, assume it's a .png file that just happens to have a . in its name
+				image += ".png"
+		
+		line_data["image"] = image
+		
+		#out_list.append( (image+".png", text) ) don't use this
+		out_list.append( line_data ) #because we switched to using dictionaries
 	
 	return out_list
 
-#add a single emenent (used so I can add a tag named "tag")
-def add_subelement(base_element, name, tag_value):
-	subelement = ET.SubElement(base_element, name, {"tag":tag_value})
-	return subelement
+#add a single emenent (initially used so I can add a tag named "tag")
+#now it also handles targets, which are optional
+#now it takes a series of lines for a particular stage, and adds all the <case> and <state> elements for the given list of lines
+def create_case_xml(base_element, lines):
+	one_word_targets = ["target", "filter"]
+	targets = one_word_targets + ["targetstage"]
+	
+	#step 1: sort the lines by case (situation, and any targets)
+	#this means that once the case changes, we know that the script won't see that case again
+	#give them a key to define an order
+	for line_data in lines:
+		sort_key = line_data["key"]
+		for target_type in targets:
+			if target_type in line_data:
+				sort_key += "," + line_data[target_type]
+		line_data["sort_key"] = sort_key
+		
+	#now do the sorting
+	lines.sort(key=lambda l: l["sort_key"])
+	
+	#step 2: iterate through the list of lines
+	current_sort = "" #which case combination we're currently looking at. initially nothing
+	case_xml_element = None #current XML element, add states to this
+	
+	for line_data in lines:
+		if line_data["sort_key"] != current_sort:
+			#this is a new key
+			current_sort = line_data["sort_key"]
+			
+			#make a new <case> element in the xml
+			tag_list = {"tag":line_data["key"]} #every case needs a "tag" value that denotes the situation
+			
+			for target_type in one_word_targets:
+				if target_type in line_data:
+					tag_list[target_type] = line_data[target_type]
+			
+			#need to re-capitalise "targetStage"
+			if "targetstage" in line_data:
+				tag_list["targetStage"] = line_data["targetstage"]
+	
+			case_xml_element = ET.SubElement(base_element, "case", tag_list) #create the <case> element in the xml
+		
+		#now add the individual line
+		#remember that this happens regardless of if the <case> is new
+		ET.SubElement(case_xml_element, "state", img=line_data["image"]).text = line_data["text"] #add the image and text
 
 #add several values to the XML tree
+#specifically, adds the <case> and <state> elements to a <stage> base_element
 def add_values(base_element, player_dictionary, default_dictionary, stage):
 	if type(default_dictionary) != list:
 		default_dictionary = [default_dictionary]
 	for d in default_dictionary:
 		for key in d.keys():
 			contents = get_cases(player_dictionary, d, key, stage)
-			case = add_subelement(base_element, "case", key)
-			for img, text in contents:
-				ET.SubElement(case, "state", img=img).text = text
+			#add the target values, if any
+			target_tags = []
+			case = create_case_xml(base_element, contents) #add the case element to the XML tree
+			#for img, text in contents: #no longer used
+			#	ET.SubElement(case, "state", img=img).text = text #add the states to the case
 
 #manually prettify xml code (because the standard method doesn't seem to work on windows)
 def manual_prettify_xml(elem, level=0, isLast=False):
@@ -445,6 +532,13 @@ def read_player_file(filename):
 	for line_number, line in enumerate(f):
 		line = line.strip()
 		
+		line_data = dict() #all of the lines data:
+		#key is the stage and situation in which the line should be used. includes a stage number for stage-specific lines
+		#image = the image filename (if no extension, assumed to be png)
+		#target = if the line targets a particular other character
+		#targetStage = if the line targets a particular stage for a particular character
+		#filter = if the line targets a particular tag
+		
 		if len(line) <= 0 or line[0]=='#': #use # as a comment character, and skip empty lines
 			continue
 		
@@ -487,6 +581,58 @@ def read_player_file(filename):
 		
 		stripped = text.strip()
 		
+		
+		#now deal with any possible targets and filters
+		target_type = "skip" #reset any previous target type. this should only be used if there's a target present, but setting it here just in case
+		if ',' in key:
+			target_parts = key.split(',')
+			key = target_parts[0]
+			targets = target_parts[1:]
+			for t in targets:
+			
+				try:
+					target_type, target_value = t.split(":")
+				except ValueError:
+					#make sure the target has a format we can understand
+					print "Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line)
+					target_type = "skip"
+					stripped = ""
+					target_value = "N/A"
+				
+				target_type = target_type.strip()
+				target_value = target_value.strip()
+				
+				#make sure there's a target. Can I check the data here to make sure that a target is valid?
+				if len(target_value) <= 0:
+					print "No target value specified for line %d - \"%s\". Skipping line." % (line_number, line)
+					target_type = skip
+					stripped = ""
+				
+				#now actually process valid targets
+				if target_type == "target":
+					#targets a specific individual
+					line_data["target"] = target_value
+					
+				elif target_type == "filter":
+					#targets a particular tag
+					line_data["filter"] = target_value
+					
+				elif target_type == "targetstage":
+					#targets a particular stage in for a character
+					if "target" not in line_data:
+						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
+					line_data["targetstage"] = target_value
+					
+				elif target_type == "skip":
+					#skip this target type
+					pass
+					
+				else:
+					#unknown target type
+					print "Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (line_number, line)
+					stripped = "" #make the script skip this line
+		
+		
 		#if the key contains a -, it belongs to a specific stage
 		if '-' in key:
 			stg, part_key = key.rsplit('-', 1)
@@ -505,18 +651,27 @@ def read_player_file(filename):
 		#cases, these can be repeated
 		if part_key in case_names:
 		
+			line_data["key"] = part_key
+		
 			if stripped == "" or stripped == ",":
 				#if there's no entry, skip it.
 				continue
 				
 			if ',' not in text:
-				img, desc = "", text
+				#img, desc = "", text
+				line_data["image"] = ""
+				line_data["text"] = text
 			else:
 				img,desc = text.split(",", 1) #split into (image, text) pairs
+				line_data["image"] = img
+				line_data["text"] = desc
+				
+			#print "adding line", line	
+			
 			if key in d:
-				d[key].append( (img,desc) ) #add it to existing list of responses
+				d[key].append(line_data) #add it to existing list of responses
 			else:
-				d[key] = [ (img, desc) ] #make a new list of responses
+				d[key] = [line_data] #make a new list of responses
 				
 		#clothes is a list
 		elif key == "clothes":
