@@ -1,9 +1,11 @@
 pages:
   stage: deploy
   script:
-  - mkdir .public
-  - rsync -avz --exclude 'saves/*.txt' .public
-  - mv .public public
+  - mkdir .public1
+  - mkdir .public2
+  - cp -r * .public1
+  - rsync -avz --exclude 'saves/*.txt' .public1 .public2
+  - mv .public2 public
   artifacts:
     paths:
     - public
