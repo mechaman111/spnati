@@ -23,7 +23,13 @@ y_tag = "y"
 width_tag = "width"
 arrow_tag = "arrow"
 ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
-	
+
+#sets of possible targets for lines
+one_word_targets = ["target", "filter"]
+multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand"] #these will need to be re-capitalised when writing the xml
+lower_multi_targets = [t.lower() for t in multi_word_targets]
+all_targets = one_word_targets + lower_multi_targets
+
 #default images and text for most cases
 def get_cases_dictionary():
 	d = {}#male pre-strip scenes
@@ -137,8 +143,16 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	
 	def have_generic_line():
 		for line_data in result_list:
-			if "target" not in line_data and "filter" not in line_data and "targetstage" not in line_data:
+			has_target = False
+			for target_type in all_targets:
+				if target_type in line_data:
+					has_target = True
+					break
+			if not has_target:
 				return True
+		#for line_data in result_list:
+		#	if "target" not in line_data and "filter" not in line_data and "targetstage" not in line_data:
+		#		return True
 		return False
 	
 	using_player = False
@@ -156,11 +170,13 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 		
 	if (not have_generic_entry) and key in player_dictionary:
 		result_list += player_dictionary[key]
-		using_player = True
+		if have_generic_line():
+			have_generic_entry = True
+			using_player = True
 	
 	backup_list = None
 	
-	#use the default data
+	#use the default data if there are no player-specific lines available
 	if full_key in default_dictionary:
 		backup_list = default_dictionary[full_key]
 		if not have_generic_entry:
@@ -217,14 +233,14 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 #now it takes a series of lines for a particular stage, and adds all the <case> and <state> elements for the given list of lines
 def create_case_xml(base_element, lines):
 	one_word_targets = ["target", "filter"]
-	targets = one_word_targets + ["targetstage"]
+	#targets = one_word_targets + ["targetstage"]
 	
 	#step 1: sort the lines by case (situation, and any targets)
 	#this means that once the case changes, we know that the script won't see that case again
 	#give them a key to define an order
 	for line_data in lines:
 		sort_key = line_data["key"]
-		for target_type in targets:
+		for target_type in all_targets:
 			if target_type in line_data:
 				sort_key += "," + line_data[target_type]
 		line_data["sort_key"] = sort_key
@@ -248,9 +264,11 @@ def create_case_xml(base_element, lines):
 				if target_type in line_data:
 					tag_list[target_type] = line_data[target_type]
 			
-			#need to re-capitalise "targetStage"
-			if "targetstage" in line_data:
-				tag_list["targetStage"] = line_data["targetstage"]
+			#need to re-capitalise multi-word target names
+			for ind, lower_case_target in enumerate(lower_multi_targets):
+				if lower_case_target in line_data:
+					capital_word = multi_word_targets[ind]
+					tag_list[capital_word] = line_data["targetstage"]
 	
 			case_xml_element = ET.SubElement(base_element, "case", tag_list) #create the <case> element in the xml
 		
@@ -609,19 +627,14 @@ def read_player_file(filename):
 					stripped = ""
 				
 				#now actually process valid targets
-				if target_type == "target":
-					#targets a specific individual
-					line_data["target"] = target_value
+				#valid targets
+				if target_type in all_targets:
+					line_data["target_type"] = target_value
 					
-				elif target_type == "filter":
-					#targets a particular tag
-					line_data["filter"] = target_value
-					
-				elif target_type == "targetstage":
-					#targets a particular stage in for a character
+				if target_type == "targetstage":
+					#print a warning if they used a targetStage without a target
 					if "target" not in line_data:
 						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
-					line_data["targetstage"] = target_value
 					
 				elif target_type == "skip":
 					#skip this target type
