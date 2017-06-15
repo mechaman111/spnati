@@ -627,19 +627,14 @@ def read_player_file(filename):
 					stripped = ""
 				
 				#now actually process valid targets
-				if target_type == "target":
-					#targets a specific individual
-					line_data["target"] = target_value
+				#valid targets
+				if target_type in all_targets:
+					line_data["target_type"] = target_value
 					
-				elif target_type == "filter":
-					#targets a particular tag
-					line_data["filter"] = target_value
-					
-				elif target_type == "targetstage":
-					#targets a particular stage in for a character
+				if target_type == "targetstage":
+					#print a warning if they used a targetStage without a target
 					if "target" not in line_data:
 						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
-					line_data["targetstage"] = target_value
 					
 				elif target_type == "skip":
 					#skip this target type
