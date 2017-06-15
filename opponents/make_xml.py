@@ -26,7 +26,7 @@ ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter"]
-multi_word_targets = ["targetStage", "alsoPlayingStage", "alsoPlayingHand"] #these will need to be re-capitalised when writing the xml
+multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
 
