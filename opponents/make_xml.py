@@ -25,8 +25,8 @@ arrow_tag = "arrow"
 ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
 
 #sets of possible targets for lines
-one_word_targets = ["target", "filter"]
-multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand"] #these will need to be re-capitalised when writing the xml
+one_word_targets = ["target", "filter", "silent"]
+multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
 
@@ -642,7 +642,7 @@ def read_player_file(filename):
 					
 				else:
 					#unknown target type
-					print "Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (line_number, line)
+					print "Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line)
 					stripped = "" #make the script skip this line
 		
 		
