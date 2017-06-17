@@ -631,11 +631,6 @@ def read_player_file(filename):
 				if target_type in all_targets:
 					line_data["target_type"] = target_value
 					
-				if target_type == "targetstage":
-					#print a warning if they used a targetStage without a target
-					if "target" not in line_data:
-						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
-					
 				elif target_type == "skip":
 					#skip this target type
 					pass
@@ -644,6 +639,16 @@ def read_player_file(filename):
 					#unknown target type
 					print "Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line)
 					stripped = "" #make the script skip this line
+					
+				if target_type == "targetstage":
+					#print a warning if they used a targetStage without a target
+					have_target = False
+					for other_target_data in targets:
+						if "target:" in other_target_data:
+							have_target = True
+							break
+					if not have_target:
+						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
 		
 		
 		#if the key contains a -, it belongs to a specific stage
