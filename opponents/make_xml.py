@@ -629,7 +629,7 @@ def read_player_file(filename):
 				#now actually process valid targets
 				#valid targets
 				if target_type in all_targets:
-					line_data["target_type"] = target_value
+					line_data[target_type] = target_value
 					
 				elif target_type == "skip":
 					#skip this target type
