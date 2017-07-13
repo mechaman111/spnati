@@ -232,7 +232,7 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 #now it also handles targets, which are optional
 #now it takes a series of lines for a particular stage, and adds all the <case> and <state> elements for the given list of lines
 def create_case_xml(base_element, lines):
-	one_word_targets = ["target", "filter"]
+	#one_word_targets = ["target", "filter"]
 	#targets = one_word_targets + ["targetstage"]
 	
 	#step 1: sort the lines by case (situation, and any targets)
@@ -268,7 +268,7 @@ def create_case_xml(base_element, lines):
 			for ind, lower_case_target in enumerate(lower_multi_targets):
 				if lower_case_target in line_data:
 					capital_word = multi_word_targets[ind]
-					tag_list[capital_word] = line_data["targetstage"]
+					tag_list[capital_word] = line_data[lower_case_target]
 	
 			case_xml_element = ET.SubElement(base_element, "case", tag_list) #create the <case> element in the xml
 		
