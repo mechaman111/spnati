@@ -74,6 +74,8 @@ The <character text> text is simply what the character says in that situation.
 
 You can have multiple entries for the same stage and situation. They will all be added to the behaviour.xml, so the character can have multiple responses to the same situation. You'll want to add multiple cases for the more common situations in particular.
 
+The dialogue box can be suppressed entirely in special circumstances. To do this, edit the behaviour.xml file directly after editing it and add silent="" to the case. Check Tracer's behaviour.xml for an example of how this works.
+
 The ending sequences are a bit more complicated. They consist of a number of endings, where each ending has at least one screen, and each screen has at least one text box. The start of each ending is marked by the "ending" keyword, which also gives the title for the ending. Each screen starts with the "screen" keyword, which gives the filename of the image for that screen. Each text box starts with a "text" entry, which gives the contents of that text box.
 
 Each ending has a "ending_gender" tag, which specifies which player gender can see that ending. The options are "male" or "female" to have the ending available to those genders, or "any" to allow players of any gender to view that ending. The text boxes have the properties "x" and "y" to specify their positions. These are measures to the left-hand-side and top of the text box, respectively. They are specified as a % of the window size. The x position can also be "centered", which will centre the text box. You can optionally provide a "width" for a text box, which specifies the width of the text box as a percentage of the window size. Finally, you can add an arrow direction, to give an dialogue arrow to a text box. The possible options are "right", "left", "up", and "down". The arrow entry can also be left out, in order to not have a dialogue arrow. See Daisy's behaviour files for an example on how to write an ending entry.
@@ -85,7 +87,7 @@ cd
 
 2) type in:
 python ..\make_xml.py <character response file> <behaviour.xml filename> <meta.xml filename>
-from a command line. <character response file> is the filename of the file you've made, and <behaviour.xml filename> and <meta.xml filename> are the names where the behaviour.xml and meta.xml are written to. If you don't specify a behaviour filename and a meta filename, then the script will use the defaults, which is the names used by SPNatI.
+from a command line. <character response file> is the filename of the file you've made, and <behaviour.xml filename> and <meta.xml filename> are the names where the behaviour.xml and meta.xml are written to. If you don't specify a behaviour filename and a meta filename, then the script will use the defaults, which are the names used by SPNatI.
 
 Before writing a character, play the game a few times to see how it flows. In particular, play with Meg and Revy, as they have large amount of unique dialogue and it varies from one stage to the next. You'll want to come up with a personality for your character think of how they would respond to the game's situations. Preferably it would match the source material for your character. And, of course, you should ensure that your character's statements match what their images show.
 
