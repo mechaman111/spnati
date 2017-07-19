@@ -28,6 +28,7 @@ var NAME = "~name~";
 var PROPER_CLOTHING = "~Clothing~";
 var LOWERCASE_CLOTHING = "~clothing~";
 var CARDS = "~cards~";
+var PLAYER_NAME = "~player~";
 
 /**********************************************************************
  *****                    All Dialogue Triggers                   *****
