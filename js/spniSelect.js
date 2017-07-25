@@ -586,7 +586,7 @@ function selectOpponentSlot (slot) {
         /* add a new opponent */
         selectedSlot = slot;
 		
-		/* remove the selected opponent from the list of selectable opponents */
+		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
 		updateSelectableOpponents();
 		
 		/* reload selection screen */
@@ -687,10 +687,6 @@ function clickedRemoveAllButton ()
     for (var i = 1; i < 5; i++) {
         players[i] = null;
     }
-
-    // Return the removed players to the list of selectable opponents
-    updateSelectableOpponents();
-
     updateSelectionVisuals();
 }
 
