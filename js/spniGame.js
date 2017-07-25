@@ -261,7 +261,7 @@ function makeAIDecision () {
 	}
 	
 	/* update a few hardcoded visuals */
-	updateBehaviour(currentTurn, SWAP_CARDS, [CARDS], [swap], null);
+	updateBehaviour(currentTurn, SWAP_CARDS, [CARDS, PLAYER_NAME], [swap, players[HUMAN_PLAYER].label], null);
 	updateGameVisual(currentTurn);
 	
 	/* wait and implement AI action */
@@ -280,13 +280,13 @@ function implementAIAction () {
 	/* update behaviour */
 	determineHand(currentTurn);
 	if (hands[currentTurn].strength == HIGH_CARD) {
-		updateBehaviour(currentTurn, BAD_HAND, [], [], null);
+		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	} else if (hands[currentTurn].strength <= TWO_PAIR) {
-		updateBehaviour(currentTurn, OKAY_HAND, [], [], null);
+		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	} else {
-		updateBehaviour(currentTurn, GOOD_HAND, [], [], null);
+		updateBehaviour(currentTurn, GOOD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	}
 	
@@ -316,7 +316,7 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [], [], null);
+            updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
             updateGameVisual(currentTurn);
 
             window.setTimeout(advanceTurn, GAME_DELAY);
@@ -634,7 +634,7 @@ function handleGameOver() {
 		}
 		for (var i = 0; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			updateBehaviour(i, tag, [NAME], [players[winner].label], players[winner]);
+			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
 		}
 		
         updateAllGameVisuals();

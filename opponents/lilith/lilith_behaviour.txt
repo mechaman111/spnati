@@ -1,0 +1,940 @@
+#required for behaviour.xml
+first=Lilith
+last=Cashlin
+label=Lilith
+gender=female
+size=large
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=19
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and British. See tag_list.txt for a list of tags.
+tag=kind
+tag=video_game
+tag=confident
+tag=pierced_nipples
+tag=future
+
+#required for meta.xml
+#select screen image
+pic=start
+height=5'7"
+from=Borderlands
+writer=krisslanza
+artist=josephkantel & Horsecatdraws
+description=Lilith is a Vault Hunter on Pandora and one of only six sirens in the universe.
+release=6
+
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,Hey, I'm Lilith. You ready to play some strip poker?
+
+
+
+#CLOTHING
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#How much they cover = important (covering nudity), major (a lot of skin), minor (small amount of skin), extra (accessories, boots, etc)
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#There must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
+
+clothes=Jacket,jacket,minor,upper
+clothes=Gloves,gloves,extra,other
+clothes=Boots,boots,minor,other
+clothes=Shirt,shirt,major,upper
+clothes=Belt,belt,extra,other
+clothes=Pants,pants,major,lower
+clothes=Tank top,tank top,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
+#The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+swap_cards=calm,I'll exchange ~cards~ cards.
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+
+#fully clothed
+0-good_hand=happy,I'll close my eyes to make it fair.
+0-good_hand=happy,Yes!
+0-good_hand=happy,Play hard to get. That's how ya do it.
+0-okay_hand=calm,You think you can take me?
+0-okay_hand=calm,Eh, guess this could be worse.
+0-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+0-bad_hand=sad,Dammit!
+0-bad_hand=sad,... Suave, Lilith.
+
+#lost jacket
+1-good_hand=happy,I'll close my eyes to make it fair.
+1-good_hand=happy,Yes!
+1-good_hand=happy,Play hard to get. That's how ya do it.
+1-okay_hand=calm,You think you can take me?
+1-okay_hand=calm,Eh, guess this could be worse.
+1-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+1-bad_hand=sad,Dammit!
+1-bad_hand=sad,... Suave, Lilith.
+
+#lost gloves
+2-good_hand=happy,Hahahaha. I'm really good at this.
+2-good_hand=happy,Yes!
+2-okay_hand=calm,You think you can take me?
+2-okay_hand=calm,Eh, guess this could be worse.
+2-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+2-bad_hand=sad,Dammit!
+2-bad_hand=sad,... Suave, Lilith.
+
+#lost boots
+3-good_hand=happy,Hahahaha. I'm really good at this.
+3-good_hand=happy,Yes!
+3-okay_hand=calm,You think you can take me?
+3-okay_hand=calm,Eh, guess this could be worse.
+3-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+3-bad_hand=sad,Dammit!
+3-bad_hand=sad,... Suave, Lilith.
+
+#lost shirt
+4-good_hand=happy,Hell yeah!
+4-good_hand=happy,Haha, yeah, this should be entertaining.
+4-good_hand=happy,No way am I losing with this hand!
+4-okay_hand=calm,Let's see what we've got.
+4-okay_hand=calm,Hope I'm lucky!
+4-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+4-bad_hand=sad,Dammit!
+4-bad_hand=sad,... Suave, Lilith.
+
+#lost belt
+5-good_hand=happy,Hell yeah!
+5-good_hand=happy,Haha, yeah, this should be entertaining.
+5-good_hand=happy,No way am I losing with this hand!
+5-okay_hand=calm,Let's see what we've got.
+5-okay_hand=calm,Hope I'm lucky!
+5-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+5-bad_hand=sad,Dammit!
+5-bad_hand=sad,... Suave, Lilith.
+
+#lost pants (in tank top and panties)
+6-good_hand=happy,Hell yeah!
+6-good_hand=happy,Haha, yeah, this should be entertaining.
+6-good_hand=happy,No way am I losing with this hand!
+6-okay_hand=calm,Let's see what we've got.
+6-okay_hand=calm,Hope I'm lucky!
+6-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+6-bad_hand=sad,Dammit!
+6-bad_hand=sad,... Suave, Lilith.
+
+#lost tank top (topless)
+7-good_hand=loss,Where the hell were these cards five minutes ago?
+7-okay_hand=calm,Let's see what we've got.
+7-okay_hand=calm,Hope I'm lucky!
+7-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+7-bad_hand=sad,Dammit!
+7-bad_hand=sad,... Suave, Lilith.
+
+#lost panties (naked)
+-3-good_hand=loss,Where the hell were these cards five minutes ago?
+-3-okay_hand=calm,Let's see what we've got.
+-3-okay_hand=calm,Hope I'm lucky!
+-3-bad_hand=sad,Just so we're clear: If I lose this, it's the cards' fault.
+-3-bad_hand=sad,Dammit!
+-3-bad_hand=sad,... Suave, Lilith.
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing jacket
+0-must_strip_winning=loss,Lame! Ah well, can't win forever.
+0-must_strip_normal=loss,Lame! Ah well, can't win forever.
+0-must_strip_losing=loss,Lame! Ah well, can't win forever.
+0-stripping=strip,Losing my jacket isn't a big deal anyway.
+1-stripped=sad,Lame! Ah well, can't win forever.
+
+#losing gloves
+1-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+1-must_strip_normal=loss,I guess I lost, huh?
+1-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+1-stripping=strip,Win or lose, I'm just happy to hear 'strip' without it being followed by 'the flesh from your bones'.
+2-stripped=sad,Lame! Ah well, can't win forever.
+
+#losing boots
+2-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+2-must_strip_normal=loss,I guess I lost, huh?
+2-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+2-stripping=strip,I guess I'll just take off my boots...
+3-stripped=sad,Lame! Ah well, can't win forever.
+
+#losing shirt
+3-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+3-must_strip_normal=loss,I guess I lost, huh?
+3-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+3-stripping=strip,I guess I'll just take off my shirt...
+4-stripped=sad,Lame! Ah well, can't win forever.
+
+#losing belt
+4-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+4-must_strip_normal=loss,I guess I lost, huh?
+4-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+4-stripping=strip,I guess I'll just take off my belt.
+5-stripped=sad,Well, no rest for the wicked. Let's play.
+
+#losing pants
+5-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+5-must_strip_normal=loss,I guess I lost, huh?
+5-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+5-stripping=strip,My siren powers let me turn invisible... but that would be cheating.
+6-stripped=sad,Well, no rest for the wicked. Let's play.
+
+#losing tank top
+6-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+6-must_strip_normal=loss,I guess I lost, huh?
+6-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+6-stripping=strip,I guess I'll just take off my tank top...
+7-stripped=awkward,Yeah, great view or whatever. Let's keep playing, please.
+
+#losing panties
+7-must_strip_winning=loss,Well, I guess it had to be my turn eventually...
+7-must_strip_normal=loss,I guess I lost, huh?
+7-must_strip_losing=loss,I lost again? But... I have less clothes than everyone else!
+7-stripping=strip,I guess I'll just take off my panties...
+8-stripped=awkward,Yeah, great view or whatever. Let's keep playing, please.
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_human_must_strip=interested,What are you going to take off, ~name~?
+male_must_strip=interested,What are you going to take off, ~name~?
+female_human_must_strip=interested,What are you going to take off, ~name~?
+female_must_strip=interested,What are you going to take off, ~name~?
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_human_must_strip=interested,Smooth.
+0-male_must_strip=interested,Smooth.
+0-female_human_must_strip=interested,I'm already wishing this was for cash.
+0-female_must_strip=interested,I'm already wishing this was for cash.
+
+#lost jacket
+1-male_human_must_strip=interested,Smooth.
+1-male_must_strip=interested,Smooth.
+1-female_human_must_strip=interested,Tough break, kid.
+1-female_must_strip=interested,Tough break, kid.
+
+#lost gloves
+2-male_human_must_strip=interested,Annnnd...I'm awesome.
+2-male_must_strip=interested,Annnnd...I'm awesome.
+2-female_human_must_strip=interested,Tough break, kid.
+2-female_must_strip=interested,Tough break, kid.
+
+#lost boots
+3-male_human_must_strip=interested,Annnnd... I'm awesome.
+3-male_must_strip=interested,Annnnd... I'm awesome.
+3-female_human_must_strip=,
+3-female_must_strip=,
+
+#lost shirt
+4-male_human_must_strip=,
+4-male_must_strip=,
+4-female_human_must_strip=,
+4-female_must_strip=,
+
+#lost belt
+5-male_human_must_strip=,
+5-male_must_strip=,
+5-female_human_must_strip=,
+5-female_must_strip=,
+
+#lost pants (in tank top and panties)
+6-male_human_must_strip=,
+6-male_must_strip=,
+6-female_human_must_strip=,
+6-female_must_strip=,
+
+#lost tank top (topless)
+7-male_human_must_strip=,
+7-male_must_strip=,
+7-female_human_must_strip=,
+7-female_must_strip=,
+
+#lost panties (naked) items
+-3-male_human_must_strip=,
+-3-male_must_strip=,
+-3-female_human_must_strip=,
+-3-female_must_strip=,
+
+#masturbating
+-2-male_human_must_strip=,
+-2-male_must_strip=,
+-2-female_human_must_strip=,
+-2-female_must_strip=,
+
+#finished
+-1-male_human_must_strip=,
+-1-male_must_strip=,
+-1-female_human_must_strip=,
+-1-female_must_strip=,
+
+#targeted
+0-female_must_strip,filter:brave=interested,This should be nothing for you, ~name~!
+0-female_must_strip,filter:kind=interested,It's okay, ~name~. Take your time.
+0-female_must_strip,target:zoey=interested,Still beats fighting zombies though, right?
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_accessory=sad,You're only taking off your ~clothing~, ~name~? That doesn't seem fair.
+male_removed_accessory=calm,At least you have less small stuff to take off now.
+female_removing_accessory=sad,You're only taking off your ~clothing~, ~name~? That doesn't seem fair.
+female_removed_accessory=calm,At least you have less small stuff to take off now.
+
+#stage-specific lines that override the stage-generic ones
+
+##another character is removing accessories
+#fully clothed
+0-male_removing_accessory=sad,Just going with your ~clothing~, ~name~? Boring!
+0-male_removed_accessory=calm,You should just take all that off at once!
+0-female_removing_accessory=,
+0-female_removing_accessory=,
+0-female_removed_accessory=,
+0-female_removed_accessory=,
+
+#lost jacket
+1-male_removing_accessory=,
+1-male_removed_accessory=,
+1-female_removing_accessory=,
+1-female_removed_accessory=,
+
+#lost gloves
+2-male_removing_accessory=,
+2-male_removed_accessory=,
+2-female_removing_accessory=,
+2-female_removed_accessory=,
+
+#lost boots
+3-male_removing_accessory=,
+3-male_removed_accessory=,
+3-female_removing_accessory=,
+3-female_removed_accessory=,
+
+#lost shirt
+4-male_removing_accessory=,
+4-male_removed_accessory=,
+4-female_removing_accessory=,
+4-female_removed_accessory=,
+
+#lost belt
+5-male_removing_accessory=,
+5-male_removed_accessory=,
+5-female_removing_accessory=,
+5-female_removed_accessory=,
+
+#lost pants (in tank top and panties)
+6-male_removing_accessory=,
+6-male_removed_accessory=sad,Oh, grow a pair.
+6-female_removing_accessory=,
+6-female_removed_accessory=calm,I have bullets, just to remind everyone.
+
+#lost tank top (topless)
+7-male_removing_accessory=,
+7-male_removed_accessory=sad,Oh, grow a pair.
+7-female_removing_accessory=,
+7-female_removed_accessory=calm,I have bullets, just to remind everyone.
+
+#nude
+-3-male_removing_accessory=,
+-3-male_removed_accessory=sad,Oh, grow a pair.
+-3-female_removing_accessory=,
+-3-female_removed_accessory=calm,I have bullets, just to remind everyone.
+
+#masturbating
+-2-male_removing_accessory=,
+-2-male_removed_accessory=sad,Oh, grow a pair.
+-2-female_removing_accessory=,
+-2-female_removed_accessory=calm,I have bullets, just to remind everyone.
+
+#finished
+-1-male_removing_accessory=,
+-1-male_removed_accessory=sad,Oh, grow a pair.
+-1-female_removing_accessory=,
+-1-female_removed_accessory=calm,I have bullets, just to remind everyone.
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_minor=calm,Your ~clothing~? That's <i>something</i>, at least.
+male_removed_minor=happy,Maybe we can get you out of some large stuff now, ~name~.
+female_removing_minor=calm,Your ~clothing~? That's <i>something</i>, at least.
+female_removed_minor=happy,Maybe we can get you out of some large stuff now, ~name~.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=calm,I guess you gotta get all the boring stuff like your ~clothing~ off first...
+0-male_removed_minor=happy,Feeling nervous yet, ~name~? Almost to the good stuff...
+0-female_removing_minor=calm,C'mon, can't I make it worth your while to get just a little more daring?
+0-female_removed_minor=,
+
+#lost jacket
+1-male_removing_minor=,
+1-male_removed_minor=,
+1-female_removing_minor=,
+1-female_removed_minor=,
+
+#lost gloves
+2-male_removing_minor=,
+2-male_removed_minor=,
+2-female_removing_minor=,
+2-female_removed_minor=,
+
+#lost boots
+3-male_removing_minor=,
+3-male_removed_minor=,
+3-female_removing_minor=,
+3-female_removed_minor=,
+
+#lost shirt
+4-male_removing_minor=,
+4-male_removed_minor=,
+4-female_removing_minor=,
+4-female_removed_minor=,
+
+#lost belt
+5-male_removing_minor=,
+5-male_removed_minor=,
+5-female_removing_minor=,
+5-female_removed_minor=,
+
+#lost pants (in tank top and panties)
+6-male_removing_minor=,
+6-male_removed_minor=,
+6-female_removing_minor=,
+6-female_removed_minor=,
+
+#lost tank top (topless)
+7-male_removing_minor=,
+7-male_removed_minor=horny,If you win, I'm tearing those clothes right off your body.
+7-female_removing_minor=,
+7-female_removed_minor=,
+
+#naked
+-3-male_removing_minor=,
+-3-male_removed_minor=horny,If you win, I'm tearing those clothes right off your body.
+-3-female_removing_minor=,
+-3-female_removed_minor=,
+
+#masturbating
+-2-male_removing_minor=,
+-2-male_removed_minor=horny,If you win, I'm tearing those clothes right off your body.
+-2-female_removing_minor=,
+-2-female_removed_minor=,
+
+#finished
+-1-male_removing_minor=,
+-1-male_removed_minor=horny,If you win, I'm tearing those clothes right off your body.
+-1-female_removing_minor=,
+-1-female_removed_minor=,
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_major=interested,Finally getting ~name~ out of his ~clothing~!
+male_removed_major=interested,You look better without your ~clothing~, ~name~.
+male_removed_major=interested,Is that iridium in your pocket or are you just glad to see me?
+female_removing_major=interested,Finally getting ~name~ out of her ~clothing~!
+female_removed_major=interested,You look better without your ~clothing~, ~name~.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=interested,Now ~name~ is making this interesting!
+0-male_removed_major=interested,Know what was really bugging me? Your ~clothing~. You look better without it!
+0-female_removing_major=,
+0-female_removed_major=,
+
+#lost jacket
+1-male_removing_major=interested,Now ~name~ is making this interesting!
+1-male_removed_major=,
+1-female_removing_major=,
+1-female_removed_major=,
+
+#lost gloves
+2-male_removing_major=interested,Wow. You are a dumbass.
+2-male_removed_major=,
+2-female_removing_major=,
+2-female_removed_major=
+
+#lost boots
+3-male_removing_major=interested,Wow. You are a dumbass.
+3-male_removed_major=,
+3-female_removing_major=,
+3-female_removed_major=,
+
+#lost shirt
+4-male_removing_major=,
+4-male_removed_major=,
+4-female_removing_major=,
+4-female_removed_major=,
+
+#lost belt
+5-male_removing_major=,
+5-male_removed_major=,
+5-female_removing_major=,
+5-female_removed_major=,
+
+#lost pants (in tank top and panties)
+6-male_removing_major=,
+6-male_removed_major=,
+6-female_removing_major=,
+6-female_removed_major=,
+
+#lost tank top (topless)
+7-male_removing_major=,
+7-male_removed_major=,
+7-female_removing_major=,
+7-female_removed_major=,
+
+#nude
+-3-male_removing_major=,
+-3-male_removed_major=,
+-3-female_removing_major=,
+-3-female_removed_major=,
+
+#masturbating
+-2-male_removing_major=,
+-2-male_removed_major=,
+-2-female_removing_major=,
+-2-female_removed_major=,
+
+#finished
+-1-male_removing_major=,
+-1-male_removed_major=,
+-1-female_removing_major=,
+-1-female_removed_major=,
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_chest_will_be_visible=interested,I guess it's time to see that chest of yours, ~name~!
+male_chest_is_visible=interested,Nice chest, ~name~.
+male_crotch_will_be_visible=horny,Alright, ~name~, I'm eager to see your dick!
+male_small_crotch_is_visible=awkward,Wow ~name~! That's really sad...
+male_medium_crotch_is_visible=awkward,Damn, ~name~! I'd love to wrap my hands around that...
+male_large_crotch_is_visible=shocked,Woah, ~name~! You need any help with that...?
+
+female_chest_will_be_visible=interested,I guess it's time to see those tits of yours, ~name~!
+female_small_chest_is_visible=interested,Those are nice, ~name~.
+female_medium_chest_is_visible=horny,Nice tits, ~name~.
+female_large_chest_is_visible=shocked,How do you even manage with those things, ~name~? Is your back okay?
+female_crotch_will_be_visible=horny,I guess you have to show <i>that</i> to me now, ~name~...
+female_crotch_is_visible=shocked,It's so pretty...
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=interested,Don't be shy about showing off your chest, ~name~!
+0-male_chest_is_visible=interested,Not bad, ~name~, not bad! You should've started out like this.
+0-male_crotch_will_be_visible=,
+0-male_small_crotch_is_visible=,
+0-male_medium_crotch_is_visible=,
+0-male_large_crotch_is_visible=,
+
+0-female_chest_will_be_visible=interested,Ehh. I'm a bad person.
+0-female_small_chest_is_visible=,
+0-female_medium_chest_is_visible=,
+0-female_large_chest_is_visible=,
+0-female_crotch_will_be_visible=,
+0-female_crotch_is_visible=,
+
+#lost jacket
+1-male_chest_will_be_visible=,
+1-male_chest_is_visible=,
+1-male_crotch_will_be_visible=,
+1-male_small_crotch_is_visible=,
+1-male_medium_crotch_is_visible=,
+1-male_large_crotch_is_visible=,
+
+1-female_chest_will_be_visible=interested,Ehh. I'm a bad person.
+1-female_small_chest_is_visible=,
+1-female_medium_chest_is_visible=,
+1-female_large_chest_is_visible=,
+1-female_crotch_will_be_visible=,
+1-female_crotch_is_visible=,
+
+#lost gloves
+2-male_chest_will_be_visible=,
+2-male_chest_is_visible=,
+2-male_crotch_will_be_visible=,
+2-male_small_crotch_is_visible=,
+2-male_medium_crotch_is_visible=,
+2-male_large_crotch_is_visible=,
+
+2-female_chest_will_be_visible=interested,Ehh. I'm a bad person.
+2-female_small_chest_is_visible=,
+2-female_medium_chest_is_visible=,
+2-female_large_chest_is_visible=,
+2-female_crotch_will_be_visible=,
+2-female_crotch_is_visible=,
+
+#lost boots
+3-male_chest_will_be_visible=,
+3-male_chest_is_visible=,
+3-male_crotch_will_be_visible=,
+3-male_small_crotch_is_visible=,
+3-male_medium_crotch_is_visible=,
+3-male_large_crotch_is_visible=,
+
+3-female_chest_will_be_visible=interested,Ehh. I'm a bad person.
+3-female_small_chest_is_visible=,
+3-female_medium_chest_is_visible=,
+3-female_large_chest_is_visible=,
+3-female_crotch_will_be_visible=,
+3-female_crotch_is_visible=,
+
+#lost shirt
+4-male_chest_will_be_visible=,
+4-male_chest_is_visible=,
+4-male_crotch_will_be_visible=,
+4-male_small_crotch_is_visible=,
+4-male_medium_crotch_is_visible=,
+4-male_large_crotch_is_visible=,
+
+4-female_chest_will_be_visible=,
+4-female_small_chest_is_visible=,
+4-female_medium_chest_is_visible=,
+4-female_large_chest_is_visible=,
+4-female_crotch_will_be_visible=,
+4-female_crotch_is_visible=,
+
+#lost belt
+5-male_chest_will_be_visible=,
+5-male_chest_is_visible=,
+5-male_crotch_will_be_visible=,
+5-male_small_crotch_is_visible=,
+5-male_medium_crotch_is_visible=,
+5-male_large_crotch_is_visible=,
+
+5-female_chest_will_be_visible=,
+5-female_small_chest_is_visible=,
+5-female_medium_chest_is_visible=,
+5-female_large_chest_is_visible=,
+5-female_crotch_will_be_visible=,
+5-female_crotch_is_visible=,
+
+#lost pants (in tank top and panties)
+6-male_chest_will_be_visible=,
+6-male_chest_is_visible=,
+6-male_crotch_will_be_visible=,
+6-male_small_crotch_is_visible=,
+6-male_medium_crotch_is_visible=,
+6-male_large_crotch_is_visible=,
+
+6-female_chest_will_be_visible=,
+6-female_small_chest_is_visible=,
+6-female_medium_chest_is_visible=,
+6-female_large_chest_is_visible=,
+6-female_crotch_will_be_visible=,
+6-female_crotch_is_visible=,
+
+#lost tank top (topless)
+7-male_chest_will_be_visible=,
+7-male_chest_is_visible=,
+7-male_crotch_will_be_visible=,
+7-male_small_crotch_is_visible=,
+7-male_medium_crotch_is_visible=,
+7-male_large_crotch_is_visible=,
+
+7-female_chest_will_be_visible=,
+7-female_small_chest_is_visible=,
+7-female_medium_chest_is_visible=,
+7-female_large_chest_is_visible=,
+7-female_crotch_will_be_visible=,
+7-female_crotch_is_visible=,
+
+#nude
+-3-male_chest_will_be_visible=,
+-3-male_chest_is_visible=,
+-3-male_crotch_will_be_visible=,
+-3-male_small_crotch_is_visible=,
+-3-male_medium_crotch_is_visible=,
+-3-male_large_crotch_is_visible=,
+
+-3-female_chest_will_be_visible=,
+-3-female_small_chest_is_visible=,
+-3-female_medium_chest_is_visible=,
+-3-female_large_chest_is_visible=,
+-3-female_crotch_will_be_visible=,
+-3-female_crotch_is_visible=,
+
+#masturbating
+-2-male_chest_will_be_visible=,
+-2-male_chest_is_visible=,
+-2-male_crotch_will_be_visible=,
+-2-male_small_crotch_is_visible=,
+-2-male_medium_crotch_is_visible=,
+-2-male_large_crotch_is_visible=,
+
+-2-female_chest_will_be_visible=,
+-2-female_small_chest_is_visible=,
+-2-female_small_chest_is_visible=,
+-2-female_medium_chest_is_visible=,
+-2-female_large_chest_is_visible=,
+-2-female_crotch_will_be_visible=,
+-2-female_crotch_will_be_visible=,
+-2-female_crotch_is_visible=,
+-2-female_crotch_is_visible=,
+
+#finished
+-1-male_chest_will_be_visible=,
+-1-male_chest_is_visible=,
+-1-male_crotch_will_be_visible=,
+-1-male_small_crotch_is_visible=,
+-1-male_medium_crotch_is_visible=,
+-1-male_large_crotch_is_visible=,
+
+-1-female_chest_will_be_visible=,
+-1-female_small_chest_is_visible=,
+-1-female_medium_chest_is_visible=,
+-1-female_large_chest_is_visible=,
+-1-female_crotch_will_be_visible=,
+-1-female_crotch_is_visible=,
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_must_masturbate=interested,Time to show your skills, ~name~...
+male_start_masturbating=horny,You're going to have to go until you're done, ~name~...
+male_masturbating=horny,Keep going, ~name~...
+male_finished_masturbating=shocked,Wow... uh... I guess you're done then...
+
+female_must_masturbate=interested,Time to show your skills, ~name~...
+female_start_masturbating=horny,You're going to have to go until you're done, ~name~...
+female_masturbating=horny,Keep going, ~name~...
+female_finished_masturbating=shocked,Wow... uh... I guess you're done then...
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=interested,Come on, ~name~, stroke it like you mean it!
+0-male_start_masturbating=horny,Mmmm, just like that, ~name~... You really know how to work your cock.
+0-male_masturbating=horny,Faster, ~name~, faster...
+0-male_finished_masturbating=shocked,Now that's what I want to see! Damn, I'd love to see you go again...
+
+0-female_must_masturbate=,
+0-female_start_masturbating=,
+0-female_masturbating=,
+0-female_finished_masturbating=,
+
+#lost jacket
+1-male_must_masturbate=,
+1-male_start_masturbating=,
+1-male_masturbating=,
+1-male_finished_masturbating=,
+
+1-female_must_masturbate=,
+1-female_start_masturbating=,
+1-female_masturbating=,
+1-female_finished_masturbating=,
+
+#lost gloves
+2-male_must_masturbate=,
+2-male_start_masturbating=,
+2-male_masturbating=,
+2-male_finished_masturbating=,
+
+2-female_must_masturbate=,
+2-female_start_masturbating=,
+2-female_masturbating=,
+2-female_finished_masturbating=,
+
+#lost boots
+3-male_must_masturbate=,
+3-male_start_masturbating=,
+3-male_masturbating=,
+3-male_finished_masturbating=,
+
+3-female_must_masturbate=,
+3-female_start_masturbating=,
+3-female_masturbating=,
+3-female_finished_masturbating=,
+
+#lost shirt
+4-male_must_masturbate=,
+4-male_start_masturbating=,
+4-male_masturbating=,
+4-male_finished_masturbating=,
+
+4-female_must_masturbate=,
+4-female_start_masturbating=,
+4-female_masturbating=,
+4-female_finished_masturbating=,
+
+#lost belt
+5-male_must_masturbate=,
+5-male_start_masturbating=,
+5-male_masturbating=,
+5-male_finished_masturbating=,
+
+5-female_must_masturbate=,
+5-female_start_masturbating=,
+5-female_masturbating=,
+5-female_masturbating=,
+5-female_finished_masturbating=,
+
+#lost pants (in tank top and panties)
+6-male_must_masturbate=,
+6-male_start_masturbating=,
+6-male_masturbating=,
+6-male_finished_masturbating=,
+
+6-female_must_masturbate=,
+6-female_start_masturbating=,
+6-female_masturbating=,
+6-female_masturbating=,
+6-female_finished_masturbating=,
+
+#lost tank top (topless)
+7-male_must_masturbate=,
+7-male_start_masturbating=,
+7-male_masturbating=,
+7-male_finished_masturbating=,
+
+7-female_must_masturbate=,
+7-female_start_masturbating=,
+7-female_masturbating=,
+7-female_masturbating=,
+7-female_finished_masturbating=,
+
+#nude
+-3-male_must_masturbate=,
+-3-male_start_masturbating=,
+-3-male_masturbating=,
+-3-male_finished_masturbating=,
+
+-3-female_must_masturbate=,
+-3-female_start_masturbating=,
+-3-female_masturbating=,
+-3-female_finished_masturbating=,
+
+#masturbating
+-2-male_must_masturbate=,
+-2-male_start_masturbating=,
+-2-male_masturbating=,
+-2-male_finished_masturbating=,
+
+-2-female_must_masturbate=,
+-2-female_start_masturbating=,
+-2-female_masturbating=,
+-2-female_finished_masturbating=,
+
+#finished
+-1-male_must_masturbate=,
+-1-male_start_masturbating=,
+-1-male_masturbating=,
+-1-male_finished_masturbating=,
+
+-1-female_must_masturbate=,
+-1-female_start_masturbating=,
+-1-female_masturbating=,
+-1-female_finished_masturbating=,
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat can repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+must_masturbate_first=loss,I guess I lost...
+must_masturbate=loss,I guess I lost...
+start_masturbating=starting,Ever seen a siren in action? Here's your chance.
+masturbating=calm,How long do I have to keep going for?
+heavy_masturbating=heavy,Mmmmmmmm....
+finishing_masturbating=finishing,I'm cumming!
+finished_masturbating=finished,I'm done...
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+game_over_victory=happy,... That was awesome.
+
+#stage-specific lines that override the stage-generic one
+0-game_over_victory=,
+1-game_over_victory=,
+2-game_over_victory=,
+3-game_over_victory=,
+4-game_over_victory=,
+5-game_over_victory=,
+6-game_over_victory=,
+7-game_over_victory=,
+-3-game_over_victory=,
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=horny,I lost, so we have to play again until I win, right?
+game_over_defeat=horny,I'll be damned. I gotta say: you... are a badass.
+
+
+
+#FOOTNOTE
+
+#Lilith's original document had two unused lines for an opponent heavily masturbating:
+#For males: male_heavy_masturbating=awkward,About to cum ~name~? You don't look so good.
+#For females: female_heavy_masturbating=awkward,You're really getting into it, aren't you ~name~?
