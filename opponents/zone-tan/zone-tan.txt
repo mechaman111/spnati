@@ -193,9 +193,10 @@ game_over_defeat=wink,So... Which one of you wants to clean up my upper thighs t
 1-good_hand=loss,I can't even wait to get all your clothes off...
 1-good_hand=happy,Ha! No way I'm gonna lose!
 1-good_hand=happy,Zone's in the house!
+1-good_hand=calm,My Poker strats are the best. There's no doubt in my mind I'll get to watch you all masturbate today...
 1-okay_hand=calm,Average hand, I deserve better.
 1-okay_hand=serene1,Could be better, could be worse.
-1-okay_hand=interested,Wouldn't it be more fun if we just all stripped down after revealing this hand anyway?
+1-okay_hand=interested,Wouldn't it be more fun if we just all stripped down after revealing this hand, no matter what?
 1-bad_hand=shocked,Well... fuck.
 1-bad_hand=sad,I've made some questionable decisions in my life.
 1-bad_hand=shocked,Wo-oh...
@@ -650,11 +651,13 @@ game_over_defeat=wink,So... Which one of you wants to clean up my upper thighs t
 -2-male_large_crotch_is_visible=horny2,I want you to slide it down my fucking throat. The gag reflex is a sign of affection...!
 
 -2-female_chest_will_be_visible=calm,Oh yeah... Show off your sweetness...
--2-female_chest_will_be_visible=horny1,Please baby, go all the way! Hold me close and let our tits make out!
+-2-female_chest_will_be_visible=horny1,Hold me close and let our tits cuddle!
 -2-female_small_chest_is_visible=interested,I'd like to nibble on those...
 -2-female_medium_chest_is_visible=wink,Fuck yeah!
+-2-female_medium_chest_is_visible=calm,Let's have a little nip to nip action, ~name~...
 -2-female_large_chest_is_visible=heavy,T-THIS is what I <i>NEEDED!</i>
 -2-female_crotch_will_be_visible=horny1,Don't... stop...! Show it, show it!
+-2-female_crotch_will_be_visible=horny1,Please baby, go all the way!
 -2-female_crotch_is_visible=interested,Hmmm... That looks delicious... Let me have a little taste, ~name~!
 -2-female_crotch_is_visible=lick,Want me to do a taste test, ~name~?
 
@@ -843,48 +846,6 @@ game_over_defeat=wink,So... Which one of you wants to clean up my upper thighs t
 -1-female_finished_masturbating=happy,Whooops...! Make sure you don't slip on ~name~'s juices when you leave!
 -1-female_finished_masturbating=interested2,Well done! I'd love to restart that loop...
 
-#ending data
-#this is optional. Delete it if you don't have an ending thought up yet.
-#you can also have multiple endings.
-#each one starts with the "ending" entry
-#the tabs aren't necessary, but make it easier to read.
-ending=This is the title of the character's ending, and the start of a new ending
-        ending_gender="male", "female", or "any". This is the gender of player that can see the ending
-
-        #each ending has a number of screens. each screen has an image, and one or more text boxes
-        #the entry "screen" marks the start of a new screen
-        screen=filename (including extension) of the background image for a screen. Also the start of a new screen
-
-                #the text boxes in a screen
-                #the entry "text" starts a new text box
-                text=The text in the text box.
-                x=The x-position of the text box. Specifically, the position of the text box's left side. This can be a percentage, or the word "centered"
-                y=The y-position of the top of the text box. Must be a percentage.
-                width=The width of a text box. This is optional. Must be a percentage.
-                arrow="up", "down", "left", or "right". Gives the text box a dialogue arrow in the specified direction. Can be left out, if you don't want the text box to be an arrow.
-
-        #this screen is an example
-        #the filename is the image you want to use
-        screen=example-filename.png
-
-                text=This is text that will be seen by the player. It has a width of 34% and an arrow pointing down.
-                x=10%
-                y=20%
-                width=34%
-                arrow=right
-
-                text=This is a centered text box. It has the default width and an arrow pointing right.
-                x=centered
-                y=50%
-                arrow=right
-
-                text=This third text box has minimum amount of values specified. It uses the default width, and has no arrow.
-                x=75%
-                y=50%
-
-#if you want additional endings, start the new one with the "ending" line
-
-
 #   Targeted lines (stage 0)
 0-female_crotch_will_be_visible,filter:mushroom_kingdom=calm,This'll be sure to destroy some childhoods...
 0-female_chest_will_be_visible,filter:princess=horny,Bestow your breasts upon me, Your Highness! Heehee, I just wanna see some tits!
@@ -944,357 +905,361 @@ ending=This is the title of the character's ending, and the start of a new endin
 0-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 0-female_removing_major,target:mei,targetStage:3=interested,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
 0-female_removed_major,target:mei,targetStage:4=horny,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
+0-must_strip,alsoPlaying:nugi-chan,alsoPlayingStage:0=happy,Yeah, it's great seeing you again, Nugi-chan! Hey, let's show ~player~ what we usually do to entertain people!
 
+#   Targeted lines (stage 1, lost sweater) 
+1-female_crotch_will_be_visible,filter:mushroom_kingdom=calm,This'll be sure to destroy some childhoods...
+1-female_chest_will_be_visible,filter:princess=horny,Bestow your breasts upon me, Your Highness! Heehee, I just wanna see some tits!
+1-female_crotch_is_visible,target:streaming-chan=interested,Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!
+1-female_medium_chest_is_visible,target:harley=loss,You don't have to tell me twice, puddin'...
+1-female_medium_chest_is_visible,target:mercy=horny,Those are definitely a perfect ten...!
+1-female_must_strip,target:harley,targetStage:0=interested,Hmmm... I love me some Suicide Girls... Have we met before, Harley?
+1-female_removing_accessory,target:harley,targetStage:0=horny,I hope you're into some weird shit, Harles... We're gonna have some fun!
+1-female_removing_accessory,target:d.va,targetStage:1=horny,Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...
+1-female_crotch_is_visible,filter:shaved=interested,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
+1-female_crotch_is_visible,filter:shaved=horny,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!
+1-female_removing_accessory,target:raven,targetStage:1=happy,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+1-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+1-female_crotch_is_visible,target:raven=interested,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+1-female_must_strip,target:raven,targetStage:4=horny,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+1-female_chest_will_be_visible,target:raven=calm,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+1-female_small_chest_is_visible,target:raven=happy,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+1-female_crotch_is_visible,target:d.va=horny,Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...
+1-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+1-male_medium_crotch_is_visible,target:xander=happy,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
+1-female_removing_major,target:streaming-chan=calm,Great idea, Streaming-chan! Who needs bras anyway?
+1-female_removed_accessory,target:streaming-chan,targetStage:2=loss,Oh yeah, I get gifts like those all the time...
+1-female_removing_major,target:samus=interested,Ooh, I would <i>love</i> to help you out with that, Samus!
+1-female_crotch_will_be_visible,target:samus=horny,Hmm, you don't even know the half of it, girl...
+1-female_crotch_is_visible,target:samus=interested,Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!
+1-female_must_strip,filter:shy=happy,Don't be shy, ~name~... Be naked instead!
+1-male_must_strip,filter:shy=happy,Don't be shy, ~name~... Be naked instead!
+1-female_removing_major,target:jasmine,targetStage:1=serene2,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+1-female_removed_major,target:jasmine,targetStage:2=interested,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+1-female_masturbating,target:zoey=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
+1-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
+1-female_crotch_is_visible,target:widowmaker=horny,Hmmm, oui... Je t'adore...
+1-female_medium_chest_is_visible,target:arwen=interested,Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...
+1-male_removed_accessory,target:human=serene1,You'll get them naked eventually, Zone-tan... You always do...
+1-male_removed_minor,target:human=serene2,&#9835; <i>I'd like to see the world for once, all standing cock in haaand... and hear them jerk it far and wide, spray jizz throughout the land...</i> &#9834;
+1-okay_hand,alsoPlaying:raven,alsoPlayingStage:2=serene2,You've got such a lovely face, Raven... Why would you want to hide it?
+1-female_removed_major,target:korra,targetStage:5=wink,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+1-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+1-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+1-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+1-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
+1-female_finished_masturbating,target:scarlet_witch=serene2,Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!
+1-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+1-male_chest_will_be_visible,target:mettaton=calm,Hm. I'd like to meet this Alphys person...
+1-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
+1-male_large_crotch_is_visible,target:mettaton=shocked,Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...
+1-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+1-male_removed_accessory,target:captain_falcon,targetStage:7=calm,It's nice to finally see your face, cap'n!
+1-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+1-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+1-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+1-female_removing_major,target:mei,targetStage:3=interested,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+1-female_removed_major,target:mei,targetStage:4=horny,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
+1-female_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
+1-male_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
 
-#               Paste into the end of stage 1 (lost boots) (checked)
-			<case tag="female_crotch_will_be_visible" filter="mushroom_kingdom"><state img="1-calm.png">This'll be sure to destroy some childhoods...</state></case>
-			<case tag="female_chest_will_be_visible" filter="princess"><state img="1-horny.png">Bestow your breasts upon me, Your Highness! Heehee, I just wanna see some tits!</state></case>
-			<case tag="female_crotch_is_visible" target="streaming-chan"><state img="1-interested.png">Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!</state></case>
-			<case tag="female_medium_chest_is_visible" target="harley"><state img="1-loss.png">You don't have to tell me twice, puddin'...</state></case>
-			<case tag="female_medium_chest_is_visible" target="mercy"><state img="1-horny.png">Those are definitely a perfect ten...!</state></case>
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="1-interested.png">Hmmm... I love me some Suicide Girls... Have we met before, Harley?</state></case>
-			<case tag="female_removing_accessory" target="harley" targetStage="0"><state img="1-horny.png">I hope you're into some weird shit, Harles... We're gonna have some fun!</state></case>
-			<case tag="female_removing_accessory" target="d.va" targetStage="1"><state img="1-horny.png">Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="1-interested.png">Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!</state><state img="1-horny.png">Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="1-happy.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="1-horny.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="1-interested.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="1-horny.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="1-calm.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="1-happy.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="1-horny.png">Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...</state></case>
-			<case tag="male_crotch_will_be_visible" target="xander"><state img="1-calm.png">Hah... big guy's got jokes! But let's see if you can back up that talk...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="1-happy.png">Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!</state></case>
-			<case tag="female_removing_major" target="streaming-chan"><state img="1-calm.png">Great idea, Streaming-chan! Who needs bras anyway?</state></case>
-			<case tag="female_removed_accessory" target="streaming-chan" targetStage="2"><state img="1-loss.png">Oh yeah, I get gifts like those all the time...</state></case>
-			<case tag="female_removing_major" target="samus"><state img="1-interested.png">Ooh, I would <i>love</i> to help you out with that, Samus!</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="1-horny.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="1-interested.png">Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!</state></case>
-			<case tag="female_must_strip" filter="shy"><state img="1-happy.png">Don't be shy, ~name~... Be naked instead!</state></case>
-			<case tag="male_must_strip" filter="shy"><state img="1-happy.png">Don't be shy, ~name~... Be naked instead!</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="1-serene2.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="1-interested.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="heavy_masturbating" target="zoey"><state img="1-interested.png">It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="1-interested.png">This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="1-horny.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="1-interested.png">Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...</state></case>
-			<case tag="male_removed_accessory" target="human"><state img="1-serene1.png">You'll get them naked eventually, Zone-tan... You always do...</state></case>
-			<case tag="male_removed_minor" target="human"><state img="1-serene2.png">&#9835; <i>I'd like to see the world for once, all standing cock in haaand... and hear them jerk it far and wide, spray jizz throughout the land...</i> &#9834;</state></case>
-			<case tag="okay_hand" alsoPlaying="raven" alsoPlayingStage="2"><state img="1-serene2.png">You've got such a lovely face, Raven... Why would you want to hide it?</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="1-wink.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="1-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="1-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="1-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="1-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="1-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="1-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="1-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="1-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="1-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="good_hand" alsoPlaying="scarlet_witch" alsoPlayingStage="8"><state img="1-interested.png">What were you saying, Wanda? Sorry, I couldn't hear you!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="1-serene2.png">Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="1-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="1-calm.png">Hm. I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="1-shocked.png">Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="1-shocked.png">Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...</state></case>
-            <case tag="female_large_chest_is_visible" target="tifa"><state img="1-serene2.png">You'd fit right in on r/BustyPetite, Tifa!</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="1-calm.png">It's nice to finally see your face, cap'n!</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="1-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="1-horny.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="1-horny.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="1-interested.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="1-horny.png">I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!</state></case>
+#   Targeted lines (stage 2, lost leggings)
+2-female_crotch_will_be_visible,filter:mushroom_kingdom=calm,This'll be sure to destroy some childhoods...
+2-female_crotch_is_visible,target:streaming-chan=interested,Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!
+2-female_medium_chest_is_visible,target:harley=loss,You don't have to tell me twice, puddin'...
+2-female_medium_chest_is_visible,target:mercy=horny,Those are definitely a perfect ten...!
+2-female_must_strip,target:harley,targetStage:0=strip,Hmmm... I love me some Suicide Girls... Have we met before, Harley?
+2-female_removing_accessory,target:harley,targetStage:0=horny,I hope you're into some weird shit, Harles... We're gonna have some fun!
+2-female_removing_accessory,target:d.va,targetStage:1=horny,Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...
+2-female_crotch_is_visible,filter:shaved=interested,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
+2-female_crotch_is_visible,filter:shaved=horny,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our vids!
+2-female_removing_accessory,target:raven,targetStage:1=happy,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+2-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+2-female_crotch_is_visible,target:raven=interested,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+2-female_must_strip,target:raven,targetStage:4=horny,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+2-female_chest_will_be_visible,target:raven=stripped,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+2-female_small_chest_is_visible,target:raven=happy,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+2-female_crotch_is_visible,target:d.va=stripped,Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...
+2-male_crotch_will_be_visible,target:xander=strip,Hah... big guy's got jokes! But let's see if you can back up that talk...
+2-male_medium_crotch_is_visible,target:xander=happy,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
+2-female_removing_major,target:streaming-chan=strip,Great idea, Streaming-chan! Who needs bras anyway?
+2-female_removed_accessory,target:streaming-chan,targetStage:2=loss,Oh yeah, I get gifts like those all the time...
+2-female_removing_major,target:samus=interested,Ooh, I would <i>love</i> to help you out with that, Samus!
+2-female_crotch_will_be_visible,target:samus=stripped2,Hmm, you don't even know the half of it, girl...
+2-female_crotch_is_visible,target:samus=interested,Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!
+2-female_removing_major,target:jasmine,targetStage:1=serene2,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+2-female_removed_major,target:jasmine,targetStage:2=interested,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+2-female_masturbating,target:zoey=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
+2-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
+2-female_crotch_is_visible,target:widowmaker=horny,Hmmm, oui... Je t'adore...
+2-female_medium_chest_is_visible,target:arwen=interested,Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...
+2-female_removed_major,target:human=calm,It does feel nice being out of those clothes...
+2-female_removed_accessory,target:revy,targetStage:2=wink,I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...
+2-female_removed_major,target:korra,targetStage:5=wink,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+2-stripping,alsoPlaying:streaming-chan=strip,Make sure you got <i>this</i> on camera...!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+2-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+2-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+2-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+2-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
+2-female_finished_masturbating,target:scarlet_witch=serene2,Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!
+2-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+2-male_chest_will_be_visible,target:mettaton=calm,Hm. I'd like to meet this Alphys person...
+2-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
+2-male_large_crotch_is_visible,target:mettaton=shocked,Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...
+2-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+2-male_removed_accessory,target:captain_falcon,targetStage:7=calm,It's nice to finally see your face, cap'n!
+2-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+2-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+2-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+2-female_removing_major,target:mei,targetStage:3=interested,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+2-female_removed_major,target:mei,targetStage:4=horny,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
+2-female_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
+2-male_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
 
-#				Paste into the end of stage 2 (lost leggings) (checked)
-			<case tag="female_crotch_will_be_visible" filter="mushroom_kingdom"><state img="2-calm.png">This'll be sure to destroy some childhoods...</state></case>
-			<case tag="female_crotch_is_visible" target="streaming-chan"><state img="2-interested.png">Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!</state></case>
-			<case tag="female_medium_chest_is_visible" target="harley"><state img="2-loss.png">You don't have to tell me twice, puddin'...</state></case>
-			<case tag="female_medium_chest_is_visible" target="mercy"><state img="2-horny.png">Those are definitely a perfect ten...!</state></case>
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="2-strip.png">Hmmm... I love me some Suicide Girls... Have we met before, Harley?</state></case>
-			<case tag="female_removing_accessory" target="harley" targetStage="0"><state img="2-horny.png">I hope you're into some weird shit, Harles... We're gonna have some fun!</state></case>
-			<case tag="female_removing_accessory" target="d.va" targetStage="1"><state img="2-horny.png">Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="2-interested.png">Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!</state><state img="2-horny.png">Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="2-happy.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="2-horny.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="2-interested.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="2-horny.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="2-stripped.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="2-happy.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="2-stripped.png">Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...</state></case>
-			<case tag="male_crotch_will_be_visible" target="xander"><state img="2-strip.png">Hah... big guy's got jokes! But let's see if you can back up that talk...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="2-happy.png">Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!</state></case>
-			<case tag="female_removing_major" target="streaming-chan"><state img="2-strip.png">Great idea, Streaming-chan! Who needs bras anyway?</state></case>
-			<case tag="female_removed_accessory" target="streaming-chan" targetStage="2"><state img="2-loss.png">Oh yeah, I get gifts like those all the time...</state></case>
-			<case tag="female_removing_major" target="samus"><state img="2-interested.png">Ooh, I would <i>love</i> to help you out with that, Samus!</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="2-stripped2.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="2-interested.png">Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="2-serene2.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="2-interested.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="heavy_masturbating" target="zoey"><state img="2-interested.png">It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="2-interested.png">This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="2-horny.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="2-interested.png">Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...</state></case>
-			<case tag="female_removed_major" target="human"><state img="2-calm.png">It does feel nice being out of those clothes...</state></case>
-			<case tag="female_removed_accessory" target="revy" targetStage="2"><state img="2-wink.png">I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="2-wink.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-			<case tag="stripping" alsoPlaying="streaming-chan"><state img="2-strip.png">Make sure you got <i>this</i> on camera...!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="2-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="2-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="2-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="2-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="2-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="2-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="2-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="2-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="2-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="good_hand" alsoPlaying="scarlet_witch" alsoPlayingStage="8"><state img="2-interested.png">What were you saying, Wanda? Sorry, I couldn't hear you!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="2-serene2.png">Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="2-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="2-calm.png">Hm. I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="2-shocked.png">Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="2-shocked.png">Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...</state></case>
-            <case tag="female_large_chest_is_visible" target="tifa"><state img="2-serene2.png">You'd fit right in on r/BustyPetite, Tifa!</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="2-calm.png">It's nice to finally see your face, cap'n!</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="2-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="2-horny.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="2-horny.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="2-interested.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="2-horny.png">I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!</state></case>
+#   Targeted lines (stage 3, lost leggings)
+3-female_crotch_is_visible,target:streaming-chan=interested,Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!
+3-female_medium_chest_is_visible,target:harley=horny,You don't have to tell me twice, puddin'...
+3-female_medium_chest_is_visible,target:mercy=happy,Those are definitely a perfect ten...!
+3-female_must_strip,target:harley,targetStage:0=horny,Hmmm... I love me some Suicide Girls... Have we met before, Harley?
+3-female_removing_accessory,target:harley,targetStage:0=happy,I hope you're into some weird shit, Harles... We're gonna have some fun!
+3-female_removing_accessory,target:d.va,targetStage:1=horny,Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...
+3-female_crotch_is_visible,filter:shaved=interested,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
+3-female_crotch_is_visible,filter:shaved=horny,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our vids!
+3-female_removing_accessory,target:raven,targetStage:1=wink,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+3-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+3-female_crotch_is_visible,target:raven=interested,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+3-female_must_strip,target:raven,targetStage:4=horny,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+3-female_chest_will_be_visible,target:raven=calm,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+3-female_small_chest_is_visible,target:raven=serene2,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+3-stripped,alsoPlaying:raven=loss,Don't be silly, Raven! I know you can't resist me...
+3-female_crotch_is_visible,target:d.va=horny,Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...
+3-okay_hand,alsoPlaying:korra=loss,Thanks a lot for opening those spirit portals, Korra! There are a lot of cute tentacle-spirits that I have... err... befriended!
+3-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+3-male_medium_crotch_is_visible,target:xander=happy,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
+3-female_removing_major,target:streaming-chan=calm,Great idea, Streaming-chan! Who needs bras anyway?
+3-female_removed_accessory,target:streaming-chan,targetStage:2=serene2,Oh yeah, I get gifts like those all the time...
+3-female_removing_major,target:samus=interested,Ooh, I would <i>love</i> to help you out with that, Samus!
+3-female_crotch_will_be_visible,target:samus=horny,Hmm, you don't even know the half of it, girl...
+3-female_crotch_is_visible,target:samus=interested,Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!
+3-female_removed_major,target:korra,targetStage:6=horny,So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...
+3-female_removing_major,target:jasmine,targetStage:1=serene2,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+3-female_removed_major,target:jasmine,targetStage:2=interested,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+3-female_masturbating,target:zoey=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
+3-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
+3-female_crotch_is_visible,target:widowmaker=horny,Hmmm, oui... Je t'adore...
+3-female_medium_chest_is_visible,target:arwen=interested,Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...
+3-male_removed_minor,target:human=shocked,Is that really all you're gonna strip...?
+3-male_removed_major,target:human=horny,Next time you're fapping, say 'Zone-tan' three times in a mirror and I'll immediately make you cum the hardest you ever did...!
+3-male_chest_is_visible,target:human=calm,Yeah... That's nice... Doesn't it feel nice to be freed of your ~clothing~?
+3-okay_hand,alsoPlaying:harley=loss,I may have a little crush on you, Harleen... Maybe even a little more than a little...
+3-female_removed_accessory,target:revy,targetStage:2=wink,I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...
+3-female_removed_major,target:korra,targetStage:5=wink,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+3-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+3-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+3-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+3-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
+3-female_finished_masturbating,target:scarlet_witch=serene2,Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!
+3-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+3-male_start_masturbating,target:mettaton=interested,I hope the sight of my boobs is filling you with even more determination!
+3-male_chest_will_be_visible,target:mettaton=calm,Hm. I'd like to meet this Alphys person...
+3-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
+3-male_large_crotch_is_visible,target:mettaton=shocked,Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...
+3-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+3-male_removed_accessory,target:captain_falcon,targetStage:7=calm,It's nice to finally see your face, cap'n!
+3-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+3-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+3-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+3-female_removing_major,target:mei,targetStage:3=interested,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+3-female_removed_major,target:mei,targetStage:4=horny,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
+3-female_large_chest_is_visible,target:human=interested,Ooo, those look like they would be a lot of fun to play with!
 
-#   			Paste into the end of stage 3 (lost sweater) (checked)
-			<case tag="female_crotch_is_visible" target="streaming-chan"><state img="3-interested.png">Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!</state></case>
-			<case tag="female_medium_chest_is_visible" target="harley"><state img="3-horny.png">You don't have to tell me twice, puddin'...</state></case>
-			<case tag="female_medium_chest_is_visible" target="mercy"><state img="3-happy.png">Those are definitely a perfect ten...!</state></case>
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="3-horny.png">Hmmm... I love me some Suicide Girls... Have we met before, Harley?</state></case>
-			<case tag="female_removing_accessory" target="harley" targetStage="0"><state img="3-happy.png">I hope you're into some weird shit, Harles... We're gonna have some fun!</state></case>
-			<case tag="female_removing_accessory" target="d.va" targetStage="1"><state img="3-horny.png">Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="3-interested.png">Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!</state><state img="3-horny.png">Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="3-wink.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="3-horny.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="3-interested.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="3-horny.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="3-calm.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="3-serene2.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="stripped" alsoPlaying="raven"><state img="3-loss.png">Don't be silly, Raven! I know you can't resist me...</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="3-horny.png">Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...</state></case>
-			<case tag="okay_hand" alsoPlaying="korra"><state img="3-loss.png">Thanks a lot for opening those spirit portals, Korra! There are a lot of cute tentacle-spirits that I have... err... befriended!</state></case>
-			<case tag="male_crotch_will_be_visible" target="xander"><state img="3-calm.png">Hah... big guy's got jokes! But let's see if you can back up that talk...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="3-happy.png">Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!</state></case>
-			<case tag="female_removing_major" target="streaming-chan"><state img="3-calm.png">Great idea, Streaming-chan! Who needs bras anyway?</state></case>
-			<case tag="female_removed_accessory" target="streaming-chan" targetStage="2"><state img="3-serene2.png">Oh yeah, I get gifts like those all the time...</state></case>
-			<case tag="female_removing_major" target="samus"><state img="3-interested.png">Ooh, I would <i>love</i> to help you out with that, Samus!</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="3-horny.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="3-interested.png">Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="6"><state img="3-horny.png">So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="3-serene2.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="3-interested.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="heavy_masturbating" target="zoey"><state img="3-interested.png">It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="3-interested.png">This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="3-horny.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="3-interested.png">Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...</state></case>
-			<case tag="male_removed_minor" target="human"><state img="3-shocked.png">Is that really all you're gonna strip...?</state></case>
-			<case tag="male_removed_major" target="human"><state img="3-horny.png">Next time you're fapping, say 'Zone-tan' three times in a mirror and I'll immediately make you cum the hardest you ever did...!</state></case>
-			<case tag="male_chest_is_visible" target="human"><state img="3-calm.png">Yeah... That's nice... Doesn't it feel nice to be freed of your ~clothing~?</state></case>
-			<case tag="okay_hand" alsoPlaying="harley"><state img="3-loss.png">I may have a little crush on you, Harleen... Maybe even a little more than a little...</state></case>
-			<case tag="female_removed_accessory" target="revy" targetStage="2"><state img="3-wink.png">I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="3-wink.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="3-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="3-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="3-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="3-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="3-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="3-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="3-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="3-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="3-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="good_hand" alsoPlaying="scarlet_witch" alsoPlayingStage="8"><state img="3-interested.png">What were you saying, Wanda? Sorry, I couldn't hear you!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="3-serene2.png">Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="3-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_start_masturbating" target="mettaton"><state img="3-interested.png">I hope the sight of my boobs is filling you with even more determination!</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="3-calm.png">Hm. I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="3-shocked.png">Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="3-shocked.png">Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...</state></case>
-            <case tag="female_large_chest_is_visible" target="tifa"><state img="3-serene2.png">You'd fit right in on r/BustyPetite, Tifa!</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="3-calm.png">It's nice to finally see your face, cap'n!</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="3-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="3-horny.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="3-horny.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="3-interested.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="3-horny.png">I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!</state></case>
-			<case tag="female_large_chest_is_visible" target="human"><state img="3-interested.png">Ooo, those look like they would be a lot of fun to play with!</state></case>
+#   Targeted lines (stage -3)
+-3-female_crotch_is_visible,target:streaming-chan=interested,Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!
+-3-female_medium_chest_is_visible,target:harley=horny,You don't have to tell me twice, puddin'...
+-3-female_medium_chest_is_visible,target:mercy=horny,Those are definitely a perfect ten...!
+-3-female_must_strip,target:harley,targetStage:0=horny,Hmmm... I love me some Suicide Girls... Have we met before, Harley?
+-3-female_removing_accessory,target:harley,targetStage:0=happy,I hope you're into some weird shit, Harles... We're gonna have some fun!
+-3-female_removing_accessory,target:d.va,targetStage:1=horny,Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...
+-3-female_crotch_is_visible,filter:shaved=loss,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
+-3-female_crotch_is_visible,filter:shaved=stripped,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our vids!
+-3-female_removing_accessory,target:raven,targetStage:1=happy,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+-3-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+-3-female_crotch_is_visible,target:raven=loss,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+-3-female_must_strip,target:raven,targetStage:4=horny,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+-3-female_chest_will_be_visible,target:raven=interested,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+-3-female_small_chest_is_visible,target:raven=happy,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+-3-female_crotch_is_visible,target:d.va=horny,Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...
+-3-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+-3-male_medium_crotch_is_visible,target:xander=serene2,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
+-3-female_removing_major,target:streaming-chan=calm,Great idea, Streaming-chan! Who needs bras anyway?
+-3-female_removed_accessory,target:streaming-chan,targetStage:2=loss,Oh yeah, I get gifts like those all the time...
+-3-female_removing_major,target:samus=interested,Ooh, I would <i>love</i> to help you out with that, Samus!
+-3-female_crotch_will_be_visible,target:samus=horny,Hmm, you don't even know the half of it, girl...
+-3-female_crotch_is_visible,target:samus=stripped,Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!
+-3-male_medium_crotch_is_visible,target:xander=horny,I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?
+-3-start_masturbating,alsoPlaying:d.va=starting,I mean, everybody knows there's already a sextape of me out there, so this is probably not gonna be anything new...
+-3-female_removed_major,target:korra,targetStage:6=horny,So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...
+-3-female_removing_major,target:jasmine,targetStage:1=loss,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+-3-female_removed_major,target:jasmine,targetStage:2=interested,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+-3-female_masturbating,target:zoey=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
+-3-female_crotch_is_visible,target:shantae=horny,Hmmm... I think we'd all love to rub on her lamp...
+-3-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
+-3-female_crotch_is_visible,target:widowmaker=horny,Hmmm, oui... Je t'adore...
+-3-female_medium_chest_is_visible,target:arwen=interested,Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...
+-3-female_removed_major,target:human=calm,It does feel nice being out of those clothes...
+-3-male_chest_is_visible,target:human=calm,Yeah... That's nice... Doesn't it feel nice to be freed of your ~clothing~?
+-3-stripped,alsoPlaying:revy=horny,Oh, Revy... Your dirty talk is turning me on so much...
+-3-female_removed_accessory,target:revy,targetStage:2=wink,I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...
+-3-female_removed_major,target:korra,targetStage:5=wink,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-3-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+-3-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+-3-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+-3-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+-3-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
+-3-female_finished_masturbating,target:scarlet_witch=serene2,Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!
+-3-female_finished_masturbating,target:moon=happy,Whoa, talk about scream while you cream, huh?
+-3-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+-3-male_start_masturbating,target:mettaton=interested,I hope the sight of me standing here naked is filling you with even more determination!
+-3-male_chest_will_be_visible,target:mettaton=calm,Hm. I'd like to meet this Alphys person...
+-3-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
+-3-male_large_crotch_is_visible,target:mettaton=shocked,Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...
+-3-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+-3-male_removed_accessory,target:captain_falcon,targetStage:7=calm,It's nice to finally see your face, cap'n!
+-3-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+-3-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+-3-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+-3-female_removing_major,target:mei,targetStage:3=interested,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+-3-female_removed_major,target:mei,targetStage:4=horny,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
 
-#   			Paste into the end of stage -3 (naked) (checked)
-			<case tag="female_crotch_is_visible" target="streaming-chan"><state img="4-interested.png">Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!</state></case>
-			<case tag="female_medium_chest_is_visible" target="harley"><state img="4-horny.png">You don't have to tell me twice, puddin'...</state></case>
-			<case tag="female_medium_chest_is_visible" target="mercy"><state img="4-horny.png">Those are definitely a perfect ten...!</state></case>
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="4-horny.png">Hmmm... I love me some Suicide Girls... Have we met before, Harley?</state></case>
-			<case tag="female_removing_accessory" target="harley" targetStage="0"><state img="4-happy.png">I hope you're into some weird shit, Harles... We're gonna have some fun!</state></case>
-			<case tag="female_removing_accessory" target="d.va" targetStage="1"><state img="4-horny.png">Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="4-loss.png">Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!</state><state img="4-stripped.png">Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="4-happy.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="4-horny.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="4-loss.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="4-horny.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="4-interested.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="4-happy.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="4-horny.png">Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...</state></case>
-			<case tag="male_crotch_will_be_visible" target="xander"><state img="4-calm.png">Hah... big guy's got jokes! But let's see if you can back up that talk...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="4-serene2.png">Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!</state></case>
-			<case tag="female_removing_major" target="streaming-chan"><state img="4-calm.png">Great idea, Streaming-chan! Who needs bras anyway?</state></case>
-			<case tag="female_removed_accessory" target="streaming-chan" targetStage="2"><state img="4-loss.png">Oh yeah, I get gifts like those all the time...</state></case>
-			<case tag="female_removing_major" target="samus"><state img="4-interested.png">Ooh, I would <i>love</i> to help you out with that, Samus!</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="4-horny.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="4-stripped.png">Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="4-horny.png">I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?</state></case>
-			<case tag="start_masturbating" alsoPlaying="d.va"><state img="4-starting.png">I mean, everybody knows there's already a sextape of me out there, so this is probably not gonna be anything new...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="6"><state img="4-horny.png">So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="4-loss.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="4-interested.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="heavy_masturbating" target="zoey"><state img="4-interested.png">It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?</state></case>
-			<case tag="female_crotch_is_visible" target="shantae"><state img="4-horny.png">Hmmm... I think we'd all love to rub on her lamp...</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="4-interested.png">This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="4-horny.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="4-interested.png">Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...</state></case>
-			<case tag="female_removed_major" target="human"><state img="4-calm.png">It does feel nice being out of those clothes...</state></case>
-			<case tag="male_chest_is_visible" target="human"><state img="4-calm.png">Yeah... That's nice... Doesn't it feel nice to be freed of your ~clothing~?</state></case>
-			<case tag="stripped" alsoPlaying="revy"><state img="4-horny.png">Oh, Revy... Your dirty talk is turning me on so much...</state></case>
-			<case tag="female_removed_accessory" target="revy" targetStage="2"><state img="4-wink.png">I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="4-wink.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="4-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="4-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="4-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="4-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="4-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="4-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="4-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="4-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="4-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="good_hand" alsoPlaying="scarlet_witch" alsoPlayingStage="8"><state img="4-interested.png">What were you saying, Wanda? Sorry, I couldn't hear you!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="4-serene2.png">Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!</state></case>
-            <case tag="female_finished_masturbating" target="moon"><state img="4-happy.png">Whoa, talk about scream while you cream, huh?</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="4-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_start_masturbating" target="mettaton"><state img="4-interested.png">I hope the sight of me standing here naked is filling you with even more determination!</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="4-calm.png">Hm. I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="4-shocked.png">Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="4-shocked.png">Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...</state></case>
-            <case tag="female_large_chest_is_visible" target="tifa"><state img="4-serene2.png">You'd fit right in on r/BustyPetite, Tifa!</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="4-calm.png">It's nice to finally see your face, cap'n!</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="4-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="4-horny.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="4-horny.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="4-interested.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="4-horny.png">I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!</state></case>
+#   Targeted lines (stage -2)
+-2-female_must_strip,target:harley,targetStage:0=horny1,Hmmm... Fuck yeah... I love me some Suicide Girls...
+-2-female_crotch_is_visible,filter:shaved=wink,Ooh yes, you're completely shaved! That's just the way I like it!
+-2-female_removing_accessory,target:raven,targetStage:1=happy,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+-2-female_crotch_will_be_visible,target:raven=interested,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+-2-female_crotch_is_visible,target:raven=calm,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+-2-female_must_strip,target:raven,targetStage:4=calm,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+-2-female_chest_will_be_visible,target:raven=wink,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+-2-female_small_chest_is_visible,target:raven=serene2,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+-2-female_chest_will_be_visible,filter:princess=horny1,Bestow your breasts upon me, Your Highness! It would be an honor to schlick to your royal tits!
+-2-female_small_chest_is_visible,filter:princess=interested,Hmmmm... They look so sweet...! Would you mind if I sucked on them for a bit, princess?
+-2-female_medium_chest_is_visible,filter:princess=interested,Hmmmm... They look so sweet...! Would you mind if I sucked on them for a bit, princess?
+-2-female_crotch_will_be_visible,target:samus=interested,Hmm, you don't even know the half of it, girl...
+-2-female_crotch_is_visible,target:samus=horny2,Oh ffffuck yeaaahh, no doubt...! You're so stunningly hot, Samus...
+-2-male_medium_crotch_is_visible,target:xander=interested,I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?
+-2-female_removed_major,target:korra,targetStage:6=horny1,Hmmm... So, Korra, how did it feel being locked up by Tarrlok...? Was it exciting? Did he... <i>punish</i> your cute butt a lot...? I bet he treated you like the bad, bad girl you are...
+-2-female_removing_major,target:jasmine,targetStage:1=calm,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+-2-female_removed_major,target:jasmine,targetStage:2=interested,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+-2-female_crotch_is_visible,target:shantae=wink,I'd love to rub on <i>your</i> lamp, Shantae...!
+-2-female_start_masturbating,target:rosalina=horny3,Fuck, yeah... This is the treatment a goddess deserves...
+-2-female_crotch_is_visible,target:widowmaker=horny1,Hmmm, oui... Je t'adore...
+-2-female_medium_chest_is_visible,target:arwen=interested,You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... I wonder if you got one through your clit, instead... Yeah, that would be hot...
+-2-female_removed_major,target:korra,targetStage:5=calm,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-2-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+-2-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+-2-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+-2-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+-2-female_finished_masturbating,target:scarlet_witch=serene2,Aah! N-now, use that spell on me, Wanda!
+-2-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+-2-male_start_masturbating,target:mettaton=interested,I hope the sight of me masturbating is filling you with even more determination!
+-2-male_chest_will_be_visible,target:mettaton=calm,Hm... I'd like to meet this Alphys person...
+-2-male_chest_is_visible,target:mettaton=shocked,Ooh yesss, those are some sexy-lookin' boobies!
+-2-male_large_crotch_is_visible,target:mettaton=heavy,You're... you're <i>perfect</i>, Mettaton! <i>Get over here! I wanna suck on those tits while you fuck me!</i>
+-2-male_crotch_will_be_visible,target:captain_falcon=interested,Give me that Falcon dick...
+-2-female_must_masturbate,target:mei=calm,Let's conduct this little experiment together, Mei! Let me know how you feel about the results...
+-2-male_removed_accessory,target:captain_falcon,targetStage:7=horny1,Those cheekbones are doing it for me...
+-2-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+-2-female_large_chest_is_visible,target:mei=interested,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+-2-female_large_chest_is_visible,target:mei=lick,I'd like to have a few licks of those popsicles...
+-2-female_removing_major,target:mei,targetStage:3=calm,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+-2-female_removed_major,target:mei,targetStage:4=horny1,Your body is so hot... Those glasses are doing it for me, too...
 
-#   			Paste into the end of stage -2 (masturbating)
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="5-horny1.png">Hmmm... Fuck yeah... I love me some Suicide Girls...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="5-wink.png">Ooh yes, you're completely shaved! That's just the way I like it!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="5-happy.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="5-interested.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="5-calm.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="5-calm.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="5-wink.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="5-serene2.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="female_chest_will_be_visible" filter="princess"><state img="5-horny1.png">Bestow your breasts upon me, Your Highness! It would be an honor to schlick to your royal tits!</state></case>
-			<case tag="female_small_chest_is_visible" filter="princess"><state img="5-interested.png">Hmmmm... They look so sweet...! Would you mind if I sucked on them for a bit, princess?</state></case>
-			<case tag="female_medium_chest_is_visible" filter="princess"><state img="5-interested.png">Hmmmm... They look so sweet...! Would you mind if I sucked on them for a bit, princess?</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="5-interested.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="5-horny2.png">Oh ffffuck yeaaahh, no doubt...! You're so stunningly hot, Samus...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="5-interested.png">I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="6"><state img="5-horny1.png">Hmmm... So, Korra, how did it feel being locked up by Tarrlok...? Was it exciting? Did he... <i>punish</i> your cute butt a lot...? I bet he treated you like the bad, bad girl you are...</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="5-calm.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="5-interested.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="female_crotch_is_visible" target="shantae"><state img="5-wink.png">I'd love to rub on <i>your</i> lamp, Shantae...!</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="5-horny3.png">Fuck, yeah... This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="5-horny1.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="5-interested.png">You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... I wonder if you got one through your clit, instead... Yeah, that would be hot...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="5-calm.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="5-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="5-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="5-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="5-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="5-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="5-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="5-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="5-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="5-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="5-serene2.png">Aah! N-now, use that spell on me, Wanda!</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="5-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_start_masturbating" target="mettaton"><state img="5-interested.png">I hope the sight of me masturbating is filling you with even more determination!</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="5-calm.png">Hm... I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="5-shocked.png">Ooh yesss, those are some sexy-lookin' boobies!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="5-heavy.png">You're... you're <i>perfect</i>, Mettaton! <i>Get over here! I wanna suck on those tits while you fuck me!</i></state></case>
-            <case tag="male_crotch_will_be_visible" target="captain_falcon"><state img="5-interested.png">Give me that Falcon dick...</state></case>
-            <case tag="female_must_masturbate" target="mei"><state img="5-calm.png">Let's conduct this little experiment together, Mei! Let me know how you feel about the results...</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="5-horny1.png">Those cheekbones are doing it for me...</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="5-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="5-interested.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="5-lick.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="5-calm.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="5-horny1.png">Your body is so hot... Those glasses are doing it for me, too...</state></case>
-
-#   			Paste into the end of stage -1 (finished)
-			<case tag="female_crotch_is_visible" target="streaming-chan"><state img="6-interested.png">Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!</state></case>
-			<case tag="female_medium_chest_is_visible" target="harley"><state img="6-horny.png">You don't have to tell me twice, puddin'...</state></case>
-			<case tag="female_medium_chest_is_visible" target="mercy"><state img="6-horny.png">Those are definitely a perfect ten...!</state></case>
-			<case tag="female_must_strip" target="harley" targetStage="0"><state img="6-calm.png">Hmmm... I love me some Suicide Girls... Have we met before, Harley?</state></case>
-			<case tag="female_removing_accessory" target="harley" targetStage="0"><state img="6-horny.png">I hope you're into some weird shit, Harles... We're gonna have some fun!</state></case>
-			<case tag="female_removing_accessory" target="d.va" targetStage="1"><state img="6-horny.png">Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...</state></case>
-			<case tag="female_crotch_is_visible" filter="shaved"><state img="6-happy.png">Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!</state><state img="6-interested2.png">Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our videos!</state></case>
-			<case tag="female_removing_accessory" target="raven" targetStage="1"><state img="6-happy.png">Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...</state></case>
-			<case tag="female_crotch_will_be_visible" target="raven"><state img="6-horny.png">I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!</state></case>
-			<case tag="female_crotch_is_visible" target="raven"><state img="6-interested2.png">Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!</state></case>
-			<case tag="female_must_strip" target="raven" targetStage="4"><state img="6-interested.png">Oohhh, you're still just as hot as always... I wouldn't mind working with you again...</state></case>
-			<case tag="female_chest_will_be_visible" target="raven"><state img="6-interested2.png">So, how 'bout it, Raven...? Wanna have another go on the Archive?</state></case>
-			<case tag="female_small_chest_is_visible" target="raven"><state img="6-happy.png">Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="6-interested.png">Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...</state></case>
-			<case tag="male_crotch_will_be_visible" target="xander"><state img="6-calm.png">Hah... big guy's got jokes! But let's see if you can back up that talk...</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="6-happy.png">Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!</state></case>
-			<case tag="female_removing_major" target="streaming-chan"><state img="6-serene2.png">Great idea, Streaming-chan! Who needs bras anyway?</state></case>
-			<case tag="female_removed_accessory" target="streaming-chan" targetStage="2"><state img="6-happy.png">Oh yeah, I get gifts like those all the time...</state></case>
-			<case tag="female_removing_major" target="samus"><state img="6-interested2.png">Ooh, I would <i>love</i> to help you out with that, Samus!</state></case>
-			<case tag="female_crotch_will_be_visible" target="samus"><state img="6-interested.png">Hmm, you don't even know the half of it, girl...</state></case>
-			<case tag="female_crotch_is_visible" target="samus"><state img="6-horny.png">Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!</state></case>
-			<case tag="male_medium_crotch_is_visible" target="xander"><state img="6-interested2.png">I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?</state></case>
-			<case tag="female_crotch_is_visible" filter="exhibitionist"><state img="6-horny.png">~name~: Champion of Lust...!</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="6"><state img="6-horny.png">So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...</state></case>
-			<case tag="female_removing_major" target="jasmine" targetStage="1"><state img="6-interested2.png">Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...</state></case>
-			<case tag="female_removed_major" target="jasmine" targetStage="2"><state img="6-wink.png">Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...</state></case>
-			<case tag="heavy_masturbating" target="zoey"><state img="6-interested.png">It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?</state></case>
-			<case tag="female_crotch_is_visible" target="shantae"><state img="6-horny.png">Hmmm... I think we'd all love to rub on her lamp...</state></case>
-			<case tag="start_masturbating" target="rosalina"><state img="6-interested.png">This is the treatment a goddess deserves...</state></case>
-			<case tag="female_crotch_is_visible" target="widowmaker"><state img="6-horny.png">Hmmm, oui... Je t'adore...</state></case>
-			<case tag="female_medium_chest_is_visible" target="arwen"><state img="6-interested2.png">Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...</state></case>
-			<case tag="female_removed_accessory" target="revy" targetStage="2"><state img="6-serene2.png">I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...</state></case>
-			<case tag="female_removed_major" target="korra" targetStage="5"><state img="6-wink.png">Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?</state></case>
-			<case tag="female_crotch_is_visible" target="blackrose"><state img="6-serene1.png">Oh, I really want to see your cute butt right now...! Too bad I actually got to win this game to be able to do that...</state></case>
-			<case tag="male_removed_minor" target="human"><state img="6-serene2.png">&#9835; <i>I'd like to teach the world to fap... in perfect harmonyyy...</i> &#9834;</state><state img="6-pinup.png">Draw me like on of your Zone girls...</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="2"><state img="6-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="3"><state img="6-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="4"><state img="6-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="5"><state img="6-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="6"><state img="6-shocked.png">What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!</state></case>
-            <case tag="male_large_crotch_is_visible" alsoPlaying="nagisa" alsoPlayingStage="9"><state img="6-serene2.png">You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!</state></case>
-            <case tag="female_crotch_will_be_visible" target="mia"><state img="6-horny.png">Yeah, come on... Let's see those titties...</state></case>
-            <case tag="female_crotch_is_visible" target="mia"><state img="6-interested.png">Errr, okay! I ain't complaining!</state></case>
-            <case tag="female_start_masturbating" target="scarlet_witch"><state img="6-interested.png">This is the treatment a witch deserves...!</state></case>
-            <case tag="female_finished_masturbating" target="scarlet_witch"><state img="6-serene2.png">Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!</state></case>
-            <case tag="female_finished_masturbating" target="moon"><state img="6-happy.png">Whoa, talk about scream while you cream, huh?</state></case>
-            <case tag="female_start_masturbating" target="hermione"><state img="6-shocked.png">I've got some feelings about this... All of them are positive.</state></case>
-            <case tag="male_start_masturbating" target="mettaton"><state img="6-pinup.png">I hope the sight of me standing here naked is filling you with even more determination!</state></case>
-            <case tag="male_chest_will_be_visible" target="mettaton"><state img="6-calm.png">Hm. I'd like to meet this Alphys person...</state></case>
-            <case tag="male_chest_is_visible" target="mettaton"><state img="6-shocked.png">Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!</state></case>
-            <case tag="male_large_crotch_is_visible" target="mettaton"><state img="6-shocked.png">Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...</state></case>
-            <case tag="male_crotch_will_be_visible" target="captain_falcon"><state img="6-happy.png">Give us that Falcon dick!</state></case>
-            <case tag="female_large_chest_is_visible" target="tifa"><state img="6-serene2.png">You'd fit right in on r/BustyPetite, Tifa!</state></case>
-            <case tag="male_removed_accessory" target="captain_falcon" targetStage="7"><state img="6-calm.png">It's nice to finally see your face, cap'n!</state></case>
-            <case tag="female_removed_accessory" target="scarlet_witch" targetStage="2"><state img="6-shocked.png">Wow! How are you able to keep your hair so pretty after wearing a helmet?!</state></case>
-            <case tag="female_large_chest_is_visible" target="mei">
-                <state img="6-horny.png">There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!</state>
-                <state img="6-horny.png">I'd like to have a few licks of those popsicles...</state></case>
-            <case tag="female_removing_major" target="mei" targetStage="3"><state img="6-horny.png">Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!</state></case>
-            <case tag="female_removed_major" target="mei" targetStage="4"><state img="6-pinup.png">I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!</state></case>
+#   Targeted lines (stage -1)
+-1-female_crotch_is_visible,target:streaming-chan=interested,Hey, Streaming-Chan, you wanna work together in the future? Hell, we could dominate the lewd industry like nobody's business... or maybe even the world!
+-1-female_medium_chest_is_visible,target:harley=horny,You don't have to tell me twice, puddin'...
+-1-female_medium_chest_is_visible,target:mercy=horny,Those are definitely a perfect ten...!
+-1-female_must_strip,target:harley,targetStage:0=calm,Hmmm... I love me some Suicide Girls... Have we met before, Harley?
+-1-female_removing_accessory,target:harley,targetStage:0=horny,I hope you're into some weird shit, Harles... We're gonna have some fun!
+-1-female_removing_accessory,target:d.va,targetStage:1=horny,Oh yeah... Bare feet are one of my many... <i>many</i> fetishes...
+-1-female_crotch_is_visible,filter:shaved=happy,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
+-1-female_crotch_is_visible,filter:shaved=interested2,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our vids!
+-1-female_removing_accessory,target:raven,targetStage:1=happy,Oh come on, didn't you find those few months fun? I certainly enjoyed having a little Raven-slave to play with...
+-1-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
+-1-female_crotch_is_visible,target:raven=interested2,Oh? You're not shaving it anymore, Raven...? You know, I must admit, that actually looks pretty good on you!
+-1-female_must_strip,target:raven,targetStage:4=interested,Oohhh, you're still just as hot as always... I wouldn't mind working with you again...
+-1-female_chest_will_be_visible,target:raven=interested2,So, how 'bout it, Raven...? Wanna have another go on the Archive?
+-1-female_small_chest_is_visible,target:raven=happy,Heehee... Like you have a choice in the matter, Raven... You're so cute sometimes!
+-1-female_crotch_is_visible,target:d.va=interested,Hmmm... You're such a cutie, D.Va! I would <i>love</i> to make a flash with you...! What would we call it though...? LoverWatch? OverCrotch...? We'll think of something good...
+-1-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+-1-male_medium_crotch_is_visible,target:xander=happy,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
+-1-female_removing_major,target:streaming-chan=serene2,Great idea, Streaming-chan! Who needs bras anyway?
+-1-female_removed_accessory,target:streaming-chan,targetStage:2=happy,Oh yeah, I get gifts like those all the time...
+-1-female_removing_major,target:samus=interested2,Ooh, I would <i>love</i> to help you out with that, Samus!
+-1-female_crotch_will_be_visible,target:samus=interested,Hmm, you don't even know the half of it, girl...
+-1-female_crotch_is_visible,target:samus=horny,Oh yeaaahh, no doubt! We <i>gotta</i> hang out some time, Samus. We can spend some time exploring some... <i>new</i> environments...!
+-1-male_medium_crotch_is_visible,target:xander=interested2,I bet you want to fuck my brains up and fill me up with cum... You want to splash your jizz all over my face, don't you?
+-1-female_crotch_is_visible,filter:exhibitionist=horny,~name~: Champion of Lust...!
+-1-female_removed_major,target:korra,targetStage:6=horny,So, how did it feel being locked up by Tarrlok, Korra...? Was it exciting? Did he... <i>punish</i> you a lot...? I bet he treated you like the bad, bad girl you are...
+-1-female_removing_major,target:jasmine,targetStage:1=interested2,Did you really think I wouldn't be able to see through your disguise, Jasmine...? I watch you masturbate every now and then, too, you know...
+-1-female_removed_major,target:jasmine,targetStage:2=wink,Yeah... That's right... I know all the weird shit you do with Rajah, you sick <i>fuck</i>...! I must applaud your imagination... It's pretty hot, actually...
+-1-female_masturbating,target:zoey=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
+-1-female_crotch_is_visible,target:shantae=horny,Hmmm... I think we'd all love to rub on her lamp...
+-1-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
+-1-female_crotch_is_visible,target:widowmaker=horny,Hmmm, oui... Je t'adore...
+-1-female_medium_chest_is_visible,target:arwen=interested2,Huh... You seem so obsessed with rings, I expected you to at least have a pair of nipple rings!... Hmmm, I wonder if you got one through your clit, instead...
+-1-female_removed_accessory,target:revy,targetStage:2=serene2,I'd let you do whatever you want with those, Revy... I promise I won't squirm. Believe me, people have done weirder shit with me like you wouldn't even know...
+-1-female_removed_major,target:korra,targetStage:5=wink,Oh, I can handle some fire... How do you think I can walk around with this hot body all the time...?
+-1-female_crotch_is_visible,target:blackrose=serene1,Oh, I really want to see your cute butt right now...! Too bad I actually got to win this game to be able to do that...
+-1-male_removed_minor,target:human=serene2,&#9835; <i>I'd like to teach the world to fap... in perfect harmonyyy...</i> &#9834;
+-1-male_removed_minor,target:human=pinup,Draw me like on of your Zone girls...
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:2=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:3=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:4=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:5=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:6=shocked,What?! You don't like tentacles, Nagisa?! What a shame, they're so much fun!
+-1-male_large_crotch_is_visible,alsoPlaying:nagisa,alsoPlayingStage:9=serene2,You'd be surprised, Nagisa... You're able to be stretched out way more than you think, as long as you're determined enough!
+-1-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
+-1-female_crotch_is_visible,target:mia=interested,Errr, okay! I ain't complaining!
+-1-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
+-1-female_finished_masturbating,target:scarlet_witch=serene2,Oh, no doubt I enjoyed that, Wanda! You <i>got to</i> use that spell on me sometime!
+-1-female_finished_masturbating,target:moon=happy,Whoa, talk about scream while you cream, huh?
+-1-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+-1-male_start_masturbating,target:mettaton=pinup,I hope the sight of me standing here naked is filling you with even more determination!
+-1-male_chest_will_be_visible,target:mettaton=calm,Hm. I'd like to meet this Alphys person...
+-1-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
+-1-male_large_crotch_is_visible,target:mettaton=shocked,Sexy boobs <i>and</i> a giant dick?! That's it. You're the perfect being. I'm gonna need a robot like you, for... <i>personal</i> use...
+-1-male_crotch_will_be_visible,target:captain_falcon=happy,Give us that Falcon dick!
+-1-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+-1-male_removed_accessory,target:captain_falcon,targetStage:7=calm,It's nice to finally see your face, cap'n!
+-1-female_removed_accessory,target:scarlet_witch,targetStage:2=shocked,Wow! How are you able to keep your hair so pretty after wearing a helmet?!
+-1-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+-1-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+-1-female_removing_major,target:mei,targetStage:3=horny,Oh, Mei... You don't really need that shirt anymore anyway. We can just use our bodies to warm each other up!
+-1-female_removed_major,target:mei,targetStage:4=pinup,I heard somewhere that our bodies will share the most heat if we're completely naked and making out... Let's test that theory!
