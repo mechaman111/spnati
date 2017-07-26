@@ -506,6 +506,77 @@ function advanceSelectDialogue (slot) {
     /* update image */
     $selectImages[slot-1].attr('src', players[slot].folder + players[slot].state[players[slot].current].image);
 }
+
+/************************************************************
+ * Filters the list of selectable opponents based on those
+ * already selected and performs search and sort logic.
+ ************************************************************/
+function updateSelectableOpponents() {
+    var name = $searchName.val().toLowerCase();
+    var source = $searchSource.val().toLowerCase();
+    var tag = $searchTag.val().toLowerCase();
+
+    // reset filters
+    selectableOpponents = [];
+
+    // search for matches
+    for (var i = 0; i < loadedOpponents.length; i++) {
+        // filter by name
+        if (name != null && !loadedOpponents[i].label.toLowerCase().includes(name) && !loadedOpponents[i].first.toLowerCase().includes(name) && !loadedOpponents[i].last.toLowerCase().includes(name)) {
+            continue;
+        }
+
+        // filter by source
+        if (source != null && !loadedOpponents[i].source.toLowerCase().includes(source)) {
+            continue;
+        }
+
+        // filter by tag
+//        var tagMatch = false;
+//        for (var j = 0; j < loadedOpponents[i].tags.length; j++) {
+//            if (loadedOpponents[i].tags[j].toLowerCase().includes(tag)) {
+//                tagMatch = true;
+//            }
+//        }
+//
+//        if (!tagMatch) {
+//            continue;
+//        }
+
+        // filter by gender
+        if (chosenGender == 2 && loadedOpponents[i].gender !== eGender.MALE) {
+            continue;
+        }
+        else if (chosenGender == 3 && loadedOpponents[i].gender !== eGender.FEMALE) {
+            continue;
+        }
+
+        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
+    }
+
+    /* hide selected opponents */
+    for (var i = 1; i < players.length; i++) {
+        if (players[i]) {
+            /* find this opponent's placement in the selectable opponents */
+            for (var j = 0; j < selectableOpponents.length; j++) {
+                if (selectableOpponents[j].folder == players[i].folder) {
+                    /* this is a selected player */
+                    selectableOpponents.splice(j, 1);
+                }
+            }
+        }
+    }
+
+    /* sort opponents */
+    // Since selectableOpponents is always reloaded here with featured order,
+    // check if a different sorting mode is selected, and if yes, sort it.
+    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
+        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+    }
+
+    /* update max page indicator */
+    $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
+}
  
 /************************************************************
  * The player clicked on an opponent slot.
@@ -515,21 +586,8 @@ function selectOpponentSlot (slot) {
         /* add a new opponent */
         selectedSlot = slot;
 		
-		/* update max page indicator */
-		$individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
-		
-        /* hide selected opponents */
-        for (var i = 1; i < players.length; i++) {
-            if (players[i]) {
-                /* find this opponent's placement in the selectable opponents */
-                for (var j = 0; j < selectableOpponents.length; j++) {
-                    if (selectableOpponents[j].folder == players[i].folder) {
-                        /* this is a selected player */
-						selectableOpponents.splice(j, 1);
-                    }
-                }
-            }
-        }
+		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
+		updateSelectableOpponents();
 		
 		/* reload selection screen */
 		updateIndividualSelectScreen();
@@ -962,70 +1020,8 @@ function openSearchModal() {
 
 
 function closeSearchModal() {
-    var name = $searchName.val().toLowerCase();
-    var source = $searchSource.val().toLowerCase();
-    var tag = $searchTag.val().toLowerCase();
-    
-    // reset filters
-    selectableOpponents = [];
-    
-    // search for matches
-    for (var i = 0; i < loadedOpponents.length; i++) {
-        // filter by name
-        if (name != null && !loadedOpponents[i].label.toLowerCase().includes(name) && !loadedOpponents[i].first.toLowerCase().includes(name) && !loadedOpponents[i].last.toLowerCase().includes(name)) {
-            continue;
-        }
-    
-        // filter by source
-        if (source != null && !loadedOpponents[i].source.toLowerCase().includes(source)) {
-            continue;
-        }
-
-        // filter by tag
-//        var tagMatch = false;
-//        for (var j = 0; j < loadedOpponents[i].tags.length; j++) {
-//            if (loadedOpponents[i].tags[j].toLowerCase().includes(tag)) {
-//                tagMatch = true;
-//            }
-//        }
-//        
-//        if (!tagMatch) {
-//            continue;
-//        }
-
-        // filter by gender
-        if (chosenGender == 2 && loadedOpponents[i].gender !== eGender.MALE) {
-            continue;
-        }
-        else if (chosenGender == 3 && loadedOpponents[i].gender !== eGender.FEMALE) {
-            continue;
-        }
-        
-        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
-    }
-    
-    /* hide selected opponents */
-    for (var i = 1; i < players.length; i++) {
-        if (players[i]) {
-            /* find this opponent's placement in the selectable opponents */
-            for (var j = 0; j < selectableOpponents.length; j++) {
-                if (selectableOpponents[j].folder == players[i].folder) {
-                    /* this is a selected player */
-                    selectableOpponents.splice(j, 1);
-                }
-            }
-        }
-    }
-    
-    /* sort opponents */
-    // Since selectableOpponents is always reloaded here with featured order,  
-    // check if a different sorting mode is selected, and if yes, sort it.
-    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
-    }
-    
-    /* update max page indicator */
-    $individualMaxPageIndicator.html("of "+Math.ceil(selectableOpponents.length/4));
+    // perform the search and sort logic
+    updateSelectableOpponents();
     
     // update
     updateIndividualSelectScreen();
