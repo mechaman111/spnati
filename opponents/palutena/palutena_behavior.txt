@@ -1,0 +1,2228 @@
+#required for behaviour.xml
+first=Palutena
+last=
+label=Palutena
+gender=female
+size=large
+
+#Number of phases to "finish" masturbating
+timer=35
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and British. See tag_list.txt for a list of tags.
+tag=video_game
+tag=divine
+tag=confident
+tag=sarcastic
+tag=straight
+intelligence=average
+
+#required for meta.xml
+#select screen image
+pic=0-calm
+height=5'10"
+from=Kid Icarus
+writer=TossawayCog
+artist=TossawayCog
+description=The goddess of light, ruler of Skyworld, and protector of humankind.
+release=7X
+
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+#<state img="0-divine.png">Hello, everyone. You can call me Palutena. So what's this game all about?</state>
+        #<state img="0-tranquil.png">You lose clothing if you lose the hand? Guess I won't lose then!</state>
+        #<state img="0-surprised.png">Is that how it works? I didn't realize this was a high-stakes game, but let's roll with it.</state>
+        #<state img="0-thoughtful.png">Is that so? Interesting. Let's get on with it then.</state>
+        #<state img="0-tranquil.png">So you lose clothing if you lose the hand? Guess I can't lose then!</state>
+start=0-teasing,Huh? You strip totally naked if you lose a hand? Did you <i>really</i> think that lie would work on me?
+
+
+#Palutena's Clothing:
+clothes=Armbands,armbands,extra,other
+clothes=Sandals,sandals,minor,lower
+clothes=Brooch,brooch,extra,upper
+clothes=Belts,belts,extra,other
+clothes=Stocking,stocking,minor,lower
+clothes=Dress,dress,important,upper
+clothes=Panties,panties,important,lower
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
+#The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+#The lines written here are examples only and should be replaced.
+swap_cards=calm,Dealer! Grant me ~cards~!
+swap_cards=calm,Maybe...no...oh! Got it! I'll take ~cards~.
+swap_cards=calm,Perhaps these next ~cards~ will be better.
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+#The character thinks they have a good hand
+good_hand=tranquil,This outta do it.
+good_hand=glad,Ooh, a tribute?
+good_hand=glad,I swear I'm not cheating.
+
+#The character thinks they have an okay hand
+okay_hand=calm,Nothing special about these cards. Although I <i>love</i> the design!
+okay_hand=calm,Guess this can go either way.
+okay_hand=surprised,Wait, is this-never mind, it's just average.
+okay_hand=thoughtful,I see, I see...
+
+#The character thinks they have a bad hand
+bad_hand=awkward,I'm... sure it'll be fine.
+bad_hand=smiteful,C'mon dealer, can't you cut your guardian a break?
+bad_hand=worried,So...anybody want to trade? I have eggs!
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-good_hand=tranquil,This outta do it.
+0-good_hand=glad,Ooh, a tribute?
+0-good_hand=glad,These are actually pretty good. Beginner's luck?
+0-good_hand,alsoPlaying:kurumu=teasing,Don't expect to beat me, Kurumu. 
+0-okay_hand=calm,Nothing special about these cards. Although I <i>love</i> the design!
+0-okay_hand=calm,Guess this can go either way.
+0-okay_hand=surprised,Wait, is this-never mind, it's just average.
+0-okay_hand=thoughtful,I see, I see...
+0-okay_hand,alsoPlaying:pit=tranquil,Pit! Glad you decided to join us after all.
+0-okay_hand,alsoPlaying:samus=glad,It's been a while, Samus. Keeping busy?
+0-okay_hand,alsoPlaying:rosalina=calm,Hello, Rosalina. Good to see a fellow goddess.
+0-okay_hand,alsoPlaying:peach=surprised,Princess Peach? Never thought you to be that type of woman.
+0-okay_hand,alsoPlaying:link=teasing,Are you ready for our rematch, Link? Say nothing if you are.
+0-okay_hand,alsoPlaying:captain_falcon=annoyed,Why am I not surprised I'd find you here, Douglas?
+0-okay_hand,alsoPlaying:lyn=surprised,Oh, I remember you! You were an assist trophy, right?
+0-okay_hand,alsoPlaying:zelda=calm,Princess Zelda. A pleasure to see you again. May the best lady win!
+0-okay_hand,alsoPlaying:wiifitfemale=thoughtful,Oh, hello, Wii Fit Trainer. Do you count poker as an exercise? Mental, maybe? Well, whatever.
+0-bad_hand=awkward,I'm... sure it'll be fine.
+0-bad_hand=annoyed,<i>Great</i>, I was hoping for the god of luck to take the day off.
+0-bad_hand=worried,So...anybody want to trade?
+
+#lost 1 item
+1-good_hand=tranquil,Excellent.
+1-good_hand=glad,Ooh, a tribute?
+1-good_hand=glad,I swear I'm not cheating.
+1-okay_hand=calm,Nothing special about these cards. Although I <i>love</i> the design!
+1-okay_hand=calm,Guess this can go either way.
+1-okay_hand=surprised,Wait, is this-never mind, it's just average.
+1-okay_hand=thoughtful,I see, I see...
+1-bad_hand=awkward,I'm... sure it'll be fine.
+1-bad_hand=smiteful,C'mon dealer, can't you cut your guardian a break?
+1-bad_hand=worried,Surely someone has something worse, right?
+
+#lost 2 items
+2-good_hand=tranquil,This outta do it.
+2-good_hand=glad,Ooh, a tribute?
+2-good_hand=glad,Well, it's only natural I get cards like these.
+2-okay_hand=calm,Nothing special about these cards. I dig the decor though!
+2-okay_hand=calm,Guess this can go either way.
+2-okay_hand=surprised,Just average?! I was hoping for <i>better</i> than average!
+2-okay_hand=thoughtful,I see, I see...
+2-bad_hand=awkward,I'm... sure it'll be fine.
+2-bad_hand=annoyed,Wonderful. Just what I wanted to see.
+2-bad_hand=worried,So...anybody want to trade? I have hearts! You accept those, right?
+
+#lost 3 items
+3-good_hand=tranquil,This outta do it.
+3-good_hand=glad,Ooh, a tribute?
+3-good_hand=glad,Perhaps this game isn't that bad.
+3-okay_hand=calm,Nothing special about these cards. Might need to clean them, though. Looks a bit overused.
+3-okay_hand=calm,Guess this can go either way.
+3-okay_hand=surprised,Hey, this isn't a great hand at all!
+3-okay_hand=thoughtful,I see, I see...
+3-bad_hand=awkward,I'm... sure it'll be fine.
+3-bad_hand=annoyed,Oh good, I was worried I would <win> this hand, Skyworld forbid.
+3-bad_hand=worried,This could be a problem.
+
+#lost 4 items
+4-good_hand=tranquil,This outta do it.
+4-good_hand=glad,Ooh, a tribute?
+4-good_hand=glad,I welcome this hand with open arms.
+4-okay_hand=calm,Nothing special about these cards. Pity.
+4-okay_hand=calm,Guess this can go either way.
+4-okay_hand=surprised,Wow, I've never seen such an average hand before!
+4-okay_hand=thoughtful,I see, I see...
+4-bad_hand=awkward,I'm... sure it'll be fine.
+4-bad_hand=annoyed,You've gotta be kidding me.
+4-bad_hand=worried,So...how about these hands?
+
+#lost 5 items
+5-good_hand=tranquil,This outta do it. With no time to spare!
+5-good_hand=glad,Ooh, a tribute? I humbly accept.
+5-good_hand=glad,Guess I really do have divine protection, don't I?
+5-okay_hand=calm,Nothing special about these cards, but I <i>need</i> special right now!
+5-okay_hand=calm,Guess this can go either way. Just gotta hope!
+5-okay_hand=worried,Average might not cut it, unfortunately.
+5-okay_hand=thoughtful,I see... I don't like what I'm seeing.
+5-bad_hand=awkward,I'm... sure it'll be fine.
+5-bad_hand=worried,C'mon dealer, can't you cut your guardian a break?
+5-bad_hand=worried,So...anybody want to trade? Actually, never mind. I've run out of trade ideas.
+
+#lost 6 items
+6-good_hand=tranquil,Truly a sight for sore eyes.
+6-good_hand=glad,I think karma is finally settling in.
+6-good_hand=glad,Things are finally going my way!
+6-okay_hand=worried,This hand is really generic. And that worries me.
+6-okay_hand=calm,Guess this can go either way.
+6-okay_hand=surprised,Wait, is this-never mind, it's just average.
+6-okay_hand=thoughtful,With my all-seeing eye, I see that this might go either way.
+6-bad_hand=awkward,I am in <i>no way</i> fine right about now!
+6-bad_hand=loss,Aaanndd there's the regret.
+6-bad_hand=worried,Gonna need some divine intervention here...
+
+
+#lost all clothing
+-3-good_hand=tranquil,Feeling good about my chances here.
+-3-good_hand=glad,I'll take it!
+-3-good_hand=glad,That's what I like to see!
+-3-okay_hand=calm,C'mon little guys, pull through for me!
+-3-okay_hand=smiteful, The suspense is killing me!
+-3-okay_hand=worried,Please don't dissapoint me.
+-3-okay_hand=thoughtful,Now, how will this go...
+-3-bad_hand=awkward,C'mon, I need to get through this...
+-3-bad_hand=loss,I...no...
+-3-bad_hand=surprised,Remind me, what was the forfeit exactly?
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#Losing Armbands
+0-must_strip_winning=glad,I <i>suppose</i> you can have at least one win on me.
+0-must_strip_normal=calm,Seems I lost. Perverse as they are, I'll respect the rules.
+0-must_strip_losing=thoughtful,...I see all of you bundled up. That's fine. I like a challenge!
+0-stripping=stripping,Let's see... my armwear seems like a worthy choice, even though my aegis is back in Skyworld..
+0-stripping=stripping,Hmm... well, my armbands are probably the most expendable things I have. Other than my centurions, of course.
+0-stripping=stripping,Good thing I'm pretty well-adorned! First up, the armbands.
+0-stripping,alsoPlaying:pit=stripping,You worry too much, Pit. I have <i>plenty</i> of protection here.
+1-stripped=stripped,And that's that.
+1-stripped=stripped,This is acceptable, right?
+1-stripped=stripped,While I'm sure you'd love to keep staring at my forearms, I'd like to keep playing.
+1-stripped,alsoPlaying:pit=stripped,See? Life moves on.
+
+#Losing Shoes
+1-must_strip_winning=glad,I mean, I'm still winning. What's one more for the pile?
+1-must_strip_normal=teasing,<i>Oh no, not one of my many adornments! Anything but that!</i>
+1-must_strip_losing=loss,Okay, bad start. But I'll still come out on top.
+1-stripping=stripping,Here's a sandal. In fact, have both sandals.
+1-stripping=stripping,Here, take the sandals. I still have plenty of accessories, this is nothing!
+1-stripping=stripping,What to choose... know what? Sandals next.
+1-stripping,alsoPlaying:pit=stripping,It'll be nice to get these off. Why are there no seats, again?
+2-stripped=stripped,So I'm matching your expectations, right?
+2-stripped=stripped,It feels better this way anyway.
+2-stripped=stripped,Maybe I should have worn my other stocking, floor's probably a bit chilly.
+2-stripped,alsoPlaying:pit=stripped,Come to think of it, I still need to get you a new pair, huh? We'll deal with that later.
+
+#Losing Necklace
+2-must_strip_winning=thoughtful,And I was doing pretty good too...
+2-must_strip_normal=glad,As they say, third time's the charm. Now let's not beat me again, okay?
+2-must_strip_losing=loss,This is going a lot worse than I thought...
+2-stripping=stripping,Well, I guess my brooch can get heavy at times. I'll throw in the choker, too.
+2-stripping=stripping,Are you looking forward to me removing my neckwear?
+2-stripping=stripping,Guess the neckwear's next. Exciting stuff.
+2-stripping,alsoPlaying:pit=stripping,And here goes my brooch, amongst other neckwear.
+3-stripped=stripped,Congrats, you managed to see a goddess' cleavage. You must be very proud of yourselves.
+3-stripped=stripped,That's genuine gold there. I can give you all a closer look after the game, if you want.
+3-stripped=stripped,Did you know that that brooch is magic? It saves people turned to stone. Not that it helps here.
+3-stripped,alsoPlaying:pit=stripped,Oh no! Not the the cleavage! It's no big deal, Pit.
+
+#Losing Belts
+3-must_strip_winning=calm,With how you all are? Sure, take it. 
+3-must_strip_normal=worried,I'm losing quite a bit here. Might need to step it up.
+3-must_strip_losing=smiteful,Have none of you heard of balance? Look it up!
+3-stripping=stripping,The belts! I knew having you around was a good idea.
+3-stripping=stripping,Ooookay, belts it is. They're mostly useless anyway.
+3-stripping=stripping,Perhaps the belts? They <i>are</i> rather decorative, after all.
+3-stripping,alsoPlaying:pit=stripping,You don't <i>actually</i> feel bad, Pit. You would've stayed my plus one, in that case.
+4-stripped=stripped,This one's actually part of the dress. <i>That one</i> stays on.
+4-stripped=stripped,I'll keep this one, though. I'm not <i>that</i> generous.
+4-stripped=stripped,Did you expect me to remove <i>all</i> the belts? No such thing as a free lunch, kids.
+4-stripped,alsoPlaying:pit=stripped,How does the plainer appearance look? Does it suit me?
+
+#Losing Stockings
+4-must_strip_winning=tranquil,I can do this all day! ...At least I could've, before I ran out of buffer items.
+4-must_strip_normal=surprised,Wait, how did this happen? This is all going so quickly...
+4-must_strip_losing=smiteful,The payoff better be worth it...
+4-stripping=stripping,I just wore the one stocking today. Don't let me catch you smelling it or anything like that!
+4-stripping=stripping,Just one stocking. Is that really all I had left?
+4-stripping=stripping,Way to ruin the height of assymetrical fashion, everyone.
+4-stripping,alsoPlaying:pit=stripping,You know as well as I do why I wear the one.
+5-stripped=stripped,Okay, you got me down to my essentials. Now I'll have to get serious!
+5-stripped=stripped,My generosity seems to have backfired... well, no more of that.
+5-stripped=stripped,Perhaps I should've been more conservative. All I can do now is my best to stave off another loss.
+5-stripped,alsoPlaying:pit=stripped,Have more faith in me. I can still pull it off!
+
+#Losing Dress
+5-must_strip_winning=glad,I was hardly the first, but I guess all eyes on me now!
+5-must_strip_normal=awkward,Well, I refuse to remove my crown...but that leaves...
+5-must_strip_losing=loss,I didn't sign up for <i>this</i>! 
+5-stripping=stripping,No turning back now. Get ready-
+5-stripping=stripping,I knew this was coming, but I hoped it wouldn't reach this point...
+5-stripping=stripping,Unfortunate, but I'm not one to dishonor my bets. Prepare yourselves!
+5-stripping,alsoPlaying:pit=stripping,No. I lost, so this is my burden to <i>bare</i>.
+6-stripped=stripped,There. Hey, d-don't look at me like that!
+6-stripped=stripped,This was my fault, so I'll handle the consequences.
+6-stripped=stripped,I should've worn my shorts today. I'd feel more covered, at least.
+6-stripped,alsoPlaying:pit=tranquil,Sometimes a good laugh is just what the soul needs.
+
+#Losing Panties
+6-must_strip_winning=awkward,That hurts, but at least it won't be a one-goddess act.
+6-must_strip_normal=loss,Hoo boy.Transparency sounds good right about now...
+6-must_strip_losing=annoyed,I smell a conspiracy! Maybe Pit was right after all...
+6-stripping=stripping,A goddess dropping her undies for mortals... how degrading!
+6-stripping=stripping,Here we go... my last bit of protection...
+6-stripping=stripping,Well this is a terrible situation...
+6-stripping,alsoPlaying:pit=stripping,What a mess I'm in...
+7-stripped=stripped,I don't know the last time I felt this vulnerable...
+7-stripped=stripped,I know I have a nice body, but please refrain from staring.
+7-stripped=stripped,Hey now, it's not polite to stare.
+7-stripped,alsoPlaying:pit=stripped,If you say "I told you so", I'll shave your wings in your sleep.
+7-stripped,alsoPlaying:pit,alsoPlayingStage:5=special,While I appreciate the concern, be professional and suck it up, Pit!
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+female_human_must_strip=calm,~name~ was the loser this time! Let's see you!
+female_must_strip=tranquil,Come onnnn ~name~! 
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+0-male_human_must_strip=tranquil,~name~? What a treat!
+0-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+0-male_human_must_strip=calm,And here. We. Go!
+0-male_human_must_strip=calm,I feel like this was a good trade.
+0-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+0-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+0-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+0-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+0-male_must_strip=glad,Personally, I love this part.
+0-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+0-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+0-male_must_strip=tranquil,Well, you shouldn't stop. Strip for me!
+0-female_human_must_strip=calm,~name~ was the loser this time! Let's see you!
+0-female_human_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+0-female_human_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+0-female_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+0-female_must_strip=calm,That's another one down!
+0-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+0-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+0-female_must_strip=tranquil,Come onnnn ~name~! 
+0-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+0-female_must_strip=tranquil,Such an interesting band we have here... I'm curious what you'll pick!
+0-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+0-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+0-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+0-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+0-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+0-female_must_strip=tranquil,I'm going to enjoy  this...
+
+#lost 1 item
+1-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+1-male_human_must_strip=tranquil,~name~? What a treat!
+1-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+1-male_human_must_strip=calm,And here. We. Go!
+1-male_human_must_strip=calm,I feel like this was a good trade.
+1-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+1-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+1-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+1-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+1-male_must_strip=glad,Personally, I love this part.
+1-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+1-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+1-male_must_strip=tranquil,Well, you shouldn't stop. Strip for me!
+1-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+1-female_human_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+1-female_human_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+1-female_human_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+1-female_must_strip=calm,That's another one down!
+1-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+1-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+1-female_must_strip=tranquil,Come onnnn ~name~! 
+1-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+1-female_must_strip=tranquil,I'm curious what you'll pick!
+1-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+1-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+1-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+1-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+1-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+1-female_must_strip=tranquil,I'm going to enjoy  this...
+
+#lost 2 items
+2-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+2-male_human_must_strip=tranquil,~name~? What a treat!
+2-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+2-male_human_must_strip=calm,And here. We. Go!
+2-male_human_must_strip=calm,I feel like this was a good trade.
+2-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+2-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+2-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+2-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+2-male_must_strip=glad,Personally, I love this part.
+2-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+2-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+2-male_must_strip=tranquil,Well, you shouldn't stop. Strip for me!
+2-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+2-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+2-female_human_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+2-female_human_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+2-female_human_must_strip=calm,That's another one down!
+2-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+2-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+2-female_must_strip=tranquil,Come onnnn ~name~! 
+2-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+2-female_must_strip=tranquil,I'm curious what you'll pick!
+2-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+2-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+2-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+2-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+2-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+2-female_must_strip=tranquil,I'm going to enjoy  this...
+
+
+#lost 3 items
+3-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+3-male_human_must_strip=tranquil,~name~? What a treat!
+3-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+3-male_human_must_strip=calm,And here. We. Go!
+3-male_human_must_strip=calm,I feel like this was a good trade.
+3-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+3-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+3-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+3-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+3-male_must_strip=glad,Personally, I love this part.
+3-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+3-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+3-male_must_strip=tranquil,Well, you shouldn't stop. Strip for me!
+3-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+3-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+3-female_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+3-female_human_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+3-female_human_must_strip=calm,That's another one down!
+3-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+3-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+3-female_must_strip=tranquil,Come onnnn ~name~! 
+3-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+3-female_must_strip=tranquil,I'm curious what you'll pick!
+3-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+3-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+3-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+3-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+3-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+3-female_must_strip=tranquil,I'm going to enjoy  this...
+
+
+#lost 4 items
+4-male_human_must_strip=calm,I feel like my straps made for a good trade.
+4-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+4-male_human_must_strip=tranquil,~name~? What a treat!
+4-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+4-male_human_must_strip=calm,And here. We. Go!
+4-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+4-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+4-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+4-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+4-male_must_strip=glad,Personally, I love this part.
+4-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+4-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+4-male_must_strip=tranquil,Well, you shouldn't stop. Strip for me!
+4-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+4-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+4-female_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+4-female_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+4-female_human_must_strip=calm,That's another one down!
+4-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+4-female_human_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+4-female_must_strip=tranquil,Come onnnn ~name~! 
+4-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+4-female_must_strip=tranquil,I'm curious what you'll pick!
+4-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+4-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+4-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+4-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+4-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+4-female_must_strip=tranquil,I'm going to enjoy  this...
+
+#lost 5 items
+5-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+5-male_human_must_strip=tranquil,~name~? What a treat!
+5-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+5-male_human_must_strip=calm,And here. We. Go!
+5-male_human_must_strip=calm,I feel like this was a good trade.
+5-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+5-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+5-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+5-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+5-male_must_strip=glad,Personally, I love this part.
+5-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+5-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+5-male_must_strip=tranquil,Cutting it real close, but I can't stop now! Strip for me!
+5-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+5-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+5-female_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+5-female_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+5-female_must_strip=calm,That's another one down!
+5-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+5-female_human_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+5-female_human_must_strip=tranquil,Come onnnn ~name~! 
+5-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+5-female_must_strip=tranquil,I'm curious what you'll pick!
+5-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+5-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+5-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+5-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+5-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+5-female_must_strip=tranquil,I'm going to enjoy  this...
+
+#lost 6 items
+6-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+6-male_human_must_strip=tranquil,~name~? What a treat!
+6-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+6-male_human_must_strip=calm,And here. We. Go!
+6-male_human_must_strip=annoyed,Hopefully this will be a good trade.
+6-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+6-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+6-male_must_strip=worried,Your turn, ~name~... hey, worry about yourself, not me!
+6-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+6-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+6-male_must_strip=glad,Personally, I love this part.
+6-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+6-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+6-male_must_strip=tranquil,Cutting it real close, but I can't stop now! Strip for me!
+6-female_human_must_strip=glad,That's a relief!
+6-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+6-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+6-female_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+6-female_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+6-female_must_strip=calm,That's another one down!
+6-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+6-female_human_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+6-female_human_must_strip=tranquil,Come onnnn ~name~! 
+6-female_human_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+6-female_must_strip=tranquil,I'm curious what you'll pick!
+6-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+6-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+6-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+6-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+6-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+6-female_must_strip=tranquil,I'm going to enjoy  this...
+6-female_must_strip=tranquil,Let's even the odds a bit!
+
+#lost all clothing items
+-3-male_human_must_strip=calm,I'm still in this!
+-3-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+-3-male_human_must_strip=tranquil,~name~? What a treat!
+-3-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+-3-male_human_must_strip=calm,And here. We. Go!
+-3-male_human_must_strip=annoyed,Hopefully this will be a good trade.
+-3-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining.
+-3-male_human_must_strip=tranquil,Good ol' ~name~, taking the bullet for the rest of us.
+-3-male_must_strip=tranquil,Well, guess this isn't all bad.
+-3-male_must_strip=worried,Your turn, ~name~... hey, worry about yourself, not me!
+-3-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+-3-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+-3-male_must_strip=glad,Personally, I love this part.
+-3-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+-3-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+-3-male_must_strip=tranquil,Cutting it real close, but I can't stop now! Strip for me!
+-3-female_human_must_strip=calm,It's not over yet! Take it off!
+-3-female_must_strip=calm,~name~ was the loser this time! Let's see you!
+-3-female_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+-3-female_must_strip=calm,Oh, good. I was worried you didn't lose for a second.
+-3-female_must_strip=calm,Any round you lose is one that I don't. So by all means, keep losing.
+-3-female_must_strip=calm,That's another one down!
+-3-female_human_must_strip=smiteful,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+-3-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+-3-female_human_must_strip=tranquil,Come onnnn ~name~! 
+-3-female_human_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+-3-female_human_must_strip=tranquil,I'm curious what you'll pick!
+-3-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+-3-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+-3-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+-3-female_must_strip=thoughtful,Okay, it's ~name~. I was worried for a minute there.
+-3-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+-3-female_must_strip=tranquil,I'm going to enjoy  this...
+-3-female_must_strip=tranquil,Let's even the odds a bit!
+-3-female_must_strip=teasing,Your loss will not be in vain. I'll make sure of that!
+
+#masturbating
+-2-male_human_must_strip=masturbate_b,~name~, you have no idea how much I want this right now.
+-2-male_human_must_strip=calm,Well well... It seems like ~name~ is going to do something...
+-2-male_human_must_strip=tranquil,~name~? What a treat...
+-2-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet...
+-2-male_human_must_strip=calm,Ah... here we. go...
+-2-male_human_must_strip=glad,Hopefully this will be good...
+-2-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining...
+-2-male_human_must_strip=tranquil,Good ol' ~name~...
+-2-male_must_strip=teasing,Yes...give me more!
+-2-male_must_strip=tranquil,Well, guess this isn't all bad...
+-3-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+-3-male_must_strip=glad,Go for a big play this round!
+-3-male_must_strip=glad,Personally, I love this part. This'll be good...
+-3-male_must_strip=glad,If it makes you feel better,  I've been waiting for this for a while...
+-2-female_human_must_strip=calm,I appreciate this...
+-2-female_human_must_strip=calm,Come now, ~name~, take it off!
+-2-female_human_must_strip=calm,~name~ was the loser this time... looking forward to seeing you!
+-2-female_human_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+-2-female_human_must_strip=calm,Oh, good. ~name~ losing makes for quite the treat!
+-2-female_human_must_strip=calm,Any round you lose is a good one. So by all means, keep losing.
+-2-female_human_must_strip=calm,That's another one down! How much longer until we reach the end...?
+-2-female_human_must_strip=annoyed,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+-2-female_human_must_strip=calm,Not gonna lie, I was hoping it was you this time...
+-2-female_must_strip=tranquil,I'm going to enjoy  this...
+-2-female_must_strip=tranquil,Come onnnn ~name~! 
+-2-female_must_strip=horny,Go on... no need to be shy in front of your goddess...
+-2-female_must_strip=tranquil,I'm curious what you'll pick!
+-2-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us...
+-2-female_must_strip=horny,You lost? Can't say I'm terribly disappointed in this outcome...
+-2-female_must_strip=teasing,Watching you squirm is quite amusing...
+-2-female_must_strip=horny,Okay, ~name~ losing isn't that bad...
+-2-female_must_strip=teasing,Yes, ~name~, draw their attention away from me...
+-2-female_must_strip=tranquil,I'm going to enjoy  this...
+
+#finished
+-1-male_human_must_strip=smiteful,Could this not have come sooner?!
+-3-male_human_must_strip=calm,Well well! It seems like ~name~ is going to do something!
+-3-male_human_must_strip=tranquil,~name~? What a treat!
+-3-male_human_must_strip=calm,I saw this coming from a mile away. Doesn't make it any less sweet.
+-3-male_human_must_strip=annoyed,Why couldn't you have lost this much when I was still in?
+-3-male_human_must_strip=glad,Hopefully this will be a good trade.
+-3-male_human_must_strip=calm,Yes, please, lose some more. You won't see me complaining...
+-3-male_human_must_strip=tranquil,Good ol' ~name~. What's it gonna be?
+-1-male_must_strip=smiteful,Where were you a few minutes ago?!
+-1-male_must_strip=tranquil,Well, guess this isn't all bad.
+-1-male_must_strip=worried,Your turn, ~name~... hey, worry about yourself, not me!
+-1-male_must_strip=teasing,Oh, well if it's ~name~ this time I'm not complaining.
+-1-male_must_strip=glad,My advice,~name~? I personally recommend going for a big play this round.
+-1-male_must_strip=glad,Personally, I love this part.
+-1-male_must_strip=glad,If it makes you feel better, this is what I've been waiting for.
+-1-male_must_strip=surprised,Oh! Let me see if I can predict what you'll take off.
+-1-female_human_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+-1-female_must_strip=calm,Come now, ~name~, take it off!
+-1-female_human_must_strip=calm,~name~ was the loser this time! Let's see you!
+-1-female_human_must_strip=calm,Oh, I didn't realize it was ~name~'s time to strip.
+-1-female_must_strip=calm,Oh, good.~name~ losing makes for quite the treat!
+-1-female_must_strip=calm,Any round you lose is a good one. So by all means, keep losing.
+-1-female_must_strip=calm,That's another one down!
+-1-female_human_must_strip=annoyed,Oh hey, it's... ~name~... you could at least acknowledge us, you know.
+-1-female_must_strip=calm,Not gonna lie, I was hoping it was you this time.
+-1-female_must_strip=tranquil,Come onnnn ~name~! 
+-1-female_must_strip=teasing,Go on, no need to be shy in front of your goddess!
+-1-female_must_strip=tranquil,I'm curious what you'll pick!
+-1-female_must_strip=tranquil,Let's see what surprises ~name~ has in store for us!
+-1-female_must_strip=surprised,You lost? I thought you were the one person who <i>wouldn't</i> lose this round...
+-1-female_must_strip=teasing,Thought you had the advantage there? How amusing.
+-1-female_must_strip=teasing,Your loss wasn't in vain. I'm sure we're all enjoying this.
+-1-female_must_strip=tranquil,I'm going to enjoy  this...
+-1-female_must_strip=glad,Okay, it's ~name~. I'm okay with this.
+-1-female_must_strip=thoughtful,Guess it doesn't really matter now, eh? Just strip already!
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_accessory=surprised,C'mon, really?
+male_removed_accessory=smiteful,I'm sure you didn't come here to watch <i>us</i> take off trinkets!
+female_removing_accessory=awkward,Well, that's disappointing.
+female_removed_accessory=calm,A win's a win, I suppose. 
+
+#stage-specific lines that override the stage-generic ones
+
+##another character is removing accessories
+#fully clothed
+0-male_removing_accessory=surprised,C'mon, really?
+0-male_removed_accessory=annoyed,I'm sure you didn't come here to watch <i>us</i> take off trinkets!
+0-female_removing_accessory=awkward,Well, that's disappointing.
+0-female_removing_accessory=awkward,Oh... how mundane.
+0-female_removed_accessory=calm,Well, time keeps on ticking. Moving on.
+0-female_removed_accessory=calm,A win's a win, I suppose. 
+
+#lost 1 item
+1-male_removing_accessory=teasing,You know, your ~clothing~ won't really win you many points with the ladies.
+1-male_removed_accessory=tranquil,Now then, let's move on to <i>actual</i> gameplay.
+1-female_removing_accessory=thoughtful,Why the ~clothing~? Not really anything, you know, worthwhile.
+1-female_removed_accessory=glad,Maybe you have stage fright? It's fine. I can wait.
+
+#lost 2 items
+2-male_removing_accessory=annoyed,Words cannot express how absolutely <i>boring</i> that choice was.
+2-male_removed_accessory=calm,I'm not mad, just disappointed.
+2-female_removing_accessory=teasing,Taking the easy way out, huh?
+2-female_removed_accessory=calm,I would do the same. I like to think I'd have more style, though.
+
+#lost 3 items
+3-male_removing_accessory=smiteful,Hmmph! What a stick-in-the-mud!
+3-male_removed_accessory=teasing,Tell you what: pick something better next time and I'll forgive you. Deal?
+3-female_removing_accessory=worried,Oh no, whatever will you do without your ~clothing~?
+3-female_removed_accessory=smiteful,I didn't come here for stall tactics, you know.
+
+#lost 4 items
+4-male_removing_accessory=annoyed,Fantastic. That didn't even faze you.
+4-male_removed_accessory=teasing,Good to know humans don't have a lot of guts.
+4-female_removing_accessory=worried,Seriously? That's all you can muster?
+4-female_removed_accessory=tranquil,I can relish in the fact that you lost at least. No, gods aren't above pettiness.
+
+#lost 5 items
+5-male_removing_accessory=smiteful,Look at this guy! Totally not winning any brownie points right now.
+5-male_removed_accessory=awkward,Have to say I'm a bit jealous. Scorn aside, any sort of backup clothes could help...
+5-female_removing_accessory=calm,How about we just ditch all these meaningless baubles and go right to our last two items?
+5-female_removed_accessory=glad,All or nothing mode! C'mon, any takers? No?
+
+#lost 6 items
+6-male_removing_accessory=awkward,Not sure why I even got my hopes up.
+6-male_removed_accessory=worried,I think this game is making me a pessimist.
+6-female_removing_accessory=smiteful,Is there a word to describe colorful, intense hatred that is also E10+ friendly?
+6-female_removed_accessory=tranquil,Don't mind me, I'll just be seething in peace over here.
+
+#nude
+-3-male_removing_accessory=thoughtful,You know, in other worlds they blind unworthy men who see us gods nude.
+-3-male_removed_accessory=teasing,You're lucky the match isn't over.
+-3-female_removing_accessory=loss,Hey, not cool man.
+-3-female_removed_accessory=annoyed,I feel like you're mocking me. <i>I</i> should be the one who mocks here!
+
+#masturbating
+-2-male_removing_accessory=smiteful,Think <i>really</i> hard if that's what you want your choice to be.
+-2-male_removed_accessory=annoyed,I'm doing you a service here! Least you could do is give me material to work with...
+-2-female_removing_accessory=glad,Must be nice, having your ~clothing~ to just dispose of.
+-2-female_removed_accessory=smiteful,The more hands you play, the more I might get to see something worthwhile, so play!
+
+#finished
+-1-male_removing_accessory=calm,As much as I hate you for that, know that I am way too turned on to care right now.
+-1-male_removed_accessory=tranquil,I'll just imagine that was your last piece instead!
+-1-female_removing_accessory=thoughtful,Maybe I would have cared a bit more if I was still in...
+-1-female_removed_accessory=tranquil,I can live with it now! As you will.
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_minor=calm,Not a bad choice.
+male_removed_minor=tranquil,I approve. Not as much as if you'd gone right for the throat, but hey.
+female_removing_minor=calm,Not bad. A pittance overall, but it'll do for now.
+female_removed_minor=glad,Excellent. Let's get back to the game, then.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=calm,Not a bad choice.
+0-male_removed_minor=tranquil,I approve. Not as much as if you'd gone right for the throat, but hey.
+0-female_removing_minor=calm,Not bad. A pittance overall, but it'll do for now.
+0-female_removed_minor=glad,Excellent. Let's get back to the game, then.
+
+
+#lost 1 item
+1-male_removing_minor=tranquil,Decided to start playing, huh?
+1-male_removed_minor=calm,A little small, but hey, what're you going to do?
+1-female_removing_minor=teasing,Did me taking off my armwear inspire you? I'm touched, truly.
+1-female_removed_minor=glad,Personally, I think that it looks better off you anyway.
+
+#lost 2 items
+2-male_removing_minor=calm,Ah, I see you chose something decent for once. 
+2-male_removed_minor=tranquil,Now that that's done, hopefully it'll ramp up from here.
+2-female_removing_minor=teasing,How *ahem* adventurous of you.
+2-female_removed_minor=glad,Not gonna lie, I'm liking the way this has been going.
+
+#lost 3 items
+3-male_removing_minor=thoughtful,Well, I guess your ~clothing~ is slightly more interesting...
+3-male_removed_minor=teasing,Of course, you'll need to do a lot better if you want to impress us.
+3-female_removing_minor=teasing,Honestly? Your ~clothing~? I'm <i>sure</i> that'll get us all going here.
+3-female_removed_minor=glad,The night is still young, I guess. It's still anyone's game!
+
+#lost 4 items
+4-male_removing_minor=tranquil,Tell me, ~name~; have you ever been a pallbearer?
+4-male_removed_minor=smiteful,You <i>really</i> seem to like letting us down.
+4-female_removing_minor=thoughtful,I <i>guess</i> I can see why you chose that.
+4-female_removed_minor=glad,I won't hold it against you, but let's see something better later!
+
+#lost 5 items
+5-male_removing_minor=tranquil,Time for a sacrifice!
+5-male_removed_minor=calm,That'll do, ~name~. That'll do.
+5-female_removing_minor=glad,I don't want to come off as pushy, but that was kind of lame.
+5-female_removed_minor=tranquil,What'll happen next? Find out...right now!
+
+#lost 6 items
+6-male_removing_minor=smiteful,Sure, rub my failure in more.
+6-male_removed_minor=worried,What I wouldn't give to restart from a checkpoint right now.
+6-female_removing_minor=annoyed,Well this is annoying.
+6-female_removed_minor=worried,I didn't think I was doing <i>that</i> badly...
+
+#naked
+-3-male_removing_minor=awkward,I feel like some sort of karmic retribution is working against me.
+-3-male_removed_minor=worried,At least I didn't forfeit...?
+-3-female_removing_minor=smiteful,I see that look in your eye! Don't think you're hot stuff just 'cause I'm naked!
+-3-female_removed_minor=loss,This is going to be a long night, isn't it?
+
+#masturbating
+-2-male_removing_minor=awkward,Oh for the love of...
+-2-male_removed_minor=worried,Please, just take it all off already!
+-2-female_removing_minor=masturbate_a,Hmm...can you say something dirty while you do it?
+-2-female_removed_minor=thoughtful,I'm still not that satisfied. I need more!
+
+#finished
+-1-male_removing_minor=worried,After all I did for you?
+-1-male_removed_minor=awkward,I'm hurt, but somehow, I crave more...
+-1-female_removing_minor=teasing,Really? You just watched me do <i>that</i>, and you still picked the ~clothing~?
+-1-female_removed_minor=tranquil,No wonder humans need gods watching over them.
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_major=teasing,The stakes have certainly been raised now!
+male_removed_major=tranquil,Can't wait to see this treasure fully opened!
+female_removing_major=tranquil,Getting to the nitty-gritty, are we?
+female_removed_major=teasing,You're weak points are really opening up now!
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=annoyed,I can't properly enjoy this if there's no danger. A shame...
+0-male_removed_major=teasing,I must say, you're quite the looker, ~name~.
+0-male_removed_major=teasing,I can't believe ~name~ took off his ~clothing~ this early. I must be a god at strip poker too!
+0-male_removed_major=surprised,Wow ~name~! Your ~clothing~ is off already? You'll be naked anytime now at this rate!
+0-female_removing_major=tranquil,You've gotta be throwing, right? There's no way I'm <i>this</i> good.
+0-female_removed_major=surprised,Oh...well...you did your best?
+0-female_removed_major=teasing,I can't believe ~name~ took off her ~clothing~ this early. I must be a god at strip poker too!
+
+#lost 1 item
+1-male_removing_major=tranquil,I'm pleasantly surprised we've reached this stage already.
+1-male_removed_major=calm,Alright, let's keep the momentum going!
+1-male_removed_major=teasing,I can't believe ~name~ took off his ~clothing~ this early. I must be a god at strip poker too!
+1-male_removed_major=surprised,Wow ~name~! Your ~clothing~ is off already? You'll be naked anytime now at this rate!
+1-female_removing_major=surprised,Already? Either I'm not getting something, or you're just bad at this.
+1-female_removed_major=teasing,Don't worry ~name~, I'll wrap this up before long.
+1-female_removed_major=teasing,I can't believe ~name~ took off her ~clothing~ this early. I must be a god at strip poker too!
+
+#lost 2 items
+2-male_removing_major=teasing,The stakes have certainly been raised now!
+2-male_removed_major=tranquil,Can't wait to see this treasure fully opened!
+2-male_removed_major=tranquil,I liked seeing you strip off your ~clothing~, ~name~!
+2-female_removing_major=tranquil,Getting to the nitty-gritty, are we?
+2-female_removed_major=teasing,Your weak points are really opening up now!
+2-male_removed_major=tranquil,I liked seeing you strip off your ~clothing~, ~name~!
+
+#lost 3 items
+3-male_removing_major=glad,Things certainly got interesting!
+3-male_removed_major=teasing,I'm looking forward to you taking the rest off as well.
+3-female_removing_major=surprised,Quite the bold move, wouldn't you say?
+3-female_removed_major=tranquil,And to think, my cost to get here was just a few accessories!
+
+#lost 4 items
+4-male_removing_major=teasing,Want to keep going? Gotta pay the toll!
+4-male_removed_major=horny,Not a bad view, all things considered... Yes, I am staring...
+4-female_removing_major=glad,Oh, well, can't complain about that!
+4-female_removed_major=teasing,I doubt any of us would mind if you went around like that normally.
+
+#lost 5 items
+5-male_removing_major=surprised,I never thought I could get so...tense!
+5-male_removed_major=awkward,Great, now I'm imagining the undercarriage...
+5-female_removing_major=annoyed,I'm cutting it a lot closer than I'd like.
+5-female_removed_major=tranquil,The satisfaction of seeing you <i>this</i> close to defeat makes it worth it.
+
+#lost 6 items
+6-male_removing_major=glad,Ahahaha... I can't wait to see...
+6-male_removed_major=annoyed,These dirty thoughts need to go away. At least while I'm like this!
+6-male_removed_major=surprised,~name~, is that a bulge? You must really like my breasts. They are goddess breasts after all.
+6-female_removing_major=surprised,Another one bites the dust...can't say I feel pity, though.
+6-female_removed_major=calm,I appreciate you taking the stares for a little while.
+
+#nude
+-3-male_removing_major=thoughtful,I'll take what I can get at this point.
+-3-male_removed_major=glad,I don't plan on forfeiting, but if I do, this will make a decent consolation prize.
+-3-male_removed_major=surprised,~name~, is that a bulge? You must really like my body. I am a goddess after all.
+-3-female_removing_major=tranquil,Wonderful! I was wondering when you'd step up your indecency game, ~name~.
+-3-female_removed_major=smiteful,I've made it this far. I <i>will</i> see this through!.
+
+#masturbating
+-2-male_removing_major=calm,Don't leave a goddess waiting, ~name~.
+-2-male_removed_major=heavy_c,Yes...that's the stuff...
+-2-male_removed_major=heavy_c,I can see that bulge... You like this, ~name~... So do I...
+-2-female_removing_major=worried,What'll you pick, ~name~?
+-2-female_removed_major=glad,Ah...I like it...
+
+#finished
+-1-male_removing_major=glad,Yeeeeaaahh, you were a bit slow there, buddy.
+-1-male_removed_major=thoughtful,Looking good! Hopefully the rest comes off before the game ends...
+-1-male_removed_major=annoyed,Come on, ~name~! Just get naked already! Please?
+-1-female_removing_major=annoyed,Listen, I'm not trying to nitpick, but you <i>really</i> couldn't have ditched it sooner?
+-1-female_removed_major=calm,Cute bod, ~name~. On that note, more poker!
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_chest_will_be_visible=teasing,Tell me, ~name~ are you in peak shape?
+male_chest_is_visible=horny,Well well, seems like my army could learn a thing or two from you!
+male_crotch_will_be_visible=teasing,And now to have a close study of the human penis. I hear they vary a lot in size....
+male_small_crotch_is_visible=awkward,Never thought a human could be smaller than a centurion, so...congrats?
+male_medium_crotch_is_visible=tranquil,About what I expected. Looks like it'd make any human girl happy.
+male_large_crotch_is_visible=surprised,I've never seen one that big! Looks rather inefficient, though...
+
+female_chest_will_be_visible=calm,Tough luck, ~name~. I won't stare, but I can't make promises for the others.
+female_small_chest_is_visible=glad,Feeling a little inadequate, ~name~?
+female_medium_chest_is_visible=tranquil,What a lovely pair! Why'd you wear a top again?
+female_large_chest_is_visible=surprised,You're more shapely than I expected!
+female_crotch_will_be_visible=tranquil,And for you, my dear ~name~, you've earned a one-way ticket to public exposure!
+female_crotch_is_visible=calm,You know, I almost feel bad, then I remember my decency's on the line too.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=teasing,The ~clothing~ already? You aren't just trying to show off, right?
+0-male_chest_is_visible=tranquil,The best things in life are those that come free.
+0-male_crotch_will_be_visible=worried,I kind of feel bad. You're already showing your little soldier and I haven't even lost...
+0-male_small_crotch_is_visible=teasing,Okay, now I <i>actually</i> feel bad.
+0-male_medium_crotch_is_visible=glad,Well, if it makes you feel better, I think that's a respectable size.
+0-male_large_crotch_is_visible=calm,Bigger than I thought. And I'm not the cause, I'm sure..
+
+0-female_chest_will_be_visible=surprised,Wow, ~name~ <i>again</i>! If I were you, I would be really upset right now!
+0-female_small_chest_is_visible=thoughtful,Well, those <i>do</i> qualify as breasts.
+0-female_medium_chest_is_visible=calm,If it makes you feel any better, I think those look pretty good.
+0-female_medium_chest_is_visible=horny,I've been looking to find Pit a girlfriend... interested, ~name~?
+0-female_large_chest_is_visible=tranquil,Impressive...although I forsee back problems in your future.
+0-female_crotch_will_be_visible=glad,Do you, uh, need help or something? I'm new, but even I seem to have a better grasp of this.
+0-female_crotch_is_visible=teasing,Don't feel too bad. <i>Everyone</i> is as good as naked to a goddess.
+0-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+0-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 1 item
+1-male_chest_will_be_visible=calm,Ooh, ~name~ has to take off his ~clothing~? I like where this is going...
+1-male_chest_is_visible=teasing,Much like Pit, I enjoy a good chest.
+1-male_crotch_will_be_visible=surprised,I was expecting more of a fight, but I'll gladly accept your, ahem, <i>generous</i>offer.
+1-male_small_crotch_is_visible=annoyed,Not gonna lie, this wasn't worth losing my armbands for.
+1-male_medium_crotch_is_visible=awkward,That's... well...
+1-male_large_crotch_is_visible=glad,<i>Someone's</i> packing a solid club there.
+
+1-female_chest_will_be_visible=tranquil,Is it that time? I didn't notice on account of how little I've lost.
+1-female_small_chest_is_visible=thoughtful,Hmmm. Maybe you'll grow into them?
+1-female_medium_chest_is_visible=calm,Hey, you look pretty good, ~name~.
+1-female_medium_chest_is_visible=horny,I must admit, ~name~, your chest blew my expectations away.
+1-female_large_chest_is_visible=surprised,Wow, I didn't think those were real at first...
+1-female_crotch_will_be_visible=worried,As your goddess, I sympathize with how tough this must be on you. But as your opponent, I'm not sorry.
+1-female_crotch_is_visible=tranquil,There! See? Not as bad once it's over and done!
+1-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+1-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 2 items
+2-male_chest_will_be_visible=teasing,Tell me, ~name~ are you in peak shape?
+2-male_chest_is_visible=horny,Well well, seems like my army could learn a thing or two from you!
+2-male_crotch_will_be_visible=teasing,And now to have a close study of the human penis. I hear they vary a lot in size....
+2-male_small_crotch_is_visible=awkward,Never thought a human could be smaller than a centurion, so...congrats?
+2-male_medium_crotch_is_visible=tranquil,About what I expected. Looks like it'd make any human girl happy.
+2-male_large_crotch_is_visible=surprised,I've never seen one that big! Looks rather inefficient, though...
+
+2-female_chest_will_be_visible=calm,Tough luck, ~name~. I won't stare, but I can't make promises for the others.
+2-female_small_chest_is_visible=glad,Feeling a little inadequate, ~name~?
+2-female_medium_chest_is_visible=tranquil,What a lovely pair! Why'd you wear a top again?
+2-female_medium_chest_is_visible=horny,How enticing...
+2-female_large_chest_is_visible=surprised,You're more shapely than I expected!
+2-female_crotch_will_be_visible=tranquil,And for you, my dear ~name~, you've earned a one-way ticket to public exposure!
+2-female_crotch_is_visible=calm,You know, I almost feel bad, then I remember my decency's on the line too.
+2-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+2-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 3 items
+3-male_chest_will_be_visible=teasing,You got to see a fair bit, but it looks like my investment's paid off!
+3-male_chest_is_visible=tranquil,A rather dashing look for you, ~name~.
+3-male_crotch_will_be_visible=teasing,Cover your eyes, children. Things are about to get <i>erotic</i>.
+3-male_small_crotch_is_visible=annoyed,This feels insulting in a way.
+3-male_medium_crotch_is_visible=calm,Quite impressive indeed...for a mere mortal.
+3-male_large_crotch_is_visible=worried,That's...a bit intimidating, actually.
+
+3-female_chest_will_be_visible=calm,Are you fond of your ~clothing~? Well, I have bad news...
+3-female_small_chest_is_visible=teasing,I didn't hit a sore spot, did I?
+3-female_medium_chest_is_visible=thoughtful,Is it just me, or are ~name~'s nipples getting hard?
+3-female_medium_chest_is_visible=horny,That shade of red complements your breasts beautifully.
+3-female_large_chest_is_visible=tranquil,Delightful! I bet men give you a lot of stares, right?
+3-female_crotch_will_be_visible=glad,I won't hold it against you if you back out now. You still wanna go through with it?
+3-female_crotch_is_visible=surprised,Oh, you actually did it? Guess I'll give you credit for that.
+3-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+3-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 4 items
+4-male_chest_will_be_visible=glad,I must admit, my curiosity is causing my mind to run wild...
+4-male_chest_is_visible=surprised,Chiseled like the champion of a god!
+4-male_crotch_will_be_visible=tranquil,Ooh, this'll be a treat! Any bets on how big he'll be?
+4-male_small_crotch_is_visible=teasing,Pfffft! ...I'm sorry, that just caught me off-guard.
+4-male_medium_crotch_is_visible=awkward,Is it bad that I'm wondering what that tastes like? Maybe you'll let me find out?
+4-male_large_crotch_is_visible=worried,My goodness, you could pull that thing like a lever!
+
+4-female_chest_will_be_visible=calm,Alright ~name~, let's see 'em!
+4-female_small_chest_is_visible=thoughtful,A bit underdeveloped. I recommend doubling your milk intake going forward.
+4-female_medium_chest_is_visible=tranquil,Well done! Those are lovely, by the way.
+4-female_medium_chest_is_visible=horny,Toplessness is a good look on you.
+4-female_large_chest_is_visible=teasing,The men must <i>loooove</i> you, don't they?
+4-female_crotch_will_be_visible=glad,Your most intimate spot will now be shown to the world! No pressure.
+4-female_crotch_is_visible=tranquil,It's glistening like blades of grass in the morning. How cute!
+4-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+4-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 5 items
+5-male_chest_will_be_visible=tranquil,Take it off at your own pace. The result will be the same in the end, so no need to rush!
+5-male_chest_is_visible=surprised,I'm impressed at how fit you are! Your demeanor totally threw me off.
+5-male_crotch_will_be_visible=calm,It's been a long journey, but now let's deal the killer blow!
+5-male_small_crotch_is_visible=glad,My mind must be playing tricks on me.
+5-male_medium_crotch_is_visible=teasing,Well, there it is. And you're <i>very</i> eager, by the look of it.
+5-male_large_crotch_is_visible=worried,Doesn't that hurt you?
+
+5-female_chest_will_be_visible=tranquil,There's something immensely satisfying about beating the clothes off your backs. Or chest, in this case.
+5-female_small_chest_is_visible=glad,Well, not everyone is blessed to have an amazing chest.
+5-female_medium_chest_is_visible=calm,For what it's worth, I still think you have a shot, ~name~.
+5-female_medium_chest_is_visible=awkward,This whole situation is quite...captivating.
+5-female_medium_chest_is_visible=horny,How's it feel being the center of attention?
+5-female_large_chest_is_visible=annoyed,I dunno, those are too "in-your-face", in my opinion.
+5-female_crotch_will_be_visible=teasing,Normally Pit's the one to inspect suspicious holes, but guess that's my job today!
+5-female_crotch_is_visible=thoughtful,Let's see...decent shape, healthy color...overall, everything's looking pretty good.
+5-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+5-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#lost 6 items
+6-male_chest_will_be_visible=annoyed,Why do I feel you're getting the better end of the deal...
+6-male_chest_is_visible=awkward, What a cruel sense of humor this game has, putting that in front of me.
+6-male_crotch_will_be_visible=calm,Thank goodness! At least I'm getting <i>something</i> for my troubles.
+6-male_small_crotch_is_visible=surprised,Seriously? Talk about short end of the stick...
+6-male_medium_crotch_is_visible=teasing,I see I've had quite the effect on you. You are rock hard!
+6-male_large_crotch_is_visible=worried,That makes me...uncomfortable.
+
+6-female_chest_will_be_visible=calm,Decided to join me then, ~name~?
+6-female_small_chest_is_visible=thoughtful,I could have sworn they were bigger...
+6-female_medium_chest_is_visible=surprised,Oh, they jiggled a bit there.
+6-female_medium_chest_is_visible=thoughtful,(<i>Bigger than I thought... I could see Pit liking those.</i>)
+6-female_large_chest_is_visible=glad,I'm in good company, it seems.
+6-female_crotch_will_be_visible=teasing,Can the beaver come out to play?
+6-female_crotch_will_be_visible=worried,I'd be happier if there wasn't the threat of me being next hanging above me...
+6-female_crotch_is_visible=tranquil,Nice and well-kept. Perhaps a demonstration is in order?
+6-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+6-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#nude
+-3-male_chest_will_be_visible=tranquil,Guess who just got tickets to the gun show?
+-3-male_chest_is_visible=calm,That right there is the textbook definition of "desireable"... for humans, I mean.
+-3-male_crotch_will_be_visible=teasing,Aw, look at poor ~name~. Afraid the pretty ladies will judge you?
+-3-male_small_crotch_is_visible=annoyed,I hope for your sake you're a grower.
+-3-male_medium_crotch_is_visible=glad,I don't know what you were so scared of, you've got a great one!
+-3-male_medium_crotch_is_visible=glad,You don't have to cover it up or be embarrassed. I enjoy looking at it., so give me a good look ~name~.
+-3-male_large_crotch_is_visible=worried,...I'm just gonna take a step back. I don't want that thing poking me from over there.
+
+-3-female_chest_will_be_visible=glad,The plot thickens! And we all love a good "plot".
+-3-female_small_chest_is_visible=teasing,Oh hello Viridi, when did you get here?
+-3-female_medium_chest_is_visible=tranquil,Thanks for the mammaries!
+-3-female_medium_chest_is_visible=horny,(<i>You know, Pit needs a girlfriend... and ~name~ seems nice enough...</i>)
+-3-female_large_chest_is_visible=surprised,Those might be on par with mine! Impressive, ~name~.
+-3-female_crotch_will_be_visible=thoughtful,It's not so bad, ~name~. No worse than a trip to the hot springs!
+-3-female_crotch_is_visible=calm,An interesting stylistic choice. Maybe I'll study it further later.
+-3-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+-3-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#masturbating
+-2-male_chest_will_be_visible=masturbate_b,~name~, please... show it to me...
+-2-male_chest_will_be_visible=masturbate_b,I could use the inspiration, ~name~... I'll be sure to make it worth your while...
+-2-male_chest_is_visible=thoughtful,That's pretty nice... like, Poseidon-level nice.
+-2-male_chest_is_visible=glad,Am I getting sheepish from a human's chest? How unusual for me...
+-2-male_crotch_will_be_visible=masturbate_c,Yes, ~name~, show me your penis!
+-2-male_crotch_will_be_visible=masturbate_c,I'm getting way too into this, I know... but I <i>need</i> to see it!
+-2-male_small_crotch_is_visible=annoyed,There's a goddess masturbating for you, and you give me <i>that</i>?
+-2-male_small_crotch_is_visible=surprised,Huh. I, uh, was expecting something...more?
+-2-male_medium_crotch_is_visible=tranquil,Thank you, ~name~! That's perfect!
+-2-male_medium_crotch_is_visible=teasing,C'mere ~name~...let me give you a gift from the gods...
+-2-male_medium_crotch_is_visible=Nice and erect for me, ~name~? I love it!
+-2-male_large_crotch_is_visible=worried,Even <i>I</i> wouldn't be able to handle that!
+-2-male_large_crotch_is_visible=surprised,It's just... so big...
+
+-2-female_chest_will_be_visible=calm,I mean, it's this lewd already, why not?
+-2-female_small_chest_is_visible=annoyed,Huh? Those are hardly fitting to stand up next to me.
+-2-female_small_chest_is_visible=worried,It's the thought that counts, I guess.
+-2-female_medium_chest_is_visible=masturbate_c,There you go, nice and undressed. It's a good look for you...
+-2-female_medium_chest_is_visible=masturbate_b,You could pass as a Syren like that. Coincidentally, they go topless as well...
+-2-female_medium_chest_is_visible=horny,So I've been looking to find Pit a girlfriend... you certainly fit the bill, ~name~.
+-2-female_large_chest_is_visible=thoughtful,Reminds me of Pandora... large and blobby. Or perhaps they're more like her Amazon form?
+-2-female_crotch_will_be_visible=masturbate_a,I could use the company.
+-2-female_crotch_will_be_visible=glad,I would've preferred if you were a guy, but I'll take what I can.
+-2-female_crotch_is_visible=tranquil,You can't really compare, but I guess that's alright.
+-2-female_crotch_is_visible=teasing,Are you getting wet from watching all this? Or are you just a natural nympho?
+-2-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+-2-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+#finished
+-1-male_chest_will_be_visible=annoyed,Someone's slow on the uptake. Most mortal men would <i>kill</i> to see what you just did.
+-1-male_chest_is_visible=calm,You came through in the end, ~name~, so I'll forgive you.
+-1-male_crotch_will_be_visible=teasing,Rise and shine, little guy. I've been waiting on you...
+-1-male_small_crotch_is_visible=smiteful,After everything we've been through, ~name~? Not even the Underworld Army is this cruel...
+-1-male_medium_crotch_is_visible=worried,~name~, you should've brought that out before! I would've finished in half the time!
+-1-male_large_crotch_is_visible=glad,Is that from me? I'm flattered.
+
+-1-female_chest_will_be_visible=calm,It was only a matter of time. Don't worry, I won't look too long.
+-1-female_small_chest_is_visible=glad,I'm sure someone here likes 'em, ~name~.
+-1-female_medium_chest_is_visible=thoughtful,You've got a good body. Wonder how compatible you'd be with Pit...
+-1-female_medium_chest_is_visible=horny,I've been looking to find Pit a girlfriend... with a body like that, he'd be all over you.
+-1-female_large_chest_is_visible=thoughtful,You know, you'd make a pretty good model. Certainly have the body for it...
+-1-female_crotch_will_be_visible=teasing,The competition will be fierce, ~name~. Not that you could back down...
+-1-female_crotch_is_visible=tranquil,Now <i>that's</i> a body worth showing off!
+-1-female_crotch_is_visible,filter:shaved=surprised,It actually looks pretty nice with no hair like that...
+-1-female_crotch_is_visible,filter:hairy=surprised,That's a lot of hair down there, ~name~! Have you ever considered shaving some of it? I have a spell I use for that.
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_must_masturbate=calm, I don't see anything left on you, ~name~. Does he have to do a forfeit? Please tell me yes.
+male_start_masturbating=surprised,Oh! This looks like it'll be a fun time!
+male_masturbating=teasing,C'mon, don't want to disappoint a goddess, do you? Do it faster!
+male_finished_masturbating=worried,I think some got on my leg...
+
+female_must_masturbate=calm, I don't see any clothes on you, ~name~. Now you do a forfeit, right?
+female_start_masturbating=awkward,Seems a bit humiliating, doesn't it?
+female_masturbating=tranquil,Nice technique, ~name~. I give it a <i>solid</i> B.
+female_finished_masturbating=teasing,I think you liked us watching you, right?
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=tranquil,Now that's what I call a total butt-kicking! Better get started, ~name~.
+0-male_must_masturbate=calm,Did you come here just to masturbate? Looks like you got your wish.
+0-male_start_masturbating=calm,I'm looking forward to your display.
+0-male_masturbating=tranquil,Such vigor! Such enthusiasm! Guess this isn't your first time.
+0-male_finished_masturbating=teasing,There it goes! You should've known better than to mess with a goddess.
+0-male_finished_masturbating=teasing,You really don't last long, ~name~. That was over as fast as it started.
+
+0-female_must_masturbate=thoughtful,Out already? Talk about an overwhelming victory...
+0-female_start_masturbating=surprised,Er, I <i>did</i> come to a game of poker, right?
+0-female_masturbating=calm,Keep going ~name~, you're doing great!
+0-female_finished_masturbating=tranquil,I take it we're both satisfied?
+
+#lost 1 item
+1-male_must_masturbate=surprised,Already? I didn't even buy you dinner!
+1-male_start_masturbating=teasing,Well, grab hold of it and get to work!
+1-male_masturbating=surprised,The rhythm you're going at is rather... mesmerizing.
+1-male_finished_masturbating=tranquil,Did you enjoy beating it to a goddess' bare arms?
+
+1-female_must_masturbate=surprised,You, uh, didn't really put up much of a fight.
+1-female_start_masturbating=glad,We'll be here to support you, don't get nervous!
+1-female_masturbating=thoughtful,I never knew you could do it like that...
+1-female_finished_masturbating=calm,Well done! Would it be too much to ask for an encore?
+
+#lost 2 items
+2-male_must_masturbate=calm, I don't see anything left on you, ~name~. Does he have to do a forfeit? Please tell me yes.
+2-male_start_masturbating=surprised,Oh! This looks like it'll be a fun time!
+2-male_start_masturbating=teasing,Well, grab hold of it and get to work!
+2-male_masturbating=teasing,C'mon, don't want to disappoint a goddess, do you? Do it faster!
+2-male_finished_masturbating=worried,I think some got on my dress...
+
+2-female_must_masturbate=calm, I don't see any clothes on you, ~name~. Now you do a forfeit, right?
+2-female_start_masturbating=awkward,Seems a bit humiliating, doesn't it?
+2-female_masturbating=tranquil,Nice technique, ~name~. I give it a <i>solid</i> B.
+2-female_finished_masturbating=teasing,I think you liked us watching you, huh?
+
+#lost 3 items
+3-male_must_masturbate=tranquil,Oh, ~name~ is out? I've been curious how you do it.
+3-male_start_masturbating=surprised,Wow, <i>no</i> hesitation on your part! 
+3-male_masturbating=calm,I wasn't expecting this to be so interesting! Keep it up!
+3-male_finished_masturbating=teasing,Were you aiming for my chest there? Don't lie.
+
+3-female_must_masturbate=surprised,It's still pretty early in the game, ~name~. Do you really want to do it?
+3-female_start_masturbating=teasing,You got into that groove quickly! No shame at all, ~name~.
+3-female_masturbating=tranquil,You could be a pianist in your spare time with technique like that!
+3-female_finished_masturbating=glad,Now those were some Celestial Fireworks!
+
+#lost 4 items
+4-male_must_masturbate=teasing,Too bad for you. Now let's see what you're made of.
+4-male_start_masturbating=tranquil,Aaannndd, you're off!
+4-male_masturbating=calm,Your goal is just ahead, ~name~. Don't stop!
+4-male_finished_masturbating=surprised,Hey! You squirted me!
+
+4-female_must_masturbate=tranquil,~name~'s out. Let's put her to work, shall we?
+4-female_start_masturbating=calm,Don't burn out too quickly. The rest of us want to enjoy this game.
+4-female_masturbating=teasing,If only you were as focused at cards as you are now, you could've won!
+4-female_finished_masturbating=surprised,Is it healthy for it to gush out like that?
+
+#lost 5 items
+5-male_must_masturbate=tranquil,Alright. Let's put that eggplant to work!
+5-male_start_masturbating=teasing,Are you a leg guy, ~name~? We'll see in a minute.
+5-male_masturbating=thoughtful,I wonder how much you could go if I gave you the Tireless power?
+5-male_finished_masturbating=surprised,Such a moving performance, it put a tear in my eye... this <i>is</i> a tear, right?
+
+5-female_must_masturbate=teasing,Sorry, but we all knew it would end this way.
+5-female_start_masturbating=glad,Good luck, ~name~.
+5-female_masturbating=thoughtful,~name~ certainly has a... captivating technique.
+5-female_finished_masturbating=calm,Nice. Now, let's see what happens next!
+
+#lost 6 items
+6-male_must_masturbate=teasing,You've lost, ~name~! Now kneel before me!
+6-male_start_masturbating=glad,Don't complain, ~name~. You have plenty of material to work with.
+6-male_masturbating=thoughtful,This situation is rather clamant. ~name~'s quite the attention-grabber like that.
+6-male_masturbating=teasing,Is it humiliating showing off like that?
+6-male_masturbating=teasing,Do you like staring at my goddess breasts, ~name~? They are simply irresistible.
+6-male_finished_masturbating=worried,That was dangerously close to hitting me!
+6-male_finished_masturbating=teasing,Were you aiming for my chest there? Don't lie.
+
+6-female_must_masturbate=tranquil,Glad you got knocked out before I had to go any further. Wouldn't that be embarrassing!
+6-female_start_masturbating=glad,If you need instructions on how to do it, ask someone else, please.
+6-female_masturbating=calm,Having fun there?
+6-female_finished_masturbating=surprised,You look rather pleased with yourself.
+
+#nude
+-3-male_must_masturbate=teasing,~name~ has been taken out! Let's move to the lower area for the next phase.
+-3-male_start_masturbating=calm,It's not every day you get to see a naked goddess. Savor it. Put your hand on your penis and relieve yourself for me.
+-3-male_masturbating=surprised,Are you a leftie? Don't see many of those in Skyworld...
+-3-male_masturbating=teasing,Do you enjoy seeing me naked? Trust me, I can tell.
+-3-male_masturbating=teasing,Try using two hands, ~name~. I want to see if you can handle it.
+-3-male_masturbating=horny,It's gotten so hard... Wow ~name~...
+-3-male_finished_masturbating=teasing,Way to craft that Burning Palm, ~name~.
+-3-male_finished_masturbating=teasing,A messy finish ~name~, you need a visit to the hot springs.
+-3-male_finished_masturbating=teasing,Over before I started, ~name~? I guess seeing a goddess naked will do that.
+
+-3-female_must_masturbate=thoughtful,Sorry, ~name~. I can only imagine how disappointed you must be in yourself, to fail right at the very end...
+-3-female_start_masturbating=glad,Why don't you go ahead and take a knee? I imagine it'll be more comfortable that way.
+-3-female_masturbating=calm,You do it like a pro! ...You should really get some friends.
+-3-female_finished_masturbating=teasing,A good orgasm is a sign of a happy body. You must be <i>very</i> happy.
+
+#masturbating
+-2-male_must_masturbate=surprised,Wait, you want us to this <i>together</i>? Great!
+-2-male_start_masturbating=annoyed,I'd face you during this, but <i>someone</i> thought it was a good idea to line us up in a row.
+-2-male_masturbating=teasing,I hope you feel closer to god now, ~name~...
+-2-male_masturbating=masturbate_c,Try and keep up... it'll make it better for both of us...
+-2-male_masturbating=masturbate_c,Keep up the pace with me ~name~, it feels heavenly!
+-2-male_finished_masturbating=heavy_b,Yes, ~name~! Let it all out! 
+-2-male_finished_masturbating=teasing,I'm not surprised. But I <i>am</i> a bit annoyed I didn't get to finish with you...
+-2-male_finished_masturbating=teasing,It doesn't matter if you finish ~name~, I still want you to do it with me. So keep on stroking it!
+
+-2-female_must_masturbate=teasing,<i>Now<i/> it's a free-for-all! You and me, ~name~, let's go!
+-2-female_start_masturbating=thoughtful,So... got any special techniques? Feel free to share with the class...
+-2-female_masturbating=calm,Word of warning, ~name~; if you even <i>try</i> to touch me, I will smack you.
+-2-female_finished_masturbating=surprised,I outlasted you? Didn't expect that.
+
+#finished
+-1-male_must_masturbate=tranquil,Finally! I was worried I wouldn't get to see you go at it!
+-1-male_start_masturbating=glad,You have nothing to be shy about. If I can do it, so can you!
+-1-male_masturbating=teasing,How's the view? Breathtaking enough?
+-1-male_masturbating=surprised,Are you a leftie? Don't see many of those in Skyworld...
+-1-male_masturbating=teasing,Do you enjoy seeing me naked? Trust me, I can tell.
+-1-male_masturbating=teasing,Try using two hands, ~name~. I want to see if you can handle it.
+-1-male_masturbating=horny,It's gotten so hard... Wow ~name~...
+-1-male_finished_masturbating=surprised,I might just have a taste of that... purely for culinary reasons, of course.
+-1-male_finished_masturbating=horny,Now that we are both naked and sticky, we should bathe in the hot springs. It really is quite relaxing.
+
+-1-female_must_masturbate=teasing,Welcome to the loser's circle, ~name~. We're all-inclusive here, you know how it is.
+-1-female_start_masturbating=glad,You have nothing to be shy about. If I can do it, so can you! The female body is lovely and deserves to be explored.
+-1-female_masturbating=horny,Very good ~name~, you are really getting into it! Keep it up!
+-1-female_finished_masturbating=teasing,A good orgasm is a sign of a happy body. You must be <i>very</i> happy!
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat can repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+must_masturbate_first=loss,So what do I do? I don't have any clothes left to bet.... wait, what did you say?
+must_masturbate=loss,...Do I really have to do what they did?
+must_masturbate=calm,Guess we'll see if this is as good as you made it seem.
+must_masturbate=annoyed,Welp. Never living this one down.
+start_masturbating=starting,How disgraceful... I've never tried this before, so don't judge me!
+start_masturbating=starting,This isn't the type of thing the goddess of light should do...
+masturbating=masturbate_a,D-don't cheer me on! It's making me self-conscious.
+masturbating=masturbate_b,This could be worse, all things considered...
+masturbating=annoyed,Glad you're enjoying the show, oh mortal peanut gallery.
+masturbating=masturbate_c,It actually feels kind of nice...
+heavy_masturbating=heavy_a,So you guys do this for fun? I think I see why...
+heavy_masturbating=heavy_b,This feeling...I can't get enough of it!
+heavy_masturbating=heavy_c,What happens if I... <i>oh</i>! <i>Ohhhhh</i>...
+heavy_masturbating=heavy_c,Now I regret not bringing my staff...
+finishing_masturbating=finishing,It's too good! Ahhhh! A....ahhhh! Hah....
+finishing_masturbating=finishing,Here it comes! Ah! Ahhhh...
+finishing_masturbating=finishing,Watch this!
+finished_masturbating=finished,Whoa... gonna need a few minutes to recover from that...
+finished_masturbating=finished,That felt great! Almost makes up for my embarrassing appearance.
+finished_masturbating=finished,Phew... what a rush! I feel like a new goddess!
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+game_over_victory=calm,Victory!
+
+#stage-specific lines that override the stage-generic one
+0-game_over_victory=tranquil,Well, that was easier than expected. Thank you for this... experience.
+1-game_over_victory=tranquil,The games of humankind really are magical, aren't they?
+2-game_over_victory=glad,And thus you have seen the light.
+3-game_over_victory=calm,Good game, everyone! I had more fun than I expected.
+4-game_over_victory=glad,Good game! I'll keep you all close to my heart... fully clothed, of course.
+5-game_over_victory=tranquil,Well, <i>that</i>was almost a disaster! You put up a good fight, though!
+6-game_over_victory=annoyed,I mean, I won, but considering how little I have left, it's a hollow victory.
+-3-game_over_victory=glad,I'm glad I won and all, but I'm going to get dressed now, if you don't mind.
+
+
+#GAME OVER DEFEAT
+game_over_defeat=finished,Excellent work, ~name~. Maybe I might come back here after all!
+game_over_defeat,target:pit=finished,Congratulations, Pit! Have you changed your mind about this place yet?
+game_over_defeat,target:human=finished,Good on you, ~name~. You should have said you were good at poker!
+
+
+#CHARACTER-SPECIFIC LINES
+#Lines can be targeted at specific characters at specific stages in the game. The best way to learn how to use these is to read these in an existing character's document.
+#There are a large number of case variables you can specify, and many can be used in conjunction if you want to get really specific, like a line to Link if he's the only male, he's removing his tunic, he had three of a kind, and Zelda is present and got a royal flush.
+# tag="situation" - This is what is happening in the game, using the same labels you used for the dialogue. This field is mandatory.
+# target="character" - This is where you put the character's name that you want to specifically target. This is optional, but you'll probably be using this, a filter, or an alsoPlaying. The tag name is the character's folder name, which is usually their first name. You can target the human player by targeting the "human" folder.
+# filter="tag" - Instead of using a specific target, you can target a group of people using a filter like "princess". These descriptor tags aren't to be confused with the "tag=" line above.
+# targetStage="0" - You can specify which stage the target is in when saying the line. If it's something that only happens once to a character, like a breast reveal, this is unnecessary. But if you use it on something more common like "female_must_strip", this will limit it to a particular occasion and will ensure that the line is only spoken once per game.
+# alsoPlaying="character" - This is used either by itself for a situation that doesn't have a target like "good_hand" or "heavy_masturbating", or it can be used in conjunction with a target or filter to ensure that the speaker, the target, and someone else are all playing.
+# alsoPlayingStage="0" - Just like targetStage, but for the alsoPlaying character.
+# alsoPlayingHand="One Pair" - You can even tailor the responses to what the alsoPlaying character has as a hand. Possibilities are: High Card, One Pair, Two Pair, Three of a Kind, Straight, Flush, Full House, Four of a Kind, Straight Flush, Royal Flush.
+# hasHand="Two Pair" - Like alsoPlayingHand, but for the character who is speaking.
+# oppHand="Three of a Kind" - Like alsoPlayingHand and hasHand, but for the targeted/filtered character
+# totalMales="1" - You can make some lines be spoken if only an exact number of males are playing. This includes the player character.
+# totalFemales="4" - Like the above option, but for females.
+# silent="" - You can add this to the case to make the dialogue box disappear entirely.
+# img="0-calm.png" - After state, the image name is specified. To make this work correctly, you must specify both the stage and add .png.
+
+#TARGETED LINES
+
+0-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+0-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+0-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+0-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+0-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+0-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+0-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+0-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+0-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+0-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+0-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+0-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+0-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+0-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+0-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+0-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+0-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+0-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+0-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+0-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+0-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+0-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+0-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+0-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+0-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+0-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+0-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+0-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+0-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+0-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+0-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+0-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+0-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+0-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+0-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+0-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+0-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+0-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+0-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+0-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+0-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+0-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+0-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+0-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+0-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+0-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+0-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+0-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+0-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+0-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+0-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+0-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+0-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+0-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+0-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+0-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+0-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+0-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+0-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+0-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+0-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+0-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+0-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+0-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+0-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+0-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+0-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+0-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+0-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+0-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+0-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+0-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+0-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+0-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+0-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+0-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+0-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+0-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+0-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+0-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+0-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+0-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+0-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+0-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+0-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+0-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+0-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+0-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+0-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+0-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+0-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+0-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+0-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+0-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+0-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+0-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+0-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+0-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+0-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+0-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+0-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+0-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+0-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+0-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+0-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+0-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+0-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+0-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+0-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+0-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+0-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+0-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+0-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+0-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+0-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+0-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+0-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+0-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+0-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+0-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+0-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+0-female_removed_major,target:samus=teasing,I kid, I kid.
+0-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+0-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+0-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+0-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+0-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+0-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+0-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+0-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+0-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+0-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+0-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+0-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+0-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+0-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+0-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+0-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+0-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+0-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+0-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+0-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+0-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+1-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+1-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+1-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+1-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+1-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+1-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+1-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+1-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+1-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+1-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+1-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+1-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+1-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+1-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+1-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+1-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+1-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+1-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+1-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+1-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+1-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+1-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+1-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+1-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+1-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+1-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+1-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+1-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+1-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+1-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+1-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+1-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+1-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+1-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+1-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+1-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+1-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+1-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+1-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+1-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+1-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+1-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+1-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+1-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+1-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+1-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+1-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+1-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+1-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+1-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+1-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+1-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+1-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+1-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+1-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+1-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+1-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+1-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+1-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+1-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+1-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+1-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+1-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+1-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+1-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+1-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+1-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+1-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+1-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+1-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+1-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+1-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+1-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+1-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+1-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+1-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+1-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+1-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+1-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+1-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+1-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+1-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+1-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+1-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+1-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+1-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+1-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+1-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+1-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+1-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+1-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+1-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+1-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+1-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+1-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+1-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+1-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+1-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+1-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+1-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+1-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+1-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+1-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+1-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+1-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+1-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+1-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+1-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+1-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+1-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+1-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+1-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+1-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+1-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+1-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+1-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+1-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+1-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+1-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+1-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+1-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+1-female_removed_major,target:samus=teasing,I kid, I kid.
+1-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+1-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+1-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+1-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+1-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+1-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+1-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+1-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+1-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+1-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+1-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+1-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+1-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+1-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+1-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+1-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+1-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+1-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+1-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+1-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+1-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+2-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+2-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+2-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+2-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+2-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+2-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+2-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+2-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+2-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+2-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+2-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+2-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+2-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+2-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+2-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+2-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+2-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+2-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+2-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+2-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+2-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+2-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+2-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+2-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+2-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+2-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+2-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+2-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+2-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+2-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+2-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+2-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+2-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+2-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+2-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+2-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+2-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+2-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+2-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+2-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+2-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+2-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+2-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+2-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+2-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+2-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+2-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+2-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+2-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+2-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+2-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+2-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+2-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+2-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+2-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+2-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+2-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+2-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+2-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+2-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+2-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+2-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+2-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+2-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+2-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+2-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+2-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+2-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+2-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+2-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+2-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+2-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+2-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+2-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+2-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+2-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+2-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+2-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+2-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+2-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+2-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+2-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+2-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+2-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+2-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+2-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+2-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+2-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+2-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+2-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+2-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+2-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+2-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+2-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+2-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+2-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+2-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+2-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+2-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+2-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+2-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+2-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+2-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+2-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+2-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+2-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+2-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+2-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+2-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+2-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+2-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+2-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+2-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+2-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+2-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+2-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+2-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+2-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+2-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+2-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+2-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+2-female_removed_major,target:samus=teasing,I kid, I kid.
+2-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+2-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+2-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+2-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+2-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+2-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+2-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+2-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+2-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+2-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+2-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+2-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+2-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+2-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+2-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+2-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+2-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+2-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+2-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+2-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+2-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+3-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+3-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+3-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+3-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+3-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+3-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+3-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+3-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+3-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+3-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+3-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+3-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+3-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+3-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+3-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+3-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+3-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+3-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+3-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+3-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+3-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+3-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+3-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+3-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+3-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+3-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+3-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+3-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+3-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+3-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+3-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+3-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+3-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+3-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+3-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+3-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+3-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+3-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+3-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+3-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+3-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+3-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+3-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+3-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+3-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+3-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+3-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+3-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+3-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+3-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+3-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+3-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+3-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+3-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+3-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+3-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+3-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+3-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+3-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+3-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+3-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+3-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+3-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+3-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+3-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+3-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+3-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+3-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+3-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+3-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+3-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+3-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+3-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+3-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+3-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+3-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+3-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+3-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+3-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+3-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+3-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+3-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+3-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+3-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+3-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+3-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+3-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+3-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+3-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+3-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+3-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+3-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+3-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+3-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+3-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+3-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+3-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+3-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+3-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+3-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+3-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+3-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+3-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+3-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+3-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+3-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+3-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+3-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+3-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+3-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+3-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+3-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+3-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+3-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+3-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+3-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+3-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+3-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+3-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+3-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+3-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+3-female_removed_major,target:samus=teasing,I kid, I kid.
+3-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+3-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+3-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+3-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+3-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+3-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+3-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+3-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+3-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+3-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+3-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+3-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+3-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+3-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+3-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+3-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+3-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+3-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+3-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+3-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+3-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+4-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+4-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+4-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+4-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+4-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+4-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+4-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+4-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+4-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+4-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+4-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+4-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+4-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+4-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+4-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+4-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+4-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+4-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+4-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+4-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+4-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+4-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+4-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+4-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+4-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+4-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+4-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+4-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+4-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+4-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+4-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+4-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+4-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+4-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+4-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+4-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+4-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+4-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+4-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+4-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+4-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+4-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+4-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+4-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+4-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+4-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+4-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+4-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+4-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+4-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+4-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+4-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+4-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+4-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+4-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+4-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+4-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+4-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+4-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+4-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+4-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+4-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+4-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+4-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+4-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+4-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+4-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+4-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+4-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+4-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+4-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+4-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+4-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+4-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+4-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+4-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+4-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+4-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+4-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+4-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+4-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+4-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+4-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+4-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+4-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+4-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+4-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+4-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+4-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+4-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+4-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+4-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+4-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+4-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+4-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+4-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+4-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+4-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+4-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+4-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+4-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+4-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+4-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+4-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+4-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+4-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+4-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+4-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+4-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+4-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+4-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+4-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+4-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+4-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+4-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+4-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+4-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+4-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+4-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+4-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+4-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+4-female_removed_major,target:samus=teasing,I kid, I kid.
+4-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+4-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+4-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+4-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+4-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+4-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+4-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+4-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+4-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+4-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+4-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+4-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+4-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+4-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+4-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+4-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+4-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+4-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+4-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+4-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+4-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+5-female_removing_major,target:mercy,targetStage:2=glad,Aw, look at the humans, wanting to dress up like us. That's adorable.
+5-female_medium_chest_is_visible,target:mercy=calm,Those are easily an eight. Maybe even better.
+5-female_finished_masturbating,target:mercy=horny,I think we've all learned a lot today from the good doctor here.
+5-female_removing_accessory,target:lux,targetStage:0,alsoPlaying:pit=calm,I don't play favorites here.
+5-female_removed_accessory,target:lux,targetStage:1,alsoPlaying:pit=glad,I think you and Pit have a lot in common, Lux.
+5-female_removing_minor,target:lux,targetStage:2=thoughtful,(<i>Whenever I hear the name "Lux", all I can think of is the Chariot Master's horse.</i>)
+5-female_crotch_is_visible,target:lux=smiteful,It's not even natural? ...how can you call yourself a warrior of light?!
+5-female_removed_accessory,target:revy,targetStage:4=teasing,<i>Maybe you'd be in better shape if you didn't have such a foul mouth.</i>
+5-female_removed_major,target:penny,targetStage:4=tranquil,It's cute, Penny! And it's comfortable? I should get a set for myself!
+5-female_finished_masturbating,target:sharla=thoughtful,That ether rifle seems to be pretty effective on your stamina...
+5-female_finished_masturbating,target:d.va=teasing,A gamer like you should know not to pick fights you can't win.
+5-female_removed_minor,target:kyoko,targetStage:6=thoughtful,Those burns are pretty severe. If you like, I can take you to the Rewind Spring and get them patched up.
+5-female_crotch_is_visible,target:daisy=calm,Oh! Daisy! ...guess you're the genuine article, then.
+5-female_removed_major,target:chara,targetStage:5=tranquil,Well, nothing can stop <i>us</i> from getting it off of you.
+5-female_finished_masturbating,target:chell=calm,Making a note here:<i>huge</i> success.
+5-female_masturbating,target:hermione=worried,Well, that's an... interesting... use of magic.
+5-female_removing_accessory,target:scarlet_witch,targetStage:0,alsoPlaying:pit=tranquil,Look Pit! Even <i>humans</i> learned to fly before you!
+5-female_masturbating,target:scarlet_witch=worried,I could never use magic like that. I'm not a fan of bondage, amongst other things.
+5-female_removing_minor,filter:kind=tranquil,Remember, ~name~: you gotta stay upbeat, upbeat, upbeat...
+5-female_crotch_is_visible,filter:mean=teasing,Bullies will get no sympathy from me.
+5-female_chest_will_be_visible,filter:shy=calm,I believe in you, ~name~. I shall grant you the power to get through this.
+5-female_chest_will_be_visible,filter:exhibitionist=surprised,Wow. You... really have no shame, do you?
+5-female_crotch_is_visible,filter:exhibitionist=horny,I think I see why you'd want to show off like you do...
+5-female_crotch_is_visible,filter:princess=teasing,Remember, ~name~: a princess is always inferior to a goddess.
+5-female_removed_accessory,filter:silent=annoyed,It's a lot harder to make conversation with a mute than I expected.
+5-female_must_masturbate,filter:virtual=horny,I hope the girl behind the avatar is playing along, if you catch my drift.
+5-female_removed_major,filter:athletic=calm,I must say, ~name~, you keep in pretty good shape. Do you use Wii Fit?
+5-male_removed_major,filter:athletic=surprised,I must say, ~name~, you keep in <i>really</i> good shape. Even I'm impressed.
+5-female_crotch_is_visible,filter:redhead=horny,Look at you! You're almost as red as your hair!
+5-female_crotch_will_be_visible,filter:creepy=horny,Not so tough now that you're about to lose, huh?
+5-female_removing_accessory,target:mia,targetStage:2=thoughtful,Speaking of, why is it I'm sensing two souls inhabiting your body?
+5-female_crotch_is_visible,target:mia=surprised,Ooh, a power play! Well, I won't lose to you, attorney.
+5-female_removed_major,target:mia=tranquil,Those are some nice words to live by.
+5-female_start_masturbating,target:moon=teasing,Wow, you're thirstier than a gatekeeper in Kanto!
+5-female_crotch_is_visible,target:elaine=tranquil,They should call you Elaine Marley, Mighty Fine Lady (tm)!
+5-female_start_masturbating,target:misty=glad,I don't know what you're scared of. You do performances in a swimsuit all the time, this isn't that much worse.
+5-female_crotch_is_visible,target:dawn=surprised,I was unaware humans could get natural hair that colorful! Thought it was a god-only thing...
+5-female_start_masturbating,target:dawn=tranquil,How courteous of you to move your hair for us.
+5-female_finished_masturbating,target:may=thoughtful,I give it a seven-point-eight out of ten. Too much juice.
+5-female_chest_will_be_visible,target:mileena=teasing,Does that even qualify as clothing In the first place?
+5-female_crotch_is_visible,target:blake,alsoPlaying:caleb=thoughtful,So Caleb, how much does a catgirl excite you compared to a human?
+5-female_start_masturbating,target:shantae=tranquil,Ooh, you know what would make this better? A pole! Should've brought my staff...
+5-female_removing_accessory,target:orendi,targetStage:0=surprised,What an interesting individual you are! Like the child of man and monster!
+5-male_chest_is_visible,target:mettaton=thoughtful,Is there any real purpose for robot nipples? I'm impressed your maker got the details as accurate as they did, though.
+5-female_removing_minor,target:amy_rose,targetStage:2=annoyed,For a species all about speed, you sure seem to be dragging this out.
+5-female_removed_major,target:nagisa,targetStage:4=thoughtful,Now I'm curious. Does dango taste good?
+5-female_start_masturbating,target:nagisa=tranquil,Is this the usual way humans put on plays? Maybe Pit wouldn't always fall asleep during them if they were like this!
+5-female_removed_minor,target:evie,targetStage:2=calm,How <i>cold</i> of you!
+5-male_removed_accessory,target:gay_spaghetti_chef,targetStage:0=thoughtful,This guy has, like, <i>two</i> frames of animation. Am I the only one who noticed? 
+5-female_crotch_is_visible,target:pauling=teasing,That body just screams 'Seduce me!', very nice.
+5-female_masturbating,target:lara=teasing,How often do you explore <i>these</i> peaks and valleys, Lara?
+5-female_must_masturbate,target:kurumu=teasing,Don't give her any sympathy. She got off easy, all things considered.
+5-female_removed_major,target:peach,targetStage:5=surprised,I remember your shorts being a lot... frillier.
+5-female_must_masturbate,target:peach=glad,A shame Peach, but I imagine this is easier than, say, streaking in a military base.
+5-female_crotch_is_visible,target:rosalina=worried,Seeing a fellow goddess exposed hits a lot closer to home than the others.
+5-male_chest_is_visible,target:link=teasing,Hylia chooses her champions well, I see.
+5-female_crotch_is_visible,target:zelda=teasing,So how's that Triforce of Wisdom working out for you?
+5-male_masturbating,target:ryu=tranquil,If only this was the turbo edition...
+5-female_removed_major,target:sheena,targetStage:6,alsoPlaying:pit=teasing,Hey Pit, I finally found someone who can gush about hot springs with you!
+5-female_must_masturbate,target:elizabeth=tranquil,Looks like I've beaten you, Elizabeth. Let that be a lesson that the skies belong to the gods!
+5-female_removed_accessory,target:lyn,targetStage:5=surprised,Our hair is so similar when you have it like that. Are you ripping off my style?
+5-female_removing_accessory,target:spooky,targetStage:0=thoughtful,(<i>I wish all souls could wield weapons. Maybe then the Underworld threat wouldn't have gotten so big...</i>)
+5-female_removed_accessory,target:marceline,targetStage:1=calm,You're awfully chipper for a vampire... and someone about to lose all her clothes. 
+5-female_large_chest_is_visible,target:seven=surprised,You're certainly attractive for a space-goer, Seven. Certainly moreso than a space pirate.
+5-male_masturbating,target:xander=tranquil,Yep. Exactly the sort of performance I'd expect from a normal guy like you, Xander.
+5-female_removing_accessory,target:raven,targetStage:0=annoyed,Spare us the edge, please. I get enough of that with Pittoo around...
+5-female_removed_major,target:alice=horny,Check out Little Miss Zebra over here! Clearly you were prepared to lose clothes tonight.
+5-female_medium_chest_is_visible,target:april=thoughtful,(<i>Why do I suddenly have a craving for pizza?</i>)
+5-female_crotch_is_visible,target:arwen=horny,Now I know why they call elves "the fairer folk".
+5-female_must_strip,target:buffy,targetStage:6,alsoPlaying:marceline=thoughtful,(<i>Maybe I should say something...then again, maybe not.</i>)
+5-male_finished_masturbating,target:captain_falcon=horny,A showman as always, Falcon. I liked it a lot.
+5-female_large_chest_is_visible,target:chara=tranquil,Guess what they say about drinking milk is true after all!
+5-female_masturbating,target:chara=horny,(<i>Surprisingly, Chara's still giving bad vibes, even in the middle of that... disturbing. But also admirable.</i>)
+5-female_removed_major,target:chell,targetStage:4=worried,I was hoping you weren't wearing anything under your jumpsuit. Does that make me a bad person?
+5-female_removed_major,target:d.va=horny,How many of your viewers would kill for this view, I wonder?
+5-female_removed_major,target:daisy=surprised,I never took you for the "thong" type, Daisy. I imagine the sand must be irritating.
+5-female_crotch_will_be_visible,target:daphne=teasing,Gather round, gang. Let's see- I mean get to, the bottom of this mystery.
+5-female_removing_accessory,target:daria,targetStage:2=surprised,Six toes? Is that normal?
+5-female_crotch_is_visible,target:dawn=horny,Now I'm no expert in house design, but know that yours is very pleasing to the eyes, Dawn.
+5-female_finished_masturbating,target:elaine=tranquil,Ocean, space, doesn't matter. No pirate will ever beat me!
+5-female_removed_accessory,target:elena,targetStage:1=calm,I'll let it slide. It's not like you have any authority here anyways.
+5-female_removed_major,target:elizabeth,targetStage:2=tranquil,That certainly <i>does</i> make this more interesting.
+5-female_finished_masturbating,target:evie=loss,I think the temperature just dropped a bit.
+5-male_small_crotch_is_visible,target:fred=teasing,I figured you were compensating for something, but this is worse than I thought.
+5-male_masturbating,target:gay_spaghetti_chef=annoyed,Can you hurry this up? This is starting to get boring. You feel the same, ~player~?
+5-female_chest_will_be_visible,target:gogo=horny,Are you finally putting your money where your mouth is? Now I'm a little excited.
+5-female_removed_accessory,target:harley,targetStage:3=calm,No, please, do go on.
+5-female_removed_accessory,target:hermione,targetStage:4=calm,You have some weird priorities, Hermione.
+5-female_removed_accessory,target:jane,targetStage:1=thoughtful,(<i>Wow. She seems so normal compared to most of the others here.</i>)
+5-female_removed_major,target:jasmine=glad,Oh yes. You had us all fooled. (<i>Did anyone really fall for it?</i>)
+5-female_finished_masturbating,target:kim=calm,That was fun. I could tell you knew <i>exactly</i> what to do.
+5-female_large_chest_is_visible,target:korra=horny,Sorry to stare, but that's the way this game goes...
+5-female_must_masturbate,target:kyoko=thoughtful,You seem pretty scared, Kyoko. Are you up to this?
+5-female_crotch_is_visible,target:lara=horny,Guess the "nude code" exists after all!
+5-female_finished_masturbating,target:leela=tranquil,Good show, Miss Monoeye, good show.
+5-female_removed_major,target:lilith,targetStage:6=calm,Your tattoo covers a lot more than I thought. It's pretty impressive, Lilith.
+5-male_removed_major,target:link,targetStage:6=horny,I can see the appeal of the armorless run now...
+5-female_finished_masturbating,target:lux=tranquil,You shone like a true warrior of light!
+5-female_removed_major,target:lyn=horny,Why don't you invite some of your sword lord friends next time, Lyn? With a body like that, imagine what Ike's packing...
+5-female_must_masturbate,target:marceline=calm,Good attempt, but futile. Now, guess what time it is?
+5-female_crotch_is_visible,target:may=teasing,Yes, we can definitely tell.
+5-female_small_chest_is_visible,target:meg=calm,I don't know what you were so upset about. There's more to life than breast size, you know. For example, maybe ~player~ is a leg person.
+5-female_masturbating,target:mercy=horny,To paraphrase you: <i>'Til Skyworld</i>!
+5-male_large_crotch_is_visible,target:mettaton=worried,Whoa, whoa! I'm pretty sure <i>most</i> penises shouldn't be the length of a blade, Mettaton.
+5-female_must_masturbate,target:mia=calm,How does it feel to be the one cornered for once, Mia?
+5-female_must_masturbate,target:mileena=calm,I don't feel the least bit bad for you.
+5-female_removed_major,target:misty,targetStage:3=That's a nice bikini. Was the cerulean intentional?
+5-female_must_strip,target:moon,targetStage:1=surprised,That's...wow. Are you even playing to win?
+5-female_finished_masturbating,target:nagisa=tranquil,Any chance of an encore performance?
+5-female_must_strip,target:nugi-chan,targetStage:6=smiteful,Don't blame the programming! You have the medium difficulty setting!
+5-female_finished_masturbating,target:orendi=annoyed,I swear, this girl is a walking mood swing...
+5-female_medium_chest_is_visible,target:pauling=horny,(<i>Considering how much she puts out, I'm surprised she never got with the Scout.</i>)
+5-female_removing_major,target:peach,targetStage:4=teasing,So is it going to be a black void, or something worth looking at?
+5-female_finished_masturbating,target:penny=thoughtful,For how shy you are, you put on a really nice show, Penny.
+5-female_medium_chest_is_visible,target:piper=worried,What a harsh environment to not even be able to get the clothes you need... you have my condolences.
+5-female_crotch_is_visible,target:raven=teasing,A bra but no bottoms? How risque!
+5-female_medium_chest_is_visible,target:revy=teasing,I'm going to enjoy putting you in your place, you crude girl.
+5-female_removed_major,target:rosalina=horny,Guess the galaxies were contained under that dress after all...
+5-female_must_masturbate,target:ruby=thoughtful,I honestly would've thought you'd bring your weapon for this, but the old fashioned way works too.
+5-male_large_crotch_is_visible,target:ryu=awkward,Wow... I bet it shoots farther than the arm of Dhalsim...
+5-female_removing_major,target:samus=surprised,Wait, Samus is a girl?
+5-female_removed_major,target:samus=teasing,I kid, I kid.
+5-female_removed_accessory,target:scarlet_witch,targetStage:2=tranquil,A helmet like that didn't really suit you anyway. You look <i>somewhat</i> normal with it off.
+5-female_removing_major,target:seven=glad,I take it you're the type who prefers utility over fashion.
+5-male_removed_major,target:shaggy=worried,(<i>He just seems... greasy.</i>)
+5-female_crotch_is_visible,target:shantae=awkward,The way you swing your hips is... mesmerizing...
+5-female_masturbating,target:sharla=teasing,You must press on, and on, and on!
+5-female_must_masturbate,target:shazza=horny,I've always wanted to pet a dingo, but I'll settle for watching one pet herself.
+5-female_finished_masturbating,target:sheena=teasing,(<i>You certainly loosened up fast. Now I'm glad Pit isn't here, since you'd probably jump him.</i>)
+5-female_removed_major,target:sonya=teasing,I see you looking at Sonya, ~player~. Fan of a woman in uniform?
+5-female_removed_major,target:spooky=glad,Yeaaahh... maybe this isn't such a good game for ghosts.
+5-female_must_masturbate,target:streaming-chan=surprised,Umm... did you forget you still have a hat?
+5-female_finished_masturbating,target:tifa=tranquil,I dedicate this victory to all the times Cloud beat me in Smash.
+5-female_crotch_is_visible,target:tracer=horny,Ah, <i>there's</i> the butt that broke the Internet.
+5-female_medium_chest_is_visible,target:twilight,targetStage:2=glad,I think you have the wrong idea about this game... you want to <i>keep</i> your underwear on...
+5-female_removed_accessory,target:velma,targetStage:6=thoughtful,It's a mystery to me why you chose to lose your bra <i>before</i> your glasses...
+5-female_removed_major,target:weiss=horny,Sorry, Ice Queen. We're just getting started...
+5-female_must_masturbate,target:wiifitfemale=teasing,Now <i>this</i> is a workout I'd like to see in the next Wii Fit.
+5-male_removed_minor,target:xander,targetStage:1=glad,You've got enthusiasm, if nothing else.
+5-female_large_chest_is_visible,target:zelda=surprised,So unashamed... guess you've got Farore's courage in you.
+5-female_removing_accessory,target:zoey,targetStage:4=annoyed,It's rude to have lead us on like that.
+5-female_must_strip,target:zoey,targetStage:5=tranquil,And that's what we call "karma", folks.
+5-female_masturbating,target:zone-tan=calm, I hear you're into tentacles, Zone-tan. You ever tried a Space Kraken? I'm sure you could find a use for the big lug.
+
+#EPILOGUE/ENDING
+#Note: an ending will certainly be made for Palutena, but is currently low priority.
+
+#ending=
+#    ending_gender="male"
+
+#    #each ending has a number of screens. each screen has an image, and one or more text boxes
+#    #the entry "screen" marks the start of a new screen
+#    screen=
+
+        #the text boxes in a screen
+        #the entry "text" starts a new text box
+        #text=The text in the text box.
+        #x=The x-position of the text box. Specifically, the position of the text box's left side. This can be a percentage, or the word "centered"
+        #y=The y-position of the top of the text box. Must be a percentage.
+        #width=The width of a text box. This is optional. Must be a percentage.
+        #arrow="up", "down", "left", or "right". Gives the text box a dialogue arrow in the specified direction. Can be left out, if you don't want the text box to be an arrow.
+
+    #this screen is an example
+    #the filename is the image you want to use
+    #screen=example-filename.png
+
+#        text=This is text that will be seen by the player. It has a width of 34% and an arrow pointing down.
+#      x=10%
+#        y=20%
+#       width=34%
+#        arrow=right
+
+#        text=This is a centered text box. It has the default width and an arrow pointing right.
+#        x=centered
+#        y=50%
+#        arrow=right
+
+#        text=This third text box has minimum amount of values specified. It uses the default width, and has no arrow.
+#        x=75%
+#        y=50%
+
+#if you want additional endings, start the new one with the "ending" line
+
