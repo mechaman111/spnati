@@ -23,6 +23,14 @@ function Save(){
 		'name' : '',
 		'gender' : "male",
 		'size' : "medium",
+		'autoFade' : 1,
+		'cardSuggest' : 2,
+		'gameDelay' : 3,
+		'dealAnimation' : 3,
+		'autoForfeit' : 4,
+		'clothing' : [false, false, true, false, true,
+			false, true, true, false, true,
+			false, false, true, false, true],
 		'endings' : {}
 	};
 
@@ -44,6 +52,14 @@ function Save(){
 		changePlayerGender(this.data['gender']);
 		changePlayerSize(this.data['size']);
 		setBackground(this.data['background']);
+		selectedChoices = this.data['clothing'].slice(0);
+		updateTitleClothing();
+
+		setAutoFade(this.data['autoFade']);
+		setCardSuggest(this.data['cardSuggest']);
+		setAITurnTime(this.data['gameDelay']);
+		setDealSpeed(this.data['dealAnimation']);
+		setAutoForfeit(this.data['autoForfeit']);
 	};
 
 	this.saveOptions = function(){
@@ -54,12 +70,46 @@ function Save(){
 		ind = back.indexOf('.');
 		back = parseInt(back.substr(0,ind));
 		this.data['background'] = back;
+
+		this.saveCookie();
+	};
+	this.saveIngameOptions = function(){
+		this.data['autoFade'] = AUTO_FADE?1:2;
+		this.data['cardSuggest'] = CARD_SUGGEST?1:2;
+		switch(GAME_DELAY){
+			case 0: this.data['gameDelay'] = 1; break;
+			case 300: this.data['gameDelay'] = 2; break;
+			default:
+			case 600: this.data['gameDelay'] = 3; break;
+			case 800: this.data['gameDelay'] =  4; break;
+			case 1200: this.data['gameDelay'] = 5;
+		}
+		switch(ANIM_DELAY){
+			case 0: this.data['dealAnimation'] = 1; break;
+			case 150: this.data['dealAnimation'] = 2; break;
+			default:
+			case 350: this.data['dealAnimation'] = 3; break;
+			case 800: this.data['dealAnimation'] = 4; break;
+		}
+		if(!AUTO_FORFEIT){
+			this.data['autoForfeit'] = 4;
+		}
+		else{
+			switch(FORFEIT_DELAY){
+				case 4000: this.data['autoForfeit'] = 1; break;
+				default:
+				case 7500: this.data['autoForfeit'] = 2; break;
+				case 10000: this.data['autoForfeit'] = 3; break;
+			}
+		}
+
 		this.saveCookie();
 	};
 	this.savePlayer = function(){
 		this.data['name'] = $nameField.val();
 		this.data['gender'] = players[HUMAN_PLAYER].gender;
 		this.data['size'] = players[HUMAN_PLAYER].size;
+		this.data['clothing'] = selectedChoices;
 		this.saveCookie();
 	};
 
@@ -87,6 +137,10 @@ function Save(){
 
 var save = new Save();
 
-$('#options-modal-button').click(function(){
+function saveOptions(){
 	save.saveOptions();
-});
+};
+
+function saveIngameOptions(){
+	save.saveIngameOptions();
+}

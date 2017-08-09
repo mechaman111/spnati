@@ -83,47 +83,81 @@ var allEndings = [];
 var anyEndings = [];
 var maleEndings = [];
 var femaleEndings = [];
+var isEndingLoaded = [];
 var galleryPage = 0;
 var galleryPages = -1;
 var epp = 20;
 var selectedEnding = -1;
+var GALLERY_GENDER = 'all';
+var loadIndex = 0;
 
 function loadGalleryEndings(){
 	if(allEndings.length>0){
 		return;
 	}
 	for(var i=0; i<loadedOpponents.length; i++){
+		isEndingLoaded.push(false);
+	}
+	for(var i=0; i<loadedOpponents.length; i++){
 		if(loadedOpponents[i].ending){
-			//We don't know how many endings each character has so we load files asynchronicly to not mess up the order
-			//There might be better solution to that
-			$.ajax({
-				async: false,
-				type: "GET",
-				url: loadedOpponents[i].folder + 'behaviour.xml',
-				dataType: "text",
-				success: function(xml){
-					var endings = $(xml).find('epilogue');
-					endings.each(function(){
-						var gending = new GEnding(loadedOpponents[i], this)
-						allEndings.push( gending );
-						switch(gending.gender){
-							case 'male': maleEndings.push(gending);
-							break;
-							case 'female': femaleEndings.push(gending);
-							break;
-							default: anyEndings.push(gending);
-							break;
-						}
-					});
-				}
-			});
-
+			loadEndingXml(i);
+		}
+		else{
+			isEndingLoaded[i] = true;
 		}
 	}
+
+	//I'm not using setInterval on purpose, although it shouldn't be necessary
+	setTimeout(fetchLoadedEndings,1);
+
 	//I don't know why but sometimes start button enables itself at start.
 	//Strangely it only happens when I refresh browser (firefox) after anabling it by picking valid epilouge
 	$galleryStartButton.attr('disabled', true);
-	galleryGender('all');
+}
+
+function fetchLoadedEndings(){
+	if(loadIndex >= isEndingLoaded.length){
+		return;
+	}
+	//If it's false go straight to setting new timeout
+	if(isEndingLoaded[loadIndex]!=false){
+		while(loadIndex<isEndingLoaded.length && isEndingLoaded[loadIndex]!=false){
+			if(isEndingLoaded[loadIndex]==true){
+				loadIndex++;
+			}
+			else{
+				var endings = isEndingLoaded[loadIndex];
+				endings.each(function(){
+					var gending = new GEnding(loadedOpponents[loadIndex], this)
+					allEndings.push( gending );
+					switch(gending.gender){
+						case 'male': maleEndings.push(gending);
+						break;
+						case 'female': femaleEndings.push(gending);
+						break;
+						default: anyEndings.push(gending);
+						break;
+					}
+				});
+
+				loadIndex++;
+				galleryGender(GALLERY_GENDER);
+			}
+		}
+	}
+	setTimeout(fetchLoadedEndings, 200);
+}
+
+function loadEndingXml(index){
+	$.ajax({
+		type: "GET",
+		url: loadedOpponents[index].folder + 'behaviour.xml',
+		dataType: "text",
+		success: function(xml){
+			var endings = $(xml).find('epilogue');
+			isEndingLoaded[index] = endings;
+		}
+	});
 }
 
 function loadEndingThunbnail(element, ending){
@@ -151,6 +185,7 @@ function loadThumbnails(){
 }
 
 function galleryGender(gender){
+	GALLERY_GENDER = gender;
 	$('.gallery-gender-button').css('opacity', 0.4);
 	switch(gender){
 		case 'male':
@@ -209,7 +244,6 @@ function selectEnding(i){
 		$galleryStartButton.attr('disabled', false);
 		chosenEpilogue = ending;
 		$selectedEndingLabels[0].html(ending.title);
-		console.log(chosenEpilogue);
 	}
 	else{
 		$galleryStartButton.attr('disabled', true);
@@ -238,6 +272,16 @@ function selectEnding(i){
 }
 
 function doEpilogueFromGallery(){
+	if($nameField.val()){
+		players[HUMAN_PLAYER].label = $nameField.val();
+	}
+	else{
+		switch(chosenEpilogue.gender){
+			case "male": players[HUMAN_PLAYER].label = "Mister"; break;
+			case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
+			default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
+		}
+	}
 	clearEpilogueBoxes();
 	epilogueScreen = 0; //reset epilogue position in case a previous epilogue played before this one
 	epilogueText = 0;

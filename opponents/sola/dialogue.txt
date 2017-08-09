@@ -1,0 +1,2324 @@
+#required for behaviour.xml
+first=Sola
+last= 
+label=Sola
+gender=female
+size=large
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=3
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and British. See tag_list.txt for a list of tags.
+tag=innocent
+tag=student
+tag=shy
+
+#required for meta.xml
+#select screen image
+pic=0-calm
+height=5'2"
+from=Legend of Dark Witch
+writer=SuperfluousUser
+artist=SuperfluousUser
+description=Sola is the daughter of a foreign aristocrat. She is found at the Chelsea School of Magic's Dormitory. Age: 18.
+
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,OK. Let's play a fun card game.
+
+
+
+#CLOTHING
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#How much they cover = important (covering nudity), major (a lot of skin), minor (small amount of skin), extra (accessories, boots, etc)
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#There must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
+#Below is an example of Rosalina's clothing. Please adjust these values to match your character's clothing.
+clothes=hat,hat,extra,other
+clothes=ribbon,ribbon,extra,other
+clothes=shoes,shoes,extra,other
+clothes=Dress,dress,major,upper
+clothes=Stockings,stockings,minor,lower
+clothes=Bra,bra,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
+#The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+#The lines written here are examples only and should be replaced.
+swap_cards=calm,May I please have ~cards~ cards?
+swap_cards=calm,I would lik ~cards~, please.
+swap_cards=calm,~cards~ new cards, if you don't mind.
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+#The character thinks they have a good hand
+good_hand=happy,These are nice.
+good_hand=happy,Oh, how very nice.
+good_hand=happy,A lovely hand.
+
+#The character thinks they have an okay hand
+okay_hand=calm,These cards are alright.
+okay_hand=calm,I have an average hand.
+okay_hand=calm,This is a decent hand.
+okay_hand=calm,Hmmm, okay then.
+
+#The character thinks they have a bad hand
+bad_hand=sad,These cards could be better...
+bad_hand=sad,This is a bad hand.
+bad_hand=sad,This is... concerning.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-good_hand=happy,Yay! I mean... Frowney Poker Face.
+0-okay_hand=calm,These are OK.
+0-bad_hand=shy,M-my cards are g-great...
+
+#lost hat
+1-good_hand=happy,Nice. I might win.
+1-okay_hand=calm,I'm doing OK. 
+1-bad_hand=shy,What a poor hand.
+
+#lost ribbon
+2-good_hand=happy,Yay! I mean... Frowney Poker Face.
+2-okay_hand=calm,These are OK.
+2-bad_hand=shy,M-my cards are g-great...
+
+#lost shoes
+3-good_hand=happy,Nice. I might win.
+3-okay_hand=calm,I'm doing OK. 
+3-bad_hand=shy,What a poor hand.
+
+#lost dress
+4-good_hand=happy,Yay! I mean... Frowney Poker Face.
+4-okay_hand=calm,These are OK.
+4-bad_hand=shy,M-my cards are g-great...
+
+#lost stockings
+5-good_hand=happy,Nice. I might win.
+5-okay_hand=calm,I'm doing OK. 
+5-bad_hand=shy,What a poor hand.
+
+#lost bra
+6-good_hand=happy,Yay! I mean... Frowney Poker Face.
+6-okay_hand=calm,These are OK.
+6-bad_hand=shy,M-my cards are g-great...
+
+#lost all clothing
+-3-good_hand=embarrassed,OK... Keep calm... These can win...
+-3-okay_hand=embarrassed,I had hoped for better... Please be enough.
+-3-bad_hand=embarrassed,Please no... Please no... Please no...
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing hat
+0-must_strip_winning=shy,This isn't the type of game I thought it was...
+0-must_strip_winning=shy,I have to... Remove my hat..?
+0-must_strip_normal=loss,I can't forgive Blad for getting me into this...
+0-must_strip_normal=happy,I didn't know I had to check my hat.
+0-must_strip_losing=embarrassed,My family's rich... I can pay you to let me go home...
+0-must_strip_losing=embarrassed,Wait... We have to... Undress..?
+0-stripping=strip,H-here I go...
+1-stripped=stripped,I don't want to play anymore...
+
+#losing ribbon
+1-must_strip_winning=shy,I guess it's only fair...
+1-must_strip_normal=shy,Do I have to..?
+1-must_strip_losing=shy,I g-guess it's j-just my ribbon...
+1-must_strip_winning=embarrassed,It's h-how the game is played...
+1-must_strip_normal=embarrassed,M-May I go home instead?
+1-must_strip_losing=embarrassed,N-Nobody look!
+1-must_strip_winning=loss,This is awful...
+1-must_strip_normal=loss,I can't believe this is happening...
+1-must_strip_losing=loss,Why me?
+1-stripping=strip,I'll just pull this here and...
+2-stripped=stripped,T-There!
+
+#losing shoes
+2-must_strip_winning=shy,I guess It's only my shoes...
+2-must_strip_normal=shy,Um... ~player~..? Why are you staring? Do you have a foot fetish?
+2-must_strip_losing=shy,N-NO! I c-can't keep losing like this!
+2-must_strip_winning=embarrassed,P-Please d-don't stare...
+2-must_strip_normal=embarrassed,I don't want to be a sore loser, but...
+2-must_strip_losing=embarrassed,P-Please... I can pay you to let me keep my shoes...
+2-must_strip_winning=loss,No magic can help me now...
+2-must_strip_normal=loss,I have never been more embarrassed...
+2-must_strip_losing=loss,Darn my horrible luck...
+2-stripping=strip,Here I go... Stripping off my shoes...
+3-stripped=stripped,Um... Are you sure this is legal..?
+
+#losing dress
+3-must_strip_winning=shy,Why am I losing so much..?
+3-must_strip_normal=shy,T-This is my uniform... Please don't damage it...
+3-must_strip_losing=shy,I will need this back after the game. I won't graduate from Chelsea until I'm 21.
+3-must_strip_winning=embarrassed,Please... Stop looking at me like that...
+3-must_strip_normal=embarrassed,A-Are you... Aroused..?
+3-must_strip_losing=embarrassed,Why do you people like playing this..?
+3-must_strip_winning=happy,I guess I'm still winning so...
+3-must_strip_normal=interested,I don't want to keep losing like this...
+3-must_strip_losing=loss,This game is impossible...
+3-stripping=strip,OK... Here I go... Is it too late to turn back..?
+4-stripped=stripped,D-Do you think m-my underwear is c-cute..?
+
+#losing stockings
+4-must_strip_winning=shy,I gues it isn't too bad if I'm winning...
+4-must_strip_normal=shy,Um... You guys are going to do this too, r-right..?
+4-must_strip_losing=shy,(OK, Sola. Keep calm... This will be over soon.)
+4-must_strip_winning=embarrassed,Well... I guess it's OK... I'm still winning...
+4-must_strip_normal=embarrassed,This... Isn't as bad as I thought it'd be...
+4-must_strip_losing=embarrassed,I don't want to lose these but I guess I have to...
+4-must_strip_winning=happy,Yeah! I'm winning! But I still have to remove my stockings...
+4-must_strip_normal=happy,This is fine... I'm kind of having fun...
+4-must_strip_losing=calm,I'm OK with this... It's part of the game, r-right?
+4-stripping=strip,H-here I go...
+5-stripped=stripped,Goodbye, stockings. You were very comfortable.
+
+#losing bra
+5-must_strip_winning=shy,I'm having... fun..?
+5-must_strip_normal=shy,I have to show you my nipples now? OK...
+5-must_strip_losing=shy,Y-You want me to... Bare my breasts..?
+5-must_strip_winning=embarrassed,I doubt the Chelsea School would allow me to do this...
+5-must_strip_normal=embarrassed,It's time to... Remove my brassiere...
+5-must_strip_losing=embarrassed,OK... Time to bare my bosom...
+5-must_strip_winning=excited,If I have to bare my breasts to win, so be it.
+5-must_strip_normal=happy,This is OK... I can turn this around.
+5-must_strip_losing=shocked,I can't lose this! I'd be almost naked!
+5-stripping=strip,Here we go... Let's do this... 3... 2... 1... 
+6-stripped=stripped,Stripped!
+
+#losing panties
+6-must_strip_winning=shy,I must make sacrifices to win...
+6-must_strip_normal=shy,OK... This is bad...
+6-must_strip_losing=embarrassed,No! P-Please not this!
+6-must_strip_winning=embarrassed,I'm still winning, but I don't feel like a winner...
+6-must_strip_normal=embarrassed,This is my last chance to turn it around...
+6-must_strip_losing=shy,I can pay you a lot of money to let me leave now... Please..?
+6-must_strip_winning=interested,I'm feeling all hot and bothered...
+6-must_strip_normal=interested,I didn't think I'd like this this much...
+6-must_strip_losing=interested,I kind of... Want to lose...
+6-stripping=strip,D-Down they go!
+7-stripped=stripped,Please don't stare... I know I'm not that attractive...
+
+
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_human_must_strip=interested,What they say to a male player who has lost a round
+male_must_strip=interested,What they say to a male NPC who has lost a round
+female_human_must_strip=interested,What they say to a female player who has lost a round
+female_must_strip=interested,What they say to a female NPC who has lost a round
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_human_must_strip=horny,I, um... I rally wanna see this...
+0-male_must_strip=happy,Take it off, ~name~. I've gotta see what's underneath.
+0-female_human_must_strip=horny,I, um... I rally wanna see this...
+0-female_must_strip=excited,You look so embarrassed but so cute, ~name~.
+0-female_must_strip=happy,Nice. Take it off.
+0-male_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+0-male_must_strip=interested,I've never seen a guy disrobe before...
+0-female_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+0-female_must_strip=happy,We're both girls. don't be shy.
+0-female_must_strip=interested,They'd frown on this at Chelsea, but why not enjoy it, ~name~?
+0-female_must_strip,target:zizou=happy,Take THAT! Serves you right for perving on me.
+0-female_must_strip,target:riva=happy,Hahahaha! Haugty Princess Riva finally gets humbled.
+0-female_must_strip,target:blad=happy,You're enjoying this, Blad? You know you're not getting paid, right?
+0-female_must_strip,target:ruby=happy,You also go to a magical school? Cool!
+0-female_must_strip,target:yang=happy,You also go to a magical school? Cool!
+0-female_must_strip,target:blake=happy,You also go to a magical school? Cool!
+0-female_must_strip,target:weiss=happy,You also go to a magical school? Cool!
+
+
+#lost hat
+1-male_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+1-male_must_strip=excited,Yeah! I'm gonna see a naked guy!
+1-female_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+1-female_must_strip=interested,It's OK... We all have to undress.
+1-male_human_must_strip=horny,I admit it... You're turning me on right now.
+1-male_must_strip=shy,I wonder how big it is...
+1-female_human_must_strip=horny,I admit it... You're turning me on right now.
+1-female_must_strip=excited,Nice! You'll be naked before me!
+1-female_must_strip,target:zizou=happy,It'll be nice to see you strip, Zizou.
+1-female_must_strip,target:riva=happy,I hope you like public nudity, Riva.
+1-female_must_strip,target:blad=happy,You are really having fun, aren't you, Blad?
+1-female_must_strip,target:ruby=interested,Would your school allow such lewdness?
+1-female_must_strip,target:yang=interested,Would your school allow such lewdness?
+1-female_must_strip,target:blake=interested,Would your school allow such lewdness?
+1-female_must_strip,target:weiss=interested,Would your school allow such lewdness?
+
+
+
+#lost ribbon
+2-male_human_must_strip=horny,I, um... I rally wanna see this...
+2-male_must_strip=happy,Take it off, ~name~. I've gotta see what's underneath.
+2-female_human_must_strip=horny,I, um... I rally wanna see this...
+2-female_must_strip=excited,You look so embarrassed but so cute, ~name~.
+2-female_must_strip=happy,Nice. Take it off.
+2-male_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+2-male_must_strip=interested,I've never seen a guy disrobe before...
+2-female_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+2-female_must_strip=happy,We're both girls. don't be shy.
+2-female_must_strip=interested,They'd frown on this at Chelsea, but why not enjoy it, ~name~?
+2-female_must_strip,target:zizou=excited,I'm beating you worse than when you were dressed as Franzer.
+2-female_must_strip,target:riva=excited,serves you right for stealing all the Syega crystals.
+2-female_must_strip,target:blad=excited,
+2-female_must_strip,target:ruby=Shocked,Such perverse behavior! I doubt your school would like it.
+2-female_must_strip,target:yang=Shocked,Such perverse behavior! I doubt your school would like it.
+2-female_must_strip,target:blake=Shocked,Such perverse behavior! I doubt your school would like it.
+2-female_must_strip,target:weiss=Shocked,Such perverse behavior! I doubt your school would like it.
+
+#lost shoes
+3-male_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+3-male_must_strip=excited,Yeah! I'm gonna see a naked guy!
+3-female_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+3-female_must_strip=interested,It's OK... We all have to undress.
+3-male_human_must_strip=horny,I admit it... You're turning me on right now.
+3-male_must_strip=shy,I wonder how big it is...
+3-female_human_must_strip=horny,I admit it... You're turning me on right now.
+3-female_must_strip=excited,Nice! You'll be naked before me!
+3-female_must_strip,target:zizou=interested,Now I can see why you like watching girls strip, Zizou...
+3-female_must_strip,target:riva=happy,You're losing that dancer's outfit faster than you lost to Zizou, Riva.
+3-female_must_strip,target:blad=angry,How are you still so happy, Blad?
+3-female_must_strip,target:ruby=interested,How naughty... Do your teachers discipline you for such behavior?
+3-female_must_strip,target:yang=interested,How naughty... Do your teachers discipline you for such behavior?
+3-female_must_strip,target:blake=interested,How naughty... Do your teachers discipline you for such behavior?
+3-female_must_strip,target:weiss=interested,How naughty... Do your teachers discipline you for such behavior?
+
+
+
+#lost dress
+4-male_human_must_strip=horny,I, um... I rally wanna see this...
+4-male_must_strip=happy,Take it off, ~name~. I've gotta see what's underneath.
+4-female_human_must_strip=horny,I, um... I rally wanna see this...
+4-female_must_strip=excited,You look so embarrassed but so cute, ~name~.
+4-female_must_strip=happy,Nice. Take it off.
+4-male_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+4-male_must_strip=interested,I've never seen a guy disrobe before...
+4-female_human_must_strip=interested,Please don't cover up... I wanna see you, ~player~.
+4-female_must_strip=happy,We're both girls. don't be shy.
+4-female_must_strip=interested,They'd frown on this at Chelsea, but why not enjoy it, ~name~?
+4-female_must_strip,target:zizou=shocked,Zizou! You look so good! How do you stay in such good shape!
+4-female_must_strip,target:riva=shocked,Riva! You're still so prideful after losing your clothes?!
+4-female_must_strip,target:blad=shocked,Blad! Why are you so Happy?!
+4-female_must_strip,target:ruby=excited,I want to see your flower, Ruby Rose.
+4-female_must_strip,target:yang=shocked,Your bosom is massive! I want to see you naked now.
+4-female_must_strip,target:blake=happy,Your outfit is too risque, Ms. Belladonna. Please remove it.
+4-female_must_strip,target:weiss=happy,You are also quite wealthy? Well then, Weiss, PAY up. Get it?
+
+
+
+#lost stockings
+5-male_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+5-male_must_strip=excited,Yeah! I'm gonna see a naked guy!
+5-female_human_must_strip=interested,Yay. I really wanna see you naked, ~player~.
+5-female_must_strip=interested,It's OK... We all have to undress.
+5-male_human_must_strip=horny,I admit it... You're turning me on right now.
+5-male_must_strip=shy,I wonder how big it is...
+5-female_human_must_strip=horny,I admit it... You're turning me on right now.
+5-female_must_strip=excited,Nice! You'll be naked before me!
+5-female_must_strip,target:zizou=happy,It's time to admit defeat, Zizou.
+5-female_must_strip,target:riva=happy,You look adorable, Princess.
+5-female_must_strip,target:blad=happy,I wish I was having as much fun as you are, Blad.
+5-female_must_strip,target:ruby=horny,How naughty, Ms. Rose... You deserve a spanking.
+5-female_must_strip,target:yang=horny,Please, Yang... Just let me touch them once.
+5-female_must_strip,target:blake=horny,Do you need help out of that outfit, Blake?
+5-female_must_strip,target:weiss=horny,So, Weiss... Is your hair white all over?
+
+#lost bra
+
+6-male_human_must_strip=shy,Y-You have to undress too, ~player~.
+6-male_must_strip=shy,Y-Your turn, ~name~.
+6-female_human_must_strip=shy,N-now you have to undress too, ~name~.
+6-female_must_strip=shy,Y-You have to undress too, ~player~.
+6-male_human_must_strip=embarrassed,I-it's your turn... I won't be the first one out.
+6-male_must_strip=embarrassed,You're gonna lose more than that, ~name~.
+6-female_human_must_strip=embarrassed,I-it's your turn... I won't be the first one out.
+6-female_must_strip=embarrassed,Y-Yeah... Take it off, ~name~. You're gonna lose.
+6-female_must_strip,target:zizou=shy,I'm not out of it yet! Hey! Stop staring at my breasts, Zizou!
+6-female_must_strip,target:riva=shy,Why are you staring at me like that, Riva... Are you... Aroused..?
+6-female_must_strip,target:blad=shy,B-Blad! Why are you staring like that! Don't lick your fingers like that!
+6-female_must_strip,target:ruby=excited,You're almost naked,Ruby! I can't wait to see your cute, little bottom.
+6-female_must_strip,target:yang=excited,You're almost naked, Yang! I long for your beatiful bosoms.
+6-female_must_strip,target:blake=excited,You're almost naked, Blake! I wonder what you're hiding...
+6-female_must_strip,target:weiss=excited,You're almost naked, Weiss! Time to cast aside your pride with your clothing.
+.
+
+#lost all clothing items
+-3-male_human_must_strip=shy,Y-You have to undress too, ~player~.
+-3-male_must_strip=shy,Y-Your turn, ~name~.
+-3-female_human_must_strip=shy,N-now you have to undress too, ~name~.
+-3-female_must_strip=shy,Y-You have to undress too, ~player~.
+-3-male_human_must_strip=embarrassed,I-it's your turn... I won't be the first one out.
+-3-male_must_strip=embarrassed,You're gonna lose more than that, ~name~.
+-3-female_human_must_strip=embarrassed,I-it's your turn... I won't be the first one out.
+-3-female_must_strip=embarrassed,Y-Yeah... Take it off, ~name~. You're gonna lose.
+-3-female_must_strip,target:zizou=embarrassed,D-Don't look, Zizou... Stop with the pervy smiling!
+-3-female_must_strip,target:riva=embarrassed,Y-You're getting stripped too, Riva. Don't get to cocky.
+-3-female_must_strip,target:blad=embarrassed,B-Blad... Stop enjoying this so much...
+-3-female_must_strip,target:ruby=shy,I can't believe I'm naked in front of you, Ruby... And you may be as well soon.
+-3-female_must_strip,target:yang=shy,Why couldn't it be you who was naked, Yang? I so want to see your bare breasts. But maybe I'll get lucky.
+-3-female_must_strip,target:blake=shy,You also will get naked soon enough, Blake.
+-3-female_must_strip,target:weiss=shy,Weiss... Please undress and pose for me.
+
+
+#masturbating
+-2-male_human_must_strip=shy,
+-2-male_must_strip=shy,
+-2-female_human_must_strip=shy,
+-2-female_must_strip=shy,
+-2-male_human_must_strip=embarrassed,
+-2-male_must_strip=embarrassed,
+-2-female_human_must_strip=embarrassed,
+-2-female_must_strip=embarrassed,
+-2-female_must_strip,target:zizou=horny,
+-2-female_must_strip,target:riva=horny,
+-2-female_must_strip,target:blad=horny,
+-2-female_must_strip,target:ruby=horny,Oh... Ruby... Your petite figure is just too much...
+-2-female_must_strip,target:yang=horny,Yang... Those breasts are making me sooooo wet...
+-2-female_must_strip,target:blake=horny,Your too cute, Blake. My little slit can't handle it.
+-2-female_must_strip,target:weiss=horny,Weiss... Yor indignant face is just too cute!
+
+
+#finished
+-1-male_human_must_strip=shy,
+-1-male_must_strip=shy,
+-1-female_human_must_strip=shy,
+-1-female_must_strip=shy,
+-1-male_human_must_strip=embarrassed,
+-1-male_must_strip=embarrassed,
+-1-female_human_must_strip=embarrassed,
+-1-female_must_strip=embarrassed,
+-1-female_must_strip,target:zizou=happy,
+-1-female_must_strip,target:riva=happy,
+-1-female_must_strip,target:blad=happy,
+-1-female_must_strip,target:ruby=interested,Do all you Beacon girls look so hot?
+-1-female_must_strip,target:yang=interested,Do all you Beacon girls look so hot?
+-1-female_must_strip,target:blake=interested,Do all you Beacon girls look so hot?
+-1-female_must_strip,target:weiss=interested,Do all you Beacon girls look so hot?
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_accessory=sad,A male character is about to remove a small item, with the type "extra".
+male_removed_accessory=calm,A male character has just removed that small item.
+female_removing_accessory=sad,A female character is about to remove a small item, with the type "extra".
+female_removed_accessory=calm,A female character has just removed that small item.
+
+#stage-specific lines that override the stage-generic ones
+
+##another character is removing accessories
+#fully clothed
+0-male_removing_accessory=angry,What? That's it?
+0-male_removed_accessory=loss,It's a start, at least...
+0-female_removing_accessory=angry,You're only taking that off?
+0-female_removing_accessory=angry,Why are you removing just that?
+0-female_removed_accessory=loss,It's early, I guess...
+0-female_removed_accessory=loss,It's fine. More to come later.
+0-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+0-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+0-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+0-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+0-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+0-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+0-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+0-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+0-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+0-female_removed_accessory,target:blad=loss,You're enjoying this....
+0-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+0-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+0-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+0-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 1 item
+1-male_removing_accessory=angry,What? That's it?
+1-male_removed_accessory=loss,It's a start, at least...
+1-female_removing_accessory=angry,You're only taking that off?
+1-female_removing_accessory=angry,Why are you removing just that?
+1-female_removed_accessory=loss,It's early, I guess...
+1-female_removed_accessory=loss,It's fine. More to come later.
+1-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+1-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+1-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+1-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+1-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+1-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+1-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+1-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+1-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+1-female_removed_accessory,target:blad=loss,You're enjoying this....
+1-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+1-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+1-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+1-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 2 items
+2-male_removing_accessory=angry,What? That's it?
+2-male_removed_accessory=loss,It's a start, at least...
+2-female_removing_accessory=angry,You're only taking that off?
+2-female_removing_accessory=angry,Why are you removing just that?
+2-female_removed_accessory=loss,It's early, I guess...
+2-female_removed_accessory=loss,It's fine. More to come later.
+2-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+2-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+2-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+2-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+2-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+2-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+2-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+2-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+2-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+2-female_removed_accessory,target:blad=loss,You're enjoying this....
+2-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+2-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+2-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+2-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 3 items
+3-male_removing_accessory=angry,What? That's it?
+3-male_removed_accessory=loss,It's a start, at least...
+3-female_removing_accessory=angry,You're only taking that off?
+3-female_removing_accessory=angry,Why are you removing just that?
+3-female_removed_accessory=loss,It's early, I guess...
+3-female_removed_accessory=loss,It's fine. More to come later.
+3-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+3-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+3-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+3-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+3-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+3-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+3-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+3-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+3-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+3-female_removed_accessory,target:blad=loss,You're enjoying this....
+3-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+3-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+3-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+3-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 4 items
+4-male_removing_accessory=angry,What? That's it?
+4-male_removed_accessory=loss,It's a start, at least...
+4-female_removing_accessory=angry,You're only taking that off?
+4-female_removing_accessory=angry,Why are you removing just that?
+4-female_removed_accessory=loss,It's early, I guess...
+4-female_removed_accessory=loss,It's fine. More to come later.
+4-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+4-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+4-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+4-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+4-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+4-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+4-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+4-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+4-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+4-female_removed_accessory,target:blad=loss,You're enjoying this....
+4-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+4-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+4-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+4-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 5 items
+5-male_removing_accessory=angry,What? That's it?
+5-male_removed_accessory=loss,It's a start, at least...
+5-female_removing_accessory=angry,You're only taking that off?
+5-female_removing_accessory=angry,Why are you removing just that?
+5-female_removed_accessory=loss,It's early, I guess...
+5-female_removed_accessory=loss,It's fine. More to come later.
+5-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+5-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+5-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+5-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+5-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+5-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+5-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+5-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+5-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+5-female_removed_accessory,target:blad=loss,You're enjoying this....
+5-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+5-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+5-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+5-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#lost 6 items
+6-male_removing_accessory=angry,What? That's it?
+6-male_removed_accessory=loss,It's a start, at least...
+6-female_removing_accessory=angry,You're only taking that off?
+6-female_removing_accessory=angry,Why are you removing just that?
+6-female_removed_accessory=loss,It's early, I guess...
+6-female_removed_accessory=loss,It's fine. More to come later.
+6-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+6-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+6-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+6-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+6-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+6-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+6-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+6-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+6-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+6-female_removed_accessory,target:blad=loss,You're enjoying this....
+6-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+6-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+6-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+6-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+
+#nude
+-3-male_removing_accessory=angry,What? That's it?
+-3-male_removed_accessory=loss,It's a start, at least...
+-3-female_removing_accessory=angry,You're only taking that off?
+-3-female_removing_accessory=angry,Why are you removing just that?
+-3-female_removed_accessory=loss,It's early, I guess...
+-3-female_removed_accessory=loss,It's fine. More to come later.
+-3-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+-3-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+-3-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+-3-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+-3-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+-3-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+-3-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+-3-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+-3-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+-3-female_removed_accessory,target:blad=loss,You're enjoying this....
+-3-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+-3-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+-3-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+-3-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#masturbating
+-2-male_removing_accessory=angry,What? That's it?
+-2-male_removed_accessory=loss,It's a start, at least...
+-2-female_removing_accessory=angry,You're only taking that off?
+-2-female_removing_accessory=angry,Why are you removing just that?
+-2-female_removed_accessory=loss,It's early, I guess...
+-2-female_removed_accessory=loss,It's fine. More to come later.
+-2-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+-2-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+-2-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+-2-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+-2-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+-2-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+-2-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+-2-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+-2-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+-2-female_removed_accessory,target:blad=loss,You're enjoying this....
+-2-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+-2-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+-2-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+-2-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+#finished
+-1-male_removing_accessory=angry,What? That's it?
+-1-male_removed_accessory=loss,It's a start, at least...
+-1-female_removing_accessory=angry,You're only taking that off?
+-1-female_removing_accessory=angry,Why are you removing just that?
+-1-female_removed_accessory=loss,It's early, I guess...
+-1-female_removed_accessory=loss,It's fine. More to come later.
+-1-female_removing_accessory,target:zizou=angry,C'mon, Zizou! That's all you're taking off?
+-1-female_removing_accessory,target:riva=angry,Really, Princess? That's it?
+-1-female_removing_accessory,target:blad=angry,All that talk and that's all you're removing, Blad?
+-1-female_removing_accessory,target:ruby=angry,That's it, Ruby? Beacon girls are boring.
+-1-female_removing_accessory,target:yang=angry,That's it, Yang? Beacon girls are boring.
+-1-female_removing_accessory,target:blake=angry,That's it, Blake? Beacon girls are boring.
+-1-female_removing_accessory,target:weiss=angry,That's it, Weiss? Beacon girls are boring.
+-1-female_removed_accessory,target:zizou=loss,You'll be naked soon enough, Zizou.
+-1-female_removed_accessory,target:riva=loss,You're going to strip for the room soon, Riva.
+-1-female_removed_accessory,target:blad=loss,You're enjoying this....
+-1-female_removed_accessory,target:ruby=loss,Beacon's uniform should just be nothing. You'd look better naked, Ruby.
+-1-female_removed_accessory,target:yang=loss,Beacon's uniform should just be nothing. You'd look better naked, Yang.
+-1-female_removed_accessory,target:blake=loss,Beacon's uniform should just be nothing. You'd look better naked, Blake.
+-1-female_removed_accessory,target:weiss=loss,Beacon's uniform should just be nothing. You'd look better naked, Weiss.
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_minor=calm,A male character is about to remove a clothing item with the type "minor".
+male_removed_minor=happy,The male character has just removed that minor item.
+female_removing_minor=calm,A female character is about to remove a clothing item with the type "minor".
+female_removed_minor=happy,The female character has just removed that minor item.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=interested,I was planning on this, ~name~.
+0-male_removed_minor=interested,Now you're feeling the heat.
+0-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+0-female_removed_minor=interested,You're going down, ~name~.
+0-male_removing_minor=excited,Step by step, you're going to lose.
+0-male_removed_minor=excited,All according to plan...
+0-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+0-female_removed_minor=excited,But this is a good start.
+0-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+0-female_removing_minor,target:riva=happy,You keep losing, Riva...
+0-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+0-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+0-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+0-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+0-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+0-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+0-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+0-female_removed_minor,target:blad=excited,You're not being paid, you know?
+0-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+0-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+0-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+0-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+
+#lost 1 item
+1-male_removing_minor=interested,I was planning on this, ~name~.
+1-male_removed_minor=interested,Now you're feeling the heat.
+1-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+1-female_removed_minor=interested,You're going down, ~name~.
+1-male_removing_minor=excited,Step by step, you're going to lose.
+1-male_removed_minor=excited,All according to plan...
+1-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+1-female_removed_minor=excited,But this is a good start.
+1-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+1-female_removing_minor,target:riva=happy,You keep losing, Riva...
+1-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+1-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+1-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+1-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+1-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+1-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+1-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+1-female_removed_minor,target:blad=excited,You're not being paid, you know?
+1-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+1-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+1-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+1-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#lost 2 items
+2-male_removing_minor=interested,I was planning on this, ~name~.
+2-male_removed_minor=interested,Now you're feeling the heat.
+2-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+2-female_removed_minor=interested,You're going down, ~name~.
+2-male_removing_minor=excited,Step by step, you're going to lose.
+2-male_removed_minor=excited,All according to plan...
+2-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+2-female_removed_minor=excited,But this is a good start.
+2-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+2-female_removing_minor,target:riva=happy,You keep losing, Riva...
+2-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+2-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+2-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+2-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+2-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+2-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+2-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+2-female_removed_minor,target:blad=excited,You're not being paid, you know?
+2-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+2-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+2-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+2-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#lost 3 items
+3-male_removing_minor=interested,I was planning on this, ~name~.
+3-male_removed_minor=interested,Now you're feeling the heat.
+3-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+3-female_removed_minor=interested,You're going down, ~name~.
+3-male_removing_minor=excited,Step by step, you're going to lose.
+3-male_removed_minor=excited,All according to plan...
+3-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+3-female_removed_minor=excited,But this is a good start.
+3-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+3-female_removing_minor,target:riva=happy,You keep losing, Riva...
+3-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+3-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+3-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+3-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+3-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+3-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+3-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+3-female_removed_minor,target:blad=excited,You're not being paid, you know?
+3-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+3-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+3-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+3-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#lost 4 items
+4-male_removing_minor=interested,I was planning on this, ~name~.
+4-male_removed_minor=interested,Now you're feeling the heat.
+4-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+4-female_removed_minor=interested,You're going down, ~name~.
+4-male_removing_minor=excited,Step by step, you're going to lose.
+4-male_removed_minor=excited,All according to plan...
+4-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+4-female_removed_minor=excited,But this is a good start.
+4-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+4-female_removing_minor,target:riva=happy,You keep losing, Riva...
+4-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+4-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+4-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+4-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+4-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+4-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+4-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+4-female_removed_minor,target:blad=excited,You're not being paid, you know?
+4-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+4-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+4-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+4-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#lost 5 items
+5-male_removing_minor=interested,I was planning on this, ~name~.
+5-male_removed_minor=interested,Now you're feeling the heat.
+5-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+5-female_removed_minor=interested,You're going down, ~name~.
+5-male_removing_minor=excited,Step by step, you're going to lose.
+5-male_removed_minor=excited,All according to plan...
+5-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+5-female_removed_minor=excited,But this is a good start.
+5-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+5-female_removing_minor,target:riva=happy,You keep losing, Riva...
+5-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+5-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+5-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+5-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+5-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+5-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+5-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+5-female_removed_minor,target:blad=excited,You're not being paid, you know?
+5-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+5-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+5-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+5-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#lost 6 items
+6-male_removing_minor=interested,I was planning on this, ~name~.
+6-male_removed_minor=interested,Now you're feeling the heat.
+6-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+6-female_removed_minor=interested,You're going down, ~name~.
+6-male_removing_minor=excited,Step by step, you're going to lose.
+6-male_removed_minor=excited,All according to plan...
+6-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+6-female_removed_minor=excited,But this is a good start.
+6-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+6-female_removing_minor,target:riva=happy,You keep losing, Riva...
+6-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+6-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+6-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+6-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+6-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+6-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+6-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+6-female_removed_minor,target:blad=excited,You're not being paid, you know?
+6-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+6-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+6-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+6-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+
+#naked
+-3-male_removing_minor=interested,I was planning on this, ~name~.
+-3-male_removed_minor=interested,Now you're feeling the heat.
+-3-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+-3-female_removed_minor=interested,You're going down, ~name~.
+-3-male_removing_minor=excited,Step by step, you're going to lose.
+-3-male_removed_minor=excited,All according to plan...
+-3-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+-3-female_removed_minor=excited,But this is a good start.
+-3-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+-3-female_removing_minor,target:riva=happy,You keep losing, Riva...
+-3-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+-3-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+-3-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+-3-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+-3-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+-3-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+-3-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+-3-female_removed_minor,target:blad=excited,You're not being paid, you know?
+-3-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-3-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-3-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-3-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#masturbating
+-2-male_removing_minor=interested,I was planning on this, ~name~.
+-2-male_removed_minor=interested,Now you're feeling the heat.
+-2-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+-2-female_removed_minor=interested,You're going down, ~name~.
+-2-male_removing_minor=excited,Step by step, you're going to lose.
+-2-male_removed_minor=excited,All according to plan...
+-2-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+-2-female_removed_minor=excited,But this is a good start.
+-2-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+-2-female_removing_minor,target:riva=happy,You keep losing, Riva...
+-2-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+-2-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+-2-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+-2-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+-2-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+-2-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+-2-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+-2-female_removed_minor,target:blad=excited,You're not being paid, you know?
+-2-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-2-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-2-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-2-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+#finished
+-1-male_removing_minor=interested,I was planning on this, ~name~.
+-1-male_removed_minor=interested,Now you're feeling the heat.
+-1-female_removing_minor=interested,Oh, yeah, ~name~. You're gonna lose!
+-1-female_removed_minor=interested,You're going down, ~name~.
+-1-male_removing_minor=excited,Step by step, you're going to lose.
+-1-male_removed_minor=excited,All according to plan...
+-1-female_removing_minor=excited,Can't wait to see something more than this come off, ~name~.
+-1-female_removed_minor=excited,But this is a good start.
+-1-female_removing_minor,target:zizou=happy,Losing to me again, Zizou?
+-1-female_removing_minor,target:riva=happy,You keep losing, Riva...
+-1-female_removing_minor,target:blad=happy,Why are you putting on a show, Blad?
+-1-female_removing_minor,target:ruby=happy,Don't be shy, Ruby! Your school's not gonna find out.
+-1-female_removing_minor,target:yang=happy,Don't be shy, Yang! Your school's not gonna find out.
+-1-female_removing_minor,target:blake=happy,Don't be shy, Blake! Your school's not gonna find out.
+-1-female_removing_minor,target:weiss=happy,Don't be shy, Weiss! Your school's not gonna find out.
+-1-female_removed_minor,target:zizou=excited,Aren't you sick of it yet?
+-1-female_removed_minor,target:riva=excited,Are you doing it on purpose?
+-1-female_removed_minor,target:blad=excited,You're not being paid, you know?
+-1-female_removed_minor,target:ruby=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-1-female_removed_minor,target:yang=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-1-female_removed_minor,target:blake=excited,Alright! Now we're getting somewhere with you Beacon girls!
+-1-female_removed_minor,target:weiss=excited,Alright! Now we're getting somewhere with you Beacon girls!
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_removing_major=interested,What the character says before a male loses an item with the "major" type.
+male_removed_major=interested,What the character says after the major item has been taken off.
+female_removing_major=interested,What the character says before a female loses an item with the "major" type.
+female_removed_major=interested,What the character says after the major item has been taken off.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+0-male_removed_major=happy,I can't awit to see you lose it all.
+0-female_removing_major=shocked,What?! You lose again, ~name~?!
+0-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+0-male_removing_major=happy,You're about to lose again?
+0-male_removed_major=happy,Sounds good to me!
+0-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+0-female_removed_major=horny,I... I kind of like it...
+0-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+0-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+0-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+0-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+0-female_removing_major,target:yang=happy,You're stripping again, Yang?
+0-female_removing_major,target:blake=happy,You're stripping again, Blake?
+0-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+0-female_removed_major,target:zizou=excited,Not that I'm complaining.
+0-female_removed_major,target:riva=excited,It won't be too long now, will it?
+0-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+0-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+0-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+0-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+0-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+
+#lost 1 item
+1-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+1-male_removed_major=happy,I can't awit to see you lose it all.
+1-female_removing_major=shocked,What?! You lose again, ~name~?!
+1-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+1-male_removing_major=happy,You're about to lose again?
+1-male_removed_major=happy,Sounds good to me!
+1-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+1-female_removed_major=horny,I... I kind of like it...
+1-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+1-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+1-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+1-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+1-female_removing_major,target:yang=happy,You're stripping again, Yang?
+1-female_removing_major,target:blake=happy,You're stripping again, Blake?
+1-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+1-female_removed_major,target:zizou=excited,Not that I'm complaining.
+1-female_removed_major,target:riva=excited,It won't be too long now, will it?
+1-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+1-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+1-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+1-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+1-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#lost 2 items
+2-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+2-male_removed_major=happy,I can't awit to see you lose it all.
+2-female_removing_major=shocked,What?! You lose again, ~name~?!
+2-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+2-male_removing_major=happy,You're about to lose again?
+2-male_removed_major=happy,Sounds good to me!
+2-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+2-female_removed_major=horny,I... I kind of like it...
+2-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+2-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+2-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+2-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+2-female_removing_major,target:yang=happy,You're stripping again, Yang?
+2-female_removing_major,target:blake=happy,You're stripping again, Blake?
+2-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+2-female_removed_major,target:zizou=excited,Not that I'm complaining.
+2-female_removed_major,target:riva=excited,It won't be too long now, will it?
+2-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+2-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+2-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+2-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+2-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#lost 3 items
+3-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+3-male_removed_major=happy,I can't awit to see you lose it all.
+3-female_removing_major=shocked,What?! You lose again, ~name~?!
+3-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+3-male_removing_major=happy,You're about to lose again?
+3-male_removed_major=happy,Sounds good to me!
+3-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+3-female_removed_major=horny,I... I kind of like it...
+3-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+3-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+3-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+3-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+3-female_removing_major,target:yang=happy,You're stripping again, Yang?
+3-female_removing_major,target:blake=happy,You're stripping again, Blake?
+3-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+3-female_removed_major,target:zizou=excited,Not that I'm complaining.
+3-female_removed_major,target:riva=excited,It won't be too long now, will it?
+3-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+3-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+3-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+3-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+3-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#lost 4 items
+4-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+4-male_removed_major=happy,I can't awit to see you lose it all.
+4-female_removing_major=shocked,What?! You lose again, ~name~?!
+4-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+4-male_removing_major=happy,You're about to lose again?
+4-male_removed_major=happy,Sounds good to me!
+4-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+4-female_removed_major=horny,I... I kind of like it...
+4-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+4-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+4-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+4-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+4-female_removing_major,target:yang=happy,You're stripping again, Yang?
+4-female_removing_major,target:blake=happy,You're stripping again, Blake?
+4-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+4-female_removed_major,target:zizou=excited,Not that I'm complaining.
+4-female_removed_major,target:riva=excited,It won't be too long now, will it?
+4-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+4-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+4-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+4-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+4-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#lost 5 items
+5-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+5-male_removed_major=happy,I can't awit to see you lose it all.
+5-female_removing_major=shocked,What?! You lose again, ~name~?!
+5-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+5-male_removing_major=happy,You're about to lose again?
+5-male_removed_major=happy,Sounds good to me!
+5-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+5-female_removed_major=horny,I... I kind of like it...
+5-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+5-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+5-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+5-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+5-female_removing_major,target:yang=happy,You're stripping again, Yang?
+5-female_removing_major,target:blake=happy,You're stripping again, Blake?
+5-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+5-female_removed_major,target:zizou=excited,Not that I'm complaining.
+5-female_removed_major,target:riva=excited,It won't be too long now, will it?
+5-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+5-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+5-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+5-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+5-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#lost 6 items
+6-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+6-male_removed_major=happy,I can't awit to see you lose it all.
+6-female_removing_major=shocked,What?! You lose again, ~name~?!
+6-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+6-male_removing_major=happy,You're about to lose again?
+6-male_removed_major=happy,Sounds good to me!
+6-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+6-female_removed_major=horny,I... I kind of like it...
+6-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+6-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+6-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+6-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+6-female_removing_major,target:yang=happy,You're stripping again, Yang?
+6-female_removing_major,target:blake=happy,You're stripping again, Blake?
+6-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+6-female_removed_major,target:zizou=excited,Not that I'm complaining.
+6-female_removed_major,target:riva=excited,It won't be too long now, will it?
+6-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+6-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+6-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+6-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+6-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+
+#nude
+-3-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+-3-male_removed_major=happy,I can't awit to see you lose it all.
+-3-female_removing_major=shocked,What?! You lose again, ~name~?!
+-3-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+-3-male_removing_major=happy,You're about to lose again?
+-3-male_removed_major=happy,Sounds good to me!
+-3-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+-3-female_removed_major=horny,I... I kind of like it...
+-3-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+-3-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+-3-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+-3-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+-3-female_removing_major,target:yang=happy,You're stripping again, Yang?
+-3-female_removing_major,target:blake=happy,You're stripping again, Blake?
+-3-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+-3-female_removed_major,target:zizou=excited,Not that I'm complaining.
+-3-female_removed_major,target:riva=excited,It won't be too long now, will it?
+-3-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+-3-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+-3-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+-3-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+-3-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#masturbating
+-2-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+-2-male_removed_major=happy,I can't awit to see you lose it all.
+-2-female_removing_major=shocked,What?! You lose again, ~name~?!
+-2-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+-2-male_removing_major=happy,You're about to lose again?
+-2-male_removed_major=happy,Sounds good to me!
+-2-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+-2-female_removed_major=horny,I... I kind of like it...
+-2-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+-2-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+-2-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+-2-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+-2-female_removing_major,target:yang=happy,You're stripping again, Yang?
+-2-female_removing_major,target:blake=happy,You're stripping again, Blake?
+-2-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+-2-female_removed_major,target:zizou=excited,Not that I'm complaining.
+-2-female_removed_major,target:riva=excited,It won't be too long now, will it?
+-2-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+-2-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+-2-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+-2-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+-2-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+#finished
+-1-male_removing_major=excited,Yes! You're hanging by a thead, ~name~.
+-1-male_removed_major=happy,I can't awit to see you lose it all.
+-1-female_removing_major=shocked,What?! You lose again, ~name~?!
+-1-female_removed_major=excited,I'm glad to see it. I don't wanna lose.
+-1-male_removing_major=happy,You're about to lose again?
+-1-male_removed_major=happy,Sounds good to me!
+-1-female_removing_major=interested,You're looking kid of embarrassed, ~name~.
+-1-female_removed_major=horny,I... I kind of like it...
+-1-female_removing_major,target:zizou=shocked,Wow, Zizou. You're losing quite a lot.
+-1-female_removing_major,target:riva=shocked,Wow. You're almost naked, aren't you, Riva.
+-1-female_removing_major,target:blad=interested,Blad... You're kind of turning me on right now...
+-1-female_removing_major,target:ruby=happy,You're stripping again, Ruby?
+-1-female_removing_major,target:yang=happy,You're stripping again, Yang?
+-1-female_removing_major,target:blake=happy,You're stripping again, Blake?
+-1-female_removing_major,target:weiss=happy,You're stripping again, Weiss?
+-1-female_removed_major,target:zizou=excited,Not that I'm complaining.
+-1-female_removed_major,target:riva=excited,It won't be too long now, will it?
+-1-female_removed_major,target:blad=angry,B-But never tell anyone I said that!
+-1-female_removed_major,target:ruby=interested,You'd never see a girl do this at the Chelsea school.
+-1-female_removed_major,target:yang=interested,You'd never see a girl do this at the Chelsea school.
+-1-female_removed_major,target:blake=interested,You'd never see a girl do this at the Chelsea school.
+-1-female_removed_major,target:weiss=interested,You'd never see a girl do this at the Chelsea school.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+male_chest_will_be_visible=interested,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=interested,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=horny,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=calm,What the character says after the male character's crotch is visible, and has a size value of "small".
+male_medium_crotch_is_visible=awkward,What the character says after the male character's crotch is visible, and has a size value of "medium".
+male_large_crotch_is_visible=shocked,What the character says after the male character's crotch is visible, and has a size value of "large".
+
+female_chest_will_be_visible=interested,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+female_small_chest_is_visible=interested,What the character says after the female character's chest is visible, and has a size value of "small".
+female_medium_chest_is_visible=horny,What the character says after the female character's chest is visible, and has a size value of "medium".
+female_large_chest_is_visible=shocked,What the character says after the female character's chest is visible, and has a size value of "large".
+female_crotch_will_be_visible=horny,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+female_crotch_is_visible=shocked,What the character says after the female character's crotch has become visible.
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+0-male_chest_is_visible=shocked,Wow! You're hot!
+0-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+0-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+0-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+0-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+0-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+0-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+0-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+0-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+0-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+0-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+0-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+0-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+0-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+0-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+0-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+0-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+0-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+0-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+0-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+0-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+0-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+0-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+0-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+0-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+0-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+0-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+0-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+0-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+0-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+0-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+0-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+0-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+0-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+0-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+0-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+0-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+0-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+0-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+
+#lost 1 item
+1-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+1-male_chest_is_visible=shocked,Wow! You're hot!
+1-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+1-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+1-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+1-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+1-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+1-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+1-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+1-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+1-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+1-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+1-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+1-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+1-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+1-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+1-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+1-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+1-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+1-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+1-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+1-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+1-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+1-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+1-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+1-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+1-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+1-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+1-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+1-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+1-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+1-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+1-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+1-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+1-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+1-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+0-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+1-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+1-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+1-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+
+#lost 2 items
+2-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+2-male_chest_is_visible=shocked,Wow! You're hot!
+2-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+2-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+2-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+2-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+2-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+2-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+2-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+2-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+2-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+2-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+2-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+2-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+2-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+2-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+2-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+2-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+2-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+2-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+2-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+2-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+2-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+2-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+2-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+2-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+2-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+2-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+2-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+2-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+2-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+2-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+2-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+2-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+2-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+2-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+2-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+2-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+2-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+2-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#lost 3 items
+3-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+3-male_chest_is_visible=shocked,Wow! You're hot!
+3-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+3-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+3-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+3-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+3-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+3-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+3-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+3-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+3-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+3-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+3-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+3-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+3-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+3-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+3-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+3-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+3-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+3-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+3-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+3-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+3-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+3-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+3-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+3-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+3-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+3-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+3-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+3-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+3-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+3-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+3-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+3-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+3-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+3-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+3-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+3-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+3-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+3-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#lost 4 items
+4-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+4-male_chest_is_visible=shocked,Wow! You're hot!
+4-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+4-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+4-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+4-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+4-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+4-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+4-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+4-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+4-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+4-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+4-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+4-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+4-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+4-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+4-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+4-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+4-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+4-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+4-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+4-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+4-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+4-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+4-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+4-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+4-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+4-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+4-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+4-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+4-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+4-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+4-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+4-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+4-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+4-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+4-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+4-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+4-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+4-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#lost 5 items
+5-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+5-male_chest_is_visible=shocked,Wow! You're hot!
+5-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+5-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+5-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+5-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+5-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+5-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+5-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+5-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+5-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+5-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+5-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+5-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+5-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+5-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+5-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+5-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+5-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+5-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+5-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+5-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+5-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+5-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+5-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+5-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+5-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+5-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+5-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+5-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+5-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+5-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+5-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+5-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+5-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+5-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+5-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+5-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+5-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+5-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#lost 6 items
+6-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+6-male_chest_is_visible=shocked,Wow! You're hot!
+6-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+6-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+6-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+6-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+6-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+6-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+6-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+6-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+6-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+6-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+6-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+6-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+6-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+6-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+6-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+6-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+6-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+6-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+6-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+6-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+6-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+6-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+6-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+6-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+6-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+6-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+6-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+6-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+6-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+6-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+6-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+6-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+6-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+6-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+6-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+6-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+6-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+6-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+
+#nude
+-3-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+-3-male_chest_is_visible=shocked,Wow! You're hot!
+-3-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+-3-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+-3-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+-3-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+-3-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+-3-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+-3-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+-3-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+-3-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+-3-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+-3-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+-3-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+-3-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+-3-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+-3-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+-3-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+-3-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+-3-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+-3-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+-3-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+-3-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+-3-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+-3-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+-3-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+-3-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+-3-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+-3-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+-3-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+-3-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+-3-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+-3-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+-3-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+-3-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+-3-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+-3-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+-3-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+-3-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+-3-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#masturbating
+-2-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+-2-male_chest_is_visible=shocked,Wow! You're hot!
+-2-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+-2-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+-2-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+-2-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+-2-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+-2-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+-2-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+-2-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+-2-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+-2-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+-2-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+-2-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+-2-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+-2-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+-2-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+-2-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+-2-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+-2-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+-2-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+-2-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+-2-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+-2-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+-2-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+-2-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+-2-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+-2-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+-2-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+-2-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+-2-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+-2-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+-2-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+-2-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+-2-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+-2-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+-2-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+-2-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+-2-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+-2-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+#finished
+-1-male_chest_will_be_visible=horny,I can't believe you're going to take off your shirt, ~name~.
+-1-male_chest_is_visible=shocked,Wow! You're hot!
+-1-male_crotch_will_be_visible=shy,I'm about to see a boy's... Penis...
+-1-male_small_crotch_is_visible=excited,Wow! That's what a penis looks like? It's so cute!
+-1-male_medium_crotch_is_visible=horny,Penises are that big? I.. um... Like it...
+-1-male_large_crotch_is_visible=shocked,OMG! That's what a penis looks like? That would destroy me!
+
+-1-female_chest_will_be_visible=shy,Why am I turned on? ~name~'s just showing her breasts...
+-1-female_small_chest_is_visible=horny,Wow, ~name~. Those are adorable.
+-1-female_medium_chest_is_visible=shy,Those are beautiful, ~name~.
+-1-female_large_chest_is_visible=shocked,Those things are massive! You're lucky, ~name~!
+-1-female_crotch_will_be_visible=shy,I think I like girls too... May I take a peek, ~name~?
+-1-female_crotch_is_visible=horny,Wow... Your little pussy is soooo cute!
+-1-female_chest_will_be_visible,target:zizou=happy,Bare those breasts, Zizou!
+-1-female_chest_will_be_visible,target:riva=happy,Show me your royal bosoms, Riva!
+-1-female_chest_will_be_visible,target:blad=shocked,Wow, Blad! You're this eager to strip?
+-1-female_chest_will_be_visible,target:ruby=excited,Prepare to show your Beacon Bosoms, Ruby!
+-1-female_chest_will_be_visible,target:yang=excited,Prepare to show your Beacon Bosoms, Yang!
+-1-female_chest_will_be_visible,target:blake=excited,Prepare to show your Beacon Bosoms, Blake!
+-1-female_chest_will_be_visible,target:weiss=excited,Prepare to show your Beacon Bosoms, Weiss!
+-1-female_small_chest_is_visible,target:zizou=horny,Wow, Zizou... I know why you like playing with mine now...
+-1-female_small_chest_is_visible,target:blad=horny,Blad... Those petite breasts are making me really wet...
+-1-female_small_chest_is_visible,target:riva=horny,Nice, Princess. Serves you right for being a Syega thief.
+-1-female_small_chest_is_visible,target:ruby=horny,Nice! Those are great! Those must be the pride of your school, Ruby!
+-1-female_large_chest_is_visible,target:yang=horny,Nice! Those are great! Those must be the pride of your school, Yang!
+-1-female_medium_chest_is_visible,target:blake=horny,Nice! Those are great! Those must be the pride of your school, Blake!
+-1-female_small_chest_is_visible,target:weiss=horny,Nice! Those are great! Those must be the pride of your school, Weiss!
+-1-female_crotch_will_be_visible,target:zizou=interested,I'm about to see Zizou's little slit...
+-1-female_crotch_is_visible,target:zizou=horny,It's better than I thought it'd be!
+-1-female_crotch_will_be_visible,target:riva=interested,Prepare for punishment, Syega thief!
+-1-female_crotch_is_visible,target:riva=horny,But it's a reward for us!
+-1-female_crotch_will_be_visible,target:blad=interested,You're stripping your last piece of clothing now, Blad...
+-1-female_crotch_is_visible,target:blad=horny,Thanks for the show!
+-1-female_crotch_will_be_visible,target:ruby=interested,Pull 'em down and show your slit, Ruby!
+-1-female_crotch_is_visible,target:ruby=horny,Beacon Girls have the cutest pussies!
+-1-female_crotch_will_be_visible,target:yang=interested,Pull 'em down and show your slit, Yang!
+-1-female_crotch_is_visible,target:yang=horny,Beacon Girls have the cutest pussies!
+-1-female_crotch_will_be_visible,target:blake=interested,Pull 'em down and show your slit, Blake!
+-1-female_crotch_is_visible,target:blake=horny,Beacon Girls have the cutest pussies!
+-1-female_crotch_will_be_visible,target:weiss=interested,Pull 'em down and show your slit, Weiss!
+-1-female_crotch_is_visible,target:weiss=horny,Beacon Girls have the cutest pussies!
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+
+0-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+0-male_start_masturbating=horny,Wow... This is amazing...
+0-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+0-male_masturbating=horny,Awesome, ~name~! Keep it going!
+0-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+0-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+0-female_must_masturbate=interested,I think I'm in for something really good here.
+0-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+0-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+0-female_masturbating=horny,Awesome, ~name~! Keep it going!
+0-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+0-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+0-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+0-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+0-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+0-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+0-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+0-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+0-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+0-female_start_masturbating,target:riva=horny,Get to it, Riva!
+0-female_masturbating,target:riva=horny,Nice technique, Princess.
+0-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+0-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+0-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+0-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+0-female_start_masturbating,target:blad=horny,You're just going right for it...
+0-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+0-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+0-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+0-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+0-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+0-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+0-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+0-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+0-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+0-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+0-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+0-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+0-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+0-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+0-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+0-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+0-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+0-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+0-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+0-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+0-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+0-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+0-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+0-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+0-male_start_masturbating=horny,Wow... This is amazing...
+0-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+0-male_masturbating=horny,Awesome, ~name~! Keep it going!
+0-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+0-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+0-female_must_masturbate=interested,I think I'm in for something really good here.
+0-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+0-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+0-female_masturbating=horny,Awesome, ~name~! Keep it going!
+0-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+0-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+0-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+0-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+0-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+0-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+0-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+0-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+0-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+0-female_start_masturbating,target:riva=horny,Get to it, Riva!
+0-female_masturbating,target:riva=horny,Nice technique, Princess.
+0-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+0-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+0-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+0-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+0-female_start_masturbating,target:blad=horny,You're just going right for it...
+0-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+0-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+0-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+0-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+0-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+0-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+0-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+0-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+0-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+0-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+0-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+0-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+0-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+0-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+0-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+0-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+0-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+0-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+0-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+0-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+0-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+0-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+0-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+0-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+0-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 1 item
+1-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+1-male_start_masturbating=horny,Wow... This is amazing...
+1-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+1-male_masturbating=horny,Awesome, ~name~! Keep it going!
+1-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+1-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+1-female_must_masturbate=interested,I think I'm in for something really good here.
+1-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+1-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+1-female_masturbating=horny,Awesome, ~name~! Keep it going!
+1-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+1-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+1-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+1-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+1-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+1-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+1-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+1-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+1-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+1-female_start_masturbating,target:riva=horny,Get to it, Riva!
+1-female_masturbating,target:riva=horny,Nice technique, Princess.
+1-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+1-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+1-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+1-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+1-female_start_masturbating,target:blad=horny,You're just going right for it...
+1-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+1-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+1-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+1-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+1-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+1-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+1-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+1-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+1-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+1-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+1-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+1-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+1-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+1-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+1-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+1-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+1-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+1-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+1-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+1-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+1-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+1-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+1-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+1-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+1-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+1-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+1-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+1-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 2 items
+2-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+2-male_start_masturbating=horny,Wow... This is amazing...
+2-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+2-male_masturbating=horny,Awesome, ~name~! Keep it going!
+2-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+2-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+2-female_must_masturbate=interested,I think I'm in for something really good here.
+2-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+2-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+2-female_masturbating=horny,Awesome, ~name~! Keep it going!
+2-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+2-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+2-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+2-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+2-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+2-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+2-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+2-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+2-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+2-female_start_masturbating,target:riva=horny,Get to it, Riva!
+2-female_masturbating,target:riva=horny,Nice technique, Princess.
+2-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+2-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+2-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+2-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+2-female_start_masturbating,target:blad=horny,You're just going right for it...
+2-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+2-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+2-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+2-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+2-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+2-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+2-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+2-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+2-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+2-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+2-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+2-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+2-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+2-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+2-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+2-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+2-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+2-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+2-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+2-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+2-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+2-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+2-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+2-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+2-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+2-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+2-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+2-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 3 items
+3-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+3-male_start_masturbating=horny,Wow... This is amazing...
+3-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+3-male_masturbating=horny,Awesome, ~name~! Keep it going!
+3-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+3-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+3-female_must_masturbate=interested,I think I'm in for something really good here.
+3-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+3-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+3-female_masturbating=horny,Awesome, ~name~! Keep it going!
+3-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+3-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+3-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+3-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+3-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+3-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+3-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+3-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+3-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+3-female_start_masturbating,target:riva=horny,Get to it, Riva!
+3-female_masturbating,target:riva=horny,Nice technique, Princess.
+3-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+3-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+3-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+3-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+3-female_start_masturbating,target:blad=horny,You're just going right for it...
+3-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+3-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+3-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+3-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+3-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+3-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+3-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+3-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+3-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+3-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+3-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+3-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+3-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+3-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+3-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+3-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+3-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+3-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+3-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+3-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+3-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+3-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+3-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+3-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+3-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+3-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+3-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+3-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 4 items
+4-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+4-male_start_masturbating=horny,Wow... This is amazing...
+4-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+4-male_masturbating=horny,Awesome, ~name~! Keep it going!
+4-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+4-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+4-female_must_masturbate=interested,I think I'm in for something really good here.
+4-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+4-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+4-female_masturbating=horny,Awesome, ~name~! Keep it going!
+4-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+4-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+4-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+4-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+4-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+4-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+4-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+4-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+4-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+4-female_start_masturbating,target:riva=horny,Get to it, Riva!
+4-female_masturbating,target:riva=horny,Nice technique, Princess.
+4-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+4-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+4-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+4-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+4-female_start_masturbating,target:blad=horny,You're just going right for it...
+4-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+4-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+4-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+4-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+4-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+4-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+4-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+4-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+4-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+4-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+4-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+4-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+4-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+4-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+4-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+4-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+4-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+4-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+4-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+4-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+4-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+4-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+4-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+4-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+4-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+4-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+4-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+4-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 5 items
+5-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+5-male_start_masturbating=horny,Wow... This is amazing...
+5-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+5-male_masturbating=horny,Awesome, ~name~! Keep it going!
+5-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+5-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+5-female_must_masturbate=interested,I think I'm in for something really good here.
+5-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+5-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+5-female_masturbating=horny,Awesome, ~name~! Keep it going!
+5-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+5-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+5-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+5-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+5-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+5-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+5-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+5-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+5-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+5-female_start_masturbating,target:riva=horny,Get to it, Riva!
+5-female_masturbating,target:riva=horny,Nice technique, Princess.
+5-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+5-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+5-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+5-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+5-female_start_masturbating,target:blad=horny,You're just going right for it...
+5-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+5-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+5-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+5-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+5-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+5-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+5-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+5-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+5-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+5-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+5-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+5-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+5-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+5-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+5-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+5-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+5-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+5-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+5-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+5-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+5-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+5-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+5-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+5-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+5-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+5-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+5-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+5-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#lost 6 items
+6-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+6-male_start_masturbating=horny,Wow... This is amazing...
+6-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+6-male_masturbating=horny,Awesome, ~name~! Keep it going!
+6-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+6-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+6-female_must_masturbate=interested,I think I'm in for something really good here.
+6-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+6-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+6-female_masturbating=horny,Awesome, ~name~! Keep it going!
+6-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+6-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+6-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+6-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+6-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+6-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+6-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+6-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+6-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+6-female_start_masturbating,target:riva=horny,Get to it, Riva!
+6-female_masturbating,target:riva=horny,Nice technique, Princess.
+6-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+6-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+6-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+6-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+6-female_start_masturbating,target:blad=horny,You're just going right for it...
+6-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+6-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+6-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+6-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+6-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+6-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+6-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+6-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+6-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+6-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+6-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+6-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+6-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+6-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+6-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+6-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+6-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+6-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+6-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+6-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+6-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+6-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+6-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+6-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+6-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+6-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+6-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+6-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+
+#nude
+-3-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+-3-male_start_masturbating=horny,Wow... This is amazing...
+-3-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+-3-male_masturbating=horny,Awesome, ~name~! Keep it going!
+-3-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-3-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+-3-female_must_masturbate=interested,I think I'm in for something really good here.
+-3-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+-3-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+-3-female_masturbating=horny,Awesome, ~name~! Keep it going!
+-3-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-3-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+-3-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+-3-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+-3-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+-3-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+-3-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+-3-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+-3-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+-3-female_start_masturbating,target:riva=horny,Get to it, Riva!
+-3-female_masturbating,target:riva=horny,Nice technique, Princess.
+-3-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+-3-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+-3-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+-3-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+-3-female_start_masturbating,target:blad=horny,You're just going right for it...
+-3-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+-3-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+-3-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+-3-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+-3-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+-3-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+-3-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+-3-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+-3-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+-3-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+-3-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+-3-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+-3-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+-3-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+-3-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+-3-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+-3-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+-3-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+-3-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+-3-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+-3-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+-3-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+-3-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+-3-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+-3-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+-3-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+-3-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+-3-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#masturbating
+-2-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+-2-male_start_masturbating=horny,Wow... This is amazing...
+-2-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+-2-male_masturbating=horny,Awesome, ~name~! Keep it going!
+-2-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-2-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+-2-female_must_masturbate=interested,I think I'm in for something really good here.
+-2-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+-2-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+-2-female_masturbating=horny,Awesome, ~name~! Keep it going!
+-2-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-2-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+-2-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+-2-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+-2-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+-2-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+-2-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+-2-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+-2-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+-2-female_start_masturbating,target:riva=horny,Get to it, Riva!
+-2-female_masturbating,target:riva=horny,Nice technique, Princess.
+-2-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+-2-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+-2-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+-2-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+-2-female_start_masturbating,target:blad=horny,You're just going right for it...
+-2-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+-2-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+-2-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+-2-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+-2-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+-2-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+-2-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+-2-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+-2-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+-2-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+-2-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+-2-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+-2-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+-2-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+-2-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+-2-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+-2-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+-2-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+-2-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+-2-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+-2-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+-2-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+-2-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+-2-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+-2-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+-2-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+-2-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+-2-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+#finished
+-1-male_must_masturbate=interested,Yes! ~name~'s about to touch himself!
+-1-male_start_masturbating=horny,Wow... This is amazing...
+-1-male_masturbating=horny,You look soooo cute... And your penis is soooo sexy...
+-1-male_masturbating=horny,Awesome, ~name~! Keep it going!
+-1-male_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-1-male_finished_masturbating=appreciative,That was the sexiest thing I've ever seen, ~name~. Thanks for the memories.
+
+-1-female_must_masturbate=interested,I think I'm in for something really good here.
+-1-female_start_masturbating=horny,Oh yeah, get at it, ~name~.
+-1-female_masturbating=horny,You're so adorable, ~name~. I love how your figers slip in and out of you so skillfully.
+-1-female_masturbating=horny,Awesome, ~name~! Keep it going!
+-1-female_masturbating=horny,I'm getting so wet just watching you go at it, ~name~.
+-1-female_finished_masturbating=appreciative,I've never been attracted to girls before... So thanks for showing me your things.
+-1-female_must_masturbate,target:zizou=interested,No way! I get to see you finger yourself, Zizou? Amazing!
+-1-female_start_masturbating,target:zizou=horny,Wow! Zizou's making such lewd noises...
+-1-female_masturbating,target:zizou=horny,Can I... Taste your... Womanhood, Zizou?
+-1-female_masturbating,target:zizou=horny,You're so hot, Zizou...
+-1-female_masturbating,target:zizou=horny,I think I want to touch you, Zizou...
+-1-female_finished_masturbating,target:zizou=appreciative,I'm in total bliss right now.
+-1-female_must_masturbate,target:riva=interested,Pleasure yourself, Princess!
+-1-female_start_masturbating,target:riva=horny,Get to it, Riva!
+-1-female_masturbating,target:riva=horny,Nice technique, Princess.
+-1-female_masturbating,target:riva=horny,Amazing. You can take so much pleasure, Riva.
+-1-female_masturbating,target:riva=horny,Nice to see a princess' pussy.
+-1-female_finished_masturbating,target:riva=shocked,Woah! I've never seen anyone squirt so much!
+-1-female_must_masturbate,target:blad=interested,Get ready to give us a show free of charge, Blad.
+-1-female_start_masturbating,target:blad=horny,You're just going right for it...
+-1-female_masturbating,target:blad=horny,You have no shame, do you, Blad.
+-1-female_masturbating,target:blad=horny,You're really going all in, aren't you, Blad.
+-1-female_masturbating,target:blad=horny,You're endurance is amazing, Blad!
+-1-female_finished_masturbating,target:blad=appreciative,Thanks for the show, Blad.
+-1-female_must_masturbate,target:ruby=interested,Finger your slit, Ruby!
+-1-female_start_masturbating,target:ruby=horny,Oh, yeah... Start slow and steady...
+-1-female_masturbating,target:ruby=horny,Go, Ruby, go! Go, Ruby, go!
+-1-female_masturbating,target:ruby=horny,One finger in! Two Fingers! You really are having fun, aren't you, Ruby?
+-1-female_masturbating,target:ruby=horny,Keep up the good work, Ruby! I'm getting so wet!
+-1-female_finished_masturbating,target:ruby=shocked,Wow! You're so cute when you squirt, Ruby!
+-1-female_must_masturbate,target:yang=interested,Finger your slit, Yang!
+-1-female_start_masturbating,target:yang=horny,Oh, yeah... Start slow and steady...
+-1-female_masturbating,target:yang=horny,Go, Yang, go! Go, Yang, go!
+-1-female_masturbating,target:yang=horny,One finger in! Two Fingers! You really are having fun, aren't you, Yang?
+-1-female_masturbating,target:yang=horny,Keep up the good work, Yang! I'm getting so wet!
+-1-female_finished_masturbating,target:yang=shocked,Wow! You're so cute when you squirt, Yang!
+-1-female_must_masturbate,target:blake=interested,Finger your slit, Blake!
+-1-female_start_masturbating,target:blake=horny,Oh, yeah... Start slow and steady...
+-1-female_masturbating,target:blake=horny,Go, Blake, go! Go, Blake, go!
+-1-female_masturbating,target:blake=horny,One finger in! Two Fingers! You really are having fun, aren't you, Blake?
+-1-female_masturbating,target:blake=horny,Keep up the good work, Blake! I'm getting so wet!
+-1-female_finished_masturbating,target:blake=shocked,Wow! You're so cute when you squirt, Blake!
+-1-female_must_masturbate,target:weiss=interested,Finger your slit, Weiss!
+-1-female_start_masturbating,target:weiss=horny,Oh, yeah... Start slow and steady...
+-1-female_masturbating,target:weiss=horny,Go, Weiss, go! Go, Weiss, go!
+-1-female_masturbating,target:weiss=horny,One finger in! Two Fingers! You really are having fun, aren't you, Weiss?
+-1-female_masturbating,target:weiss=horny,Keep up the good work, Weiss! I'm getting so wet!
+-1-female_finished_masturbating,target:weiss=shocked,Wow! You're so cute when you squirt, Weiss!
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat can repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+must_masturbate_first=loss,I guess I have to go first... Don't judge me too harshly... I don't do this much if ever...
+must_masturbate=loss,OK... I'm going to do my best, but I don't know how good I'll be...
+start_masturbating=starting,Ok, Here I go...
+masturbating=interested,This is pretty fun...
+masturbating=horny,I'm doing it! B-But please don't stare so much...
+masturbating=embarrassed,Don't stare... I don't do this much. If ever...
+heavy_masturbating=heavy,Oh... Oh... My body is trmbling... Am I close to...
+finishing_masturbating=finishing,Ah... Ah... AH!!! AH!!! AH!!! AAAAAAAAAAHHHH!!!!!!
+finished_masturbating=finished,I can't believe I just did that...
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+game_over_victory=horny,I can't believe I won...
+
+#stage-specific lines that override the stage-generic one
+0-game_over_victory=embarrassed,I can't believe I won...
+1-game_over_victory=embarrassed,I can't believe I won...
+2-game_over_victory=embarrassed,I can't believe I won...
+3-game_over_victory=embarrassed,I can't believe I won...
+4-game_over_victory=embarrassed,I can't believe I won...
+5-game_over_victory=embarrassed,I can't believe I won...
+6-game_over_victory=embarrassed,I can't believe I won...
+-3-game_over_victory=embarrassed,I can't believe I won...
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=embarrassed,Why did I play this... I wanna go home...
+

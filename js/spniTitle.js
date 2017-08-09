@@ -37,7 +37,7 @@ var selectedChoices = [false, false, false, false, false, false, false, false, f
  * screen.
  ************************************************************/
 function loadTitleScreen () {
-	selectedChoices = [false, false, true, false, true, false, true, true, false, true, false, false, true, false, true];
+	//selectedChoices = [false, false, true, false, true, false, true, true, false, true, false, false, true, false, true];
     loadClothing();
 }
 
@@ -117,10 +117,10 @@ function updateTitleClothing () {
  ************************************************************/
 function holdTitleClothing () {
 	/* clear selection */
-	for (var i = 0; i < selectedChoices.length; i++) {
-		selectedChoices[i] = false;
-	}
-	
+	// for (var i = 0; i < selectedChoices.length; i++) {
+	// 	selectedChoices[i] = false;
+	// }
+
 	/* hold worn clothing */
 	for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
 		if (players[HUMAN_PLAYER].clothing[i]) {

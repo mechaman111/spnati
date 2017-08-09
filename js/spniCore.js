@@ -134,12 +134,12 @@ function initialSetup () {
 	$gameTable.css({opacity:1});
 	
     /* load the all content */
-	save.loadCookie();
     loadTitleScreen();
     selectTitleCandy();
 	loadSelectScreen();
     loadConfigFile();
-	
+	save.loadCookie();
+
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
@@ -225,12 +225,10 @@ function clearState () {
  * Restarts the game.
  ************************************************************/
 function restartGame () {
-    console.log("restarting the game");
     KEYBINDINGS_ENABLED = false;
 	
 	/* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", players[HUMAN_PLAYER].gender, players[HUMAN_PLAYER].size, players[HUMAN_PLAYER].clothing, false, "", save.data.masturbationTimer, 0, 0, [], null);
-
+    var humanPlayer = createNewPlayer("", "", "", "", players[HUMAN_PLAYER].gender, players[HUMAN_PLAYER].size, "average", [], false, "", save.data.masturbationTimer, 0, 0, [], null);
 	/* clean slate */
 	clearState();
 	
