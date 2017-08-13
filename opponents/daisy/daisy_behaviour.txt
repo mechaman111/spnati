@@ -7,6 +7,14 @@ size=small
 #Number of phases to "finish"
 timer=12
 
+tag=tomboy
+tag=athletic
+tag=princess
+tag=confident
+tag=video_game
+tag=Mushroom_Kingdom
+tag=thong
+
 #required for meta.xml
 #start picture
 pic=0-happy
@@ -14,7 +22,8 @@ height=5'11"
 from=Super Mario Land
 writer=Zombiqaz
 artist=
-description=Princess Daisy of Sarasaland.
+description=Princess Daisy of Sarasaland
+release=2
 
 #clothes
 #these must be in order of removal
@@ -45,16 +54,19 @@ swap_cards=calm,I'll take ~cards~.
 swap_cards=calm,I need ~cards~.
 
 #The character thinks they have a good hand
+good_hand=happy,Cool!
+good_hand=happy,Neat-o!
 good_hand=happy,I like these.
 good_hand=happy,Hah! I've got this round.
-good_hand=happy,Nice!
 
 #The character thinks they have an okay hand
+okay_hand=calm,Here we go!
 okay_hand=calm,Eh, these'll do.
-okay_hand=calm,This is alright.
+okay_hand=calm,Whatever.
 okay_hand=calm,Could be better, could be worse.
 
 #The character thinks they have a bad hand
+bad_hand=disappointed,Aw, man.
 bad_hand=disappointed,How did I get such a bad hand...
 bad_hand=disappointed,These cards are awful.
 bad_hand=disappointed,This is bad...
@@ -66,6 +78,8 @@ must_strip_normal=loss,My turn again?
 must_strip_losing=loss,You must really want to see me naked.
 stripping=strip,There goes my ~clothing~...
 stripped=calm,Like what you see?
+
+
 
 #masturbation
 #these situations relate to when the character is masturbating
@@ -99,8 +113,20 @@ finishing_masturbating=finishing,I'm Cumming! I'm Cumming! Ahhhh!
 finished_masturbating=finished,Oooh, I enjoyed that...
 finished_masturbating=finished,Anybody want an encore?
 finished_masturbating=finished,Mmmm.... It's more exciting with an audience.
-#I don't think this line is actually used by the game.
-game_over_defeat=calm,That was fun. Congratulations, ~name~!
+
+
+
+game_over_defeat=loss,Augh! I don't believe this! I've never lost - not even to my dad!
+0-game_over_victory=happy,Yes, yes! I rule! I rule!
+1-game_over_victory=happy,Yes, yes! I rule! I rule!
+2-game_over_victory=happy,Yeah, I'm the best!
+3-game_over_victory=happy,Yeah, I'm the best!
+4-game_over_victory=happy,I'm a superstar!
+5-game_over_victory=happy,Woo! Not too bad, right?
+6-game_over_victory=happy,Alright, I won! Take that!
+-3-game_over_victory=happy,Nya nya! *giggles*
+
+
 
 #situations where another male character is stripping
 male_human_must_strip=interested,Show us what you've got, big boy!
@@ -217,33 +243,43 @@ female_finished_masturbating=excited,Mmm...
 6-must_strip_losing=loss,Are you guys conspiring to get me naked?
 6-stripping=strip,So you get to see all of me...
 7-stripped=stripped,I'm sure it was worth the wait.
+7-stripped=stripped,If it's beauty you want, then there's no need to prove it - Daisy is the fairest of all!
+
+
 
 #card cases
 #fully clothed
-#0-good_hand=,
-#0-okay_hand=,
-#0-bad_hand=,
+0-good_hand=,
+0-okay_hand=,
+0-bad_hand=,
 
 #lost shoes
-#1-good_hand=,
-#1-okay_hand=,
-#1-bad_hand=,
+1-good_hand=,
+1-okay_hand=,
+1-bad_hand=,
 
 #lost earrings
-#2-good_hand=,
-#2-okay_hand=,
-#2-bad_hand=,
+2-good_hand=happy,Woo-hoo! Nice!
+2-good_hand=happy,Yeah!
+2-good_hand=happy,I like these.
+2-good_hand=happy,Hah! I've got this round.
+2-okay_hand=,
+2-bad_hand=,
 
 #lost gloves
-#3-good_hand=,
-#3-okay_hand=,
-#3-bad_hand=,
+3-good_hand=happy,Woo-hoo! Nice!
+3-good_hand=happy,Yeah!
+3-good_hand=happy,I like these.
+3-good_hand=happy,Hah! I've got this round.
+3-okay_hand=,
+3-bad_hand=,
 
 #lost crown
 4-good_hand=,I like these!
 4-good_hand=,You won't be seeing under here yet...
 4-okay_hand=calm,Well, I'll have to hope with these.
 4-okay_hand=calm,These cards will have to do.
+4-bad_hand=disappointed,Oh no!
 4-bad_hand=disappointed,I'm sure you were hoping so see some skin...
 4-bad_hand=disappointed,You could've given me some better cards...
 
@@ -252,6 +288,7 @@ female_finished_masturbating=excited,Mmm...
 5-good_hand=happy,Now this is a good hand.
 5-okay_hand=calm,These are alright.
 5-okay_hand=calm,I'll have to hope with these.
+5-bad_hand=disappointed,Whoa! Aw, brutal!
 5-bad_hand=disappointed,Huh, you might be getting a peek soon...
 5-bad_hand=disappointed,Oh, dear. Does anyone want to swap hands?
 
@@ -274,8 +311,11 @@ female_finished_masturbating=excited,Mmm...
 -3-good_hand=happy,I like this hand.
 -3-okay_hand=calm,I hope this is enough...
 -3-okay_hand=calm,These are OK, I suppose.
+-3-bad_hand=disappointed,NOOOOOO!
 -3-bad_hand=disappointed,This might be it for me...
 -3-bad_hand=disappointed,Oh dear.
+
+
 
 ##other player must strip specific
 #fully clothed
@@ -440,11 +480,15 @@ female_finished_masturbating=excited,Mmm...
 -1-female_removing_accessory=disappointed,Aww...
 -1-female_removed_accessory=calm,I wanted to see what you look like under your clothes...
 
+#targeted
+6-female_removed_accessory,target:peach=happy,Just more confirmation that you're the most boring princess, Peach!
+
+
 ##another character is removing minor clothing items
 #fully clothed
 0-male_removing_minor=calm,At least it's something.
 0-male_removed_minor=calm,And it's out of the way now.
-0-female_removing_minor=calm,At least your ~clothing~ something.
+0-female_removing_minor=calm,At least your ~clothing~ is something.
 0-female_removed_minor=calm,And it's out of the way now.
 
 #lost 1 item
@@ -561,6 +605,8 @@ female_finished_masturbating=excited,Mmm...
 -1-male_removed_major=appreciative,Mmm... You should go like that more often, ~name~.
 -1-female_removing_major=interested,Taking off your ~clothing~?
 -1-female_removed_major=appreciative,Mmm... You should go like that more often, ~name~.
+
+
 
 ##another character is removing important clothes
 #fully clothed
@@ -732,6 +778,8 @@ female_finished_masturbating=excited,Mmm...
 -1-female_crotch_is_visible=happy,But I can still appreciate it now...
 -1-female_crotch_is_visible=horny,Can I... warm it up for you?
 
+
+
 ##other player is masturbating
 #fully clothed
 0-male_must_masturbate=interested,Oh, it's your turn to go, ~name~.
@@ -851,6 +899,7 @@ female_finished_masturbating=excited,Mmm...
 -2-female_masturbating=horny,Can you feel them all watching us, ~name~?
 -2-female_masturbating=horny,Think we can... ha... cum together?
 -2-female_masturbating=horny,Ahhh... Ever masturbate with someone else, ~name~?
+-2-female_masturbating=horny,Do this often, ~name~? If you don't, I can give you some... ahh... tips...
 -2-female_finished_masturbating=excited,Hah... If you're done... Can you come and help me finish?
 -2-female_finished_masturbating=loss,You're done? Mmm... Who am I going to watch now?
 
@@ -870,6 +919,10 @@ female_finished_masturbating=excited,Mmm...
 -1-female_masturbating=horny,Need a hand? Or a tongue?
 -1-female_finished_masturbating=excited,Oh, feels good doing it in front of people, doesn't it, ~name~?
 -1-female_finished_masturbating=excited,Oooh... you're all wet and I'm all thirsty...
+
+#targeted
+-3-female_start_masturbating,target:hermione=interested,Don't worry, Hermione, I'm sure you'll love it!
+
 
 
 #ending data
@@ -1018,8 +1071,3 @@ ending=At the races...
 		x=centered
 		y=30%
 		arrow=down
-		
-		
-#CHARACTER-SPECIFIC LINES TO PASTE INTO behavior.xml
-#Paste into end of stage 6 (thong only)
-#<case tag="female_removed_accessory" target="peach"><state img="6-happy.png">Just more confirmation that you're the most boring princess, Peach!</state></case>

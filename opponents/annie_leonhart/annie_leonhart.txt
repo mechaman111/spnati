@@ -395,6 +395,10 @@ female_finished_masturbating=shocked,That was more screaming than Wall Rose.
 -1-female_removing_accessory=shocked,You didn't come here to play, you came here gawk. 
 -1-female_removed_accessory=angry,There is going to be a full Military Police investigation. Trust me. 
 
+#targeted
+0-female_removing_accessory,target:kim,targetStage:0=embarrassed,I think I may have been a cheerleader in another life.
+1-female_removing_accessory,target:annie,targetStage:0=smug,Do bookbags count? Should I count my swords and jump gear separately too?
+
 ##another character is removing minor clothing items
 #fully clothed
 0-male_removing_minor=calm,I hear the Garrison plays this all the time. 
@@ -528,6 +532,9 @@ female_finished_masturbating=shocked,That was more screaming than Wall Rose.
 -1-male_removed_major=happy,You may be winning, but the night was mine. 
 -1-female_removing_major=calm,Still playing, ~name~?
 -1-female_removed_major=horny,Maybe you could convince me for another round.
+
+#targeted
+0-female_removing_major,target:hermione,targetStage:0=horny,Out of uniform? Military Police guidelines state that that offence if worthy of detention. You should report to my bunk to serve your sentence... say 9pm tonight?
 
 ##another character is removing important clothes
 #fully clothed
@@ -698,6 +705,8 @@ female_finished_masturbating=shocked,That was more screaming than Wall Rose.
 -1-female_crotch_will_be_visible=happy,Take those off! No reason to wear them now, is there?
 -1-female_crotch_is_visible=horny,You're dripping...is that from watching me?
 
+
+
 ##other player is masturbating
 #fully clothed
 0-male_must_masturbate=smug,You threw this game on purpose...
@@ -827,6 +836,8 @@ female_finished_masturbating=shocked,That was more screaming than Wall Rose.
 -1-female_masturbating=shocked,Damn! Can I just have a quick taste, your pussy looks delicious!
 -1-female_finished_masturbating=horny,Well we lost, lets leave the others, and go on our own "Exploratory Mission".
 
+
+
 #masturbation
 #these situations relate to when the character is masturbating
 #these only come up in the relevant stages, so you don't need to include the stage numbers here
@@ -860,57 +871,3 @@ game_over_victory=calm,What the character says when they win the game. Can happe
 6-game_over_victory=smug,Nice game everyone. Maybe next time you'll get to see my tits!
 7-game_over_victory=horny,Since I won, who wants to help me get off? 
 -3-game_over_victory=horny,It took every ounce of dignity I had. But the day is mine.
-
-
-#ending data
-#this is optional. Delete it if you don't have an ending thought up yet.
-#you can also have multiple endings.
-#each one starts with the "ending" entry
-#the tabs aren't necessary, but make it easier to read.
-ending=This is the title of the character's ending, and the start of a new ending
-        ending_gender="male", "female", or "any". This is the gender of player that can see the ending
-
-        #each ending has a number of screens. each screen has an image, and one or more text boxes
-        #the entry "screen" marks the start of a new screen
-        screen=filename (including extension) of the background image for a screen. Also the start of a new screen
-
-                #the text boxes in a screen
-                #the entry "text" starts a new text box
-                text=The text in the text box.
-                x=The x-position of the text box. Specifically, the position of the text box's left side. This can be a percentage, or the word "centered"
-                y=The y-position of the top of the text box. Must be a percentage.
-                width=The width of a text box. This is optional. Must be a percentage.
-                arrow="up", "down", "left", or "right". Gives the text box a dialogue arrow in the specified direction. Can be left out, if you don't want the text box to be an arrow.
-
-        #this screen is an example
-        #the filename is the image you want to use
-        screen=example-filename.png
-
-                text=This is text that will be seen by the player. It has a width of 34% and an arrow pointing down.
-                x=10%
-                y=20%
-                width=34%
-                arrow=right
-
-                text=This is a centered text box. It has the default width and an arrow pointing right.
-                x=centered
-                y=50%
-                arrow=right
-
-                text=This third text box has minimum amount of values specified. It uses the default width, and has no arrow.
-                x=75%
-                y=50%
-
-#if you want additional endings, start the new one with the "ending" line
-
-<case tag="female_must_strip" target="k" targetStage="0" oppHand="One Pair" hasHand="Two Pair" alsoPlaying="streaming-chan" alsoPlayingStage="9" alsoPlayingHand="Three of a Kind" totalMales="2"> <state img="5-stunned.png">This is a bizarrely specific circumstance!</state> </case>
-
-#Annie
-#<case tag="female_removing_accessory" target="annie" targetStage="0"><state img="1-smug.png">Do bookbags count? Should I count my swords and jump gear separately too?</state></case>
-#Hermione
-#<case tag="female_removing_major" target="hermione" targetStage="0"><state img="0-horny.png">Out of uniform? Military Police guidelines state that that offence if worthy of detention. You should report to my bunk to serve your sentence... say 9pm tonight?</state></case>
-#Kim
-#<case tag="female_removing_accessory" target="kim" targetStage="0"><state img="0-embarrassed.png">I think I may have been a cheerleader in another life.</state></case>
-
-
-
