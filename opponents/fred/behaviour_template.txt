@@ -7,6 +7,12 @@ size=small
 #Number of phases to "finish"
 timer=12
 
+tag=cartoon
+tag=blonde
+tag=fashionable
+tag=American
+tag=mystery_inc
+
 #required for meta.xml
 #start picture
 pic=0-start
@@ -15,6 +21,7 @@ from=Scooby-Doo
 writer=The Other Dude
 artist=The Other Dude
 description=The leader of the Mystery Inc. gang. Fred is statuesque and brave, Everything that the group's other male member isn't. 
+release=36
 
 #clothes
 #these must be in order of removal
@@ -24,11 +31,11 @@ description=The leader of the Mystery Inc. gang. Fred is statuesque and brave, E
 #what they cover = upper (upper body), lower (lower body), other (neither).
 #there must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
 #these are some examples from Rosalina:
-clothes=Monk boots,monk boots,extra,lower
+clothes=Boots,boots,extra,lower
 clothes=Sweater,sweater,minor,upper
 clothes=Ascot,ascot,extra,upper
 clothes=Slacks,slacks,major,lower
-clothes=Dress shirt,dress shirt,important,upper
+clothes=Shirt,shirt,important,upper
 clothes=Socks,socks,minor,lower
 clothes=Briefs,briefs,important,lower
 
@@ -43,13 +50,13 @@ start=0-start,The tracks lead me here, to this secret club built underneath a vi
 #This is what a character says while they're exchanging cards.
 swap_cards=calm,Let's set a trap. I'll use ~cards~ new cards as bait!
 swap_cards=calm,Gang, I need ~cards~ cards. Who's with me?
-swap_Cards=calm,This time I need ~cards~, please.
+swap_cards=calm,This time I need ~cards~, please.
 
 #The character thinks they have a good hand
 good_hand=happy,See? Poker is a man's game.
 good_hand=happy,I thought this game was going to be harder.
 good_hand=happy,What a strong, masculine hand! These cards are good too.
-good_hand=happy,Hey, Howya doin'? 
+good_hand=happy,Hey, howya doin'? 
 
 #The character thinks they have a decent hand
 okay_hand=calm,There's no point in bluffing against me. It's not like I even know what I'm doing.
@@ -64,6 +71,8 @@ bad_hand=eh,The good news for you is that you all probably get to see some more 
 bad_hand=eh,So, uh, did you see the game last night?
 bad_hand=eh,I knew I shouldn't have discarded those three sixes.
 bad_hand=eh,Nope. These cards are just stupid.
+
+
 
 #stripping default
 #This is the character says once they've lost a hand, but before they strip
@@ -91,6 +100,8 @@ must_strip_losing=loss,How do you like that for small talk?
 stripping=strip,What the character says as they take their clothes off. The picture and text should be unique to what they're taking off.
 stripped=sad,What the character says just after they take their clothes off.
 
+
+
 #masturbation
 #these situations relate to when the character is masturbating
 #these only come up in the relevant stages, so you don't need to include the stage numbers here
@@ -108,13 +119,16 @@ finished_masturbating=finished,We aren't going to talk about this again, are we?
 finished_masturbating=finished,Enough already.
 finished_masturbating=finished,I hope you're all proud of yourselves.
 finished_masturbating=finished,I wish I could take this 'Fred Mask' off and be somebody else.
-#I don't think this line is actually used by the game.
+
+
 game_over_defeat=calm,It would be too much of a coincidence if this only happened to us. Everyone must run into monsters all the time. 
 game_over_victory=calm,Come on, gang. It's time we head for home. You all have to stay naked though.
 
+
+
 #situations where another male character is stripping
 male_human_must_strip=happy,Well gang, there's only one way to find out what's underneath ~name~'s clothes.
-male_must_strip=happy-position,Well gang, there's only one way to find out what's underneath ~name~'s clothes.
+male_must_strip=happy,Well gang, there's only one way to find out what's underneath ~name~'s clothes.
 male_human_must_strip=happy,Let's see what you've got under there.
 male_must_strip=happy,Let's see what you've got under there.
 male_human_must_strip=happy,Don't complain. You agreed to play.
@@ -305,6 +319,8 @@ female_finished_masturbating=shocked,It looks like somebody, or something, was i
 6-stripping=strip,This is bad. This is really bad.
 7-stripped=stripped,This is more embarrassing than the time Shaggy started cleaning his beans at Don Knotts' Christmas party.
 
+
+
 #victory lines. one for each stage.
 0-game_over_victory=,
 1-game_over_victory=,
@@ -317,6 +333,8 @@ female_finished_masturbating=shocked,It looks like somebody, or something, was i
 -3-game_over_victory=,
 -2-game_over_victory=,
 -1-game_over_victory=,
+
+
 
 #card cases
 #fully clothed
@@ -614,6 +632,11 @@ female_finished_masturbating=shocked,It looks like somebody, or something, was i
 -1-female_removing_major=awkward,The faster you strip, the faster I can pretend this never happened.
 -1-female_removed_major=sad,I'm going to be standing here like this forever!
 
+#targeted
+6-female_removed_major,target:daphne,targetStage:3=happy,Wow, Daphne! Those are some groovy panties.
+
+
+
 ##another character is removing important clothes
 #fully clothed
 0-male_chest_will_be_visible=,
@@ -765,6 +788,13 @@ female_finished_masturbating=shocked,It looks like somebody, or something, was i
 -1-female_crotch_will_be_visible=,
 -1-female_crotch_is_visible=,
 
+#targeted
+6-female_crotch_is_visible,filter:creepy=interested,That's my fetish!
+-3-female_crotch_is_visible,filter:creepy=interested,That's my fetish!
+-3-female_crotch_is_visible,target:daphne=horny.png,I've never been as hard for you as I am right now, Daphne!
+
+
+
 ##other player is masturbating
 #fully clothed
 0-male_must_masturbate=,
@@ -872,22 +902,11 @@ female_finished_masturbating=shocked,It looks like somebody, or something, was i
 #finished
 -1-male_must_masturbate=sad,You certainly aren't getting any sympath from me, ~name~.
 -1-male_start_masturbating=calm,Everybody's looking at you. Nobody's judging me right now.
--1-male_masturbating=calm,Not so easy with an audience, is it ~name~?
+-1-male_masturbating=calm,Not so easy with an audience, is it, ~name~?
 -1-male_finished_masturbating=awkward,I guess one positive is you're more of a mess than I am.
 
 -1-female_must_masturbate=happy,Your turn, ~name~. Let's see how you like it.
 -1-female_start_masturbating=calm,Everybody's looking at you. Nobody's judging me right now.
--1-female_masturbating=Not so easy with an audience, is it ~name~?
--1-female_masturbating=I'm not doing anything right now, if you need a hand.
+-1-female_masturbating=calm,Not so easy with an audience, is it, ~name~?
+-1-female_masturbating=horny,I'm not doing anything right now, if you need a hand.
 -1-female_finished_masturbating=horny,I'd be more than willing to help you clean up, ~name~.
-
-
-#CHARACTER-SPECIFIC LINES TO PASTE INTO behavior.xml
-#Paste into end of stage 6 (underwear only)
-#<case tag="female_removed_major" target="daphne" targetStage="3"><state img="6-happy.png">Wow, Daphne! Those are some groovy panties.</state></case>
-#<case tag="female_crotch_is_visible" filter="creepy"><state img="6-interested.png">That's my fetish!</state></case>
-
-#Paste into end of stage 7 (naked)
-#<case tag="female_crotch_is_visible" filter="creepy"><state img="7-interested.png">That's my fetish!</state></case>
-#<case tag="female_crotch_is_visible" target="daphne"><state img="7-horny.png">I've never been as hard for you as I am right now, Daphne!</state></case>
-
