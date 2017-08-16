@@ -1,6 +1,8 @@
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+import imp
+if sys.version_info[0] == 2:
+	imp.reload(sys)
+	sys.setdefaultencoding('utf8')
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 
@@ -282,7 +284,7 @@ def add_values(base_element, player_dictionary, default_dictionary, stage):
 	if type(default_dictionary) != list:
 		default_dictionary = [default_dictionary]
 	for d in default_dictionary:
-		for key in d.keys():
+		for key in list(d.keys()):
 			contents = get_cases(player_dictionary, d, key, stage)
 			#add the target values, if any
 			target_tags = []
@@ -418,21 +420,21 @@ def write_xml(data, filename):
 def add_ending(ending, d):
 	ending = dict(ending)
 
-	if len(ending.keys()) <= 0:
+	if len(list(ending.keys())) <= 0:
 		#this is an empty ending, so don't add anything
 		return
 	
 	#check for required values
 	if "title" not in ending:
-		print "Error - ending \"%s\" does not have a title." % (str(ending))
+		print("Error - ending \"%s\" does not have a title." % (str(ending)))
 		return
 		
 	if "gender" not in ending:
-		print "Error - ending \"%s\" does not have a gender specified." % (str(ending))
+		print("Error - ending \"%s\" does not have a gender specified." % (str(ending)))
 		return
 		
 	if "screens" not in ending:
-		print "Error - ending \"%s\" does not have any screens." % (str(ending))
+		print("Error - ending \"%s\" does not have any screens." % (str(ending)))
 		return
 	
 	#either get the endings data from the dictionary, or make a new endings variable and add that to the dictionary
@@ -485,7 +487,7 @@ def handle_ending_string(key, content, ending, d):
 	
 	#make sure we have a screen ready, because the other tags are specific to a screen
 	if screen is None:
-		print "Error - using tag \"%s\" with value \"%s\", without a screen varaible - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag)
+		print("Error - using tag \"%s\" with value \"%s\", without a screen varaible - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag))
 		return
 	
 	text_boxes = screen["text_boxes"]
@@ -502,7 +504,7 @@ def handle_ending_string(key, content, ending, d):
 	if len(text_boxes) >= 1:
 		text_box = text_boxes[-1]
 	else:
-		print "Error - trying to use tag \"%s\" with value \"%s\", without making a text box. Use the \"%s\" tag first." % (key, content, text_tag)
+		print("Error - trying to use tag \"%s\" with value \"%s\", without making a text box. Use the \"%s\" tag first." % (key, content, text_tag))
 		return
 	
 	#x position. Can be a css value, or "centered"
@@ -535,7 +537,7 @@ def read_player_file(filename):
 	mstb_dict = get_masturbating_cases_dictionary()
 	fnsh_dict = get_finished_Cases_dictionary()
 	
-	case_names = main_dict.keys() + plyr_dict.keys() + strp_dict.keys() + nude_dict.keys() + mstb_dict.keys() + fnsh_dict.keys()
+	case_names = list(main_dict.keys()) + list(plyr_dict.keys()) + list(strp_dict.keys()) + list(nude_dict.keys()) + list(mstb_dict.keys()) + list(fnsh_dict.keys())
 	
 	d = {}
 	
@@ -561,38 +563,39 @@ def read_player_file(filename):
 			continue
 		
 		#check for characters that can't be used
-		skip_line = False
-		try:
-			# In utf-8, characters using umlauts are actually encoded as two separate characters
-			# so we need to try to decode the entire line instead of individual characters
-			line.decode('utf-8')
-		except UnicodeDecodeError:
-			# Find out which character
-			problem_character = ""
-			for c in line:
-				try:
-					c.decode('utf-8')
-				except UnicodeDecodeError:
-					problem_character = c
-					break
+		if sys.version_info[0] == 2:
+			skip_line = False
+			try:
+				# In utf-8, characters using umlauts are actually encoded as two separate characters
+				# so we need to try to decode the entire line instead of individual characters
+				line.decode('utf-8')
+			except UnicodeDecodeError:
+				# Find out which character
+				problem_character = ""
+				for c in line:
+					try:
+						c.decode('utf-8')
+					except UnicodeDecodeError:
+						problem_character = c
+						break
 
-			if (len(problem_character) > 0):
-				print "Unable to decode character %s in line %d: \"%s\"" % (problem_character, line_number, line)
-			else:
-				print "Unable to decode line \"%s\" in line %d: " % (line, line_number)
+				if (len(problem_character) > 0):
+					print("Unable to decode character %s in line %d: \"%s\"" % (problem_character, line_number, line))
+				else:
+					print("Unable to decode line \"%s\" in line %d: " % (line, line_number))
 
-			skip_line = True
-			break
+				skip_line = True
+				break
 
-		if skip_line:
-			continue
+			if skip_line:
+				continue
 		
 		#split the lines, then check for malformed entries
 		try:
 			key, text = line.split("=", 1)
 		except ValueError:
 			#this helps to find lines that are misformed 
-			print "Unable to split line %d: \"%s\"" % (line_number, line)
+			print("Unable to split line %d: \"%s\"" % (line_number, line))
 			continue
 		
 		key = key.strip().lower()
@@ -612,7 +615,7 @@ def read_player_file(filename):
 					target_type, target_value = t.split(":")
 				except ValueError:
 					#make sure the target has a format we can understand
-					print "Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line)
+					print("Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = "skip"
 					stripped = ""
 					target_value = "N/A"
@@ -622,7 +625,7 @@ def read_player_file(filename):
 				
 				#make sure there's a target. Can I check the data here to make sure that a target is valid?
 				if len(target_value) <= 0:
-					print "No target value specified for line %d - \"%s\". Skipping line." % (line_number, line)
+					print("No target value specified for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = skip
 					stripped = ""
 				
@@ -637,7 +640,7 @@ def read_player_file(filename):
 					
 				else:
 					#unknown target type
-					print "Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line)
+					print("Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line))
 					stripped = "" #make the script skip this line
 					
 				if target_type == "targetstage":
@@ -648,7 +651,7 @@ def read_player_file(filename):
 							have_target = True
 							break
 					if not have_target:
-						print "Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line)
+						print("Warning - using a targetStage for line %d - \"%s\" without using a target value" % (line_number, line))
 		
 		
 		#if the key contains a -, it belongs to a specific stage
@@ -776,7 +779,7 @@ def make_xml(player_filename, out_filename, meta_filename=None):
 #python make_xml <character data file> <behaviour.xml output file> <meta.xml output file>
 if __name__ == "__main__":
 	if len(sys.argv) <= 1:
-		print "Please give the name of the dialogue file to process into XML files"
+		print("Please give the name of the dialogue file to process into XML files")
 		exit()
 	behaviour_name = "behaviour.xml"
 	meta_name = "meta.xml"
