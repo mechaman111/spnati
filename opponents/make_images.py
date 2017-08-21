@@ -176,7 +176,7 @@ def read_image_data(filename):
 			try:
 				image_filename, image_data = line.split("=", 1)
 			except ValueError:
-				print "Error - unable to split line number %d: \"%s\"" % (line_number, line)
+				print("Error - unable to split line number %d: \"%s\"" % (line_number, line))
 				continue
 			image_filename = image_filename.strip()
 			image_data = image_data.strip()
