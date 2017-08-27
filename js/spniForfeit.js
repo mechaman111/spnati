@@ -165,7 +165,7 @@ function tickForfeitTimers (context) {
 	if (masturbatingPlayers.length > 0 && Math.random() < showMasturbatingThreshold){
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 0; i < players.length; i++){
-			updateBehaviour(i, (i == playerToShow) ? players[i].forfeit[0] : (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), [NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], null);
+			updateBehaviour(i, (i == playerToShow) ? players[i].forfeit[0] : (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), [NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], players[playerToShow]);
 		}
 		updateAllGameVisuals();
 		blockingSleep(masturbationDelay); // wait so that you can see what they say
