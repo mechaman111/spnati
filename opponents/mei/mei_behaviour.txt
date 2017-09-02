@@ -12,7 +12,7 @@ tag=kind
 tag=glasses
 tag=hairy
 tag=future
-tag=Chinese
+tag=chinese
 tag=cheerful
 tag=video_game
 tag=overwatch
@@ -23,7 +23,7 @@ intelligence=average
 pic=0-calm
 height=5'6"
 from=Overwatch
-writer=Arcess, Mei-enthusiast, Master_Ultimus, humdumthrow
+writer=Arndress, Mei-enthusiast, Master_Ultimus, humdumthrow
 artist=humdumthrow
 description=Mei-Ling is a scientist who has taken the fight to preserve the environment into her own hands.
 release=
@@ -158,7 +158,10 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 3-bad_hand=loss,Shivers...
 3-bad_hand=loss,I'm going to have to science the heck out of this...
 3-bad_hand=strip,Should I just start taking off my shirt now to save time?
- 
+
+3-good_hand,alsoPlaying:chara=happy,I'm safe this hand. How did you go, Chara?
+3-good_hand,alsoPlaying:chara=strip,I've been eating right and getting excercise. I don't know why the public is so focused on a scientist's body type...
+
 #lost shirt
 4-good_hand=interested,Blocking them off.
 4-good_hand=happy,My ultimate is ready! 
@@ -173,7 +176,9 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 5-okay_hand=sad,People say that I'm thick, but I'm actually very smart!
 5-bad_hand=loss,I'm on fire! Not really...
 5-bad_hand=sad,I don't have to have the best hand; it just has to be better than the worst!
- 
+
+5-bad_hand,alsoPlaying:zone-tan,alsoPlayingStage:2=interested,Wow, you're a tough opponent, Zone-tan. You're so good at this game!
+
 #lost bra
 6-good_hand=happy,&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x6321;&#x4F4F;&#x4ED6;&#x4EEC;&#x3002;
 6-okay_hand=interested,Not this time.
@@ -766,6 +771,17 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 -2-female_medium_chest_is_visible,target:may=happy,A-<i>May</i>-zing!
 -1-female_medium_chest_is_visible,target:may=happy,A-<i>May</i>-zing!
 6-female_medium_chest_is_visible,target:tracer=sad,Sometimes I wonder if people misjudge our busts just because of our bulky chest protection.
+0-female_medium_chest_is_visible,target:zone-tan=happy,No bra? How daring!
+1-female_medium_chest_is_visible,target:zone-tan=happy,No bra? How daring!
+2-female_medium_chest_is_visible,target:zone-tan=happy,No bra? How daring!
+3-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+4-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+4-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+5-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+6-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+-3-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+-2-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
+-1-female_medium_chest_is_visible,target:zone-tan=happy,I could tell you weren't wearing anything under that sweater. You really make an impression!
 
 
 
@@ -931,43 +947,36 @@ game_over_defeat=interested,Well played, ~name~! But you'll be in my shoes next 
 
 
 
-#Paste into end of stage 0 (fully clothed)
-#<case tag="male_must_strip" target="link" targetStage="0"><state img="0-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state></case>
-#<case tag="female_must_strip" filter="cheerful" targetStage="2"><state img="0-sad.png">Sorry again... But you seem to be taking losing well!</state></case>
-#<case tag="female_must_strip" filter="princess" targetStage="0"><state img="0-shocked.png">Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed...</state></case> 
-#<case tag="female_medium_chest_is_visible" target="d.va"><state img="0-shocked.png">Oh my gosh, your chest is... it's perfect, Hana! Now I understand why you wanted to play so badly!</state></case>
-#<case tag="female_must_masturbate" target="d.va"><state img="0-shocked.png">Wow! Is this what they call "early access"?</state></case>
-#<case tag="female_must_masturbate" target="mercy"><state img="0-shocked.png">Angela, are the rumors about you true?</state></case>
-#<case tag="female_start_masturbating" target="mercy"><state img="0-embarrassed.png">I had no idea that you really were this promiscuous!</state></case>
-#<case tag="female_must_masturbate" target="tracer"><state img="0-shocked.png">Wow! You really are the fastest here!</state></case>
-#<case tag="female_start_masturbating" target="tracer"><state img="0-embarrassed.png">Um, your girlfriend is a very lucky lady...</state></case>
+#targeted lines to be moved into the sections above
 
+0-male_must_strip,target:link,targetStage:0=calm,I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?
+0-female_must_strip,filter:cheerful,targetStage:2=sad,Sorry again... But you seem to be taking losing well!
+0-female_must_strip,filter:princess,targetStage:0=shocked,Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed... 
+0-female_medium_chest_is_visible,target:d.va=shocked,Oh my gosh, your chest is... it's perfect, Hana! Now I understand why you wanted to play so badly!
+0-female_must_masturbate,target:d.va=shocked,Wow! Is this what they call "early access"?
+0-female_must_masturbate,target:mercy=shocked,Angela, are the rumors about you true?
+0-female_start_masturbating,target:mercy=embarrassed,I had no idea that you really were this promiscuous!
+0-female_must_masturbate,target:tracer=shocked,Wow! You really are the fastest here!
+0-female_start_masturbating,target:tracer=embarrassed,Um, your girlfriend is a very lucky lady...
 
-#Paste into end of stage 3 (lost jacket)
-#<case tag="good_hand" alsoPlaying="chara"><state img="3-happy.png">I'm safe this hand. How did you go, Chara?</state><state img="3-strip.png">I've been eating right and getting excercise. I don't know why the public is so focused on a scientist's body type...</state></case>
-#<case tag="must_strip" target="nagisa" targetStage="2"><state img="3-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state></case>
-#<case tag="must_strip" target="revy"><state img="3-loss.png">Revy, maybe you'd start playing better if you weren't so toxic.</state></case>
-#<case tag="female_removed_major" target="d.va"><state img="3-shocked.png">Wow, you took off the whole suit! You're so good at charging in, Hana!</state></case>
-#<case tag="female_must_masturbate" target="d.va"><state img="3-stripped.png">Oh, Hana! I promise never to tell the team about this... or your viewers.</state></case>
+3-must_strip,target:nagisa,targetStage:2=embarrassed,You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.
+3-must_strip,target:revy=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+3-female_removed_major,target:d.va=shocked,Wow, you took off the whole suit! You're so good at charging in, Hana!
+3-female_must_masturbate,target:d.va=stripped,Oh, Hana! I promise never to tell the team about this... or your viewers.
 
+5-good_hand,alsoPlaying:jasmine=calm,Jasmine, do you happen to know Elsa from <i>Frozen</i>? I've wanted to meet her for years!
+5-female_removed_major,target:d.va=interested,Sorry, Hana, but I had to even the score!
+5-female_medium_chest_is_visible,target:d.va=stripped,Those are amazing, Hana! But if we're going by size, I'm about to beat your high score...
+5-female_finished_masturbating,target:mercy=happy,Wow, that was amazing, Angela! Your sacrifice will be remembered! 
 
-#Paste into end of stage 5 (underwear only)
-#<case tag="good_hand" alsoPlaying="jasmine"><state img="5-calm.png">Jasmine, do you happen to know Elsa from <i>Frozen</i>? I've wanted to meet her for years!</state></case>
-#<case tag="female_removed_major" target="d.va"><state img="5-interested.png">Sorry, Hana, but I had to even the score!</state></case>
-#<case tag="female_medium_chest_is_visible" target="d.va"><state img="5-stripped.png">Those are amazing, Hana! But if we're going by size, I'm about to beat your high score...</state></case>
-#<case tag="female_finished_masturbating" target="mercy"><state img="5-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state></case> 
+7-female_removed_accessory,target:mercy=embarrassed,Angela, would you consider throwing this game... for a price?
+7-female_medium_chest_is_visible,target:d.va=shocked,You might have the most perfect pair in all of Overwatch! Please don't tell Dr. Ziegler that I said that...
+7-female_medium_chest_is_visible,target:d.va,alsoPlaying:mercy=loss,Angela, have you ever performed breast reduction surgery? Is it possible that mine could ever be as perfect as Hana's?
+7-female_medium_chest_is_visible,target:tracer=happy,Lena, you've got freckles there too! So cute! 
+7-female_must_masturbate,target:d.va=interested,Time to dive in, D.Va... I'm not far behind you, as usual. 
+7-female_must_masturbate,target:tracer=embarrassed,Lena... you like girls, don't you? I guess having to do this might be a little easier for you... 
 
-
-#Paste into end of stage 7 (naked)
-#<case tag="female_removed_accessory" target="mercy"><state img="7-embarrassed.png">Angela, would you consider throwing this game... for a price?</state></case>
-#<case tag="female_medium_chest_is_visible" target="d.va"><state img="7-shocked.png">You might have the most perfect pair in all of Overwatch! Please don't tell Dr. Ziegler that I said that...</state></case>
-#<case tag="female_medium_chest_is_visible" target="d.va" alsoPlaying="mercy"><state img="7-loss.png">Angela, have you ever performed breast reduction surgery? Is it possible that mine could ever be as perfect as Hana's?</state></case>
-#<case tag="female_medium_chest_is_visible" target="tracer"><state img="7-happy.png">Lena, you've got freckles there too! So cute!</state></case> 
-#<case tag="female_must_masturbate" target="d.va"><state img="7-interested.png">Time to dive in, D.Va... I'm not far behind you, as usual.</state></case> 
-#<case tag="female_must_masturbate" target="tracer"><state img="7-embarrassed.png">Lena... you like girls, don't you? I guess having to do this might be a little easier for you...</state></case> 
-
-#Paste into end of stage 8 (masturbating)
-#<case tag="female_medium_chest_is_visible" target="d.va"><state img="8-shocked.png">Oh, oh Hana! Your chest is even better in person than it is in the fanart!</state></case>
-#<case tag="female_crotch_is_visible" target="d.va"><state img="8-shocked.png">Oh my gosh! You... it's so perfect, Hana!</state></case>
-#<case tag="female_crotch_is_visible" target="mercy"><state img="8-finishing.png">Dr. Angela, I'm.. ah... ah!</state></case> 
-#<case tag="female_crotch_is_visible" target="tracer"><state img="8-shocked.png">Oh... oh, Lena! I should have taken you up on your offer years ago...</state></case> 
+8-female_medium_chest_is_visible,target:d.va=shocked,Oh, oh Hana! Your chest is even better in person than it is in the fanart!
+8-female_crotch_is_visible,target:d.va=shocked,Oh my gosh! You... it's so perfect, Hana!
+8-female_crotch_is_visible,target:mercy=finishing,Dr. Angela, I'm.. ah... ah! 
+8-female_crotch_is_visible,target:tracer=shocked,Oh... oh, Lena! I should have taken you up on your offer years ago... 
