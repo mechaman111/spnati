@@ -15,18 +15,18 @@
         <tag>hairy</tag>
         <tag>video_game</tag>
         <tag>kind</tag>
-        <tag>Chinese</tag>
+        <tag>chinese</tag>
+        <tag>overwatch</tag>
         <tag>cheerful</tag>
         <tag>future</tag>
         <tag>glasses</tag>
-        <tag>overwatch</tag>
     </tags>
 
     <start>
         <state img="0-interested.png">Let's gather some valuable data on this mission.</state>
 		<state img="0-happy.png">I can't wait to get started.</state>
 		<state img="0-shocked.png">Hey, wait for me!</state>
-		<state img="0-happy.png">It's good to get out of the lab.
+		<state img="0-happy.png">It's good to get out of the lab.</state>
 		<state img="0-calm.png">Mei on duty!</state>
     </start>
 
@@ -45,6 +45,9 @@
             <case tag="female_must_strip">
                 <state img="0-shocked.png">Oh, sorry about that.</state>
                 <state img="0-happy.png">Thanks for not making me go first!</state>
+            </case>
+            <case filter="cheerful" tag="female_must_strip" targetStage="2">
+                <state img="0-sad.png">Sorry again... But you seem to be taking losing well!</state>
             </case>
             <case tag="female_must_strip" target="d.va" targetStage="0">
                 <state img="0-happy.png">Thanks for taking one for the team, Hana!</state>
@@ -88,6 +91,9 @@
             <case tag="female_must_strip" target="orendi" targetStage="0">
                 <state img="0-interested.png">Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!</state>
             </case>
+            <case filter="princess" tag="female_must_strip" targetStage="0">
+                <state img="0-shocked.png">Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed...</state>
+            </case>
             <case tag="female_must_strip" target="revy" targetStage="0">
                 <state img="0-happy.png">It's nice to meet you, Revy. Is it true that you're half Chinese? I hope that we can be friends.</state>
             </case>
@@ -109,11 +115,20 @@
             <case tag="female_must_strip" target="velma" targetStage="0">
                 <state img="0-happy.png">Velma, I love your glasses!</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="0-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="0-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="0-horny.png">Feel free to take it off at your own pace!</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="0-calm.png">It looks like ~name~ has picked her ~clothing~.</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="0-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="0-horny.png">~name~, rub some ice cubes on it. I want to see if you can really handle the cold.</state>
@@ -121,6 +136,9 @@
             <case tag="female_removed_major">
                 <state img="0-calm.png">It's okay. Just pull yourself together and have another try at it!</state>
                 <state img="0-calm.png">I'm doing really well this game. This is a personal best for me!</state>
+            </case>
+            <case tag="female_removed_major" target="d.va">
+                <state img="0-happy.png">Wow, Hana! If you wanted to start in your underwear, you could have just said so!</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="0-shocked.png">You started the game with that between your legs!? You must be really excited!</state>
@@ -153,6 +171,12 @@
             <case tag="female_start_masturbating">
                 <state img="0-shocked.png">~name~!</state>
             </case>
+            <case tag="female_start_masturbating" target="mercy">
+                <state img="0-embarrassed.png">I had no idea that you really were this promiscuous!</state>
+            </case>
+            <case tag="female_start_masturbating" target="tracer">
+                <state img="0-embarrassed.png">Um, your girlfriend is a very lucky lady...</state>
+            </case>
             <case tag="male_removing_major">
                 <state img="0-loss.png">For an experiment, good preparation is always necessary.</state>
             </case>
@@ -182,8 +206,20 @@
             <case tag="male_must_strip">
                 <state img="0-horny.png">Luck is on my side so far.</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="0-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="0-shocked.png">Oh, of course. The penalty...</state>
+            </case>
+            <case tag="female_must_masturbate" target="d.va">
+                <state img="0-shocked.png">Wow! Is this what they call "early access"?</state>
+            </case>
+            <case tag="female_must_masturbate" target="mercy">
+                <state img="0-shocked.png">Angela, are the rumors about you true?</state>
+            </case>
+            <case tag="female_must_masturbate" target="tracer">
+                <state img="0-shocked.png">Wow! You really are the fastest here!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-happy.png">It wasn't me who lost!</state>
@@ -205,8 +241,14 @@
             <case tag="female_medium_chest_is_visible">
                 <state img="0-happy.png">Your curves are lovely, ~name~.</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="d.va">
+                <state img="0-shocked.png">Oh my gosh, your chest is... it's perfect, Hana! Now I understand why you wanted to play so badly!</state>
+            </case>
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="0-happy.png">A-<i>May</i>-zing!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="0-happy.png">No bra? How daring!</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="0-interested.png">Wow, that's actually a really good strategy.</state>
@@ -222,14 +264,23 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="0-interested.png">A bodysuit that leaves little to the imagination is the essence of discovery!</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="0-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="0-interested.png">What do you have for us, ~name~?</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="0-embarrassed.png">I didn't think your loss would affect me so much, ~name~.</state>
             </case>
+            <case tag="female_finished_masturbating" target="mercy">
+                <state img="0-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
+            </case>
             <case tag="female_chest_will_be_visible">
                 <state img="0-loss.png">I'm sorry... It was up to you to change this outcome.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="evie">
+                <state img="0-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
             <case tag="male_masturbating">
                 <state img="0-shocked.png">W-wait, not so fast! Slow down!</state>
@@ -271,15 +322,6 @@
             <case tag="must_strip_winning">
                 <state img="0-happy.png">I can't wait to get started!</state>
             </case>
-			<case tag="male_must_strip" target="link" targetStage="0"><state img="0-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state></case>
-			<case tag="female_must_strip" filter="cheerful" targetStage="2"><state img="0-sad.png">Sorry again... But you seem to be taking losing well!</state></case>
-			<case tag="female_must_strip" filter="princess" targetStage="0"><state img="0-shocked.png">Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed...</state></case> 
-			<case tag="female_medium_chest_is_visible" target="d.va"><state img="0-shocked.png">Oh my gosh, your chest is... it's perfect, Hana! Now I understand why you wanted to play so badly!</state></case>
-			<case tag="female_must_masturbate" target="d.va"><state img="0-shocked.png">Wow! Is this what they call "early access"?</state></case>
-			<case tag="female_must_masturbate" target="mercy"><state img="0-shocked.png">Angela, are the rumors about you true?</state></case>
-			<case tag="female_start_masturbating" target="mercy"><state img="0-embarrassed.png">I had no idea that you really were this promiscuous!</state></case>
-			<case tag="female_must_masturbate" target="tracer"><state img="0-shocked.png">Wow! You really are the fastest here!</state></case>
-			<case tag="female_start_masturbating" target="tracer"><state img="0-embarrassed.png">Um, your girlfriend is a very lucky lady...</state></case>
         </stage>
 
         <stage id="1">
@@ -312,6 +354,9 @@
             <case tag="female_must_strip" target="orendi" targetStage="0">
                 <state img="1-interested.png">Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!</state>
             </case>
+            <case filter="princess" tag="female_must_strip" targetStage="0">
+                <state img="1-shocked.png">Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed...</state>
+            </case>
             <case tag="female_must_strip" target="samus" targetStage="0">
                 <state img="1-happy.png">Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!</state>
             </case>
@@ -327,6 +372,12 @@
             <case tag="female_must_strip" target="velma" targetStage="0">
                 <state img="1-happy.png">Velma, I love your glasses!</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="1-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="1-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="1-embarrassed.png">I... I confess that I get excited by seeing a nice chest...</state>
             </case>
@@ -336,6 +387,9 @@
             <case tag="female_removing_minor" target="kim" targetStage="1">
                 <state img="1-interested.png">Haha, I agree, Kim! Let's get serious!</state>
             </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="1-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
+            </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="1-embarrassed.png">If your plan was to show me your thing early to make me blush... Mission success...</state>
                 <state img="1-horny.png">~name~, rub some ice cubes on it. I want to see if you can really handle the cold.</state>
@@ -344,7 +398,6 @@
                 <state img="1-interested.png">Better watch out, Mei's going to get you!</state>
             </case>
             <case tag="female_removed_major" target="d.va">
-                <state img="1-happy.png">Wow, Hana! If you wanted to start in your underwear, you could have just said so!</state>
                 <state img="1-loss.png">Hana, I'm sorry! You always seemed so good at games...</state>
             </case>
             <case tag="male_large_crotch_is_visible">
@@ -378,6 +431,9 @@
             <case tag="female_start_masturbating">
                 <state img="1-shocked.png">Oh, you're just going for it!</state>
             </case>
+            <case tag="female_start_masturbating" target="mercy">
+                <state img="1-embarrassed.png">I had no idea that you really were this promiscuous!</state>
+            </case>
             <case tag="male_removing_major">
                 <state img="1-embarrassed.png">&#x7B49;&#x7B49;&#x6211;&#xFF01;</state>
             </case>
@@ -405,6 +461,9 @@
             </case>
             <case tag="male_must_strip">
                 <state img="1-interested.png">You have to do better than that if you want to win!</state>
+            </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="1-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
             </case>
             <case tag="female_must_masturbate">
                 <state img="1-embarrassed.png">When you're ready, it's time for you do what we agreed...</state>
@@ -443,6 +502,9 @@
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="1-happy.png">A-<i>May</i>-zing!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="1-happy.png">No bra? How daring!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="1-interested.png">I'm not surprised.</state>
             </case>
@@ -452,14 +514,23 @@
             <case tag="female_removing_major">
                 <state img="1-calm.png">It's nothing personal.</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="1-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="1-calm.png">What small sample do you have for us, ~name~?</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="1-embarrassed.png">Do I make that face when I lose?</state>
             </case>
+            <case tag="female_finished_masturbating" target="mercy">
+                <state img="1-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
+            </case>
             <case tag="female_chest_will_be_visible">
                 <state img="1-sad.png">Sorry.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="evie">
+                <state img="1-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
             <case tag="male_masturbating">
                 <state img="1-happy.png">Haha, this is great!</state>
@@ -486,6 +557,7 @@
             <case tag="bad_hand">
                 <state img="1-calm.png">I'm sure I can make up for this.</state>
                 <state img="1-loss.png">Forecast: stormy times ahead.</state>
+                <state img="1-sad.png">Just to let everyone know, climate change is <i>not</i> a like from the Chinese. And we're trying our best to fix it!</state>
             </case>
             <case tag="stripped">
                 <state img="1-interested.png">It's for the best. My hands were getting warm.</state>
@@ -516,11 +588,20 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="2-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case tag="female_must_strip" target="nagisa" targetStage="2">
+                <state img="2-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state>
+            </case>
             <case tag="female_must_strip" target="seven" targetStage="0">
                 <state img="2-calm.png">Excuse me, Ms. Nine, but are you an astronaut? Maybe you've met my friend Winston at the Lunar Colony?</state>
             </case>
             <case tag="female_must_strip" target="velma" targetStage="0">
                 <state img="2-happy.png">Velma, I love your glasses!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="2-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="2-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="2-horny.png">Oh? Well, I wonder what you have...</state>
@@ -528,6 +609,9 @@
             <case tag="female_removing_minor">
                 <state img="2-interested.png">Off comes the ~clothing~!</state>
                 <state img="2-embarrassed.png">I was only trying to help!</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="2-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="2-horny.png">That icicle looks like it won't melt anytime soon...</state>
@@ -600,6 +684,9 @@
             <case tag="male_must_strip">
                 <state img="2-interested.png">C'mon, it's not that hard.</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="2-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="2-calm.png">Don't be sad, but it's time to see you play.</state>
             </case>
@@ -630,6 +717,9 @@
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="2-happy.png">A-<i>May</i>-zing!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="2-happy.png">No bra? How daring!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="2-strip.png">If you don't know what to take off, we could make suggestions.</state>
             </case>
@@ -643,6 +733,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="2-strip.png">Remember that time Roadhog's just missed your body but ripped your suit off, Hana?</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="2-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="2-shocked.png">Are you... are you taking off your...</state>
             </case>
@@ -651,6 +744,9 @@
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="2-calm.png">Don't be shy. You're among friends!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="evie">
+                <state img="2-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
             <case tag="male_masturbating">
                 <state img="2-happy.png">If you could keep it up, I could watch you for hours!</state>
@@ -710,8 +806,20 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="3-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case tag="female_must_strip" target="nagisa" targetStage="2">
+                <state img="3-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state>
+            </case>
+            <case tag="female_must_strip" target="revy">
+                <state img="3-loss.png">Revy, maybe you'd start playing better if you weren't so toxic.</state>
+            </case>
             <case tag="female_must_strip" target="velma" targetStage="0">
                 <state img="3-happy.png">Velma, I love your glasses!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="3-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="3-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="3-interested.png">I should take notes for next time. Study on why I did so well and the results.</state>
@@ -719,12 +827,18 @@
             <case tag="female_removing_minor">
                 <state img="3-happy.png">I'm looking forward to seeing what you pick.</state>
             </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="3-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
+            </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="3-horny.png">Result: ~name~ seems to be very excited about playing. Should attempt a hands on experiment</state>
             </case>
             <case tag="female_removed_major">
                 <state img="3-shocked.png">~name~, you're so awesome! Just like Sun Wukong!</state>
                 <state img="3-interested.png">Good choice.</state>
+            </case>
+            <case tag="female_removed_major" target="d.va">
+                <state img="3-shocked.png">Wow, you took off the whole suit! You're so good at charging in, Hana!</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="3-shocked.png">Result: Oh my gosh!</state>
@@ -785,8 +899,14 @@
             <case tag="male_must_strip">
                 <state img="3-horny.png">I didn't think I'd be this interested!</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="3-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="3-stripped.png">This isn't a race, you know...</state>
+            </case>
+            <case tag="female_must_masturbate" target="d.va">
+                <state img="3-stripped.png">Oh, Hana! I promise never to tell the team about this... or your viewers.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-happy.png">&#x54C7;&#xFF01;&#x771F;&#x597D;&#x73A9;&#x513F;&#xFF01;</state>
@@ -809,6 +929,9 @@
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="3-happy.png">A-<i>May</i>-zing!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="3-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="3-calm.png">You have to let it go.</state>
             </case>
@@ -818,14 +941,23 @@
             <case tag="female_removing_major">
                 <state img="3-happy.png">Victory is still within my grasp!</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="3-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="3-horny.png">What do you have that's equal to my jacket?</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="3-shocked.png">Wow! You were so loud at the end!</state>
             </case>
+            <case tag="female_finished_masturbating" target="mercy">
+                <state img="3-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
+            </case>
             <case tag="female_chest_will_be_visible">
                 <state img="3-interested.png">Let me make some notes so I can learn the progression.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="evie">
+                <state img="3-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
             <case tag="male_masturbating">
                 <state img="3-embarrassed.png">I feel so overdressed right now...</state>
@@ -839,6 +971,10 @@
             <case tag="good_hand">
                 <state img="3-happy.png">Thanks!</state>
                 <state img="3-happy.png">&#x77A7;&#x77A7;&#x8FD9;&#x4E2A;&#x3002;</state>
+            </case>
+            <case alsoPlaying="chara" tag="good_hand">
+                <state img="3-happy.png">I'm safe this hand. How did you go, Chara?</state>
+                <state img="3-strip.png">I've been eating right and getting excercise. I don't know why the public is so focused on a scientist's body type...</state>
             </case>
             <case tag="okay_hand">
                 <state img="3-interested.png">Hmm... I still have a chance!</state>
@@ -871,11 +1007,6 @@
             <case tag="must_strip_winning">
                 <state img="3-calm.png">I knew it was statistically a matter of time.</state>
             </case>
-			<case tag="good_hand" alsoPlaying="chara"><state img="3-happy.png">I'm safe this hand. How did you go, Chara?</state><state img="3-strip.png">I've been eating right and getting excercise. I don't know why the public is so focused on a scientist's body type...</state></case>
-			<case tag="must_strip" target="nagisa" targetStage="2"><state img="3-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state></case>
-			<case tag="must_strip" target="revy"><state img="3-loss.png">Revy, maybe you'd start playing better if you weren't so toxic.</state></case>
-			<case tag="female_removed_major" target="d.va"><state img="3-shocked.png">Wow, you took off the whole suit! You're so good at charging in, Hana!</state></case>
-			<case tag="female_must_masturbate" target="d.va"><state img="3-stripped.png">Oh, Hana! I promise never to tell the team about this... or your viewers.</state></case>
         </stage>
 
         <stage id="4">
@@ -889,11 +1020,20 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="4-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="4-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="4-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="4-interested.png">I lost my shirt. You should lose yours too!</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="4-happy.png">Is it time to see a little bit more skin?</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="4-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="4-horny.png">I'm in the mood for a popsicle now...</state>
@@ -969,6 +1109,9 @@
                 <state img="4-calm.png">Don't postpone until next round what you could take off in this one.</state>
                 <state img="4-sad.png">I wasn't aiming for you, ~name~, so please don't take this personally.</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="4-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="4-calm.png">~name~ is out!</state>
             </case>
@@ -998,6 +1141,10 @@
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="4-happy.png">A-<i>May</i>-zing!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="4-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
+                <state img="4-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="4-sad.png">I'm not hoping for much.</state>
             </case>
@@ -1010,14 +1157,23 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="4-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="4-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="4-horny.png">Just think of me as a scientist here to observe the results.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="4-happy.png">&#x54C7;&#xFF01;&#x771F;&#x597D;&#x73A9;&#x513F;&#xFF01;</state>
             </case>
+            <case tag="female_finished_masturbating" target="mercy">
+                <state img="4-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
+            </case>
             <case tag="female_chest_will_be_visible">
                 <state img="4-horny.png">I have to admit, I'm curious!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="evie">
+                <state img="4-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
             <case tag="male_masturbating">
                 <state img="4-embarrassed.png">Did you know that thawed ice can cause a surprising amount of dampness?</state>
@@ -1025,12 +1181,18 @@
             <case tag="female_removed_minor">
                 <state img="4-calm.png">Are you teasing us, ~name~?</state>
             </case>
+            <case tag="female_removed_minor" target="zone-tan" targetStage="1">
+                <state img="4-strip.png">You're too good at this! I started with more, but now we're even.</state>
+            </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-strip.png">If you want to get even more comfortable I wouldn't mind.</state>
             </case>
             <case tag="good_hand">
                 <state img="4-interested.png">Blocking them off.</state>
                 <state img="4-happy.png">My ultimate is ready!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="good_hand">
+                <state img="4-interested.png">Zone-tan, if you watch everyone fap, you must have <i>so much data</i> from your observation! You should share it for peer review.</state>
             </case>
             <case tag="okay_hand">
                 <state img="4-calm.png">Starting to get hot there!</state>
@@ -1070,11 +1232,20 @@
             <case tag="female_must_strip" target="gogo" targetStage="0">
                 <state img="5-calm.png">GoGo, I'm looking forward to seeing your lab! You're welcome to see mine anytime.</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="0">
+                <state img="5-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="5-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="5-shocked.png">Be careful, ~name~. You don't want to be shirtless in cold climates.</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="5-interested.png">I'll make sure next time this won't happen!</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="5-embarrassed.png">Um, which of us do you think are foot fetishists, Zone-tan?</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="5-shocked.png">My glasses are fogging up! I can't see properly!</state>
@@ -1082,6 +1253,9 @@
             </case>
             <case tag="female_removed_major">
                 <state img="5-interested.png">Sexy geometry!</state>
+            </case>
+            <case tag="female_removed_major" target="d.va">
+                <state img="5-interested.png">Sorry, Hana, but I had to even the score!</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="5-shocked.png">Whoa! That's huge!</state>
@@ -1142,6 +1316,9 @@
             <case tag="male_must_strip">
                 <state img="5-stripped.png">I've lost enough already. It's some to see some more of you, ~name~!</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="5-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="5-embarrassed.png">It's time to give us a glance into a more private side of you, ~name~.</state>
             </case>
@@ -1165,8 +1342,14 @@
             <case tag="female_medium_chest_is_visible">
                 <state img="5-embarrassed.png">Sorry if this embarrasses you, but thank you for showing us this side of yourself.</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="d.va">
+                <state img="5-stripped.png">Those are amazing, Hana! But if we're going by size, I'm about to beat your high score...</state>
+            </case>
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="5-happy.png">A-<i>May</i>-zing!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="5-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="5-loss.png">Hey, no fair!</state>
@@ -1177,11 +1360,17 @@
             <case tag="female_removing_major">
                 <state img="5-happy.png">Don't be worried. I'm in your corner!</state>
             </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="5-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
+            </case>
             <case tag="male_removing_minor">
                 <state img="5-stripped.png">I'm going to try twice as hard so that you have do that again!</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="5-embarrassed.png">Those little squeaks you made were cute.</state>
+            </case>
+            <case tag="female_finished_masturbating" target="mercy">
+                <state img="5-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="5-calm.png">This is what I'm about to have to do, so I may as well enjoy it.</state>
@@ -1200,6 +1389,9 @@
                 <state img="5-interested.png">This will stop them.</state>
                 <state img="5-interested.png">I'm ready to start a blizzard!</state>
             </case>
+            <case alsoPlaying="jasmine" tag="good_hand">
+                <state img="5-calm.png">Jasmine, do you happen to know Elsa from <i>Frozen</i>? I've wanted to meet her for years!</state>
+            </case>
             <case tag="okay_hand">
                 <state img="5-calm.png">I may be safe!</state>
                 <state img="5-sad.png">People say that I'm thick, but I'm actually very smart!</state>
@@ -1212,6 +1404,9 @@
             <case tag="bad_hand">
                 <state img="5-loss.png">I'm on fire! Not really...</state>
                 <state img="5-sad.png">I don't have to have the best hand; it just has to be better than the worst!</state>
+            </case>
+            <case alsoPlaying="zone-tan" alsoPlayingStage="2" tag="bad_hand">
+                <state img="5-interested.png">Wow, you're a tough opponent, Zone-tan. You're so good at this game!</state>
             </case>
             <case tag="stripped">
                 <state img="5-stripped.png">Don't look at me that way, or I'll have to wall you off!</state>
@@ -1229,11 +1424,8 @@
             </case>
             <case tag="must_strip_winning">
                 <state img="5-embarrassed.png">I guess there is no way around this...</state>
+                <state img="5-embarrassed.png">Well, this is sure to change the climate of the game.</state>
             </case>
-			<case tag="good_hand" alsoPlaying="jasmine"><state img="5-calm.png">Jasmine, do you happen to know Elsa from <i>Frozen</i>? I've wanted to meet her for years!</state></case>
-			<case tag="female_removed_major" target="d.va"><state img="5-interested.png">Sorry, Hana, but I had to even the score!</state></case>
-			<case tag="female_medium_chest_is_visible" target="d.va"><state img="5-stripped.png">Those are amazing, Hana! But if we're going by size, I'm about to beat your high score...</state></case>
-			<case tag="female_finished_masturbating" target="mercy"><state img="5-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state></case>
         </stage>
 
         <stage id="6">
@@ -1244,11 +1436,17 @@
             <case tag="female_must_strip" target="gogo" targetStage="0">
                 <state img="6-calm.png">GoGo, I'm looking forward to seeing your lab! You're welcome to see mine anytime.</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="6-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="6-horny.png">Time for you to be topless too, ~name~</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="6-happy.png">I want to feel bad, but I only feel thankful...</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="6-interested.png">There's a little more than just feet on show right now!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="6-interested.png">I wonder, if I did some jumping jacks, would it get any bigger?</state>
@@ -1315,6 +1513,9 @@
             <case tag="male_must_strip">
                 <state img="6-interested.png">Let's balance this out a little.</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="6-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="6-interested.png">Maybe you could think of this like an experiment, ~name~.</state>
             </case>
@@ -1347,6 +1548,9 @@
             <case tag="female_medium_chest_is_visible" target="tracer">
                 <state img="6-sad.png">Sometimes I wonder if people misjudge our busts just because of our bulky chest protection.</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="6-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="6-sad.png">Sorry, but we had to win this one.</state>
             </case>
@@ -1355,6 +1559,9 @@
             </case>
             <case tag="female_removing_major">
                 <state img="6-happy.png">Go on, take off your ~clothing~! Don't be afraid to get a little bit colder.</state>
+            </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="6-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="6-shocked.png">A-are you kidding? You still had that at the ready?</state>
@@ -1419,11 +1626,17 @@
                 <state img="7-shocked.png">Wow, that was a close one!</state>
                 <state img="7-interested.png">I think it's only fair that we all get naked before any of us have to go further...</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="7-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="7-horny.png">It's time for you to expose your chest.</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="7-interested.png">Serves you right.</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="7-interested.png">There's a little more than just feet on show right now!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="7-embarrassed.png">I haven't been with a man in almost ten years. Want to help make up for lost time?</state>
@@ -1448,6 +1661,7 @@
             </case>
             <case tag="male_removed_accessory">
                 <state img="7-loss.png">Please give me a chance! I'm so close to losing!</state>
+                <state img="7-calm.png">I'm going to dare to see you for what you <i>could</i> be!</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="7-interested.png">Don't be embarrassed. Biologically, this is all very normal.</state>
@@ -1471,6 +1685,9 @@
             <case tag="female_removed_accessory">
                 <state img="7-happy.png">I wish I could freeze all of your clothes and then just shatter them off...</state>
             </case>
+            <case tag="female_removed_accessory" target="mercy">
+                <state img="7-embarrassed.png">Angela, would you consider throwing this game... for a price?</state>
+            </case>
             <case tag="male_removed_major">
                 <state img="7-shocked.png">Well, color me impressed ~name~!</state>
             </case>
@@ -1492,11 +1709,20 @@
             <case tag="male_must_strip">
                 <state img="7-happy.png">Okay!</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="7-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="7-happy.png">That was a close one. You had me so worried!</state>
             </case>
+            <case tag="female_must_masturbate" target="d.va">
+                <state img="7-interested.png">Time to dive in, D.Va... I'm not far behind you, as usual.</state>
+            </case>
             <case tag="female_must_masturbate" target="mercy">
                 <state img="7-loss.png">I'm sorry that I couldn't protect you, Angela...</state>
+            </case>
+            <case tag="female_must_masturbate" target="tracer">
+                <state img="7-embarrassed.png">Lena... you like girls, don't you? I guess having to do this might be a little easier for you...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="7-calm.png">I've given everything I can. It's your turn now!</state>
@@ -1507,6 +1733,7 @@
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-sad.png">I had a feeling you'd choose your ~clothing~...</state>
+                <state img="7-sad.png">I can't accept what you appear to be doing.</state>
             </case>
             <case tag="male_finished_masturbating">
                 <state img="7-shocked.png">That's a lot more volume than I expected!</state>
@@ -1517,8 +1744,20 @@
             <case tag="female_medium_chest_is_visible">
                 <state img="7-happy.png">I'm so jealous! You are too perfect, ~name~!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="d.va">
+                <state img="7-shocked.png">You might have the most perfect pair in all of Overwatch! Please don't tell Dr. Ziegler that I said that...</state>
+            </case>
+            <case alsoPlaying="mercy" tag="female_medium_chest_is_visible" target="d.va">
+                <state img="7-loss.png">Angela, have you ever performed breast reduction surgery? Is it possible that mine could ever be as perfect as Hana's?</state>
+            </case>
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="7-happy.png">A-<i>May</i>-zing!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="tracer">
+                <state img="7-happy.png">Lena, you've got freckles there too! So cute!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="7-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="7-sad.png">You're playing so well, ~name~...</state>
@@ -1530,6 +1769,9 @@
             </case>
             <case tag="female_removing_major">
                 <state img="7-calm.png">Maybe you'd never take off your ~clothing~ on the train, but it's okay when you won't be the least dressed...</state>
+            </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="7-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="7-loss.png">O-oh, come on! That's just rude!</state>
@@ -1583,18 +1825,15 @@
             <case tag="must_masturbate">
                 <state img="7-calm.png">It's less embarrassing if you're not the first one to lose, I guess...</state>
             </case>
-			<case tag="female_removed_accessory" target="mercy"><state img="7-embarrassed.png">Angela, would you consider throwing this game... for a price?</state></case>
-			<case tag="female_medium_chest_is_visible" target="d.va"><state img="7-shocked.png">You might have the most perfect pair in all of Overwatch! Please don't tell Dr. Ziegler that I said that...</state></case>
-			<case tag="female_medium_chest_is_visible" target="d.va" alsoPlaying="mercy"><state img="7-loss.png">Angela, have you ever performed breast reduction surgery? Is it possible that mine could ever be as perfect as Hana's?</state></case>
-			<case tag="female_medium_chest_is_visible" target="tracer"><state img="7-happy.png">Lena, you've got freckles there too! So cute!</state></case> 
-			<case tag="female_must_masturbate" target="d.va"><state img="7-interested.png">Time to dive in, D.Va... I'm not far behind you, as usual.</state></case> 
-			<case tag="female_must_masturbate" target="tracer"><state img="7-embarrassed.png">Lena... you like girls, don't you? I guess having to do this might be a little easier for you...</state></case>
         </stage>
 
         <stage id="8">
             <case tag="female_must_strip">
                 <state img="8-interested.png">If you could distract everyone for even a minute, I would really appreciate it!</state>
                 <state img="8-happy.png">Oh, oh, what do you have for us?</state>
+            </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="8-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="8-happy.png">Oh, ~name~ is taking his ~clothing~ off? Yes, please!</state>
@@ -1635,6 +1874,15 @@
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="8-horny.png">I see a slot. Are you a letterbox? Because I'm <i>Mei-Ling</i> myself right now...</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="d.va">
+                <state img="8-shocked.png">Oh my gosh! You... it's so perfect, Hana!</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="mercy">
+                <state img="8-finishing.png">Dr. Angela, I'm.. ah... ah!</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="tracer">
+                <state img="8-shocked.png">Oh... oh, Lena! I should have taken you up on your offer years ago...</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="8-calm.png">We can do this together!</state>
@@ -1688,8 +1936,17 @@
                 <state img="8-shocked.png">Oh my gosh, ~name~! You're basically the perfect woman!</state>
                 <state img="8-happy.png">Have you ever tried "asymmetrical docking"? It doesn't have anything to do with Symmetra. Unless she agrees too.</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="d.va">
+                <state img="8-shocked.png">Oh, oh Hana! Your chest is even better in person than it is in the fanart!</state>
+            </case>
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="8-happy.png">A-<i>May</i>-zing!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="tracer">
+                <state img="8-happy.png">Lena, you've got freckles there too! So cute!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="8-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="8-embarrassed.png">Don't be like that!</state>
@@ -1733,10 +1990,6 @@
                 <state img="8-heavy.png">I'm so hot, I... aaaah... cause global warming!</state>
                 <state img="8-embarrassed.png">Ohhh... Ahhh... I'm really feeling good...</state>
             </case>
-			<case tag="female_medium_chest_is_visible" target="d.va"><state img="8-shocked.png">Oh, oh Hana! Your chest is even better in person than it is in the fanart!</state></case>
-			<case tag="female_crotch_is_visible" target="d.va"><state img="8-shocked.png">Oh my gosh! You... it's so perfect, Hana!</state></case>
-			<case tag="female_crotch_is_visible" target="mercy"><state img="8-finishing.png">Dr. Angela, I'm.. ah... ah!</state></case> 
-			<case tag="female_crotch_is_visible" target="tracer"><state img="8-shocked.png">Oh... oh, Lena! I should have taken you up on your offer years ago...</state></case>
         </stage>
 
         <stage id="9">
@@ -1744,11 +1997,17 @@
                 <state img="9-interested.png">Let's get you a little bit closer to the end of the game.</state>
                 <state img="9-calm.png">You're about to be one step nearer to where I am!</state>
             </case>
+            <case tag="female_must_strip" target="zone-tan" targetStage="3">
+                <state img="9-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="9-horny.png">With any luck, I'll see more, but let's get a look at that bare chest.</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="9-shocked.png">Of all the- how are you so good at this game?</state>
+            </case>
+            <case tag="female_removing_minor" target="zone-tan" targetStage="0">
+                <state img="9-interested.png">There's a little more than just feet on show right now!</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
                 <state img="9-interested.png">~name~, rub some ice cubes on it. I want to see if you can really handle the cold.</state>
@@ -1820,11 +2079,20 @@
             <case tag="male_must_strip">
                 <state img="9-calm.png">If you'd please take off another piece of clothing, I can study the transfer of warmth through visual stimulus.</state>
             </case>
+            <case tag="male_must_strip" target="link" targetStage="0">
+                <state img="9-calm.png">I'm really curious, Link... but are you an elf boy? Does anyone know if he understands English or Mandarin?</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="9-horny.png">Get ready for a flurry!</state>
             </case>
             <case filter="innocent" tag="female_must_masturbate">
                 <state img="9-embarrassed.png">~name~, you lost the hand, so it's time to do what I did.</state>
+            </case>
+            <case tag="female_must_masturbate" target="tracer">
+                <state img="9-embarrassed.png">Lena... you like girls, don't you? I guess having to do this might be a little easier for you...</state>
+            </case>
+            <case tag="female_must_masturbate" target="zone-tan">
+                <state img="9-happy.png">Aha, the tables have turned! Now <i>we</i> get to watch <i>you</i>!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="9-calm.png">You're the most attractive one here, so don't be sad that we're happy that you lost, ~name~.</state>
@@ -1848,6 +2116,12 @@
             <case tag="female_medium_chest_is_visible" target="may">
                 <state img="9-happy.png">A-<i>May</i>-zing!</state>
             </case>
+            <case tag="female_medium_chest_is_visible" target="tracer">
+                <state img="9-happy.png">Lena, you've got freckles there too! So cute!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="zone-tan">
+                <state img="9-happy.png">I could tell you weren't wearing anything under that sweater. You really make an impression!</state>
+            </case>
             <case tag="female_removing_accessory">
                 <state img="9-embarrassed.png">Thank you for losing a hand. It makes me feel a little better about losing the whole game.</state>
             </case>
@@ -1859,6 +2133,9 @@
             </case>
             <case tag="female_removing_major" target="d.va">
                 <state img="9-horny.png">Let's see Hanamura! Uh, I mean, more-o'-Hana!</state>
+            </case>
+            <case tag="female_removing_major" target="zone-tan" targetStage="1">
+                <state img="9-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="9-shocked.png">I'm already done, and you're barely starting... this was a bad play on my part.</state>
