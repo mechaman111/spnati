@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Pose Importer</title>
+</head>
+<body>
+    <header id="header">4. Importing Poses</header>
+    <ul id="nav">
+        <li><a href="#basics">Basics</a></li>
+        <li><a href="#template">Templates</a></li>
+        <li><a href="#poseList">Pose Lists</a></li>
+        <li><a href="#crop_tool">Cropping Tool</a></li>
+    </ul>
+    <article id="main">
+        <section class="card" id="basics">
+            <h1>Basics</h1>
+            Character poses are generated using the <a href="https://whitesheepdog.net/" target="_blank">offline version</a> of Kisekae. This guide will not include details about creating characters. There are many resources online.
+            <p>Your primary friend when using Kisekae to interact with the editor is the Export button found in the file menu:</p>
+            <img src="images/export.png" alt="Kisekae export button" />
+            <p>This will display a textbox containing a bunch of gibberish code. You will be copying this code and pasting it into the relevant fields in the Images tab of the editor.</p>
+            <p>Kisekae codes are essentially the entire character information (face, clothing, pose, etc.) compressed into a text format. The editor can in turn take these codes and convert them into PNG files.</p>
+            <p>An example code:</p>
+            <pre style="word-break: break-all; white-space: pre-wrap;">54***0*0*0*aa8.99.1.0.59.8.0.1.0.59_ab_ac_ba46_bb6.1_bc440.500.7.0.1.0_bd6_be180_ca63.1.16.63.29.18.31.18.31.1.60.80_daF0CDC8.0.0.100_db_dd9.3.21.0.0.29_dhE08781.20.50.43.3_di5_qa_qb_dc7.4.F8D2D2.D2948E.E6826C_eh_ea2.32.32.56.0.0_ec7.29.32.32.56.42.63.1_ed15.12.1.1.32.56_ef_eg_r00_fa1.65.53.49.16.50.56_fb_fh_fc1.32.55.1.32.55.42.61.61.42.50.50_fj0.0.0_fd2.0.31.32.5_fe50.77_ff0000000000_fg8.63.56.0.0.1.0.0_fi4.70.20.30.30_pa0.0.0.0.10.50.85.78.0.0_t00_pb_pc_pd_pe_ga0_gb0_gc3.0_ge0000000000_gh_gf_gg_gd10000000_ha100.100_hb53.1.50.100_hc0.50.48.0.50.48_hd0.1.50.50_ia_if_ib_id_ic_jc_ie_ja_jb_jd_je_jf_jg_ka_kb_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_m00_n00_s00_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_ad0.0.0.0.0.0.0.0.0.0*0*0*0*0*0</pre>
+        </section>
+        <section class="card" id="template">
+            <h1>Templates</h1>
+            <p>Each clothing stage needs one or more poses associated with it. Poses are usually associated with emotions (calm, happy, sad, etc.), though a pose can be anything. Typically every stage uses the same pose names/emotions for consistency, though the actual poses can look different.</p>
+            <p>To hit the ground running, it's useful to generate a <strong>pose template</strong>. Templates consist of three parts:</p>
+            <ol>
+                <li><span class="label">Body:</span> A kisekae code that describes the character's naked body.</li>
+                <li><span class="label">Clothing:</span> Each clothing layer has a kisekae code describing that layer's clothing.</li>
+                <li><span class="label">Poses:</span> Kisekae codes describing poses (happy, sad, etc.)</li>
+            </ol>
+            Generating a template will generate a complete set of character codes by taking every combination of body+clothing+pose and building a code from it. This can save a lot of time compared to creating each combination manually in kisekae and exporting them one at a time.
+        </section>
+        <section class="card" id="templateCreation">
+            <h1>Creating a Template</h1>
+            <div class="info">
+                <i class="fa fa-info"></i>
+                This step is optional in creating a character. If you prefer to create each image manually, or prefer using the make_images.py Python script, you may skip to the <a href="dialogue.html">Dialogue</a> section.
+            </div>
+            <p>Go to the Template tab found within the Images tab of the main editor. You will be presented with three fields: a base code, a grid for clothing, and a grid for poses.</p>
+            <ol>
+                <li>
+                    <img src="images/template0.png" alt="body" title="Body" />
+                    In Kisekae, create your character's appearance (hair, face, body, etc.) and export it. Paste the code into the base code box. The editor will automatically strip away any clothing data, so you do not need to filter anything when making the export.</li>
+                <li>
+                    <img src="images/template1.png" alt="dressed" title="Fully Dressed" /><img src="images/template2.png" alt="dressed" title="Lost Shirt" />Assuming you've filled out the <a href="wardrobe.html">wardrobe</a> tab, the clothing grid will have a row for each clothing layer, plus three additional ones (naked, masturbating and finished).
+                    <p>For each stage, create and export the character's appearance at that clothing stage. Posing is not important at this point, just the clothing. Paste these codes into the appropriate rows under the Code column.</p>
+                    <p>There are three additional options for each row:</p>
+                    <ul>
+                        <li>
+                            <img src="images/blush.png" alt="blush" />Blush (0-100)</li>
+                        <li>
+                            <img src="images/blush.png" alt="blush" />Anger (0-100)</li>
+                        <li>Love Juice (0-200, has no corresponding slider in kisekae; repeatedly click the crotch region to add juice. Ctrl+click to reset it)</li>
+                    </ul>
+
+                    <p>These will define a base value for the corresponding detail to all poses for that clothing stage. For instance, while naked you may want your character to be blushing at all times.</p>
+                    <p>Poses can also contain blush, anger, and juice amounts, so when a pose+clothing stage is combined, the values will be added together.</p>
+                    <div class="info">
+                        <i class="fa fa-info"></i>
+                        Usually the character will be naked for the naked, masturbating and finished stages, so their codes will usually be the same. The details values can differ, however.
+                    </div>
+                </li>
+                <li>
+                    <img src="images/template3.png" alt="happy" title="Happy pose" />Define one or more poses. The emotion column describes that pose's emotion (happy, sad, etc.) and will be used when generating the PNG filename (ex. clothing stage 2 + emotion happy will create 2-happy.png).
+                    <p>Pose your character in kisekae and paste the code into the Code column.</p>
+                    <p>Placeholder dialogue assumes the following emotions, so they would be a good starting point to include here:</p>
+                    <ul>
+                        <li>calm</li>
+                        <li>happy</li>
+                        <li>sad</li>
+                        <li>horny</li>
+                        <li>interested</li>
+                        <li>awkward</li>
+                        <li>shocked</li>
+                    </ul>
+                </li>
+            </ol>
+            The template is now ready to be converted into poses. Below is an example filled template.
+            <img src="images/template_filled.png" title="Filled Template" />
+        </section>
+        <section class="card" id="template_options">
+            <h1>Template Features</h1>
+            The following features are available on the Template tab besides the fields explained above.
+            <ol>
+                <li><span class="label">Load Template:</span> Loads a previously saved template from a text file.</li>
+                <li><span class="label">Save Template:</span> Saves the template information to a text file.
+                    <div class="warning">
+                        <i class="fa fa-warning"></i>
+                        Templates are not part of a character's game data and will <strong>not</strong> be saved with the rest of the character information. If you wish to preserve this information for later editing, you <strong>must</strong> save the template to a text file.
+                    </div>
+                </li>
+                <li><span class="label">Preview Selected:</span> This will display what a body+clothing+pose combination will look like. Highlight the clothing and pose rows you want to combine and then press this button to see it. This does not actually generate a PNG.
+                    <div class="warning">
+                        <i class="fa fa-warning"></i>
+                        Kisekae <strong>must</strong> be running for this feature to work!
+                    </div>
+                    <img src="images/template_preview.png" title="Pose Preview for Lost Skirt+Happy combination" />
+                </li>
+                <li><span class="label">Generate Pose List:</span> Converts the template into a <a href="#poseList">pose list</a>.</li>
+            </ol>
+        </section>
+        <section class="card" id="poseList">
+            <h1>Pose Lists</h1>
+            A pose list containings the Kisekae codes for each image in the character's folder. Images can also be split among several pose lists.
+            <div class="info">
+                <i class="fa fa-info"></i>
+                When first visiting the Images tab, a pose list from poses.txt will automatically be imported, if it exists.
+            </div>
+            <img src="images/pose_list.png" title="Pose List" />
+            Pose data consists of the following parts:
+            <ul>
+                <li><span class="label">File name:</span> This is created from the Stage and Pose columns.</li>
+                <li><span class="label">Cropping bounds:</span> By default images are 600x1400 pixels. This can be altered by adjusting the left, top, right and bottom cropping positions. It's easiest to use the Reimport cropping tool to set these.
+                    <div class="warning">
+                        <i class="fa fa-warning"></i>
+                        Cropping coordinates are based on the positioned used by make_images.py, which left aligns the character on the screen. The editor, however, centers the character. 
+                        Thus, a negative Left value can be used to widen the image in the editor, but using the same value with make_images.py will result in the character's left side being cut off.
+                        Therefore, it's best to always import using the same tool, either the Python script or the Character Editor, and not mix them.
+                    </div>
+                </li>
+                <li><span class="label">Code:</span> The complete Kisekae export code for the pose. This can be imported back into Kisekae to modify the pose, and then reexported.</li>
+                <li><span class="label">Image:</span> If the file for this pose exists, its preview will be displayed here. If the image has never been generated, this will be blank.</li>
+            </ul>
+            <p>You can generate a pose list in three manners:</p>
+            <ol>
+                <li>Adding poses manually, filling out the stage and pose columns and pasting in the relevant code data from Kisekae.</li>
+                <li>Using a <a href="#template">template</a>.</li>
+                <li>Importing a text file via the Lose Pose List button. The text file uses the same format that make_images.py does, so you can import pose lists for characters who weren't made with the character editor. You can also reload Pose Lists built in the editor that were saved previously.</li>
+
+            </ol>
+        </section>
+        <section class="card" id="pose_import">
+            <h1>Importing Poses</h1>
+            <div class="warning">
+                <i class="fa fa-warning"></i>
+                Kisekae <strong>must</strong> be running for image import to work correctly!
+            </div>
+            A pose list is just data describing a pose; it is not the actual image used in the game. To convert pose list information to actual images, you must <strong>import</strong> the poses. You can import one image at a time, or in bulk.
+            <ol>
+                <li><span class="label">Bulk Import</span> Use the Import New or Import All buttons to convert multiple poses into images. <strong>New</strong> will convert poses for images that don't exist yet. <strong>All</strong> will convert all poses into images, even if they already have one.</li>
+                <li><span class="label">Single Import</span> Use the Import (or Reimport) button in a pose's row. Importing this way will open the Cropping Tool prior to generating the image.</li>
+            </ol>
+        </section>
+        <section class="card" id="crop_tool">
+            <h1>Cropping Tool</h1>
+            You can interactively adjust an images cropping by importing or reimporting that single image. This will open the Cropping Tool, which shows the character in a red box. Drag the box to adjust the cropping region.<br />
+            There are three methods of dragging:
+            <ol>
+                <li><span class="label">Drag Edge:</span> Drag an edge with the left mouse button to move it</li>
+                <li><span class="label">Mirror:</span> Drag an edge with the right mouse button to move it while moving the opposite edge the same distance in the other direction. This is useful to keep the character centered. </li>
+                <li><span class="label">Move:</span> Drag with the left mouse button inside the box to move the whole box.</li>
+            </ol>
+            <div class="warning">
+                <i class="fa fa-warning"></i>
+                Moving top and bottom edges is not supported at this time.
+            </div>
+            Click Accept to finish importing. The row in the pose list will be updated with the new crop values, and the image will be loaded.
+        </section>
+        <section class="card" id="pose_features">
+            <h1>Pose List Features</h1>
+            The following features are available on the Template tab besides the fields explained above.
+            <ol>
+                <li><span class="label">Load Pose List:</span> Loads a previously saved pose list from a text file. <strong>poses.txt</strong> is loaded automatically during initial load, if it exists.</li>
+                <li><span class="label">Save Post List:</span> Saves the current pose list to a text file.
+                    <div class="warning">
+                        <i class="fa fa-warning"></i>
+                        Pose lists are not part of a character's game data and will <strong>not</strong> be saved with the rest of the character information. If you wish to preserve this information for later editing, you <strong>must</strong> save the pose list to a text file.
+                    </div>
+                </li>
+                <li><span class="label">Import New:</span> Imports any images from Kisekae that have not been generated yet (all rows with blank images).</li>
+                <li><span class="label">Import All:</span> Imports all images from Kisekae, replacing existing images in the pose list.
+                    <div class="warning">
+                        <i class="fa fa-warning"></i>
+                        When reimporting an image, the old PNG will be relocated to %appdata%/SPNATI/&lt;character folder&gt; for backup purposes. However, if you reimport again, that backup will be replaced by the previous import's image. 
+                    </div>
+                </li>
+            </ol>
+        </section>
+        <section class="card navCard" id="next">
+            <a href="wardrobe.html">« 3. Wardrobe</a> | <a href="dialogue.html">5. Dialogue »</a>
+        </section>
+    </article>
+</body>
+</html>

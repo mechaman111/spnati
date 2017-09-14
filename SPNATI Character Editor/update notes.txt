@@ -1,0 +1,47 @@
+SPNATI Character Editor Version 1.0
+
+Version history
+------------
+1.0
+* First official release
+
+Changes from beta
+-----------------
+* Better compatibility with make_xml.py output. Case sort order is nearly identical now
+* Available images for dialogue lines now update immediately when changing which stages are checked rather than needing to switch between cases to update
+* Improved formatting in text export
+* Text import (same text files that make_xml.py reads)
+* Tag list now gives frequency of each tag among all characters
+* Filters available for validation warnings
+* Dialogue is now preserved when modifying clothing layers (ex. when moving a layer up, the corresponding stage's dialogue is also moved up a stage)
+* Dialogue tree filters to show only targeted dialogue
+* Select All checkbox for picking applicable stages
+
+Bug Fixes
+-------------
+* Starting lines now allow images that don't start with 0-
+* Fixed parsing errors in the export when a character's folder contains -
+* Fixed posing templates stripping away color hex values that start with a letter
+* Cases with a targetStage but no target now display the stage instead of blank in the dialogue tree
+* Target stage is now respected in the Dialogue Tester
+
+Planned Features (expected to be added in a future release)
+----------------
+* Better starting lines editor (since lots of people don't understand how these work)
+* Ability to link cases together for shared dialogue (ex. male_must_strip and male_human_must_strip share a single case if all their dialogue will be the same)
+* Better compatibility with make_images.py (i.e. cropping with scene imports)
+* Tooltips to better explain the various options
+* Find and replace tool
+
+Wishlist (nice to have features, but not currently under development)
+--------
+* Embed the game inside the dialogue tester so the actual game scripts are used to determine dialogue choices
+* Testing tables editor
+
+Known bugs
+--------
+* The image importer does not play nicely with files that use a global scene setter. (aka if the first image in your list has global scene data, make_images.py would use this for all following scenes, but the importer will use it only for that line itself)
+* Poses with crop_pixels generated from the importer are not always compatible with make_images.py
+* Stages remain blue even if there are no default lines. This persists until the next time a character is loaded
+* Images for a case are sometimes discarded when selecting a stage checkbox
+* Cross-stage images aren't preserved (ex. Nagisa uses 7-rear in stage 9, but this gets turned into 9-rear)

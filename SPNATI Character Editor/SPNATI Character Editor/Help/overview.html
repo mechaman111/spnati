@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Overview</title>
+</head>
+<body>
+    <header id="header">Overview</header>
+    <ul id="nav">
+        <li><a href="#basics">Basics</a></li>
+        <li><a href="#metadata">Metadata</a></li>
+        <li><a href="#behaviour">Behaviour</a></li>
+        <li><a href="#images">Images</a></li>
+        <li><a href="#source">Source files</a></li>
+    </ul>
+    <article id="main">
+        <section class="card" id="basics">
+            <h1>Basics</h1>
+            This page aims to give a basic overview of all the components that work together to create a character for SPNATI.
+            <p>Use the navigation pane on the left to dig into particular topics.</p>
+            <p>Each character has a dedicated folder inside the opponents directory, which contains all the data to make a character work.</p>
+            <p>Additionally, each character has an entry in listing.xml found in the opponents directory. This is how the game actually recognizes a character is available for play. 
+                You do not need to worry about this file. When you are ready to submit your character, a mod will take care of it for you.</p>
+            <p>The sections below describe the various files found within your character's folder in the opponents directory.</p>
+        </section>
+        <section class="card" id="metadata">
+            <h1>meta.xml</h1>
+            This file contains your character's name, gender, and various metadata about them: the artist and writer, character bio, original source material, etc.
+            <p>This file is rebuilt from the Metadata tab whenever you save.</p>
+        </section>
+        <section class="card" id="behaviour">
+            <h1>behaviour.xml</h1>
+            This is the meat of your character, containing all of their dialogue, the order they remove their clothing, what poses to use for each line, when to use certain dialogue, etc.
+            Epilogue information is also found in this file.
+            <p>This file's data is spread across the editor's various tabs.</p>
+        </section>
+        <section class="card" id="images">
+            <h1>Images</h1>
+            Numerous images are located in the folder. These typically come in the format <i>&lt;number&gt;-&lt;emotion&gt;.png</i>, representing the pose for a particular emotion during a particular stage.
+            <p>Ending images are also stored here.</p>
+        </section>
+        <section class="card" id="source">
+            <h1>Source files</h1>
+            Everything else in the folder is not used by the game, but are just source files used to help create the files the game uses.
+            Common files include:
+            <ul>
+                <li>Dialogue (*.txt): A file containing raw dialogue information, commonly used for creating data prior to the creation of the Character Editor (via the make_xml.py script). The Editor is capable of reading and writing these files.</li>
+                <li>Pose data (*.txt): A file associating Kisekae codes with image names, used to auto-create image files as described in the Images section. The Editor is capable of reading and writing these files.</li>
+                <li>Backup data (*.edit.bak): Auto-generated backups of meta.xml and behaviour.xml that the Character Editor creates periodically. These do not need to be included when submitting your character for use.</li>
+            </ul>
+        </section>
+    </article>
+</body>
+</html>
