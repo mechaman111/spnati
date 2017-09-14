@@ -45,6 +45,7 @@
 			this.currentCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.allCharactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.howToGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutCharacterEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -90,7 +91,6 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.cboGender = new System.Windows.Forms.ComboBox();
 			this.tabWardrobe = new System.Windows.Forms.TabPage();
-			this.label38 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.lblPositionHelp = new System.Windows.Forms.Label();
@@ -109,7 +109,6 @@
 			this.cmdAddClothes = new System.Windows.Forms.Button();
 			this.lstClothes = new System.Windows.Forms.ListBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
-			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.cboTreeTarget = new System.Windows.Forms.ComboBox();
 			this.label40 = new System.Windows.Forms.Label();
@@ -159,7 +158,6 @@
 			this.cboOwnHand = new System.Windows.Forms.ComboBox();
 			this.label26 = new System.Windows.Forms.Label();
 			this.tabEndings = new System.Windows.Forms.TabPage();
-			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
 			this.cboDefaultPic = new System.Windows.Forms.ComboBox();
 			this.label22 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -171,7 +169,10 @@
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.howToGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
+			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -219,6 +220,8 @@
             this.importtxtToolStripMenuItem,
             this.exporttxtFileForPythonToolStripMenuItem,
             this.toolStripSeparator2,
+            this.setupToolStripMenuItem,
+            this.toolStripSeparator3,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.ShortcutKeyDisplayString = "";
@@ -329,6 +332,14 @@
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// howToGuideToolStripMenuItem
+			// 
+			this.howToGuideToolStripMenuItem.Name = "howToGuideToolStripMenuItem";
+			this.howToGuideToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+			this.howToGuideToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+			this.howToGuideToolStripMenuItem.Text = "View Help";
+			this.howToGuideToolStripMenuItem.Click += new System.EventHandler(this.howToGuideToolStripMenuItem_Click);
 			// 
 			// aboutCharacterEditorToolStripMenuItem
 			// 
@@ -783,7 +794,6 @@
 			// 
 			// tabWardrobe
 			// 
-			this.tabWardrobe.Controls.Add(this.label38);
 			this.tabWardrobe.Controls.Add(this.label9);
 			this.tabWardrobe.Controls.Add(this.groupBox1);
 			this.tabWardrobe.Controls.Add(this.cmdClothesDown);
@@ -798,16 +808,6 @@
 			this.tabWardrobe.TabIndex = 2;
 			this.tabWardrobe.Text = "Wardrobe";
 			this.tabWardrobe.UseVisualStyleBackColor = true;
-			// 
-			// label38
-			// 
-			this.label38.AutoSize = true;
-			this.label38.ForeColor = System.Drawing.Color.Red;
-			this.label38.Location = new System.Drawing.Point(167, 218);
-			this.label38.Name = "label38";
-			this.label38.Size = new System.Drawing.Size(317, 13);
-			this.label38.TabIndex = 15;
-			this.label38.Text = "Warning! Adding or removing layers will delete all existing dialogue";
 			// 
 			// label9
 			// 
@@ -995,14 +995,6 @@
 			this.tabImages.Text = "Images";
 			this.tabImages.UseVisualStyleBackColor = true;
 			// 
-			// imageImporter
-			// 
-			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.imageImporter.Location = new System.Drawing.Point(3, 3);
-			this.imageImporter.Name = "imageImporter";
-			this.imageImporter.Size = new System.Drawing.Size(931, 662);
-			this.imageImporter.TabIndex = 0;
-			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.Controls.Add(this.cboTreeTarget);
@@ -1186,7 +1178,7 @@
 			// 
 			this.cboCaseTags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboCaseTags.FormattingEnabled = true;
-			this.cboCaseTags.Location = new System.Drawing.Point(41, 19);
+			this.cboCaseTags.Location = new System.Drawing.Point(45, 19);
 			this.cboCaseTags.Name = "cboCaseTags";
 			this.cboCaseTags.Size = new System.Drawing.Size(175, 21);
 			this.cboCaseTags.TabIndex = 35;
@@ -1196,9 +1188,9 @@
 			this.label34.AutoSize = true;
 			this.label34.Location = new System.Drawing.Point(6, 22);
 			this.label34.Name = "label34";
-			this.label34.Size = new System.Drawing.Size(29, 13);
+			this.label34.Size = new System.Drawing.Size(34, 13);
 			this.label34.TabIndex = 34;
-			this.label34.Text = "Tag:";
+			this.label34.Text = "Type:";
 			// 
 			// label8
 			// 
@@ -1641,15 +1633,6 @@
 			this.tabEndings.Text = "Epilogue";
 			this.tabEndings.UseVisualStyleBackColor = true;
 			// 
-			// epilogueEditor
-			// 
-			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.epilogueEditor.Enabled = false;
-			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
-			this.epilogueEditor.Name = "epilogueEditor";
-			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
-			this.epilogueEditor.TabIndex = 0;
-			// 
 			// cboDefaultPic
 			// 
 			this.cboDefaultPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1742,13 +1725,34 @@
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// howToGuideToolStripMenuItem
+			// setupToolStripMenuItem
 			// 
-			this.howToGuideToolStripMenuItem.Name = "howToGuideToolStripMenuItem";
-			this.howToGuideToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.howToGuideToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-			this.howToGuideToolStripMenuItem.Text = "View Help";
-			this.howToGuideToolStripMenuItem.Click += new System.EventHandler(this.howToGuideToolStripMenuItem_Click);
+			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
+			this.setupToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+			this.setupToolStripMenuItem.Text = "Setup...";
+			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
+			// 
+			// imageImporter
+			// 
+			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imageImporter.Location = new System.Drawing.Point(3, 3);
+			this.imageImporter.Name = "imageImporter";
+			this.imageImporter.Size = new System.Drawing.Size(931, 662);
+			this.imageImporter.TabIndex = 0;
+			// 
+			// epilogueEditor
+			// 
+			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.epilogueEditor.Enabled = false;
+			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
+			this.epilogueEditor.Name = "epilogueEditor";
+			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
+			this.epilogueEditor.TabIndex = 0;
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
 			// 
 			// CharacterEditor
 			// 
@@ -1927,7 +1931,6 @@
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.Label label36;
 		private System.Windows.Forms.Label label37;
-		private System.Windows.Forms.Label label38;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
 		private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
@@ -1957,6 +1960,8 @@
 		private System.Windows.Forms.ComboBox cboTreeTarget;
 		private System.Windows.Forms.Label label40;
 		private System.Windows.Forms.ToolStripMenuItem howToGuideToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 	}
 }
 

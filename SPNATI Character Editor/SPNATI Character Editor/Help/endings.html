@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Endings</title>
+</head>
+<body>
+    <header id="header">Endings</header>
+    <ul id="nav">
+        <li><a href="#basics">Overview</a></li>
+        <li><a href="#edit">Creation</a></li>
+        <li><a href="#screens">Screens</a></li>
+        <li><a href="#example">Example</a></li>
+    </ul>
+    <article id="main">
+        <section class="card" id="basics">
+            <h1>Overview</h1>
+            Characters can optionally have one or more epilogues, which will be available to view the player wins a game against this character.
+            Endings are like a non-interactive visual novel, consisting of a series of pictures with speech bubbles overlaid on top.
+            <div class="info">
+                <i class="fa fa-info"></i>
+                The Character Editor will not help in creating pictures for an epilogue. Instead, it helps with sequencing previously created pictures and positioning their speech bubbles. Common tools for creating the pictures are Kisekae with its built-in screenshot feature and/or Photoshop.
+            </div>
+        </section>
+        <section class="card" id="edit">
+            <h1>Creation</h1>
+            If your character has no endings yet, the Epilogue tab will be a black screen with everything disabled. Otherwise it will open the first ending.
+            Use the dropdown in the upper left to switch between existing endings, or to create a new ending, click <strong>Add</strong>.
+            <img src="images/ending_toolbar.png" />
+            <ul>
+                <li><span class="label">Available to gender:</span> This controls which gender the player must be to be able to access the ending in game.</li>
+                <li><span class="label">Title:</span> This is the title that will display in the game when the player is given a choice of endings to view.</li>
+            </ul>
+        </section>
+        <section class="card" id="screens">
+            <h1>Screens</h1>
+            An ending is divided into multiple <strong>screen</strong>. Each screen consists of a picture and a series of speech bubbles that appear one after the other when the player clicks the Next button.
+            <p>The middle of the Epilogue tab is the screen preview. This will give you a preview of the current screen as it would appear in game. You can resize the editor to see how your scene scales with various window sizes.</p>
+            <p>The bottom of the Epilogue tab is the screen editor, which consists of two parts.</p>
+            <ul>
+                <li><span class="label">Navigation Bar</span><br />This lets you move between screens.
+                    <img src="images/ending_navigator.png" />
+                    <ol>
+                        <li><span class="label">Previous:</span> Moves back to the previous screen.</li>
+                        <li><span class="label">Image:</span> Displays the file name for this screen's image.</li>
+                        <li><span class="label">Set Image:</span> Allows you to pick the file to use for this screen's image.</li>
+                        <li><span class="label">Add (or Next):</span> If you are on the last screen, this will add another screen. Otherwise it will advance to the next screen. When you create a new ending, the first screen is added automatically.</li>
+                        <li><span class="label">Screen Number:</span> This shows which screen you are editing currently, as well as how many screens there are total.</li>
+                        <li><span class="label">Insert Screen:</span> Inserts a screen at the current screen position. If you are at screen 2 of 3, for example, inserting will add a new screen 2, moving the old screen 2 to screen 3 (and screen 3 to 4).</li>
+                        <li><span class="label">Remove Screen:</span> Removes the current screen.</li>
+                    </ol>
+                </li>
+                <li><span class="label">Speech Editor</span>
+                    <p>Each screen can have multiple speech bubbles, which appear in the ordered listed in this table. Every time the player clicks Next in game, the next bubble will appear. After the last bubble is displayed, Next will advance to the next screen.</p> 
+                    <img src="images/ending_speech.png" />
+                    <ul>
+                        <li><span class="label">X:</span> Percentage from the left edge of the screen that the bubble starts (ex. 20% of the screen's width from the left).</li>
+                        <li><span class="label">Y:</span> Percentage from the top edge of the screen that the bubble starts.</li>
+                        <li><span class="label">Width:</span> Bubble's width in terms of screen width. The bubble's height is determined automatically by its text.</li>
+                        <li><span class="label">Arrow:</span> Which side of the speech bubble that the bubble arrow should appear on.</li>
+                        <li><span class="label">Text:</span> Text to put inside the bubble.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section class="card" id="example">
+            <h1>Example</h1>
+            In this section, we'll go through all the steps to create an example ending.
+            <ol>
+                <li>Click Add at the top of the Epilogue tab to create a new ending.</li>
+                <li>This ending isn't gender specific, so set <strong>Applicable to gender</strong> to "any."</li>
+                <li>Give it the title "A Sample Ending."</li>
+                <li>The first screen has been created automatically, so the next step is to set its picture. Click <strong>Set Image</strong> and choose a picture.
+                    For this tutorial, we created 3 images in advance named ending_1.png, ending_2.png, and ending_3.png, but you can use any file name. The first screen will use ending_1.png.
+                </li>
+                <li>The picture should display now, so it's time to create speech bubbles.</li>
+                <li>Here's an example completed first screen.
+                    <img src="images/ending0.png" title="First Screen" />
+                    <div class="info">
+                        <i class="fa fa-info"></i>
+                        Clicking a row in the Speech Editor will highlight that row and display only speech bubbles for that row and above. This can be used to simulate what it looks for the user to be advancing between bubbles.
+                    </div>
+                </li>
+                <li>It'd be boring to use the same picture for the whole ending, so let's add another screen. Click Add underneath the screen preview to add another screen.</li>
+                <li>
+                    With a picture selected and speech added:
+                    <img src="images/ending1.png" title="2nd Screen" />
+                    <div class="info">
+                        <i class="fa fa-info"></i>
+                        Note the use of "centered" for the bubble's X position. This is a special value that will center the bubble no matter how wide it is.
+                    </div>
+                </li>
+                <li>Let's add one last screen. Click Add in the Screen Navigation Bar again, and then fill out the screen data.
+                    <img src="images/ending2.png" title="3rd Screen" />
+                    <p>One important thing to keep in mind is that speech bubbles are positioned based on screen percentage, so make sure you try various window sizes to make sure they look generally okay. You may need to finagle the numbers a bit to get them decent at all sizes.
+                        <img src="images/ending2_small.png" title="3rd Screen With a Smaller Window" />
+                    </p>
+                </li>
+                <li>We have decided the ending is missing something. Let's go back to screen by clicking Previous. On this screen, let's add one last bit of dialogue.
+                    <img src="images/ending1b.png" title="Revised 2nd Screen" />
+                </li>
+                <li>Okay, now the ending is done. Make sure to save! (File > Save)</li>
+            </ol>
+        </section>
+        <section class="card navCard" id="next">
+            <a href="dialogue.html">« 5. Dialogue</a> | <a href="listing.html">7. Adding to the Game »</a>
+        </section>
+    </article>
+</body>
+</html>

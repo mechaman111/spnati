@@ -37,7 +37,7 @@
 			this.wb.Location = new System.Drawing.Point(0, 0);
 			this.wb.MinimumSize = new System.Drawing.Size(20, 20);
 			this.wb.Name = "wb";
-			this.wb.Size = new System.Drawing.Size(791, 553);
+			this.wb.Size = new System.Drawing.Size(1226, 702);
 			this.wb.TabIndex = 0;
 			this.wb.Url = new System.Uri("", System.UriKind.Relative);
 			// 
@@ -45,7 +45,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(791, 553);
+			this.ClientSize = new System.Drawing.Size(1226, 702);
 			this.Controls.Add(this.wb);
 			this.Name = "HelpForm";
 			this.ShowIcon = false;

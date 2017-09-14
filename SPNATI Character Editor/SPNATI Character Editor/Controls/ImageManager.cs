@@ -31,6 +31,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private readonly Image EmptyImage = new Bitmap(1, 1);
 
+		public event EventHandler<Tuple<string, Image>> GeneratedImage;
 		public event EventHandler<Image> PreviewImage;
 
 		public ImageManager()
