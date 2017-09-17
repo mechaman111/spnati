@@ -39,6 +39,8 @@
 			this.importtxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exporttxtFileForPythonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.validatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -169,10 +171,8 @@
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -286,6 +286,18 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(272, 6);
+			// 
+			// setupToolStripMenuItem
+			// 
+			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
+			this.setupToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+			this.setupToolStripMenuItem.Text = "Setup...";
+			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
@@ -423,13 +435,12 @@
 			// 
 			// treeDialogue
 			// 
-			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.treeDialogue.HideSelection = false;
 			this.treeDialogue.Location = new System.Drawing.Point(6, 39);
 			this.treeDialogue.Name = "treeDialogue";
-			this.treeDialogue.Size = new System.Drawing.Size(279, 534);
+			this.treeDialogue.Size = new System.Drawing.Size(248, 534);
 			this.treeDialogue.TabIndex = 1;
 			this.treeDialogue.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDialogue_AfterSelect);
 			this.treeDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeDialogue_KeyDown);
@@ -484,7 +495,7 @@
 			this.cboLineTarget.FormattingEnabled = true;
 			this.cboLineTarget.Location = new System.Drawing.Point(81, 19);
 			this.cboLineTarget.Name = "cboLineTarget";
-			this.cboLineTarget.Size = new System.Drawing.Size(518, 21);
+			this.cboLineTarget.Size = new System.Drawing.Size(549, 21);
 			this.cboLineTarget.TabIndex = 12;
 			this.cboLineTarget.SelectedIndexChanged += new System.EventHandler(this.cboLineTarget_SelectedIndexChanged);
 			// 
@@ -528,7 +539,7 @@
 			this.cboLineFilter.FormattingEnabled = true;
 			this.cboLineFilter.Location = new System.Drawing.Point(81, 100);
 			this.cboLineFilter.Name = "cboLineFilter";
-			this.cboLineFilter.Size = new System.Drawing.Size(518, 21);
+			this.cboLineFilter.Size = new System.Drawing.Size(549, 21);
 			this.cboLineFilter.TabIndex = 13;
 			// 
 			// tabControl
@@ -1023,13 +1034,12 @@
 			// 
 			// cboTreeTarget
 			// 
-			this.cboTreeTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboTreeTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cboTreeTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboTreeTarget.FormattingEnabled = true;
 			this.cboTreeTarget.Location = new System.Drawing.Point(58, 606);
 			this.cboTreeTarget.Name = "cboTreeTarget";
-			this.cboTreeTarget.Size = new System.Drawing.Size(227, 21);
+			this.cboTreeTarget.Size = new System.Drawing.Size(196, 21);
 			this.cboTreeTarget.TabIndex = 39;
 			this.cboTreeTarget.SelectedIndexChanged += new System.EventHandler(this.cboTreeTarget_SelectedIndexChanged);
 			// 
@@ -1045,8 +1055,7 @@
 			// 
 			// cboTreeFilter
 			// 
-			this.cboTreeFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboTreeFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cboTreeFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboTreeFilter.FormattingEnabled = true;
 			this.cboTreeFilter.Items.AddRange(new object[] {
@@ -1055,7 +1064,7 @@
             "Targeted Only"});
 			this.cboTreeFilter.Location = new System.Drawing.Point(58, 579);
 			this.cboTreeFilter.Name = "cboTreeFilter";
-			this.cboTreeFilter.Size = new System.Drawing.Size(227, 21);
+			this.cboTreeFilter.Size = new System.Drawing.Size(196, 21);
 			this.cboTreeFilter.TabIndex = 37;
 			this.cboTreeFilter.SelectedIndexChanged += new System.EventHandler(this.cboTreeFilter_SelectedIndexChanged);
 			// 
@@ -1104,7 +1113,7 @@
 			// cmdRemoveDialogue
 			// 
 			this.cmdRemoveDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdRemoveDialogue.Location = new System.Drawing.Point(227, 10);
+			this.cmdRemoveDialogue.Location = new System.Drawing.Point(196, 10);
 			this.cmdRemoveDialogue.Name = "cmdRemoveDialogue";
 			this.cmdRemoveDialogue.Size = new System.Drawing.Size(58, 23);
 			this.cmdRemoveDialogue.TabIndex = 30;
@@ -1124,7 +1133,8 @@
 			// 
 			// grpCase
 			// 
-			this.grpCase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.grpCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.grpCase.Controls.Add(this.lblHelpText);
 			this.grpCase.Controls.Add(this.cmdPasteAll);
@@ -1136,9 +1146,9 @@
 			this.grpCase.Controls.Add(this.groupBox3);
 			this.grpCase.Controls.Add(this.gridDialogue);
 			this.grpCase.Controls.Add(this.grpConditions);
-			this.grpCase.Location = new System.Drawing.Point(291, 10);
+			this.grpCase.Location = new System.Drawing.Point(260, 10);
 			this.grpCase.Name = "grpCase";
-			this.grpCase.Size = new System.Drawing.Size(640, 652);
+			this.grpCase.Size = new System.Drawing.Size(671, 652);
 			this.grpCase.TabIndex = 28;
 			this.grpCase.TabStop = false;
 			this.grpCase.Text = "Edit Case";
@@ -1155,7 +1165,7 @@
 			// cmdPasteAll
 			// 
 			this.cmdPasteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdPasteAll.Location = new System.Drawing.Point(565, 385);
+			this.cmdPasteAll.Location = new System.Drawing.Point(596, 385);
 			this.cmdPasteAll.Name = "cmdPasteAll";
 			this.cmdPasteAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdPasteAll.TabIndex = 37;
@@ -1166,7 +1176,7 @@
 			// cmdCopyAll
 			// 
 			this.cmdCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCopyAll.Location = new System.Drawing.Point(484, 385);
+			this.cmdCopyAll.Location = new System.Drawing.Point(515, 385);
 			this.cmdCopyAll.Name = "cmdCopyAll";
 			this.cmdCopyAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdCopyAll.TabIndex = 36;
@@ -1220,7 +1230,7 @@
 			this.groupBox3.Controls.Add(this.flowStageChecks);
 			this.groupBox3.Location = new System.Drawing.Point(9, 46);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(625, 132);
+			this.groupBox3.Size = new System.Drawing.Size(656, 132);
 			this.groupBox3.TabIndex = 30;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Applies to Stages";
@@ -1230,7 +1240,7 @@
 			this.chkSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkSelectAll.AutoSize = true;
 			this.chkSelectAll.BackColor = System.Drawing.Color.White;
-			this.chkSelectAll.Location = new System.Drawing.Point(552, -1);
+			this.chkSelectAll.Location = new System.Drawing.Point(583, -1);
 			this.chkSelectAll.Name = "chkSelectAll";
 			this.chkSelectAll.Size = new System.Drawing.Size(70, 17);
 			this.chkSelectAll.TabIndex = 1;
@@ -1243,7 +1253,7 @@
 			this.flowStageChecks.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowStageChecks.Location = new System.Drawing.Point(3, 16);
 			this.flowStageChecks.Name = "flowStageChecks";
-			this.flowStageChecks.Size = new System.Drawing.Size(619, 113);
+			this.flowStageChecks.Size = new System.Drawing.Size(650, 113);
 			this.flowStageChecks.TabIndex = 0;
 			// 
 			// gridDialogue
@@ -1260,7 +1270,7 @@
 			this.gridDialogue.MultiSelect = false;
 			this.gridDialogue.Name = "gridDialogue";
 			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.gridDialogue.Size = new System.Drawing.Size(635, 232);
+			this.gridDialogue.Size = new System.Drawing.Size(666, 232);
 			this.gridDialogue.TabIndex = 26;
 			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
 			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
@@ -1288,7 +1298,7 @@
 			this.grpConditions.Controls.Add(this.tabControlConditions);
 			this.grpConditions.Location = new System.Drawing.Point(9, 184);
 			this.grpConditions.Name = "grpConditions";
-			this.grpConditions.Size = new System.Drawing.Size(625, 198);
+			this.grpConditions.Size = new System.Drawing.Size(656, 198);
 			this.grpConditions.TabIndex = 28;
 			this.grpConditions.TabStop = false;
 			this.grpConditions.Text = "Conditions";
@@ -1304,7 +1314,7 @@
 			this.tabControlConditions.Location = new System.Drawing.Point(6, 19);
 			this.tabControlConditions.Name = "tabControlConditions";
 			this.tabControlConditions.SelectedIndex = 0;
-			this.tabControlConditions.Size = new System.Drawing.Size(613, 173);
+			this.tabControlConditions.Size = new System.Drawing.Size(644, 173);
 			this.tabControlConditions.TabIndex = 30;
 			// 
 			// tabTarget
@@ -1321,7 +1331,7 @@
 			this.tabTarget.Location = new System.Drawing.Point(4, 22);
 			this.tabTarget.Name = "tabTarget";
 			this.tabTarget.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTarget.Size = new System.Drawing.Size(605, 147);
+			this.tabTarget.Size = new System.Drawing.Size(636, 147);
 			this.tabTarget.TabIndex = 0;
 			this.tabTarget.Text = "Target";
 			this.tabTarget.UseVisualStyleBackColor = true;
@@ -1367,7 +1377,7 @@
             "Royal Flush"});
 			this.cboTargetHand.Location = new System.Drawing.Point(81, 73);
 			this.cboTargetHand.Name = "cboTargetHand";
-			this.cboTargetHand.Size = new System.Drawing.Size(518, 21);
+			this.cboTargetHand.Size = new System.Drawing.Size(549, 21);
 			this.cboTargetHand.TabIndex = 17;
 			// 
 			// label29
@@ -1390,7 +1400,7 @@
 			this.cboTargetStage.FormattingEnabled = true;
 			this.cboTargetStage.Location = new System.Drawing.Point(81, 46);
 			this.cboTargetStage.Name = "cboTargetStage";
-			this.cboTargetStage.Size = new System.Drawing.Size(518, 21);
+			this.cboTargetStage.Size = new System.Drawing.Size(549, 21);
 			this.cboTargetStage.TabIndex = 25;
 			// 
 			// tabOther
@@ -1405,7 +1415,7 @@
 			this.tabOther.Location = new System.Drawing.Point(4, 22);
 			this.tabOther.Name = "tabOther";
 			this.tabOther.Padding = new System.Windows.Forms.Padding(3);
-			this.tabOther.Size = new System.Drawing.Size(605, 147);
+			this.tabOther.Size = new System.Drawing.Size(636, 147);
 			this.tabOther.TabIndex = 1;
 			this.tabOther.Text = "Other Player";
 			this.tabOther.UseVisualStyleBackColor = true;
@@ -1428,7 +1438,7 @@
 			this.cboAlsoPlaying.FormattingEnabled = true;
 			this.cboAlsoPlaying.Location = new System.Drawing.Point(81, 19);
 			this.cboAlsoPlaying.Name = "cboAlsoPlaying";
-			this.cboAlsoPlaying.Size = new System.Drawing.Size(518, 21);
+			this.cboAlsoPlaying.Size = new System.Drawing.Size(549, 21);
 			this.cboAlsoPlaying.TabIndex = 21;
 			this.cboAlsoPlaying.SelectedIndexChanged += new System.EventHandler(this.cboAlsoPlaying_SelectedIndexChanged);
 			// 
@@ -1452,7 +1462,7 @@
 			this.cboAlsoPlayingStage.FormattingEnabled = true;
 			this.cboAlsoPlayingStage.Location = new System.Drawing.Point(81, 46);
 			this.cboAlsoPlayingStage.Name = "cboAlsoPlayingStage";
-			this.cboAlsoPlayingStage.Size = new System.Drawing.Size(518, 21);
+			this.cboAlsoPlayingStage.Size = new System.Drawing.Size(549, 21);
 			this.cboAlsoPlayingStage.TabIndex = 23;
 			// 
 			// cboAlsoPlayingHand
@@ -1476,7 +1486,7 @@
             "Royal Flush"});
 			this.cboAlsoPlayingHand.Location = new System.Drawing.Point(81, 73);
 			this.cboAlsoPlayingHand.Name = "cboAlsoPlayingHand";
-			this.cboAlsoPlayingHand.Size = new System.Drawing.Size(518, 21);
+			this.cboAlsoPlayingHand.Size = new System.Drawing.Size(549, 21);
 			this.cboAlsoPlayingHand.TabIndex = 27;
 			// 
 			// label30
@@ -1513,7 +1523,7 @@
 			this.tabMisc.Location = new System.Drawing.Point(4, 22);
 			this.tabMisc.Name = "tabMisc";
 			this.tabMisc.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMisc.Size = new System.Drawing.Size(605, 147);
+			this.tabMisc.Size = new System.Drawing.Size(636, 147);
 			this.tabMisc.TabIndex = 2;
 			this.tabMisc.Text = "Misc";
 			this.tabMisc.UseVisualStyleBackColor = true;
@@ -1565,7 +1575,7 @@
             "5"});
 			this.cboTotalMales.Location = new System.Drawing.Point(81, 73);
 			this.cboTotalMales.Name = "cboTotalMales";
-			this.cboTotalMales.Size = new System.Drawing.Size(518, 21);
+			this.cboTotalMales.Size = new System.Drawing.Size(549, 21);
 			this.cboTotalMales.TabIndex = 21;
 			// 
 			// cboTotalFemales
@@ -1584,7 +1594,7 @@
             "5"});
 			this.cboTotalFemales.Location = new System.Drawing.Point(81, 46);
 			this.cboTotalFemales.Name = "cboTotalFemales";
-			this.cboTotalFemales.Size = new System.Drawing.Size(518, 21);
+			this.cboTotalFemales.Size = new System.Drawing.Size(549, 21);
 			this.cboTotalFemales.TabIndex = 20;
 			// 
 			// cboOwnHand
@@ -1608,7 +1618,7 @@
             "Royal Flush"});
 			this.cboOwnHand.Location = new System.Drawing.Point(81, 19);
 			this.cboOwnHand.Name = "cboOwnHand";
-			this.cboOwnHand.Size = new System.Drawing.Size(518, 21);
+			this.cboOwnHand.Size = new System.Drawing.Size(549, 21);
 			this.cboOwnHand.TabIndex = 19;
 			// 
 			// label26
@@ -1725,13 +1735,6 @@
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// setupToolStripMenuItem
-			// 
-			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
-			this.setupToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
-			this.setupToolStripMenuItem.Text = "Setup...";
-			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
-			// 
 			// imageImporter
 			// 
 			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1748,11 +1751,6 @@
 			this.epilogueEditor.Name = "epilogueEditor";
 			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
 			this.epilogueEditor.TabIndex = 0;
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(272, 6);
 			// 
 			// CharacterEditor
 			// 
