@@ -203,21 +203,6 @@ function parseDialogue (caseObject, replace, content) {
 }
 
 /************************************************************
- * Gets a list of all count-TAG targets in a caseObject
- ************************************************************/
-function getFilterCounters (caseObject) {
-	var filters = [];
-	var attrs = caseObject[0].attributes;
-	for (var i = 0; i < attrs.length; i++) {
-		var attr = attrs[i].name;
-		if (attr.lastIndexOf('count', 0) === 0) {
-			filters.push(attr);
-		}
-	}
-	return filters;
-}
-
-/************************************************************
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
@@ -284,7 +269,13 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
-			var counters =		   getFilterCounters(states[i]);
+			var counters = [];
+			states[i].find("condition").each(function () {
+				var counter = $(this);
+				if (counter.attr('filter')) {
+					counters.push(counter);
+				}
+			});
 
 			var totalPriority = 0; // this is used to determine which of the states that
 									// doesn't fail any conditions should be used
@@ -398,9 +389,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 
 			// filter counter targets (priority = 10)
+			var matchCounter = true;
 			for (var j = 0; j < counters.length; j++) {
-				var desiredCount = states[i].attr(counters[j]);
-				var filterTag = counters[j].substring(6).toLowerCase();
+				var desiredCount = counters[j].attr('count');
+				var filterTag = counters[j].attr('filter');
 				var count = 0;
 				for (var q = 0; q < players.length; q++) {
 					if (players[q] !== null && players[q].tags) {
@@ -412,12 +404,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 				}
-				if ('' + count == desiredCount) {
+				if (count + '' === desiredCount) {
 					totalPriority += 10;
 				}
 				else {
-					continue;
+					matchCounter = false;
+					break;
 				}
+			}
+			if (!matchCounter) {
+				continue; // failed filter count
 			}
 			
 			// totalMales (priority = 5)
