@@ -59,7 +59,11 @@ namespace SPNATI_Character_Editor
 			}
 			if (string.IsNullOrEmpty(Config.GameDirectory))
 			{
-				OpenSetup();
+				if (OpenSetup() == DialogResult.Cancel)
+				{
+					this.Close();
+					return;
+				}
 			}
 			if (string.IsNullOrEmpty(Config.GameDirectory))
 			{
@@ -197,16 +201,10 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Opens the initial setup form
 		/// </summary>
-		private void OpenSetup()
+		private DialogResult OpenSetup()
 		{
 			SettingsSetup form = new SettingsSetup();
-			DialogResult result = form.ShowDialog();
-
-			if (result == DialogResult.Cancel)
-			{
-				this.Close();
-				return;
-			}
+			return form.ShowDialog();
 		}
 
 		/// <summary>
