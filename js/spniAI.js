@@ -20,7 +20,7 @@ function determineAIAction (player) {
 	var cardSuits = [0, 0, 0, 0];
 	
 	/*for low intelligence characters all trades are done at random. Technically this is the same as doing nothing but this way they won't always just do nothing.*/
-	if(players[player].intelligence == "bad"){
+	if(players[player].getIntelligence() == "bad"){
 		hands[player].tradeIns = [false, false, false, false, false];
 
 		/*choose number of cards to trade in*/
@@ -36,7 +36,7 @@ function determineAIAction (player) {
 		}
 
 	/*for good intelligence characters only attempt to get pairs or improve on pairs*/
-	}else if(players[player].intelligence == "good"){
+	}else if(players[player].getIntelligence() == "good"){
 		for (var i = 0; i < hand.length; i++) {
 			cardRanks[getCardValue(hand[i]) - 1]++;
 			if (getCardValue(hand[i]) == 1) {
