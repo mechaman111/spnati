@@ -254,6 +254,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			Behavior.OnBeforeSerialize(this);
+			Metadata.Layers = Layers;
 			Metadata.HasEnding = Endings.Count > 0;
 		}
 

@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.cmdOK = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblVersion = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// cmdOK
@@ -43,14 +43,14 @@
 			this.cmdOK.UseVisualStyleBackColor = true;
 			this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
 			// 
-			// label1
+			// lblVersion
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(13, 13);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(149, 13);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "SPNATI Character Editor v1.0";
+			this.lblVersion.AutoSize = true;
+			this.lblVersion.Location = new System.Drawing.Point(13, 13);
+			this.lblVersion.Name = "lblVersion";
+			this.lblVersion.Size = new System.Drawing.Size(149, 13);
+			this.lblVersion.TabIndex = 1;
+			this.lblVersion.Text = "SPNATI Character Editor v1.0";
 			// 
 			// About
 			// 
@@ -58,7 +58,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 70);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.lblVersion);
 			this.Controls.Add(this.cmdOK);
 			this.Name = "About";
 			this.ShowIcon = false;
@@ -73,6 +73,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button cmdOK;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblVersion;
 	}
 }
