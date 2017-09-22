@@ -112,7 +112,28 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
                            current:current,
 						   stage:stage,
                            state:state,
-                           xml:xml};
+                           xml:xml,
+
+						    getIntelligence: function getIntelligence() {
+						       if (typeof(this.intelligence) === "string") {
+							   	   return this.intelligence;
+							   }
+						       var bestFitStage = -1;
+							   var bestFit = null;
+                               for (var i = 0; i < this.intelligence.length; i++)
+							   {
+							       var startStage = this.intelligence[i].getAttribute('stage');
+								   startStage = parseInt(startStage, 10) || 0;
+								   if (startStage > bestFitStage && startStage <= this.stage)
+								   {
+									bestFit = $(this.intelligence[i]).text();
+									bestFitStage = startStage;
+								   }
+							   }
+							   return bestFit || eIntelligence.AVERAGE;
+						   },
+						   
+						   };
                            
     return newPlayerObject;
 }

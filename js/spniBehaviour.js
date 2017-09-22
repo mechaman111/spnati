@@ -125,7 +125,7 @@ function loadBehaviour (folder, callFunction, slot) {
             var gender = $(xml).find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
             var size = $(xml).find('size').text();
             var timer = $(xml).find('timer').text();
-            var intelligence = $(xml).find('intelligence').text();
+            var intelligence = $(xml).find('intelligence');
             
             var tags = $(xml).find('tags');
             var tagsArray = [];
@@ -254,7 +254,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
     }
     else {
         // look for the best match
-        var bestMatch = null;
+        var bestMatch = [];
 		var bestMatchPriority = -1;
 		
         for (var i = 0; i < states.length; i++) {
@@ -269,7 +269,14 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
-			
+			var counters = [];
+			states[i].find("condition").each(function () {
+				var counter = $(this);
+				if (counter.attr('filter')) {
+					counters.push(counter);
+				}
+			});
+
 			var totalPriority = 0; // this is used to determine which of the states that
 									// doesn't fail any conditions should be used
 			
@@ -380,6 +387,34 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 				}
 			}
+
+			// filter counter targets (priority = 10)
+			var matchCounter = true;
+			for (var j = 0; j < counters.length; j++) {
+				var desiredCount = counters[j].attr('count');
+				var filterTag = counters[j].attr('filter');
+				var count = 0;
+				for (var q = 0; q < players.length; q++) {
+					if (players[q] !== null && players[q].tags) {
+						for (var t = 0; t < players[q].tags.length; t++) {
+							if (filterTag === players[q].tags[t]) {
+								count++;
+								break;
+							}
+						}
+					}
+				}
+				if (count + '' === desiredCount) {
+					totalPriority += 10;
+				}
+				else {
+					matchCounter = false;
+					break;
+				}
+			}
+			if (!matchCounter) {
+				continue; // failed filter count
+			}
 			
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
@@ -419,20 +454,24 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 			}
 			
-			
 			// Finished going through - if a state has still survived up to this point,
 			// it's then determined if it's the highest priority so far
 			
 			if (totalPriority > bestMatchPriority)
 			{
 				console.log("New best match with " + totalPriority + " priority.");
-				bestMatch = states[i];
+				bestMatch = [states[i]];
 				bestMatchPriority = totalPriority;
+			}
+			else if (totalPriority === bestMatchPriority)
+			{
+				bestMatch.push(states[i]);
 			}
 			
     }
         
-        if (bestMatch != null) {
+        if (bestMatch.length > 0) {
+			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
             players[player].state = parseDialogue(bestMatch, replace, content);
         }
