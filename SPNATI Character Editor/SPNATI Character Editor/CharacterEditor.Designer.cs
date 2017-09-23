@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterEditor));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +121,6 @@
 			this.cmdAddClothes = new System.Windows.Forms.Button();
 			this.lstClothes = new System.Windows.Forms.ListBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
-			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.cboTreeTarget = new System.Windows.Forms.ComboBox();
 			this.label40 = new System.Windows.Forms.Label();
@@ -142,7 +142,6 @@
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.chkSelectAll = new System.Windows.Forms.CheckBox();
 			this.flowStageChecks = new System.Windows.Forms.FlowLayoutPanel();
-			this.gridDialogue = new SPNATI_Character_Editor.KeyboardDataGridView();
 			this.grpConditions = new System.Windows.Forms.GroupBox();
 			this.tabControlConditions = new System.Windows.Forms.TabControl();
 			this.tabTarget = new System.Windows.Forms.TabPage();
@@ -172,7 +171,6 @@
 			this.cboOwnHand = new System.Windows.Forms.ComboBox();
 			this.label26 = new System.Windows.Forms.Label();
 			this.tabEndings = new System.Windows.Forms.TabPage();
-			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
 			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -182,9 +180,12 @@
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
+			this.gridDialogue = new SPNATI_Character_Editor.KeyboardDataGridView();
 			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColSilent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -199,7 +200,6 @@
 			this.tabDialogue.SuspendLayout();
 			this.grpCase.SuspendLayout();
 			this.groupBox3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.grpConditions.SuspendLayout();
 			this.tabControlConditions.SuspendLayout();
 			this.tabTarget.SuspendLayout();
@@ -209,6 +209,7 @@
 			this.tabMisc.SuspendLayout();
 			this.tabEndings.SuspendLayout();
 			this.splitMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -711,7 +712,6 @@
 			// 
 			// label22
 			// 
-			this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label22.AutoSize = true;
 			this.label22.Location = new System.Drawing.Point(6, 64);
 			this.label22.Name = "label22";
@@ -729,7 +729,6 @@
 			// 
 			// cboDefaultPic
 			// 
-			this.cboDefaultPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cboDefaultPic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboDefaultPic.FormattingEnabled = true;
 			this.cboDefaultPic.Location = new System.Drawing.Point(75, 61);
@@ -1112,14 +1111,6 @@
 			this.tabImages.Text = "Images";
 			this.tabImages.UseVisualStyleBackColor = true;
 			// 
-			// imageImporter
-			// 
-			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.imageImporter.Location = new System.Drawing.Point(3, 3);
-			this.imageImporter.Name = "imageImporter";
-			this.imageImporter.Size = new System.Drawing.Size(931, 662);
-			this.imageImporter.TabIndex = 0;
-			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.Controls.Add(this.cboTreeTarget);
@@ -1226,7 +1217,6 @@
 			// 
 			// cmdRemoveDialogue
 			// 
-			this.cmdRemoveDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdRemoveDialogue.Location = new System.Drawing.Point(196, 10);
 			this.cmdRemoveDialogue.Name = "cmdRemoveDialogue";
 			this.cmdRemoveDialogue.Size = new System.Drawing.Size(58, 23);
@@ -1369,30 +1359,6 @@
 			this.flowStageChecks.Name = "flowStageChecks";
 			this.flowStageChecks.Size = new System.Drawing.Size(650, 113);
 			this.flowStageChecks.TabIndex = 0;
-			// 
-			// gridDialogue
-			// 
-			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridDialogue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridDialogue.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColImage,
-            this.ColText,
-            this.ColSilent});
-			this.gridDialogue.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.gridDialogue.Location = new System.Drawing.Point(5, 414);
-			this.gridDialogue.MultiSelect = false;
-			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.gridDialogue.Size = new System.Drawing.Size(666, 232);
-			this.gridDialogue.TabIndex = 41;
-			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
-			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
-			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
-			this.gridDialogue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellValueChanged);
-			this.gridDialogue.CurrentCellDirtyStateChanged += new System.EventHandler(this.gridDialogue_CurrentCellDirtyStateChanged);
-			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
 			// 
 			// grpConditions
 			// 
@@ -1786,15 +1752,6 @@
 			this.tabEndings.Text = "Epilogue";
 			this.tabEndings.UseVisualStyleBackColor = true;
 			// 
-			// epilogueEditor
-			// 
-			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.epilogueEditor.Enabled = false;
-			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
-			this.epilogueEditor.Name = "epilogueEditor";
-			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
-			this.epilogueEditor.TabIndex = 0;
-			// 
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1866,6 +1823,38 @@
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// imageImporter
+			// 
+			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imageImporter.Location = new System.Drawing.Point(3, 3);
+			this.imageImporter.Name = "imageImporter";
+			this.imageImporter.Size = new System.Drawing.Size(931, 662);
+			this.imageImporter.TabIndex = 0;
+			// 
+			// gridDialogue
+			// 
+			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridDialogue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridDialogue.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColImage,
+            this.ColText,
+            this.ColSilent});
+			this.gridDialogue.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridDialogue.Location = new System.Drawing.Point(5, 414);
+			this.gridDialogue.MultiSelect = false;
+			this.gridDialogue.Name = "gridDialogue";
+			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+			this.gridDialogue.Size = new System.Drawing.Size(666, 232);
+			this.gridDialogue.TabIndex = 41;
+			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
+			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
+			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
+			this.gridDialogue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellValueChanged);
+			this.gridDialogue.CurrentCellDirtyStateChanged += new System.EventHandler(this.gridDialogue_CurrentCellDirtyStateChanged);
+			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
+			// 
 			// ColImage
 			// 
 			this.ColImage.HeaderText = "Image";
@@ -1885,6 +1874,15 @@
 			this.ColSilent.Name = "ColSilent";
 			this.ColSilent.Width = 50;
 			// 
+			// epilogueEditor
+			// 
+			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.epilogueEditor.Enabled = false;
+			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
+			this.epilogueEditor.Name = "epilogueEditor";
+			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
+			this.epilogueEditor.TabIndex = 0;
+			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1898,6 +1896,7 @@
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.picPortrait);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Location = new System.Drawing.Point(7, 7);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "CharacterEditor";
@@ -1926,7 +1925,6 @@
 			this.grpCase.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
 			this.grpConditions.ResumeLayout(false);
 			this.tabControlConditions.ResumeLayout(false);
 			this.tabTarget.ResumeLayout(false);
@@ -1939,6 +1937,7 @@
 			this.tabMisc.PerformLayout();
 			this.tabEndings.ResumeLayout(false);
 			this.splitMenu.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
