@@ -35,14 +35,14 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
 
-		[XmlAttribute("silent")]
-		public string Silent;
-
 		[XmlAttribute("totalMales")]
 		public string TotalMales;
 
 		[XmlAttribute("totalFemales")]
 		public string TotalFemales;
+
+		[XmlElement("condition")]
+		public List<TargetCondition> Conditions;
 
 		[XmlElement("state")]
 		public List<DialogueLine> Lines;
@@ -68,12 +68,14 @@ namespace SPNATI_Character_Editor
 		{
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
+			Conditions = new List<TargetCondition>();
 		}
 
 		public Case(string tag)
 		{
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
+			Conditions = new List<TargetCondition>();
 			Tag = tag;
 		}
 
@@ -106,6 +108,10 @@ namespace SPNATI_Character_Editor
 				{
 					result += string.Format(" (hand={0})", HasHand);
 				}
+				else if (Conditions.Count > 0)
+				{
+					result += string.Format(" ({0})", string.Join(",", Conditions));
+				}
 				else if (!string.IsNullOrEmpty(TotalFemales))
 				{
 					result += string.Format(" ({0} females)", TotalFemales);
@@ -136,6 +142,10 @@ namespace SPNATI_Character_Editor
 			copy.HasHand = HasHand;
 			copy.TotalFemales = TotalFemales;
 			copy.TotalMales = TotalMales;
+			foreach (TargetCondition condition in Conditions)
+			{
+				copy.Conditions.Add(condition.Copy());
+			}
 			return copy;
 		}
 
@@ -209,6 +219,8 @@ namespace SPNATI_Character_Editor
 					totalPriority += 5;
 			}
 
+			totalPriority += Conditions.Count * 10;
+
 			if (!string.IsNullOrEmpty(TotalMales))
 				totalPriority += 5;
 			if (!string.IsNullOrEmpty(TotalFemales))
@@ -240,6 +252,16 @@ namespace SPNATI_Character_Editor
 				TotalMales == other.TotalMales;
 			if (!sameFilters)
 				return false;
+
+			if (other.Conditions.Count != Conditions.Count)
+				return false;
+			for (int i = 0; i < Conditions.Count; i++)
+			{
+				TargetCondition c1 = Conditions[i];
+				TargetCondition c2 = other.Conditions[i];
+				if (c1.Filter != c2.Filter || c1.Count != c2.Count)
+					return false;
+			}
 
 			return true;
 		}
@@ -284,7 +306,7 @@ namespace SPNATI_Character_Editor
 				  !string.IsNullOrEmpty(HasHand) ||
 				  !string.IsNullOrEmpty(TotalFemales) ||
 				  !string.IsNullOrEmpty(TotalMales) ||
-				  Silent != null;
+				  Conditions.Count > 0;
 			}
 		}
 
@@ -305,17 +327,57 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (TotalMales ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (HasHand ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Filter ?? string.Empty).GetHashCode();
+			foreach (var condition in Conditions)
+			{
+				hash = (hash * 397) ^ condition.GetHashCode();
+			}
 			return hash;
 		}
 
 		public int CompareTo(Case other)
 		{
 			int comparison = Tag.CompareTo(other.Tag);
-			if(comparison == 0)
+			if (comparison == 0)
 				comparison = other.GetPriority().CompareTo(GetPriority());
 			if (comparison == 0)
 				return _globalId.CompareTo(other._globalId);
 			else return comparison;
+		}
+	}
+
+	public class TargetCondition
+	{
+		[XmlAttribute("filter")]
+		/// <summary>
+		/// Tag to condition on
+		/// </summary>
+		public string Filter;
+
+		[XmlAttribute("count")]
+		/// <summary>
+		/// Number of characters needing the filter tag
+		/// </summary>
+		public int Count;
+
+		public TargetCondition()
+		{
+		}
+
+		public TargetCondition(string filter, int count)
+		{
+			Filter = filter;
+			Count = count;
+		}
+
+		public TargetCondition Copy()
+		{
+			TargetCondition copy = new TargetCondition(Filter, Count);
+			return copy;
+		}
+
+		public override string ToString()
+		{
+			return string.Format("{0}={1}", Filter, Count);
 		}
 	}
 }

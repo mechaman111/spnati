@@ -76,5 +76,21 @@ namespace SPNATI_Character_Editor
 			//text = text.Replace("&amp;", "&");
 			return text;
 		}
+
+		/// <summary>
+		/// Replaces the instance of 
+		/// </summary>
+		/// <param name="str">String to do replacement on</param>
+		/// <param name="index">Starting index</param>
+		/// <param name="oldValue">String to replace</param>
+		/// <param name="newValue">Replacement string</param>
+		/// <returns>String with replacement</returns>
+		public static string ReplaceAt(this string str, int index, string oldValue, string newValue)
+		{
+			string left = str.Substring(0, index);
+			int count = oldValue.Length;
+			string right = str.Substring(index + count);
+			return left + newValue + right;
+		}
 	}
 }

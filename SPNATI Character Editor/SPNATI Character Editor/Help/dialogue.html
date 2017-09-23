@@ -71,6 +71,13 @@
                         <li><span class="label">Hand:</span> The character in the Player field must have the given hand (ex. Two Pair, Full House).</li>
                     </ul>
                 </li>
+                <li><span class="label">Tags:</span> Conditions that target the whole table based on the tags of the characters playing. If multiple conditions are provided, they must all be met for the case to be considered for use in game.
+                    <br /> For example, you can filter the line to display only if 4 players have the "shaved" tag, or filter the line to display only if none of the characters have the "shy" tag.
+                    <ul>
+                        <li><span class="label">Filter on Tag: </span>Chooses a tag to filter on.</li>
+                        <li><span class="label">Total Playing with Tag: </span>Value between 0-4 (including this character but not the human, who can't have tags) for how many characters must have this tag in order for the condition to be met.</li>
+                    </ul>
+                </li>
                 <li><span class="label">Misc:</span> Conditions that do not target another player.
                     <ul>
                         <li><span class="label">Own hand:</span> The character being edited must have the given hand (ex. Two Pair, Full House).</li>
@@ -98,7 +105,7 @@
                     </div>
                 </li>
             </ol>
-            <p>The case with the highest priority will then have a random line chosen.</p>
+            <p>The case with the highest priority will then have a random line chosen. If multiple cases have the same priority, a random case will be chosen.</p>
         </section>
         <section class="card" id="legend">
             <h1>Legend</h1>
@@ -201,6 +208,7 @@
                     </div>
                 </li>
                 <li><span class="label">Text column:</span> This is the text that will appear in the character's speech bubble when the line is chosen. Line should be fairly short, since a wall of text will both be glazed over by the player and will often not fit in the speech bubble.</li>
+                <li><span class="label">Silent column:</span> If this is checked, no dialogue bubble will be displayed at all.</li>
                 <li><span class="label">Italics:</span> Words can be italicized by encasing them in &lt;i&gt;&lt;/i&gt;. For example, &lt;i&gt;Wow!&lt;/i&gt; will produce <span style="font-style:italic">Wow!</span>.</li>
                 <li><span class="label">Variables:</span> Lines can use variables, which are placeholder labels that will be replaced at runtime with a dynamic bit of text. To use a variable, in the text type ~variableName~ where variableName is the name of the variable. Available variables include:
                     <ul>

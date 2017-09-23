@@ -30,7 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboCharacter.BindingContext = new BindingContext();
 		}
 
-		private void cboCharacter_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void cboCharacter_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			SetCharacterInternal(cboCharacter.SelectedItem as Character);
 		}
@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor.Controls
 				cboStage.SelectedIndex = 0;
 		}
 
-		private void cboStage_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void cboStage_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var stage = cboStage.SelectedItem as StageName;
 			if (stage != null)

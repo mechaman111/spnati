@@ -20,7 +20,8 @@ namespace SPNATI_Character_Editor
 			lines.Add("label=" + character.Label);
 			lines.Add("gender=" + character.Gender);
 			lines.Add("size=" + character.Size);
-			lines.Add("intelligence=" + character.Intelligence);
+			if(character.Intelligence.Count > 0)
+				lines.Add("intelligence=" + character.Intelligence[0].Level); //make_xml.py doesn't support multi-stage intelligence yet
 			lines.Add("");
 			lines.Add("#Number of phases to \"finish\" masturbating");
 			lines.Add("timer=" + character.Stamina);
@@ -358,7 +359,8 @@ namespace SPNATI_Character_Editor
 						character.Size = value;
 						break;
 					case "intelligence":
-						character.Intelligence = value;
+						//TODO: Update this once multi-stage intelligence is supported in make_xml.py
+						character.Intelligence.Add(new Intelligence(0, value));
 						break;
 					case "timer":
 						if (int.TryParse(value, out intValue))
@@ -656,9 +658,6 @@ namespace SPNATI_Character_Editor
 						break;
 					case "totalmales":
 						lineCase.TotalMales = value;
-						break;
-					case "silent":
-						lineCase.Silent = "";
 						break;
 				}
 			}

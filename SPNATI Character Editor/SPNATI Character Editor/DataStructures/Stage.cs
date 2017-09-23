@@ -72,8 +72,6 @@ namespace SPNATI_Character_Editor
 				filters.Add(c1.Target);
 			if (!string.IsNullOrEmpty(c1.Filter))
 				filters.Add(c1.Filter);
-			if (c1.Silent != null)
-				filters.Add("");
 			if (!string.IsNullOrEmpty(c1.TargetStage))
 				filters.Add(c1.TargetStage);
 			if (!string.IsNullOrEmpty(c1.AlsoPlaying))

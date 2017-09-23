@@ -1,5 +1,6 @@
 ﻿using SPNATI_Character_Editor.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -41,7 +42,7 @@ namespace SPNATI_Character_Editor
 
 		[XmlNewLine]
 		[XmlElement("intelligence")]
-		public string Intelligence;
+		public List<Intelligence> Intelligence;
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
@@ -72,7 +73,7 @@ namespace SPNATI_Character_Editor
 			Label = "Opponent";
 			Gender = "female";
 			Size = "medium";
-			Intelligence = "average";
+			Intelligence = new List<Intelligence>();
 			Stamina = 15;
 			Tags = new List<string>();
 			Metadata = new Metadata();
@@ -92,7 +93,7 @@ namespace SPNATI_Character_Editor
 			Gender = "";
 			Size = "";
 			Behavior = new Behaviour();
-			Intelligence = "average";
+			Intelligence = new List<Intelligence>();
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
@@ -194,7 +195,7 @@ namespace SPNATI_Character_Editor
 		public int RemoveLayer(Clothing layer)
 		{
 			int index = Wardrobe.IndexOf(layer);
-			if(index >= 0)
+			if (index >= 0)
 				Wardrobe.RemoveAt(index);
 			return Wardrobe.Count - index;
 		}
@@ -268,7 +269,7 @@ namespace SPNATI_Character_Editor
 			Metadata.HasEnding = Endings.Count > 0;
 		}
 		#endregion
-		
+
 		/// <summary>
 		/// Called when editing a character in the editor to make sure working fields are built properly.
 		/// Working fields are set up lazily so as to not inflict the performance cost on every single character during startup
@@ -276,6 +277,137 @@ namespace SPNATI_Character_Editor
 		public void PrepareForEdit()
 		{
 			Behavior.PrepareForEdit(this);
+		}
+
+		/// <summary>
+		/// Gets a count of the number of unique, non-targeted lines
+		/// </summary>
+		/// <returns></returns>
+		public int GetGenericLineCount()
+		{
+			return GetLineCount(true, false);
+		}
+
+		/// <summary>
+		/// Gets a count of the number of unique targeted lines
+		/// </summary>
+		/// <returns></returns>
+		public int GetTargetedLineCount()
+		{
+			return GetLineCount(false, true);
+		}
+
+		/// <summary>
+		/// Gets a count of unique lines
+		/// </summary>
+		/// <returns></returns>
+		public int GetUniqueLineCount()
+		{
+			return GetLineCount(true, true);
+		}
+
+		private int GetLineCount(bool includeGeneric, bool includeTargeted)
+		{
+			int count = 0;
+			HashSet<string> lines = new HashSet<string>();
+			List<Stage> stages = Behavior.Stages;
+			foreach (var stage in stages)
+			{
+				foreach (var stageCase in stage.Cases)
+				{
+					bool targeted = stageCase.HasFilters;
+					if (!includeTargeted && targeted || !includeGeneric && !targeted)
+						continue;
+					foreach (var line in stageCase.Lines)
+					{
+						if (lines.Contains(line.Text))
+							continue;
+						count++;
+						lines.Add(line.Text);
+					}
+				}
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Gets a count of lines targeted towards another character
+		/// </summary>
+		/// <param name="folderName"></param>
+		/// <returns></returns>
+		public int GetCharacterUsage(Character character, out int tagCount)
+		{
+			tagCount = 0;
+			int count = 0;
+			HashSet<string> lines = new HashSet<string>();
+			List<Stage> stages = Behavior.Stages;
+			foreach (var stage in stages)
+			{
+				foreach (var stageCase in stage.Cases)
+				{
+					bool targeted = false;
+					bool targetedByTag = false;
+					targeted = stageCase.Target == character.FolderName || stageCase.AlsoPlaying == character.FolderName;
+					if (!targeted)
+					{
+						//see if any targets are used
+						foreach (string tag in character.Tags)
+						{
+							if (stageCase.Filter == tag)
+							{
+								targetedByTag = true;
+								break;
+							}
+						}
+					}
+					if (targeted || targetedByTag)
+					{
+						foreach (var line in stageCase.Lines)
+						{
+							if (lines.Contains(line.Text))
+								continue;
+							if (targetedByTag)
+								tagCount++;
+							else count++;
+							lines.Add(line.Text);
+						}
+					}
+				}
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Gets a count of lines targeting a specific tag
+		/// </summary>
+		/// <returns></returns>
+		public int GetTagUsage(string tag)
+		{
+			int count = 0;
+			HashSet<string> lines = new HashSet<string>();
+			List<Stage> stages = Behavior.Stages;
+			foreach (var stage in stages)
+			{
+				foreach (var stageCase in stage.Cases)
+				{
+					bool usesTag = (stageCase.Filter == tag);
+					if (!usesTag)
+					{
+						usesTag = stageCase.Conditions.Find(c => c.Filter == tag) != null;
+					}
+					if (usesTag)
+					{
+						foreach (var line in stageCase.Lines)
+						{
+							if (lines.Contains(line.Text))
+								continue;
+							count++;
+							lines.Add(line.Text);
+						}
+					}
+				}
+			}
+			return count;
 		}
 	}
 
@@ -318,5 +450,31 @@ namespace SPNATI_Character_Editor
 		/// Item was moved down, originally located at the given index
 		/// </summary>
 		MoveDown
+	}
+
+	public class Intelligence
+	{
+		/// <summary>
+		/// Stages this intelligence begins at
+		/// </summary>
+		[XmlAttribute("stage")]
+		[DefaultValue(0)]
+		public int Stage;
+
+		/// <summary>
+		/// Intelligence level
+		/// </summary>
+		[XmlText]
+		public string Level;
+
+		public Intelligence()
+		{
+		}
+
+		public Intelligence(int stage, string level)
+		{
+			Stage = stage;
+			Level = level;
+		}
 	}
 }
