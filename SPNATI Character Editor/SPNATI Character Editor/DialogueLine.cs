@@ -16,6 +16,12 @@ namespace SPNATI_Character_Editor
 		[XmlText]
 		public string Text;
 
+		/// <summary>
+		/// Whether the dialogue should be suppressed entirely. Should be null or ""
+		/// </summary>
+		[XmlAttribute("silent")]
+		public string IsSilent;
+
 		[XmlIgnore]
 		public string ImageExtension;
 

@@ -1,7 +1,15 @@
-SPNATI Character Editor Version 1.0
+SPNATI Character Editor Version
 
 Version history
 ------------
+1.04
+* Rudimentary dialogue find/replace
+* Dynamic AI
+* Filtering cases based on number of characters using a tag
+* Silent dialogue support
+* Graphical charts
+* Added a taskbar icon
+
 1.02
 * Minor bug fixes
 
@@ -11,32 +19,12 @@ Version history
 1.0
 * First official release
 
-Changes from beta
------------------
-* Better compatibility with make_xml.py output. Case sort order is nearly identical now
-* Available images for dialogue lines now update immediately when changing which stages are checked rather than needing to switch between cases to update
-* Improved formatting in text export
-* Text import (same text files that make_xml.py reads)
-* Tag list now gives frequency of each tag among all characters
-* Filters available for validation warnings
-* Dialogue is now preserved when modifying clothing layers (ex. when moving a layer up, the corresponding stage's dialogue is also moved up a stage)
-* Dialogue tree filters to show only targeted dialogue
-* Select All checkbox for picking applicable stages
-
 Bug Fixes
 -------------
-* Starting lines now allow images that don't start with 0-
-* Fixed parsing errors in the export when a character's folder contains -
-* Fixed posing templates stripping away color hex values that start with a letter
-* Cases with a targetStage but no target now display the stage instead of blank in the dialogue tree
-* Target stage is now respected in the Dialogue Tester
-* Layers in meta.xml is now set correctly for new characters
-* Dialogue tree doesn't expand when resizing window
-* Canceling the Setup form from the File menu no longer closes the program
+* Fixed Remove button floating in the middle of the Dialogue screen
 
 Planned Features (expected to be added in a future release)
 ----------------
-* Find and replace tool
 * Better starting lines editor (since lots of people don't understand how these work)
 * Ability to link cases together for shared dialogue (ex. male_must_strip and male_human_must_strip share a single case if all their dialogue will be the same)
 * Change tracking (so it can be more intelligent about prompting to save)
@@ -54,3 +42,6 @@ Known bugs
 * Stages remain blue even if there are no default lines. This persists until the next time a character is loaded
 * Images for a case are sometimes discarded when selecting a stage checkbox
 * Cross-stage images aren't preserved (ex. Nagisa uses 7-rear in stage 9, but this gets turned into 9-rear)
+* Importing new images doesn't make them immediately available for dialogue - restarting the program is necessary
+* Images must start with a stage prefix (disallows tracer's blank.png in stage 3, for example)
+* Sometimes Find doesn't do anything, but clicking onto the dialogue table and back to the Find box seems to work

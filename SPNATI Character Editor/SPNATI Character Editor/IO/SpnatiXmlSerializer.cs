@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -84,6 +85,21 @@ namespace SPNATI_Character_Editor.IO
 				if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
 					continue;
 
+				DefaultValueAttribute defaultValueAttr = field.GetCustomAttribute<DefaultValueAttribute>();
+				if (defaultValueAttr != null)
+				{
+					object actualValue = field.GetValue(data);
+					if (defaultValueAttr.Value == null)
+					{
+						if (actualValue == null)
+							continue;
+					}
+					else if (defaultValueAttr.Value.Equals(actualValue))
+					{
+						continue;
+					}
+				}
+
 				XmlElementAttribute element = field.GetCustomAttribute<XmlElementAttribute>();
 				if (element != null)
 				{
@@ -160,9 +176,10 @@ namespace SPNATI_Character_Editor.IO
 								{
 									sortedList.Add(obj);
 								}
-								sortedList.Sort((o1, o2) => 
+								sortedList.Sort((o1, o2) =>
 								{
-									return (int)sortMethod.Invoke(data, new object[] { o1, o2 }); }
+									return (int)sortMethod.Invoke(data, new object[] { o1, o2 });
+								}
 								);
 								list = sortedList;
 							}
@@ -216,7 +233,7 @@ namespace SPNATI_Character_Editor.IO
 			if (text != null)
 			{
 				writer.WriteString(text);
-			}			
+			}
 
 			writer.WriteEndElement();
 		}

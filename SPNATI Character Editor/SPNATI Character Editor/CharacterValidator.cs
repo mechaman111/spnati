@@ -23,7 +23,16 @@ namespace SPNATI_Character_Editor
 			int layers = character.Layers + Clothing.ExtraStages;
 			if (character.Behavior.Stages.Count > layers)
 			{
-				warnings.Add(new ValidationError(ValidationFilterLevel.Stage, string.Format("There are too many stages. Expected amount based on clothing: {0}, Actual: {1}", layers, character.Behavior.Stages.Count)));
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("There are too many stages. Expected amount based on clothing: {0}, Actual: {1}", layers, character.Behavior.Stages.Count)));
+			}
+
+			foreach (var ai in character.Intelligence)
+			{
+				int stage = ai.Stage;
+				if (stage < 0 || stage >= layers)
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("Intelligence level starting at stage {0}, but character has no stage {0}", stage)));
+				}
 			}
 
 			foreach (var line in character.StartingLines)
@@ -230,6 +239,20 @@ namespace SPNATI_Character_Editor
 					}
 					#endregion
 
+					#region Filters
+					foreach (var condition in stageCase.Conditions)
+					{
+						if (condition.Count > 5 || condition.Count < 0)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering tag {1} for {2} characters, but must be between 0-5. {0}", caseLabel, condition.Filter, condition.Count)));
+						}
+						if (!TagDatabase.TagExists(condition.Filter))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag {1} which is not used by any characters. {0}", caseLabel, condition.Filter)));
+						}
+					}
+					#endregion
+
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
 					foreach (DialogueLine line in stageCase.Lines)
@@ -349,9 +372,10 @@ namespace SPNATI_Character_Editor
 		None = 0,
 		Minor = 1,
 		MissingImages = 2,
-		Variables = 4,
-		TargetedDialogue = 8,
-		Case = 16,
-		Stage = 32
+		Metadata = 4,
+		Variables = 8,
+		TargetedDialogue = 16,
+		Case = 32,
+		Stage = 64
 	}
 }
