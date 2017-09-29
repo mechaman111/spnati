@@ -4,8 +4,18 @@ last=Kirigiri
 label=Kyoko
 gender=female
 size=small
+intelligence=average
+
 #Number of phases to "finish"
 timer=15
+
+tag=anime
+tag=silent
+tag=serious
+tag=shy
+tag=video_game
+tag=school_uniform
+tag=japanese
 
 #required for meta.xml
 #start picture
@@ -15,6 +25,7 @@ from=Danganronpa
 writer=DonOuttaDan
 artist=DonOuttaDan
 description=Former Ultimate Detective
+release=24
 
 #clothes
 #these must be in order of removal
@@ -24,8 +35,8 @@ description=Former Ultimate Detective
 #what they cover = upper (upper body), lower (lower body), other (neither).
 #there must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
 clothes=Jacket,jacket,extra,upper
-clothes=Boots,boots,extra,lower
-clothes=Socks,socks,minor,lower
+clothes=Boots,boots,extra,other
+clothes=Socks,socks,minor,other
 clothes=Shirt,shirt,major,upper
 clothes=Skirt,skirt,major,lower
 clothes=Gloves,gloves,minor,other
@@ -79,7 +90,7 @@ start_masturbating=starting,Th-this is v-very embarrassing... P-please don't sta
 masturbating=masturbate_a,O-ohh g-god...
 masturbating=masturbate_calm,Hnngh... mmm...
 heavy_masturbating=heavy_a,T-this is... r-really... mmm...
-heavy_masturbating=heavy_calm, Ohhhh... Ohhh...
+heavy_masturbating=heavy_calm,Ohhhh... Ohhh...
 heavy_masturbating=heavy_surprised, Y-y-yes... oh... my... f-...fuck...
 finishing_masturbating=finishing,I-I'm c-...c-... mmm... ohhhhhhhaaaaa...
 finished_masturbating=finished,...
@@ -182,10 +193,18 @@ female_finished_masturbating=surprised,That seemed... intense.
 #character is stripping situations
 #losing jacket (accessory)
 0-must_strip_winning=loss,Only a matter of time, I suppose.
+0-must_strip_winning,hasHand:High Card=loss,I expected as much, having only a high card and nothing else...
+0-must_strip_winning,hasHand:One Pair=loss,Perhaps I should not have been so confident about a single pair.
 0-must_strip_normal=loss,That's unfortunate.
+0-must_strip_normal,hasHand:High Card=loss,I expected as much, having only a high card and nothing else...
+0-must_strip_normal,hasHand:One Pair=loss,Perhaps I should not have been so confident about a single pair.
 0-must_strip_losing=loss,That's unfortunate.
-0-stripping=strip,Oh well. It was getting hot in here anyway.
+0-must_strip_losing,hasHand:High Card=loss,I expected as much, having only a high card and nothing else...
+0-must_strip_losing,hasHand:One Pair=loss,Perhaps I should not have been so confident about a single pair.
+0-stripping=strip,Oh well. It was getting hot in here regardless.
+0-stripping,alsoPlaying:streaming-chan=strip,Is this really being streamed to so many people? That brings back... bad memories.
 1-stripped=stripped,Don't assume this will become a trend.
+1-stripped,alsoPlaying:streaming-chan=stripped,Regardless, this won't become a trend.
 
 #losing boots (accessory)
 1-must_strip_winning=loss,Hmm. I suppose I'll take off my boots.
@@ -205,7 +224,7 @@ female_finished_masturbating=surprised,That seemed... intense.
 3-must_strip_winning=loss,Oh, I can't... I can't take off my gloves, so...
 3-must_strip_normal=loss,Oh no, I... Well, I... I can't take off my gloves, so...
 3-must_strip_losing=loss,Oh no... This is getting severe...
-3-stripping=strip,I guess I have to...
+3-stripping=strip.gif,I guess I have to...
 4-stripped=stripped,I won't... I won't lose anymore.
 
 #losing skirt (major)
@@ -341,11 +360,55 @@ female_finished_masturbating=surprised,That seemed... intense.
 0-female_human_must_strip=,
 0-female_must_strip=,
 
+0-male_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+0-male_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+0-male_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+0-male_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+0-male_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+0-male_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+0-male_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+0-male_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+0-male_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+0-male_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+0-female_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+0-female_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+0-female_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+0-female_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+0-female_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+0-female_must_strip,oppHand:One Pair=smug,Lost with a pair? That's a little unlucky.
+0-female_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+0-female_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+0-female_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+0-female_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+0-female_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+
 #lost jacket
 1-male_human_must_strip=,
 1-male_must_strip=,
 1-female_human_must_strip=,
 1-female_must_strip=,
+
+1-male_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+1-male_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+1-male_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+1-male_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+1-male_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+1-male_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+1-male_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+1-male_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+1-male_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+1-male_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+1-female_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+1-female_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+1-female_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+1-female_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+1-female_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+1-female_must_strip,oppHand:One Pair=smug,Lost with a pair? That's a little unlucky.
+1-female_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+1-female_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+1-female_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+1-female_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+1-female_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
 
 #lost boots
 2-male_human_must_strip=,
@@ -353,11 +416,55 @@ female_finished_masturbating=surprised,That seemed... intense.
 2-female_human_must_strip=,
 2-female_must_strip=,
 
+2-male_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+2-male_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+2-male_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+2-male_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+2-male_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+2-male_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+2-male_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+2-male_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+2-male_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+2-male_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+2-female_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+2-female_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+2-female_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+2-female_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+2-female_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+2-female_must_strip,oppHand:One Pair=smug,Lost with a pair? That's a little unlucky.
+2-female_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+2-female_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+2-female_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+2-female_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+2-female_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+
 #lost socks
 3-male_human_must_strip=calm,~name~ is up.
 3-male_must_strip=calm,It's ~name~'s turn.
 3-female_human_must_strip=calm,~name~ is up.
 3-female_must_strip=calm,It's ~name~'s turn.
+
+3-male_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+3-male_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+3-male_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+3-male_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+3-male_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+3-male_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+3-male_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+3-male_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+3-male_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+3-male_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+3-female_human_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+3-female_human_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+3-female_human_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+3-female_human_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+3-female_human_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
+3-female_must_strip,oppHand:One Pair=smug,Lost with a pair? That's a little unlucky.
+3-female_must_strip,oppHand:Two Pair=calm,Lost with two pairs? That's unfortunate.
+3-female_must_strip,oppHand:Three of a Kind=calm,Lost with three of a kind? That's unfortunate.
+3-female_must_strip,oppHand:Straight=surprised,You lost with a really good hand!
+3-female_must_strip,oppHand:Flush=surprised,You lost with a really good hand!
+3-female_must_strip,oppHand:Full House=surprised,You lost with a really good hand!
 
 #lost shirt
 4-male_human_must_strip=crossArms,~name~, it's you.
@@ -400,6 +507,8 @@ female_finished_masturbating=surprised,That seemed... intense.
 -1-male_must_strip=calm,~name~ lost that one.
 -1-female_human_must_strip=calm,~name~ lost that one.
 -1-female_must_strip=calm,~name~ lost that one.
+
+
 
 ##another character is removing accessories
 #fully clothed
@@ -535,6 +644,20 @@ female_finished_masturbating=surprised,That seemed... intense.
 -1-female_removing_minor=crossArms,...
 -1-female_removed_minor=thinking,The g-game continues...
 
+#targeted
+0-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+1-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+2-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+3-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+4-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+5-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+6-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+7-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+-3-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+-1-female_removed_minor,target:jasmine,targetStage:1=thinking,There's something odd about the way you're acting...
+
+
+
 ##another character is removing major clothes
 #fully clothed
 0-male_removing_major=,
@@ -601,6 +724,21 @@ female_finished_masturbating=surprised,That seemed... intense.
 -1-male_removed_major=horny,Mmmm...
 -1-female_removing_major=smug,Oh, h-here it comes...
 -1-female_removed_major=horny,Mmmm...
+
+#targeted
+0-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+1-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+2-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+3-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+4-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+5-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+6-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+7-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+-3-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+-2-female_removed_major,target:jasmine,targetStage:2=masturbate_a,I <i>knew</i> there was something odd about you...
+-1-female_removed_major,target:jasmine,targetStage:2=smug,I <i>knew</i> there was something odd about you...
+
+
 
 ##another character is removing important clothes
 #fully clothed
@@ -767,6 +905,17 @@ female_finished_masturbating=surprised,That seemed... intense.
 -1-female_large_chest_is_visible=surprised,W-wow, those... D-do those hurt?
 -1-female_crotch_will_be_visible=thinking,I'm... very curious...
 -1-female_crotch_is_visible=horny,That's... very nice...
+
+#targeted
+0-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+1-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+2-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+3-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+4-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+5-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+6-female_large_chest_is_visible,alsoPlaying:streaming-chan=smug,I can imagine those are... very well-liked on the little stream over there...
+
+
 
 ##other player is masturbating
 #fully clothed
