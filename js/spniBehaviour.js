@@ -368,7 +368,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				else
 				{
 					if (typeof alsoPlayingStage !== typeof undefined && alsoPlayingStage !== false) {
-						if (alsoPlayingStage === players[j].stage + '')
+						var alsoPlayingPieces = alsoPlayingStage.split("-");
+						var alsoPlayingMinStage = parseInt(alsoPlayingPieces[0], 10);
+						var alsoPlayingMaxStage = alsoPlayingPieces.length > 1 ? parseInt(alsoPlayingPieces[1], 10) : alsoPlayingMinStage;
+						if (alsoPlayingMinStage >= players[j].stage && players[j].stage <= alsoPlayingMaxStage)
 						{
 							totalPriority += 40;	// priority
 						}
