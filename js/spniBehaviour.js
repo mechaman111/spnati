@@ -313,7 +313,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			
 			// targetStage (priority = 80)
 			if (opp !== null && typeof targetStage !== typeof undefined && targetStage !== false) {
-				if (targetStage === opp.stage + '') {
+				var targetPieces = targetStage.split("-");
+				var targetMinStage = parseInt(targetPieces[0], 10);
+				var targetMaxStage = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : targetMinStage;
+				if (targetMinStage <= opp.stage && opp.stage <= targetMaxStage) {
 					totalPriority += 80;		// priority
 				}
 				else {
@@ -371,8 +374,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						var alsoPlayingPieces = alsoPlayingStage.split("-");
 						var alsoPlayingMinStage = parseInt(alsoPlayingPieces[0], 10);
 						var alsoPlayingMaxStage = alsoPlayingPieces.length > 1 ? parseInt(alsoPlayingPieces[1], 10) : alsoPlayingMinStage;
-						if (alsoPlayingMinStage >= players[j].stage && players[j].stage <= alsoPlayingMaxStage)
-						{
+						if (alsoPlayingMinStage <= players[j].stage && players[j].stage <= alsoPlayingMaxStage) {
 							totalPriority += 40;	// priority
 						}
 						else {
