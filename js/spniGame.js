@@ -814,6 +814,9 @@ function game_keyUp(e)
             showDebug = !showDebug;
             updateDebugState(showDebug);
         }
+        else if (e.keyCode == 84) {
+            toggleTableVisibility();
+        }
     }
 }
 
