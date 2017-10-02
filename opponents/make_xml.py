@@ -273,7 +273,11 @@ def create_case_xml(base_element, lines):
 					tag_list[capital_word] = line_data[lower_case_target]
 	
 			case_xml_element = ET.SubElement(base_element, "case", tag_list) #create the <case> element in the xml
-		
+
+			if "conditions" in line_data:
+				for condition in line_data["conditions"]:
+					ET.SubElement(case_xml_element, "condition", {"filter": condition[0], "count": condition[1]})
+
 		#now add the individual line
 		#remember that this happens regardless of if the <case> is new
 		ET.SubElement(case_xml_element, "state", img=line_data["image"]).text = line_data["text"] #add the image and text
@@ -333,7 +337,17 @@ def write_xml(data, filename):
 	ET.SubElement(o, "gender").text = data["gender"]
 	ET.SubElement(o, "size").text = data["size"]
 	ET.SubElement(o, "timer").text = data["timer"]
-	ET.SubElement(o, "intelligence").text = data["intelligence"]
+
+	#intelligence
+	intelligence_data = set(data["intelligence"])
+	for level in intelligence_data:
+		if "," not in level:
+			level = level + ",0"
+		intelligence_level, intelligence_stage = level.split(",")
+		if intelligence_stage == "0":
+			ET.SubElement(o, "intelligence").text = intelligence_level
+		else:
+			ET.SubElement(o, "intelligence", stage=intelligence_stage).text = intelligence_level
 
 	#tags
 	tags_elem = ET.SubElement(o, "tags")
@@ -541,9 +555,6 @@ def read_player_file(filename):
 	
 	d = {}
 	
-	#set default intelligence, if the writer doesn't set it
-	d["intelligence"] = "average"
-	
 	ending = dict()
 	
 	stage = -1
@@ -637,6 +648,12 @@ def read_player_file(filename):
 				elif target_type == "skip":
 					#skip this target type
 					pass
+
+				elif target_type.startswith("count-"):
+					condition_filter = target_type[6::]
+					if "conditions" not in line_data:
+						line_data["conditions"] = [[condition_filter, target_value]]
+					else: line_data["conditions"].append([condition_filter, target_value])
 					
 				else:
 					#unknown target type
@@ -702,6 +719,16 @@ def read_player_file(filename):
 			else:
 				d["clothes"] = [stripped]
 
+        #intelligence is written as
+        #   intelligence=bad
+        #   intelligence=good,3
+        #this means to start at bad intelligence and switch to good starting at stage 3
+		elif key == "intelligence":
+			if "intelligence" in d:
+				d["intelligence"].append(stripped)
+			else:
+				d["intelligence"] = [stripped]
+
 		#tags for the character i.e. blonde, athletic, cute
 		#tags can be written as either:
 		#	tag=blonde
@@ -733,6 +760,10 @@ def read_player_file(filename):
 	#add the final ending (if it exists)
 	add_ending(ending, d)
 	
+    #set default intelligence, if the writer doesn't set it
+	if "intelligence" not in d:
+		d["intelligence"] = ["average"]
+
 	return d
 
 #make the meta.xml file
