@@ -242,6 +242,9 @@ def create_case_xml(base_element, lines):
 	#give them a key to define an order
 	for line_data in lines:
 		sort_key = line_data["key"]
+		if "conditions" in line_data:
+			for condition in line_data["conditions"]:
+				sort_key += "," + "count-" + condition[0]
 		for target_type in all_targets:
 			if target_type in line_data:
 				sort_key += "," + line_data[target_type]
@@ -339,15 +342,15 @@ def write_xml(data, filename):
 	ET.SubElement(o, "timer").text = data["timer"]
 
 	#intelligence
-	intelligence_data = set(data["intelligence"])
-	for level in intelligence_data:
-		if "," not in level:
-			level = level + ",0"
-		intelligence_level, intelligence_stage = level.split(",")
-		if intelligence_stage == "0":
-			ET.SubElement(o, "intelligence").text = intelligence_level
-		else:
-			ET.SubElement(o, "intelligence", stage=intelligence_stage).text = intelligence_level
+	used_intelligence = []
+	data["intelligence"].sort()
+	for level in data["intelligence"]:
+		if not level[0] in used_intelligence:
+			used_intelligence.append(level[0])
+			if level[0] == "0":
+				ET.SubElement(o, "intelligence").text = level[1]
+			else:
+				ET.SubElement(o, "intelligence", stage=level[0]).text = level[1]
 
 	#tags
 	tags_elem = ET.SubElement(o, "tags")
@@ -724,10 +727,14 @@ def read_player_file(filename):
         #   intelligence=good,3
         #this means to start at bad intelligence and switch to good starting at stage 3
 		elif key == "intelligence":
+			if "," not in stripped:
+				stripped = stripped + ",0"
+			intelligence_level, intelligence_stage = stripped.split(",")
+			intelligence_item = [intelligence_stage, intelligence_level]
 			if "intelligence" in d:
-				d["intelligence"].append(stripped)
+				d["intelligence"] = d["intelligence"] + [intelligence_item]
 			else:
-				d["intelligence"] = [stripped]
+				d["intelligence"] = [intelligence_item]
 
 		#tags for the character i.e. blonde, athletic, cute
 		#tags can be written as either:
