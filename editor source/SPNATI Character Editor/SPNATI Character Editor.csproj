@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{983E6D14-871B-4188-9068-A3FFFF714085}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SPNATI_Character_Editor</RootNamespace>
+    <AssemblyName>SPNATI Character Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>editor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChartHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChartHost.Designer.cs">
+      <DependentUpon>ChartHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\Builders\IChartDataBuilder.cs" />
+    <Compile Include="Charts\Builders\SpokenToBuilder.cs" />
+    <Compile Include="Charts\Builders\TagDialogueUsageBuilder.cs" />
+    <Compile Include="Charts\Builders\TagFrequencyBuilder.cs" />
+    <Compile Include="Charts\Builders\GenderedBuilder.cs" />
+    <Compile Include="Charts\Builders\TargetedLineBuilder.cs" />
+    <Compile Include="Charts\Builders\UniqueLineBuilder.cs" />
+    <Compile Include="Charts\IChartControl.cs" />
+    <Compile Include="Charts\StackedBarChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Charts\StackedBarChart.Designer.cs">
+      <DependentUpon>StackedBarChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\ChartAttribute.cs" />
+    <Compile Include="Charts\BarChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Charts\BarChart.Designer.cs">
+      <DependentUpon>BarChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FindReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FindReplace.Designer.cs">
+      <DependentUpon>FindReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\KeyboardDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataStructures\Behaviour.cs" />
+    <Compile Include="BulkReplaceTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BulkReplaceTool.Designer.cs">
+      <DependentUpon>BulkReplaceTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructures\Case.cs" />
+    <Compile Include="DataStructures\Character.cs" />
+    <Compile Include="CharacterDatabase.cs" />
+    <Compile Include="CharacterEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharacterEditor.Designer.cs">
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructures\Clothing.cs" />
+    <Compile Include="Controls\DBPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\EpilogueEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EpilogueEditor.Designer.cs">
+      <DependentUpon>EpilogueEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageManager.Designer.cs">
+      <DependentUpon>ImageManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TestCharacter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TestCharacter.Designer.cs">
+      <DependentUpon>TestCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructures\Epilogue.cs" />
+    <Compile Include="DataStructures\KisekaeCode.cs" />
+    <Compile Include="DataStructures\PoseTemplate.cs" />
+    <Compile Include="DataStructures\Screen.cs" />
+    <Compile Include="DialogueDatabase.cs" />
+    <Compile Include="DialogueLine.cs" />
+    <Compile Include="ErrorLog.cs" />
+    <Compile Include="FileNameSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileNameSelect.Designer.cs">
+      <DependentUpon>FileNameSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSimulator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSimulator.Designer.cs">
+      <DependentUpon>GameSimulator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageCache.cs" />
+    <Compile Include="ImageImport\ImageMetadata.cs" />
+    <Compile Include="ImageImport\ImageImporter.cs" />
+    <Compile Include="ImageImport\PoseList.cs" />
+    <Compile Include="ImageLibrary.cs" />
+    <Compile Include="IO\FlatFileSerializer.cs" />
+    <Compile Include="IO\SpnatiXmlSerializer.cs" />
+    <Compile Include="DataStructures\Listing.cs" />
+    <Compile Include="NewCharacterPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCharacterPrompt.Designer.cs">
+      <DependentUpon>NewCharacterPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadCharacterPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadCharacterPrompt.Designer.cs">
+      <DependentUpon>LoadCharacterPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructures\Metadata.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="IO\Serialization.cs" />
+    <Compile Include="SettingsSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsSetup.Designer.cs">
+      <DependentUpon>SettingsSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructures\Stage.cs" />
+    <Compile Include="DataStructures\StageName.cs" />
+    <Compile Include="TagDatabase.cs" />
+    <Compile Include="DataStructures\Trigger.cs" />
+    <Compile Include="CharacterValidator.cs" />
+    <Compile Include="ValidationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ValidationForm.Designer.cs">
+      <DependentUpon>ValidationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XMLHelper.cs" />
+    <EmbeddedResource Include="BulkReplaceTool.resx">
+      <DependentUpon>BulkReplaceTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharacterEditor.resx">
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChartHost.resx">
+      <DependentUpon>ChartHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Charts\StackedBarChart.resx">
+      <DependentUpon>StackedBarChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Charts\BarChart.resx">
+      <DependentUpon>BarChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EpilogueEditor.resx">
+      <DependentUpon>EpilogueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FindReplace.resx">
+      <DependentUpon>FindReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImageManager.resx">
+      <DependentUpon>ImageManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TestCharacter.resx">
+      <DependentUpon>TestCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileNameSelect.resx">
+      <DependentUpon>FileNameSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSimulator.resx">
+      <DependentUpon>GameSimulator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCharacterPrompt.resx">
+      <DependentUpon>NewCharacterPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadCharacterPrompt.resx">
+      <DependentUpon>LoadCharacterPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SettingsSetup.resx">
+      <DependentUpon>SettingsSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValidationForm.resx">
+      <DependentUpon>ValidationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dialogue_tags.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="editor.ico" />
+    <Content Include="epilogue.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\creation.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\dialogue.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\dialogue_tester.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\empty.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\endings.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\faq.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\file.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\help.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\help.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\help.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\anger.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\blush.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\dialogue_case_description.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\dialogue_screen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending1b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending2.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending2_small.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_navigator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_speech.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_toolbar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\export.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\pose_list.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template3.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template_filled.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\template_preview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\tester.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\listing.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\metadata.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\overview.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\poses.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\topic.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\validation.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\wardrobe.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xml_encoding.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
