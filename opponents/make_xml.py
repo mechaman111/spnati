@@ -362,8 +362,10 @@ def write_xml(data, filename):
 	#start image
 	start = ET.SubElement(o, "start")
 	start_data = get_value(data, "start", stage=0, default="0-calm,So we'll be playing strip poker... I hope we have fun.")
-	start_image, start_text = start_data.split(",", 1)
-	ET.SubElement(start, "state", img=start_image+".png").text = start_text
+	start_count = len(start_data)
+	for i in range(start_count - 1, -1, -1):
+		start_image, start_text = start_data[i].split(",", 1)
+		ET.SubElement(start, "state", img=start_image+".png").text = start_text
 	
 	#wardrobe
 	clth = ET.SubElement(o, "wardrobe")
@@ -756,6 +758,13 @@ def read_player_file(filename):
 			else:
 				d["character_tags"] = character_tags
 
+		#write start lines last to first
+		elif key == "start":
+			if key in d:
+				d[key].append(text)
+			else:
+				d[key] = [text]
+
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
@@ -833,7 +842,7 @@ if __name__ == "__main__":
 #make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
 #This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
 #Also converted here are the hand quality words, which make_xml converts to lower case
-replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&amp;':'&', '="high card"':'="High Card"', '="one pair"':'="One Pair"', '="two pair"':'="Two Pair"', '="three of a kind"':'="Three of a Kind"', '="straight"':'="Straight"', '="flush"':'="Flush"', '="full house"':'="Full House"', '="four of a kind"':'="Four of a Kind"', '="straight flush"':'="Straight Flush"', '="royal flush"':'="Royal Flush"'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
+replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&amp;':'&', '="high card"':'="High Card"', '="one pair"':'="One Pair"', '="two pair"':'="Two Pair"', '="three of a kind"':'="Three of a Kind"', 'hand="straight"':'hand="Straight"', '="flush"':'="Flush"', '="full house"':'="Full House"', '="four of a kind"':'="Four of a Kind"', '="straight flush"':'="Straight Flush"', '="royal flush"':'="Royal Flush"'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
 
 lines = []
 with open(behaviour_name) as infile:
