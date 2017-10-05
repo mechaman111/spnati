@@ -1,6 +1,3 @@
-#Data for Nagisa Furukawa character
-#IMPORTANT EXPORT NOTE: After converting this file with Python, you must do a find/replace of the behaviour.xml in a text editor. Convert all "&lt;" to "<" and convert all "&gt;" to ">". This is because the make_xml/py converter transforms the html markup into displayed characters.
-
 #required for behaviour.xml and meta.xml
 first=Nagisa
 last=Furukawa
@@ -25,10 +22,21 @@ tag=straight
 tag=anime
 tag=visual_novel
 
-intelligence=average
+#Nagisa's poker skill is average for the first stage, dips to bad to hasten sock removal, then returns to average for her larger items.
+#When down to her underwear, Nagisa starts giving it her all to protect her modesty.
+intelligence=average,0
+intelligence=bad,1
+intelligence=average,2
+intelligence=good,5
 release=42
 
-
+#Nagisa is holding a "Dango" plushie in her select screen image. This image cannot be automatically generated due to automatically generated image layer constraints, so I photoshopped it in.
+#The Dango is a made from a Kisekae speech bubble, then with two simple lines added for eyes.
+start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
+start=shy,Is... is this where the game is being played?
+start=shy,Is... is this where the game is being played?
+start=shy,Is... is this where the game is being played?
+start=shy,Is... is this where the game is being played?
 
 #CLOTHING
 #Nagisa wears her winter school uniform. Underneath, she has a dango-colored bra and cherry blossom panties.
@@ -40,13 +48,6 @@ clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower
 
-#Nagisa is holding a "Dango" plushie in her select screen image. This image cannot be automatically generated due to automatically generated image layer constraints, so I photoshopped it in. The Dango is a made from a Kisekae speech bubble, then with two simple lines added for eyes.
-start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
-#make_xml.py ignores subsequent start lines, but they can be added manually by pasting them in below the first one.
-#<state img="0-shy.png">Is... is this where the game is being played?</state>
-#<state img="0-shy.png">Is... is this where the game is being played?</state>
-#<state img="0-shy.png">Is... is this where the game is being played?</state>
-#<state img="0-shy.png">Is... is this where the game is being played?</state>
 
 
 #EXCHANGING CARDS
@@ -107,6 +108,8 @@ start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
 1-good_hand,alsoPlaying:hermione=happy,Do you believe in magic and wishes, Hermione? I do. I once heard a true story about a boy who turned into a cat!
 1-good_hand,alsoPlaying:mercy=happy,There's a famous folklore story in my town. Whenever something good happens or someone achieves true happiness, an orb of light appears.
 1-good_hand,alsoPlaying:mercy=happy,I think that orbs of light are a symbol of happiness born from the kindness in people's hearts.
+1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=happy,Your twintails are really pretty, Marinette.
+1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=idea,Marinette, you remind me of my friend Mei, but all grown up!
 
 #lost socks and shoes
 2-good_hand=interested,This is better than my last hand!
@@ -420,6 +423,14 @@ start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
 2-female_must_strip,target:nugi-chan,targetStage:0=interested,That maid outfit looks really good on you, Nugi-chan! You should be a mascot or something!
 3-female_must_strip,target:nugi-chan,targetStage:0=thinking,That maid outfit looks really good on you, Nugi-chan! You should be a mascot or something!
 4-female_must_strip,target:nugi-chan,targetStage:0=happy,That maid outfit looks really good on you, Nugi-chan! You should be a mascot or something!
+0-female_must_strip,target:nugi-chan,targetStage:4=worried,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+1-female_must_strip,target:nugi-chan,targetStage:4=sad,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+2-female_must_strip,target:nugi-chan,targetStage:4=sad,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+3-female_must_strip,target:nugi-chan,targetStage:4=veryembarrassed,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+4-female_must_strip,target:nugi-chan,targetStage:4=sorry,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+5-female_must_strip,target:nugi-chan,targetStage:4=worried,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+6-female_must_strip,target:nugi-chan,targetStage:4=peaceful,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
+-3-female_must_strip,target:nugi-chan,targetStage:4=nervous,I don't exactly agree with your line of work, but I'm sure you're still a nice person, Nugi-chan...
 0-female_must_strip,target:orendi,targetStage:0=thinking,That's an amazing cosplay! How did you attach the extra arms like that?
 1-female_must_strip,target:orendi,targetStage:0=raisedhand,That's an amazing cosplay! How did you attach the extra arms like that?
 2-female_must_strip,target:orendi,targetStage:0=handsbehindback,That's an amazing cosplay! How did you attach the extra arms like that?
@@ -781,6 +792,17 @@ start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
 -1-female_removed_major=unsure,Should I say, "Ready, set, go" or something like that?
 
 #targeted
+
+0-male_removed_major,target:xander,targetStage:6,totalFemales:4=veryembarrassed,A boy's underwear... This is my first time seeing it...
+1-male_removed_major,target:xander,targetStage:6,totalFemales:4=maximumembarrassed,A boy's underwear... This is my first time seeing it...
+2-male_removed_major,target:xander,targetStage:6,totalFemales:4=embarrassed,A boy's underwear... This is my first time seeing it...
+3-male_removed_major,target:xander,targetStage:6,totalFemales:4=veryembarrassed,A boy's underwear... This is my first time seeing it...
+4-male_removed_major,target:xander,targetStage:6,totalFemales:4=maximumembarrassed,A boy's underwear... This is my first time seeing it...
+5-male_removed_major,target:xander,targetStage:6,totalFemales:4=veryembarrassed,We're both in our underwear now, Xander. I'm still one piece ahead, but we... we can call the game a draw if you want...
+6-male_removed_major,target:xander,targetStage:6,totalFemales:4=coveringeyes,A boy's underwear... This is my first time seeing it...
+-3-male_removed_major,target:xander,targetStage:6,totalFemales:4=nervous,A boy's underwear... This is my first time seeing it...
+-1-male_removed_major,target:xander,targetStage:6,totalFemales:4=appreciating,A boy's underwear... This is my first time seeing it...
+
 4-female_removing_major,target:streaming-chan=stripped,Please, please stop streaming this! I'm begging you for all of us!
 5-female_removing_major,target:streaming-chan=stripped,Please, please stop streaming this! I'm begging you for all of us!
 6-female_removing_major,target:streaming-chan=maximumembarrassed,Please, please stop streaming this! I'm begging you for all of us!
@@ -867,7 +889,7 @@ start=selectscreen,My name is Nagisa Furukawa. It's nice to meet you all!
 5-female_removed_major,target:marinette,targetStage:2=veryembarrassed,Huh? Wait a minute, how did you fit those clothes under your bodysuit?
 6-female_removed_major,target:marinette,targetStage:2=emphatic,I'm playing this game with amazing people, but I won't give up!
 -3-female_removed_major,target:marinette,targetStage:2=worried,I thought we were almost even, but now it's like you're just starting...
--1-female_removed_major,target:marinette,targetStage:2:coveringbreasts,It's like you went back in time to the start of the game. I don't think it's fair to use magic to cheat like that.
+-1-female_removed_major,target:marinette,targetStage:2=coveringbreasts,It's like you went back in time to the start of the game. I don't think it's fair to use magic to cheat like that.
 0-female_removed_major,target:zoey,targetStage:6=embarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
 1-female_removed_major,target:zoey,targetStage:6=veryembarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
 2-female_removed_major,target:zoey,targetStage:6=worried,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
