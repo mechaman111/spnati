@@ -769,7 +769,7 @@ def read_player_file(filename):
 	
     #set default intelligence, if the writer doesn't set it
 	if "intelligence" not in d:
-		d["intelligence"] = ["average"]
+		d["intelligence"] = [["0", "average"]]
 
 	return d
 
