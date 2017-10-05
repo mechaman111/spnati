@@ -363,7 +363,7 @@ def write_xml(data, filename):
 	start = ET.SubElement(o, "start")
 	start_data = get_value(data, "start", stage=0, default="0-calm,So we'll be playing strip poker... I hope we have fun.")
 	start_count = len(start_data)
-	for i in range(start_count - 1, -1, -1):
+	for i in range(0, start_count):
 		start_image, start_text = start_data[i].split(",", 1)
 		ET.SubElement(start, "state", img=start_image+".png").text = start_text
 	
