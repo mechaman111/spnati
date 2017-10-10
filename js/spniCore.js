@@ -113,27 +113,37 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
 						   stage:stage,
                            state:state,
                            xml:xml,
+                           timeInStage:-1,
+                           consecutiveLosses:0,
 
-						    getIntelligence: function getIntelligence() {
-						       if (typeof(this.intelligence) === "string") {
-							   	   return this.intelligence;
-							   }
-						       var bestFitStage = -1;
-							   var bestFit = null;
-                               for (var i = 0; i < this.intelligence.length; i++)
-							   {
-							       var startStage = this.intelligence[i].getAttribute('stage');
-								   startStage = parseInt(startStage, 10) || 0;
-								   if (startStage > bestFitStage && startStage <= this.stage)
-								   {
-									bestFit = $(this.intelligence[i]).text();
-									bestFitStage = startStage;
-								   }
-							   }
-							   return bestFit || eIntelligence.AVERAGE;
-						   },
-						   
-						   };
+                           getIntelligence: function getIntelligence() {
+
+                               if (typeof(this.intelligence) === "string") {
+
+                                   return this.intelligence;
+                               }
+
+                               var bestFitStage = -1;
+                               var bestFit = null;
+                               for (var i = 0; i < this.intelligence.length; i++) {
+
+                                   var startStage = this.intelligence[i].getAttribute('stage');
+                                   startStage = parseInt(startStage, 10) || 0;
+                                   if (startStage > bestFitStage && startStage <= this.stage)
+ {
+
+                                       bestFit = $(this.intelligence[i]).text();
+
+                                       bestFitStage = startStage;
+
+                                   }
+
+                               }
+
+                               return bestFit || eIntelligence.AVERAGE;
+
+                           },
+                       };
                            
     return newPlayerObject;
 }

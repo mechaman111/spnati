@@ -88,7 +88,8 @@ var loserColour = "#DD4444";	/* indicates loser of a round */
  
 /* game state */
 var currentTurn = 0;
-var recentLoser = 0;
+var previousLoser = -1;
+var recentLoser = -1;
 var savedContext = "";
 var gameOver = false;
 var actualMainButtonState = false;
@@ -374,6 +375,7 @@ function startDealPhase () {
                     $gameOpponentAreas[i-1].hide();
                 }
             }
+            players[i].timeInStage++;
         }
     }
     
@@ -486,6 +488,7 @@ function completeRevealPhase () {
     }
     
     /* figure out who has the lowest hand */
+    previousLoser = recentLoser;
     recentLoser = determineLowestHand();
     
     if (chosenDebug !== -1 && DEBUG) {
@@ -514,6 +517,22 @@ function completeRevealPhase () {
         }
         return;
     }
+
+    // update loss history
+    if (previousLoser < 0) {
+        // first loser
+        players[recentLoser].consecutiveLosses = 1;
+    }
+    else if (previousLoser === recentLoser) {
+        // same player lost again
+        players[recentLoser].consecutiveLosses++;
+    }
+    else {
+        // a different player lost
+        players[previousLoser].consecutiveLosses = 0; //reset last loser
+        players[recentLoser].consecutiveLosses = 1;
+    }
+    
     
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);

@@ -262,13 +262,22 @@ function updateBehaviour (player, tag, replace, content, opp) {
             var target =           states[i].attr("target");
             var filter =           states[i].attr("filter");
 			var targetStage =      states[i].attr("targetStage");
+			var timeInStage =      states[i].attr("timeInStage");
 			var oppHand =          states[i].attr("oppHand");
 			var hasHand =          states[i].attr("hasHand");
 			var alsoPlaying =      states[i].attr("alsoPlaying");
 			var alsoPlayingStage = states[i].attr("alsoPlayingStage");
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
+			var alsoPlayingTimeInStage =  states[i].attr("alsoPlayingTimeInStage");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
+			var ownTimeInStage =      states[i].attr("ownTimeInStage");
+			var lossesInRow =      states[i].attr("consecutiveLosses");
+			var totalAlive =         states[i].attr("totalAlive");
+			var totalExposed =       states[i].attr("totalExposed");
+			var totalNaked =         states[i].attr("totalNaked");
+			var totalFinishing =     states[i].attr("totalFinishing");
+			var totalFinished =      states[i].attr("totalFinished");
 			var counters = [];
 			states[i].find("condition").each(function () {
 				var counter = $(this);
@@ -323,6 +332,26 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "targetStage" requirement
 				}
 			}
+
+			// consecutiveLosses (priority = 60)
+			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
+				if (opp !== null) { // if there's a target, look at their losses
+					if (opp.consecutiveLosses >= lossesInRow) {
+						totalPriority += 60;
+					}
+					else {
+						continue;				// failed "consecutiveLosses" requirement
+					}
+				}
+				else { // else look at your own losses
+					if (players[player].consecutiveLosses >= lossesInRow) {
+						totalPriority += 60;
+					}
+					else {
+						continue;
+					}
+				}
+			}
 			
 			// oppHand (priority = 30)
 			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
@@ -338,6 +367,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 				}
 			}
+
+			// timeInStage (priority = 25)
+			if (opp !== null && typeof timeInStage !== typeof undefined) {
+				if (opp.timeInStage >= timeInStage) {
+					totalPriority += 25;
+				}
+				else {
+					continue;				// failed "timeInStage" requirement
+				}
+			}
 			
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
@@ -349,7 +388,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 			}
 			
-            // alsoPlaying, alsoPlayingStage, alsoPlayingHand (priority = 100, 40, 5)
+            // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
 			
 				var foundEm = false;
@@ -379,6 +418,14 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 						else {
 							continue;		// failed "alsoPlayingStage" requirement
+						}
+					}
+					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
+						if (players[j].timeInStage >= alsoPlayingTimeInStage) {
+							totalPriority += 15;
+						}
+						else {
+							continue;		// failed "alsoPlayingTimeInStage" requirement
 						}
 					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
@@ -420,6 +467,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			if (!matchCounter) {
 				continue; // failed filter count
 			}
+
+			// ownTimeInStage (priority = 8)
+			if (typeof ownTimeInStage !== typeof undefined) {
+				if (players[player].timeInStage >= ownTimeInStage) {
+					totalPriority += 8;
+				}
+				else {
+					continue;		// failed "ownTimeInStage" requirement
+				}
+			}
 			
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
@@ -456,6 +513,62 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 				else {
 					continue;		// failed "totalFemales" requirement
+				}
+			}
+
+			// totalAlive (priority = 3)
+			if (typeof totalAlive !== typeof undefined) {
+				if (getNumPlayersInStage(STAGE_ALIVE) == totalAlive) {
+					totalPriority += 3;
+				}
+				else {
+					continue;		// failed "totalAlive" requirement
+				}
+			}
+
+			// totalExposed (priority = 4)
+			if (typeof totalExposed !== typeof undefined) {
+				var count = 0;
+				for (var q = 0; q < players.length; q++) {
+					if (players[q] && !!players[q].exposed) {
+						count++;
+					}
+				}
+				if (count == totalExposed) {
+					totalPriority += 4;
+				}
+				else {
+					continue;		// failed "totalExposed" requirement
+				}
+			}
+
+			// totalNaked (priority = 5)
+			if (typeof totalNaked !== typeof undefined) {
+				if (getNumPlayersInStage(STAGE_NAKED) == totalNaked) {
+					totalPriority += 5;
+				}
+				else {
+					continue;		// failed "totalNaked" requirement
+				}
+			}
+
+			// totalFinishing (priority = 5)
+			if (typeof totalFinishing !== typeof undefined) {
+				if (getNumPlayersInStage(STAGE_FINISHING) == totalFinishing) {
+					totalPriority += 5;
+				}
+				else {
+					continue;		// failed "totalFinishing" requirement
+				}
+			}
+
+			// totalFinished (priority = 5)
+			if (typeof totalFinished !== typeof undefined) {
+				if (getNumPlayersInStage(STAGE_FINISHED) == totalFinished) {
+					totalPriority += 5;
+				}
+				else {
+					continue;		// failed "totalFinished" requirement
 				}
 			}
 			
