@@ -842,7 +842,7 @@ if __name__ == "__main__":
 #make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
 #This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
 #Also converted here are the hand quality words, which make_xml converts to lower case
-replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&amp;':'&', '="high card"':'="High Card"', '="one pair"':'="One Pair"', '="two pair"':'="Two Pair"', '="three of a kind"':'="Three of a Kind"', 'hand="straight"':'hand="Straight"', '="flush"':'="Flush"', '="full house"':'="Full House"', '="four of a kind"':'="Four of a Kind"', '="straight flush"':'="Straight Flush"', '="royal flush"':'="Royal Flush"'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
+replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&amp;':'&', '="high card"':'="High Card"', '="one pair"':'="One Pair"', '="two pair"':'="Two Pair"', '="three of a kind"':'="Three of a Kind"', 'hand="straight"':'hand="Straight"', '="flush"':'="Flush"', '="full house"':'="Full House"', '="four of a kind"':'="Four of a Kind"', '="straight flush"':'="Straight Flush"', '="royal flush"':'="Royal Flush"','>~silent~': ' silent="">'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
 
 lines = []
 with open(behaviour_name) as infile:
