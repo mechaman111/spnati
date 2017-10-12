@@ -262,7 +262,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
             var target =           states[i].attr("target");
             var filter =           states[i].attr("filter");
 			var targetStage =      states[i].attr("targetStage");
-			var timeInStage =      states[i].attr("timeInStage");
+			var targetTimeInStage =      states[i].attr("targetTimeInStage");
 			var oppHand =          states[i].attr("oppHand");
 			var hasHand =          states[i].attr("hasHand");
 			var alsoPlaying =      states[i].attr("alsoPlaying");
@@ -271,12 +271,12 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var alsoPlayingTimeInStage =  states[i].attr("alsoPlayingTimeInStage");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
-			var ownTimeInStage =      states[i].attr("ownTimeInStage");
+			var timeInStage =      states[i].attr("timeInStage");
 			var lossesInRow =      states[i].attr("consecutiveLosses");
 			var totalAlive =         states[i].attr("totalAlive");
 			var totalExposed =       states[i].attr("totalExposed");
 			var totalNaked =         states[i].attr("totalNaked");
-			var totalFinishing =     states[i].attr("totalFinishing");
+			var totalMasturbating =     states[i].attr("totalMasturbating");
 			var totalFinished =      states[i].attr("totalFinished");
 			var counters = [];
 			states[i].find("condition").each(function () {
@@ -336,7 +336,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// consecutiveLosses (priority = 60)
 			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
 				if (opp !== null) { // if there's a target, look at their losses
-					if (opp.consecutiveLosses >= lossesInRow) {
+					var targetPieces = lossesInRow.split("-");
+					var minLosses = parseInt(targetPieces[0], 10);
+					var maxLosses = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minLosses;
+					if (minLosses <= opp.consecutiveLosses && opp.consecutiveLosses <= maxLosses) {
 						totalPriority += 60;
 					}
 					else {
@@ -344,7 +347,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 				}
 				else { // else look at your own losses
-					if (players[player].consecutiveLosses >= lossesInRow) {
+					if (minLosses <= players[player].consecutiveLosses && players[player].consecutiveLosses <= maxLosses) {
 						totalPriority += 60;
 					}
 					else {
@@ -368,13 +371,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 			}
 
-			// timeInStage (priority = 25)
-			if (opp !== null && typeof timeInStage !== typeof undefined) {
-				if (opp.timeInStage >= timeInStage) {
+			// targetTimeInStage (priority = 25)
+			if (opp !== null && typeof targetTimeInStage !== typeof undefined) {
+				var targetPieces = targetTimeInStage.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime <= opp.timeInStage && opp.timeInStage <= maxTime) {
 					totalPriority += 25;
 				}
 				else {
-					continue;				// failed "timeInStage" requirement
+					continue;				// failed "targetTimeInStage" requirement
 				}
 			}
 			
@@ -421,7 +427,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
-						if (players[j].timeInStage >= alsoPlayingTimeInStage) {
+						var targetPieces = alsoPlayingTimeInStage.split("-");
+						var minTime = parseInt(targetPieces[0], 10);
+						var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+						if (minTime <= players[j].timeInStage && players[j].timeInStage <= maxTime) {
 							totalPriority += 15;
 						}
 						else {
@@ -468,13 +477,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				continue; // failed filter count
 			}
 
-			// ownTimeInStage (priority = 8)
-			if (typeof ownTimeInStage !== typeof undefined) {
-				if (players[player].timeInStage >= ownTimeInStage) {
+			// timeInStage (priority = 8)
+			if (typeof timeInStage !== typeof undefined) {
+				var targetPieces = timeInStage.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime <= players[player].timeInStage && players[player].timeInStage <= maxTime) {
 					totalPriority += 8;
 				}
 				else {
-					continue;		// failed "ownTimeInStage" requirement
+					continue;		// failed "timeInStage" requirement
 				}
 			}
 			
@@ -488,8 +500,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						count++;
 					}
 				}
-				if (count + '' === totalMales)
-				{
+				var targetPieces = totalMales.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;		// priority
 				}
 				else {
@@ -507,8 +521,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						count++;
 					}
 				}
-				if (count + '' === totalFemales)
-				{
+				var targetPieces = totalFemales.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;		// priority
 				}
 				else {
@@ -518,7 +534,11 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// totalAlive (priority = 3)
 			if (typeof totalAlive !== typeof undefined) {
-				if (getNumPlayersInStage(STAGE_ALIVE) == totalAlive) {
+				var count = getNumPlayersInStage(STAGE_ALIVE);
+				var targetPieces = totalAlive.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 3;
 				}
 				else {
@@ -534,7 +554,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						count++;
 					}
 				}
-				if (count == totalExposed) {
+				var targetPieces = totalExposed.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 4;
 				}
 				else {
@@ -544,7 +567,11 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// totalNaked (priority = 5)
 			if (typeof totalNaked !== typeof undefined) {
-				if (getNumPlayersInStage(STAGE_NAKED) == totalNaked) {
+				var count = getNumPlayersInStage(STAGE_NAKED);
+				var targetPieces = totalNaked.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;
 				}
 				else {
@@ -552,19 +579,27 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 			}
 
-			// totalFinishing (priority = 5)
-			if (typeof totalFinishing !== typeof undefined) {
-				if (getNumPlayersInStage(STAGE_FINISHING) == totalFinishing) {
+			// totalMasturbating (priority = 5)
+			if (typeof totalMasturbating !== typeof undefined) {
+				var count = getNumPlayersInStage(STAGE_MASTURBATING);
+				var targetPieces = totalMasturbating.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;
 				}
 				else {
-					continue;		// failed "totalFinishing" requirement
+					continue;		// failed "totalMasturbating" requirement
 				}
 			}
 
 			// totalFinished (priority = 5)
 			if (typeof totalFinished !== typeof undefined) {
-				if (getNumPlayersInStage(STAGE_FINISHED) == totalFinished) {
+				var count = getNumPlayersInStage(STAGE_FINISHED);
+				var targetPieces = totalFinished.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;
 				}
 				else {

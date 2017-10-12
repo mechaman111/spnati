@@ -20,7 +20,7 @@ var OTHER_ARTICLE = "other";
 
 var STAGE_ALIVE = 0;
 var STAGE_NAKED = -3;
-var STAGE_FINISHING = -2;
+var STAGE_MASTURBATING = -2;
 var STAGE_FINISHED = -1;
 
 /************************************************************
@@ -597,7 +597,7 @@ function getNumPlayersInStage(stage) {
 			case STAGE_NAKED:
 				if (clothes === 0) { count++; }
 				break;
-			case STAGE_FINISHING:
+			case STAGE_MASTURBATING:
 				if (players[i].out && !players[i].finished) { count++; }
 				break;
 			case STAGE_FINISHED:
