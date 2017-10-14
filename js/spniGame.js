@@ -88,6 +88,7 @@ var loserColour = "#DD4444";	/* indicates loser of a round */
  
 /* game state */
 var currentTurn = 0;
+var currentRound = -1;
 var previousLoser = -1;
 var recentLoser = -1;
 var savedContext = "";
@@ -355,6 +356,7 @@ function advanceTurn () {
  * information.
  ************************************************************/
 function startDealPhase () {
+    currentRound++;
     /* dealing cards */
 	dealLock = 0;
     for (var i = 0; i < players.length; i++) {

@@ -278,6 +278,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var totalNaked =         states[i].attr("totalNaked");
 			var totalMasturbating =     states[i].attr("totalMasturbating");
 			var totalFinished =      states[i].attr("totalFinished");
+			var totalRounds = 	states[i].attr("totalRounds");
 			var counters = [];
 			states[i].find("condition").each(function () {
 				var counter = $(this);
@@ -476,6 +477,19 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 			if (!matchCounter) {
 				continue; // failed filter count
+			}
+
+			// totalRounds (priority = 10)
+			if (typeof totalRounds !== typeof undefined) {
+				var targetPieces = totalRounds.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime <= currentRound && currentRound <= maxTime) {
+					totalPriority += 10;
+				}
+				else {
+					continue;		// failed "totalRounds" requirement
+				}
 			}
 
 			// timeInStage (priority = 8)
