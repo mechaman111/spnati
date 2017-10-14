@@ -335,10 +335,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// consecutiveLosses (priority = 60)
 			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
+				var targetPieces = lossesInRow.split("-");
+				var minLosses = parseInt(targetPieces[0], 10);
+				var maxLosses = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minLosses;
 				if (opp !== null) { // if there's a target, look at their losses
-					var targetPieces = lossesInRow.split("-");
-					var minLosses = parseInt(targetPieces[0], 10);
-					var maxLosses = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minLosses;
 					if (minLosses <= opp.consecutiveLosses && opp.consecutiveLosses <= maxLosses) {
 						totalPriority += 60;
 					}
@@ -376,6 +376,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var targetPieces = targetTimeInStage.split("-");
 				var minTime = parseInt(targetPieces[0], 10);
 				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime === 0) { minTime = -1; } //allow post-strip time to count as 0
 				if (minTime <= opp.timeInStage && opp.timeInStage <= maxTime) {
 					totalPriority += 25;
 				}
@@ -482,6 +483,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var targetPieces = timeInStage.split("-");
 				var minTime = parseInt(targetPieces[0], 10);
 				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime === 0) { minTime = -1; } //allow post-strip time to count as 0
 				if (minTime <= players[player].timeInStage && players[player].timeInStage <= maxTime) {
 					totalPriority += 8;
 				}
@@ -539,7 +541,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var minValue = parseInt(targetPieces[0], 10);
 				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
 				if (minValue <= count && count <= maxValue) {
-					totalPriority += 3;
+					totalPriority += 2 + maxValue; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
 					continue;		// failed "totalAlive" requirement
@@ -558,7 +560,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var minValue = parseInt(targetPieces[0], 10);
 				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
 				if (minValue <= count && count <= maxValue) {
-					totalPriority += 4;
+					totalPriority += 4 + maxValue; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
 					continue;		// failed "totalExposed" requirement
@@ -572,7 +574,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var minValue = parseInt(targetPieces[0], 10);
 				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
 				if (minValue <= count && count <= maxValue) {
-					totalPriority += 5;
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority;
 				}
 				else {
 					continue;		// failed "totalNaked" requirement
@@ -586,7 +588,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var minValue = parseInt(targetPieces[0], 10);
 				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
 				if (minValue <= count && count <= maxValue) {
-					totalPriority += 5;
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority;
 				}
 				else {
 					continue;		// failed "totalMasturbating" requirement
@@ -600,7 +602,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var minValue = parseInt(targetPieces[0], 10);
 				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
 				if (minValue <= count && count <= maxValue) {
-					totalPriority += 5;
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
 					continue;		// failed "totalFinished" requirement

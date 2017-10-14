@@ -584,17 +584,17 @@ function getNumPlayersInStage(stage) {
 	var count = 0;
 	for (var i = 0; i < players.length; i++) {
 		if (!players[i]) { continue; }
-		var clothes = 0;
-    		for (var j = 0; j < players[i].clothing.length; j++) {
-			if (players[i].clothing[j]) {
-				clothes++;
-			}
-		}
 		switch (stage) {
 			case STAGE_ALIVE:
-				if (clothes > 0) { count++; }
+				if (!players[i].out) { count++; }
 				break;
 			case STAGE_NAKED:
+				var clothes = 0;
+    				for (var j = 0; j < players[i].clothing.length; j++) {
+					if (players[i].clothing[j]) {
+						clothes++;
+					}
+				}
 				if (clothes === 0) { count++; }
 				break;
 			case STAGE_MASTURBATING:
