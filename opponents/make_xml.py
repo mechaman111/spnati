@@ -334,7 +334,6 @@ def write_xml(data, filename):
 	o = ET.Element("opponent")
 	o.insert(0, ET.Comment("After generating this file, you may need to find-replace the following: '&lt;' to '<' and '&gt;' to '>' for italics and '&amp;' to '&' for symbols."))
 	o.insert(0, ET.Comment("This file is machine generated. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated."))
-
 	ET.SubElement(o, "first").text = data["first"]
 	ET.SubElement(o, "last").text = data["last"]
 	ET.SubElement(o, "label").text = data["label"]
@@ -363,9 +362,7 @@ def write_xml(data, filename):
 	start = ET.SubElement(o, "start")
 	start_data = get_value(data, "start", stage=0, default="0-calm,So we'll be playing strip poker... I hope we have fun.")
 	start_image, start_text = start_data.split(",", 1)
-
 	ET.SubElement(start, "state", img=start_image+".png").text = start_text
-
 	
 	#wardrobe
 	clth = ET.SubElement(o, "wardrobe")
