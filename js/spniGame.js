@@ -156,6 +156,11 @@ function updateGameVisual (player) {
         if (players[player].state) {
             var chosenState = players[player].state[getRandomNumber(0, players[player].state.length)];
 
+            /* track markers */
+            if (!!chosenState.marker) {
+                players[player].markers[chosenState.marker] = true;
+            }
+
             /* update dialogue */
             $gameDialogues[player-1].html(chosenState.dialogue);
 

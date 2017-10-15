@@ -115,6 +115,7 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
                            xml:xml,
                            timeInStage:-1,
                            consecutiveLosses:0,
+                           markers:{},
 
                            getIntelligence: function getIntelligence() {
 

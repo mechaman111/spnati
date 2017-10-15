@@ -11,11 +11,12 @@
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
-function createNewState (dialogue, image, direction, silent) {
+function createNewState (dialogue, image, direction, silent, marker) {
 	var newStateObject = {dialogue:dialogue,
                           image:image,
                           direction:direction,
-                          silent:silent};
+                          silent:silent,
+                          marker:marker};
 						  
 	return newStateObject;
 }
@@ -182,6 +183,7 @@ function parseDialogue (caseObject, replace, content) {
         var dialogue = $(this).html();
         var direction = $(this).attr('direction');
         var silent = $(this).attr('silent');
+        var marker = $(this).attr('marker');
         
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
@@ -196,7 +198,7 @@ function parseDialogue (caseObject, replace, content) {
             silent = false;
         }
         
-        states.push(createNewState(dialogue, image, direction, silent));
+        states.push(createNewState(dialogue, image, direction, silent, marker));
 	});
 	
 	return states;
@@ -263,12 +265,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
             var filter =           states[i].attr("filter");
 			var targetStage =      states[i].attr("targetStage");
 			var targetTimeInStage =      states[i].attr("targetTimeInStage");
+			var targetSeenMarker =        states[i].attr("targetSeenMarker");
+			var targetNotSeenMarker =     states[i].attr("targetNotSeenMarker");
 			var oppHand =          states[i].attr("oppHand");
 			var hasHand =          states[i].attr("hasHand");
 			var alsoPlaying =      states[i].attr("alsoPlaying");
 			var alsoPlayingStage = states[i].attr("alsoPlayingStage");
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
 			var alsoPlayingTimeInStage =  states[i].attr("alsoPlayingTimeInStage");
+			var alsoPlayingSeenMarker =   states[i].attr("alsoPlayingSeenMarker");
+			var alsoPlayingNotSeenMarker = states[i].attr("alsoPlayingNotSeenMarker");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
 			var timeInStage =      states[i].attr("timeInStage");
@@ -279,6 +285,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var totalMasturbating =     states[i].attr("totalMasturbating");
 			var totalFinished =      states[i].attr("totalFinished");
 			var totalRounds = 	states[i].attr("totalRounds");
+			var seenMarker =        states[i].attr("seenMarker");
+			var notSeenMarker =     states[i].attr("notSeenMarker");
+
 			var counters = [];
 			states[i].find("condition").each(function () {
 				var counter = $(this);
@@ -331,6 +340,25 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 				else {
 					continue;				// failed "targetStage" requirement
+				}
+			}
+
+			// markers (priority = 1)
+			// marker checks have very low priority as they're mainly intended to be used with other target types
+			if (opp !== null && targetSeenMarker) {
+				if (targetSeenMarker in opp.markers) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+			if (targetNotSeenMarker) {
+				if (!(targetNotSeenMarker in opp.markers)) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
 				}
 			}
 
@@ -446,6 +474,23 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 						else {
 							continue;		// failed "alsoPlayingHand" requirement
+						}
+					}
+					// marker checks have very low priority as they're mainly intended to be used with other target types
+					if (alsoPlayingSeenMarker) {
+						if (alsoPlayingSeenMarker in players[j].markers) {
+							totalPriority += 1;
+						}
+						else {
+							continue;
+						}
+					}
+					if (alsoPlayingNotSeenMarker) {
+						if (!(alsoPlayingNotSeenMarker in players[j].markers)) {
+							totalPriority += 1;
+						}
+						else {
+							continue;
 						}
 					}
 				}
@@ -620,6 +665,25 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 				else {
 					continue;		// failed "totalFinished" requirement
+				}
+			}
+
+			// markers (priority = 1)
+			// marker checks have very low priority as they're mainly intended to be used with other target types
+			if (seenMarker) {
+				if (seenMarker in players[player].markers) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+			if (notSeenMarker) {
+				if (!(notSeenMarker in players[player].markers)) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
 				}
 			}
 			
