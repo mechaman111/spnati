@@ -287,7 +287,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var totalRounds = 	states[i].attr("totalRounds");
 			var seenMarker =        states[i].attr("seenMarker");
 			var notSeenMarker =     states[i].attr("notSeenMarker");
-
+			var customPriority =    states[i].attr("priority");
 			var counters = [];
 			states[i].find("condition").each(function () {
 				var counter = $(this);
@@ -685,6 +685,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				else {
 					continue;
 				}
+			}
+
+			if (typeof customPriority !== typeof undefined) {
+				totalPriority = parseInt(customPriority, 10); //priority override
 			}
 			
 			// Finished going through - if a state has still survived up to this point,
