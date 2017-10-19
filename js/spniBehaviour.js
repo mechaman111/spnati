@@ -265,16 +265,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
             var filter =           states[i].attr("filter");
 			var targetStage =      states[i].attr("targetStage");
 			var targetTimeInStage =      states[i].attr("targetTimeInStage");
-			var targetSeenMarker =        states[i].attr("targetSeenMarker");
-			var targetNotSeenMarker =     states[i].attr("targetNotSeenMarker");
+			var targetSaidMarker =        states[i].attr("targetSaidMarker");
+			var targetNotSaidMarker =     states[i].attr("targetNotSaidMarker");
 			var oppHand =          states[i].attr("oppHand");
 			var hasHand =          states[i].attr("hasHand");
 			var alsoPlaying =      states[i].attr("alsoPlaying");
 			var alsoPlayingStage = states[i].attr("alsoPlayingStage");
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
 			var alsoPlayingTimeInStage =  states[i].attr("alsoPlayingTimeInStage");
-			var alsoPlayingSeenMarker =   states[i].attr("alsoPlayingSeenMarker");
-			var alsoPlayingNotSeenMarker = states[i].attr("alsoPlayingNotSeenMarker");
+			var alsoPlayingSaidMarker =   states[i].attr("alsoPlayingSaidMarker");
+			var alsoPlayingNotSaidMarker = states[i].attr("alsoPlayingNotSaidMarker");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
 			var timeInStage =      states[i].attr("timeInStage");
@@ -285,8 +285,8 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			var totalMasturbating =     states[i].attr("totalMasturbating");
 			var totalFinished =      states[i].attr("totalFinished");
 			var totalRounds = 	states[i].attr("totalRounds");
-			var seenMarker =        states[i].attr("seenMarker");
-			var notSeenMarker =     states[i].attr("notSeenMarker");
+			var saidMarker =        states[i].attr("saidMarker");
+			var notSaidMarker =     states[i].attr("notSaidMarker");
 			var customPriority =    states[i].attr("priority");
 			var counters = [];
 			states[i].find("condition").each(function () {
@@ -345,16 +345,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (opp !== null && targetSeenMarker) {
-				if (targetSeenMarker in opp.markers) {
+			if (opp !== null && targetSaidMarker) {
+				if (targetSaidMarker in opp.markers) {
 					totalPriority += 1;
 				}
 				else {
 					continue;
 				}
 			}
-			if (targetNotSeenMarker) {
-				if (!(targetNotSeenMarker in opp.markers)) {
+			if (targetNotSaidMarker) {
+				if (!(targetNotSaidMarker in opp.markers)) {
 					totalPriority += 1;
 				}
 				else {
@@ -477,16 +477,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					// marker checks have very low priority as they're mainly intended to be used with other target types
-					if (alsoPlayingSeenMarker) {
-						if (alsoPlayingSeenMarker in players[j].markers) {
+					if (alsoPlayingSaidMarker) {
+						if (alsoPlayingSaidMarker in players[j].markers) {
 							totalPriority += 1;
 						}
 						else {
 							continue;
 						}
 					}
-					if (alsoPlayingNotSeenMarker) {
-						if (!(alsoPlayingNotSeenMarker in players[j].markers)) {
+					if (alsoPlayingNotSaidMarker) {
+						if (!(alsoPlayingNotSaidMarker in players[j].markers)) {
 							totalPriority += 1;
 						}
 						else {
@@ -670,16 +670,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (seenMarker) {
-				if (seenMarker in players[player].markers) {
+			if (saidMarker) {
+				if (saidMarker in players[player].markers) {
 					totalPriority += 1;
 				}
 				else {
 					continue;
 				}
 			}
-			if (notSeenMarker) {
-				if (!(notSeenMarker in players[player].markers)) {
+			if (notSaidMarker) {
+				if (!(notSaidMarker in players[player].markers)) {
 					totalPriority += 1;
 				}
 				else {
