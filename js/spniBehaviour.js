@@ -326,6 +326,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			
 			// oppHand (priority = 30)
 			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
+				var failedOppHandReq = false;
 				for (var q = 0; q < players.length; q++)
 				{
 					if (opp === players[q]) {
@@ -333,9 +334,13 @@ function updateBehaviour (player, tag, replace, content, opp) {
 							totalPriority += 30;	// priority
 						}
 						else {
-							continue;				// failed "oppHand" requirement
+							failedOppHandReq = true;
+							break;
 						}
 					}
+				}
+				if (failedOppHandReq) {
+					continue;
 				}
 			}
 			
