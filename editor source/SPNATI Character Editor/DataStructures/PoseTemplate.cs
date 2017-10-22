@@ -10,6 +10,11 @@ namespace SPNATI_Character_Editor
 	public class PoseTemplate
 	{
 		/// <summary>
+		/// In advanced mode, codes won't be culled when combining the base, stage and emotion
+		/// </summary>
+		public bool AdvancedMode { get; set; }
+
+		/// <summary>
 		/// Character's body
 		/// </summary>
 		public KisekaeCode BaseCode = new KisekaeCode();
@@ -27,6 +32,7 @@ namespace SPNATI_Character_Editor
 		public void SaveToFile(string filename)
 		{
 			List<string> lines = new List<string>();
+			lines.Add(string.Format("advanced={0}", AdvancedMode ? "1" : "0"));
 			lines.Add(string.Format("base={0}", BaseCode.Serialize()));
 			for (int i = 0; i < Stages.Count; i++)
 			{
@@ -54,6 +60,9 @@ namespace SPNATI_Character_Editor
 				string value = kvp[1].ToLower();
 				switch (key)
 				{
+					case "advanced":
+						template.AdvancedMode = (value == "1");
+						break;
 					case "base":
 						template.BaseCode = new KisekaeCode(value);
 						break;

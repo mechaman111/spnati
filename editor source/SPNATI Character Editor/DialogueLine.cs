@@ -16,6 +16,9 @@ namespace SPNATI_Character_Editor
 		[XmlText]
 		public string Text;
 
+		[XmlAttribute("marker")]
+		public string Marker;
+
 		/// <summary>
 		/// Whether the dialogue should be suppressed entirely. Should be null or ""
 		/// </summary>
@@ -29,6 +32,7 @@ namespace SPNATI_Character_Editor
 		{
 			Image = "";
 			Text = "";
+			Marker = null;
 		}
 
 		public DialogueLine(string image, string text)
@@ -47,7 +51,10 @@ namespace SPNATI_Character_Editor
 
 		public override int GetHashCode()
 		{
-			int hash = (Image ?? string.Empty).GetHashCode() * 397 + (Text ?? string.Empty).GetHashCode();
+			int hash = (Image ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Text ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (!string.IsNullOrEmpty(IsSilent) ? 1.GetHashCode() : 0.GetHashCode());
+			hash = (hash * 397) ^ (Marker ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
@@ -83,6 +90,10 @@ namespace SPNATI_Character_Editor
 		{
 			Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
 			List<string> invalidVars = new List<string>();
+			if (text == "~silent~")
+			{
+				return invalidVars;
+			}
 			MatchCollection matches = varRegex.Matches(text);
 			foreach (var match in matches)
 			{

@@ -203,6 +203,8 @@ namespace SPNATI_Character_Editor
 		public Character Character;
 		public int Stage;
 		public string Hand;
+		public int TimeInStage;
+		public int Losses;
 
 		public override string ToString()
 		{
@@ -223,6 +225,7 @@ namespace SPNATI_Character_Editor
 		BeforeLoss,
 		DuringLoss,
 		AfterLoss,
+		Masturbating,
 		HeavyMasturbating,
 		Finishing,
 		Finished,

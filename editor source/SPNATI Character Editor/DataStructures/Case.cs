@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
+	/// <remarks>
+	/// For simplicity in serialization, fields are listed in the order that make_xml.py generates them, so that the two methods for generating xml files produce mostly equivalent output
+	/// </remarks>
 	public class Case : IComparable<Case>
 	{
 		private static long s_globalId;
@@ -17,29 +21,80 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoPlayingStage")]
 		public string AlsoPlayingStage;
 
-		[XmlAttribute("oppHand")]
-		public string TargetHand;
-
 		[XmlAttribute("hasHand")]
 		public string HasHand;
-
-		[XmlAttribute("filter")]
-		public string Filter;
 
 		[XmlAttribute("tag")]
 		public string Tag;
 
-		[XmlAttribute("target")]
-		public string Target;
+		[XmlAttribute("totalNaked")]
+		public string TotalNaked;
+
+		[XmlAttribute("totalMasturbating")]
+		public string TotalFinishing;
+
+		[XmlAttribute("totalFinished")]
+		public string TotalFinished;
+
+		[XmlAttribute("totalExposed")]
+		public string TotalExposed;
+
+		[XmlAttribute("totalAlive")]
+		public string TotalPlaying;
+
+		[XmlAttribute("timeInStage")]
+		public string TimeInStage;
+
+		[XmlAttribute("targetTimeInStage")]
+		public string TargetTimeInStage;
 
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
+
+		[XmlAttribute("targetSaidMarker")]
+		public string TargetSaidMarker;
+
+		[XmlAttribute("targetNotSaidMarker")]
+		public string TargetNotSaidMarker;
+
+		[XmlAttribute("target")]
+		public string Target;
+
+		[XmlAttribute("notSaidMarker")]
+		public string NotSaidMarker;
+
+		[XmlElement("priority")]
+		public string CustomPriority;
+
+		[XmlAttribute("saidMarker")]
+		public string SaidMarker;
+
+		[XmlAttribute("oppHand")]
+		public string TargetHand;
 
 		[XmlAttribute("totalMales")]
 		public string TotalMales;
 
 		[XmlAttribute("totalFemales")]
 		public string TotalFemales;
+
+		[XmlAttribute("totalRounds")]
+		public string TotalRounds;
+
+		[XmlAttribute("filter")]
+		public string Filter;
+
+		[XmlAttribute("consecutiveLosses")]
+		public string ConsecutiveLosses;
+
+		[XmlAttribute("alsoPlayingTimeInStage")]
+		public string AlsoPlayingTimeInStage;
+
+		[XmlAttribute("alsoPlayingSaidMarker")]
+		public string AlsoPlayingSaidMarker;
+
+		[XmlAttribute("alsoPlayingNotSaidMarker")]
+		public string AlsoPlayingNotSaidMarker;
 
 		[XmlElement("condition")]
 		public List<TargetCondition> Conditions;
@@ -82,6 +137,10 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			string result = TriggerDatabase.GetLabel(Tag);
+			if (!string.IsNullOrEmpty(CustomPriority))
+			{
+				result = "*" + result;
+			}
 			if (HasFilters)
 			{
 				if (!string.IsNullOrEmpty(Target))
@@ -96,6 +155,10 @@ namespace SPNATI_Character_Editor
 				{
 					result += string.Format(" (target hand={0})", TargetHand);
 				}
+				if (!string.IsNullOrEmpty(TargetTimeInStage))
+				{
+					result += string.Format(" (after {0} rounds in stage)", TargetTimeInStage);
+				}
 				if (!string.IsNullOrEmpty(Filter))
 				{
 					result += string.Format(" (filter={0})", Filter);
@@ -103,6 +166,10 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(AlsoPlaying))
 				{
 					result += string.Format(" (playing w/{0})", AlsoPlaying);
+				}
+				if (!string.IsNullOrEmpty(AlsoPlayingTimeInStage))
+				{
+					result += string.Format(" (after {0} rounds in stage)", AlsoPlayingTimeInStage);
 				}
 				if (!string.IsNullOrEmpty(HasHand))
 				{
@@ -120,6 +187,62 @@ namespace SPNATI_Character_Editor
 				{
 					result += string.Format(" ({0} males)", TotalMales);
 				}
+				if (!string.IsNullOrEmpty(TotalRounds))
+				{
+					result += string.Format(" ({0} overall rounds)", TotalRounds);
+				}
+				if (!string.IsNullOrEmpty(TimeInStage))
+				{
+					result += string.Format(" (after {0} rounds in own stage)", TimeInStage);
+				}
+				if (!string.IsNullOrEmpty(ConsecutiveLosses))
+				{
+					result += string.Format(" ({0} losses in a row)", ConsecutiveLosses);
+				}
+				if (!string.IsNullOrEmpty(TotalPlaying))
+				{
+					result += string.Format(" ({0} playing)", TotalPlaying);
+				}
+				if (!string.IsNullOrEmpty(TotalExposed))
+				{
+					result += string.Format(" ({0} exposed)", TotalExposed);
+				}
+				if (!string.IsNullOrEmpty(TotalNaked))
+				{
+					result += string.Format(" ({0} naked)", TotalNaked);
+				}
+				if (!string.IsNullOrEmpty(TotalFinishing))
+				{
+					result += string.Format(" ({0} finishing)", TotalFinishing);
+				}
+				if (!string.IsNullOrEmpty(TotalFinished))
+				{
+					result += string.Format(" ({0} finished)", TotalFinished);
+				}
+				if (!string.IsNullOrEmpty(SaidMarker))
+				{
+					result += string.Format(" (said {0})", SaidMarker);
+				}
+				if (!string.IsNullOrEmpty(NotSaidMarker))
+				{
+					result += string.Format(" (not said {0})", NotSaidMarker);
+				}
+				if (!string.IsNullOrEmpty(TargetSaidMarker))
+				{
+					result += string.Format(" (target said {0})", TargetSaidMarker);
+				}
+				if (!string.IsNullOrEmpty(TargetNotSaidMarker))
+				{
+					result += string.Format(" (target not said {0})", TargetNotSaidMarker);
+				}
+				if (!string.IsNullOrEmpty(AlsoPlayingSaidMarker))
+				{
+					result += string.Format(" (other said {0})", AlsoPlayingSaidMarker);
+				}
+				if (!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker))
+				{
+					result += string.Format(" (other not said {0})", AlsoPlayingNotSaidMarker);
+				}
 			}
 			return result;
 		}
@@ -131,17 +254,16 @@ namespace SPNATI_Character_Editor
 		public Case CopyConditions()
 		{
 			Case copy = new Case();
-			copy.Tag = Tag;
-			copy.Target = Target;
-			copy.TargetHand = TargetHand;
-			copy.TargetStage = TargetStage;
-			copy.AlsoPlaying = AlsoPlaying;
-			copy.AlsoPlayingHand = AlsoPlayingHand;
-			copy.AlsoPlayingStage = AlsoPlayingStage;
-			copy.Filter = Filter;
-			copy.HasHand = HasHand;
-			copy.TotalFemales = TotalFemales;
-			copy.TotalMales = TotalMales;
+			foreach (FieldInfo field in this.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
+			{
+				if (field.FieldType == typeof(string))
+				{
+					field.SetValue(copy, field.GetValue(this));
+				}
+			}
+
+			//Since it's just a shallow collection, need to break references to objects
+			copy.Conditions = new List<TargetCondition>();
 			foreach (TargetCondition condition in Conditions)
 			{
 				copy.Conditions.Add(condition.Copy());
@@ -165,26 +287,18 @@ namespace SPNATI_Character_Editor
 
 		public void ClearEmptyValues()
 		{
-			if (Target == "")
-				Target = null;
-			if (TargetHand == "")
-				TargetHand = null;
-			if (TargetStage == "")
-				TargetStage = null;
-			if (AlsoPlaying == "")
-				AlsoPlaying = null;
-			if (AlsoPlayingHand == "")
-				AlsoPlayingHand = null;
-			if (AlsoPlayingStage == "")
-				AlsoPlayingStage = null;
-			if (Filter == "")
-				Filter = null;
-			if (HasHand == "")
-				HasHand = null;
-			if (TotalFemales == "")
-				TotalFemales = null;
-			if (TotalMales == "")
-				TotalMales = null;
+			foreach (FieldInfo field in this.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
+			{
+				if (field.FieldType == typeof(string) && (string)field.GetValue(this) == "")
+				{
+					field.SetValue(this, null);
+				}
+			}
+
+			foreach (var condition in Conditions)
+			{
+				condition.ClearEmptyValues();
+			}
 		}
 
 		/// <summary>
@@ -194,6 +308,16 @@ namespace SPNATI_Character_Editor
 		public int GetPriority()
 		{
 			int totalPriority = 0;
+
+			if (!string.IsNullOrEmpty(CustomPriority))
+			{
+				int priority;
+				if (int.TryParse(CustomPriority, out priority))
+				{
+					return priority;
+				}
+			}
+
 			if (!string.IsNullOrEmpty(Target))
 				totalPriority += 300;
 
@@ -203,8 +327,19 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(TargetStage))
 				totalPriority += 80;
 
+			if (!string.IsNullOrEmpty(ConsecutiveLosses))
+				totalPriority += 60;
+
 			if (!string.IsNullOrEmpty(TargetHand))
 				totalPriority += 30;
+
+			if (!string.IsNullOrEmpty(TargetTimeInStage))
+				totalPriority += 25;
+
+			if (!string.IsNullOrEmpty(TargetSaidMarker))
+				totalPriority += 1;
+			if (!string.IsNullOrEmpty(TargetNotSaidMarker))
+				totalPriority += 1;
 
 			if (!string.IsNullOrEmpty(HasHand))
 				totalPriority += 20;
@@ -215,9 +350,23 @@ namespace SPNATI_Character_Editor
 
 				if (!string.IsNullOrEmpty(AlsoPlayingStage))
 					totalPriority += 40;
+				if (!string.IsNullOrEmpty(AlsoPlayingTimeInStage))
+					totalPriority += 15;
 				if (!string.IsNullOrEmpty(AlsoPlayingHand))
 					totalPriority += 5;
+				if (!string.IsNullOrEmpty(AlsoPlayingSaidMarker))
+					totalPriority += 1;
+				if (!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker))
+					totalPriority += 1;
 			}
+
+			if (!string.IsNullOrEmpty(TimeInStage))
+				totalPriority += 8;
+
+			if (!string.IsNullOrEmpty(SaidMarker))
+				totalPriority += 1;
+			if (!string.IsNullOrEmpty(NotSaidMarker))
+				totalPriority += 1;
 
 			totalPriority += Conditions.Count * 10;
 
@@ -225,6 +374,18 @@ namespace SPNATI_Character_Editor
 				totalPriority += 5;
 			if (!string.IsNullOrEmpty(TotalFemales))
 				totalPriority += 5;
+			if (!string.IsNullOrEmpty(TotalPlaying))
+				totalPriority += 3;
+			if (!string.IsNullOrEmpty(TotalExposed))
+				totalPriority += 4;
+			if (!string.IsNullOrEmpty(TotalNaked))
+				totalPriority += 5;
+			if (!string.IsNullOrEmpty(TotalFinishing))
+				totalPriority += 5;
+			if (!string.IsNullOrEmpty(TotalFinished))
+				totalPriority += 5;
+			if (!string.IsNullOrEmpty(TotalRounds))
+				totalPriority += 10;
 
 			return totalPriority;
 		}
@@ -243,13 +404,29 @@ namespace SPNATI_Character_Editor
 			bool sameFilters = Target == other.Target &&
 				TargetHand == other.TargetHand &&
 				TargetStage == other.TargetStage &&
+				TargetTimeInStage == other.TargetTimeInStage &&
 				AlsoPlaying == other.AlsoPlaying &&
 				AlsoPlayingHand == other.AlsoPlayingHand &&
 				AlsoPlayingStage == other.AlsoPlayingStage &&
+				AlsoPlayingTimeInStage == other.AlsoPlayingTimeInStage &&
 				HasHand == other.HasHand &&
 				Filter == other.Filter &&
+				TimeInStage == other.TimeInStage &&
 				TotalFemales == other.TotalFemales &&
-				TotalMales == other.TotalMales;
+				TotalMales == other.TotalMales &&
+				TotalPlaying == other.TotalPlaying &&
+				TotalExposed == other.TotalExposed &&
+				TotalFinishing == other.TotalFinishing &&
+				TotalNaked == other.TotalNaked &&
+				TotalFinished == other.TotalFinished &&
+				TotalRounds == other.TotalRounds &&
+				SaidMarker == other.SaidMarker &&
+				NotSaidMarker == other.NotSaidMarker &&
+				TargetSaidMarker == other.TargetSaidMarker &&
+				TargetNotSaidMarker == other.TargetNotSaidMarker &&
+				AlsoPlayingSaidMarker == other.AlsoPlayingSaidMarker &&
+				AlsoPlayingNotSaidMarker == other.AlsoPlayingNotSaidMarker &&
+				ConsecutiveLosses == other.ConsecutiveLosses;
 			if (!sameFilters)
 				return false;
 
@@ -306,7 +483,71 @@ namespace SPNATI_Character_Editor
 				  !string.IsNullOrEmpty(HasHand) ||
 				  !string.IsNullOrEmpty(TotalFemales) ||
 				  !string.IsNullOrEmpty(TotalMales) ||
+				  !string.IsNullOrEmpty(ConsecutiveLosses) ||
+				  !string.IsNullOrEmpty(TargetTimeInStage) ||
+				  !string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
+				  !string.IsNullOrEmpty(TimeInStage) ||
+				  !string.IsNullOrEmpty(TotalPlaying) ||
+				  !string.IsNullOrEmpty(TotalExposed) ||
+				  !string.IsNullOrEmpty(TotalNaked) ||
+				  !string.IsNullOrEmpty(TotalFinishing) ||
+				  !string.IsNullOrEmpty(TotalFinished) ||
+				  !string.IsNullOrEmpty(TotalRounds) ||
+				  !string.IsNullOrEmpty(TargetSaidMarker) ||
+				  !string.IsNullOrEmpty(TargetNotSaidMarker) ||
+				  !string.IsNullOrEmpty(AlsoPlayingSaidMarker) ||
+				  !string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
+				  !string.IsNullOrEmpty(SaidMarker) ||
+				  !string.IsNullOrEmpty(NotSaidMarker) ||
 				  Conditions.Count > 0;
+			}
+		}
+
+		/// <summary>
+		/// Gets whether this case has any targeted dialogue towards other players
+		/// </summary>
+		public bool HasTargetedConditions
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(Target) ||
+					 !string.IsNullOrEmpty(TargetHand) ||
+					 !string.IsNullOrEmpty(TargetStage) ||
+					 !string.IsNullOrEmpty(Filter) ||
+					 !string.IsNullOrEmpty(AlsoPlayingStage) ||
+					 !string.IsNullOrEmpty(AlsoPlaying) ||
+					 !string.IsNullOrEmpty(AlsoPlayingHand) ||
+					 !string.IsNullOrEmpty(HasHand) ||
+					 !string.IsNullOrEmpty(ConsecutiveLosses) ||
+					 !string.IsNullOrEmpty(TargetTimeInStage) ||
+					 !string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
+					 !string.IsNullOrEmpty(TargetSaidMarker) ||
+					 !string.IsNullOrEmpty(TargetNotSaidMarker) ||
+					 !string.IsNullOrEmpty(AlsoPlayingSaidMarker) ||
+					 !string.IsNullOrEmpty(AlsoPlayingNotSaidMarker);
+			}
+		}
+
+		/// <summary>
+		/// Gets whether this case has any targeted dialogue that is based on game state
+		/// </summary>
+		public bool HasStageConditions
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(TimeInStage) ||
+					!string.IsNullOrEmpty(TotalRounds) ||
+					!string.IsNullOrEmpty(SaidMarker) ||
+					!string.IsNullOrEmpty(NotSaidMarker) ||
+					!string.IsNullOrEmpty(TotalPlaying) ||
+					!string.IsNullOrEmpty(TotalExposed) ||
+					!string.IsNullOrEmpty(TotalNaked) ||
+					!string.IsNullOrEmpty(TotalFinishing) ||
+					!string.IsNullOrEmpty(TotalFinished) ||
+					!string.IsNullOrEmpty(TotalRounds) ||
+					!string.IsNullOrEmpty(TotalFemales) ||
+					!string.IsNullOrEmpty(TotalMales) ||
+					Conditions.Count > 0;
 			}
 		}
 
@@ -327,9 +568,27 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (TotalMales ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (HasHand ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Filter ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TargetTimeInStage ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AlsoPlayingTimeInStage ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TimeInStage ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (ConsecutiveLosses ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalExposed ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalPlaying ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalNaked ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalFinishing ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalFinished ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TotalRounds ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (SaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (NotSaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TargetSaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TargetNotSaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AlsoPlayingSaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AlsoPlayingNotSaidMarker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
 			foreach (var condition in Conditions)
 			{
-				hash = (hash * 397) ^ condition.GetHashCode();
+				hash = (hash * 397) ^ (condition.Filter ?? string.Empty).GetHashCode();
+				hash = (hash * 397) ^ condition.Count.GetHashCode();
 			}
 			return hash;
 		}
@@ -437,6 +696,12 @@ namespace SPNATI_Character_Editor
 		{
 			Filter = filter;
 			Count = count;
+		}
+
+		public void ClearEmptyValues()
+		{
+			if (Filter == "")
+				Filter = null;
 		}
 
 		public TargetCondition Copy()
