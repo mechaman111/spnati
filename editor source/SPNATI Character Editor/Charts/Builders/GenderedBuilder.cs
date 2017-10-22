@@ -17,14 +17,6 @@ namespace SPNATI_Character_Editor.Charts.Builders
 		public void GenerateData()
 		{
 			_data = GetData();
-			foreach (Character c in CharacterDatabase.Characters)
-			{
-				int count = c.GetTargetedLineCount();
-				if (count > 0)
-				{
-					_data.Add(new Tuple<Character, int>(c, count));
-				}
-			}
 			_data.Sort((t1, t2) =>
 			{
 				return t2.Item2.CompareTo(t1.Item2);

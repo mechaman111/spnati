@@ -96,6 +96,22 @@ namespace SPNATI_Character_Editor.Controls
 			StateChanged?.Invoke(this, State);
 		}
 
+		private void valTime_ValueChanged(object sender, EventArgs e)
+		{
+			int time = (int)valTime.Value;
+			State.TimeInStage = time;
+			StateChanged?.Invoke(this, State);
+		}
+
+		private void valLosses_ValueChanged(object sender, EventArgs e)
+		{
+			int time = (int)valLosses.Value;
+			State.Losses = time;
+			StateChanged?.Invoke(this, State);
+		}
+
+
+
 		public void UpdateDisplay(string image, string text)
 		{
 			SetImage(image);
@@ -154,8 +170,14 @@ namespace SPNATI_Character_Editor.Controls
 						if (!string.IsNullOrEmpty(possibleCase.Target) && target != possibleCase.Target)
 							continue;   //Target doesn't match
 
-						if (!string.IsNullOrEmpty(possibleCase.TargetStage) && state.TargetState.Stage.ToString() != possibleCase.TargetStage)
+						if (!InRange(possibleCase.TargetStage, state.TargetState.Stage))
 							continue; //Target stage doesn't match
+
+						if (!InRange(possibleCase.TargetTimeInStage, state.TargetState.TimeInStage))
+							continue;
+
+						if (!InRange(possibleCase.ConsecutiveLosses, state.TargetState.Losses))
+							continue;
 
 						if (!string.IsNullOrEmpty(possibleCase.Filter))
 						{
@@ -167,6 +189,11 @@ namespace SPNATI_Character_Editor.Controls
 							if (state.TargetState.Hand != possibleCase.TargetHand)
 								continue;
 						}
+					}
+					else
+					{
+						if (!InRange(possibleCase.ConsecutiveLosses, State.Losses))
+							continue;
 					}
 					if (!string.IsNullOrEmpty(possibleCase.AlsoPlaying))
 					{
@@ -180,6 +207,8 @@ namespace SPNATI_Character_Editor.Controls
 							if (alsoPlaying.Hand != possibleCase.AlsoPlayingHand)
 								continue;
 						}
+						if (!InRange(possibleCase.AlsoPlayingTimeInStage, alsoPlaying.TimeInStage))
+							continue;
 					}
 					if (!string.IsNullOrEmpty(possibleCase.HasHand))
 					{
@@ -231,6 +260,30 @@ namespace SPNATI_Character_Editor.Controls
 				return _gameState.GetVariable(match.Value.Substring(1, match.Value.Length - 2));
 			});
 			lblText.Text = text;
+		}
+
+		/// <summary>
+		/// Gets whether a value is within a range
+		/// </summary>
+		/// <param name="range"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		private bool InRange(string range, int value)
+		{
+			if (string.IsNullOrEmpty(range))
+				return true;
+			int min = 0;
+			int max = 0;
+			string[] pieces = range.Split('-');
+			if (!int.TryParse(pieces[0], out min))
+				return true;
+			if (pieces.Length > 1)
+			{
+				if (!int.TryParse(pieces[1], out max))
+					return true;
+				return min <= value && value <= max;
+			}
+			return value == min;
 		}
 
 		/// <summary>
@@ -474,6 +527,19 @@ namespace SPNATI_Character_Editor.Controls
 						}
 					}
 					break;
+				case GamePhase.Masturbating:
+					if (standardStage == 9)
+					{
+						if (isTarget)
+						{
+							tag = "masturbating";
+						}
+						else
+						{
+							tag = string.Format("{0}_masturbating", gender);
+						}
+					}
+					break;
 				case GamePhase.HeavyMasturbating:
 					if (standardStage == 9)
 					{
@@ -523,5 +589,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			return TriggerDatabase.GetTrigger(tag);
 		}
+
+		
 	}
 }

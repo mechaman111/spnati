@@ -29,6 +29,17 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterEditor));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,12 +157,36 @@
 			this.grpConditions = new System.Windows.Forms.GroupBox();
 			this.tabControlConditions = new System.Windows.Forms.TabControl();
 			this.tabTarget = new System.Windows.Forms.TabPage();
+			this.cboTargetNotMarker = new System.Windows.Forms.ComboBox();
+			this.label72 = new System.Windows.Forms.Label();
+			this.cboTargetMarker = new System.Windows.Forms.ComboBox();
+			this.label66 = new System.Windows.Forms.Label();
+			this.valMaxTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label53 = new System.Windows.Forms.Label();
+			this.valMaxLosses = new System.Windows.Forms.NumericUpDown();
+			this.label52 = new System.Windows.Forms.Label();
+			this.valTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label45 = new System.Windows.Forms.Label();
+			this.valLosses = new System.Windows.Forms.NumericUpDown();
+			this.label43 = new System.Windows.Forms.Label();
+			this.cboTargetToStage = new System.Windows.Forms.ComboBox();
+			this.label41 = new System.Windows.Forms.Label();
 			this.label21 = new System.Windows.Forms.Label();
 			this.label25 = new System.Windows.Forms.Label();
 			this.cboTargetHand = new System.Windows.Forms.ComboBox();
 			this.label29 = new System.Windows.Forms.Label();
 			this.cboTargetStage = new System.Windows.Forms.ComboBox();
 			this.tabOther = new System.Windows.Forms.TabPage();
+			this.cboAlsoPlayingNotMarker = new System.Windows.Forms.ComboBox();
+			this.label71 = new System.Windows.Forms.Label();
+			this.cboAlsoPlayingMarker = new System.Windows.Forms.ComboBox();
+			this.label67 = new System.Windows.Forms.Label();
+			this.valMaxAlsoTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label54 = new System.Windows.Forms.Label();
+			this.valAlsoTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label44 = new System.Windows.Forms.Label();
+			this.cboAlsoPlayingMaxStage = new System.Windows.Forms.ComboBox();
+			this.label38 = new System.Windows.Forms.Label();
 			this.label36 = new System.Windows.Forms.Label();
 			this.cboAlsoPlaying = new System.Windows.Forms.ComboBox();
 			this.label27 = new System.Windows.Forms.Label();
@@ -163,14 +198,56 @@
 			this.gridFilters = new System.Windows.Forms.DataGridView();
 			this.ColTagFilter = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColTagCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.tabSelf = new System.Windows.Forms.TabPage();
+			this.cboNotMarker = new System.Windows.Forms.ComboBox();
+			this.label70 = new System.Windows.Forms.Label();
+			this.cboOwnHand = new System.Windows.Forms.ComboBox();
+			this.label26 = new System.Windows.Forms.Label();
+			this.label69 = new System.Windows.Forms.Label();
+			this.valMaxOwnTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label63 = new System.Windows.Forms.Label();
+			this.valMaxOwnLosses = new System.Windows.Forms.NumericUpDown();
+			this.label57 = new System.Windows.Forms.Label();
+			this.valOwnLosses = new System.Windows.Forms.NumericUpDown();
+			this.label51 = new System.Windows.Forms.Label();
+			this.valOwnTimeInStage = new System.Windows.Forms.NumericUpDown();
+			this.label42 = new System.Windows.Forms.Label();
+			this.cboMarker = new System.Windows.Forms.ComboBox();
+			this.label68 = new System.Windows.Forms.Label();
 			this.tabMisc = new System.Windows.Forms.TabPage();
+			this.valMaxGameRounds = new System.Windows.Forms.NumericUpDown();
+			this.label64 = new System.Windows.Forms.Label();
+			this.valGameRounds = new System.Windows.Forms.NumericUpDown();
+			this.label65 = new System.Windows.Forms.Label();
+			this.cboMaxTotalFinished = new System.Windows.Forms.ComboBox();
+			this.label62 = new System.Windows.Forms.Label();
+			this.cboMaxTotalFinishing = new System.Windows.Forms.ComboBox();
+			this.label61 = new System.Windows.Forms.Label();
+			this.cboMaxTotalNaked = new System.Windows.Forms.ComboBox();
+			this.label60 = new System.Windows.Forms.Label();
+			this.cboMaxTotalExposed = new System.Windows.Forms.ComboBox();
+			this.label59 = new System.Windows.Forms.Label();
+			this.cboMaxTotalPlaying = new System.Windows.Forms.ComboBox();
+			this.label58 = new System.Windows.Forms.Label();
+			this.cboMaxTotalMales = new System.Windows.Forms.ComboBox();
+			this.label56 = new System.Windows.Forms.Label();
+			this.cboMaxTotalFemales = new System.Windows.Forms.ComboBox();
+			this.label55 = new System.Windows.Forms.Label();
+			this.cboTotalFinished = new System.Windows.Forms.ComboBox();
+			this.label50 = new System.Windows.Forms.Label();
+			this.cboTotalFinishing = new System.Windows.Forms.ComboBox();
+			this.label49 = new System.Windows.Forms.Label();
+			this.cboTotalNaked = new System.Windows.Forms.ComboBox();
+			this.label48 = new System.Windows.Forms.Label();
+			this.cboTotalExposed = new System.Windows.Forms.ComboBox();
+			this.label47 = new System.Windows.Forms.Label();
+			this.cboTotalPlaying = new System.Windows.Forms.ComboBox();
+			this.label46 = new System.Windows.Forms.Label();
 			this.label37 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
 			this.label31 = new System.Windows.Forms.Label();
 			this.cboTotalMales = new System.Windows.Forms.ComboBox();
 			this.cboTotalFemales = new System.Windows.Forms.ComboBox();
-			this.cboOwnHand = new System.Windows.Forms.ComboBox();
-			this.label26 = new System.Windows.Forms.Label();
 			this.tabEndings = new System.Windows.Forms.TabPage();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
@@ -181,16 +258,15 @@
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.label38 = new System.Windows.Forms.Label();
-			this.cboAlsoPlayingMaxStage = new System.Windows.Forms.ComboBox();
+			this.label73 = new System.Windows.Forms.Label();
+			this.valPriority = new System.Windows.Forms.NumericUpDown();
 			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.gridDialogue = new SPNATI_Character_Editor.KeyboardDataGridView();
 			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColSilent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
-			this.cboTargetToStage = new System.Windows.Forms.ComboBox();
-			this.label41 = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -212,12 +288,26 @@
 			this.grpConditions.SuspendLayout();
 			this.tabControlConditions.SuspendLayout();
 			this.tabTarget.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxTimeInStage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxLosses)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valTimeInStage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valLosses)).BeginInit();
 			this.tabOther.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxAlsoTimeInStage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valAlsoTimeInStage)).BeginInit();
 			this.tabConditions.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFilters)).BeginInit();
+			this.tabSelf.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxOwnTimeInStage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxOwnLosses)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valOwnLosses)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valOwnTimeInStage)).BeginInit();
 			this.tabMisc.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).BeginInit();
 			this.tabEndings.SuspendLayout();
 			this.splitMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valPriority)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -600,15 +690,13 @@
 			// 
 			// cboLineFilter
 			// 
-			this.cboLineFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.cboLineFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboLineFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboLineFilter.FormattingEnabled = true;
 			this.cboLineFilter.Location = new System.Drawing.Point(81, 100);
 			this.cboLineFilter.Name = "cboLineFilter";
-			this.cboLineFilter.Size = new System.Drawing.Size(544, 21);
-			this.cboLineFilter.TabIndex = 3;
+			this.cboLineFilter.Size = new System.Drawing.Size(242, 21);
+			this.cboLineFilter.TabIndex = 6;
 			// 
 			// tabControl
 			// 
@@ -669,13 +757,37 @@
 			// 
 			this.gridAI.AllowUserToResizeColumns = false;
 			this.gridAI.AllowUserToResizeRows = false;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridAI.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridAI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridAI.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColAIStage,
             this.ColDifficulty});
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridAI.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridAI.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridAI.Location = new System.Drawing.Point(366, 140);
 			this.gridAI.Name = "gridAI";
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridAI.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.gridAI.RowHeadersVisible = false;
 			this.gridAI.Size = new System.Drawing.Size(212, 101);
 			this.gridAI.TabIndex = 81;
@@ -785,12 +897,36 @@
 			// 
 			this.gridTags.AllowUserToResizeColumns = false;
 			this.gridTags.AllowUserToResizeRows = false;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridTags.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.gridTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridTags.ColumnHeadersVisible = false;
 			this.gridTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColTag});
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridTags.DefaultCellStyle = dataGridViewCellStyle5;
 			this.gridTags.Location = new System.Drawing.Point(75, 140);
 			this.gridTags.Name = "gridTags";
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridTags.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.gridTags.RowHeadersVisible = false;
 			this.gridTags.Size = new System.Drawing.Size(212, 101);
 			this.gridTags.TabIndex = 15;
@@ -1409,15 +1545,28 @@
 			this.tabControlConditions.Controls.Add(this.tabTarget);
 			this.tabControlConditions.Controls.Add(this.tabOther);
 			this.tabControlConditions.Controls.Add(this.tabConditions);
+			this.tabControlConditions.Controls.Add(this.tabSelf);
 			this.tabControlConditions.Controls.Add(this.tabMisc);
 			this.tabControlConditions.Location = new System.Drawing.Point(6, 19);
 			this.tabControlConditions.Name = "tabControlConditions";
 			this.tabControlConditions.SelectedIndex = 0;
-			this.tabControlConditions.Size = new System.Drawing.Size(639, 173);
+			this.tabControlConditions.Size = new System.Drawing.Size(639, 176);
 			this.tabControlConditions.TabIndex = 30;
 			// 
 			// tabTarget
 			// 
+			this.tabTarget.Controls.Add(this.cboTargetNotMarker);
+			this.tabTarget.Controls.Add(this.label72);
+			this.tabTarget.Controls.Add(this.cboTargetMarker);
+			this.tabTarget.Controls.Add(this.label66);
+			this.tabTarget.Controls.Add(this.valMaxTimeInStage);
+			this.tabTarget.Controls.Add(this.label53);
+			this.tabTarget.Controls.Add(this.valMaxLosses);
+			this.tabTarget.Controls.Add(this.label52);
+			this.tabTarget.Controls.Add(this.valTimeInStage);
+			this.tabTarget.Controls.Add(this.label45);
+			this.tabTarget.Controls.Add(this.valLosses);
+			this.tabTarget.Controls.Add(this.label43);
 			this.tabTarget.Controls.Add(this.cboTargetToStage);
 			this.tabTarget.Controls.Add(this.label41);
 			this.tabTarget.Controls.Add(this.label21);
@@ -1432,10 +1581,137 @@
 			this.tabTarget.Location = new System.Drawing.Point(4, 22);
 			this.tabTarget.Name = "tabTarget";
 			this.tabTarget.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTarget.Size = new System.Drawing.Size(631, 147);
+			this.tabTarget.Size = new System.Drawing.Size(631, 150);
 			this.tabTarget.TabIndex = 0;
 			this.tabTarget.Text = "Target";
 			this.tabTarget.UseVisualStyleBackColor = true;
+			// 
+			// cboTargetNotMarker
+			// 
+			this.cboTargetNotMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboTargetNotMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboTargetNotMarker.FormattingEnabled = true;
+			this.cboTargetNotMarker.Location = new System.Drawing.Point(416, 127);
+			this.cboTargetNotMarker.Name = "cboTargetNotMarker";
+			this.cboTargetNotMarker.Size = new System.Drawing.Size(209, 21);
+			this.cboTargetNotMarker.TabIndex = 10;
+			// 
+			// label72
+			// 
+			this.label72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label72.AutoSize = true;
+			this.label72.Location = new System.Drawing.Point(344, 130);
+			this.label72.Name = "label72";
+			this.label72.Size = new System.Drawing.Size(49, 13);
+			this.label72.TabIndex = 41;
+			this.label72.Text = "Not said:";
+			// 
+			// cboTargetMarker
+			// 
+			this.cboTargetMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboTargetMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboTargetMarker.FormattingEnabled = true;
+			this.cboTargetMarker.Location = new System.Drawing.Point(81, 127);
+			this.cboTargetMarker.Name = "cboTargetMarker";
+			this.cboTargetMarker.Size = new System.Drawing.Size(242, 21);
+			this.cboTargetMarker.TabIndex = 9;
+			// 
+			// label66
+			// 
+			this.label66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label66.AutoSize = true;
+			this.label66.Location = new System.Drawing.Point(6, 130);
+			this.label66.Name = "label66";
+			this.label66.Size = new System.Drawing.Size(66, 13);
+			this.label66.TabIndex = 39;
+			this.label66.Text = "Said marker:";
+			// 
+			// valMaxTimeInStage
+			// 
+			this.valMaxTimeInStage.Location = new System.Drawing.Point(542, 101);
+			this.valMaxTimeInStage.Name = "valMaxTimeInStage";
+			this.valMaxTimeInStage.Size = new System.Drawing.Size(43, 20);
+			this.valMaxTimeInStage.TabIndex = 8;
+			// 
+			// label53
+			// 
+			this.label53.AutoSize = true;
+			this.label53.Location = new System.Drawing.Point(517, 103);
+			this.label53.Name = "label53";
+			this.label53.Size = new System.Drawing.Size(19, 13);
+			this.label53.TabIndex = 38;
+			this.label53.Text = "to:";
+			// 
+			// valMaxLosses
+			// 
+			this.valMaxLosses.Location = new System.Drawing.Point(542, 74);
+			this.valMaxLosses.Name = "valMaxLosses";
+			this.valMaxLosses.Size = new System.Drawing.Size(43, 20);
+			this.valMaxLosses.TabIndex = 5;
+			// 
+			// label52
+			// 
+			this.label52.AutoSize = true;
+			this.label52.Location = new System.Drawing.Point(517, 76);
+			this.label52.Name = "label52";
+			this.label52.Size = new System.Drawing.Size(19, 13);
+			this.label52.TabIndex = 36;
+			this.label52.Text = "to:";
+			// 
+			// valTimeInStage
+			// 
+			this.valTimeInStage.Location = new System.Drawing.Point(468, 101);
+			this.valTimeInStage.Name = "valTimeInStage";
+			this.valTimeInStage.Size = new System.Drawing.Size(43, 20);
+			this.valTimeInStage.TabIndex = 7;
+			// 
+			// label45
+			// 
+			this.label45.AutoSize = true;
+			this.label45.Location = new System.Drawing.Point(344, 103);
+			this.label45.Name = "label45";
+			this.label45.Size = new System.Drawing.Size(87, 13);
+			this.label45.TabIndex = 34;
+			this.label45.Text = "Rounds in stage:";
+			// 
+			// valLosses
+			// 
+			this.valLosses.Location = new System.Drawing.Point(468, 74);
+			this.valLosses.Name = "valLosses";
+			this.valLosses.Size = new System.Drawing.Size(43, 20);
+			this.valLosses.TabIndex = 4;
+			// 
+			// label43
+			// 
+			this.label43.AutoSize = true;
+			this.label43.Location = new System.Drawing.Point(344, 76);
+			this.label43.Name = "label43";
+			this.label43.Size = new System.Drawing.Size(101, 13);
+			this.label43.TabIndex = 32;
+			this.label43.Text = "Consecutive losses:";
+			// 
+			// cboTargetToStage
+			// 
+			this.cboTargetToStage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboTargetToStage.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboTargetToStage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboTargetToStage.FormattingEnabled = true;
+			this.cboTargetToStage.Location = new System.Drawing.Point(373, 46);
+			this.cboTargetToStage.Name = "cboTargetToStage";
+			this.cboTargetToStage.Size = new System.Drawing.Size(252, 21);
+			this.cboTargetToStage.TabIndex = 2;
+			// 
+			// label41
+			// 
+			this.label41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label41.AutoSize = true;
+			this.label41.Location = new System.Drawing.Point(344, 49);
+			this.label41.Name = "label41";
+			this.label41.Size = new System.Drawing.Size(23, 13);
+			this.label41.TabIndex = 31;
+			this.label41.Text = "To:";
 			// 
 			// label21
 			// 
@@ -1459,8 +1735,6 @@
 			// 
 			// cboTargetHand
 			// 
-			this.cboTargetHand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.cboTargetHand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboTargetHand.FormattingEnabled = true;
 			this.cboTargetHand.Items.AddRange(new object[] {
@@ -1478,8 +1752,8 @@
             "Royal Flush"});
 			this.cboTargetHand.Location = new System.Drawing.Point(81, 73);
 			this.cboTargetHand.Name = "cboTargetHand";
-			this.cboTargetHand.Size = new System.Drawing.Size(544, 21);
-			this.cboTargetHand.TabIndex = 2;
+			this.cboTargetHand.Size = new System.Drawing.Size(242, 21);
+			this.cboTargetHand.TabIndex = 3;
 			// 
 			// label29
 			// 
@@ -1488,9 +1762,9 @@
 			this.label29.AutoSize = true;
 			this.label29.Location = new System.Drawing.Point(6, 49);
 			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(49, 13);
+			this.label29.Size = new System.Drawing.Size(62, 13);
 			this.label29.TabIndex = 24;
-			this.label29.Text = "At stage:";
+			this.label29.Text = "From stage:";
 			// 
 			// cboTargetStage
 			// 
@@ -1506,6 +1780,14 @@
 			// 
 			// tabOther
 			// 
+			this.tabOther.Controls.Add(this.cboAlsoPlayingNotMarker);
+			this.tabOther.Controls.Add(this.label71);
+			this.tabOther.Controls.Add(this.cboAlsoPlayingMarker);
+			this.tabOther.Controls.Add(this.label67);
+			this.tabOther.Controls.Add(this.valMaxAlsoTimeInStage);
+			this.tabOther.Controls.Add(this.label54);
+			this.tabOther.Controls.Add(this.valAlsoTimeInStage);
+			this.tabOther.Controls.Add(this.label44);
 			this.tabOther.Controls.Add(this.cboAlsoPlayingMaxStage);
 			this.tabOther.Controls.Add(this.label38);
 			this.tabOther.Controls.Add(this.label36);
@@ -1518,10 +1800,105 @@
 			this.tabOther.Location = new System.Drawing.Point(4, 22);
 			this.tabOther.Name = "tabOther";
 			this.tabOther.Padding = new System.Windows.Forms.Padding(3);
-			this.tabOther.Size = new System.Drawing.Size(631, 147);
+			this.tabOther.Size = new System.Drawing.Size(631, 150);
 			this.tabOther.TabIndex = 1;
 			this.tabOther.Text = "Other Player";
 			this.tabOther.UseVisualStyleBackColor = true;
+			// 
+			// cboAlsoPlayingNotMarker
+			// 
+			this.cboAlsoPlayingNotMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboAlsoPlayingNotMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboAlsoPlayingNotMarker.FormattingEnabled = true;
+			this.cboAlsoPlayingNotMarker.Location = new System.Drawing.Point(418, 126);
+			this.cboAlsoPlayingNotMarker.Name = "cboAlsoPlayingNotMarker";
+			this.cboAlsoPlayingNotMarker.Size = new System.Drawing.Size(207, 21);
+			this.cboAlsoPlayingNotMarker.TabIndex = 45;
+			// 
+			// label71
+			// 
+			this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label71.AutoSize = true;
+			this.label71.Location = new System.Drawing.Point(325, 129);
+			this.label71.Name = "label71";
+			this.label71.Size = new System.Drawing.Size(84, 13);
+			this.label71.TabIndex = 44;
+			this.label71.Text = "Not said marker:";
+			// 
+			// cboAlsoPlayingMarker
+			// 
+			this.cboAlsoPlayingMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboAlsoPlayingMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboAlsoPlayingMarker.FormattingEnabled = true;
+			this.cboAlsoPlayingMarker.Location = new System.Drawing.Point(99, 126);
+			this.cboAlsoPlayingMarker.Name = "cboAlsoPlayingMarker";
+			this.cboAlsoPlayingMarker.Size = new System.Drawing.Size(207, 21);
+			this.cboAlsoPlayingMarker.TabIndex = 43;
+			// 
+			// label67
+			// 
+			this.label67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label67.AutoSize = true;
+			this.label67.Location = new System.Drawing.Point(6, 129);
+			this.label67.Name = "label67";
+			this.label67.Size = new System.Drawing.Size(66, 13);
+			this.label67.TabIndex = 42;
+			this.label67.Text = "Said marker:";
+			// 
+			// valMaxAlsoTimeInStage
+			// 
+			this.valMaxAlsoTimeInStage.Location = new System.Drawing.Point(195, 100);
+			this.valMaxAlsoTimeInStage.Name = "valMaxAlsoTimeInStage";
+			this.valMaxAlsoTimeInStage.Size = new System.Drawing.Size(65, 20);
+			this.valMaxAlsoTimeInStage.TabIndex = 33;
+			// 
+			// label54
+			// 
+			this.label54.AutoSize = true;
+			this.label54.Location = new System.Drawing.Point(170, 102);
+			this.label54.Name = "label54";
+			this.label54.Size = new System.Drawing.Size(19, 13);
+			this.label54.TabIndex = 32;
+			this.label54.Text = "to:";
+			// 
+			// valAlsoTimeInStage
+			// 
+			this.valAlsoTimeInStage.Location = new System.Drawing.Point(99, 100);
+			this.valAlsoTimeInStage.Name = "valAlsoTimeInStage";
+			this.valAlsoTimeInStage.Size = new System.Drawing.Size(65, 20);
+			this.valAlsoTimeInStage.TabIndex = 31;
+			// 
+			// label44
+			// 
+			this.label44.AutoSize = true;
+			this.label44.Location = new System.Drawing.Point(6, 102);
+			this.label44.Name = "label44";
+			this.label44.Size = new System.Drawing.Size(87, 13);
+			this.label44.TabIndex = 30;
+			this.label44.Text = "Rounds in stage:";
+			// 
+			// cboAlsoPlayingMaxStage
+			// 
+			this.cboAlsoPlayingMaxStage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboAlsoPlayingMaxStage.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboAlsoPlayingMaxStage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboAlsoPlayingMaxStage.FormattingEnabled = true;
+			this.cboAlsoPlayingMaxStage.Location = new System.Drawing.Point(373, 46);
+			this.cboAlsoPlayingMaxStage.Name = "cboAlsoPlayingMaxStage";
+			this.cboAlsoPlayingMaxStage.Size = new System.Drawing.Size(252, 21);
+			this.cboAlsoPlayingMaxStage.TabIndex = 6;
+			// 
+			// label38
+			// 
+			this.label38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label38.AutoSize = true;
+			this.label38.Location = new System.Drawing.Point(344, 49);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(23, 13);
+			this.label38.TabIndex = 29;
+			this.label38.Text = "To:";
 			// 
 			// label36
 			// 
@@ -1539,9 +1916,9 @@
 			this.cboAlsoPlaying.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboAlsoPlaying.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboAlsoPlaying.FormattingEnabled = true;
-			this.cboAlsoPlaying.Location = new System.Drawing.Point(81, 19);
+			this.cboAlsoPlaying.Location = new System.Drawing.Point(99, 19);
 			this.cboAlsoPlaying.Name = "cboAlsoPlaying";
-			this.cboAlsoPlaying.Size = new System.Drawing.Size(544, 21);
+			this.cboAlsoPlaying.Size = new System.Drawing.Size(526, 21);
 			this.cboAlsoPlaying.TabIndex = 4;
 			this.cboAlsoPlaying.SelectedIndexChanged += new System.EventHandler(this.cboAlsoPlaying_SelectedIndexChanged);
 			// 
@@ -1563,9 +1940,9 @@
 			this.cboAlsoPlayingStage.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboAlsoPlayingStage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboAlsoPlayingStage.FormattingEnabled = true;
-			this.cboAlsoPlayingStage.Location = new System.Drawing.Point(81, 46);
+			this.cboAlsoPlayingStage.Location = new System.Drawing.Point(99, 46);
 			this.cboAlsoPlayingStage.Name = "cboAlsoPlayingStage";
-			this.cboAlsoPlayingStage.Size = new System.Drawing.Size(242, 21);
+			this.cboAlsoPlayingStage.Size = new System.Drawing.Size(224, 21);
 			this.cboAlsoPlayingStage.TabIndex = 5;
 			// 
 			// cboAlsoPlayingHand
@@ -1587,9 +1964,9 @@
             "Four of a Kind",
             "Straight Flush",
             "Royal Flush"});
-			this.cboAlsoPlayingHand.Location = new System.Drawing.Point(81, 73);
+			this.cboAlsoPlayingHand.Location = new System.Drawing.Point(99, 73);
 			this.cboAlsoPlayingHand.Name = "cboAlsoPlayingHand";
-			this.cboAlsoPlayingHand.Size = new System.Drawing.Size(544, 21);
+			this.cboAlsoPlayingHand.Size = new System.Drawing.Size(526, 21);
 			this.cboAlsoPlayingHand.TabIndex = 7;
 			// 
 			// label30
@@ -1620,7 +1997,7 @@
 			this.tabConditions.Location = new System.Drawing.Point(4, 22);
 			this.tabConditions.Name = "tabConditions";
 			this.tabConditions.Padding = new System.Windows.Forms.Padding(3);
-			this.tabConditions.Size = new System.Drawing.Size(631, 147);
+			this.tabConditions.Size = new System.Drawing.Size(631, 150);
 			this.tabConditions.TabIndex = 3;
 			this.tabConditions.Text = "Tags";
 			this.tabConditions.UseVisualStyleBackColor = true;
@@ -1630,13 +2007,37 @@
 			this.gridFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFilters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
 			this.gridFilters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridFilters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColTagFilter,
             this.ColTagCount});
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFilters.DefaultCellStyle = dataGridViewCellStyle10;
 			this.gridFilters.Location = new System.Drawing.Point(6, 6);
 			this.gridFilters.Name = "gridFilters";
-			this.gridFilters.Size = new System.Drawing.Size(619, 135);
+			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFilters.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+			this.gridFilters.Size = new System.Drawing.Size(619, 138);
 			this.gridFilters.TabIndex = 0;
 			// 
 			// ColTagFilter
@@ -1653,91 +2054,51 @@
 			this.ColTagCount.HeaderText = "Total Playing with Tag";
 			this.ColTagCount.Name = "ColTagCount";
 			// 
-			// tabMisc
+			// tabSelf
 			// 
-			this.tabMisc.Controls.Add(this.label37);
-			this.tabMisc.Controls.Add(this.label32);
-			this.tabMisc.Controls.Add(this.label31);
-			this.tabMisc.Controls.Add(this.cboTotalMales);
-			this.tabMisc.Controls.Add(this.cboTotalFemales);
-			this.tabMisc.Controls.Add(this.cboOwnHand);
-			this.tabMisc.Controls.Add(this.label26);
-			this.tabMisc.Location = new System.Drawing.Point(4, 22);
-			this.tabMisc.Name = "tabMisc";
-			this.tabMisc.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMisc.Size = new System.Drawing.Size(631, 147);
-			this.tabMisc.TabIndex = 2;
-			this.tabMisc.Text = "Misc";
-			this.tabMisc.UseVisualStyleBackColor = true;
+			this.tabSelf.Controls.Add(this.cboNotMarker);
+			this.tabSelf.Controls.Add(this.label70);
+			this.tabSelf.Controls.Add(this.cboOwnHand);
+			this.tabSelf.Controls.Add(this.label26);
+			this.tabSelf.Controls.Add(this.label69);
+			this.tabSelf.Controls.Add(this.valMaxOwnTimeInStage);
+			this.tabSelf.Controls.Add(this.label63);
+			this.tabSelf.Controls.Add(this.valMaxOwnLosses);
+			this.tabSelf.Controls.Add(this.label57);
+			this.tabSelf.Controls.Add(this.valOwnLosses);
+			this.tabSelf.Controls.Add(this.label51);
+			this.tabSelf.Controls.Add(this.valOwnTimeInStage);
+			this.tabSelf.Controls.Add(this.label42);
+			this.tabSelf.Controls.Add(this.cboMarker);
+			this.tabSelf.Controls.Add(this.label68);
+			this.tabSelf.Location = new System.Drawing.Point(4, 22);
+			this.tabSelf.Name = "tabSelf";
+			this.tabSelf.Padding = new System.Windows.Forms.Padding(3);
+			this.tabSelf.Size = new System.Drawing.Size(631, 150);
+			this.tabSelf.TabIndex = 4;
+			this.tabSelf.Text = "Self";
+			this.tabSelf.UseVisualStyleBackColor = true;
 			// 
-			// label37
+			// cboNotMarker
 			// 
-			this.label37.AutoSize = true;
-			this.label37.Location = new System.Drawing.Point(6, 3);
-			this.label37.Name = "label37";
-			this.label37.Size = new System.Drawing.Size(213, 13);
-			this.label37.TabIndex = 24;
-			this.label37.Text = "Conditions not targeting anyone in particular";
+			this.cboNotMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboNotMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboNotMarker.FormattingEnabled = true;
+			this.cboNotMarker.Location = new System.Drawing.Point(428, 45);
+			this.cboNotMarker.Name = "cboNotMarker";
+			this.cboNotMarker.Size = new System.Drawing.Size(197, 21);
+			this.cboNotMarker.TabIndex = 61;
 			// 
-			// label32
+			// label70
 			// 
-			this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.label70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label32.AutoSize = true;
-			this.label32.Location = new System.Drawing.Point(6, 76);
-			this.label32.Name = "label32";
-			this.label32.Size = new System.Drawing.Size(64, 13);
-			this.label32.TabIndex = 23;
-			this.label32.Text = "Total males:";
-			// 
-			// label31
-			// 
-			this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label31.AutoSize = true;
-			this.label31.Location = new System.Drawing.Point(6, 49);
-			this.label31.Name = "label31";
-			this.label31.Size = new System.Drawing.Size(73, 13);
-			this.label31.TabIndex = 22;
-			this.label31.Text = "Total females:";
-			// 
-			// cboTotalMales
-			// 
-			this.cboTotalMales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboTotalMales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboTotalMales.FormattingEnabled = true;
-			this.cboTotalMales.Items.AddRange(new object[] {
-            "",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-			this.cboTotalMales.Location = new System.Drawing.Point(81, 73);
-			this.cboTotalMales.Name = "cboTotalMales";
-			this.cboTotalMales.Size = new System.Drawing.Size(544, 21);
-			this.cboTotalMales.TabIndex = 9;
-			// 
-			// cboTotalFemales
-			// 
-			this.cboTotalFemales.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboTotalFemales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboTotalFemales.FormattingEnabled = true;
-			this.cboTotalFemales.Items.AddRange(new object[] {
-            "",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-			this.cboTotalFemales.Location = new System.Drawing.Point(81, 46);
-			this.cboTotalFemales.Name = "cboTotalFemales";
-			this.cboTotalFemales.Size = new System.Drawing.Size(544, 21);
-			this.cboTotalFemales.TabIndex = 8;
+			this.label70.AutoSize = true;
+			this.label70.Location = new System.Drawing.Point(321, 48);
+			this.label70.Name = "label70";
+			this.label70.Size = new System.Drawing.Size(84, 13);
+			this.label70.TabIndex = 67;
+			this.label70.Text = "Not said marker:";
 			// 
 			// cboOwnHand
 			// 
@@ -1758,21 +2119,571 @@
             "Four of a Kind",
             "Straight Flush",
             "Royal Flush"});
-			this.cboOwnHand.Location = new System.Drawing.Point(81, 19);
+			this.cboOwnHand.Location = new System.Drawing.Point(115, 72);
 			this.cboOwnHand.Name = "cboOwnHand";
-			this.cboOwnHand.Size = new System.Drawing.Size(544, 21);
-			this.cboOwnHand.TabIndex = 7;
+			this.cboOwnHand.Size = new System.Drawing.Size(200, 21);
+			this.cboOwnHand.TabIndex = 62;
 			// 
 			// label26
 			// 
 			this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label26.AutoSize = true;
-			this.label26.Location = new System.Drawing.Point(6, 22);
+			this.label26.Location = new System.Drawing.Point(6, 75);
 			this.label26.Name = "label26";
 			this.label26.Size = new System.Drawing.Size(59, 13);
-			this.label26.TabIndex = 18;
+			this.label26.TabIndex = 66;
 			this.label26.Text = "Own hand:";
+			// 
+			// label69
+			// 
+			this.label69.AutoSize = true;
+			this.label69.Location = new System.Drawing.Point(6, 3);
+			this.label69.Name = "label69";
+			this.label69.Size = new System.Drawing.Size(147, 13);
+			this.label69.TabIndex = 64;
+			this.label69.Text = "Targets this own player\'s data";
+			// 
+			// valMaxOwnTimeInStage
+			// 
+			this.valMaxOwnTimeInStage.Location = new System.Drawing.Point(195, 19);
+			this.valMaxOwnTimeInStage.Name = "valMaxOwnTimeInStage";
+			this.valMaxOwnTimeInStage.Size = new System.Drawing.Size(54, 20);
+			this.valMaxOwnTimeInStage.TabIndex = 57;
+			// 
+			// label63
+			// 
+			this.label63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label63.AutoSize = true;
+			this.label63.Location = new System.Drawing.Point(175, 21);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(19, 13);
+			this.label63.TabIndex = 63;
+			this.label63.Text = "to:";
+			// 
+			// valMaxOwnLosses
+			// 
+			this.valMaxOwnLosses.Location = new System.Drawing.Point(513, 19);
+			this.valMaxOwnLosses.Name = "valMaxOwnLosses";
+			this.valMaxOwnLosses.Size = new System.Drawing.Size(54, 20);
+			this.valMaxOwnLosses.TabIndex = 59;
+			// 
+			// label57
+			// 
+			this.label57.AutoSize = true;
+			this.label57.Location = new System.Drawing.Point(488, 21);
+			this.label57.Name = "label57";
+			this.label57.Size = new System.Drawing.Size(19, 13);
+			this.label57.TabIndex = 62;
+			this.label57.Text = "to:";
+			// 
+			// valOwnLosses
+			// 
+			this.valOwnLosses.Location = new System.Drawing.Point(428, 19);
+			this.valOwnLosses.Name = "valOwnLosses";
+			this.valOwnLosses.Size = new System.Drawing.Size(54, 20);
+			this.valOwnLosses.TabIndex = 58;
+			// 
+			// label51
+			// 
+			this.label51.AutoSize = true;
+			this.label51.Location = new System.Drawing.Point(321, 21);
+			this.label51.Name = "label51";
+			this.label51.Size = new System.Drawing.Size(101, 13);
+			this.label51.TabIndex = 61;
+			this.label51.Text = "Consecutive losses:";
+			// 
+			// valOwnTimeInStage
+			// 
+			this.valOwnTimeInStage.Location = new System.Drawing.Point(115, 19);
+			this.valOwnTimeInStage.Name = "valOwnTimeInStage";
+			this.valOwnTimeInStage.Size = new System.Drawing.Size(54, 20);
+			this.valOwnTimeInStage.TabIndex = 56;
+			// 
+			// label42
+			// 
+			this.label42.AutoSize = true;
+			this.label42.Location = new System.Drawing.Point(6, 21);
+			this.label42.Name = "label42";
+			this.label42.Size = new System.Drawing.Size(87, 13);
+			this.label42.TabIndex = 60;
+			this.label42.Text = "Rounds in stage:";
+			// 
+			// cboMarker
+			// 
+			this.cboMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cboMarker.FormattingEnabled = true;
+			this.cboMarker.Location = new System.Drawing.Point(115, 45);
+			this.cboMarker.Name = "cboMarker";
+			this.cboMarker.Size = new System.Drawing.Size(200, 21);
+			this.cboMarker.TabIndex = 60;
+			// 
+			// label68
+			// 
+			this.label68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label68.AutoSize = true;
+			this.label68.Location = new System.Drawing.Point(6, 48);
+			this.label68.Name = "label68";
+			this.label68.Size = new System.Drawing.Size(66, 13);
+			this.label68.TabIndex = 45;
+			this.label68.Text = "Said marker:";
+			// 
+			// tabMisc
+			// 
+			this.tabMisc.Controls.Add(this.valPriority);
+			this.tabMisc.Controls.Add(this.label73);
+			this.tabMisc.Controls.Add(this.valMaxGameRounds);
+			this.tabMisc.Controls.Add(this.label64);
+			this.tabMisc.Controls.Add(this.valGameRounds);
+			this.tabMisc.Controls.Add(this.label65);
+			this.tabMisc.Controls.Add(this.cboMaxTotalFinished);
+			this.tabMisc.Controls.Add(this.label62);
+			this.tabMisc.Controls.Add(this.cboMaxTotalFinishing);
+			this.tabMisc.Controls.Add(this.label61);
+			this.tabMisc.Controls.Add(this.cboMaxTotalNaked);
+			this.tabMisc.Controls.Add(this.label60);
+			this.tabMisc.Controls.Add(this.cboMaxTotalExposed);
+			this.tabMisc.Controls.Add(this.label59);
+			this.tabMisc.Controls.Add(this.cboMaxTotalPlaying);
+			this.tabMisc.Controls.Add(this.label58);
+			this.tabMisc.Controls.Add(this.cboMaxTotalMales);
+			this.tabMisc.Controls.Add(this.label56);
+			this.tabMisc.Controls.Add(this.cboMaxTotalFemales);
+			this.tabMisc.Controls.Add(this.label55);
+			this.tabMisc.Controls.Add(this.cboTotalFinished);
+			this.tabMisc.Controls.Add(this.label50);
+			this.tabMisc.Controls.Add(this.cboTotalFinishing);
+			this.tabMisc.Controls.Add(this.label49);
+			this.tabMisc.Controls.Add(this.cboTotalNaked);
+			this.tabMisc.Controls.Add(this.label48);
+			this.tabMisc.Controls.Add(this.cboTotalExposed);
+			this.tabMisc.Controls.Add(this.label47);
+			this.tabMisc.Controls.Add(this.cboTotalPlaying);
+			this.tabMisc.Controls.Add(this.label46);
+			this.tabMisc.Controls.Add(this.label37);
+			this.tabMisc.Controls.Add(this.label32);
+			this.tabMisc.Controls.Add(this.label31);
+			this.tabMisc.Controls.Add(this.cboTotalMales);
+			this.tabMisc.Controls.Add(this.cboTotalFemales);
+			this.tabMisc.Location = new System.Drawing.Point(4, 22);
+			this.tabMisc.Name = "tabMisc";
+			this.tabMisc.Padding = new System.Windows.Forms.Padding(3);
+			this.tabMisc.Size = new System.Drawing.Size(631, 150);
+			this.tabMisc.TabIndex = 2;
+			this.tabMisc.Text = "Misc";
+			this.tabMisc.UseVisualStyleBackColor = true;
+			// 
+			// valMaxGameRounds
+			// 
+			this.valMaxGameRounds.Location = new System.Drawing.Point(200, 46);
+			this.valMaxGameRounds.Name = "valMaxGameRounds";
+			this.valMaxGameRounds.Size = new System.Drawing.Size(54, 20);
+			this.valMaxGameRounds.TabIndex = 6;
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Location = new System.Drawing.Point(175, 48);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(19, 13);
+			this.label64.TabIndex = 59;
+			this.label64.Text = "to:";
+			// 
+			// valGameRounds
+			// 
+			this.valGameRounds.Location = new System.Drawing.Point(115, 46);
+			this.valGameRounds.Name = "valGameRounds";
+			this.valGameRounds.Size = new System.Drawing.Size(54, 20);
+			this.valGameRounds.TabIndex = 5;
+			// 
+			// label65
+			// 
+			this.label65.AutoSize = true;
+			this.label65.Location = new System.Drawing.Point(8, 48);
+			this.label65.Name = "label65";
+			this.label65.Size = new System.Drawing.Size(73, 13);
+			this.label65.TabIndex = 58;
+			this.label65.Text = "Game rounds:";
+			// 
+			// cboMaxTotalFinished
+			// 
+			this.cboMaxTotalFinished.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalFinished.FormattingEnabled = true;
+			this.cboMaxTotalFinished.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalFinished.Location = new System.Drawing.Point(519, 97);
+			this.cboMaxTotalFinished.Name = "cboMaxTotalFinished";
+			this.cboMaxTotalFinished.Size = new System.Drawing.Size(38, 21);
+			this.cboMaxTotalFinished.TabIndex = 18;
+			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Location = new System.Drawing.Point(494, 100);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(19, 13);
+			this.label62.TabIndex = 53;
+			this.label62.Text = "to:";
+			// 
+			// cboMaxTotalFinishing
+			// 
+			this.cboMaxTotalFinishing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalFinishing.FormattingEnabled = true;
+			this.cboMaxTotalFinishing.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalFinishing.Location = new System.Drawing.Point(410, 97);
+			this.cboMaxTotalFinishing.Name = "cboMaxTotalFinishing";
+			this.cboMaxTotalFinishing.Size = new System.Drawing.Size(38, 21);
+			this.cboMaxTotalFinishing.TabIndex = 16;
+			// 
+			// label61
+			// 
+			this.label61.AutoSize = true;
+			this.label61.Location = new System.Drawing.Point(385, 100);
+			this.label61.Name = "label61";
+			this.label61.Size = new System.Drawing.Size(19, 13);
+			this.label61.TabIndex = 51;
+			this.label61.Text = "to:";
+			// 
+			// cboMaxTotalNaked
+			// 
+			this.cboMaxTotalNaked.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalNaked.FormattingEnabled = true;
+			this.cboMaxTotalNaked.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalNaked.Location = new System.Drawing.Point(279, 97);
+			this.cboMaxTotalNaked.Name = "cboMaxTotalNaked";
+			this.cboMaxTotalNaked.Size = new System.Drawing.Size(38, 21);
+			this.cboMaxTotalNaked.TabIndex = 14;
+			// 
+			// label60
+			// 
+			this.label60.AutoSize = true;
+			this.label60.Location = new System.Drawing.Point(254, 100);
+			this.label60.Name = "label60";
+			this.label60.Size = new System.Drawing.Size(19, 13);
+			this.label60.TabIndex = 49;
+			this.label60.Text = "to:";
+			// 
+			// cboMaxTotalExposed
+			// 
+			this.cboMaxTotalExposed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalExposed.FormattingEnabled = true;
+			this.cboMaxTotalExposed.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalExposed.Location = new System.Drawing.Point(177, 97);
+			this.cboMaxTotalExposed.Name = "cboMaxTotalExposed";
+			this.cboMaxTotalExposed.Size = new System.Drawing.Size(38, 21);
+			this.cboMaxTotalExposed.TabIndex = 12;
+			// 
+			// label59
+			// 
+			this.label59.AutoSize = true;
+			this.label59.Location = new System.Drawing.Point(152, 100);
+			this.label59.Name = "label59";
+			this.label59.Size = new System.Drawing.Size(19, 13);
+			this.label59.TabIndex = 47;
+			this.label59.Text = "to:";
+			// 
+			// cboMaxTotalPlaying
+			// 
+			this.cboMaxTotalPlaying.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalPlaying.FormattingEnabled = true;
+			this.cboMaxTotalPlaying.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalPlaying.Location = new System.Drawing.Point(68, 97);
+			this.cboMaxTotalPlaying.Name = "cboMaxTotalPlaying";
+			this.cboMaxTotalPlaying.Size = new System.Drawing.Size(38, 21);
+			this.cboMaxTotalPlaying.TabIndex = 10;
+			// 
+			// label58
+			// 
+			this.label58.AutoSize = true;
+			this.label58.Location = new System.Drawing.Point(43, 100);
+			this.label58.Name = "label58";
+			this.label58.Size = new System.Drawing.Size(19, 13);
+			this.label58.TabIndex = 45;
+			this.label58.Text = "to:";
+			// 
+			// cboMaxTotalMales
+			// 
+			this.cboMaxTotalMales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalMales.FormattingEnabled = true;
+			this.cboMaxTotalMales.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalMales.Location = new System.Drawing.Point(435, 19);
+			this.cboMaxTotalMales.Name = "cboMaxTotalMales";
+			this.cboMaxTotalMales.Size = new System.Drawing.Size(54, 21);
+			this.cboMaxTotalMales.TabIndex = 4;
+			// 
+			// label56
+			// 
+			this.label56.AutoSize = true;
+			this.label56.Location = new System.Drawing.Point(410, 22);
+			this.label56.Name = "label56";
+			this.label56.Size = new System.Drawing.Size(19, 13);
+			this.label56.TabIndex = 41;
+			this.label56.Text = "to:";
+			// 
+			// cboMaxTotalFemales
+			// 
+			this.cboMaxTotalFemales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboMaxTotalFemales.FormattingEnabled = true;
+			this.cboMaxTotalFemales.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboMaxTotalFemales.Location = new System.Drawing.Point(200, 19);
+			this.cboMaxTotalFemales.Name = "cboMaxTotalFemales";
+			this.cboMaxTotalFemales.Size = new System.Drawing.Size(54, 21);
+			this.cboMaxTotalFemales.TabIndex = 2;
+			// 
+			// label55
+			// 
+			this.label55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label55.AutoSize = true;
+			this.label55.Location = new System.Drawing.Point(175, 22);
+			this.label55.Name = "label55";
+			this.label55.Size = new System.Drawing.Size(19, 13);
+			this.label55.TabIndex = 39;
+			this.label55.Text = "to:";
+			// 
+			// cboTotalFinished
+			// 
+			this.cboTotalFinished.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalFinished.FormattingEnabled = true;
+			this.cboTotalFinished.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalFinished.Location = new System.Drawing.Point(519, 73);
+			this.cboTotalFinished.Name = "cboTotalFinished";
+			this.cboTotalFinished.Size = new System.Drawing.Size(38, 21);
+			this.cboTotalFinished.TabIndex = 17;
+			// 
+			// label50
+			// 
+			this.label50.AutoSize = true;
+			this.label50.Location = new System.Drawing.Point(454, 76);
+			this.label50.Name = "label50";
+			this.label50.Size = new System.Drawing.Size(59, 13);
+			this.label50.TabIndex = 35;
+			this.label50.Text = "# Finished:";
+			// 
+			// cboTotalFinishing
+			// 
+			this.cboTotalFinishing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalFinishing.FormattingEnabled = true;
+			this.cboTotalFinishing.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalFinishing.Location = new System.Drawing.Point(410, 73);
+			this.cboTotalFinishing.Name = "cboTotalFinishing";
+			this.cboTotalFinishing.Size = new System.Drawing.Size(38, 21);
+			this.cboTotalFinishing.TabIndex = 15;
+			// 
+			// label49
+			// 
+			this.label49.AutoSize = true;
+			this.label49.Location = new System.Drawing.Point(323, 76);
+			this.label49.Name = "label49";
+			this.label49.Size = new System.Drawing.Size(81, 13);
+			this.label49.TabIndex = 33;
+			this.label49.Text = "# Masturbating:";
+			// 
+			// cboTotalNaked
+			// 
+			this.cboTotalNaked.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalNaked.FormattingEnabled = true;
+			this.cboTotalNaked.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalNaked.Location = new System.Drawing.Point(279, 73);
+			this.cboTotalNaked.Name = "cboTotalNaked";
+			this.cboTotalNaked.Size = new System.Drawing.Size(38, 21);
+			this.cboTotalNaked.TabIndex = 13;
+			// 
+			// label48
+			// 
+			this.label48.AutoSize = true;
+			this.label48.Location = new System.Drawing.Point(221, 76);
+			this.label48.Name = "label48";
+			this.label48.Size = new System.Drawing.Size(52, 13);
+			this.label48.TabIndex = 31;
+			this.label48.Text = "# Naked:";
+			// 
+			// cboTotalExposed
+			// 
+			this.cboTotalExposed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalExposed.FormattingEnabled = true;
+			this.cboTotalExposed.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalExposed.Location = new System.Drawing.Point(177, 73);
+			this.cboTotalExposed.Name = "cboTotalExposed";
+			this.cboTotalExposed.Size = new System.Drawing.Size(38, 21);
+			this.cboTotalExposed.TabIndex = 11;
+			// 
+			// label47
+			// 
+			this.label47.AutoSize = true;
+			this.label47.Location = new System.Drawing.Point(110, 76);
+			this.label47.Name = "label47";
+			this.label47.Size = new System.Drawing.Size(61, 13);
+			this.label47.TabIndex = 29;
+			this.label47.Text = "# Exposed:";
+			// 
+			// cboTotalPlaying
+			// 
+			this.cboTotalPlaying.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalPlaying.FormattingEnabled = true;
+			this.cboTotalPlaying.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalPlaying.Location = new System.Drawing.Point(68, 73);
+			this.cboTotalPlaying.Name = "cboTotalPlaying";
+			this.cboTotalPlaying.Size = new System.Drawing.Size(38, 21);
+			this.cboTotalPlaying.TabIndex = 9;
+			// 
+			// label46
+			// 
+			this.label46.AutoSize = true;
+			this.label46.Location = new System.Drawing.Point(8, 76);
+			this.label46.Name = "label46";
+			this.label46.Size = new System.Drawing.Size(54, 13);
+			this.label46.TabIndex = 27;
+			this.label46.Text = "# Playing:";
+			// 
+			// label37
+			// 
+			this.label37.AutoSize = true;
+			this.label37.Location = new System.Drawing.Point(6, 3);
+			this.label37.Name = "label37";
+			this.label37.Size = new System.Drawing.Size(213, 13);
+			this.label37.TabIndex = 24;
+			this.label37.Text = "Conditions not targeting anyone in particular";
+			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.Location = new System.Drawing.Point(276, 22);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(64, 13);
+			this.label32.TabIndex = 23;
+			this.label32.Text = "Total males:";
+			// 
+			// label31
+			// 
+			this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label31.AutoSize = true;
+			this.label31.Location = new System.Drawing.Point(6, 22);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(73, 13);
+			this.label31.TabIndex = 22;
+			this.label31.Text = "Total females:";
+			// 
+			// cboTotalMales
+			// 
+			this.cboTotalMales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalMales.FormattingEnabled = true;
+			this.cboTotalMales.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalMales.Location = new System.Drawing.Point(350, 19);
+			this.cboTotalMales.Name = "cboTotalMales";
+			this.cboTotalMales.Size = new System.Drawing.Size(54, 21);
+			this.cboTotalMales.TabIndex = 3;
+			// 
+			// cboTotalFemales
+			// 
+			this.cboTotalFemales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboTotalFemales.FormattingEnabled = true;
+			this.cboTotalFemales.Items.AddRange(new object[] {
+            "",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cboTotalFemales.Location = new System.Drawing.Point(115, 19);
+			this.cboTotalFemales.Name = "cboTotalFemales";
+			this.cboTotalFemales.Size = new System.Drawing.Size(54, 21);
+			this.cboTotalFemales.TabIndex = 1;
 			// 
 			// tabEndings
 			// 
@@ -1856,26 +2767,26 @@
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// label38
+			// label73
 			// 
-			this.label38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label38.AutoSize = true;
-			this.label38.Location = new System.Drawing.Point(344, 49);
-			this.label38.Name = "label38";
-			this.label38.Size = new System.Drawing.Size(23, 13);
-			this.label38.TabIndex = 29;
-			this.label38.Text = "To:";
+			this.label73.AutoSize = true;
+			this.label73.Location = new System.Drawing.Point(276, 48);
+			this.label73.Name = "label73";
+			this.label73.Size = new System.Drawing.Size(41, 13);
+			this.label73.TabIndex = 60;
+			this.label73.Text = "Priority:";
 			// 
-			// cboAlsoPlayingMaxStage
+			// valPriority
 			// 
-			this.cboAlsoPlayingMaxStage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboAlsoPlayingMaxStage.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboAlsoPlayingMaxStage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.cboAlsoPlayingMaxStage.FormattingEnabled = true;
-			this.cboAlsoPlayingMaxStage.Location = new System.Drawing.Point(373, 46);
-			this.cboAlsoPlayingMaxStage.Name = "cboAlsoPlayingMaxStage";
-			this.cboAlsoPlayingMaxStage.Size = new System.Drawing.Size(252, 21);
-			this.cboAlsoPlayingMaxStage.TabIndex = 6;
+			this.valPriority.Location = new System.Drawing.Point(350, 46);
+			this.valPriority.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.valPriority.Name = "valPriority";
+			this.valPriority.Size = new System.Drawing.Size(54, 20);
+			this.valPriority.TabIndex = 7;
 			// 
 			// imageImporter
 			// 
@@ -1890,11 +2801,28 @@
 			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridDialogue.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.gridDialogue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridDialogue.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColImage,
             this.ColText,
+            this.ColMarker,
             this.ColSilent});
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridDialogue.DefaultCellStyle = dataGridViewCellStyle8;
 			this.gridDialogue.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridDialogue.Location = new System.Drawing.Point(5, 414);
 			this.gridDialogue.MultiSelect = false;
@@ -1922,6 +2850,12 @@
 			this.ColText.HeaderText = "Text";
 			this.ColText.Name = "ColText";
 			// 
+			// ColMarker
+			// 
+			this.ColMarker.HeaderText = "Marker";
+			this.ColMarker.Name = "ColMarker";
+			this.ColMarker.Width = 70;
+			// 
 			// ColSilent
 			// 
 			this.ColSilent.HeaderText = "Silent";
@@ -1936,27 +2870,6 @@
 			this.epilogueEditor.Name = "epilogueEditor";
 			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
 			this.epilogueEditor.TabIndex = 0;
-			// 
-			// cboTargetToStage
-			// 
-			this.cboTargetToStage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboTargetToStage.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboTargetToStage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.cboTargetToStage.FormattingEnabled = true;
-			this.cboTargetToStage.Location = new System.Drawing.Point(373, 46);
-			this.cboTargetToStage.Name = "cboTargetToStage";
-			this.cboTargetToStage.Size = new System.Drawing.Size(252, 21);
-			this.cboTargetToStage.TabIndex = 2;
-			// 
-			// label41
-			// 
-			this.label41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label41.AutoSize = true;
-			this.label41.Location = new System.Drawing.Point(344, 49);
-			this.label41.Name = "label41";
-			this.label41.Size = new System.Drawing.Size(23, 13);
-			this.label41.TabIndex = 31;
-			this.label41.Text = "To:";
 			// 
 			// CharacterEditor
 			// 
@@ -2008,14 +2921,29 @@
 			this.tabControlConditions.ResumeLayout(false);
 			this.tabTarget.ResumeLayout(false);
 			this.tabTarget.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxTimeInStage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxLosses)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valTimeInStage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valLosses)).EndInit();
 			this.tabOther.ResumeLayout(false);
 			this.tabOther.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxAlsoTimeInStage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valAlsoTimeInStage)).EndInit();
 			this.tabConditions.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridFilters)).EndInit();
+			this.tabSelf.ResumeLayout(false);
+			this.tabSelf.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxOwnTimeInStage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxOwnLosses)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valOwnLosses)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valOwnTimeInStage)).EndInit();
 			this.tabMisc.ResumeLayout(false);
 			this.tabMisc.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).EndInit();
 			this.tabEndings.ResumeLayout(false);
 			this.splitMenu.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.valPriority)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -2096,8 +3024,6 @@
 		private System.Windows.Forms.ComboBox cboAlsoPlayingStage;
 		private System.Windows.Forms.Label label27;
 		private System.Windows.Forms.ComboBox cboAlsoPlaying;
-		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.ComboBox cboOwnHand;
 		private System.Windows.Forms.Label label25;
 		private System.Windows.Forms.ComboBox cboTargetHand;
 		private System.Windows.Forms.GroupBox grpCase;
@@ -2177,14 +3103,81 @@
 		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem graphsToolStripItem;
 		private System.Windows.Forms.ToolStripMenuItem dialogueTesterToolStripMenuItem;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColSilent;
 		private System.Windows.Forms.SplitContainer splitDialogue;
 		private System.Windows.Forms.ComboBox cboAlsoPlayingMaxStage;
 		private System.Windows.Forms.Label label38;
 		private System.Windows.Forms.ComboBox cboTargetToStage;
 		private System.Windows.Forms.Label label41;
+		private System.Windows.Forms.NumericUpDown valLosses;
+		private System.Windows.Forms.Label label43;
+		private System.Windows.Forms.NumericUpDown valAlsoTimeInStage;
+		private System.Windows.Forms.Label label44;
+		private System.Windows.Forms.NumericUpDown valTimeInStage;
+		private System.Windows.Forms.Label label45;
+		private System.Windows.Forms.ComboBox cboTotalFinished;
+		private System.Windows.Forms.Label label50;
+		private System.Windows.Forms.ComboBox cboTotalFinishing;
+		private System.Windows.Forms.Label label49;
+		private System.Windows.Forms.ComboBox cboTotalNaked;
+		private System.Windows.Forms.Label label48;
+		private System.Windows.Forms.ComboBox cboTotalExposed;
+		private System.Windows.Forms.Label label47;
+		private System.Windows.Forms.ComboBox cboTotalPlaying;
+		private System.Windows.Forms.Label label46;
+		private System.Windows.Forms.NumericUpDown valMaxTimeInStage;
+		private System.Windows.Forms.Label label53;
+		private System.Windows.Forms.NumericUpDown valMaxLosses;
+		private System.Windows.Forms.Label label52;
+		private System.Windows.Forms.NumericUpDown valMaxAlsoTimeInStage;
+		private System.Windows.Forms.Label label54;
+		private System.Windows.Forms.ComboBox cboMaxTotalMales;
+		private System.Windows.Forms.Label label56;
+		private System.Windows.Forms.ComboBox cboMaxTotalFemales;
+		private System.Windows.Forms.Label label55;
+		private System.Windows.Forms.ComboBox cboMaxTotalNaked;
+		private System.Windows.Forms.Label label60;
+		private System.Windows.Forms.ComboBox cboMaxTotalExposed;
+		private System.Windows.Forms.Label label59;
+		private System.Windows.Forms.ComboBox cboMaxTotalPlaying;
+		private System.Windows.Forms.Label label58;
+		private System.Windows.Forms.ComboBox cboMaxTotalFinished;
+		private System.Windows.Forms.Label label62;
+		private System.Windows.Forms.ComboBox cboMaxTotalFinishing;
+		private System.Windows.Forms.Label label61;
+		private System.Windows.Forms.NumericUpDown valMaxGameRounds;
+		private System.Windows.Forms.Label label64;
+		private System.Windows.Forms.NumericUpDown valGameRounds;
+		private System.Windows.Forms.Label label65;
+		private System.Windows.Forms.ComboBox cboTargetMarker;
+		private System.Windows.Forms.Label label66;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn ColSilent;
+		private System.Windows.Forms.ComboBox cboAlsoPlayingMarker;
+		private System.Windows.Forms.Label label67;
+		private System.Windows.Forms.TabPage tabSelf;
+		private System.Windows.Forms.Label label69;
+		private System.Windows.Forms.NumericUpDown valMaxOwnTimeInStage;
+		private System.Windows.Forms.Label label63;
+		private System.Windows.Forms.NumericUpDown valMaxOwnLosses;
+		private System.Windows.Forms.Label label57;
+		private System.Windows.Forms.NumericUpDown valOwnLosses;
+		private System.Windows.Forms.Label label51;
+		private System.Windows.Forms.NumericUpDown valOwnTimeInStage;
+		private System.Windows.Forms.Label label42;
+		private System.Windows.Forms.ComboBox cboMarker;
+		private System.Windows.Forms.Label label68;
+		private System.Windows.Forms.ComboBox cboOwnHand;
+		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.ComboBox cboNotMarker;
+		private System.Windows.Forms.Label label70;
+		private System.Windows.Forms.ComboBox cboTargetNotMarker;
+		private System.Windows.Forms.Label label72;
+		private System.Windows.Forms.ComboBox cboAlsoPlayingNotMarker;
+		private System.Windows.Forms.Label label71;
+		private System.Windows.Forms.NumericUpDown valPriority;
+		private System.Windows.Forms.Label label73;
 	}
 }
 

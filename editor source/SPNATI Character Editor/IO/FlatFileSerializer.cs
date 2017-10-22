@@ -101,7 +101,7 @@ namespace SPNATI_Character_Editor
 			Dictionary<string, Case> defaultCases = new Dictionary<string, Case>();
 			foreach (Case c in character.Behavior.WorkingCases)
 			{
-				if (c.Stages.Count == 0 || c.HasFilters)
+				if (c.Stages.Count <= 1 || c.HasFilters)
 					continue;
 				Case currentDefaultForTag;
 				if (!defaultCases.TryGetValue(c.Tag, out currentDefaultForTag))
@@ -122,7 +122,7 @@ namespace SPNATI_Character_Editor
 			{
 				if (c.Stages.Count == 0)
 					continue;
-				if (defaultCases[c.Tag] == c)
+				if (defaultCases.ContainsKey(c.Tag) && defaultCases[c.Tag] == c)
 				{
 					c.IsDefault = true;
 					cases.Add(c);
@@ -227,6 +227,11 @@ namespace SPNATI_Character_Editor
 					lastStage = stageId;
 				}
 				string stagePrefix = outputCase.IsDefault ? "" : stageId + "-";
+				if (outputCase.Stages.Count == 1 && outputCase.IsDefault)
+				{
+					//If the default case only has one stage, there is effectively no default case
+					stagePrefix = outputCase.Stages[0] + "-";
+				}
 				if (trigger.NoPrefix)
 				{
 					stagePrefix = "";
@@ -239,7 +244,13 @@ namespace SPNATI_Character_Editor
 				foreach (var line in outputCase.Lines)
 				{
 					var defaultLine = Behaviour.CreateDefaultLine(line);
-					lines.Add(string.Format("{0}={1},{2}", caseCode, defaultLine.Image, defaultLine.Text));
+					string lineCode = caseCode;
+					if (!string.IsNullOrEmpty(defaultLine.Marker))
+					{
+						lineCode += string.Format(",marker:{0}", defaultLine.Marker); 
+					}
+					string text = defaultLine.IsSilent != null ? "~silent~" : defaultLine.Text;
+					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
 				}
 			}
 
@@ -282,6 +293,14 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetStage:" + stageCase.TargetStage);
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetTimeInStage))
+			{
+				filters.Add("targetTimeInStage:" + stageCase.TargetTimeInStage);
+			}
+			if (!string.IsNullOrEmpty(stageCase.ConsecutiveLosses))
+			{
+				filters.Add("consecutiveLosses:" + stageCase.ConsecutiveLosses);
+			}
 			if (!string.IsNullOrEmpty(stageCase.TargetHand))
 			{
 				filters.Add("oppHand:" + stageCase.TargetHand);
@@ -289,6 +308,14 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.Filter))
 			{
 				filters.Add("filter:" + stageCase.Filter);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TargetSaidMarker))
+			{
+				filters.Add("targetSaidMarker:" + stageCase.TargetSaidMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TargetNotSaidMarker))
+			{
+				filters.Add("targetNotSaidMarker:" + stageCase.TargetNotSaidMarker);
 			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
@@ -298,13 +325,29 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("alsoPlayingStage:" + stageCase.AlsoPlayingStage);
 			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingTimeInStage))
+			{
+				filters.Add("alsoPlayingTimeInStage:" + stageCase.AlsoPlayingTimeInStage);
+			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingHand))
 			{
 				filters.Add("alsoPlayingHand:" + stageCase.AlsoPlayingHand);
 			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaidMarker))
+			{
+				filters.Add("alsoPlayingSaidMarker:" + stageCase.AlsoPlayingSaidMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
+			{
+				filters.Add("alsoPlayingNotSaidMarker:" + stageCase.AlsoPlayingNotSaidMarker);
+			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
 				filters.Add("hasHand:" + stageCase.HasHand);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TimeInStage))
+			{
+				filters.Add("timeInStage:" + stageCase.TimeInStage);
 			}
 			if (!string.IsNullOrEmpty(stageCase.TotalMales))
 			{
@@ -313,6 +356,42 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.TotalFemales))
 			{
 				filters.Add("totalFemales:" + stageCase.TotalFemales);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalRounds))
+			{
+				filters.Add("totalRounds:" + stageCase.TotalRounds);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalPlaying))
+			{
+				filters.Add("totalAlive:" + stageCase.TotalPlaying);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalExposed))
+			{
+				filters.Add("totalExposed:" + stageCase.TotalExposed);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalNaked))
+			{
+				filters.Add("totalNaked:" + stageCase.TotalNaked);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalFinishing))
+			{
+				filters.Add("totalMasturbating:" + stageCase.TotalFinishing);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TotalFinished))
+			{
+				filters.Add("totalFinished:" + stageCase.TotalFinished);
+			}
+			if (!string.IsNullOrEmpty(stageCase.SaidMarker))
+			{
+				filters.Add("saidMarker:" + stageCase.SaidMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.NotSaidMarker))
+			{
+				filters.Add("notSaidMarker:" + stageCase.NotSaidMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.CustomPriority))
+			{
+				filters.Add("priority:" + stageCase.CustomPriority);
 			}
 			if (stageCase.Conditions != null)
 			{
@@ -603,7 +682,7 @@ namespace SPNATI_Character_Editor
 				return null;
 			for (int i = 1; i < targets.Length; i++)
 			{
-				AddTarget(targets[i], lineCase);
+				AddTarget(targets[i], lineCase, line);
 			}
 
 			//Image and dialogue
@@ -620,6 +699,12 @@ namespace SPNATI_Character_Editor
 				text = value;
 			}
 
+			if (text == "~silent~")
+			{
+				text = "";
+				line.IsSilent = "";
+			}
+
 			line.Image = img;
 			line.Text = text;
 
@@ -634,7 +719,7 @@ namespace SPNATI_Character_Editor
 			return lineCase;
 		}
 
-		private static void AddTarget(string data, Case lineCase)
+		private static void AddTarget(string data, Case lineCase, DialogueLine line)
 		{
 			string[] kvp = data.Split(':');
 			if (kvp.Length == 2)
@@ -659,6 +744,15 @@ namespace SPNATI_Character_Editor
 						case "targetstage":
 							lineCase.TargetStage = value;
 							break;
+						case "targettimeinstage":
+							lineCase.TargetTimeInStage = value;
+							break;
+						case "targetsaidmarker":
+							lineCase.TargetSaidMarker = value;
+							break;
+						case "targetnotsaidmarker":
+							lineCase.TargetNotSaidMarker = value;
+							break;
 					}
 				}
 
@@ -674,6 +768,15 @@ namespace SPNATI_Character_Editor
 					case "alsoplayingstage":
 						lineCase.AlsoPlayingStage = value;
 						break;
+					case "alsoplayingtimeinstage":
+						lineCase.AlsoPlayingTimeInStage = value;
+						break;
+					case "alsoplayingsaidmarker":
+						lineCase.AlsoPlayingSaidMarker = value;
+						break;
+					case "alsoplayingnotsaidmarker":
+						lineCase.AlsoPlayingNotSaidMarker = value;
+						break;
 					case "hashand":
 						lineCase.HasHand = value;
 						break;
@@ -682,6 +785,42 @@ namespace SPNATI_Character_Editor
 						break;
 					case "totalmales":
 						lineCase.TotalMales = value;
+						break;
+					case "totalrounds":
+						lineCase.TotalRounds = value;
+						break;
+					case "totalalive":
+						lineCase.TotalPlaying = value;
+						break;
+					case "totalexposed":
+						lineCase.TotalExposed = value;
+						break;
+					case "totalnaked":
+						lineCase.TotalNaked = value;
+						break;
+					case "totalmasturbating":
+						lineCase.TotalFinishing = value;
+						break;
+					case "totalfinished":
+						lineCase.TotalFinished = value;
+						break;
+					case "consecutivelosses":
+						lineCase.ConsecutiveLosses = value;
+						break;
+					case "timeinstage":
+						lineCase.TimeInStage = value;
+						break;
+					case "saidmarker":
+						lineCase.SaidMarker = value;
+						break;
+					case "notsaidmarker":
+						lineCase.NotSaidMarker = value;
+						break;
+					case "marker":
+						line.Marker = value;
+						break;
+					case "priority":
+						lineCase.CustomPriority = value;
 						break;
 					default:
 						if (key.StartsWith("count-"))

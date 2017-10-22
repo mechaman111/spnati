@@ -48,6 +48,9 @@ namespace SPNATI_Character_Editor
 					foreach (var line in stageCase.Lines)
 					{
 						line.Text = XMLHelper.DecodeEntityReferences(line.Text);
+						if (string.IsNullOrEmpty(line.Marker))
+							line.Marker = null;
+						character.CacheMarker(line.Marker);
 					}
 				}
 			}

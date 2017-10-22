@@ -541,6 +541,7 @@ namespace SPNATI_Character_Editor
 				return;
 			string dir = Config.GetRootDirectory(_selectedCharacter);
 			openFileDialog1.InitialDirectory = dir;
+			openFileDialog1.FileName = "edit-dialogue.txt";
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				FlatFileSerializer.Import(openFileDialog1.FileName, _selectedCharacter);
@@ -798,8 +799,10 @@ namespace SPNATI_Character_Editor
 				return;
 			string key = cboLineTarget.SelectedItem.ToString();
 			Character c = CharacterDatabase.Characters.Find(chr => chr.FolderName == key);
-			SetStageCombo(cboTargetStage, c, true);
-			SetStageCombo(cboTargetToStage, c, true);
+			PopulateStageCombo(cboTargetStage, c, true);
+			PopulateStageCombo(cboTargetToStage, c, true);
+			PopulateMarkerCombo(cboTargetMarker, c);
+			PopulateMarkerCombo(cboTargetNotMarker, c);
 		}
 
 		private void cboAlsoPlaying_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -808,8 +811,10 @@ namespace SPNATI_Character_Editor
 				return;
 			string key = cboAlsoPlaying.SelectedItem.ToString();
 			Character c = CharacterDatabase.Characters.Find(chr => chr.FolderName == key);
-			SetStageCombo(cboAlsoPlayingStage, c, false);
-			SetStageCombo(cboAlsoPlayingMaxStage, c, false);
+			PopulateStageCombo(cboAlsoPlayingStage, c, false);
+			PopulateStageCombo(cboAlsoPlayingMaxStage, c, false);
+			PopulateMarkerCombo(cboAlsoPlayingMarker, c);
+			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c);
 		}
 
 		private enum TreeFilterMode
@@ -845,7 +850,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="box"></param>
 		/// <param name="character"></param>
 		/// <param name="useLookForward">If true, for removed/removing cases, only valid stages will be provided</param>
-		private void SetStageCombo(ComboBox box, Character character, bool filterStages)
+		private void PopulateStageCombo(ComboBox box, Character character, bool filterStages)
 		{
 			string oldText = box.Text;
 			box.Items.Clear();
@@ -983,6 +988,30 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Updates a marker dropdown to contain only markers used in the given character's dialogue
+		/// </summary>
+		/// <param name="box"></param>
+		/// <param name="character"></param>
+		private void PopulateMarkerCombo(ComboBox box, Character character)
+		{
+			string oldText = box.Text;
+			box.Items.Clear();
+			box.Text = "";
+			if (character == null)
+				return;
+
+			foreach (string marker in character.Markers)
+			{
+				box.Items.Add(marker);
+			}
+
+			if (!string.IsNullOrEmpty(oldText))
+			{
+				box.Text = oldText;
+			}
+		}
+
+		/// <summary>
 		/// Generates the dialogue tree.
 		/// </summary>
 		/// <param name="initialGeneration">If true, the tree is completely built from scratch. If false, only the Case nodes are regenerated</param>
@@ -1113,7 +1142,7 @@ namespace SPNATI_Character_Editor
 					{
 						foreach (var line in wrapper.Case.Lines)
 						{
-							if (Path.GetFileNameWithoutExtension(line.Image) == template.Item1 && line.Text.Trim() == template.Item2)
+							if (Path.GetFileNameWithoutExtension(line.Image) == template.Item1 && line.Text?.Trim() == template.Item2)
 							{
 								node.ForeColor = System.Drawing.Color.Blue;
 								//Color parent too
@@ -1336,20 +1365,27 @@ namespace SPNATI_Character_Editor
 			#endregion
 
 			#region Target tab
-			cboTargetStage.Text = "";
-			cboTargetToStage.Text = "";
+			ClearConditionFields();
 			if (caseTrigger.HasTarget)
 			{
 				((Control)tabTarget).Enabled = true;
 				SetComboBox(cboLineTarget, _selectedCase.Target);
 				SetComboBox(cboTargetHand, _selectedCase.TargetHand);
 				SetComboBox(cboLineFilter, _selectedCase.Filter);
-				Character target = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.Target);				
+				Character target = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.Target);
 				_selectedCase.SplitTargetStage(out minStage, out maxStage);
-				SetStageCombo(cboTargetStage, target, true);
+				PopulateStageCombo(cboTargetStage, target, true);
 				SetStageComboBox(cboTargetStage, minStage);
-				SetStageCombo(cboTargetToStage, target, true);
+				PopulateStageCombo(cboTargetToStage, target, true);
 				SetStageComboBox(cboTargetToStage, maxStage);
+				PopulateMarkerCombo(cboTargetMarker, target);
+				cboTargetMarker.Text = _selectedCase.TargetSaidMarker;
+				PopulateMarkerCombo(cboTargetNotMarker, target);
+				cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
+				SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
+				SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
+				valOwnLosses.Enabled = false;
+				valMaxOwnLosses.Enabled = false;
 			}
 			else
 			{
@@ -1357,8 +1393,12 @@ namespace SPNATI_Character_Editor
 				SetComboBox(cboLineTarget, "");
 				cboTargetStage.Text = "";
 				cboTargetToStage.Text = "";
+				cboTargetMarker.Text = "";
+				cboTargetNotMarker.Text = "";
 				SetComboBox(cboTargetHand, "");
 				SetComboBox(cboLineFilter, "");
+				valOwnLosses.Enabled = true;
+				valMaxOwnLosses.Enabled = true;
 			}
 			#endregion
 
@@ -1368,18 +1408,39 @@ namespace SPNATI_Character_Editor
 			Character other = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.AlsoPlaying);
 			cboAlsoPlayingStage.Text = "";
 			cboAlsoPlayingMaxStage.Text = "";
-			
+			SetRange(valAlsoTimeInStage, valMaxAlsoTimeInStage, _selectedCase.AlsoPlayingTimeInStage);
+
 			_selectedCase.SplitAlsoPlayingStage(out minStage, out maxStage);
-			SetStageCombo(cboAlsoPlayingStage, other, false);
+			PopulateStageCombo(cboAlsoPlayingStage, other, false);
 			SetStageComboBox(cboAlsoPlayingStage, minStage);
-			SetStageCombo(cboAlsoPlayingMaxStage, other, false);
+			PopulateStageCombo(cboAlsoPlayingMaxStage, other, false);
 			SetStageComboBox(cboAlsoPlayingMaxStage, maxStage);
+			PopulateMarkerCombo(cboAlsoPlayingMarker, other);
+			PopulateMarkerCombo(cboAlsoPlayingNotMarker, other);
+			cboAlsoPlayingMarker.Text = _selectedCase.AlsoPlayingSaidMarker;
+			cboAlsoPlayingNotMarker.Text = _selectedCase.AlsoPlayingNotSaidMarker;
+			#endregion
+
+			#region Self tab
+			cboOwnHand.SelectedItem = _selectedCase.HasHand;
+			SetRange(valOwnLosses, valMaxOwnLosses, _selectedCase.ConsecutiveLosses);
+			SetRange(valOwnTimeInStage, valMaxOwnTimeInStage, _selectedCase.TimeInStage);
+			PopulateMarkerCombo(cboMarker, _selectedCharacter);
+			PopulateMarkerCombo(cboNotMarker, _selectedCharacter);
+			cboMarker.Text = _selectedCase.SaidMarker;
+			cboNotMarker.Text = _selectedCase.NotSaidMarker;
 			#endregion
 
 			#region Misc tab
-			cboOwnHand.SelectedItem = _selectedCase.HasHand;
-			cboTotalFemales.SelectedItem = _selectedCase.TotalFemales;
-			cboTotalMales.SelectedItem = _selectedCase.TotalMales;
+			SetRange(cboTotalFemales, cboMaxTotalFemales, _selectedCase.TotalFemales);
+			SetRange(cboTotalMales, cboMaxTotalMales, _selectedCase.TotalMales);
+			SetRange(valGameRounds, valMaxGameRounds, _selectedCase.TotalRounds);
+			SetRange(cboTotalPlaying, cboMaxTotalPlaying, _selectedCase.TotalPlaying);
+			SetRange(cboTotalExposed, cboMaxTotalExposed, _selectedCase.TotalExposed);
+			SetRange(cboTotalNaked, cboMaxTotalNaked, _selectedCase.TotalNaked);
+			SetRange(cboTotalFinishing, cboMaxTotalFinishing, _selectedCase.TotalFinishing);
+			SetRange(cboTotalFinished, cboMaxTotalFinished, _selectedCase.TotalFinished);
+			SetNumericBox(valPriority, _selectedCase.CustomPriority);
 			#endregion
 
 			#region Tags tab
@@ -1410,6 +1471,25 @@ namespace SPNATI_Character_Editor
 
 			_populatingCase = false;
 			HighlightRow(0);
+		}
+
+		private void ClearConditionFields()
+		{
+			foreach (TabPage page in tabControlConditions.TabPages)
+			{
+				foreach (Control ctl in page.Controls)
+				{
+					if (ctl is TextBox || ctl is NumericUpDown)
+						ctl.Text = "";
+					else if (ctl is ComboBox)
+					{
+						ComboBox box = ctl as ComboBox;
+						box.SelectedIndex = -1;
+						box.Text = "";
+					}
+
+				}
+			}
 		}
 
 		/// <summary>
@@ -1536,6 +1616,9 @@ namespace SPNATI_Character_Editor
 			silentCell.FalseValue = null;
 			silentCell.TrueValue = "";
 			silentCell.Value = line.IsSilent;
+
+			DataGridViewCell markerCell = row.Cells["ColMarker"];
+			markerCell.Value = line.Marker;
 		}
 
 		/// <summary>
@@ -1555,6 +1638,92 @@ namespace SPNATI_Character_Editor
 					return;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Sets a range value into its boxes
+		/// </summary>
+		/// <param name="minBox"></param>
+		/// <param name="maxBox"></param>
+		/// <param name="value"></param>
+		private void SetRange(ComboBox minBox, ComboBox maxBox, string value)
+		{
+			if (value == null)
+			{
+				minBox.Text = "";
+				maxBox.Text = "";
+				return;
+			}
+			string[] pieces = value.Split('-');
+			string min = pieces[0];
+			string max = null;
+			if (pieces.Length > 1)
+			{
+				max = pieces[1];
+			}
+			if (string.IsNullOrEmpty(min))
+			{
+				minBox.Text = "";
+			}
+			else
+			{
+				minBox.Text = min;
+			}
+			if (string.IsNullOrEmpty(max))
+			{
+				maxBox.Text = "";
+			}
+			else
+			{
+				maxBox.Text = max;
+			}
+		}
+
+		/// <summary>
+		/// Sets a range value into its boxes
+		/// </summary>
+		/// <param name="minBox"></param>
+		/// <param name="maxBox"></param>
+		/// <param name="value"></param>
+		private void SetRange(NumericUpDown minBox, NumericUpDown maxBox, string value)
+		{
+			if (value == null)
+			{
+				SetNumericBox(minBox, null);
+				SetNumericBox(maxBox, null);
+				return;
+			}
+			string[] pieces = value.Split('-');
+			string min = pieces[0];
+			string max = null;
+			if (pieces.Length > 1)
+			{
+				max = pieces[1];
+			}
+			SetNumericBox(minBox, min);
+			SetNumericBox(maxBox, max);
+		}
+
+		private string ReadRange(ComboBox minBox, ComboBox maxBox)
+		{
+			string min = minBox.Text;
+			if (string.IsNullOrEmpty(min))
+				return null;
+			string max = maxBox.Text;
+			if (string.IsNullOrEmpty(max))
+				return min;
+			return min + "-" + max;
+		}
+
+		private string ReadRange(NumericUpDown minBox, NumericUpDown maxBox)
+		{
+			string min = ReadNumericBox(minBox);
+			if (string.IsNullOrEmpty(min))
+				return null;
+			string max = ReadNumericBox(maxBox);
+			if (string.IsNullOrEmpty(max))
+				return min;
+			return min + "-" + max;
 		}
 
 		/// <summary>
@@ -1606,6 +1775,30 @@ namespace SPNATI_Character_Editor
 			if (value == "")
 				return null;
 			else return value;
+		}
+
+		private void SetNumericBox(NumericUpDown box, string value)
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				box.Text = "";
+			}
+			else
+			{
+				int v;
+				if (int.TryParse(value, out v) && v >= box.Minimum && v <= box.Maximum)
+				{
+					box.Value = v;
+					box.Text = v.ToString();
+				}
+			}
+		}
+
+		private string ReadNumericBox(NumericUpDown box)
+		{
+			if (string.IsNullOrEmpty(box.Text))
+				return null;
+			return box.Value.ToString();
 		}
 
 		/// <summary>
@@ -1709,23 +1902,46 @@ namespace SPNATI_Character_Editor
 					needRegeneration = true;
 				c.Tag = newTag;
 
+				Trigger caseTrigger = TriggerDatabase.GetTrigger(c.Tag);
+
 				#region Target tab
 				c.Target = ReadComboBox(cboLineTarget);
 				c.SetTargetStage(ReadStageComboBox(cboTargetStage), ReadStageComboBox(cboTargetToStage));
 				c.TargetHand = ReadComboBox(cboTargetHand);
 				c.Filter = ReadComboBox(cboLineFilter);
+				c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
+				c.ConsecutiveLosses = ReadRange(caseTrigger != null && caseTrigger.HasTarget ? valLosses : valOwnLosses,
+												caseTrigger != null && caseTrigger.HasTarget ? valMaxLosses : valMaxOwnLosses);
+				c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
+				c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
 				#endregion
 
 				#region Also Playing Tab
 				c.AlsoPlaying = ReadComboBox(cboAlsoPlaying);
 				c.AlsoPlayingHand = ReadComboBox(cboAlsoPlayingHand);
 				c.SetAlsoPlayingStage(ReadStageComboBox(cboAlsoPlayingStage), ReadStageComboBox(cboAlsoPlayingMaxStage));
+				c.AlsoPlayingTimeInStage = ReadRange(valAlsoTimeInStage, valMaxAlsoTimeInStage);
+				c.AlsoPlayingSaidMarker = ReadComboBox(cboAlsoPlayingMarker);
+				c.AlsoPlayingNotSaidMarker = ReadComboBox(cboAlsoPlayingNotMarker);
+				#endregion
+
+				#region Self tab
+				c.SaidMarker = ReadComboBox(cboMarker);
+				c.NotSaidMarker = ReadComboBox(cboNotMarker);
+				c.HasHand = ReadComboBox(cboOwnHand);
+				c.TimeInStage = ReadRange(valOwnTimeInStage, valMaxOwnTimeInStage);
 				#endregion
 
 				#region Misc tab
-				c.HasHand = ReadComboBox(cboOwnHand);
-				c.TotalFemales = ReadComboBox(cboTotalFemales);
-				c.TotalMales = ReadComboBox(cboTotalMales);
+				c.TotalFemales = ReadRange(cboTotalFemales, cboMaxTotalFemales);
+				c.TotalMales = ReadRange(cboTotalMales, cboMaxTotalMales);
+				c.TotalRounds = ReadRange(valGameRounds, valMaxGameRounds);
+				c.TotalPlaying = ReadRange(cboTotalPlaying, cboMaxTotalPlaying);
+				c.TotalExposed = ReadRange(cboTotalExposed, cboMaxTotalExposed);
+				c.TotalNaked = ReadRange(cboTotalNaked, cboMaxTotalNaked);
+				c.TotalFinishing = ReadRange(cboTotalFinishing, cboMaxTotalFinishing);
+				c.TotalFinished = ReadRange(cboTotalFinished, cboMaxTotalFinished);
+				c.CustomPriority = ReadNumericBox(valPriority);
 				#endregion
 
 				#region Tags tab
@@ -1740,7 +1956,10 @@ namespace SPNATI_Character_Editor
 			{
 				DialogueLine line = ReadLineFromDialogueGrid(i);
 				if (line != null)
+				{
 					lines.Add(line);
+					_selectedCharacter.CacheMarker(line.Marker);
+				}
 			}
 
 			if (!switchingCases)
@@ -1760,14 +1979,21 @@ namespace SPNATI_Character_Editor
 			string image = row.Cells["ColImage"].Value?.ToString();
 			string text = row.Cells["ColText"].Value?.ToString();
 			string silent = row.Cells["ColSilent"].Value?.ToString();
+			string marker = row.Cells["ColMarker"].Value?.ToString();
 			if (silent == "")
 				text = "";
+			if (text == "~silent~")
+			{
+				text = "";
+				silent = "";
+			}
 			if (text == null)
 				return null;
 			CharacterImage img = _imageLibrary.Find(image);
 			string extension = img != null ? img.FileExtension : ".png";
 			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
 			line.IsSilent = silent;
+			line.Marker = string.IsNullOrEmpty(marker) ? null : marker;
 			return line;
 		}
 

@@ -1,4 +1,5 @@
 ﻿using SPNATI_Character_Editor.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -65,6 +66,9 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
 		public List<Epilogue> Endings;
+
+		[XmlIgnore]
+		public HashSet<string> Markers = new HashSet<string>();
 
 		public Character()
 		{
@@ -307,6 +311,7 @@ namespace SPNATI_Character_Editor
 			foreach (var line in StartingLines)
 			{
 				line.Text = XMLHelper.DecodeEntityReferences(line.Text);
+				CacheMarker(line.Marker);
 			}
 			Behavior.OnAfterDeserialize(this);
 			Metadata.HasEnding = Endings.Count > 0;
@@ -328,7 +333,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetGenericLineCount()
 		{
-			return GetLineCount(true, false);
+			return GetLineCount(LineFilter.Generic);
 		}
 
 		/// <summary>
@@ -337,7 +342,16 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetTargetedLineCount()
 		{
-			return GetLineCount(false, true);
+			return GetLineCount(LineFilter.Targeted);
+		}
+
+		/// <summary>
+		/// Gets a count of the number of unique targeted lines
+		/// </summary>
+		/// <returns></returns>
+		public int GetSpecialLineCount()
+		{
+			return GetLineCount(LineFilter.Special);
 		}
 
 		/// <summary>
@@ -346,10 +360,10 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public int GetUniqueLineCount()
 		{
-			return GetLineCount(true, true);
+			return GetLineCount(LineFilter.Generic | LineFilter.Targeted | LineFilter.Special);
 		}
 
-		private int GetLineCount(bool includeGeneric, bool includeTargeted)
+		private int GetLineCount(LineFilter filters)
 		{
 			int count = 0;
 			HashSet<string> lines = new HashSet<string>();
@@ -358,19 +372,34 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var stageCase in stage.Cases)
 				{
-					bool targeted = stageCase.HasFilters;
-					if (!includeTargeted && targeted || !includeGeneric && !targeted)
-						continue;
-					foreach (var line in stageCase.Lines)
+					bool targeted = stageCase.HasTargetedConditions;
+					bool special = stageCase.HasStageConditions;
+					bool generic = !stageCase.HasFilters;
+
+					if ((filters & LineFilter.Generic) > 0 && generic ||
+						(filters & LineFilter.Targeted) > 0 && targeted ||
+						(filters & LineFilter.Special) > 0 && special)
 					{
-						if (lines.Contains(line.Text))
-							continue;
-						count++;
-						lines.Add(line.Text);
+						foreach (var line in stageCase.Lines)
+						{
+							if (lines.Contains(line.Text))
+								continue;
+							count++;
+							lines.Add(line.Text);
+						}
 					}
 				}
 			}
 			return count;
+		}
+
+		[Flags]
+		public enum LineFilter
+		{
+			None = 0,
+			Generic = 1,
+			Targeted = 2,
+			Special = 4
 		}
 
 		/// <summary>
@@ -453,6 +482,14 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return count;
+		}
+
+		public void CacheMarker(string marker)
+		{
+			if (string.IsNullOrEmpty(marker))
+				return;
+			if (!Markers.Contains(marker))
+				Markers.Add(marker);
 		}
 	}
 

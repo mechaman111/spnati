@@ -18,7 +18,11 @@ namespace SPNATI_Character_Editor
 				"Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush"};
 			HashSet<string> validHands = new HashSet<string>();
 			foreach (string hand in hands)
+			{
 				validHands.Add(hand.ToLowerInvariant());
+			}
+
+			Regex targetRange = new Regex(@"^\d+(-\d+)?$");
 
 			int layers = character.Layers + Clothing.ExtraStages;
 			if (character.Behavior.Stages.Count > layers)
@@ -35,14 +39,15 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			foreach (var line in character.StartingLines)
-			{
-				string img = line.Image;
-				if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
-				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", "start", img)));
-				}
-			}
+			//TODO: This isn't working correctly at the moment
+			//foreach (var line in character.StartingLines)
+			//{
+			//	string img = line.Image;
+			//	if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+			//	{
+			//		warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", "start", img)));
+			//	}
+			//}
 
 			foreach (Stage stage in character.Behavior.Stages)
 			{
@@ -124,6 +129,8 @@ namespace SPNATI_Character_Editor
 										}
 									}
 								}
+								ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker);
+								ValidateMarker(warnings, target, caseLabel, "targetNotSeenMarker", stageCase.TargetNotSaidMarker);
 							}
 						}
 					}
@@ -133,10 +140,9 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"targetStage\" is not allowed for case {0}", caseLabel)));
 						}
-						int targetStage;
-						if (!int.TryParse(stageCase.TargetStage, out targetStage))
+						if (!targetRange.IsMatch(stageCase.TargetStage))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targetStage \"{1}\" should be numeric. {0}", caseLabel, stageCase.TargetStage)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targetStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.TargetStage)));
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.TargetHand))
@@ -164,6 +170,7 @@ namespace SPNATI_Character_Editor
 					#endregion
 
 					#region Also Playing
+					Character other = CharacterDatabase.Get(stageCase.AlsoPlaying);
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 					{
 						if (!ValidateCharacterExists(stageCase.AlsoPlaying))
@@ -202,11 +209,13 @@ namespace SPNATI_Character_Editor
 						int alsoPlayingStage;
 						if (!int.TryParse(stageCase.AlsoPlayingStage, out alsoPlayingStage))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage \"{1}\" should be numeric. {0}", caseLabel, stageCase.AlsoPlayingStage)));
+							if (!targetRange.IsMatch(stageCase.AlsoPlayingStage))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.AlsoPlayingStage)));
+							}
 						}
 						else
 						{
-							Character other = CharacterDatabase.Get(stageCase.AlsoPlaying);
 							if (other != null)
 							{
 								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage)
@@ -216,6 +225,30 @@ namespace SPNATI_Character_Editor
 							}
 						}
 					}
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingTimeInStage))
+					{
+						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingTimeInStage must be accompanied with alsoPlaying. {0}", caseLabel)));
+						}
+						warnings.AddRange(ValidateRangeField(stageCase.AlsoPlayingTimeInStage, "alsoPlayingTimeInStage", caseLabel, -1, -1));
+					}
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaidMarker))
+					{
+						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
+						}
+						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingSeenMarker", stageCase.AlsoPlayingSaidMarker);
+					}
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
+					{
+						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
+						}
+						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingNotSeenMarker", stageCase.AlsoPlayingNotSaidMarker);
+					}
 					#endregion
 
 					#region Misc
@@ -223,29 +256,29 @@ namespace SPNATI_Character_Editor
 					{
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
 					}
-					int total;
-					if (!string.IsNullOrEmpty(stageCase.TotalFemales))
+					
+					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalPlaying, "totalAlive", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalExposed, "totalExposed", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalNaked, "totalNaked", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalFinishing, "totalMasturbating", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalFinished, "totalFinished", caseLabel, 0, 5));
+					warnings.AddRange(ValidateRangeField(stageCase.ConsecutiveLosses, "consecutiveLosses", caseLabel, -1, -1));
+					warnings.AddRange(ValidateRangeField(stageCase.TargetTimeInStage, "targetTimeInStage", caseLabel, -1, -1));
+					warnings.AddRange(ValidateRangeField(stageCase.TimeInStage, "timeInStage", caseLabel, -1, -1));
+					if (!string.IsNullOrEmpty(stageCase.CustomPriority))
 					{
-						if (!int.TryParse(stageCase.TotalFemales, out total))
+						int priority;
+						if (!int.TryParse(stageCase.CustomPriority, out priority))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("totalFemales \"{1}\" must be numeric.", caseLabel, total)));
-						}
-						else if (total < 0 || total > 5)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("totalFemales \"{1}\" must be between 0-5.", caseLabel, total)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("customPriority {1} must be numeric. {0}", caseLabel, stageCase.CustomPriority)));
 						}
 					}
-					if (!string.IsNullOrEmpty(stageCase.TotalMales))
-					{
-						if (!int.TryParse(stageCase.TotalMales, out total))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("totalMales \"{1}\" must be numeric.", caseLabel, total)));
-						}
-						else if (total < 0 || total > 5)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("totalMales \"{1}\" must be between 0-5.", caseLabel, total)));
-						}
-					}
+					ValidateMarker(warnings, character, caseLabel, "seenMarker", stageCase.SaidMarker);
+					ValidateMarker(warnings, character, caseLabel, "notSeenMarker", stageCase.NotSaidMarker);
+
 					#endregion
 
 					#region Filters
@@ -306,6 +339,7 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+
 			if (warnings.Count == 0)
 				return true;
 
@@ -355,6 +389,65 @@ namespace SPNATI_Character_Editor
 		public static bool IsInFilter(ValidationFilterLevel filters, ValidationFilterLevel level)
 		{
 			return (filters & level) > 0;
+		}
+
+		private static IEnumerable<ValidationError> ValidateRangeField(string value, string fieldName, string caseLabel, int min, int max)
+		{
+			int total;
+			if (!string.IsNullOrEmpty(value))
+			{
+				string[] pieces = value.Split('-');
+				if (pieces.Length > 3)
+				{
+					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be numeric or a range. {0}", caseLabel, value, fieldName));
+					yield break;
+				}
+				string minStr = pieces[0];
+				if (!int.TryParse(minStr, out total))
+				{
+					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Min value in {2} \"{1}\" must be numeric. {0}", caseLabel, value, fieldName));
+				}
+				else
+				{
+					if (min >= 0 && total < min && max >= 0 && total > max)
+					{
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+					}
+				}
+
+				if (pieces.Length > 1)
+				{
+					string maxStr = pieces[1];
+					if (!int.TryParse(maxStr, out total))
+					{
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Max value in {2} \"{1}\" must be numeric. {0}", caseLabel, value, fieldName));
+					}
+					else
+					{
+						if (min >= 0 && total < min && max >= 0 && total > max)
+						{
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+						}
+					}
+				}
+			}
+		}
+
+		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string label, string value)
+		{
+			if (string.IsNullOrEmpty(value))
+				return;
+			if (character == null)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Missing character for {1}. {0}", caseLabel, value)));
+			}
+			else
+			{
+				if (!character.Markers.Contains(value))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, value)));
+				}
+			}
 		}
 
 		/// <summary>

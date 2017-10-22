@@ -62,6 +62,10 @@
                         <li><span class="label">At stage:</span> The target must be at the given stage. This is a numeric stage ID, but the editor will display friendly labels instead (ex. Lost Shoes) if you have also filled the Player condition.</li>
                         <li><span class="label">Hand:</span> The target ended up with the given hand (ex. Two Pair, Full House).</li>
                         <li><span class="label">Tag:</span> The target has the given tag in their <a href="metadata.html">metadata</a>.</li>
+                        <li><span class="label">Time in stage:</span> Number of rounds the target has been in their current stage. This resets to 0 once the target strips, so for a "removed something" case, the time will always be 0, but for a "removing something" case, it will still be counting from their last loss.</li>
+                        <li><span class="label">Consecutive losses:</span> Number of rounds the target has lost in a row.</li>
+                        <li><span class="label">Seen marker:</span> Whether a line of dialogue containing the given marker has been played previously by the target character.</li>
+                        <li><span class="label">Not seen:</span> Whether a line of dialogue containing the given marker has NOT been played previously by the target character.</li>
                     </ul>
                 </li>
                 <li><span class="label">Other Player:</span> Conditions that match a character currently playing who is <strong>not</strong> the target.
@@ -69,6 +73,9 @@
                         <li><span class="label">Player:</span> Case will only apply if the given character is playing. This uses the character's folder name.</li>
                         <li><span class="label">From/to stage:</span> The character in the Player field must between the given stages. The editor will show user friendly labels, but the underlying values are actually stage IDs. If only the From field is provided, the character must be at that exact stage. If both From and To are filled out, the character must be anywhere between those two stages (inclusive).</li>
                         <li><span class="label">Hand:</span> The character in the Player field must have the given hand (ex. Two Pair, Full House).</li>
+                        <li><span class="label">Time in stage:</span> Number of rounds the character in the Player field has been in their current stage.</li>
+                        <li><span class="label">Seen marker:</span> Whether a line of dialogue containing the given marker has been played previously by the character in the Player field.</li>
+                        <li><span class="label">Not seen:</span> Whether a line of dialogue containing the given marker has NOT been played previously by the character in the Player field.</li>
                     </ul>
                 </li>
                 <li><span class="label">Tags:</span> Conditions that target the whole table based on the tags of the characters playing. If multiple conditions are provided, they must all be met for the case to be considered for use in game.
@@ -78,11 +85,25 @@
                         <li><span class="label">Total Playing with Tag: </span>Value between 0-4 (including this character but not the human, who can't have tags) for how many characters must have this tag in order for the condition to be met.</li>
                     </ul>
                 </li>
-                <li><span class="label">Misc:</span> Conditions that do not target another player.
+                <li><span class="label">Misc:</span> Conditions that target this character's current state.
                     <ul>
                         <li><span class="label">Own hand:</span> The character being edited must have the given hand (ex. Two Pair, Full House).</li>
+                        <li><span class="label">Time in stage:</span> Number of rounds this player has been in their current stage.</li>
+                        <li><span class="label">Consecutive losses:</span> Number of rounds this player has lost in a row.</li>
+                        <li><span class="label">Seen marker:</span> Whether a line of dialogue containing the given marker has been played previously by this character.</li>
+                        <li><span class="label">Not seen:</span> Whether a line of dialogue containing the given marker has NOT been played previously by this character.</li>
+                    </ul>
+                </li>
+                <li><span class="label">Misc:</span> Conditions that do not target another player directly.
+                    <ul>
+                        <li><span class="label">Game rounds:</span> Number of overall rounds that have passed since the start of the game. A round begins whenever new cards are dealt.</li>
                         <li><span class="label">Total females:</span> Number of females playing must match this (including this character and the human player).</li>
                         <li><span class="label">Total males:</span> Number of males playing must match this (including this character and the human player).</li>
+                        <li><span class="label">Total playing:</span> Number of players still in the game (including this character and the human player). A player is considered in the game until they lose while already naked.</li>
+                        <li><span class="label">Total exposed:</span> Number of players who have exposed their chest or crotch (including this character and the human player).</li>
+                        <li><span class="label">Total naked:</span> Number of players who are fully naked (including this character and the human player).</li>
+                        <li><span class="label">Total masturbating:</span> Number of players who are currently masturbating (including this character and the human player).</li>
+                        <li><span class="label">Total finished:</span> Number of players who have finished masturbating and are out of the game (including this character and the human player).</li>
                     </ul>
                 </li>
             </ul>
@@ -208,6 +229,7 @@
                     </div>
                 </li>
                 <li><span class="label">Text column:</span> This is the text that will appear in the character's speech bubble when the line is chosen. Line should be fairly short, since a wall of text will both be glazed over by the player and will often not fit in the speech bubble.</li>
+                <li><span class="label">Marker column:</span> When this line is played in game, it track that the line has been played using this "marker." This character or others can then write targeted dialogue based on whether that marker has been seen yet. This allows you to play a line only once all game, for example, or to only play a line if another line was previously played earlier in the game.</li>
                 <li><span class="label">Silent column:</span> If this is checked, no dialogue bubble will be displayed at all.</li>
                 <li><span class="label">Italics:</span> Words can be italicized by encasing them in &lt;i&gt;&lt;/i&gt;. For example, &lt;i&gt;Wow!&lt;/i&gt; will produce <span style="font-style:italic">Wow!</span>.</li>
                 <li><span class="label">Variables:</span> Lines can use variables, which are placeholder labels that will be replaced at runtime with a dynamic bit of text. To use a variable, in the text type ~variableName~ where variableName is the name of the variable. Available variables include:

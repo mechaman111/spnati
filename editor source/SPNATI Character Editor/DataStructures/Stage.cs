@@ -61,7 +61,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Generates a sort key like make_xml.py does. This could use optimization by caching these values
+		/// Generates a sort key like make_xml.py does. This is to get the cases sorted the same way make_xml.py does. Otherwise diffs can be tricky
 		/// </summary>
 		/// <param name="c1"></param>
 		/// <returns></returns>
@@ -69,25 +69,62 @@ namespace SPNATI_Character_Editor
 		{
 			List<string> filters = new List<string>();
 			if (!string.IsNullOrEmpty(c1.Target))
-				filters.Add(c1.Target);
+				filters.Add("target:" + c1.Target);
 			if (!string.IsNullOrEmpty(c1.Filter))
-				filters.Add(c1.Filter);
+				filters.Add("filter:" + c1.Filter);
 			if (!string.IsNullOrEmpty(c1.TargetStage))
-				filters.Add(c1.TargetStage);
+				filters.Add("targetstage:" + c1.TargetStage);
+			if (!string.IsNullOrEmpty(c1.TargetTimeInStage))
+				filters.Add("targettimeinstage:" + c1.TargetTimeInStage);
 			if (!string.IsNullOrEmpty(c1.AlsoPlaying))
-				filters.Add(c1.AlsoPlaying);
+				filters.Add("alsoplaying:" + c1.AlsoPlaying);
 			if (!string.IsNullOrEmpty(c1.AlsoPlayingStage))
-				filters.Add(c1.AlsoPlayingStage);
+				filters.Add("alsoplayingstage:" + c1.AlsoPlayingStage);
 			if (!string.IsNullOrEmpty(c1.AlsoPlayingHand))
-				filters.Add(c1.AlsoPlayingHand);
+				filters.Add("alsoplayinghand:" + c1.AlsoPlayingHand);
 			if (!string.IsNullOrEmpty(c1.TargetHand))
-				filters.Add(c1.TargetHand);
+				filters.Add("opphand:" + c1.TargetHand);
 			if (!string.IsNullOrEmpty(c1.HasHand))
-				filters.Add(c1.HasHand);
+				filters.Add("hashand:" + c1.HasHand);
 			if (!string.IsNullOrEmpty(c1.TotalMales))
-				filters.Add(c1.TotalMales);
+				filters.Add("totalmales:" + c1.TotalMales);
 			if (!string.IsNullOrEmpty(c1.TotalFemales))
-				filters.Add(c1.TotalFemales);
+				filters.Add("totalfemales:" + c1.TotalFemales);
+			if (!string.IsNullOrEmpty(c1.TargetTimeInStage))
+				filters.Add("targettimeinstage:" + c1.TargetTimeInStage);
+			if (!string.IsNullOrEmpty(c1.AlsoPlayingTimeInStage))
+				filters.Add("alsoplayingtimeinstage:" + c1.AlsoPlayingTimeInStage);
+			if (!string.IsNullOrEmpty(c1.TimeInStage))
+				filters.Add("timeinstage:" + c1.TimeInStage);
+			if (!string.IsNullOrEmpty(c1.ConsecutiveLosses))
+				filters.Add("consecutivelosses:" + c1.ConsecutiveLosses);
+			if (!string.IsNullOrEmpty(c1.TotalPlaying))
+				filters.Add("totalalive:" + c1.TotalPlaying);
+			if (!string.IsNullOrEmpty(c1.TotalExposed))
+				filters.Add("totalexposed:" + c1.TotalExposed);
+			if (!string.IsNullOrEmpty(c1.TotalNaked))
+				filters.Add("totalnaked:" + c1.TotalNaked);
+			if (!string.IsNullOrEmpty(c1.TotalFinishing))
+				filters.Add("totalmasturbating:" + c1.TotalFinishing);
+			if (!string.IsNullOrEmpty(c1.TotalFinished))
+				filters.Add("totalfinished:" + c1.TotalFinished);
+			if (!string.IsNullOrEmpty(c1.TotalRounds))
+				filters.Add("totalrounds:" + c1.TotalRounds);
+			if (!string.IsNullOrEmpty(c1.SaidMarker))
+				filters.Add("saidmarker:" + c1.SaidMarker);
+			if (!string.IsNullOrEmpty(c1.NotSaidMarker))
+				filters.Add("notsaidmarker:" + c1.NotSaidMarker);
+			if (!string.IsNullOrEmpty(c1.AlsoPlayingSaidMarker))
+				filters.Add("alsoplayingsaidmarker:" + c1.AlsoPlayingSaidMarker);
+			if (!string.IsNullOrEmpty(c1.AlsoPlayingNotSaidMarker))
+				filters.Add("alsoplayingnotsaidmarker:" + c1.AlsoPlayingNotSaidMarker);
+			if (!string.IsNullOrEmpty(c1.TargetSaidMarker))
+				filters.Add("targetsaidmarker:" + c1.TargetSaidMarker);
+			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
+				filters.Add("targetnotsaidmarker:" + c1.TargetNotSaidMarker);
+			if (!string.IsNullOrEmpty(c1.CustomPriority))
+				filters.Add("priority:" + c1.CustomPriority);
+
 			return string.Join(",", filters);
 		}
 
