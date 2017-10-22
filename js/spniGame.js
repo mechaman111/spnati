@@ -88,7 +88,9 @@ var loserColour = "#DD4444";	/* indicates loser of a round */
  
 /* game state */
 var currentTurn = 0;
-var recentLoser = 0;
+var currentRound = -1;
+var previousLoser = -1;
+var recentLoser = -1;
 var savedContext = "";
 var gameOver = false;
 var actualMainButtonState = false;
@@ -153,6 +155,11 @@ function updateGameVisual (player) {
     if (players[player]) {
         if (players[player].state) {
             var chosenState = players[player].state[getRandomNumber(0, players[player].state.length)];
+
+            /* track markers */
+            if (!!chosenState.marker) {
+                players[player].markers[chosenState.marker] = true;
+            }
 
             /* update dialogue */
             $gameDialogues[player-1].html(chosenState.dialogue);
@@ -354,6 +361,7 @@ function advanceTurn () {
  * information.
  ************************************************************/
 function startDealPhase () {
+    currentRound++;
     /* dealing cards */
 	dealLock = 0;
     for (var i = 0; i < players.length; i++) {
@@ -374,6 +382,7 @@ function startDealPhase () {
                     $gameOpponentAreas[i-1].hide();
                 }
             }
+            players[i].timeInStage++;
         }
     }
     
@@ -486,6 +495,7 @@ function completeRevealPhase () {
     }
     
     /* figure out who has the lowest hand */
+    previousLoser = recentLoser;
     recentLoser = determineLowestHand();
     
     if (chosenDebug !== -1 && DEBUG) {
@@ -514,6 +524,22 @@ function completeRevealPhase () {
         }
         return;
     }
+
+    // update loss history
+    if (previousLoser < 0) {
+        // first loser
+        players[recentLoser].consecutiveLosses = 1;
+    }
+    else if (previousLoser === recentLoser) {
+        // same player lost again
+        players[recentLoser].consecutiveLosses++;
+    }
+    else {
+        // a different player lost
+        players[previousLoser].consecutiveLosses = 0; //reset last loser
+        players[recentLoser].consecutiveLosses = 1;
+    }
+    
     
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);

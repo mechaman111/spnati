@@ -29,7 +29,7 @@ ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter", "silent"]
-multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales"] #these will need to be re-capitalised when writing the xml
+multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
 
@@ -248,7 +248,7 @@ def create_case_xml(base_element, lines):
 				sort_key += "," + "count-" + condition[0]
 		for target_type in all_targets:
 			if target_type in line_data:
-				sort_key += "," + line_data[target_type]
+				sort_key += "," + target_type + ":" +line_data[target_type]
 		line_data["sort_key"] = sort_key
 		
 	#now do the sorting
@@ -284,7 +284,10 @@ def create_case_xml(base_element, lines):
 
 		#now add the individual line
 		#remember that this happens regardless of if the <case> is new
-		ET.SubElement(case_xml_element, "state", img=line_data["image"]).text = line_data["text"] #add the image and text
+		attrib = {"img": line_data["image"]}
+		if "marker" in line_data:
+			attrib["marker"] = line_data["marker"]
+		ET.SubElement(case_xml_element, "state", attrib).text = line_data["text"] #add the image and text
 
 #add several values to the XML tree
 #specifically, adds the <case> and <state> elements to a <stage> base_element
@@ -653,6 +656,10 @@ def read_player_file(filename):
 					
 				elif target_type == "skip":
 					#skip this target type
+					pass
+
+				elif target_type == "marker":
+					line_data["marker"] = target_value
 					pass
 
 				elif target_type.startswith("count-"):

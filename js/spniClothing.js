@@ -18,6 +18,11 @@ var UPPER_ARTICLE = "upper";
 var LOWER_ARTICLE = "lower";
 var OTHER_ARTICLE = "other";
 
+var STAGE_ALIVE = 0;
+var STAGE_NAKED = -3;
+var STAGE_MASTURBATING = -2;
+var STAGE_FINISHED = -1;
+
 /************************************************************
  * Stores information on an article of clothing.
  ************************************************************/
@@ -388,7 +393,9 @@ function closeStrippingModal () {
         
         /* grab the removed article of clothing */
         var removedClothing = players[HUMAN_PLAYER].clothing[selectedClothing];
+
         players[HUMAN_PLAYER].clothing[selectedClothing] = null;
+	players[HUMAN_PLAYER].timeInStage = -1;
         
         /* figure out if it should be important */
         var flag = false;
@@ -404,6 +411,7 @@ function closeStrippingModal () {
         console.log(flag);
         if (!flag) {
             removedClothing.type = IMPORTANT_ARTICLE;
+            players[HUMAN_PLAYER].exposed = true;
         }
         
         /* determine its dialogue trigger */
@@ -455,6 +463,9 @@ function stripAIPlayer (player) {
 	
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
+	if (removedClothing.type === IMPORTANT_ARTICLE) {
+		players[player].exposed = true;
+	}
     players[player].clothing.unshift(null);
 	var dialogueTrigger = getClothingTrigger(player, removedClothing, true);
 	
@@ -468,6 +479,7 @@ function stripAIPlayer (player) {
     var startingClothes = players[player].clothing.length;
 	
 	players[player].stage = startingClothes - clothes;
+	players[player].timeInStage = -1;
 	
 	/* set up the replaceable tags and content */
 	var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
@@ -521,7 +533,7 @@ function stripPlayer (player) {
         }
     }
     var startingClothes = players[player].clothing.length;
-    
+
 	/* determine the situation */
 	if (clothes > 0) {
 		/* the player has clothes left and will strip */
@@ -563,4 +575,35 @@ function stripPlayer (player) {
 		/* allow progression */
 		endRound();
 	}
+}
+
+/************************************************************
+ * Counts the number of players in a certain stage
+ ************************************************************/ 
+function getNumPlayersInStage(stage) {
+	var count = 0;
+	for (var i = 0; i < players.length; i++) {
+		if (!players[i]) { continue; }
+		switch (stage) {
+			case STAGE_ALIVE:
+				if (!players[i].out) { count++; }
+				break;
+			case STAGE_NAKED:
+				var clothes = 0;
+    				for (var j = 0; j < players[i].clothing.length; j++) {
+					if (players[i].clothing[j]) {
+						clothes++;
+					}
+				}
+				if (clothes === 0) { count++; }
+				break;
+			case STAGE_MASTURBATING:
+				if (players[i].out && !players[i].finished) { count++; }
+				break;
+			case STAGE_FINISHED:
+				if (players[i].finished) { count++; }
+				break;
+		}
+	}
+	return count;
 }

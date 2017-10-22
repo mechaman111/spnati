@@ -11,11 +11,12 @@
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
-function createNewState (dialogue, image, direction, silent) {
+function createNewState (dialogue, image, direction, silent, marker) {
 	var newStateObject = {dialogue:dialogue,
                           image:image,
                           direction:direction,
-                          silent:silent};
+                          silent:silent,
+                          marker:marker};
 						  
 	return newStateObject;
 }
@@ -182,6 +183,7 @@ function parseDialogue (caseObject, replace, content) {
         var dialogue = $(this).html();
         var direction = $(this).attr('direction');
         var silent = $(this).attr('silent');
+        var marker = $(this).attr('marker');
         
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
@@ -196,7 +198,7 @@ function parseDialogue (caseObject, replace, content) {
             silent = false;
         }
         
-        states.push(createNewState(dialogue, image, direction, silent));
+        states.push(createNewState(dialogue, image, direction, silent, marker));
 	});
 	
 	return states;
@@ -262,13 +264,30 @@ function updateBehaviour (player, tag, replace, content, opp) {
             var target =           states[i].attr("target");
             var filter =           states[i].attr("filter");
 			var targetStage =      states[i].attr("targetStage");
+			var targetTimeInStage =      states[i].attr("targetTimeInStage");
+			var targetSaidMarker =        states[i].attr("targetSaidMarker");
+			var targetNotSaidMarker =     states[i].attr("targetNotSaidMarker");
 			var oppHand =          states[i].attr("oppHand");
 			var hasHand =          states[i].attr("hasHand");
 			var alsoPlaying =      states[i].attr("alsoPlaying");
 			var alsoPlayingStage = states[i].attr("alsoPlayingStage");
 			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
+			var alsoPlayingTimeInStage =  states[i].attr("alsoPlayingTimeInStage");
+			var alsoPlayingSaidMarker =   states[i].attr("alsoPlayingSaidMarker");
+			var alsoPlayingNotSaidMarker = states[i].attr("alsoPlayingNotSaidMarker");
 			var totalMales =	   states[i].attr("totalMales");
 			var totalFemales =	   states[i].attr("totalFemales");
+			var timeInStage =      states[i].attr("timeInStage");
+			var lossesInRow =      states[i].attr("consecutiveLosses");
+			var totalAlive =         states[i].attr("totalAlive");
+			var totalExposed =       states[i].attr("totalExposed");
+			var totalNaked =         states[i].attr("totalNaked");
+			var totalMasturbating =     states[i].attr("totalMasturbating");
+			var totalFinished =      states[i].attr("totalFinished");
+			var totalRounds = 	states[i].attr("totalRounds");
+			var saidMarker =        states[i].attr("saidMarker");
+			var notSaidMarker =     states[i].attr("notSaidMarker");
+			var customPriority =    states[i].attr("priority");
 			var counters = [];
 			states[i].find("condition").each(function () {
 				var counter = $(this);
@@ -323,6 +342,48 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "targetStage" requirement
 				}
 			}
+
+			// markers (priority = 1)
+			// marker checks have very low priority as they're mainly intended to be used with other target types
+			if (opp !== null && targetSaidMarker) {
+				if (targetSaidMarker in opp.markers) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+			if (targetNotSaidMarker) {
+				if (!(targetNotSaidMarker in opp.markers)) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+
+			// consecutiveLosses (priority = 60)
+			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
+				var targetPieces = lossesInRow.split("-");
+				var minLosses = parseInt(targetPieces[0], 10);
+				var maxLosses = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minLosses;
+				if (opp !== null) { // if there's a target, look at their losses
+					if (minLosses <= opp.consecutiveLosses && opp.consecutiveLosses <= maxLosses) {
+						totalPriority += 60;
+					}
+					else {
+						continue;				// failed "consecutiveLosses" requirement
+					}
+				}
+				else { // else look at your own losses
+					if (minLosses <= players[player].consecutiveLosses && players[player].consecutiveLosses <= maxLosses) {
+						totalPriority += 60;
+					}
+					else {
+						continue;
+					}
+				}
+			}
 			
 			// oppHand (priority = 30)
 			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
@@ -338,6 +399,20 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 				}
 			}
+
+			// targetTimeInStage (priority = 25)
+			if (opp !== null && typeof targetTimeInStage !== typeof undefined) {
+				var targetPieces = targetTimeInStage.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime === 0) { minTime = -1; } //allow post-strip time to count as 0
+				if (minTime <= opp.timeInStage && opp.timeInStage <= maxTime) {
+					totalPriority += 25;
+				}
+				else {
+					continue;				// failed "targetTimeInStage" requirement
+				}
+			}
 			
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
@@ -349,7 +424,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				}
 			}
 			
-            // alsoPlaying, alsoPlayingStage, alsoPlayingHand (priority = 100, 40, 5)
+            // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
 			
 				var foundEm = false;
@@ -381,6 +456,17 @@ function updateBehaviour (player, tag, replace, content, opp) {
 							continue;		// failed "alsoPlayingStage" requirement
 						}
 					}
+					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
+						var targetPieces = alsoPlayingTimeInStage.split("-");
+						var minTime = parseInt(targetPieces[0], 10);
+						var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+						if (minTime <= players[j].timeInStage && players[j].timeInStage <= maxTime) {
+							totalPriority += 15;
+						}
+						else {
+							continue;		// failed "alsoPlayingTimeInStage" requirement
+						}
+					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
 						if (handStrengthToString(hands[j].strength) === alsoPlayingHand)
 						{
@@ -388,6 +474,23 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 						else {
 							continue;		// failed "alsoPlayingHand" requirement
+						}
+					}
+					// marker checks have very low priority as they're mainly intended to be used with other target types
+					if (alsoPlayingSaidMarker) {
+						if (alsoPlayingSaidMarker in players[j].markers) {
+							totalPriority += 1;
+						}
+						else {
+							continue;
+						}
+					}
+					if (alsoPlayingNotSaidMarker) {
+						if (!(alsoPlayingNotSaidMarker in players[j].markers)) {
+							totalPriority += 1;
+						}
+						else {
+							continue;
 						}
 					}
 				}
@@ -420,6 +523,33 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			if (!matchCounter) {
 				continue; // failed filter count
 			}
+
+			// totalRounds (priority = 10)
+			if (typeof totalRounds !== typeof undefined) {
+				var targetPieces = totalRounds.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime <= currentRound && currentRound <= maxTime) {
+					totalPriority += 10;
+				}
+				else {
+					continue;		// failed "totalRounds" requirement
+				}
+			}
+
+			// timeInStage (priority = 8)
+			if (typeof timeInStage !== typeof undefined) {
+				var targetPieces = timeInStage.split("-");
+				var minTime = parseInt(targetPieces[0], 10);
+				var maxTime = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minTime;
+				if (minTime === 0) { minTime = -1; } //allow post-strip time to count as 0
+				if (minTime <= players[player].timeInStage && players[player].timeInStage <= maxTime) {
+					totalPriority += 8;
+				}
+				else {
+					continue;		// failed "timeInStage" requirement
+				}
+			}
 			
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
@@ -431,8 +561,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						count++;
 					}
 				}
-				if (count + '' === totalMales)
-				{
+				var targetPieces = totalMales.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;		// priority
 				}
 				else {
@@ -450,13 +582,113 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						count++;
 					}
 				}
-				if (count + '' === totalFemales)
-				{
+				var targetPieces = totalFemales.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
 					totalPriority += 5;		// priority
 				}
 				else {
 					continue;		// failed "totalFemales" requirement
 				}
+			}
+
+			// totalAlive (priority = 3)
+			if (typeof totalAlive !== typeof undefined) {
+				var count = getNumPlayersInStage(STAGE_ALIVE);
+				var targetPieces = totalAlive.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
+					totalPriority += 2 + maxValue; //priority is weighted by max, so that higher totals take priority
+				}
+				else {
+					continue;		// failed "totalAlive" requirement
+				}
+			}
+
+			// totalExposed (priority = 4)
+			if (typeof totalExposed !== typeof undefined) {
+				var count = 0;
+				for (var q = 0; q < players.length; q++) {
+					if (players[q] && !!players[q].exposed) {
+						count++;
+					}
+				}
+				var targetPieces = totalExposed.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
+					totalPriority += 4 + maxValue; //priority is weighted by max, so that higher totals take priority
+				}
+				else {
+					continue;		// failed "totalExposed" requirement
+				}
+			}
+
+			// totalNaked (priority = 5)
+			if (typeof totalNaked !== typeof undefined) {
+				var count = getNumPlayersInStage(STAGE_NAKED);
+				var targetPieces = totalNaked.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority;
+				}
+				else {
+					continue;		// failed "totalNaked" requirement
+				}
+			}
+
+			// totalMasturbating (priority = 5)
+			if (typeof totalMasturbating !== typeof undefined) {
+				var count = getNumPlayersInStage(STAGE_MASTURBATING);
+				var targetPieces = totalMasturbating.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority;
+				}
+				else {
+					continue;		// failed "totalMasturbating" requirement
+				}
+			}
+
+			// totalFinished (priority = 5)
+			if (typeof totalFinished !== typeof undefined) {
+				var count = getNumPlayersInStage(STAGE_FINISHED);
+				var targetPieces = totalFinished.split("-");
+				var minValue = parseInt(targetPieces[0], 10);
+				var maxValue = targetPieces.length > 1 ? parseInt(targetPieces[1], 10) : minValue;
+				if (minValue <= count && count <= maxValue) {
+					totalPriority += 5 + maxValue; //priority is weighted by max, so that higher totals take priority
+				}
+				else {
+					continue;		// failed "totalFinished" requirement
+				}
+			}
+
+			// markers (priority = 1)
+			// marker checks have very low priority as they're mainly intended to be used with other target types
+			if (saidMarker) {
+				if (saidMarker in players[player].markers) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+			if (notSaidMarker) {
+				if (!(notSaidMarker in players[player].markers)) {
+					totalPriority += 1;
+				}
+				else {
+					continue;
+				}
+			}
+
+			if (typeof customPriority !== typeof undefined) {
+				totalPriority = parseInt(customPriority, 10); //priority override
 			}
 			
 			// Finished going through - if a state has still survived up to this point,
