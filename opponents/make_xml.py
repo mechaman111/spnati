@@ -40,7 +40,7 @@ def get_cases_dictionary():
 	d["male_must_strip"] = [{"key":"male_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
 	d["male_removing_accessory"] = [{"key":"male_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
 	d["male_removing_minor"] = [{"key":"male_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
-	d["male_removing_major"] = [{"key":"male_removing_major", "image":"interested", "text":"Finally getting ~name~ out of their ~clothing~!"}]
+	d["male_removing_major"] = [{"key":"male_removing_major", "image":"interested", "text":"Finally getting ~name~ out of his ~clothing~!"}]
 	d["male_chest_will_be_visible"] = [{"key":"male_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see that chest of yours, ~name~!"}]
 	d["male_crotch_will_be_visible"] = [{"key":"male_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
 	
@@ -64,7 +64,7 @@ def get_cases_dictionary():
 	d["female_must_strip"] = [{"key":"female_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
 	d["female_removing_accessory"] = [{"key":"female_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
 	d["female_removing_minor"] = [{"key":"female_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
-	d["female_removing_major"] = [{"key":"female_removing_major", "image":"interested", "text":"Finally getting ~name~ out of their ~clothing~!"}]
+	d["female_removing_major"] = [{"key":"female_removing_major", "image":"interested", "text":"Finally getting ~name~ out of her ~clothing~!"}]
 	d["female_chest_will_be_visible"] = [{"key":"female_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see those tits of yours, ~name~!"}]
 	d["female_crotch_will_be_visible"] = [{"key":"female_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
 	
