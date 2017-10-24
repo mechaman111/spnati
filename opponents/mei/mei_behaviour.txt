@@ -162,7 +162,9 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 
 1-good_hand,alsoPlaying:weiss=happy,It's nice to finally meet you, Weiss. I use Schnee Dust to power my endothermic blaster!
 1-good_hand,alsoPlaying:weiss=interested,I'm safe this time. Did you get a good hand too, Weiss?
- 
+1-okay_hand,alsoPlaying:leela,notSaidMarker:mei_leela_question,marker:mei_leela_question=sad,Leela, is it true that you once met a man who was accidentally in cryostasis for <i>a thousand years</i>?
+1-okay_hand,alsoPlaying:leela,saidMarker:mei_leela_question,notSaidMarker:mei_leela_sadness,marker:mei_leela_sadness=loss,A thousand years... Everyone he ever knew would have passed away. Sorry for bringing up such a sad topic during the game, Leela.
+
 #lost shoes
 2-good_hand,marker:mei_speaking_chinese=happy,&#x563F;&#xFF0C;&#x6211;&#x53C8;&#x56DE;&#x6765;&#x5566;&#x3002;
 2-good_hand=interested,Nothing can stop me! 
@@ -211,6 +213,8 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 6-bad_hand=sad,Oh, my...
 6-bad_hand=embarrassed,It's starting to get dangerous...
 6-bad_hand=sad,This does not bode well.
+
+6-bad_hand,alsoPlaying:d.va,alsoPlayingStage:4=horny,Even though it'd be bad for me, I was kind of hoping you'd somehow be wearing your police officer outfit under your suit this time, Hana.
 
 #lost all clothing
 -3-good_hand=happy,Yay!
@@ -319,6 +323,16 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 0-female_must_strip,filter:cheerful,targetStage:2=sad,Sorry again... But you seem to be taking losing well!
 0-female_must_strip,filter:princess,targetStage:0=shocked,Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed... 
 1-female_must_strip,filter:princess,targetStage:0=shocked,Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed... 
+-3-female_must_strip,filter:villain=interested,Time to put your evil plans on ice!
+0-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+1-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+2-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+3-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+4-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+5-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+6-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+-3-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
+-1-female_must_strip,target:dawn,targetStage:5=embarrassed,Time for the big D! Um, not that. I meant Dawn...
 0-female_must_strip,target:d.va,targetStage:0=happy,Thanks for taking one for the team, Hana!
 1-female_must_strip,target:d.va,targetStage:0=loss,Hana, don't you dare eat Snowball with your Defense Matrix again! I didn't pick these cards...
 0-female_must_strip,target:evie,targetStage:0=happy,Evie, <i>ice</i> to meet you! Ha ha!
@@ -356,8 +370,13 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 3-female_must_strip,target:nagisa,targetStage:2=embarrassed,You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.
 0-female_must_strip,target:orendi,targetStage:0=interested,Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!
 1-female_must_strip,target:orendi,targetStage:0=interested,Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!
+0-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
+1-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
+2-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
+3-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
 0-female_must_strip,target:revy,targetStage:0=happy,It's nice to meet you, Revy. Is it true that you're half Chinese? I hope that we can be friends.
 3-female_must_strip,target:revy=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+#0-female_must_strip,target:ruby,targetStage:0,filter:rwby=loss,Where's the rest of your team, Ruby? Oh no! Are they okay?!           ####I can't recall how to make this fire when only one "rwby"-filtered opponents is playing.
 0-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 1-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 0-female_must_strip,target:seven,targetStage:0=calm,Excuse me, Ms. Nine, but are you an astronaut? Maybe you've met my friend Winston at the Lunar Colony?
@@ -415,7 +434,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
  
 #lost shoes
 2-male_removing_accessory=calm,You want to remove that?
-2-male_removed_accessory=sad,I loved your ~clothing~. You should've kept it on you!
+2-male_removed_accessory=sad,I loved your ~clothing~. Couldn't you have taken off something else?
 2-female_removing_accessory=strip,If you don't know what to take off, we could make suggestions.
 2-female_removed_accessory=interested,Don't worry. You weren't going to hang on to that long anyway!
  
@@ -669,7 +688,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 
 0-female_removed_major,target:d.va=happy,Wow, Hana! If you wanted to start in your underwear, you could have just said so!
 1-female_removed_major,target:d.va=loss,Hana, I'm sorry! You always seemed so good at games...
-2-female_removed_major,target:d.va=horny,Even though it'd be bad for me, I was kind of hoping you'd somehow be wearing your police officer outfit under your suit this time.
+2-female_removed_major,target:d.va=loss,Hana, I'm sorry! You always seemed so good at games...
 3-female_removed_major,target:d.va=shocked,Wow, you took off the whole suit! You're so good at charging in, Hana!
 4-female_removed_major,target:d.va=happy,Now that you have your suit off, it feels like I'm winning again, Hana!
 5-female_removed_major,target:d.va=interested,Sorry, Hana, but I had to even the score!
@@ -681,6 +700,15 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 2-female_removed_major,target:korra,targetStage:5=shocked,Ooh, you're so muscular! I've been meaning to work out a bit more... B-but I don't think I could handle <i>your</i> workout routine.
 3-female_removed_major,target:korra,targetStage:5=shocked,Ooh, you're so muscular! I've been meaning to work out a bit more... B-but I don't think I could handle <i>your</i> workout routine.
 4-female_removed_major,target:korra,targetStage:5=shocked,Ooh, you're so muscular! I've been meaning to work out a bit more... B-but I don't think I could handle <i>your</i> workout routine.
+0-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+1-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+2-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+3-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+4-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+5-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+6-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+-3-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
+-1-female_removed_major,target:marinette,targetStage:2=happy,Wow, you have such piercing blue eyes beneath your mask, Marinette!
 0-female_removed_major,target:mercy=embarrassed,I'm sorry, Angela, but we all really enjoyed that!
 1-female_removed_major,target:mercy=embarrassed,I'm sorry, Angela, but we all really enjoyed that!
 2-female_removed_major,target:mercy=embarrassed,I'm sorry, Angela, but we all really enjoyed that!
@@ -819,8 +847,9 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 -3-male_crotch_will_be_visible=horny,There seems to be a bulge in your pants, mister. I must discover it! You know, for science.
 -3-male_small_crotch_is_visible=loss,Oh. Did it shrink in the cold?
 -3-male_small_crotch_is_visible=loss,I guess my body didn't do much for you.
--3-male_medium_crotch_is_visible=embarrassed,I haven't been with a man in almost ten years. Want to help make up for lost time?
+-3-male_medium_crotch_is_visible,marker:mei_nine_year_itch=embarrassed,I haven't been with a man in almost ten years. Want to help make up for lost time?
 -3-male_large_crotch_is_visible=embarrassed,I knew they could get that big in theory, but...
+-3-male_large_crotch_is_visible,totalMales:2-4,totalNaked:3-5=horny,Maybe Lena's right. I'm an expert at making people stiff!
  
 -3-female_chest_will_be_visible=interested,Time to take that next big step!
 -3-female_small_chest_is_visible=embarrassed,Sure, there's not a lot to look at, but your nipples are very nice...
@@ -1047,6 +1076,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 -3-male_start_masturbating=embarrassed,And it's normal for my body to react to what it's seeing.
 -3-male_masturbating=loss,Hypothetically, would someone else rubbing it like that for you be the best way to make you feel good?
 -3-male_finished_masturbating=shocked,That's a lot more volume than I expected!
+-3-male_finished_masturbating=happy,I want to see that again! Let me know when your cooldown has refreshed.
  
 -3-female_must_masturbate=happy,That was a close one. You had me so worried!
 -3-female_start_masturbating=loss,But I feel bad for you. I'll join you next round if I can.
@@ -1144,6 +1174,7 @@ must_masturbate_first=shocked,That's a Play of the Game I don't want to take par
 must_masturbate_first=loss,Being naked was bad enough... I don't think I'm ready to start... this.
 must_masturbate=calm,It's less embarrassing if you're not the first one to lose, I guess...
 start_masturbating=starting,Don't be scared, Mei. You've had a lot of alone time in the arctic!
+start_masturbating,marker:mei_nine_year_itch=starting,Sorry if I seem inexperienced. I have haven't done this for over nine years...
 masturbating,marker:mei_speaking_chinese=shocked,&#x54E6;! &#x611F;&#x89C9;&#x6BD4;&#x6211;&#x7684;&#x8BB0;&#x5FC6;&#x66F4;&#x597D;&#xFF01;
 masturbating,marker:mei_speaking_chinese=embarrassed,&#x554A;! &#x563F;! &#x4E0D;&#x8981;&#x76EF;&#x7740;&#x6211;&#xFF0C;&#x8BF7;&#xFF01;
 heavy_masturbating,marker:mei_speaking_chinese=heavy,&#x6211;&#x5F88;&#x70ED;&#xFF0C;&#x5F15;&#x8D77;&#x5168;&#x7403;&#x53D8;&#x6696;&#xFF01;
@@ -1155,6 +1186,8 @@ finished_masturbating=happy,I hope that we <i>all</i> get to have a happy ending
 finished_masturbating=interested,Sometimes I surprise myself.
 
 game_over_defeat=interested,Well played, ~name~! But you'll be in my shoes next time.
+game_over_defeat,target:nugi-chan=happy,Haha, it's not every day I get Mei'd by a maid!
+game_over_defeat,target:raven=interested,I've never lost to a zombie before. Great game, Raven!
  
 #victory lines. one for each stage.
 0-game_over_victory=embarrassed,Sorry! Sorry, I'm sorry. Sorry.
