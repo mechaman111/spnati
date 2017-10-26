@@ -14,6 +14,7 @@ tag=confident
 tag=school_uniform
 tag=boob_envy
 tag=mean
+tag=japanese
 
 #required for meta.xml
 #select screen image
@@ -25,7 +26,7 @@ artist=AzideBen
 description=Ami Kawashima is known as a kind and generious model, and she'll do whatever she can to maintain that facade.
 #release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
 
-#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#You can have more than one start line
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-happytoplay,Oh, I like strip poker. Let's play!
 
@@ -33,11 +34,6 @@ start=0-happytoplay,Oh, I like strip poker. Let's play!
 #CLOTHING
 #Items of clothing should be listed here in order of removal.
 #The values are formal name, lower case name, how much they cover, what they cover
-#Please do not put spaces around the commas.
-#How much they cover = important (covering nudity), major (a lot of skin), minor (small amount of skin), extra (accessories, boots, etc)
-#What they cover = upper (upper body), lower (lower body), other (neither).
-#There must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
-#Below is an example of Rosalina's clothing. Please adjust these values to match your character's clothing.
 clothes=Shoes,shoes,extra,other
 clothes=Socks,socks,minor,other
 clothes=Blazer,blazer,major,upper
@@ -185,9 +181,9 @@ bad_hand=sad,Greeeat.
 
 #losing seventh item of clothing
 6-must_strip_winning=shocked,Finally my turn?
-6-must_strip_normal=defeat,It was inevitable, huh.
+6-must_strip_normal=stripping,It was inevitable, huh.
 6-must_strip_losing=angry,Wonderful...
-6-stripping=stripping,Feast your eyes...
+6-stripping=stripping2,Feast your eyes...
 7-stripped=stripped,I hope all that junk food didn't do too much on me.
 
 
@@ -196,15 +192,6 @@ bad_hand=sad,Greeeat.
 #These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
 #Writing different variations is important here, as these lines will be spoken about thirty times per game.
 #The "human" versions of the lines will only be spoken if the human player is stripping.
-
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-male_human_must_strip=happy,Sorry, ~name~!
-male_must_strip=happy,Woo, not me!
-female_human_must_strip=happy,Don't worry about it, ~name~!
-female_must_strip=happy,Try not to feel embarrassed.
-
-#stage-specific lines that override the stage-generic ones
 
 #fully clothed
 0-male_human_must_strip=happytostrip,Let's go, ~name~!
@@ -222,10 +209,12 @@ female_must_strip=happy,Try not to feel embarrassed.
 2-male_human_must_strip=confident,Not it!
 2-male_must_strip=confident,Yay, not me!
 2-female_human_must_strip=teasing,Way to make this slightly more interesting.
+2-female_human_must_strip=happy,Don't worry about it, ~name~!
 2-female_must_strip=confident,Excellent! Let's go, ~name~.
 
 #lost 3 items
 3-male_human_must_strip=sassy,Way to go, big boy.
+3-male_human_must_strip=happy,Sorry, ~name~!
 3-male_must_strip=sassy,Good, good.
 3-female_human_must_strip=interestedfemalesmaller,You better not look better than me.
 3-female_must_strip=interestedfemalesmaller,This is getting fun, huh?
@@ -233,8 +222,10 @@ female_must_strip=happy,Try not to feel embarrassed.
 #lost 4 items
 4-male_human_must_strip=calm,I don't want to be the only one showing off.
 4-male_must_strip=calm,Is it getting hot in here?
+4-male_must_strip=happy,Woo, not me!
 4-female_human_must_strip=calm,Show some skin, why don't you?
 4-female_must_strip=calm,I can't be the only one showing off, anyway.
+4-female_must_strip=happy,Try not to feel embarrassed.
 
 #lost 5 items
 5-male_human_must_strip=sassy,You should join me, though, I like to show off.
@@ -248,12 +239,12 @@ female_must_strip=happy,Try not to feel embarrassed.
 6-female_human_must_strip=interestedfemalebigger,Don't think you can one-up me.
 6-female_must_strip=interestedfemalesmaller,Oooh, this is gonna be fun.
 
-
 #lost all clothing items
 -3-male_human_must_strip=embarrassed,Yes, join me...
 -3-male_must_strip=embarrassed,Not bad... not bad at all.
 -3-female_human_must_strip=embarrassed,I like what I see.
 -3-female_must_strip=embarrassed,Mmmm...
+-3-female_must_strip=leaning,Who had the worst hand?
 
 #masturbating
 -2-male_human_must_strip=calm,Yes, show me what you got...
@@ -274,16 +265,6 @@ female_must_strip=happy,Try not to feel embarrassed.
 #Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
 #Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
 
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-male_removing_accessory=sad,How lame.
-male_removed_accessory=calm,Onward to the big stuff, hm?
-female_removing_accessory=sad,That's all?
-female_removed_accessory=calm,I hope you don't have too many small things, ~name~.
-
-#stage-specific lines that override the stage-generic ones
-
-##another character is removing accessories
 #fully clothed
 0-male_removing_accessory=calm,Can't expect much yet, I guess.
 0-male_removed_accessory=,Onwards to the next round.
@@ -296,8 +277,8 @@ female_removed_accessory=calm,I hope you don't have too many small things, ~name
 1-male_removing_accessory=teasing,I hope you don't have too many accessories.
 1-male_removed_accessory=happytostrip,Woohoo.
 1-female_removing_accessory=sad,Booring, hurry up.
-1-female_removed_accessory=teasing,Relish the small stuff while you still have them. 
-
+1-female_removed_accessory=teasing,Relish the small stuff while you still have them.
+1-female_removed_accessory=calm,I hope you don't have too many small things, ~name~.
 
 #lost 2 items
 2-male_removing_accessory=confident,About time, huh?
@@ -313,7 +294,9 @@ female_removed_accessory=calm,I hope you don't have too many small things, ~name
 
 #lost 4 items
 4-male_removing_accessory=embarrassed,That's all?
+4-male_removing_accessory=sad,How lame.
 4-male_removed_accessory=indifferent,Oh well.
+4-male_removed_accessory=calm,Onward to the big stuff, hmmm?
 4-female_removing_accessory=embarrassed,I'm showing so much and that's all you got?
 4-female_removed_accessory=interestedfemalesmaller,You better lose faster.
 
@@ -328,7 +311,6 @@ female_removed_accessory=calm,I hope you don't have too many small things, ~name
 6-male_removed_accessory=moveon,Hurry up.
 6-female_removing_accessory=angry,Lame.
 6-female_removed_accessory=moveon,Let's just get on with it.
-
 
 #nude
 -3-male_removing_accessory=angry,God damn it, that's all?
@@ -353,29 +335,24 @@ female_removed_accessory=calm,I hope you don't have too many small things, ~name
 #OPPONENT REMOVING MINOR CLOTHING
 #Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
 
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-male_removing_minor=calm,Oh, this is fun.
-male_removed_minor=happy,We're getting somewhere, huh?
-female_removing_minor=calm,Very nice.
-female_removed_minor=happy,Let's get more off!
-#stage-specific lines that override the stage-generic ones
-
 #fully clothed
 0-male_removing_minor=happy,Your turn again!
 0-male_removed_minor=happytostrip,You better be feeling worried.
-0-female_removing_minor=interestedgeneric,Ooh, another lifeline goes down.
+0-female_removing_minor=calm,Very nice.
 0-female_removed_minor=calm,If only I was in your position, right?
 
 #lost 1 item
 1-male_removing_minor=indifferent,At least it's not me.
+1-male_removing_minor=calm,Oh, this is fun.
 1-male_removed_minor=calm,Good, good.
 1-female_removing_minor=teasing,Is it wrong to say I'm glad you lost?
+1-female_removing_minor=interestedgeneric,Ooh, another lifeline goes down.
 1-female_removed_minor=happy,We're close to the good stuff, aren't we?
 
 #lost 2 items
 2-male_removing_minor=teasing,So, what's gonna come off?,
 2-male_removed_minor=confident,Eh, not bad.
+2-male_removed_minor=happy,We're getting somewhere, huh?
 2-female_removing_minor=teasing,So, what have you got to lose?
 2-female_removed_minor=confident,You know, you might look better without that.
 
@@ -384,6 +361,7 @@ female_removed_minor=happy,Let's get more off!
 3-male_removed_minor=calm,I think we're pretty even now.
 3-female_removing_minor=calm,What's it gonna be?
 3-female_removed_minor=sassy,Hey, looking good!
+3-female_removed_minor=happy,Let's get more off!
 
 #lost 4 items
 4-male_removing_minor=interestedgeneric,You're up, ~name~.
@@ -402,7 +380,6 @@ female_removed_minor=happy,Let's get more off!
 6-male_removed_minor=worried,Luck of the cards has definitely been on your side.
 6-female_removing_minor=defeat,Wow, aren't you lucky?
 6-female_removed_minor=moveon,Relish in the luck you have now, it might not happen next time.
-
 
 #naked
 -3-male_removing_minor=disbelief,I can't believe you're only on that.
@@ -428,15 +405,6 @@ female_removed_minor=happy,Let's get more off!
 #Major clothing reveals a significant amount of skin and likely underwear.
 #However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
 
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-male_removing_major=calm,Oh, things are heating up, hm?
-male_removed_major=happy,You look better without it, ~name~.
-female_removing_major=interestedfemalesmaller,Another lifeline down. Worried, ~name~?
-female_removed_major=sassy,You look cute!
-
-#stage-specific lines that override the stage-generic ones
-
 #fully clothed
 0-male_removing_major=happytostrip,Oh no, someone's losing.
 0-male_removed_major=happy,Way to show some skin, hotshot!
@@ -457,15 +425,19 @@ female_removed_major=sassy,You look cute!
 
 #lost 3 items
 3-male_removing_major=sassy,Way to get on my level!
+3-male_removing_major=calm,Oh, things are heating up, hm?
 3-male_removed_major=calm,Hope you know you're going down.
 3-female_removing_major=sassy,What's it gonna be?
 3-female_removed_major=happy,We're both making this game a little interesting now, huh? Moreso me, maybe.
+3-female_removed_major=sassy,You look cute!
 
 #lost 4 items
 4-male_removing_major=confident,Yeah, join me!
 4-male_removed_major=happytostrip,Not bad, not bad.
+4-male_removed_major=happy,You look better without it, ~name~.
 4-female_removing_major=calm,Join me, ~name~.
 4-female_removed_major=happytostrip,Not bad, just don't try to steal my light.
+4-female_removed_major=interestedfemalesmaller,Another lifeline down. Worried, ~name~?
 
 #lost 5 items
 5-male_removing_major=happytostrip,Let's see some skin.
@@ -478,7 +450,6 @@ female_removed_major=sassy,You look cute!
 6-male_removed_major=calm,Not bad.
 6-female_removing_major=embarrassed,Let's see if you can compare.
 6-female_removed_major=sassy,Almost as good as me. Almost.
-
 
 #nude
 -3-male_removing_major=horny,Look at me while you undress.
@@ -505,9 +476,6 @@ female_removed_major=sassy,You look cute!
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
-male_chest_will_be_visible=interested,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
-male_chest_is_visible=interested,What the character says once the male character's chest is visible.
-male_crotch_will_be_visible=horny,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
 male_small_crotch_is_visible=calm,Ah, you weren't hiding much from us, huh?
 male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, very nice, ~name~.
 male_large_crotch_is_visible=interestedmale,Oh... oh my.
@@ -682,20 +650,6 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 #The "masturbating" line will be spoken a little after the opponent has started but before they climax.
 #When the opponent climaxes, your character will say the "finished_masturbating" line.
 
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-male_must_masturbate=interested,What the character says when a male character has lost a hand while nude, and must masturbate.
-male_start_masturbating=horny,What the character says when a male character has started masturbating.
-male_masturbating=horny,What the character says while a male character is masturbating.
-male_finished_masturbating=shocked,What the character says when a male character "finishes" masturbating.
-
-female_must_masturbate=interested,What the character says when a female character has lost a hand while nude, and must masturbate.
-female_start_masturbating=horny,What the character says when a female character has started masturbating.
-female_masturbating=horny,What the character says while a female character is masturbating.
-female_finished_masturbating=shocked,What the character says when a female character "finishes" masturbating.
-
-#stage-specific lines that override the stage-generic ones
-
 #fully clothed
 0-male_must_masturbate=happytostrip,On one hand, you lost terribly. On the other, you get to have fun!
 0-male_start_masturbating=indifferent,Sorry I'm not providing much of a show for you, with all my clothes and all.
@@ -835,7 +789,7 @@ game_over_victory=one,Well played game, I guess.
 2-game_over_victory=teasing,I mean, my feet are cute and all, but that's all?
 3-game_over_victory=laugh,Aww, you guys almost got to see some skin. Such a shame.
 4-game_over_victory=disappointed,Well played game, I guess.
-5-game_over_victory=happytostrip,I guess this should be enough for everyone, right? Good game.
+5-game_over_victory=6-stripped,I guess this should be enough for everyone, right? Good game.
 6-game_over_victory=victory,Aren't my boobs the best? I'll let the runner up touch them if they want.
 7-game_over_victory=calm,Was a pleasure playing with you all. Shame you didn't see me cum, hehe.
 -3-game_over_victory=shocked,Wow, that was close, huh? Good game!
