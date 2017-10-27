@@ -353,7 +353,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;
 				}
 			}
-			if (targetNotSaidMarker) {
+			if (opp !== null && targetNotSaidMarker) {
 				if (!(targetNotSaidMarker in opp.markers)) {
 					totalPriority += 1;
 				}
