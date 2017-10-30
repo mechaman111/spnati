@@ -95,14 +95,26 @@
             <case tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="0-calm.png">Angela, it's so good to see a familiar face! Do you remember when we played this game one time in Dorado?</state>
             </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="misty">
+                <state img="0-interested.png">If you want to be the very best, you have to want it a little more!</state>
+            </case>
             <case tag="female_must_strip" target="misty" targetStage="0">
                 <state img="0-interested.png">Time to make a splash, Misty!</state>
             </case>
             <case tag="female_must_strip" target="misty" targetStage="1">
                 <state img="0-interested.png">It turns out that ice <i>is</i> effective against water after all!</state>
             </case>
-            <case tag="female_must_strip" target="moon" targetStage="4">
-                <state img="0-sad.png">You should try to win like the rest of us, Moon. Don't drop out right away.</state>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="0-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="0-loss.png">You should have a little more self-respect, Moon!</state>
+            </case>
+            <case tag="female_must_strip" target="moon" targetStage="0">
+                <state img="0-happy.png">Wow! I've never played this with someone so eager!</state>
+            </case>
+            <case tag="female_must_strip" target="moon" targetStage="1" totalRounds="2">
+                <state img="0-shocked.png">I never expected you to change phases so quickly, Moon...</state>
             </case>
             <case tag="female_must_strip" target="orendi" targetStage="0">
                 <state img="0-interested.png">Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!</state>
@@ -171,6 +183,12 @@
             <case tag="female_removed_major" target="mercy">
                 <state img="0-embarrassed.png">I'm sorry, Angela, but we all really enjoyed that!</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="0-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="0-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="0-shocked.png">You started the game with that between your legs!? You must be really excited!</state>
             </case>
@@ -236,6 +254,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="0-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="0-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="0-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="0-embarrassed.png">It seems you didn't come prepared.</state>
@@ -316,6 +340,9 @@
             <case tag="female_removing_accessory" target="korra" targetStage="1">
                 <state img="0-embarrassed.png">So, Korra, you can control water using your body's energy? That doesn't seem very scientific.</state>
             </case>
+            <case tag="female_removing_accessory" target="raven" targetStage="0">
+                <state img="0-calm.png">Kicking things off with your boots?</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="0-embarrassed.png">Sorry! Sorry, I'm sorry. Sorry.</state>
             </case>
@@ -324,6 +351,9 @@
             </case>
             <case tag="female_removing_major" target="d.va">
                 <state img="0-interested.png">A bodysuit that leaves little to the imagination is the essence of discovery!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="0-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
             </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="0-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
@@ -343,11 +373,20 @@
             <case tag="female_chest_will_be_visible" target="evie">
                 <state img="0-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="0-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="0-interested.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="0-shocked.png">W-wait, not so fast! Slow down!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="0-interested.png">I'm sure you'll do better next hand!</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="0-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="0-embarrassed.png">~name~, I don't understand why you started the game wearing so little. You are about to be naked!</state>
@@ -382,13 +421,16 @@
                 <state img="0-interested.png">Uhmmm... I've been stationed at the South Pole for my job, if that's what you mean!</state>
             </case>
             <case tag="must_strip_losing">
-                <state img="0-loss.png">I lost first? Uhm...very well.</state>
+                <state img="0-loss.png">I lost first? Uhm... very well.</state>
             </case>
             <case alsoPlaying="korra" alsoPlayingStage="0-4" tag="must_strip_losing">
                 <state img="0-interested.png">Uhmmm... I've been stationed at the South Pole for my job, if that's what you mean!</state>
             </case>
             <case tag="stripping">
                 <state img="0-strip.png">Okay, I guess I'll take my gloves off first.</state>
+            </case>
+            <case alsoPlaying="raven" alsoPlayingStage="0" tag="stripping">
+                <state img="0-strip.png">Don't be bored, Raven. Things are going to heat up soon!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-happy.png">I can't wait to get started!</state>
@@ -436,6 +478,24 @@
             </case>
             <case tag="female_must_strip" target="marceline" targetStage="0">
                 <state img="1-interested.png">How do you float like that, Marceline? Could you show me the trick?</state>
+            </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="misty">
+                <state img="1-interested.png">If you want to be the very best, you have to want it a little more!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="1-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="1">
+                <state img="1-interested.png">It turns out that ice <i>is</i> effective against water after all!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="1-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="moon">
+                <state img="1-sad.png">You should try to win like the rest of us, Moon. Don't drop out right away.</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="1-loss.png">You should have a little more self-respect, Moon!</state>
             </case>
             <case tag="female_must_strip" target="orendi" targetStage="0">
                 <state img="1-interested.png">Wow, your arms are amazing! I wish I had an extra set of hands for when I'm the lab!</state>
@@ -501,6 +561,12 @@
             <case tag="female_removed_major" target="mercy">
                 <state img="1-embarrassed.png">I'm sorry, Angela, but we all really enjoyed that!</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="1-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="1-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
+            </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="1-happy.png">You don't disappoint!</state>
                 <state img="1-happy.png">Are you ranked Diamond, because you look very hard!</state>
@@ -565,6 +631,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="1-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="1-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="1-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="1-happy.png">Overcome all obstacles.</state>
@@ -642,6 +714,9 @@
             <case tag="female_removing_accessory" target="korra" targetStage="1">
                 <state img="1-embarrassed.png">So, Korra, you can control water using your body's energy? That doesn't seem very scientific.</state>
             </case>
+            <case tag="female_removing_accessory" target="raven" targetStage="0">
+                <state img="1-calm.png">Kicking things off with your boots?</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="1-happy.png">A-<i>Mei</i>-zing!</state>
             </case>
@@ -650,6 +725,9 @@
             </case>
             <case tag="female_removing_major" target="d.va">
                 <state img="1-happy.png">Remember that time Roadhog's just missed your body but ripped your suit off, Hana?</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="1-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
             </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="1-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
@@ -669,11 +747,20 @@
             <case tag="female_chest_will_be_visible" target="evie">
                 <state img="1-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="1-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="1-interested.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="1-happy.png">Haha, this is great!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="1-happy.png">It doesn't matter if we only made a little progress, as long as we're still ahead!</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="1-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="1-shocked.png">So soon! I was expecting to wait much longer.</state>
@@ -744,6 +831,18 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="2-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="misty">
+                <state img="2-interested.png">If you want to be the very best, you have to want it a little more!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="2-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="2-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="2-loss.png">You should have a little more self-respect, Moon!</state>
+            </case>
             <case tag="female_must_strip" target="nagisa" targetStage="2">
                 <state img="2-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state>
             </case>
@@ -783,7 +882,7 @@
                 <state img="2-strip.png">The quicker you lose everything, the quicker you can put it all back on again!</state>
             </case>
             <case tag="female_removed_major" target="d.va">
-                <state img="2-loss.png">Hana, I'm sorry! You always seemed so good at games...</state>
+                <state img="2-embarrassed.png">I haven't seen you wear that style before, Hana. Not that I'm looking when we're in the locker room...</state>
             </case>
             <case tag="female_removed_major" target="dawn" targetStage="4">
                 <state img="2-happy.png">Wow, cute bra, Dawn! I love the polka dots!</state>
@@ -796,6 +895,12 @@
             </case>
             <case tag="female_removed_major" target="mercy">
                 <state img="2-embarrassed.png">I'm sorry, Angela, but we all really enjoyed that!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="2-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="2-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="2-shocked.png" marker="mei_speaking_chinese">&#x5929;&#x554A;&#xFF01; It is indeed a stalagmite!</state>
@@ -856,6 +961,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="2-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="2-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="2-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="2-horny.png">Just wait a little longer and I'll catch up.</state>
@@ -933,6 +1044,9 @@
             <case tag="female_removing_accessory" target="korra" targetStage="1">
                 <state img="2-embarrassed.png">So, Korra, you can control water using your body's energy? That doesn't seem very scientific.</state>
             </case>
+            <case tag="female_removing_accessory" target="raven" targetStage="0">
+                <state img="2-calm.png">Kicking things off with your boots?</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="2-interested.png">Just ice delivered!</state>
                 <state img="2-horny.png">Oh, it was nothing, really. Good game!</state>
@@ -942,6 +1056,9 @@
             </case>
             <case tag="female_removing_major" target="d.va">
                 <state img="2-strip.png">Remember that time Roadhog's just missed your body but ripped your suit off, Hana?</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="2-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
             </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="2-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
@@ -958,11 +1075,20 @@
             <case tag="female_chest_will_be_visible" target="evie">
                 <state img="2-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="2-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="2-strip.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="2-happy.png">If you could keep it up, I could watch you for hours!</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="2-happy.png">Hey, let's not feel bad. This is fun!</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="2-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-interested.png">Will it be an icicle? Or a stalagmite?</state>
@@ -1026,6 +1152,18 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="3-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="misty">
+                <state img="3-interested.png">If you want to be the very best, you have to want it a little more!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="3-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="3-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="3-loss.png">You should have a little more self-respect, Moon!</state>
+            </case>
             <case tag="female_must_strip" target="nagisa" targetStage="2">
                 <state img="3-embarrassed.png">You seem like a really nice girl, Nagisa. Maybe you should just go home and keep warm.</state>
             </case>
@@ -1074,6 +1212,12 @@
             </case>
             <case tag="female_removed_major" target="mercy">
                 <state img="3-stripped.png">I'm sorry, Angela, but we all really enjoyed that!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="3-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="3-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="female_removed_major" target="tracer">
                 <state img="3-happy.png">Now it's starting to feel like the stakes are raised, like a real mission!</state>
@@ -1137,6 +1281,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="3-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="3-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="3-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="3-embarrassed.png" marker="mei_speaking_chinese">&#x6709;&#x672C;&#x4E8B;&#x5C31;&#x8FC7;&#x6765;&#x3002;</state>
@@ -1224,6 +1374,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="3-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="3-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="3-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -1242,11 +1395,20 @@
             <case tag="female_chest_will_be_visible" target="evie">
                 <state img="3-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="3-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="3-strip.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="3-embarrassed.png" marker="mei_overdressed">I feel so overdressed right now...</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="3-stripped.png">Well, that's something at least...</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="3-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="3-embarrassed.png">~name~ must now take off underwear, currently feeling excited and a little embarrassed.</state>
@@ -1257,7 +1419,7 @@
             </case>
             <case alsoPlaying="chara" tag="good_hand">
                 <state img="3-happy.png">I'm safe this hand. How did you go, Chara?</state>
-                <state img="3-strip.png">I've been eating right and getting excercise. I don't know why the public is so focused on a scientist's body type...</state>
+                <state img="3-strip.png">I've been eating right and getting exercise. I don't know why the public is so focused on a scientist's body type...</state>
             </case>
             <case tag="okay_hand">
                 <state img="3-interested.png">Hmm... I still have a chance!</state>
@@ -1312,6 +1474,18 @@
             <case tag="female_must_strip" target="leela" targetStage="0">
                 <state img="4-calm.png">Leela, is it true that you used to work in the field of cryonics?</state>
             </case>
+            <case consecutiveLosses="2" tag="female_must_strip" target="misty">
+                <state img="4-interested.png">If you want to be the very best, you have to want it a little more!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="4-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="4-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="4-loss.png">You should have a little more self-respect, Moon!</state>
+            </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="4-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
             </case>
@@ -1348,6 +1522,12 @@
             </case>
             <case tag="female_removed_major" target="mercy">
                 <state img="4-stripped.png">I'm sorry, Angela, but we all really enjoyed that!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="4-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="4-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="female_removed_major" target="tracer">
                 <state img="4-happy.png">Now it's starting to feel like the stakes are raised, like a real mission!</state>
@@ -1408,6 +1588,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="4-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="4-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="4-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="4-happy.png">You're amazing.</state>
@@ -1494,6 +1680,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="4-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="4-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="4-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -1512,11 +1701,20 @@
             <case tag="female_chest_will_be_visible" target="evie">
                 <state img="4-interested.png">Evie, are you wearing hairties? It might be time to let your hair hang down.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="4-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="4-interested.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="4-embarrassed.png">Did you know that thawed ice can cause a surprising amount of dampness?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="4-calm.png">Are you teasing us, ~name~?</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="4-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="female_removed_minor" target="zone-tan" targetStage="1">
                 <state img="4-strip.png">You're too good at this! I started with more, but now we're even.</state>
@@ -1572,6 +1770,15 @@
             <case tag="female_must_strip" target="gogo" targetStage="0">
                 <state img="5-calm.png">GoGo, I'm looking forward to seeing your lab! You're welcome to see mine anytime.</state>
             </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="5-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="5-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
+            <case consecutiveLosses="3" tag="female_must_strip" target="moon">
+                <state img="5-loss.png">You should have a little more self-respect, Moon!</state>
+            </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="5-loss.png">Purple with a skull logo... You're not affiliated with Sombra the hacker, are you?!</state>
             </case>
@@ -1602,6 +1809,12 @@
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2">
                 <state img="5-happy.png">Wow, you have such piercing blue eyes beneath your mask, Marinette!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="5-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="5-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="5-shocked.png">Whoa! That's huge!</state>
@@ -1657,6 +1870,12 @@
             </case>
             <case tag="female_removed_accessory" target="korra" targetStage="2">
                 <state img="5-calm.png">Those fighting moves you use seem tiring... I'd rather keep using my devices to manipulate water!</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="5-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="5-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="5-horny.png">Your body is worth fighting for!</state>
@@ -1742,6 +1961,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="5-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="5-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="5-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -1757,12 +1979,21 @@
             <case tag="female_chest_will_be_visible">
                 <state img="5-calm.png">This is what I'm about to have to do, so I may as well enjoy it.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="5-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="weiss" totalExposed="0">
+                <state img="5-strip.png">You can drop out now if you want, Weiss. But if you do, you won't get to see what everyone else has to show.</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="5-strip.png">Is there anything that you'd like us to do to help you charge that ult faster?</state>
                 <state img="5-shocked.png">I'm sorry that I'm watching so closely. I'm not breaking any rules, am I?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="5-calm.png">On the bright side for you, at least you didn't lose anything major.</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="5-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="5-stripped.png" marker="mei_will_freeze_you">Time to freeze your butt off!</state>
@@ -1821,6 +2052,12 @@
             <case tag="female_must_strip" target="gogo" targetStage="0">
                 <state img="6-calm.png">GoGo, I'm looking forward to seeing your lab! You're welcome to see mine anytime.</state>
             </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="6-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="6-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="3">
                 <state img="6-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
@@ -1847,6 +2084,12 @@
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2">
                 <state img="6-happy.png">Wow, you have such piercing blue eyes beneath your mask, Marinette!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="6-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="6-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="6-horny.png">If my hypothesis is correct, that would fit perfectly between my breasts!</state>
@@ -1896,6 +2139,12 @@
             </case>
             <case tag="female_removed_accessory">
                 <state img="6-calm.png">Now the score's a little more even.</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="6-interested.png">If you think it's cold here, you should try being assigned to the Antarctic!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="6-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="6-horny.png">I just want to sneak up behind you and hug you until you can't move!</state>
@@ -1981,6 +2230,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="6-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="6-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="6-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -1994,6 +2246,9 @@
                 <state img="6-sad.png">I'd love some company. I don't want to be alone...</state>
                 <state img="6-interested.png">Ah, is the game about to get even more erotic?</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="6-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
             <case tag="female_chest_will_be_visible" target="tracer">
                 <state img="6-happy.png">Join me, Lena! Mine could use the company of yours...</state>
             </case>
@@ -2002,6 +2257,9 @@
             </case>
             <case tag="female_removed_minor">
                 <state img="6-embarrassed.png">I'm happy that I got to keep some modesty. At least for now...</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="6-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="6-interested.png">I've read a lot of scientific research on this topic, but I haven't participated in many hands-on trials.</state>
@@ -2057,6 +2315,12 @@
             <case tag="female_must_strip" target="dawn" targetStage="5">
                 <state img="7-embarrassed.png">Time for the big D! Um, not that. I meant Dawn...</state>
             </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="7-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="7-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="3">
                 <state img="7-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
@@ -2084,6 +2348,12 @@
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2">
                 <state img="7-happy.png">Wow, you have such piercing blue eyes beneath your mask, Marinette!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="7-loss.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="7-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="7-embarrassed.png">I knew they could get that big in theory, but...</state>
@@ -2122,6 +2392,9 @@
             <case tag="female_crotch_is_visible">
                 <state img="7-calm.png">Thank you for keeping up your end of the deal.</state>
             </case>
+            <case filter="shaved" tag="female_crotch_is_visible">
+                <state img="7-horny.png">Smooth as ice!</state>
+            </case>
             <case tag="female_crotch_is_visible" target="d.va">
                 <state img="7-shocked.png">Oh my gosh! I don't even know what to say, Hana!</state>
             </case>
@@ -2145,6 +2418,12 @@
             </case>
             <case tag="female_removed_accessory" target="mercy">
                 <state img="7-embarrassed.png">Angela, would you consider throwing this game... for a price?</state>
+            </case>
+            <case tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="7-sad.png">Some of us have more than cold feet to worry about, Raven!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="7-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="7-shocked.png">Well, color me impressed ~name~!</state>
@@ -2238,6 +2517,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="7-calm.png">Did you need any help getting out of that?</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="7-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="7-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -2250,11 +2532,17 @@
             <case tag="female_chest_will_be_visible">
                 <state img="7-interested.png">Time to take that next big step!</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="7-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="7-loss.png">Hypothetically, would someone else rubbing it like that for you be the best way to make you feel good?</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="7-embarrassed.png">I'm so embarrassed that I'm losing this badly. I wish I could cover my face, but then I'd be showing everything...</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="7-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="7-horny.png">There seems to be a bulge in your pants, mister. I must discover it! You know, for science.</state>
@@ -2482,6 +2770,12 @@
             <case tag="female_must_strip" target="dawn" targetStage="5">
                 <state img="9-embarrassed.png">Time for the big D! Um, not that. I meant Dawn...</state>
             </case>
+            <case tag="female_must_strip" target="misty" targetStage="0">
+                <state img="9-interested.png">Time to make a splash, Misty!</state>
+            </case>
+            <case tag="female_must_strip" target="misty" targetStage="3">
+                <state img="9-horny.png"><i>Water</i> you going to take off next? Haha!</state>
+            </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="3">
                 <state img="9-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
@@ -2507,6 +2801,12 @@
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2">
                 <state img="9-happy.png">Wow, you have such piercing blue eyes beneath your mask, Marinette!</state>
+            </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removed_major" target="raven" targetStage="3">
+                <state img="9-sad.png">Sorry for suspecting you, Raven. I just had to make sure you weren't Reaper's younger sister.</state>
+            </case>
+            <case tag="female_removed_major" target="samus">
+                <state img="9-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="9-embarrassed.png">One vs one me... please. I'll give you my number.</state>
@@ -2542,6 +2842,9 @@
                 <state img="9-interested.png">It's only fair that you have to show what I did!</state>
                 <state img="9-horny.png">I see a slot. Are you a letterbox? Because I'm <i>Mei-Ling</i> myself right now...</state>
             </case>
+            <case filter="shaved" tag="female_crotch_is_visible">
+                <state img="9-horny.png">Smooth as ice!</state>
+            </case>
             <case tag="female_crotch_is_visible" target="d.va">
                 <state img="9-shocked.png">Oh my gosh! I don't even know what to say, Hana!</state>
             </case>
@@ -2574,6 +2877,9 @@
             </case>
             <case tag="female_removed_accessory" target="mercy">
                 <state img="9-embarrassed.png">This is like a game of Mystery Heroes. Maybe I should find the nearest cliff...</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="female_removed_accessory" target="raven" targetStage="1">
+                <state img="9-shocked.png" marker="mei_suspicious_of_raven">Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="9-embarrassed.png">Mmm, I might just play another round with you. One on one?</state>
@@ -2670,6 +2976,9 @@
             <case tag="female_removing_major" target="d.va">
                 <state img="9-horny.png">Let's see Hanamura! Uh, I mean, more-o'-Hana!</state>
             </case>
+            <case notSaidMarker="mei_suspicious_of_raven" tag="female_removing_major" target="raven" targetStage="2">
+                <state img="9-interested.png" marker="mei_suspicious_of_raven">Now's my chance to make sure you aren't a wanted agent of Talon!</state>
+            </case>
             <case tag="female_removing_major" target="zone-tan" targetStage="1">
                 <state img="9-calm.png">I didn't think you'd go commando. Actually, I think Soldier: 76 is the only person I know who normally goes commando.</state>
             </case>
@@ -2683,12 +2992,18 @@
                 <state img="9-interested.png">Now, where are they?</state>
                 <state img="9-interested.png">Let's see what puts the bounce in your step.</state>
             </case>
+            <case tag="female_chest_will_be_visible" target="moon">
+                <state img="9-happy.png">Time to see the surface of the Moon! And I don't mean through the window of the Horizon Moon Colony!</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="9-embarrassed.png">The way you look at me when you do that, it's like you're looking at <i>me</i> for inspiration...</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="9-sad.png">That's abominable.</state>
                 <state img="9-embarrassed.png">I'm a little disappointed...</state>
+            </case>
+            <case tag="female_removed_minor" target="raven" targetStage="2">
+                <state img="9-happy.png">It sure was worth it! We're one step closer to seeing the real you!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="9-horny.png">Come on out.</state>
