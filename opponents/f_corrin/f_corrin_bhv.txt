@@ -4,7 +4,9 @@ last=(Female)
 label=Corrin
 gender=female
 size=medium
-intelligence=average
+intelligence=bad
+intelligence=good,2
+intelligence=average,5
 timer=23
 pic=0-start
 height=6'3"
@@ -33,12 +35,15 @@ clothes=Pants,pants,major,lower
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower
 start=0-start,Strip poker? I think I read about that in one of Nyx's books once, this should be fun!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
+start=0-calm,I might be new at this but please don't go easy on me!
 
-#extra starting line and dynamic difficulty. I don't know how make_xml.py handles these so I'll just put them as commentary and paste them in behavior.xml myself
-#<state img="0-calm.png">I might be new at this but please don't go easy on me!</state> (This one is in there a few times so it'll be more likely to show on game start.
-#<intelligence>bad</intelligence>
-#<intelligence stage="2">good</intelligence>
-#<intelligence stage="5">bad</intelligence>
 
 #Swapping cards
 swap_cards=calm,~cards~ cards please
@@ -59,110 +64,161 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 5-swap_cards=confident,I think ~cards~ new cards is the best choice here.
 5-swap_cards=calm,I'd like to swap these ~cards~ cards!
 
+#Special markers, I love this feature
+#Saying you've got a good start, even though 5 rounds have already passed is kind of dumb. shc stands for Start Hand Comment.
+0-good_hand,marker:shc,notSaidMarker:shc=happy,Looks like I am off to a good start!
+0-okay_hand,marker:shc,notSaidMarker:shc=calm,This start seems decent enough.
+0-bad_hand,marker:shc,notSaidMarker:shc=concerned,This might not be the best start.
+
+#Getting a good hand just after stripping must feel pretty good. Or bad... depends on your mindset, I guess.
+#Marker names are the first letter of every word in the line, except for arco, which means "Armor Complain" (see below)
+1-good-hand,timeInStage:0,marker:tmli,notSaidMarker:tmli=happy,That's more like it!
+1-good-hand,timeInStage:0,marker:nint,notSaidMarker:nint=happy,Nice! I needed this!
+2-good-hand,timeInStage:0,marker:tmli,notSaidMarker:tmli=happy,That's more like it!
+2-good-hand,timeInStage:0,marker:nint,notSaidMarker:nint=happy,Nice! I needed this!
+3-good-hand,timeInStage:0,marker:arco,notSaidMarker:arco=annoyed,Ugh... Just after taking that thing off... Whatever, a good hand is a good hand!
+4-good-hand,timeInStage:0,marker:oytig,notSaidMarker:oytig=confident,Oh yes! This is great!
+5-good-hand,timeInStage:0,marker:nmiti,notSaidMarker:nmiti=unsure,Now? Meh, I'll take it...
+5-good-hand,timeInStage:0,marker:wtiu,notSaidMarker:wtiu=unsure,Well... This is... Unlucky....
+6-good-hand,timeInStage:0,marker:nmiti,notSaidMarker:nmiti=unsure,Now? Meh, I'll take it...
+6-good-hand,timeInStage:0,marker:wtiu,notSaidMarker:wtiu=unsure,Well... This is... Unlucky...
+
+#Armor Complain (arco)
+#Taking off the armor is quite a hassle for poor Corrin, but she complained about it a bit too often for my liking. Yay for markers!
+3-male_must_strip,marker:arco,notSaidMarker:arco=apology,I'm sorry you had to sit through me taking that thing off... Please do it quickly okay?
+3-female_removed_accessory,marker:arco,notSaidMarker:arco=annoyed,I just spent a lot of effort taking my armor off, and you just... Well, we're all trying to win, I can't get too mad.
+
+#Anankos
+#Lore stuff, in short: Anankos is both evil and not evil at the same time because reasons. Mentioning both in the same game might be kinda confusing so yea..
+4-good_hand,marker:anankos,notSaidMarker:anankos=happy,These cards were chosen by Anankos himself!
+5-bad_hand,marker:anankos,notSaidMarker:anankos=apology,These cards seem to have been chosen by Anankos himself...
+
+#Mirror
+#Referencing the "Dragon Looks in Mirror, Falls in Love w/Reflection" thing because it's cute. 
+4-good_hand,marker:mirror,notSaidMarker:mirror=mirror,It's just like looking in a mirror!
+
+#Haiku
+#Referencing Mitama, a character in FE:Fates who basically only speaks in haiku. I'm way too proud of myself for actually doing this.
+3-female_removed_minor,marker:haiku,notSaidMarker:haiku=haiku,Not much else to say / Let us continue playing / I'm ready for more! Wait, that's a haiku! I did it!
+-2-male_chest_is_visible,marker:haiku,notSaidMarker:haiku=horny,<i>Seeing those clothes go / my horniness compels me / joy neverending</i> ... Why am I speaking in haiku? What's happening to me?
+
+#At first, Corrin is surprised people have to masturbate in this game. 
+#In case anyone's wondering, SurMas means "Surprise Masturbation", I'm a literary genious. /s
+must_masturbate_first,marker:SurMas,notSaidMarker:SurMas=lossfirst,Okay I lost again... Wait I have to do <i>what</i> now? ... Okay... I didn't know that was part of the rules...
+male_must_masturbate,marker:SurMas,notSaidMarker:SurMas=shock,He has to do <i>what</i> now? ... I didn't know those were the rules...
+male_start_masturbating,saidMarker:SurMas=awkward,I didn't expect to see <i>this</i> today...
+female_must_masturbate,marker:SurMas,notSaidMarker:SurMas=shock,She has to do <i>what</i> now? ... I didn't know those were the rules...
+female_start_masturbating,saidMarker:SurMas=awkward,I uhm... Don't know what to say...
+
 #State 0 (Fully clothed)
-0-good_hand=happy,Looks like I am off to a good start!
+0-good_hand=happy,Ohh, nice!
 0-good_hand=happy,These cards look amazing!
-0-good_hand=humble,While I am happy with this hand, please do not go easy on me. I can handle it!
-0-okay_hand=calm,This start seems decent enough.
+0-good_hand,marker:goingeasy=humble,While I am happy with this hand, please do not go easy on me. I can handle it!
+0-okay_hand=confident,I'll make this work!
 0-okay_hand=calm,This is a risky hand, but I'm fine with that.
-0-okay_hand=confident,I have won a war based on nothing but risks and hope, so a game shouldn't be a problem!
-0-bad_hand=concerned,This might not be the best start.
-0-bad_hand=serene,I'm just going to call this "learning by doing"
-0-bad_hand=humble,These cards don't match with any of the combos I read about... Maybe it is a hidden one? 
-0-male_human_must_strip=happy,I won a round! Now ~name~ has to take something off, right?
+0-okay_hand,marker:war=confident,I have won a war based on nothing but risks and hope, so a game shouldn't be a problem!
+0-bad_hand=unsure,I'm no expert, but this is just bad...
+0-bad_hand,marker:learnbydoing=serene,I'm just going to call this "learning by doing"
+0-bad_hand,marker:cardcombos=humble,These cards don't match with any of the combos I read about... Maybe it is a hidden one? 
+0-male_human_must_strip,timeInStage:0,marker:wathappen,notSaidMarker:wathappen=happy,I won a round! Now ~name~ has to take something off, right?
 0-male_human_must_strip=calm,Ohh what are you going to take off?
-0-male_must_strip=happy,I won a round! Now ~name~ has to take something off, right?
+0-male_must_strip,timeInStage:0,marker:wathappen,notSaidMarker:wathappen=happy,I won a round! Now ~name~ has to take something off, right?
 0-male_must_strip=calm,What are you going to show us?
 0-male_must_strip=humble,Don't worry ~name~, I probably won't stay ahead for long. Heehee~
-0-female_human_must_strip=happy,I won a round! Now ~name~ has to take something off, right?
-0-female_human_must_strip=calm,~name~ lost the hand, what happens now?
-0-female_must_strip=happy,I won a round! Now ~name~ has to take something off, right?
+0-female_human_must_strip,timeInStage:0,marker:wathappen,notSaidMarker:wathappen=happy,I won a round! Now ~name~ has to take something off, right?
+0-female_human_must_strip,timeInStage:0,marker:wathappen,notSaidMarker:wathappen=calm,~name~ lost the hand, what happens now?
+0-female_human_must_strip=calm,Ohh what are you going to take off?
+0-female_must_strip,timeInStage:0,marker:wathappen,notSaidMarker:wathappen=happy,I won a round! Now ~name~ has to take something off, right?
 0-female_must_strip=happy,Yay, I'm winning!
 0-female_must_strip=cheer,Hmm... I'm doing well so far!
 0-male_removing_accessory=calm,I wonder...
-0-male_removed_accessory=unsure,Oh, your ~clothing~? You looked good wearing that.
+0-male_removed_accessory,marker:lookgudwitdat=unsure,Oh, your ~clothing~? You looked good wearing that.
 0-male_removed_accessory=confident,Alright, let's continue! 
 0-female_removing_accessory=calm,What are you going to take off, ~name~?
-0-female_removing_accessory=encourage,Small things count? That's nice to know!
-0-female_removed_accessory=encourage,Your ~clothing~? That's a good choice!
+0-female_removing_accessory,marker:smallcount,notSaidMarker:smallcount=encourage,Small things count? That's nice to know!
+0-female_removed_accessory,marker:goodchoice=encourage,Your ~clothing~? That's a good choice!
 0-female_removed_accessory=encourage,You have nothing to worry about, ~name~, you still have plenty left!
-0-female_removed_accessory=unsure,Oh, your ~clothing~? You looked good wearing that.
+0-female_removed_accessory,marker:lookgudwitdat=unsure,Oh, your ~clothing~? You looked good wearing that.
 0-male_removing_minor=calm,Something bigger this time?
-0-male_removed_minor=disappointed,Oh, your ~clothing~? You looked good with that.
+0-male_removed_minor,marker:lookgudwitdat=disappointed,Oh, your ~clothing~? You looked good with that.
 0-male_removed_minor=encourage,Nothing too big yet, though. That's fine.
-0-female_removing_minor=humble,Are you out of small things, or is this a strategy?
+0-female_removing_minor=calm,Oh, you're taking off bigger things already?
+0-female_removing_minor,marker:demstratz=humble,Are you out of small things, or is this a strategy?
 0-female_removed_minor=encourage,You'll be fine, ~name~. Let's continue playing!
-0-female_removed_minor=happy,It's a strategy, right? You are good at this!
+0-female_removed_minor,marker:demstratz,saidMarker:demstratz=happy,It's a strategy, right? You are good at this!
 0-male_removing_major=disappointed,It really looks like we're picking on you...
 0-male_removed_major=cheer,I'm sorry for saying it, but I'm enjoying this!
 0-female_removing_major=disappointed,It really looks like we're picking on you... 
 0-female_removed_major=disappointed,I don't know if I should be happy or sad, you look uncomfortable...
 0-male_chest_will_be_visible=humble,All things considered, this is going well for me!
-0-male_chest_is_visible=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
+0-male_chest_is_visible,marker:camp=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
 0-male_crotch_will_be_visible=concerned,You're taking that off already!?
-0-male_small_crotch_is_visible=disappointed,That's it? ... I'm sorry, that was mean. It's just... I was expecting more...
+0-male_small_crotch_is_visible,marker:SPH=disappointed,That's it? ... I'm sorry, that was mean. It's just... I was expecting more...
 0-male_medium_crotch_is_visible=shock,It's gotten big already? But barely anything happened yet...
-0-male_large_crotch_is_visible=shock,That is bigger than my sword!
-0-male_large_crotch_is_visible=shock,Those books weren't lying!
+0-male_large_crotch_is_visible,marker:swordbig=shock,That is bigger than my sword!
+0-male_large_crotch_is_visible,marker:booksdontlie=shock,Those books weren't lying!
 0-female_chest_will_be_visible=concerned,Oh dear, you lost this much already?
 0-female_small_chest_is_visible=encourage,Don't worry too much, I think you look cute!
 0-female_medium_chest_is_visible=encourage,Hey, don't be embarrassed, you look great!
-0-female_large_chest_is_visible=concerned,Doesn't your back hurt?
+0-female_large_chest_is_visible,marker:backcare=concerned,Doesn't your back hurt?
 0-female_crotch_will_be_visible=concerned,Are we really doing this? But I haven't even lost a hand yet, this seems unfair to her...
 0-female_crotch_is_visible=encourage,Well, you've got nothing to worry about, ~name~, we're all friends here!
-0-male_must_masturbate=shock,He has to do <i>what</i> now? ... I didn't know those were the rules...
+0-male_must_masturbate=awkward,Ehm... Rules are rules, ~name~...
 0-male_start_masturbating=awkward,Uhm... Have fun, I guess?
 0-male_masturbating=awkward,So this is how men do it...
 0-male_masturbating=awkward,Wow... I...
 0-male_finished_masturbating=happy,That was amazing!
-0-female_must_masturbate=shock,She has to do <i>what</i> now? ... I didn't know those were the rules...
-0-female_start_masturbating=awkward,I uhm... Don't know what to say... 
+0-female_must_masturbate=disappointed,It's okay, ~name~, we're not here to embarrass you. Masturbation is part of the rules, that's all...
+0-female_start_masturbating=encourage,The sooner you start, the sooner it'll be over. You'll be okay! 
 0-female_masturbating=awkward,That looks... Fun...
 0-female_masturbating=encourage,Don't give up, ~name~!
 0-female_finished_masturbating=happy,Ohhhh... Nice!
 0-must_strip_winning=loss,Oh well, I can't stay ahead forever.
 0-must_strip_winning=loss,Maybe it was just a streak of luck?
-0-must_strip_winning=loss,Winning without a single lost item sounds like a nice achievement. This was to be expected, though.
+0-must_strip_winning=loss,Had to happen at some point.
+0-must_strip_winning,timeInStage:10-30=loss,Winning without a single lost item sounds like a nice achievement. This was to be expected, though.
 0-must_strip_normal=loss,It's my turn? Okay, that was to be expected.
 0-must_strip_normal=loss,At least you aren't going easy on me. Heehee~
-0-must_strip_losing=loss,Oh, I lost. I have to take something off now, right?
-0-must_strip_losing=loss,I lost a round already? So what should I do now, just take something small off?
+0-must_strip_losing,timeInStage:0=loss,Oh, I lost. I have to take something off now, right?
+0-must_strip_losing,marker:smallcount,notSaidMarker:smallcount=loss,I lost a round already? So what should I do now, just take something small off?
+0-stripping,saidMarker:smallcount=strip,Something small it is then! It's way too warm to wear gloves anyway.
 0-stripping=strip,Alright, I guess my gloves will be the first ones to go!
 0-stripping=strip,Despite the fact that they are made mostly of metal, my gloves are actually pretty flexible!
 0-game_over_victory=humble,Yay, I won my very first time playing! ... Wait, you weren't going easy on me right?
 
 #State 1 (Lost Gloves)
 1-stripped=stripped,Done and done! Let's keep going!
-1-stripped=stripped,Here you go! You can try them on if you like, they are really comfy!
+1-stripped,marker:comfygloves=stripped,Here you go! You can try them on if you like, they are really comfy!
 1-good_hand=confident,I should not be discouraged by a single loss. This battle will be mine!
 1-good_hand=confident,Looks like I found an advantageous position!
 1-good_hand=happy,These are amazing!
-1-good_hand=confident,Your fate is sealed!
-1-okay_hand=serene,It is just like the book said, "To win one does not need the best hand, simply not having the worst hand is enough to achieve victory."
-1-okay_hand=calm,This start seems decent enough.
+1-good_hand,marker:yourfateissealed=confident,Your fate is sealed!
+1-okay_hand,marker:onedoesnotneed,notSaidMarker:onedoesnotneed=serene,It is just like the book said, "To win one does not need the best hand, simply not having the worst hand is enough to achieve victory."
+1-okay_hand=cheer,Thanks for the cards, dealer!
+1-okay_hand=calm,I can work with this.
 1-okay_hand=calm,This is a risky hand, but I'm fine with that.
 1-bad_hand=serene,I'm just going to call this "learning by doing"
-1-bad_hand=confident,I did everything like the strategy guide told me to, so this has to be good right?
-1-bad_hand=humble,Okay, these cards are bad. At least nobody else will have to strip now, right?
+1-bad_hand,marker:strategyguide=confident,I did everything like the strategy guide told me to, so this has to be good right?
+1-bad_hand,marker:onefortheteam=humble,Okay, these cards are bad. At least nobody else will have to strip now, right?
 1-male_human_must_strip=cheer,~name~ lost this hand right? What will you take off?
-1-male_human_must_strip=encourage,I'm sorry ~name~, you lost this one. I suggest playing a little safer!
+1-male_human_must_strip,marker:playsafer=encourage,I'm sorry ~name~, you lost this one. I suggest playing a little safer!
 1-male_must_strip=confident,I'm doing pretty well for myself!
 1-male_must_strip=encourage,Sorry ~name~, it's your turn now!
 1-female_human_must_strip=confident,Do this quickly, ~name~, I want to continue playing!
 1-female_human_must_strip=calm,Is this all part of a hidden tactic, ~name~?
 1-female_must_strip=humble,Sorry ~name~, it's your turn now!
 1-male_removing_accessory=calm,Something small? Fine with me!
-1-male_removed_accessory=unsure,Oh, your ~clothing~? You looked good wearing that.
+1-male_removed_accessory,marker:lookgudwitdat=unsure,Oh, your ~clothing~? You looked good wearing that.
 1-male_removed_accessory=confident,Alright, let's continue!
 1-female_removing_accessory=calm,What are you going to take off, ~name~?
-1-female_removed_accessory=encourage,Your ~clothing~? That's a good choice!
+1-female_removed_accessory,marker:goodchoice=encourage,Your ~clothing~? That's a good choice!
 1-female_removed_accessory=cheer,You have nothing to worry about, ~name~, you still have plenty left!
-1-female_removed_accessory=unsure,Oh, your ~clothing~? You looked good wearing that.
+1-female_removed_accessory,marker:lookgudwitdat=unsure,Oh, your ~clothing~? You looked good wearing that.
 1-male_removing_minor=calm,What are you going to take off, ~name~?
-1-male_removed_minor=encourage,Your ~clothing~? That's a good choice!
+1-male_removed_minor,marker:goodchoice=encourage,Your ~clothing~? That's a good choice!
 1-male_removed_minor=calm,Getting closer...
 1-female_removing_minor=encourage,Take off whatever makes you feel the least uncomfortable!
-1-female_removed_minor=cheer,Your ~clothing~? That's a good choice!
+1-female_removed_minor,marker:goodchoice=cheer,Your ~clothing~? That's a good choice!
 1-male_removing_major=concerned,It really looks like we're picking on you...
 1-male_removing_major=concerned,You're taking off big things already? I'm not sure about this...
 1-male_removed_major=humble,I'm sorry for saying it, but I'm enjoying this!
@@ -170,53 +226,54 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 1-female_removing_major=concerned,You're taking off big things already? I'm not sure about this...
 1-female_removed_major=disappointed,I don't know if I should be happy or sad, you look uncomfortable...
 1-male_chest_will_be_visible=humble,This is going pretty well for me!
-1-male_chest_is_visible=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
+1-male_chest_is_visible,marker:camp=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
 1-male_crotch_will_be_visible=concerned,You're down to your last piece already? What happened?
-1-male_small_crotch_is_visible=disappointed,That's it? ... I'm sorry, that was mean. It's just... I was expecting more...
+1-male_small_crotch_is_visible,marker:SPH=disappointed,That's it? ... I'm sorry, that was mean. It's just... I was expecting more...
 1-male_medium_crotch_is_visible=awkward,I'm not sure what to say...
-1-male_large_crotch_is_visible=shock,That is bigger than my sword!
-1-male_large_crotch_is_visible=shock,Those books weren't lying!
+1-male_large_crotch_is_visible,marker:swordbig=shock,That is bigger than my sword!
+1-male_large_crotch_is_visible,marker:booksdontlie=shock,Those books weren't lying!
 1-female_chest_will_be_visible=concerned,Oh dear, you lost this much already?
 1-female_small_chest_is_visible=encourage,Don't worry too much, I think you look cute!
 1-female_medium_chest_is_visible=encourage,Hey, don't be embarrassed, you look great!
-1-female_large_chest_is_visible=concerned,Doesn't your back hurt?
+1-female_large_chest_is_visible,marker:backcare=concerned,Doesn't your back hurt?
 1-female_crotch_will_be_visible=concerned,You're taking that off already? What happened?
 1-female_crotch_is_visible=encourage,Well, you've got nothing to worry about, ~name~, we're all friends here!
-1-male_must_masturbate=shock,He has to do <i>what</i> now? ... I didn't know those were the rules...
+1-male_must_masturbate=awkward,Ehm... Rules are rules, ~name~...
 1-male_start_masturbating=awkward,Uhm... Have fun, I guess?
 1-male_masturbating=awkward,So this is how men do it...
 1-male_masturbating=awkward,I've never...
 1-male_masturbating=awkward,Wow... I...
 1-male_finished_masturbating=happy,That was amazing!
-1-female_must_masturbate=shock,She has to do <i>what</i> now? ... I didn't know those were the rules...
-1-female_start_masturbating=awkward,I uhm... Don't know what to say... 
+1-female_must_masturbate=disappointed,It's okay, ~name~, we're not here to embarrass you. Masturbation is part of the rules, that's all...
+1-female_start_masturbating=encourage,The sooner you start, the sooner it'll be over. You'll be okay! 
 1-female_masturbating=awkward,That looks... Fun...
 1-female_masturbating=encourage,Don't give up, ~name~!
 1-female_finished_masturbating=happy,Ohhhh... Nice!
 1-must_strip_winning=loss,Sorry guys, I have to take off something small again. That is how the game works, right?
 1-must_strip_winning=loss,Another small item will have to go, please don't be angry.
 1-must_strip_normal=loss,My turn! I have quite a bit to learn.
-1-must_strip_normal=loss,Don't feel bad, I'll happily take one for the team!
+1-must_strip_normal,marker:onefortheteam=loss,Don't feel bad, I'll happily take one for the team!
 1-must_strip_normal=loss,This had to happen anyway, I don't mind.
-1-must_strip_losing=loss,I should have brought my sword as an extra accessory... On the other hand, maybe not, might be a little too dangerous.
+1-must_strip_losing,marker:chainsawsword=loss,I should have brought my sword as an extra accessory... On the other hand, maybe not, might be a little too dangerous.
 1-must_strip_losing=loss,Maybe I should change my strategy... This isn't really working.
 1-must_strip_losing=loss,I'm a little worse at this than I was expecting.
 1-stripping=strip,My hairband doesn't do much but I like the way it looks.
-1-stripping=strip,I like to think of my hairband as a lucky charm, but I'll have to do without it from now on.
+1-stripping,marker:luckycharm=strip,I like to think of my hairband as a lucky charm, but I'll have to do without it from now on.
 1-game_over_victory=humble,Yay, I won my very first time playing! ... Wait, you weren't going easy on me right?
 
 #State 2 (Lost Hairband)
 2-stripped=stripped,I'm all out of small stuff now, I promise that things will become more interesting!
 2-stripped=stripped,My band is gone, I hope this is the last time I lose.
-2-good_hand=confident,Your fate is sealed!
+2-good_hand,marker:yourfateissealed=confident,Your fate is sealed!
 2-good_hand=confident,I may have lost my lucky charm but I will not lose this game!
 2-good_hand=humble,Someone else will have to strip this round, I hope you are not angry at me haha.
 2-okay_hand=calm,Hmm... I guess this is alright.
-2-okay_hand=serene,It is just like the book said, "To win, one does not need the best hand. Simply not having the worst hand is enough to achieve victory."
+2-okay_hand,marker:onedoesnotneed,notSaidMarker:onedoesnotneed=serene,It is just like the book said, "To win, one does not need the best hand. Simply not having the worst hand is enough to achieve victory."
+2-okay_hand=calm,Not bad, but I'd prefer something better right now.
 2-okay_hand=serene,Sometimes "just okay" is good enough, not everything has to be perfect.
-2-bad_hand=disappointed,I am starting to regret taking off my hairband this early.
+2-bad_hand,saidMarker:luckycharm=disappointed,I am starting to regret taking off my hairband this early.
 2-bad_hand=unsure,I guess losing is ok, this armor is pretty heavy anyways, although taking it off really sucks...
-2-bad_hand=apology,Don't worry, everyone, my hand is probably the worst one.
+2-bad_hand,marker:onefortheteam=apology,Don't worry, everyone, my hand is probably the worst one.
 2-bad_hand=concerned,This is not a good sign...
 2-male_human_must_strip=cheer,Don't stall too much, ~name~, you knew this had to happen at some point~
 2-male_human_must_strip=cheer,Rules are rules, ~name~.
@@ -238,7 +295,7 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 2-male_removed_minor=encourage,I'm okay with this. I hope you are as well!
 2-female_removing_minor=calm,Your ~clothing~ this time? 
 2-female_removing_minor=humble,C'mon, quickly. I want to continue!
-2-female_removed_minor=cheer,Good choice!
+2-female_removed_minor,marker:goodchoice=cheer,Good choice!
 2-female_removed_minor=cheer,We're kinda close, this is pretty exciting!
 2-male_removing_major=happy,This is going pretty well for me!
 2-male_removing_major=concerned,Oh dear, taking off your ~clothing~ already...
@@ -250,10 +307,10 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 2-female_removed_major=cheer,You can do this, ~name~!
 2-male_chest_will_be_visible=happy,This is going pretty well for me!
 2-male_chest_will_be_visible=happy,I'm doing better than I expected!
-2-male_chest_is_visible=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
-2-male_chest_is_visible=humble,This reminds me of the time I <i>accidentally</i> walked into the guys' hot springs...
+2-male_chest_is_visible,marker:camp=serene,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
+2-male_chest_is_visible,marker:hotsprings=humble,This reminds me of the time I <i>accidentally</i> walked into the guys' hot springs...
 2-male_crotch_will_be_visible=concerned,You're going to show your..... Oh...
-2-male_small_crotch_is_visible=disappointed,Okay... Not much to se- ... I mean, it's certainly <i>something</i>, I guess...
+2-male_small_crotch_is_visible,marker:SPH=disappointed,Okay... Not much to se- ... I mean, it's certainly <i>something</i>, I guess...
 2-male_medium_crotch_is_visible=awkward,<i>Ahem</i>... This is kinda... Wow...
 2-male_medium_crotch_is_visible=awkward,That looks..... Never mind...
 2-male_large_crotch_is_visible=shock,Whoa! That's huge!
@@ -261,7 +318,7 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 2-female_chest_will_be_visible=concerned,You don't have anything left to cover your chest? Wow...
 2-female_small_chest_is_visible=encourage,Nothing to be ashamed of!
 2-female_medium_chest_is_visible=cheer,Hey, don't be embarrassed, you look great!
-2-female_large_chest_is_visible=concerned,Those look heavy... Is your back alright?
+2-female_large_chest_is_visible,marker:backcare=concerned,Those look heavy... Is your back alright?
 2-female_crotch_will_be_visible=concerned,You're taking that off already? What happened?
 2-female_crotch_is_visible=encourage,Well, you've got nothing to worry about, ~name~, we're all friends here!
 2-female_crotch_is_visible=serene,Just pretend that we are going to a hot spring if that helps, ~name~. There's no need to worry!
@@ -291,23 +348,24 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 2-game_over_victory=humble,I was expecting this to feel better... anyway, a win's a win right. Let's play again some time!
 
 #State 3 (Lost Armor)
-3-stripped=stripped,Glad that's done, it's starting to get warm in here.
+3-stripped,marker:warminhere=stripped,Glad that's done, it's starting to get warm in here.
 3-stripped=stripped,There you go! I don't mind not wearing my armor, it's the taking it off part that sucks the most.
 3-good_hand=confident,There is no way I will lose this one!
 3-good_hand=confident,I am not going to lose this round, are you ready?
-3-good_hand=confident,I hope you like looking at my shirt, it is not going anywhere for now!
-3-good_hand=humble,Does anyone want to swap cards? I am fine with losing another round but there is no way that is going to happen with these cards, hehe.
+3-good_hand,marker:lookatmashirt=confident,I hope you like looking at my shirt, it is not going anywhere for now!
+3-good_hand,marker:onefortheteam=humble,Does anyone want to swap cards? I am fine with losing another round but there is no way that is going to happen with these cards, hehe.
 3-okay_hand=serene,This should be good enough.
 3-okay_hand=confident,I am fine with having risky cards, it keeps things interesting!
 3-okay_hand=serene,I am looking forward to the outcome!
 3-okay_hand=calm,So far so good.
 3-okay_hand=confident,I can do this!
 3-bad_hand=apology,I might not need the best cards to win, but it would be nice to have a good hand once in a while...
-3-bad_hand=apology,Is Arthur playing too? I think I have his cards...
+3-bad_hand,marker:arthur=apology,Is Arthur playing too? I think I have his cards...
 3-bad_hand=unsure,On the bright side, at least none of you will need to strip this round.
-3-male_human_must_strip=humble,It's getting pretty hot in here don't you think?
-3-male_must_strip=humble,It's getting pretty hot in here don't you think?
-3-male_must_strip=apology,I'm sorry you had to sit through me taking that thing off... Please do it quickly okay?
+3-male_human_must_strip,marker:warminhere,notSaidMarker:warminhere=humble,It's getting pretty hot in here don't you think?
+3-male_human_must_strip=calm,Well, ~name~, what's it going to be?
+3-male_must_strip,marker:warminhere,notSaidMarker:warminhere=humble,It's getting pretty hot in here don't you think?
+3-male_must_strip=calm,Well, ~name~, what's it going to be?
 3-male_must_strip=happy,Ohh what are you going to take off?
 3-female_human_must_strip=encourage,Better luck next round, ~name~!
 3-female_must_strip=calm,Ohh what are you going to take off?
@@ -317,13 +375,12 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 3-male_removed_accessory=confident,Let's keep going!
 3-female_removing_accessory=calm,Just your ~clothing~? That's okay.
 3-female_removing_accessory=unsure,I guess that's fine...
-3-female_removed_accessory=annoyed,I just spent a lot of effort taking my armor off, and you just... Well, we're all trying to win, I can't get too mad.
-3-male_removing_minor=cheer,Okay, that's a good choice.
+3-female_removed_accessory=encourage,Well, if you're happy, I'm happy!
+3-male_removing_minor,marker:goodchoice=cheer,Okay, that's a good choice.
 3-male_removed_minor=confident,Let's continue, I want to see what you'll take off next!
 3-female_removing_minor=encourage,I think both of us are okay with this!
 3-female_removed_minor=unsure,You <i>did</i> look good with that on, though.
 3-female_removed_minor=calm,Let's keep going!
-3-female_removed_minor=haiku,Not much else to say / Let us continue playing / I'm ready for more! Wait, that's a haiku! I did it!
 3-male_removing_major=humble,Your ~clothing~? Nice, I'm doing well!
 3-male_removing_major=calm,Getting closer...
 3-male_removed_major=cheer,Sorry to say it, ~name~, but I'm having a lot of fun here!
@@ -334,24 +391,24 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 3-male_chest_will_be_visible=calm,Getting closer...
 3-male_chest_will_be_visible=humble,Your ~clothing~? Nice, I'm doing well!
 3-male_chest_is_visible=cheer,Sorry to say it, ~name~, but I'm having a lot of fun here!
-3-male_chest_is_visible=calm,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
-3-male_chest_is_visible=humble,This reminds me of the time I <i>accidentally</i> walked into the guys' hot springs...
+3-male_chest_is_visible,marker:camp=calm,A lot of guys at the camp walk around topless all the time, I don't really see what the big deal is.
+3-male_chest_is_visible,marker:hotsprings=humble,This reminds me of the time I <i>accidentally</i> walked into the guys' hot springs...
 3-male_crotch_will_be_visible=concerned,You're going to take off your... Oh...
-3-male_small_crotch_is_visible=apology,I was hoping for a little bit more to be honest...
+3-male_small_crotch_is_visible,marker:SPH=apology,I was hoping for a little bit more to be honest...
 3-male_medium_crotch_is_visible=horny,Ohh yes..... <i>Ahem</i> What? No, nothing! I mean... Not nothing but... Oh, whatever...
 3-male_medium_crotch_is_visible=awkward,<i>Ahem</i>... This is kinda... Wow...
 3-male_medium_crotch_is_visible=horny,That looks..... Never mind...
 3-male_large_crotch_is_visible=shock,What! How did keep <i>that</i> hidden?!
 3-male_large_crotch_is_visible=awkward,Well... That's pretty huge...
 3-female_chest_will_be_visible=concerned,Oh, ~name~, I hope you are not too upset about this...
-3-female_small_chest_is_visible=awkward,You look like Hi..... No wait, I can't say that...
+3-female_small_chest_is_visible,marker:looklikehi=awkward,You look like Hi..... No wait, I can't say that...
 3-female_small_chest_is_visible=cheer,Nothing to be ashamed of!
 3-female_small_chest_is_visible=encourage,Don't worry, you look great!
 3-female_medium_chest_is_visible=encourage,Those are great! You should be proud!
-3-female_large_chest_is_visible=concerned,Whoa... Those must hurt, I don't envy you...
+3-female_large_chest_is_visible,marker:backcare=concerned,Whoa... Those must hurt, I don't envy you...
 3-female_crotch_will_be_visible=cheer,You've come this far, ~name~, don't let us down now!
 3-female_crotch_is_visible=encourage,Well, you've got nothing to worry about, ~name~, we're all friends here!
-3-female_crotch_is_visible=serene,Just pretend that we are going to a hot spring if that helps, ~name~. There's no need to worry!
+3-female_crotch_is_visible,marker:hotsprings=serene,Just pretend that we are going to a hot spring if that helps, ~name~. There's no need to worry!
 3-male_must_masturbate=awkward,Uhm, well... You lost, ~name~.
 3-male_start_masturbating=awkward,Uhm... Have fun, I guess?
 3-male_start_masturbating=awkward,I didn't expect <i>this</i> to happen...
@@ -372,8 +429,8 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 3-must_strip_normal=loss,It's my turn? Alright!
 3-must_strip_normal=loss,Me? I'm worse at this than I expected, no worries though!
 3-must_strip_losing=loss,Okay I get it, I'll take off something bigger now.
-3-stripping=strip,Is anyone else feeling warm here? Time to take off my shirt I guess.
-3-stripping=strip,I hope you didn't grow too attached to this shirt.
+3-stripping,marker:warminhere,notSaidMarker:warminhere=strip,Is anyone else feeling warm here? Time to take off my shirt I guess.
+3-stripping,notSaidMarker:lookatmashirt=strip,I hope you didn't grow too attached to this shirt.
 3-stripping=strip,I'll show you some skin this time, I've teased you long enough. Heehee~
 3-game_over_victory=humble,I was expecting this to feel better... anyway, a win's a win right. Let's play again some time!
 
@@ -381,8 +438,6 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 4-stripped=stripped,I'm ready, shall we continue?
 4-stripped=stripped,The game can continue!
 4-stripped=stripped,Done, now let's win this!
-4-good_hand=mirror,It is just like looking in a mirror!
-4-good_hand=happy,These cards were chosen by Anankos himself!
 4-good_hand=confident,I will not lose!
 4-good_hand=serene,My cards are good, my mood is good, all is good.
 4-good_hand=confident,I make my own fate!
@@ -420,33 +475,37 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 4-female_removed_major=cheer,I'm sure you'll win next time, ~name~, but I can't be beaten right now!
 4-male_chest_will_be_visible=cheer,Nice, I wonder if you're hiding anything special...
 4-male_chest_will_be_visible=cheer,I hope you don't feel too bad about taking that off, ~name~. I'm here to win after all!
-4-male_chest_is_visible=apology,I've seen better... I <i>may</i> have walked into the guys' hot springs a few times... Always on accident, of course.
+4-male_chest_is_visible,marker:hotsprings=apology,I've seen better... I <i>may</i> have walked into the guys' hot springs a few times... Always on accident, of course.
 4-male_chest_is_visible=cheer,Eh, not too bad. I'm getting really close to winning, though! 
 4-male_crotch_will_be_visible=unsure,Time to claim my... Prize? ... Yeah, let's go with that.
 4-male_crotch_will_be_visible=happy,You have to ... Nice, I knew I would beat you!
 4-male_small_crotch_is_visible=awkward,I uhm... <i>might</i> know someone who could... help you with that...
-4-male_small_crotch_is_visible=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
+4-male_small_crotch_is_visible,marker:SPH=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
 4-male_medium_crotch_is_visible=happy,Victory!
 4-male_medium_crotch_is_visible=horny,Oh my...
 4-male_medium_crotch_is_visible=horny,That looks..... Never mind...
 4-male_medium_crotch_is_visible=horny,You're bringing me all kinds of pleasure right now...
-4-male_large_crotch_is_visible=concerned,What is <i>that</i>!? Please tell me someone cursed you...
+4-male_large_crotch_is_visible,marker:cursed=concerned,What is <i>that</i>!? Please tell me someone cursed you...
 4-male_large_crotch_is_visible=concerned,How'd you keep <i>that</i> hidden from us for so long!?
 4-female_chest_will_be_visible=cheer,It's time for you to show them, ~name~. I hope you don't feel too bad about this!
 4-female_small_chest_is_visible=awkward,Not much to comment on... Uh I mean... In a good way! You would have to show us at some point anyway so this isn't anything special, right? ... Ugh why did I say that...
 4-female_medium_chest_is_visible=encourage,See, no reason to feel bad about it, you look great!
-4-female_large_chest_is_visible=concerned,Whoa... Those must hurt, I don't envy you...
+4-female_large_chest_is_visible,marker:backcare=concerned,Whoa... Those must hurt, I don't envy you...
 4-female_crotch_will_be_visible=cheer,You've come this far, ~name~, don't let us down now!
 4-female_crotch_will_be_visible=serene,Well, we can't all be winners, ~name~.
 4-female_crotch_is_visible=encourage,Better luck next time! You came pretty far!
-4-male_must_masturbate=happy,Ha! ~name~ lost again! You're out!
-4-male_start_masturbating=apology,... Oh right, I forgot about this part...
+4-male_must_masturbate,marker:forgot,notSaidMarker:nomoreforget=happy,Ha! ~name~ lost again! You're out!
+4-male_must_masturbate,marker:nomoreforget=awkward,Well, ~name~... You lost...
+4-male_start_masturbating,marker:nomoreforget,saidMarker:forgot,notSaidMarker:nomoreforget=apology,... Oh right, I forgot about this part...
+4-male_start_masturbating,saidMarker:nomoreforget=awkward,So... Yeah...
 4-male_masturbating=horny,Wow, ~name~, you'd make a good warrior...
 4-male_masturbating=horny,You having fun over there, ~name~? I know I am!
 4-male_masturbating=awkward,It's okay if you look at me... Just don't stare too much.
 4-male_finished_masturbating=horny,Oh my... Uhm, can we finish this quickly? I've got ... things to do...
-4-female_must_masturbate=happy,Ha! ~name~ lost again! You're out!
-4-female_start_masturbating=apology,... Oh right, I forgot about this part...
+4-female_must_masturbate,marker:forgot,notSaidMarker:nomoreforget=happy,Ha! ~name~ lost again! You're out!
+4-female_must_masturbate,marker:nomoreforget=awkward,Well, ~name~... You lost...
+4-female_start_masturbating,marker:nomoreforget,saidMarker:forgot,notSaidMarker:nomoreforget=apology,... Oh right, I forgot about this part...
+4-female_start_masturbating,saidMarker:nomoreforget=awkward,So... Yeah...
 4-female_masturbating=horny,Ohhh, I'm getting distracted...
 4-female_masturbating=horny,Maybe losing isn't that bad either...
 4-female_finished_masturbating=happy,Oh wow, ~name~, that was amazing!
@@ -473,7 +532,7 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 5-okay_hand=unsure,I guess these are fine, but it's starting to get close here.
 5-okay_hand=humble,It's getting kinda hot in here... Although that isn't necessarily a bad thing!
 5-bad_hand=unsure,This is not... bad, not bad.
-5-bad_hand=apology,These cards seem to have been chosen by Anankos himself...
+5-bad_hand=,
 5-bad_hand=unsure,All these years of making Leo go easy on me might have made me bad at games...
 5-male_human_must_strip=encourage,Please take off something big, ~name~.
 5-male_human_must_strip=calm,Ohh what are you going to take off?
@@ -507,22 +566,22 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 5-male_chest_will_be_visible=confident,Oh, something bigger this time?
 5-male_chest_will_be_visible=cheer,You're taking that off? Finally, I thought this was never going to happen!
 5-male_chest_is_visible=cheer,I might still have a chance!
-5-male_chest_is_visible=apology,I've seen better... I <i>may</i> have walked into the guys' hot springs a few times... Always on accident, of course.
+5-male_chest_is_visible,marker:hotsprings=apology,I've seen better... I <i>may</i> have walked into the guys' hot springs a few times... Always on accident, of course.
 5-male_chest_is_visible=humble,To be honest, I didn't like that piece anyway. You look much better like this!
 5-male_crotch_will_be_visible=cheer,I've been waiting for this to happen!
 5-male_crotch_will_be_visible=horny,Oh yes, I've been waiting for this.
-5-male_small_crotch_is_visible=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
+5-male_small_crotch_is_visible,marker:SPH=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
 5-male_medium_crotch_is_visible=horny,You're bringing me all kinds of pleasure right now...
 5-male_medium_crotch_is_visible=horny,I'd love to... No, never mind.
 5-male_medium_crotch_is_visible=horny,Why had I never seen anything like this before playing this game... I mean, I know why but still.
-5-male_large_crotch_is_visible=concerned,What is <i>that</i>!? Please tell me someone cursed you...
+5-male_large_crotch_is_visible,marker:cursed=concerned,What is <i>that</i>!? Please tell me someone cursed you...
 5-male_large_crotch_is_visible=concerned,I can't imagine ... <i>that</i> being pleasant for anyone involved...
 5-female_chest_will_be_visible=encourage,I'm kind of glad you lost, ~name~. Nothing personal, I just don't know if I'm ready...
 5-female_chest_will_be_visible=concerned,You have to show your breasts before I have to... I hope you're not mad.
 5-female_small_chest_is_visible=humble,I would never be able to match your cuteness, though!
 5-female_medium_chest_is_visible=humble,I'll probably have to join you soon, though, it's fine. 
 5-female_medium_chest_is_visible=happy,Those are fantastic, no reason at all to feel bad!
-5-female_large_chest_is_visible=concerned,Oh dear, that looks painful...
+5-female_large_chest_is_visible,marker:backcare=concerned,Oh dear, that looks painful...
 5-female_large_chest_is_visible=concerned,Those must be so impractical for... Well, everything.
 5-female_crotch_will_be_visible=apology,Sorry, ~name~, this had to happen.
 5-female_crotch_is_visible=encourage,Better luck next time! You came pretty far!
@@ -607,24 +666,24 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 6-male_crotch_will_be_visible=happy,I've been waiting for this to happen!
 6-male_crotch_will_be_visible=cheer,Oh yes, I've been waiting for this.
 6-male_crotch_will_be_visible=confident,You gotta show it now, no more outs!
-6-male_small_crotch_is_visible=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
-6-male_small_crotch_is_visible=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
-6-male_small_crotch_is_visible=unsure,I was hoping for a little bit more to be honest...
+6-male_small_crotch_is_visible,marker:SPH=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
+6-male_small_crotch_is_visible,marker:SPH=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
+6-male_small_crotch_is_visible,marker:SPH=unsure,I was hoping for a little bit more to be honest...
 6-male_medium_crotch_is_visible=horny,Why had I never seen anything like this before playing this game... I mean, I know why but still.
 6-male_medium_crotch_is_visible=horny,Can I... No, forget I said anything.
 6-male_medium_crotch_is_visible=serene,I couldn't have hoped for better, ~name~.
-6-male_large_crotch_is_visible=concerned,What is <i>that</i>!? Please tell me someone cursed you...
+6-male_large_crotch_is_visible,marker:cursed=concerned,What is <i>that</i>!? Please tell me someone cursed you...
 6-male_large_crotch_is_visible=concerned,I can't imagine ... <i>that</i> being pleasant for anyone involved...
 6-female_chest_will_be_visible=humble,It's time for you to join me, ~name~!
 6-female_small_chest_is_visible=humble,Mine are bigger, but yours are certainly cuter!
 6-female_medium_chest_is_visible=humble,Nice! We make a good team. Heehee~
 6-female_medium_chest_is_visible=calm,So, what do you think? Feels pretty good right?
-6-female_large_chest_is_visible=concerned,Oh dear, that looks painful...
+6-female_large_chest_is_visible,marker:backcare=concerned,Oh dear, that looks painful...
 6-female_large_chest_is_visible=concerned,Those must be so impractical for... Well, everything.
 6-female_crotch_will_be_visible=awkward,Ehm, we can swap places if you want. I don't really mind...
 6-female_crotch_is_visible=encourage,Don't worry too much, I'll probably be joining you soon!
-6-male_must_masturbate=help,Uhm, you can look at me if you want... How's this?
-6-male_start_masturbating=help,Someone I know walks around like this all the time, the guys in camp seem to love it.
+6-male_must_masturbate,marker:chrltpose=help,Uhm, you can look at me if you want... How's this?
+6-male_start_masturbating,marker:chrltpose=help,Someone I know walks around like this all the time, the guys in camp seem to love it.
 6-male_masturbating=horny,Such force... Have you ever considered becoming a warrior? I'd love to ... spar with you.
 6-male_masturbating=horny,You sure know how to put on a show...
 6-male_masturbating=horny,Please forgive my staring...
@@ -706,19 +765,19 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 -3-male_crotch_will_be_visible=cheer,I've been waiting for this to happen!
 -3-male_crotch_will_be_visible=awkward,Oh yes, I've been waiting for this.
 -3-male_crotch_will_be_visible=happy,Yes! Come on, ~name~, show it!
--3-male_small_crotch_is_visible=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
--3-male_small_crotch_is_visible=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
--3-male_small_crotch_is_visible=apology,I was hoping for a little bit more to be honest...
+-3-male_small_crotch_is_visible,marker:SPH=awkward,<i>Ahem</i> So, ehm... That's as big as it gets?
+-3-male_small_crotch_is_visible,marker:SPH=annoyed,... That's it? ... No seriously, that's really it? ... Well okay then...
+-3-male_small_crotch_is_visible,marker:SPH=apology,I was hoping for a little bit more to be honest...
 -3-male_medium_crotch_is_visible=horny,Why had I never seen anything like this before playing this game... I mean, I know why but still.
 -3-male_medium_crotch_is_visible=horny,Can I... No, forget I said anything.
 -3-male_medium_crotch_is_visible=serene,I couldn't have hoped for better, ~name~.
--3-male_large_crotch_is_visible=concerned,What is <i>that</i>!? Please tell me someone cursed you..
+-3-male_large_crotch_is_visible,marker:cursed=concerned,What is <i>that</i>!? Please tell me someone cursed you..
 -3-male_large_crotch_is_visible=concerned,What the... At least we're even now I guess?
 -3-female_chest_will_be_visible=encourage,Come join me, ~name~. It's much more fun this way!
 -3-female_small_chest_is_visible=cheer,Mine are bigger, but yours are certainly cuter!
 -3-female_medium_chest_is_visible=humble,Nice! We make a good team. Heehee~
 -3-female_medium_chest_is_visible=calm,So, what do you think? Feels pretty good right?
--3-female_large_chest_is_visible=concerned,Oh dear, that looks painful...
+-3-female_large_chest_is_visible,marker:backcare=concerned,Oh dear, that looks painful...
 -3-female_large_chest_is_visible=concerned,Those must be so impractical for... Well, everything.
 -3-female_crotch_will_be_visible=humble,It's time for you to join me, ~name~.
 -3-female_crotch_is_visible=serene,At least you're not the only one. Heehee~
@@ -738,7 +797,7 @@ swap_cards=calm,I'd like to swap these ~cards~ cards!
 -3-female_masturbating=cheer,Calm down, ~name~, you shouldn't rush this.
 -3-female_finished_masturbating=concerned,Oh wow, ~name~, you made such a mess, are you okay?
 -3-game_over_victory=lossfirst,I kinda wish I could have joined you... Is anyone free later this evening?
-must_masturbate_first=lossfirst,Okay I lost again... Wait I have to do <i>what</i> now? ... Okay... I didn't know that was part of the rules...
+must_masturbate_first=lossfirst,Well... <i>Someone</i> has got to be the first one...
 must_masturbate=lossnotfirst,I'll be honest, I've been waiting for this moment.
 must_masturbate=lossnotfirst,Actually, this probably isn't that bad.
 must_masturbate=lossnotfirst,Honestly, I've been looking forward to this.
@@ -766,8 +825,8 @@ finishing_masturbating=finishing,No... I... want... to... cont-aaaahh!
 -2-female_must_strip=unsure,I guess you're still in the race...
 -2-female_must_strip=base,So, what are you going to take off? 
 -2-male_removing_accessory=angry,Seriously?
--2-male_removed_accessory=sad,So justice really <i>is</i> an illusion after all...
--2-male_removed_accessory=angry,Friendly reminder that I can transform into a dragon.
+-2-male_removed_accessory,marker:justillusion=sad,So justice really <i>is</i> an illusion after all...
+-2-male_removed_accessory,marker:dragon=angry,Friendly reminder that I can transform into a dragon.
 -2-female_removing_accessory=unsure,What! You... Okay...
 -2-female_removing_accessory=angry,Ugh, really? 
 -2-female_removed_accessory=unsure,Well at least we know who is going to win now.
@@ -784,9 +843,9 @@ finishing_masturbating=finishing,No... I... want... to... cont-aaaahh!
 -2-female_removed_major=unsure,At least it was kinda close...
 -2-male_chest_will_be_visible=happy,Your ~clothing~? Amazing!
 -2-male_chest_will_be_visible=happy,Oh my gosh, your ~clothing~?
--2-male_chest_is_visible=horny,<i>Seeing those clothes go / my horniness compels me / joy neverending</i> ... Why am I speaking in haiku? What's happening to me?
+-2-male_chest_is_visible=horny,Oh yes... 
 -2-male_crotch_will_be_visible=horny,Your ~clothing~? Thanks ~name~, this is so going to be so much better than going off memory alone!
--2-male_small_crotch_is_visible=unsure,<i>That</i> is seriously as big as it gets?
+-2-male_small_crotch_is_visible,marker:SPH=unsure,<i>That</i> is seriously as big as it gets?
 -2-male_medium_crotch_is_visible=happy,Oh yes! It's everything I could have hoped for!
 -2-male_medium_crotch_is_visible=horny,Oh, gods. Please let me have a closer look...
 -2-male_medium_crotch_is_visible=horny,My dreams have finally come true...
@@ -800,10 +859,12 @@ finishing_masturbating=finishing,No... I... want... to... cont-aaaahh!
 -2-female_crotch_will_be_visible=cheer,Be careful, ~name~. Or you might have to join me soon!
 -2-female_crotch_is_visible=horny,Ohh, this is just like that time at the hot springs... Wait, I said that out loud didn't I?
 -2-female_crotch_is_visible=horny,Ohh, this reminds me of that one time at the hot springs... Oh gods, I shouldn't have said that.
--2-male_must_masturbate=invite,Come here, ~name~. This'll be so much better if we-
--2-male_start_masturbating=shock,Whaaat?! What do you mean "that's against the rules"?
--2-male_start_masturbating=unsure,"Against the rules"? Like I care about that. ... Oh come on...
--2-male_start_masturbating=sad,What? Rules? No, please... This was the perfect moment to...
+-2-male_must_masturbate,marker:fuckme,notSaidMarker:notallowed=invite,Come here, ~name~. This'll be so much better if we-
+-2-male_must_masturbate,marker:notallowed=horny,Oh my... This keeps getting better!
+-2-male_start_masturbating,marker:notallowed,saidMarker:fuckme,notSaidMarker:notallowed=shock,Whaaat?! What do you mean "that's against the rules"?
+-2-male_start_masturbating,marker:notallowed,saidMarker:fuckme,notSaidMarker:notallowed=unsure,"Against the rules"? Like I care about that. ... Oh come on...
+-2-male_start_masturbating,marker:notallowed,saidMarker:fuckme,notSaidMarker:notallowed=sad,What? Rules? No, please... This was the perfect moment to...
+-2-male_start_masturbating,saidMarker:notallowed=horny,Oh my... I can almost imagine...
 -2-male_masturbating=horny,Oh my... I can almost imagine...
 -2-male_masturbating=disappointed,So close yet so far away...
 -2-male_masturbating=horny,This is so much better than being alone...
@@ -857,12 +918,12 @@ finished_masturbating=finished,That... was... amazing~
 -1-male_chest_will_be_visible=happy,Oh, your ~clothing~? Amazing!
 -1-male_chest_is_visible=calm,I love this, thanks ~name~.
 -1-male_crotch_will_be_visible=shock,Oh, your ~clothing~? Wow...
--1-male_small_crotch_is_visible=sad,Really, that's all? ... I mean, it's not bad, but I hoped for something bigger...
+-1-male_small_crotch_is_visible,marker:SPH=sad,Really, that's all? ... I mean, it's not bad, but I hoped for something bigger...
 -1-male_medium_crotch_is_visible=happy,Oh yes! It's everything I could have hoped for!
 -1-male_medium_crotch_is_visible=horny,My dreams have finally come true...
 -1-male_medium_crotch_is_visible=horny,I'm so glad to finally see this...
 -1-male_large_crotch_is_visible=shock,How would that even fit in... Anything? How did you even keep that hidden?
--1-male_large_crotch_is_visible=shock,What is <i>that</i>!? Please tell me someone cursed you..
+-1-male_large_crotch_is_visible,marker:cursed=shock,What is <i>that</i>!? Please tell me someone cursed you..
 -1-female_chest_will_be_visible=cheer,It's about time you showed them, don't you think?
 -1-female_chest_will_be_visible=cheer,Come on, ~name~. This can't be that bad!
 -1-female_small_chest_is_visible=awkward,You're reminding me of a few people whom I'd rather not think about right now...
@@ -871,10 +932,10 @@ finished_masturbating=finished,That... was... amazing~
 -1-female_large_chest_is_visible=awkward,You're reminding me of someone whom I'd rather not think about right now..
 -1-female_crotch_will_be_visible=shock,Oh dear, are you really <i>that</i> close to losing?
 -1-female_crotch_is_visible=happy,You still have a chance, ~name~! Don't give up!
--1-male_must_masturbate=invite,I still have some energy left, ~name~. Maybe you and I could...
--1-male_must_masturbate=invite,C-come here, ~name~, I'd love to... h-help you if you want.
--1-male_start_masturbating=disappointed,No? Awww...
--1-male_start_masturbating=sad,We can't? Awww...
+-1-male_must_masturbate,marker:fuckme,notSaidMarker:notallowed=invite,I still have some energy left, ~name~. Maybe you and I could...
+-1-male_must_masturbate,marker:notallowed=horny,C-come here, ~name~, I'd love to... h-help you if you want.
+-1-male_start_masturbating,saidMarker:notallowed=disappointed,No? Awww...
+-1-male_start_masturbating,marker:notallowed,saidMarker:fuckme,notSaidMarker:notallowed=sad,We can't? Awww...
 -1-male_masturbating=horny,Oh my... I can almost imagine...
 -1-male_masturbating=sad,So close yet so far away...
 -1-male_masturbating=horny,Gods, I wish I could join you again...
@@ -1322,7 +1383,7 @@ game_over_defeat=calm,Congratulations, ~name~! Let's play again some time!
 6-male_must_masturbate,target:m_corrin=concerned,And now he's going to... This has to be a dream right?
 6-male_start_masturbating,target:m_corrin=humble,... You know what, no. This is too weird to be a dream. I couldn't make this up...
 6-male_start_masturbating,target:m_corrin=unsure,This entire situation does sound like something Odin would be capable of doing...
-6-male_masturbating,target:m_corrin=help,Hey, uh... Do you know someone called Charlotte? What do you think of this pose?
+6-male_masturbating,marker:chrltpose,target:m_corrin=help,Hey, uh... Do you know someone called Charlotte? What do you think of this pose?
 6-male_masturbating,target:m_corrin=horny,I wonder what it feels like for guys...
 6-male_masturbating,target:m_corrin=awkward,Oh gods... I can almost feel it as well...
 6-male_finished_masturbating,target:m_corrin=horny,Wow... That looked intense...
@@ -1343,9 +1404,11 @@ game_over_defeat=calm,Congratulations, ~name~! Let's play again some time!
 
 0-female_must_strip,target:nugi-chan,targetStage:6=disappointed,Hmm... Definitely as clumsy as Felicia... Are all maids like this?
 1-female_must_strip,target:nugi-chan,targetStage:6=disappointed,Hmm... Definitely as clumsy as Felicia... Are all maids like this?
+2-female_must_strip,target:nugi-chan,targetStage:6=disappointed,Hmm... Definitely as clumsy as Felicia... Are all maids like this?
 
 0-female_crotch_will_be_visible,target:nugi-chan=encourage,I'm sorry, that was mean. We all get unlucky sometimes.
 1-female_crotch_will_be_visible,target:nugi-chan=encourage,I'm sorry, that was mean. We all get unlucky sometimes.
+2-female_crotch_will_be_visible,target:nugi-chan=encourage,I'm sorry, that was mean. We all get unlucky sometimes.
 
 #Rinkah
 #Rinkah is one of the units in FE:Fates.
@@ -1497,17 +1560,9 @@ game_over_defeat,target:rinkah=cheer,Well, Rinkah, at least you're better at thi
 
 #Link
 #Both in Smash4, also he speaks.
-0-good_hand,alsoPlaying:link,alsoPlayingStage:0=humble,Link? You here? I didn't see this coming...
-0-good_hand,alsoPlaying:link,alsoPlayingStage:0=happy,Looks like I am off to a good start!
-0-good_hand,alsoPlaying:link,alsoPlayingStage:0=happy,These cards look amazing!
-
-0-okay_hand,alsoPlaying:link,alsoPlayingStage:0=humble,Link? You here? I didn't see this coming...
-0-okay_hand,alsoPlaying:link,alsoPlayingStage:0=calm,This start seems decent enough.
-0-okay_hand,alsoPlaying:link,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-
-0-bad_hand,alsoPlaying:link,alsoPlayingStage:0=humble,Link? You here? I didn't see this coming...
-0-bad_hand,alsoPlaying:link,alsoPlayingStage:0=concerned,This might not be the best start.
-0-bad_hand,alsoPlaying:link,alsoPlayingStage:0=serene,I'm just going to call this "learning by doing"
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:link=humble,Link? You here? I didn't see this coming...
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:link=humble,Link? You here? I didn't see this coming...
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:link=humble,Link? You here? I didn't see this coming...
 
 0-male_must_strip,target:link,targetStage:4=shock,Link? You can talk? Why did you never say anything at the meetings?
 1-male_must_strip,target:link,targetStage:4=shock,Link? You can talk? Why did you never say anything at the meetings?
@@ -1544,44 +1599,24 @@ game_over_defeat,target:rinkah=cheer,Well, Rinkah, at least you're better at thi
 
 #Zelda
 #Both in Smash4.
-0-good_hand,alsoPlaying:zelda,alsoPlayingStage:0=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
-0-good_hand,alsoPlaying:zelda,alsoPlayingStage:0=happy,These cards look amazing!
-0-good_hand,alsoPlaying:zelda,alsoPlayingStage:0=humble,While I am happy with this hand, please do not go easy on me. I can handle it!
-
-0-okay_hand,alsoPlaying:zelda,alsoPlayingStage:0=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
-0-okay_hand,alsoPlaying:zelda,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-0-okay_hand,alsoPlaying:zelda,alsoPlayingStage:0=confident,I have won a war based on nothing but risks and hope, so a game shouldn't be a problem!
-
-0-bad_hand,alsoPlaying:zelda,alsoPlayingStage:0=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
-0-bad_hand,alsoPlaying:zelda,alsoPlayingStage:0=serene,I'm just going to call this "learning by doing"
-0-bad_hand,alsoPlaying:zelda,alsoPlayingStage:0=humble,These cards don't match with any of the combos I read about... Maybe it is a hidden one? 
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:zelda=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:zelda=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:zelda=encourage,Oh hi there, Zelda. Nice to see a familiar face here!
 
 #Samus
 #Both in Smash4, Samus is a higher tier so I sort of reference it. 
-0-good_hand,alsoPlaying:samus,alsoPlayingStage:0=humble,You here, Samus? Please don't go too hard on me, okay?
-0-good_hand,alsoPlaying:samus,alsoPlayingStage:0=happy,Looks like I am off to a good start!
-0-good_hand,alsoPlaying:samus,alsoPlayingStage:0=happy,These cards look amazing!
-
-0-okay_hand,alsoPlaying:samus,alsoPlayingStage:0=humble,You here, Samus? Please don't go too hard on me, okay?
-0-okay_hand,alsoPlaying:samus,alsoPlayingStage:0=calm,This start seems decent enough.
-0-okay_hand,alsoPlaying:samus,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-
-0-bad_hand,alsoPlaying:samus,alsoPlayingStage:0=humble,You here, Samus? Please don't go too hard on me, okay?
-0-bad_hand,alsoPlaying:samus,alsoPlayingStage:0=concerned,This might not be the best start.
-0-bad_hand,alsoPlaying:samus,alsoPlayingStage:0=serene,I'm just going to call this "learning by doing"
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:samus=humble,You here, Samus? Please don't go too hard on me, okay?
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:samus=humble,You here, Samus? Please don't go too hard on me, okay?
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:samus=humble,You here, Samus? Please don't go too hard on me, okay?
 
 game_over_defeat,target:samus=disappointed,Well, Samus, you beat me. As usual...
 
 #CptFalcon
 #Both in Smash4, Corrin may or may not have a crush on The Captain just to make things a little bit more interesting. Or cringy, idk.
-0-good_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
-0-good_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=happy,These cards look amazing!
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:captain_falcon=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:captain_falcon=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:captain_falcon=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
 
-0-okay_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
-0-okay_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-
-0-bad_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=awkward,C-c-captain? Y-you're here too? B-but this is... We're going to... Oh gods...
-0-bad_hand,alsoPlaying:captain_falcon,alsoPlayingStage:0=concerned,This might not be the best start.
 
 0-male_removing_accessory,target:captain_falcon,targetStage:6=serene,Ohh your helmet? I've been waiting for this...
 1-male_removing_accessory,target:captain_falcon,targetStage:6=serene,Ohh your helmet? I've been waiting for this...
@@ -1667,14 +1702,9 @@ start_masturbating,alsoPlaying:captain_falcon,alsoPlayingStage:9=start,Doing thi
 
 #Palutena
 #Corrin isn't a fan of Palutena. Most of these quotes mirror my personal thoughts of her during my first play with her. No hard feelings, though. She's actually one of my favorites now.
-0-good_hand,alsoPlaying:palutena,alsoPlayingStage:0=disappointed,Ugh, <i>you're</i> here too, Palutena?
-0-good_hand,alsoPlaying:palutena,alsoPlayingStage:0=happy,Looks like I am off to a good start!
-
-0-okay_hand,alsoPlaying:palutena,alsoPlayingStage:0=disappointed,Ugh, <i>you're</i> here too, Palutena?
-0-okay_hand,alsoPlaying:palutena,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-
-0-bad_hand,alsoPlaying:palutena,alsoPlayingStage:0=disappointed,Ugh, <i>you're</i> here too, Palutena?
-0-bad_hand,alsoPlaying:palutena,alsoPlayingStage:0=concerned,This might not be the best start.
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:palutena=disappointed,Ugh, <i>you're</i> here too, Palutena?
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:palutena=disappointed,Ugh, <i>you're</i> here too, Palutena?
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:palutena=disappointed,Ugh, <i>you're</i> here too, Palutena?
 
 0-female_removing_accessory,target:palutena,targetStage:3=disappointed,So are you finally going to take off something bigger?
 1-female_removing_accessory,target:palutena,targetStage:3=disappointed,So are you finally going to take off something bigger?
@@ -1709,16 +1739,16 @@ start_masturbating,alsoPlaying:captain_falcon,alsoPlayingStage:9=start,Doing thi
 -2-female_removing_minor,target:palutena,targetStage:4=angry,Really? You count <i>that</i>? ...
 -1-female_removing_minor,target:palutena,targetStage:4=unsure,Really? You count <i>that</i>? ...
 
-0-female_removed_minor,target:palutena,targetStage:5=disappointed,Please stop teasing us like that...
-1-female_removed_minor,target:palutena,targetStage:5=disappointed,Please stop teasing us like that...
-2-female_removed_minor,target:palutena,targetStage:5=disappointed,Please stop teasing us like that...
-3-female_removed_minor,target:palutena,targetStage:5=annoyed,Please stop teasing us like that...
-4-female_removed_minor,target:palutena,targetStage:5=annoyed,Please stop teasing us like that...
-5-female_removed_minor,target:palutena,targetStage:5=annoyed,Please stop teasing us like that...
-6-female_removed_minor,target:palutena,targetStage:5=disappointed,Please stop teasing us like that...
--3-female_removed_minor,target:palutena,targetStage:5=annoyed,Please stop teasing us like that...
--2-female_removed_minor,target:palutena,targetStage:5=unsure,Please stop teasing us like that...
--1-female_removed_minor,target:palutena,targetStage:5=sad,Please stop teasing us like that...
+0-female_removed_minor,target:palutena,targetStage:5=disappointed,Well... You got a point...
+1-female_removed_minor,target:palutena,targetStage:5=disappointed,Well... You got a point...
+2-female_removed_minor,target:palutena,targetStage:5=disappointed,Well... You got a point...
+3-female_removed_minor,target:palutena,targetStage:5=annoyed,Well... You got a point...
+4-female_removed_minor,target:palutena,targetStage:5=annoyed,Well... You got a point...
+5-female_removed_minor,target:palutena,targetStage:5=annoyed,Well... You got a point......
+6-female_removed_minor,target:palutena,targetStage:5=disappointed,Well... You got a point...
+-3-female_removed_minor,target:palutena,targetStage:5=annoyed,Well... You got a point...
+-2-female_removed_minor,target:palutena,targetStage:5=unsure,Well... You got a point...
+-1-female_removed_minor,target:palutena,targetStage:5=sad,Well... You got a point...
 
 0-female_must_strip,target:palutena,targetStage:5=disappointed,Let me guess, your other belt? Your crown?
 1-female_must_strip,target:palutena,targetStage:5=disappointed,Let me guess, your other belt? Your crown?
@@ -1739,7 +1769,6 @@ start_masturbating,alsoPlaying:captain_falcon,alsoPlayingStage:9=start,Doing thi
 5-female_chest_will_be_visible,target:palutena=unsure,Oh, look, the goddess finally decided to start playing along with us.
 6-female_chest_will_be_visible,target:palutena=serene,Oh, look, the goddess finally decided to start playing along with us.
 -3-female_chest_will_be_visible,target:palutena=serene,Oh, look, the goddess finally decided to start playing along with us.
--2-female_chest_will_be_visible,target:palutena=angry,Oh, look, the goddess finally decided to start playing along with us.
 -1-female_chest_will_be_visible,target:palutena=unsure,Oh, look, the goddess finally decided to start playing along with us.
 
 0-female_large_chest_is_visible,target:palutena=cheer,Well at least it was worth the wait!
@@ -1768,17 +1797,9 @@ start_masturbating,alsoPlaying:captain_falcon,alsoPlayingStage:9=start,Doing thi
 
 #Rosalina
 #Both in Smash4
-0-good_hand,alsoPlaying:rosalina,alsoPlayingStage:0=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
-0-good_hand,alsoPlaying:rosalina,alsoPlayingStage:0=happy,These cards look amazing!
-0-good_hand,alsoPlaying:rosalina,alsoPlayingStage:0=humble,While I am happy with this hand, please do not go easy on me. I can handle it!
-
-0-okay_hand,alsoPlaying:rosalina,alsoPlayingStage:0=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
-0-okay_hand,alsoPlaying:rosalina,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-0-okay_hand,alsoPlaying:rosalina,alsoPlayingStage:0=confident,I have won a war based on nothing but risks and hope, so a game shouldn't be a problem!
-
-0-bad_hand,alsoPlaying:rosalina,alsoPlayingStage:0=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
-0-bad_hand,alsoPlaying:rosalina,alsoPlayingStage:0=serene,I'm just going to call this "learning by doing"
-0-bad_hand,alsoPlaying:rosalina,alsoPlayingStage:0=humble,These cards don't match with any of the combos I read about... Maybe it is a hidden one? 
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:rosalina=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:rosalina=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:rosalina=encourage,Rosalina? You're here? Wow I didn't expect you to be into this sort of game. You're full of surprises!
 
 #Daisy
 #References Peach's Daisy coloration in Smash4
@@ -1788,17 +1809,10 @@ start_masturbating,alsoPlaying:captain_falcon,alsoPlayingStage:9=start,Doing thi
 
 #Ryu
 #Both in Smash4 as DLC characters.
-0-good_hand,alsoPlaying:ryu,alsoPlayingStage:0=cheer,You were invited to play too, Ryu? Cool!
-0-good_hand,alsoPlaying:ryu,alsoPlayingStage:0=happy,Looks like I am off to a good start!
-0-good_hand,alsoPlaying:ryu,alsoPlayingStage:0=happy,These cards look amazing!
+0-good_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:ryu=cheer,You were invited to play too, Ryu? Cool!
+0-okay_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:ryu=cheer,You were invited to play too, Ryu? Cool!
+0-bad_hand,notSaidMarker:greetother,marker:greetother,alsoPlaying:ryu=cheer,You were invited to play too, Ryu? Cool!
 
-0-okay_hand,alsoPlaying:ryu,alsoPlayingStage:0=cheer,You were invited to play too, Ryu? Cool!
-0-okay_hand,alsoPlaying:ryu,alsoPlayingStage:0=calm,This is a risky hand, but I'm fine with that.
-0-okay_hand,alsoPlaying:ryu,alsoPlayingStage:0=confident,I have won a war based on nothing but risks and hope, so a game shouldn't be a problem!
-
-0-bad_hand,alsoPlaying:ryu,alsoPlayingStage:0=cheer,You were invited to play too, Ryu? Cool!
-0-bad_hand,alsoPlaying:ryu,alsoPlayingStage:0=concerned,This might not be the best start.
-0-bad_hand,alsoPlaying:ryu,alsoPlayingStage:0=serene,I'm just going to call this "learning by doing"
 
 #Aimee
 #She's kinda special
