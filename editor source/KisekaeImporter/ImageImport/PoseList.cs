@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace SPNATI_Character_Editor.ImageImport
+namespace KisekaeImporter.ImageImport
 {
 	/// <summary>
 	/// List of pose data

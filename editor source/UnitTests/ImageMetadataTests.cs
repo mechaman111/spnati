@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SPNATI_Character_Editor.ImageImport;
+using KisekaeImporter.ImageImport;
 
 namespace UnitTests
 {

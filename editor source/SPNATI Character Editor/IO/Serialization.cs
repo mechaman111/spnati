@@ -62,9 +62,12 @@ namespace SPNATI_Character_Editor
 
 			if (BackupAndExportXml(character, character, "behaviour"))
 			{
-				return BackupAndExportXml(character, character.Metadata, "meta");
+				if (BackupAndExportXml(character, character.Metadata, "meta"))
+				{
+					return BackupAndExportXml(character, character.Markers, "markers");
+				}
 			}
-			else return false;
+			return false;
 
 		}
 
@@ -132,6 +135,13 @@ namespace SPNATI_Character_Editor
 			if (metadata == null)
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
+
+			MarkerData markers = ImportMarkerData(folderName);
+			if (markers != null)
+			{
+				character.Markers.Merge(markers);
+			}
+
 			return character;			
 		}
 
@@ -245,6 +255,21 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return null;
+		}
+
+		private static MarkerData ImportMarkerData(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "markers.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+
+			return ImportXml<MarkerData>(filename);
 		}
 	}
 

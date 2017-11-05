@@ -14,11 +14,14 @@ namespace SPNATI_Character_Editor
 	/// PROPERTY ORDER IS IMPORTANT - Order determines the order attributes are placed in the xml files
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
-	[XmlHeader("This file is machine generated. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
+	[XmlHeader("This file was machine generated using the Character Editor. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
 	public class Character : IHookSerialization
 	{
 		[XmlIgnore]
 		public Metadata Metadata;
+
+		[XmlIgnore]
+		public MarkerData Markers;
 
 		[XmlIgnore]
 		public string FolderName;
@@ -67,9 +70,6 @@ namespace SPNATI_Character_Editor
 		[XmlElement("epilogue")]
 		public List<Epilogue> Endings;
 
-		[XmlIgnore]
-		public HashSet<string> Markers = new HashSet<string>();
-
 		public Character()
 		{
 			FirstName = "New";
@@ -81,6 +81,7 @@ namespace SPNATI_Character_Editor
 			Stamina = 15;
 			Tags = new List<string>();
 			Metadata = new Metadata();
+			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
@@ -101,6 +102,7 @@ namespace SPNATI_Character_Editor
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
+			Markers = new MarkerData();
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
@@ -402,6 +404,71 @@ namespace SPNATI_Character_Editor
 			Special = 4
 		}
 
+		public IEnumerable<Case> GetWorkingCasesTargetedAtCharacter(Character character, TargetType targetTypes)
+		{
+			Behavior.BuildWorkingCases(this);
+			foreach (var workingCase in Behavior.WorkingCases)
+			{
+				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes))
+				{
+					yield return workingCase;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Iterates through dialogue that targets another particular character
+		/// </summary>
+		/// <param name="character">The character being targeted</param>
+		/// <returns></returns>
+		public IEnumerable<Case> GetCasesTargetedAtCharacter(Character character, TargetType targetTypes)
+		{
+			List<Stage> stages = Behavior.Stages;
+			foreach (var stage in stages)
+			{
+				foreach (var stageCase in stage.Cases)
+				{
+					if (IsCaseTargetedAtCharacter(stageCase, character, targetTypes))
+					{
+						bool addStage = !stageCase.Stages.Contains(stage.Id);
+						if (addStage)
+							stageCase.Stages.Add(stage.Id);
+						yield return stageCase;
+						if (addStage)
+							stageCase.Stages.Remove(stage.Id);
+					}
+				}
+			}
+		}
+
+		private bool IsCaseTargetedAtCharacter(Case stageCase, Character character, TargetType allowedTargetTypes)
+		{
+			if (allowedTargetTypes == TargetType.None)
+				return false;
+			bool targeted = false;
+			bool targetedByTag = false;
+			targeted = stageCase.Target == character.FolderName || stageCase.AlsoPlaying == character.FolderName;
+			if (!targeted && (allowedTargetTypes & TargetType.Filter) > 0)
+			{
+				string gender = stageCase.Tag.StartsWith("male_") ? "male" : stageCase.Tag.StartsWith("female_") ? "female" : null;
+				if (gender != null && gender != character.Gender)
+					return false;
+				string size = stageCase.Tag.Contains("_large_") ? "large" : stageCase.Tag.Contains("_medium_") ? "medium" : stageCase.Tag.Contains("_small_") ? "small" : null;
+				if (size != null && character.Size != size)
+					return false;
+
+				if (stageCase.Filter != null && character.Tags.Contains(stageCase.Filter))
+				{
+					targetedByTag = true;
+				}
+			}
+			if ((targeted && (allowedTargetTypes & TargetType.DirectTarget) > 0) || targetedByTag)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		/// <summary>
 		/// Gets a count of lines targeted towards another character
 		/// </summary>
@@ -413,39 +480,19 @@ namespace SPNATI_Character_Editor
 			int count = 0;
 			HashSet<string> lines = new HashSet<string>();
 			List<Stage> stages = Behavior.Stages;
-			foreach (var stage in stages)
+			foreach (var stageCase in GetCasesTargetedAtCharacter(character, TargetType.All))
 			{
-				foreach (var stageCase in stage.Cases)
+				foreach (var line in stageCase.Lines)
 				{
-					bool targeted = false;
-					bool targetedByTag = false;
-					targeted = stageCase.Target == character.FolderName || stageCase.AlsoPlaying == character.FolderName;
-					if (!targeted)
-					{
-						//see if any targets are used
-						foreach (string tag in character.Tags)
-						{
-							if (stageCase.Filter == tag)
-							{
-								targetedByTag = true;
-								break;
-							}
-						}
-					}
-					if (targeted || targetedByTag)
-					{
-						foreach (var line in stageCase.Lines)
-						{
-							if (lines.Contains(line.Text))
-								continue;
-							if (targetedByTag)
-								tagCount++;
-							else count++;
-							lines.Add(line.Text);
-						}
-					}
+					if (lines.Contains(line.Text))
+						continue;
+					if (stageCase.Target != character.FolderName && stageCase.AlsoPlaying != character.FolderName)
+						tagCount++;
+					else count++;
+					lines.Add(line.Text);
 				}
 			}
+
 			return count;
 		}
 
@@ -486,10 +533,7 @@ namespace SPNATI_Character_Editor
 
 		public void CacheMarker(string marker)
 		{
-			if (string.IsNullOrEmpty(marker))
-				return;
-			if (!Markers.Contains(marker))
-				Markers.Add(marker);
+			Markers.Cache(marker);
 		}
 	}
 

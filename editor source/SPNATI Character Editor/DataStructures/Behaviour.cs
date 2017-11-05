@@ -280,7 +280,7 @@ namespace SPNATI_Character_Editor
 					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase));
 					if (existingCase == null)
 					{
-						//Not case exists yet, so create one
+						//No case exists yet, so create one
 						existingCase = workingCase.CopyConditions();
 						existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
 						stage.Cases.Add(existingCase);
@@ -292,6 +292,12 @@ namespace SPNATI_Character_Editor
 						existingCase.Lines.Add(CreateStageSpecificLine(line, s, character));
 					}
 				}
+			}
+
+			//Sort cases to try to match make_xml's output
+			foreach (var stage in Stages)
+			{
+				stage.Cases.Sort(stage.SortCases);
 			}
 		}
 

@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BanterWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BanterWizard.Designer.cs">
+      <DependentUpon>BanterWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChartHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,12 @@
     <Compile Include="Charts\BarChart.Designer.cs">
       <DependentUpon>BarChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DialogueGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DialogueGrid.Designer.cs">
+      <DependentUpon>DialogueGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FindReplace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +98,18 @@
     </Compile>
     <Compile Include="Controls\KeyboardDataGridView.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerGrid.Designer.cs">
+      <DependentUpon>MarkerGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WardrobeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WardrobeEditor.Designer.cs">
+      <DependentUpon>WardrobeEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\Behaviour.cs" />
     <Compile Include="BulkReplaceTool.cs">
@@ -126,8 +150,8 @@
       <DependentUpon>TestCharacter.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\Epilogue.cs" />
-    <Compile Include="DataStructures\KisekaeCode.cs" />
-    <Compile Include="DataStructures\PoseTemplate.cs" />
+    <Compile Include="DataStructures\Marker.cs" />
+    <Compile Include="DataStructures\MarkerData.cs" />
     <Compile Include="DataStructures\Screen.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
@@ -157,13 +181,16 @@
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageCache.cs" />
-    <Compile Include="ImageImport\ImageMetadata.cs" />
-    <Compile Include="ImageImport\ImageImporter.cs" />
-    <Compile Include="ImageImport\PoseList.cs" />
     <Compile Include="ImageLibrary.cs" />
     <Compile Include="IO\FlatFileSerializer.cs" />
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
+    <Compile Include="MarkerReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MarkerReport.Designer.cs">
+      <DependentUpon>MarkerReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewCharacterPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +232,9 @@
       <DependentUpon>ValidationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="XMLHelper.cs" />
+    <EmbeddedResource Include="BanterWizard.resx">
+      <DependentUpon>BanterWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BulkReplaceTool.resx">
       <DependentUpon>BulkReplaceTool.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +250,9 @@
     <EmbeddedResource Include="Charts\BarChart.resx">
       <DependentUpon>BarChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DialogueGrid.resx">
+      <DependentUpon>DialogueGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\EpilogueEditor.resx">
       <DependentUpon>EpilogueEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -229,8 +262,14 @@
     <EmbeddedResource Include="Controls\ImageManager.resx">
       <DependentUpon>ImageManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MarkerGrid.resx">
+      <DependentUpon>MarkerGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TestCharacter.resx">
       <DependentUpon>TestCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WardrobeEditor.resx">
+      <DependentUpon>WardrobeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileNameSelect.resx">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
@@ -243,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MarkerReport.resx">
+      <DependentUpon>MarkerReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewCharacterPrompt.resx">
       <DependentUpon>NewCharacterPrompt.cs</DependentUpon>
@@ -406,6 +448,12 @@
     <Content Include="xml_encoding.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KisekaeImporter\KisekaeImporter.csproj">
+      <Project>{854f0d78-23db-4aaa-bc52-3061ebd1a95c}</Project>
+      <Name>KisekaeImporter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

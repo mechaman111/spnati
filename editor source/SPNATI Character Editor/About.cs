@@ -8,7 +8,7 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public partial class About : Form
 	{
-		private const string Version = "1.08";
+		private const string Version = "1.09";
 
 		public About()
 		{

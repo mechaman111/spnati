@@ -97,27 +97,62 @@ namespace SPNATI_Character_Editor
 			#endregion
 			List<Case> cases = new List<Case>();
 
-			//Make a best guess as to what the "default" case is for a tag by using the one that applies to the most stages
+			//Pass 1 - build a mapping of how many non-targeted cases belong to each stage
+			Dictionary<Tuple<string, int>, HashSet<Case>> _stageMap = new Dictionary<Tuple<string, int>, HashSet<Case>>();
+			foreach (Case c in character.Behavior.WorkingCases)
+			{
+				if (c.HasFilters)
+					continue;
+				foreach (int stage in c.Stages)
+				{
+					Tuple<string, int> key = new Tuple<string, int>(c.Tag, stage);
+					HashSet<Case> set;
+					if (!_stageMap.TryGetValue(key, out set))
+					{
+						set = new HashSet<Case>();
+						_stageMap[key] = set;
+					}
+					_stageMap[key].Add(c);
+				}
+			}
+
+			//Pass 2 - Mark default cases - those that are the only case for the pertinent key in the map 
 			Dictionary<string, Case> defaultCases = new Dictionary<string, Case>();
 			foreach (Case c in character.Behavior.WorkingCases)
 			{
 				if (c.Stages.Count <= 1 || c.HasFilters)
 					continue;
-				Case currentDefaultForTag;
-				if (!defaultCases.TryGetValue(c.Tag, out currentDefaultForTag))
+
+				bool candidate = true;
+				foreach (int stage in c.Stages)
 				{
-					defaultCases[c.Tag] = c;
+					Tuple<string, int> key = new Tuple<string, int>(c.Tag, stage);
+					HashSet<Case> set;
+					if (!_stageMap.TryGetValue(key, out set) || set.Count != 1 || !set.Contains(c))
+					{
+						candidate = false;
+						break;
+					}
 				}
-				else
+				if (candidate)
 				{
-					if (c.Stages.Count > currentDefaultForTag.Stages.Count)
+					//There could be multiple potential defaults (ex one case covers stages 1-3, another covers 4-6), so just use the one that covers the most stages
+					Case currentDefaultForTag;
+					if (!defaultCases.TryGetValue(c.Tag, out currentDefaultForTag))
 					{
 						defaultCases[c.Tag] = c;
+					}
+					else
+					{
+						if (c.Stages.Count > currentDefaultForTag.Stages.Count)
+						{
+							defaultCases[c.Tag] = c;
+						}
 					}
 				}
 			}
 
-			//Separate non-default cases into individual cases per stage
+			//Pass 3 - Separate non-default cases into individual cases per stage, and actually mark the default cases as defaults
 			foreach (Case c in character.Behavior.WorkingCases)
 			{
 				if (c.Stages.Count == 0)
@@ -247,7 +282,7 @@ namespace SPNATI_Character_Editor
 					string lineCode = caseCode;
 					if (!string.IsNullOrEmpty(defaultLine.Marker))
 					{
-						lineCode += string.Format(",marker:{0}", defaultLine.Marker); 
+						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
 					}
 					string text = defaultLine.IsSilent != null ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));

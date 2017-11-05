@@ -1,19 +1,15 @@
-﻿using SPNATI_Character_Editor.ImageImport;
+﻿using KisekaeImporter.ImageImport;
+using KisekaeImporter.SubCodes;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SPNATI_Character_Editor
+namespace KisekaeImporter.ImageImport
 {
 	/// <summary>
 	/// Template for auto-generating poses
 	/// </summary>
 	public class PoseTemplate
 	{
-		/// <summary>
-		/// In advanced mode, codes won't be culled when combining the base, stage and emotion
-		/// </summary>
-		public bool AdvancedMode { get; set; }
-
 		/// <summary>
 		/// Character's body
 		/// </summary>
@@ -29,10 +25,85 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public List<Emotion> Emotions = new List<Emotion>();
 
+		/// <summary>
+		/// Creates a code out of a base, a clothing stage, and an emotion/position
+		/// </summary>
+		/// <param name="baseCode"></param>
+		/// <param name="stage"></param>
+		/// <param name="emotion"></param>
+		/// <returns></returns>
+		public static KisekaeCode CreatePose(KisekaeCode baseCode, StageTemplate stage, KisekaeCode poseCode)
+		{
+			KisekaeCode output = new KisekaeCode(baseCode, true);
+			KisekaeHair resultHair = output.GetOrAddComponent<KisekaeHair>();
+
+			KisekaeCode clothingCode = new KisekaeCode(stage.Code);
+
+			//Only apply appearance components to the output
+			output.ReplaceComponent(baseCode.GetComponent<KisekaeAppearance>());
+			output.ReplaceComponent(baseCode.GetComponent<KisekaeFace>());
+			output.ReplaceComponent(baseCode.GetComponent<KisekaeHair>());
+
+			//Bake the clothing into the result
+			output.ReplaceComponent(clothingCode.GetComponent<KisekaeClothing>());
+
+			//Manually apply any ahoge that doesn't appear in the base
+			KisekaeHair clothingHair = clothingCode.GetComponent<KisekaeHair>();
+			if (clothingHair != null)
+			{
+				foreach (KisekaeAhoge ahoge in clothingHair.GetSubCodeArrayItem<KisekaeAhoge>())
+				{
+					if (!resultHair.HasSubCode(ahoge.Id, ahoge.Index))
+					{
+						resultHair.ReplaceSubCode(ahoge);
+					}
+				}
+			}
+
+			//Apply the pose information
+			output.ReplaceComponent(poseCode.GetComponent<KisekaePose>());
+			output.ReplaceComponent(poseCode.GetComponent<KisekaeExpression>());
+
+			//Manually set positions of belts and ahoge that appear in the pose
+			KisekaeHair poseHair = poseCode.GetComponent<KisekaeHair>();
+			if (poseHair != null)
+			{
+				foreach (KisekaeAhoge ahoge in poseHair.GetSubCodeArrayItem<KisekaeAhoge>())
+				{
+					if (resultHair.HasSubCode(ahoge.Id, ahoge.Index))
+					{
+						KisekaeAhoge final = resultHair.GetAhoge(ahoge.Index);
+						final.CopyPositioningFrom(ahoge);
+					}
+				}
+			}
+			KisekaeClothing resultClothing = output.GetOrAddComponent<KisekaeClothing>();
+			KisekaeClothing poseClothing = poseCode.GetComponent<KisekaeClothing>();
+			if (poseClothing != null)
+			{
+				foreach (KisekaeBelt belt in poseClothing.GetSubCodeArrayItem<KisekaeBelt>())
+				{
+					if (resultClothing.HasSubCode(belt.Id, belt.Index))
+					{
+						KisekaeBelt final = resultClothing.GetBelt(belt.Index);
+						final.CopyPositionFrom(belt);
+					}
+				}
+			}
+
+			//Add in stage blush, etc.
+			KisekaeExpression expression = output.GetOrAddComponent<KisekaeExpression>();
+			expression.Blush.Blush += stage.ExtraBlush;
+			expression.Blush.Anger += stage.ExtraAnger;
+			KisekaeAppearance appearance = output.GetOrAddComponent<KisekaeAppearance>();
+			appearance.Vagina.Juice += stage.ExtraJuice;
+
+			return output;
+		}
+
 		public void SaveToFile(string filename)
 		{
 			List<string> lines = new List<string>();
-			lines.Add(string.Format("advanced={0}", AdvancedMode ? "1" : "0"));
 			lines.Add(string.Format("base={0}", BaseCode.Serialize()));
 			for (int i = 0; i < Stages.Count; i++)
 			{
@@ -60,9 +131,6 @@ namespace SPNATI_Character_Editor
 				string value = kvp[1].ToLower();
 				switch (key)
 				{
-					case "advanced":
-						template.AdvancedMode = (value == "1");
-						break;
 					case "base":
 						template.BaseCode = new KisekaeCode(value);
 						break;
@@ -90,11 +158,10 @@ namespace SPNATI_Character_Editor
 			PoseList poses = new PoseList();
 			for (int stage = 0; stage < Stages.Count; stage++)
 			{
+				StageTemplate stageTemplate = Stages[stage];
 				foreach (Emotion emotion in Emotions)
 				{
-					KisekaeCode baseCode = new KisekaeCode("", true);
-					baseCode.MergeIn(BaseCode);
-					KisekaeCode finalCode = new KisekaeCode(baseCode, Stages[stage], emotion.Code);
+					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion.Code);
 					poses.Poses.Add(new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize()));
 				}
 			}

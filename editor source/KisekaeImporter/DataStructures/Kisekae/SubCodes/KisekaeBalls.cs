@@ -1,0 +1,19 @@
+﻿namespace KisekaeImporter.SubCodes
+{
+	public class KisekaeBalls : KisekaeSubCode
+	{
+		public KisekaeBalls() : base("qb") { }
+
+		public int Shape
+		{
+			get { return GetInt(0); }
+			set { Set(0, value.ToString()); }
+		}
+
+		public int Scale
+		{
+			get { return GetInt(1); }
+			set { Set(1, value.ToString()); }
+		}
+	}
+}

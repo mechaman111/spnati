@@ -20,7 +20,6 @@ namespace SPNATI_Character_Editor
 		private ImageLibrary _imageLibrary = new ImageLibrary();
 		private Stage _selectedStage;
 		private Case _selectedCase;
-		private int _selectedRow;
 		private bool _populatingImages;
 		private bool _populatingWardrobe;
 		private bool _populatingTree;
@@ -28,6 +27,7 @@ namespace SPNATI_Character_Editor
 		private TreeNode _startNode;
 		private TreeFilterMode _filterMode = TreeFilterMode.All;
 		private Queue<WardrobeChange> _wardrobeChanges = new Queue<WardrobeChange>();
+		private TabPage _currentTab;
 
 		private FindReplace _findForm;
 
@@ -438,6 +438,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (_selectedCharacter == null)
 				return;
+			Cursor.Current = Cursors.WaitCursor;
 			_selectedCharacter.Label = txtLabel.Text;
 			_selectedCharacter.FirstName = txtFirstName.Text;
 			_selectedCharacter.LastName = txtLastName.Text;
@@ -453,6 +454,8 @@ namespace SPNATI_Character_Editor
 			SaveTags();
 			SaveIntelligence();
 			SaveCase(false);
+			if (tabControl.SelectedTab == tabMarkers)
+				markerGrid.Save();
 
 			ApplyWardrobeChanges();
 
@@ -462,6 +465,7 @@ namespace SPNATI_Character_Editor
 				SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
 				GenerateDialogueTree(false);
 			}
+			Cursor.Current = Cursors.Default;
 		}
 
 		/// <summary>
@@ -592,6 +596,10 @@ namespace SPNATI_Character_Editor
 				}
 				ApplyWardrobeChanges();
 			}
+			else if (_currentTab == tabMarkers)
+			{
+				markerGrid.Save();
+			}
 		}
 
 		/// <summary>
@@ -615,6 +623,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			_currentTab = tabControl.SelectedTab;
 			if (_selectedCharacter != null)
 			{
 				if (tabControl.SelectedTab == tabEndings)
@@ -624,6 +633,10 @@ namespace SPNATI_Character_Editor
 				else if (tabControl.SelectedTab == tabImages)
 				{
 					imageImporter.SetCharacter(_selectedCharacter);
+				}
+				else if (tabControl.SelectedTab == tabMarkers)
+				{
+					markerGrid.SetCharacter(_selectedCharacter);
 				}
 			}
 			if (tabControl.SelectedTab == tabDialogue)
@@ -748,6 +761,7 @@ namespace SPNATI_Character_Editor
 
 		private void RegenerateWardrobeList(bool changingLayers)
 		{
+			wardrobeEditor.SetCharacter(_selectedCharacter);
 			_populatingWardrobe = true;
 			lstClothes.Items.Clear();
 			for (int i = _selectedCharacter.Wardrobe.Count - 1; i >= 0; i--)
@@ -801,8 +815,8 @@ namespace SPNATI_Character_Editor
 			Character c = CharacterDatabase.Characters.Find(chr => chr.FolderName == key);
 			PopulateStageCombo(cboTargetStage, c, true);
 			PopulateStageCombo(cboTargetToStage, c, true);
-			PopulateMarkerCombo(cboTargetMarker, c);
-			PopulateMarkerCombo(cboTargetNotMarker, c);
+			PopulateMarkerCombo(cboTargetMarker, c, false);
+			PopulateMarkerCombo(cboTargetNotMarker, c, false);
 		}
 
 		private void cboAlsoPlaying_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -813,8 +827,8 @@ namespace SPNATI_Character_Editor
 			Character c = CharacterDatabase.Characters.Find(chr => chr.FolderName == key);
 			PopulateStageCombo(cboAlsoPlayingStage, c, false);
 			PopulateStageCombo(cboAlsoPlayingMaxStage, c, false);
-			PopulateMarkerCombo(cboAlsoPlayingMarker, c);
-			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c);
+			PopulateMarkerCombo(cboAlsoPlayingMarker, c, false);
+			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c, false);
 		}
 
 		private enum TreeFilterMode
@@ -969,7 +983,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			_populatingCase = false;
-			UpdateAvailableImagesForCase(true);
+			gridDialogue.UpdateAvailableImagesForCase(GetSelectedStages(), true);
 		}
 
 		/// <summary>
@@ -983,7 +997,7 @@ namespace SPNATI_Character_Editor
 				return;
 			_populatingCase = true;
 			UpdateCheckAllState();
-			UpdateAvailableImagesForCase(true);
+			gridDialogue.UpdateAvailableImagesForCase(GetSelectedStages(), true);
 			_populatingCase = false;
 		}
 
@@ -992,7 +1006,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="box"></param>
 		/// <param name="character"></param>
-		private void PopulateMarkerCombo(ComboBox box, Character character)
+		private void PopulateMarkerCombo(ComboBox box, Character character, bool allowPrivate)
 		{
 			string oldText = box.Text;
 			box.Items.Clear();
@@ -1000,9 +1014,12 @@ namespace SPNATI_Character_Editor
 			if (character == null)
 				return;
 
-			foreach (string marker in character.Markers)
+			foreach (var marker in character.Markers.Values)
 			{
-				box.Items.Add(marker);
+				if (allowPrivate || marker.Scope == MarkerScope.Public)
+				{
+					box.Items.Add(marker.Name);
+				}
 			}
 
 			if (!string.IsNullOrEmpty(oldText))
@@ -1378,9 +1395,9 @@ namespace SPNATI_Character_Editor
 				SetStageComboBox(cboTargetStage, minStage);
 				PopulateStageCombo(cboTargetToStage, target, true);
 				SetStageComboBox(cboTargetToStage, maxStage);
-				PopulateMarkerCombo(cboTargetMarker, target);
+				PopulateMarkerCombo(cboTargetMarker, target, false);
 				cboTargetMarker.Text = _selectedCase.TargetSaidMarker;
-				PopulateMarkerCombo(cboTargetNotMarker, target);
+				PopulateMarkerCombo(cboTargetNotMarker, target, false);
 				cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
 				SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
 				SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
@@ -1415,8 +1432,8 @@ namespace SPNATI_Character_Editor
 			SetStageComboBox(cboAlsoPlayingStage, minStage);
 			PopulateStageCombo(cboAlsoPlayingMaxStage, other, false);
 			SetStageComboBox(cboAlsoPlayingMaxStage, maxStage);
-			PopulateMarkerCombo(cboAlsoPlayingMarker, other);
-			PopulateMarkerCombo(cboAlsoPlayingNotMarker, other);
+			PopulateMarkerCombo(cboAlsoPlayingMarker, other, false);
+			PopulateMarkerCombo(cboAlsoPlayingNotMarker, other, false);
 			cboAlsoPlayingMarker.Text = _selectedCase.AlsoPlayingSaidMarker;
 			cboAlsoPlayingNotMarker.Text = _selectedCase.AlsoPlayingNotSaidMarker;
 			#endregion
@@ -1425,8 +1442,8 @@ namespace SPNATI_Character_Editor
 			cboOwnHand.SelectedItem = _selectedCase.HasHand;
 			SetRange(valOwnLosses, valMaxOwnLosses, _selectedCase.ConsecutiveLosses);
 			SetRange(valOwnTimeInStage, valMaxOwnTimeInStage, _selectedCase.TimeInStage);
-			PopulateMarkerCombo(cboMarker, _selectedCharacter);
-			PopulateMarkerCombo(cboNotMarker, _selectedCharacter);
+			PopulateMarkerCombo(cboMarker, _selectedCharacter, true);
+			PopulateMarkerCombo(cboNotMarker, _selectedCharacter, true);
 			cboMarker.Text = _selectedCase.SaidMarker;
 			cboNotMarker.Text = _selectedCase.NotSaidMarker;
 			#endregion
@@ -1448,29 +1465,27 @@ namespace SPNATI_Character_Editor
 			#endregion
 
 			#region Dialogue
-			for (int i = 0; i < gridDialogue.Rows.Count; i++)
-			{
-				DataGridViewRow row = gridDialogue.Rows[i];
-				row.Cells["ColImage"].Value = null;
-			}
-
-			//Populate image box with valid images
-			UpdateAvailableImagesForCase(false);
-
-			//Populate lines
-			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _selectedCharacter.StartingLines : _selectedCase.Lines);
-			foreach (DialogueLine line in lines)
-			{
-				AddLineToDialogueGrid(line);
-			}
-			if (lines.Count > 0)
-				HighlightRow(0);
-
+			var stages = GetSelectedStages();
+			gridDialogue.SetData(_selectedCharacter, _selectedStage, _selectedCase, stages, _imageLibrary);
+			GetSelectedStages();
 			#endregion
 
 			_populatingCase = false;
 			HighlightRow(0);
+		}
+
+		private HashSet<int> GetSelectedStages()
+		{
+			HashSet<int> selectedStages = new HashSet<int>();
+			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
+			{
+				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
+				if (box.Checked)
+				{
+					selectedStages.Add(i);
+				}
+			}
+			return selectedStages;
 		}
 
 		private void ClearConditionFields()
@@ -1488,154 +1503,6 @@ namespace SPNATI_Character_Editor
 						box.Text = "";
 					}
 
-				}
-			}
-		}
-
-		/// <summary>
-		/// Updates the Image column in the dialogue grid to contain only images that exist for all currently selected stages
-		/// </summary>
-		/// <param name="retainValue"></param>
-		private void UpdateAvailableImagesForCase(bool retainValue)
-		{
-			List<object> values = new List<object>();
-			if (retainValue)
-			{
-				//save off values
-				for (int i = 0; i < gridDialogue.Rows.Count; i++)
-				{
-					DataGridViewRow row = gridDialogue.Rows[i];
-					values.Add(row.Cells["ColImage"].Value);
-				}
-			}
-
-			int stageId = _selectedStage == null ? 0 : _selectedStage.Id;
-			DataGridViewComboBoxColumn col = gridDialogue.Columns["ColImage"] as DataGridViewComboBoxColumn;
-
-			HashSet<int> selectedStages = new HashSet<int>();
-			for (int i = 0; i < flowStageChecks.Controls.Count; i++)
-			{
-				CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-				if (box.Checked)
-				{
-					selectedStages.Add(i);
-				}
-			}
-
-			col.Items.Clear();
-			List<CharacterImage> images = new List<CharacterImage>();
-			if (_selectedStage == null)
-			{
-				images.AddRange(_imageLibrary.GetImages(0));
-				images.AddRange(_imageLibrary.GetImages(-1));
-				foreach (var image in images)
-				{
-					col.Items.Add(image);
-				}
-			}
-			else
-			{
-				images.AddRange(_imageLibrary.GetImages(stageId));
-				images.AddRange(_imageLibrary.GetImages(-1));
-
-				foreach (var image in images)
-				{
-					string name = DialogueLine.GetDefaultImage(image.Name);
-					//Filter out the ones that don't appear in every selected stage
-					bool allExist = true;
-					if (!image.IsGeneric)
-					{
-						foreach (int stage in selectedStages)
-						{
-							if (_imageLibrary.Find(stage + "-" + name) == null)
-							{
-								allExist = false;
-								break;
-							}
-						}
-
-					}
-					if (allExist)
-						col.Items.Add(image);
-				}
-			}
-
-			col.DisplayMember = "DefaultName";
-
-			if (retainValue)
-			{
-				//restore values
-				for (int i = 0; i < gridDialogue.Rows.Count; i++)
-				{
-					DataGridViewRow row = gridDialogue.Rows[i];
-
-					//Make sure the value is still valid
-					bool found = false;
-					foreach (var item in col.Items)
-					{
-						CharacterImage img = item as CharacterImage;
-						CharacterImage oldImg = values[i] as CharacterImage;
-						if ((oldImg == null && img.DefaultName == values[i]?.ToString()) || (oldImg != null && oldImg.DefaultName == img.DefaultName))
-						{
-							row.Cells["ColImage"].Value = item;
-							found = true;
-							break;
-						}
-					}
-					if (!found)
-					{
-						row.Cells["ColImage"].Value = null;
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Adds a row to the dialogue grid
-		/// </summary>
-		/// <param name="line">Line to populate the row with</param>
-		private void AddLineToDialogueGrid(DialogueLine line)
-		{
-			string imageKey = line.Image;
-			CharacterImage image = _imageLibrary.Find(imageKey);
-			if (image == null && _selectedCase.Stages.Count > 0)
-			{
-				int stage = _selectedCase.Stages[0];
-				if (_selectedStage != null)
-					stage = _selectedStage.Id;
-				imageKey = string.Format("{0}-{1}", stage, imageKey);
-				image = _imageLibrary.Find(imageKey);
-			}
-
-			DataGridViewRow row = gridDialogue.Rows[gridDialogue.Rows.Add()];
-			DataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as DataGridViewComboBoxCell;
-			SetImage(imageCell, imageKey);
-			DataGridViewCell textCell = row.Cells["ColText"];
-			textCell.Value = line.Text;
-			DataGridViewCheckBoxCell silentCell = row.Cells["ColSilent"] as DataGridViewCheckBoxCell;
-			silentCell.FalseValue = null;
-			silentCell.TrueValue = "";
-			silentCell.Value = line.IsSilent;
-
-			DataGridViewCell markerCell = row.Cells["ColMarker"];
-			markerCell.Value = line.Marker;
-		}
-
-		/// <summary>
-		/// Sets the image cell of a dialogue row
-		/// </summary>
-		/// <param name="cell"></param>
-		/// <param name="key"></param>
-		private void SetImage(DataGridViewComboBoxCell cell, string key)
-		{
-			string defaultKey = Path.GetFileNameWithoutExtension(DialogueLine.GetDefaultImage(key));
-			foreach (var item in cell.Items)
-			{
-				CharacterImage image = item as CharacterImage;
-				if (image != null && image.DefaultName == defaultKey)
-				{
-					cell.Value = item;
-					return;
 				}
 			}
 		}
@@ -1950,51 +1817,12 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Lines
-			List<DialogueLine> lines = (c.Tag == Trigger.StartTrigger ? _selectedCharacter.StartingLines : c.Lines);
-			lines.Clear();
-			for (int i = 0; i < gridDialogue.Rows.Count; i++)
-			{
-				DialogueLine line = ReadLineFromDialogueGrid(i);
-				if (line != null)
-				{
-					lines.Add(line);
-					_selectedCharacter.CacheMarker(line.Marker);
-				}
-			}
-
+			gridDialogue.Save();
+			
 			if (!switchingCases)
 				GenerateDialogueTree(false);
 
 			return needRegeneration;
-		}
-
-		/// <summary>
-		/// Converts a row in the dialogue grid into a DialogueLine
-		/// </summary>
-		/// <param name="rowIndex"></param>
-		/// <returns></returns>
-		private DialogueLine ReadLineFromDialogueGrid(int rowIndex)
-		{
-			DataGridViewRow row = gridDialogue.Rows[rowIndex];
-			string image = row.Cells["ColImage"].Value?.ToString();
-			string text = row.Cells["ColText"].Value?.ToString();
-			string silent = row.Cells["ColSilent"].Value?.ToString();
-			string marker = row.Cells["ColMarker"].Value?.ToString();
-			if (silent == "")
-				text = "";
-			if (text == "~silent~")
-			{
-				text = "";
-				silent = "";
-			}
-			if (text == null)
-				return null;
-			CharacterImage img = _imageLibrary.Find(image);
-			string extension = img != null ? img.FileExtension : ".png";
-			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
-			line.IsSilent = silent;
-			line.Marker = string.IsNullOrEmpty(marker) ? null : marker;
-			return line;
 		}
 
 		/// <summary>
@@ -2245,15 +2073,10 @@ namespace SPNATI_Character_Editor
 			Serialization.ExportListing(_listing);
 			Export();
 		}
-
-		/// <summary>
-		/// Handler for clicking into a dialogue row
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void gridDialogue_CellEnter(object sender, DataGridViewCellEventArgs e)
+		
+		private void gridDialogue_HighlightRow(object sender, int index)
 		{
-			HighlightRow(e.RowIndex);
+			HighlightRow(index);
 		}
 
 		/// <summary>
@@ -2264,9 +2087,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (index == -1 || _populatingCase)
 				return;
-			_selectedRow = index;
-			DataGridViewRow row = gridDialogue.Rows[index];
-			string image = row.Cells["ColImage"].Value?.ToString();
+			string image = gridDialogue.GetImage(index);
 			CharacterImage img = null;
 			img = _imageLibrary.Find(image);
 			if (img == null)
@@ -2276,76 +2097,6 @@ namespace SPNATI_Character_Editor
 				img = _imageLibrary.Find(stage + "-" + image);
 			}
 			DisplayImage(img);
-		}
-
-		/// <summary>
-		/// Validates variables in a dialogue line
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void gridDialogue_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-		{
-			if (_selectedCase == null || e.FormattedValue == null || _populatingCase)
-				return;
-
-			Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
-			List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase.Tag, e.FormattedValue.ToString());
-			if (invalidVars.Count > 0)
-			{
-				MessageBox.Show(string.Format("The following variables are invalid for this line: {0}", string.Join(",", invalidVars)));
-				e.Cancel = true;
-			}
-		}
-
-		/// <summary>
-		/// Performs auto-replacement of variables
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void gridDialogue_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
-		{
-			if (_selectedCase == null)
-				return;
-			if (e.ColumnIndex == 1)
-			{
-				//Validate variables in text
-				string text = e.Value?.ToString();
-				if (string.IsNullOrEmpty(text))
-					return;
-				Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
-				List<string> invalidVars = new List<string>();
-				e.Value = varRegex.Replace(text, (match) =>
-				{
-					string var = match.Value;
-					if (var == "~clothes~")
-					{
-						var = "~clothing~";
-					}
-					return var;
-				});
-				e.ParsingApplied = true;
-			}
-		}
-
-		/// <summary>
-		/// Updates the preview image when the user selects a new pose image for a dialogue line
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void gridDialogue_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.ColumnIndex == 0)
-			{
-				HighlightRow(e.RowIndex);
-			}
-		}
-
-		private void gridDialogue_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (gridDialogue.IsCurrentCellDirty)
-			{
-				gridDialogue.CommitEdit(DataGridViewDataErrorContexts.Commit);
-			}
 		}
 
 		private List<DialogueLine> _lineClipboard = new List<DialogueLine>();
@@ -2358,13 +2109,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (_selectedCase == null)
 				return;
-			_lineClipboard.Clear();
-			for (int i = 0; i < gridDialogue.Rows.Count; i++)
-			{
-				var line = ReadLineFromDialogueGrid(i);
-				if (line != null)
-					_lineClipboard.Add(line);
-			}
+			_lineClipboard = gridDialogue.CopyLines();
 			SetStatus(string.Format("Lines from {0} copied to the clipboard.", _selectedCase));
 		}
 
@@ -2378,20 +2123,17 @@ namespace SPNATI_Character_Editor
 			if (_selectedCase == null || _lineClipboard.Count == 0)
 				return;
 
-			if (gridDialogue.Rows.Count > 0 && !string.IsNullOrEmpty(gridDialogue.Rows[0].Cells["ColText"].Value?.ToString()))
+			if (!gridDialogue.IsEmpty)
 			{
 				DialogResult result = MessageBox.Show("Do you want to overwrite the existing lines?", "Paste Lines", MessageBoxButtons.YesNoCancel);
 				if (result == DialogResult.Cancel)
 					return;
 				else if (result == DialogResult.Yes)
 				{
-					gridDialogue.Rows.Clear();
+					gridDialogue.Clear();
 				}
 			}
-			foreach (var line in _lineClipboard)
-			{
-				AddLineToDialogueGrid(line);
-			}
+			gridDialogue.PasteLines(_lineClipboard);
 		}
 
 		/// <summary>
@@ -2615,71 +2357,20 @@ namespace SPNATI_Character_Editor
 				return;
 
 			List<Case> cases = _selectedCharacter.Behavior.WorkingCases;
-			int startLine = 0;
 			int startCaseIndex = 0;
 
 			//Look at the current screen before doing cases in the data structure
 			if (_selectedCase != null)
 			{
-				startLine = _selectedRow;
 				startCaseIndex = Math.Max(0, cases.IndexOf(_selectedCase));
-				int startIndex = GetSelectionStart(gridDialogue);
-				if (args.DoReplace && startIndex >= 0)
-				{
-					//Back up a space when replacing so the highlighted word gets replaced
-					startIndex--;
-				}
-				bool firstIteration = (startIndex == -1);
-				for (int l = startLine; l < gridDialogue.Rows.Count; l++)
-				{
-					DataGridViewRow row = gridDialogue.Rows[l];
-					string text = row.Cells["ColText"].Value?.ToString();
-					if (!string.IsNullOrEmpty(text))
-					{
-						int index = -1;
-						do
-						{
-							index = FindText(text, startIndex + 1, args);
-							if (index >= 0)
-							{
-								//highlight it
-								if (ActiveControl != gridDialogue.EditingControl || gridDialogue.CurrentCell != row.Cells["ColText"])
-								{
-									gridDialogue.Select();
-									gridDialogue.CurrentCell = row.Cells["ColText"];
-									gridDialogue.BeginEdit(false);
-								}
-								SelectText(index, args.FindText.Length);
-
-								args.Success = true;
-
-								if (args.DoReplace)
-								{
-									ReplaceText(args.ReplaceText);
-									args.ReplaceCount++;
-									text = row.Cells["ColText"].Value?.ToString();
-								}
-
-								if (!args.ReplaceAll)
-									return;
-							}
-							firstIteration = true;
-						}
-						while (index >= 0);
-					}
-					startIndex = -1;
-				}
+				bool found = gridDialogue.FindReplace(args);
+				if (found)
+					return;
 			}
 
 			//Nothing found, deselect everything
-			_selectedRow = 0;
-			TextBox box = gridDialogue.EditingControl as TextBox;
-			if (box != null)
-			{
-				box.SelectionStart = 0;
-				box.SelectionLength = 0;
-			}
-
+			gridDialogue.ClearSelection();
+			
 			//Now look across all cases
 			List<Case> otherCases = new List<Case>();
 			for (int i = startCaseIndex + 1; i < cases.Count; i++)
@@ -2698,7 +2389,7 @@ namespace SPNATI_Character_Editor
 					string text = c.Lines[l].Text;
 					if (!string.IsNullOrEmpty(text))
 					{
-						int index = FindText(text, 0, args);
+						int index = gridDialogue.FindText(text, 0, args);
 						if (index >= 0)
 						{
 							args.Success = true;
@@ -2714,11 +2405,7 @@ namespace SPNATI_Character_Editor
 								//Select the case
 								SelectCase(c, _selectedStage != null ? _selectedStage.Id : -1);
 								//Select the line
-								DataGridViewRow row = gridDialogue.Rows[l];
-								gridDialogue.Select();
-								gridDialogue.CurrentCell = row.Cells["ColText"];
-								gridDialogue.BeginEdit(false);
-								SelectText(index, args.FindText.Length);
+								gridDialogue.SelectTextInRow(l, index, args.FindText.Length);
 							}
 
 							if (!args.ReplaceAll)
@@ -2770,71 +2457,6 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		/// <summary>
-		/// Gets the text selection start of a grid's TextBox cell, if there is one
-		/// </summary>
-		/// <param name="grid">Grid to look at</param>
-		/// <returns>Selection start index, or -1 if there is none</returns>
-		private int GetSelectionStart(DataGridView grid)
-		{
-			if (grid.CurrentCell == null)
-				return -1;
-			if (grid.EditingControl != null && grid.EditingControl is TextBox)
-			{
-				TextBox box = (TextBox)grid.EditingControl;
-				return box.SelectionStart;
-			}
-			return -1;
-		}
-
-		private void SelectText(int start, int length)
-		{
-			TextBox textbox = (TextBox)gridDialogue.EditingControl;
-			if (textbox != null)
-			{
-				textbox.SelectionStart = start;
-				textbox.SelectionLength = length;
-			}
-		}
-
-		private void ReplaceText(string replacement)
-		{
-			if (gridDialogue.EditingControl != null && gridDialogue.EditingControl is TextBox)
-			{
-				TextBox box = (TextBox)gridDialogue.EditingControl;
-				int start = box.SelectionStart;
-				box.SelectedText = replacement;
-				box.SelectionStart = start;
-				box.SelectionLength = replacement.Length;
-			}
-		}
-
-		/// <summary>
-		/// Looks for a find match in a string of text
-		/// </summary>
-		/// <param name="text">Text to search</param>
-		/// <param name="args">Search args</param>
-		/// <returns>Index in the string where the match begins, or -1 if no match</returns>
-		private int FindText(string text, int startIndex, FindArgs args)
-		{
-			if (string.IsNullOrEmpty(text) || startIndex >= text.Length)
-				return -1;
-			string pattern = args.FindText;
-			if (args.WholeWords)
-			{
-				pattern = string.Format(@"\b{0}\b", pattern);
-			}
-
-			Regex regex = new Regex(pattern, !args.MatchCase ? RegexOptions.IgnoreCase : RegexOptions.None);
-			text = text.Substring(startIndex); //only search from the startIndex on
-			Match match = regex.Match(text);
-			if (match.Success)
-			{
-				return match.Index + startIndex;
-			}
-			return -1;
-		}
-
 		private void gridDialogue_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (_findForm.Visible && e.KeyCode == Keys.Enter)
@@ -2847,11 +2469,28 @@ namespace SPNATI_Character_Editor
 
 		private void _findForm_RestoreFocus(object sender, EventArgs e)
 		{
-			if (ActiveControl != gridDialogue && ActiveControl != gridDialogue.EditingControl)
-				gridDialogue.Select();
-			if (gridDialogue.EditingControl != null && ActiveControl != gridDialogue.EditingControl)
-				gridDialogue.EditingControl.Select();
+			gridDialogue.SetFocus();
 		}
 		#endregion
+
+		private void markerReportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveCase(false);
+			MarkerReport form = new MarkerReport();
+			form.ShowDialog();
+		}
+
+		private void banterWizardToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveCase(false);
+			_selectedCharacter.Behavior.BuildStageTree(_selectedCharacter);
+			BanterWizard wizard = new BanterWizard();
+			wizard.SetCharacter(_selectedCharacter, _imageLibrary);
+			wizard.ShowDialog();
+			if (wizard.Modified)
+			{
+				GenerateDialogueTree(false);	
+			}
+		}
 	}
 }
