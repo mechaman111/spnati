@@ -1,11 +1,8 @@
 ﻿using System.Drawing;
 using System.Text.RegularExpressions;
 
-namespace SPNATI_Character_Editor.ImageImport
+namespace KisekaeImporter.ImageImport
 {
-	/// <summary>
-	/// Metadata for a pose created from a kisekae code
-	/// </summary>
 	public class ImageMetadata
 	{
 		/// <summary>

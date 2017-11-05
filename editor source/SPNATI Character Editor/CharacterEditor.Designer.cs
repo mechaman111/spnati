@@ -35,11 +35,9 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterEditor));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +61,8 @@
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dialogueTesterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.graphsToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.markerReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.banterWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.howToGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutCharacterEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -215,6 +215,8 @@
 			this.cboMarker = new System.Windows.Forms.ComboBox();
 			this.label68 = new System.Windows.Forms.Label();
 			this.tabMisc = new System.Windows.Forms.TabPage();
+			this.valPriority = new System.Windows.Forms.NumericUpDown();
+			this.label73 = new System.Windows.Forms.Label();
 			this.valMaxGameRounds = new System.Windows.Forms.NumericUpDown();
 			this.label64 = new System.Windows.Forms.Label();
 			this.valGameRounds = new System.Windows.Forms.NumericUpDown();
@@ -249,6 +251,7 @@
 			this.cboTotalMales = new System.Windows.Forms.ComboBox();
 			this.cboTotalFemales = new System.Windows.Forms.ComboBox();
 			this.tabEndings = new System.Windows.Forms.TabPage();
+			this.tabMarkers = new System.Windows.Forms.TabPage();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
 			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -258,15 +261,15 @@
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.label73 = new System.Windows.Forms.Label();
-			this.valPriority = new System.Windows.Forms.NumericUpDown();
+			this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.wardrobeEditor = new SPNATI_Character_Editor.Controls.WardrobeEditor();
 			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
-			this.gridDialogue = new SPNATI_Character_Editor.KeyboardDataGridView();
-			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColSilent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
+			this.markerGrid = new SPNATI_Character_Editor.Controls.MarkerGrid();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -303,12 +306,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.valOwnLosses)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valOwnTimeInStage)).BeginInit();
 			this.tabMisc.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valPriority)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).BeginInit();
 			this.tabEndings.SuspendLayout();
+			this.tabMarkers.SuspendLayout();
 			this.splitMenu.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.valPriority)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -474,7 +477,9 @@
 			// 
 			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dialogueTesterToolStripMenuItem,
-            this.graphsToolStripItem});
+            this.graphsToolStripItem,
+            this.markerReportToolStripMenuItem,
+            this.banterWizardToolStripMenuItem});
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
 			this.viewToolStripMenuItem.Text = "Tools";
@@ -492,6 +497,20 @@
 			this.graphsToolStripItem.Size = new System.Drawing.Size(164, 22);
 			this.graphsToolStripItem.Text = "Charts...";
 			this.graphsToolStripItem.Click += new System.EventHandler(this.graphsToolStripItem_Click);
+			// 
+			// markerReportToolStripMenuItem
+			// 
+			this.markerReportToolStripMenuItem.Name = "markerReportToolStripMenuItem";
+			this.markerReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.markerReportToolStripMenuItem.Text = "Marker Report...";
+			this.markerReportToolStripMenuItem.Click += new System.EventHandler(this.markerReportToolStripMenuItem_Click);
+			// 
+			// banterWizardToolStripMenuItem
+			// 
+			this.banterWizardToolStripMenuItem.Name = "banterWizardToolStripMenuItem";
+			this.banterWizardToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.banterWizardToolStripMenuItem.Text = "Banter Wizard...";
+			this.banterWizardToolStripMenuItem.Click += new System.EventHandler(this.banterWizardToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -708,6 +727,7 @@
 			this.tabControl.Controls.Add(this.tabImages);
 			this.tabControl.Controls.Add(this.tabDialogue);
 			this.tabControl.Controls.Add(this.tabEndings);
+			this.tabControl.Controls.Add(this.tabMarkers);
 			this.tabControl.Location = new System.Drawing.Point(12, 51);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -1056,6 +1076,7 @@
 			// 
 			// tabWardrobe
 			// 
+			this.tabWardrobe.Controls.Add(this.wardrobeEditor);
 			this.tabWardrobe.Controls.Add(this.label9);
 			this.tabWardrobe.Controls.Add(this.groupBox1);
 			this.tabWardrobe.Controls.Add(this.cmdClothesDown);
@@ -1405,6 +1426,7 @@
 			this.grpCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpCase.Controls.Add(this.gridDialogue);
 			this.grpCase.Controls.Add(this.lblHelpText);
 			this.grpCase.Controls.Add(this.cmdPasteAll);
 			this.grpCase.Controls.Add(this.cmdCopyAll);
@@ -1413,7 +1435,6 @@
 			this.grpCase.Controls.Add(this.label8);
 			this.grpCase.Controls.Add(this.lblAvailableVars);
 			this.grpCase.Controls.Add(this.groupBox3);
-			this.grpCase.Controls.Add(this.gridDialogue);
 			this.grpCase.Controls.Add(this.grpConditions);
 			this.grpCase.Location = new System.Drawing.Point(3, 0);
 			this.grpCase.Name = "grpCase";
@@ -2007,6 +2028,28 @@
 			this.gridFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFilters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			this.gridFilters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridFilters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColTagFilter,
+            this.ColTagCount});
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFilters.DefaultCellStyle = dataGridViewCellStyle8;
+			this.gridFilters.Location = new System.Drawing.Point(6, 6);
+			this.gridFilters.Name = "gridFilters";
 			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
 			dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2014,29 +2057,7 @@
 			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFilters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
-			this.gridFilters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridFilters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColTagFilter,
-            this.ColTagCount});
-			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFilters.DefaultCellStyle = dataGridViewCellStyle10;
-			this.gridFilters.Location = new System.Drawing.Point(6, 6);
-			this.gridFilters.Name = "gridFilters";
-			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFilters.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+			this.gridFilters.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
 			this.gridFilters.Size = new System.Drawing.Size(619, 138);
 			this.gridFilters.TabIndex = 0;
 			// 
@@ -2275,6 +2296,27 @@
 			this.tabMisc.TabIndex = 2;
 			this.tabMisc.Text = "Misc";
 			this.tabMisc.UseVisualStyleBackColor = true;
+			// 
+			// valPriority
+			// 
+			this.valPriority.Location = new System.Drawing.Point(350, 46);
+			this.valPriority.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.valPriority.Name = "valPriority";
+			this.valPriority.Size = new System.Drawing.Size(54, 20);
+			this.valPriority.TabIndex = 7;
+			// 
+			// label73
+			// 
+			this.label73.AutoSize = true;
+			this.label73.Location = new System.Drawing.Point(276, 48);
+			this.label73.Name = "label73";
+			this.label73.Size = new System.Drawing.Size(41, 13);
+			this.label73.TabIndex = 60;
+			this.label73.Text = "Priority:";
 			// 
 			// valMaxGameRounds
 			// 
@@ -2696,6 +2738,17 @@
 			this.tabEndings.Text = "Epilogue";
 			this.tabEndings.UseVisualStyleBackColor = true;
 			// 
+			// tabMarkers
+			// 
+			this.tabMarkers.Controls.Add(this.markerGrid);
+			this.tabMarkers.Location = new System.Drawing.Point(4, 22);
+			this.tabMarkers.Name = "tabMarkers";
+			this.tabMarkers.Padding = new System.Windows.Forms.Padding(3);
+			this.tabMarkers.Size = new System.Drawing.Size(937, 668);
+			this.tabMarkers.TabIndex = 5;
+			this.tabMarkers.Text = "Markers";
+			this.tabMarkers.UseVisualStyleBackColor = true;
+			// 
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2767,26 +2820,41 @@
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// label73
+			// dataGridViewComboBoxColumn1
 			// 
-			this.label73.AutoSize = true;
-			this.label73.Location = new System.Drawing.Point(276, 48);
-			this.label73.Name = "label73";
-			this.label73.Size = new System.Drawing.Size(41, 13);
-			this.label73.TabIndex = 60;
-			this.label73.Text = "Priority:";
+			this.dataGridViewComboBoxColumn1.HeaderText = "Image";
+			this.dataGridViewComboBoxColumn1.MaxDropDownItems = 20;
+			this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+			this.dataGridViewComboBoxColumn1.Width = 150;
 			// 
-			// valPriority
+			// dataGridViewTextBoxColumn1
 			// 
-			this.valPriority.Location = new System.Drawing.Point(350, 46);
-			this.valPriority.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-			this.valPriority.Name = "valPriority";
-			this.valPriority.Size = new System.Drawing.Size(54, 20);
-			this.valPriority.TabIndex = 7;
+			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn1.HeaderText = "Text";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.HeaderText = "Marker";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.Width = 70;
+			// 
+			// dataGridViewCheckBoxColumn1
+			// 
+			this.dataGridViewCheckBoxColumn1.HeaderText = "Silent";
+			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+			this.dataGridViewCheckBoxColumn1.Width = 50;
+			// 
+			// wardrobeEditor
+			// 
+			this.wardrobeEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.wardrobeEditor.Location = new System.Drawing.Point(182, 167);
+			this.wardrobeEditor.Name = "wardrobeEditor";
+			this.wardrobeEditor.Size = new System.Drawing.Size(749, 495);
+			this.wardrobeEditor.TabIndex = 15;
+			this.wardrobeEditor.Visible = false;
 			// 
 			// imageImporter
 			// 
@@ -2801,66 +2869,12 @@
 			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridDialogue.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-			this.gridDialogue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridDialogue.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColImage,
-            this.ColText,
-            this.ColMarker,
-            this.ColSilent});
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridDialogue.DefaultCellStyle = dataGridViewCellStyle8;
-			this.gridDialogue.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.gridDialogue.Location = new System.Drawing.Point(5, 414);
-			this.gridDialogue.MultiSelect = false;
+			this.gridDialogue.Location = new System.Drawing.Point(6, 414);
 			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.gridDialogue.Size = new System.Drawing.Size(655, 239);
-			this.gridDialogue.TabIndex = 41;
-			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
-			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
-			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
-			this.gridDialogue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellValueChanged);
-			this.gridDialogue.CurrentCellDirtyStateChanged += new System.EventHandler(this.gridDialogue_CurrentCellDirtyStateChanged);
-			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
-			// 
-			// ColImage
-			// 
-			this.ColImage.HeaderText = "Image";
-			this.ColImage.MaxDropDownItems = 20;
-			this.ColImage.Name = "ColImage";
-			this.ColImage.Width = 150;
-			// 
-			// ColText
-			// 
-			this.ColText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColText.HeaderText = "Text";
-			this.ColText.Name = "ColText";
-			// 
-			// ColMarker
-			// 
-			this.ColMarker.HeaderText = "Marker";
-			this.ColMarker.Name = "ColMarker";
-			this.ColMarker.Width = 70;
-			// 
-			// ColSilent
-			// 
-			this.ColSilent.HeaderText = "Silent";
-			this.ColSilent.Name = "ColSilent";
-			this.ColSilent.Width = 50;
+			this.gridDialogue.Size = new System.Drawing.Size(654, 239);
+			this.gridDialogue.TabIndex = 42;
+			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
+			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
 			// 
 			// epilogueEditor
 			// 
@@ -2870,6 +2884,16 @@
 			this.epilogueEditor.Name = "epilogueEditor";
 			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
 			this.epilogueEditor.TabIndex = 0;
+			// 
+			// markerGrid
+			// 
+			this.markerGrid.AllowPrivate = true;
+			this.markerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.markerGrid.Location = new System.Drawing.Point(3, 3);
+			this.markerGrid.Name = "markerGrid";
+			this.markerGrid.ReadOnly = false;
+			this.markerGrid.Size = new System.Drawing.Size(931, 662);
+			this.markerGrid.TabIndex = 0;
 			// 
 			// CharacterEditor
 			// 
@@ -2939,12 +2963,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.valOwnTimeInStage)).EndInit();
 			this.tabMisc.ResumeLayout(false);
 			this.tabMisc.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valPriority)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).EndInit();
 			this.tabEndings.ResumeLayout(false);
+			this.tabMarkers.ResumeLayout(false);
 			this.splitMenu.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.valPriority)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3046,7 +3070,6 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label33;
 		private System.Windows.Forms.Button cmdAddToListing;
-		private SPNATI_Character_Editor.KeyboardDataGridView gridDialogue;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label lblAvailableVars;
 		private System.Windows.Forms.Label label34;
@@ -3150,10 +3173,6 @@
 		private System.Windows.Forms.Label label65;
 		private System.Windows.Forms.ComboBox cboTargetMarker;
 		private System.Windows.Forms.Label label66;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColSilent;
 		private System.Windows.Forms.ComboBox cboAlsoPlayingMarker;
 		private System.Windows.Forms.Label label67;
 		private System.Windows.Forms.TabPage tabSelf;
@@ -3178,6 +3197,16 @@
 		private System.Windows.Forms.Label label71;
 		private System.Windows.Forms.NumericUpDown valPriority;
 		private System.Windows.Forms.Label label73;
+		private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+		private Controls.DialogueGrid gridDialogue;
+		private System.Windows.Forms.ToolStripMenuItem markerReportToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem banterWizardToolStripMenuItem;
+		private System.Windows.Forms.TabPage tabMarkers;
+		private Controls.MarkerGrid markerGrid;
+		private Controls.WardrobeEditor wardrobeEditor;
 	}
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 
@@ -23,6 +24,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("hasHand")]
 		public string HasHand;
+
+		[XmlAttribute("filter")]
+		public string Filter;
 
 		[XmlAttribute("tag")]
 		public string Tag;
@@ -48,6 +52,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("targetTimeInStage")]
 		public string TargetTimeInStage;
 
+		[XmlAttribute("target")]
+		public string Target;
+
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
 
@@ -56,9 +63,6 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("targetNotSaidMarker")]
 		public string TargetNotSaidMarker;
-
-		[XmlAttribute("target")]
-		public string Target;
 
 		[XmlAttribute("notSaidMarker")]
 		public string NotSaidMarker;
@@ -72,17 +76,14 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("oppHand")]
 		public string TargetHand;
 
-		[XmlAttribute("totalMales")]
-		public string TotalMales;
-
 		[XmlAttribute("totalFemales")]
 		public string TotalFemales;
 
+		[XmlAttribute("totalMales")]
+		public string TotalMales;
+
 		[XmlAttribute("totalRounds")]
 		public string TotalRounds;
-
-		[XmlAttribute("filter")]
-		public string Filter;
 
 		[XmlAttribute("consecutiveLosses")]
 		public string ConsecutiveLosses;
@@ -166,6 +167,10 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(AlsoPlaying))
 				{
 					result += string.Format(" (playing w/{0})", AlsoPlaying);
+				}
+				if (!string.IsNullOrEmpty(AlsoPlayingStage))
+				{
+					result += string.Format(" (playing w/stage={0})", AlsoPlayingStage);
 				}
 				if (!string.IsNullOrEmpty(AlsoPlayingTimeInStage))
 				{
@@ -672,6 +677,290 @@ namespace SPNATI_Character_Editor
 				TargetStage += "-" + max;
 			}
 		}
+
+		/// <summary>
+		/// Converts a string to a range
+		/// </summary>
+		/// <param name="range">Range in the format D or D-D</param>
+		/// <param name="min">Minimum value of the range</param>
+		/// <param name="max">Maximum value of the range</param>
+		public static void ToRange(string range, out int min, out int max)
+		{
+			if (string.IsNullOrEmpty(range))
+			{
+				min = 0;
+				max = 0;
+				return;
+			}
+			string[] pieces = range.Split('-');
+			int.TryParse(pieces[0], out min);
+			if (pieces.Length > 1)
+				int.TryParse(pieces[1], out max);
+			else max = min;
+		}
+
+		/// <summary>
+		/// Creates a working case that is a direct response to this one. Assumes that this case has a target
+		/// </summary>
+		/// <param name="speaker">The character speaking the lines from this case that should be responded to</param>
+		/// <param name="responder">The character who will say the response that is being created</param>
+		/// <returns></returns>
+		public Case CreateResponse(Character speaker, Character responder)
+		{
+			Case response = new Case();
+			int minStage, maxStage;
+
+			string speakerStageRange = null;
+			int min = Stages.Min(stage => stage);
+			int max = Stages.Max(stage => stage);
+			if (max != min)
+				speakerStageRange = min + "-" + max;
+			else speakerStageRange = min.ToString();
+			//iF it applies to all stages, leave it blank
+			if (min == 0 && max == speaker.Layers + Clothing.ExtraStages - 1)
+				speakerStageRange = null;
+
+			string gender = (Tag.StartsWith("male_") ? "male" : Tag.StartsWith("female_") ? "female" : null);
+			if (Target == responder.FolderName || responder.Tags.Exists(t => t == Filter))
+			{
+				//Responder is the target
+
+				if (AlsoPlaying != null || (gender != null && gender != responder.Gender))
+				{
+					//If the responder is the target, but there was also an AlsoPlaying, it's impossible to respond directly to this case since 
+					//you can't use two AlsoPlayings
+					return null;
+				}
+
+				if (!string.IsNullOrEmpty(TargetStage))
+				{
+					ToRange(TargetStage, out minStage, out maxStage);
+					for (int stage = minStage; stage <= maxStage; stage++)
+					{
+						response.Stages.Add(stage);
+					}
+				}
+				else
+				{
+					List<int> targetStages = GetTargetStage(Tag, responder);
+					if (targetStages.Count == 0)
+					{
+						//If not limited to a stage, use all stages by default
+						for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
+						{
+							response.Stages.Add(i);
+						}
+					}
+					else
+					{
+						response.Stages.AddRange(targetStages);
+					}
+				}
+
+				//Figure out the corresponding responder tag
+				response.Tag = TriggerDatabase.GetOppositeTag(Tag, speaker, response.Stages[0]);
+				if (response.Tag == null)
+				{
+					return null; //There is no way to respond to this tag
+				}
+
+				//Since the response won't have a target, put the speaker in alsoPlaying
+				response.AlsoPlaying = speaker.FolderName;
+				response.AlsoPlayingStage = speakerStageRange;
+				response.AlsoPlayingTimeInStage = TimeInStage;
+				response.AlsoPlayingHand = HasHand;
+				response.AlsoPlayingNotSaidMarker = NotSaidMarker;
+				response.AlsoPlayingSaidMarker = SaidMarker;
+
+				//Match speaker's target conditions with the responder
+				response.TimeInStage = TargetTimeInStage;
+				response.HasHand = TargetHand;
+				response.SaidMarker = TargetSaidMarker;
+				response.NotSaidMarker = TargetNotSaidMarker;
+
+			}
+			else if (AlsoPlaying == responder.FolderName)
+			{
+				//Responder is also playing
+				if (!string.IsNullOrEmpty(AlsoPlayingStage))
+				{
+					ToRange(AlsoPlayingStage, out minStage, out maxStage);
+					for (int stage = minStage; stage <= maxStage; stage++)
+					{
+						response.Stages.Add(stage);
+					}
+				}
+				else
+				{
+					//If not limited to a stage, use all stages by default
+					for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
+					{
+						response.Stages.Add(i);
+					}
+				}
+
+				Trigger trigger = TriggerDatabase.GetTrigger(Tag);
+				if (trigger.HasTarget)
+				{
+					//someone else is the target, so use the same tag as the speaker
+					response.Tag = Tag;
+					response.Target = Target;
+					response.TargetStage = TargetStage;
+					response.TargetTimeInStage = TargetTimeInStage;
+					response.TargetHand = TargetHand;
+					response.Filter = Filter;
+					response.TargetSaidMarker = TargetSaidMarker;
+					response.TargetNotSaidMarker = TargetNotSaidMarker;
+
+					//Speaker goes into AlsoPlaying
+					response.AlsoPlaying = speaker.FolderName;
+					response.AlsoPlayingHand = HasHand;
+					response.AlsoPlayingNotSaidMarker = NotSaidMarker;
+					response.AlsoPlayingSaidMarker = SaidMarker;
+					response.AlsoPlayingStage = speakerStageRange;
+					response.AlsoPlayingTimeInStage = TimeInStage;
+				}
+				else
+				{
+					//speaker is the target, so use the opposite tag
+					response.Tag = TriggerDatabase.GetOppositeTag(Tag, speaker, min);
+					response.Target = speaker.FolderName;
+					response.TargetStage = speakerStageRange;
+					response.TargetTimeInStage = TimeInStage;
+					response.TargetHand = HasHand;
+					response.TargetSaidMarker = SaidMarker;
+					response.TargetNotSaidMarker = NotSaidMarker;
+				}
+
+				//Match speaker's also playing conditions with the responder
+				response.TimeInStage = AlsoPlayingTimeInStage;
+				response.HasHand = AlsoPlayingHand;
+				response.SaidMarker = AlsoPlayingSaidMarker;
+				response.NotSaidMarker = AlsoPlayingNotSaidMarker;
+			}
+
+			//Misc conditions are always the same
+			response.Conditions.AddRange(Conditions);
+			response.ConsecutiveLosses = ConsecutiveLosses;
+			response.TotalFemales = TotalFemales;
+			response.TotalMales = TotalMales;
+			response.TotalPlaying = TotalPlaying;
+			response.TotalExposed = TotalExposed;
+			response.TotalNaked = TotalNaked;
+			response.TotalFinishing = TotalFinishing;
+			response.TotalFinished = TotalFinished;
+			response.TotalRounds = TotalRounds;
+
+			return response;
+		}
+
+		public static List<int> GetTargetStage(string reactionTag, Character target)
+		{
+			List<int> stages = new List<int>();
+			//limit the stages for certain tags
+			if (reactionTag.EndsWith("crotch_is_visible"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer);
+				}
+			}
+			else if (reactionTag.EndsWith("crotch_will_be_visible"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "lower");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer - 1);
+				}
+			}
+			else if (reactionTag.EndsWith("chest_is_visible"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer);
+				}
+			}
+			else if (reactionTag.EndsWith("chest_will_be_visible"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "important" && l.Position == "upper");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer - 1);
+				}
+			}
+			else if (reactionTag.EndsWith("removing_accessory"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer - 1);
+				}
+			}
+			else if (reactionTag.EndsWith("removed_accessory"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "extra");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer);
+				}
+			}
+			else if (reactionTag.EndsWith("removing_major"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer - 1);
+				}
+			}
+			else if (reactionTag.EndsWith("removed_major"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "major");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer);
+				}
+			}
+			else if (reactionTag.EndsWith("removing_minor"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer - 1);
+				}
+			}
+			else if (reactionTag.EndsWith("removed_minor"))
+			{
+				int layer = target.Wardrobe.FindIndex(l => l.Type == "minor");
+				if (layer >= 0)
+				{
+					stages.Add(target.Layers - layer);
+				}
+			}
+			else if (reactionTag.EndsWith("must_masturbate"))
+			{
+				stages.Add(target.Layers);
+			}
+			else if (reactionTag.EndsWith("start_masturbating"))
+			{
+				stages.Add(target.Layers);
+			}
+			else if (reactionTag.Contains("finished"))
+			{
+				stages.Add(target.Layers + 2);
+			}
+			else if (reactionTag.Contains("finishing"))
+			{
+				stages.Add(target.Layers + 1);
+			}
+			else if (reactionTag.EndsWith("masturbating"))
+			{
+				stages.Add(target.Layers + 1);
+			}
+
+			return stages;
+		}
 	}
 
 	public class TargetCondition
@@ -713,6 +1002,29 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			return string.Format("{0}={1}", Filter, Count);
+		}
+	}
+
+	[Flags]
+	public enum TargetType
+	{
+		None = 0,
+		DirectTarget = 1,
+		Filter = 2,
+		All = 3,
+	}
+
+	public static class Extensions
+	{
+		public static int ToInt(this string value)
+		{
+			if (value == null)
+				return 0;
+			string[] pieces = value.Split('-');
+			string val = pieces[0];
+			int result;
+			int.TryParse(val, out result);
+			return result;
 		}
 	}
 }

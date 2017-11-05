@@ -3,10 +3,10 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 
-namespace SPNATI_Character_Editor.ImageImport
+namespace KisekaeImporter.ImageImport
 {
 	/// <summary>
-	/// Interfaces with Kisekae to produce images. kkl.exe must be running for this class to work properly
+	/// Interfaces with Kisekae to produce images
 	/// </summary>
 	public class ImageImporter
 	{
@@ -43,28 +43,21 @@ namespace SPNATI_Character_Editor.ImageImport
 			}
 		}
 
-		/// <summary>
-		/// File name for the scene setup file
-		/// </summary>
 		private string SetupFileName
 		{
 			get { return Path.Combine(KklAppData, "scene_setup_file.txt"); }
 		}
 
-		/// <summary>
-		/// Adds a pose to the pose list
-		/// </summary>
-		/// <param name="key">Pose name</param>
-		/// <param name="rawData">Kisekae code for the pose</param>
+		private string SetupImageFileName
+		{
+			get { return Path.Combine(KklAppData, "scene_setup_file..png"); }
+		}
+
 		public void AddPose(string key, string rawData)
 		{
 			_poseList.Poses.Add(new ImageMetadata(key, rawData));
 		}
 
-		/// <summary>
-		/// Gets the scene data to put in the setup file
-		/// </summary>
-		/// <returns></returns>
 		private string GetSetupString()
 		{
 			//Parse out the version from the first image
@@ -74,11 +67,6 @@ namespace SPNATI_Character_Editor.ImageImport
 			return GetSetupString(_poseList.Poses[0].Data);
 		}
 
-		/// <summary>
-		/// Gets the scene data for a particular kisekae version based on the code provided
-		/// </summary>
-		/// <param name="rawData">Kisekae code</param>
-		/// <returns></returns>
 		private string GetSetupString(string rawData)
 		{
 			if (rawData.Length < 2)
@@ -95,37 +83,24 @@ namespace SPNATI_Character_Editor.ImageImport
 			}
 		}
 
-		/// <summary>
-		/// Creates an Image from a code. Kisekae must be running
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
 		public Image ImportSingleImage(ImageMetadata image)
 		{
 			SetupForImport();
 			return Import(image);
 		}
 
-		/// <summary>
-		/// Prepares files that Kisekae uses for imports
-		/// </summary>
 		private void SetupForImport()
 		{
 			try
 			{
 				File.WriteAllText(SetupFileName, GetSetupString());
 			}
-			catch (IOException e)
+			catch
 			{
-				ErrorLog.LogError(string.Format("Error importing image: {0}", e.Message));
+			
 			}
 		}
 
-		/// <summary>
-		/// Imports an image from Kisekae
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
 		private Image Import(ImageMetadata image)
 		{
 			const string DefaultVersion = "33**";
@@ -155,9 +130,9 @@ namespace SPNATI_Character_Editor.ImageImport
 				Image result = WaitForImage(imageFileNames);
 				return result;
 			}
-			catch (IOException e)
+			catch
 			{
-				ErrorLog.LogError(string.Format("Error importing image: {0}", e.Message));
+				
 			}
 
 			return null;
@@ -206,6 +181,8 @@ namespace SPNATI_Character_Editor.ImageImport
 		/// <returns>Copy of the source image cropped as appropriate</returns>
 		public Image Crop(Image srcImage, Rect cropBounds)
 		{
+			if (srcImage == null)
+				return null;
 			Rectangle cropRegion = new Rectangle(cropBounds.Left, cropBounds.Top, cropBounds.Right - cropBounds.Left, cropBounds.Bottom - cropBounds.Top);
 
 			Image img = new Bitmap(cropRegion.Width, cropRegion.Height);

@@ -129,7 +129,7 @@ namespace SPNATI_Character_Editor
 										}
 									}
 								}
-								ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker);
+								ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker, stageCase.TargetStage);
 								ValidateMarker(warnings, target, caseLabel, "targetNotSeenMarker", stageCase.TargetNotSaidMarker);
 							}
 						}
@@ -239,7 +239,7 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
 						}
-						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingSeenMarker", stageCase.AlsoPlayingSaidMarker);
+						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingSeenMarker", stageCase.AlsoPlayingSaidMarker, stageCase.AlsoPlayingStage);
 					}
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
 					{
@@ -435,8 +435,14 @@ namespace SPNATI_Character_Editor
 
 		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string label, string value)
 		{
+			ValidateMarker(warnings, character, caseLabel, label, value, "");
+		}
+
+		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string label, string value, string stageRange)
+		{
 			if (string.IsNullOrEmpty(value))
 				return;
+
 			if (character == null)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Missing character for {1}. {0}", caseLabel, value)));
@@ -446,6 +452,31 @@ namespace SPNATI_Character_Editor
 				if (!character.Markers.Contains(value))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, value)));
+				}
+				else
+				{
+					if (!string.IsNullOrEmpty(stageRange))
+					{
+						//verify that a marker can even be set prior to this point
+
+						int min, max;
+						Case.ToRange(stageRange, out min, out max);
+						for (int i = 0; i <= min && i < character.Behavior.Stages.Count; i++)
+						{
+							Stage stage = character.Behavior.Stages[i];
+							foreach (var c in stage.Cases)
+							{
+								foreach (var line in c.Lines)
+								{
+									if (line.Marker == value)
+									{
+										return;
+									}
+								}
+							}
+						}
+						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, value)));
+					}
 				}
 			}
 		}

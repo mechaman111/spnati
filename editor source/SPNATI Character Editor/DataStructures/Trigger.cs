@@ -338,5 +338,166 @@ namespace SPNATI_Character_Editor
 				return group.AppliesToNextStage;
 			return false;
 		}
+
+		/// <summary>
+		/// Gets the tag opposite another one. Ex. female_removing_minor <-> stripping
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public static string GetOppositeTag(string tag, Character character, int stage)
+		{
+			//TODO: Move this into dialogue_tags.xml instead of hardcoding
+			if (tag == "must_strip_winning" || tag == "must_strip_normal" || tag == "must_strip_losing")
+			{
+				return character.Gender + "_must_strip";
+			}
+			else if (tag == "stripping")
+			{
+				Clothing layer = character.Wardrobe[stage];
+				string type = layer.Type;
+				if (type == "extra")
+					type = "accessory";
+				else if (type == "important")
+				{
+					if (layer.Position == "upper")
+					{
+						return character.Gender + "_chest_will_be_visible";
+					}
+					else
+					{
+						return character.Gender + "_crotch_will_be_visible";
+					}
+				}
+				return character.Gender + "_removing_" + type;
+			}
+			else if (tag == "stripped")
+			{
+				Clothing layer = character.Wardrobe[stage - 1];
+				string type = layer.Type;
+				if (type == "extra")
+					type = "accessory";
+				else if (type == "important")
+				{
+					if (layer.Position == "upper")
+					{
+						if (character.Gender == "male")
+						{
+							return "male_chest_is_visible";
+						}
+						else
+						{
+							return "female_" + character.Size + "_chest_is_visible";
+						}
+					}
+					else
+					{
+						if (character.Gender == "male")
+						{
+							return "male_" + character.Size + "_crotch_is_visible";
+						}
+						else
+						{
+							return "female_chest_is_visible";
+						}
+					}
+				}
+				return character.Gender + "_removed_" + type;
+			}
+			else if (tag == "must_masturbate_first" || tag == "must_masturbate")
+			{
+				return character.Gender + "_must_masturbate";
+			}
+			else if (tag == "start_masturbating")
+			{
+				return character.Gender + "_start_masturbating";
+			}
+			else if (tag == "masturbating" || tag == "heavy_masturbating")
+			{
+				return character.Gender + "_masturbating";
+			}
+			else if (tag == "finished_masturbating")
+			{
+				return character.Gender + "_finished_masturbating";
+			}
+			else if (tag.Contains("_must_strip"))
+			{
+				return "must_strip_normal";
+			}
+			else if (tag.Contains("_removing_") || tag.Contains("_will_be_visible"))
+			{
+				return "stripping";
+			}
+			else if (tag.Contains("_removed_") || tag.Contains("_is_visible"))
+			{
+				return "stripped";
+			}
+			else if (tag.EndsWith("male_must_masturbate"))
+			{
+				return "must_masturbate";
+			}
+			else if (tag.EndsWith("male_start_masturbating"))
+			{
+				return "start_masturbating";
+			}
+			else if (tag.EndsWith("male_masturbating"))
+			{
+				return "masturbating";
+			}
+			else if (tag.EndsWith("male_finished_masturbating"))
+			{
+				return "finished_masturbating";
+			}
+			else if (tag == "game_over_defeat")
+			{
+				return "game_over_victory";
+			}
+			else if (tag == "game_over_victory")
+			{
+				return "game_over_defeat";
+			}
+
+			return null; //there is no opposite
+		}
+
+		/// <summary>
+		/// Gets the game phase corresponding to a tag
+		/// </summary>
+		/// <param name="tag"></param>
+		/// <returns></returns>
+		public static GamePhase GetPhase(string tag)
+		{
+			if (tag == "swap_cards")
+				return GamePhase.ExchangingCards;
+			else if (tag == "must_strip_winning" || tag == "must_strip_normal" || tag == "must_strip_losing")
+				return GamePhase.BeforeLoss;
+			else if (tag.EndsWith("must_strip"))
+				return GamePhase.BeforeLoss;
+			else if (tag.Contains("_removing_") || tag.Contains("_will_be_visible") || tag == "stripping")
+				return GamePhase.DuringLoss;
+			else if (tag.Contains("_removed_") || tag.Contains("_is_visible") || tag == "stripped")
+				return GamePhase.AfterLoss;
+			else if (tag.Contains("must_masturbate"))
+				return GamePhase.BeforeLoss;
+			else if (tag.Contains("start_masturbating"))
+				return GamePhase.DuringLoss;
+			else if (tag == "heavy_masturbating")
+				return GamePhase.HeavyMasturbating;
+			else if (tag.Contains("finishing"))
+				return GamePhase.Finishing;
+			else if (tag.Contains("finished"))
+				return GamePhase.Finished;
+			else if (tag == "good_hand")
+				return GamePhase.GoodHand;
+			else if (tag == "bad_hand")
+				return GamePhase.BadHand;
+			else if (tag == "okay_hand")
+				return GamePhase.OkayHand;
+			else if (tag == "masturbating" || tag == "male_masturbating" || tag == "female_masturbating")
+				return GamePhase.Masturbating;
+			else if (tag.Contains("game_over"))
+				return GamePhase.GameOver;
+
+			return GamePhase.Start;
+		}
 	}
 }

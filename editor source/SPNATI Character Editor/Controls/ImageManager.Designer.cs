@@ -38,6 +38,15 @@
 			this.cmdExport = new System.Windows.Forms.Button();
 			this.cmdImport = new System.Windows.Forms.Button();
 			this.gridPoses = new System.Windows.Forms.DataGridView();
+			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -49,7 +58,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.valWidth = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
-			this.previewPanel = new SPNATI_Character_Editor.Controls.DBPanel();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -73,15 +81,7 @@
 			this.ColJuice = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.txtBaseCode = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
-			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.previewPanel = new SPNATI_Character_Editor.Controls.DBPanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitPreviewer)).BeginInit();
 			this.splitPreviewer.Panel1.SuspendLayout();
 			this.splitPreviewer.Panel2.SuspendLayout();
@@ -226,6 +226,62 @@
 			this.gridPoses.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.gridPoses_RowPrePaint);
 			this.gridPoses.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridPoses_RowsAdded);
 			// 
+			// ColStage
+			// 
+			this.ColStage.HeaderText = "Stage";
+			this.ColStage.Name = "ColStage";
+			this.ColStage.Width = 50;
+			// 
+			// ColPose
+			// 
+			this.ColPose.HeaderText = "Pose";
+			this.ColPose.Name = "ColPose";
+			// 
+			// ColL
+			// 
+			this.ColL.HeaderText = "L";
+			this.ColL.Name = "ColL";
+			this.ColL.Width = 40;
+			// 
+			// ColT
+			// 
+			this.ColT.HeaderText = "T";
+			this.ColT.Name = "ColT";
+			this.ColT.Width = 40;
+			// 
+			// ColR
+			// 
+			this.ColR.HeaderText = "R";
+			this.ColR.Name = "ColR";
+			this.ColR.Width = 40;
+			// 
+			// ColB
+			// 
+			this.ColB.HeaderText = "B";
+			this.ColB.Name = "ColB";
+			this.ColB.Width = 40;
+			// 
+			// ColData
+			// 
+			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
+			this.ColData.HeaderText = "Code";
+			this.ColData.Name = "ColData";
+			// 
+			// ColImage
+			// 
+			this.ColImage.HeaderText = "Image";
+			this.ColImage.Name = "ColImage";
+			this.ColImage.Width = 75;
+			// 
+			// ColImport
+			// 
+			this.ColImport.HeaderText = "";
+			this.ColImport.Name = "ColImport";
+			this.ColImport.Width = 70;
+			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
@@ -357,19 +413,6 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Width:";
 			// 
-			// previewPanel
-			// 
-			this.previewPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this.previewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.previewPanel.Location = new System.Drawing.Point(3, 33);
-			this.previewPanel.Name = "previewPanel";
-			this.previewPanel.Size = new System.Drawing.Size(666, 500);
-			this.previewPanel.TabIndex = 3;
-			this.previewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPanel_Paint);
-			this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
-			this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
-			this.previewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseUp);
-			// 
 			// saveFileDialog1
 			// 
 			this.saveFileDialog1.Filter = "Text files|*.txt";
@@ -492,7 +535,6 @@
 			this.gridEmotions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridEmotions.Size = new System.Drawing.Size(877, 237);
 			this.gridEmotions.TabIndex = 7;
-			this.gridEmotions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridEmotions_CellEndEdit);
 			// 
 			// ColPoseKey
 			// 
@@ -536,7 +578,6 @@
 			this.gridLayers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridLayers.Size = new System.Drawing.Size(877, 247);
 			this.gridLayers.TabIndex = 5;
-			this.gridLayers.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridLayers_CellEndEdit);
 			// 
 			// ColLayerName
 			// 
@@ -580,7 +621,6 @@
 			this.txtBaseCode.Size = new System.Drawing.Size(877, 64);
 			this.txtBaseCode.TabIndex = 4;
 			this.txtBaseCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBaseCode_KeyDown);
-			this.txtBaseCode.Validating += new System.ComponentModel.CancelEventHandler(this.txtBaseCode_Validating);
 			// 
 			// label8
 			// 
@@ -591,61 +631,18 @@
 			this.label8.TabIndex = 3;
 			this.label8.Text = "Base code:";
 			// 
-			// ColStage
+			// previewPanel
 			// 
-			this.ColStage.HeaderText = "Stage";
-			this.ColStage.Name = "ColStage";
-			this.ColStage.Width = 50;
-			// 
-			// ColPose
-			// 
-			this.ColPose.HeaderText = "Pose";
-			this.ColPose.Name = "ColPose";
-			// 
-			// ColL
-			// 
-			this.ColL.HeaderText = "L";
-			this.ColL.Name = "ColL";
-			this.ColL.Width = 40;
-			// 
-			// ColT
-			// 
-			this.ColT.HeaderText = "T";
-			this.ColT.Name = "ColT";
-			this.ColT.Width = 40;
-			// 
-			// ColR
-			// 
-			this.ColR.HeaderText = "R";
-			this.ColR.Name = "ColR";
-			this.ColR.Width = 40;
-			// 
-			// ColB
-			// 
-			this.ColB.HeaderText = "B";
-			this.ColB.Name = "ColB";
-			this.ColB.Width = 40;
-			// 
-			// ColData
-			// 
-			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
-			this.ColData.HeaderText = "Code";
-			this.ColData.Name = "ColData";
-			// 
-			// ColImage
-			// 
-			this.ColImage.HeaderText = "Image";
-			this.ColImage.Name = "ColImage";
-			this.ColImage.Width = 75;
-			// 
-			// ColImport
-			// 
-			this.ColImport.HeaderText = "";
-			this.ColImport.Name = "ColImport";
-			this.ColImport.Width = 70;
+			this.previewPanel.BackColor = System.Drawing.Color.LightSteelBlue;
+			this.previewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.previewPanel.Location = new System.Drawing.Point(3, 33);
+			this.previewPanel.Name = "previewPanel";
+			this.previewPanel.Size = new System.Drawing.Size(666, 500);
+			this.previewPanel.TabIndex = 3;
+			this.previewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPanel_Paint);
+			this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
+			this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
+			this.previewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseUp);
 			// 
 			// ImageManager
 			// 

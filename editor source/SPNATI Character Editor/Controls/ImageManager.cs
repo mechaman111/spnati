@@ -1,4 +1,5 @@
-﻿using SPNATI_Character_Editor.ImageImport;
+﻿using KisekaeImporter;
+using KisekaeImporter.ImageImport;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -281,7 +282,7 @@ namespace SPNATI_Character_Editor.Controls
 			int.TryParse(row.Cells["ColT"].Value?.ToString(), out t);
 			if (!int.TryParse(row.Cells["ColB"].Value?.ToString(), out b))
 				b = 1400;
-			_previewImageMetadata.CropInfo = new ImageImport.Rect(l, t, r, b);
+			_previewImageMetadata.CropInfo = new Rect(l, t, r, b);
 
 			Cursor.Current = Cursors.WaitCursor;
 			_previewImage = _importer.ImportSingleImage(_previewImageMetadata);
@@ -935,14 +936,6 @@ namespace SPNATI_Character_Editor.Controls
 			Move = 64
 		}
 
-		private void txtBaseCode_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			KisekaeCode code = new KisekaeCode(txtBaseCode.Text);
-			code.RemoveAllBut("ca", "da", "db", "dd", "dh", "di", "qa", "qb", "eh", "ea", "ec", "ed", "ef", "eg", "r", "fa", "fb", "fh", "fj",
-				"fd", "fe", "fg", "fi", "pa", "t");
-			txtBaseCode.Text = code.Serialize();
-		}
-
 		private void txtBaseCode_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Control && e.KeyCode == Keys.A)
@@ -969,39 +962,6 @@ namespace SPNATI_Character_Editor.Controls
 				string label = name?.DisplayName ?? "Unknown";
 				DataGridViewRow row = gridLayers.Rows[layer];
 				row.Cells[0].Value = label;
-			}
-		}
-
-		private void gridLayers_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.ColumnIndex == 1)
-			{
-				DataGridViewCell cell = gridLayers.Rows[e.RowIndex].Cells[e.ColumnIndex];
-				string value = cell.Value?.ToString();
-				if (value != null)
-				{
-					KisekaeCode code = new KisekaeCode(value);
-					code.RemoveAllBut("ab", "ac", "pb", "pc", "pd", "pe", "ia", "if", "ib", "ic", "id", "jc", "ie", "ja", "jb", "jd", "je", "jf", "jg",
-						"ka", "kb", "kc", "kd", "ke", "kf", "la", "lb", "lc", "oa", "ob", "oc", "od", "oe", "of", "m", "n", "s", "og",
-						"oh", "oo", "op", "oq", "or", "oi", "oj", "ok", "ol", "om", "on", "dc");
-					cell.Value = code.Serialize();
-				}
-			}
-		}
-
-		private void gridEmotions_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.ColumnIndex == 1)
-			{
-				DataGridViewCell cell = gridEmotions.Rows[e.RowIndex].Cells[e.ColumnIndex];
-				string value = cell.Value?.ToString();
-				if (value != null)
-				{
-					KisekaeCode code = new KisekaeCode(value);
-					code.RemoveAllBut("aa", "ba", "bb", "bc", "bd", "be", "ga", "gb", "gc", "gd", "ge", "gf",
-						"gg", "ha", "hb", "hc", "hd");
-					cell.Value = code.Serialize();
-				}
 			}
 		}
 
@@ -1160,7 +1120,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			KisekaeCode code = new KisekaeCode(baseCode, stage, emotion.Code);
+			KisekaeCode code = PoseTemplate.CreatePose(baseCode, stage, emotion.Code);
 			ImageMetadata metadata = new ImageMetadata("_zzPreview", code.Serialize());
 			Rect cropInfo = metadata.CropInfo;
 			cropInfo.Left += ImageImporter.ImageXOffset;
