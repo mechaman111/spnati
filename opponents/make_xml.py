@@ -765,6 +765,12 @@ def read_player_file(filename):
 			else:
 				d["character_tags"] = character_tags
 
+		elif key == "marker":
+			if "markers" in d:
+				d["markers"].append(stripped)
+			else:
+				d["markers"] = [stripped]
+
 		#write start lines last to first
 		elif key == "start":
 			if key in d:
@@ -823,12 +829,29 @@ def make_meta_xml(data, filename):
 	pretty_xml = manual_prettify_xml(o)
 	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
 
+#make the marker.xml file
+def make_markers_xml(data, filename):
+	o = ET.Element("markers")
+	markers = data["markers"]
+	for marker_data in markers:
+		name, scope, desc = marker_data.split(",", 2)
+		if scope == "public":
+			scope = "Public"
+		elif scope == "private":
+			scope = "Private"
+		ET.SubElement(o, "marker", **{"name":name, "scope":scope}).text = desc
+	
+	pretty_xml = manual_prettify_xml(o)
+	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
+
 #read the input data, the write the xml files
-def make_xml(player_filename, out_filename, meta_filename=None):
+def make_xml(player_filename, out_filename, meta_filename=None, marker_filename=None):
 	player_dictionary = read_player_file(player_filename)
 	write_xml(player_dictionary, out_filename)
 	if meta_filename is not None:
 		make_meta_xml(player_dictionary, meta_filename)
+	if marker_filename is not None:
+		make_markers_xml(player_dictionary, marker_filename)
 
 #make the xml files using the given arguments
 #python make_xml <character data file> <behaviour.xml output file> <meta.xml output file>
@@ -838,12 +861,15 @@ if __name__ == "__main__":
 		exit()
 	behaviour_name = "behaviour.xml"
 	meta_name = "meta.xml"
+	marker_name = "markers.xml"
 	if len(sys.argv) > 2:
 		behaviour_name = sys.argv[2]
 	if len(sys.argv) > 3:
 		meta_name = sys.argv[3]
+	if len(sys.argv) > 4:
+		marker_name = sys.argv[4]
 		
-	make_xml(sys.argv[1], behaviour_name, meta_name)
+	make_xml(sys.argv[1], behaviour_name, meta_name, marker_name)
 
 
 #make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
