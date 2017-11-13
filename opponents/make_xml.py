@@ -831,18 +831,19 @@ def make_meta_xml(data, filename):
 
 #make the marker.xml file
 def make_markers_xml(data, filename):
-	o = ET.Element("markers")
-	markers = data["markers"]
-	for marker_data in markers:
-		name, scope, desc = marker_data.split(",", 2)
-		if scope == "public":
-			scope = "Public"
-		elif scope == "private":
-			scope = "Private"
-		ET.SubElement(o, "marker", **{"name":name, "scope":scope}).text = desc
-	
-	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
+	if "markers" in data:
+		o = ET.Element("markers")
+		markers = data["markers"]
+		for marker_data in markers:
+			name, scope, desc = marker_data.split(",", 2)
+			if scope == "public":
+				scope = "Public"
+			elif scope == "private":
+				scope = "Private"
+			ET.SubElement(o, "marker", **{"name":name, "scope":scope}).text = desc
+		
+		pretty_xml = manual_prettify_xml(o)
+		ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
 
 #read the input data, the write the xml files
 def make_xml(player_filename, out_filename, meta_filename=None, marker_filename=None):
