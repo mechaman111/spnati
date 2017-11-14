@@ -1,8 +1,3 @@
-#Data for Nugi-chan character
-#IMPORTANT EXPORT NOTE: After converting this file with Python, you must do a find/replace of the behaviour.xml in a text editor.
-#Convert all "&lt;" to "<" and convert all "&gt;" to ">". This is because the make_xml/py converter transforms the html markup into displayed characters.
-#Because Nugi-chan uses <3s, you may need to do a "<3" -> "&lt;3" conversion afterwards.
-
 #required for behaviour.xml
 first=Nugi-chan
 last=
@@ -105,12 +100,14 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 2-good_hand,alsoPlaying:revy=mean,As long as I beat Revy-sama, I'm happy. Give up the goods!
 
 #lost stockings
+3-good_hand=happy,I have the high ground!
 3-good_hand=happy,Insert line here. Nah, just messing. I don't have any missing lines. But one of you is about to have missing clothes!
 3-good_hand=calm,I'm back on track!
 3-okay_hand=,
 3-bad_hand=,
 
 3-good_hand,alsoPlaying:nagisa,alsoPlayingStage:5,alsoPlayingHand:High Card=mean,Who else is ready to be the first ever to see Nagisa-sama's titties? <3
+3-bad_hand,alsoPlaying:zone-tan,priority:0=awkward,Zone-tan and I are in a similar line of work, so we go way back. Sometimes we go so far back that... Let's not tell that story.
 
 #lost top
 4-good_hand=,
@@ -481,16 +478,6 @@ female_removed_accessory=awkward,Don't worry, ~name~-sama. I barely noticed that
 -3-female_removed_accessory,target:hermione,targetStage:4=devious,If it helps, you should know that you're about to get <i>real</i> naked, Hermione-sama!
 -2-female_removed_accessory,target:hermione=embarrassed,Ah, Hermione-sama... Give me a little peek at your panties! Help a maid out! <3
 -1-female_removed_accessory,target:hermione,targetStage:4=devious,If it helps, you should know that you're about to get <i>real</i> naked, Hermione-sama!
-0-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-1-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-2-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-3-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-4-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-5-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
-6-female_removed_accessory,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
--3-female_removed_accessory,target:kim,targetStage:1=stripped,Would you consider throwing in your belt and pants into that deal?
--2-female_removed_accessory,target:kim,targetStage:1=devious,Kimberly-sama's feet... Well, I've fantasized to weirder stuff than that...
--1-female_removed_accessory,target:kim,targetStage:1=loss,Even on fast forward, it's taking longer than expected to get you naked, Kimberly-sama...
 0-female_removed_accessory,target:jasmine,targetStage:6=embarrassed,If I had two more wishes, I'd use them on your top and your pants, Jasmine-hime!
 1-female_removed_accessory,target:jasmine,targetStage:6=embarrassed,If I had two more wishes, I'd use them on your top and your pants, Jasmine-hime!
 2-female_removed_accessory,target:jasmine,targetStage:6=embarrassed,If I had two more wishes, I'd use them on your top and your pants, Jasmine-hime!
@@ -607,6 +594,16 @@ female_removed_minor=interested,That's better, ~name~-sama. Keep losing and show
 6-female_removed_minor,target:hermione,targetStage:3=small2,<i>Skirtium leviosa!</i> Well... it was worth a try!
 -3-female_removed_minor,target:hermione,targetStage:3=small2,<i>Skirtium leviosa!</i> Well... it was worth a try!
 -1-female_removed_minor,target:hermione,targetStage:3=small2,<i>Skirtium leviosa!</i> Well... it was worth a try!
+0-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+1-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+2-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+3-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+4-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+5-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+6-female_removed_minor,target:kim,targetStage:1=happy,Sweet! Four for the price of one!
+-3-female_removed_minor,target:kim,targetStage:1=stripped,Would you consider throwing in your belt and pants into that deal?
+-2-female_removed_minor,target:kim,targetStage:1=devious,Kimberly-sama's feet... Well, I've fantasized to weirder stuff than that...
+-1-female_removed_minor,target:kim,targetStage:1=loss,Even on fast forward, it's taking longer than expected to get you naked, Kimberly-sama...
 
 
 
@@ -621,6 +618,9 @@ female_removed_major=interested,Your underwear is nice, ~name~-sama, but you don
 0-male_removed_major=,
 0-female_removing_major=,
 0-female_removed_major=,
+
+0-male_removing_major,targetStage:0=interested,Starting off with something big? Great start!
+0-female_removing_major,targetStage:0=devious,Yeah, that's right, big items off first. It's the rules.
 
 #lost shoes
 1-male_removing_major=,
@@ -834,7 +834,7 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 6-male_large_crotch_is_visible=,
 
 6-female_chest_will_be_visible=,
-6-female_small_chest_is_visible=,
+6-female_small_chest_is_visible=calm,You've got nothing to show! Put your ~clothing~ back on. That was sexier.
 6-female_medium_chest_is_visible=,
 6-female_large_chest_is_visible=mean,Mine are still bigger! Now I wonder, are you cold, or turned on by stripping in front of others? <3
 6-female_crotch_will_be_visible=,
@@ -859,7 +859,7 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 #masturbating
 -2-male_chest_will_be_visible=,
 -2-male_chest_is_visible=,
--2-male_crotch_will_be_visible=,
+-2-male_crotch_will_be_visible=interested,Let's have a measuring contest. I bet my tongue is longer than your penis, ~name~-sama...
 -2-male_small_crotch_is_visible,marker:nugi-chan_sph=small2,Don't trouble yourself, ~name~-sama. I already have finger-sized apendages to do this with.
 -2-male_medium_crotch_is_visible=,
 -2-male_large_crotch_is_visible=,
@@ -1147,6 +1147,16 @@ female_finished_masturbating=mean,Good girl, loser-sama. You get to sit there na
 -3-female_start_masturbating,target:jasmine=shocked,Don't you dare close your thighs!
 -2-female_start_masturbating,target:jasmine=shocked,Don't you dare close your thighs!
 -1-female_start_masturbating,target:jasmine=shocked,Don't you dare close your thighs!
+0-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+1-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+2-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+3-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+4-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+5-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+6-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+-3-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
+-2-female_start_masturbating,target:lilith=happy,Get ready to hear the sound... of sirens.
+-1-female_start_masturbating,target:lilith=devious,Get ready to hear the sound... of sirens.
 0-female_start_masturbating,target:yang=devious,Let me know if you need a hand, Yang-sama!
 1-female_start_masturbating,target:yang=devious,Let me know if you need a hand, Yang-sama!
 2-female_start_masturbating,target:yang=devious,Let me know if you need a hand, Yang-sama!
