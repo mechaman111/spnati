@@ -42,9 +42,9 @@ namespace SPNATI_Character_Editor.Charts.Builders
 	public class ChartData
 	{
 		public string X;
-		public int Y;
+		public double Y;
 
-		public ChartData(string x, int y)
+		public ChartData(string x, double y)
 		{
 			X = x;
 			Y = y;

@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor
 	/// PROPERTY ORDER IS IMPORTANT - Order determines the order attributes are placed in the xml files
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
-	[XmlHeader("This file was machine generated using the Character Editor. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
+	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
 	public class Character : IHookSerialization
 	{
 		[XmlIgnore]
@@ -295,6 +295,8 @@ namespace SPNATI_Character_Editor
 		#region Serialization
 		public void OnBeforeSerialize()
 		{
+			Gender = Gender.ToLower();
+
 			string dir = Config.GetRootDirectory(this);
 			foreach (var line in StartingLines)
 			{

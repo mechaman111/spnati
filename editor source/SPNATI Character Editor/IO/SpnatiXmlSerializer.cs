@@ -62,7 +62,7 @@ namespace SPNATI_Character_Editor.IO
 			{
 				writer.Flush();
 				builder.AppendLine();
-				writer.WriteComment(header.Text);
+				writer.WriteComment(ReplaceTokens(header.Text));
 			}
 
 			List<Tuple<FieldInfo, string, string>> subElements = new List<Tuple<FieldInfo, string, string>>();
@@ -236,6 +236,14 @@ namespace SPNATI_Character_Editor.IO
 			}
 
 			writer.WriteEndElement();
+		}
+
+		private string ReplaceTokens(string line)
+		{
+			line = line.Replace("{Time}", DateTime.Now.ToString("h:mm:ss tt"));
+			line = line.Replace("{Date}", DateTime.Now.ToString("MMMM dd, yyyy"));
+			line = line.Replace("{Version}", Config.Version);
+			return line;
 		}
 	}
 

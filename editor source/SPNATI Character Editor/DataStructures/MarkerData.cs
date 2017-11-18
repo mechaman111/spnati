@@ -80,6 +80,7 @@ namespace SPNATI_Character_Editor
 			{
 				Markers.Add(kvp.Value);
 			}
+			Markers.Sort();
 		}
 	}
 }

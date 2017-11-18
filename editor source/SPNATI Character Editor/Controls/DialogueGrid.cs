@@ -397,7 +397,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (string.IsNullOrEmpty(text) || startIndex >= text.Length)
 				return -1;
-			string pattern = args.FindText;
+			string pattern = Regex.Escape(args.FindText);
 			if (args.WholeWords)
 			{
 				pattern = string.Format(@"\b{0}\b", pattern);
@@ -459,10 +459,10 @@ namespace SPNATI_Character_Editor.Controls
 				string text = row.Cells["ColText"].Value?.ToString();
 				if (!string.IsNullOrEmpty(text))
 				{
-					int index = -1;
+					int index = startIndex;
 					do
 					{
-						index = FindText(text, startIndex + 1, args);
+						index = FindText(text, index + 1, args);
 						if (index >= 0)
 						{
 							//highlight it
@@ -481,6 +481,7 @@ namespace SPNATI_Character_Editor.Controls
 								ReplaceText(args.ReplaceText);
 								args.ReplaceCount++;
 								text = row.Cells["ColText"].Value?.ToString();
+								index += args.ReplaceText.Length - 1;
 							}
 
 							if (!args.ReplaceAll)

@@ -50,6 +50,8 @@ namespace SPNATI_Character_Editor
 
 		private void SetCharacter(Character character)
 		{
+			if (character == null)
+				return;
 			_selectedCharacter = character;
 			_imageLibrary = new ImageLibrary();
 			_imageLibrary.Load(character.FolderName);

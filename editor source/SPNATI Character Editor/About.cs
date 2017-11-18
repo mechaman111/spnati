@@ -8,12 +8,10 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public partial class About : Form
 	{
-		private const string Version = "1.09";
-
 		public About()
 		{
 			InitializeComponent();
-			lblVersion.Text = string.Format("SPNATI Character Editor v{0}", Version);
+			lblVersion.Text = string.Format("SPNATI Character Editor {0}", Config.Version);
 		}
 
 		private void cmdOK_Click(object sender, EventArgs e)

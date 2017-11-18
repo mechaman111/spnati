@@ -249,6 +249,11 @@ namespace SPNATI_Character_Editor
 					result += string.Format(" (other not said {0})", AlsoPlayingNotSaidMarker);
 				}
 			}
+			int priority = GetPriority();
+			if (priority > 0)
+			{
+				result += string.Format(" (priority={0})", priority);
+			}
 			return result;
 		}
 

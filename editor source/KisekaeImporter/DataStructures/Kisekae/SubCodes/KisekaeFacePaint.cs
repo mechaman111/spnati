@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KisekaeImporter.SubCodes
+﻿namespace KisekaeImporter.SubCodes
 {
 	public class KisekaeFacePaint : KisekaeSubCode
 	{
 		public KisekaeFacePaint() : base("t") { }
+
+		public void CopyPositionFrom(KisekaeFacePaint paint)
+		{
+			Side = paint.Side;
+			ScaleX = paint.ScaleX;
+			ScaleY = paint.ScaleY;
+			Rotation = paint.Rotation;
+			OffsetX = paint.OffsetX;
+			OffsetY = paint.OffsetY;
+		}
 
 		public int Shape
 		{

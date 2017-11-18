@@ -85,7 +85,7 @@
                         <li><span class="label">Total Playing with Tag: </span>Value between 0-4 (including this character but not the human, who can't have tags) for how many characters must have this tag in order for the condition to be met.</li>
                     </ul>
                 </li>
-                <li><span class="label">Misc:</span> Conditions that target this character's current state.
+                <li><span class="label">Self:</span> Conditions that target this character's current state.
                     <ul>
                         <li><span class="label">Own hand:</span> The character being edited must have the given hand (ex. Two Pair, Full House).</li>
                         <li><span class="label">Time in stage:</span> Number of rounds this player has been in their current stage.</li>
@@ -97,6 +97,7 @@
                 <li><span class="label">Misc:</span> Conditions that do not target another player directly.
                     <ul>
                         <li><span class="label">Game rounds:</span> Number of overall rounds that have passed since the start of the game. A round begins whenever new cards are dealt.</li>
+                        <li><span class="label">Priority:</span> You can assign a case a custom <a href="#priority">priority</a>. This is useful for either putting a targeted case at the same priority as a non-targeted case (so they both get picked from randomly), or to ensure that a case always takes priority over all other possible types of targets.</li>
                         <li><span class="label">Total females:</span> Number of females playing must match this (including this character and the human player).</li>
                         <li><span class="label">Total males:</span> Number of males playing must match this (including this character and the human player).</li>
                         <li><span class="label">Total playing:</span> Number of players still in the game (including this character and the human player). A player is considered in the game until they lose while already naked.</li>
@@ -117,7 +118,7 @@
             When multiple cases fit the current game state's criteria, the game follows a specific algorithm for determining what case to use:
             <ol>
                 <li>If a case has conditions and those conditions are met, the case will <strong>always</strong> take priority over a case with no conditions.</li>
-                <li>If multiple cases have conditions, they will be given specific priorities based on their conditions. For example, a case with a target and target stage will always take priority over a case with just a target. The editor will sort cases in the order of their priority.</li>
+                <li>If multiple cases have conditions, they will be given specific priorities based on their conditions. For example, a case with a target and target stage will always take priority over a case with just a target. The editor will sort cases in the order of their priority, and display that priority in the list.</li>
                 <li>If a case has conditions, and those conditions are not met by the current game state, the case will be ignored.</li>
                 <li>If no case has been chosen yet, the case with no conditions (the generic case) will be used.
                     <div class="info">
