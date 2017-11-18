@@ -68,7 +68,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_character == null)
 				return;
 			_imageLibrary = new ImageLibrary();
-			_imageLibrary.Load(character.FolderName);
+			_imageLibrary.Load(character);
 
 			string defaultFileName = Path.Combine(Config.GetRootDirectory(character), "poses.txt");
 			if (File.Exists(defaultFileName))

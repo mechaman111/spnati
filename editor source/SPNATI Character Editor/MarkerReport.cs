@@ -54,7 +54,7 @@ namespace SPNATI_Character_Editor
 				return;
 			_selectedCharacter = character;
 			_imageLibrary = new ImageLibrary();
-			_imageLibrary.Load(character.FolderName);
+			_imageLibrary.Load(character);
 			//Make sure WorkingCases are built for easy lookup of lines
 			_selectedCharacter.Behavior.BuildWorkingCases(_selectedCharacter);
 			PopulateMarkers();

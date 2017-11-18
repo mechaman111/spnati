@@ -12,18 +12,18 @@ namespace SPNATI_Character_Editor
 	{
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
-		private string _folder;
+		private Character _character;
 
 		/// <summary>
 		/// Loads metadata for all images in the given folder
 		/// </summary>
 		/// <param name="folder"></param>
-		public void Load(string folder)
+		public void Load(Character character)
 		{
-			_folder = folder;
+			_character = character;
 			_stages.Clear();
 			_allImages.Clear();
-			string dir = Config.GetRootDirectory(folder);
+			string dir = Config.GetRootDirectory(character);
 			string[] extenstions = { ".png", ".gif" };
 			foreach (string file in Directory.EnumerateFiles(dir, "*.*")
 				.Where(s => extenstions.Any(ext => ext == Path.GetExtension(s))))
@@ -84,7 +84,7 @@ namespace SPNATI_Character_Editor
 		{
 			CharacterImage img = Find(name);
 			if (img == null)
-				img = Add(Path.Combine(Config.GetRootDirectory(_folder), name + ".png"), name);
+				img = Add(Path.Combine(Config.GetRootDirectory(_character), name + ".png"), name);
 			img.Image = image;
 		}
 

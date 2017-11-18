@@ -112,9 +112,9 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public static Character ImportCharacter(string folderName)
+		public static Character ImportCharacter(string folderName, CharacterSource source)
 		{
-			string folder = Config.GetRootDirectory(folderName);
+			string folder = Config.GetRootDirectory(folderName, source);
 			if (!Directory.Exists(folder))
 				return null;
 
@@ -129,14 +129,15 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
+			character.Source = source;
 			character.FolderName = Path.GetFileName(folderName);
 
-			Metadata metadata = ImportMetadata(folderName);
+			Metadata metadata = ImportMetadata(folderName, source);
 			if (metadata == null)
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
 
-			MarkerData markers = ImportMarkerData(folderName);
+			MarkerData markers = ImportMarkerData(folderName, source);
 			if (markers != null)
 			{
 				character.Markers.Merge(markers);
@@ -220,9 +221,9 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static Metadata ImportMetadata(string folderName)
+		private static Metadata ImportMetadata(string folderName, CharacterSource source)
 		{
-			string folder = Config.GetRootDirectory(folderName);
+			string folder = Config.GetRootDirectory(folderName, source);
 			if (!Directory.Exists(folder))
 				return null;
 
@@ -257,9 +258,9 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
-		private static MarkerData ImportMarkerData(string folderName)
+		private static MarkerData ImportMarkerData(string folderName, CharacterSource source)
 		{
-			string folder = Config.GetRootDirectory(folderName);
+			string folder = Config.GetRootDirectory(folderName, source);
 			if (!Directory.Exists(folder))
 				return null;
 

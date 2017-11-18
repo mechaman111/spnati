@@ -187,7 +187,7 @@ namespace SPNATI_Character_Editor
 			{
 				Config.LastCharacter = c.FolderName;
 				_selectedCharacter = c;
-				_imageLibrary.Load(c.FolderName);
+				_imageLibrary.Load(c);
 
 				CreateStageCheckboxes();
 				DisplayPortrait();
@@ -2291,6 +2291,8 @@ namespace SPNATI_Character_Editor
 					int current = 0;
 					foreach (Character c in CharacterDatabase.Characters)
 					{
+						if (c.Source != CharacterSource.Main)
+							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
 						current++;
 						progress.Report(current);
 						List<ValidationError> warnings;

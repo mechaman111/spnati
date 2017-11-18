@@ -6,7 +6,7 @@ namespace SPNATI_Character_Editor
 {
 	public static class Config
 	{
-		public const string Version = "v1.11";
+		public const string Version = "v1.12";
 
 		/// <summary>
 		/// Gets the SPNATI directory
@@ -77,7 +77,9 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public static string GetRootDirectory(Character character)
 		{
-			return GetRootDirectory(character.FolderName);
+			if (GameDirectory == null || character == null || string.IsNullOrEmpty(character.FolderName))
+				return "";
+			return GetRootDirectory(character.FolderName, character.Source);
 		}
 
 		/// <summary>
@@ -85,12 +87,19 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="character"></param>
 		/// <returns></returns>
-		public static string GetRootDirectory(string folder)
+		public static string GetRootDirectory(string folder, CharacterSource source)
 		{
 			if (GameDirectory == null || folder == null)
 				return "";
-			string dir = Path.Combine(GameDirectory, "opponents", folder);
-			return dir;
+			switch (source)
+			{
+				case CharacterSource.Offline:
+					return Path.Combine(GameDirectory, "saves", "offline_opponents", folder);
+				case CharacterSource.Incomplete:
+					return Path.Combine(GameDirectory, "saves", "incomplete_opponents", folder);
+				default:
+					return Path.Combine(GameDirectory, "opponents", folder);
+			}
 		}
 	}
 }
