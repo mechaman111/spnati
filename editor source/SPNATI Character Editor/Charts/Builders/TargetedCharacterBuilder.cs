@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace SPNATI_Character_Editor.Charts.Builders
+{
+	[Chart(ChartType.Bar, 4)]
+	public class TargetedCharacterBuilder : GenderedBuilder
+	{
+		public override string GetLabel()
+		{
+			return "Targets (Outgoing)";
+		}
+
+		public override string GetTitle()
+		{
+			return "Unique Players Targeted By This Character (Top 30 Characters)";
+		}
+
+		protected override List<Tuple<Character, int>> GetData()
+		{
+			var data = new List<Tuple<Character, int>>();
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				HashSet<string> targets = new HashSet<string>();
+				List<Stage> stages = c.Behavior.Stages;
+				foreach (var stage in stages)
+				{
+					foreach (var stageCase in stage.Cases)
+					{
+						if (!string.IsNullOrEmpty(stageCase.Target))
+							targets.Add(stageCase.Target);
+						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
+							targets.Add(stageCase.AlsoPlaying);
+					}
+				}
+				int count = targets.Count;
+				if (count > 0)
+				{
+					data.Add(new Tuple<Character, int>(c, count));
+				}
+			}
+			return data;
+		}
+	}
+}
