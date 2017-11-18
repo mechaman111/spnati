@@ -34,15 +34,18 @@ namespace KisekaeImporter.ImageImport
 		/// <returns></returns>
 		public static KisekaeCode CreatePose(KisekaeCode baseCode, StageTemplate stage, KisekaeCode poseCode)
 		{
-			KisekaeCode output = new KisekaeCode(baseCode, true);
+			KisekaeCode baseCopy = new KisekaeCode(baseCode);
+			KisekaeCode poseCopy = new KisekaeCode(poseCode);
+
+			KisekaeCode output = new KisekaeCode("", true);
 			KisekaeHair resultHair = output.GetOrAddComponent<KisekaeHair>();
 
 			KisekaeCode clothingCode = new KisekaeCode(stage.Code);
 
 			//Only apply appearance components to the output
-			output.ReplaceComponent(baseCode.GetComponent<KisekaeAppearance>());
-			output.ReplaceComponent(baseCode.GetComponent<KisekaeFace>());
-			output.ReplaceComponent(baseCode.GetComponent<KisekaeHair>());
+			output.ReplaceComponent(baseCopy.GetComponent<KisekaeAppearance>());
+			output.ReplaceComponent(baseCopy.GetComponent<KisekaeFace>());
+			output.ReplaceComponent(baseCopy.GetComponent<KisekaeHair>());
 
 			//Bake the clothing into the result
 			output.ReplaceComponent(clothingCode.GetComponent<KisekaeClothing>());
@@ -61,11 +64,11 @@ namespace KisekaeImporter.ImageImport
 			}
 
 			//Apply the pose information
-			output.ReplaceComponent(poseCode.GetComponent<KisekaePose>());
-			output.ReplaceComponent(poseCode.GetComponent<KisekaeExpression>());
+			output.ReplaceComponent(poseCopy.GetComponent<KisekaePose>());
+			output.ReplaceComponent(poseCopy.GetComponent<KisekaeExpression>());
 
 			//Manually set positions of belts and ahoge that appear in the pose
-			KisekaeHair poseHair = poseCode.GetComponent<KisekaeHair>();
+			KisekaeHair poseHair = poseCopy.GetComponent<KisekaeHair>();
 			if (poseHair != null)
 			{
 				foreach (KisekaeAhoge ahoge in poseHair.GetSubCodeArrayItem<KisekaeAhoge>())
@@ -78,7 +81,7 @@ namespace KisekaeImporter.ImageImport
 				}
 			}
 			KisekaeClothing resultClothing = output.GetOrAddComponent<KisekaeClothing>();
-			KisekaeClothing poseClothing = poseCode.GetComponent<KisekaeClothing>();
+			KisekaeClothing poseClothing = poseCopy.GetComponent<KisekaeClothing>();
 			if (poseClothing != null)
 			{
 				foreach (KisekaeBelt belt in poseClothing.GetSubCodeArrayItem<KisekaeBelt>())
@@ -87,6 +90,19 @@ namespace KisekaeImporter.ImageImport
 					{
 						KisekaeBelt final = resultClothing.GetBelt(belt.Index);
 						final.CopyPositionFrom(belt);
+					}
+				}
+			}
+			KisekaeFace resultFace = output.GetOrAddComponent<KisekaeFace>();
+			KisekaeFace poseFace = poseCopy.GetComponent<KisekaeFace>();
+			if (poseFace != null)
+			{
+				foreach (KisekaeFacePaint paint in poseFace.GetSubCodeArrayItem<KisekaeFacePaint>())
+				{
+					if (resultFace.HasSubCode(paint.Id, paint.Index))
+					{
+						KisekaeFacePaint final = resultFace.GetFacePaint(paint.Index);
+						final.CopyPositionFrom(paint);
 					}
 				}
 			}

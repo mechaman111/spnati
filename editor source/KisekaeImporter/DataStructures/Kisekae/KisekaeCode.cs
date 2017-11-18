@@ -68,24 +68,6 @@ namespace KisekaeImporter
 			_components[component.GetType()] = component;
 		}
 
-		/// <summary>
-		/// Merges another code into this one. Any existing subcodes will be replaced
-		/// </summary>
-		/// <param name="code">Code to merge into this one</param>
-		public void MergeIn(KisekaeCode code)
-		{
-			foreach (var kvp in code._components)
-			{
-				KisekaeComponent existing = GetOrAddComponent(kvp.Key);
-				KisekaeComponent component = kvp.Value;
-
-				foreach (var subcode in component.GetSubCodes())
-				{
-					existing.ReplaceSubCode(subcode);
-				}
-			}
-		}
-
 		public override string ToString()
 		{
 			return Serialize();
@@ -110,8 +92,12 @@ namespace KisekaeImporter
 				{
 					sb.Append("_");
 				}
-				else first = false;
-				sb.Append(component.Serialize());
+				string data = component.Serialize();
+				if (!string.IsNullOrEmpty(data))
+				{
+					first = false;
+				}
+				sb.Append(data);
 			}
 
 			return sb.ToString();

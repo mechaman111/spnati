@@ -1,4 +1,5 @@
 ﻿using SPNATI_Character_Editor.Charts.Builders;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -31,7 +32,7 @@ namespace SPNATI_Character_Editor.Charts
 				points.Clear();
 				foreach (var point in dataPoints)
 				{
-					points.AddXY(point.X, point.Y);
+					points.AddXY(point.X, Math.Round(point.Y, 2));
 				}
 			}
 		}

@@ -137,7 +137,7 @@
 			// 
 			// txtScreenImage
 			// 
-			this.txtScreenImage.Location = new System.Drawing.Point(76, 22);
+			this.txtScreenImage.Location = new System.Drawing.Point(142, 22);
 			this.txtScreenImage.Name = "txtScreenImage";
 			this.txtScreenImage.ReadOnly = true;
 			this.txtScreenImage.Size = new System.Drawing.Size(142, 20);
@@ -146,7 +146,7 @@
 			// 
 			// cmdNextScreen
 			// 
-			this.cmdNextScreen.Location = new System.Drawing.Point(300, 20);
+			this.cmdNextScreen.Location = new System.Drawing.Point(76, 20);
 			this.cmdNextScreen.Name = "cmdNextScreen";
 			this.cmdNextScreen.Size = new System.Drawing.Size(60, 23);
 			this.cmdNextScreen.TabIndex = 17;
@@ -157,7 +157,7 @@
 			// 
 			// cmdBrowseImage
 			// 
-			this.cmdBrowseImage.Location = new System.Drawing.Point(220, 20);
+			this.cmdBrowseImage.Location = new System.Drawing.Point(290, 20);
 			this.cmdBrowseImage.Name = "cmdBrowseImage";
 			this.cmdBrowseImage.Size = new System.Drawing.Size(74, 23);
 			this.cmdBrowseImage.TabIndex = 18;

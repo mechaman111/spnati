@@ -289,7 +289,7 @@ namespace SPNATI_Character_Editor
 					{
 						target.Character = CharacterDatabase.Get(speakerCase.Target);
 					}
-					else
+					if (target.Character == null)
 					{
 						//use some dummy target if none is being targeted specifically
 						Character c = CreateDummyCharacter();

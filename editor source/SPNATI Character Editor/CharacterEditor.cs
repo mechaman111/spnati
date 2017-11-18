@@ -1748,6 +1748,12 @@ namespace SPNATI_Character_Editor
 			var c = _selectedCase;
 			if (c.Tag != Trigger.StartTrigger)
 			{
+				string newTag = ReadComboBox(cboCaseTags);
+				if (newTag != c.Tag)
+					needRegeneration = true;
+				c.Tag = newTag;
+				Trigger trigger = TriggerDatabase.GetTrigger(newTag);
+
 				//Figure out the stages
 				List<int> oldStages = new List<int>();
 				oldStages.AddRange(c.Stages);
@@ -1755,7 +1761,7 @@ namespace SPNATI_Character_Editor
 				for (int i = 0; i < flowStageChecks.Controls.Count; i++)
 				{
 					CheckBox box = flowStageChecks.Controls[i] as CheckBox;
-					if (box.Checked)
+					if (box.Checked && TriggerDatabase.UsedInStage(newTag, _selectedCharacter, i))
 					{
 						c.Stages.Add(i);
 						if (!oldStages.Contains(i))
@@ -1764,23 +1770,32 @@ namespace SPNATI_Character_Editor
 					else if (oldStages.Contains(i))
 						needRegeneration = true;
 				}
-				string newTag = ReadComboBox(cboCaseTags);
-				if (newTag != c.Tag)
-					needRegeneration = true;
-				c.Tag = newTag;
-
+				
 				Trigger caseTrigger = TriggerDatabase.GetTrigger(c.Tag);
 
 				#region Target tab
-				c.Target = ReadComboBox(cboLineTarget);
-				c.SetTargetStage(ReadStageComboBox(cboTargetStage), ReadStageComboBox(cboTargetToStage));
-				c.TargetHand = ReadComboBox(cboTargetHand);
-				c.Filter = ReadComboBox(cboLineFilter);
-				c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
-				c.ConsecutiveLosses = ReadRange(caseTrigger != null && caseTrigger.HasTarget ? valLosses : valOwnLosses,
-												caseTrigger != null && caseTrigger.HasTarget ? valMaxLosses : valMaxOwnLosses);
-				c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
-				c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
+				if (trigger.HasTarget)
+				{
+					c.Target = ReadComboBox(cboLineTarget);
+					c.SetTargetStage(ReadStageComboBox(cboTargetStage), ReadStageComboBox(cboTargetToStage));
+					c.TargetHand = ReadComboBox(cboTargetHand);
+					c.Filter = ReadComboBox(cboLineFilter);
+					c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
+					c.ConsecutiveLosses = ReadRange(caseTrigger != null && caseTrigger.HasTarget ? valLosses : valOwnLosses,
+													caseTrigger != null && caseTrigger.HasTarget ? valMaxLosses : valMaxOwnLosses);
+					c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
+					c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
+				}
+				else
+				{
+					c.Target = null;
+					c.TargetStage = null;
+					c.TargetHand = null;
+					c.Filter = null;
+					c.TargetTimeInStage = null;
+					c.TargetSaidMarker = null;
+					c.TargetNotSaidMarker = null;
+				}
 				#endregion
 
 				#region Also Playing Tab

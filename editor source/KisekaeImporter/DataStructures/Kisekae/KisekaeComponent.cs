@@ -44,6 +44,16 @@ namespace KisekaeImporter
 			}
 		}
 
+		public KisekaeComponent Copy()
+		{
+			KisekaeComponent copy = Activator.CreateInstance(this.GetType()) as KisekaeComponent;
+			foreach (var code in _subcodes.Values)
+			{
+				copy.ReplaceSubCode(code);
+			}
+			return copy;
+		}
+
 		private KisekaeSubCode GetSubCode(string id)
 		{
 			string name;
