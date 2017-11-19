@@ -46,7 +46,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			character.OnAfterDeserialize();
 			_imageLibrary = new ImageLibrary();
-			_imageLibrary.Load(character.FolderName);
+			_imageLibrary.Load(character);
 			SetImage(character.Metadata.Portrait);
 			lblName.Text = character.Label;
 			PopulateStageCombo();

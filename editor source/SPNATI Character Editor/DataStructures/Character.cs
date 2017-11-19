@@ -17,6 +17,12 @@ namespace SPNATI_Character_Editor
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
 	public class Character : IHookSerialization
 	{
+		/// <summary>
+		/// Where did this character come from?
+		/// </summary>
+		[XmlIgnore]
+		public CharacterSource Source = CharacterSource.Main;
+
 		[XmlIgnore]
 		public Metadata Metadata;
 
@@ -69,6 +75,8 @@ namespace SPNATI_Character_Editor
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("epilogue")]
 		public List<Epilogue> Endings;
+
+		private bool _built;
 
 		public Character()
 		{
@@ -328,7 +336,10 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public void PrepareForEdit()
 		{
+			if (_built)
+				return;
 			Behavior.PrepareForEdit(this);
+			_built = true;
 		}
 
 		/// <summary>
@@ -604,5 +615,21 @@ namespace SPNATI_Character_Editor
 			Stage = stage;
 			Level = level;
 		}
+	}
+
+	public enum CharacterSource
+	{
+		/// <summary>
+		/// characters that are in the main game or testing tables
+		/// </summary>
+		Main,
+		/// <summary>
+		/// finished characters that were moved offline to conserve space
+		/// </summary>
+		Offline,
+		/// <summary>
+		/// characters that were never completed
+		/// </summary>
+		Incomplete
 	}
 }

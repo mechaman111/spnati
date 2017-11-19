@@ -22,6 +22,18 @@ namespace SPNATI_Character_Editor
 				validHands.Add(hand.ToLowerInvariant());
 			}
 
+			HashSet<string> unusedImages = new HashSet<string>();
+			string folder = Config.GetRootDirectory(character);
+			foreach (string filename in Directory.EnumerateFiles(folder))
+			{
+				string ext = Path.GetExtension(filename).ToLower();
+				if (ext.EndsWith(".png") || ext.EndsWith(".gif"))
+				{
+					unusedImages.Add(Path.GetFileName(filename));
+				}
+			}
+			unusedImages.Remove(character.Metadata.Portrait);
+
 			Regex targetRange = new Regex(@"^\d+(-\d+)?$");
 
 			int layers = character.Layers + Clothing.ExtraStages;
@@ -39,15 +51,17 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			//TODO: This isn't working correctly at the moment
-			//foreach (var line in character.StartingLines)
-			//{
-			//	string img = line.Image;
-			//	if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
-			//	{
-			//		warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", "start", img)));
-			//	}
-			//}
+
+			foreach (var line in character.StartingLines)
+			{
+				string img = line.Image;
+				unusedImages.Remove(img);
+				//TODO: This isn't working correctly at the moment
+				//if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+				//{
+				//	warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", "start", img)));
+				//}
+			}
 
 			foreach (Stage stage in character.Behavior.Stages)
 			{
@@ -83,55 +97,53 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"target\" is not allowed for case {0}", caseLabel)));
 						}
-						if (!ValidateCharacterExists(stageCase.Target))
+						Character target = CharacterDatabase.Get(stageCase.Target);
+						if (target == null)
 						{
-							if (CheckIfOfflineCharacter(stageCase.Target))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is located in the saves folder and may be obsolete. {0}", caseLabel, stageCase.Target)));
-							}
-							else if (CheckIfIncompleteCharacter(stageCase.Target))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is an incomplete character. {0}", caseLabel, stageCase.Target)));
-							}
-							else
+							if (stageCase.Target != "human")
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target)));
 							}
 						}
 						else
 						{
-							Character target = CharacterDatabase.Get(stageCase.Target);
-							if (target != null)
+							if (target.Source == CharacterSource.Incomplete)
 							{
-								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is in the incomplete opponents folder. {0}", caseLabel, stageCase.Target)));
+							}
+							else if (target.Source == CharacterSource.Offline)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target)));
+							}
+
+							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender)));
+							}
+							if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size)));
+							}
+							if (!string.IsNullOrEmpty(stageCase.TargetStage))
+							{
+								int targetStage;
+								if (int.TryParse(stageCase.TargetStage, out targetStage))
 								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender)));
-								}
-								if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size)));
-								}
-								if (!string.IsNullOrEmpty(stageCase.TargetStage))
-								{
-									int targetStage;
-									if (int.TryParse(stageCase.TargetStage, out targetStage))
+									if (target.Layers + Clothing.ExtraStages <= targetStage)
 									{
-										if (target.Layers + Clothing.ExtraStages <= targetStage)
-										{
-											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage)));
-										}
-										Clothing clothing;
-										if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
-										{
-											if (clothing == null)
-												warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel)));
-											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Lowercase, clothing.Type)));
-										}
+										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage)));
+									}
+									Clothing clothing;
+									if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
+									{
+										if (clothing == null)
+											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel)));
+										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Lowercase, clothing.Type)));
 									}
 								}
-								ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker, stageCase.TargetStage);
-								ValidateMarker(warnings, target, caseLabel, "targetNotSeenMarker", stageCase.TargetNotSaidMarker);
 							}
+							ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker, stageCase.TargetStage);
+							ValidateMarker(warnings, target, caseLabel, "targetNotSeenMarker", stageCase.TargetNotSaidMarker);
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.TargetStage))
@@ -173,19 +185,22 @@ namespace SPNATI_Character_Editor
 					Character other = CharacterDatabase.Get(stageCase.AlsoPlaying);
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 					{
-						if (!ValidateCharacterExists(stageCase.AlsoPlaying))
+						if (other == null)
 						{
-							if (CheckIfOfflineCharacter(stageCase.AlsoPlaying))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" is located in the saves folder and may be obsolete. {0}", caseLabel, stageCase.AlsoPlaying)));
-							}
-							else if (CheckIfIncompleteCharacter(stageCase.AlsoPlaying))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is an incomplete character. {0}", caseLabel, stageCase.AlsoPlaying)));
-							}
-							else
+							if (stageCase.AlsoPlaying != "human")
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying)));
+							}
+						}
+						else
+						{
+							if (other.Source == CharacterSource.Incomplete)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is in the incomplete opponents folder. {0}", caseLabel, stageCase.AlsoPlaying)));
+							}
+							else if (other.Source == CharacterSource.Offline)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is offline only. {0}", caseLabel, stageCase.AlsoPlaying)));
 							}
 						}
 					}
@@ -256,7 +271,7 @@ namespace SPNATI_Character_Editor
 					{
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
 					}
-					
+
 					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1));
@@ -301,6 +316,7 @@ namespace SPNATI_Character_Editor
 					{
 						//Validate image
 						string img = line.Image;
+						unusedImages.Remove(img);
 						if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img)));
@@ -340,44 +356,24 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			//endings
+			foreach (Epilogue ending in character.Endings)
+			{
+				foreach (Screen screen in ending.Screens)
+				{
+					unusedImages.Remove(screen.Image);
+				}
+			}
+
+			if (unusedImages.Count > 0)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("The following images are never used: {0}", string.Join(", ", unusedImages))));
+			}
+
 			if (warnings.Count == 0)
 				return true;
 
 			return false;
-		}
-
-		/// <summary>
-		/// Verifies that a character's folder exists
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		private static bool ValidateCharacterExists(string name)
-		{
-			if (name == "human")
-				return true;
-			return Directory.Exists(Config.GetRootDirectory(name));
-		}
-
-		/// <summary>
-		/// Checks if a character exists in the saves folder instead of opponents
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		private static bool CheckIfOfflineCharacter(string name)
-		{
-			string dir = Path.Combine(Config.GameDirectory, "saves", name);
-			return Directory.Exists(dir);
-		}
-
-		/// <summary>
-		/// Checks if a character exists in the saves folder instead of opponents
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		private static bool CheckIfIncompleteCharacter(string name)
-		{
-			string dir = Path.Combine(Config.GameDirectory, "saves", "incomplete_opponents", name);
-			return Directory.Exists(dir);
 		}
 
 		/// <summary>
