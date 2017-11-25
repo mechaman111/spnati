@@ -83,7 +83,6 @@ var FEMALE_MUST_STRIP = "female_must_strip";
 var FEMALE_REMOVING_ACCESSORY = "female_removing_accessory";
 var FEMALE_REMOVING_MINOR = "female_removing_minor";
 var FEMALE_REMOVING_MAJOR = "female_removing_major";
-var FEMALE_CHEST_OR_CROTCH_WILL_BE_VISIBLE = "female_chest_or_crotch_will_be_visible";
 var FEMALE_CHEST_WILL_BE_VISIBLE = "female_chest_will_be_visible";
 var FEMALE_CROTCH_WILL_BE_VISIBLE = "female_crotch_will_be_visible";
 
