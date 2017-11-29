@@ -55,14 +55,14 @@ function loadClothing () {
 		clothingChoices.push(createNewClothing('Jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", 3, 2));
 		clothingChoices.push(createNewClothing('Shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", 2, 3));
 		clothingChoices.push(createNewClothing('T-Shirt', 't-shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", 1, 4));
-		clothingChoices.push(createNewClothing('Undershirt', 'undershirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", 0, 5));
+		clothingChoices.push(createNewClothing('Undershirt', 'undershirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", 0, 5));
 
         clothingChoices.push(createNewClothing('Glasses', 'glasses', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/glasses.png", 3, 6));
 		clothingChoices.push(createNewClothing('Belt', 'belt', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/belt.png", 4, 7));
 		clothingChoices.push(createNewClothing('Pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/pants.png", 3, 8));
 		clothingChoices.push(createNewClothing('Shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/shorts.png", 2, 9));
 		clothingChoices.push(createNewClothing('Kilt', 'kilt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/kilt.png", 1, 10));
-		clothingChoices.push(createNewClothing('Boxers', 'boxers', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", 0, 11));
+		clothingChoices.push(createNewClothing('Boxers', 'boxers', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", 0, 11));
 
 		clothingChoices.push(createNewClothing('Necklace', 'necklace', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/necklace.png", 3, 12));
 		clothingChoices.push(createNewClothing('Tie', 'tie', EXTRA_ARTICLE, OTHER_ARTICLE, "player/male/tie.png", 3, 13));
@@ -76,14 +76,14 @@ function loadClothing () {
 		clothingChoices.push(createNewClothing('Jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", 3, 2));
 		clothingChoices.push(createNewClothing('Shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", 2, 3));
 		clothingChoices.push(createNewClothing('Tank Top', 'tank top', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/tanktop.png", 1, 4));
-		clothingChoices.push(createNewClothing('Bra', 'bra', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", 0, 5));
+		clothingChoices.push(createNewClothing('Bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", 0, 5));
 
 		clothingChoices.push(createNewClothing('Glasses', 'glasses', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/glasses.png", 3, 6));
 		clothingChoices.push(createNewClothing('Belt', 'belt', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/belt.png", 4, 7));
 		clothingChoices.push(createNewClothing('Pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/pants.png", 3, 8));
 		clothingChoices.push(createNewClothing('Shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/shorts.png", 2, 9));
 		clothingChoices.push(createNewClothing('Skirt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/skirt.png", 1, 10));
-		clothingChoices.push(createNewClothing('Panties', 'panties', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 11));
+		clothingChoices.push(createNewClothing('Panties', 'panties', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 11));
 
 		clothingChoices.push(createNewClothing('Necklace', 'necklace', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/necklace.png", 3, 12));
         clothingChoices.push(createNewClothing('Bracelet', 'bracelet', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/bracelet.png", 3, 13));
