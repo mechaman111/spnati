@@ -255,16 +255,20 @@ function playerMustStrip (player) {
 		/* the player has clothes and will strip */
 		if (player == HUMAN_PLAYER) {
 			if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					if (clothes <2 && clothes > 0 &&importantOnly == true) {
+					if (clothes <2 && clothes > 0 &&importantOnly == true && positionIsLower == true) {
 						updateAllBehaviours(player, MALE_CROTCH_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-					} 
-					else {
-						updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-					}			
-				}
+					} else {
+						if (clothes <2 && clothes > 0 &&importantOnly == true && positionIsUpper == true) {
+							updateAllBehaviours(player, MALE_CHEST_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
+						} 
+						else {
+							updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+						}
+					}							
+			}
 			else {
 				if (clothes < 3 && clothes > 1 && importantOnly == true) {				
-					updateAllBehaviours(player, FEMALE_CHEST_OR_CROTCH_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+					updateAllBehaviours(player, FEMALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 				} 
 				else {
 					if (clothes < 2 && clothes > 0 && importantOnly == true && positionIsUpper == true) {
@@ -275,20 +279,17 @@ function playerMustStrip (player) {
 							updateAllBehaviours(player, FEMALE_CROTCH_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 						} else {
 							updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
-							}						
+							}	
 						}
 					}
+			    }
+		} else { 
+				if (players[player].gender == eGender.MALE) {
+					updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+				} else {
+					updateAllBehaviours(player, FEMALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 				}
-			} else { 
-			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-			} else {
-					if (clothes < 2 && clothes > 0 && importantOnly == true && positionIsUpper == true) {
-						updateAllBehaviours(player, FEMALE_CHEST_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-					} else {
-						updateAllBehaviours(player, FEMALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-					}	
-				}
+																		
 			var trigger = determineStrippingSituation(player);
 			updateBehaviour(player, trigger, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
 		}
