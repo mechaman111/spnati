@@ -262,13 +262,13 @@ function playerMustStrip (player) {
 							updateAllBehaviours(player, MALE_CHEST_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
 						} 
 						else {
-							updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+							updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 						}
 					}							
 			}
 			else {
 				if (clothes < 3 && clothes > 1 && importantOnly == true) {				
-					updateAllBehaviours(player, FEMALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+					updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 				} 
 				else {
 					if (clothes < 2 && clothes > 0 && importantOnly == true && positionIsUpper == true) {
