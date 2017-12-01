@@ -83,7 +83,7 @@ function loadClothing () {
 		clothingChoices.push(createNewClothing('Pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/pants.png", 3, 8));
 		clothingChoices.push(createNewClothing('Shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/shorts.png", 2, 9));
 		clothingChoices.push(createNewClothing('Skirt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/skirt.png", 1, 10));
-		clothingChoices.push(createNewClothing('Panties', 'panties', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 11));
+		clothingChoices.push(createNewClothing('Panties', 'panties', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", 0, 11));
 
 		clothingChoices.push(createNewClothing('Necklace', 'necklace', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/necklace.png", 3, 12));
         clothingChoices.push(createNewClothing('Bracelet', 'bracelet', EXTRA_ARTICLE, OTHER_ARTICLE, "player/female/bracelet.png", 3, 13));
