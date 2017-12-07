@@ -22,7 +22,12 @@ tag=straight
 tag=anime
 tag=visual_novel
 
+marker=nagisa_asks_buffy_about_school,public,Nagisa and Buffy feel differently about high school.
+marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does not repeat.
+marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
+marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
+marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
 
 #Nagisa's poker skill is average for the first stage, dips to bad to hasten sock removal, then returns to average for her larger items.
@@ -104,6 +109,8 @@ clothes=Panties,panties,important,lower
 0-bad_hand=worried,Oh...
 0-bad_hand=thinking,Ryou taught me out to play regular poker, but I was never very good at it.
 
+0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
+
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
 1-okay_hand=strip,I have a pair... of socks.
@@ -113,9 +120,9 @@ clothes=Panties,panties,important,lower
 1-bad_hand=shy,I'd be lying if I said I wasn't a little disappointed by these cards.
 1-bad_hand=oneleg,I hope I don't lose my socks too...
 
-1-good_hand,alsoPlaying:hermione=happy,Do you believe in magic and wishes, Hermione? I do. I once heard a true story about a boy who turned into a cat!
-1-good_hand,alsoPlaying:mercy=happy,There's a famous folklore story in my town. Whenever something good happens or someone achieves true happiness, an orb of light appears.
-1-good_hand,alsoPlaying:mercy=happy,I think that orbs of light are a symbol of happiness born from the kindness in people's hearts.
+1-good_hand,alsoPlaying:hermione,priority:0=happy,Do you believe in magic and wishes, Hermione? I do. I once heard a true story about a boy who turned into a cat!
+1-good_hand,alsoPlaying:mercy,priority:0=happy,There's a famous folklore story in my town. Whenever something good happens or someone achieves true happiness, an orb of light appears.
+1-good_hand,alsoPlaying:mercy,priority:0=happy,I think that orbs of light are a symbol of happiness born from the kindness in people's hearts.
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=happy,Your twintails are really pretty, Marinette.
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=idea,Marinette, you remind me of my friend Mei, but all grown up!
 
@@ -127,7 +134,7 @@ clothes=Panties,panties,important,lower
 2-bad_hand=worried,I might lose this one...
 2-bad_hand=worried,I guess I don't know much about poker...
 
-2-good_hand,alsoPlaying:buffy,priority:0=happy,I love my school very, very much! How about you, Buffy? Did you love your high school too?
+2-good_hand,alsoPlaying:buffy,priority:0,marker:nagisa_asks_buffy_about_school=happy,I love my school very, very much! How about you, Buffy? Did you love your high school too?
 2-good_hand,alsoPlaying:mia,alsoPlayingStage:0-3,priority:0=handsbehindback,I'd love to meet your cousin Pearl, Mia! Does she live around here?
 
 #lost jacket
@@ -142,6 +149,7 @@ clothes=Panties,panties,important,lower
 3-bad_hand=shy,I should've worn my coat over my jacket.
 
 3-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your webmaster would understand if you took off your ribbons next, Nugi-chan...
+3-good_hand,alsoPlaying:revy,alsoPlayingStage:3,priority:0=wink,I think we can all have a fun game by putting down our weapons.
 3-okay_hand,alsoPlaying:xander,priority:0=stripped,I hope I don't get another bad hand. Xander's looking at me a lot...
 3-okay_hand,alsoPlaying:xander,priority:0=shy,I have okay cards, but you guys are making me nervous.
 3-bad_hand,alsoPlaying:marinette=shy,Thanks for cheering me up, Marinette. I have a feeling I'm going to lose this game...
@@ -157,6 +165,7 @@ clothes=Panties,panties,important,lower
 4-bad_hand=stripped,I'm sorry, but I'd better head home...
 4-bad_hand=veryembarrassed,How did I get myself into this mess?
 
+4-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your Webmaster would understand if you took your ribbons off next, Nugi-chan...
 4-good_hand,alsoPlaying:xander,alsoPlayingStage:6,totalMales:1=sorry,I'm not ready to see a boy's private part! Please win this hand, Xander...
 
 #lost 5 items: underwear only
@@ -176,7 +185,7 @@ clothes=Panties,panties,important,lower
 6-good_hand=emphatic,I'm way too old to be showing you my butt, anyway!
 6-okay_hand=happy,I have a nice pair.
 6-okay_hand=calm,I think I'll be okay this hand, but what I really want is my shirt back.
-6-bad_hand=embarrassed,I haven't felt this uneasy since I played Tomoyo After: It's a Wonderful Life.
+6-bad_hand,marker:nagisa_played_tomoyo_after=embarrassed,I haven't felt this uneasy since I played Tomoyo After: It's a Wonderful Life.
 6-bad_hand=embarrassed,I'm a nervous wreck. I'm trying not to worry, but I can't help it.
 6-bad_hand=embarrassed,I know that I can leave at any time. I'm sorry, everyone, but I think I have to go home soon.
 
@@ -191,9 +200,11 @@ clothes=Panties,panties,important,lower
 -3-okay_hand=embarrassed,I have something, at least.
 -3-okay_hand=worried,This is okay, I guess.
 -3-okay_hand=determined,Just because I lost my clothes doesn't mean I should give up without a fight!
--3-okay_hand=worried,My dad says I have a mysterious scar on my butt, but I don't believe him!
+-3-okay_hand,marker:nagisa_mysterious_scar=worried,My dad says I have a mysterious scar on my butt, but I don't believe him!
 -3-bad_hand=embarrassed,I'm so nervous right now, I can even taste it.
 -3-bad_hand=veryembarrassed,I think I'm starting to get nervous again.
+
+-3-bad_hand,alsoPlaying:revy,alsoPlayingStage:8,totalFinished:1-3,priority:0=nervous,Even the mean gun lady is doing it... Do I even have a chance?
 
 
 
@@ -424,6 +435,11 @@ clothes=Panties,panties,important,lower
 6-female_must_strip,target:aimee,targetStage:2=shy,Is there any way you could strip non-violently?
 -3-female_must_strip,target:aimee,targetStage:2=worried,Is there any way you could strip non-violently?
 -1-female_must_strip,target:aimee,targetStage:2=unsure,Is there any way you could strip non-violently?
+0-female_must_strip,target:aimee,targetStage:2,alsoPlaying:nugi-chan,alsoPlayingSaidMarker:nugi-chan_marks_nagisa=embarrassed,H-hey! Shooting off another player's skirt is against the rules, isn't it?!
+1-female_must_strip,target:aimee,targetStage:2,alsoPlaying:nugi-chan,alsoPlayingSaidMarker:nugi-chan_marks_nagisa=veryembarrassed,H-hey! Shooting off another player's skirt is against the rules, isn't it?!
+2-female_must_strip,target:aimee,targetStage:2,alsoPlaying:nugi-chan,alsoPlayingSaidMarker:nugi-chan_marks_nagisa=veryembarrassed,H-hey! Shooting off another player's skirt is against the rules, isn't it?!
+3-female_must_strip,target:aimee,targetStage:2,alsoPlaying:nugi-chan,alsoPlayingSaidMarker:nugi-chan_marks_nagisa=veryembarrassed,H-hey! Shooting off another player's skirt is against the rules, isn't it?!
+4-female_must_strip,target:aimee,targetStage:2,alsoPlaying:nugi-chan,alsoPlayingSaidMarker:nugi-chan_marks_nagisa=veryembarrassed,H-hey! Shooting off another player's skirt is against the rules, isn't it?!
 0-female_must_strip,target:aimee,targetStage:3=maximumembarrassed,But... but all Aimee has left is...
 1-female_must_strip,target:aimee,targetStage:3=crossedarms,But... but all Aimee has left is...
 2-female_must_strip,target:aimee,targetStage:3=worried,But... but all Aimee has left is...
@@ -1544,6 +1560,7 @@ finished_masturbating,saidMarker:nagisa_finished_2=unsure,Could... could I have 
 -3-game_over_victory=embarrassed,Even though I won, you all... for me... What happens now that the card game part is over?
 -2-game_over_victory=finishing,<i>This is a game that has ended. Not even passing time exists.</i>
 -1-game_over_victory=unsure,I thought it was impossible, but somehow I won!
+
 game_over_defeat=victorystanding,Congratulations! I hope I'll be the winner next time... if I ever play again.
 game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the game's over, I can face this way, right?
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
@@ -1551,6 +1568,10 @@ game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I le
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
 game_over_defeat,target:nugi-chan=embarrassed,Does anyone see my panties anywhere? I don't want to have to ride the train home without them...
 game_over_defeat,target:tina=embarrassed,I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...
+game_over_defeat,target:revy=embarrassed,Congratulations, Revy. This means you're going to let us live, right?
+game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,Miss Zone-tan... Please don't put me in any videos...
+game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:mei=embarrassed,Miss Zone-tan, I'm sorry to bother you, but I agree with Mei. I don't think I'm ready to be in a video.
+
 0-stripped=winkthumbsup,I'm just so happy that no one was hurt in a terrible bus accident.
 
 
