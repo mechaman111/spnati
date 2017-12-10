@@ -28,6 +28,7 @@ marker=nagisa_finished2,private,This is Nagisa's second final stage line. It doe
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
+marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realise that boys would be playing too.
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
 
 #Nagisa's poker skill is average for the first stage, dips to bad to hasten sock removal, then returns to average for her larger items.
@@ -111,11 +112,35 @@ clothes=Panties,panties,important,lower
 
 0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
 
+0-good_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
+0-okay_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
+0-bad_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
+0-good_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
+0-okay_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
+0-bad_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
+0-good_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+0-okay_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+
+0-good_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
+0-okay_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
+0-bad_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
+0-good_hand,totalMales:2-3,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be boys playing with us too.
+0-okay_hand,totalMales:2-3,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be boys playing with us too.
+0-bad_hand,totalMales:2-3,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be boys playing with us too.
+0-good_hand,totalFemales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't realise that I was going to be the only girl here...
+0-okay_hand,totalFemales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't realise that I was going to be the only girl here...
+0-bad_hand,totalFemales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't realise that I was going to be the only girl here...
+
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
-1-okay_hand=strip,I have a pair... of socks.
+1-good_hand=raisedhand,I think I might have the winning hand.
 1-okay_hand=happy,Mmm, it's okay.
-1-okay_hand=calm,No harm in trying.
+1-okay_hand,totalExposed:0,priority=happy,We're all doing great.
+1-okay_hand,hasHand:One Pair,priority:0=strip,I have a pair... of socks.
+1-okay_hand,hasHand:One Pair,priority:0=calm,No harm in trying.
+1-okay_hand,hasHand:Two Pair,priority:0=happy,I think this is a good one.
 1-bad_hand=sad,I'm such a ditz sometimes.
 1-bad_hand=shy,I'd be lying if I said I wasn't a little disappointed by these cards.
 1-bad_hand=oneleg,I hope I don't lose my socks too...
@@ -136,6 +161,7 @@ clothes=Panties,panties,important,lower
 
 2-good_hand,alsoPlaying:buffy,priority:0,marker:nagisa_asks_buffy_about_school=happy,I love my school very, very much! How about you, Buffy? Did you love your high school too?
 2-good_hand,alsoPlaying:mia,alsoPlayingStage:0-3,priority:0=handsbehindback,I'd love to meet your cousin Pearl, Mia! Does she live around here?
+2-okay_hand,alsoPlaying:xander,totalExposed:0,priority:0=worried,So... which school does everyone go to? I go to Hikarizaka High! How about you, Xander?
 
 #lost jacket
 3-good_hand=wink,Yeah!
@@ -616,6 +642,7 @@ clothes=Panties,panties,important,lower
 #nude
 -3-male_removing_accessory=veryembarrassed,I don't think I have a chance...
 -3-male_removed_accessory=worried,You don't think it's too late for that now?
+-3-male_removed_accessory=worried,Are you being serious?
 -3-female_removing_accessory=lookingdown,But... but I'm completely exposed!
 -3-female_removed_accessory=determined,That's not good at all! It's cheating!
 
@@ -630,6 +657,13 @@ clothes=Panties,panties,important,lower
 0-female_removing_accessory,target:nugi-chan=embarrassed,Nugi-chan, you don't have to show us your panties yet!
 1-female_removing_accessory,target:nugi-chan=veryembarrassed,Nugi-chan, you don't have to show us your panties yet!
 2-female_removing_accessory,target:nugi-chan=embarrassed,Nugi-chan, you don't have to show us your panties yet!
+
+0-female_removed_accessory,target:asuna=winkthumbsup,You look like a pretty cheerleader now, Asuna!
+1-female_removed_accessory,target:asuna=singing,You look like a pretty cheerleader now, Asuna!
+2-female_removed_accessory,target:asuna=interested,You look like a pretty cheerleader now, Asuna!
+3-female_removed_accessory,target:asuna=clapping,You look like a pretty cheerleader now, Asuna!
+4-female_removed_accessory,target:asuna=happy,You look like a pretty cheerleader now, Asuna!
+5-female_removed_accessory,target:asuna=happy,You look like a pretty cheerleader now, Asuna!
 0-female_removed_accessory,target:arwen,targetStage:2=veryembarrassed,You are a beautiful lady, Miss Arwen. You remind me of my mom. Um, but younger! Sorry! I didn't mean to offend you! My mom looks very young for her age!
 1-female_removed_accessory,target:arwen,targetStage:2=sad,You are a beautiful lady, Miss Arwen. You remind me of my mom. Um, but younger! Sorry! I didn't mean to offend you! My mom looks very young for her age!
 2-female_removed_accessory,target:arwen,targetStage:2=shy,You are a beautiful lady, Miss Arwen. You remind me of my mom. Um, but younger! Sorry! I didn't mean to offend you! My mom looks very young for her age!
@@ -1579,7 +1613,6 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 #TARGETED LINES
 #Arndress will assess these lines later to see if they are appropriate to expand to more stages. Nagisa has many uniquely-named images for each stage, so making one line cover multiple stages involves a little more work for her.
 
-2-female_removed_accessory,target:asuna=interested,You look like a pretty cheerleader now, Asuna!
 2-female_removed_accessory,target:leela=handsbehindback,That ~clothing~ looked really high-tech, Leela! I'm impressed!
 2-female_removed_minor,filter:innocent=happy,I'd give anything to have a little sister like you, ~name~.
 2-female_removed_minor,target:april=happy,We're both wearing yellow today, April! But your shirt outshines my dull yellow jacket...
