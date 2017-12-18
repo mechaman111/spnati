@@ -419,7 +419,17 @@ function checkDealLock () {
 	if (dealLock < inGame * 5) {
 		window.setTimeout(checkDealLock, 100);
 	} else {
-		continueDealPhase();
+             /*set up main button*/
+        if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
+            continueDealPhase()
+        else if (players[HUMAN_PLAYER].out) { 
+            $mainButton.html("Next");
+            $mainButton.attr('disabled', false);
+            actualMainButtonState = true
+        } else {
+             continueDealPhase()          
+        }
+    
 	}
 }
 
