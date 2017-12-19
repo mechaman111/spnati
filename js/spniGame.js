@@ -419,7 +419,17 @@ function checkDealLock () {
 	if (dealLock < inGame * 5) {
 		window.setTimeout(checkDealLock, 100);
 	} else {
-		continueDealPhase();
+             /*set up main button*/
+        if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
+            continueDealPhase()
+        else if (players[HUMAN_PLAYER].out) { 
+            $mainButton.html("Next");
+            $mainButton.attr('disabled', false);
+            actualMainButtonState = true
+        } else {
+             continueDealPhase()          
+        }
+    
 	}
 }
 
@@ -764,6 +774,10 @@ function advanceGame () {
         completeContinuePhase();
 		$mainButton.attr('disabled', false);
         actualMainButtonState = false;
+    }else if (context == "Next") {
+        /* advance to next round if human player is masterbating */
+        if (AUTO_FADE) forceTableVisibility(false);
+        continueDealPhase();
 	} else if (context == "Cumming...") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
