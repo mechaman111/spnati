@@ -23,7 +23,6 @@ writer=The_Caretaker
 artist=The_Caretaker
 description=A model and third year high school student who has the power to summon Personas.
 
-#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-confused,I don't really understand the rules, but...sure, I'll play!
 
@@ -121,6 +120,8 @@ bad_hand=sad,I'd rather be taking a midterm right now.
 0-must_strip_losing=shocked,Wait, are my cards THAT bad? Really??
 0-stripping=stripping,I know it's just my jacket, but this feels really ... I don't know, perverted ... or something.
 0-stripping=stripping,I'm not shy, but taking off my clothes in front of you is a bit much.
+0-stripping,alsoPlaying:futaba,alsoPlayingStage:0-6=stripping,Ugh, this is extra embarassing with Futaba here.
+0-stripping,alsoPlaying:futaba,alsoPlayingStage:0-6=stripping,Just don't tell Joker about this, Futaba.
 
 
 #losing hoodie
@@ -134,6 +135,7 @@ bad_hand=sad,I'd rather be taking a midterm right now.
 1-must_strip_losing=sad,I wish escape was an option right now, but I'm surrounded.
 1-stripping=stripping,I really should have worn something on top of my panties today.
 1-stripping=stripping,This was a bad day to go without shorts. I don't usually wear them on non-school days.
+1-stripping,alsoPlaying:futaba=stripping,You're enjoying this too much, Futaba...
 
 
 #losing shoes
@@ -147,6 +149,7 @@ bad_hand=sad,I'd rather be taking a midterm right now.
 2-must_strip_losing=angry,Bastards!
 2-stripping=stripping,OK, this time I'm taking off my shoes!
 2-stripping=stripping,Shoes! I can't forget my shoes again!
+2-stripping,alsoPlaying:futaba=stripping,Don't worry, Futaba, I'm not forgetting this time.
 
 
 #losing shirt
@@ -187,6 +190,8 @@ bad_hand=sad,I'd rather be taking a midterm right now.
 5-stripping=stripping,No one has a camera, right? I can't afford to have anything leak ...
 5-stripping=stripping,I always thought I'd at least get a big payday if I had to show my breasts.
 5-stripping=stripping,Trust me, I don't get these from my Japanese side.
+5-stripping,alsoPlaying:futaba=stripping,Girl talk is supposed to be secret, Futaba.
+5-stripping,alsoPlaying:futaba=stripping,That is not helping right now, Futaba.
 5-stripping,alsoPlaying:streaming-chan=stripping,Your viewers aren't going to record this or anything, right, Streaming-Chan?
 
 
@@ -199,12 +204,14 @@ bad_hand=sad,I'd rather be taking a midterm right now.
 6-must_strip_normal=angry,Ugh, why do I keep losing!
 6-must_strip_losing=shocked,No! But I only have my panties left!
 6-must_strip_losing=sad,I'd rather be anywhere else right now. Even Kamoshida's castle.
-6-stripping=stripping,This really doesn't seem like a dignified thing for a Phantom Thief to do.
+6-stripping=stripping,This really doesn't seem like a dignified thing for a Phantom Thief to do ...
+6-stripping,alsoPlaying:futaba=stripping,Don't stare like that, Futaba. People will get the wrong idea about you.
 
 -3-stripped=sad,Sigh. Well, I'm naked now.
 -3-stripped=sad,Can't you all just be quiet for a second so I can pretend you're not here?
 -3-stripped=sad,And I thought my Phantom Thief outfit was embarrassing.
 -3-stripped=sad,I don't think even a Soma could save me now.
+-3-stripped,alsoPlaying:futaba=shocked,Wait, is Futaba into girls?
 
 
 
@@ -241,165 +248,267 @@ female_must_strip=calm,Better hurry, ~name~. You don't want me to get out my whi
 
 
 #fully clothed
+0-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 0-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-0-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-0-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
-0-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-0-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-0-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
-0-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
-0-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
-0-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+0-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+0-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
+0-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+0-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+0-female_human_must_strip,targetStage:0,filter:school_uniform=happy,Your uniform doesn't look as nice as mine, anyway.
+0-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+0-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+0-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
 0-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
 0-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-0-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-0-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
-0-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
 0-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-0-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-0-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-0-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
 0-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+0-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+0-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+0-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+0-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
+0-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+0-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+0-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
+0-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+0-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+0-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+0-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+0-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+0-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
+0-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+0-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
+0-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+0-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+0-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+0-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
 
 
 #lost jacket
 1-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
+1-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
+1-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+1-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+1-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+1-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
+1-female_human_must_strip,targetStage:0,filter:school_uniform=happy,Your uniform doesn't look as nice as mine, anyway.
 1-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
-1-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
-1-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
+1-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+1-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
 1-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-1-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-1-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
-1-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-1-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-1-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
-1-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-1-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-1-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
+1-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
 1-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-1-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
-1-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
-1-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
-1-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+1-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
 1-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+1-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+1-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+1-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+1-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+1-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+1-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+1-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+1-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
+1-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+1-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
+1-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+1-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+1-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+1-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+1-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+1-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+1-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+1-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
 
 
 #lost hoodie
 2-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-2-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
-2-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-2-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+2-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
+2-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+2-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+2-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
+2-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
 2-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-2-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-2-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
 2-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
-2-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-2-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-2-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-2-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-2-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
-2-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
-2-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-2-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
-2-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
 2-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+2-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+2-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
+2-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+2-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
+2-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+2-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
+2-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+2-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+2-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+2-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+2-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+2-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+2-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+2-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+2-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+2-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+2-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+2-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
+2-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+2-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
 2-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+2-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+2-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
 
 
 #lost shoes
 3-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-3-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-3-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
-3-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
-3-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
-3-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-3-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-3-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
-3-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-3-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-3-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-3-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+3-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
+3-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+3-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
+3-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+3-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+3-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
 3-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
 3-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+3-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
+3-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+3-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+3-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+3-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
+3-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+3-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
+3-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+3-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+3-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+3-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+3-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+3-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+3-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+3-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
 3-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
 3-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+3-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+3-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+3-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
 3-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
-3-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-3-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+3-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+3-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
 
 
 #lost shirt
+4-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 4-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-4-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
-4-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+4-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+4-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+4-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+4-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
 4-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-4-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
-4-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-4-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
-4-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
-4-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-4-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
-4-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
-4-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-4-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-4-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
-4-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-4-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
-4-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-4-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
 4-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
+4-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+4-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
+4-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+4-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+4-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+4-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
+4-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+4-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+4-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+4-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+4-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+4-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+4-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+4-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
+4-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+4-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+4-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
+4-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+4-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+4-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+4-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
+4-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+4-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+4-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
 
 
 #lost stockings
+5-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 5-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-5-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+5-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+5-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
+5-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+5-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
 5-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-5-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
-5-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-5-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
-5-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
-5-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
-5-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+5-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
 5-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
-5-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
-5-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-5-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
-5-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-5-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
-5-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-5-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+5-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
 5-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+5-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
 5-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
+5-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+5-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+5-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
+5-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+5-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+5-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+5-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+5-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+5-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+5-female_must_strip,target:futaba,targetStage:0=sad,Are you sure you're ready for this, Futaba?
+5-female_must_strip,target:futaba,targetStage:0=confused,Aww, poor Futaba. Hopefully this will be your only loss.
+5-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+5-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+5-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+5-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+5-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+5-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
+5-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+5-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
 
 
 #lost bra
+6-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 6-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
-6-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+6-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+6-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+6-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+6-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
 6-female_must_strip,target:zelda,targetStage:0=confused,Zelda? I don't think Joker has that game.
 6-female_must_strip,target:wiifitfemale,targetStage:0=happy,Oh, a trainer! Maybe you can help me get into better shape for my modelling!
-6-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
-6-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
-6-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
-6-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
-6-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
-6-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
 6-female_must_strip,target:mercy,targetStage:0=confused,You're a healer? Oh, so you know Dia!
-6-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
+6-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+6-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+6-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
+6-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
+6-female_must_strip,target:gogo,targetStage:0=calm,I don't suppose I could borrow some gum, GoGo?
+6-female_must_strip,target:zone-tan,targetStage:0=confused,Hey, Zone ... what's a fap, anyway?
+6-female_must_strip,target:seven,targetStage:0=sad,At least your bodysuit doesn't expose as much of your chest as mine does.
+6-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+6-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
+6-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+6-female_must_strip,target:tifa,targetStage:0=confused,You just fight with fists? Why not use a whip or a tommy gun?
+6-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
+6-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+6-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
 6-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
 6-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+6-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
 6-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
-6-female_must_strip,target:buffy,targetStage:0=confused,Are vampires kinda like shadows?
-6-female_must_strip,target:moon,targetStage:0=shocked,God, Moon! Don't you have any decency??
-6-female_must_strip,target:korra,targetStage:0=happy,Wow, Korra, you look so fit! You must be avoiding the buffets!
 6-female_must_strip,target:misty,targetStage:0=confused,Pokemon? Aren't those the little cute things you get from those small capsule machines?
+6-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+6-female_must_strip,target:peach,targetStage:0=confused,I heard that Peach was stuck in a castle. Is that like a Palace?
 
+-3-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 -3-male_must_strip,target:captain_falcon,targetStage:0=confused,Did you get your outfit in the Metaverse too, Captain Falcon? It looks pretty outlandish.
--3-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
--3-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+-3-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+-3-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+-3-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
+-3-female_human_must_strip,targetStage:0,filter:fashionable=happy,That's such a cute outfit! Too bad you'll be stripping it all away.
 -3-female_must_strip,target:kim,targetStage:0=happy,We have to go shopping at Club Banana some time, Kim.
--3-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
--3-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+-3-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+-3-female_must_strip,target:marinette,targetStage:0=happy,Maybe you can take me back to Paris with you.
+-3-female_must_strip,target:samus,targetStage:0=shocked,You actually CHOOSE to always wear that outfit, Samus? I can't wait for when I'm out of the Metaverse and my catsuit!
+-3-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
 -3-female_must_strip,target:d.va,targetStage:0=shocked,Is that your Metaverse outfit, D.Va? How are you wearing it in the real world?
+-3-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+-3-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
+-3-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+-3-female_must_strip,target:aimee,targetStage:0=shocked,Careful, Aimee!
+-3-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
+-3-female_must_strip,target:hermione,targetStage:0=confused,I haven't heard of Hogwarts before. I wonder if it's like Shujin.
 
 -2-male_human_must_strip=calm,What? Is something happening?
 -2-male_human_must_strip=happy,Just do it, ~name~.
@@ -435,17 +544,26 @@ female_must_strip=calm,Better hurry, ~name~. You don't want me to get out my whi
 -1-male_must_strip=calm,No point waiting, ~name~.
 -1-male_must_strip=happy,You're going to have to try harder if you don't want to lose.
 -1-male_must_strip=happy,Just think of something else...like an all-you-can-eat buffet!
+-1-male_must_strip,target:mettaton,targetStage:0=confused,Wait, how is a Shadow in the real world? You are a Shadow, right?
 -1-female_human_must_strip=calm,Too bad, ~name~.
 -1-female_human_must_strip=calm,Well, you can't break the rules now.
 -1-female_human_must_strip=calm,No point waiting, ~name~.
 -1-female_human_must_strip=happy,You're going to have to try harder if you don't want to lose.
 -1-female_human_must_strip=happy,Just think of something else...like an all-you-can-eat buffet!
+-1-female_human_must_strip,target:revy,targetStage:0=shocked,Damn, Revy! I'd rather fight Yaldaboth again than go up against you!
+-1-female_human_must_strip,target:spooky,targetStage:0=shocked,Is that a Shadow? Should I be, like, fighting you or something?
+-1-female_human_must_strip,targetStage:0,filter:animal_ears=happy,Awww, you remind me of Morgana!
 -1-female_must_strip=calm,Too bad, ~name~.
 -1-female_must_strip=calm,Well, you can't break the rules now.
 -1-female_must_strip=calm,No point waiting, ~name~.
 -1-female_must_strip=happy,You're going to have to try harder if you don't want to lose.
 -1-female_must_strip=happy,Just think of something else...like an all-you-can-eat buffet!
 -1-female_must_strip,target:elaine,targetStage:6=happy,Time to show the booty.
+-1-female_must_strip,target:peach,targetStage:0=confused,I haven't I seen you in one of Joker's games?
+-1-female_must_strip,target:rosalina,targetStage:0=happy,Cute wand!
+-1-female_must_strip,target:streaming-chan,targetStage:0=angry,I hope you're willing to pay for any video you take of me. I don't work for free!
+-1-female_must_strip,target:ami,targetStage:0=confused,Blue hair? You know, it doesn't look bad on you, somehow.
+-1-female_must_strip,target:sonya,targetStage:0=angry,Hey, Ms. Ugly Green Tights! It's not our fault you lost!
 
 
 
@@ -496,20 +614,20 @@ female_removed_accessory=happy,Now I'm determined to make you lose again!
 
 
 #lost shoes
+3-female_removing_accessory=angry,How does that even count?
+3-female_removing_accessory=angry,Boooooooo!
 3-female_removing_accessory=angry,Ugh, that's lame!
 3-female_removing_accessory=angry,That's really the best you've got?
 3-female_removing_accessory=sad,Well, at least I'm not stripping something.
-3-female_removing_accessory=angry,How does that even count?
-3-female_removing_accessory=angry,Boooooooo!
 3-female_removed_accessory,target:florina,targetStage:1=shocked,I didn't realize escape was an option!
 
 
 #lost shirt
+4-female_removing_accessory=angry,How does that even count?
+4-female_removing_accessory=angry,Boooooooo!
 4-female_removing_accessory=angry,Ugh, that's lame!
 4-female_removing_accessory=angry,That's really the best you've got?
 4-female_removing_accessory=sad,Well, at least I'm not stripping something.
-4-female_removing_accessory=angry,How does that even count?
-4-female_removing_accessory=angry,Boooooooo!
 4-female_removed_accessory,target:florina,targetStage:1=shocked,I didn't realize escape was an option!
 
 
@@ -537,9 +655,9 @@ female_removed_accessory=happy,Now I'm determined to make you lose again!
 -3-female_removing_accessory=sad,Well, at least I'm not stripping something.
 -3-female_removed_accessory,target:florina,targetStage:1=shocked,I didn't realize escape was an option!
 
+-2-male_removing_accessory=angry,Ugh!
 -2-male_removing_accessory=angry,Lame! Come on, ~name~!
 -2-male_removing_accessory=angry,What!?
--2-male_removing_accessory=angry,Ugh!
 -2-male_removed_accessory=sad,I can't believe you.
 -2-male_removed_accessory=angry,Bastard!
 -2-male_removed_accessory=sad,Sigh, it's not fair.
@@ -550,9 +668,9 @@ female_removed_accessory=happy,Now I'm determined to make you lose again!
 -2-female_removed_accessory=sad,Sigh, why couldn't I beat you?
 -2-female_removed_accessory=sad,Sigh, it's not fair.
 
+-1-male_removing_accessory=angry,Ugh!
 -1-male_removing_accessory=sad,Just that small thing?
 -1-male_removing_accessory=sad,Really, ~name~?
--1-male_removing_accessory=angry,Ugh!
 -1-male_removed_accessory=angry,Well, that sucked.
 -1-male_removed_accessory=sad,Great. Just your ~clothing~. Weee.
 -1-male_removed_accessory=calm,Geez.
@@ -586,39 +704,56 @@ female_removed_minor=sad,I guess that's only mildly embarrassing for you.
 
 
 #fully clothed
-0-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
+0-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+0-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
+0-female_removing_minor,target:sonya,targetStage:5=angry,Hey! Panther is MY codename!
 0-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
+0-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
 
 #lost jacket
-1-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
+1-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+1-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 1-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
+1-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
 
 #lost hoodie
+2-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+2-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 2-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 2-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
 
 
 #lost shoes
-3-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
+3-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+3-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 3-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
+3-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
 
 #lost shirt
-4-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
+4-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+4-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 4-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
+4-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
 
 #lost stockings
+5-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+5-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 5-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 5-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
 
 
 #lost bra
+6-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+6-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 6-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
 6-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
+-3-female_removing_minor,target:futaba,targetStage:0=happy,Just ignore all the eyes on you, Futaba. That's what I do during a shoot.
+-3-female_removing_minor,target:futaba,targetStage:0=happy,I'm actually kind of proud of you, Futaba. You'd never have done this when we first met.
 -3-female_removed_minor,target:kim,targetStage:1=calm,A two-for-one special! Not bad.
 -3-female_removed_minor,target:shego,targetStage:1=angry,Style is never pointless, Shego!
 
@@ -717,12 +852,12 @@ female_removing_major=confused,Sorry, ~name~, but not too sorry.
 6-female_removed_major=happy,That's what you get!
 6-female_removed_major,target:aimee,targetStage:1=confused,I wonder if could do that with my tommy gun ...
 
--3-female_removed_major=confused,You don't have much left.
--3-female_removed_major=horny,Damn it, this is getting intense.
--3-female_removed_major=happy,That's what you get!
 -3-female_removed_major=sad,I wish I still had something to take off.
 -3-female_removed_major=sad,Let's move on...
 -3-female_removed_major=happy,That was a big turn for you, ~name~!
+-3-female_removed_major=confused,You don't have much left.
+-3-female_removed_major=horny,Damn it, this is getting intense.
+-3-female_removed_major=happy,That's what you get!
 -3-female_removed_major,target:aimee,targetStage:1=confused,I wonder if could do that with my tommy gun ...
 
 -2-male_removing_major=confused,I'm not saying I need stimulation or anything, but take it off already.
@@ -789,40 +924,104 @@ female_crotch_is_visible=horny,I wonder if stuff like this goes on in those weir
 
 
 #fully clothed
+0-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+0-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 0-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+0-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+0-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+0-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+0-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
+0-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+0-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 0-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
 
 
 #lost jacket
+1-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+1-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 1-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+1-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+1-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+1-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+1-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+1-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 1-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+1-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 
 
 #lost hoodie
+2-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+2-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 2-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+2-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+2-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+2-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+2-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 2-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+2-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+2-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 
 
 #lost shoes
+3-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+3-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 3-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+3-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+3-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+3-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+3-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+3-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
+3-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 3-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
 
 
 #lost shirt
+4-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+4-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 4-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+4-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+4-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+4-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
 4-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+4-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
+4-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+4-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 
 
 #lost stockings
+5-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+5-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 5-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+5-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+5-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+5-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+5-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+5-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 5-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+5-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 
 
 #lost bra
+6-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+6-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 6-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+6-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+6-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+6-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+6-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+6-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 6-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+6-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 
+-3-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+-3-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 -3-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
+-3-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+-3-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+-3-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
+-3-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+-3-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
+-3-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 -3-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
 
 -2-male_chest_will_be_visible=horny1,Hurry...
@@ -857,18 +1056,28 @@ female_crotch_is_visible=horny,I wonder if stuff like this goes on in those weir
 -2-female_crotch_is_visible=horny1,I wonder how many lucky guys have seen that pussy before.
 -2-female_crotch_is_visible=angry,Damn it! That pussy looks too good! You guys are starting to get me all confused and stuff!
 -2-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+-2-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+-2-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 
 -1-male_crotch_will_be_visible=confused,A little late to get me excited, ~name~.
 -1-male_crotch_will_be_visible=happy,Come on, take it off!
 -1-male_medium_crotch_is_visible=confused,Yup, that's your penis. Just out there.
 -1-male_medium_crotch_is_visible=angry,Pervert! I can tell you're happy showing us all that.
+-1-female_chest_will_be_visible,target:futaba=confused,Well, it's nothing I haven't seen in the changing rooms, Futaba.
+-1-female_small_chest_is_visible,target:futaba=happy,Size isn't everything, Futaba! You're breasts are cute too!
 -1-female_medium_chest_is_visible,target:shego,targetStage:5=shocked,Whoa, Shego knows Agi too!
 -1-female_crotch_will_be_visible=shocked,Wow, ~name~ finally has to show it!
 -1-female_crotch_will_be_visible=angry,Let's not act like her pussy is that big a deal after I had to get off for all of you.
+-1-female_crotch_will_be_visible,target:twilight=shocked,Wait! You know you can take off anything you want first, right??
+-1-female_crotch_will_be_visible,target:florina=shocked,Just stay calm, Futaba!
+-1-female_crotch_will_be_visible,target:florina=shocked,I thought you'd be better at this, Futaba! You're really putting me in awkward spot...
 -1-female_crotch_is_visible=happy,Heh, you might have to do what I did soon, ~name~.
 -1-female_crotch_is_visible=shocked,You're already wet!
 -1-female_crotch_is_visible=sad,I wonder what Joker would think of ~name~'s pussy?
+-1-female_crotch_is_visible,target:futaba=sad,Sigh ... I guess I need to teach you about that kind of maintenance still.
+-1-female_crotch_is_visible,target:futaba=angry,It's not an accident, Futaba! It takes work to keep everything down there trimmed and pretty!
 -1-female_crotch_is_visible,target:gogo,targetStage:7=shocked,God, that looks deeper than Ouroboros!
+-1-female_crotch_is_visible,target:twilight=sad,God, Twilight. I wasn't at all prepared for that.
 
 
 
@@ -914,65 +1123,96 @@ female_finished_masturbating=horny,That was pretty naughty, ~name~.
 
 
 #fully clothed
-0-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
-0-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
-0-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
-0-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+0-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+0-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 0-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+0-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+0-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+0-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+0-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
+0-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+0-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 
 
 #lost jacket
-1-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+1-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+1-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 1-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
 1-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 1-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
 1-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+1-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+1-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
+1-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 
 
 #lost hoodie
-2-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+2-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+2-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 2-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+2-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+2-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+2-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
 2-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 2-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
-2-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 
 
 #lost shoes
-3-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+3-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+3-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 3-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 3-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
-3-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 3-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+3-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+3-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+3-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+3-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
 
 
 #lost shirt
-4-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
-4-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+4-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+4-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 4-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 4-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+4-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+4-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
+4-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
 4-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+4-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
 
 
 #lost stockings
-5-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+5-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+5-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 5-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
-5-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 5-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
 5-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+5-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+5-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+5-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+5-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
 
 
 #lost bra
-6-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
-6-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+6-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+6-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 6-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 6-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+6-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+6-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
+6-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+6-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
 6-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
 
--3-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
--3-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
--3-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+-3-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
+-3-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
+-3-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+-3-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
 -3-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
 -3-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+-3-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+-3-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+-3-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
 
 -2-male_must_masturbate=shocked,Wait, I really have to do this with a guy??
 -2-male_must_masturbate=confused,Well, I guess we have to do this together, ~name~.
@@ -998,11 +1238,13 @@ female_finished_masturbating=horny,That was pretty naughty, ~name~.
 -2-female_finished_masturbating=shocked,You came! In front of everyone! Am I really going to do that too?
 -2-female_finished_masturbating=confused,Was I supposed to try to cum first? Did I lose again?
 -2-female_finished_masturbating=horny3,God, ~name~! Watching you cum like that is going to make me explode!
--2-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
--2-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
--2-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
--2-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
 -2-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
+-2-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
+-2-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+-2-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
+-2-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+-2-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
+-2-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
 
 -1-male_must_masturbate=happy,I guess we're passed embarrassment now, ~name~. You may as well enjoy yourself!
 -1-male_must_masturbate=angry,Don't try to upstage me, OK?
@@ -1027,9 +1269,11 @@ female_finished_masturbating=horny,That was pretty naughty, ~name~.
 -1-female_must_masturbate=happy,Oooo, it's ~name~'s turn!
 -1-female_must_masturbate=happy,Not that it's a competition, but let's see if you attract as many eyes as I did.
 -1-female_must_masturbate=confused,Don't try to outdo me, 'k?
+-1-female_must_masturbate,target:futaba=sad,Do I really have to watch Futaba do this? She's like a little sister to me.
 -1-female_start_masturbating=happy,You actually look kinda cute doing that, ~name~!
 -1-female_start_masturbating=happy,Just enjoy it!
 -1-female_start_masturbating=horny,Geez, pace yourself, ~name~!
+-1-female_start_masturbating,target:futaba=horny,Never mind. That sister dynamic has just been obliterated.
 -1-female_masturbating=happy,It's kind of hot doing it in a group, huh?
 -1-female_masturbating=horny,~name~ is really having fun.
 -1-female_masturbating=happy,You look happier than a kid on Children's Day!
@@ -1042,10 +1286,12 @@ female_finished_masturbating=horny,That was pretty naughty, ~name~.
 -1-female_finished_masturbating=happy,We both made a pretty big mess, huh, ~name~?
 -1-female_finished_masturbating=happy,I think Ryuji would have a heart attack if he saw that!
 -1-female_finished_masturbating=happy,It's good to know I'm not the only one who gets cum dripping down my legs after getting off.
--1-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
 -1-female_finished_masturbating,target:wiifitfemale,targetStage:6=happy,Well, if you think masturbating is so healthy, maybe I need to be doing it more.
--1-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+-1-female_finished_masturbating,target:futaba=shocked,Damn, I didn't think I'd learn anything about masturbating from Futaba.
+-1-female_finished_masturbating,target:futaba=confused,Uh...maybe we should hang out more, Futaba. Just the two of us.
 -1-female_finished_masturbating,target:hermione,targetStage:10=sad,Aw, is the magic show over?
+-1-female_finished_masturbating,target:d.va,targetStage:8=confused,What's a "nerf"?
+-1-female_finished_masturbating,target:gogo,targetStage:9=happy,GoGo is DoneDone.
 -1-female_finished_masturbating,target:aimee=shocked,Poor Aimee! Does anyone know Dia?
 
 
@@ -1057,6 +1303,7 @@ female_finished_masturbating=horny,That was pretty naughty, ~name~.
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
 -3-must_masturbate_first=sad,I really suck at this, huh? But do I really have to...you know?
 -3-must_masturbate_first=shocked,Wait, what do I have to do now again?
+-3-must_masturbate_first,alsoPlaying:futaba=shocked,Futaba is going to see this?? There goes the cute "little sister" dynamic I had going on with her.
 -3-must_masturbate=sad,My modelling career never prepared me for this.
 -3-must_masturbate=sad,Even Kamoshida wouldn't make me stoop this low.
 -3-start_masturbating=starting,This is so embarrassing...at least Joker isn't here.
@@ -1105,3 +1352,148 @@ game_over_defeat=confused,So, I lost...right? All of that stripping and masturba
 game_over_defeat=confused,So, uh, can I put my clothes back on now?
 
 #EPILOGUE/ENDING
+
+ending=Into the Metaverse
+	ending_gender=male
+
+		screen=annending1.jpg
+				
+				text=As you walk home from the inventory, you find yourself in a strange place ...
+				x=centered
+				y=50%
+				width=
+				arrow=
+
+		screen=annending2.jpg
+				
+				text=Why, hello there, ~name~. It looks like you've wandered into my master's palace.
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=That's right. I'm Ann. But not the Ann you just met. I'm your cognitive interpretation of her.
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annending2.jpg
+				
+				text=In other words, I don't have to play the innocent, hesitant highschooler who acts like she doesn't know everyone can't stop thinking about fucking her.
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=I can be every bit the naughty slut that you want Ann to be.
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annending2.jpg
+				
+				text=So come on.
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=Let me take you to your "cell".
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annending5.jpg
+				
+				text=A few minutes later ...
+				x=centered
+				y=50%
+				width=
+				arrow=
+
+		screen=annsex1.gif
+				
+				text=That's it! Just lay there as I show you how good this supermodel pussy feels!
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=You couldn't think of anything else when you saw Ann cum during the game, couldn't you? Well now you have her, big boy!
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annsex1.gif
+				
+				text=Admit it, ~name~! Sex with me is the best!
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=You were actually upset that you couldn't stroke your cock in front of her before, weren't you? Well now that load is going to be all mine!
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annending3.jpg
+				
+				text=Ah, silly me. You probably want to see my big tits bounce while we fuck, don't you?
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=Sorry! I really can be a dumb, blonde bimbo sometimes, huh?
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annsex2.gif
+				
+				text=Oh, I can feel your cock pulsing, ~name~! Do you really like my boobs that much?
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=Well don't worry. You can shoot that creamy load right inside my pussy!
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annsex2.gif
+				
+				text=Come on, I want it! Fill me up!
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=Pretend I'm the real Ann and leave your mark on me!
+				x=65%
+				y=50%
+				width=
+				arrow=left
+
+		screen=annending4.jpg
+				
+				text=Good job, ~name~!
+				x=15%
+				y=20%
+				width=
+				arrow=right
+				
+				text=Now relax while I try to push your cum out of my pussy. You sure did pump a lot in me!
+				x=65%
+				y=50%
+				width=
+				arrow=left
