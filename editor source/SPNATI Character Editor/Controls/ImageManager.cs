@@ -145,7 +145,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (currentCrop != crop)
 				{
 					//If new crop values are found, put them in
-					lines.Add(string.Format("crop_pixels={0}", crop.ToString()));
+					lines.Add(string.Format("crop_pixels={0}", crop.Serialize()));
 					currentCrop = crop;
 				}
 				lines.Add(metadata.Serialize());
@@ -1030,6 +1030,11 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			PoseTemplate template = new PoseTemplate();
 			template.BaseCode = new KisekaeCode(txtBaseCode.Text);
+			if (string.IsNullOrWhiteSpace(txtBaseCode.Text))
+			{
+				MessageBox.Show("You must supply a base code.", "Generating Template");
+				return null;
+			}
 			foreach (DataGridViewRow row in gridLayers.Rows)
 			{
 				StageTemplate stageTemplate = GetStageTemplateFromRow(row);
@@ -1083,7 +1088,6 @@ namespace SPNATI_Character_Editor.Controls
 			PoseTemplate template = CreateTemplate();
 			if (template == null)
 			{
-				MessageBox.Show("Could not generate template.");
 				return;
 			}
 			_poseList = template.GeneratePoseList();
@@ -1111,12 +1115,12 @@ namespace SPNATI_Character_Editor.Controls
 			Emotion emotion = GetEmotionFromRow(emotionRow);
 			if (stage == null)
 			{
-				MessageBox.Show("No clothing data has been defined yet.");
+				MessageBox.Show("No clothing data has been defined yet.", "Preview");
 				return;
 			}
 			if (emotion == null)
 			{
-				MessageBox.Show("No pose has been defined yet.");
+				MessageBox.Show("No pose has been defined yet.", "Preview");
 				return;
 			}
 

@@ -38,6 +38,7 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+			Characters.Sort((c1, c2) => { return c1.FolderName.CompareTo(c2.FolderName); });
 		}
 
 		public static Character Get(string folderName)

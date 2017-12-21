@@ -199,6 +199,13 @@ namespace SPNATI_Character_Editor
 					imageImporter.SetCharacter(c);
 				if (treeDialogue.Nodes.Count > 0)
 					treeDialogue.SelectedNode = treeDialogue.Nodes[0];
+				lblIncomplete.Visible = c.Source == CharacterSource.Incomplete;
+				lblOffline.Visible = c.Source == CharacterSource.Offline;
+			}
+			else
+			{
+				lblIncomplete.Visible = false;
+				lblOffline.Visible = false;
 			}
 		}
 
@@ -1727,10 +1734,7 @@ namespace SPNATI_Character_Editor
 				string countValue = row.Cells["ColTagCount"].Value?.ToString();
 				if (string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(countValue))
 					continue;
-				int count;
-				if (!int.TryParse(countValue, out count))
-					continue;
-				TargetCondition condition = new TargetCondition(filter, count);
+				TargetCondition condition = new TargetCondition(filter, countValue);
 				_selectedCase.Conditions.Add(condition);
 			}
 		}

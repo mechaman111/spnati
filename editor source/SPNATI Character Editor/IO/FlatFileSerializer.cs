@@ -43,7 +43,6 @@ namespace SPNATI_Character_Editor
 			lines.Add("description=" + metadata.Description);
 
 			lines.Add("");
-			lines.Add("#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.");
 			lines.Add("#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.");
 			foreach (var line in character.StartingLines)
 			{
@@ -861,11 +860,7 @@ namespace SPNATI_Character_Editor
 						if (key.StartsWith("count-"))
 						{
 							string filter = key.Substring(6);
-							int count;
-							if (int.TryParse(value, out count))
-							{
-								lineCase.Conditions.Add(new TargetCondition(filter, count));
-							}
+							lineCase.Conditions.Add(new TargetCondition(filter, value));
 						}
 						break;
 				}

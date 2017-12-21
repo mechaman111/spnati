@@ -114,6 +114,7 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.cboGender = new System.Windows.Forms.ComboBox();
 			this.tabWardrobe = new System.Windows.Forms.TabPage();
+			this.wardrobeEditor = new SPNATI_Character_Editor.Controls.WardrobeEditor();
 			this.label9 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.lblPositionHelp = new System.Windows.Forms.Label();
@@ -132,6 +133,7 @@
 			this.cmdAddClothes = new System.Windows.Forms.Button();
 			this.lstClothes = new System.Windows.Forms.ListBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
+			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.splitDialogue = new System.Windows.Forms.SplitContainer();
 			this.cboTreeTarget = new System.Windows.Forms.ComboBox();
@@ -144,6 +146,7 @@
 			this.cmdSplit = new System.Windows.Forms.Button();
 			this.label35 = new System.Windows.Forms.Label();
 			this.grpCase = new System.Windows.Forms.GroupBox();
+			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.lblHelpText = new System.Windows.Forms.Label();
 			this.cmdPasteAll = new System.Windows.Forms.Button();
 			this.cmdCopyAll = new System.Windows.Forms.Button();
@@ -251,7 +254,9 @@
 			this.cboTotalMales = new System.Windows.Forms.ComboBox();
 			this.cboTotalFemales = new System.Windows.Forms.ComboBox();
 			this.tabEndings = new System.Windows.Forms.TabPage();
+			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
 			this.tabMarkers = new System.Windows.Forms.TabPage();
+			this.markerGrid = new SPNATI_Character_Editor.Controls.MarkerGrid();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
 			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -265,11 +270,8 @@
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.wardrobeEditor = new SPNATI_Character_Editor.Controls.WardrobeEditor();
-			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
-			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
-			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
-			this.markerGrid = new SPNATI_Character_Editor.Controls.MarkerGrid();
+			this.lblOffline = new System.Windows.Forms.Label();
+			this.lblIncomplete = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -1092,6 +1094,17 @@
 			this.tabWardrobe.Text = "Wardrobe";
 			this.tabWardrobe.UseVisualStyleBackColor = true;
 			// 
+			// wardrobeEditor
+			// 
+			this.wardrobeEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.wardrobeEditor.Location = new System.Drawing.Point(182, 167);
+			this.wardrobeEditor.Name = "wardrobeEditor";
+			this.wardrobeEditor.Size = new System.Drawing.Size(749, 495);
+			this.wardrobeEditor.TabIndex = 15;
+			this.wardrobeEditor.Visible = false;
+			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
@@ -1278,6 +1291,14 @@
 			this.tabImages.Text = "Images";
 			this.tabImages.UseVisualStyleBackColor = true;
 			// 
+			// imageImporter
+			// 
+			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.imageImporter.Location = new System.Drawing.Point(3, 3);
+			this.imageImporter.Name = "imageImporter";
+			this.imageImporter.Size = new System.Drawing.Size(931, 662);
+			this.imageImporter.TabIndex = 0;
+			// 
 			// tabDialogue
 			// 
 			this.tabDialogue.Controls.Add(this.splitDialogue);
@@ -1442,6 +1463,18 @@
 			this.grpCase.TabIndex = 28;
 			this.grpCase.TabStop = false;
 			this.grpCase.Text = "Edit Case";
+			// 
+			// gridDialogue
+			// 
+			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridDialogue.Location = new System.Drawing.Point(6, 414);
+			this.gridDialogue.Name = "gridDialogue";
+			this.gridDialogue.Size = new System.Drawing.Size(654, 239);
+			this.gridDialogue.TabIndex = 42;
+			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
+			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
 			// 
 			// lblHelpText
 			// 
@@ -2738,6 +2771,15 @@
 			this.tabEndings.Text = "Epilogue";
 			this.tabEndings.UseVisualStyleBackColor = true;
 			// 
+			// epilogueEditor
+			// 
+			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.epilogueEditor.Enabled = false;
+			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
+			this.epilogueEditor.Name = "epilogueEditor";
+			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
+			this.epilogueEditor.TabIndex = 0;
+			// 
 			// tabMarkers
 			// 
 			this.tabMarkers.Controls.Add(this.markerGrid);
@@ -2748,6 +2790,16 @@
 			this.tabMarkers.TabIndex = 5;
 			this.tabMarkers.Text = "Markers";
 			this.tabMarkers.UseVisualStyleBackColor = true;
+			// 
+			// markerGrid
+			// 
+			this.markerGrid.AllowPrivate = true;
+			this.markerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.markerGrid.Location = new System.Drawing.Point(3, 3);
+			this.markerGrid.Name = "markerGrid";
+			this.markerGrid.ReadOnly = false;
+			this.markerGrid.Size = new System.Drawing.Size(931, 662);
+			this.markerGrid.TabIndex = 0;
 			// 
 			// label4
 			// 
@@ -2845,61 +2897,33 @@
 			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
 			this.dataGridViewCheckBoxColumn1.Width = 50;
 			// 
-			// wardrobeEditor
+			// lblOffline
 			// 
-			this.wardrobeEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.wardrobeEditor.Location = new System.Drawing.Point(182, 167);
-			this.wardrobeEditor.Name = "wardrobeEditor";
-			this.wardrobeEditor.Size = new System.Drawing.Size(749, 495);
-			this.wardrobeEditor.TabIndex = 15;
-			this.wardrobeEditor.Visible = false;
+			this.lblOffline.AutoSize = true;
+			this.lblOffline.ForeColor = System.Drawing.SystemColors.Highlight;
+			this.lblOffline.Location = new System.Drawing.Point(161, 28);
+			this.lblOffline.Name = "lblOffline";
+			this.lblOffline.Size = new System.Drawing.Size(120, 13);
+			this.lblOffline.TabIndex = 15;
+			this.lblOffline.Text = "OFFLINE CHARACTER";
 			// 
-			// imageImporter
+			// lblIncomplete
 			// 
-			this.imageImporter.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.imageImporter.Location = new System.Drawing.Point(3, 3);
-			this.imageImporter.Name = "imageImporter";
-			this.imageImporter.Size = new System.Drawing.Size(931, 662);
-			this.imageImporter.TabIndex = 0;
-			// 
-			// gridDialogue
-			// 
-			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridDialogue.Location = new System.Drawing.Point(6, 414);
-			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.Size = new System.Drawing.Size(654, 239);
-			this.gridDialogue.TabIndex = 42;
-			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
-			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
-			// 
-			// epilogueEditor
-			// 
-			this.epilogueEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.epilogueEditor.Enabled = false;
-			this.epilogueEditor.Location = new System.Drawing.Point(3, 3);
-			this.epilogueEditor.Name = "epilogueEditor";
-			this.epilogueEditor.Size = new System.Drawing.Size(931, 662);
-			this.epilogueEditor.TabIndex = 0;
-			// 
-			// markerGrid
-			// 
-			this.markerGrid.AllowPrivate = true;
-			this.markerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.markerGrid.Location = new System.Drawing.Point(3, 3);
-			this.markerGrid.Name = "markerGrid";
-			this.markerGrid.ReadOnly = false;
-			this.markerGrid.Size = new System.Drawing.Size(931, 662);
-			this.markerGrid.TabIndex = 0;
+			this.lblIncomplete.AutoSize = true;
+			this.lblIncomplete.ForeColor = System.Drawing.Color.Maroon;
+			this.lblIncomplete.Location = new System.Drawing.Point(161, 28);
+			this.lblIncomplete.Name = "lblIncomplete";
+			this.lblIncomplete.Size = new System.Drawing.Size(145, 13);
+			this.lblIncomplete.TabIndex = 16;
+			this.lblIncomplete.Text = "INCOMPLETE CHARACTER";
 			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1217, 770);
+			this.Controls.Add(this.lblIncomplete);
+			this.Controls.Add(this.lblOffline);
 			this.Controls.Add(this.lblLinesOfDialogue);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.tabControl);
@@ -3207,6 +3231,8 @@
 		private System.Windows.Forms.TabPage tabMarkers;
 		private Controls.MarkerGrid markerGrid;
 		private Controls.WardrobeEditor wardrobeEditor;
+		private System.Windows.Forms.Label lblOffline;
+		private System.Windows.Forms.Label lblIncomplete;
 	}
 }
 

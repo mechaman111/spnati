@@ -6,7 +6,7 @@ namespace SPNATI_Character_Editor
 {
 	public static class Config
 	{
-		public const string Version = "v1.13";
+		public const string Version = "v1.14";
 
 		/// <summary>
 		/// Gets the SPNATI directory
@@ -41,8 +41,7 @@ namespace SPNATI_Character_Editor
 			{
 				GameDirectory = lines[0];
 				LastCharacter = lines[1];
-				//KisekaeDirectory = lines[2];
-				DisplayImages = lines[2] == "1";
+				DisplayImages = true; // lines[2] == "1";
 			}
 			catch
 			{
@@ -62,7 +61,6 @@ namespace SPNATI_Character_Editor
 			List<string> lines = new List<string>();
 			lines.Add(GameDirectory);
 			lines.Add(LastCharacter);
-			//lines.Add(KisekaeDirectory);
 			lines.Add(DisplayImages ? "1" : "0");
 			File.WriteAllLines(filename, lines);
 		}

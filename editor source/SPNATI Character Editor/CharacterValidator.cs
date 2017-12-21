@@ -299,9 +299,17 @@ namespace SPNATI_Character_Editor
 					#region Filters
 					foreach (var condition in stageCase.Conditions)
 					{
-						if (condition.Count > 5 || condition.Count < 0)
+						int count;
+						if (int.TryParse(condition.Count, out count))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering tag {1} for {2} characters, but must be between 0-5. {0}", caseLabel, condition.Filter, condition.Count)));
+							if (count > 5 || count < 0)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering tag {1} for {2} characters, but must be between 0-5. {0}", caseLabel, condition.Filter, condition.Count)));
+							}
+						}
+						if (condition.Count.Contains("-"))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering by tag count \"{1}\" does not support ranges. {0}", caseLabel, condition.Filter)));
 						}
 						if (!TagDatabase.TagExists(condition.Filter))
 						{

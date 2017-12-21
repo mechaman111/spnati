@@ -48,6 +48,11 @@ namespace KisekaeImporter.ImageImport
 			return string.Format("{0},{1},{2},{3}", Left, Top, Right - Left, Bottom - Top);
 		}
 
+		public string Serialize()
+		{
+			return string.Format("{0},{1},{2},{3}", Left, Top, Right, Bottom);
+		}
+
 		public static bool operator ==(Rect a, Rect b)
 		{
 			return a.Left == b.Left && a.Top == b.Top && a.Right == b.Right && a.Bottom == b.Bottom;

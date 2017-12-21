@@ -974,7 +974,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Number of characters needing the filter tag
 		/// </summary>
-		public int Count;
+		public string Count;
 
 		[XmlAttribute("filter")]
 		/// <summary>
@@ -986,7 +986,7 @@ namespace SPNATI_Character_Editor
 		{
 		}
 
-		public TargetCondition(string filter, int count)
+		public TargetCondition(string filter, string count)
 		{
 			Filter = filter;
 			Count = count;
