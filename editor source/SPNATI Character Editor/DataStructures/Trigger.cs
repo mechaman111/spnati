@@ -277,6 +277,18 @@ namespace SPNATI_Character_Editor
 			int layers = character.Layers;
 			if (stage == 0 || layers == 8)
 				return stage;
+			return ShiftStage(character, stage);
+		}
+
+		/// <summary>
+		/// Upshifts stages so that it's based off of 8 layers
+		/// </summary>
+		/// <param name="character"></param>
+		/// <param name="stage"></param>
+		/// <returns></returns>
+		public static int ShiftStage(Character character, int stage)
+		{
+			int layers = character.Layers;
 			//Shift forwards so 8 is the final stage before losing
 			int shiftAmount = 8 - layers;
 			return stage + shiftAmount;

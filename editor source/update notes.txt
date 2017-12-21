@@ -1,82 +1,17 @@
 SPNATI Character Editor
 
-Version history
+New to v1.14
 ------------
-1.13
-* More charts - marker and target usage
-
-1.12
-* Major validation performance boost
-* Unused images reported in validator
-* Incomplete and offline opponents are now editable
-
-1.11
-* More charts
-* Cases with non-zero priority now show the priority in the dialogue tree
-* Date/Time and Editor version used are now added to behaviour.xml when saved
-* Epilogue tab layout slightly changed based on feedback
-
-1.10
 * Bug fixes
-
-1.09
-* Marker report
-* Banter Wizard
-* Improved templates: hair and belts can now be specified as part of clothing or appearance
-
-1.08
-* Player state targets in the Misc tab
-* Consecutive losses targets
-* Time in stage targets
-* ~silent~ variable converted to silent checkbox
-
-1.07
-* For removing/removed cases, target stage options will be filtered to the appropriate type
-* Graphs filterable by gender
-* Prefixless images are now selectable for dialogue lines
-* Target at stage and "also playing" at stage can now be specified as ranges
-
-1.06
-* Bug fixes
-* Validating that removing/removed "at stage" targets match the actual clothing type
-
-1.05
-The dialogue tree is now resizable
-
-1.04
-* Rudimentary dialogue find/replace
-* Dynamic AI
-* Filtering cases based on number of characters using a tag
-* Silent dialogue support
-* Graphical charts
-* Added a taskbar icon
-
-1.02
-* Minor bug fixes
-
-1.01
-* Minor bug fixes
-
-1.0
-* First official release
 
 Bug Fixes
 -------------
-&mdash; and &ndash; are properly preserved when importing a text file
-offline opponents are now recognized correctly durnig validation
-
-Wishlist (nice to have features, but not currently under development)
---------
-* Ability to link cases together for shared dialogue (ex. male_must_strip and male_human_must_strip share a single case if all their dialogue will be the same)
-* Optimize validator for performance
-* Change tracking (so it can be more intelligent about prompting to save)
-* Better compatibility with make_images.py (i.e. cropping with scene imports
-* Embed the game inside the dialogue tester so the actual game scripts are used to determine dialogue choices
-* Testing tables editor
+* images will display without needing to mess with settings.ini
+* dialogue tester now correctly accounts for who is winning/losing by looking at how many layers each character has left rather than how many they have removed
+* characters with tag count filter range now load in the editor but give a validation warning
 
 Known bugs
 --------
-* Characters in the offline_opponents and incomplete folders are not treated as first class citizens by the editor
 * The image importer does not play nicely with files that use a global scene setter. (aka if the first image in your list has global scene data, make_images.py would use this for all following scenes, but the importer will use it only for that line itself)
 * Poses with crop_pixels generated from the importer are not always compatible with make_images.py
 * Stages remain blue even if there are no default lines. This persists until the next time a character is loaded

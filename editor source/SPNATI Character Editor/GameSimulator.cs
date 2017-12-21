@@ -278,11 +278,11 @@ namespace SPNATI_Character_Editor
 			int standardStage = 0;
 			if (state.TargetState != null)
 			{
-				standardStage = TriggerDatabase.ToStandardStage(state.TargetState.Character, state.TargetState.Stage);
+				standardStage = TriggerDatabase.ShiftStage(state.TargetState.Character, state.TargetState.Stage);
 			}
 			else
 			{
-				standardStage = TriggerDatabase.ToStandardStage(Character, Stage);
+				standardStage = TriggerDatabase.ShiftStage(Character, Stage);
 				isTarget = true;
 			}
 			switch (state.Phase)
@@ -343,17 +343,13 @@ namespace SPNATI_Character_Editor
 					bool losing = true;
 					if (standardStage < 8)
 					{
-						int stage = Stage;
-						if (stage >= Character.Layers)
-							stage = 100 + (stage - Character.Layers);
+						int stage = standardStage;
 						foreach (var character in state.Characters)
 						{
 							if (character != this)
 							{
-								int otherStage = character.Stage;
-								if (otherStage >= character.Character.Layers)
-									otherStage = 100 + (otherStage - character.Character.Layers);
-								if (otherStage < stage)
+								int otherStage = TriggerDatabase.ShiftStage(character.Character, character.Stage);
+								if (otherStage <= stage)
 									winning = false;
 								else if (otherStage > stage)
 									losing = false;
@@ -382,7 +378,7 @@ namespace SPNATI_Character_Editor
 							{
 								if (character != this)
 								{
-									if (TriggerDatabase.ToStandardStage(character.Character, character.Stage) >= 9)
+									if (TriggerDatabase.ShiftStage(character.Character, character.Stage) >= 9)
 									{
 										first = false;
 										break;
@@ -561,7 +557,7 @@ namespace SPNATI_Character_Editor
 					}
 					else
 					{
-						if (TriggerDatabase.ToStandardStage(Character, Stage) == 10)
+						if (TriggerDatabase.ShiftStage(Character, Stage) == 10)
 							tag = "game_over_defeat";
 					}
 					break;
