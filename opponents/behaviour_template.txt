@@ -28,9 +28,9 @@ artist=Who made and posed the character's Kisekae model
 description=Description of the character for the More Info button
 release=what number character this was in release order if it has been released
 
-#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
-#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-calm,This is what the character says after they've been selected
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand. This is the only place in this document where the order in which you write the lines is important.
+start=0-calm,This is what the character says after they've been selected.
+start=0-calm,This could be what the character says after you've commenced the game, as the game will randomly select from all start lines.
 
 
 
@@ -74,6 +74,8 @@ clothes=Panties,panties,important,lower
 #Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
 #Here is an example line (note that targeted lines must have a stage number):
 #0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+#More advanced dialogue techniques including markers can be found here: https://www.reddit.com/r/spnati/comments/7hfzgh/how_to_make_a_character_december_2017_version/
 
 #Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
 #The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
@@ -554,6 +556,7 @@ female_removed_major=interested,What the character says after the major item has
 
 #OPPONENT REVEALING CHEST OR CROTCH
 #Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+#As NPCs cannot predict which item the human player will choose to remove, they skip straight from the male_human_must_strip lines to male_chest_is_visible line (for example). However, if the human player has only a single item of clothing and it is covering his/her chest or crotch, the NPC will replace their normal fe/male_human_must_strip line with the appropriate fe/male_chest/crotch_will_be_visible line. NPCs still always use the normal must_strip -> removing -> removed sequence with each other.
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
@@ -746,7 +749,7 @@ female_crotch_is_visible=shocked,What the character says after the female charac
 #OPPONENT MASTURBATING
 #When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
 #The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
-#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax. Adding a few alternatives here will add needed variety.
 #When the opponent climaxes, your character will say the "finished_masturbating" line.
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
