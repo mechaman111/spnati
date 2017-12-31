@@ -1,0 +1,1380 @@
+#required for behaviour.xml
+first=Gwendolyne
+last=Stacy
+label=Gwen
+gender=female
+size=medium
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=35
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=trimmed
+tag=american
+tag=confident
+tag=superhero
+tag=hero
+tag=comic
+tag=blonde
+tag=single
+tag=bisexual
+
+#required for meta.xml
+#select screen image
+pic=0-normal.png
+height=5'5"
+from=Spider-Gwen
+writer=FrostFireFive and Ira Tovell
+artist=FrostFireFive and YuriSpacePirate
+description=Gwen Stacy of Earth-65 is the Spider Woman, a crime-fighting heroine and part time-rocker.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-start,Strip poker? Well, this is just one alternate universe, so why not.
+start=0-start,Wow, look at all these ladies and gentlemen. This is a weird crossover world, but hey, let's have some fun.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Hood,hood,extra,other
+clothes=Mask,mask,major,upper
+clothes=Top,top,minor,upper
+clothes=Costume,costume,major,lower
+clothes=Sports bra,Sports bra,important,upper
+clothes=Boyshorts,boyshorts,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=normal,Yikes. ~cards~.
+swap_cards=normal,~cards~, now!
+
+
+#fully clothed
+0-swap_cards=normal,I'll take ~cards~.
+0-swap_cards=normal,~cards~ for me, dealer.
+
+
+#lost hood
+1-swap_cards=normal,Can I get cards from Earth-~cards~, instead?
+1-swap_cards=normal,Let me just snag ~cards~.
+
+
+#lost mask
+2-swap_cards=normal,~cards~.
+2-swap_cards=normal,Yeesh. Gonna need ~cards~ to fix this.
+
+
+#lost top
+3-swap_cards=normal,How about ~cards~?
+3-swap_cards=normal,~cards~ me, Amadeus.
+
+-3-swap_cards=normal,~cards~ for me, dealer.
+-3-swap_cards=normal,I need ~cards~... And fast!
+
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#fully clothed
+0-good_hand=happy,This hand's got a good bass line to it. You know, like anything of quality.
+0-good_hand=excited,It's not radioactive, but I feel like this hand has some explosive potential.
+0-okay_hand=confident,Hmm... Yeah, I'll stay.
+0-okay_hand=angry,I'll hit! Wait, wrong game. Sorry folks!
+0-okay_hand=happy,Not bad, not bad!
+0-okay_hand=normal,I've done more with less.
+0-bad_hand=sad,To be clear, there's no house rules that make 2's wild, right?
+0-bad_hand=angry,Uh... This hand is trashfire. And believe me, I know my trashfires.
+
+
+#lost hood
+1-good_hand=happy,This hand's a better lineup than the Yankees on my fantasy baseball team.
+1-good_hand=cocky,You know, I got a good feeling about this hand.
+1-okay_hand=confident,Drum roll please...!
+1-okay_hand=confident,And who's gonna go now?
+1-okay_hand=normal,This is a hand like Bodega Bandit's a nemesis.
+1-okay_hand=sad,I don't mean to bitch, but this is kind of a bitch hand, man.
+1-bad_hand=sad,My spider-sense is tingling... And not in a good way.
+1-bad_hand=angry,What the $%&*, Dealer?
+
+
+#lost mask
+2-good_hand=confident,Face out, time to space out! <i>Psyche.</i>
+2-good_hand=excited,What, are you so desperate a pretty face is all you need to lose your nerve, ~player~?
+2-okay_hand=sad,Argh! This uncertainty is <i>killing</i> me.
+2-okay_hand=confident,Hmm. I'll have to go in on this, I guess.
+2-okay_hand=happy,Aww, this hand makes me wish I'd packed a band T-shirt.
+2-okay_hand=shocked,Crap. I was thinking about something else. This hand's... Commensurate with that.
+2-bad_hand=angry,Huh. Really? Now?
+2-bad_hand=sad,Look guys, I already showed you my face. That's worth at least some chest action, ya think?
+
+
+#lost top
+3-good_hand=happy,You know, some of you suggested making really good hands worth two. How about now?
+3-good_hand=confident,I'm no formal detective, but something tells me I'm winning this hand.
+3-good_hand,notSaidMarker:nanoscale,marker:nanoscale=confident,So, for the curious, I'm still wearing my webshooters. They're not implants, but they are super small. If you look reallllll carefully, you might see them. You might also get webbing in your eyes, though.
+3-okay_hand=shocked,There's no like, draft passing, right?
+3-okay_hand=sad,Jeez. Ambiguous hand much?
+3-okay_hand=shocked,Ugh. Not garbage, but not great.
+3-okay_hand=angry,Meh, bleh, urgh, blargagh. If I'm the Amazing Spider-Woman, you'd think I'd get <i>some</i> amazing hands.
+3-okay_hand,notSaidMarker:nanoscale,marker:nanoscale=confident,So, for the curious, I'm still wearing my webshooters. They're not implants, but they are super small. If you look reallllll carefully, you might see them. You might also get webbing in your eyes, though.
+3-bad_hand=shocked,Aw crap. Really? I'm not even wearing the sexy undies today.
+3-bad_hand=happy,Tell you what. You let me win this hand, I'll take one for you later.
+3-bad_hand,notSaidMarker:nanoscale,marker:nanoscale=confident,So, for the curious, I'm still wearing my webshooters. They're not implants, but they are super small. If you look reallllll carefully, you might see them. You might also get webbing in your eyes, though.
+
+
+#lost costume
+4-good_hand=confident,Sure, sure. I may have taken off my suit, but I'm gonna take the win in this game!
+4-good_hand=angry,Oh, so <i>now</i> I get a good hand, standing here in my underwear.
+4-okay_hand=happy,This is all right by me.
+4-okay_hand=sad,If I lose with this... Eh, I could probably lose with this.
+4-okay_hand=normal,Blah. This hand is <i>blah</i> supreme.
+4-okay_hand,totalMales:1-4,totalFemales:1-4=confident,Trust me, ladies and gentlemen, you're really not going to be all that interested with what I'm working with.
+4-bad_hand=angry,Yessss- &*@#. This is a primadonna of hands. It looks good, then you realize that's a four, not an A.
+4-bad_hand=sad,Great, <i>now</i> I get cards that're like a punk group without drums.
+4-bad_hand=confident,Uh, I was going to web a few more cards, but I guess I'll <i>stick</i> with this. No? Not funny?
+
+
+#lost sports bra
+5-good_hand=happy,With a hand like this, I'm at least keeping my panties on.
+5-good_hand=confident,This works. It doesn't work cleanly, but I can get kind of dirty. I mean really, I haven't cleaned my apartment in weeks.
+5-okay_hand=confident,You know, there's a weird, never-made-it-to-a-frat-party side of me that's a little excited standing here like this.
+5-okay_hand=shocked,Really cutting it close here!
+5-okay_hand=angry,Oh come on, cut a part-time bodega clerk a break.
+5-okay_hand=happy,Folks, the girls are out. Any chance you'll... No? Ugh, fine.
+5-bad_hand=sad,Suns out, guns out... Uh. Well, that's not really the sun. And I've not got a great hand.
+5-bad_hand=sad,My spider-sense doesn't seem super reliable here...
+
+-3-good_hand=confident,There's an old joke that I'm dead in every universe except the one I'm currently in. Point is: I'm still in this game!
+-3-good_hand=happy,Is this one of those last minute saves?
+-3-okay_hand=shocked,I need some more cards! Wait, that's it? I don't get a mulligan now that I'm naked? Lame.
+-3-okay_hand=sad,$%@*.
+-3-okay_hand=angry,Man, really?
+-3-okay_hand=angry,This hand goes out to all the dudes who play acoustic guitars at parties. It's as mediocre as your capo-wannabe power chords.
+-3-bad_hand=sad,Argh, I guess this Gwen Stacy is gonna die too... At least it's just of embarrassment.
+-3-bad_hand=horny,Part of me kinda wants to just show you all how it's done...
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing hood
+0-must_strip_winning=confident,Awright, awright, folks. Time to show you... The effects of a light breeze.
+0-must_strip_winning=horny,The perks of having an unecesary hood, am I right?
+0-must_strip_winning=excited,Hm. I can just lower the hood, right?
+0-must_strip_normal=confident,You know, given that I'm not far ahead, I'm gonna be a bit defensive.
+0-must_strip_normal=happy,So, the costume counts as one object, huh? <i>Just kidding, put your boners and vulvas away, please. No, seriously. Please.</i>
+0-must_strip_losing=sad,Okay, so, for some <i>weird</i> reason, I'm losing already. So, let's just play this game a little slower, yeah?
+0-stripping,marker:canon=stripping,Just so we're clear, this is all <i>not</i> canon.
+
+
+#losing mask
+1-stripped=stripped,Well, if this all goes according to plan, that's the only hood of <i>mine</i> y'all be seeing tonight.
+1-stripped=stripped,And there we go. Now all of you can get a nice long look at my mask. Pretty hot, right?
+1-must_strip_winning=sad,Well, looks like various other blackmail-able material from blackmail-able folks is out, so... I guess I can...
+1-must_strip_winning=confident,Look, this mask is more than just a cover. It's like a badge. It lets me do what I need to get done.
+1-must_strip_normal=horny,This'll be a particularly rad diary entry, won't it?
+1-must_strip_normal=happy,Okay, gonna have to trust y'all that my perky and sunny disposition is enough to get you to not blab about this everywhere.
+1-must_strip_normal=confident,%&$#. Well. Scout's honor this doesn't leave here, right?
+1-must_strip_losing=sad,W-what? Oh come on, seriously? Really? You want me to just reveal my identity? Because Dealer gave me a bad hand?
+1-must_strip_losing=confident,I'm really going to have to remind you. This is <i>not</i> canon. And this is absolutely an <i>alternate</i> universe. <i>Got it?</i>
+1-stripping=stripping,Here goes...
+1-stripping=stripping,This is never particularly fun to remove...
+1-stripping,alsoPlaying:streaming-chan=stripping,Okay, Streaming-chan, <i>or whatever your real name is</i>, I'm gonna web over that camera now...
+
+
+#losing top
+2-stripped=stripped,Honestly, the mask breathes really well. Part of me wonders if I shouldn't have saved it for last... I guess I'm a bit limited on my gimmicks, heh?
+2-stripped=stripped,Okay. So, that's probably the worst part of tonight over.
+2-stripped,alsoPlaying:streaming-chan=stripped,"Against contract?" Whaddya mean, <i>webbing her camera is against contract!?</i>
+2-must_strip_winning=confident,Have the rest of you considered playing less risky things? You're kinda sucking at this.
+2-must_strip_winning=horny,Okay, okay, you're gonna see the vague outlines of my boobs. Keep breathing.
+2-must_strip_normal,marker:technicalities=happy,Costume counts for two. I read the manual before I came in. Check with a... Sayla Mass for setting the precedent.
+2-must_strip_normal,marker:bodysuit=angry,The top part of this is always a pain to get off.
+2-must_strip_normal,alsoPlaying:sayla,marker:technicalities=horny,You know, Sayla, thanks for ammending the rulebook. It's great to know full-body stuff can count as two pieces!
+2-must_strip_losing,marker:bodysuit=horny,It's getting kinda toasty in here. Jeez, how are the rest of you not boiling up?
+2-must_strip_losing,marker:bodysuit=confident,What? I just took off my mask. Everyone sees more than this at the gym. Or your momma's house. <i>Eyyy!</i>
+2-stripping=stripping,I have to admit, this suit fits super well under a jacket and skirt. It's so much easier to get into that than you'd imagine.
+2-stripping=stripping,...Anyway, I put my clothes on like a normal person, I just take them off like a weirdo.
+
+
+#losing costume
+3-stripped=stripped,Don't take that as a meaning <i>you're</i> gonna get into them, ~player~.
+3-stripped=stripped,Okay, hope <i>you're</i> having fun, folks.
+3-must_strip_winning,marker:spiderfacts=confident,You guys want to hear a stupid fact?
+3-must_strip_winning=horny,Okay, okay, fine, you can have the rest of the suit too.
+3-must_strip_normal,marker:spiderfacts=horny,So, this might take a bit of time. I'm not content with you all awkwardly staring at me, so here's an awkward fact of my own!
+3-must_strip_normal=happy,Can I web the ceiling? Not that I need it right now, but you're all... Staring.
+3-must_strip_normal=confident,What a day not to wear underwear... <i>Jeez</i>, you're gullable.
+3-must_strip_losing=sad,Oh, damn it. I'm up again?
+3-must_strip_losing=angry,%$#@. Guys, those sounds are <i>fucking</i> hard to make. At least laugh at the joke.
+3-stripping=stripping,Ugh. <i>Don't worry, Gwen, your spider-sense will make it easy. You definitely don't need to put the cute stuff on, just be comfortable.</i>
+3-stripping=stripping,Do you know how hard it is to get out of skin-tight lycra while people are watching? Jeez.
+3-stripping,saidMarker:spiderfacts=stripping,I basically have to shave my legs or the costume sticks to them. So, you know, be careful what you wish for.
+3-stripping,saidMarker:spiderfacts=stripping,I ended up getting the nano-scale webshooters from Wasp. Like, is this what boob implants or hairplugs are for normal people?
+3-stripping,saidMarker:spiderfacts=stripping,Did you know that of all the types of spiders in the world, I'm the only one who will beat you in Strip Poker?
+
+
+#losing sports bra
+4-stripped=stripped,Man, I could've just worn a hoodie and a skirt and gotten two more layers. Ah well.
+4-stripped=stripped,Congrats, you found out my secret identity and got my costume off in about ten minutes. I gotta admit, that's pretty smooth.
+4-must_strip_winning=horny,I've kept you hanging by a web for long enough, I guess...
+4-must_strip_winning=excited,Wait, it can't be me! I'll have to... Oh. Wait, I'm definitely not the first to do this. Fine, fine.
+4-must_strip_normal=horny,Ugh. I don't like showing off my tits if I'm not in the crowd at a show. Definitely not something I do when <i>I'm on stage.</i>
+4-must_strip_normal=happy,Weird. Can the rest of you figure out if you're going fast or slow? It's hard to catch the beat.
+4-must_strip_normal=confident,Face it tiger, you hit the jackpot.
+4-must_strip_losing=shocked,Looks like I've really got some skin the game now. Like <i>lots</i> of skin.
+4-must_strip_losing=angry,Just because I'm not an actual spider doesn't mean I'm above biting you if you keep up the staring.
+4-stripping=stripping,So, about the canon thing, I'm serious. I have webshooters in my arms. They're like... Half-biological. Trust me, it'll make sense if you think about it less.
+
+
+#lost all clothing
+5-stripped=stripped,They nipples are hard because I'm on edge. Definitely not because I'm feeling turned on. Nope. That's definitely not a lie that'll definitely not be be proved when I lose my underwear.
+5-stripped=stripped,<i>Sigh.</i> Here I am.
+5-must_strip_winning,marker:drapes=horny,A couple of answers to prospective questions: Yes, the carpet does match the drapes.
+5-must_strip_winning,marker:drapes=sad,A couple of answers to prospective questions: Yes, the color does match and no that's not how it typically goes.
+5-must_strip_winning,marker:shave=excited,A couple of answers to prospective questions: No, I don't shave there, but I do use scissors.
+5-must_strip_winning,marker:shave=angry,A couple of answers to prospective questions: No, I don't shave there, and waxing <i>hurts</i> like you wouldn't believe.
+5-must_strip_winning,marker:shave=horny,A couple of answers to prospective questions: No, I don't shave there, and I have to be really careful when I use my hands, I stick to <i>everything<i>.
+5-must_strip_winning,marker:web=sad,A couple of answers to prospective questions: No, I don't shoot webs from there, even if the porno rags on this earth say otherwise.
+5-must_strip_normal,marker:drapes=happy,A couple of answers to prospective questions: Yes, the carpet does match the drapes.
+5-must_strip_normal,marker:drapes=horny,A couple of answers to prospective questions: Yes, the color does match and no that's not how it typically goes.
+5-must_strip_normal,marker:shave=confident,A couple of answers to prospective questions: No, I don't shave there, but I do use scissors.
+5-must_strip_normal,marker:shave=angry,A couple of answers to prospective questions: No, I don't shave there, and waxing <i>hurts</i> like you wouldn't believe.
+5-must_strip_normal,marker:web=angry,A couple of answers to prospective questions: No, I don't shoot webs from there, even if the porno rags on this earth say otherwise.
+5-must_strip_losing,marker:drapes=horny,A couple of answers to prospective questions: Yes, the carpet does match the drapes.
+5-must_strip_losing,marker:drapes=sad,A couple of answers to prospective questions: Yes, the color does match and no that's not how it typically goes.
+5-must_strip_losing,marker:shave=excited,A couple of answers to prospective questions: No, I don't shave there, but I do use scissors.
+5-must_strip_losing,marker:shave=angry,A couple of answers to prospective questions: No, I don't shave there, and waxing <i>hurts</i> like you wouldn't believe.
+5-must_strip_losing,marker:web=sad,A couple of answers to prospective questions: No, I don't shoot webs from there, even if the porno rags on this earth say otherwise.
+5-stripping=sad,DELETE ME
+5-stripping,notSaidMarker:shave=stripping,And no, I don't shave the downstairs. It grows back too fast and thankfully isn't sticky like the leg hair. I mean, <i>I</i> Might be incidentally sticky now...
+5-stripping,notSaidMarker:drapes=stripping,And yes, the carpet does match the drapes. Why, is that, of all possible questions, what you find weird?
+5-stripping,saidMarker:web=stripping,Can you <i>imagine</i> how many guys would use that to shoot a load in me? "Oh I was stuck!" In this economy? No thanks!
+
+-3-stripped=stripped,Anyway, I'm naked and pretty turned on now. Get to playing or get to losing.
+-3-stripped=stripped,Pretty hot, right? I mean, myself, obviously. Not hygiene facts. Though...
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#fully clothed
+0-male_human_must_strip=excited,~name~, dude. Make this good.
+0-male_must_strip=confident,Okay, ~name~, normally I'd be webbing you up, but this time I'll let you off with just stripping.
+0-male_must_strip=excited,~name~, dude. Make this good.
+0-female_human_must_strip=horny,So, ~name~, you lost a hand. What's the clothing you're gonna lose with it?
+0-female_human_must_strip=confident,You know, ~name~, I gotta admit. I like what you got on. So whatcha got under it?
+0-female_human_must_strip=excited,Cool, ~name~'s time to shine!
+0-female_human_must_strip=happy,~name~'s a %*&@ champion. She's not gonna just take off something super basic like a hair tie or whatever.
+0-female_must_strip=horny,So, ~name~, you lost a hand. What's the clothing you're gonna lose with it?
+0-female_must_strip=confident,You know, ~name~, I gotta admit. I like what you got on. So whatcha got under it?
+0-female_must_strip=excited,Cool, ~name~'s time to shine!
+0-female_must_strip=happy,~name~'s a %*&@ champion. She's not gonna just take off something super basic like a hair tie or whatever.
+0-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+0-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+0-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+0-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+0-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+0-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+0-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+0-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+0-female_must_strip,target:asuna,targetStage:0=confident,Huh. Are you some kind of cheerleader, Asuna?
+0-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+0-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+0-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+0-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+0-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+0-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+
+
+#lost hood
+1-male_human_must_strip=happy,~name~, you're real close. I mean, maybe not, but if you want this mask off, let alone the rest, get to the good stuff, yeah?
+1-male_human_must_strip,marker:lady_luck=sad,Man, ~name~, luck isn't your lady today, is she?
+1-male_must_strip=happy,~name~, you're real close. I mean, maybe not, but if you want this mask off, let alone the rest, get to the good stuff, yeah?
+1-male_must_strip,marker:lady_luck=sad,Man, ~name~, luck isn't your lady today, is she?
+1-female_human_must_strip,marker:great_power=happy,With great power comes great responsibility. And with a great hand comes the responsibility to make sure ~name~ strips!
+1-female_human_must_strip=shocked,Okay, ~name~, I may have lowered my hood instead of taking off my suit or my masks, but I'm gonna ask you to be brave and take off something with substance.
+1-female_human_must_strip=excited,Sweet, ~name~'s up. Show us the goods!
+1-female_human_must_strip=horny,It's like New Orleans up in dis *&%@! Or like a dive bar. Or college. Take your pick, ~name~!
+1-female_must_strip,marker:great_power=happy,With great power comes great responsibility. And with a great hand comes the responsibility to make sure ~name~ strips!
+1-female_must_strip=shocked,Okay, ~name~, I may have lowered my hood instead of taking off my suit or my masks, but I'm gonna ask you to be brave and take off something with substance.
+1-female_must_strip=excited,Sweet, ~name~'s up. Show us the goods!
+1-female_must_strip=horny,It's like New Orleans up in dis *&%@! Or like a dive bar. Or college. Take your pick, ~name~!
+1-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+1-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+1-female_must_strip,target:raven,targetStage:0=confident,Don't worry, Ray-ray, I already put down the hood. You can chill.
+1-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+1-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+1-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+1-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+1-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+1-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+1-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+1-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+1-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+1-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+1-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+1-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+
+
+#lost mask
+2-male_human_must_strip=happy,Aww, ~name~, I got a pretty face and a cool secret identity. Why don't you take off something cool?
+2-male_human_must_strip=confident,~name~, look, I just took off my mask. You're gonna do something similarly embarrassing, right?
+2-male_must_strip=happy,Aww, ~name~, I got a pretty face and a cool secret identity. Why don't you take off something cool?
+2-male_must_strip=confident,~name~, look, I just took off my mask. You're gonna do something similarly embarrassing, right?
+2-female_human_must_strip=happy,Nice work, ~name~.
+2-female_human_must_strip=horny,Bad hand, bad play, or bad girl? ~name~, the story of the turn!
+2-female_human_must_strip,marker:baby_blues=confident,I hope my baby blues didn't distract you, ~name~.
+2-female_human_must_strip,marker:underthemask=excited,Alrite, I'll bite. What's under <i>your</i> mask, ~name~?
+2-female_must_strip=happy,Nice work, ~name~.
+2-female_must_strip=horny,Bad hand, bad play, or bad girl? ~name~, the story of the turn!
+2-female_must_strip,marker:baby_blues=confident,I hope my baby blues didn't distract you, ~name~.
+2-female_must_strip,marker:underthemask=excited,Alrite, I'll bite. What's under <i>your</i> mask, ~name~?
+2-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+2-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+2-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+2-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+2-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+2-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+2-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+2-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+2-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+2-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+2-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+2-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+2-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+2-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+
+
+#lost top
+3-male_human_must_strip=horny,Okay, ~name~, my ever-fascinating cleavage is on display. And, hey, there's no lycra in the way! Why not enjoy the view, and I'll enjoy the view of you taking something else off.
+3-male_human_must_strip=happy,Whatcha thinking, ~name~? How you're gonna strip something good, right?
+3-male_must_strip=horny,Okay, ~name~, my ever-fascinating cleavage is on display. And, hey, there's no lycra in the way! Why not enjoy the view, and I'll enjoy the view of you taking something else off.
+3-male_must_strip=happy,Whatcha thinking, ~name~? How you're gonna strip something good, right?
+3-female_human_must_strip=sad,Dreams do come true. ~name~'s up. Well, probably a nightmare for her.
+3-female_human_must_strip=happy,Okay, ~name~, let's see whatcha got!
+3-female_human_must_strip=excited,Make our collective days, girlfriend!
+3-female_human_must_strip=horny,Hood down, hair out. Come on, ~name~, you wanna see more of me? 'Cause I wanna see more of you!
+3-female_must_strip=sad,Dreams do come true. ~name~'s up. Well, probably a nightmare for her.
+3-female_must_strip=happy,Okay, ~name~, let's see whatcha got!
+3-female_must_strip=excited,Make our collective days, girlfriend!
+3-female_must_strip=horny,Hood down, hair out. Come on, ~name~, you wanna see more of me? 'Cause I wanna see more of you!
+3-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+3-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+3-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+3-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+3-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+3-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+3-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+3-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+3-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+3-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+3-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+3-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+3-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+3-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+
+
+#lost costume
+4-male_human_must_strip=sad,So. I'm down to my underwear. You gonna match me, or do me one better, ~name~?
+4-male_human_must_strip=happy,Well, ~name~'s up.
+4-male_must_strip=sad,So. I'm down to my underwear. You gonna match me, or do me one better, ~name~?
+4-male_must_strip=happy,Well, ~name~'s up.
+4-female_human_must_strip,marker:instruments=horny,Say, ~name~, you any good with instruments?
+4-female_human_must_strip=confident,~name~-er-Woman doesn't have the same ring to it as Spider-Woman.
+4-female_human_must_strip=excited,Hmm... Yeah, Spider-Gwen is definitely cooler than Spider-~name~.
+4-female_human_must_strip,marker:good_stuff=horny,Ya know, ~name~, whenever your turn comes up, it begs the question: Are ya finally gonna strip the good stuff?
+4-female_must_strip,marker:instruments=horny,Say, ~name~, you any good with instruments?
+4-female_must_strip=confident,~name~-er-Woman doesn't have the same ring to it as Spider-Woman.
+4-female_must_strip=excited,Hmm... Yeah, Spider-Gwen is definitely cooler than Spider-~name~.
+4-female_must_strip,marker:good_stuff=horny,Ya know, ~name~, whenever your turn comes up, it begs the question: Are ya finally gonna strip the good stuff?
+4-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+4-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+4-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+4-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+4-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+4-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+4-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+4-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+4-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+4-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+4-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+4-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+4-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+4-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+
+
+#lost sports bra
+5-male_human_must_strip=horny,~name~, you've seen all the good bits. Let's see yours.
+5-male_human_must_strip=angry,Look, I'm not going to just whip my snatch out for some lame play. Come on, ~name~, work for it.
+5-male_must_strip=horny,~name~, you've seen all the good bits. Let's see yours.
+5-male_must_strip=angry,Look, I'm not going to just whip my snatch out for some lame play. Come on, ~name~, work for it.
+5-female_human_must_strip=shocked,~name~, help a sister in need, and at least take off your bra.
+5-female_human_must_strip=excited,Don't take this the wrong way, ~name~, but it'd be hot if you took off something big. Dudes love that kinda stuff.
+5-female_human_must_strip=horny,Chicks dig confident chicks who aren't afraid to step up when their friends are in need.
+5-female_human_must_strip=sad,Spider-~name~, strips just like a Spider-Gwen does... Please?
+5-female_must_strip=shocked,~name~, help a sister in need, and at least take off your bra.
+5-female_must_strip=excited,Don't take this the wrong way, ~name~, but it'd be hot if you took off something big. Dudes love that kinda stuff.
+5-female_must_strip=horny,Chicks dig confident chicks who aren't afraid to step up when their friends are in need.
+5-female_must_strip=sad,Spider-~name~, strips just like a Spider-Gwen does... Please?
+5-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+5-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+5-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+5-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+5-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+5-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+5-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+5-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+5-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+5-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+5-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+5-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+5-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+5-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+
+-3-male_human_must_strip=confident,Yo, ~name~, you can see the goods. You gonna match me, or what?
+-3-male_human_must_strip=happy,Are you just gonna stand there and watch, or you gonna strip, ~name~?
+-3-male_must_strip=confident,Yo, ~name~, you can see the goods. You gonna match me, or what?
+-3-male_must_strip=happy,Are you just gonna stand there and watch, or you gonna strip, ~name~?
+-3-female_human_must_strip=horny,A girl is fine too, ~name~, time to strip.
+-3-female_human_must_strip=confident,Some solidarity would be great, ~name~.
+-3-female_human_must_strip=shocked,Friendly neighborhood Spider-Gwen, tits and snatch out, could use your help feeling less exposed, ~name~.
+-3-female_must_strip=horny,A girl is fine too, ~name~, time to strip.
+-3-female_must_strip=confident,Some solidarity would be great, ~name~.
+-3-female_must_strip=shocked,Friendly neighborhood Spider-Gwen, tits and snatch out, could use your help feeling less exposed, ~name~.
+-3-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+-3-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+-3-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+-3-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+-3-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+-3-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+-3-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+-3-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+-3-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+-3-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+-3-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+-3-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+-3-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+-3-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+
+-2-male_human_must_strip=happy,Make it good, ~name~!
+-2-male_human_must_strip=confident,You're getting a good show out of this, ~name~, at least gimme something back!
+-2-male_human_must_strip=excited,Strip if you like the view, ~name~!
+-2-male_must_strip=happy,Make it good, ~name~!
+-2-male_must_strip=confident,You're getting a good show out of this, ~name~, at least gimme something back!
+-2-male_must_strip=excited,Strip if you like the view, ~name~!
+-2-female_human_must_strip=confident,Strip if you like the view, ~name~!
+-2-female_human_must_strip=happy,You're getting a good show out of this, ~name~, at least gimme something back!
+-2-female_human_must_strip=excited,Make it good, ~name~!
+-2-female_must_strip=confident,Strip if you like the view, ~name~!
+-2-female_must_strip=happy,You're getting a good show out of this, ~name~, at least gimme something back!
+-2-female_must_strip=excited,Make it good, ~name~!
+-2-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+-2-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+-2-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+-2-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+-2-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+-2-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+-2-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+-2-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+-2-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+-2-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+-2-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+-2-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+-2-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+-2-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+
+-1-male_human_must_strip=horny,Saving a man from his shame is not necessarily part of my superhero contract.
+-1-male_human_must_strip=happy,Alright alright alright, ~name~. You better be catching up!
+-1-male_human_must_strip=horny,Take it off, ~name~.
+-1-male_must_strip=horny,Saving a man from his shame is not necessarily part of my superhero contract.
+-1-male_must_strip=happy,Alright alright alright, ~name~. You better be catching up!
+-1-male_must_strip=horny,Take it off, ~name~.
+-1-female_human_must_strip=excited,Whew, I might be done, but I'm <i>definitely</i> not done watching.
+-1-female_human_must_strip=confident,Gotta say, ~name~, I'm surprised <i>you</i> lasted this long.
+-1-female_human_must_strip=happy,Are ya gonna <i>come</i> and join me? Get it, ~name~?
+-1-female_human_must_strip=sad,This better be good, ~name~. I'm more embarrassed I lost than anything.
+-1-female_human_must_strip=happy,Is this your main universe, or you just visitin', ~name~? So strip.
+-1-female_human_must_strip=excited,~name~, you in particular liked the show. So how about you show some respect?
+-1-female_must_strip=excited,Whew, I might be done, but I'm <i>definitely</i> not done watching.
+-1-female_must_strip=confident,Gotta say, ~name~, I'm surprised <i>you</i> lasted this long.
+-1-female_must_strip=happy,Are ya gonna <i>come</i> and join me? Get it, ~name~?
+-1-female_must_strip=sad,This better be good, ~name~. I'm more embarrassed I lost than anything.
+-1-female_must_strip=happy,Is this your main universe, or you just visitin', ~name~? So strip.
+-1-female_must_strip=excited,~name~, you in particular liked the show. So how about you show some respect?
+-1-female_must_strip,target:zone-tan,targetStage:3=normal,So, why Zone-tan? The Japanese girls I know always use -han as the end syntax.
+-1-female_must_strip,target:raven,targetStage:2=happy,Oh, looks like the hood's coming down!
+-1-female_must_strip,target:marceline,targetStage:0=happy,Whoa, a vampire queen? That's metal AF, Marceline!
+-1-female_must_strip,target:marceline,targetStage:0=horny,You know, Morbius is always looking for a date...
+-1-female_must_strip,target:sei,targetStage:0=excited,You know, Sei, I don't see a badge on you.
+-1-female_must_strip,target:ann,targetStage:0=excited,A supermodel? That's... Really high-profile for a vigilante, don't you think, Ann?
+-1-female_must_strip,target:zone-tan,targetStage:1=shocked,Ya know I'm just screwing with you, right Zone-tan?
+-1-female_must_strip,target:futaba,targetStage:2=sad,Sooooo... I realize that my humor runs a little flinty. Sorry if I upset you, Futaba.
+-1-female_must_strip,target:kyoko,targetStage:5=excited,As one amateur detective to another, I gotta wonder what the mystery of those gloves are.
+-1-female_must_strip,target:zone-tan,targetStage:0=happy,Hey, purple chick, are you that artist that everyone goes on about? With the braces and ganguro $#%@?
+-1-female_must_strip,target:raven,targetStage:0=happy,Aw yeah, someone who's gonna set the hood precedent for me.
+-1-female_must_strip,target:futaba,targetStage:0=happy,Futaba, you're some sort of computer whiz, right?
+-1-female_must_strip,target:zone-tan,targetStage:2,marker:hotdogs=happy,Speaking of realism, it's a shame this dimension doesn't have the same levels of tech as mine. I could really use a couple of hot dogs. And no, that's not a euphemism.
+-1-female_must_strip,target:zone-tan,targetStage:3,alsoPlaying:nugi-chan,marker:gaijin_gwen=confident,Nugi-chan, can you explain to me the various formalisms?
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#fully clothed
+0-male_removing_accessory=angry,Good thing you're not a girl. I'd have to say the same stuff about what a coward you are.
+0-male_removed_accessory=sad,I mean, 'cause you're only gonna have one or two accessories, right?
+0-female_removing_accessory=shocked,<i>No!</i> ~name~, I trusted you to be the cool girl!
+0-female_removing_accessory=horny,You know, ~name~, you have a name that's fun to say. I hope I'm gonna say it more, because just an accessory like your ~clothing~ isn't what I expected of you.
+0-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+0-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+0-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+0-female_removed_accessory=angry,Fine, I guess your ~clothing~ fits the spirit if not the fun of the game...
+0-female_removed_accessory=confident,Really putting on a show, huh, ~name~?
+0-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+0-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+
+
+#lost hood
+1-male_removing_accessory=normal,<i>Sigh.</i> Well, I just took down my hood, so I <i>guess</i> I can't be indignant about this.
+1-male_removed_accessory=happy,I mean, can't is a hard, <i>hard</i> line to take. Why dontcha show some leg next time? Eh?
+1-female_removing_accessory=confident,Ah, so just a dive bar.
+1-female_removing_accessory=sad,Aww, ~name~, I thought we wuz besties.
+1-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+1-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+1-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+1-female_removed_accessory=sad,Man, ~name~, you're bumming me out here.
+1-female_removed_accessory=shocked,Take off something better next time, and I <i>swear</i> I'll do the same.
+1-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+1-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+
+#lost mask
+2-male_removing_accessory=normal,Really?
+2-male_removed_accessory=angry,Bro, you know <i>Spider-Woman's</i> secret identity and have an even chance of seeing me *&%@ myself silly later. That's the best you can do?
+2-female_removing_accessory=happy,So I'm out of accessories. Mind stepping it up, ~name~?
+2-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+2-female_removing_accessory,saidMarker:baby_blues=happy,I mean, I'd be super flattered if they did. But yeah, go ahead and strip.
+2-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+2-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+2-female_removed_accessory=horny,Your ~clothing~... I mean, not what <i>I'd pick.</i> If you're curious, I'd pick your panties.
+2-female_removed_accessory=confident,Well, There you go, ~name~!
+2-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+2-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+
+#lost top
+3-male_removing_accessory=sad,Dude, come on.
+3-male_removed_accessory=confident,I'm <i>so</i> making sure your hand gets stuck to your cock when you end up losing.
+3-female_removing_accessory=confident,Well, ~name~, enjoying the view?
+3-female_removing_accessory=sad,<i>Sigh</i>. Your ~clothing~?
+3-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+3-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+3-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+3-female_removed_accessory=sad,I'm not really liking the way you played this.
+3-female_removed_accessory=happy,Man, ~name~, I thought we were peoples. I thought I could rely on you to be cool.
+3-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+3-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+
+#lost costume
+4-male_removing_accessory=sad,Dude. I'm out here like I'm down at the corner, and that's all you got?
+4-male_removed_accessory,marker:laundry_day=happy,I mean like, for laundry-day, obviously.
+4-female_removing_accessory=confident,You want a spin off, ~name~?
+4-female_removing_accessory=horny,~name~, I still got my webshooters on. You want me to take something better off for you?
+4-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+4-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+4-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+4-female_removed_accessory=happy,You gotta work for it, though.
+4-female_removed_accessory=sad,No? Girl, do better next time.
+4-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+4-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+
+
+#lost sports bra
+5-male_removing_accessory=confident,This is like, the exact opposite of what I asked for.
+5-male_removed_accessory=sad,Like, really, dude? ~clothing~?
+5-female_removing_accessory=sad,Aww, come on, ~name~.
+5-female_removing_accessory=sad,Don't worry, ~name~, your number's gonna get punched soon!
+5-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+5-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+5-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+5-female_removed_accessory=happy,That's a nice ~clothing~. It'd look better on the floor, in a pile of bigger stuff, though.
+5-female_removed_accessory=horny,It's not like I'll hit you or anything, but $%#@, you gotta understand my frustration with stuff like your ~clothing~.
+5-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+5-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+-3-male_removing_accessory=sad,That's the thing I hate about Strip Poker boys. I keep getting more naked, and you stay clothed the same...
+-3-male_removed_accessory=angry,Ugh, you are the <i>worst</i>, ~name~.
+-3-female_removing_accessory=confident,~name~, we gotta work on your call and response.
+-3-female_removing_accessory=sad,Your ~clothing~? If I were you, I'd've taken something like that off <i>first</i>, ~name~.
+-3-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+-3-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+-3-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+-3-female_removed_accessory=happy,I guess I'll just wait for the next issue of ~name~-strips.
+-3-female_removed_accessory=excited,Okay, ~name~, play the big stuff next, yeah?
+-3-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+-3-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+-2-male_removing_accessory=happy,That better be a prelude to something better, ~name~!
+-2-male_removed_accessory=horny,Look, if you wanna see the real sexy stuff, you're gonna have to impress me, ~name~.
+-2-female_removing_accessory=excited,Whoa, ~name~, your ~clothing~ is gonna be a bonus to whatever you're really stripping, right?
+-2-female_removing_accessory=horny,You must be really excited, ~name~, if you're just taking that off...
+-2-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+-2-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+-2-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+-2-female_removed_accessory=angry,Thanks for the compliment. Not.
+-2-female_removed_accessory=happy,~name~, I'm open to all kinds of things. But you taking that off isn't doing it for me?
+-2-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+-2-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+-1-male_removing_accessory=excited,Meh, I could be bitter about ~name~ just taking off his ~clothing~.
+-1-male_removed_accessory=happy,But no harm, no foul. ~name~'ll get there. Probably.
+-1-female_removing_accessory=horny,Aww, ~name~, you shouldn't have.
+-1-female_removing_accessory=happy,Okay, okay, let's just move on.
+-1-female_removing_accessory,target:marceline,targetStage:0=excited,What type of instrument do you play? I'm guessing drums. Please tell me drums.
+-1-female_removing_accessory,target:sei,targetStage:0=happy,Though, I consider my mask my badge. I just hope you're a good cop.
+-1-female_removing_accessory,target:raven,targetStage:0=angry,Girl, you serious?
+-1-female_removed_accessory=angry,No seriously, you should've taken off something else.
+-1-female_removed_accessory=sad,Why, ~name~, why do you like to be such a tease?
+-1-female_removed_accessory,target:raven,targetStage:1=confident,You have some issues with showing your face, huh? I wonder why. It looks pretty to me, but I've got darkvision.
+-1-female_removed_accessory,target:sei,targetStage:1=confident,I get the feeling you try your best, at least. I come from a line of police, so, you know, kinda a significant spot.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#fully clothed
+0-male_removing_minor=happy,Okay, not bad, not bad.
+0-male_removed_minor=excited,~name~, that's pretty good. But I'd rather you be pretty <i>and</i> good.
+0-female_removing_minor=horny,Man, I knew ~name~ was cool! She's already taking off her ~clothing~!
+0-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+0-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+0-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+0-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+0-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+0-female_removed_minor=excited,Good choice, ~name~. Big enough to start showing off the goods, small enough to keep it interesting.
+0-female_removed_minor,target:zone-tan,targetStage:1=happy,Weird that you're a girl, though... You are a girl, right?
+0-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+0-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+0-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+0-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+
+
+#lost hood
+1-male_removing_minor=sad,Man, ~name~, I upsell chips and drinks at Dollar Dog on the reg. And you won't go for a hot superhero unmasking?
+1-male_removed_minor=confident,Your loss!
+1-female_removing_minor=happy,Woo, ~name~ going Mardi Gras on us!
+1-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+1-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+1-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+1-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+1-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+1-female_removed_minor=excited,Not really, but I hoped you'd jump and flash us!
+1-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+1-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+1-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+1-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+
+
+#lost mask
+2-male_removing_minor=normal,Hm. ~clothing~?
+2-male_removed_minor=happy,Okay, ~name~, continue. I'd write a song about this, but, like your clothing, it would alas, be lame.
+2-female_removing_minor=horny,Whoa, ~name~, don't get <i>too</i> saucy.
+2-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+2-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+2-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+2-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+2-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+2-female_removed_minor=excited,Or do. I'm into it.
+2-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+2-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+2-female_removed_minor,target:zone-tan,targetStage:1=happy,Weird that you're a girl, though... You are a girl, right?
+2-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+2-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+
+
+#lost top
+3-male_removing_minor=happy,Man, who needs spider-sense when you've got reads like these?
+3-male_removed_minor=horny,~clothing~. Nice.
+3-female_removing_minor=excited,Oh, looks like ~name~'s getting a little brave. ~clothing~ like that can be a great first step.
+3-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+3-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+3-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+3-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+3-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+3-female_removed_minor=horny,...But not the only one. Keep going, gorgeous, and I'll try my best to keep up.
+3-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+3-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+3-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+3-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+
+
+#lost costume
+4-male_removing_minor=happy,Not matching, not doing one better.
+4-male_removed_minor=sad,~name~, I thought you were the fun one.
+4-female_removing_minor=normal,Not quite the good stuff, but not bad.
+4-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+4-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+4-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+4-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+4-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+4-female_removed_minor=excited,~name~, I bet you're the type to do better next time, so let's see what you got net time you lose.
+4-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+4-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+4-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+4-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+
+
+#lost sports bra
+5-male_removing_minor=horny,Not bad, not bad. Fancy ~clothing~. Fancy fancy.
+5-male_removed_minor=happy,~name~, you trying to save up your good stuff, or you letting go of your last small stuff?
+5-female_removing_minor=excited,Hells yeah, ~name~. Your ~clothing~ is a great step forward.
+5-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+5-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+5-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+5-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+5-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+5-female_removed_minor=confident,Lookin' good, ~name~, lookin' good!
+5-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+5-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+5-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+5-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+
+-3-male_removing_minor=excited,Gonna strip, ~name~'s gonna strip! But his ~clothing~ is kinda a bottom of the ninth fastball.
+-3-male_removed_minor=sad,It's not so good if you're watching it happen to your team.
+-3-female_removing_minor=happy,You're looking <i>fine</i>, ~name~. I mean, you're still mostly dressed...
+-3-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+-3-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+-3-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+-3-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+-3-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+-3-female_removed_minor=normal,What're you gonna fall back on next? Hopefully something a bit more interesting.
+-3-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+-3-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+-3-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+-3-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+
+-2-male_removing_minor=angry,Huh. Not a fan of the view?
+-2-male_removed_minor=sad,Bummer. I thought getting a superhero out of her costume'd do it for you, ~name~.
+-2-female_removing_minor=shocked,The show must go on, ~name~!
+-2-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+-2-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+-2-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+-2-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+-2-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+-2-female_removed_minor=sad,Guess you're not guest-starring anytime soon...
+-2-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+-2-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+-2-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+-2-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+
+-1-male_removing_minor=angry,You're being kinda a baby about this, ~name~.
+-1-male_removed_minor=shocked,I'm putting myself out there, bro, what are you even <i>doin'</i>?
+-1-female_removing_minor=horny,I'm a giver, ~name~, even when I'm not saving kittens, or giving a masturbation sequence that'd make a Cirque du Soleil star cream, I give you the gift of great jokes.
+-1-female_removing_minor,target:zone-tan,targetStage:0=excited,Yeah! The one with the freaky weird art. Sh�dman!
+-1-female_removing_minor,target:futaba,targetStage:0=normal,I guess that's pretty cool. I think you and Reed Richards would get along, but he's more about machines and physics than psychology and computer science.
+-1-female_removing_minor,target:kyoko,targetStage:5=sad,I mean, like, damn, girl, I took off my mask. What're you-
+-1-female_removing_minor,target:asuna,targetStage:0,marker:asuna_cheerleader=sad,You seem like one. You're dressed that way, and you seem kinda... Like you need someone else to do the heavy lifting.
+-1-female_removing_minor,target:ann,targetStage:0=normal,Your codename is... Panther... And you use a red latex costume?
+-1-female_removed_minor,marker:butts=angry,But I like to be <i>in</i> on them, not the <i>butt</i> of them. Jeez, show us your butt, ~name~!
+-1-female_removed_minor,target:ann,targetStage:1=sad,Sorry, that all feels kinda derivative. I say. As <i>Spider-Woman</i>.
+-1-female_removed_minor,target:kyoko,targetStage:6=sad,Oh. Kyoko, I'm so sorry. Tell you what, why don't we go on a case together sometime? Like, in whatever capacity you'd like.
+-1-female_removed_minor,target:futaba,targetStage:1=excited,Heh. To think, with the two of you working together, you can figure out why someone jumped, and he'd get to figure out when they hit the ground. Er. Too dark?
+-1-female_removed_minor,target:asuna,targetStage:1=confident,Though, I'm more of a "do it myself" kind of girl.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#fully clothed
+0-male_removing_major=happy,Aww yeah, ~name~'s getting off the good stuff. And the good stuff to get off too.
+0-male_removed_major=horny,Whoa, ~name~, you're goin' right for the awesome. Great job!
+0-female_removing_major=excited,Aww yeah, ~name~'s getting off the good stuff. And the good stuff to get off too.
+0-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+0-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+0-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+0-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+0-female_removed_major=shocked,That's just what I expect from a %*&@ champion like ~name~.
+0-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+0-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+0-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+
+
+#lost hood
+1-male_removing_major=shocked,Luck or no, you're really setting up for a good game!
+1-male_removed_major=horny,You're tempting me to take off this mask fo' sho'.
+1-male_removed_major=horny,Keep it up, handsome, and I might just reenact that kiss. Yes. I mean <i>that</i> kiss.
+1-female_removing_major=happy,Oh $%#@, ~name~'s gonna be my hero tonight.
+1-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+1-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+1-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+1-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+1-female_removed_major=horny,Keep it up, gorgerous, and I might just reenact that kiss. <i>That</i> kiss.
+1-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+1-female_removed_major,target:raven,targetStage:3=happy,There you go, girlfriend. Now we match!
+1-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+1-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+
+
+#lost mask
+2-male_removing_major=shocked,Well, thanks, ~name~, I appreciate the show of confidence.
+2-male_removed_major=happy,Speaking of confidence, looks like <i>you're</i> confident this stays between all of us. Scout's honor.
+2-female_removing_major=shocked,Whoa, ~name~. That's...
+2-female_removing_major=happy,Oof, getting real sloppy, taking off your ~clothing~ like that, ~name~.
+2-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+2-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+2-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+2-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+2-female_removed_major=horny,...That's pretty hot! Keep going, yeah?
+2-female_removed_major=excited,Not that I mind. ~player~ definitely doesn't seem to.
+2-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+2-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+2-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+
+
+#lost top
+3-male_removing_major=happy,Oh yeah.
+3-male_removed_major=horny,Oh yeah. This'll do nicely. Thanks, ~name~.
+3-female_removing_major,marker:mysterio=confident,Yo, ~name~, have you heard of Mysterio? 'Cause you're hypnotic.
+3-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+3-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+3-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+3-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+3-female_removed_major=excited,Though <i>distracting</i> might be better.
+3-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+3-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+3-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+
+
+#lost costume
+4-male_removing_major=shocked,Woohoo! ~name~ is definitely in this for the thrill.
+4-male_removed_major=happy,And what a thrill it's gonna be when he loses!
+4-female_removing_major=excited,Whoa, looks like ~name~'s trying to prove us wrong.
+4-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+4-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+4-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+4-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+4-female_removed_major=confident,Okay, ~name~, I appreciate the show of support, let's get back to the game, though!
+4-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+4-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+4-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+
+
+#lost sports bra
+5-male_removing_major=confident,Whoa, ~name~, when I said good bits, I didn't just mean the lining of your ~clothing~.
+5-male_removed_major=horny,Not bad, ~name~!
+5-female_removing_major=happy,Aww, ~name~, it's like we're twins. Weirdly sexy twins.
+5-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+5-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+5-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+5-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+5-female_removed_major=horny,Seriously though, two naked chicks has got to be a show for ~player~.
+5-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+5-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+5-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+
+-3-male_removing_major=horny,Hells yeah, ~name~!
+-3-male_removed_major=happy,Nice ~clothing~, nicer on the pile of stuff though.
+-3-female_removing_major=confident,Thanks for stepping up, ~name~. Sexy!
+-3-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+-3-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+-3-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+-3-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+-3-female_removed_major=excited,Aww yesss, ~clothing~, the mainstay of any clothing and any good strip game.
+-3-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+-3-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+-3-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+
+-2-male_removing_major=excited,I appreciate the show of thanks, ~name~!
+-2-male_removed_major=horny,You want to be a participant, though, you're gonna need to hurry up!
+-2-female_removing_major=horny,Whoa, ~name~, not a bad start, but pick up the pace!
+-2-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+-2-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+-2-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+-2-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+-2-female_removed_major=happy,I can't be the only one schlicking out here.
+-2-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+-2-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+-2-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+
+-1-male_removing_major=excited,Nice. ~clothing~. Something of substance.
+-1-male_removed_major=happy,~name~, keep going, or I'm gonna have to use my webs to add some <i>substance</i> to that.
+-1-female_removing_major=happy,Whoa, ~name~, finally getting what you need to lose out!
+-1-female_removing_major,target:zone-tan,targetStage:1=excited,Who'd've thought >Sh�dman shitposting'd get you off your guard out here.
+-1-female_removing_major,target:raven,targetStage:2=excited,That's so Raven, you know.
+-1-female_removing_major,target:futaba,targetStage:2=shocked,That said, I really appreciate the work folks like you do. I can basically just punch bad guys and follow a paper trail. You can take care of criminals who don't quite need a beating but do need some moral and legal education.
+-1-female_removing_major,target:ann,targetStage:1,alsoPlaying:marinette=happy,No offense, Marinette.
+-1-female_removed_major=confident,Let's be honest, we're all winners here.
+-1-female_removed_major,target:raven,targetStage:3=shocked,Hmm... Why <i>do</i> you need that hood?
+-1-female_removed_major,target:futaba,targetStage:3=happy,Yikes. I'd hate to see you end up working for Murderdock.
+-1-female_removed_major,target:zone-tan,targetStage:2,marker:hentairealism=horny,That said, not a huge fan of hentai. Not realistic enough for me.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-specific lines that override the stage-generic ones
+male_chest_will_be_visible,marker:comics=confident,Washboard abs are a dime a dozen in my universe. Huh. I bet if you bought a comic book, you <i>really</i> would see about twelve for a dime.
+male_chest_is_visible=happy,Oo la la, very impressive, ~name~. The stripping down when I'm still suited up part, but the chest is pretty okay too.
+male_crotch_will_be_visible=horny,Time to rock out with your cock out, ~name~
+male_crotch_will_be_visible=confident,Aren't those normally supposed to come in boxes, ~name~? What're you doing taking it out already?
+male_small_crotch_is_visible=happy,I bet there's a lot of short women who are grateful for you, ~name~. Like, five feet and under.
+male_medium_crotch_is_visible=excited,Hey there, cowboy. I'm not great at video games, but I think I can handle that joystick pretty well.
+male_large_crotch_is_visible=shocked,Well, lookit that. I bet they call you "Doc Cock," huh?
+female_chest_will_be_visible=sad,Whoa, ~name~, what are you doing? I'm still all suited up. Get it together, girlfriend!
+female_chest_will_be_visible=shocked,Seriously, ~name~? Is this some sort of exhibitionist thing for you?
+female_chest_will_be_visible=horny,Whoa, point the way to your missing clothes, ~name~!
+female_chest_will_be_visible=confident,Spider-Woman's Mask: 1. ~name~: About to be two 0's.
+female_small_chest_is_visible=angry,Yeesh. All that work losing, for what?
+female_small_chest_is_visible=happy,I was making a comment about nipples, but... Wow, ~name~, you must really save on lingerie.
+female_large_chest_is_visible=horny,~name~, do you ever worry about suffocating with those? Like, dang, lady, who needs body armor with <i>that</i> rack?
+female_large_chest_is_visible=excited,Whoa, ~name~'s got some bombs under her shirt! Call in the bomb squad, someone!
+female_crotch_will_be_visible=normal,Lady, I got no puns for this. With dudes, there's so many analogies. "Spanking the monkey," "jerking the jackson," "polishing the helm..."
+
+
+#fully clothed
+0-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+0-female_medium_chest_is_visible=excited,I bet you love hugs, huh, ~name~? If you wanted me to give you one, you didn't have to go to all the trouble of losing.
+0-female_medium_chest_is_visible=happy,Okay, ~name~, very pretty. Let's get back to the game.
+0-female_medium_chest_is_visible=excited,Those are bouncy, ~name~. It'd be almost hard to web you up. Though...
+0-female_medium_chest_is_visible,marker:webounce=horny,~name~, I gotta admit. Those would bounce great at the end of a line of webbing.
+0-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+0-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+0-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+0-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+0-female_crotch_is_visible=confident,"Polishing the pearl," sounds kinda #$%&, you know? Anyway, ~name~, are you a mystery? Because something smells kinda fishy about you.
+0-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+0-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+0-female_crotch_is_visible,filter:trimmed=happy,Cute, ~name~. Not that it'll save you from losing!
+0-female_crotch_is_visible,filter:trimmed=happy,I see someone else isn't a huge fan of rugburn. Cute, ~name~!
+0-female_crotch_is_visible,filter:shaved=sad,I'd say you were hit by a smooth criminal, but that feels a bit degrading. To me, I mean.
+0-female_crotch_is_visible,filter:hairy=sad,Do you ever wonder why nobody goes down on you, ~name~?
+0-female_crotch_is_visible,filter:hairy=shocked,I can dig it. I mean, someone's gotta, to get to the goods, huh, ~name~?
+
+
+#lost hood
+1-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+1-female_medium_chest_is_visible=excited,I bet you love hugs, huh, ~name~? If you wanted me to give you one, you didn't have to to to all the trouble of losing.
+1-female_medium_chest_is_visible=happy,Okay, ~name~, very pretty. Let's get back to the game.
+1-female_medium_chest_is_visible=excited,Those are bouncy, ~name~. It'd be almost hard to web you up. Though...
+1-female_medium_chest_is_visible,marker:webounce=horny,~name~, I gotta admit. Those would bounce great at the end of a line of webbing.
+1-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+1-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+1-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+1-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+1-female_crotch_is_visible=confident,"Polishing the pearl," sounds kinda #$%&, you know? Anyway, ~name~, are you a mystery? because something smells kinda fishy about you.
+1-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+1-female_crotch_is_visible,filter:shaved=sad,I'd say you were hit by a smooth criminal, but that feels a bit degrading. To me, I mean.
+1-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+1-female_crotch_is_visible,filter:hairy=sad,Do you ever wonder why nobody goes down on you, ~name~?
+1-female_crotch_is_visible,filter:hairy=shocked,I can dig it. I mean, someone's gotta, to get to the goods, huh, ~name~?
+1-female_crotch_is_visible,filter:trimmed=happy,Cute, ~name~. Not that it'll save you from losing!
+1-female_crotch_is_visible,filter:trimmed=happy,I see someone else isn't a huge fan of rugburn. Cute, ~name~!
+
+
+#lost mask
+2-female_chest_will_be_visible=happy,You're making me feel a lot better, ~name~. After all, you took off your clothes in front of strangers. I just took off a mask. Really, in the scheme of things, I think you're the bigger story.
+2-female_chest_will_be_visible=shocked,I don't want to alarm you, ~name~, but you're about to be a little naked. I'm still a little bitter about the mask, honestly.
+2-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+2-female_small_chest_is_visible=confident,Well, maybe not. Though, you know, I could try to motorboat you? Small consoliation?
+2-female_medium_chest_is_visible=happy,<i>Sigh</i>. I already regret asking this: Do those milkshakes bring the boys to the yard?
+2-female_medium_chest_is_visible=sad,Call it impending panic on the possibility of me losing my secret identity, but would ~name~ mind coming over? I see some nice fleshy bits I could use as a stressball. I think it'd help her out too.
+2-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+2-female_large_chest_is_visible=shocked,<i>Much</i> bigger, it seems.
+2-female_crotch_will_be_visible=happy,Forecast for the Inventory: Wet, with a chance of showers. And webbing. And other, weirder things, as long as ~name~'s here!
+2-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+2-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+2-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+2-female_crotch_is_visible=horny,Huh. I for sure thought ~name~ would've shaved, with what she was wearing. Stay classy, lady!
+2-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+2-female_crotch_is_visible,filter:shaved=angry,I envy you, ~name~, with your free time and high pain tolerance.
+2-female_crotch_is_visible,filter:trimmed=excited,Oh, nice and neat! I'm more of a guy's-girl. Um. Like, I usually like to pursue whatever folks I like to pursue. So that kind of... Astroturfing is appealing for various reasons.
+2-female_crotch_is_visible,filter:hairy=sad,Okay, good joke, ~name~. Wait, that doesn't come off?
+2-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+
+
+#lost top
+3-female_chest_will_be_visible=horny,~name~, are you suggesting we compare sizes? Because that's what I'm thinking.
+3-female_chest_will_be_visible=excited,I'm right behind you, ~name~! I mean, I have to lose another two hands, but the thought counts, right?
+3-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+3-female_small_chest_is_visible=confident,How cute, ~name~. At least you don't have to worry about flopping about.
+3-female_medium_chest_is_visible=excited,You <i>were</i> planning on taking those out, huh, ~name~! So bouncy!
+3-female_medium_chest_is_visible=happy,Heh. ~name~'s nips are hard. Pay no mind to my own chest.
+3-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+3-female_large_chest_is_visible=shocked,Now <i>that's</i> a glorious chest! Dang, ~name~, you won the lottery.
+3-female_crotch_will_be_visible=happy,So I'm stripped to the waist, looks like ~name~'s gonna show off her wastes!
+3-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+3-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+3-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+3-female_crotch_is_visible=shocked,You know, because... I was going for a whole "abandon all hope ye who enter here" kinda thing. Whoops.
+3-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+3-female_crotch_is_visible,filter:shaved=confident,Waste not, want not? Looks like ~name~'s got a pretty big <i>want</i> to have shaved before coming here.
+3-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+3-female_crotch_is_visible,filter:hairy=happy,Waste not, want not? Looks like ~name~'s not too worried about either with a bush like that.
+3-female_crotch_is_visible,filter:trimmed=horny,Well doesn't that look enticing? The only thing going to waste there is that she's not showing us how it's done. And by it, I mean masturbating.
+
+
+#lost costume
+4-male_chest_will_be_visible=horny,Strip, strip, strip!
+4-male_chest_is_visible=sad,Sorry, ~name~, I got caught up in the obnoxiousness. Not so fun on the other side, huh?
+4-male_crotch_will_be_visible=normal,Whatcha got, ~name~?
+4-male_small_crotch_is_visible=shocked,Aww it's so little... I mean... Ohhh...That's so big, ~name~.
+4-male_medium_crotch_is_visible=happy,Oh %$#*, dude. I think I need to take care of that swelling.
+4-male_large_crotch_is_visible=excited,I mean, I'm pretty bendy, but that monster looks like something punishing.
+4-male_large_crotch_is_visible=shocked,I've heard touching them makes them bigger, so I gotta leave you hanging, man.
+4-female_chest_will_be_visible=normal,Jeez. We're already to the <i>actually</i> naked parts of this, huh?
+4-female_chest_will_be_visible=happy,Okay, ~name~, let's see what you get to play with when nobody's looking. I mean, people are gonna look here, but in general, you get it.
+4-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+4-female_small_chest_is_visible=confident,To sleep on your chest must be wonderful. I mean, like, you, face-down. Not a lot of padding for resting a sleepy head there, huh, ~name~?
+4-female_medium_chest_is_visible=horny,Nice handful... No blemishes... Yep, those are some quality melons, all right! I should give 'em a squeeze to be sure.
+4-female_medium_chest_is_visible=horny,You know, ~name~, do you need some really precise cleaning? I do have heightened senses. If I used my mouth, I bet I could get your nipples <i>extra</i> refreshed.
+4-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+4-female_large_chest_is_visible=excited,You know, I've got a lot of experience with mutation. Want me to check you for lumps, ~name~?
+4-female_crotch_will_be_visible=happy,Hmm. Having seen everything else you've taken off, I'm not exactly shy and I'm not exactly disinterested in what ~name~'s birthday suit is like.
+4-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+4-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+4-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+4-female_crotch_is_visible=shocked,Huh! Man, my Spider-sense is like 0/a billion tonight.That's not what I was expecting!
+4-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+4-female_crotch_is_visible,filter:trimmed=confident,Ah, another chick who like to keep things neat, but without putting razor blades near the important bits. Nice.
+4-female_crotch_is_visible,filter:shaved=shocked,Classy, ~name~.
+4-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+4-female_crotch_is_visible,filter:hairy=happy,You know, I gotta say, I'm always surprised when I see a hairy one. I can't tell if it's laziness or just trying to stand out, but as much as I rag on hairy pussy, it's just as good.
+
+
+#lost sports bra
+5-male_chest_will_be_visible=happy,Damn, ~name~, I know this has to kill you, but I've already taken off <i>my</i> shirt.
+5-male_chest_is_visible=horny,You should be proud, most people get really embarrassed when their chest's exposed. Heh.
+5-male_crotch_will_be_visible,marker:mary_janes=excited,The other girls in the Mary Janes call me three drink Gwen. That's usually how long it takes me to get from "slightly awkward" to "sloppy awkward."
+5-male_small_crotch_is_visible=horny,I haven't exactly sucked a <i>lot</i> of dick, but I've never had one that small...
+5-male_medium_crotch_is_visible=happy,I think I'd like to get sloppy awkward all over that, ~name~.
+5-male_large_crotch_is_visible=sad,I think you're working with mostly just "awkward" with a side of "painful" with a bonus round of "that's definitely going nowhere near my sensitive anatomy."
+5-female_chest_will_be_visible,marker:secret_ichestity=confident,Oh no! ~name~ is going to give away her secret i-chest-tit-ty. Get it. Boobs. Boobs, guys.
+5-female_chest_will_be_visible=excited,Well, looks like I'll at least have a friend in standing here, tits out.
+5-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+5-female_small_chest_is_visible=happy,Hey, ~name~, is what they say about small boobs being more sensitive true? 'Cause the detective in me wants to put that to the test. Call it the scientific method.
+5-female_medium_chest_is_visible,marker:webdsm=confident,Mmm. Don't commit any crimes, ~name~, besides being gorgeous. Then I'd have to tie you up. And that'd be <i>very</i> bad.
+5-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+5-female_large_chest_is_visible=horny,Some spiders use their legs to weave hypnotic patterns. The way you jiggle is having that effect on me, ~name~.
+5-female_crotch_will_be_visible=happy,Yeah! Here we go, ~name~, you're just ahead of me.
+5-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+5-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+5-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+5-female_crotch_is_visible=angry,Hey! No hiding, ~name~! I can't make a quip if I can't even see what kind of grooming you do!
+5-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+5-female_crotch_is_visible,filter:hairy=sad,Uh, wow. I always forget to ask the year when I dimension hop. Is it still the 1960's where you're from, ~name~?
+5-female_crotch_is_visible,filter:shaved=excited,You know, when people ask you if the carpet matches the drapes, do you just say you have tile flooring?
+5-female_crotch_is_visible,filter:trimmed=horny,Hmm... Are you a scissors or a beard trimmer kind of girl? Protip: On the light settings, that beard trimmer also makes a great vibrator. Scissors are a cheap way I get the look I rock, though. Maybe you'll see it next?
+5-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+
+-3-male_chest_will_be_visible=happy,Okay, okay, just take it off already, ~name~, no need to tease us.
+-3-male_chest_is_visible,marker:snare_drum=horny,That's no snare drum, but I'd give that chest a few taps.
+-3-male_crotch_will_be_visible,marker:pros_cons=sad,Cons of dating Gwen: You're paying for everything, and pretty often I'll have to dash off when you're about to get laid to save kittens.
+-3-male_small_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I'm from a pretty conservative family, so you know I like to cut loose and get <i>freaky</i>.
+-3-male_small_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I can tie you up, or you can tie me up. Webbing doesn't leave a mess. Mostly.
+-3-male_small_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I don't mind switch hitting, and could even wing-man us at bars, and I'm used to taking out my frustration on drums.
+-3-male_medium_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I'm from a pretty conservative family, so you know I like to cut loose and get <i>freaky</i>.
+-3-male_medium_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I can tie you up, or you can tie me up. Webbing doesn't leave a mess. Mostly.
+-3-male_medium_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I don't mind switch hitting, and could even wing-man us at bars, and I'm used to taking out my frustration on drums.
+-3-male_large_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I'm from a pretty conservative family, so you know I like to cut loose and get <i>freaky</i>.
+-3-male_large_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I can tie you up, or you can tie me up. Webbing doesn't leave a mess. Mostly.
+-3-male_large_crotch_is_visible=horny,Pros of dating Gwen: I don't like to mess around with handjobs. You're <i>at least</i> getting to third base every time. Extra pro: I don't mind switch hitting, and could even wing-man us at bars, and I'm used to taking out my frustration on drums.
+-3-female_chest_will_be_visible=excited,Playing catch-up, ~name~?
+-3-female_chest_will_be_visible=confident,I don't mind using a bit of webbing to help you out of that, huh, ~name~? Whaddya say?
+-3-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+-3-female_small_chest_is_visible=happy,You're making it really hard not to just boop those boobs, ~name~.
+-3-female_medium_chest_is_visible=confident,You'd be a good roommate, ~name~. You know when to lose, and you could loan me some bras.
+-3-female_medium_chest_is_visible=shocked,I'm blinking a little fast, I definitely thought you had a bigger cup size than that.
+-3-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+-3-female_large_chest_is_visible=angry,Ugh, the rules say I'm not allowed to touch, ~name~, or I'd help you release some tension.
+-3-female_crotch_will_be_visible=shocked,I wonder if you're gonna match, ~name~. I gotta feeling ~player~ might be picking for variety rather than uniformity.
+-3-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+-3-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+-3-female_crotch_will_be_visible,count-trimmed:4=confident,I wonder if you're gonna match, ~name~. I gotta feeling ~player~ might be picking for uniformity rather than variety.
+-3-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+-3-female_crotch_is_visible=happy,Want a drum roll? I gotta say, I'm pretty good at that.
+-3-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+-3-female_crotch_is_visible,filter:hairy=horny,Hmm. Are you into this or not, ~name~? It's hard to tell with all that carpet in the way. Wait a second, <i>that's</i> why it's called carpet munching! Oh my god.
+-3-female_crotch_is_visible,filter:shaved=excited,Oh no, ~name~, you're all wet, and everyone can see it. Quick! You better masturbate so you can dry off after!
+-3-female_crotch_is_visible,filter:trimmed=confident,Huh, I dunno if that constitutes as styled, ~name~. You're gonna have to come over here and let me test it.
+-3-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+
+-2-male_chest_will_be_visible=happy,Woo, take it off, ~name~!
+-2-male_chest_is_visible=confident,Yeah, more like that, please!
+-2-male_crotch_will_be_visible=confident,Whip it out, ~name~!
+-2-male_small_crotch_is_visible=sad,You can't even get a good rhythm with that, ugh, next!
+-2-male_medium_crotch_is_visible=excited,Yeah, yeah, yeah, that's working it for me!
+-2-male_large_crotch_is_visible=shocked,Whoa, I know some people like their music and their dicks heavy, but that's a bit much for me!
+-2-female_chest_will_be_visible=happy,You know, ~name~, this might do it for me!
+-2-female_chest_will_be_visible=horny,I'm used to getting flashed at my shows, and since I'm putting one on now, mind giving me a yell, ~name~?
+-2-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+-2-female_small_chest_is_visible=excited,That is a very sign-able chest. If someone got me a marker, I'd be happy to write my number on those tits, ~name~!
+-2-female_medium_chest_is_visible=confident,Oh yeah, this is doing it for me. Can you jump up and down a little bit?
+-2-female_medium_chest_is_visible=excited,Oh, don't be embarrassed, ~name~, you're just helping a superhero cum. That's not shameful, that's doing your civic duty!
+-2-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+-2-female_large_chest_is_visible=excited,You know what they say about boats, right? The best kind are motorized. Babe, ~name~, I wanna motorboat you.
+-2-female_crotch_will_be_visible=shocked,Let your tiger out to play, ~name~!
+-2-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+-2-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+-2-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+-2-female_crotch_is_visible=excited,Ah, yes, yes!
+-2-female_crotch_is_visible,filter:trimmed=horny,Cute, ~name~, but would you mind touching it a bit?
+-2-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+-2-female_crotch_is_visible,filter:shaved=horny,Hot, ~name~, I wouldn't mind sampling the goods, as it were.
+-2-female_crotch_is_visible,filter:hairy=horny,Ah, looks like you're more tiger mom than Capital T tiger, huh?
+-2-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+-2-female_crotch_is_visible,totalMasturbating:1=happy,Yesss. I've never masturbated with someone else, so feel free to break that trend, ~name~.
+
+-1-male_chest_will_be_visible=happy,I'm done, but definitely could use schlick material for next time, dude.
+-1-male_chest_is_visible=horny,Yeah, I'm gonna masturbate to this later. And there's nothing you can do about it.
+-1-male_crotch_will_be_visible=shocked,~name~, what've you been holding out on us girls?
+-1-male_small_crotch_is_visible=excited,Well, not a whole lot, but hey, I've done more with less.
+-1-male_medium_crotch_is_visible=excited,Yeah, ~name~! That's the gold standard of cock.
+-1-male_large_crotch_is_visible=sad,I gotta admit. I've thought about getting run through on something like that. But I think that's something best left to the imagination. I can't imagine webswinging, let alone walking, after a round with that.
+-1-female_chest_will_be_visible=happy,<i>Yawn</i>, sorry ~name~, this has just gotta be better than what I'm expecting.
+-1-female_chest_will_be_visible=sad,Whatcha looking at me for, ~name~? Isn't ~player~ more interested?
+-1-female_chest_will_be_visible,target:zone-tan=horny,In the meantime, while we're thinking of wieners, let's take a look at Zone-tan's wiener barns.
+-1-female_small_chest_is_visible=horny,Those're cute.
+-1-female_medium_chest_is_visible=excited,I bet those would look good under a costume, they sure look great out in the open!
+-1-female_medium_chest_is_visible,target:zone-tan=excited,Aww, I just figured you'd appreciate the snark, Zone-tan.
+-1-female_large_chest_is_visible=horny,With knockers like those, I bet you get a lot of people knocking on your front door, ~name~. Or are you a backdoor sort of chick?
+-1-female_crotch_will_be_visible=confident,Okay, ~name~, time to join in the best part...
+-1-female_crotch_will_be_visible,notSaidMarker:webshooters,marker:webshooters=confident,You know, I thought my web shooters were condensing some extra moisture... Having fun, ~name~?
+-1-female_crotch_will_be_visible,target:futaba=shocked,What kinda heat are <i>you</i> packing, Futaba? Now <i>this</i> isn't a dark joke, given that you're a fire crotch!
+-1-female_crotch_will_be_visible,target:zone-tan=horny,As someone who isn't a fine purveyor of smut, I gotta find out what you're working with, Zone-tan.
+-1-female_crotch_is_visible=sad,Aw, wait a second, I forget you don't strip and schlick away. You gotta lose again. $%#@.
+-1-female_crotch_is_visible,filter:shaved=happy,Nothing to stick to there, ~name~. Maybe you'd be be up for something soft, though. Like, a pair of lips?
+-1-female_crotch_is_visible,filter:hairy=happy,You know, with most girls, I figured that kind of volume was the result of pixelization. It's... surprising in person.
+-1-female_crotch_is_visible,target:futaba=horny,Well, okay, not my best either. But you go, girl, you rock that 80's punk rock bush!
+-1-female_crotch_is_visible,filter:trimmed=horny,I gotta see what that looks like when you're finished, ~name~.
+-1-female_crotch_is_visible,target:zone-tan=sad,Huh. There's a great deal less detail than I expected. You're an innie? With no styling or anything? Huh.
+-1-female_crotch_is_visible,filter:hairy,alsoPlaying:zone-tan=confident,You know, ~name~, that seems kinda familiar. Have you starred in one of Zone-tan's videos?
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-specific lines that override the stage-generic ones
+male_must_masturbate=horny,Whoa, ~name~, someone's an eager... Whatever you are.
+male_start_masturbating=confident,Dontcha you feel kinda weird masturbating to a faceless mask?
+male_masturbating=shocked,~name~, you're really going at it.
+male_finished_masturbating=sad,~name~, you're really bad at this. Like, I can't say anything else.
+female_must_masturbate=shocked,Whoa, you madwoman! You're an enthusiast, clearly.
+female_start_masturbating=happy,Isn't that just like, a pervert, though? Like a masturbation enthusiast?
+female_masturbating=sad,I can't really help you out, ~name~. Maybe in a couple minutes, you'll be ready to go again though?
+female_finished_masturbating=excited,There's like, an old-timey word. <i>Zounds</i>. That's the only way to describe you losing your clothing, masturbating, and finishing, before I've even touched my mask.
+
+
+#fully clothed
+0-female_must_masturbate,target:zone-tan=shocked,Oh god, you're gonna whip out the weird tentacle stuff, aren't you?
+
+
+#lost mask
+2-male_must_masturbate=sad,I really hope you didn't wait for me to take off my mask to start.
+2-male_start_masturbating=horny,Though, it's <i>kinda</i> hot if this is all you need to get you going.
+2-male_masturbating=shocked,Whoa, ~name~'s beating it like it owes him money.
+2-male_finished_masturbating=shocked,<i>Not in the face, not in the face!</i>
+2-female_must_masturbate=happy,Aww, you're kinda a leg and face girl, ain'tcha, ~name~?
+2-female_start_masturbating=horny,I haven't gotten to see another woman do this. I mean, outside the internet.
+2-female_masturbating=confident,Oh, this is <i>way</i> better in person. Who doesn't like a good show?
+2-female_finished_masturbating=excited,Well, ~name~, can't promise I'll lose, but if I do, I think you'll enjoy what I'm working with.
+
+
+#lost top
+3-male_must_masturbate=happy,Well, you've got a nice view to start, eh, ~name~?
+3-male_start_masturbating=confident,That's a good boy.
+3-male_masturbating=horny,Interesting technique. Try a finger in your butt. Guys seem to love that, ~name~!
+3-male_finished_masturbating=shocked,I'm not the only one equipped with a webshooter today, looks like!
+3-female_must_masturbate=happy,~name~'s gonna go? This's worth showing off the girls, fo' sho'.
+3-female_start_masturbating=excited,%*&@, ~name~'s diving right in with the one finger salute!
+3-female_masturbating=confident,I bet ~name~'s a squirter.
+3-female_finished_masturbating=shocked,Whoa, I thought ~name~ was a squirter, but never expected her to gush like that.
+
+
+#lost costume
+4-male_must_masturbate=horny,There's not a lot left of me to the imagination, ~name~. So, when you're thinking of whoever you're thinking of, feel free to fill in the blanks.
+4-male_start_masturbating=sad,Just uh, be careful with where you fire that thing.
+4-male_masturbating=shocked,It's like it's watching me...
+4-male_finished_masturbating=happy,Whoa, not cool, ~name~! I'm the goo shooter around here. Heh. Goo shooter.
+4-female_must_masturbate=sad,Sorry I'm not in a cute pair of underwear. Be a good girl and maybe these'll... Slide off.
+4-female_start_masturbating=happy,~name~, this kinda thing really does it for you?
+4-female_masturbating=excited,Having fun, ~name~? If it helps, I'd definitely be helping you if it weren't against the rules.
+4-female_finished_masturbating=horny,Strong finish, ~name~. Pretty hot! I could write a song about this. I <i>should</i> write a song about this.
+
+
+#lost sports bra
+5-male_must_masturbate=happy,Ah, feeling the breeze between your knees, dude?
+5-male_start_masturbating=confident,Oh, and a self-applied handjob. Nice.
+5-male_masturbating=confident,Keep doin' what you're doin' and I might have to show you the rest, ~name~.
+5-male_finished_masturbating=horny,Wow, that was quick, ~name~.
+5-female_must_masturbate=confident,You got me all the way down to my panties before you lost, that's pretty good, ~name~!
+5-female_start_masturbating=excited,I don't masturbate a lot, but I can definitely pick up some new tricks.
+5-female_masturbating=horny,I see that unlike crime-fighting, this is about 90% imagination, 10% perspiration. More for ~name~, though.
+5-female_finished_masturbating=happy,Okay, ~name~, me next! Me next!
+
+-3-male_must_masturbate=confident,I'm all about that fapping life, yo.
+-3-male_start_masturbating=horny,~name~ getting jiggy with himself.
+-3-male_masturbating=confident,I'd give that a spin, at least a short one, ~name~.
+-3-male_finished_masturbating=sad,Oh, over so fast, ~name~? That's unfortunate.
+-3-female_must_masturbate=confident,Hey, ~name~, you want some help with that?
+-3-female_start_masturbating=excited,I wouldn't mind taking care of you, and you take me.
+-3-female_masturbating=horny,That's some heroic-class masturbation, ~name~!
+-3-female_finished_masturbating=happy,Strong finish, ~name~.
+
+-2-male_must_masturbate=happy,Oh yeah, ~name~, get jacking and get in.
+-2-male_start_masturbating=shocked,Not in <i>me</i>, but maybe after.
+-2-male_masturbating=confident,I'd love to give that some more direct attention, ~name~.
+-2-male_finished_masturbating=shocked,Maybe I should've clarified. You could've come <i>on me</i>, ~name~.
+-2-female_must_masturbate=confident,Hopping in with me, ~name~?
+-2-female_start_masturbating=shocked,If I helped tie you up, I don't think that violates the mutual masturbation rules, ~name~. Interested?
+-2-female_masturbating=horny,Offer for some light bondage still stands. I'm good at it.
+-2-female_finished_masturbating=horny,Aww, ~name~, want a kiss for effort?
+
+-1-male_must_masturbate=confident,Better late than never, ~name~.
+-1-male_start_masturbating=excited,Huh. I could really learn some of the technical aspects of this. Call it...Casework.
+-1-male_masturbating=sad,There's like, a song I liked. <i>Swing life away?</i> Based on the, ah, proficiency ~name~'s showing, he probably faps life away.
+-1-male_finished_masturbating=shocked,Whoo, welcome to the finished side of the table. Not losers, because really, hasn't this experience brought us closer together?
+-1-female_must_masturbate=confident,Here you go, ~name~, hope my little routine got you nice and worked up.
+-1-female_start_masturbating=excited,Oh, <i>that's</i> different!
+-1-female_masturbating=happy,Sexy, ~name~.
+-1-female_finished_masturbating=horny,Next time, I get to have a go at ~name~, okay?
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first,marker:dinner=loosing,Aw, #$%*, you're not even gonna take me out to dinner first, are you?
+-3-must_masturbate_first=sad,Really? You're gonna do me like that, Dealer? And you're not even gonna do me?
+-3-must_masturbate=loosing,Well, at least I'll be in good company...
+-3-must_masturbate=confident,Hold on, let me make this good...
+-3-must_masturbate=horny,Folks, if I'm gonna show you my most private moments, I'm gonna show all of them.
+-3-start_masturbating=excited,I'm not into swinging, technically, but I figure you all wondered how I do it when I <i>really</i> get some alone time.
+-3-start_masturbating,saidMarker:dinner=confident,Well, if you're hungry, I think I'm the mood for eating out tonight... Let me make it easy for you.
+
+-2-masturbating=mast1,You haven't <i>lived</i> until you've tried it like this.
+-2-masturbating=mast2,<i>Swinging from the ceiling, feeling the love~</i>
+-2-masturbating=mast3,It's just so easy to cut loose.
+-2-masturbating=mast1,I feel like I'm flying! I mean, it's close, but UNF!
+-2-masturbating=mast2,Yes, yes yes...
+-2-masturbating=mast3,Ahahaha, woo! This is more fun than mashing double bass drums!
+-2-heavy_masturbating=mast3,Thanks <i>GOD</i> for core strength.
+-2-heavy_masturbating=mast2,Whoops, almost slipped. All the blood's rushing to my head...And clit.
+-2-heavy_masturbating=mast1,A-almost there!
+-2-finishing_masturbating=finished,Yes! Oh yes!
+
+-1-finished_masturbating=excited,Well, that was fun!
+-1-finished_masturbating,timeInStage:10=sad,Okay so... Sorry about the mess, but can I go ahead and get dressed?
+-1-finished_masturbating,saidMarker:mpuns=normal,Man, I'm trying to think of a joke, but my brain keeps gushing past anything that makes sense.
+-1-finished_masturbating,saidMarker:mpuns=horny,Here I am, all hot and bothered, and I can't think of a single quip.
+-1-finished_masturbating,saidMarker:mpuns=confident,Oh, I have a joke. Nah, I'll save it, you guys only want to cream of the crop.
+-1-finished_masturbating,saidMarker:mpuns=horny,I'm just dripping here with sarcasm.
+-1-finished_masturbating,saidMarker:mpuns=shocked,Does anyone find the word pussy weird? Like, just say "ussy," and you look like an idiot. Like ~player~ just mouthed.
+-1-finished_masturbating,notSaidMarker:mpuns,marker:mpuns=excited,You'd think I'd have some clever masturbation puns. They just don't come to me.
+-1-finished_masturbating,timeInStage:20=horny,Look, like, at this point, I'll join in if someone wants me too, but don't leave me here all sticky and cold!
+
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#fully clothed
+0-game_over_victory=stripping,Aw, come on guys, it's no fun if I don't lose <i>a little</i>.
+
+
+#lost hood
+1-game_over_victory=confident,You were <i>this</i> close to seeing something interesting. That has to be frustrating, eh, ~player~?
+
+
+#lost mask
+2-game_over_victory=confident,You want to see what's under my suit? Sorry, you got the face, and that seems to be the final thing girls on Reddit give away, so that's good enough for me.
+
+
+#lost top
+3-game_over_victory=confident,Not bad, folks. You saw what most people see when I'm at the gym. Nice job.
+
+
+#lost costume
+4-game_over_victory=confident,Okay, you got the suit off! Hope it was worth it for the four of you.
+
+
+#lost sports bra
+5-game_over_victory=confident,Well, you got to see my boobs. Not the worst game I've played, but definitely not the best.
+
+-3-game_over_victory=confident,Whew. I almost had to do some real gymnastics to get off. It was fun seeing the rest of you, though!
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=celebrating,Well, ~name~, this was fun, but I gotta go. Want to take a spin on my web?
+game_over_defeat,alsoPlaying:marinette=celebrating,So, Marinette, you up for that tour I offered?
+
+#EPILOGUE/ENDING
