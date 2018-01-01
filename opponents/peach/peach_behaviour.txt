@@ -19,14 +19,14 @@ tag=mushroom_kingdom
 
 #required for meta.xml
 #select screen image
-pic=0-calm.png
+pic=0-calm
 height=6'1"
 from=Super Mario
 writer=
 artist=
 description=Princess Peach of the Toadstool Kingdom. Current status: not kidnapped.
+release=11
 
-#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-calm,Good evening. I hope we all enjoy ourselves tonight.
 start=0-calm,I'm Peach, princess of the Mushroom Kingdom. No need to bow!
@@ -158,69 +158,68 @@ bad_hand=sad,I was hoping for better cards this round.
 #losing shoes
 0-must_strip_winning=calm,Is it my turn now?
 0-must_strip_normal=calm,Oh, I lost?
-0-must_strip_losing=calm,Me first? Okay, here I go.
-0-stripping=strip,I'll start with my ~clothing~.
-
+0-must_strip_losing=calm,Me already? Okay, here I go.
+0-must_strip_losing,totalRounds:0=calm,Me first? Okay, here I go.
+0-stripping=strip,I'll start with my shoes.
+0-stripping,alsoPlaying:amalia=strip,Amalia, the mushrooms in my kingdom aren't just your garden variety. They're my subjects!
+0-stripping,alsoPlaying:ann=strip,Unfortunately, Bowser's castles are nearly enough like my royal palace, Ann. You should come visit!
+1-stripped=stripped,Not much, but it'll get better.
 
 #losing earrings
-1-stripped=stripped,Not much, but it'll get better.
-1-must_strip_winning=calm,So the game got back around to me?
+1-must_strip_winning=calm,This is only fair, as I started with more.
+1-must_strip_winning,consecutiveLosses:0=calm,So the game got back around to me?
 1-must_strip_normal=calm,And it seems to be my turn.
 1-must_strip_losing=calm,Me again? It's no big problem.
-1-stripping=strip,Now I'll take off my ~clothing~.
-
+1-stripping=strip,Now I'll take off my earrings.
+2-stripped=stripped,Did you like them?
 
 #losing gloves
-2-stripped=stripped,Did you like them?
 2-must_strip_winning=calm,Well, you can't win forever.
 2-must_strip_normal=calm,Someone has to lose.
 2-must_strip_losing=calm,Someone has to lead the group.
 2-stripping=strip,I'll just slip these off.
-
+3-stripped=stripped,I'm feeling a bit colder now.
 
 #losing crown
-3-stripped=stripped,I'm feeling a bit colder now.
 3-must_strip_winning=calm,You certainly waited to part me from my treasure.
 3-must_strip_normal=calm,Oh? It's me?
 3-must_strip_losing=sad,This isn't going so well for me.
-3-stripping=strip,I've lost my ~clothing~ now.
-
+3-stripping=strip,I've lost my crown now.
+4-stripped=stripped,You know, I have nothing small left to protect me.
+4-stripped,alsoPlaying:alice=stripped,I'm sorry if I made you feel uncomfortable, Alice.
 
 #losing dress
-4-stripped=stripped,You know, I have nothing small left to protect me.
 4-must_strip_winning=horny,Well, it's only fair I join you now.
 4-must_strip_normal=calm,So it's finally time to take this off.
 4-must_strip_losing=sad,You're awfully eager to get me naked.
 4-stripping=strip,I'm sure you've all been waiting for this.
-
+5-stripped=stripped,You aren't the only people who'd like to see me like this.
 
 #losing pants
-5-stripped=stripped,You aren't the only people who'd like to see me like this.
 5-must_strip_winning=calm,Worried I was going to leave you behind?
 5-must_strip_normal=calm,It all comes off sooner or later.
 5-must_strip_losing=sad,This was my last line of defense.
 5-stripping=strip,You've finally got me out of my pants.
-
+6-stripped=stripped,I hope I'm as cute with them off, as I am with them on.
+6-stripped,alsoPlaying:sonya=stripped,My favorite color <i>is</i> pink, Sonya. How did you know?
 
 #losing bra
-6-stripped=stripped,I hope I'm as cute with them off, as I am with them on.
-6-must_strip_winning=horny,So we're all exposed now.
+6-must_strip_winning=horny,We'll all be exposed soon.
+6-must_strip_winning,totalExposed:5=horny,So we're all exposed now.
 6-must_strip_normal=calm,It's not strip poker if we don't expose ourselves.
-6-must_strip_losing=sad,I'm not supposed to be the only one who's getting naked.
+6-must_strip_losing=sad,I'm not supposed to be getting naked so early.
+6-must_strip_losing,totalNaked:0=sad,I'm not supposed to be the only one who's getting naked.
 6-stripping=strip,Here I go.
-
-
-#lost all clothing
 7-stripped=stripped,Stare all you want, these are a royal treasure.
 7-stripped=stripped,I hope you appreciate these royal treasures.
+
+#lost all clothing
 7-must_strip_winning=horny,It's coming down to the wire.
 7-must_strip_normal=horny,Well, you've nearly finished me.
 7-must_strip_losing=sad,I really could have used a hero tonight.
 7-stripping=strip,Now you get to enjoy my peach.
 7-stripping=strip,Did I ever tell you about the secret world? It's about to be revealed.
-
 -3-stripped=stripped,And my cake isn't half-bad, either.
-
 
 
 
@@ -399,11 +398,11 @@ female_crotch_is_visible=happy,Don't you love this game?
 
 
 #fully clothed
-0-male_chest_is_visible=happy,Now THAT's one for the scrapbook!
+0-male_chest_is_visible=happy,Now <i>that's</i> one for the scrapbook!
 
 
 #lost shoes
-1-male_chest_is_visible=happy,Now THAT's one for the scrapbook!
+1-male_chest_is_visible=happy,Now <i>that's</i> one for the scrapbook!
 
 
 #lost crown
@@ -417,7 +416,7 @@ female_crotch_is_visible=happy,Don't you love this game?
 #lost pants
 6-male_chest_will_be_visible=interested,You've got something nice to show us, don't you?
 6-female_chest_will_be_visible=happy,Come, join me ~name~! Showing skin is exhilarating!
-6-female_chest_will_be_visible=happy,All this nudity, imagine if somebody was watching us?
+6-female_chest_will_be_visible=happy,All this nudity... Imagine if somebody was watching us?
 6-female_small_chest_is_visible=happy,I'm glad my peaches have some good company!
 6-female_medium_chest_is_visible=happy,I'm glad my peaches have some good company!
 6-female_large_chest_is_visible=happy,A fine set! Maybe as fine as mine!
@@ -618,9 +617,10 @@ game_over_victory=happy,Yes, first place!
 
 #GAME OVER DEFEAT
 game_over_defeat=shocked,Oh, no! I lost? How could I lose?
-game_over_defeat,alsoPlaying:zelda=happy,Still better then being kidnaped again. Don't you agree, Zelda?
+game_over_defeat,alsoPlaying:zelda=happy,Still better than being kidnaped again. Don't you agree, Zelda?
 game_over_defeat,filter:villain=finished,Why do villains always make me do this?
-game_over_defeat,target:sonya=finished,At least you cannot "finish" me, Sonya. I have well and truly already finsihed.
+game_over_defeat,target:sonya=finished,At least you cannot "finish" me, Sonya. I have well and truly already finished.
+game_over_defeat,target:ayano=sad,Please let up with the personal attacks next time, Ayano. We're just here to have fun.
 game_over_defeat,target:captain_falcon=sad,Turns out I can't beat Falcon Punch...
 game_over_defeat,target:chell=happy,You guys want some cake?
 game_over_defeat,target:daisy=happy,Oh well. Are we still on for tennis next week?
