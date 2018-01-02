@@ -18,7 +18,7 @@ function Save(){
 	this.data = {
 		'gender' : '',
 		'name' : '',
-		'background' : 7,
+		'background' : 1,
 		'masturbationTimer' : 20,
 		'name' : '',
 		'gender' : "male",
