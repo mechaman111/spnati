@@ -27,6 +27,7 @@ marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does
 marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
 marker=nagisa_kanji,public,When introducing herself when Marinette is present, she mentions that her name can be written with one Chinese character (kanji).
+marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realise that boys would be playing too.
@@ -151,11 +152,16 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:xander,totalRounds:0=embarrassed,Oh, Xander and I just met outside. I didn't know we were here to play the same game...
 0-okay_hand,alsoPlaying:xander,totalRounds:0=embarrassed,Oh, Xander and I just met outside. I didn't know we were here to play the same game...
 0-bad_hand,alsoPlaying:xander,totalRounds:0=embarrassed,WOh, Xander and I just met outside. I didn't know we were here to play the same game...
+0-good_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
+0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
+0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
+
 
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
 1-good_hand=raisedhand,I think I might have the winning hand.
 1-okay_hand=happy,Mmm, it's okay.
+1-okay_hand=calm,Everything is fine.
 1-okay_hand,totalExposed:0,priority:0=happy,We're all doing great.
 1-okay_hand,hasHand:One Pair,priority:0=strip,I have a pair... of socks.
 1-okay_hand,hasHand:One Pair,priority:0=calm,No harm in trying.
@@ -213,6 +219,7 @@ clothes=Panties,panties,important,lower
 
 4-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your Webmaster would understand if you took your ribbons off next, Nugi-chan...
 4-good_hand,alsoPlaying:xander,alsoPlayingStage:6,totalMales:1=sorry,I'm not ready to see a boy's private part! Please win this hand, Xander...
+4-okay_hand,alsoPlaying:blake,alsoPlayingStage:0-5,priority:0=shy,Blake, did your bow just... wiggle?
 
 #lost 5 items: underwear only
 5-good_hand=peaceful,I'm not worried anymore.
@@ -837,6 +844,7 @@ clothes=Panties,panties,important,lower
 -1-female_removing_minor,target:aimee,targetStage:2=embarrassed,I can't watch!
 0-female_removing_minor,target:buffy,targetStage:1,alsoPlaying:mettaton=happy,"Turned on"? You're funny. We're not robots! Except maybe Mr Mettaton...
 1-female_removing_minor,target:buffy,targetStage:1,alsoPlaying:mettaton=idea,"Turned on"? You're funny. We're not robots! Except maybe Mr Mettaton...
+2-female_removed_minor,filter:innocent,notSaidMarker:nagisa_little_sister,marker:nagisa_little_sister=happy,I'd give anything to have a little sister like you, ~name~.
 0-female_removed_minor,target:hermione,targetStage:2=happy,Oh, your black stockings are so cute, Hermione!
 1-female_removed_minor,target:hermione,targetStage:2=strip,Oh, your black stockings are so cute, Hermione!
 2-female_removed_minor,target:hermione,targetStage:2=happy,Oh, your black stockings are so cute, Hermione!
@@ -1638,10 +1646,12 @@ game_over_defeat=victorystanding,Congratulations! I hope I'll be the winner next
 game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the game's over, I can face this way, right?
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
 game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...
+game_over_defeat,target:kyu=embarrassed,How did Kyu win? She... she didn't even start with all of her clothes on.
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
 game_over_defeat,target:nugi-chan=embarrassed,Does anyone see my panties anywhere? I don't want to have to ride the train home without them...
 game_over_defeat,target:tina=embarrassed,I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...
 game_over_defeat,target:revy=embarrassed,Congratulations, Revy. This means you're going to let us live, right?
+game_over_defeat,target:zoey=embarrassed,Can you teach me to play cards like you, Zoey?
 game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,Miss Zone-tan... Please don't put me in any videos...
 game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:mei=embarrassed,Miss Zone-tan, I'm sorry to bother you, but I agree with Mei. I don't think I'm ready to be in a video.
 
@@ -1652,7 +1662,6 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 #TARGETED LINES
 #Arndress will assess these lines later to see if they are appropriate to expand to more stages. Nagisa has many uniquely-named images for each stage, so making one line cover multiple stages involves a little more work for her.
 
-2-female_removed_minor,filter:innocent=happy,I'd give anything to have a little sister like you, ~name~.
 2-female_removed_minor,target:april=happy,We're both wearing yellow today, April! But your shirt outshines my dull yellow jacket...
 2-female_removed_minor,target:elizabeth=shy,Elizabeth, I think of everyone here, us two are most alike. Maybe... could we be friends if that's okay?
 2-female_removed_minor,target:hermione=handsbehindback,Is that your school uniform, Hermione? If you're an exchange student, I'd be happy to show you around!
