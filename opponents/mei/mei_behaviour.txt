@@ -18,6 +18,9 @@ tag=cheerful
 tag=video_game
 tag=overwatch
 
+#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
+tag=mei
+
 marker=mei_dawn_light,public,Mei makes a pun on Dawn's name when Dawn removes something 'light'.
 marker=mei_keeping_florina_company,public,Mei gets topless with Florina.
 marker=mei_ice_block,public,When threatened, the female of the species must briefly hibernate.
@@ -60,6 +63,7 @@ start=0-happy,I can't wait to get started.
 start=0-shocked,Hey, wait for me!
 start=0-happy,It's good to get out of the lab.
 start=0-calm,Mei on duty!
+start=0-happy,Okay gang, let's go!
 
 
 
@@ -140,12 +144,13 @@ start=0-calm,Mei on duty!
  
 
 #card cases
-#default card behaviour
-#you can include multiple entries to give the character multiple lines and/or appearances in that situation.
 #This is what a character says while they're exchanging cards.
 swap_cards=calm,Sorry, but could I have ~cards~ cards?
 swap_cards=calm,~cards~, please.
 swap_cards=calm,&#x6211;&#x8981; ~cards~.
+swap_cards=calm,Just ~cards~ more.
+
+
 
 #HAND QUALITY
 #fully clothed
@@ -154,9 +159,13 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 0-okay_hand=calm,It's a start.
 0-bad_hand=loss,I wish I was wearing more, but it's too late to change!
 0-bad_hand=sad,Huh. I think I might be a little underdressed for this place. 
- 
-0-good_hand,totalFemales:4=interested,The four of us would do great in Team Deathmatch!
-0-good_hand,totalFemales:4=interested,I'm good for this round! What did everyone else get?
+
+0-good_hand,alsoPlaying:ruby,count-rwby:1,totalRounds:0=loss,Where's the rest of your team, Ruby? Oh no! Are they okay?!
+0-okay_hand,alsoPlaying:ruby,count-rwby:1,totalRounds:0=loss,Where's the rest of your team, Ruby? Oh no! Are they okay?!
+0-bad_hand,alsoPlaying:ruby,count-rwby:1,totalRounds:0=loss,Where's the rest of your team, Ruby? Oh no! Are they okay?!
+
+0-good_hand,totalFemales:4,priority:0=interested,The four of us would do great in Team Deathmatch!
+0-good_hand,totalFemales:4,priority:0=interested,I'm good for this round! What did everyone else get?
 0-okay_hand,alsoPlaying:florina,alsoPlayingStage:0,alsoPlayingSaidMarker:bee=interested,If a bee starts bothering you, Florina, then I'll have to get out my beekeeper gear!
 0-okay_hand,alsoPlaying:samus,alsoPlayingStage:0,totalRounds:3-30,notSaidMarker:mei_samus_mech,marker:mei_samus_mech=calm,You seem like a good fighter, Samus. Can you call down a mech like D.Va?
 
@@ -213,7 +222,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 4-good_hand,alsoPlaying:zone-tan,priority:0=interested,Zone-tan, if you watch everyone fap, you must have <i>so much data</i> from your observation! You should share it for peer review.
 
 #lost pants
-5-good_hand=interested,This will stop them.
+5-good_hand=interested,You know, I'm pretty good at this!
 5-good_hand=interested,I'm ready to start a blizzard!
 5-okay_hand=calm,I may be safe!
 5-okay_hand=sad,People say that I'm thick, but I'm actually very smart!
@@ -316,6 +325,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
  
 #lost all clothing items
 -3-male_human_must_strip=calm,I've given everything I can. It's your turn now!
+-3-male_human_must_strip=happy,I caught him!
 -3-male_must_strip=happy,Okay!
 -3-female_human_must_strip=calm,Don't be shy. It's not as bad as you think it is.
 -3-female_human_must_strip=loss,There's no other way...
@@ -495,7 +505,6 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 3-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
 0-female_must_strip,target:revy,targetStage:0=happy,It's nice to meet you, Revy. Is it true that you're half Chinese? I hope that we can be friends.
 3-female_must_strip,target:revy=loss,Revy, maybe you'd start playing better if you weren't so toxic.
-#0-female_must_strip,target:ruby,targetStage:0,filter:rwby=loss,Where's the rest of your team, Ruby? Oh no! Are they okay?!           ####I can't recall how to make this fire when only one "rwby"-filtered opponents is playing.
 0-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 1-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 0-female_must_strip,target:seven,targetStage:0=calm,Excuse me, Ms. Nine, but are you an astronaut? Maybe you've met my friend Winston at the Lunar Colony?
@@ -825,6 +834,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 1-male_removed_major=happy,Overcome all obstacles.
 1-female_removing_major=calm,It's nothing personal.
 1-female_removed_major=interested,Better watch out, Mei's going to get you! 
+1-female_removed_major=happy,Way to go!
  
 #lost shoes
 2-male_removing_major=shocked,Hey, wait for me!
@@ -845,6 +855,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 #lost shirt
 4-male_removing_major=interested,Let's see you get past this!
 4-male_removed_major=happy,You're amazing.
+4-male_removed_major=adjusting,Looking good!
 4-female_removing_major=interested,I could block you off with an Ice Wall until you're finished stripping, if you'd prefer.
 4-female_removed_major=shocked,Ouch! Are you okay?
 4-female_removed_major=embarrassed,You remind me a little of my friend Hana. She has a very nice figure too!
@@ -1072,10 +1083,11 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 #lost shirt
 4-male_chest_will_be_visible=interested,I lost my shirt. You should lose yours too!
 4-male_chest_is_visible=stripped,If, um, you're ever looking for a girlfriend... Maybe you could hang out with me and my friends.
-4-male_crotch_will_be_visible=strip,If you want to get even more comfortable I wouldn't mind. 
+4-male_crotch_will_be_visible=strip,If you want to get even more comfortable, I wouldn't mind. 
 4-male_small_crotch_is_visible=loss,It's disappointing to win and then gain so little...
 4-male_small_crotch_is_visible=sad,I wonder if it would disappear if I sprayed it...
 4-male_medium_crotch_is_visible=horny,I'm in the mood for a popsicle now...
+4-male_medium_crotch_is_visible=horny,There he is! We just want to study you!
 4-male_large_crotch_is_visible=happy,A-<i>Mei</i>-zing!
  
 4-female_chest_will_be_visible=horny,I have to admit, I'm curious!
@@ -1127,7 +1139,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 -3-male_chest_will_be_visible=horny,It's time for you to expose your chest.
 -3-male_chest_is_visible=happy,This makes losing everything almost worth it.
 -3-male_chest_is_visible=adjusting,Sorry, my glasses are fogging up.
--3-male_crotch_will_be_visible=horny,There seems to be a bulge in your pants, mister. I must discover it! You know, for science.
+-3-male_crotch_will_be_visible=horny,There seems to be a bulge in your pants, mister. I must discover it! This is for science!
 -3-male_small_crotch_is_visible=loss,Oh. Did it shrink in the cold?
 -3-male_small_crotch_is_visible=loss,I guess my body didn't do much for you.
 -3-male_medium_crotch_is_visible,marker:mei_nine_year_itch=embarrassed,I haven't been with a man in almost ten years. Want to help make up for lost time?
@@ -1165,7 +1177,9 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 -1-male_small_crotch_is_visible=sad,Oh, it's all shriveled up and small. Did you stick it in the snow?
 -1-male_medium_crotch_is_visible=interested,~name~, rub some ice cubes on it. I want to see if you can really handle the cold.
 -1-male_medium_crotch_is_visible=horny,This is the hardest my nipples have ever been... and I've been in cryofreeze!
--1-male_large_crotch_is_visible=embarrassed,One vs one me... please. I'll give you my number.
+-1-male_large_crotch_is_visible=shocked,I'm surprised something so big could hide from us.
+-1-male_large_crotch_is_visible,target:human=embarrassed,One vs one me... please. I'll give you my number.
+
  
 -1-female_chest_will_be_visible=interested,Now, where are they?
 -1-female_chest_will_be_visible=interested,Let's see what puts the bounce in your step.
@@ -1390,6 +1404,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 1-male_must_masturbate=horny,Um, I think it's time, ~name~.
 1-male_start_masturbating=happy,Yay, you're doing it!
 1-male_masturbating=happy,Haha, this is great!
+1-male_masturbating=shocked,Don't stop now!
 1-male_finished_masturbating=horny,Excellent job, ~name~! I hope that your experiment is reproducible.
  
 1-female_must_masturbate=embarrassed,When you're ready, it's time for you do what we agreed...
@@ -1411,6 +1426,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 #lost jacket
 3-male_must_masturbate=stripped,Oh, already?
 3-male_start_masturbating=embarrassed,You're so brazen.
+3-male_masturbating=horny,Just a little more...
 3-male_masturbating,marker:mei_overdressed=embarrassed,I feel so overdressed right now...
 3-male_finished_masturbating=,Whoa! Were you trying to hit someone on the other side of the map?
  
@@ -1423,6 +1439,7 @@ swap_cards=calm,&#x6211;&#x8981; ~cards~.
 4-male_must_masturbate=horny,I'm happy with how inevitable this was!
 4-male_start_masturbating=strip,I'll probably lose my pants soon if that helps.
 4-male_masturbating=embarrassed,Did you know that thawed ice can cause a surprising amount of dampness?
+4-male_masturbating=happy,This is awesome!
 4-male_finished_masturbating=happy,Haha! That was great!
  
 4-female_must_masturbate=calm,~name~ is out!
@@ -1588,6 +1605,8 @@ finished_masturbating=interested,It's always nice to share experiences with your
 finished_masturbating=happy,I hope that we <i>all</i> get to have a happy ending!
 finished_masturbating=interested,Sometimes I surprise myself.
 
+
+
 game_over_defeat=interested,Well played, ~name~! But you'll be in my shoes next time.
 game_over_defeat,target:marinette,targetSaidMarker:twiceloss=interested,Good job, Marinette. I didn't think you had a chance when you started that losing streak.
 game_over_defeat,target:nugi-chan=happy,Haha, it's not every day I get Mei'd by a maid!
@@ -1606,3 +1625,42 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,
 7-game_over_victory=happy,If you focus on the objective, you can win too!
 7-game_over_victory=embarrassed,Whoa! That was going great... until the end.
 -3-game_over_victory=happy,Wow, that was a close one! Thanks for an exciting game!
+
+
+
+#In-game quotes yet to be adapted to lines. Some are very specific, but a few could work well as targeted lines.
+
+#Be very, very quiet.
+#Come on gang, let's go catch that yeti!
+#Come out, come out...
+#Did you hear something?
+#Don't be afraid, we don't hurt you!   ["don't"?]
+#Don't let him catch you!
+#Don't you just love surprises?
+#Get away from him!
+#He's almost there!
+#He's caught in the trap, get him!
+#He's frozen! Everyone come over here!
+#He's getting stronger!
+#He's not going anywhere.
+#I love the new ice sculpture!
+#I see him!
+#I think he's calmed down.
+#If I were a yeti, where would I be hiding?
+#Look out!
+#Looks like he's back to normal
+#Oh no, he got the meat!
+#Run away! Run away!
+#Run for your life!
+#Run! Run!
+#Safe now!
+#Shh... he'll hear you.
+#Stay on your guard.
+#Uh oh, he's getting angry!
+#We can't let him get another one.
+#
+#Where are you?
+#Yeti popsicle!
+#Yeti's over here.
+#You'd better watch your step.
+#-XMAS 2017 END-
