@@ -19,6 +19,9 @@ tag=shaved
 tag=overwatch
 tag=bodysuit
 
+#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
+tag=d.va
+
 #required for meta.xml
 #start picture
 pic=0-calm
@@ -76,6 +79,9 @@ swap_cards=serene,~cards~ cards.
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
 
+0-good_hand,totalRounds:5=heart,If you ever see anyone else get MVP, that's just the system being broken!
+0-okay_hand,totalRounds:5=heart,If you ever see anyone else get MVP, that's just the system being broken!
+
 #Lost Gloves
 1-good_hand=peaceside,Let's shoot for a new high score! 
 1-good_hand=winking,Think you can keep up with me? 
@@ -97,6 +103,7 @@ swap_cards=serene,~cards~ cards.
 #Lost Headphones
 3-good_hand=peace,I play to win! 
 3-good_hand=peaceside,This hand and how I look in a bunny suit: both awesome.
+3-good_hand=winking,Let's see them stop me.
 3-okay_hand=calm,This is okay for mid-game.
 3-okay_hand=serene,I can get through this.
 3-bad_hand=stripped,Don't mess with me!
@@ -113,9 +120,12 @@ swap_cards=serene,~cards~ cards.
 4-bad_hand=angry,Literally unplayable.
 4-bad_hand=awkward,Uh oh...
 
+4-bad_hand,notSaidMarker:human_first_piece=shocked,~player~, so OP!
+
 #Lost Bra
 5-good_hand=peace,I'm back in the game!
 5-good_hand,marker:d.va_high_score=winking,High score, for sure!
+5-good_hand=heart,Extra life!
 5-okay_hand=shy,I asked for 2/2/2, but I'm only looking at a pair here.
 5-okay_hand=awkward,Let's hope this is good enough...
 5-bad_hand=shocked,I need healing!
@@ -124,8 +134,6 @@ swap_cards=serene,~cards~ cards.
 
 #Lost Panties/Fully Nude
 #using negative numbers counts back from the final stage
-#-3 is while nude, -2 is masturbating, -1 is finished
-#this lets you use the same numbers with different amounts of clothing
 -3-good_hand=peaceside,Ultimate ready.
 -3-good_hand=winking,I'm back in the fight! 
 -3-good_hand=peace,Aw, yeah! 
@@ -210,11 +218,11 @@ swap_cards=serene,~cards~ cards.
 #other player must strip specific
 
 #Fully Clothed
-0-male_human_must_strip=winking,Hey there, ~name~!
-0-male_human_must_strip=calm,Are you really that easy to beat? That's surprising!
+0-male_human_must_strip,marker:human_first_piece=winking,Hey there, ~name~!
+0-male_human_must_strip,marker:human_first_piece=calm,Are you really that easy to beat? That's surprising!
 0-male_must_strip=peace,An early pick!
 0-male_must_strip=stripped,I won again! I just hope I won't get nerfed...
-0-female_human_must_strip=excited,Nice one! And I haven't even taken any damage yet!
+0-female_human_must_strip,marker:human_first_piece=excited,Nice one! And I haven't even taken any damage yet!
 0-female_must_strip=saluting,~name~ strip sequence initiated.
 0-female_must_strip=peaceside,I already like this game!
 0-female_must_strip=calm,Ooh, I'm curious what you'll take off...
@@ -249,6 +257,7 @@ swap_cards=serene,~cards~ cards.
 4-female_human_must_strip=winking,Why not take off two things? I had to take off my whole suit in one go.
 4-female_must_strip=heart,Configuration: Celebratory!
 4-female_must_strip=calm,The huntress lays a trap for her prey...
+4-female_must_strip=winking,Ding!
 
 #Lost Bra
 5-male_human_must_strip=heart,Show me something interesting and I might give you a long look at these.
@@ -284,6 +293,7 @@ swap_cards=serene,~cards~ cards.
 
 3-male_must_strip,target:xander,targetStage:3=winking,Your turn, Xan.Da!
 
+0-female_must_strip,filter:overwatch,totalRounds:0=heart,Hey, my favorite teammate! Picked off already?
 0-female_must_strip,filter:video_game,targetStage:0=calm,Look who it is! I know you're good in a fight.
 0-female_must_strip,filter:video_game,targetStage:0=shocked,~name~, you're real?! I'm such a huge fan!
 0-female_must_strip,target:aimee,targetStage:0=winking,Are we playing a deathmatch?
@@ -967,6 +977,15 @@ swap_cards=serene,~cards~ cards.
 -3-female_medium_chest_is_visible,target:aimee=heart,Two for one? Aw, yeah!
 -2-female_medium_chest_is_visible,target:aimee=horny,Two for one? Aw, yeah!
 -1-female_medium_chest_is_visible,target:aimee=heart,Two for one? Aw, yeah!
+0-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+1-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+2-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+3-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+4-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+5-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+-3-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+-2-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
+-1-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
 0-female_medium_chest_is_visible,target:scarlet_witch=serene,Take it from me: bright colors just make you stand out on the battlefield anyways.
 1-female_medium_chest_is_visible,target:scarlet_witch=serene,Take it from me: bright colors just make you stand out on the battlefield anyways.
 2-female_medium_chest_is_visible,target:scarlet_witch=serene,Take it from me: bright colors just make you stand out on the battlefield anyways.
@@ -1102,6 +1121,7 @@ swap_cards=serene,~cards~ cards.
  
 #Lost Bra
 5-male_must_masturbate=excited,It's go time, boy!
+5-male_must_masturbate=heart,Aw, my number one fan. Buh bye.
 5-male_start_masturbating=winking,Start with some long, slow strokes.
 5-male_masturbating=shocked,This part seems really hard... REALLY really hard...!
 5-male_masturbating=hornier,This is even better than watching porn!
@@ -1142,6 +1162,7 @@ swap_cards=serene,~cards~ cards.
 -2-female_start_masturbating=excited,Now we're teamed up!
 -2-female_masturbating=horny,Payload moving. Let's all work together. 
 -2-female_masturbating=finishing,W-we're working together on this! We can't lose!
+-2-female_masturbating=peace,Try and keep up!
 -2-female_finished_masturbating=heart,Thanks for your support!
  
 #Finished
@@ -1238,6 +1259,7 @@ must_masturbate_first=dismayed,I just realized what Mei meant when she said this
 must_masturbate=horny,Time to show my skills!
 start_masturbating=starting,I normally use my mech to do this, but I can manage with just my fingers.
 start_masturbating=starting,I've had lots of training moments to do this... Like, a LOOOT!
+start_masturbating=starting,I'm goin' in!
 masturbating=winking,Winky face!
 masturbating=excited,Boom shakalaka! I'm on fire!
 masturbating=awkward,I don't mind it if you peek under the hood o-of my mech...
@@ -1254,7 +1276,7 @@ finished_masturbating=shocked,This gave me tons of experience!
 finished_masturbating=heart,Oh man, that was great... I gotta take a little break now, though...
 finished_masturbating=excited,Yeah, I definitely gotta play this game more often!
 finished_masturbating=excited,Let's start a new game plus!
-finished_masturbating=peace,Like, follow, subcribe!
+finished_masturbating=peace,Like, follow, subscribe!
 
 
 
