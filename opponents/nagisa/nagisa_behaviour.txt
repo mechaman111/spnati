@@ -26,12 +26,14 @@ marker=nagisa_asks_buffy_about_school,public,Nagisa and Buffy feel differently a
 marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does not repeat.
 marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
+marker=nagisa_food_motivation,public,Nagisa canonically promises herself food to motivate her to do difficult things.
 marker=nagisa_kanji,public,When introducing herself when Marinette is present, she mentions that her name can be written with one Chinese character (kanji).
 marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realise that boys would be playing too.
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
+marker=nagisa_swimsuit,public,Nagisa modestly claims not to look good in a swimsuit.
 marker=nagisa_tentacle,public,Nagisa can make a tentacle comparison when playing with Zone-tan.
 
 
@@ -73,34 +75,41 @@ clothes=Panties,panties,important,lower
 0-swap_cards=shy,May I please have ~cards~?
 0-swap_cards=calm,I'll have ~cards~ if that's okay.
 0-swap_cards=calm,Can I swap ~cards~?
+
 1-swap_cards=idea,~cards~ for me, please.
 1-swap_cards=calm,Just ~cards~ this time.
 1-swap_cards=raisedhand,Could I ask for ~cards~?
 1-swap_cards=happy,I'd like ~cards~.
+
 2-swap_cards=happy,~cards~, please.
 2-swap_cards=calm,I choose ~cards~ this time.
 2-swap_cards=calm,I'll trade ~cards~.
 2-swap_cards=handsbehindback,Could I try ~cards~?
+
 3-swap_cards=thinking,Hmmm. I'll get ~cards~.
 3-swap_cards=sad,Would it be too much to ask for ~cards~?
 3-swap_cards=thinking,I'd like to request ~cards~, please!
 3-swap_cards=calm,I'll try ~cards~.
+
 4-swap_cards=openarms,I'll have 2. Wait, um, ~cards~!
 4-swap_cards=happy,~cards~ for me, please.
 4-swap_cards=shy,Oh, I have to swap ~cards~ of these.
 4-swap_cards=shy,Maybe ~cards~?
+
 5-swap_cards=determined,I'll keep what I have. Except for these ~cards~.
 5-swap_cards=idea,Could you please allow me to have ~cards~? 
 5-swap_cards=idea,I have to try ~cards~.
 5-swap_cards=covering,May I have ~cards~?
+
 6-swap_cards=shy,~cards~...
 6-swap_cards=calm,I'm really hoping that ~cards~ more will help.
 6-swap_cards=calm,Oh, ~cards~, I think.
 6-swap_cards=peaceful,Maybe I could make it with ~cards~?
-7-swap_cards=embarrassed,I really need ~cards~.
-7-swap_cards=worried,~cards~... and please be enough.
-7-swap_cards=determined,I have to trade ~cards~.
-7-swap_cards=worried,I have to get ~cards~.
+
+-3-swap_cards=embarrassed,I really need ~cards~.
+-3-swap_cards=worried,~cards~... and please be enough.
+-3-swap_cards=determined,I have to trade ~cards~.
+-3-swap_cards=worried,I have to get ~cards~.
 
 
 
@@ -119,7 +128,7 @@ clothes=Panties,panties,important,lower
 
 0-good_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
 0-okay_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
-0-bad_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
+0-bad_hand,totalRounds:0=worried,Is it true that this is the kind of poker where we have to take our clothes off?
 0-good_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
 0-okay_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
 0-bad_hand,totalMales:1,totalRounds:0,marker:nagisa_playing_with_boys=veryembarrassed,Um, I didn't know that there were going to be a boy playing with us too.
@@ -156,7 +165,6 @@ clothes=Panties,panties,important,lower
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 
-
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
 1-good_hand=raisedhand,I think I might have the winning hand.
@@ -187,6 +195,7 @@ clothes=Panties,panties,important,lower
 
 2-good_hand,alsoPlaying:buffy,priority:0,marker:nagisa_asks_buffy_about_school=happy,I love my school very, very much! How about you, Buffy? Did you love your high school too?
 2-good_hand,alsoPlaying:mia,alsoPlayingStage:0-3,priority:0=handsbehindback,I'd love to meet your cousin Pearl, Mia! Does she live around here?
+2-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0-1,priority:0,marker:nagisa_swimsuit=worried,Your suit is very pretty, Marinette. I could never pull that off. I don't even look good in a swimsuit.
 2-okay_hand,alsoPlaying:xander,totalExposed:0,priority:0=worried,So... which school does everyone go to? I go to Hikarizaka High! How about you, Xander?
 
 #lost jacket
@@ -321,6 +330,7 @@ clothes=Panties,panties,important,lower
 5-stripped=determined,From here on out, I know things might be hard sometimes. But no matter what, I don't want to regret anything!
 5-stripped=stripped,I... I'm not wearing a matching set. I just thought they were cute!
 5-stripped,alsoPlaying:kim=stripped,I... I'm not wearing a matching set. I just thought they were cute!
+5-stripped,alsoPlaying:kyu=veryembarrassed,Kyu, would you like to wear my skirt? It's only fair because you started without one.
 
 #losing bra (medium chest)
 5-must_strip_winning=veryembarrassed,Would it be okay if we played with the lights off? I'm a little shy.
@@ -329,10 +339,12 @@ clothes=Panties,panties,important,lower
 5-must_strip_normal=veryembarrassed,What should I do? I have to keep my panties, but if I take off my bra, I can't cover myself properly...
 5-must_strip_normal,alsoPlaying:mia,alsoPlayingStage:5=worried,Even though it's embarrassing, I'm taking off my bra next. There are some secrets that a girl has to leave until last, Mia.
 5-must_strip_losing=covering,But... nobody else...
-5-stripping=stripping,Anpan!
-5-stripping=stripping,Tonkatsu!
-6-stripped=maximumembarrassed,It's just something I say to cheer myself up when I'm embarrassed. It's weird, isn't it?
-6-stripped,alsoPlaying:asuna,alsoPlayingStage:2-6=maximumembarrassed,It's just something I say to cheer myself up when I'm embarrassed. Is it weird, Asuna?
+5-stripping,marker:nagisa_food_motivation=stripping,Anpan!
+5-stripping,marker:nagisa_food_motivation=stripping,Tonkatsu!
+5-stripping=stripping,Please don't be disappointed...
+6-stripped=maximumembarrassed,I'm sorry!
+6-stripped,saidMarker:nagisa_food_motivation=maximumembarrassed,It's just something I say to cheer myself up when I'm embarrassed. It's weird, isn't it?
+6-stripped,saidMarker:nagisa_food_motivation,alsoPlaying:asuna,alsoPlayingStage:2-6=maximumembarrassed,It's just something I say to cheer myself up when I'm embarrassed. Is it weird, Asuna?
 
 #losing panties (crotch)
 6-must_strip_winning=emphatic,Don't just stare. Say something!
