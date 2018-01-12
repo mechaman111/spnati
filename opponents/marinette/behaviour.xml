@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v1.15 at 7:43:59 PM on January 08, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v1.15 at 8:25:03 PM on January 10, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Marinette</first>
     <last>Dupain-Cheng</last>
@@ -1656,11 +1656,13 @@
                 <state img="0-embarrassed.png">--Oh. Well, at least *my* skintight outfit is fun. And not. You know, not cannibalistic. That’d be super weird, right? Uhm. Right?</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="0-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
-                <state img="0-excited.png">Whoa! Like a battlecry!</state>
+                <state img="0-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
                 <state img="0-alarmed.png">You’re bigger than I expected! This is like biting into a bun and finding a rice cracker!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="nagisa" targetSaidMarker="nagisa_food_motivation">
+                <state img="0-excited.png">Whoa! Like a battlecry!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="scarlet_witch">
                 <state img="0-embarrassed.png">W-well they’re perky, but you can see your hair… there… and that underwear is...um...not my style.</state>
@@ -2275,6 +2277,9 @@
             <case alsoPlaying="florina" tag="female_removed_minor" notSaidMarker="pegasusquish" alsoPlayingSaidMarker="crash">
                 <state img="0-confident.png">W-what? You can fly on a pegasus! That’s incredible, Florina! A-and sorry, ~name~, about your ~clothing~. And spine.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="0-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="0-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -2385,21 +2390,17 @@
                 <state img="0-wink.png">This is mostly about luck, and you can’t out-luck a ladybug.</state>
                 <state img="0-wink.png">My mark can only grow!</state>
             </case>
-            <case tag="good_hand">
-                <condition count="4" filter="bodysuit" />
-                <state img="0-confident.png">Hey! We have a full team of bodysuits. Let’s get to it, ladies! ~player~ doesn’t stand a chance!</state>
+            <case alsoPlaying="alice" alsoPlayingStage="2" tag="good_hand" notSaidMarker="alice_dreamy">
+                <state img="0-wink.png" marker="alice_dreamy">Me, scared? Pfft, it was a dream. I mean, you're a dream. I mean, in your dreams! Huh? Oh, this is a nightmare...</state>
             </case>
-            <case alsoPlaying="alice" tag="good_hand">
-                <state img="0-embarrassed.png">U-um. Alice, you seem to be associated with butterflies... Please tell me you don’t work with Hawk Moth, and you’re... eccentric just the way you are?</state>
+            <case alsoPlaying="alice" tag="good_hand" notSaidMarker="alice_butterflies">
+                <state img="0-embarrassed.png" marker="alice_butterflies">U-um. Alice, you seem to be associated with butterflies... Please tell me you don’t work with Hawk Moth, and you’re... eccentric just the way you are?</state>
             </case>
-            <case alsoPlaying="alice" alsoPlayingStage="2" tag="good_hand">
-                <state img="0-wink.png">Me, scared? Pfft, it was a dream. I mean, you're a dream. I mean, in your dreams! Huh? Oh, this is a nightmare...</state>
+            <case alsoPlaying="d.va" alsoPlayingStage="0" tag="good_hand" notSaidMarker="warpaint_dva">
+                <state img="0-wink.png" marker="warpaint_dva">You know D.Va, it’s surprising nobody’s figured out your secret identity, given how little your warpaint covers.</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingStage="0" tag="good_hand">
-                <state img="0-wink.png">You know D.Va, it’s surprising nobody’s figured out your secret identity, given how little your warpaint covers.</state>
-            </case>
-            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand">
-                <state img="0-bored.png">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
+            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand" notSaidMarker="dvaptr">
+                <state img="0-bored.png" marker="dvaptr">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
             </case>
             <case alsoPlaying="d.va" tag="good_hand" alsoPlayingTimeInStage="7" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="0-confused.png">Sorry, what were you saying about cheating? You’ve been like that for way too many hands, D.Va…</state>
@@ -2407,11 +2408,11 @@
             <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="cheats1" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="0-alarmed.png" marker="cheats1">I don’t cheat! I’m just innately lucky. You’re one to talk, Ms. No-Miraculous-But Miraculously-Good-At-Games!</state>
             </case>
-            <case alsoPlaying="d.va" tag="good_hand" saidMarker="samusplaying">
-                <state img="0-alarmed.png">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
+            <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="samusplaying">
+                <state img="0-alarmed.png" marker="bodysuit_challenge">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
             </case>
-            <case alsoPlaying="d.va" tag="good_hand" saidMarker="sevenplaying">
-                <state img="0-wink.png">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
+            <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="sevenplaying">
+                <state img="0-wink.png" marker="bodysuit_challenge">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
             </case>
             <case alsoPlaying="florina" tag="good_hand" notSaidMarker="bee1" alsoPlayingSaidMarker="bee">
                 <state img="0-alarmed.png" marker="bee1">What? Queen Bee? Already? Where?</state>
@@ -2449,26 +2450,33 @@
             <case alsoPlaying="nugi-chan" tag="good_hand" notSaidMarker="ai_mixup" saidMarker="alphaplaying" alsoPlayingSaidMarker="nugi-chan_blames_ai">
                 <state img="0-confused.png" marker="ai_mixup">W-wait, you’re not real, Nugi-chan? You’re an AI like Alpha?</state>
             </case>
-            <case alsoPlaying="samus" tag="good_hand" saidMarker="d.vaplaying">
-                <state img="0-alarmed.png">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
+            <case alsoPlaying="samus" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="d.vaplaying">
+                <state img="0-alarmed.png" marker="bodysuit_challenge">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
             </case>
-            <case alsoPlaying="samus" tag="good_hand" saidMarker="sevenplaying">
-                <state img="0-wink.png">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
+            <case alsoPlaying="samus" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="sevenplaying">
+                <state img="0-wink.png" marker="bodysuit_challenge">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
             </case>
-            <case alsoPlaying="scarlet_witch" alsoPlayingHand="High Card" alsoPlayingStage="3" tag="good_hand">
-                <state img="0-alarmed.png">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
+            <case alsoPlaying="scarlet_witch" alsoPlayingStage="3" tag="good_hand" notSaidMarker="swprob">
+                <state img="0-alarmed.png" marker="swprob">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
             </case>
-            <case alsoPlaying="seven" tag="good_hand" saidMarker="d.vaplaying">
-                <state img="0-wink.png">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
+            <case alsoPlaying="seven" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="d.vaplaying">
+                <state img="0-wink.png" marker="bodysuit_challenge">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
             </case>
-            <case alsoPlaying="seven" tag="good_hand" saidMarker="samusplaying">
-                <state img="0-wink.png">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
+            <case alsoPlaying="seven" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="samusplaying">
+                <state img="0-wink.png" marker="bodysuit_challenge">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="0-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="0-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            </case>
+            <case alsoPlaying="sonya" tag="good_hand" saidMarker="hisonya">
+                <state img="0-wink.png" marker="hisonya">I love the outfit, Sonya. Very retro.</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="0-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
+            </case>
+            <case tag="good_hand" notSaidMarker="full_bodysuit_table">
+                <condition count="4" filter="bodysuit" />
+                <state img="0-confident.png" marker="full_bodysuit_table">Hey! We have a full team of bodysuits. Let’s get to it, ladies! ~player~ doesn’t stand a chance!</state>
             </case>
             <case tag="good_hand" notSaidMarker="hueyend" saidMarker="hueymari">
                 <state img="0-wink.png" marker="hueyend">Oh! Your pegasus! I cannot get over how cool that is, Florina!</state>
@@ -2534,6 +2542,9 @@
             <case alsoPlaying="nagisa" tag="okay_hand" notSaidMarker="marinette_sees_butts" alsoPlayingSaidMarker="nagisa_rear">
                 <state img="0-embarrassed.png" marker="marinette_sees_butts">Um. Nagisa, I hate to tell you this but after careful scrutiny there’s no odd scar there. Just a crack.</state>
             </case>
+            <case alsoPlaying="nagisa" tag="okay_hand" notSaidMarker="nagisa_swimsuit" priority="0" alsoPlayingSaidMarker="nagisa_swimsuit">
+                <state img="0-confident.png" marker="nagisa_swimsuit">Aww, you're sweet, Nagisa. After the game, I can help you find a suit that you'd like <i>amazing</i> in, I promise!</state>
+            </case>
             <case alsoPlaying="samus" tag="okay_hand" notSaidMarker="samusplaying">
                 <state img="0-confident.png" marker="samusplaying">Hmm... how does this lucky charm play out, I wonder?</state>
                 <state img="0-calm.png" marker="samusplaying">Let’s see how everyone else plays.</state>
@@ -2594,11 +2605,11 @@
                 <state img="0-embarrassed.png">I could use a save right now, Cat Noir…</state>
                 <state img="0-alarmed.png">I really shouldn’t use a Lucky Charm, but I am sorely tempted.</state>
             </case>
-            <case alsoPlaying="marceline" tag="bad_hand">
-                <state img="0-embarrassed.png">A-are you floating, Marceline? Are you empowered? Or...You can’t really be a vampire, can you?</state>
+            <case alsoPlaying="marceline" tag="bad_hand" notSaidMarker="vampires">
+                <state img="0-embarrassed.png" marker="vampires">A-are you floating, Marceline? Are you empowered? Or...You can’t really be a vampire, can you?</state>
             </case>
-            <case alsoPlaying="zizou" tag="bad_hand" saidMarker="magicalgirl">
-                <state img="0-alarmed.png">Um, Zizou, if you do have magical x-ray vision, can you please not reveal my identity?</state>
+            <case alsoPlaying="zizou" tag="bad_hand" notSaidMarker="xray" saidMarker="magicalgirl">
+                <state img="0-alarmed.png" marker="xray">Um, Zizou, if you do have magical x-ray vision, can you please not reveal my identity?</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="0-must_strip.png">I don’t even need my lucky charm to finish you off!</state>
@@ -4279,11 +4290,13 @@
                 <state img="1-embarrassed.png">--Oh. Well, at least *my* skintight outfit is fun. And not. You know, not cannibalistic. That’d be super weird, right? Uhm. Right?</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="1-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
-                <state img="1-excited.png">Whoa! Like a battlecry!</state>
+                <state img="1-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
                 <state img="1-alarmed.png">You’re bigger than I expected! This is like biting into a bun and finding a rice cracker!</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="nagisa" targetSaidMarker="nagisa_food_motivation">
+                <state img="1-excited.png">Whoa! Like a battlecry!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="scarlet_witch">
                 <state img="1-embarrassed.png">W-well they’re perky, but you can see your hair… there… and that underwear is...um...not my style.</state>
@@ -4907,6 +4920,9 @@
             <case alsoPlaying="florina" tag="female_removed_minor" notSaidMarker="pegasusquish" alsoPlayingSaidMarker="crash">
                 <state img="1-confident.png">W-what? You can fly on a pegasus! That’s incredible, Florina! A-and sorry, ~name~, about your ~clothing~. And spine.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="1-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="1-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -5017,21 +5033,17 @@
                 <state img="1-wink.png">This is definitely okay.</state>
                 <state img="1-embarrassed.png" marker="themesong">♪Miraculous, the luckiest~♪</state>
             </case>
-            <case tag="good_hand">
-                <condition count="4" filter="bodysuit" />
-                <state img="1-confident.png">Hey! We have a full team of bodysuits. Let’s get to it, ladies! ~player~ doesn’t stand a chance!</state>
-            </case>
-            <case alsoPlaying="alice" tag="good_hand">
-                <state img="1-embarrassed.png">U-um. Alice, you seem to be associated with butterflies... Please tell me you don’t work with Hawk Moth, and you’re... eccentric just the way you are?</state>
-            </case>
             <case alsoPlaying="alice" alsoPlayingStage="2" tag="good_hand">
                 <state img="1-wink.png" marker="alicedream">Me, scared? Pfft, it was a dream. I mean, you're a dream. I mean, in your dreams! Huh? Oh, this is a nightmare...</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingStage="0" tag="good_hand">
-                <state img="1-wink.png">You know D.Va, it’s surprising nobody’s figured out your secret identity, given how little your warpaint covers.</state>
+            <case alsoPlaying="alice" tag="good_hand" notSaidMarker="alice_butterflies">
+                <state img="1-embarrassed.png" marker="alice_butterflies">U-um. Alice, you seem to be associated with butterflies... Please tell me you don’t work with Hawk Moth, and you’re... eccentric just the way you are?</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand">
-                <state img="1-bored.png">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
+            <case alsoPlaying="d.va" alsoPlayingStage="0" tag="good_hand" notSaidMarker="warpaint_dva">
+                <state img="1-wink.png" marker="warpaint_dva">You know D.Va, it’s surprising nobody’s figured out your secret identity, given how little your warpaint covers.</state>
+            </case>
+            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand" notSaidMarker="dvaptr">
+                <state img="1-bored.png" marker="dvaptr">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
             </case>
             <case alsoPlaying="d.va" tag="good_hand" alsoPlayingTimeInStage="7" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="1-confused.png">Sorry, what were you saying about cheating? You’ve been like that for way too many hands, D.Va…</state>
@@ -5039,11 +5051,11 @@
             <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="cheats1" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="1-alarmed.png" marker="cheats1">I don’t cheat! I’m just innately lucky. You’re one to talk, Ms. No-Miraculous-But Miraculously-Good-At-Games!</state>
             </case>
-            <case alsoPlaying="d.va" tag="good_hand" saidMarker="samusplaying">
-                <state img="1-alarmed.png">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
+            <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="samusplaying">
+                <state img="1-alarmed.png" marker="bodysuit_challenge">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
             </case>
-            <case alsoPlaying="d.va" tag="good_hand" saidMarker="sevenplaying">
-                <state img="1-wink.png">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
+            <case alsoPlaying="d.va" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="sevenplaying">
+                <state img="1-wink.png" marker="bodysuit_challenge">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
             </case>
             <case alsoPlaying="florina" tag="good_hand" notSaidMarker="bee1" alsoPlayingSaidMarker="bee">
                 <state img="1-alarmed.png" marker="bee1">What? Queen Bee? Already? Where?</state>
@@ -5087,29 +5099,36 @@
             <case alsoPlaying="palutena" alsoPlayingStage="1" tag="good_hand">
                 <state img="1-confused.png">Tikki doesn’t elaborate on spirits very often, let alone goddesses...Palutena, could you tell me more about yourself?</state>
             </case>
-            <case alsoPlaying="samus" tag="good_hand" saidMarker="d.vaplaying">
-                <state img="1-alarmed.png">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
+            <case alsoPlaying="samus" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="d.vaplaying">
+                <state img="1-alarmed.png" marker="bodysuit_challenge">Ack, two blue bodysuits and one red one. I’ve fought enough akuma to see where this one might go…</state>
             </case>
-            <case alsoPlaying="samus" tag="good_hand" saidMarker="sevenplaying">
-                <state img="1-wink.png">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
+            <case alsoPlaying="samus" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="sevenplaying">
+                <state img="1-wink.png" marker="bodysuit_challenge">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
             </case>
-            <case alsoPlaying="scarlet_witch" alsoPlayingHand="High Card" alsoPlayingStage="3" tag="good_hand">
-                <state img="1-alarmed.png">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
+            <case alsoPlaying="scarlet_witch" alsoPlayingStage="3" tag="good_hand" notSaidMarker="swprob">
+                <state img="1-alarmed.png" marker="swprob">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
             </case>
-            <case alsoPlaying="seven" tag="good_hand" saidMarker="d.vaplaying">
-                <state img="1-wink.png">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
+            <case alsoPlaying="seven" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="d.vaplaying">
+                <state img="1-wink.png" marker="bodysuit_challenge">Seven, it’s two red suits against one blue suit! Let’s team up! You can handle 2v1 and control the point, right, D.Va?</state>
             </case>
-            <case alsoPlaying="seven" tag="good_hand" saidMarker="samusplaying">
-                <state img="1-wink.png">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
+            <case alsoPlaying="seven" tag="good_hand" notSaidMarker="bodysuit_challenge" saidMarker="samusplaying">
+                <state img="1-wink.png" marker="bodysuit_challenge">Samus! It’s two red players against one blue! I hope you have extra stock for this final destination!</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="1-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="1-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            </case>
+            <case alsoPlaying="sonya" tag="good_hand" saidMarker="hisonya">
+                <state img="1-wink.png" marker="hisonya">I love the outfit, Sonya. Very retro.</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="1-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
             </case>
             <case alsoPlaying="tracer" tag="good_hand">
                 <state img="1-confident.png">Tracer! I like how upbeat you are. I think we’d make a great team!</state>
+            </case>
+            <case tag="good_hand" notSaidMarker="full_bodysuit_table">
+                <condition count="4" filter="bodysuit" />
+                <state img="1-confident.png" marker="full_bodysuit_table">Hey! We have a full team of bodysuits. Let’s get to it, ladies! ~player~ doesn’t stand a chance!</state>
             </case>
             <case tag="good_hand" notSaidMarker="hueyend" saidMarker="hueymari">
                 <state img="1-wink.png" marker="hueyend">Oh! Your pegasus! I cannot get over how cool that is, Florina!</state>
@@ -5172,6 +5191,9 @@
             </case>
             <case alsoPlaying="nagisa" tag="okay_hand" notSaidMarker="marinette_sees_butts" alsoPlayingSaidMarker="nagisa_rear">
                 <state img="1-embarrassed.png" marker="marinette_sees_butts">Um. Nagisa, I hate to tell you this but after careful scrutiny there’s no odd scar there. Just a crack.</state>
+            </case>
+            <case alsoPlaying="nagisa" tag="okay_hand" notSaidMarker="nagisa_swimsuit" priority="0" alsoPlayingSaidMarker="nagisa_swimsuit">
+                <state img="1-confident.png" marker="nagisa_swimsuit">Aww, you're sweet, Nagisa. After the game, I can help you find a suit that you'd like <i>amazing</i> in, I promise!</state>
             </case>
             <case alsoPlaying="samus" tag="okay_hand" notSaidMarker="samusplaying">
                 <state img="1-calm.png" marker="samusplaying">Hmm... how does this lucky charm play out, I wonder?</state>
@@ -5236,8 +5258,8 @@
                 <state img="1-alarmed.png">Marceline, please don't drink Tikki’s blood... or drain away my costume...</state>
                 <state img="1-alarmed.png">If you drink colors, please stay away from my costume. It’s very important I keep it on as long as possible. Um. Both in and out of the game.</state>
             </case>
-            <case alsoPlaying="zizou" tag="bad_hand" saidMarker="magicalgirl">
-                <state img="1-alarmed.png">Um, Zizou, if you do have magical x-ray vision, can you please not reveal my identity?</state>
+            <case alsoPlaying="zizou" tag="bad_hand" notSaidMarker="xray" saidMarker="magicalgirl">
+                <state img="1-alarmed.png" marker="xray">Um, Zizou, if you do have magical x-ray vision, can you please not reveal my identity?</state>
             </case>
             <case tag="stripped">
                 <state img="1-confident.png">I make due without my yoyo all the time. Ladybug is still plenty clever and plenty strong... Most of the time.</state>
@@ -7019,7 +7041,7 @@
                 <state img="2-embarrassed.png">--Oh. Well, at least *my* skintight outfit is fun. And not. You know, not cannibalistic. That’d be super weird, right? Uhm. Right?</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="2-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="2-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="2-excited.png">Not weird at all. I have to yell out all sorts of things to make the Miraculous deakumatize people! Or put on my costume!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -7622,6 +7644,9 @@
             <case alsoPlaying="florina" tag="female_removed_minor" notSaidMarker="pegasusquish" alsoPlayingSaidMarker="crash">
                 <state img="2-confident.png">W-what? You can fly on a pegasus! That’s incredible, Florina! A-and sorry, ~name~, about your ~clothing~. And spine.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="2-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="2-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -7737,8 +7762,8 @@
             <case alsoPlaying="alice" tag="good_hand">
                 <state img="2-calm.png">Alice, my Miraculous tells me something is a bit off about you…</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand">
-                <state img="2-bored.png">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
+            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand" notSaidMarker="dvaptr">
+                <state img="2-bored.png" marker="dvaptr">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
             </case>
             <case alsoPlaying="d.va" tag="good_hand" alsoPlayingTimeInStage="7" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="2-confused.png">Sorry, what were you saying about cheating? You’ve been like that for way too many hands, D.Va…</state>
@@ -7795,11 +7820,11 @@
             <case alsoPlaying="ryuko" alsoPlayingStage="2-7" tag="good_hand" notSaidMarker="ryukoclothes">
                 <state img="2-bored.png" marker="ryukoclothes">Clothes aren’t evil, Ryuko! Your taste could use some work though.</state>
             </case>
-            <case alsoPlaying="scarlet_witch" alsoPlayingHand="High Card" alsoPlayingStage="3" tag="good_hand">
-                <state img="2-alarmed.png">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
+            <case alsoPlaying="scarlet_witch" alsoPlayingStage="3" tag="good_hand" notSaidMarker="swprob">
+                <state img="2-alarmed.png" marker="swprob">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="2-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="2-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="2-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
@@ -9051,6 +9076,9 @@
             <case alsoPlaying="d.va" alsoPlayingStage="3" tag="male_removed_accessory">
                 <state img="3-wink.png">You know, I like to incorporate my signatures into my designs, but I, um. Usually do outerwear.</state>
             </case>
+            <case alsoPlaying="human" tag="male_removed_accessory">
+                <state img="3-alarmed.png">I’ve played a bunch of card games, which must be why I’m good at this! Argh, not strip poker though!</state>
+            </case>
             <case tag="male_removed_accessory" notSaidMarker="hotstuff1" saidMarker="hotstuff">
                 <state img="3-confused.png" marker="hotstuff1">...I've got such a crazy crush on you that the only way I can talk to you without foaming at the mouth is over this stupid game.' Pretty ridiculous, right?</state>
             </case>
@@ -9754,7 +9782,7 @@
                 <state img="3-embarrassed.png">--Oh. Well, at least *my* skintight outfit is fun. And not. You know, not cannibalistic. That’d be super weird, right? Uhm. Right?</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="3-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="3-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="3-excited.png">Not weird at all. I have to yell out all sorts of things to make the Miraculous deakumatize people! Or put on my costume!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -10362,6 +10390,9 @@
             <case alsoPlaying="florina" tag="female_removed_minor" notSaidMarker="pegasusquish" alsoPlayingSaidMarker="crash">
                 <state img="3-confident.png">W-what? You can fly on a pegasus! That’s incredible, Florina! A-and sorry, ~name~, about your ~clothing~. And spine.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="3-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="3-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -10486,8 +10517,8 @@
             <case alsoPlaying="blake" alsoPlayingHand="high card" alsoPlayingStage="6-10" tag="good_hand">
                 <state img="3-wink.png">Hey pretty kitty, look before you leap!</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand">
-                <state img="3-bored.png">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
+            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand" notSaidMarker="dvaptr">
+                <state img="3-bored.png" marker="dvaptr">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
             </case>
             <case alsoPlaying="d.va" tag="good_hand" alsoPlayingTimeInStage="7" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="3-confused.png">Sorry, what were you saying about cheating? You’ve been like that for way too many hands, D.Va…</state>
@@ -10540,14 +10571,14 @@
             <case alsoPlaying="ryuko" alsoPlayingStage="2-7" tag="good_hand" notSaidMarker="ryukoclothes">
                 <state img="3-bored.png" marker="ryukoclothes">Clothes aren’t evil, Ryuko! Your taste could use some work though.</state>
             </case>
-            <case alsoPlaying="scarlet_witch" alsoPlayingHand="High Card" alsoPlayingStage="3" tag="good_hand">
-                <state img="3-alarmed.png">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
+            <case alsoPlaying="scarlet_witch" alsoPlayingStage="3" tag="good_hand" notSaidMarker="swprob">
+                <state img="3-alarmed.png" marker="swprob">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
             </case>
             <case alsoPlaying="shazza" alsoPlayingHand="high card" tag="good_hand">
                 <state img="3-wink.png">Oh no, little dingo, watch your cards carefully!</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="3-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="3-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="3-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
@@ -12426,7 +12457,7 @@
                 <state img="4-embarrassed.png">--Oh. Well, at least *my* skintight outfit is fun. And not. You know, not cannibalistic. That’d be super weird, right? Uhm. Right?</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="4-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="4-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="4-excited.png">Not weird at all. I have to yell out all sorts of things to make the Miraculous deakumatize people! Or put on my costume!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -13034,6 +13065,9 @@
             <case alsoPlaying="florina" tag="female_removed_minor" notSaidMarker="pegasusquish" alsoPlayingSaidMarker="crash">
                 <state img="4-confident.png">W-what? You can fly on a pegasus! That’s incredible, Florina! A-and sorry, ~name~, about your ~clothing~. And spine.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="4-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="4-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -13155,8 +13189,8 @@
             <case alsoPlaying="blake" alsoPlayingHand="high card" alsoPlayingStage="6-10" tag="good_hand">
                 <state img="4-wink.png">Hey pretty kitty, look before you leap!</state>
             </case>
-            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand">
-                <state img="4-bored.png">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
+            <case alsoPlaying="d.va" alsoPlayingHand="High Card" alsoPlayingStage="1" tag="good_hand" notSaidMarker="dvaptr">
+                <state img="4-bored.png" marker="dvaptr">Um...What’s a PTR, D.Va? Is that some special Overwatch training?</state>
             </case>
             <case alsoPlaying="d.va" tag="good_hand" alsoPlayingTimeInStage="7" alsoPlayingSaidMarker="d.va_accuses_cheating">
                 <state img="4-confused.png">Sorry, what were you saying about cheating? You’ve been like that for way too many hands, D.Va…</state>
@@ -13209,14 +13243,14 @@
             <case alsoPlaying="ryuko" alsoPlayingStage="2-7" tag="good_hand" notSaidMarker="ryukoclothes">
                 <state img="4-bored.png" marker="ryukoclothes">Clothes aren’t evil, Ryuko! Your taste could use some work though.</state>
             </case>
-            <case alsoPlaying="scarlet_witch" alsoPlayingHand="High Card" alsoPlayingStage="3" tag="good_hand">
-                <state img="4-alarmed.png">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
+            <case alsoPlaying="scarlet_witch" alsoPlayingStage="3" tag="good_hand" notSaidMarker="swprob">
+                <state img="4-alarmed.png" marker="swprob">Probability control, you mean like… Really good luck? I’m happy my miraculous can alter reality, but I don’t even think it can save us from these hands...</state>
             </case>
             <case alsoPlaying="shazza" alsoPlayingHand="high card" tag="good_hand">
                 <state img="4-wink.png">Oh no, little dingo, watch your cards carefully!</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="4-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="4-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="4-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
@@ -14999,7 +15033,7 @@
                 <state img="5-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="5-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="5-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="5-excited.png">Not weird at all. I have to yell out all sorts of things to make the Miraculous deakumatize people! Or put on my costume!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -15590,6 +15624,9 @@
                 <state img="5-alarmed.png">You must be working for Hawk Moth.</state>
                 <state img="5-embarrassed.png">I had just hoped I’d be recognized for something like designing clothes, or saving the world.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="5-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="5-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -15756,8 +15793,8 @@
             <case alsoPlaying="ryuko" alsoPlayingStage="2-7" tag="good_hand" notSaidMarker="ryukoclothes">
                 <state img="5-bored.png" marker="ryukoclothes">Clothes aren’t evil, Ryuko! Your taste could use some work though.</state>
             </case>
-            <case alsoPlaying="sheena" tag="good_hand">
-                <state img="5-calm.png">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
+            <case alsoPlaying="sheena" tag="good_hand" notSaidMarker="summoner_seals">
+                <state img="5-calm.png" marker="summoner_seals">These cards are kind of like your summoner seals, are they, Sheena? Maybe if you thought of it that way, you’d be in better shape?</state>
             </case>
             <case alsoPlaying="spooky" tag="good_hand" notSaidMarker="nagisa_myths1" saidMarker="nagisa_myths">
                 <state img="5-embarrassed.png" marker="nagisa_myths1">Nagisa, if a Nue isn’t quite your style… Maybe something about a ghost girl? Not like Spooky… Someone friendly, trying to do the right thing!</state>
@@ -17584,7 +17621,7 @@
                 <state img="6-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="6-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="6-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="6-embarrassed.png">Anpan! Tonkatsu! Hmm... I think it does help, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -18165,6 +18202,9 @@
             <case tag="female_removed_minor">
                 <state img="6-confused.png">But I’ve never seen an akuma take over clothing that small before.</state>
                 <state img="6-wink.png">At least the game is kind of fun. A little bit.</state>
+            </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="6-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
             </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="6-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
@@ -20102,7 +20142,7 @@
                 <state img="7-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="7-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="7-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="7-embarrassed.png">Anpan! Tonkatsu! Hmm... I think it does help, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -20674,6 +20714,9 @@
             <case tag="female_removed_minor">
                 <state img="7-confused.png">It’s miraculous that you’re so far ahead...</state>
                 <state img="7-embarrassed.png">But I think losing your ~clothing~ is making me excited?</state>
+            </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="7-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
             </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="7-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
@@ -22602,7 +22645,7 @@
                 <state img="8-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="8-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="8-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="8-embarrassed.png">Anpan! Tonkatsu! Hmm... I think it does help, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -23170,6 +23213,9 @@
             <case tag="female_removed_minor">
                 <state img="8-alarmed.png">Because looking at how bad this game is going, I definitely could use some cover.</state>
             </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="8-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
+            </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="8-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
             </case>
@@ -23429,12 +23475,12 @@
                 <state img="8-shibari1.png">A-ah, even moving a little bit is... Oh...</state>
             </case>
             <case tag="bad_hand">
-                <state img="8-embarrassed.png">... I hope everyone else is as ready to be speechless as I am.</state>
-                <state img="8-alarmed.png">Oh dear.</state>
-            </case>
-            <case tag="bad_hand">
                 <condition count="3" filter="shaved" />
                 <state img="8-embarrassed.png">U-uhm. Was… Shaving an expectation for this?</state>
+            </case>
+            <case tag="bad_hand">
+                <state img="8-embarrassed.png">... I hope everyone else is as ready to be speechless as I am.</state>
+                <state img="8-alarmed.png">Oh dear.</state>
             </case>
             <case alsoPlaying="gwen" tag="bad_hand" notSaidMarker="shimari" priority="990" saidMarker="shibari">
                 <state img="8-shibari2.png" marker="shimari">Ah, as much as I’m oh <i>oui</i> yes <i>oui</i>.. LET ME DOWN!</state>
@@ -25000,7 +25046,7 @@
                 <state img="9-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="9-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="9-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="9-embarrassed.png">Anpan! Tonkatsu! Hmm... I think it does help, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -25551,6 +25597,9 @@
             <case tag="female_removed_minor">
                 <state img="9-embarrassed.png">B-but if you took off more that’d help... more?</state>
                 <state img="9-confused.png">I’m p-playing with myself, and you’re just-!</state>
+            </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="9-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
             </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="9-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
@@ -27175,7 +27224,7 @@
                 <state img="10-alarmed.png">--Oh. Well, the sexy way sounds. Um. Less dangerous. And, er. More appealing. Hypothetically.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa">
-                <state img="10-confident.png">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
+                <state img="10-confident.png" marker="battlecry_nagisa">That’s impressive, I mean! You have such a good figure, Nagisa!</state>
                 <state img="10-embarrassed.png">Anpan! Tonkatsu! Hmm... I think it does help, Nagisa!</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="nagisa" saidMarker="marinette_ricebun">
@@ -27722,6 +27771,9 @@
             </case>
             <case tag="female_removed_minor">
                 <state img="10-bored.png">And at this rate it looks like I’ll not have a chance to.</state>
+            </case>
+            <case alsoPlaying="sonya" alsoPlayingStage="6" tag="female_removed_minor" alsoPlayingSaidMarker="commando">
+                <state img="10-embarrassed.png">Whoa, Sonya. That's... Wow, body paint. I didn't think I was into this. I guess I am, though.</state>
             </case>
             <case alsoPlaying="zoey" tag="female_removed_minor" notSaidMarker="rodeo">
                 <state img="10-confused.png" marker="rodeo">Zoey, what do you mean by rodeo?</state>
