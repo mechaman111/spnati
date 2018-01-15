@@ -27,7 +27,13 @@ artist=josephkantel
 description=Lara Croft is the titular character of the Tomb Raider franchise.
 release=8
 
-#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+
+
+marker=lara_british_cumming,public,Lara makes a pun when she and a fellow Brit are in the penalty stage.
+
+
+
+
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-calm,Hi, I'm Lara, Lara Croft. Looks like we'll be going on an adventure together!
 
@@ -193,19 +199,18 @@ swap_cards=calm,~cards~ new cards, please.
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
-male_human_must_strip=interested,Good to see ~name~. What are you going remove?
+male_human_must_strip=interested,Good to see, ~name~. What are you going remove?
 male_must_strip=interested,Okay, ~name~, get it off!
 female_human_must_strip=interested,Bad luck, ~name~. What are you going to lose?
-female_must_strip=female_must_strip=interested,Hmm you have to strip, ~name~!
-
+female_must_strip=interested,Hmm you have to strip, ~name~!
 
 #stage-specific lines that override the stage-generic ones
 
 #fully clothed
-0-male_human_must_strip,
+0-male_human_must_strip=,
 0-male_must_strip=,
 0-female_human_must_strip=,
-0-female_must_strip=,
+0-female_must_strip=happy,Show us how it's done, ~name~.
 
 #lost boots
 1-male_human_must_strip=,
@@ -262,7 +267,7 @@ female_must_strip=female_must_strip=interested,Hmm you have to strip, ~name~!
 -2-female_must_strip=interested,Time to strip, ~name~!
 
 #finished
--1-male_human_must_strip=,
+-1-male_human_must_strip=horny,This is my favorite part.
 -1-male_must_strip=,
 -1-female_human_must_strip=,
 -1-female_must_strip=,
@@ -350,7 +355,7 @@ female_removed_accessory=calm,Okay, ~name~, at least you are heading in the righ
 
 #finished
 -1-male_removing_accessory=,
--1-male_removed_accessory=,
+-1-male_removed_accessory=sad,I know an accessory to a crime when I see one.
 -1-female_removing_accessory=,
 -1-female_removed_accessory=,
 
@@ -363,7 +368,7 @@ female_removed_accessory=calm,Okay, ~name~, at least you are heading in the righ
 
 male_removing_minor=calm,Don't you want to take off something bigger, ~name~?
 male_removed_minor=happy,One step closer to the treasure.
-female_removing_minor=,calm,Time to lose the ~clothing~, ~name~.
+female_removing_minor=calm,Time to lose the ~clothing~, ~name~.
 female_removed_minor=happy,Now we're one step closer to your hidden secrets, ~name~.
 
 #stage-specific lines that override the stage-generic ones
@@ -704,6 +709,9 @@ female_crotch_is_visible=shocked,...~name~... you have a beautiful pussy...
 -1-female_crotch_is_visible=,
 
 #targeted
+
+-3-female_crotch_will_be_visible,filter:video_game=interested,Go on. I'm game if you are.
+
 -1-female_crotch_is_visible,filter:hairy=horny,Wow! I'd love to explore <i>that</i> forest!
 
 
@@ -723,7 +731,7 @@ male_finished_masturbating=shocked,Oh wow... ~name~, that was hot...
 
 female_must_masturbate=interested,Show us your sacred ritual, ~name~...
 female_start_masturbating=horny,Explore yourself thoroughly, ~name~...
-female_masturbating=,
+female_masturbating=,Keep going, ~name~...
 female_finished_masturbating=shocked,Oh wow... ~name~, I liked that a lot.
 
 #stage-specific lines that override the stage-generic ones
@@ -848,10 +856,10 @@ female_finished_masturbating=shocked,Oh wow... ~name~, I liked that a lot.
 -1-female_must_masturbate=,
 -1-female_start_masturbating=,
 -1-female_masturbating=,
--1-female_finished_masturbating=,..
+-1-female_finished_masturbating=,...
 
 #targeted
--2-female_finished_masturbating,filter:british=finishing,The British are cumming!
+-2-female_finished_masturbating,filter:british,notSaidMarker:lara_british_cumming,marker:lara_british_cumming=finishing,The British are cumming!
 
 
 
@@ -873,10 +881,10 @@ female_finished_masturbating=shocked,Oh wow... ~name~, I liked that a lot.
 #GAME OVER VICTORY
 
 #stage-generic line that will be used for every individual stage that doesn't have a line written
-game_over_victory=calm,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+game_over_victory=happy,I won? I can hardly believe it...
 
 #stage-specific lines that override the stage-generic one
-0-game_over_victory=,
+0-game_over_victory=happy,That was too easy, like taking candy from a tomb!
 1-game_over_victory=,
 2-game_over_victory=,
 3-game_over_victory=,
@@ -889,5 +897,4 @@ game_over_victory=calm,What the character says when they win the game. Can happe
 
 
 #GAME OVER DEFEAT
-game_over_defeat=calm,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
-
+game_over_defeat=happy,Things don't have to end there, do they?

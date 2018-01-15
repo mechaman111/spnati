@@ -47,7 +47,6 @@
             <case tag="female_must_strip">
                 <state img="0-calm.png">Please remove one article of clothing, ~name~-sama. The bigger, the better!</state>
                 <state img="0-loss.png">It's time to take something off, ~name~-sama. ~player~-sama and I will watch closely to make sure you're doing it right.</state>
-                <state img="0-sad.png">I wonder what the odds are of me playing a perfect game...</state>
             </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0">
                 <state img="0-calm.png">I am well versed in the ancient Japanese art of clothing removal. I can review your performance if you'd like, ~name~-sama. &lt;3</state>
@@ -139,6 +138,9 @@
             </case>
             <case tag="female_must_strip" target="zone-tan" targetStage="0">
                 <state img="0-awkward.png">Zone-tan, just a heads up, but I might call you Zone-tan-sama this game. The double honorific is respectful.</state>
+            </case>
+            <case tag="female_must_strip" totalRounds="5">
+                <state img="0-sad.png">I wonder what the odds are of me playing a perfect game...</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="0-mean.png">Hahaha! Now, no covering up, ~name~-sama; I want to see my rewards. &lt;3</state>
@@ -552,6 +554,9 @@
                 <state img="0-happy.png">Oooh, this is a good hand.</state>
                 <state img="0-calm.png">I feel safe with this hand.</state>
             </case>
+            <case alsoPlaying="gay_spaghetti_chef" tag="good_hand" totalRounds="0">
+                <state img="0-annoyed.png">Uggh, Spaghetti Night at the Inventory <i>again</i>?</state>
+            </case>
             <case alsoPlaying="jasmine" alsoPlayingStage="0" priority="0" tag="good_hand">
                 <state img="0-devious.png">Those are some sexy ankles you have there, Jasmine-sama.</state>
             </case>
@@ -567,9 +572,15 @@
             <case alsoPlaying="zone-tan" tag="good_hand" totalRounds="0">
                 <state img="0-calm.png">Hey, Zone-tan! Long time, no see!</state>
             </case>
+            <case tag="good_hand" totalAlive="3" totalRounds="0">
+                <state img="0-sad.png">Oh, an epilogue farm? I see how it is...</state>
+            </case>
             <case tag="okay_hand">
                 <state img="0-calm.png">I can handle this.</state>
                 <state img="0-calm.png">What did everybody else get?</state>
+            </case>
+            <case alsoPlaying="gay_spaghetti_chef" tag="okay_hand" totalRounds="0">
+                <state img="0-annoyed.png">Uggh, Spaghetti Night at the Inventory <i>again</i>?</state>
             </case>
             <case alsoPlaying="kyu" tag="okay_hand" totalRounds="0">
                 <state img="0-happy.png">Hey, it's Kyu-sama! I love how your look is Casual Friday minus Take Your Pants to Work Day.</state>
@@ -580,6 +591,9 @@
             <case alsoPlaying="zone-tan" tag="okay_hand" totalRounds="0">
                 <state img="0-calm.png">Hey, Zone-tan! Long time, no see!</state>
             </case>
+            <case tag="okay_hand" totalAlive="3" totalRounds="0">
+                <state img="0-sad.png">Oh, an epilogue farm? I see how it is...</state>
+            </case>
             <case tag="swap_cards">
                 <state img="0-calm.png">I'll take ~cards~ cards, dealer-sama!</state>
                 <state img="0-calm.png">~cards~, please.</state>
@@ -589,11 +603,17 @@
                 <state img="0-awkward.png">Aww, this hand is awful.</state>
                 <state img="0-sad.png">I... I don't know about this hand, dealer-sama!</state>
             </case>
+            <case alsoPlaying="gay_spaghetti_chef" tag="bad_hand" totalRounds="0">
+                <state img="0-annoyed.png">Uggh, Spaghetti Night at the Inventory <i>again</i>?</state>
+            </case>
             <case alsoPlaying="kyu" tag="bad_hand" totalRounds="0">
                 <state img="0-happy.png">Hey, it's Kyu-sama! I love how your look is Casual Friday minus Take Your Pants to Work Day.</state>
             </case>
             <case alsoPlaying="zone-tan" tag="bad_hand" totalRounds="0">
                 <state img="0-calm.png">Hey, Zone-tan! Long time, no see!</state>
+            </case>
+            <case tag="bad_hand" totalAlive="3" totalRounds="0">
+                <state img="0-sad.png">Oh, an epilogue farm? I see how it is...</state>
             </case>
             <case tag="stripped">
                 <state img="0-sad.png">I miss my ~clothing~ already...</state>
@@ -1158,7 +1178,8 @@
 
         <stage id="2">
             <case tag="female_must_strip">
-                <state img="2-interested.png">Teeheehee! Strip, ~name~-sama! &lt;3</state>
+                <state img="2-interested.png">Time to take off your panties, ~name~-sama. You're taking requests, right?</state>
+                <state img="2-happy.png">Another layer bites the dust!</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="2-awkward.png">Oh dear!</state>
@@ -2517,7 +2538,7 @@
                 <state img="4-devious.png">Asuna-sama, you said you liked beaters, right?</state>
             </case>
             <case saidMarker="nugi-chan_sph" tag="male_start_masturbating" target="human">
-                <state img="4-loss.png">I can go find you some tweezers if you're having trouble getting a grip.</state>
+                <state img="4-small2.png">Now that's what I call using your noodle!</state>
             </case>
             <case tag="male_chest_is_visible">
                 <state img="4-calm.png">I see a blush, ~name~-sama! I thought guys didn't mind being shirtless.</state>
@@ -2704,6 +2725,9 @@
             </case>
             <case tag="bad_hand">
                 <state img="4-sad.png">Does anyone want to play rock-paper-scissors to decide who wins from now on?</state>
+            </case>
+            <case notSaidMarker="nugi-chan_sph_lifetime" saidMarker="nugi-chan_sph" tag="bad_hand">
+                <state img="4-mean.png" marker="nugi-chan_sph_lifetime">This hand is more disappointing than ~player~-sama's little dick. Just kidding! How could I compare it to a <i>lifetime</i> of disappointment?</state>
             </case>
             <case tag="stripped">
                 <state img="4-stripped.png">At least I brought a nice bra.</state>
@@ -3240,6 +3264,7 @@
         <stage id="6">
             <case tag="female_must_strip">
                 <state img="6-happy.png">This is more like it! Take if off, ~name~!</state>
+                <state img="6-happy.png">~name~-sama is about to strip for us. But this time it will be very slowly and very <i>sexually</i>.</state>
             </case>
             <case tag="female_must_strip" target="aimee" targetStage="0">
                 <state img="6-awkward.png">Oh dear!</state>
@@ -3556,8 +3581,10 @@
                 <state img="6-sad.png">Time for the best part!</state>
             </case>
             <case tag="male_small_crotch_is_visible">
-                <state img="6-mean.png">Ahahahahahaha! Oh, man... Thanks! I haven't had a laugh like that in ages!</state>
-                <state img="6-small2.png">I brought mouthwatering tits to the table, and you brought... that little dicklet.</state>
+                <state img="6-annoyed.png">Your tongue's been writing checks that your dick can't cash.</state>
+            </case>
+            <case saidMarker="nugi-chan_sph" tag="male_small_crotch_is_visible">
+                <state img="6-shocked.png">Wow! It's almost as tiny as ~player~-sama's!</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="fred">
                 <state img="6-calm.png">... That's my fetish!</state>
@@ -3580,6 +3607,9 @@
             </case>
             <case tag="female_small_chest_is_visible">
                 <state img="6-calm.png">You've got nothing to show! Put your ~clothing~ back on. That was sexier.</state>
+            </case>
+            <case saidMarker="nugi-chan_sph" tag="female_small_chest_is_visible">
+                <state img="6-shocked.png">Aw, so little, ~name~-chan. You're never going to get a man with those. Unless you're willing to settle for a tiny dick like ~player~-sama's.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="6-interested.png">All nice and topless for me... now I wonder, are you cold, or turned on by stripping in front of others? &lt;3</state>
@@ -3710,6 +3740,9 @@
             </case>
             <case hasHand="One Pair" tag="okay_hand">
                 <state img="6-devious.png">I have the best pair!</state>
+            </case>
+            <case notSaidMarker="nugi-chan_sph_lipstick" saidMarker="nugi-chan_sph" tag="okay_hand">
+                <state img="6-small1.png" marker="nugi-chan_sph_lipstick">So today we learned that ~player~-sama has a penis the size of my lipstick. But unlike lipstick, I don't want it anywhere near my mouth.</state>
             </case>
             <case tag="swap_cards">
                 <state img="6-calm.png">I'll take ~cards~ cards, dealer-sama!</state>
@@ -4760,7 +4793,7 @@
                 <state img="9-shocked.png">I have a position that needs filling, but I think you're overqualified!</state>
             </case>
             <case saidMarker="nugi-chan_sph" tag="male_large_crotch_is_visible">
-                <state img="9-horny.png">See, ~player, this is what a real man looks like.</state>
+                <state img="9-horny.png">Now <i>that's</i> a man! Take notes, ~player~-sama.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="9-happy.png">Hahaha! Now, no covering up, ~name~-sama; I want to see my rewards. &lt;3</state>
@@ -4965,14 +4998,14 @@
                 <state img="9-interested.png">Teeheehee! Strip, ~name~-sama! &lt;3</state>
             </case>
             <case tag="male_small_crotch_is_visible">
-                <state img="9-small2.png">Haha! It's bite-sized! Shame I just lost my apetite.</state>
-                <state img="9-awkward.png">Wow! I'm sure it will get even bigger when you hit puberty!</state>
+                <state img="9-awkward.png">It's okay if you alread finished in your ~clothing~. My performance <i>was</i> pretty hot.</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="fred">
                 <state img="9-calm.png">... That's my fetish!</state>
             </case>
             <case tag="male_small_crotch_is_visible" target="human">
                 <state img="9-small2.png" marker="nugi-chan_sph">Haha! It's bite-sized! Shame I just lost my apetite.</state>
+                <state img="9-calm.png" marker="nugi-chan_sph">It's dongles like that that make me want to remove my access port.</state>
                 <state img="9-awkward.png" marker="nugi-chan_sph">Wow! I'm sure it will get even bigger when you hit puberty!</state>
             </case>
             <case tag="male_removing_accessory">

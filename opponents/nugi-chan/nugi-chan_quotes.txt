@@ -31,6 +31,8 @@ release=9
 marker=nugi-chan_blames_ai,public,Because Nugi-chan is a web site mascot, she knows that she is digital and has AI.
 marker=nugi-chan_tweeting_raven,public,Nugi-chan says she'll live-tweet Raven's stripping.
 marker=nugi-chan_sph,public,Nugi-chan makes "SPH" remarks when a male player reveals a small crotch. She has the same comments for male NPCs but does not set a marker to remember this.
+marker=nugi-chan_sph_lifetime,public,Nugi-chan's bad hand doesn't compare to a lifetime of disappointment.
+marker=nugi-chan_sph_lipstick,public,Nugi-chan compares the player's small size to her lipstick.
 
 
 
@@ -85,6 +87,13 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 0-okay_hand=,
 0-bad_hand=,
 
+0-good_hand,totalAlive:3,totalRounds:0=sad,Oh, an epilogue farm? I see how it is...
+0-okay_hand,totalAlive:3,totalRounds:0=sad,Oh, an epilogue farm? I see how it is...
+0-bad_hand,totalAlive:3,totalRounds:0=sad,Oh, an epilogue farm? I see how it is...
+
+0-good_hand,alsoPlaying:gay_spaghetti_chef,totalRounds:0=annoyed,Uggh, Spaghetti Night at the Inventory <i>again</i>?
+0-okay_hand,alsoPlaying:gay_spaghetti_chef,totalRounds:0=annoyed,Uggh, Spaghetti Night at the Inventory <i>again</i>?
+0-bad_hand,alsoPlaying:gay_spaghetti_chef,totalRounds:0=annoyed,Uggh, Spaghetti Night at the Inventory <i>again</i>?
 0-good_hand,alsoPlaying:kyu,totalRounds:0=happy,Hey, it's Kyu-sama! I love how your look is Casual Friday minus Take Your Pants to Work Day.
 0-okay_hand,alsoPlaying:kyu,totalRounds:0=happy,Hey, it's Kyu-sama! I love how your look is Casual Friday minus Take Your Pants to Work Day.
 0-bad_hand,alsoPlaying:kyu,totalRounds:0=happy,Hey, it's Kyu-sama! I love how your look is Casual Friday minus Take Your Pants to Work Day.
@@ -135,6 +144,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 4-bad_hand=sad,Does anyone want to play rock-paper-scissors to decide who wins from now on?
 
 4-good_hand,alsoPlaying:nagisa,alsoPlayingStage:5,alsoPlayingHand:High Card=mean,Who else is ready to be the first ever to see Nagisa-sama's titties? <3
+4-bad_hand,saidMarker:nugi-chan_sph,notSaidMarker:nugi-chan_sph_lifetime,marker:nugi-chan_sph_lifetime=mean,This hand is more disappointing than ~player~-sama's little dick. Just kidding! How could I compare it to a <i>lifetime</i> of disappointment?
 
 #lost skirt (underwear only)
 5-good_hand=,
@@ -155,6 +165,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 6-good_hand,alsoPlaying:nagisa,alsoPlayingStage:6,alsoPlayingHand:High Card=devious,Prepare to pee yourself, Nagisa-sama!
 6-good_hand,alsoPlaying:buffy,alsoPlayingStage:6,alsoPlayingHand:High Card=devious,What did you get, Buffy-sama? You've got a lot at <i>stake</i> right now.
 6-okay_hand,hasHand:One Pair=devious,I have the best pair!
+6-okay_hand,saidMarker:nugi-chan_sph,notSaidMarker:nugi-chan_sph_lipstick,marker:nugi-chan_sph_lipstick=small1,So today we learned that ~player~-sama has a penis the size of my lipstick. But unlike lipstick, I don't want it anywhere near my mouth.
 6-okay_hand,alsoPlaying:daphne,priority:0=interested,Daphne-sama, if your van is parked outside, you and I could get to know each other a little better later. <3
 
 #lost panties (naked)
@@ -240,7 +251,7 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 0-female_human_must_strip=,
 0-female_must_strip=calm,Please remove one article of clothing, ~name~-sama. The bigger, the better!
 0-female_must_strip=loss,It's time to take something off, ~name~-sama. ~player~-sama and I will watch closely to make sure you're doing it right.
-0-female_must_strip=sad,I wonder what the odds are of me playing a perfect game...
+0-female_must_strip,totalRounds:5=sad,I wonder what the odds are of me playing a perfect game...
 
 #lost shoes
 1-male_human_must_strip=,
@@ -253,7 +264,8 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 2-male_human_must_strip=loss,I know you'd rather see me strip instead, but just roll with it.
 2-male_must_strip=,
 2-female_human_must_strip=,
-2-female_must_strip=,
+2-female_must_strip=interested,Time to take off your panties, ~name~-sama. You're taking requests, right?
+2-female_must_strip=happy,Another layer bites the dust!
 
 #lost stockings
 3-male_human_must_strip=calm,Would you like me to assist you in disrobing, ~name~-sama?
@@ -281,6 +293,7 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 6-male_must_strip=,
 6-female_human_must_strip=,
 6-female_must_strip=happy,This is more like it! Take if off, ~name~!
+6-female_must_strip=happy,~name~-sama is about to strip for us. But this time it will be very slowly and very <i>sexually</i>.
 
 #lost panties (naked)
 -3-male_human_must_strip=,
@@ -1202,15 +1215,16 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 6-male_chest_will_be_visible=,
 6-male_chest_is_visible=,
 6-male_crotch_will_be_visible=,
-6-male_small_crotch_is_visible=mean,Ahahahahahaha! Oh, man... Thanks! I haven't had a laugh like that in ages!
+6-male_small_crotch_is_visible=annoyed,Your tongue's been writing checks that your dick can't cash.
+6-male_small_crotch_is_visible,saidMarker:nugi-chan_sph=shocked,Wow! It's almost as tiny as ~player~-sama's!
 6-male_small_crotch_is_visible,target:human,marker:nugi-chan_sph=mean,Ahahahahahaha! Oh, man... Thanks! I haven't had a laugh like that in ages!
-6-male_small_crotch_is_visible=small2,I brought mouthwatering tits to the table, and you brought... that little dicklet.
 6-male_small_crotch_is_visible,target:human,marker:nugi-chan_sph=small2,I brought mouthwatering tits to the table, and you brought... that little dicklet.
 6-male_medium_crotch_is_visible=,
 6-male_large_crotch_is_visible=,
 
 6-female_chest_will_be_visible=,
 6-female_small_chest_is_visible=calm,You've got nothing to show! Put your ~clothing~ back on. That was sexier.
+6-female_small_chest_is_visible,saidMarker:nugi-chan_sph=shocked,Aw, so little, ~name~-chan. You're never going to get a man with those. Unless you're willing to settle for a tiny dick like ~player~-sama's.
 6-female_medium_chest_is_visible=,
 6-female_large_chest_is_visible=mean,Mine are still bigger! Now I wonder, are you cold, or turned on by stripping in front of others? <3
 6-female_crotch_will_be_visible=,
@@ -1255,13 +1269,13 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 -1-male_chest_will_be_visible=,
 -1-male_chest_is_visible=,
 -1-male_crotch_will_be_visible=,
--1-male_small_crotch_is_visible=small2,Haha! It's bite-sized! Shame I just lost my apetite.
+-1-male_small_crotch_is_visible=awkward,It's okay if you alread finished in your ~clothing~. My performance <i>was</i> pretty hot.
 -1-male_small_crotch_is_visible,target:human,marker:nugi-chan_sph=small2,Haha! It's bite-sized! Shame I just lost my apetite.
--1-male_small_crotch_is_visible=awkward,Wow! I'm sure it will get even bigger when you hit puberty!
+-1-male_small_crotch_is_visible,target:human,marker:nugi-chan_sph=calm,It's dongles like that that make me want to remove my access port.
 -1-male_small_crotch_is_visible,target:human,marker:nugi-chan_sph=awkward,Wow! I'm sure it will get even bigger when you hit puberty!
 -1-male_medium_crotch_is_visible=,
 -1-male_large_crotch_is_visible=shocked,I have a position that needs filling, but I think you're overqualified!
--1-male_large_crotch_is_visible,saidMarker:nugi-chan_sph=horny,See, ~player, this is what a real man looks like.
+-1-male_large_crotch_is_visible,saidMarker:nugi-chan_sph=horny,Now <i>that's</i> a man! Take notes, ~player~-sama.
 
 -1-female_chest_will_be_visible=,
 -1-female_small_chest_is_visible=,
@@ -1271,7 +1285,6 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 -1-female_crotch_is_visible=,
 
 #targeted
-
 0-female_chest_will_be_visible,target:aimee=embarrassed,This wouldn't be the first game I've played where something went up further than expected...
 1-female_chest_will_be_visible,target:aimee=embarrassed,This wouldn't be the first game I've played where something went up further than expected...
 2-female_chest_will_be_visible,target:aimee=embarrassed,This wouldn't be the first game I've played where something went up further than expected...
@@ -1583,7 +1596,7 @@ female_finished_masturbating=mean,Good girl, loser-sama. You get to sit there na
 1-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=loss,I can go find you some tweezers if you're having trouble getting a grip.
 2-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=loss,I can go find you some tweezers if you're having trouble getting a grip.
 3-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=loss,I can go find you some tweezers if you're having trouble getting a grip.
-4-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=loss,I can go find you some tweezers if you're having trouble getting a grip.
+4-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=small2,Now that's what I call using your noodle!
 5-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=shocked,Wait, are you legal? With a tiny penis like that, maybe you're just a tall preteen.
 6-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=interested,Go on. Start whipping up the world's smallest serving of cream.
 -3-male_start_masturbating,target:human,saidMarker:nugi-chan_sph=blushpinkies,Did that little thing get slightly bigger?
