@@ -22,6 +22,11 @@ tag=straight
 tag=anime
 tag=visual_novel
 
+#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
+tag=nagisa
+
+
+
 marker=nagisa_asks_buffy_about_school,public,Nagisa and Buffy feel differently about high school.
 marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does not repeat.
 marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
@@ -35,7 +40,7 @@ marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce t
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
 marker=nagisa_swimsuit,public,Nagisa modestly claims not to look good in a swimsuit.
 marker=nagisa_tentacle,public,Nagisa can make a tentacle comparison when playing with Zone-tan.
-
+marker=nagisa_underwear_party,public,Zoey and Nagisa entertain the idea of having an underwear party instead.
 
 
 #Nagisa's poker skill is average for the first stage, dips to bad to hasten sock removal, then returns to average for her larger items.
@@ -154,16 +159,19 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
 0-okay_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
 0-bad_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
-0-good_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
-0-okay_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
-0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
-0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
 0-good_hand,alsoPlaying:xander,totalRounds:0=embarrassed,Oh, Xander and I just met outside. I didn't know we were here to play the same game...
 0-okay_hand,alsoPlaying:xander,totalRounds:0=embarrassed,Oh, Xander and I just met outside. I didn't know we were here to play the same game...
-0-bad_hand,alsoPlaying:xander,totalRounds:0=embarrassed,WOh, Xander and I just met outside. I didn't know we were here to play the same game...
+0-bad_hand,alsoPlaying:xander,totalRounds:0=embarrassed,Oh, Xander and I just met outside. I didn't know we were here to play the same game...
 0-good_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
+
+0-good_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
+0-okay_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
+0-bad_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
+0-good_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+0-okay_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
 
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
@@ -184,6 +192,10 @@ clothes=Panties,panties,important,lower
 1-good_hand,alsoPlaying:zoey,priority:0=happy,You all look really strong. If it's okay to ask, what do you do for work?
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=happy,Your twintails are really pretty, Marinette.
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=idea,Marinette, you remind me of my friend Mei, but all grown up!
+
+1-good_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
+1-okay_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
+1-bad_hand,alsoPlaying:kyu,totalRounds:1=sad,Maybe you're better than me at poker, Kyu. I need all the help I can get.
 
 #lost socks and shoes
 2-good_hand=interested,This is better than my last hand!
@@ -266,6 +278,7 @@ clothes=Panties,panties,important,lower
 -3-bad_hand=embarrassed,I'm so nervous right now, I can even taste it.
 -3-bad_hand=veryembarrassed,I think I'm starting to get nervous again.
 
+-3-bad_hand,alsoPlaying:kyu,priority:0=nervous,Kyu, if you can grant wishes, I really think I need your help!
 -3-bad_hand,alsoPlaying:revy,alsoPlayingStage:8,totalFinished:1-3,priority:0=nervous,Even the mean gun lady is doing it... Do I even have a chance?
 
 
@@ -560,6 +573,10 @@ clothes=Panties,panties,important,lower
 1-female_must_strip,target:may,targetStage:0=singing,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
 2-female_must_strip,target:may,targetStage:0=happy,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
 3-female_must_strip,target:may,targetStage:0=thinking,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
+0-female_must_strip,target:meia,targetStage:0=winkthumbsup,You look really cool, Meia. Are you an astronaut?
+1-female_must_strip,target:meia,targetStage:0=idea,You look really cool, Meia. Are you an astronaut?
+2-female_must_strip,target:meia,targetStage:0=interested,You look really cool, Meia. Are you an astronaut?
+3-female_must_strip,target:meia,targetStage:0=thinking,You look really cool, Meia. Are you an astronaut?
 0-female_must_strip,target:mileena=veryembarrassed,But... but you're basically naked already!
 1-female_must_strip,target:mileena=maximumembarrassed,But... but you're basically naked already!
 2-female_must_strip,target:mileena=embarrassed,Mileena's turn? Can't we make an exception for girls who started in bandages?
@@ -613,8 +630,8 @@ clothes=Panties,panties,important,lower
 3-female_must_strip,target:wiifitfemale,targetStage:1=sad,I'm sorry that I don't play your games, Ms Trainer. My body is weak, so I can't push it too hard.
 4-female_must_strip,target:wiifitfemale,targetStage:1=shy,I'm sorry that I don't play your games, Ms Trainer. My body is weak, so I can't push it too hard.
 5-female_must_strip,target:wiifitfemale,targetStage:1=worried,I'm sorry that I don't play your games, Ms Trainer. My body is weak, so I can't push it too hard.
-6-female_must_strip,target:wiifitfemale,targetStage:2=maximumembarrassed,I can't do any more excercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
--3-female_must_strip,target:wiifitfemale,targetStage:2=lookingdown,I can't do any more excercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
+6-female_must_strip,target:wiifitfemale,targetStage:2=maximumembarrassed,I can't do any more exercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
+-3-female_must_strip,target:wiifitfemale,targetStage:2=lookingdown,I can't do any more exercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
 0-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=calm,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
 1-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=calm,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
 2-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=happy,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
@@ -770,6 +787,12 @@ clothes=Panties,panties,important,lower
 -1-female_removed_accessory,target:spooky=embarrassed,Thanks for putting down the knife! That was making me really anxious.
 0-female_removed_accessory,target:zoey,targetStage:5=winkthumbsup,I'm glad you still had your belt. You worried me for a minute there!
 1-female_removed_accessory,target:zoey,targetStage:5=strip,I'm glad you still had your belt. You worried me for a minute there!
+2-female_removed_accessory,target:zoey,targetStage:5=happy,I wish I'd thought of wearing a big belt like that.
+3-female_removed_accessory,target:zoey,targetStage:5=sad,I wish I'd thought of wearing a big belt like that.
+4-female_removed_accessory,target:zoey,targetStage:5=shy,I wish I'd thought of wearing a big belt like that.
+5-female_removed_accessory,target:zoey,targetStage:5=worried,I wish I'd thought of wearing a big belt like that.
+6-female_removed_accessory,target:zoey,targetStage:5=worried,I wish I'd thought of wearing a big belt like that.
+-3-female_removed_accessory,target:zoey,targetStage:5=embarrassed,I wish I'd thought of wearing a big belt like that.
 
 
 
@@ -1123,13 +1146,13 @@ clothes=Panties,panties,important,lower
 6-female_removed_major,target:marinette,targetStage:2=emphatic,I'm playing this game with amazing people, but I won't give up!
 -3-female_removed_major,target:marinette,targetStage:2=worried,I thought we were almost even, but now it's like you're just starting...
 -1-female_removed_major,target:marinette,targetStage:2=coveringbreasts,It's like you went back in time to the start of the game. I don't think it's fair to use magic to cheat like that.
-0-female_removed_major,target:zoey,targetStage:6=embarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
-1-female_removed_major,target:zoey,targetStage:6=veryembarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
-2-female_removed_major,target:zoey,targetStage:6=worried,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
-3-female_removed_major,target:zoey,targetStage:6=stripping,An underwear party? Um, so would that mean I'd have to take off my clothes but we could skip the rest of the game?
-4-female_removed_major,target:zoey,targetStage:6=stripping,An underwear party? Um, so would that mean I'd have to take off my skirt but we could skip the rest of the game?
-5-female_removed_major,target:zoey,targetStage:6=veryembarrassed,An underwear party? Oh my gosh, yes! I didn't even know that was an option...
-6-female_removed_major,target:zoey,targetStage:6=peaceful,An underwear party? Would... would that mean I could put my bra back on?
+0-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=embarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
+1-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=veryembarrassed,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
+2-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=worried,An underwear party? Um, so would that mean I'd have to take off my clothes even though I'm winning?
+3-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=stripping,An underwear party? Um, so would that mean I'd have to take off my clothes but we could skip the rest of the game?
+4-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=stripping,An underwear party? Um, so would that mean I'd have to take off my skirt but we could skip the rest of the game?
+5-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=veryembarrassed,An underwear party? Oh my gosh, yes! I didn't even know that was an option...
+6-female_removed_major,target:zoey,targetStage:6,marker:nagisa_underwear_party=peaceful,An underwear party? Would... would that mean I could put my bra back on?
 -3-female_removed_major,target:zoey,targetStage:6=determined,No way! You can't just change the rules when you're losing!
 -1-female_removed_major,target:zoey,targetStage:6=coveringbreasts,I don't think that's very fair, Zoey...
 
