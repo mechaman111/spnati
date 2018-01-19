@@ -1,0 +1,719 @@
+#required for behaviour.xml
+first=Elizabeth
+last=
+label=Elizabeth
+gender=female
+size=medium
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=11
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=video_game
+tag=shy
+tag=kind
+tag=american
+tag=innocent
+
+#required for meta.xml
+#select screen image
+pic=0-calm.png
+height=5'6"
+from=Bioshock Infinite
+writer=undeadclown
+artist=josephkantel
+description=A young woman who was held captive aboard Columbia since she was a baby, Elizabeth has the power to open tears in the fabric of Space-Time.
+release=5
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,Hello, I'm Elizabeth. I suppose we'll be playing strip poker together tonight.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Boots,boots,minor,other
+clothes=Jacket,jacket,major,upper
+clothes=Skirt,skirt,major,lower
+clothes=Choker,choker,extra,other
+clothes=Slip,slip,major,lower
+clothes=Stockings,stockings,minor,lower
+clothes=Corset,corset,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=calm,I'll take ~cards~, please.
+
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#stage-specific lines that override the stage-generic ones
+good_hand=happy,Oh... this looks promising!
+okay_hand=calm,I think I can work with this.
+bad_hand=sad,This could go poorly...
+
+
+#fully clothed
+0-good_hand,alsoPlaying:alice,totalRounds:1=awkward,I somehow thought you were blonde, Alice.
+0-good_hand,alsoPlaying:alice,totalRounds:1=awkward,I somehow thought you were blonde, Alice.
+0-good_hand,alsoPlaying:alice,totalRounds:1=awkward,I somehow thought you were blonde, Alice.
+0-good_hand,alsoPlaying:alice,totalRounds:0=shocked,Have I followed a white rabbit?
+0-okay_hand,alsoPlaying:alice,totalRounds:0=shocked,Have I followed a white rabbit?
+0-bad_hand,alsoPlaying:alice,totalRounds:0=shocked,Have I followed a white rabbit?
+
+
+#lost choker
+4-good_hand=happy,Thank goodness! I should be safe for now.
+4-okay_hand=calm,Hmmm... hopefully it will be good enough.
+4-bad_hand=sad,Not a good sign. I'm already less dressed than I'm comfortable with...
+
+
+#lost slip
+5-good_hand=happy,Thank goodness! I should be safe for now.
+5-okay_hand=calm,Hmmm... hopefully it will be good enough.
+5-bad_hand=sad,Not a good sign. I'm already less dressed than I'm comfortable with...
+
+
+#lost stockings
+6-good_hand=happy,What a relief! I'm certainly not ready to show my... well, anyway...
+6-okay_hand=calm,I hope this will work. I'm exposed enough as it is.
+6-bad_hand=sad,This can't be! If I lose here I'll have to show my... my...
+
+
+#lost corset
+7-good_hand=happy,I think I'm safe! Though, still very, very indecent.
+7-okay_hand=calm,This should be enough to win. But if it's not...
+7-bad_hand=sad,No...
+
+-3-good_hand=happy,If only I could win clothes back...
+-3-okay_hand=calm,I don't have anything to bet. I have to win here...
+-3-bad_hand=sad,This is a nightmare! What am I going to do if I lose here?
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing boots
+0-must_strip_winning=loss,So I'm up? Oh well... I'm hardly the first to take off something in this game.
+0-must_strip_normal=loss,I guess odds were against me staying fully dressed the whole game.
+0-must_strip_losing=loss,Me!? Being the first to lose is not an auspicious start...
+0-stripping=strip,Well, I'll start with the footwear. Unexciting, but modest at least.
+
+
+#losing jacket
+1-stripped=calm,That's first blood drawn on me. Hopefully this isn't a sign of things to come.
+1-must_strip_winning=loss,I suppose it's only fair I join the rest of you in disrobing... just a little.
+1-must_strip_normal=loss,I see... it's that time again.
+1-must_strip_losing=loss,Another loss so soon?
+1-stripping=strip,I suppose my petticoat would be a bit more interesting...
+
+
+#losing skirt
+2-stripped=happy,Heh... ta-dah!
+2-must_strip_winning=loss,Looking at the way you're all dressed now I actually feel a little bad, so maybe this is for the best.
+2-must_strip_normal=loss,Again? It's not my day.
+2-must_strip_losing=loss,Maybe choosing to play this today wasn't such a good idea...
+2-stripping=strip,I guess the skirt has to go...
+
+
+#losing choker
+3-stripped=happy,Luckily, I decided to wear a slip today.
+3-must_strip_winning=loss,It would seem I'm starting to come down to everyone else's level now...
+3-must_strip_normal=loss,This is getting intense.
+3-must_strip_losing=loss,This isn't funny any more, I'm very near to showing things a proper lady shouldn't be showing off!
+3-stripping=strip,I'm going to tone things down a notch and just remove the choker.
+
+
+#losing slip
+4-stripped=sad,I'm not giving this away, by the way. It was a gift.
+4-must_strip_winning=loss,I see... I suppose I'm hardly setting the standard for lewdness here.
+4-must_strip_normal=loss,I'm running out of options here...
+4-must_strip_losing=loss,No... why is this going so wrong?
+4-stripping=strip,And here I was thinking I was being so clever.
+
+
+#losing stockings
+5-stripped=sad,I'm practically in my underthings now. Heh... not exactly fitting for a lady, is it?
+5-must_strip_winning=loss,Well... if everyone else has already done it...
+5-must_strip_normal=loss,Wow... everyone can practically see everything already. This is rather embarrassing.
+5-must_strip_losing=loss,It can't be! I'm the first one down to their underthings!?
+5-stripping=strip,Time I show some leg, I suppose. Try not to get too excited.
+
+
+#losing corset
+6-stripped=sad,I can't believe I'm down to my last two items. This is going much worse than I'd hoped.
+6-must_strip_winning=loss,Oh dear... even though everyone else already has...
+6-must_strip_normal=loss,Oh... dear...
+6-must_strip_losing=loss,No... no! A lady shouldn't... no one else has!
+6-stripping=strip,I... I can't believe I have to show my...
+
+
+#lost all clothing
+7-stripped=sad,Please... don't stare too much...
+7-must_strip_winning=loss,To hell with it! Even if everyone's naked already...
+7-must_strip_normal=loss,But... !
+7-must_strip_losing=loss,I'm... the first one completely stripped...
+7-stripping=strip,This can't be happening! Damn it, I don't have a choice.
+
+-3-stripped=sad,Oh, God, I'm naked! This is mortifying...
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-specific lines that override the stage-generic ones
+male_human_must_strip=interested,Oh, dear! Should I be watching this?
+male_must_strip=interested,Oh, my...
+female_human_must_strip=interested,Well, fair's fair! You lost, ~name~. It's time to pay up.
+female_must_strip=interested,Ah, so you're up, ~name~.
+
+
+#fully clothed
+0-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+0-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+0-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+0-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+0-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+
+
+#lost boots
+1-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+1-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+1-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+1-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+1-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+
+
+#lost jacket
+2-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+2-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+2-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+2-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+2-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+
+
+#lost skirt
+3-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+3-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+3-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+3-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+3-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+
+
+#lost choker
+4-male_human_must_strip=interested,Bad luck, ~name~.
+4-female_human_must_strip=interested,It seems like your time has come, ~name~.
+4-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+4-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+4-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+4-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+4-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+
+
+#lost slip
+5-male_human_must_strip=interested,Bad luck, ~name~.
+5-female_human_must_strip=interested,It seems like your time has come, ~name~.
+5-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+5-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+5-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+5-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+5-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+
+
+#lost stockings
+6-male_human_must_strip=interested,Suddenly it doesn't feel so cold in here...
+6-female_human_must_strip=interested,Ha, thank goodness! I mean... that's bad luck, ~name~.
+6-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+6-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+6-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+6-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+6-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+
+
+#lost corset
+7-male_human_must_strip=interested,I'm feeling flushed...
+7-female_human_must_strip=interested,At least I'm not the only one stripping.
+7-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+7-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+7-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+7-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+7-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+
+-3-male_human_must_strip=interested,I can't say I'm complaining...
+-3-female_human_must_strip=interested,Soon you'll be just as exposed as I am...
+-3-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+-3-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+-3-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+-3-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+-3-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+
+-2-male_human_must_strip=interested,I can't say I'm complaining...
+-2-female_human_must_strip=interested,Soon you'll be just as exposed as I am...
+-2-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+-2-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+-2-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+-2-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+-2-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+
+-1-male_human_must_strip=interested,I was hoping for this...
+-1-female_human_must_strip=interested,Are you going to put on a show for us?
+-1-female_must_strip=interested,What are you going to take off for us, ~name~?
+-1-female_must_strip,target:alice,targetStage:0=interested,I have to admit, Alice. You are nothing like Songbird described you.
+-1-female_must_strip,targetStage:0,filter:brave=interested,This should be nothing for you, ~name~!
+-1-female_must_strip,target:alice,targetStage:1=interested,I hadn’t noticed before, but we seem to be wearing the same dress, Alice. I sincerely hope we don’t share the same past.
+-1-female_must_strip,target:lara,targetStage:0=interested,Lara, is this more or less exciting than tomb raiding?
+-1-female_must_strip,targetStage:0,filter:kind=interested,It's okay, ~name~, take your time.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_accessory=sad,I can understand not wanting to show off something major.
+male_removed_accessory=calm,Shall we continue, then?
+female_removing_accessory=sad,Yes, I agree. A lady should try to keep modest.
+female_removed_accessory=calm,And another item down. The game continues.
+
+
+#fully clothed
+0-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+0-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost boots
+1-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+1-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost jacket
+2-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+2-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost skirt
+3-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+3-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost choker
+4-male_removed_accessory=calm,Fair enough, ~name~.
+4-female_removing_accessory=sad,I wish I had a few things like that left...
+4-female_removed_accessory=calm,*Sigh* shall we move on, then?
+4-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+4-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+
+
+#lost slip
+5-male_removed_accessory=calm,Fair enough, ~name~.
+5-female_removing_accessory=sad,I wish I had a few things like that left...
+5-female_removed_accessory=calm,*Sigh* shall we move on, then?
+5-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+5-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost stockings
+6-male_removed_accessory=calm,That seems a bit small for this late in the game doesn't it?
+6-female_removing_accessory=sad,Must be nice...
+6-female_removed_accessory=calm,*Sigh* shall we move on, then?
+6-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+6-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+
+#lost corset
+7-male_removed_accessory=calm,Not exactly showing gentlemanly empathy for my state of undress, are you?
+7-female_removing_accessory=sad,Don't you think that's a little insensitive given my situation?
+7-female_removed_accessory=calm,Never mind. I'd do the same in your position.
+7-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+7-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+
+-3-male_removed_accessory=calm,Is that all?
+-3-female_removing_accessory=sad,Here I am, naked as the day I was born, and there you are, taking off trinkets.
+-3-female_removed_accessory=calm,It's just not fair...
+-3-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+-3-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+
+-2-male_removed_accessory=calm,Is that all?
+-2-female_removing_accessory=sad,Here I am, naked as the day I was born, and there you are, taking off trinkets.
+-2-female_removed_accessory=calm,It's just not fair...
+-2-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+-2-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+
+-1-male_removed_accessory=calm,Oh, dear... but I wished to see more.
+-1-female_removing_accessory=sad,Oh, are you only taking that off?
+-1-female_removed_accessory=calm,I think you can show a bit more skin than that, right?
+-1-female_removed_accessory,target:alice,targetStage:1=calm,It is nice you also dropped your blade, Alice. I mean, I can tear up reality, but you could have torn down my skin with ease.
+-1-female_removed_accessory,target:alice,targetStage:2=interested,What a shame! That apron looked good on you, Alice.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_minor=calm,*Giggle* Wow, I really am playing strip poker, huh?
+male_removed_minor=happy,Things are picking up, aren't they?
+female_removing_minor=calm,Are you sure there's not an earring you can take off or something, ~name~?
+female_removed_minor=happy,It seems the stakes are rising.
+
+
+#lost choker
+4-male_removed_minor=happy,You and I seem to be in similar circumstances...
+4-female_removing_minor=calm,Enjoy those while they last...
+4-female_removed_minor=happy,Soon you might end up like me.
+
+
+#lost slip
+5-male_removed_minor=happy,You and I seem to be in similar circumstances...
+5-female_removing_minor=calm,Enjoy those while they last...
+5-female_removed_minor=happy,Soon you might end up like me.
+
+
+#lost stockings
+6-male_removed_minor=happy,And understandable choice.
+6-female_removing_minor=calm,There goes another layer of modesty for you.
+6-female_removed_minor=happy,It could be worse... you could be doing as bad as I am.
+
+
+#lost corset
+7-male_removed_minor=happy,I don't know why I was expecting more...
+7-female_removing_minor=calm,Really? You still have that?
+7-female_removed_minor=happy,I have to admit, I'm a little jealous you still have so much on.
+
+-3-male_removed_minor=happy,You still have that much left?
+-3-female_removing_minor=calm,Not even a major piece of clothing yet, huh?
+-3-female_removed_minor=happy,What I wouldn't give for a pair of shoes right now... actually, that would probably just look strange.
+
+-2-male_removed_minor=happy,You still have that much left?
+-2-female_removing_minor=calm,Not even a major piece of clothing yet, huh?
+-2-female_removed_minor=happy,What I wouldn't give for a pair of shoes right now... actually, that would probably just look strange.
+
+-1-male_removed_minor=happy,Getting better.
+-1-female_removing_minor=calm,Fine, fine. But you can't hide yourself forever.
+-1-female_removed_minor=happy,Better, but I still want to see more.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_major=interested,W-what are you doing now?
+male_removed_major=interested,Oh dear... is my face red?
+female_removing_major=interested,Oh, my! How shameless!
+female_removed_major=interested,Goodness... that's quite a bit of skin you're showing there, ~name~.
+
+
+#fully clothed
+0-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost boots
+1-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost jacket
+2-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost skirt
+3-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost choker
+4-male_removed_major=interested,You don't have much left, do you?
+4-female_removing_major=interested,Just like me... out of small items.
+4-female_removed_major=interested,That's a cute piece of underwear, though, ~name~.
+4-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost slip
+5-male_removed_major=interested,You don't have much left, do you?
+5-female_removing_major=interested,Just like me... out of small items.
+5-female_removed_major=interested,That's a cute piece of underwear, though, ~name~.
+5-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost stockings
+6-male_removed_major=interested,Ah, I see you're showing undergarments as well, ~name~. You're in good company, at least.
+6-female_removing_major=interested,That's a pretty big piece you're losing...
+6-female_removed_major=interested,Hmm, it seems neither one of us is very decent, are we?
+6-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+#lost corset
+7-male_removed_major=interested,You aren't looking at me when you're doing that, are you?
+7-female_removing_major=interested,I see, so you have to show some underwear...
+7-female_removed_major=interested,You're catching up with me, it seems. My condolences.
+7-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+-3-male_removed_major=interested,Eep, for some reason I feel like I need to cover up more...
+-3-female_removing_major=interested,Are you finally losing something major, then?
+-3-female_removed_major=interested,I'd give anything to still be that covered...
+-3-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+-2-male_removed_major=interested,Eep, for some reason I feel like I need to cover up more...
+-2-female_removing_major=interested,Are you finally losing something major, then?
+-2-female_removed_major=interested,I'd give anything to still be that covered...
+-2-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+-1-male_removed_major=interested,Please... keep going.
+-1-female_removing_major=interested,Ooooh, yes. I'm, enjoying this.
+-1-female_removed_major=interested,How long can you keep that pretty underwear on, I wonder?
+-1-female_removed_major,target:alice,targetStage:3=shocked,Your underwear sure is... stripey...
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-specific lines that override the stage-generic ones
+male_chest_will_be_visible=interested,Are you not wearing anything under that!?
+male_chest_is_visible=interested,Um... nice... chest. You seem... well built... I'm terrible at situations like these.
+male_crotch_will_be_visible=horny,I think I should cover my eyes now...
+male_small_crotch_is_visible=calm,Oh... my... goodness. I mean... I've seen them in books, but... oh... my goodness.
+male_medium_crotch_is_visible=awkward,Oh... my... goodness. I mean... I've seen them in books, but... oh... my goodness.
+male_large_crotch_is_visible=shocked,Oh... my... goodness. I mean... I've seen them in books, but... oh... my goodness.
+female_chest_will_be_visible=interested,Oh, dear... it seems you'll have to show your...
+female_small_chest_is_visible=interested,Eep! They bounced!
+female_medium_chest_is_visible=horny,Eep! They bounced!
+female_large_chest_is_visible=shocked,Eep! They bounced!
+female_crotch_will_be_visible=horny,Wow, are you really going to go through with it!?
+female_crotch_is_visible=shocked,I suppose if you don't look too closely it's kind of like looking at a nude statue... with hair... and skin...
+
+
+#fully clothed
+0-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost boots
+1-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost jacket
+2-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost skirt
+3-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost choker
+4-male_chest_is_visible=interested,Goodness... that's distracting.
+4-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost slip
+5-male_chest_is_visible=interested,Goodness... that's distracting.
+5-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+
+
+#lost stockings
+6-male_chest_is_visible=interested,Heh... goodness, it seems neither of us is wearing very much, huh?
+6-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+6-female_crotch_will_be_visible=horny,Well... at least I wasn't the first one...
+6-female_crotch_is_visible=shocked,Are... are you okay like that? I'll try not to stare.
+
+
+#lost corset
+7-male_chest_is_visible=interested,Oh... with you taking that off and me... like this... it kind of seems like..well...
+7-male_small_crotch_is_visible=calm,It's... big...
+7-male_medium_crotch_is_visible=awkward,It's... big...
+7-male_large_crotch_is_visible=shocked,It's... big...
+7-female_chest_will_be_visible=interested,At least you aren't alone...
+7-female_small_chest_is_visible=interested,Oh, my! I'm impressed...
+7-female_medium_chest_is_visible=horny,Oh, my! I'm impressed...
+7-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+7-female_large_chest_is_visible=shocked,Oh, my! I'm impressed...
+7-female_crotch_will_be_visible=horny,Well... at least I wasn't the first one...
+7-female_crotch_is_visible=shocked,Are... are you okay like that? I'll try not to stare.
+
+-3-male_chest_is_visible=interested,So much indecency...
+-3-male_small_crotch_is_visible=calm,It's... big...
+-3-male_medium_crotch_is_visible=awkward,It's... big...
+-3-male_large_crotch_is_visible=shocked,It's... big...
+-3-female_chest_will_be_visible=interested,At least you aren't alone...
+-3-female_small_chest_is_visible=interested,Oh, my! I'm impressed...
+-3-female_medium_chest_is_visible=horny,Oh, my! I'm impressed...
+-3-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+-3-female_large_chest_is_visible=shocked,Oh, my! I'm impressed...
+-3-female_crotch_will_be_visible=horny,I guess we'll be naked together...
+-3-female_crotch_is_visible=shocked,I know... it's not fun...
+
+-2-male_chest_is_visible=interested,So much indecency...
+-2-male_small_crotch_is_visible=calm,It's... big...
+-2-male_medium_crotch_is_visible=awkward,It's... big...
+-2-male_large_crotch_is_visible=shocked,It's... big...
+-2-female_chest_will_be_visible=interested,At least you aren't alone...
+-2-female_small_chest_is_visible=interested,Oh, my! I'm impressed...
+-2-female_medium_chest_is_visible=horny,Oh, my! I'm impressed...
+-2-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+-2-female_large_chest_is_visible=shocked,Oh, my! I'm impressed...
+-2-female_crotch_will_be_visible=horny,I guess we'll be naked together...
+-2-female_crotch_is_visible=shocked,I know... it's not fun...
+
+-1-male_chest_is_visible=interested,This is... a pleasing sight.
+-1-male_small_crotch_is_visible=calm,Oh, wow. You seem aroused. Is it because of me?
+-1-male_medium_crotch_is_visible=awkward,Oh, wow. You seem aroused. Is it because of me?
+-1-male_large_crotch_is_visible=shocked,They should call you 'Big Daddy'!
+-1-female_chest_will_be_visible=interested,Oh my... I'm surprised how much I'm looking forward to this...
+-1-female_small_chest_is_visible=horny,Dear me, are you cold? you certainly LOOK cold. Would you like me to warm them up for you? Maybe you're just enjoying yourself? Either way, the offer stands.
+-1-female_medium_chest_is_visible=horny,Dear me, are you cold? you certainly LOOK cold. Would you like me to warm them up for you? Maybe you're just enjoying yourself? Either way, the offer stands.
+-1-female_medium_chest_is_visible,target:alice=interested,Hmm... I guess you could shrink. That way nobody will be able to see you.
+-1-female_large_chest_is_visible=shocked,Dear me, are you cold? you certainly LOOK cold. Would you like me to warm them up for you? Maybe you're just enjoying yourself? Either way, the offer stands.
+-1-female_crotch_will_be_visible=horny,Try and take them down slowly...
+-1-female_crotch_is_visible=shocked,You look very pretty like this, ~name~.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-specific lines that override the stage-generic ones
+male_must_masturbate=interested,Hmm? But you're out of clothing. What are you going to-
+male_start_masturbating=horny,Oh, my god!
+male_masturbating=horny,It's... getting bigger...
+male_finished_masturbating=shocked,Oh... OH! I should have looked away, but...
+female_must_masturbate=interested,Aren't you out of the game now? Surely you aren't going to-
+female_start_masturbating=horny,Um... shouldn't you be doing this in private, ~name~!?
+female_masturbating=horny,If you don't stop soon you'll... you'll...
+female_finished_masturbating=shocked,Well... that was... *blush*... something.
+
+
+#lost stockings
+6-female_must_masturbate=interested,Oh dear... .do you have to... you know?
+6-female_start_masturbating=horny,I'll... try to give you some privacy.
+6-female_masturbating=horny,So are you still... ? Yes, yes you are...
+6-female_finished_masturbating=shocked,Is it... does it feel... what's it like?
+
+
+#lost corset
+7-male_must_masturbate=interested,A-are you going to...
+7-male_start_masturbating=horny,It would certainly seem so...
+7-male_masturbating=horny,K-keep going... I mean... if you want to...
+7-male_finished_masturbating=shocked,It went so high!
+7-female_must_masturbate=interested,Oh dear... .do you have to... you know?
+7-female_start_masturbating=horny,I'll... try to give you some privacy.
+7-female_masturbating=horny,So are you still... ? Yes, yes you are...
+7-female_finished_masturbating=shocked,Is it... does it feel... what's it like?
+
+-3-male_must_masturbate=interested,A-are you going to...
+-3-male_start_masturbating=horny,It would certainly seem so...
+-3-male_masturbating=horny,K-keep going... I mean... if you want to...
+-3-male_finished_masturbating=shocked,It went so high!
+-3-female_must_masturbate=interested,I'm... quite glad this isn't me right now...
+-3-female_start_masturbating=horny,Do I really have to do this if I lose!?
+-3-female_masturbating=horny,I can't lose any more from here on!
+-3-female_finished_masturbating=shocked,I can't let anyone see me like that!
+
+-2-male_must_masturbate=interested,A-are you going to...
+-2-male_start_masturbating=horny,It would certainly seem so...
+-2-male_masturbating=horny,K-keep going... I mean... if you want to...
+-2-male_finished_masturbating=shocked,It went so high!
+-2-female_must_masturbate=interested,I'm... quite glad this isn't me right now...
+-2-female_start_masturbating=horny,Do I really have to do this if I lose!?
+-2-female_masturbating=horny,I can't lose any more from here on!
+-2-female_finished_masturbating=shocked,I can't let anyone see me like that!
+
+-1-male_must_masturbate=interested,I want to see what's it's like... when a boy does it.
+-1-male_start_masturbating=horny,Yes, just like that.
+-1-male_masturbating=horny,You can look at me if it helps.
+-1-male_finished_masturbating=shocked,Mmm. Maybe next time I can help you more directly...
+-1-female_must_masturbate=interested,It's okay. It's rather pleasing once you get used to it. Do you want some help?
+-1-female_start_masturbating=horny,Yes, just like that.
+-1-female_masturbating=horny,Touch yourself there a little more. That's it. Do you want to watch me?
+-1-female_finished_masturbating=shocked,Mmm, lovely. Perhaps next time you'd like to try with someone else's fingers... or tongue.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=loss,B-but I'm out of clothing. Y-you want me to what!? I... I...
+-3-must_masturbate=loss,So... I have to... you know... just like... oh, god...
+-3-start_masturbating=starting,This... has to be a nightmare. Please... don't watch!
+
+-2-masturbating=calm,This is... so humiliating!
+-2-heavy_masturbating=heavy,I'm... I'm feeling... warm... I don't... what... is this?
+-2-finishing_masturbating=finishing,Oh... oh God! I... I... no! I... not here! Not now! I... hnnnnnnnnnnngggAAAAAA!
+
+-1-finished_masturbating=finished,*Huff* huff* Oh... I can't believe... people saw... no...
+
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#stage-specific lines that override the stage-generic ones
+game_over_victory=happy,I am just glad to have kept some of my clothes, to be honest.
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=sad,Across infinite worlds, there <i>has</i> to be one in which I win!
+
+#EPILOGUE/ENDING
