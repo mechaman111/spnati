@@ -1,3 +1,29 @@
+# The following xml is for both D.Va's regular and Cruiser image sets. As Cruiser D.Va mostly has D.Va's regular dialogue, this will keep them synchronized.
+# When generating her xml from this file, please do so twice. The second time you generate, follow these steps:
+
+##1. Uncomment the following tag. The game will look for this repeatedly when deciding whether to play Cruiser lines:
+#tag=d.va_cruiser
+
+##2. Uncomment the following clothing and start lines and DELETE the original ones further below.
+#clothes=Gloves,gloves,extra,other
+#clothes=Boots,boots,extra,other
+#clothes=Headphones,headphones,extra,other
+#clothes=Jeans and shirt,jeans and shirt,major,other
+#clothes=Bra,bra,important,upper
+#clothes=Panties,panties,important,lower
+#start=0-peaceside,What's happenin', Daddio?
+#start=0-calm,Wow, nice comp. This is gonna be easy!
+#start=0-warpaint,Makeup? Nuh-uh! This is <i>warpaint</i>!
+#start=0-awkward,Oh, a fan, huh? Oh, well, who can blame you?
+#start=0-excited,Oh, by the way, I know I say "NERF THIS" a lot. Please don't <i>actually</i> "NERF THIS", okay?
+#start=0-riveting_cruiser,I can do it!
+
+##3. Generate the xml to go with her Cruiser folder.
+
+##4. Undo steps 1 and 2 for this document.
+
+
+
 #required for behaviour.xml
 first=D.Va
 last=
@@ -21,6 +47,8 @@ tag=bodysuit
 
 #Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
 tag=d.va
+
+
 
 #required for meta.xml
 #start picture
@@ -160,18 +188,24 @@ swap_cards=serene,~cards~ cards.
 0-must_strip_winning=peace,You guys are losing and I'm only NOW losing my gloves.
 0-must_strip_winning=excited,I'm fine, I'm fine...
 0-must_strip_winning,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
+0-must_strip_winning,count-d.va_cruiser:1,priority:0=prestrip_cruiser,You guys are losing and I'm only NOW losing my bangles.
 0-must_strip_normal=loss,It's easier to play without gloves anyway...
 0-must_strip_normal=sad,Damn. I got these gloves custom made!
+0-must_strip_normal,count-d.va_cruiser:1,priority:1000=prestrip_cruiser,I guess it's time to lose these snazzy bangles.
 0-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
 0-must_strip_losing=awkward,Aw, no fair. I should've been able to wear my mech as an extra layer.
 0-must_strip_losing,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
+0-must_strip_losing,count-d.va_cruiser:1,priority:1000=prestrip_cruiser,Aw, no fair. I should've been able to wear my mech as an extra layer.
 0-stripping=strip,This is nothing. I won't lose again.
+0-stripping,count-d.va_cruiser:1,priority:0=strip,Tell you what, I'll take the ascot off, too.
+0-stripping,count-d.va_cruiser:1,priority:0=strip,I've got places to be, so how about I take this thing off, too?
 1-stripped=stripped,I'm back in the fight!
 
 #Losing Shoes (accessory)
 1-must_strip_winning,marker:d.va_noobs=peace,I'm owning all you noobs anyway.
 1-must_strip_normal=saluting,Roger.
 1-must_strip_losing=angry,Damn it!
+1-must_strip_losing,count-d.va_cruiser:1,priority:1000=angry,Dang it!
 1-stripping=strip,Taking off.
 1-stripping=strip,I'm sure there's at least one person who wants to see this really badly.
 2-stripped=stripped,D.Va, online.
@@ -193,10 +227,12 @@ swap_cards=serene,~cards~ cards.
 3-must_strip_winning=excited,There goes my winning streak...
 3-must_strip_winning=heart,It seems you have enough credits to unlock my alternate outfit!
 3-must_strip_normal=awkward,My suit took too much damage. Bailing out!
+3-must_strip_normal,count-d.va_cruiser:1,priority:0=prestrip_cruiser,My outfit took too much damage. Bailing out!
 3-must_strip_normal=excited,I was hoping I'd get the chance to show off!
 3-must_strip_losing=shy,Time to raise my APM...
 3-must_strip_losing=loss,I feel like you're teaming up on me...
 3-stripping=strip,Suiting down...
+3-stripping,count-d.va_cruiser:1,priority:1000=strip,Yeah, I've got a stream to get to, so this round's a twofer.
 4-stripped=stripped,I could really use a hug right now.
 4-stripped=stripped,With a figure like this, how can people say that my diet is entirely Doritos and Mountain Dew?
 4-stripped=excited,D.Va in the flesh, woo! How do you like it?
@@ -216,6 +252,7 @@ swap_cards=serene,~cards~ cards.
 5-must_strip_normal=handsonhips,I guess it's time for me to be a team player...
 5-must_strip_losing=sad,I lost? No fair!
 5-must_strip_losing=stripped,Damn it! 
+5-must_strip_losing,count-d.va_cruiser:1,priority:1000=stripped,Dang it!
 5-stripping=strip,Now I'll bare it all.
 5-stripping=strip,Oh man, if my fans saw me like this... Hmm... That would actually be kinda hot.
 6-stripped=dismayed,I feel more exposed now than when I'm out of my mech.
@@ -264,9 +301,11 @@ swap_cards=serene,~cards~ cards.
 
 #Lost Suit
 4-male_human_must_strip=stripped,You got me out of my suit, so I'm hoping for a lot here!
+4-male_human_must_strip,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
 4-male_human_must_strip,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
 4-male_must_strip=loss,Believe me that this is more than a fair trade!
 4-female_human_must_strip=winking,Why not take off two things? I had to take off my whole suit in one go.
+4-female_human_must_strip,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
 4-female_must_strip=heart,Configuration: Celebratory!
 4-female_must_strip=calm,The huntress lays a trap for her prey...
 4-female_must_strip=winking,Ding!
@@ -302,9 +341,20 @@ swap_cards=serene,~cards~ cards.
 -1-female_must_strip=winking,You know, I can play both sides, if you know what I mean...
 
 #Targeted
-
+0-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+1-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+2-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+0-male_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
+1-male_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
+2-male_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
 3-male_must_strip,target:xander,targetStage:3=winking,Your turn, Xan.Da!
 
+0-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+1-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+2-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
+0-female_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
+1-female_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
+2-female_must_strip,oppHand:Two Pair,count-d.va_cruiser:1,priority:1000=shocked,You lost with two pair? Dang, that's cruel!
 0-female_must_strip,filter:overwatch,totalRounds:0=heart,Hey, my favorite teammate! Picked off already?
 0-female_must_strip,filter:video_game,targetStage:0=calm,Look who it is! I know you're good in a fight.
 0-female_must_strip,filter:video_game,targetStage:0=shocked,~name~, you're real?! I'm such a huge fan!
@@ -470,6 +520,7 @@ swap_cards=serene,~cards~ cards.
 -2-female_removing_accessory=sad,I'm SO getting ready to pull my trigger!!
 -2-female_removed_accessory=shy,Ahh, it was nice of you to take off your ~clothing~ for me, but I don't think that I should use it to masturbate!
 -2-female_removed_accessory=angry,I honestly hope the rest of your clothing gets hooked to point 2 of Ilios, right-fucking-now.
+-2-female_removed_accessory,count-d.va_cruiser:1,priority:1000=angry,I honestly hope the rest of your clothing gets hooked to point 2 of Ilios, right the heck now.
 
 #Finished
 -1-male_removing_accessory=shocked,~name~... are you a bot?
@@ -574,6 +625,8 @@ swap_cards=serene,~cards~ cards.
 4-male_removed_minor=serene,At least, that's a start...
 4-female_removing_minor=loss,Just your ~clothing~? Oh, I see, you're going for optimal strats...
 4-female_removed_minor=shy,I took off my whole bodysuit! You could at least take off something a little bigger than your ~clothing~!
+4-female_removed_minor,count-d.va_cruiser:1,priority:1000=shy,I took off my my shirt <i>and</i> pants! You could at least take off something a little bigger than your ~clothing~!
+4-female_removed_minor,count-d.va_cruiser:1,priority:1000=sad,You know I'm in a rush, right?
  
 #Lost Bra
 5-male_removing_minor=peace,I don't mind showing off my boobs... But I DO mind losing!
@@ -720,6 +773,7 @@ swap_cards=serene,~cards~ cards.
 -2-female_removing_major=peaceblush,Raising the beat!
 -2-female_removed_major=horny,Oh yeah, this feels so good!
 -2-female_removed_major=horny,I fucking love this...
+-2-female_removed_major,count-d.va_cruiser:1,priority:1000=horny,Jeez, I love this...
  
 #Finished
 -1-male_removing_major=awkward,Is this gonna get me horny again?
@@ -803,6 +857,7 @@ swap_cards=serene,~cards~ cards.
 1-female_chest_will_be_visible=hornier,Yeah! Give us a look at your software!
 1-female_small_chest_is_visible=loss,That's pretty cute, but you could use an upgrade.
 1-female_medium_chest_is_visible=horny,Now that I lost my gloves, I could feel up those boobs, if that's okay with you!
+1-female_medium_chest_is_visible,count-d.va_cruiser:1,priority:1000=horny,Whoah, mama!
 1-female_large_chest_is_visible=shocked,I remember seeing racks like these in some of those simulator games!
 1-female_crotch_will_be_visible=heart,Awesome! Let's see your loot box, ~name~!
 1-female_crotch_is_visible=stripped,Yay! No duplicates!
@@ -907,6 +962,7 @@ swap_cards=serene,~cards~ cards.
 -2-female_chest_will_be_visible=calm,Now, show some cute tits to this cute girl!
 -2-female_chest_will_be_visible=winking,Now, let this cute girl take a look at those cute tits!
 -2-female_small_chest_is_visible=heart,I don't care about the size, those are cute as fuck!
+-2-female_small_chest_is_visible,count-d.va_cruiser:1,priority:1000=heart,I don't care about the size, those are cute as heck!
 -2-female_small_chest_is_visible=hornier,Oh god, this is making my nipples hard!
 -2-female_medium_chest_is_visible=horny,I'm so glad this game isn't censored!
 -2-female_large_chest_is_visible=shocked,YES! This is the GOOD stuff!
@@ -1093,6 +1149,7 @@ swap_cards=serene,~cards~ cards.
 1-male_must_masturbate=stripped,Time to "fan the hammer", ~name~!
 1-male_start_masturbating=horny,I'd love to help, but I just took off my gloves.
 1-male_start_masturbating=hornier,Give it a whirl, and entertain this girl!
+1-male_start_masturbating,count-d.va_cruiser:1,priority:1000=horny,I'd love to help, but I'm a little busy playing to win here.
 1-male_masturbating=shocked,Dude, we KNOW you can go faster than THAT!
 1-male_finished_masturbating=horny,Speedrun complete!
  
@@ -1176,6 +1233,7 @@ swap_cards=serene,~cards~ cards.
 -2-male_masturbating=hornier,Hello... I could use a hand.
 -2-male_finished_masturbating=shocked,Wait up! Let's not trickle in...
 -2-male_finished_masturbating=peaceblush,Holy fuck, dude, this is 10/10!
+-2-male_finished_masturbating,count-d.va_cruiser:1,priority:1000=peaceblush,Aw, jeez, dude, this is 10/10!
  
 -2-female_must_masturbate=winking,Should I help you with that? It will go a lot faster if we team up!
 -2-female_must_masturbate=hornier,Group up here!
@@ -1243,6 +1301,8 @@ swap_cards=serene,~cards~ cards.
 -3-female_start_masturbating,target:mia=winking,Whoa, now that's what I call the one finger challenge!
 -2-female_start_masturbating,target:mia=peace,It's about time you lifted a finger to join me!
 -1-female_start_masturbating,target:mia=winking,You can use more than one finger if you like.
+-2-female_start_masturbating,target:tifa=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! F-fuck...!
+-2-female_start_masturbating,target:tifa,count-d.va_cruiser:1,priority:1000=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! G-gosh...!
 
 0-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
 1-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
@@ -1289,10 +1349,13 @@ masturbating=excited,Boom shakalaka! I'm on fire!
 masturbating=awkward,I don't mind it if you peek under the hood o-of my mech...
 masturbating=peace,I'm really feeling it!
 masturbating=shocked,O-oooh fuck! This is s-sooo much better with an audience...!
+masturbating,count-d.va_cruiser:1,priority:0=shocked,O-oooh jeez! This is s-sooo much better with an audience...!
 masturbating=excited,I'm a masturbation enthusiast!
 heavy_masturbating=horny,My ultimate's nearly charged!
 heavy_masturbating=horny,G-getting ready to BLOW!
 heavy_masturbating=horny,S-SO much... Stimulation!!!
+heavy_masturbating,count-d.va_cruiser:1,priority:0=horny,F-Firing up!
+heavy_masturbating,count-d.va_cruiser:1,priority:0=horny,...Running on full cylinders!
 finishing_masturbating=finishing,NERF THIS!
 finished_masturbating=peaceblush,That's one for my highlight reel.
 finished_masturbating=serene,Rebooting...
@@ -1322,6 +1385,7 @@ finished_masturbating=peace,Like, follow, subscribe!
 game_over_defeat=shy,I guess I lost this round. I want a rematch!
 game_over_defeat=peace,I definitely like winning more... buuut still, I enjoyed this!
 game_over_defeat=excited,Just wait 'til you try and beat me in a game of Starcraft. I will wreck the shit out of you!
+game_over_defeat,count-d.va_cruiser:1,priority:0=excited,Just wait 'til you try and beat me in a game of Starcraft. I will <i>annihilate</i> you!
 game_over_defeat=winking,I have decided: I want to do this again!
 game_over_defeat=heart,~name~, does your win mean that you get our mutual friend all to yourself, or can we share?
 game_over_defeat,target:human=excited,Wrestle with mechs, prepare for sex!
@@ -1344,10 +1408,7 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 
 #Consider sorting these targeted lines into the sections above
 
-
 0-stripping,alsoPlaying:streaming-chan=heart,Quick shoutout to my fans: Thanks for all the love and support!
-0-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
-0-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
 0-female_crotch_will_be_visible,target:asuna=excited,Aw, I almost feel bad. You're whatever tier is below Bronze, Asuna.
 0-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 0-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
@@ -1355,8 +1416,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 
 1-good_hand,alsoPlaying:kim,alsoPlayingStage:3=calm,You may have skills, Kim, but you don't know who you're dealing with here!
 1-female_must_strip,target:daria,targetStage:1=peace,Hmmmm, do you think that "D.Aria,would be a good stage name if I ever pursue a singing career? Y'know, if I retire from pro gaming, acting, and carrying Overwatch.
-1-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
-1-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
 1-female_removed_accessory,target:arwen,targetStage:1=heart,I love your Linkle cosplay, Arwen. The ears look so realistic!
 1-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
 1-female_removing_minor,target:harley=stripped,I really love the suit you wore in Arkham City, Harley! This suit is cute too, though!
@@ -1373,8 +1432,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 2-stripping,alsoPlaying:xander=strip,They're just headphones...
 2-female_must_strip,target:buffy,targetStage:3=winking,"Buffy"? More like "Nerfy", am I right?
 2-female_must_strip,filter:mushroom_kingdom,targetStage:4=winking,Well, ~name~, seems like your power star went out!
-2-female_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
-2-male_must_strip,oppHand:Two Pair=shocked,You lost with two pair? Damn, that's cruel!
 2-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
 2-female_crotch_will_be_visible,target:asuna=winking,You should play this game with Kirito. He'd like how bad you are at it.
 2-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
@@ -1454,7 +1511,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 -2-female_medium_chest_is_visible,alsoPlaying:harley=hornier,I've seen those hot pictures you made of Selina all tied up, Harley. I-I wouldn't mind being dominated like that by you...
 -2-female_crotch_will_be_visible,target:asuna=excited,You're close to joining me, Asuna. Let's group up for a bonus experience.
 -2-female_crotch_is_visible,target:mercy=horny,M-Mercy... I've n-never felt like this about you before...
--2-female_start_masturbating,target:tifa=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! F-fuck...!
 -2-female_start_masturbating,target:zone-tan=finishing,Ohhh, that video was <i>so</i> hot... Seeing your cute body like that... was... <i>ahhhh</i>...
 -2-female_masturbating,target:mercy=horny,Oh my god, Mercy. You've never b-boosted me up like this before...
 -2-female_masturbating,target:mercy=peaceblush,M-Mercy...! T-thanks for the support!
