@@ -17,6 +17,11 @@ tag=boob_envy
 tag=mean
 tag=japanese
 
+#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
+tag=ami
+
+
+
 #required for meta.xml
 #select screen image
 pic=0-calm
@@ -70,32 +75,21 @@ swap_cards=calm,~cards~, if you please.
 
 #HAND QUALITY
 #These lines appear each round when a character is commenting on how good or bad their hand is.
-#The lines written here are examples only and should be replaced.
-
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
-#The character thinks they have a good hand
-good_hand=happy,Hah, piece of cake.
-good_hand=happy,Yes! Victory is mine.
-good_hand=happy,Look's like I'm safe, sorry everyone!
-
-#The character thinks they have an okay hand
-okay_hand=calm,I can work with these.
-okay_hand=calm,Not the best, but I can make these work.
-okay_hand=calm,Eh, I'll live.
-okay_hand=calm,Not bad.
-
-#The character thinks they have a bad hand
-bad_hand=angry,What's with these cards!?
-bad_hand=sad,Damn it.
-bad_hand=sad,Greeeat.
-
-#stage-specific lines that override the stage-generic ones
 
 #fully clothed
-0-good_hand=,Looks like I'm off to a good start, huh?
+0-good_hand=happy,Can't get much better than this!
 0-okay_hand=,I think I'll be okay.
 0-bad_hand=sassy,Eh, I can afford to lose my shoes if needed.
+
+0-good_hand,totalRounds:0=happy,Looks like I'm off to a good start, huh?
+0-okay_hand,totalRounds:0=happytoplay,Looks like I'm off to an okay start, huh?
+0-bad_hand,totalRounds:0=indifferent,Looks like I'm off to a bad start, huh?
+0-good_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-okay_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-bad_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-good_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
+0-okay_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
+0-bad_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
 
 #lost 1 item
 1-good_hand=happy,Looking good, Ami, looking good.
@@ -104,6 +98,7 @@ bad_hand=sad,Greeeat.
 
 #lost 2 items
 2-good_hand=confident,Good this the red uniform looks good on me, because I'm keeping it this round.
+2-good_hand=happy,Hah, piece of cake.
 2-okay_hand=indifferent,Eh, fair enough.
 2-bad_hand=teasing,Oh well, I can afford to drop the blazer.
 
@@ -111,22 +106,30 @@ bad_hand=sad,Greeeat.
 3-good_hand=sassy,Looks like you won't see my boobs this round. Anyone upset?
 3-good_hand=teasing,Sorry you guys won't see any skin this time. Want a peek?
 3-okay_hand=,I should be fine.
+3-okay_hand=calm,Eh, I'll live.
 3-bad_hand=sad,Well, I guess it can't be helped, huh.
+3-bad_hand=sad,Greeeat.
 
 #lost 4 items
 4-good_hand=happy,My skirt's not going anywhere. Sorry!
 4-okay_hand=,Eh, I'm sure someone did worse than me.
+4-okay_hand=calm,I can work with these.
 4-bad_hand=embarrassed,Good thing I wore a matching set.
 
 #lost 5 items
 5-good_hand=sassy,My boobs remain for my eyes only this round. Sorry everyone.
+5-good_hand=happy,Yes! Victory is mine.
 5-okay_hand=embarrassed,You might see some skin, or you might not. Heh.
+5-okay_hand=calm,Not the best, but I can make these work.
 5-bad_hand=angry,I should have worn my bracelet, ugh.
+5-bad_hand=angry,What's with these cards!?
 
 #lost 6 items
 6-good_hand=relief,Okay, I'm still in this. Good.
+6-good_hand=happy,Look's like I'm safe, sorry everyone!
 6-okay_hand=worried,I hope this is enough.
 6-bad_hand=angry,I got these kinds of cards at this time!?
+6-bad_hand=sad,Damn it.
 
 #lost all clothing
 -3-good_hand=victory,Yes! I'm still in this!
@@ -248,16 +251,16 @@ bad_hand=sad,Greeeat.
 -3-female_must_strip=leaning,Who had the worst hand?
 
 #masturbating
--2-male_human_must_strip=calm,Yes, show me what you got...
--2-male_must_strip=calm,Oh, please indulge me...
--2-female_human_must_strip=three,Yes, take it off...
--2-female_must_strip=one,Oh, please, let me see!
+-2-male_human_must_strip=base,Yes, show me what you got...
+-2-male_must_strip=base,Oh, please indulge me...
+-2-female_human_must_strip=base,Yes, take it off...
+-2-female_must_strip=base,Oh, please, let me see!
 
 #finished
--1-male_human_must_strip=four,Hurry up and cum with me...
--1-male_must_strip=three,Let's go, chop chop!
--1-female_human_must_strip=four,Aren't you quite the pretty lady?
--1-female_must_strip=three,Come on, make a mess like I did already!
+-1-male_human_must_strip=calm,Hurry up and cum with me...
+-1-male_must_strip=tease,Let's go, chop chop!
+-1-female_human_must_strip=smug,Aren't you quite the pretty lady?
+-1-female_must_strip=tease,Come on, make a mess like I did already!
 
 
 
@@ -320,16 +323,16 @@ bad_hand=sad,Greeeat.
 -3-female_removed_accessory=worried,I can't believe I'm doing do bad.
 
 #masturbating
--2-male_removing_accessory=heavy,I'd be more annoyed if this didn't feel so good...
--2-male_removed_accessory=four,Hurry up, big boy.
--2-female_removing_accessory=four,Maybe getting to cum before you is a reward...
--2-female_removed_accessory=heavy,You have a long way to go before feeling this good...
+-2-male_removing_accessory=annoyed,I'd be more annoyed if this didn't feel so good...
+-2-male_removed_accessory=base,Hurry up, big boy.
+-2-female_removing_accessory=angry,Maybe getting to cum before you is a reward...
+-2-female_removed_accessory=tease,You have a long way to go before feeling this good...
 
 #finished
--1-male_removing_accessory=one,Show your stuff already.
--1-male_removed_accessory=four,Come on.
--1-female_removing_accessory=two,Maybe give us a little flash?
--1-female_removed_accessory=finished,I might touch myself again once you get more undressed, you know.
+-1-male_removing_accessory=annoyed,Show your stuff already.
+-1-male_removed_accessory=sad,Come on.
+-1-female_removing_accessory=tease,Maybe give us a little flash?
+-1-female_removed_accessory=tease,I might touch myself again once you get more undressed, you know.
 
 
 
@@ -389,16 +392,16 @@ bad_hand=sad,Greeeat.
 -3-female_removed_minor=embarrassed,Did you guys maybe rig the game just to see me naked?
 
 #masturbating
--2-male_removing_minor=four,Ugh, you're doing nothing for me...
--2-male_removed_minor=five,I'll touch myself to you once you lose more...
--2-female_removing_minor=calm,You don't wanna give me a peek while I'm doing this?
--2-female_removed_minor=one,So be it...
+-2-male_removing_minor=annoyed,Ugh, you're doing nothing for me...
+-2-male_removed_minor=tease,I'll touch myself to you once you lose more...
+-2-female_removing_minor=tease,You don't wanna give me a peek while I'm doing this?
+-2-female_removed_minor=annoyed,So be it...
 
 #finished
--1-male_removing_minor=four,Wow, I did terrible this game compared to you.
--1-male_removed_minor=three,Next time, I'll do better.
--1-female_removing_minor=four,Oh god, how badly did I lose to you?
--1-female_removed_minor=three,This can't happen again.
+-1-male_removing_minor=sad,Wow, I did terrible this game compared to you.
+-1-male_removed_minor=calm,Next time I'll do better.
+-1-female_removing_minor=annoyed,Oh god, how badly did I lose to you?
+-1-female_removed_minor=annoyed,This can't happen again.
 
 
 
@@ -459,16 +462,16 @@ bad_hand=sad,Greeeat.
 -3-female_removed_major=sassy,I understand wanting to keep your clothes. I'm a tough act to follow.
 
 #masturbating
--2-male_removing_major=calm,Ugh, take it off already!
--2-male_removed_major=five,More, please...
--2-female_removing_major=three,Yeah, give me something to touch myself to...
--2-female_removed_major=five,Mmmm, aren't you delicious?
+-2-male_removing_major=angry,Ugh, take it off already!
+-2-male_removed_major=base,More, please...
+-2-female_removing_major=base,Yeah, give me something to touch myself to...
+-2-female_removed_major=tease,Mmmm, aren't you delicious?
 
 #finished
--1-male_removing_major=three,Oh, boy toy's turn.
--1-male_removed_major=four,Just a little more.
--1-female_removing_major=two,You probably look better without clothes.
--1-female_removed_major=three,You know, I might start touching myself again if you lose.
+-1-male_removing_major=smug,Oh, boy toy's turn.
+-1-male_removed_major=tease,Just a little more.
+-1-female_removing_major=tease,You probably look better without clothes.
+-1-female_removed_major=tease,You know, I might start touching myself again if you lose.
 
 
 
@@ -611,37 +614,37 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 -3-female_crotch_is_visible=sassy,Well kept. Give any pointers?
 
 #masturbating
--2-male_chest_will_be_visible=three,Take it off already!
--2-male_chest_is_visible=five,Oh, I wanna touch it...
--2-male_crotch_will_be_visible=calm,Let's see how hard I'm making you...
--2-male_small_crotch_is_visible=five,Need me to help you?
--2-male_medium_crotch_is_visible=four,Unf, the perfect material...
--2-male_large_crotch_is_visible=calm,Wow... you're packing a lot of heat huh, hotshot?
+-2-male_chest_will_be_visible=annoyed,Take it off already!
+-2-male_chest_is_visible=horny,Oh, I wanna touch it...
+-2-male_crotch_will_be_visible=base,Let's see how hard I'm making you...
+-2-male_small_crotch_is_visible=tease,Need me to help you?
+-2-male_medium_crotch_is_visible=horny,Unf, the perfect material...
+-2-male_large_crotch_is_visible=horny,Wow... you're packing a lot of heat huh, hotshot?
 
--2-female_chest_will_be_visible=one,Let them free already! And maybe play with them a little...
--2-female_small_chest_is_visible=calm,That's adorable...
--2-female_small_chest_is_visible=five,Can I give them a little lick?
--2-female_medium_chest_is_visible=calm,Almost as good as mine...
--2-female_large_chest_is_visible=calm,Doesn't your back hurt...?
--2-female_crotch_will_be_visible=one,Take them off quickly...
--2-female_crotch_will_be_visible=one,You don't need those anymore.
--2-female_crotch_is_visible=four,I wouldn't penalize you for sticking a finger or two in, ~name~.
--2-female_crotch_is_visible=heavy,Ever try scissoring?
+-2-female_chest_will_be_visible=tease,Let them free already! And maybe play with them a little...
+-2-female_small_chest_is_visible=base,That's adorable...
+-2-female_small_chest_is_visible=tease,Can I give them a little lick?
+-2-female_medium_chest_is_visible=base,Almost as good as mine...
+-2-female_large_chest_is_visible=concerned,Doesn't your back hurt...?
+-2-female_crotch_will_be_visible=base,Take them off quickly...
+-2-female_crotch_will_be_visible=base,You don't need those anymore.
+-2-female_crotch_is_visible=horny,I wouldn't penalize you for sticking a finger or two in, ~name~.
+-2-female_crotch_is_visible=tease,Ever try scissoring?
 
 #finished
--1-male_chest_will_be_visible=two,Maybe take two items off and get naked with me faster?
--1-male_chest_is_visible=four,I lost, but at least I have another show.
--1-male_crotch_will_be_visible=three,Mmm...
--1-male_small_crotch_is_visible=four,Heh, how cute.
--1-male_medium_crotch_is_visible=three,Yum...
--1-male_large_crotch_is_visible=finished,Oh my... I might start again...
+-1-male_chest_will_be_visible=tease,Maybe take two items off and get naked with me faster?
+-1-male_chest_is_visible=smug,I lost, but at least I have another show.
+-1-male_crotch_will_be_visible=horny,Mmm...
+-1-male_small_crotch_is_visible=tease,Heh, how cute.
+-1-male_medium_crotch_is_visible=horny,Yum...
+-1-male_large_crotch_is_visible=horny,Oh my... I might start again...
 
--1-female_chest_will_be_visible=one,Let the puppies run wild!
--1-female_small_chest_is_visible=four,There are definitely guys that like your kind of chest, you know.
--1-female_medium_chest_is_visible=two,Wanna rub 'em together? Hmm?
--1-female_large_chest_is_visible=three,Very nice.
--1-female_crotch_will_be_visible=three,You're still wearing them after I took mine off?
--1-female_crotch_is_visible=four,If you want, I'll start again when you start...
+-1-female_chest_will_be_visible=tease,Let the puppies run wild!
+-1-female_small_chest_is_visible=calm,There are definitely guys that like your kind of chest, you know.
+-1-female_medium_chest_is_visible=tease,Wanna rub 'em together? Hmm?
+-1-female_large_chest_is_visible=calm,Very nice.
+-1-female_crotch_will_be_visible=annoyed,You're still wearing them after I took mine off?
+-1-female_crotch_is_visible=tease,If you want, I'll start again when you start...
 
 
 
@@ -739,29 +742,33 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 -3-female_must_masturbate=happy,Woohoo, not it!
 -3-female_start_masturbating=sassy,Hey, ~name~, wanna scissor?
 -3-female_masturbating=embarrassed,If I lose one more round, I'm gonna look a lot like ~name~ right now.
+-3-female_masturbating,totalAlive:1=embarrassed,Even though I won, I'll let you keep looking.
 -3-female_finished_masturbating=horny,That looked like a lot of fun, ~name~...
 
 #masturbating
--2-male_must_masturbate=five,Someone else to join me, hm...?
--2-male_start_masturbating=one,Look me in the eyes while you do it, cutie...
--2-male_masturbating=three,It feels sooo good, doesn't it, ~name~?
--2-male_finished_masturbating=one,It's rude to finish before a girl, you know...
+-2-male_must_masturbate=base,Someone else to join me, hm...?
+-2-male_start_masturbating=heavy,Look me in the eyes while you do it, cutie...
+-2-male_masturbating=heavy,It feels sooo good, doesn't it, ~name~?
+-2-male_finished_masturbating=disappointed,It's rude to finish before a girl, you know...
 
--2-female_must_masturbate=one,Oh, I always wanted to try mutual masturbation...
--2-female_start_masturbating=calm,Look me in the eyes while you rub, ~name~...
--2-female_masturbating=four,~name~, ever try scissoring...?
--2-female_finished_masturbating=five,Aww, you finished first...
+-2-female_must_masturbate=horny,Oh, I always wanted to try mutual masturbation...
+-2-female_start_masturbating=base,Look me in the eyes while you rub, ~name~...
+-2-female_masturbating=tease,~name~, ever try scissoring...?
+-2-female_finished_masturbating=disappointed,Aww, you finished first...
 
 #finished
--1-male_must_masturbate=three,A shame I already finished, huh?
--1-male_start_masturbating=one,Feel free to look at me while you do it.
--1-male_masturbating=two,You should feel lucky, no one really gets to see me like this.
--1-male_finished_masturbating=four,Have fun, stud?
+-1-male_must_masturbate=smug,A shame I already finished, huh?
+-1-male_start_masturbating=tease,Feel free to look at me while you do it.
+-1-male_masturbating=tease,You should feel lucky, no one really gets to see me like this.
+-1-male_finished_masturbating=smug,Have fun, stud?
 
--1-female_must_masturbate=four,Want me to join?
--1-female_start_masturbating=three,Enjoy yourself.
--1-female_masturbating=one,You kind of make me want to do it again...
--1-female_finished_masturbating=four,That was pretty hot, huh?
+-1-female_must_masturbate=horny,Want me to join?
+-1-female_start_masturbating=calm,Enjoy yourself.
+-1-female_masturbating=horny,You kind of make me want to do it again...
+-1-female_finished_masturbating=tease,That was pretty hot, huh?
+
+#targeted
+-1-female_finished_masturbating,target:marinette=horny,Let's spoon, Little Miss Spoonerism.
 
 
 
@@ -773,17 +780,23 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 must_masturbate_first=lossembarrassed,Me first, huh...? Prepare for a show, I guess...
 must_masturbate=losshappy,It's only fair I do my due diligence.
 start_masturbating=starting,D-don't stare too much...
-masturbating=calm,You guys looking at me is making this so much hotter...
+masturbating=base,You guys looking at me is making this so much hotter...
 heavy_masturbating=heavy,Oh god, I'm close, oh god...
 finishing_masturbating=finishing,Aah! Oh my GOD, Im c-cumming... ahh...
-finished_masturbating=finished,S-sorry you guys had to see me like that, haha...
+finished_masturbating,notSaidMarker:ami_finished_1,marker:ami_finished_1=finished,I'm done...
+finished_masturbating,notSaidMarker:ami_finished_2,saidMarker:ami_finished_1,marker:ami_finished_2=shocked,S-sorry you guys had to see me like that, haha...
+finished_masturbating,saidMarker:ami_finished_2=tease,I'm sure you'll catch up.
+finished_masturbating,saidMarker:ami_finished_2=sad,You don't think less of me now do you, ~player~?
+finished_masturbating,saidMarker:ami_finished_2=horny,I know a way to make this more interactive.
+finished_masturbating,saidMarker:ami_finished_2=smug,Something interesting is about to happen, isn't it?
+finished_masturbating,saidMarker:ami_finished_2=calm,I can be patient.
 
 
 
 #GAME OVER VICTORY
 
 #unused stage-generic line to prevent broken images in the final two stages.
-game_over_victory=one,Well played game, I guess.
+game_over_victory=horny,Well played game, I guess.
 
 0-game_over_victory=shocked,I really didn't lose any clothing? We have to do a rematch, how boring!
 1-game_over_victory=shocked,Just my shoes? Should I handicap myself next game?
@@ -798,7 +811,7 @@ game_over_victory=one,Well played game, I guess.
 
 
 #GAME OVER DEFEAT
-game_over_defeat=four,Good... good game, everyone...
+game_over_defeat=finished,Good... good game, everyone...
 
 
 #REACTIONS TO AIMEE'S GUNPLAY
@@ -812,8 +825,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_must_strip,target:aimee,targetStage:0=shocked,What?!
 6-female_must_strip,target:aimee,targetStage:0=shocked,What?!
 -3-female_must_strip,target:aimee,targetStage:0=shocked,What?!
--2-female_must_strip,target:aimee,targetStage:0=calm,What?!
--1-female_must_strip,target:aimee,targetStage:0=two,What?!
+-2-female_must_strip,target:aimee,targetStage:0=shocked,What?!
+-1-female_must_strip,target:aimee,targetStage:0=shocked,What?!
 
 0-female_removing_major,target:aimee,targetStage:0=shocked,No!
 1-female_removing_major,target:aimee,targetStage:0=shocked,No!
@@ -823,8 +836,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removing_major,target:aimee,targetStage:0=shocked,No!
 6-female_removing_major,target:aimee,targetStage:0=shocked,No!
 -3-female_removing_major,target:aimee,targetStage:0=shocked,No!
--2-female_removing_major,target:aimee,targetStage:0=four,No!
--1-female_removing_major,target:aimee,targetStage:0=finished,No!
+-2-female_removing_major,target:aimee,targetStage:0=shocked,No!
+-1-female_removing_major,target:aimee,targetStage:0=shocked,No!
 
 0-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
 1-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
@@ -834,8 +847,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
 6-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
 -3-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
--2-female_removed_major,target:aimee,targetStage:1=one,You idiot! You could have killed us!
--1-female_removed_major,target:aimee,targetStage:1=four,You idiot! You could have killed us!
+-2-female_removed_major,target:aimee,targetStage:1=angry,You idiot! You could have killed us!
+-1-female_removed_major,target:aimee,targetStage:1=shocked,You idiot! You could have killed us!
 
 
 0-female_must_strip,target:aimee,targetStage:1=embarrassed,Ah!
@@ -846,8 +859,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_must_strip,target:aimee,targetStage:1=interestedfemalebigger,Ah!
 6-female_must_strip,target:aimee,targetStage:1=interestedfemalebigger,Ah!
 -3-female_must_strip,target:aimee,targetStage:1=interestedfemalebigger,Ah!
--2-female_must_strip,target:aimee,targetStage:1=four,Ah!
--1-female_must_strip,target:aimee,targetStage:1=finished,Ah!
+-2-female_must_strip,target:aimee,targetStage:1=shocked,Ah!
+-1-female_must_strip,target:aimee,targetStage:1=shocked,Ah!
 
 0-female_removing_minor,target:aimee,targetStage:1=shocked,Stop! I surrender!
 1-female_removing_minor,target:aimee,targetStage:1=shocked,Stop! I surrender!
@@ -857,8 +870,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removing_minor,target:aimee,targetStage:1=happytostrip,Stop! I surrender!
 6-female_removing_minor,target:aimee,targetStage:1=shocked,Stop! I surrender!
 -3-female_removing_minor,target:aimee,targetStage:1=shocked,Stop! I surrender!
--2-female_removing_minor,target:aimee,targetStage:1=calm,Can't you see I'm already surrendering?
--1-female_removing_minor,target:aimee,targetStage:1=four,Can't you see I've already surrendered?
+-2-female_removing_minor,target:aimee,targetStage:1=shocked,Can't you see I'm already surrendering?
+-1-female_removing_minor,target:aimee,targetStage:1=shocked,Can't you see I've already surrendered?
 
 0-female_removed_minor,target:aimee,targetStage:2=interestedfemalebigger,I didn't mean I was giving up. Frankly, I don't think you deserve to see me undressed.
 1-female_removed_minor,target:aimee,targetStage:2=interestedfemalebigger,I didn't mean I was giving up. Frankly, I don't think you deserve to see me undressed.
@@ -868,8 +881,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removed_minor,target:aimee,targetStage:2=annoyed,I didn't mean I was giving up. Frankly, I don't think you deserve to see me naked.
 6-female_removed_minor,target:aimee,targetStage:2=worried,I didn't mean I was giving up. Frankly, I don't think you deserve to see me fully naked.
 -3-female_removed_minor,target:aimee,targetStage:2=worried,I didn't mean I was giving up. Frankly, I don't think you deserve to see me do any more than I have!
--2-female_removed_minor,target:aimee,targetStage:2=one,I lost! What more would you have me do?
--1-female_removed_minor,target:aimee,targetStage:2=four,You'll stop shooting now, right?
+-2-female_removed_minor,target:aimee,targetStage:2=shocked,I lost! What more would you have me do?
+-1-female_removed_minor,target:aimee,targetStage:2=8-concerned,You'll stop shooting now, right?
 
 
 0-female_must_strip,target:aimee,targetStage:2=interestedfemalebigger,Again?!
@@ -880,8 +893,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_must_strip,target:aimee,targetStage:2=interestedfemalebigger,Again?!
 6-female_must_strip,target:aimee,targetStage:2=relief,Again?!
 -3-female_must_strip,target:aimee,targetStage:2=lossembarrassed,Again?!
--2-female_must_strip,target:aimee,targetStage:2=one,Again?
--1-female_must_strip,target:aimee,targetStage:2=finished,Again?!
+-2-female_must_strip,target:aimee,targetStage:2=shocked,Again?
+-1-female_must_strip,target:aimee,targetStage:2=shocked,Again?!
 
 0-female_removing_minor,target:aimee,targetStage:2=shocked,Ah!
 1-female_removing_minor,target:aimee,targetStage:2=shocked,Ah!
@@ -891,8 +904,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removing_minor,target:aimee,targetStage:2=shocked,Ah!
 6-female_removing_minor,target:aimee,targetStage:2=angry,Ah!
 -3-female_removing_minor,target:aimee,targetStage:2=angry,Ah!
--2-female_removing_minor,target:aimee,targetStage:2=four,Ah!
--1-female_removing_minor,target:aimee,targetStage:2=four,Ah!
+-2-female_removing_minor,target:aimee,targetStage:2=shocked,Ah!
+-1-female_removing_minor,target:aimee,targetStage:2=shocked,Ah!
 
 0-female_removed_minor,target:aimee,targetStage:3=angry,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
 1-female_removed_minor,target:aimee,targetStage:3=angry,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
@@ -902,8 +915,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_removed_minor,target:aimee,targetStage:3=annoyed,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
 6-female_removed_minor,target:aimee,targetStage:3=moveon,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
 -3-female_removed_minor,target:aimee,targetStage:3=interestedmale,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
--2-female_removed_minor,target:aimee,targetStage:3=five,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
--1-female_removed_minor,target:aimee,targetStage:3=four,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
+-2-female_removed_minor,target:aimee,targetStage:3=concerned,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
+-1-female_removed_minor,target:aimee,targetStage:3=8-concerned,I don't know how you're doing that, but I don't think you should be shooting a gun during a card game!
 
 
 0-female_must_strip,target:aimee,targetStage:3=embarrassed,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
@@ -914,8 +927,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_must_strip,target:aimee,targetStage:3=embarrassed,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
 6-female_must_strip,target:aimee,targetStage:3=embarrassed,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
 -3-female_must_strip,target:aimee,targetStage:3=embarrassed,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
--2-female_must_strip,target:aimee,targetStage:3=one,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
--1-female_must_strip,target:aimee,targetStage:3=four,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
+-2-female_must_strip,target:aimee,targetStage:3=tease,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
+-1-female_must_strip,target:aimee,targetStage:3=smug,You do know that you have to take off a piece, right? It doesn't have to be in <i>pieces</i>.
 
 0-female_chest_will_be_visible,target:aimee=happytoplay,Finally decided to strip like a normal person?
 1-female_chest_will_be_visible,target:aimee=calm,Finally decided to strip like a normal person?
@@ -925,8 +938,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_chest_will_be_visible,target:aimee=calm,Finally decided to strip like a normal person?
 6-female_chest_will_be_visible,target:aimee=calm,Finally decided to strip like a normal person?
 -3-female_chest_will_be_visible,target:aimee=calm,Finally decided to strip like a normal person?
--2-female_chest_will_be_visible,target:aimee=three,Finally decided to strip like a normal person?
--1-female_chest_will_be_visible,target:aimee=three,Finally decided to strip like a normal person?
+-2-female_chest_will_be_visible,target:aimee=tease,Finally decided to strip like a normal person?
+-1-female_chest_will_be_visible,target:aimee=calm,Finally decided to strip like a normal person?
 
 0-female_medium_chest_is_visible,target:aimee=embarrassed,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
 1-female_medium_chest_is_visible,target:aimee=embarrassed,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
@@ -936,8 +949,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_medium_chest_is_visible,target:aimee=shocked,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
 6-female_medium_chest_is_visible,target:aimee=shocked,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
 -3-female_medium_chest_is_visible,target:aimee=shocked,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
--2-female_medium_chest_is_visible,target:aimee=four,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
--1-female_medium_chest_is_visible,target:aimee=finished,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
+-2-female_medium_chest_is_visible,target:aimee=shocked,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
+-1-female_medium_chest_is_visible,target:aimee=shocked,Ah! What's stopping her from turning the gun on us when she loses? Isn't anybody else worried about this?
 
 
 0-female_must_strip,target:aimee,targetStage:4=happy,You're almost done, Aimee.
@@ -948,8 +961,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_must_strip,target:aimee,targetStage:4=happy,You're almost done, Aimee.
 6-female_must_strip,target:aimee,targetStage:4=happy,You're almost done, Aimee.
 -3-female_must_strip,target:aimee,targetStage:4=happy,You're almost done, Aimee.
--2-female_must_strip,target:aimee,targetStage:4=three,You're almost done too, Aimee.
--1-female_must_strip,target:aimee,targetStage:4=three,You're almost done too, Aimee.
+-2-female_must_strip,target:aimee,targetStage:4=base,You're almost done too, Aimee.
+-1-female_must_strip,target:aimee,targetStage:4=calm,You're almost done too, Aimee.
 
 0-female_crotch_will_be_visible,target:aimee=sad,Can you even hit a target that small?
 1-female_crotch_will_be_visible,target:aimee=sad,Can you even hit a target that small?
@@ -959,8 +972,8 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_crotch_will_be_visible,target:aimee=sad,Can you even hit a target that small?
 6-female_crotch_will_be_visible,target:aimee=sad,Can you even hit a target that small?
 -3-female_crotch_will_be_visible,target:aimee=sad,Can you even hit a target that small?
--2-female_crotch_will_be_visible,target:aimee=calm,Can you even hit a target that small?
--1-female_crotch_will_be_visible,target:aimee=two,Can you even hit a target that small?
+-2-female_crotch_will_be_visible,target:aimee=shocked,Can you even hit a target that small?
+-1-female_crotch_will_be_visible,target:aimee=shocked,Can you even hit a target that small?
 
 0-female_crotch_is_visible,target:aimee=interestedfemalebigger,Please tell me that was the end of your little rampage.
 1-female_crotch_is_visible,target:aimee=interestedfemalebigger,Please tell me that was the end of your little rampage.
@@ -970,5 +983,5 @@ game_over_defeat=four,Good... good game, everyone...
 5-female_crotch_is_visible,target:aimee=interestedfemalebigger,Please tell me that was the end of your little rampage.
 6-female_crotch_is_visible,target:aimee=interestedfemalebigger,Please tell me that was the end of your little rampage.
 -3-female_crotch_is_visible,target:aimee=interestedfemalebigger,Please tell me that was the end of your little rampage.
--2-female_crotch_is_visible,target:aimee=one,Please tell me that was the end of your little rampage.
--1-female_crotch_is_visible,target:aimee=four,Please tell me that was the end of your little rampage.
+-2-female_crotch_is_visible,target:aimee=concerned,Please tell me that was the end of your little rampage.
+-1-female_crotch_is_visible,target:aimee=annoyed,Please tell me that was the end of your little rampage.
