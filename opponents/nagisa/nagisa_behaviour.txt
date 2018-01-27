@@ -32,7 +32,9 @@ marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does
 marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
 marker=nagisa_food_motivation,public,Nagisa canonically promises herself food to motivate her to do difficult things.
+marker=nagisa_hairclips,public,Nagisa wears red hairclips not visible from the front. She doesn't think to use them as an extra layer.
 marker=nagisa_kanji,public,When introducing herself when Marinette is present, she mentions that her name can be written with one Chinese character (kanji).
+marker=nagisa_kyu_showing_panties,public,When the game starts, Nagisa is alarmed that Kyu's panties are already visible.
 marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
@@ -129,8 +131,6 @@ clothes=Panties,panties,important,lower
 0-bad_hand=worried,Oh...
 0-bad_hand=thinking,Ryou taught me out to play regular poker, but I was never very good at it.
 
-0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
-
 0-good_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
 0-okay_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
 0-bad_hand,totalRounds:0=worried,Is it true that this is the kind of poker where we have to take our clothes off?
@@ -147,9 +147,9 @@ clothes=Panties,panties,important,lower
 0-okay_hand,count-princess:1,totalRounds:0=worried,I think I might have come to the wrong room. I'm not good enough to play against a princess...
 0-bad_hand,count-princess:1,totalRounds:0=worried,I think I might have come to the wrong room. I'm not good enough to play against a princess...
 
-0-good_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
-0-okay_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
-0-bad_hand,alsoPlaying:kyu,totalRounds:0=veryembarrassed,Why is that girl already showing her panties?
+0-good_hand,alsoPlaying:kyu,totalRounds:0,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
+0-okay_hand,alsoPlaying:kyu,totalRounds:0,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
+0-bad_hand,alsoPlaying:kyu,totalRounds:0,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
 0-good_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
 0-okay_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
 0-bad_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
@@ -162,16 +162,27 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=worried,Oh, I'm sorry! Is this a gang? Did I walk in on your gang meeting?
+0-good_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
+0-okay_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
+0-bad_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
 
 0-good_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
 0-okay_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
 0-bad_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
+0-good_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
+0-okay_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
+0-bad_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
 0-good_hand,alsoPlaying:kyu,totalRounds:1=embarrassed,Kyu, it's okay if you want to find a skirt to put on before we go any further.
 0-okay_hand,alsoPlaying:kyu,totalRounds:1=embarrassed,Kyu, it's okay if you want to find a skirt to put on before we go any further.
 0-bad_hand,alsoPlaying:kyu,totalRounds:1=embarrassed,Kyu, it's okay if you want to find a skirt to put on before we go any further.
+0-good_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola! Is that your school's uniform?
+0-okay_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola! Is that your school's uniform?
+0-bad_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola! Is that your school's uniform?
 0-good_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
 0-okay_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
 0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
+
+0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
 
 #lost shoes
 1-good_hand=singing,Dango, dango, dango, dango, dango, big dango family!
@@ -239,6 +250,7 @@ clothes=Panties,panties,important,lower
 4-good_hand=calm,I'm so relieved!
 4-good_hand=happy,This is a good hand!
 4-okay_hand=calm,I'm fine. Don't worry about me.
+4-okay_hand=shy,This is okay under the circumstances.
 4-bad_hand=veryembarrassed,My skirt...
 4-bad_hand=stripped,I'm sorry, but I'd better head home...
 4-bad_hand=veryembarrassed,How did I get myself into this mess?
@@ -357,7 +369,8 @@ clothes=Panties,panties,important,lower
 5-must_strip_normal=veryembarrassed,I'm sorry! I've only just met you all and I'm already...
 5-must_strip_normal=veryembarrassed,What should I do? I have to keep my panties, but if I take off my bra, I can't cover myself properly...
 5-must_strip_normal,alsoPlaying:mia,alsoPlayingStage:5=worried,Even though it's embarrassing, I'm taking off my bra next. There are some secrets that a girl has to leave until last, Mia.
-5-must_strip_losing=covering,But... nobody else...
+5-must_strip_losing=embarrassed,Could you check again? Are you sure I lost?
+5-must_strip_losing,totalExposed:0=covering,But... nobody else...
 5-stripping,marker:nagisa_food_motivation=stripping,Anpan!
 5-stripping,marker:nagisa_food_motivation=stripping,Tonkatsu!
 5-stripping=stripping,Please don't be disappointed...
@@ -544,6 +557,15 @@ clothes=Panties,panties,important,lower
 6-female_must_strip,target:aimee,targetStage:4=worried,I'm sorry you lost, Aimee, but you would have lasted longer if you just took off your clothes one at a time...
 -3-female_must_strip,target:aimee,targetStage:4=embarrassed,I'm sorry you lost, Aimee, but you would have lasted longer if you just took off your clothes one at a time...
 -1-female_must_strip,target:aimee,targetStage:4=determined,I'm sorry you lost, Aimee, but you could have won if you just took off your clothes one at a time...
+0-female_must_strip,target:aiyana,targetStage:7=embarrassed,Oh no! Aiyana! You have to... you have to...
+1-female_must_strip,target:aiyana,targetStage:7=maximumembarrassed,Oh no! Aiyana! You have to... you have to...
+2-female_must_strip,target:aiyana,targetStage:7=veryembarrassed,Oh no! Aiyana! You have to... you have to...
+3-female_must_strip,target:aiyana,targetStage:7=shy,Oh no! Aiyana! You have to... you have to...
+4-female_must_strip,target:aiyana,targetStage:7=veryembarrassed,Oh no! Aiyana! You have to... you have to...
+5-female_must_strip,target:aiyana,targetStage:7=veryembarrassed,Oh no! Aiyana! You have to... you have to...
+6-female_must_strip,target:aiyana,targetStage:7=coveringeyes,Oh no! Aiyana! You have to... you have to...
+-3-female_must_strip,target:aiyana,targetStage:7=maximumembarrassed,I'm sorry, Aiyana, but I have to stay in this!
+-1-female_must_strip,target:aiyana,targetStage:7=coveringbreasts,I'm sorry, Aiyana. It looks like you lost too.
 0-female_must_strip,target:blackrose,targetStage:0=thinking,I've never met anyone like you before, BlackRose! Where are you from?
 1-female_must_strip,target:blackrose,targetStage:0=happy,I've never met anyone like you before, BlackRose! Where are you from?
 2-female_must_strip,target:blackrose,targetStage:0=handsbehindback,I've never met anyone like you before, BlackRose! Where are you from?
@@ -639,7 +661,7 @@ clothes=Panties,panties,important,lower
 4-female_must_strip,target:wiifitfemale,targetStage:1=shy,I'm sorry that I don't play your games, Ms Trainer. My body is weak, so I can't push it too hard.
 5-female_must_strip,target:wiifitfemale,targetStage:1=worried,I'm sorry that I don't play your games, Ms Trainer. My body is weak, so I can't push it too hard.
 6-female_must_strip,target:wiifitfemale,targetStage:2=maximumembarrassed,I can't do any more exercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
--3-female_must_strip,target:wiifitfemale,targetStage:2=lookingdown,I can't do any more exercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
+-3-female_must_strip,target:wiifitfemale,targetStage:2=nervous,I can't do any more exercise, Ms Trainer. I know that my body is small and weak, but... even someone like me needs chest support.
 0-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=calm,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
 1-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=calm,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
 2-female_must_strip,target:weiss,targetStage:0,totalRounds:0-5=happy,Hello. Is your name Weiss? My name is Nagisa. I love your white dress.
@@ -712,7 +734,7 @@ clothes=Panties,panties,important,lower
 -3-male_removing_accessory=veryembarrassed,I don't think I have a chance...
 -3-male_removed_accessory=worried,You don't think it's too late for that now?
 -3-male_removed_accessory=worried,Are you being serious?
--3-female_removing_accessory=lookingdown,But... but I'm completely exposed!
+-3-female_removing_accessory=maximumembarrassed,But... but I'm completely exposed!
 -3-female_removed_accessory=determined,That's not good at all! It's cheating!
 
 #finished
@@ -723,11 +745,30 @@ clothes=Panties,panties,important,lower
 -1-female_removed_accessory=unsure,Are you hiding something?
 
 #targeted
+0-female_removing_accessory,target:aiyana,targetStage:7=maximumembarrassed,How could I let this happen! I'm so sorry, Aiyana!
+1-female_removing_accessory,target:aiyana,targetStage:7=crossedarms,How could I let this happen! I'm so sorry, Aiyana!
+2-female_removing_accessory,target:aiyana,targetStage:7=maximumembarrassed,How could I let this happen! I'm so sorry, Aiyana!
+3-female_removing_accessory,target:aiyana,targetStage:7=veryembarrassed,It's time for you to... um. Touch yourself. Down there.
+4-female_removing_accessory,target:aiyana,targetStage:7=stripped,It's time for you to... um. Touch yourself. Down there.
+5-female_removing_accessory,target:aiyana,targetStage:7=stripped,It's time for you to... um. Touch yourself. Down there.
+6-female_removing_accessory,target:aiyana,targetStage:7=maximumembarrassed,It's time for you to... um. Touch yourself. Down there.
+-3-female_removing_accessory,target:aiyana,targetStage:7=exposed,It's time for you to... um. Touch yourself. Down here.
+-1-female_removing_accessory,target:aiyana,targetStage:7=closedeyes,Don't worry. You'll feel better when it's all over.
 0-female_removing_accessory,target:nugi-chan=embarrassed,Nugi-chan, you don't have to show us your panties yet!
 1-female_removing_accessory,target:nugi-chan=veryembarrassed,Nugi-chan, you don't have to show us your panties yet!
 2-female_removing_accessory,target:nugi-chan=embarrassed,Nugi-chan, you don't have to show us your panties yet!
 
 5-female_removed_accessory,filter:mean=determined,You should stop being such a meanie, ~name~!
+0-female_removed_accessory,target:aiyana,targetStage:8=happy,Oh, thank goodness! You had me so worried!
+1-female_removed_accessory,target:aiyana,targetStage:8=strip,Oh, thank goodness! You had me so worried!
+2-female_removed_accessory,target:aiyana,targetStage:8=wink,Oh, thank goodness! You had me so worried!
+3-female_removed_accessory,target:aiyana,targetStage:8=clapping,Oh, thank goodness! You had me so worried!
+4-female_removed_accessory,target:aiyana,targetStage:8=sorry,Oh, thank goodness! You had me so worried!
+5-female_removed_accessory,target:aiyana,targetStage:8=covering,Oh, thank goodness! You had me so worried!
+6-female_removed_accessory,target:aiyana,targetStage:8=shy,Oh, thank goodness! You had me so worried!
+-3-female_removed_accessory,target:aiyana,targetStage:8=determined,That was so close, Aiyana. I'm not going to give up, and neither should you!
+-1-female_removed_accessory,target:aiyana,targetStage:8,marker:nagisa_hairclips=unsure,Oh! That's so clever, Aiyana. I wish I'd thought of that.
+-1-female_removed_accessory,target:aiyana,targetStage:8,notSaidMarker:nagisa_hairclips,marker:nagisa_hairclips=embarrassed,Oh, do earrings count? Does that mean I could've used my hairclips?
 0-female_removed_accessory,target:asuna=winkthumbsup,You look like a pretty cheerleader now, Asuna!
 1-female_removed_accessory,target:asuna=singing,You look like a pretty cheerleader now, Asuna!
 2-female_removed_accessory,target:asuna=interested,You look like a pretty cheerleader now, Asuna!
@@ -857,7 +898,7 @@ clothes=Panties,panties,important,lower
 
 #naked
 -3-male_removing_minor=embarrassed,I don't want to lose, but if I win it means that you have to take off even more...
--3-male_removed_minor=lookingdown,I feel so conflicted!
+-3-male_removed_minor=veryembarrassed,I feel so conflicted!
 -3-female_removing_minor=worried,I must admit that I am a little bit envious.
 -3-female_removed_minor=determined,I think ~name~ is doing the best she can!
 
@@ -1289,19 +1330,19 @@ clothes=Panties,panties,important,lower
 -3-male_chest_will_be_visible=calm,On a normal day, seeing a cute guy taking off his shirt would be the most embarrassing thing that could happen.
 -3-male_chest_is_visible=veryembarrassed,This game has made me feel so mixed up inside.
 -3-male_chest_is_visible=appreciating,I don't hate it or anything.
--3-male_crotch_will_be_visible=lookingdown,I can't wait to see what it looks like. I... I said too much!
--3-male_crotch_will_be_visible=lookingdown,I'm sorry if this is a silly question... but does this mean we have to get married?
+-3-male_crotch_will_be_visible=nervous,I can't wait to see what it looks like. I... I said too much!
+-3-male_crotch_will_be_visible=nervous,I'm sorry if this is a silly question... but does this mean we have to get married?
 -3-male_crotch_will_be_visible=veryembarrassed,I'm not sure what was harder: taking my clothes off or being here while you take of yours.
 -3-male_small_crotch_is_visible=calm,Is... is it true it gets bigger when a boy sees a girl he likes?
 -3-male_medium_crotch_is_visible=shocked,I know how babies are made, but I never saw any pictures!
--3-male_large_crotch_is_visible=lookingdown,Don't worry about me. I just... feel a little...
+-3-male_large_crotch_is_visible=nervous,Don't worry about me. I just... feel a little...
 -3-male_large_crotch_is_visible=mustmasturbate,Oh my gosh! How do you walk around with something that big in your underwear!
 
 -3-female_chest_will_be_visible=happy,Could it be possible that ~name~ is bigger than everyone?
 -3-female_small_chest_is_visible=happy,Oh, they're so pretty!
 -3-female_medium_chest_is_visible=embarrassed,I'm trying to tell myself that I'm just in the girls' locker-room. You can try it too if you like.
 -3-female_large_chest_is_visible=happy,You remind me a bit of my mom. She's really nice!
--3-female_large_chest_is_visible=lookingdown,Is it strange that I'm a girl too?
+-3-female_large_chest_is_visible=veryembarrassed,Is it strange that I'm a girl too?
 -3-female_crotch_will_be_visible=determined,Let's imagine that we're at a hot spring or a public bath, ~name~.
 -3-female_crotch_is_visible=embarrassed,I wish we had towels...
 
@@ -1325,7 +1366,6 @@ clothes=Panties,panties,important,lower
 -1-female_crotch_is_visible=unsure,I'm a baker's daughter, but I haven't seen buns like that before!
 
 #targeted
-
 0-male_chest_will_be_visible,target:xander,totalFemales:4=supportive,I'm sorry if it feels like us girls are ganging up on you Xander. We're not bullies, I promise!
 1-male_chest_will_be_visible,target:xander,totalFemales:4=sad,I'm sorry if it feels like us girls are ganging up on you Xander. We're not bullies, I promise!
 0-male_chest_is_visible,target:mettaton=embarrassed,Oh, those are... I'm so confused!
@@ -1363,6 +1403,7 @@ clothes=Panties,panties,important,lower
 6-female_chest_will_be_visible,target:aimee=peaceful,Did she miss this time?
 -3-female_chest_will_be_visible,target:aimee=happy,Did she miss this time?
 -1-female_chest_will_be_visible,target:aimee=closedeyes,Did she miss this time?
+5-female_chest_will_be_visible,target:asuna,totalFemales:5=embarrassed,I guess the game can't end until there are eight boobies out...
 
 0-female_medium_chest_is_visible,target:aimee=embarrassed,Oh no! You accidentally shot off two things! You need to play more carefully, Aimee!
 1-female_medium_chest_is_visible,target:aimee=veryembarrassed,Oh no! You accidentally shot off two things! You need to play more carefully, Aimee!
@@ -1387,6 +1428,8 @@ clothes=Panties,panties,important,lower
 2-female_medium_chest_is_visible,target:zone-tan,totalMales:1=maximumembarrassed,You... you're not wearing a bra? But a boy can see... He can see your chest!
 3-female_medium_chest_is_visible,target:zone-tan,totalMales:1=maximumembarrassed,You... you're not wearing a bra? But a boy can see... He can see your chest!
 4-female_medium_chest_is_visible,target:zone-tan,totalMales:1=stripped,You... you're not wearing a bra? But a boy can see... He can see your chest!
+
+5-female_large_chest_is_visible,target:asuna=veryembarrassed,It's going to be my turn right after yours. I just know it.
 
 -3-female_crotch_will_be_visible,target:kim=nervous,Is that why I'm twice as embarrassed?
 0-female_crotch_will_be_visible,target:aimee=veryembarrassed,And if you didn't wear such revealing underwear, maybe you'd have a bigger target to hit...
@@ -1441,7 +1484,7 @@ clothes=Panties,panties,important,lower
 4-female_crotch_is_visible,target:mia=maximumembarrassed,You could've taken off your bra instead... Now you're basically naked!
 5-female_crotch_is_visible,target:mia=stripping,You could've taken off your bra instead... Now you're basically naked!
 6-female_crotch_is_visible,target:mia=coveringeyes,You could've taken off your bra instead... That's what I did...
--3-female_crotch_is_visible,target:mia=lookingdown,You could've taken off your bra instead... That's what I did...
+-3-female_crotch_is_visible,target:mia=calm,You could've taken off your bra instead... That's what I did...
 0-female_crotch_is_visible,target:zelda,alsoPlaying:link=embarrassed,Hey, give those back! It's not nice to steal a girl's panties!
 1-female_crotch_is_visible,target:zelda,alsoPlaying:link=veryembarrassed,Hey, give those back! It's not nice to steal a girl's panties!
 2-female_crotch_is_visible,target:zelda,alsoPlaying:link=veryembarrassed,Hey, give those back! It's not nice to steal a girl's panties!
@@ -1544,14 +1587,14 @@ clothes=Panties,panties,important,lower
 
 #nude
 -3-male_must_masturbate=calm,You're... really... lucky, ~name~! B-Because you get to play cards with a sort-of-cute girl like me. 
--3-male_start_masturbating=lookingdown,I... I, uh... I said cute, but just sort-of-cute.
+-3-male_start_masturbating=nervous,I... I, uh... I said cute, but just sort-of-cute.
 -3-male_masturbating=shocked,I can't watch!
--3-male_masturbating=lookingdown,Everyone's looking at you! I'm sorry, but I'm looking too.
+-3-male_masturbating=embarrassed,Everyone's looking at you! I'm sorry, but I'm looking too.
 -3-male_masturbating,marker:nagisa_rear=rear,I'm sorry, but ~name~ was looking right at me while he did that... Is-is he still looking?
 -3-male_finished_masturbating=shocked,I'm really sorry. Let me know if there's anything I can do to make this up to you.
 
 -3-female_must_masturbate=shocked,Oh no! If you want me to, I could stand facing you so that no one can see you touching yourself.
--3-female_start_masturbating=lookingdown,Oh, but then I would be really close to it, and everyone would look at my butt...
+-3-female_start_masturbating=nervous,Oh, but then I would be really close to it, and everyone would look at my butt...
 -3-female_masturbating=shocked,I never thought of doing it like that...
 -3-female_masturbating=shocked,I don't want people to come because of something like that!
 -3-female_finished_masturbating=determined,I have renewed determination! I won't give up!
@@ -1580,6 +1623,7 @@ clothes=Panties,panties,important,lower
 -3-female_must_masturbate,filter:princess=shocked,If even a <i>princess</i> has to do it, what chance do I have?
 -3-female_must_masturbate,filter:princess=determined,If even a <i>princess</i> has to do it, I know I can be brave enough too!
 -1-female_must_masturbate,target:sayla=embarrassed,I'm sorry you lost too, Sayla. Would you like me to find you a chair so that you can sit down?
+
 0-female_start_masturbating,target:kurumu=veryembarrassed,You have wings?! This is turning into the weirdest day ever...
 1-female_start_masturbating,target:kurumu=maximumembarrassed,You have wings?! This is turning into the weirdest day ever...
 2-female_start_masturbating,target:kurumu=maximumembarrassed,You have wings?! This is turning into the weirdest day ever...
@@ -1589,6 +1633,7 @@ clothes=Panties,panties,important,lower
 6-female_start_masturbating,target:kurumu=maximumembarrassed,You have wings?! This is turning into the weirdest day ever...
 -3-female_start_masturbating,target:kurumu=mustmasturbate,You have wings?! This is turning into the weirdest day ever...
 -1-female_start_masturbating,target:kurumu=finished,You have wings?! This is turning into the weirdest day ever...
+
 -1-female_masturbating,target:hermione=embarrassed,You have control over those hands, right? None of them will accidentally poke us, will they?
 0-female_masturbating,target:moon=embarrassed,You should be ashamed of yourself!
 1-female_masturbating,target:moon=maximumembarrassed,You should be ashamed of yourself!
@@ -1621,6 +1666,7 @@ heavy_masturbating=calm,<i>If we try hard enough, w-with time, we may be able to
 heavy_masturbating=eyesopentwofingersin,<i>W-what is this light? I would not know a sight like this.</i>
 heavy_masturbating=twofingersin,<i>S-somewhere, far far away, there was another world for them to live in - one full of warmth and life.</i>
 finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Ahhh! Ahhh!
+finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Oh... omigosh...
 finished_masturbating,notSaidMarker:nagisa_finished_1,marker:nagisa_finished_1=embarrassed,Oh! Forget you saw anything today, please? Please, please?
 finished_masturbating,notSaidMarker:nagisa_finished_2,saidMarker:nagisa_finished_1,marker:nagisa_finished_2=unsure,Um, just checking, but there isn't a second even-more-embarrassing penalty for losing again somehow, is there?
 finished_masturbating,saidMarker:nagisa_finished_2=unsure,I'm going to need to rest in bed after this...
@@ -1628,7 +1674,7 @@ finished_masturbating,saidMarker:nagisa_finished_2=finished,Is it true that I ha
 finished_masturbating,saidMarker:nagisa_finished_2=embarrassed,Don't tell my friends that you saw me here. I'll make it up to you.
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,Now that I have nothing left to lose, waiting's not so hard.
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,I guess I'm braver than I thought.
-finished_masturbating,saidMarker:nagisa_finished_2=unsure,Could... could I have used my hairclips as a piece of clothing?
+finished_masturbating,saidMarker:nagisa_finished_2,notSaidMarker:nagisa_hairclips,marker:nagisa_hairclips,priority:0=unsure,Could... could I have used my hairclips as a piece of clothing?
 finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:kyu,priority:0=embarrassed,Kyu, were you... were you making fun of me during my play?
 
 -2-male_human_must_strip=calm,<i>Are we almost there already, or do we still have a long way to walk?</i>
@@ -1705,6 +1751,7 @@ game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the g
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
 game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...
 game_over_defeat,target:dawn,totalMales:0=closedeyes,No hard feelings, Dawn. Good luck with your poke-monsters game!
+game_over_defeat,target:elaine=embarrassed,I know you're a pirate, Elaine, but please don't plunder my booty!
 game_over_defeat,target:kyu=embarrassed,How did Kyu win? She... she didn't even start with all of her clothes on.
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
 game_over_defeat,target:nugi-chan=embarrassed,Does anyone see my panties anywhere? I don't want to have to ride the train home without them...
@@ -1739,8 +1786,6 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 5-female_must_strip,target:tracer=veryembarrassed,Is it true that you can rewind time? Maybe to about fifteen minutes ago?
 
 5-female_removed_major,target:daphne=idea,Your bra and panties match your dress! You're so stylish, Daphne...
-5-female_chest_will_be_visible,target:asuna,totalFemales:5=embarrassed,I guess the game can't end until there are eight boobies out...
-5-female_large_chest_is_visible,target:asuna=veryembarrassed,It's going to be my turn right after yours. I just know it.
 5-female_must_masturbate,target:velma=maximumembarrassed,V-Velma... I'm so sorry!
 
 6-female_chest_will_be_visible,filter:princess=emphatic,Princess, it's okay if you don't want to do this!
@@ -1748,7 +1793,7 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 
 -3-female_removed_major,target:tracer=calm,If you disappear, could you take me with you?
 -3-female_start_masturbating,filter:princess=veryembarrassed,I'm so sorry, princess!
--3-female_masturbating,target:kyoko=lookingdown,Your hands are... This is even stranger than I expected!
+-3-female_masturbating,target:kyoko=embarrassed,Your hands are... This is even stranger than I expected!
 -3-female_finished_masturbating,target:chara=shocked,I'm not sure if I should say this, but that was kinda scary...
 
 
