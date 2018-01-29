@@ -60,6 +60,21 @@ artist=humdumthrow & Arndress
 description=Hana Song, known as "D.Va", is a former professional gamer who now uses her skills to pilot a state-of-the-art mech in defense of her homeland.
 release=49
 
+
+
+marker=d.va_kicks_butt_without_shoes,public,Hana doesn't need shoes to kick your butt.
+marker=d.va_lucio_playing,public,Hana heard that Lucio is playing at "Inner City Spectacle" tonight.
+marker=d.va_needs_a_hug,public,Some characters react to Hana saying she needs a hug via Hana using an alsoPlaying. This marker will replace that method in the future.
+marker=d.va_sonya_butt_kicked,public,Hana: 1, Sonya: 0.
+marker=d.va_sonya_talks_big,public,Hana jousts with Sonya.
+
+marker=d.va_thinks_seven_is_moira,public,
+marker=d.va_noobs,public,
+marker=d.va_high_score,public,
+marker=d.va_accuses_cheating,public,
+
+
+
 #D.Va's Clothing:
 clothes=Gloves,gloves,extra,other
 clothes=Boots,boots,extra,other
@@ -75,6 +90,7 @@ start=0-warpaint,Makeup whiskers? Nuh-uh! This is <i>warpaint</i>!
 start=0-awkward,Oh, a fan, huh? Oh, well, who can blame you?
 start=0-winking,Oh, is this like Fighters of the Storm 2? Because I used to main Garrosh.
 start=0-excited,Oh, by the way, I know I say "NERF THIS" a lot. Please don't <i>actually</i> "NERF THIS", okay?
+
 
 
 #card cases
@@ -111,6 +127,9 @@ swap_cards=serene,~cards~ cards.
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
 
+0-good_hand,alsoPlaying:meia,totalRounds:1=calm,Gotta say, nice suit, Meia. I hope some more League teams form so that I can expand my wardrobe.
+0-okay_hand,alsoPlaying:meia,totalRounds:1=calm,Gotta say, nice suit, Meia. I hope some more League teams form so that I can expand my wardrobe.
+0-bad_hand,alsoPlaying:meia,totalRounds:1=excited,Gotta say, nice suit, Meia. I hope some more League teams form so that I can expand my wardrobe. Although with this hand, my wardrobe might deplete instead...
 0-good_hand,alsoPlaying:streaming-chan,totalRounds:1=strip,I don't remember agreeing to collaborate, Streaming-chan.
 0-okay_hand,alsoPlaying:streaming-chan,totalRounds:1=strip,I don't remember agreeing to collaborate, Streaming-chan.
 0-bad_hand,alsoPlaying:streaming-chan,totalRounds:1=strip,I don't remember agreeing to collaborate, Streaming-chan.
@@ -131,10 +150,15 @@ swap_cards=serene,~cards~ cards.
 2-good_hand=peace,Revenge is sweet.
 2-good_hand=winking,I'm unstoppable!
 2-good_hand=heart,I'm the boss!
+2-good_hand,count-d.va_cruiser:1,priority:0=winking,Hot dog!
 2-okay_hand=calm,This isn't the best defense I've seen, but it should be enough.
+2-okay_hand,notSaidMarker:d.va_lucio_playing,marker:d.va_lucio_playing=awkward,I heard that Lucio's playing a set at Inner City Spectacle tonight. Oh... I hope they let me in.
 2-bad_hand=excited,Is it too late to just spectate this match?
 2-bad_hand=loss,Uggh, this is what I call a hard counter.
 2-bad_hand=angry,Ugh... This is worse than when they nerfed my mech.
+
+2-good_hand,alsoPlaying:sonya,alsoPlayingStage:0-8,notSaidMarker:d.va_sonya_talks_big,marker:d.va_sonya_talks_big=calm,You talk a big game for an <i>old lady</i>, Sonya.
+2-good_hand,alsoPlaying:sonya,alsoPlayingStage:10,notSaidMarker:d.va_sonya_butt_kicked,marker:d.va_sonya_butt_kicked=winking,You already lost, Sonya. Consider your butt kicked!
 
 #Lost Headphones
 3-good_hand=peace,I play to win! 
@@ -185,10 +209,10 @@ swap_cards=serene,~cards~ cards.
 #character is stripping situations***
 
 #Losing Gloves (accessory)
-0-must_strip_winning=peace,You guys are losing and I'm only NOW losing my gloves.
+0-must_strip_winning=peace,You guys are losing and I'm only <i>now</i> losing my gloves.
 0-must_strip_winning=excited,I'm fine, I'm fine...
 0-must_strip_winning,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
-0-must_strip_winning,count-d.va_cruiser:1,priority:0=prestrip_cruiser,You guys are losing and I'm only NOW losing my bangles.
+0-must_strip_winning,count-d.va_cruiser:1,priority:0=prestrip_cruiser,You guys are losing and I'm only <i>now</i> losing my bangles.
 0-must_strip_normal=loss,It's easier to play without gloves anyway...
 0-must_strip_normal=sad,Damn. I got these gloves custom made!
 0-must_strip_normal,count-d.va_cruiser:1,priority:1000=prestrip_cruiser,I guess it's time to lose these snazzy bangles.
@@ -209,7 +233,7 @@ swap_cards=serene,~cards~ cards.
 1-stripping=strip,Taking off.
 1-stripping=strip,I'm sure there's at least one person who wants to see this really badly.
 2-stripped=stripped,D.Va, online.
-2-stripped=stripped,I don't need shoes to kick your butt.
+2-stripped,marker:d.va_kicks_butt_without_shoes=stripped,I don't need shoes to kick your butt.
 
 #Losing Headphones (accessory)
 2-must_strip_winning=serene,I'm just getting warmed up.
@@ -226,14 +250,17 @@ swap_cards=serene,~cards~ cards.
 #Losing Suit (major)
 3-must_strip_winning=excited,There goes my winning streak...
 3-must_strip_winning=heart,It seems you have enough credits to unlock my alternate outfit!
-3-must_strip_normal=awkward,My suit took too much damage. Bailing out!
+3-must_strip_normal,count-d.va_cruiser:0,priority:0=awkward,My suit took too much damage. Bailing out!
 3-must_strip_normal,count-d.va_cruiser:1,priority:0=prestrip_cruiser,My outfit took too much damage. Bailing out!
 3-must_strip_normal=excited,I was hoping I'd get the chance to show off!
 3-must_strip_losing=shy,Time to raise my APM...
 3-must_strip_losing=loss,I feel like you're teaming up on me...
 3-stripping=strip,Suiting down...
 3-stripping,count-d.va_cruiser:1,priority:1000=strip,Yeah, I've got a stream to get to, so this round's a twofer.
-4-stripped=stripped,I could really use a hug right now.
+4-stripped,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
+4-stripped,alsoPlaying:asuna,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
+4-stripped,alsoPlaying:kim,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
+4-stripped,alsoPlaying:xander,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
 4-stripped=stripped,With a figure like this, how can people say that my diet is entirely Doritos and Mountain Dew?
 4-stripped=excited,D.Va in the flesh, woo! How do you like it?
 
@@ -251,8 +278,8 @@ swap_cards=serene,~cards~ cards.
 5-must_strip_winning=handsonhips,Time for me to get "buffed"!
 5-must_strip_normal=handsonhips,I guess it's time for me to be a team player...
 5-must_strip_losing=sad,I lost? No fair!
-5-must_strip_losing=stripped,Damn it! 
-5-must_strip_losing,count-d.va_cruiser:1,priority:1000=stripped,Dang it!
+5-must_strip_losing,count-d.va_cruiser:0,priority:0=stripped,Damn it! 
+5-must_strip_losing,count-d.va_cruiser:1,priority:0=stripped,Dang it!
 5-stripping=strip,Now I'll bare it all.
 5-stripping=strip,Oh man, if my fans saw me like this... Hmm... That would actually be kinda hot.
 6-stripped=dismayed,I feel more exposed now than when I'm out of my mech.
@@ -267,7 +294,7 @@ swap_cards=serene,~cards~ cards.
 #Fully Clothed
 0-male_human_must_strip,marker:human_first_piece=winking,Hey there, ~name~!
 0-male_human_must_strip,marker:human_first_piece=calm,Are you really that easy to beat? That's surprising!
-0-male_must_strip=peace,An early pick!
+0-male_must_strip,totalRounds:0-1=peace,An early pick!
 0-male_must_strip=stripped,I won again! I just hope I won't get nerfed...
 0-female_human_must_strip,marker:human_first_piece=excited,Nice one! And I haven't even taken any damage yet!
 0-female_must_strip=saluting,~name~ strip sequence initiated.
@@ -1079,6 +1106,16 @@ swap_cards=serene,~cards~ cards.
 -2-female_medium_chest_is_visible,target:zoey=serene,If it helps, I'm really into your new look!
 -1-female_medium_chest_is_visible,target:zoey=winking,Girlfriend, you have <i>nothing</i> to be embarrassed about.
 
+0-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+1-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+2-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+3-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+4-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+5-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+-3-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+-2-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+-1-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+
 0-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I have gold damage.
 1-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I have gold damage.
 2-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I have gold damage.
@@ -1088,6 +1125,15 @@ swap_cards=serene,~cards~ cards.
 -3-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I need to see this faster!
 -2-female_crotch_will_be_visible,target:aimee=winking,Could you switch to hitscan? I need to see this faster!
 -1-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? Pharah is close by, and she's not showing enough skin.
+0-female_crotch_will_be_visible,target:asuna=excited,Aw, I almost feel bad. You're whatever tier is below Bronze, Asuna.
+1-female_crotch_will_be_visible,target:asuna=excited,Time to hand over your panties, Asuna! It's not a Blood Oath day, is it?
+2-female_crotch_will_be_visible,target:asuna=winking,You should play this game with Kirito. He'd like how bad you are at it.
+3-female_crotch_will_be_visible,target:asuna=saluting,Let's have a 16.5 gun salute for the Panties of Superior Vigor.
+4-female_crotch_will_be_visible,target:asuna=horny,So the rich girl's losing everything?
+5-female_crotch_will_be_visible,target:asuna=shy,It's not going to be me next. I'm good at lots of games, unlike Asuna.
+-3-female_crotch_will_be_visible,target:asuna=peace,Don't worry, Asuna. Japanese law requires me to blur out your fun parts when I share our group selfies!
+-2-female_crotch_will_be_visible,target:asuna=excited,You're close to joining me, Asuna. Let's group up for a bonus experience.
+-1-female_crotch_will_be_visible,target:asuna=excited,Let's see what got you all those guild promotions, Asuna.
 0-female_crotch_will_be_visible,target:moon=awkward,So you really are throwing? I'm glad you're not on my team!
 1-female_crotch_will_be_visible,target:moon=awkward,So you really are throwing? I'm glad you're not on my team!
 2-female_crotch_will_be_visible,target:moon=awkward,So you really are throwing? I'm glad you're not on my team!
@@ -1283,6 +1329,15 @@ swap_cards=serene,~cards~ cards.
 5-female_must_masturbate,target:mei=horny,Mei, spread some peanut butter down there. Maybe Winston will drop in and give you a good lick!
 -3-female_must_masturbate,target:mei=heart,Aw, yeah! This is the emote that I wanted to unlock for you, Mei!
 
+0-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+1-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+2-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+3-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+4-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+5-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+-3-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+-2-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+-1-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
 0-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
 1-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
 2-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
@@ -1409,7 +1464,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 #Consider sorting these targeted lines into the sections above
 
 0-stripping,alsoPlaying:streaming-chan=heart,Quick shoutout to my fans: Thanks for all the love and support!
-0-female_crotch_will_be_visible,target:asuna=excited,Aw, I almost feel bad. You're whatever tier is below Bronze, Asuna.
 0-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 0-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
 0-female_finished_masturbating,target:tracer=hornier,Awesome! Tracer, how about you Recall and do that all again?
@@ -1419,7 +1473,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 1-female_removed_accessory,target:arwen,targetStage:1=heart,I love your Linkle cosplay, Arwen. The ears look so realistic!
 1-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
 1-female_removing_minor,target:harley=stripped,I really love the suit you wore in Arkham City, Harley! This suit is cute too, though!
-1-female_crotch_will_be_visible,target:asuna=excited,Time to hand over your panties, Asuna! It's not a Blood Oath day, is it?
 1-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 1-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
 1-female_finished_masturbating,target:tracer=hornier,Awesome! Tracer, how about you Recall and do that all again?
@@ -1433,7 +1486,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 2-female_must_strip,target:buffy,targetStage:3=winking,"Buffy"? More like "Nerfy", am I right?
 2-female_must_strip,filter:mushroom_kingdom,targetStage:4=winking,Well, ~name~, seems like your power star went out!
 2-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
-2-female_crotch_will_be_visible,target:asuna=winking,You should play this game with Kirito. He'd like how bad you are at it.
 2-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 2-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
 2-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
@@ -1442,7 +1494,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 3-good_hand,alsoPlaying:hermione=calm,Hermione, I thought of something we have in common! We've both had bad experiences with trolls.
 3-stripped,alsoPlaying:kim=stripped,Time to get serious!
 3-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
-3-female_crotch_will_be_visible,target:asuna=stripped,I hope this doesn't affect my chances at being promoted in the guild...
 3-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 3-female_crotch_is_visible,target:mercy=winking,You should go into battle like that, Angela. You look amazing for an old woman!
 3-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
@@ -1453,9 +1504,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 4-good_hand,alsoPlaying:kim=excited,Kim, you're pretty well connected, right? Could you get me Doomfist's number?
 4-good_hand,alsoPlaying:xander,alsoPlayingHand:High Card=winking,Xander, you're too normal to join Overwatch. If you want in, steal a high-tech weapon and fake your own death!
 4-good_hand,alsoPlaying:zoey,alsoPlayingStage:6,alsoPlayingHand:High Card=excited,I hope you like surprises, Zoey!
-4-stripped,alsoPlaying:asuna=stripped,I could really use a hug right now.
-4-stripped,alsoPlaying:kim=stripped,I could really use a hug right now.
-4-stripped,alsoPlaying:xander=stripped,I could really use a hug right now.
 4-female_must_strip,hasHand:High Card=shocked,I didn't lose?! But I didn't even have a pair! RNG must really be on my side...
 4-male_must_strip,hasHand:High Card=shocked,I didn't lose?! But I didn't even have a pair! RNG must really be on my side...
 4-female_removing_accessory,target:april=loss,You're just turtling. Uh, no pun intended.
@@ -1463,7 +1511,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 4-female_removed_accessory,target:elena=awkward,I wish I had a traditional dress to wear, but I spent all my credits on Anniversary cosmetics...
 4-female_removing_minor,target:marie=horny,Marie, you look like you belong in some sort of hentai!
 4-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
-4-female_crotch_will_be_visible,target:asuna=horny,So the rich girl's losing everything?
 4-female_crotch_will_be_visible,target:elena=excited,We've freed you up North. Time to liberate down South!
 4-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
 4-female_crotch_is_visible,filter:shaved=peace,Silky smooth! That's my style!
@@ -1478,7 +1525,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 5-female_removing_minor,target:marie=horny,Marie, you look like you belong in some sort of hentai!
 5-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
 5-female_large_chest_is_visible,alsoPlaying:harley=shocked,Whoa! Hm, I bet you've sucked on tits like these a lot, right, Harley? Poison Ivy comes to mind...
-5-female_crotch_will_be_visible,target:asuna=shy,It's not going to be me next. I'm good at lots of games, unlike Asuna.
 5-female_crotch_will_be_visible,target:elena=excited,We've freed you up North. Time to liberate down South!
 5-female_crotch_is_visible,filter:shaved=peace,Silky smooth! That's my style!
 5-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
@@ -1498,7 +1544,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 -3-female_removing_major,target:buffy=calm,You've got skills! Team up with me next time Junkenstein's Revenge comes back.
 -3-female_medium_chest_is_visible,alsoPlaying:harley=dismayed,I've seen those pictures you made of Selina all tied up, Harley. I wouldn't mind being dominated like that by you...
 -3-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
--3-female_crotch_will_be_visible,target:asuna=peace,Don't worry, Asuna. Japanese law requires me to blur out your fun parts when I share our group selfies!
 -3-female_crotch_will_be_visible,target:elena=excited,We've freed you up North. Time to liberate down South!
 -3-female_crotch_is_visible,target:mercy=hornier,M-Mercy... I've n-never felt like this about you before...
 -3-female_crotch_is_visible,filter:shaved=starting,You're also completely smooth down there? I love it!
@@ -1509,7 +1554,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 -3-female_masturbating,target:mercy=hornier,Oh my god, Mercy. You've never b-boosted me up like this before...
 
 -2-female_medium_chest_is_visible,alsoPlaying:harley=hornier,I've seen those hot pictures you made of Selina all tied up, Harley. I-I wouldn't mind being dominated like that by you...
--2-female_crotch_will_be_visible,target:asuna=excited,You're close to joining me, Asuna. Let's group up for a bonus experience.
 -2-female_crotch_is_visible,target:mercy=horny,M-Mercy... I've n-never felt like this about you before...
 -2-female_start_masturbating,target:zone-tan=finishing,Ohhh, that video was <i>so</i> hot... Seeing your cute body like that... was... <i>ahhhh</i>...
 -2-female_masturbating,target:mercy=horny,Oh my god, Mercy. You've never b-boosted me up like this before...
@@ -1519,7 +1563,6 @@ game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
 
 -1-female_removed_accessory,target:elena=awkward,I wish I had a traditional dress to wear, but I spent all my credits on Anniversary cosmetics...
 -1-female_removing_major,target:buffy=calm,You've got skills! Team up with me next time Junkenstein's Revenge comes back.
--1-female_crotch_will_be_visible,target:asuna=excited,Let's see what got you all those guild promotions, Asuna.
 -1-female_crotch_will_be_visible,target:elena=excited,We've freed you up North. Time to liberate down South!
 -1-male_crotch_will_be_visible,target:human,totalFemales:3=winking,Hey, girls, anyone wanna team up to play Capture the Rooster?
 -1-male_crotch_will_be_visible,target:human,totalFemales:4=winking,Hey, girls, anyone wanna team up to play Capture the Rooster?
