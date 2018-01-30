@@ -4,9 +4,10 @@ last=
 label=Orendi
 gender=female
 size=medium
+intelligence=bad
 
 #Number of phases to "finish" masturbating
-timer=5
+timer=10
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and British. See tag_list.txt for a list of tags.
 tag=creepy
@@ -15,26 +16,21 @@ tag=alien
 tag=bisexual
 tag=cheerful
 
-intelligence=bad
-
 #required for meta.xml
 #select screen image
 pic=0-portrait
-height=5'3"
+height=4'9"
 from=Battleborn
 writer=BlueKoin
 artist=BlueKoin
-description=Unhinged, unpredictable, and feared even by members of her own faction, Orendi channels bursts of chaotic energy to ravage her opponents at incredible speed, and seeks to test herself against the greatest challenges Solus has to offer.
-
-release=76
+description=Unhinged, unpredictable, and feared even by members of her own faction, Orendi is a dangerous shapeshifting alien known as a Varimorph.
+#hasending=false
+#layers=6
+#release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
 
 #You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-excited,Two questions: ONE! What is poker?! TWO! I can't think of a second question!
-start=0-happy,Welcome to Casa de Orendi. Who's up for board games?
-start=0-cross,Seriously guys? The world is ending and all you want to do is play strip poker? I'M SO IN!
-start=0-angry,WHO TOLD YOU WHERE I WAS?!
-
+start=0-excited,Two questions: <I>one!</I> What is poker?! <I>two!</I> I can't think of a second question!
 
 
 #CLOTHING
@@ -46,8 +42,8 @@ start=0-angry,WHO TOLD YOU WHERE I WAS?!
 #There must be 2-8 entries, and at least one "important" piece of clothing on each of the upper and lower locations.
 #Below is an example of Rosalina's clothing. Please adjust these values to match your character's clothing.
 clothes=Bracelets,bracelets,extra,other
-clothes=Vest,vest,extra,upper
-clothes=Hat,hat,extra,other
+clothes=Vest,vest,minor,upper
+clothes=Hat,hat,minor,other
 clothes=Scarf,scarf,extra,other
 clothes=Shirt,shirt,important,upper
 clothes=Pants,pants,important,lower
@@ -72,7 +68,7 @@ clothes=Pants,pants,important,lower
 #These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
 #The lines written here are examples only and should be replaced.
 swap_cards=cross,Hey, dealer, gimme ~cards~ cards.
-swap_cards=angry,Give me ~cards~ cards, or I will EAT your FACE!
+swap_cards=angry,Give me ~cards~ cards, or I will <I>eat</I> your <I>face</I>!
 swap_cards=happy,~cards~ new cards, please!
 
 
@@ -84,23 +80,28 @@ swap_cards=happy,~cards~ new cards, please!
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
 #The character thinks they have a good hand
-good_hand=excited,Haha ha HA!
-good_hand=excited,Chaos magik is SICK!
-good_hand=excited,NO! WHAT A TERRIBLE HAND!... Nah. Just playin'. My hand RULES!
+good_hand=excited,Haha ha <I>ha</I>!
+good_hand=excited,Chaos magik is <I>sick</I>!
+good_hand=excited,<I>No! What a terrible hand!</I>... Nah. Just playin'. My hand <I>rules</I>!
+good_hand=excited,Ha! Look at this hand! I told you the dealer loves me!
+good_hand=excited,Fuck these cards! That's not a threat, that's a &#9834;<I>promise</I>&#9834;!
 
 #The character thinks they have an okay hand
-okay_hand=cross,Uh, I've got four hands, not counting this new one. Is that cheating? No? COOL!
-okay_hand=cross,Man, these cards are boring. They don't have corpses, or burn victims, or anything cool like that on them...
+okay_hand=cross,Uh, I've got four hands, not counting this new one. Is that cheating? No? <I>Cool!</I>
+okay_hand=cross,Man, these cards are boring. They don't have flames, or brains, or anything cool like that on them...
 okay_hand=happy,Hey guys, you dare me to eat all of the cards?!
+okay_hand=happy,This reminds me of a game I played with Rendain. Except it didn't involve stripping. Or cards. Actually, it was just me blasting him with Chaos Bolts.
 okay_hand=excited,Hey! These cards remind me of Pendles! They're all squiggly, just like he is!
+okay_hand=excited,Sweet! A full house! That's when you have five cards, right?
 
 #The character thinks they have a bad hand
 bad_hand=angry,Guess who's about to regret giving me these cards? Spoilers: it's the dealer!
-bad_hand=angry,Time for some revenge for these cards! Served hot! WITH SPRINKLES!
-bad_hand=angry,Hahaha WHAT?!
-bad_hand=angry,You know what's gonna be great? WHEN I MURDER THE HELL OUT OF THE DEALER!
-bad_hand=angry,These cards are like chocolate, and I SHANKING, HATE, CHOCOLATE!
-
+bad_hand=angry,Time for some revenge for these cards! Served hot! <I>With sprinkles!</I>
+bad_hand=angry,Hahaha <I>what</I>?!
+bad_hand=angry,You know what's gonna be great? When I murder the hell out of the dealer!
+bad_hand=angry,These cards are like chocolate, and I <I>shanking, HATE, chocolate</I>!
+bad_hand=birds,These are for you, dealer! <I>Keep the change!</I>
+bad_hand=cross,Welp, I fold... <I>Wait, what?! I'm not allowed to fold?! Damn it!</I>
 
 #stage-specific lines that override the stage-generic ones
 
@@ -120,34 +121,37 @@ bad_hand=angry,These cards are like chocolate, and I SHANKING, HATE, CHOCOLATE!
 2-bad_hand=,
 
 #lost 3 items
-3-good_hand=,
+3-good_hand=sad,It doesn't matter how good my hand is; it'll never bring back my hat!
+3-good_hand=sad,Where were these cards when I still had my hat?!
 3-okay_hand=,
 3-bad_hand=,
 
 #lost 4 items
-4-good_hand=cross,It doesn't matter how good my hand is; it'll never bring back my hat!
+4-good_hand=,
 4-okay_hand=,
 4-bad_hand=,
 
 #lost 5 items
 5-good_hand=happy,You done screwed up, Orendi, but you got another chance!
-5-good_hand=happy,If I lose this hand somehow, I am SERIOUSLY going to eat someone's legs off!
-5-good_hand=happy,Where were the cards when I still had my hat?!
-5-okay_hand=happy,You know, I can change my gender at will. If I lose this hand, ya'll might get an eyeful of GIANT VARIMORPH DICK!
+5-good_hand=happy,If I lose this hand somehow, I am <I>seriously</I> going to eat someone's legs off!
+5-good_hand=happy,Where were these cards when I still had my hat?!
+5-okay_hand=happy,You know, I can change my gender at will. If I lose this hand, ya'll might get an eyeful of <I>giant Varamorph dick</I>!
 5-okay_hand=happy,If I lose this hand, I will eat my shorts! I may or may not follow through on that...
-5-bad_hand=angry,Damn it! I've got five hands right now, and NONE OF THEM ARE HELPING!
-5-bad_hand=angry,I will burn all these cards in the biggest, HOTTEST fire!
-5-bad_hand=angry,Yes! An unbeatable hand!... Oh wait, hold on, I read them wrong; MY HAND SUCKS!
+5-bad_hand=angry,Damn it! I've got five hands right now, and <I>none of them are helping</I>!
+5-bad_hand=angry,I will burn all these cards in the biggest, <I>hottest</I> fire!
+5-bad_hand=angry,Yes! An unbeatable hand!... Oh wait, hold on, I read them wrong. <I>My hand sucks!</I>
 
 #lost all clothing
--3-good_hand=excited,Orendi is back! ORENDI IS MAD!
+-3-good_hand=excited,Orendi is back! <I>Orendi is mad!</I>
 -3-good_hand=excited,Haha ha! I'm not out yet!
 -3-good_hand=excited,In your faces! I got good cards!
--3-okay_hand=happy,Ooh. Am I gonna touch myself? Will I be safe this turn? THE SUSPENSE IS KILLING ME!
+-3-okay_hand=happy,Ooh. Am I gonna touch myself? Will I be safe this turn? <I>The suspense is killing me!</I>
 -3-okay_hand=happy,If I lose this hand, I will eat my shorts!... Oh that's right, I lost them already...
+-3-okay_hand=happy,If I lose this hand, I will eat, uh... Myself? Sure, let's go with that.
 -3-bad_hand=cross,Welp, guess it's gonna be 'batin' time for me soon.
--3-bad_hand=cross,I'M OUT!
+-3-bad_hand=cross,<I>I'm out!</I>
 -3-bad_hand=cross,Damn it! 
+-3-bad_hand=angry,<I>Damn it damn it damn it!</I>
 
 
 
@@ -155,50 +159,53 @@ bad_hand=angry,These cards are like chocolate, and I SHANKING, HATE, CHOCOLATE!
 #This is the character says once they've lost a hand, but before they strip.
 
 #losing first item of clothing
-0-must_strip_winning=cross,Man, you guys suck at this!
+0-must_strip_winning=excited,Man, you guys suck at this!
 0-must_strip_normal=excited,My turn? Is it my turn? It's my turn now, right?
 0-must_strip_losing=excited,Me first me first me first! 
 0-stripping=stripping,Gonna level with you guys; even I think that taking off these bracelets one at a time would be unfair.
 1-stripped=stripped,You can thank me later.
+1-stripped,alsoPlaying:videl,marker:orendiissmart=stripped,Not quite, Videl. I actually have incredibly malleable genetic structuring that allows me intentionally adapt my physiology. It's no technique; it's as natural as breathing. You were close, though!
 
 #losing second item of clothing
 1-must_strip_winning=cross,Ugh, finally, my turn! 
-1-must_strip_normal=excited,Everyone shut up! It's my turn now!
+1-must_strip_normal=happy,Everyone shut up! It's my turn now!
 1-must_strip_losing=cross,Me again? Crap.
 1-stripping=stripping,Uh... How 'bout my vest. That counts, right?
-2-stripped=stripped,TOOLATEWHOCARES!
+2-stripped=stripped,<I>Toolatewhocares!</I>
 
 #losing third item of clothing
-2-must_strip_winning=happy,I lost? DON'T CARE! Still winning anyway!
-2-must_strip_normal=happy,&#9834;My turn!&#9834;
+2-must_strip_winning=excited,I lost? <I>Don't care! Still winning anyway!</I>
+2-must_strip_normal=excited,&#9834;My turn!&#9834;
 2-must_strip_losing=angry,Damn it! Me again? Fine!
 2-stripping=stripping,No! Not the hat! Anything but the hat!
 3-stripped=stripped,Yeahokaywhatever...
 
 #losing fourth item of clothing
-3-must_strip_winning=happy,I lost? OH WELL I'M STILL IN THE LEAD!
-3-must_strip_normal=cross,Alright, who's next?... Why is everyone STARING AT ME?!
-3-must_strip_losing=happy,Hell yeah! Orendi is in the lead!... This is a race, right?...
-3-stripping=stripping,Hey, hey! Wanna see some tits?
+3-must_strip_winning=happy,I lost? <I>Oh well I'm still in the lead!</I>
+3-must_strip_normal=cross,Alright, who's next?... Why is everyone staring at me?
+3-must_strip_losing=excited,Hell yeah! Orendi is in the lead!... This is a race, right?...
+3-stripping=stripping,Hey, <I>hey</I>! Wanna see some tits?
 4-stripped=stripped,Oops too bad I took off my scarf! &#9834;No taksies-backsies!&#9834;
 
 #losing fifth item of clothing
 4-must_strip_winning=happy,Wow, you guys reeeeally suck if I'm winning right now.
-4-must_strip_normal=cross,My turn again? Cool. COOOOOOOL.
-4-must_strip_losing=angry,Don't lie; you guys just wanted to see me get nekked, didn'tcha? It's obvious because you RIGGED THE CARDS!
-4-stripping=stripping,WHO WANTS TO SEE SOME VARIMORPH TITTIES?!
-4-stripping=stripping,I guess I'll take off my shirt and... Wait! My shoes! MY SHOES! I could take off my shoes instead!... Oh wait, I don't wear shoes...
-5-stripped=stripped,WOO! FEEL THAT FRESH AIR!
+4-must_strip_normal=cross,My turn again? Cool. <I>Coooooool.</I>
+4-must_strip_losing=angry,Don't lie; you guys just wanted to see me get nekked, didn'tcha? It's obvious because you <I>rigged the cards</I>!
+4-stripping=stripping,<I>Who wants to see some Varimorph titties?!</I>
+4-stripping=stripping,I guess I'll take off my shirt and... Wait! My shoes! <I>My shoes!</I> I could take off my shoes instead!... Oh wait, I don't wear shoes...
+5-stripped=stripped,<I>Woo! Feel that fresh air!</I>
 5-stripped=stripped,Get a load of these puppies!
 
 #losing sixth item of clothing
 5-must_strip_winning=cross,Okay, for realsies guys, how am I winning right now?
-5-must_strip_normal=happy,MY TUUUUURN!
-5-must_strip_losing=angry,DAMN IT! Believe it or not, but I actually WANTED to WIN!
+5-must_strip_normal=happy,<I>My tuuuuurn!</I>
+5-must_strip_losing=angry,<I>Damn it!</I> Believe it or not, but I actually <I>wanted</I> to <I>win</I>!
 5-stripping=stripping,Not gonna lie, I'm going commando right now. Get ready to see some Varimorph pussy!
 5-stripping=stripping,And now, the moment of truth: does Orendi have a dick right now?
-6-stripped=strippedA,Aw yeah, that's much better. Pants freakin' SUCK.
-6-stripped=strippedB,Wait, where'd my dick go? WHERE DID IT GO?!... Nah, just kiddin', I always know what's goin' on down there.
+6-stripped=strippedA,Aw yeah, that's much better. Pants freakin' <I>suck</I>!
+6-stripped=strippedB,Wait, where'd my dick go? <I>Where did it go?!...</I> Nah, just kiddin', I always know what's goin' on down there.
+6-stripped,alsoPlaying:phoebe=strippedA,Hey Phoebe, did'ja know that I can change my gender at will? Wanna see me do it?
+6-stripped,alsoPlaying:beatrix=strippedA,Hey Beatrix, did'ja know that I can change my gender at will? Wanna see me do it?
 
 
 
@@ -209,42 +216,47 @@ bad_hand=angry,These cards are like chocolate, and I SHANKING, HATE, CHOCOLATE!
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
-male_human_must_strip=happy,Oh noooo! PAH! Jokes!
+male_human_must_strip=happy,<I>Oh noooo!</I> Pah! Jokes!
 male_human_must_strip=happy,Score one for Orendi!... And everyone else, I guess...
 male_human_must_strip=excited,&#9834;Stripping time!&#9834;
 male_human_must_strip=excited,Guess who's stripping? &#9834;Not me!&#9834;
-male_human_must_strip=excited,GET REKT! OH YEAH!
-male_human_must_strip=excited,TEE! HEE!
-male_human_must_strip=happy,All eyes are on you! Including those on my hands!
+male_human_must_strip=excited,<I>Get rekt! Oh yeah!</I>
+male_human_must_strip=excited,Tee! Hee!
+male_human_must_strip=happy,All eyes are on you! Including my hand-eyeballs!
 male_human_must_strip=excited,&#9834;Time to lose another layer of defenses!&#9834;
-male_human_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? RIGHT?!
-male_must_strip=happy,Oh noooo! PAH! Jokes!
+male_human_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? <I>Right?!</I>
+male_human_must_strip=happy,Pick something good or I'll bite you~!
+male_must_strip=happy,<I>Oh noooo!</I> Pah! Jokes!
 male_must_strip=happy,Score one for Orendi!... And everyone else, I guess...
 male_must_strip=excited,&#9834;Stripping time!&#9834;
 male_must_strip=excited,Guess who's stripping? &#9834;Not me!&#9834;
-male_must_strip=excited,GET REKT! OH YEAH!
-male_must_strip=excited,TEE! HEE!
-male_must_strip=happy,All eyes are on you! Including those on my hands!
+male_must_strip=excited,<I>Get rekt! Oh yeah!</I>
+male_must_strip=excited,Tee! Hee!
+male_must_strip=happy,All eyes are on you! Including my hand-eyeballs!
 male_must_strip=excited,&#9834;Time to lose another layer of defenses!&#9834;
-male_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? RIGHT?!
-female_human_must_strip=happy,Oh noooo! PAH! Jokes!
+male_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? <I>Right?!</I>
+male_must_strip=happy,Pick something good or I'll bite you~!
+female_human_must_strip=happy,<I>Oh noooo!</I> Pah! Jokes!
 female_human_must_strip=happy,Score one for Orendi!... And everyone else, I guess...
 female_human_must_strip=excited,&#9834;Stripping time!&#9834;
 female_human_must_strip=excited,Guess who's stripping? &#9834;Not me!&#9834;
-female_human_must_strip=excited,GET REKT! OH YEAH!
-female_human_must_strip=excited,TEE! HEE!
-female_human_must_strip=happy,All eyes are on you! Including those on my hands!
+female_human_must_strip=excited,<I>Get rekt! Oh yeah!</I>
+female_human_must_strip=excited,Tee! Hee!
+female_human_must_strip=happy,All eyes are on you! Including my hand-eyeballs!
 female_human_must_strip=excited,&#9834;Time to lose another layer of defenses!&#9834;
-female_human_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? RIGHT?!
-female_must_strip=happy,Oh noooo! PAH! Jokes!
+female_human_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? <I>Right?!</I>
+female_human_must_strip=happy,Pick something good or I'll bite you~!
+female_must_strip=happy,<I>Oh noooo!</I> Pah! Jokes!
 female_must_strip=happy,Score one for Orendi!... And everyone else, I guess...
 female_must_strip=excited,&#9834;Stripping time!&#9834;
 female_must_strip=excited,Guess who's stripping? &#9834;Not me!&#9834;
-female_must_strip=excited,GET REKT! OH YEAH!
-female_must_strip=excited,TEE! HEE!
-female_must_strip=happy,All eyes are on you! Including those on my hands!
+female_must_strip=excited,<I>Get rekt! Oh yeah!</I>
+female_must_strip=excited,Tee! Hee!
+female_must_strip=happy,All eyes are on you! Including my hand-eyeballs!
 female_must_strip=excited,&#9834;Time to lose another layer of defenses!&#9834;
-female_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? RIGHT?!
+female_must_strip=cute,There's nothing to be ashamed of; we're all friends here!... Right? <I>Right?!</I>
+female_must_strip=happy,Pick something good or I'll bite you~!
+female_must_strip,target:aimee,targetStage:0=excited,<I>Holy shit! Aimee's opening fire!</I>
 
 #stage-specific lines that override the stage-generic ones
 
@@ -287,17 +299,21 @@ female_must_strip=cute,There's nothing to be ashamed of; we're all friends here!
 
 #lost all clothing items
 -3-male_human_must_strip=cross,Hurry up and take off more stuff. I'm not gettin' any more naked over here!
--3-male_human_must_strip=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
--3-male_human_must_strip=angry,YOU! CLOTHES OFF! NOW!
+-3-male_human_must_strip=cross,Awesome. Now if could just keep losing, that be even better!
+-3-male_human_must_strip=cross,Don't keep me waiting, ~name~!
+-3-male_human_must_strip=angry,<I>You! Clothes off! Now!</I>
 -3-male_must_strip=cross,Hurry up and take off more stuff. I'm not gettin' any more naked over here!
--3-male_must_strip=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
--3-male_must_strip=angry,YOU! CLOTHES OFF! NOW!
+-3-male_must_strip=cross,Awesome. Now if could just keep losing, that be even better!
+-3-male_must_strip=cross,Don't keep me waiting, ~name~!
+-3-male_must_strip=angry,<I>You! Clothes off! Now!</I>
 -3-female_human_must_strip=cross,Hurry up and take off more stuff. I'm not gettin' any more naked over here!
--3-female_human_must_strip=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
--3-female_human_must_strip=angry,YOU! CLOTHES OFF! NOW!
+-3-female_human_must_strip=cross,Awesome. Now if could just keep losing, that be even better!
+-3-female_human_must_strip=cross,Don't keep me waiting, ~name~!
+-3-female_human_must_strip=angry,<I>You! Clothes off! Now!</I>
 -3-female_must_strip=cross,Hurry up and take off more stuff. I'm not gettin' any more naked over here!
--3-female_must_strip=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
--3-female_must_strip=angry,YOU! CLOTHES OFF! NOW!
+-3-female_must_strip=cross,Awesome. Now if could just keep losing, that be even better!
+-3-female_must_strip=cross,Don't keep me waiting, ~name~!
+-3-female_must_strip=angry,<I>You! Clothes off! Now!</I>
 
 #masturbating
 -2-male_human_must_strip=,
@@ -320,26 +336,42 @@ female_must_strip=cute,There's nothing to be ashamed of; we're all friends here!
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
-male_removing_accessory=cross,Oh, I'm sorry, I thought we were playing "strip poker," not "PUSSYFOOT POKER!"
-male_removing_accessory=cross,You used to be cool!
+male_removing_accessory=cross,Oh, I'm sorry, I thought we were playing "strip poker," not "<I>Pussyfoot Poker</I>!"
+male_removing_accessory=sad,You used to be cool!
 male_removing_accessory=cross,This shit: I didn't order this!
 male_removing_accessory=angry,No! Bad! That's bad! Feel bad!
-male_removed_accessory=angry,HATE!
+male_removing_accessory=birds,Oh look, a flock of birds came to say hello! <I>Hi, ~name~! You suck at stripping!</I>
+male_removing_accessory=birds,Y'know, I once had four birds as pets, but they flew away. <I>Oh look, they came back!</I>
+male_removed_accessory=angry,<I>Hate!</I>
 male_removed_accessory=angry,That, is why I hate you!
 male_removed_accessory=cross,Take off something better next time!
-male_removed_accessory=angry,I hate you so much it BURNS CALORIES!
-male_removed_accessory=angry,Die in a fire!
-male_removed_accessory=angry,Your brains need a GOOOOD PUNCHING!
-female_removing_accessory=cross,Oh, I'm sorry, I thought we were playing "strip poker," not "PUSSYFOOT POKER!"
-female_removing_accessory=cross,You used to be cool!
+male_removed_accessory=angry,I hate you so much it <I>burns calories</I>!
+male_removed_accessory=cross,If you strip any slower, I'll <I>die</I> from <I>boredom</I>!
+male_removed_accessory=sad,I'm so bored I could cry!
+male_removed_accessory=sad,This turn could've been used for so much more!
+male_removed_accessory=sad,This could've been the turn where you got your dick out, but you <I>waisted it</I>!
+male_removed_accessory=cross,How many times is that, now? I'm afraid I lost count because I'm <I>so mad</I>!
+female_removing_accessory=cross,Oh, I'm sorry, I thought we were playing "strip poker," not "<I>Pussyfoot Poker</I>!"
+female_removing_accessory=sad,You used to be cool!
 female_removing_accessory=cross,This shit: I didn't order this!
 female_removing_accessory=angry,No! Bad! That's bad! Feel bad!
-female_removed_accessory=angry,HATE!
+female_removing_accessory=birds,Oh look, a flock of birds came to say hello! <I>Hi, ~name~! You suck at stripping!</I>
+female_removing_accessory=birds,Y'know, I once had four birds as pets, but they flew away. <I>Oh look, they came back!</I>
+female_removing_accessory,target:blake,targetStage:5=happy,<I>Ooh!</I> &#9834;Secret time!&#9834; Tell me tell me tell me!
+female_removed_accessory=angry,<I>Hate!</I>
 female_removed_accessory=angry,That, is why I hate you!
 female_removed_accessory=cross,Take off something better next time!
-female_removed_accessory=angry,I hate you so much it BURNS CALORIES!
-female_removed_accessory=angry,Die in a fire!
-female_removed_accessory=angry,Your brains need a GOOOOD PUNCHING!
+female_removed_accessory=angry,I hate you so much it <I>burns calories</I>!
+female_removed_accessory=cross,If you strip any slower, I'll <I>die</I> from <I>boredom</I>!
+female_removed_accessory=sad,I'm so bored I could cry!
+female_removed_accessory=sad,This turn could've been used for so much more!
+female_removed_accessory=sad,This could've been the turn where you got your tits out, but you <I>waisted it</I>!
+female_removed_accessory=cross,How many times is that, now? I'm afraid I lost count because I'm <I>so mad</I>!
+female_removed_accessory,target:blake,targetStage:6=cross,What? That's it? <I>Cat ears?!</I> You're bad at having shocking secrets!
+female_removed_accessory,target:blake,targetStage:6=cross,What? That's it? <I>Cat ears?!</I> I was more surprised learning Attikus could talk than I am by <I>cat ears</I>!
+female_removed_accessory,target:blake,targetStage:6=cross,What? That's it? <I>Cat ears?!</I> Seeing Caldarius without his armor for the first time was more shocking than this!
+female_removed_accessory,target:blake,targetStage:6=cross,What? That's it? <I>Cat ears?!</I> Seeing a Mike without his helmet for the first time was more shocking than this!
+female_removed_accessory,target:blake,targetStage:6=cross,What? That's it? <I>Cat ears?!</I> Kleese's Taser is more shocking than this!... Seriously though: your secret blows. 
 
 #stage-specific lines that override the stage-generic ones
 
@@ -375,34 +407,42 @@ female_removed_accessory=angry,Your brains need a GOOOOD PUNCHING!
 4-female_removed_accessory=,
 
 #lost 5 items
-5-male_removing_accessory=,
-5-male_removed_accessory=,
-5-female_removing_accessory=,
-5-female_removed_accessory=,
-
-#lost 6 items
-6-male_removing_accessory=,
-6-male_removed_accessory=,
-6-female_removing_accessory=,
-6-female_removed_accessory=,
-
-#lost 7 items
-7-male_removing_accessory=,
-7-male_removed_accessory=,
-7-female_removing_accessory=,
-7-female_removed_accessory=,
+5-male_removing_accessory=angry,That's it? <I>That's it?!</I>
+5-male_removing_accessory=angry,How the hell do you still have that?!
+5-male_removing_accessory=angry,That's what you decide to take off?! While I'm this undressed?!
+5-male_removed_accessory=angry,Die in a fire!
+5-male_removed_accessory=angry,Your brains need a <I>gooood</I> punching!
+5-male_removed_accessory=angry,You can shove it up your ass, ~name~! Literally! Or not! Take your pick!
+5-female_removing_accessory=angry,That's it? <I>That's it?!</I>
+5-female_removing_accessory=angry,How the hell do you still have that?!
+5-female_removing_accessory=angry,That's what you decide to take off?! While I'm this undressed?!
+5-female_removed_accessory=angry,Die in a fire!
+5-female_removed_accessory=angry,Your brains need a <I>gooood</I> punching!
+5-female_removed_accessory=angry,You can shove it up your ass, ~name~! Literally! Or not! Take your pick!
 
 #nude
--3-male_removing_accessory=,
--3-male_removed_accessory=,
--3-female_removing_accessory=,
--3-female_removed_accessory=,
+-3-male_removing_accessory=cross,Yo, ~name~, in case you haven't noticed, I'm naked. <I>You're not doing much to level the playing field!</I>
+-3-male_removing_accessory=angry,This game has gone on for long enough! Forget your ~clothing~, I wanna see some stroking! 
+-3-male_removing_accessory=angry,If there were ever a terrible time to take off your ~clothing~, <I>now would be that time</I>!
+-3-male_removed_accessory=cross,No, you know what, it's <I>my</I> fault for thinking you actually wanted to play the game we're playing!
+-3-male_removed_accessory=cross,Fine! <I>Don't</I> listen to me! I'm only trying to have fun at this strip poker match!
+-3-male_removed_accessory=angry,I'm getting sick of your stalling, ~name~!
+-3-female_removing_accessory=cross,Yo, ~name~, in case you haven't noticed, I'm naked. <I>You're not doing much to level the playing field!</I>
+-3-female_removing_accessory=angry,This game has gone on for long enough! Forget your ~clothing~, I wanna see some fingering!
+-3-female_removing_accessory=angry,If there were ever a terrible time to take off your ~clothing~, <I>now would be that time</I>!
+-3-female_removed_accessory=cross,No, you know what, it's <I>my</I> fault for thinking you actually wanted to play the game we're playing!
+-3-female_removed_accessory=cross,Fine! <I>Don't</I> listen to me! I'm only trying to have fun at this strip poker match!
+-3-female_removed_accessory=angry,I'm getting sick of your stalling, ~name~!
 
 #masturbating
--2-male_removing_accessory=,
--2-male_removed_accessory=,
--2-female_removing_accessory=,
--2-female_removed_accessory=,
+-2-male_removing_accessory=sad,<I>Not that! That's not sexy at all! It's like you don't even wanna help me!</I>
+-2-male_removing_accessory=angry,What, do you get off on me not getting off to your stripping?!
+-2-male_removed_accessory=cross,<I>That's it! You're off my Newshines Day list!</I>
+-2-male_removed_accessory=birds,I'll stop masturbating just to flip you off harder!
+-2-female_removing_accessory=sad,<I>Not that! That's not sexy at all! It's like you don't even wanna help me!</I>
+-2-female_removing_accessory=angry,What, do you get off on me not getting off to your stripping?!
+-2-female_removed_accessory=cross,<I>That's it! You're off my Newshines Day list!</I>
+-2-female_removed_accessory=birds,I'll stop masturbating just to flip you off harder!
 
 #finished
 -1-male_removing_accessory=,
@@ -417,22 +457,32 @@ female_removed_accessory=angry,Your brains need a GOOOOD PUNCHING!
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
-male_removing_minor=cross,Just your ~clothing~? LAAAAME!
+male_removing_minor=cross,Just your ~clothing~? <I>Laaaame!</I>
 male_removing_minor=happy,I bet your ~clothing~ looks better on the floor than it does on you.
-male_removing_minor=cross,~name~, I'ma level with you: YOU SUCK AT THIS!
+male_removing_minor=cross,~name~, I'ma level with you: <I>you suck at this</I>!
 male_removing_minor=cross,Yay, off comes your ~clothing~, whoopty freakin' doo. Someone throw some confetti or whatever.
-male_removed_minor=cross,Aw come on. I've seen more skin from Shayne. AND SHE'S SIXTEEN!
+male_removing_minor=birds,Wow! What an awesome choice, ~name~! <I>Wait a minute, what are my fingers doing?!</I>
+male_removing_minor=sad,Not your ~clothing~! You have better things than that to take off!
+male_removed_minor=cross,Aw, come on! I've seen more skin from Shayne, <I>and she's sixteen</I>!
 male_removed_minor=happy,Don't stop! Take off more!
-male_removed_minor=happy,&#9834;Less layers, less protection, easier stabbing!&#9834;
-male_removed_minor=excited,Hey, I was right! Your ~clothing~ DOES look better on the floor!
-female_removing_minor=cross,Just your ~clothing~? LAAAAME!
+male_removed_minor=happy,&#9834;Less layers, less protection, sooner nudity!&#9834;
+male_removed_minor=excited,Hey, I was right! Your ~clothing~ <I>does</I> look better on the floor!
+male_removed_minor=boo,Step it up next time!
+male_removed_minor=boo,Boring choice! Boring stripping! Boring exposure!
+female_removing_minor=cross,Just your ~clothing~? <I>Laaaame!</I>
 female_removing_minor=happy,I bet your ~clothing~ looks better on the floor than it does on you.
-female_removing_minor=cross,~name~, I'ma level with you: YOU SUCK AT THIS!
+female_removing_minor=cross,~name~, I'ma level with you: <I>you suck at this</I>!
 female_removing_minor=cross,Yay, off comes your ~clothing~, whoopty freakin' doo. Someone throw some confetti or whatever.
-female_removed_minor=cross,Aw come on. I've seen more skin from Shayne. AND SHE'S SIXTEEN!
+female_removing_minor=birds,Wow! What an awesome choice, ~name~! <I>Wait a minute, what are my fingers doing?!</I>
+female_removing_minor=sad,Not your ~clothing~! You have better things than that to take off!
+female_removing_minor,target:kyoko,targetStage:5=excited,<I>Woah!</I> Why didn't you take off your gloves sooner? 
+female_removed_minor=cross,Aw, come on! I've seen more skin from Shayne, <I>and she's sixteen</I>!
 female_removed_minor=happy,Don't stop! Take off more!
-female_removed_minor=happy,&#9834;Less layers, less protection, easier stabbing!&#9834;
-female_removed_minor=excited,Hey, I was right! Your ~clothing~ DOES look better on the floor!
+female_removed_minor=happy,&#9834;Less layers, less protection, sooner nudity!&#9834;
+female_removed_minor=excited,Hey, I was right! Your ~clothing~ <I>does</I> look better on the floor!
+female_removed_minor=boo,Step it up next time!
+female_removed_minor=boo,Boring choice! Boring stripping! Boring exposure!
+female_removed_minor,target:kyoko,targetStage:6=excited,<I>Pfft</I>, "ugly sight." Shut your face! Those are cool!
 
 #stage-specific lines that override the stage-generic ones
 
@@ -467,28 +517,34 @@ female_removed_minor=excited,Hey, I was right! Your ~clothing~ DOES look better 
 4-female_removed_minor=,
 
 #lost 5 items
-5-male_removing_minor=,
-5-male_removed_minor=,
-5-female_removing_minor=,
-5-female_removed_minor=,
-
-#lost 6 items
-6-male_removing_minor=,
-6-male_removed_minor=,
-6-female_removing_minor=,
-6-female_removed_minor=,
-
-#lost 7 items
-7-male_removing_minor=,
-7-male_removed_minor=,
-7-female_removing_minor=,
-7-female_removed_minor=,
+5-male_removing_minor=cross,You sure are taking your freakin' time getting to the good stuff!
+5-male_removing_minor=cross,<I>Oh my god, could you strip any slower?!</I>
+5-male_removing_minor=boo,<I>Boo! Your choice is lame and you should feel bad!</I>
+5-male_removed_minor=cross,Seriously, I lost most of my stuff already, and you're still getting rid of stupid things like your ~clothing~! Hurry up and lose more!
+5-male_removed_minor=angry,<I>Lose faster!</I>
+5-male_removed_minor=cross,If you stripped any slower, you'd be putting clothes back on!
+5-male_removed_minor=boo,At this rate, I'll die of old age before you get naked!
+5-female_removing_minor=cross,You sure are taking your freakin' time getting to the good stuff!
+5-female_removing_minor=cross,<I>Oh my god, could you strip any slower?!</I>
+5-female_removing_minor=boo,<I>Boo! Your choice is lame and you should feel bad!</I>
+5-female_removed_minor=cross,Seriously, I lost most of my stuff already, and you're still getting rid of stupid things like your ~clothing~! Hurry up and lose more!
+5-female_removed_minor=angry,<I>Lose faster!</I>
+5-female_removed_minor=cross,If you stripped any slower, you'd be putting clothes back on!
+5-female_removed_minor=boo,At this rate, I'll die of old age before you get naked!
 
 #naked
--3-male_removing_minor=,
--3-male_removed_minor=,
--3-female_removing_minor=,
--3-female_removed_minor=,
+-3-male_removing_minor=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
+-3-male_removing_minor=angry,How are you not naked yet?!
+-3-male_removing_minor=angry,Are you even <I>trying</I> to play this game properly?! You're supposed to get naked!
+-3-male_removed_minor=boo,What, are you afraid of being naked or something?!
+-3-male_removed_minor=boo,<I>Lose! More!</I>
+-3-male_removed_minor=sad,<I>I just want everyone here to be naked! Is that too much to ask?</I>
+-3-female_removing_minor=angry,Hey! Do you see how naked I am right now?! You should be this naked too!
+-3-female_removing_minor=angry,How are you not naked yet?!
+-3-female_removing_minor=angry,Are you even <I>trying</I> to play this game properly?! You're supposed to get naked!
+-3-female_removed_minor=boo,What, are you afraid of being naked or something?!
+-3-female_removed_minor=boo,<I>Lose! More!</I>
+-3-female_removed_minor=sad,<I>I just want everyone here to be naked! Is that too much to ask?</I>
 
 #masturbating
 -2-male_removing_minor=,
@@ -513,24 +569,37 @@ female_removed_minor=excited,Hey, I was right! Your ~clothing~ DOES look better 
 male_removing_major=excited,Aw yeah! Take it off!
 male_removing_major=excited,All that time I spent hating you is paying off!
 male_removing_major=excited,I've dreamed about this for like ten minutes!
-male_removing_major=excited,Here comes the FUN!
+male_removing_major=excited,Here comes the <I>fun</I>!
+male_removing_major=sad,You're going to do it? Really? No jokes?... <I>I'm so happy...</I>
+male_removing_major=boo,Coward!... Oh wait, did you say ~clothing~? <I>Hell yes!</I>
 male_removed_major=cross,Aaaand now I'm bored. Deal the cards!
-male_removed_major=happy,This is all I ever wanted!
+male_removed_major=sad,This is all I ever wanted!
 male_removed_major=happy,&#9834;This is going in my memoirs!&#9834;
 male_removed_major=happy,I hate how much I love you!
 male_removed_major=happy,Your shame sustains me!
 male_removed_major=excited,Shame spiral!
+male_removed_major=happy,You have such nice skin, ~name~! Mind if I take- er, touch it? Can I touch it?
+male_removed_major=happy,Hey ~name~, can I try on your ~clothing~? I bet we're, like, <I>totally</I> the same size!
 female_removing_major=excited,Aw yeah! Take it off!
 female_removing_major=excited,All that time I spent hating you is paying off!
 female_removing_major=excited,I've dreamed about this for like ten minutes!
-female_removing_major=excited,Here comes the FUN!
+female_removing_major=excited,Here comes the <I>fun</I>!
+female_removing_major=sad,You're going to do it? Really? No jokes?... <I>I'm so happy...</I>
+female_removing_major=boo,Coward!... Oh wait, did you say ~clothing~? <I>Hell yes!</I>
+female_removing_major,target:aimee,targetStage:0=happy,Go, bullet, go!
+female_removing_major,target:aimee,targetStage:0=happy,An-ar-chy! An-ar-chy!
+female_removing_major,target:beatrix=excited,Aw yeah! Beatrix knows how this game should be played! No pussyfooting, just straight to the good stuff!
 female_removed_major=happy,You go girl!
-female_removed_major=happy,This is all I ever wanted!
+female_removed_major=sad,This is all I ever wanted!
 female_removed_major=happy,&#9834;This is going in my memoirs!&#9834;
 female_removed_major=happy,I hate how much I love you!
 female_removed_major=happy,Your shame sustains me!
 female_removed_major=excited,Shame spiral!
-
+female_removed_major=happy,You have such nice skin, ~name~! Mind if I take- er, touch it? Can I touch it?
+female_removed_major=happy,Hey ~name~, can I try on your ~clothing~? I bet we're, like, <I>totally</I> the same size!
+female_removed_major,target:aimee,targetStage:1=excited,That was so cool! You were all like BLAM BLAM, and ~player~ was all "AH! BULLETS!" and then your clothes exploded!
+female_removed_major,target:aimee,targetStage:1=cross,Aw, lame! You missed ~player~!
+female_removed_major,target:beatrix=happy,We should've played this together sooner!
 
 #stage-specific lines that override the stage-generic ones
 
@@ -596,35 +665,65 @@ female_removed_major=excited,Shame spiral!
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
 male_chest_will_be_visible=cross,Eh, what's the big deal? Montana and Whiskey go shirtless all the time. Nothin' new to me.
-male_chest_will_be_visible=cross,Yes! Here it comes!... Wait a moment; you don't have tits! BORING!
-male_chest_is_visible=cross,LATIES AND GENTLEMEN, ORENDI IS DYING FROM BORDOM! LET'S MOVE ON!
-male_chest_is_visible=cross,You, sir, need to grow a pair of tits. 
-male_crotch_will_be_visible=excited,SHOW ME THEM NUTS, FELLA!
+male_chest_will_be_visible=cross,Yes! Here it comes!... Wait a moment; you don't have tits! <I>Boring!</I>
+male_chest_will_be_visible=cross,Orendi objects! <I>Orendi objects!</I>
+male_chest_will_be_visible=cross,Come on! Do you know how many shirtless dudes I see every day?!... Three!... Trust me, that's enough to get bored of it!
+male_chest_will_be_visible,target:mettaton=cross,Yes! Here it comes!... Wait a moment; you don't have tits! <I>Boring!</I>
+male_chest_is_visible=cross,<I>Laties and gentlemen, Orendi is dying from boredom! Let's move on!</I>
+male_chest_is_visible=cross,You, sir, need to grow a pair of tits.
+male_chest_is_visible=cross,I mean, really, what's there to get excited about? Hair? Nipples that don't work? Lack of boobs?
+male_chest_is_visible=cross,Call me when you've had a sex-change operation.
+male_chest_is_visible=cross,Wired were the eyes of a horse on Orendi, one that was <I>pissed for people spending too much time staring at some dude's chest!</I>
+male_chest_is_visible,target:mettaton=excited,Oh my god, you do have tits! <I>Best robot ever!</I>
+male_crotch_will_be_visible=excited,<I>Show me them nuts, fella!</I>
+male_crotch_will_be_visible=excited,Time to whip out your flesh stick!
+male_crotch_will_be_visible=happy,Is it weird that I'm just as excited to see the balls as I am to see the shaft? <I>That's not weird, right?</I>
+male_crotch_will_be_visible=excited,<I>Fuuuull picklllle!</I>
 male_small_crotch_is_visible=cute,Aw, it's cute. What's his name? Can I pet him?
 male_small_crotch_is_visible=cute,&#9834;I can hear, your loved ones laughing!&#9834;
+male_small_crotch_is_visible=boo,<I>Smaaaall peeeenis!</I>
+male_small_crotch_is_visible=sad,<I>It's so small, I could cry...</I>
 male_medium_crotch_is_visible=happy,Nice. Not too big, not too little. 
 male_medium_crotch_is_visible=happy,Hey guys! Would anyone be grossed out if I ate that?
-male_large_crotch_is_visible=excited,You could bust a head open with that! Wait, let me rephrase that: PLEASE bust a head open with that!
+male_medium_crotch_is_visible=happy,<I>Get in my mouth!</I>
+male_medium_crotch_is_visible=cute,I need that inside me, <I>pronto</I>!
+male_large_crotch_is_visible=excited,You could bust a head open with that! Wait, let me rephrase that: <I>please</I> bust a head open with that!
 male_large_crotch_is_visible=happy,Oh, hi Miko! When did you get here? If I had known you were coming, I would've cleaned up a bit.
 male_large_crotch_is_visible=cross,Well, you know what they say: "The bigger they are..." Why is everyone staring at me?!
+male_large_crotch_is_visible=sad,<I>It's so big, I could cry...</I>
 
 female_chest_will_be_visible=excited,Take, it, off! Take, it, off!... Seriously, take it off or I'll hurt you!
-female_chest_will_be_visible=excited,Off comes the top, out fall the tits!
+female_chest_will_be_visible=excited,Off comes the ~clothing~, out fall the tits!
 female_chest_will_be_visible=excited,Do it! Do it, do it, do it do it do it! Do it!
-female_small_chest_is_visible=cute,Aw, they're almost as small as Alani's.
+female_chest_will_be_visible=excited,Come on! What are you waiting for? I wanna see some titties!
+female_chest_will_be_visible,target:beatrix=excited,I've waited for this moment since we first met!
+female_small_chest_is_visible=cute,Aw, they're almost as small as Alani's. How cute!
 female_small_chest_is_visible=cross,Hey, nothing wrong with a small chest. Respect, yo.
+female_small_chest_is_visible=angry,If anyone mocks you for your size, you come tell big sis Orendi and she'll <I>roast their giblets! And eat them! With ketchup!</I>
+female_small_chest_is_visible=cute,<I>Ooh! Bitty-boobs!</I>
+female_small_chest_is_visible,target:beatrix=sad,... I'm sorry... I'm gonna need a moment...
 female_medium_chest_is_visible=cross,Not bad, not bad.
 female_medium_chest_is_visible=happy,Woah! Did'ja see them giggle?! Do it again!
-female_large_chest_is_visible=excited,HOT DAMN! Those are bigger than Phoebe's!
+female_medium_chest_is_visible=excited,Boobs are the best! That's why I have them!
+female_medium_chest_is_visible=excited,Can we get an instant replay on that? I wanna see that again in slow motion!
+female_medium_chest_is_visible,target:chica=sad,<I>Are you sure? Did you check? Check again! Maybe there is this time!</I>
+female_large_chest_is_visible=excited,<I>Hot damn!</I> Those are bigger than Phoebe's!
 female_large_chest_is_visible=cross,Eh, I could make mine that big too, if I really wanted to.
 female_large_chest_is_visible=happy,Damn, girl, nice tits you got there.
-female_crotch_will_be_visible=happy,Take it off. TAKE! IT! OFF!
+female_large_chest_is_visible=sad,<I>They're so beautiful...</I>
+female_large_chest_is_visible,target:phoebe=excited,<I>Hot damn!</I> Those are bigger than Phoebe's!... <I>Wait a minute...</I>
+female_crotch_will_be_visible=happy,Take it off. <I>Take! It! Off!</I>
 female_crotch_will_be_visible=excited,Time to show us your flesh taco!
 female_crotch_will_be_visible=happy,Bush or no bush? Place your bets, folks!
+female_crotch_will_be_visible=cute,Take your time. This can't be easy for you... What am I saying? <I>Hurry up and take off your ~clothing~ already!</I>
+female_crotch_will_be_visible,target:twilight,targetStage:0=excited,Panties first? This girl knows how to have fun!
 female_crotch_is_visible=happy,I wanna whisper a secret into your gushing pussy!
 female_crotch_is_visible=happy,&#9834;I, can smell, your pussy fluid!&#9834;
-female_crotch_is_visible=excited,YAY! NIGHTMARES!... Nah, just kidding, you look great.
+female_crotch_is_visible=excited,<I>Yay! Nightmares!...</I> Nah, just kidding, you look great.
 female_crotch_is_visible=excited,I wonder what your pussy taste like!
+female_crotch_is_visible,filter:shaved=excited,<I>No bush!</I> Ha! I win! Pay up!... What? Was I the only one betting?
+female_crotch_is_visible,filter:hairy=excited,<I>Bush!</I> Ha! I win! Pay up!... What? Was I the only one betting?
+female_crotch_is_visible,filter:hairy=cute,<I>Woah!</I> Are you sure there's actually a vagina under all that?! <I>Pahaha!</I>
 
 #stage-specific lines that override the stage-generic ones
 
@@ -636,7 +735,7 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 0-male_medium_crotch_is_visible=,
 0-male_large_crotch_is_visible=,
 
-0-female_chest_will_be_visible=excited,Woo! I haven't even lost once yet and I'm already gonna see some tits! I'M THE BEST AT STRIP POKER!
+0-female_chest_will_be_visible=excited,Woo! I haven't even lost once yet and I'm already gonna see some tits! <I>I'm the best at strip poker!</I>
 0-female_small_chest_is_visible=,
 0-female_medium_chest_is_visible=,
 0-female_large_chest_is_visible=,
@@ -646,12 +745,12 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 #lost 1 item
 1-male_chest_will_be_visible=,
 1-male_chest_is_visible=,
-1-male_crotch_will_be_visible=excited,Hot damn! I've barely taken anything off yet, and you're already gonna go full pickle?! STRIP POKER RULES!
+1-male_crotch_will_be_visible=excited,Hot damn! I've barely taken anything off yet, and you're already gonna go full pickle?! <I>Strip poker rules</I>
 1-male_small_crotch_is_visible=,
 1-male_medium_crotch_is_visible=,
 1-male_large_crotch_is_visible=,
 
-1-female_chest_will_be_visible=happy,My bracelets for your tits? I'd say that's a fair trade!... Shh! No one say anything!
+1-female_chest_will_be_visible=happy,My bracelets for your tits? I'd say that's a fair trade!... <I>Shh! No one say anything!</I>
 1-female_small_chest_is_visible=,
 1-female_medium_chest_is_visible=,
 1-female_large_chest_is_visible=,
@@ -684,7 +783,7 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 3-female_chest_will_be_visible=,
 3-female_small_chest_is_visible=cross,Eh, that chest almost makes up for my hat... Almost...
 3-female_medium_chest_is_visible=cross,I took off my hat, you got out your tits. I'd say we're even now.
-3-female_large_chest_is_visible=excited,Holy crap! Those are SO worth taking off my hat for!
+3-female_large_chest_is_visible=excited,Holy crap! Those are <I>so</I> worth taking off my hat for!
 3-female_crotch_will_be_visible=,
 3-female_crotch_is_visible=,
 
@@ -711,7 +810,7 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 5-male_medium_crotch_is_visible=,
 5-male_large_crotch_is_visible=,
 
-5-female_chest_will_be_visible=stripped,C'mon. Whip 'em out! The wind feels GREAT!
+5-female_chest_will_be_visible=stripped,C'mon. Whip 'em out! The air feels <I>great</I>!
 5-female_small_chest_is_visible=,
 5-female_medium_chest_is_visible=,
 5-female_large_chest_is_visible=,
@@ -737,30 +836,30 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 -2-male_chest_will_be_visible=angry,Grrrh, pick something else! You're not doin' me any favors by taking your ~clothing~ off!
 -2-male_chest_is_visible=angry,You'd better pick something better next time, or I'll chew your legs off!
 -2-male_crotch_will_be_visible=angry,Take it off! Now! Or I'll eat your eyeballs!
--2-male_small_crotch_is_visible=angry,Nggh, not enough. ORENDI NEEDS MORE!
+-2-male_small_crotch_is_visible=angry,Nggh, not enough. Orendi needs more!
 -2-male_medium_crotch_is_visible=happy,Oooh yeah, that's the stuff... Now make it wiggle...
--2-male_large_crotch_is_visible=excited,OH MAN! I THINK I'M GONNA EXPLODE RIGHT NOW!
+-2-male_large_crotch_is_visible=excited,<I>Oh man! I think I'm gonna explode!</I>
 
--2-female_chest_will_be_visible=angry,RRRgh, take it off before I rip it off!
--2-female_small_chest_is_visible=happy,NNNh, nice nipples...
--2-female_medium_chest_is_visible=excited,Yes! Oh yes! So GOOD!
+-2-female_chest_will_be_visible=angry,Rrrgh, take it off before I rip it off!
+-2-female_small_chest_is_visible=happy,Nnnh, nice nipples...
+-2-female_medium_chest_is_visible=excited,Yes! Oh yes! So <I>good</I>!
 -2-female_medium_chest_is_visible=excited,Hey, wait! Put your ~clothing~ back on then take it off again! I wanna see that again!
--2-female_large_chest_is_visible=excited,YES YES YES YES YES! OH MAN! 
--2-female_crotch_will_be_visible=angry,OFF! NOW! OR THERE WILL BE PAIN!
+-2-female_large_chest_is_visible=excited,<I>Yes yes yes yes yes! Oh man!</I>
+-2-female_crotch_will_be_visible=angry,<I>Off! Now! Or there will be pain!</I>
 -2-female_crotch_is_visible=happy,Ooooh yes!
 
 #finished
 -1-male_chest_will_be_visible=,
 -1-male_chest_is_visible=cross,Wouldn't have cared while I was masturbating, don't care now!
--1-male_crotch_will_be_visible=cross,Oh sure, NOW you take your ~clothing~ off!
+-1-male_crotch_will_be_visible=cross,Oh sure, <I>now</I> you take your ~clothing~ off!
 -1-male_small_crotch_is_visible=cross,Too little too late, buddy... Uh, no pun intended...
 -1-male_medium_crotch_is_visible=cross,Too late, I'm done, don't care anymore.
--1-male_large_crotch_is_visible=cross,NOPE! TOO LATE! I'M DONE!
+-1-male_large_crotch_is_visible=cross,<I>Nope! Too late! I'm done!</I>
 
 -1-female_chest_will_be_visible=,
 -1-female_small_chest_is_visible=,
 -1-female_medium_chest_is_visible=,
--1-female_large_chest_is_visible=,
+-1-female_large_chest_is_visible=happy,<I>Orendi came: part 2: Orendi came again.</I>
 -1-female_crotch_will_be_visible=,
 -1-female_crotch_is_visible=,
 
@@ -775,37 +874,51 @@ female_crotch_is_visible=excited,I wonder what your pussy taste like!
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 
 male_must_masturbate=cross,What are you waiting for? A cookie? Christmas? Christmas cookie?!
-male_must_masturbate=cross,Oh no! You lost! Now we all get to see you masturbate! Oh woe is me!
-male_must_masturbate=happy,Ha ha! LOSER! That's one down, and... Seven to go!... Shut up! I know how to count!
+male_must_masturbate=cross,<I>Oh no! You lost! Now we all get to see you masturbate! Oh woe is me!</I>
+male_must_masturbate=happy,Ha ha! <I>Loser!</I> That's one down, and... Seven to go!... Shut up! I know how to count!
+male_must_masturbate=sad,You're out? You're finally out? <I>Finally...</I>
 male_start_masturbating=happy,Hop to it. I wanna see you spank it!
 male_start_masturbating=happy,Lemme know if you need help. I've got enough hands to go around!
-male_start_masturbating=cross,Don't even try to give me none of that "I've never done this before" crap! I KNOW you know how to fap!
-male_masturbating=cross,Hey buddy, you might wanna slow down, or you might burst into flames. Oh, what am I saying? GO FASTER! I WANNA SEE YOUR DICK BURN! WITH FIRE!
-male_masturbating=angry,Hey! Stop punching that little mushroom man! What did he ever do to you?!... Oh wait that's your dick...
-male_masturbating=happy,If you need some motivation, just remember that I'LL KILL YOU IF YOU STOP!
+male_start_masturbating=cross,Don't even try to give me none of that "I've never done this before" crap! I <I>know</I> you know how to fap!
+male_masturbating=cross,Hey buddy, you might wanna slow down, or your dick might burst into flames. <I>Oh, what am I saying? Go faster!</I>
+male_masturbating=angry,Hey! Stop punching that little mushroom man! What did he ever do to you?!... <I>Oh wait that's your dick...</I>
+male_masturbating=happy,If you need some motivation, just remember that <I>I'll punch you if you stop</I>!
 male_masturbating=angry,I didn't say stop! Who said stop?!
-male_finished_masturbating=excited,You did it. YOU DID IT!
+male_masturbating=cute,I'm willing to lend you a hand if you want! I'm, like, <I>totally</I> a handjob machine over here.
+male_masturbating=cute,You're not allowed to stop 'til you turn your dick into a cannon! Literally!... <I>Oh, that's right, you can't do that. You're not a Varimorph...</I>
+male_masturbating=excited,Stroke faster! Faster! <I>Faster!</I>
+male_masturbating=cute,Let me help, ~name~! My hands <I>totally</I> feel great!
+male_finished_masturbating=excited,You did it. <I>You did it!</I>
 male_finished_masturbating=excited,Do it again!
-male_finished_masturbating=excited,Woah! That was awesome! You were all like "AAAH!" And then your dick was all like "BOOM!" And then your jizz was all like "SPLOOSH!"
+male_finished_masturbating=excited,Woah! That was awesome! You were all like "Aaah!" And then your dick was all like "<I>Boom</I>!" And then your jizz was all like "Sploosh!"
 male_finished_masturbating=excited,I'm... I'm cured! Your jizz cured me!... Nah, just playin' though, heh heh ha haha ha!
-male_finished_masturbating=excited,Woah, that was GROSS!
+male_finished_masturbating=excited,Woah, that was <I>gross</I>!
+male_finished_masturbating=excited,<I>Everyone saw it! They saw it! I saw them see it!</I>
 
 female_must_masturbate=excited,Haha ha ha! You lose! Time to teach your pussy sign language!
-female_must_masturbate=cross,Oh no! You lost! Now we all get to see you masturbate! Oh woe is me!
-female_must_masturbate=happy,Ha ha! LOSER! That's one down, and... Seven to go!... Shut up! I know how to count!
+female_must_masturbate=cross,<I>Oh no! You lost! Now we all get to see you masturbate! Oh woe is me!</I>
+female_must_masturbate=happy,Ha ha! <I>Loser!</I> That's one down, and... Seven to go!... Shut up! I know how to count!
 female_must_masturbate=cross,What are you waiting for? A cookie? Christmas? Christmas cookie?!
+female_must_masturbate=sad,You're out? You're finally out? <I>Finally...</I>
 female_start_masturbating=happy,Lemme know if you need help. I've got enough hands to go around!
 female_start_masturbating=happy,Be sure to give your tits attention! It feels great when you do that! That's why I like having them!
-female_start_masturbating=cross,Don't even try to give me none of that "I've never done this before" crap! I KNOW you know how to fap!
-female_masturbating=happy,Wow, you're REALLY going at it. &#9834;Somebody's desperate!&#9834;
-female_masturbating=happy,Oh yeah! Just like that! No, not like that! Like that!
-female_masturbating=happy,Man, if you think having TWO hands is great, you should try having FOUR hands!
+female_start_masturbating=cross,Don't even try to give me none of that "I've never done this before" crap! I <I>know</I> you know how to fap!
+female_start_masturbating,target:hermione=excited,Wait wait wait, they have masturbating spells?! Teach me, teach me!
+female_start_masturbating,target:scarlet_witch=cross,Nah, I'd rather be on the other end of the chains. Let me know if you need some whippin'!
+female_masturbating=happy,Wow! You're <I>really</I> going at it. &#9834;Somebody's desperate!&#9834;
+female_masturbating=happy,Oh yeah! Just like that! No, not like that! Like <I>that</I>!
+female_masturbating=happy,Man, if you think having <I>two</I> hands is great, you should try having <I>four</I>!
 female_masturbating=happy,Splish splish splish!
 female_masturbating=angry,I didn't say stop! Who said stop?!
-female_finished_masturbating=excited,You did it. YOU DID IT!
+female_masturbating=cute,I'm willing to lend you a hand if you want! I'm, like, <I>totally</I> a fingering machine over here.
+female_masturbating=cute,You're not allowed to stop 'til you turn your pussy into a cannon! Literally!... <I>Oh, that's right, you can't do that. You're not a Varimorph...</I>
+female_masturbating=excited,Finger faster! Faster! <I>Faster!</I>
+female_masturbating=cute,Let me help, ~name~! My hands <I>totally</I> feel great!
+female_finished_masturbating=excited,You did it. <I>You did it!</I>
 female_finished_masturbating=excited,Do it again!
-female_finished_masturbating=excited,Woah! That was awesome! You were all like "AAAH!" And then your pussy was all like "BOOM!" And then your pussy juice was all like "SPLOOSH!"
-female_finished_masturbating=excited,Woah, that was GROSS!
+female_finished_masturbating=excited,Woah! That was awesome! You were all like "Aaah!" And then your pussy was all like "<I>Boom</I>!" And then your pussy juice was all like "Sploosh!"
+female_finished_masturbating=excited,Woah, that was <I>gross</I>!
+female_finished_masturbating=excited,<I>Everyone saw it! They saw it! I saw them see it!</I>
 
 #stage-specific lines that override the stage-generic ones
 
@@ -865,9 +978,18 @@ female_finished_masturbating=excited,Woah, that was GROSS!
 4-female_finished_masturbating=,
 
 #lost 5 items
-5-male_must_masturbate=happy,Look at the bright side: at least you got these SWEET Varimorph titties to whack it to.
-5-male_start_masturbating=cross,Before you ask: NO! I'm not going to make them bounce for you! This is as good as you're gettin'.
-5-male_masturbating=happy,Am I helping? My tits are TOTALLY helping right now, right? I always knew they were great!
+5-male_must_masturbate=happy,Hey, at least you got these <I>sweet</I> Varimorph titties to whack it to.
+5-male_start_masturbating=cross,Before you ask: <I>No!</I> I'm not going to make them bounce for you! This is as good as you're gettin'.
+5-male_start_masturbating=cross,Before you ask: <I>No!</I> I'm not going to make them bigger for you! That would take too long!
+5-male_masturbating=happy,Am I helping? My tits are <I>totally</I> helping right now, right? I always knew they were great!
+5-male_masturbating=cross,Hey buddy, you might wanna slow down, or your dick might burst into flames. <I>Oh, what am I saying? Go faster!</I>
+5-male_masturbating=angry,Hey! Stop punching that little mushroom man! What did he ever do to you?!... <I>Oh wait that's your dick...</I>
+5-male_masturbating=happy,If you need some motivation, just remember that <I>I'll punch you if you stop</I>!
+5-male_masturbating=angry,I didn't say stop! Who said stop?!
+5-male_masturbating=cute,I'm willing to lend you a hand if you want! I'm, like, <I>totally</I> a handjob machine over here.
+5-male_masturbating=cute,You're not allowed to stop 'til you turn your dick into a cannon! Literally!... <I>Oh, that's right, you can't do that. You're not a Varimorph...</I>
+5-male_masturbating=excited,Stroke faster! Faster! <I>Faster!</I>
+5-male_masturbating=cute,Let me help, ~name~! My hands <I>totally</I> feel great!
 5-male_finished_masturbating=,
 
 5-female_must_masturbate=,
@@ -917,22 +1039,34 @@ female_finished_masturbating=excited,Woah, that was GROSS!
 #The "finished_masturbating" line will repeat can repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
 
 must_masturbate_first=lossA,Damn it! I wanted to win! 
-must_masturbate=lossB,WOO! MY TURN! Watch and learn, everybody! This is how you do it when you have four arms!
-start_masturbating=starting,Look look, look at, MEEEEEE.
+must_masturbate=lossB,<I>Woo! My turn!</I> Watch and learn, everybody! This is how you do it when you have four arms!
+start_masturbating=starting,Look look, look at, <I>meeeeee</I>!
 start_masturbating=starting,Watch watch watch... Ew...
+start_masturbating=starting,Watch in envy at Orendi's outstanding masturbation abilities!
 masturbating=happy,Oh yeah... Mmmm... 
-masturbating=angry,Shut up! I know how to do it!
-masturbating=angry,Everyone leave me alone, or I will vomit FIRE into your EYESOCKETS!
+masturbating=angry,Shut up! I know how to do it! 
+masturbating=happy,I'm open to some help! I promise I don't bite!... Pah! Like anyone believed that!
+masturbating=excited,It feels good having eyes on me!... Not <I>your</I> eyes, my hand-eyeballs!
+masturbating=happy,I bet you guys wish you could masturbate with four hands!
+masturbating=happy,Seriously, guys, you should try masturbating with four hands sometime; it's freakin' amazing!
+masturbating=excited,<I>I love my crazy biology!</I>
 heavy_masturbating=heavy,Yeah yeah, yeah, yeah, ah ha, ah ha, ah ha!
-finishing_masturbating=finishing,REEEEEEYNAAAAAAAA!
-finishing_masturbating=finishing,Shadowfire NUUUUUUUUUUKE!
-finishing_masturbating=finishing,One! Two! Three! PTTTTH!
-finishing_masturbating=finishing,This is all happing inside my MIND!
-finishing_masturbating=finishing,It's a good thing nothing is REEEEAL!
-finished_masturbating=finished,People always told me I got poor impulse control. I have no idea what they're talking about; I can control myself just fine. Did you see how long I lasted? That was, like, seven turns. TOTAL CONTROL!
-finished_masturbating=finished,My lust is satisfied I'M HORNY AGAIN!
-finished_masturbating=finished,I had to use ALL MY ARMS FOR THAT!
-
+heavy_masturbating=heavy,Oh man! The pleasure is making me lose my mind!
+heavy_masturbating=heavy,So close!... <I>So! Close!</I>
+heavy_masturbating=angry,Grrr! Stupid vagina! What's taking so long?! I'd normally have cum by now!
+finishing_masturbating=finishing,Reeeeeeyaaaaaaaa!
+finishing_masturbating=finishing,Shadowfire <I>nuuuuuuuuuuke</I>!
+finishing_masturbating=finishing,One! Two! Three! <I>Ptttth!</I>
+finishing_masturbating=finishing,This is all happing inside my mind!
+finishing_masturbating=finishing,It's a good thing nothing is reeeeal!
+finished_masturbating=finished,Geez, are you guys done yet? I feel like I've been sitting here <I>all day</I>!
+finished_masturbating=finished,My lust is satisfied <I>I'm horny again</I>!
+finished_masturbating=finished,I had to use <I>all my arms for that</I>!
+finished_masturbating=angry,I'm refracting now! Everyone leave me alone, or I will vomit <I>fire</I> into your <I>eyesockets</I>!
+finished_masturbating=finished,Alright, deal me back in... What, that's not how this works?...
+finished_masturbating=cross,Oh I'm sorry, did I finish too quickly? I thought that was <I>the point of playing</I>!
+finished_masturbating=cross,Come on, guys! Hurry up and lose! I wanna see some people <I>nut</I>!
+finished_masturbating=finished,Man, I feel <I>great</I>! Like I just broke someone's kneecaps!
 
 
 #GAME OVER VICTORY
@@ -941,15 +1075,31 @@ finished_masturbating=finished,I had to use ALL MY ARMS FOR THAT!
 game_over_victory=happy,Haha ha! I win! In your faces!
 
 #stage-specific lines that override the stage-generic one
-0-game_over_victory=excited,Holy crap, you guys freaking SUCK. I won, AND I got all of my clothes on!
+0-game_over_victory=excited,Holy crap, you guys freaking <I>suck</I>. I won <I>and</I> I got all of my clothes on!
 1-game_over_victory=,
 2-game_over_victory=,
-3-game_over_victory=cross,Great, I won, whoopty freakin' doo, now GIVE ME MY HAT BACK!
+3-game_over_victory=cross,Great, I won, whoopty freakin' doo, now <I>give me my hat back</I>!
 4-game_over_victory=,
-5-game_over_victory=happy, Yay! I won! And I'm NOT going to put my shirt back on!
--3-game_over_victory=happy,Hey, I may have won, but YOU are the winners for seein' me nekked!
+5-game_over_victory=happy, Yay! I won! And I'm <I>not</I> going to put my shirt back on, and no one can make me!
+-3-game_over_victory=happy,Hey, I may have won, but <I>you</I> are the winners for seein' me nekked!
+-3-game_over_victory=excited,Woo! I won! Nude victory lap time!
 
 
 
 #GAME OVER DEFEAT
-game_over_defeat=angry,Damn it! I actually wanted to win!... And now I'm over it. WHO WANTS TO PLAY AGAIN?!
+game_over_defeat=angry,Damn it! I actually wanted to win!... And now I'm over it. Who wants to play again?!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
