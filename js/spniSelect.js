@@ -521,6 +521,10 @@ function updateSelectableOpponents() {
 
     // search for matches
     for (var i = 0; i < loadedOpponents.length; i++) {
+        if (!loadedOpponents[i]) {
+            continue;
+        }
+        
         // filter by name
         if (name != null && !loadedOpponents[i].label.toLowerCase().includes(name) && !loadedOpponents[i].first.toLowerCase().includes(name) && !loadedOpponents[i].last.toLowerCase().includes(name)) {
             continue;
