@@ -22,7 +22,7 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  *****                    Title Screen Variables                  *****
  **********************************************************************/
 
-var CANDY_OPTIONS = 20;
+var CANDY_OPTIONS = 18;
 var CANDY_VARIANTS = 4;
 
 var clothingChoices = [];
