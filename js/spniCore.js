@@ -17,7 +17,9 @@ var HUMAN_PLAYER = 0;
 
 /* Directory Constants */
 var IMG = 'img/';
-var OPP = 'opponents/';
+/*var OPP = 'opponents/';
+#The "OPP" folder abbreviation was used to slightly shorten a few lines in spniSelect that looked for opponents in the opponents folder.
+#Now that opponents can be specified in any folder, this is no longer required.*/
 
 /* Gender Images */
 var MALE_SYMBOL = IMG + 'male.png';

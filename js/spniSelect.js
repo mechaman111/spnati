@@ -207,7 +207,7 @@ function loadListingFile () {
 			$individualListings.find('opponent').each(function () {
 				var folder = $(this).text();
 				console.log("Reading \""+folder+"\" from listing file");
-				loadOpponentMeta(OPP + folder, oppDefaultIndex);
+				loadOpponentMeta(folder, oppDefaultIndex);
                 oppDefaultIndex++;
 			});
 			
@@ -215,10 +215,10 @@ function loadListingFile () {
 			$groupListings = $(xml).find('groups');
 			$groupListings.find('group').each(function () {
 				var title = $(this).attr('title');
-				var opp1 = OPP + $(this).attr('opp1');
-				var opp2 = OPP + $(this).attr('opp2');
-				var opp3 = OPP + $(this).attr('opp3');
-				var opp4 = OPP + $(this).attr('opp4');
+				var opp1 = $(this).attr('opp1');
+				var opp2 = $(this).attr('opp2');
+				var opp3 = $(this).attr('opp3');
+				var opp4 = $(this).attr('opp4');
 				
 				var newGroup = createNewGroup(title, [opp1, opp2, opp3, opp4]);
 				loadGroupMeta(newGroup);
@@ -451,7 +451,7 @@ function updateGroupSelectScreen () {
 				$groupButton.html('Select Group');
 				$groupButton.attr('disabled', false);
 			} else {
-				$groupButton.html('Coming Soon');
+				$groupButton.html('Unavailable');
 				$groupButton.attr('disabled', true);
 			}
 		} else {
