@@ -190,7 +190,7 @@ $("#options-modal").on("hidden.bs.modal", function () {
 });
 
 
-$backgroundSettings = [$("#settings-background-1"), $("#settings-background-2"), $("#settings-background-3"), $("#settings-background-4"), $("#settings-background-5"), $("#settings-background-6"), $("#settings-background-7"), $("#settings-background-8"), $("#settings-background-9"), $("#settings-background-10"), $("#settings-background-11"), $("#settings-background-12"), $("#settings-background-13"), $("#settings-background-14"), $("#settings-background-15"), $("#settings-background-16"), $("#settings-background-17"), $("#settings-background-18"), $("#settings-background-19"), $("#settings-background-20"), $("#settings-background-21"), $("#settings-background-22")];
+$backgroundSettings = [$("#settings-background-1"), $("#settings-background-2"), $("#settings-background-3"), $("#settings-background-4"), $("#settings-background-5"), $("#settings-background-6"), $("#settings-background-7"), $("#settings-background-8"), $("#settings-background-9"), $("#settings-background-10"), $("#settings-background-11"), $("#settings-background-12"), $("#settings-background-13"), $("#settings-background-14"), $("#settings-background-15"), $("#settings-background-16"), $("#settings-background-17"), $("#settings-background-18"), $("#settings-background-19"), $("#settings-background-20"), $("#settings-background-21"), $("#settings-background-22"), $("#settings-background-23")];
 
 
 /************************************************************

@@ -1,3 +1,27 @@
+# The following file is for both Zone-tan's regular and "Valentine" image sets. As Valentine Zone-tan mostly has Zone-tan's regular dialogue, this will keep them synchronized.
+# When generating her xml from this file, please do so twice. The second time you generate, follow these steps:
+
+##1. Uncomment the following tag. The game will look for this repeatedly when deciding whether to play Valentine lines:
+#tag=zone-tan_valentine
+
+##2. Uncomment the following clothing items and start lines and DELETE the original ones further below.
+#clothes=Heels,heels,minor,lower
+#clothes=Stockings,stockings,major,lower
+#clothes=Skirt,skirt,important,upper
+#clothes=Panties,panties,important,lower
+#start=0-calm,Happy Valentine's Day, my little Zone-lings. Ready to let <i>love</i> take over? ❤
+#start=0-serene2,I dressed up for the occasion! Cute, don't'cha think?
+#start=0-serene2,I dressed up for the occasion! Cute, don't'cha think?
+#start=0-loss,It is the perfect day for pure lust!
+#start=0-smirk,<i>Prepare to be seduced...</i>
+#start=0-serene2,Strip Poker has never been so romantic!
+#start=0-loss,This will be a night of lust and temptation...
+
+##3. Generate the xml to go with her Valentine folder.
+
+##4. Undo steps 1 and 2 for this document.
+
+
 #required for behaviour.xml
 first=Zone-tan
 last=
@@ -16,14 +40,19 @@ tag=exhibitionist
 tag=cartoon
 tag=confident
 
+#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
+
+tag=zone-tan
+
 #required for meta.xml
 #select screen image
-pic=0-calm.png
+pic=0-calm
 height=4'10"
 from=Zone-Archive
 writer=Patrickisdom
 artist=Patrickisdom
 description=Zone-tan is the loyal mascot of Zone-sama and the Zone-Archive. She is also the host of ZTV News.
+release=64
 
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-calm,Greetings, my little Zone-lings. Ready to play?
@@ -44,7 +73,7 @@ start=0-wink,Don't be concerned, I'm only the best strip poker player ever!
 start=0-happy,Yeah! I know I'm gonna beat <i>all of you</i> in this game!
 start=0-horny,Hey there! I'm Zone-tan, from the Zone-Archive. We make all those flash cartoon 'parodies'! Yes, <i>those</i> ones...
 start=0-horny,Hey there! I'm Zone-tan, from the Zone-Archive. We make all those flash cartoon 'parodies'! Yes, <i>those</i> ones...
-
+start=0-loss,Welcome to heaven... or hell... depending on how this'll play out.
 
 #Items of clothing should be listed here in order of removal.
 #The values are formal name, lower case name, how much they cover, what they cover
@@ -129,9 +158,14 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-good_hand,alsoPlaying:d.va,totalRounds:0=happy,I'm playing with one of the biggest fans of the Archive... Did ~player~ hook you up to play with me, D.Va?
 0-good_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
 0-good_hand,alsoPlaying:raven,alsoPlayingStage:1-2,notSaidMarker:raven_hide_face,marker:raven_hide_face=serene2,You've got such a lovely face, Raven... Why would you want to hide it?
+0-good_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
+0-good_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+0-good_hand,totalRounds:0,count-zone-tan_valentine:1,priority:1=calm,Keep in mind, I will need <i>more</i> from you tonight than just romance.
+0-good_hand,totalRounds:0,alsoPlaying:samus,count-zone-tan_valentine:1=interested,I was gonna ask why you weren't wearing a sexy Valentine's Day-themed suit today, Samus, but it's gonna be hard to get anything much sexier than this birthday suit you're always wearing.
+0-good_hand,totalRounds:0,alsoPlaying:korra=shocked,Ahhhw, you grew your hair back out, Korra...? Bummer! You were <i>digging</i> the bad-ass bob cut!
 0-okay_hand=serene1,Could be better, could be worse.
 0-okay_hand=calm,Average hand, I deserve better.
-0-okay_hand=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+0-okay_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
 0-okay_hand=calm,These look alright...
 0-okay_hand,alsoPlaying:mettaton,priority:0=horny,I'm certainly no stranger to intimacy with robots, Mettaton... Just keep that in mind.
 0-okay_hand,alsoPlaying:d.va,totalRounds:0=happy,I'm playing with one of the biggest fans of the Archive... Did ~player~ hook you up to play with me, D.Va?
@@ -146,6 +180,10 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-okay_hand,alsoPlaying:raven=calm,Let's have a little fun again today, shall we, Raven?
 0-okay_hand,totalFemales:5,priority:0=calm,I feel like I'm in Ladyworld!
 0-okay_hand,alsoPlaying:futaba,totalRounds:0,priority:1=happy,I'm playing with one of the biggest fans of the Archive... Did ~player~ hook you up to play with me, Futaba?
+0-okay_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
+0-okay_hand,totalRounds:0,count-zone-tan_valentine:1,priority:1=calm,Keep in mind, I will need <i>more</i> from you tonight than just romance.
+0-okay_hand,totalRounds:0,alsoPlaying:samus,count-zone-tan_valentine:1=interested,I was gonna ask why you weren't wearing a sexy Valentine's Day-themed suit today, Samus, but it's gonna be hard to get anything much sexier than this birthday suit you're always wearing.
+0-okay_hand,totalRounds:0,alsoPlaying:korra=shocked,Ahhhw, you grew your hair back out, Korra...? Bummer! You were <i>digging</i> the bad-ass bob cut!
 0-bad_hand=sad,This is bad.
 0-bad_hand=shocked,Wo-oh...
 0-bad_hand=shocked,Well... fuck.
@@ -155,7 +193,11 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-bad_hand,alsoPlaying:d.va,totalRounds:0=happy,I'm playing with one of the biggest fans of the Archive... Did ~player~ hook you up to play with me, D.Va?
 0-bad_hand,alsoPlaying:futaba,alsoPlayingSaidMarker:hizone,notSaidMarker:hifutaba,marker:hifutaba=happy,Hey there, Futaba! And I want to thank <i>you</i> for frequently participating in the world of self-pleasure... and also tentacles!
 0-bad_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
-
+0-bad_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
+0-bad_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+0-bad_hand,totalRounds:0,count-zone-tan_valentine:1,priority:1=calm,Keep in mind, I will need <i>more</i> from you tonight than just romance.
+0-bad_hand,totalRounds:0,alsoPlaying:samus,count-zone-tan_valentine:1=interested,I was gonna ask why you weren't wearing a sexy Valentine's Day-themed suit today, Samus, but it's gonna be hard to get anything much sexier than this birthday suit you're always wearing.
+0-bad_hand,totalRounds:0,alsoPlaying:korra=shocked,Ahhhw, you grew your hair back out, Korra...? Bummer! You were <i>digging</i> the bad-ass bob cut!
 
 #lost boots
 1-good_hand=happy,Ha! No way I'm gonna lose!
@@ -173,11 +215,12 @@ swap_cards=calm,Let's see ~cards~ new ones...
 1-good_hand,alsoPlaying:raven,alsoPlayingStage:1-2,notSaidMarker:raven_hide_face,marker:raven_hide_face=serene2,You've got such a lovely face, Raven... Why would you want to hide it?
 1-good_hand,alsoPlaying:futaba,alsoPlayingSaidMarker:fztentacles,notSaidMarker:futaba_tentacles,marker:futaba_tentacles=calm,Hm-hmm... Not a moment goes by when I <i>don't</i> think about some sweet, sweet tentacles...
 1-good_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
+1-good_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+1-good_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
 1-okay_hand=interested,Wouldn't it be more fun if we just all stripped down after revealing this hand, no matter what?
 1-okay_hand=loss,I can't even wait to get all your clothes off...
 1-okay_hand=serene1,Could be better, could be worse.
 1-okay_hand=calm,Average hand, I deserve better.
-1-okay_hand=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
 1-okay_hand=calm,These look alright...
 1-okay_hand,alsoPlaying:futaba,alsoPlayingSaidMarker:fztentacles,notSaidMarker:futaba_tentacles,marker:futaba_tentacles=calm,Hm-hmm... Not a moment goes by when I <i>don't</i> think about some sweet, sweet tentacles...
 1-okay_hand,alsoPlaying:futaba,saidMarker:futaba_pro,notSaidMarker:futaba_pro2,marker:futaba_pro2=calm,Just keep playing, keep stripping, keep practicing... You'll be a pro in no time, just like me!
@@ -189,6 +232,8 @@ swap_cards=calm,Let's see ~cards~ new ones...
 1-okay_hand,alsoPlaying:korra,notSaidMarker:korra_spirit_portals,priority:0,marker:korra_spirit_portals=happy,Thanks a lot for opening those spirit portals, Korra! There are a lot of cute tentacle-spirits that I have... err... befriended!
 1-okay_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
 1-okay_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
+1-okay_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+1-okay_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
 1-bad_hand=shocked,Wo-oh...
 1-bad_hand=shocked,Well... fuck.
 1-bad_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
@@ -196,6 +241,8 @@ swap_cards=calm,Let's see ~cards~ new ones...
 1-bad_hand,alsoPlaying:futaba,alsoPlayingSaidMarker:fztentacles,notSaidMarker:futaba_tentacles,marker:futaba_tentacles=calm,Hm-hmm... Not a moment goes by when I <i>don't</i> think about some sweet, sweet tentacles...
 1-bad_hand,notSaidMarker:questionable_decisions,marker:questionable_decisions=sad,I've made some questionable decisions in my life.
 1-bad_hand,alsoPlaying:futaba,saidMarker:futaba_pro,notSaidMarker:futaba_pro2,marker:futaba_pro2=calm,Just keep playing, keep stripping, keep practicing... You'll be a pro in no time, just like me!
+1-bad_hand,totalRounds:2-5,notSaidMarker:meetnfuck,marker:meetnfuck,priority:1=calm,So... is this like one of those Meet'N'Fuck games or are we really just gonna strip?
+1-bad_hand,totalRounds:1,count-zone-tan_valentine:1=loss,This lipstick is cherry-flavored, ~player~! If you're lucky, I'll let you have a taste.
 
 
 #lost leggings
@@ -234,6 +281,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 3-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8,priority:0=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
 3-good_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
 3-good_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
+3-good_hand,count-zone-tan_valentine:1,notSaidMarker:kissmark,marker:kissmark=calm,Hmmm... I bet you wouldn't mind a big kiss mark on your cheeks, ~player~. And no, I'm not talking about your face...
 3-okay_hand=serene1,Fiiine.
 3-okay_hand=happy,I gotta be honest, guys, I'm having so much fun!
 3-okay_hand=sad,Hm. Okay then.
@@ -243,6 +291,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 3-okay_hand,alsoPlaying:korra,notSaidMarker:korra_spirit_portals,marker:korra_spirit_portals=smiling,Thanks a lot for opening those spirit portals, Korra! There are a lot of cute tentacle-spirits that I have... err... befriended!
 3-okay_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
 3-okay_hand,alsoPlaying:futaba,alsoPlayingSaidMarker:fztentacles,notSaidMarker:futaba_tentacles,marker:futaba_tentacles=calm,Hm-hmm... Not a moment goes by when I <i>don't</i> think about some sweet, sweet tentacles...
+3-okay_hand,count-zone-tan_valentine:1,notSaidMarker:kissmark,marker:kissmark=calm,Hmmm... I bet you wouldn't mind a big kiss mark on your cheeks, ~player~. And no, I'm not talking about your face...
 3-bad_hand=shocked,Ohww, balls...
 3-bad_hand=sad,Shit.
 3-bad_hand=sad,These cards fucking suck...
@@ -258,6 +307,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -3-good_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
 -3-good_hand,alsoPlaying:scarlet_witch,alsoPlayingStage:8,priority:0=interested,What were you saying, Wanda? Sorry, I couldn't hear you!
 -3-good_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
+-3-good_hand,count-zone-tan_valentine:1,notSaidMarker:kissmark,marker:kissmark=calm,Hmmm... I bet you wouldn't mind a big kiss mark on your cheeks, ~player~. And no, I'm not talking about your face...
 -3-okay_hand=bored,Meh.
 -3-okay_hand=bored,Could be better, could be worse.
 -3-okay_hand=calm,Hmmm...
@@ -266,6 +316,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -3-okay_hand,alsoPlaying:korra,notSaidMarker:korra_spirit_portals,marker:korra_spirit_portals=smiling,Thanks a lot for opening those spirit portals, Korra! There are a lot of cute tentacle-spirits that I have... err... befriended!
 -3-okay_hand,alsoPlaying:sonya,alsoPlayingSaidMarker:commando,notSaidMarker:sonya_commando,marker:sonya_commando=wink,Hold on, you call <i>this</i> your 'commando' mode? I'd hate to break it to you, Sonya, but your technique is lacking one key component.
 -3-okay_hand,alsoPlaying:twilight,alsoPlayingStage:1-6,saidMarker:sonya_commando,notSaidMarker:sonya_twilight,marker:sonya_twilight=calm,Take a good look at Twilight, Sonya. <i>That's</i> how you perform a proper 'commando' mode!
+-3-okay_hand,count-zone-tan_valentine:1,notSaidMarker:kissmark,marker:kissmark=calm,Hmmm... I bet you wouldn't mind a big kiss mark on your cheeks, ~player~. And no, I'm not talking about your face...
 -3-bad_hand=serene1,Well, there I go...
 -3-bad_hand=serene1,I might as well start fapping now, with these cards...
 -3-bad_hand=disappointed,Stop giving me these shitty cards, dude...
@@ -284,6 +335,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 
 #losing boots
 0-must_strip_winning=happy,<i>Finally!</i> It's my turn!
+0-must_strip_winnning,count-zone-tan_valentine:1=loss,Let's get these heels off. They were getting kinda uncomfortable anyway.
 0-must_strip_winning,alsoPlaying:nugi-chan,alsoPlayingStage:0=happy,Yeah, it's great seeing you again, Nugi-chan! Hey, let's show ~player~ what we usually do to entertain people!
 0-must_strip_winning,alsoPlaying:futaba,alsoPlayingStage:2-3=loss,Call me whatever you want, Futaba. I've been called many names... ZT, Tentacle-Queen, Dirty-minded Demoness- you know, it's all fine with me!
 0-must_strip_winning,alsoPlaying:futaba,alsoPlayingStage:2-3=sad,You can call me whatever you want, Futaba! As long as you don't bring up Chris-- oh god, Chris Scorpi-... *<i>eurk</i>* Ch-Chris Scorpion... Disgusting.
@@ -293,6 +345,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-must_strip_winning,alsoPlaying:mei=loss,Errr, define '<i>affiliated</i>'...? I mean, I watch her masturbate passionately preeeetty much every day. She seems like a fanatic!
 0-must_strip_winning,alsoPlaying:gogo=loss,Oh, just admit it, GoGo: You <i>loved</i> the little 'modification' we made to Baymax...
 0-must_strip_normal=loss,Feet feel much better when freed anyway...
+0-must_strip_normal,count-zone-tan_valentine:1,priority:0=loss,Let's get these heels off. They were getting kinda uncomfortable anyway.
 0-must_strip_normal,alsoPlaying:nugi-chan,alsoPlayingStage:0=happy,Yeah, it's great seeing you again, Nugi-chan! Hey, let's show ~player~ what we usually do to entertain people!
 0-must_strip_normal,alsoPlaying:rinkah,alsoPlayingStage:0-2=smirk,You're about to find out, Rinkah...
 0-must_strip_normal,alsoPlaying:rinkah,alsoPlayingStage:0-2=smirk,Heehee... You really want to know, Rinkah?
@@ -305,6 +358,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-must_strip_normal,alsoPlaying:futaba,alsoPlayingStage:0-1=wink,Zone-sama animates me using Adobe Flash all the way, Futaba... I'm here in the vector-flesh!
 0-must_strip_losing=loss,Fuck. Not a great start... Oh well, time to strip!
 0-must_strip_losing=loss,Well, I can already see this is gonna be a lot of fun!
+0-must_strip_losing,count-zone-tan_valentine:1,priority:0=loss,Let's get these heels off. They were getting kinda uncomfortable anyway.
 0-must_strip_losing,alsoPlaying:futaba,alsoPlayingStage:2-3=loss,Call me whatever you want, Futaba. I've been called many names... ZT, Tentacle-Queen, Dirty-minded Demoness- you know, it's all fine with me!
 0-must_strip_losing,alsoPlaying:futaba,alsoPlayingStage:2-3=sad,You can call me whatever you want, Futaba! As long as you don't bring up Chris-- oh god, Chris Scorpi-... *<i>eurk</i>* Ch-Chris Scorpion... Disgusting.
 0-must_strip_losing,alsoPlaying:futaba,alsoPlayingStage:2-3=serene1,You may call me whatever you want, Futaba! As long as you don't just call me 'Zone'... God, I hate when people do that... The name's Zone-<i>taaan</i>!
@@ -319,15 +373,19 @@ swap_cards=calm,Let's see ~cards~ new ones...
 
 #losing leggings
 1-stripped=stripped,And there you go. Boots off, see? I can follow the rules...!
+1-stripped,count-zone-tan_valentine:1=stripped,Bye bye, cute heels. Hellooo, cute feet!
 1-stripped,alsoPlaying:gogo=happy,Even after our crew left, you just went ooooon and ooooon... Don't try to deny it anymore, GoGo. I know you still 'use' him every few days...
 1-stripped,alsoPlaying:futaba,alsoPlayingStage:4-8=happy,Hmmm... Yeah, I guess you could call it that, Futaba.
 1-stripped,alsoPlaying:futaba,alsoPlayingStage:4-8,marker:futaba_pro=stripped,You tend to understand all the best strategies after having played this game so often, Futaba...
 1-stripped,alsoPlaying:futaba,alsoPlayingStage:4-8,marker:futaba_pro=stripped,I just have <i>mad</i> poker skills, Futaba... That tends to happen after the amount of strip poker games I've played.
 1-must_strip_winning=loss,Maybe I just threw that round so I can get all pantsless on ya.
+1-must_strip_winning,count-zone-tan_valentine:1=loss,You <i>really</i> want me out of this cute outfit, don't you? Hey, I ain't complaining!
 1-must_strip_normal=loss,Don't worry, I won't tease you with anything else small.
 1-must_strip_normal=loss,I'm gonna go ahead and slide out of my pants...
+1-must_strip_normal,count-zone-tan_valentine:1=loss,You <i>really</i> want me out of this cute outfit, don't you? Hey, I ain't complaining!
 1-must_strip_losing=loss,Aw, it's so cute seeing how desperate you guys are for li'l ol' me.
 1-must_strip_losing=loss,Maybe I just threw that round so I can get all pantsless on ya.
+1-must_strip_losing,count-zone-tan_valentine:1=loss,You <i>really</i> want me out of this cute outfit, don't you? Hey, I ain't complaining!
 1-stripping=strip,Here I come, y'all! Full of love!
 1-stripping=strip,It's a good thing I didn't go commando today... Well, it isn't a <i>great</i> thing either, I'm just saying...
 1-stripping,alsoPlaying:sonya,alsoPlayingSaidMarker:commando=strip,Sorry, guys. I haven't been performing my 'commando' mode today, either...
@@ -336,30 +394,32 @@ swap_cards=calm,Let's see ~cards~ new ones...
 
 #losing sweater
 2-stripped,marker:zone-sama=stripped,Everything Zone-sama makes is very arousing... Including me, of course!
-2-stripped=stripped2,Yes, I do actually wear panties sometimes. Shocking, I know.
+2-stripped=stripped2,Yes, I do wear panties sometimes. Shocking, I know.
 2-stripped=horny,Here, I'll give ya a sneak peek...
+2-stripped,count-zone-tan_valentine:1=horny,Yes, I am wearing panties today. I didn't want one gust of wind to reveal all the goodies... Although that would be <i>very</i> exciting...
 2-stripped,alsoPlaying:sonya,alsoPlayingStage:6-7=loss,... but, in my defense, neither has Sonya, if you ask me!
 2-stripped,alsoPlaying:sonya,alsoPlayingStage:8-10=horny,... unlike Sonya, who's going <i>all out</i> right now!
 2-stripped,alsoPlaying:aimee=stripped2,Yeah, you like that, Aimee? If you want a little taste of these toes, you just gotta ask, you know...
 2-stripped,alsoPlaying:aimee=stripped2,There, now my soft feet are <i>completely</i> exposed... This better, Aimee?
-2-must_strip_winning=loss,I like this sweater... Though, I must admit, I like my naked body way more.
+2-must_strip_winning,count-zone-tan_valentine:0,priority:0=loss,I like this sweater... Though, I must admit, I like my naked body way more.
 2-must_strip_winning=loss,Having my boobies out is way more fun anyway!... Did I mention I'm not wearing a bra...?
 2-must_strip_winning=loss,All eyes on me now!
 2-must_strip_winning=smirk,Sure you ready for this...?
+2-must_strip_winning=loss,All this stripping is making me kinda hungry...!
 2-must_strip_winning,alsoPlaying:gogo=stripped,Jeez, GoGo... Can't you act a <i>little bit</i> more excited about me showing you my boobs again...?
 2-must_strip_normal=wink,We're <i>all</i> going to enjoy this!
 2-must_strip_normal=loss,All eyes on me now!
 2-must_strip_normal=loss,Having my boobies out is way more fun anyway! Did I mention I'm not wearing a bra...?
 2-must_strip_normal,alsoPlaying:gogo=stripped,Jeez, GoGo... Can't you act a <i>little bit</i> more excited about me showing you my boobs again...?
-2-must_strip_losing=loss,I like this sweater... Though, I must admit, I like my naked body way more.
+2-must_strip_losing,count-zone-tan_valentine:0,priority:0=loss,I like this sweater... Though, I must admit, I like my naked body way more.
 2-must_strip_losing=loss,No worries. I <i>always</i> win in the end, no matter what the outcome of the game will be...
 2-must_strip_losing=loss,Guess I gotta show my boobs now, too... Did I mention I'm not wearing a bra...?
 2-must_strip_losing,alsoPlaying:gogo=stripped,Jeez, GoGo... Can't you act a <i>little bit</i> more excited about me showing you my boobs again...?
 2-stripping=strip,This just in, my tits are about to be unveiled.
-2-stripping=strip,Off goes the sweater...
+2-stripping=strip,Off goes the ~clothing~...
 2-stripping=strip,Wanna see some cute little tits? Then this is the place for you...
 2-stripping,alsoPlaying:streaming-chan=strip,Make sure you got <i>this</i> on camera...!
-2-stripping,alsoPlaying:aimee,alsoPlayingStage:1-5=strip,Now, don't start shooting off <i>my</i> clothes like you're doing with your own, Aimee... This is my favorite sweater!
+2-stripping,alsoPlaying:aimee,alsoPlayingStage:1-5=strip,Now, don't start shooting off <i>my</i> clothes like you're doing with your own, Aimee... This is my favorite ~clothing~!
 
 
 #lost all clothing
@@ -378,11 +438,13 @@ swap_cards=calm,Let's see ~cards~ new ones...
 3-must_strip_losing=loss,Careful, or you might find out why I'm the only woman banned in Arkansas.
 3-must_strip_losing=eyes_peeled,Make sure you got your eyes peeled and those flies unzipped...
 3-stripping=strip,Is this what you've been waiting for?
-3-stripping=strip,You can call me Booty-tan!
+3-stripping,marker:booty-tan=strip,You can call me Booty-tan!
 
 -3-stripped=stripped,I'm just gonna tell you now, I'm not gonna fap until <i>after</i> this game's done!... Hopefully...
 -3-stripped=stripped,No, you're not dreaming. I'm really standing here, completely naked...
 -3-stripped=stripped,If this doesn't turn you on, nothing will.
+-3-stripped,count-zone-tan_valentine:1=stripped,Now the only thing I'm wearing is my make-up... Isn't it beautiful?
+-3-stripped,count-zone-tan_valentine:1=stripped,From Valentine outfit to birthday suit... Both equally sexy!
 -3-stripped,alsoPlaying:revy=horny,Oh, Revy... Your dirty talk is turning me on so much...
 
 
@@ -396,11 +458,13 @@ swap_cards=calm,Let's see ~cards~ new ones...
 #fully clothed
 0-male_human_must_strip=wink,Sorry, ~name~. Tough luck.
 0-male_human_must_strip=happy,Welcome to porn boot camp!
+0-male_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 0-male_must_strip=calm,Ooo, too bad. You lose!
 0-male_must_strip=happy,Alright. Let's see what you got.
-0-male_must_strip=smirk,<i>Get fucking owned, dude.</i>
+0-male_must_strip,targetStage:2-8,priority:0=smirk,<i>Get fucking owned, dude.</i>
 0-female_human_must_strip=happy,Welcome to porn boot camp!
 0-female_human_must_strip=wink,Sorry, ~name~. Tough luck.
+0-female_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 0-female_must_strip=serene2,Go ahead, ~name~, start stripping for us.
 0-female_must_strip=calm,The world always needs more naked.
 0-female_must_strip=calm,Your turn to undress, ~name~!
@@ -412,14 +476,17 @@ swap_cards=calm,Let's see ~cards~ new ones...
 #lost boots
 1-male_human_must_strip=happy,Don't be shy... Be naked instead!
 1-male_human_must_strip=loss,Guess who's gotta lose their pants... Not me, that's who!
+1-male_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 1-male_must_strip=calm,Ooo, too bad. You lose!
 1-male_must_strip=happy,Alright. Let's see what you got.
 1-male_must_strip=wink,Sorry, ~name~. Though luck.
 1-male_must_strip=shocked,Oh? You lost, ~name~!
 1-male_must_strip,filter:shy=happy,Don't be shy, ~name~... Be naked instead!
 1-male_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
+1-male_must_strip,targetStage:4-8,priority:0=smirk,<i>Get fucking owned, dude.</i>
 1-female_human_must_strip=happy,Don't be shy... Be naked instead!
 1-female_human_must_strip=loss,Guess who's gotta lose her pants... Not me, that's who!
+1-female_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 1-female_must_strip=calm,Ooo, too bad. You lose!
 1-female_must_strip=serene2,Hey, I didn't lose!
 1-female_must_strip=wink,Sorry, ~name~. Tough luck.
@@ -435,15 +502,16 @@ swap_cards=calm,Let's see ~cards~ new ones...
 2-male_human_must_strip=interested,Alright. Let's see what you got.
 2-male_human_must_strip=smirk,You're <i>mine</i> now, ~name~...
 2-male_human_must_strip=happy,Just imagine you're auditioning for my next animation.
+2-male_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 2-male_must_strip=serene2,Hey, I didn't lose!
 2-male_must_strip=happy,Just imagine you're auditioning for my next animation.
 2-male_must_strip=loss,You don't mind it if I touch myself while you strip, right?
 2-male_must_strip=calm,Pay up, loser.
-2-male_must_strip=smirk,<i>Get fucking owned, dude.</i>
 2-male_must_strip,oppHand:Two Pair=happy,Told you I was good! You lost, even with two pair!
 2-female_human_must_strip=happy,Just imagine you're auditioning for my next animation.
 2-female_human_must_strip=interested,Alright. Let's see what you got.
 2-female_human_must_strip=smirk,You're <i>mine</i> now, ~name~...
+2-female_human_must_strip,count-zone-tan_valentine:1,marker:valentine_reward,notSaidMarker:valentine_reward=interested,I'm absolutely sure I will defeat you at this game tonight, ~name~. If you <i>do</i> manage to win... well, I'll let <i>you</i> decide what you want your reward to be...
 2-female_must_strip=happy,Just imagine you're auditioning for my next animation.
 2-female_must_strip=loss,You don't mind it if I touch myself while you strip, right?
 2-female_must_strip=calm,Pay up, loser.
@@ -724,21 +792,23 @@ swap_cards=calm,Let's see ~cards~ new ones...
 0-female_removing_minor,target:futaba,targetStage:3=serene2,Nahhh, it would look adorable if a cute girl like you messed up and fell to the ground, Futaba... That's how the <i>good</i> hentai start!
 0-female_removing_minor,target:sonya,targetStage:5=calm,Nice. That's a <i>great</i> butt.
 0-female_removing_minor,target:sonya,targetStage:5,alsoPlaying:nagisa,alsoPlayingSaidMarker:nagisa_rear=wink,Whoa, nice ass! Quite a stark contrast from Nagisa's cute little bum!
+0-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene1,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 0-female_removed_minor,marker:akidearest=serene1,If only Akidearest were here...
 0-female_removed_minor=horny,Just so you know, I didn't bring many pieces of clothing to this game. I never do.
 0-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
 0-female_removed_minor,target:futaba,targetStage:4,totalMales:3=interested,Actually, why not let <i>all three</i> of them have a go at you...? It's perfect! They can all take you at the same time, and I'll overlook the 'project'!
 0-female_removed_minor,target:sonya,targetStage:6=smirk,We'll see who's gonna be the <i>bitch</i> when we're done with this game, won't we...?
 0-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
+0-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=serene2,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 
 #lost boots
 1-male_removing_minor=smirk,And here's another step towards <i>watching you jerk it</i>...
 1-male_removing_minor,notSaidMarker:zone-tan_fap_song,marker:zone-tan_fap_song=serene1,♫ <i>I'd like to build the world a site... and furnish it with porn... Draw hentai piiics and girls with diiicks and tentacles galore...</i> ♪
-1-male_removing_minor,notSaidMarker:zone-tan_fap_song,marker:zone-tan_fap_song=serene1,♫ <i>I'd like to see the world for once, all standing cock in haaand...</i> ♪
+1-male_removing_minor,notSaidMarker:zone-tan_fap_song_alt,marker:zone-tan_fap_song_alt=serene1,♫ <i>I'd like to see the world for once, all standing cock in haaand...</i> ♪
 1-male_removed_minor=horny,I can't wait for more...
-1-male_removed_minor,saidMarker:zone-tan_fap_song,marker:zone-tan_fap_song2=serene2,♫ <i>And hear them jerk it far and wide, spray jizz throughout the land...</i> ♪
 1-male_removed_minor,saidMarker:zone-tan_fap_song,notSaidMarker:zone-tan_fap_song2,marker:zone-tan_fap_song2=serene2,♫ <i>I'd like to teach the world to fap... in perfect harmonyyy...</i> ♪
+1-male_removed_minor,saidMarker:zone-tan_fap_song_alt,notSaidMarker:zone-tan_fap_song_alt2,marker:zone-tan_fap_song_alt2=serene2,♫ <i>And hear them jerk it far and wide, spray jizz throughout the land...</i> ♪
 1-female_removing_minor=shocked,What seems to be the problem here...?
 1-female_removing_minor=shocked,What's up...?
 1-female_removing_minor,target:futaba,targetStage:3,totalMales:1-3=serene2,Me and my tentacle friends would <i>love</i> to help you out with that, Futaba...
@@ -746,12 +816,14 @@ swap_cards=calm,Let's see ~cards~ new ones...
 1-female_removing_minor,target:sonya,targetStage:5,alsoPlaying:nagisa,alsoPlayingSaidMarker:nagisa_rear=wink,Whoa, nice ass! Quite a stark contrast from Nagisa's cute little bum!
 1-female_removing_minor,target:futaba,targetStage:3=serene2,Nahhh, it would look adorable if a cute girl like you messed up and fell to the ground, Futaba... That's how the <i>good</i> hentai start!
 1-female_removing_minor,target:aimee,targetStage:2=happy,Yeah, do the shooty thing again, Aimee! It looks impressive!
+1-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 1-female_removed_minor=interested,Oh, I see, there's a severe lack of nudity! I can fix that...!
 1-female_removed_minor=smirk,There's not enough nudity...? Well, I know the <i>perfect</i> solution!
 1-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
 1-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
 1-female_removed_minor,target:sonya,targetStage:6=smirk,We'll see who's gonna be the <i>bitch</i> when we're done with this game, won't we...?
 1-female_removed_minor,target:futaba,targetStage:4,totalMales:3=interested,Actually, why not let <i>all three</i> of them have a go at you...? It's perfect! They can all take you at the same time, and I'll overlook the 'project'!
+1-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=wink,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 
 #lost leggings
@@ -764,12 +836,14 @@ swap_cards=calm,Let's see ~cards~ new ones...
 2-female_removing_minor,target:aimee,targetStage:2=happy,Yeah, do the shooty thing again, Aimee! It looks impressive!
 2-female_removing_minor,target:sonya,targetStage:5,alsoPlaying:nagisa,alsoPlayingSaidMarker:nagisa_rear=wink,Whoa, nice ass! Quite a stark contrast from Nagisa's cute little bum!
 2-female_removing_minor,target:futaba,targetStage:3=serene2,Nahhh, it would look adorable if a cute girl like you messed up and fell to the ground, Futaba... That's how the <i>good</i> hentai start!
+2-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 2-female_removed_minor,marker:akidearest=sad,I often feel like Aki is the only one who truly shares my love of tentacles...
 2-female_removed_minor=interested,There seems to be a severe lack of nudity... I can fix that...!
 2-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
 2-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
 2-female_removed_minor,target:sonya,targetStage:6=smirk,We'll see who's gonna be the <i>bitch</i> when we're done with this game, won't we...?
 2-female_removed_minor,target:futaba,targetStage:4,totalMales:3=interested,Actually, why not let <i>all three</i> of them have a go at you...? It's perfect! They can all take you at the same time, and I'll overlook the 'project'!
+2-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=wink,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 
 #lost sweater
@@ -789,6 +863,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 3-female_removing_minor,target:aimee,targetStage:2=happy,Yeah, do the shooty thing again, Aimee! It looks impressive!
 3-female_removing_minor,target:sonya,targetStage:5,alsoPlaying:nagisa,alsoPlayingSaidMarker:nagisa_rear=wink,Whoa, nice ass! Quite a stark contrast from Nagisa's cute little bum!
 3-female_removing_minor,target:futaba,targetStage:3,totalMales:1-3=serene2,Me and my tentacle friends would <i>love</i> to help you out with that, Futaba...
+3-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 3-female_removed_minor=bored,Nope. Not doing it for me...
 3-female_removed_minor=smirk,So cute, you actually think this matters... Nah, I'll get you out of every single bit of those clothes, one way or another...
 3-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
@@ -796,6 +871,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 3-female_removed_minor,target:sonya,targetStage:6=smirk,We'll see who's gonna be the <i>bitch</i> when we're done with this game, won't we...?
 3-female_removed_minor,saidMarker:zone-tan_likes_singing,notSaidMarker:zone-tan_likes_singing2,marker:zone-tan_likes_singing2=loss,What? I like singing a lot! And I'm good at it, too...
 3-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
+3-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=horny,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 -3-male_removing_minor,marker:zone-tan_singing=serene1,♫ <i>I'd like to teach the world to fap... in perfect harmonyyy...</i> ♪
 -3-male_removed_minor=serene2,♫ <i>I'd like to build the world a site... and furnish it with porn... Draw hentai piiics and girls with diiicks and tentacles galore...</i> ♪
@@ -809,6 +885,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -3-female_removing_minor,target:aimee,targetStage:2=happy,Yeah, do the shooty thing again, Aimee! It looks impressive!
 -3-female_removing_minor,totalMasturbating:0=bored,Hrmmm... How is it even <i>possible</i> to get bored during a game of strip poker...?
 -3-female_removing_minor,notSaidMarker:zone-tan_likes_singing,marker:zone-tan_likes_singing=bored,I sometimes sing when I get bored...
+-3-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 -3-female_removed_minor=disappointed,You got any other <i>great</i> ideas?!
 -3-female_removed_minor=sad,Oh god, edit me out of this shitshow, dude...
 -3-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
@@ -817,6 +894,7 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -3-female_removed_minor,target:sonya,targetStage:6=smirk,Oh, I'll show you 'bitch'... Just you wait...
 -3-female_removed_minor,saidMarker:zone-tan_likes_singing,notSaidMarker:zone-tan_likes_singing2,marker:zone-tan_likes_singing2=loss,What? I like singing a lot! And I'm good at it, too...
 -3-female_removed_minor,saidMarker:zone-tan_fap_song,notSaidMarker:zone-tan_fap_song2,marker:zone-tan_fap_song2=serene2,♫ <i>I'd like to teach the world to fap... in perfect harmonyyy...</i> ♪
+-3-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=happy,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 -2-male_removing_minor=horny1,Be a real man and give me <i>all</i> the hotness!
 -2-male_removed_minor=sad,You're not a real man, ~name~...
@@ -828,12 +906,14 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -2-female_removing_minor,target:futaba,targetStage:3,totalMales:1-3=serene2,Me and my tentacle friends would <i>love</i> to help you out with that, Futaba...
 -2-female_removing_minor,target:sonya,targetStage:5=calm,Nice. That's a <i>great</i> butt.
 -2-female_removing_minor,target:sonya,targetStage:5,alsoPlaying:nagisa,alsoPlayingSaidMarker:nagisa_rear=wink,Whoa, nice ass! Quite a stark contrast from Nagisa's cute little bum!
+-2-female_removing_minor,target:elizabeth,targetStage:5,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 -2-female_removed_minor=horny3,Ugh, I'll just have to look up some more hentai fanart of yours, instead... Or... maybe make it myself...
 -2-female_removed_minor,saidMarker:translucent_dildo,notSaidMarker:translucent_dildo2,marker:translucent_dildo2=horny2,I would love to use my collection on you soon, ~name~... Or, right now... If you'd just fully undress... C-come on, just give me some more spice to shlick to!
 -2-female_removed_minor,target:futaba,targetStage:4,totalMales:3=interested,Actually, why not let <i>all three</i> of them have a go at you...? It's perfect! They can all take you at the same time, and I'll overlook the 'project'!
 -2-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
 -2-female_removed_minor,target:sonya,targetStage:6=horny3,Y-yes... I'll be your bitch, Sonya...!
 -2-female_removed_minor,target:aimee,targetStage:3=horny3,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
+-2-female_removed_minor,target:elizabeth,targetStage:6,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=wink,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 -1-male_removing_minor=serene1,So... You're opting for a slow burn...?
 -1-male_removing_minor,notSaidMarker:zone-tan_fap_song,marker:zone-tan_fap_song=serene1,♫ <i>I'd like to build the world a site... and furnish it with porn... Draw hentai piiics and girls with diiicks and tentacles galore...</i> ♪
@@ -853,6 +933,8 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -1-female_removing_minor,saidMarker:zone-tan_singing=interested2,Have you listened to my songs on YouTube already?
 -1-female_removing_minor,notSaidMarker:zone-tan_fap_song,marker:zone-tan_fap_song=serene1,♫ <i>I'd like to see the world for once, all standing cock in haaand...</i> ♪
 -1-female_removing_minor,target:sonya,targetStage:5=calm,Nice. That's a <i>great</i> butt.
+-1-female_removing_minor,count-zone-tan_valentine:1,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>Don't know why you play hard to get... I'm here to kiss away aaany thoughts of your regret!</i> ♪
+-1-female_removing_minor,target:elizabeth,notSaidMarker:justonedance,marker:justonedance=serene2,♫ <i>All it costs is just a minute now... For one dollar you can show me how.</i> ♪
 -1-female_removed_minor=angry,Whoever's still clothed in the next minute will get a whoopin'...
 -1-female_removed_minor=angry,I am sick and tired of your bullshit, girl.
 -1-female_removed_minor=serene1,I guess it doesn't really matter anymore now, huh?
@@ -862,7 +944,8 @@ swap_cards=calm,Let's see ~cards~ new ones...
 -1-female_removed_minor,target:futaba,targetStage:4,totalMales:3=interested,Actually, why not let <i>all three</i> of them have a go at you...? It's perfect! They can all take you at the same time, and I'll overlook the 'project'!
 -1-female_removed_minor,target:futaba,targetStage:4,totalMales:1-2=interested,... buuut let's circle back to the part where you were talking about having sex with me...! Actually, let's make that a priority!
 -1-female_removed_minor,target:aimee,targetStage:3=horny,♫ I love the way you shoot yer loads to remove yer clothes! ♪ ... Whoops, I think I'm starting to mimic your accent...!
-
+-1-female_removed_minor,target:elizabeth,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=happy,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
+-1-female_removed_minor,count-zone-tan_valentine:1,saidMarker:justonedance,notSaidMarker:justonedance2,marker:justonedance2=serene1,♫ <i>I'll take your hand and then your worries too... In just one dance I'll make your dreams come true.</i> ♪
 
 
 
@@ -1081,13 +1164,13 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -2-female_removed_major,target:futaba,targetStage:3,alsoPlaying:raven=shocked,Oooh, an all-black outfit... so cute! I'm way into these kind of goth-y styles. Just take a look at Raven: <i>deeelicious</i>!
 
 -1-male_removing_major=happy,He's got the right idea!
--1-male_removing_major=pinup,I'm a great pin-up girl, don't ya think?
+-1-male_removing_major=pinup,I'm a great pin-up girl, don't'cha think?
 -1-male_removing_major=smirk,Hmmm... You're <i>mine</i>.
 -1-male_removed_major=calm,Nice. Reaaaal nice.
 -1-male_removed_major=serene2,I love all the love we're getting!
 -1-male_removed_major=horny,Nice... You know how to treat a lady!
 -1-female_removing_major=happy,Show us our prize!
--1-female_removing_major=pinup,I'm a great pin-up girl, don't ya think?
+-1-female_removing_major=pinup,I'm a great pin-up girl, don't'cha think?
 -1-female_removing_major=happy,Woohoo! It's ~name~'s turn to strip!
 -1-female_removing_major,target:marinette,targetStage:1=shocked,What are you...? Hey! That's not fair!
 -1-female_removing_major,target:shego=smirk,Yeah, I'd like that... Us, going around together, <i>'recruiting' people</i>...
@@ -1098,6 +1181,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -1-female_removing_major,target:samus=interested2,Ooh, I would <i>love</i> to help you out with that, Samus!
 -1-female_removing_major,target:marinette,targetStage:4=interested,French girls are such cuties... Hey, I know a bit of French, Marinette! Let's see...
 -1-female_removing_major,target:aimee=shocked,W-wow... What are you...?
+-1-female_removed_major,saidMarker:zone-tan_love_song,notSaidMarker:zone-tan_love_song2,marker:zone-tan_love_song2=serene2,♫ <i>La-laa-loooooveee makes the world go 'rooound...</i> ♪
 -1-female_removed_major,marker:tentacles=horny,We are all united by our love of the female form... and tentacles...
 -1-female_removed_major=serene2,This might surprise you, but we have quite a few female fans of the Archive!... Are you a member yet, ~name~?
 -1-female_removed_major=horny,Look at this beaut!
@@ -1130,6 +1214,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 0-male_chest_is_visible,target:mettaton=shocked,Ooh, those are some sexy-lookin' boobies! This ain't something you see everyday!
 0-male_crotch_will_be_visible=happy,Yeah! I want to see your delicious banana!
 0-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+0-male_crotch_will_be_visible,count-zone-tan_valentine:1=loss,I'm here to <i>kiss away</i> any thoughts of regret!
 0-male_small_crotch_is_visible=horny,Does your dick get larger the more I undress...? 'Cause I could get down with that!
 0-male_medium_crotch_is_visible=horny,Hmmm... I'm in the mood for some rice balls...
 0-male_medium_crotch_is_visible,target:xander=happy,Oh, I will, Xander! You had to know you can't back your talk up with a size like <i>that</i>! Calling you a 'big guy' was definitely an exaggeration!
@@ -1160,8 +1245,10 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 0-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
 0-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
 0-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
+0-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 0-female_crotch_will_be_visible=happy,Let's see ~name~'s cookie!
 0-female_crotch_will_be_visible=serene2,Come on, ~name~! Drop those pantsu!
+0-female_crotch_will_be_visible,count-zone-tan_valentine:1=loss,I'm here to <i>kiss away</i> any thoughts of regret!
 0-female_crotch_will_be_visible,target:moon=horny,Hey, ~player~. Little Moon here would like nothing more than to be violated by any fan, whenever possible... You know what that means, right?
 0-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
 0-female_crotch_will_be_visible,target:samus=horny,Hmm, you don't even know the half of it, girl...
@@ -1219,6 +1306,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 1-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
 1-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 1-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+1-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 1-female_crotch_will_be_visible=serene2,Come on, ~name~! Drop those pantsu!
 1-female_crotch_will_be_visible,target:moon=interested,Hey, ~player~. Little Moon here would like nothing more than to be violated by any fan, whenever possible... You know what that means, right?
 1-female_crotch_will_be_visible,filter:mushroom_kingdom=calm,This'll be sure to destroy some childhoods...
@@ -1275,6 +1363,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 2-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
 2-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 2-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
+2-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 2-female_crotch_will_be_visible,marker:tentacles=horny,Tentacles can just slither around and reach places others can't go... That's really... appealing to me.
 2-female_crotch_will_be_visible,filter:mushroom_kingdom=calm,This'll be sure to destroy some childhoods...
 2-female_crotch_will_be_visible,target:moon=interested,Hey, ~player~. Little Moon here would like nothing more than to be violated by any fan, whenever possible... You know what that means, right?
@@ -1335,6 +1424,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 3-female_large_chest_is_visible,target:mei=horny,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
 3-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 3-female_large_chest_is_visible,filter:shy=serene2,Trust me. You make <i>one</i> sextape that leaks, and next thing you know, you just don't care anymore!
+3-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 3-female_crotch_will_be_visible=horny,Uhmm... Do you mind if I ask you a question, ~name~?
 3-female_crotch_will_be_visible,filter:shy=smirk,Every girl has a freaky side, <i>you just have to find it</i>...
 3-female_crotch_will_be_visible,target:mia=horny,Yeah, come on... Let's see those titties...
@@ -1397,6 +1487,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -3-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 -3-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
 -3-female_large_chest_is_visible,filter:shy=serene2,Trust me. You make <i>one</i> sextape that leaks, and next thing you know, you just don't care anymore!
+-3-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 -3-female_crotch_will_be_visible=horny,Yes, this is going to be soooo hot...
 -3-female_crotch_will_be_visible=horny,I'm already so fucking horny...
 -3-female_crotch_will_be_visible,target:raven=horny,I've seen your sexy, naked body so many times already while working on our Teen Titans flash, but I'm still super excited for this! It's been way too long!
@@ -1404,7 +1495,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -3-female_crotch_will_be_visible,target:moon=loss,Hey, ~player~. Little Moon here would like nothing more than to be violated by any fan, whenever possible... You know what that means, right?
 -3-female_crotch_will_be_visible,filter:shy=smirk,Every girl has a freaky side, <i>you just have to find it</i>...
 -3-female_crotch_will_be_visible,target:samus=horny,Hmm, you don't even know the half of it, girl...
--3-female_crotch_is_visible=happy,Hmmm, what do you say, ~name~... Will you be my valentine?
+-3-female_crotch_is_visible=happy,Hmmm, what do you say, ~name~... Will you be my Valentine?
 -3-female_crotch_is_visible=shocked,Woah, you're almost as wet as I am!... Did I say that out loud?
 -3-female_crotch_is_visible,filter:shaved=stripped,Ooh, I fucking <i>love</i> a clean shaven pussy...! That's why you rarely ever see any fuzz in our vids!
 -3-female_crotch_is_visible,filter:shaved=loss,Oooh, you're completely shaved! That's exactly how I like it! It's also preferred by most of the people that watch hentai, as a matter of fact!
@@ -1456,6 +1547,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -2-female_large_chest_is_visible=heavy,T-THIS is what I <i>NEEDED!</i>
 -2-female_large_chest_is_visible,target:mei=lick,I'd like to have a few licks of those popsicles...
 -2-female_large_chest_is_visible,target:mei=interested,There must be gallons of sweet milk in there... I bet it tastes like a cold milkshake! You've <i>got</i> to let me have some of it, Mei! It looks <i>so tasty</i>!
+-2-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 -2-female_crotch_will_be_visible=horny1,Don't... stop...! Show it, show it!
 -2-female_crotch_will_be_visible=horny1,Please baby, go all the way!
 -2-female_crotch_will_be_visible,target:mia=horny1,Yeah, come on... Let's see those titties...
@@ -1481,6 +1573,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -1-male_crotch_will_be_visible=smiling,This is like watching porn in real life! Though, I'm personally into the more hardcore stuff... Well, it can still go in any direction after you all are done stripping...!
 -1-male_crotch_will_be_visible,target:captain_falcon=happy,Give us that Falcon dick!
 -1-male_crotch_will_be_visible,target:xander=calm,Hah... big guy's got jokes! But let's see if you can back up that talk...
+-1-male_crotch_will_be_visible,count-zone-tan_valentine:1,target:human=smiling,Congratulations, ~name~! You actually get to show <i>someone</i> your dick during Valentine's!
 -1-male_small_crotch_is_visible,marker:zone-tan_singing=serene2,♫ <i>Iiiit's fucked up 'round heeere...</i> ♪
 -1-male_small_crotch_is_visible=interested2,Oh, hello there!
 -1-male_medium_crotch_is_visible=serene2,Some guys have told me that fucking a pumpkin feels <i>really</i> nice!... Man, last year's Halloween was weeeeiiird...
@@ -1523,6 +1616,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -1-female_large_chest_is_visible,target:mei=horny,I'd like to have a few licks of those popsicles...
 -1-female_large_chest_is_visible,target:tifa=serene2,You'd fit right in on r/BustyPetite, Tifa!
 -1-female_large_chest_is_visible,filter:shy=serene2,Trust me. You make <i>one</i> sextape that leaks, and next thing you know, you just don't care anymore!
+-1-female_large_chest_is_visible,target:annie=shocked,I'm pretty sure I've seen you before, Annie... Have you ever posted on r/BiggerThanYouThought?
 -1-female_crotch_will_be_visible=calm,Such a lust for buns...
 -1-female_crotch_will_be_visible=interested2,Come on, let me squeeze your butt!
 -1-female_crotch_will_be_visible=smiling,I can't imagine your butt being anything else than <i>cute</i>!
@@ -1550,7 +1644,6 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 
 
 
-
 #OPPONENT MASTURBATING
 #When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
 #The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
@@ -1574,6 +1667,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 0-female_start_masturbating,target:aimee=calm,Masturbation in this game is turn-based... You're already used to that, right?
 0-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
 0-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+0-female_start_masturbating,target:sei=interested,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 0-female_masturbating=horny,Too much lewd? Sorry, never heard of it.
 0-female_masturbating,marker:tentacles=happy,You know, I have no idea why people are so against tentacle-monsters. For the ones I've met, they seem really nice...
 0-female_masturbating=horny,I know what <i>I'm</i> gonna do after this game's over...
@@ -1606,6 +1700,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 1-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
 1-female_start_masturbating,target:shego=interested,I'll accept any punishment you decide to give me for making you do this... In fact, I look forward to it!
 1-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+1-female_start_masturbating,target:sei=interested,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 1-female_masturbating,marker:tentacles=sad,Just your hands? Where are the tentacles...? Wait, you can't use those in this game?! Bummer!
 1-female_masturbating=horny,I know how you're feeling right now, ~name~... It's the best feeling in the world!
 1-female_masturbating,target:zoey,priority:0=interested,It's great to see you're enjoying yourself, Zoey! Even in a zombie infested world, you gotta get a few, you know...?
@@ -1635,6 +1730,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 2-female_start_masturbating,target:futaba=happy,Yeah! You go, girl!
 2-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
 2-female_start_masturbating,target:shego=interested,I'll accept any punishment you decide to give me for making you do this... In fact, I look forward to it!
+2-female_start_masturbating,target:sei=interested,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 2-female_masturbating=interested,In other news, this is fucking hot as hell.
 2-female_masturbating,marker:zone-tan_singing=serene1,♫ <i>Laaaa la-la laaaa, laaaa la-la laaa... Hmmm hmm hmm hmm hm-hmmmm...</i> ♪
 2-female_masturbating=interested,I'd have a hard time getting out of bed if you were there with me, ~name~...
@@ -1670,6 +1766,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 3-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
 3-female_start_masturbating,target:shantae=happy,Yeah! Shake it like you mean it!
 3-female_start_masturbating,target:shego=interested,I'll accept any punishment you decide to give me for making you do this... In fact, I look forward to it!
+3-female_start_masturbating,target:sei=interested,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 3-female_masturbating=interested,That looks great. Makes me wanna join in...
 3-female_masturbating=happy,The way we're gonna reach world peace is by realizing sex feels amazing and makes everyone happy!
 3-female_masturbating=horny,One of our mottos at Zone is: 'Our work is never finished until <i>you</i> have finished!'
@@ -1705,6 +1802,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -3-female_start_masturbating,target:rosalina=interested,This is the treatment a goddess deserves...
 -3-female_start_masturbating,target:futaba=happy,Yeah! You go, girl!
 -3-female_start_masturbating,target:hermione=shocked,I've got some feelings about this... All of them are positive.
+-3-female_start_masturbating,target:sei=interested,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 -3-female_masturbating=horny,I know how you're feeling right now, ~name~... It's the best feeling in the world!
 -3-female_masturbating=horny,Too much lewd? Sorry, never heard of it.
 -3-female_masturbating=wink,I wanna try out my three finger salute on you, ~name~...
@@ -1800,6 +1898,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -1-female_start_masturbating=interested2,The only thing better than one slut... is two sluts!
 -1-female_start_masturbating=interested2,What, you want <i>me</i> to start up again, too? It's really easy to persuade me, you know...
 -1-female_start_masturbating,target:shego=interested2,You don't have to use that boring chair, Shego... Just sit on my lap instead!
+-1-female_start_masturbating,target:sei=interested2,A juicy chick filled with alcohol... Hmmm, I can go for some Coq Au Vin!
 -1-female_start_masturbating,target:scarlet_witch=interested,This is the treatment a witch deserves...!
 -1-female_start_masturbating,target:aimee=smiling,Masturbation in this game is turn-based... You're already used to that, right?
 -1-female_start_masturbating,target:futaba=happy,Yeah! You go, girl!
@@ -1833,6 +1932,7 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
 -3-must_masturbate_first=loss,I'm supposed to watch <i>you</i> fap, but I don't mind it if it's the other way around, for once...
 -3-must_masturbate_first=loss,Don't be shy, join me if you want!
+-3-must_masturbate_first,count-zone-tan_valentine:1=loss,Sure, I'll let you watch <i>me</i> fap... but just because it's a special occasion, of course!
 -3-must_masturbate=loss,It's time to teach the world to fap!
 -3-must_masturbate=loss,Damn, I kinda liked just watching you fap.
 -3-must_masturbate=happy,Yes, yes, yes! It's my turn!
@@ -1853,7 +1953,8 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -2-masturbating,marker:zone-tan_singing=serene2,♫ <i>I'd like to show you dirty toons for all eternity...</i> ♪
 -2-masturbating=lick,Hmmm... I just <i>love</i> the taste of my pussy...
 -2-masturbating=smiling,Hmmm... Heehee, watching you all get more and more lewd makes my whole body feel all tingly and happy!
--2-masturbating=interested,This is what I usually do to relax... Well, aside from, you know, watching anybody fap.
+-2-masturbating=interested,This is what I usually do to relax... Well, aside from, you know, watching else anybody fap.
+-2-masturbating,count-zone-tan_valentine:1,priority:0=serene2,♫ <i>Don't'cha wanna spend about an hour with me...?</i> ♪
 -2-heavy_masturbating=heavy,FUCK! I really <i>am</i> the best at this!
 -2-heavy_masturbating=heavy,Years of experience m-made my fapping skills <i>INCREDIBLE</i>...!
 -2-heavy_masturbating=heavy,Y-... <i>YES</i>! Let's finish this!
@@ -1862,13 +1963,13 @@ female_removed_major=smirk,Hmmm, what a <i>cutie</i>!
 -2-finishing_masturbating=finishing,Oh <i>FUCKKK!!!</i>
 -2-finishing_masturbating=finishing,<i>Yes!</i> That did it! <i>I'M CUUUUUUuuuu...</i>
 
--1-finished_masturbating=happy,I think I'll just stay down here for a minute... That orgasm was just... too amazing...
+-1-finished_masturbating,notSaidMarker:sittingdown,marker:sittingdown,priority:1=happy,I think I'll just stay down here for a minute... That orgasm was just... too amazing...
 -1-finished_masturbating=pinup,Draw me like one of your Zone girls...!
 -1-finished_masturbating=smiling,Did you enjoy what you've seen, ~player~? I can show you again, if you like...
--1-finished_masturbating,timeInStage:10-99=horny,I'm still really wet... Maybe I will go for round two...?
--1-finished_masturbating,saidMarker:zone-tan_love_song=serene2,Love really <i>does</i> make the world go round...!
+-1-finished_masturbating,timeInStage:10-99,priority:0=horny,I'm still really wet... Maybe I will go for round two...?
+-1-finished_masturbating,saidMarker:zone-tan_love_song,priority:0=serene2,Love really <i>does</i> make the world go round...!
 -1-finished_masturbating,timeInStage:0=calm,And the fapping is complete.
--1-finished_masturbating,notSaidMarker:thank_you_anyway,marker:thank_you_anyway=interested2,You're probably thinking to yourself: "Zone-tan, you're awesome!"... I know... But thank you anyway.
+-1-finished_masturbating,notSaidMarker:thank_you_anyway,marker:thank_you_anyway,priority:0=interested2,You're probably thinking to yourself: "Zone-tan, you're awesome!"... I know... But thank you anyway.
 
 
 
@@ -1913,5 +2014,674 @@ game_over_defeat=smiling,You think you won? Sure, keep telling yourself that...
 game_over_defeat=happy,Remember to subscribe to ZTV News and leave a like and a comment!
 game_over_defeat=wink,So... Which one of you wants to clean up my upper thighs the most...? As long as you only use your tongue, go right ahead...!
 game_over_defeat,target:futaba=happy,I'll invite you to my dungeon sometime, Futaba... You'll <i>love</i> it there, for sure!
+game_over_defeat,count-zone-tan_valentine:1,target:human=interested2,So, you actually managed to defeat me! Well, ~player~, I guess I owe you a reward. What's it gonna be, a nice dinner for two? Hah, I'm sure you'll be able to think of more <i>exciting</i> options, won't you...?
 
 #EPILOGUE/ENDING
+
+
+ending=Dinner Date
+	ending_gender=any
+
+		screen=
+				
+				text=WARNING: This epilogue may be unsuitable for players with photosensitive epilepsy. Caution is advised.
+				x=45%
+				y=40%
+				width=15%
+				arrow=none
+
+		screen=epilogue-1.jpg
+				
+				text=Gotta say, this wasn't what I was expecting when you said you wanted to take me somewhere.
+				x=25%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=Not that I was expecting fast food or burgers out of a truck or something.
+				x=25%
+				y=35%
+				width=15%
+				arrow=right
+				
+				text=But you really went all-out with this. <i>Somebody</i> told you about my expensive tastes.
+				x=25%
+				y=50%
+				width=15%
+				arrow=right
+				
+				text=You must <i>really</i> be trying to get in my panties with this, huh?
+				x=25%
+				y=65%
+				width=15%
+				arrow=right
+				
+				text=I'm <i>joking</i>, god. There's really no need to be so tense. I don't bite.
+				x=60%
+				y=20%
+				width=15%
+				arrow=left
+				
+				text=(Not without a safe word, anyway.)
+				x=60%
+				y=30%
+				width=15%
+				arrow=up
+				
+				text=Shall we take a little peek at the menu?
+				x=60%
+				y=40%
+				width=15%
+				arrow=left
+
+		screen=epilogue-2.jpg
+				
+				text=Oh, it all looks so <i>good!</i>
+				x=25%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=Decisions, decisions...
+				x=25%
+				y=30%
+				width=15%
+				arrow=right
+				
+				text=(And, yes, my reading glasses don't even have lenses. But don't they make me look sophisticated?)
+				x=25%
+				y=40%
+				width=15%
+				arrow=up
+				
+				text=<i>Coq Au Vin</i> could be fun. You'd better believe I love a mouthful of thick, creamy <i>Coq</i>!
+				x=60%
+				y=25%
+				width=15%
+				arrow=left
+				
+				text=But I'm partial to salmon, too.
+				x=60%
+				y=40%
+				width=15%
+				arrow=left
+
+		screen=epilogue-3.jpg
+				
+				text=I think I'll have the calimari starter.
+				x=30%
+				y=20%
+				width=10%
+				arrow=right
+				
+				text=(I'm a big fan of squid.)
+				x=30%
+				y=30%
+				width=10%
+				arrow=up
+				
+				text=And for the main, I'm thinking...
+				x=60%
+				y=25%
+				width=10%
+				arrow=left
+				
+				text=Let's keep it simple. Kobe ribeye, blue.
+				x=60%
+				y=35%
+				width=10%
+				arrow=left
+				
+				text=And a bottle of <i>René Pogel</i> for us both, please.
+				x=60%
+				y=45%
+				width=10%
+				arrow=left
+				
+				text=(Thank you!)
+				x=62%
+				y=55%
+				width=5%
+				arrow=up
+
+		screen=epilogue-4.jpg
+				
+				text=Okay, am I going crazy, or did that waitress look familiar?
+				x=20%
+				y=10%
+				width=15%
+				arrow=right
+				
+				text=(Also, what was that piece of paper you gave her?)
+				x=20%
+				y=20%
+				width=15%
+				arrow=up
+				
+				text=Was she on my website? Is she from the Inventory?
+				x=20%
+				y=35%
+				width=15%
+				arrow=right
+				
+				text=Maybe Dave was right. I <i>do</i> need some time off.
+				x=20%
+				y=50%
+				width=15%
+				arrow=right
+				
+				text=Have some time to myself, away from the studio...
+				x=65%
+				y=25%
+				width=10%
+				arrow=left
+				
+				text=...Unwind, de-stress, maybe catch up with my--
+				x=65%
+				y=40%
+				width=10%
+				arrow=left
+
+		screen=epilogue-5.jpg
+				
+				text=Oh shit, I love this song!
+				x=30%
+				y=10%
+				width=10%
+				arrow=right
+				
+				text=♪ <i>...Scent and the aroma refuses to breathe... More like a haze that's trying to succeed...</i> ♫
+				x=20%
+				y=25%
+				width=15%
+				arrow=right
+				
+				text=How did you <i>know</i>!?
+				x=60%
+				y=20%
+				width=10%
+				arrow=left
+				
+				text=♪ <i>...Drawing me in, mag-</i> I mean, <i>pulling me to you...</i> ♫
+				x=65%
+				y=25%
+				width=10%
+				arrow=left
+				
+				text=God, I've not even started drinking yet and I'm already a mess.
+				x=70%
+				y=35%
+				width=10%
+				arrow=left
+
+		screen=epilogue-6.jpg
+				
+				text=Speaking of which...
+				x=30%
+				y=20%
+				width=10%
+				arrow=right
+				
+				text=You'd better not have taken me out here just so you can get me drunk.
+				x=30%
+				y=30%
+				width=10%
+				arrow=right
+				
+				text=...And then take advantage of my impaired state.
+				x=65%
+				y=30%
+				width=10%
+				arrow=left
+
+		screen=epilogue-7.jpg
+				
+				text=You know, just repeatedly having your way with me while I'm powerless to resist.
+				x=30%
+				y=30%
+				width=15%
+				arrow=right
+				
+				text=And if I'm not pliable enough, you just have to fuck me harder, until I'm willing to cooperate.
+				x=25%
+				y=40%
+				width=15%
+				arrow=right
+				
+				text=Using me like a cheap fucktoy after you tear my nice new dress to shreds.
+				x=20%
+				y=50%
+				width=15%
+				arrow=right
+				
+				text=Making all the effort I put into my makeup go to waste as it smears down my face in a mix of spit and sweat and tears.
+				x=15%
+				y=60%
+				width=15%
+				arrow=right
+				
+				text=You'd never do something like that to me, right?
+				x=65%
+				y=25%
+				width=15%
+				arrow=left
+				
+				text=Not even if I spent all night teasing you? Getting you nice and pent up and desperate?
+				x=70%
+				y=35%
+				width=15%
+				arrow=left
+				
+				text=Of course not.
+				x=75%
+				y=45%
+				width=5%
+				arrow=left
+
+		screen=epilogue-8.jpg
+				
+				text=Oh, I'm sorry, did my foot just brush against something under the table?
+				x=30%
+				y=20%
+				width=10%
+				arrow=right
+				
+				text=Silly me. Let me just move it.
+				x=30%
+				y=35%
+				width=10%
+				arrow=right
+				
+				text=There. Better?
+				x=30%
+				y=50%
+				width=10%
+				arrow=right
+				
+				text=It's not? Me moving my foot back and forth like that isn't making it any less uncomfortable?
+				x=60%
+				y=25%
+				width=10%
+				arrow=left
+				
+				text=And you don't wanna cream your pants in the middle of a fancy restaurant?
+				x=60%
+				y=40%
+				width=10%
+				arrow=left
+				
+				text=That's a shame.
+				x=60%
+				y=55%
+				width=10%
+				arrow=left
+				
+				text=If it helps, I'm not going to do anything in <i>my</i> panties.
+				x=75%
+				y=40%
+				width=15%
+				arrow=left
+				
+				text=Can you guess why I can't? Do you want to see why?
+				x=75%
+				y=50%
+				width=15%
+				arrow=left
+				
+				text=Are you going to ask nicely?
+				x=75%
+				y=60%
+				width=15%
+				arrow=left
+				
+				text=Well...
+				x=65%
+				y=70%
+				width=5%
+				arrow=left
+
+		screen=epilogue-9.jpg
+				
+				text=Oh, look, the wine's here!
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=Thank you, that's lovely!
+				x=55%
+				y=20%
+				width=15%
+				arrow=left
+				
+				text=(Have we met somewhere before?)
+				x=57%
+				y=10%
+				width=10%
+				arrow=down
+
+		screen=epilogue-1.jpg
+				
+				text=So, like I was saying...
+				x=25%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=...Think you can wait until we get home?
+				x=25%
+				y=30%
+				width=15%
+				arrow=right
+				
+				text=Or are we going to have to take a trip to the bathrooms before the starters arrive?
+				x=25%
+				y=40%
+				width=15%
+				arrow=right
+				
+				text=I don't care either way. I just wanna--
+				x=65%
+				y=25%
+				width=15%
+				arrow=left
+
+		screen=epilogue-10.jpg
+				
+				text=Hello? Do I know you?
+				x=50%
+				y=0%
+				width=10%
+				arrow=down
+				
+				text=Oh, you're a fan? Of my show?
+				x=65%
+				y=20%
+				width=10%
+				arrow=left
+				
+				text=Aww, that's so sweet! Stop it, you're too kind!
+				x=65%
+				y=30%
+				width=10%
+				arrow=left
+				
+				text=~name~, would you mind taking a picture of us?
+				x=65%
+				y=40%
+				width=10%
+				arrow=left
+				
+				text=Thanks, ~name~. You're the best!
+				x=65%
+				y=50%
+				width=10%
+				arrow=left
+
+		screen=epilogue-11.jpg
+				
+				text=*CLICK*
+				x=30%
+				y=10%
+				width=5%
+				arrow=none
+				
+				text=Y'know, I'm pretty sure she was trying to touch my boob there.
+				x=80%
+				y=20%
+				width=18%
+				arrow=right
+				
+				text=You jealous?
+				x=90%
+				y=35%
+				width=8%
+				arrow=right
+				
+				text=Yeah, I bet you are. 
+				x=85%
+				y=50%
+				width=13%
+				arrow=right
+				
+				text=Don't lie! You were staring at them the whole night!
+				x=80%
+				y=65%
+				width=18%
+				arrow=right
+
+		screen=epilogue-12.jpg
+				
+				text=You really weren't?
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=<i>Seriously?</i>
+				x=25%
+				y=35%
+				width=7%
+				arrow=right
+				
+				text=And here I was, ready to offer you the chance to right that horrible wrong.
+				x=20%
+				y=50%
+				width=10%
+				arrow=right
+				
+				text=Of course, if you don't <i>want</i> to touch my boobs, that's fine too...
+				x=70%
+				y=25%
+				width=15%
+				arrow=left
+
+		screen=epilogue-13.jpg
+				
+				text=Nope, too late! No backpedalling out of this one!
+				x=25%
+				y=25%
+				width=15%
+				arrow=right
+				
+				text=If you want it that badly, you have to admit you were perving on me during our dinner.
+				x=25%
+				y=40%
+				width=15%
+				arrow=right
+				
+				text=C'mon, don't be shy. If you don't say it, <i>neither</i> of us will be getting what we want.
+				x=60%
+				y=35%
+				width=15%
+				arrow=left
+				
+				text=Don't be a wimp!
+				x=60%
+				y=50%
+				width=10%
+				arrow=left
+
+		screen=epilogue-14.jpg
+				
+				text=Ha! I knew it! Your hands are shaking! You're totally nervous!
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=You call <i>that</i> groping? I've seen less awkward attempts to fondle a pair of breasts at a high school prom!
+				x=65%
+				y=40%
+				width=15%
+				arrow=left
+
+		screen=epilogue-15.jpg
+				
+				text=I-Is -nff!- that really the best you can do?
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=What kind of amateur hour shit is this, ~name~?
+				x=20%
+				y=40%
+				width=15%
+				arrow=right
+				
+				text=It's like you're not even <i>trying</i>.
+				x=60%
+				y=25%
+				width=15%
+				arrow=left
+
+		screen=epilogue-16.jpg
+				
+				text=Y-Yep. I've met tentacle monsters better at this than you, and they don't even have finger bones.
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=(Or hands...)
+				x=23%
+				y=30%
+				width=10%
+				arrow=up
+				
+				text=S-Seriously, I mean, this is just <i>sad</i>.
+				x=65%
+				y=35%
+				width=10%
+				arrow=left
+				
+				text=Who taught you how to fuck a girl? Stamper? <i>Dave?</i>
+				x=65%
+				y=50%
+				width=10%
+				arrow=left
+				
+				text=(No, Zone-tan. The bedroom is <i>not</i> a place for saying <i>that name</i>.)
+				x=65%
+				y=60%
+				width=10%
+				arrow=up
+				
+				text=Honestly, th-this is just--
+				x=20%
+				y=50%
+				width=10%
+				arrow=right
+
+		screen=epilogue-17.jpg
+				
+				text=...huh?
+				x=35%
+				y=20%
+				width=5%
+				arrow=right
+				
+				text=...y-you...
+				x=65%
+				y=25%
+				width=5%
+				arrow=left
+
+		screen=epilogue-18.gif
+				
+				text=𝕯𝖎𝖉 𝕴 𝖘𝖆𝖞 𝖞𝖔𝖚 𝖈𝖔𝖚𝖑𝖉 𝖘𝖙𝖔𝖕?
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=𝓢𝓪𝔂 "𝓝𝓸, 𝓜𝓲𝓼𝓼 𝓩𝓸𝓷𝓮-𝓣𝓪𝓷".
+				x=20%
+				y=40%
+				width=15%
+				arrow=right
+				
+				text=𝕬𝖗𝖊 𝖞𝖔𝖚 𝖌𝖔𝖎𝖓𝖌 𝖙𝖔 𝖌𝖊𝖙 𝖞𝖔𝖚𝖗 𝖌𝖗𝖊𝖆𝖘𝖞 𝖑𝖎𝖙𝖙𝖑𝖊 <i>𝖋𝖚𝖈𝖐𝖎𝖓𝖌</i> 𝖍𝖆𝖓𝖉𝖘 𝖇𝖆𝖈𝖐 𝖜𝖍𝖊𝖗𝖊 𝖙𝖍𝖊𝖞 𝖇𝖊𝖑𝖔𝖓𝖌?
+				x=70%
+				y=40%
+				width=15%
+				arrow=left
+				
+				text=𝓢𝓪𝔂 "𝓨𝓮𝓼, 𝓜𝓲𝓼𝓼 𝓩𝓸𝓷𝓮-𝓣𝓪𝓷".
+				x=70%
+				y=60%
+				width=15%
+				arrow=left
+				
+				text=Ϯ♅ꂅภ <i>ꊰu꒝КᎥภg ᎠԾ ᎥϮ!</i>
+				x=70%
+				y=70%
+				width=15%
+				arrow=left
+
+		screen=epilogue-19.jpg
+				
+				text=Much better!
+				x=30%
+				y=20%
+				width=5%
+				arrow=right
+
+		screen=epilogue-20.jpg
+				
+				text=Oh, come on. Don't give me that look.
+				x=20%
+				y=20%
+				width=15%
+				arrow=right
+				
+				text=It turns you on when I do that. Don't lie.
+				x=20%
+				y=30%
+				width=15%
+				arrow=right
+				
+				text=...'Turned on', 'scared shitless', basically all just the same thing.
+				x=20%
+				y=70%
+				width=15%
+				arrow=right
+				
+				text=Look, we can talk semantics all night if you want...
+				x=70%
+				y=60%
+				width=15%
+				arrow=left
+				
+				text=Orrr....
+				x=70%
+				y=70%
+				width=5%
+				arrow=left
+
+		screen=
+				
+				text=I can
+				x=47%
+				y=42%
+				width=5%
+				arrow=none
+				
+				text=FUCK
+				x=47%
+				y=46%
+				width=5%
+				arrow=none
+				
+				text=the SHIT
+				x=47%
+				y=50%
+				width=5%
+				arrow=none
+				
+				text=out of you.
+				x=47%
+				y=54%
+				width=5%
+				arrow=none
