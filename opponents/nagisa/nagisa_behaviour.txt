@@ -25,10 +25,14 @@ tag=visual_novel
 #Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
 tag=nagisa
 
+#uncomment the following tag when generating Nagisa's behaviour.xml for Valentine's Day week
+tag=nagisa_valentine
+
 
 
 marker=nagisa_asks_buffy_about_school,public,Nagisa and Buffy feel differently about high school.
 marker=nagisa_asks_zt_for_help,public,Nagisa asks Zone-tan if her hand is good. It isn't.
+marker=nagisa_considers_leaving,public,Nagisa mentions leaving but never goes through with it.
 marker=nagisa_finished1,private,This is Nagisa's first final stage line. It does not repeat.
 marker=nagisa_finished2,private,This is Nagisa's second final stage line. It does not repeat.
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
@@ -36,12 +40,14 @@ marker=nagisa_food_motivation,public,Nagisa canonically promises herself food to
 marker=nagisa_hairclips,public,Nagisa wears red hairclips not visible from the front. She doesn't think to use them as an extra layer.
 marker=nagisa_kanji,public,When introducing herself when Marinette is present, she mentions that her name can be written with one Chinese character (kanji).
 marker=nagisa_kyu_showing_panties,public,When the game starts, Nagisa is alarmed that Kyu's panties are already visible.
+marker=nagisa_legs_apart_query,public,Nagisa questions whether she's required to sit with her legs apart after losing.
 marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
 marker=nagisa_maid,public,Nagisa gets along fine without a maid.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realize that boys would be playing too.
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
+marker=nagisa_skirt_in_danger,private,Nagisa doesn't know how she got into this mess.
 marker=nagisa_swimsuit,public,Nagisa modestly claims not to look good in a swimsuit.
 marker=nagisa_tentacle,public,Nagisa can make a tentacle comparison when playing with Zone-tan.
 marker=nagisa_terrible_pirate,public,Nagisa would make a terrible pirate.
@@ -151,6 +157,9 @@ clothes=Panties,panties,important,lower
 0-good_hand,count-princess:1,totalRounds:0=worried,I think I might have come to the wrong room. I'm not good enough to play against a princess...
 0-okay_hand,count-princess:1,totalRounds:0=worried,I think I might have come to the wrong room. I'm not good enough to play against a princess...
 0-bad_hand,count-princess:1,totalRounds:0=worried,I think I might have come to the wrong room. I'm not good enough to play against a princess...
+0-good_hand,count-nagisa_valentine:1,totalRounds:0,priority:1000=embarrassed,It's Valentine's Day, but I didn't make you chocolates, ~player~... So, um, I thought I could play this game to make it up to you.
+0-okay_hand,count-nagisa_valentine:1,totalRounds:0,priority:1000=embarrassed,It's Valentine's Day, but I didn't make you chocolates, ~player~... So, um, I thought I could play this game to make it up to you.
+0-bad_hand,count-nagisa_valentine:1,totalRounds:0,priority:1000=embarrassed,It's Valentine's Day, but I didn't make you chocolates, ~player~... So, um, I thought I could play this game to make it up to you.
 
 0-good_hand,alsoPlaying:kyu,totalRounds:0,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
 0-okay_hand,alsoPlaying:kyu,totalRounds:0,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
@@ -170,6 +179,10 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
 0-okay_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
 0-bad_hand,alsoPlaying:zizou,totalRounds:0=supportive,I'm sorry, Mr Prince Sir, but this game is too important. I can't just surrender!
+
+0-good_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose, but I want you to know how much to mean to me, ~player~...
+0-okay_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose, but I want you to know how much to mean to me, ~player~...
+0-bad_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose, but I want you to know how much to mean to me, ~player~...
 
 0-good_hand,alsoPlaying:alice,totalRounds:1,alsoPlayingStage:0=embarrassed,Alice, that knife is making me a little nervous.
 0-okay_hand,alsoPlaying:alice,totalRounds:1,alsoPlayingStage:0=embarrassed,Alice, that knife is making me a little nervous.
@@ -191,6 +204,11 @@ clothes=Panties,panties,important,lower
 0-bad_hand,alsoPlaying:terezi,totalRounds:1=embarrassed,Let me know if there's anything I can help you with, Terezi.
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:1,marker:nagisa_asks_zt_for_help=embarrassed,Excuse me, lady in purple... Could I ask if this is a good hand?
 
+0-good_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=supportive,We're going to make this a memorable Valentine's Day, I promise!
+0-okay_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=supportive,We're going to make this a memorable Valentine's Day, I promise!
+0-bad_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=supportive,We're going to make this a memorable Valentine's Day, I promise!
+
+
 0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
 
 #lost shoes
@@ -204,7 +222,15 @@ clothes=Panties,panties,important,lower
 1-okay_hand,hasHand:Two Pair,priority:0=happy,I think this is a good one.
 1-bad_hand=sad,I'm such a ditz sometimes.
 1-bad_hand=shy,I'd be lying if I said I wasn't a little disappointed by these cards.
-1-bad_hand=oneleg,I hope I don't lose my socks too...
+1-bad_hand,count-nagisa_valentine:0,priority:0=oneleg,I hope I don't lose my socks too...
+
+1-good_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose more than just my shoes, I want you to know how much to mean to me, ~player~...
+1-okay_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose more than just my shoes, I want you to know how much to mean to me, ~player~...
+1-bad_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose more than just my shoes, I want you to know how much to mean to me, ~player~...
+
+1-good_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
+1-okay_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
+1-bad_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
 
 1-good_hand,alsoPlaying:hermione,priority:0=happy,Do you believe in magic and wishes, Hermione? I do. I once heard a true story about a boy who turned into a cat!
 1-good_hand,alsoPlaying:meia,alsoPlayingSaidMarker:riches_to_rags,count-nugi-chan:1,notSaidMarker:nagisa_maid,marker:nagisa_maid,priority:0=idea,We don't need a maid at my house. I always try to help my mom with the chores.
@@ -265,8 +291,9 @@ clothes=Panties,panties,important,lower
 4-okay_hand,hasHand:One Pair,priority:0=sad,Is a pair enough?
 4-okay_hand,totalMasturbating:1-4,priority:0=maximumembarrassed,I can't believe we're still playing when... you know...
 4-bad_hand=veryembarrassed,My skirt...
-4-bad_hand=stripped,I'm sorry, but I'd better head home...
-4-bad_hand=veryembarrassed,How did I get myself into this mess?
+4-bad_hand,count-nagisa_valentine:1,priority:0=veryembarrassed,I have to keep going. This is for ~player~.
+4-bad_hand,notSaidMarker:nagisa_considers_leaving,marker:nagisa_considers_leaving,count-nagisa_valentine:0,priority:0=stripped,I'm sorry, but I'd better head home...
+4-bad_hand,notSaidMarker:nagisa_skirt_in_danger,marker:nagisa_skirt_in_danger,count-nagisa_valentine:0,priority:0=veryembarrassed,How did I get myself into this mess?
 
 4-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your Webmaster would understand if you took your ribbons off next, Nugi-chan...
 4-good_hand,alsoPlaying:xander,alsoPlayingStage:6,totalMales:1=sorry,I'm not ready to see a boy's private part! Please win this hand, Xander...
@@ -284,23 +311,21 @@ clothes=Panties,panties,important,lower
 5-bad_hand=nervous,Someone told me that if you write the word "person" on your hand, it can help you be less nervous.
 
 5-good_hand,alsoPlaying:zizou,alsoPlayingStage:6,notSaidMarker:nagisa_zizou_amulet,marker:nagisa_zizou_amulet=veryembarrassed,You can take off your amulet next if want, Zizou. Because it's either that or...
-5-bad_hand,alsoPlaying:elena,alsoPlayingStage:5=veryembarrassed,Princess, um... could you make a law against this game? Or should I have asked before you dropped your scepter?
-5-bad_hand,alsoPlaying:tracer,priority:0=veryembarrassed,Is it true that you can rewind time, Tracer? Maybe to about fifteen minutes ago?
+5-bad_hand,alsoPlaying:elena,alsoPlayingStage:5,count-nagisa_valentine:0,priority:0=veryembarrassed,Princess, um... could you make a law against this game? Or should I have asked before you dropped your scepter?
+5-bad_hand,alsoPlaying:tracer,priority:0,count-nagisa_valentine:0,priority:0=veryembarrassed,Is it true that you can rewind time, Tracer? Maybe to about fifteen minutes ago?
 
 #lost 6 items: topless
 6-good_hand=happy,It's all right. I was pretty scared for a second there, though.
-6-good_hand=emphatic,I'm way too old to be showing you my butt, anyway!
+6-good_hand,count-nagisa_valentine:0,priority:0=emphatic,I'm way too old to be showing you my butt, anyway!
 6-okay_hand=happy,I have a nice pair.
 6-okay_hand=calm,I think I'll be okay this hand, but what I really want is my shirt back.
 6-bad_hand,marker:nagisa_played_tomoyo_after=embarrassed,I haven't felt this uneasy since I played <i>Tomoyo After: It's a Wonderful Life</i>.
 6-bad_hand=embarrassed,I'm a nervous wreck. I'm trying not to worry, but I can't help it.
-6-bad_hand=embarrassed,I know that I can leave at any time. I'm sorry, everyone, but I think I have to go home soon.
+6-bad_hand,marker:nagisa_considers_leaving=embarrassed,I know that I can leave at any time. I'm sorry, everyone, but I think I have to go home soon.
 
-6-bad_hand,alsoPlaying:asuna,alsoPlayingStage:7=embarrassed,Asuna, I'm sorry to bother you, but do you know if we can get out of this game if things go badly?
+6-bad_hand,alsoPlaying:asuna,alsoPlayingStage:7,count-nagisa_valentine:0,priority:0=embarrassed,Asuna, I'm sorry to bother you, but do you know if we can get out of this game if things go badly?
 
 #lost all clothing
-#using negative numbers counts back from the final stage
-#-3 is while nude, -2 is masturbating, -1 is finished
 -3-good_hand=happy,Yay! These are really good cards!
 -3-good_hand=embarrassed,For a second there, I was afraid I was going to have to do... that.
 -3-good_hand=shocked,I just realized what I'm going to see if I win! Oh no!
@@ -310,6 +335,7 @@ clothes=Panties,panties,important,lower
 -3-okay_hand,marker:nagisa_mysterious_scar=worried,My dad says I have a mysterious scar on my butt, but I don't believe him!
 -3-bad_hand=embarrassed,I'm so nervous right now, I can even taste it.
 -3-bad_hand=veryembarrassed,I think I'm starting to get nervous again.
+-3-bad_hand,count-nagisa_valentine:0,priority:0=nervous,I just want you to snatch me up and save me, ~player~.
 
 -3-bad_hand,alsoPlaying:kyu,priority:0=nervous,Kyu, if you can grant wishes, I really think I need your help!
 -3-bad_hand,alsoPlaying:revy,alsoPlayingStage:8,totalFinished:1-3,priority:0=nervous,Even the mean gun lady is doing it... Do I even have a chance?
@@ -362,7 +388,7 @@ clothes=Panties,panties,important,lower
 3-stripping=stripping,I've never... I've never taken my shirt off in front of a stranger before...
 4-stripped=relieved,I'm so glad that I got up the courage to do that!
 4-stripped=stripped,It's going to be really hard to hold my cards like this.
-4-stripped=stripped,When I said I'd play a game to help Tomoyo become Student Council President, I didn't know it would be this kind of game!
+4-stripped,count-nagisa_valentine:0,priority:0=stripped,When I said I'd play a game to help Tomoyo become Student Council President, I didn't know it would be this kind of game!
 4-stripped,alsoPlaying:mia,alsoPlayingStage:4=happy,Oh my gosh, do you like the Big Dango Family too, Mia? They're so cute!
 4-stripped,alsoPlaying:zone-tan,alsoPlayingStage:3=determined,Yes, I'm wearing a bra. Underwear is for hiding a girl's secrets. My mom could teach you a lot, Zone-tan!
 
@@ -382,7 +408,7 @@ clothes=Panties,panties,important,lower
 5-must_strip_winning=veryembarrassed,Would it be okay if we played with the lights off? I'm a little shy.
 5-must_strip_winning=veryembarrassed,Thank you for letting me win, but I don't want you to be totally uninterested...
 5-must_strip_normal=veryembarrassed,I'm sorry! I've only just met you all and I'm already...
-5-must_strip_normal=veryembarrassed,What should I do? I have to keep my panties, but if I take off my bra, I can't cover myself properly...
+5-must_strip_normal,count-nagisa_valentine:0,priority:0=veryembarrassed,What should I do? I have to keep my panties, but if I take off my bra, I can't cover myself properly...
 5-must_strip_normal,alsoPlaying:mia,alsoPlayingStage:5=worried,Even though it's embarrassing, I'm taking off my bra next. There are some secrets that a girl has to leave until last, Mia.
 5-must_strip_losing=embarrassed,Could you check again? Are you sure I lost?
 5-must_strip_losing,totalExposed:0=covering,But... nobody else...
@@ -399,7 +425,8 @@ clothes=Panties,panties,important,lower
 6-must_strip_winning=veryembarrassed,Y-You're crazy! I'm not cute at all.
 6-must_strip_normal=veryembarrassed,Oh, what should I say? I mean, I've never been in trouble before...
 6-must_strip_normal=handonpanties,I... I...
-6-must_strip_losing=maximumembarrassed,I don't want to live on this planet anymore.
+6-must_strip_losing=maximumembarrassed,It's... it's me, isn't it?
+6-must_strip_losing,count-nagisa_valentine:0,priority:0=maximumembarrassed,I don't want to live on this planet anymore.
 6-stripping=stripping,Could you all close your eyes for about ten seconds?
 6-stripping=stripping,...
 6-stripping,alsoPlaying:aimee=stripping,Could you all close your eyes for about ten seconds?
@@ -407,7 +434,7 @@ clothes=Panties,panties,important,lower
 6-stripping,alsoPlaying:marinette=stripping,I'm sorry that you have to see this! I know I'm not very cute...
 6-stripping,alsoPlaying:shego,alsoPlayingSaidMarker:shego_can_take_photos=stripping,Please don't take any photos, Shego!
 7-stripped=stripped,Heh he he... I'm floundering here... You say something too!
-7-stripped=determined,Instead of turning to tears, I'm turning to empowerment to win this game!
+7-stripped,count-nagisa_valentine:0,priority:0=determined,Instead of turning to tears, I'm turning to empowerment to win this game!
 7-stripped=stripped,I'm sorry, but it's not polite to stare!
 
 
@@ -416,7 +443,7 @@ clothes=Panties,panties,important,lower
 #fully clothed
 0-male_human_must_strip=shy,It's... your turn, ~name~.
 0-male_human_must_strip=shy,You lost, so you have to pick something to take off... if you want.
-0-male_human_must_strip=worried,It's okay if you don't want to take anything off. We could play normal poker instead.
+0-male_human_must_strip,count-nagisa_valentine:0,priority:0=worried,It's okay if you don't want to take anything off. We could play normal poker instead.
 0-male_must_strip,notSaidMarker:nagisa_playing_with_boys,marker:nagisa_playing_with_boys=shy,Nobody told me that boys would be playing this too.
 0-male_must_strip=shy,That can just be a practice round if you want. No need to take anything off.
 0-female_human_must_strip=happy,It's your turn, ~name~!
@@ -438,7 +465,7 @@ clothes=Panties,panties,important,lower
 
 #lost socks and shoes
 2-male_human_must_strip=shy,You really did have the worst hand?
-2-male_human_must_strip=wink,Oh, look, ~name~ has a special hand we've never seen before that beats everything. I guess he doesn't have to take off anything, right?
+2-male_human_must_strip,count-nagisa_valentine:0,priority:0=wink,Oh, look, ~name~ has a special hand we've never seen before that beats everything. I guess he doesn't have to take off anything, right?
 2-male_must_strip=shy,I'm allowed to not look, right?
 2-female_human_must_strip=sad,Sorry about what happened.
 2-female_must_strip=worried,It's okay! We'll support you!
@@ -1071,7 +1098,7 @@ clothes=Panties,panties,important,lower
 
 #lost jacket and shirt
 4-male_removing_major=sorry,I should have thought of that. I'm sorry, ~name~.
-4-male_removed_major=shy,Sorry if this seems random, but I was just wondering if you had a girlfriend. It's okay if you don't wanna talk about it.
+4-male_removed_major,count-nagisa_valentine:0,priority:0=shy,Sorry if this seems random, but I was just wondering if you had a girlfriend. It's okay if you don't wanna talk about it.
 4-male_removed_major=sorry,This game really makes my heart beat fast.
 4-female_removing_major=stripped,I'm always... I'm always causing you trouble...
 4-female_removed_major=sorry,I'm sorry. Please excuse me!
@@ -1079,13 +1106,13 @@ clothes=Panties,panties,important,lower
 
 #lost skirt (underwear only)
 5-male_removing_major=determined,No, I won't cry.
-5-male_removed_major=stripping,This outrageous lie just came out!
+5-male_removed_major=stripping,...
 5-male_removed_major,target:human=veryembarrassed,It's okay, ~name~. Let's just promise not to look at each other.
 5-male_removed_major=stripped,Everything changes eventually...
 5-female_removing_major=stripped,I'm sorry about your ~clothing~.
 5-female_removed_major=veryembarrassed,Are you sure you're okay, ~name~?
 5-female_removed_major=determined,You don't have to pretend like nothing is wrong.
-5-female_removed_major=idea,Of course you're cute, but the Big Dango Family is a heck of a lot cuter and everyone knows it!
+5-female_removed_major,count-nagisa_valentine:0,priority:0=idea,Of course you're cute, but the Big Dango Family is a heck of a lot cuter and everyone knows it!
 
 #lost bra (topless)
 6-male_removing_major=appreciating,~name~, you're trying to avoid following through, aren't you?
@@ -1364,11 +1391,11 @@ clothes=Panties,panties,important,lower
 -3-male_chest_is_visible=appreciating,I don't hate it or anything.
 -3-male_crotch_will_be_visible=nervous,I can't wait to see what it looks like. I... I said too much!
 -3-male_crotch_will_be_visible=nervous,I'm sorry if this is a silly question... but does this mean we have to get married?
--3-male_crotch_will_be_visible=veryembarrassed,I'm not sure what was harder: taking my clothes off or being here while you take of yours.
+-3-male_crotch_will_be_visible=veryembarrassed,I'm not sure what was harder: taking my clothes off or being here while you take off yours.
 -3-male_small_crotch_is_visible=calm,Is... is it true it gets bigger when a boy sees a girl he likes?
 -3-male_medium_crotch_is_visible=shocked,I know how babies are made, but I never saw any pictures!
 -3-male_large_crotch_is_visible=nervous,Don't worry about me. I just... feel a little...
--3-male_large_crotch_is_visible=mustmasturbate,Oh my gosh! How do you walk around with something that big in your underwear!
+-3-male_large_crotch_is_visible=mustmasturbate,Oh my gosh! How do you walk around with something that big in your underwear?!
 
 -3-female_chest_will_be_visible=happy,Could it be possible that ~name~ is bigger than everyone?
 -3-female_small_chest_is_visible=happy,Oh, they're so pretty!
@@ -1394,6 +1421,7 @@ clothes=Panties,panties,important,lower
 -1-female_medium_chest_is_visible=peaceful,Please don't be embarrassed. I had to touch myself in front of everybody just minutes ago.
 -1-female_large_chest_is_visible=coveringbreasts,Wow! I wish I could be like that.
 -1-female_crotch_will_be_visible=unsure,Could it be that the whole purpose of this game is just to get girls out of their panties?
+-1-female_crotch_will_be_visible,count-nagisa_valentine:1,priority:1000=determined,You should look away, ~player~.
 -1-female_crotch_is_visible=closedeyes,I'm no expert, but I think what you have looks very nice, ~name~.
 -1-female_crotch_is_visible=unsure,I'm a baker's daughter, but I haven't seen buns like that before!
 
@@ -1558,7 +1586,7 @@ clothes=Panties,panties,important,lower
 1-male_must_masturbate=maximumembarrassed,You have to touch... This is so embarrassing!
 1-male_start_masturbating=maximumembarrassed,...
 1-male_masturbating=veryembarrassed,I don't care how cute anybody is; you shouldn't do that!
-1-male_masturbating=veryembarrassed,Please don't look at me like that. It's not that I don't like you, but there must be someone more suitable for you!
+1-male_masturbating,count-nagisa_valentine:0,priority:0=veryembarrassed,Please don't look at me like that. It's not that I don't like you, but there must be someone more suitable for you!
 1-male_finished_masturbating=maximumembarrassed,It squirted!
 
 1-female_must_masturbate=veryembarrassed,You have to... In f-front of everyone? ...
@@ -1606,7 +1634,8 @@ clothes=Panties,panties,important,lower
 5-male_start_masturbating=maximumembarrassed,It got even bigger!
 5-male_masturbating=stripped,It's so hard! I didn't expect it to be so hard.
 5-male_masturbating=maximumembarrassed,Your hands are so sticky! I can't look!
-5-male_masturbating=stripped,You're... you're not thinking about me, are you?
+5-male_masturbating,count-nagisa_valentine:0,priority:0=stripped,You're... you're not thinking about me, are you?
+5-male_masturbating,count-nagisa_valentine:1,priority:0=maximumembarrassed,I won't stop liking you just because you had to do this!
 5-male_finished_masturbating=maximumembarrassed,I can't believe I just saw that!
 
 5-female_must_masturbate=veryembarrassed,I... I don't know how to make it up to you.
@@ -1709,7 +1738,9 @@ clothes=Panties,panties,important,lower
 #Because Nagisa's penalty stage dialogue has a common theme, I've grouped it all together here.
 
 must_masturbate_first=mustmasturbate,Oh, my heart's gonna beat out of my chest! But I have an idea for how to get through this... I have to be brave and put on my play!
+must_masturbate_first,count-nagisa_valentine:1,priority:1000=mustmasturbate,I have to go first?! But everyone's watching... I wrote you a special play, ~player~. I hope I don't mess up the lines.
 must_masturbate=mustmasturbate,Oh no... It might be weird, but I have an idea to get through this. I have to be brave and put on my play!
+must_masturbate,count-nagisa_valentine:1,priority:1000=mustmasturbate,It's... it's finally my turn. I wrote something special for you, ~player~. I hope you like my play.
 must_masturbate,alsoPlaying:xander=mustmasturbate,Oh no... It might be weird, but I have an idea to get through this. I have to be brave and put on my play! Xander, please don't watch.
 start_masturbating=starting,<i>Let me tell you a touching story about a girl who lives all alone. Nothing dies, and nothing is born in the world.</i>
 masturbating=eyesopencovering,I wrote a script and memorized it so I'll know just what to say.
@@ -1722,10 +1753,12 @@ heavy_masturbating=eyesopentwofingersin,<i>W-what is this light? I would not kno
 heavy_masturbating=twofingersin,<i>S-somewhere, far far away, there was another world for them to live in - one full of warmth and life.</i>
 finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Ahhh! Ahhh!
 finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Oh... omigosh...
-finished_masturbating,notSaidMarker:nagisa_finished_1,marker:nagisa_finished_1=embarrassed,Oh! Forget you saw anything today, please? Please, please?
-finished_masturbating,notSaidMarker:nagisa_finished_2,saidMarker:nagisa_finished_1,marker:nagisa_finished_2=unsure,Um, just checking, but there isn't a second even-more-embarrassing penalty for losing again somehow, is there?
+finished_masturbating,notSaidMarker:nagisa_finished_1,marker:nagisa_finished_1,count-nagisa_valentine:0=embarrassed,Oh! Forget you saw anything today, please? Please, please?
+finished_masturbating,notSaidMarker:nagisa_finished_1,marker:nagisa_finished_1,count-nagisa_valentine:1=finished,This is really hard to say, but... I did this because I love you, ~player~...
+finished_masturbating,notSaidMarker:nagisa_finished_2,saidMarker:nagisa_finished_1,marker:nagisa_finished_2=embarrassed,I can't believe I really confessed...
 finished_masturbating,saidMarker:nagisa_finished_2=unsure,I'm going to need to rest in bed after this...
-finished_masturbating,saidMarker:nagisa_finished_2=finished,Is it true that I have to sit like this when I'm done? It's not true, is it?
+finished_masturbating,saidMarker:nagisa_finished_2,notSaidMarker:nagisa_legs_apart_query,marker:nagisa_legs_apart_query,count-nagisa_valentine:0,priority:0=finished,Is it true that I have to sit like this when I'm done? It's not true, is it?
+finished_masturbating,saidMarker:nagisa_finished_2,count-nagisa_valentine:1,priority:0=finished,I'm sorry if I'm being jealous, ~player~, but I don't want you looking at anyone else.
 finished_masturbating,saidMarker:nagisa_finished_2=embarrassed,Don't tell my friends that you saw me here. I'll make it up to you.
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,Now that I have nothing left to lose, waiting's not so hard.
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,I guess I'm braver than I thought.
@@ -1804,6 +1837,7 @@ finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:kyu,priority:0=em
 game_over_defeat=victorystanding,Congratulations! I hope I'll be the winner next time... if I ever play again.
 game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the game's over, I can face this way, right?
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
+game_over_defeat,target:human,count-nagisa_valentine:1,priority:1000=embarrassed,Was this a good enough Valentine's present, ~name~? Let me know if it wasn't enough...
 game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...
 game_over_defeat,target:dawn,totalMales:0=closedeyes,No hard feelings, Dawn. Good luck with your poke-monsters game!
 game_over_defeat,target:elaine=embarrassed,I know you're a pirate, Elaine, but please don't plunder my booty!
