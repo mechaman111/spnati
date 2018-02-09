@@ -306,8 +306,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			
 			// target (priority = 300)
 			if (opp !== null && typeof target !== typeof undefined && target !== false) {
-                target = "opponents/" + target + "/";
-				if (target === opp.folder) {
+            target = target;
+				var oppID = opp.folder.substr(0, opp.folder.length - 1);
+				oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
+				if (target === oppID) {
 					totalPriority += 300; 	// priority
 				}
 				else {
