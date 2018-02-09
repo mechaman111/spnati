@@ -401,6 +401,9 @@ function loadGroupMemberMeta (folder, groupID, member) {
 			/* load the individual select screen */
 			groupPage = 0;
 			updateGroupSelectScreen();
+		},
+		error: function(err) {
+			loadedGroups[groupID].opponents[member] = null;
 		}
 	});
 }
@@ -455,7 +458,7 @@ function updateGroupSelectScreen () {
 				$groupButton.attr('disabled', true);
 			}
 		} else {
-			shownIndividuals[i] = null;
+			shownGroup[i] = null;
 			
 			$groupNameLabels[i].html("");
 			$groupPrefersLabels[i].html("");
@@ -791,7 +794,9 @@ function selectGroup () {
 	
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
-		loadBehaviour(loadedGroups[groupPage].opponents[i].folder, groupScreenCallback, i+1);
+		if (loadedGroups[groupPage].opponents[i]) {
+			loadBehaviour(loadedGroups[groupPage].opponents[i].folder, groupScreenCallback, i+1);
+		}
 	}
 }
 
