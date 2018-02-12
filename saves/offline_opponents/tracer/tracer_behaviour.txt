@@ -6,26 +6,42 @@ gender=female
 size=medium
 intelligence=average
 
-#Number of phases to "finish"
-timer=5
+#Number of phases to "finish" masturbating
+timer=10
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
 tag=video_game
-tag=glasses
+tag=overwatch
 tag=lesbian
 tag=british
-tag=overwatch
-
+tag=glasses
 
 #required for meta.xml
-#start picture
-pic=0-calm
+#select screen image
+pic=0-calm.png
 height=5'4"
 from=Overwatch
-writer=humdumthrow & throwaway10671
-artist=TYDaisy95 & humdumthrow
+writer=humdumthrow, throwaway10671, The_Caretaker
+artist=TYDaisy95,  humdumthrow, and The_Caretaker
 description=Lena Oxton, more commonly known as "Tracer", is an agent Overwatch who can control the speed of her own passage through time.
-release=33
 
-#Tracer's Clothing:
+#You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,Cheers, love! The cavalry's here!
+start=0-calm,Cheers, love! The cavalry's here! Sorry, I'm contractually obligated to say that.
+start=0-happy,Here comes Tracer!
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
 clothes=Gloves,gloves,extra,other
 clothes=Shoes,shoes,extra,other
 clothes=Jacket,jacket,major,upper
@@ -34,40 +50,71 @@ clothes=Goggles,goggles,extra,other
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower
 
-#starting picture and text
-start=0-calm,Cheers, love! The cavalry's here!
 
 
-#SWAPPING CARDS
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
 #This is what a character says while they're exchanging cards.
-swap_cards=calm,May I have ~cards~ cards?
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=calm,~cards~ cards!
 swap_cards=calm,I'll take ~cards~.
 swap_cards=calm,~cards~ new cards, please.
+swap_cards=calm,~cards~ cards for me!
+
 
 
 
 #HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#stage-specific lines that override the stage-generic ones
 good_hand=happy,Wicked!
 good_hand=happy,Yeah!
 good_hand=happy,Woeeey!
-
-#The character thinks they have an okay hand
-okay_hand=calm,Okay...
+good_hand=happy,Smashing!
+okay_hand=calm,This should be good enough for you blokes.
 okay_hand=calm,This could go either way.
-okay_hand=calm,Yeah, okay.
+okay_hand=calm,Not bad, not bad.
 okay_hand=calm,What did everybody else get?
-
-#The character thinks they have a bad hand
 bad_hand=sad,Aw, rubbish!
 bad_hand=sad,I wish I could recall this hand...
-bad_hand=sad,Let's try that again!
+bad_hand=sad,Let's try that again! Please?
 bad_hand=sad,Looks like my luck is on cooldown...
 bad_hand=sad,Oh shoot, this can't be good.
+bad_hand=sad,Ballocks.
+
 
 #fully clothed
-#lost shoes
-#lost jacket
-#lost leggings
+0-good_hand,totalRounds:0-0,count-overwatch:4=happy,Overwatch ladies assemble!
+0-okay_hand,totalRounds:0-0,count-overwatch:4=happy,Overwatch ladies assemble!
+0-bad_hand,totalRounds:0-0,count-overwatch:4=happy,Overwatch ladies assemble!
+
 
 #lost goggles
 5-good_hand=happy,This hand is my saviour!
@@ -76,193 +123,578 @@ bad_hand=sad,Oh shoot, this can't be good.
 5-bad_hand=sad,I can't afford to lose again.
 5-bad_hand=sad,I think I hit the wall.
 
+
 #lost bra
 6-good_hand=happy,I'm back, baby!
 6-good_hand=happy,I got my second wind.
 6-okay_hand=calm,Surely someone has something worse, right?
-6-bad_hand=sad,This is not the d&eacute;j&agrave; vu I was looking for...
+6-bad_hand=sad,This is not the d�j� vu I was looking for...
 
-#naked
-7-good_hand=happy,And she's back in the game!
-7-good_hand=happy,Just in time!
-7-okay_hand=sad,Will this be enough to save my honor?
-7-bad_hand=embarrassed,This is bad...
+-3-good_hand=happy,And she's back in the game!
+-3-good_hand=happy,Just in time!
+-3-okay_hand=sad,Will this be enough to save my honor?
+-3-bad_hand=embarrassed,This is bad...
+
 
 
 
 #SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
 #losing gloves
 0-must_strip_winning=happy,I have this under control!
+0-must_strip_winning=happy,No worries, I'll still beat you lot easily.
+0-must_strip_winning=happy,Ha! Just a minor setback.
+0-must_strip_winning=calm,I'm fine, I'm fine.
 0-must_strip_winning,alsoPlaying:mei,alsoPlayingStage:0=happy,I don't know, Mei. Probably doing some monkey business!
-0-must_strip_normal=loss,Let's start with the gloves, alright.
+0-must_strip_normal=loss,Let's start with the gloves, I guess.
+0-must_strip_normal=loss,Congrats, you're getting me out of my gloves. Whippee.
+0-must_strip_normal=loss,Winning is a lot more fun.
+0-must_strip_normal=loss,Grrrrrr...
 0-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:0=happy,I don't know, Mei. Probably doing some monkey business!
-0-must_strip_losing=loss,I always start quick, but this time it was unintentional.
+0-must_strip_losing=loss,I like being fast, but not fast to lose.
+0-must_strip_losing=sad,Drat, not a great start.
+0-must_strip_losing=loss,I zigged when I should have zagged.
 0-must_strip_losing,alsoPlaying:mei,alsoPlayingStage:0=happy,I don't know, Mei. Probably doing some monkey business!
 0-stripping=strip,Those gloves are pretty heavy anyways...
-1-stripped=calm,Keep calm and Tracer on!
-1-stripped=calm,Now, where were we?
+0-stripping=strip,These gloves are supposed to be practical, but I think they're kinda cute...
+0-stripping=strip,Well, I guess it'll be good to let my hands breathe for a bit.
+
 
 #losing shoes
+1-stripped=calm,Keep calm and Tracer on!
+1-stripped=calm,Now, where were we?
 1-must_strip_winning=happy,I'm way ahead of you guys anyway!
 1-must_strip_normal=loss,What to take off next...?
 1-must_strip_losing=loss,Come on... I'm gonna lose!
 1-stripping=strip,Not my beloved crocs...
-2-stripped=calm,Back to work!
+
 
 #losing jacket
-2-must_strip_winning=calm,I guess I have to lose my jacket after all...
+2-stripped=calm,Back to work!
+2-stripped=calm,Still got a ways to go if you want to eliminate me.
+2-stripped=calm,I'm not out yet.
+2-must_strip_winning=loss,I guess I have to lose my jacket after all...
+2-must_strip_winning=loss,Ugh. This might take a bit.
 2-must_strip_normal=loss,Oh shoot, I lost!
-2-must_strip_losing=loss,Again? No fair!
-2-stripping=strip,I hope I don't blink through time again without this.
-3-stripped=calm,Hmmmm, seems stable for now.
-3-stripped=blank,~silent~
+2-must_strip_normal=loss,Ugh. I really do prefer winning.
+2-must_strip_losing=shocked,Again? No fair!
+2-must_strip_losing=shocked,I lose? Again? This is very un-Tracer like of me.
+2-stripping=strip,Don't worry, I'll be fine without my chronal accelerator as long as it's nearby. Probably.
+2-stripping=strip,Well, the chronal accelerator is a bit heavy anyway. I'll be OK without it for a bit.
+
 
 #losing leggings
-3-must_strip_winning=calm,Next up: My pants.
+3-stripped=calm,Hmmmm, seems stable for now.
+3-stripped=calm,~silent~
+3-stripped=calm,Yup, I'm all here still. Well, minus most of my clothes.
+3-must_strip_winning=loss,Great. Guess my pants are next.
+3-must_strip_winning=calm,Guess you lot get to see Tracer's famous legs after all.
 3-must_strip_normal=loss,Bollocks! There is not much left.
+3-must_strip_normal=loss,Fine, you get to see my legs.
 3-must_strip_losing=loss,This is worse than getting hooked by Roadhog.
+3-must_strip_losing=loss,Well, there might still be time for a comeback.
 3-stripping=strip,Here we go...
-4-stripped=calm,Back in the fight!
-4-stripped=embarrassed,What'cha lookin' at?
+3-stripping=strip,I hope you appreciate them.
+3-stripping=strip,You get to see my bare legs and panties in one go. I'm really spoiling you.
+
 
 #losing goggles
-4-must_strip_winning=calm,I hope you don't find this too cheeky...
-4-must_strip_normal=loss,Nooo, what should I do?
+4-stripped=calm,Back in the fight!
+4-stripped=interested,What'cha lookin' at?
+4-stripped=calm,Fit, long, and soft. I'm proud of these legs.
+4-must_strip_winning=embarrassed,I hope you don't find this too cheeky...
+4-must_strip_winning=embarrassed,Whelp, nothing to it but to do it.
+4-must_strip_normal=loss,Fine, fine, you win.
+4-must_strip_normal=loss,Emily usually gets jealous when someone else sees my tits.
 4-must_strip_losing=loss,Again? This can't be fair...
+4-must_strip_losing=loss,Well, half-naked beats completely naked, I guess.
 4-stripping=strip,Heh, I almost forgot those!
-5-stripped=happy,You guys look very good in natural colors!
+4-stripping=strip,Oh, right, my goggles!
+4-stripping=strip,Psyche! Expecting to see my boobs? Sorry, I'm taking these off isntead.
+
 
 #losing bra
-5-must_strip_winning=calm,Seems, I can't hide my favourite two pulse bombs forever.
-5-must_strip_normal=loss,I hope you like these...
-5-must_strip_losing=sad,This is going too fast... even for me.
+5-stripped=happy,You guys look very good in natural colors!
+5-stripped=calm,Awww, don't look so sad, loves. You just gotta beat me again.
+5-stripped=happy,Tracer lives to fight another day.
+5-must_strip_winning=embarrassed,Seems, I can't hide my favourite two pulse bombs forever.
+5-must_strip_winning=embarrassed,Alright, I guess you earned it. Or earned them, rather.
+5-must_strip_normal=loss,You better appreciate them.
+5-must_strip_normal=loss,I'm not shy or anything. I just don't like losing.
+5-must_strip_losing=sad,Whelp, I guess losers show tits, as the saying goes. That is a saying, right?
+5-must_strip_losing=shocked,Really? I have to expose my chest already? Ballocks.
 5-stripping=strip,Got no more tricks up my sleeves...
+
+
+#lost all clothing
 6-stripped=embarrassed,Disappearing out of this timeline seems like a reasonable alternative now...
 6-stripped=interested,Check me out...
-
-#losing panties
+6-stripped=embarrassed,OK, I'm not usually shy, but that is a lot staring, guys!
+6-stripped=embarrassed,Well, uh...you like em?
 6-must_strip_winning=calm,Now you guys can see me in my birthday suit as well.
-6-must_strip_normal=loss,I have to go full nakey?!
-6-must_strip_losing=sad,I'm gonna be bollock naked...
+6-must_strip_winning=calm,Guess you get to see everything.
+6-must_strip_normal=shocked,I have to go full nakey?!
+6-must_strip_normal=interested,You know, showing you my pussy doesn't sound too bad right now.
+6-must_strip_losing=sad,Well, when Tracer goes for something, she goes all out.
+6-must_strip_losing=loss,Grrr...you lucky SOBS. I usually ask for a night at the pub before showing this.
 6-stripping=strip,Time to only wear a smile...
-7-stripped=embarrassed,Well, that just happened...
+6-stripping=strip,Hope you don't mind this, Emily.
+6-stripping=strip,It's hard not to think about what I might have to do next while I strip.
+
+-3-stripped=embarrassed,Well, that just happened...
+-3-stripped=embarrassed,Whelp, here I am. Tracer in the buff.
+-3-stripped=embarrassed,Hope you don't mind a little grass on the lawn.
+
 
 
 
 #OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-specific lines that override the stage-generic ones
 male_human_must_strip=interested,Brilliant! It's your turn now.
 male_human_must_strip=interested,Right on target...
 male_human_must_strip=interested,All eyes on you!
 male_human_must_strip=happy,Waiting's the hardest part!
+male_human_must_strip=interested,Let's see what you got, ~name~.
 male_must_strip=interested,Brilliant! It's your turn now.
 male_must_strip=happy,Gotcha!
 male_must_strip=interested,All eyes on you!
 male_must_strip=interested,Show us something goood!
-
+male_must_strip=interested,Let's see it, ~name~.
 female_human_must_strip=interested,Brilliant! It's your turn now.
 female_human_must_strip=interested,Your time to shine!
 female_human_must_strip=interested,All eyes on you!
 female_human_must_strip=interested,Show us something goood!
+female_human_must_strip=happy,Don't be shy, ~name~!
+female_human_must_strip=happy,It's just part of the game, love!
+female_human_must_strip=calm,Looks like ~name~'s strip ability is off cooldown.
 female_must_strip=interested,Brilliant! It's your turn now.
 female_must_strip=interested,Your time to shine!
 female_must_strip=interested,All eyes on you!
 female_must_strip=interested,Show us something goood!
+female_must_strip=calm,Looks like ~name~'s strip ability is off cooldown.
+female_must_strip=happy,It's just part of the game, love!
+female_must_strip=happy,Voyeur mode engaged!
+
+
+#fully clothed
+0-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+0-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
+0-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+0-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+0-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+0-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+0-female_must_strip,target:tracer,targetStage:0=loss,Woah, it's another me! Is my chronal accelerator malfunctioning again?
+0-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+0-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+0-female_must_strip,target:zone-tan=interested,What they say to a female NPC who has lost a round
+0-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+0-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+0-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+
+
+#lost gloves
+1-female_human_must_strip=calm,Who's next?
+1-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+1-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+1-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
+1-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+1-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+1-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+1-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+1-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+1-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+1-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+1-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+
 
 #lost shoes
-1-female_human_must_strip=calm,Who's next?
-
-#masturbating
--2-male_human_must_strip=horny,I could use some inspiration.
--2-male_must_strip=horny,I could use some inspiration.
--2-female_human_must_strip=horny,I could use some inspiration.
--2-female_must_strip=horny,I could use some inspiration.
-
-#targeted
-0-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
-1-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+2-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+2-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+2-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+2-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+2-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+2-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+2-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+2-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
 2-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+2-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+
+
+#lost jacket
+3-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+3-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
 3-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+3-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+3-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+3-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+3-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+3-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+3-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+3-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+3-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+
+
+#lost leggings
+4-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+4-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+4-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+4-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
 4-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+4-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+4-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+4-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+4-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+4-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
+4-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+
+
+#lost goggles
+5-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+5-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+5-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+5-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+5-female_must_strip,target:d.va,targetStage:0=happy,Alright, D.Va's losing layers without me having to destroy her robot thingy!
+5-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+5-female_must_strip,target:mercy,targetStage:0=interested,Hey, Mercy. I think I feel a cough coming on. You going to inspect me?
+5-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+5-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+5-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
 5-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+
+
+#lost bra
 6-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+6-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+6-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+6-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+6-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
+6-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+6-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+6-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+6-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+
+-3-female_must_strip,target:wiifitfemale,targetStage:0=happy,We should work out together sometime! If you can keep up, that is.
+-3-female_must_strip,target:ann,targetStage:0=happy,You really know how to put yourself together, Ann! Too bad you're gonna have to take it all off.
 -3-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
+-3-female_must_strip,target:ami,targetStage:0=calm,Hey, Ami. I heard your pal Sonic is pretty fast. Maybe you could organize a race?
+-3-female_must_strip,target:gogo,targetStage:0=embarrassed,I don't know why, but I have a big thing for Asian girls. I could probably blame D.Va for that.
+-3-female_must_strip,target:seven,targetStage:0-1=calm,That's some interesting tech! You should show my friend, Winston!
+-3-female_must_strip,target:kim,targetStage:0=interested,Feel free to call or beep me anytime, Kim.
+-3-female_must_strip,target:videl,targetStage:0=embarrassed,So, uh, Videl. What is ki anyway? Is that like ammo?
+-3-female_must_strip,target:hermione,targetStage:0=shocked,Magic is real?? Winston owes me $10!
+
+-2-male_human_must_strip=horny,I could use some inspiration.
+-2-male_human_must_strip=horny,Help me out here, love.
+-2-male_must_strip=horny,I could use some inspiration.
+-2-male_must_strip=horny,Help me out here, love.
+-2-female_human_must_strip=horny,I could use some inspiration.
+-2-female_human_must_strip=horny,Help me out here, love.
+-2-female_human_must_strip=horny,I could use something soft and curvy right now.
+-2-female_must_strip=horny,I could use some inspiration.
+-2-female_must_strip=horny,Help me out here, love.
+-2-female_must_strip=horny,I could use something soft and curvy right now.
+
 -1-female_must_strip,target:chell,targetStage:1=interested,Chell, you don't happen to work with Symmetra by any chance?
-0-female_must_strip,target:tracer,targetStage:0=loss,Woah, it's another me! Is my chronal accelerator malfunctioning again?
+
 
 
 
 #OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
 
-male_removing_accessory=sad,Not like this, punk!
-male_removing_accessory=calm,I should remember that trick.
+#stage-specific lines that override the stage-generic ones
 male_removed_accessory=sad,Blarg! That's nothing...
-male_removed_accessory=sad,Bummer!
-male_removed_accessory=sad,Rubbish!
-female_removing_accessory=sad,Not like this, punk!
-female_removing_accessory=calm,I should remember that trick.
-female_removed_accessory=sad,Blarg! That's nothing...
-female_removed_accessory=sad,Bummer!
-female_removed_accessory=sad,Rubbish!
+male_removed_accessory=sad,Bummer.
+male_removed_accessory=loss,Rubbish!
+male_removed_accessory=sad,Not very impressive there, ~name~.
+male_removed_accessory=loss,Not to brag, but I am a bit of a celebrity. You should be trying to impress me.
+female_removing_accessory=calm,Get it going, ~name~.
+female_removing_accessory=interested,Whatcha gonna take off?
+female_removing_accessory=calm,Waiting is the hardest part!
+female_removing_accessory=calm,Sorry, ~name~! Rules are rules.
+
 
 #fully clothed
 0-male_removing_accessory=calm,Let's get this thing moving.
+0-male_removing_accessory=calm,Move it along, ~name~.
+0-male_removing_accessory=happy,Faster!
+0-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
+0-female_removed_accessory=sad,Blarg! That's nothing...
+0-female_removed_accessory=sad,Bummer.
+0-female_removed_accessory=sad,Rubbish!
+0-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+0-female_removed_accessory=loss,Waited for nothing...
+0-female_removed_accessory=calm,We'll get you next time, love.
 
-#lost bra
+
+#lost gloves
+1-male_removing_accessory=calm,Let's get this thing moving.
+1-male_removing_accessory=calm,Move it along, ~name~.
+1-male_removing_accessory=happy,Faster!
+1-male_removing_accessory=sad,Not like this, punk!
+1-male_removing_accessory=calm,I should remember that trick.
+1-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
+1-female_removed_accessory=sad,Blarg! That's nothing...
+1-female_removed_accessory=sad,Bummer.
+1-female_removed_accessory=sad,Rubbish!
+1-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+1-female_removed_accessory=loss,Waited for nothing...
+1-female_removed_accessory=calm,We'll get you next time, love.
+
+
+#lost shoes
+2-male_removing_accessory=sad,Not like this, punk!
+2-male_removing_accessory=calm,I should remember that trick.
+2-male_removing_accessory=calm,Let's get this thing moving.
+2-male_removing_accessory=calm,Move it along, ~name~.
+2-male_removing_accessory=happy,Faster!
+2-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
+2-female_removed_accessory=sad,Blarg! That's nothing...
+2-female_removed_accessory=sad,Bummer.
+2-female_removed_accessory=sad,Rubbish!
+2-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+2-female_removed_accessory=loss,Waited for nothing...
+2-female_removed_accessory=calm,We'll get you next time, love.
+
+
+#lost jacket
+3-male_removing_accessory=calm,Let's get this thing moving.
+3-male_removing_accessory=calm,Move it along, ~name~.
+3-male_removing_accessory=happy,Faster!
+3-male_removing_accessory=sad,Not like this, punk!
+3-male_removing_accessory=calm,I should remember that trick.
+3-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
+3-female_removed_accessory=sad,Blarg! That's nothing...
+3-female_removed_accessory=sad,Bummer.
+3-female_removed_accessory=sad,Rubbish!
+3-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+3-female_removed_accessory=loss,Waited for nothing...
+3-female_removed_accessory=calm,We'll get you next time, love.
+
+
+#lost leggings
+4-male_removing_accessory=calm,Let's get this thing moving.
+4-male_removing_accessory=calm,Move it along, ~name~.
+4-male_removing_accessory=happy,Faster!
+4-male_removing_accessory=sad,Not like this, punk!
+4-male_removing_accessory=calm,I should remember that trick.
+4-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
+4-female_removed_accessory=sad,Blarg! That's nothing...
+4-female_removed_accessory=sad,Bummer.
+4-female_removed_accessory=sad,Rubbish!
+4-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+4-female_removed_accessory=loss,Waited for nothing...
+4-female_removed_accessory=calm,We'll get you next time, love.
+
+
+#lost goggles
+5-male_removing_accessory=sad,Not like this, punk!
+5-male_removing_accessory=calm,I should remember that trick.
+5-male_removing_accessory=calm,Let's get this thing moving.
+5-male_removing_accessory=calm,Move it along, ~name~.
+5-male_removing_accessory=happy,Faster!
+5-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
 5-female_removed_accessory=sad,Aren't you warm wearing all that?
 
-#naked
+
+#lost bra
+6-male_removing_accessory=calm,Let's get this thing moving.
+6-male_removing_accessory=calm,Move it along, ~name~.
+6-male_removing_accessory=happy,Faster!
+6-male_removing_accessory=sad,Not like this, punk!
+6-male_removing_accessory=calm,I should remember that trick.
+6-female_removed_accessory=sad,Blarg! That's nothing...
+6-female_removed_accessory=sad,Bummer.
+6-female_removed_accessory=sad,Rubbish!
+6-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+6-female_removed_accessory=loss,Waited for nothing...
+6-female_removed_accessory=calm,We'll get you next time, love.
+
+-3-male_removing_accessory=calm,Let's get this thing moving.
+-3-male_removing_accessory=calm,Move it along, ~name~.
+-3-male_removing_accessory=happy,Faster!
+-3-male_removing_accessory=sad,Not like this, punk!
+-3-male_removing_accessory=calm,I should remember that trick.
+-3-female_removing_accessory,target:aimee=shocked,Oui! Watch it, love!
 -3-female_removed_accessory=sad,Don't think I'm happy about that!
+-3-female_removed_accessory=sad,Blarg! That's nothing...
+-3-female_removed_accessory=sad,Bummer.
+-3-female_removed_accessory=sad,Rubbish!
+-3-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+-3-female_removed_accessory=loss,Waited for nothing...
+-3-female_removed_accessory=calm,We'll get you next time, love.
+
+-2-male_removing_accessory=sad,Not like this, punk!
+-2-male_removing_accessory=calm,I should remember that trick.
+-2-male_removing_accessory=calm,Let's get this thing moving.
+-2-male_removing_accessory=calm,Move it along, ~name~.
+-2-male_removing_accessory=happy,Faster!
+-2-female_removed_accessory=sad,Blarg! That's nothing...
+-2-female_removed_accessory=sad,Bummer.
+-2-female_removed_accessory=sad,Rubbish!
+-2-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+-2-female_removed_accessory=loss,Waited for nothing...
+-2-female_removed_accessory=calm,We'll get you next time, love.
+
+-1-male_removing_accessory=sad,Not like this, punk!
+-1-male_removing_accessory=calm,I should remember that trick.
+-1-male_removing_accessory=calm,Let's get this thing moving.
+-1-male_removing_accessory=calm,Move it along, ~name~.
+-1-male_removing_accessory=happy,Faster!
+-1-female_removed_accessory=sad,Blarg! That's nothing...
+-1-female_removed_accessory=sad,Bummer.
+-1-female_removed_accessory=sad,Rubbish!
+-1-female_removed_accessory=sad,I'm just gonna stand here and wait for something interesting to happen.
+-1-female_removed_accessory=loss,Waited for nothing...
+-1-female_removed_accessory=calm,We'll get you next time, love.
 
 
-#OPPONENT REMOVING MINOR
-male_removing_minor=calm,Aww, you got my hopes up...
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_minor=happy,Yeah, take it off, ~name~!
 male_removing_minor=calm,It had to go sometime...
 male_removing_minor=calm,I see you came prepared for this.
-male_removed_minor=calm,Ugh, clothing is clothing.
-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
-male_removed_minor=happy,You have to think bigger than this.
-male_removed_minor=happy,You've got less stuff to stall now, at least.
-
+male_removing_minor=happy,Closer and closer to nakey!
 female_removing_minor=calm,It had to go sometime...
 female_removing_minor=calm,Aww, you got my hopes up...
 female_removing_minor=calm,I see you came prepared for this.
+female_removing_minor=happy,Closer and closer to nakey!
+female_removing_minor=happy,Go go, ~name~!
 female_removed_minor=calm,I guess that's okay.
-female_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
-female_removed_minor=happy,You have to think bigger than this.
-female_removed_minor=happy,You've got less stuff to stall now, at least.
+female_removed_minor=calm,Nice ~clothing~, but I bet you can live without.
+female_removed_minor=loss,You have to think bigger than this.
+female_removed_minor=happy,You've got less stuff to stall with now, at least.
+female_removed_minor=calm,Let's put ~name~ into a losing streak.
+female_removed_minor=sad,Aww, I want something big!
+
 
 #fully clothed
 0-male_removed_minor=happy,Yeah!
 0-male_removed_minor=happy,Nice!
+0-female_removing_minor,target:aimee,targetStage:1=shocked,Oui! Watch it, love!
+
+
+#lost gloves
+1-male_removed_minor=happy,Yeah!
+1-male_removed_minor=happy,Nice!
+1-male_removed_minor=calm,Ugh, clothing is clothing.
+1-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+1-male_removed_minor=happy,You have to think bigger than this.
+1-male_removed_minor=happy,You've got less stuff to stall now, at least.
+
+
+#lost shoes
+2-male_removed_minor=calm,Ugh, clothing is clothing.
+2-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+2-male_removed_minor=happy,You have to think bigger than this.
+2-male_removed_minor=happy,You've got less stuff to stall now, at least.
+2-male_removed_minor=happy,Yeah!
+2-male_removed_minor=happy,Nice!
+
+
+#lost jacket
+3-male_removed_minor=calm,Ugh, clothing is clothing.
+3-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+3-male_removed_minor=happy,You have to think bigger than this.
+3-male_removed_minor=happy,You've got less stuff to stall now, at least.
+3-male_removed_minor=happy,Yeah!
+3-male_removed_minor=happy,Nice!
+
+
+#lost leggings
+4-male_removed_minor=calm,Ugh, clothing is clothing.
+4-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+4-male_removed_minor=happy,You have to think bigger than this.
+4-male_removed_minor=happy,You've got less stuff to stall now, at least.
+4-male_removed_minor=happy,Yeah!
+4-male_removed_minor=happy,Nice!
+
+
+#lost goggles
+5-male_removed_minor=happy,Yeah!
+5-male_removed_minor=happy,Nice!
+5-male_removed_minor=calm,Ugh, clothing is clothing.
+5-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+5-male_removed_minor=happy,You have to think bigger than this.
+5-male_removed_minor=happy,You've got less stuff to stall now, at least.
+
+
+#lost bra
+6-male_removed_minor=happy,Yeah!
+6-male_removed_minor=happy,Nice!
+6-male_removed_minor=calm,Ugh, clothing is clothing.
+6-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+6-male_removed_minor=happy,You have to think bigger than this.
+6-male_removed_minor=happy,You've got less stuff to stall now, at least.
+
+-3-male_removed_minor=happy,Yeah!
+-3-male_removed_minor=happy,Nice!
+-3-male_removed_minor=calm,Ugh, clothing is clothing.
+-3-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+-3-male_removed_minor=happy,You have to think bigger than this.
+-3-male_removed_minor=happy,You've got less stuff to stall now, at least.
+
+-2-male_removed_minor=happy,Yeah!
+-2-male_removed_minor=happy,Nice!
+-2-male_removed_minor=calm,Ugh, clothing is clothing.
+-2-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+-2-male_removed_minor=happy,You have to think bigger than this.
+-2-male_removed_minor=happy,You've got less stuff to stall now, at least.
+
+-1-male_removed_minor=happy,Yeah!
+-1-male_removed_minor=happy,Nice!
+-1-male_removed_minor=calm,Ugh, clothing is clothing.
+-1-male_removed_minor=calm,Nice ~clothing~, but I bet you can live without them.
+-1-male_removed_minor=happy,You have to think bigger than this.
+-1-male_removed_minor=happy,You've got less stuff to stall now, at least.
 
 
 
-#OPPONENT REMOVING MAJOR
-male_removing_major=interested,Yes! You are finally going for something big!
-female_removing_major=interested,Yes! You are finally going for something big!
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_major=happy,Yes! You are finally going for something big!
 male_removing_major=interested,You thought you could get away with showing no skin?
-female_removing_major=interested,You thought you could get away with showing no skin?
 male_removing_major=interested,This could be exciting.
-female_removing_major=interested,This could be exciting.
 male_removing_major=interested,Who needs ~clothing~ anyways? Not you!
-female_removing_major=interested,Who needs ~clothing~ anyways? Not you!
-
+male_removing_major=happy,Ooo, this looks promising!
 male_removed_major=happy,It's nice to see you more exposed, ~name~. Your ~clothing~ looks better on the floor anyways.
-female_removed_major=happy,It's nice to see you more exposed, ~name~. Your ~clothing~ looks better on the floor anyways.
 male_removed_major=happy,Don't be shy. You look great!
-female_removed_major=happy,Don't be shy. You look great!
 male_removed_major=happy,You are getting closer to the finish line.
-female_removed_major=happy,You are getting closer to the finish line.
 male_removed_major=happy,This is why we play this game!
+male_removed_major=interested,You know, ~name~, I don't only like girls.
+female_removing_major=happy,Yes! You are finally going for something big!
+female_removing_major=interested,You thought you could get away with showing no skin?
+female_removing_major=interested,This could be exciting.
+female_removing_major=interested,Who needs ~clothing~ anyways? Not you!
+female_removing_major=happy,Waiting is the hardest part!
+female_removing_major=interested,Now this is what I came here to see.
+female_removed_major=happy,It's nice to see you more exposed, ~name~. Your ~clothing~ looks better on the floor anyways.
+female_removed_major=happy,Don't be shy. You look great!
+female_removed_major=happy,You are getting closer to the finish line.
 female_removed_major=happy,This is why we play this game!
+female_removed_major=horny,I hope Emily doesn't mind that I'm seeing this.
+female_removed_major=interested,Now isn't that better, ~name~? Better for me, anyway.
 
-#masturbating
 -2-male_removing_major=horny,I can't wait to see you without your ~clothing~, ~name~!
 -2-male_removed_major=horny,That's some good inspiration, ~name~.
 -2-female_removing_major=horny,I can't wait to see you without your ~clothing~, ~name~!
 -2-female_removed_major=horny,That's some good inspiration, ~name~.
 
-#finished
 -1-male_removing_major=horny,Finally, I've been looking forward to this!
 -1-male_removed_major=horny,You look good, ~name~.
 -1-female_removing_major=horny,Finally, I've been looking forward to this!
@@ -270,253 +702,428 @@ female_removed_major=happy,This is why we play this game!
 
 
 
-#OPPONENT REVEALING NUDITY
-male_chest_will_be_visible=interested,Come on now, shirts off. 
-male_chest_is_visible=interested,Cute chest, ~name~!
-male_crotch_will_be_visible=horny,Finally! Let's get to it already!
-male_small_crotch_is_visible=calm,How cute!
-male_medium_crotch_is_visible=horny,Wow, nice dick you got there, love.
-male_large_crotch_is_visible=shocked,I'd like to move that payload! 
 
-female_chest_will_be_visible=interested,Finally! Let's get to it already!
-female_small_chest_is_visible=interested,Those must be perfect for sprinting.
-female_medium_chest_is_visible=horny,I like them, ~name~. Nice and perky.
-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs. 
-female_crotch_will_be_visible=horny,Finally! Let's get to it already!
-female_crotch_is_visible=shocked,Looks like you're all naked now, ~name~. 
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-specific lines that override the stage-generic ones
+male_chest_will_be_visible=interested,Come on now, shirt off.
+male_chest_will_be_visible=happy,Let's see how fit you keep yourself.
+male_chest_will_be_visible=calm,Let's see some skin. Don't keep me waiting.
+male_chest_is_visible=interested,Cute chest, ~name~!
+male_chest_is_visible=interested,Looking good there, ~name~.
+male_chest_is_visible=interested,Doesn't that feel better, ~name~?
+male_chest_is_visible=interested,The male chest isn't quite as interesting as a girl's, but it's still fun to look at.
+male_crotch_will_be_visible=happy,Finally! Let's get to it already!
+male_crotch_will_be_visible=interested,You know I usually prefer girls, ~name~, but let's see if you can tap into my more bi side.
+male_crotch_will_be_visible=interested,Whatcha hiding down there, ~name~?
+male_crotch_will_be_visible=interested,Got something to show us, ~name~?
+male_medium_crotch_is_visible=interested,Wow, nice dick you got there, love.
+male_medium_crotch_is_visible=horny,Yup, defintiely feeling a bit bi right now...
+male_medium_crotch_is_visible=interested,Wonder what you're planning to do with that thing tonight, love.
+female_chest_will_be_visible=interested,Finally! Let's get to it already.
+female_chest_will_be_visible=interested,Fun Tracer fact. Boobs are one of my five favorite things in the world.
+female_chest_will_be_visible=interested,Good, my imagination has been running all game imagining what they look like.
+female_crotch_will_be_visible=happy,Yes! I've been waiting for this moment!
+female_crotch_will_be_visible=happy,Woohoo! Let's see that fanny!
+female_crotch_will_be_visible=interested,Come on, love. Show us your axe wound.
+female_crotch_is_visible=horny,Ohhh, Tracer likes...
+female_crotch_is_visible=horny,I'm feeling awfully pervy now...
+female_crotch_is_visible=horny,I'd love to give that thing an Aussie kiss right now.
+female_crotch_is_visible=horny,OK, we need to team up and get her wanking ASAP.
+
 
 #fully clothed
-0-male_chest_will_be_visible=,
-0-male_chest_is_visible=,
-0-male_crotch_will_be_visible=,
-0-male_small_crotch_is_visible=,I guess the early bird really does get the worm...
-0-male_medium_crotch_is_visible=,
-0-male_large_crotch_is_visible=,
+0-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+0-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+0-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+0-male_large_crotch_is_visible=horny,Wow...that's...big...
+0-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+0-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+0-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+0-female_medium_chest_is_visible=horny,Perky... so, so perky...
+0-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+0-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+0-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+0-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+0-female_large_chest_is_visible=shocked,They come that big??
+0-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+0-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+0-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-0-female_chest_will_be_visible=,
-0-female_small_chest_is_visible=,
-0-female_medium_chest_is_visible=,
-0-female_large_chest_is_visible=,
-0-female_crotch_will_be_visible=,
-0-female_crotch_is_visible=,
+
+#lost gloves
+1-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+1-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+1-male_small_crotch_is_visible=calm,How cute!
+1-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+1-male_large_crotch_is_visible=horny,Wow...that's...big...
+1-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+1-male_large_crotch_is_visible=happy,Whoa!
+1-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+1-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+1-female_medium_chest_is_visible=horny,Perky... so, so perky...
+1-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+1-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+1-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+1-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+1-female_large_chest_is_visible=shocked,They come that big??
+1-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+1-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+1-female_crotch_is_visible=happy,You're going on my nice list!
+1-female_crotch_is_visible,target:alice=happy,It's high moon!
+
 
 #lost shoes
-1-male_chest_will_be_visible=,
-1-male_chest_is_visible=,
-1-male_crotch_will_be_visible=,
-1-male_small_crotch_is_visible=,
-1-male_medium_crotch_is_visible=,
-1-male_large_crotch_is_visible=happy,Whoa!
+2-male_small_crotch_is_visible=calm,How cute!
+2-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+2-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+2-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+2-male_large_crotch_is_visible=horny,Wow...that's...big...
+2-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+2-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+2-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+2-female_medium_chest_is_visible=horny,Perky... so, so perky...
+2-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+2-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+2-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+2-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+2-female_large_chest_is_visible=shocked,They come that big??
+2-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+2-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+2-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-1-female_chest_will_be_visible=,
-1-female_small_chest_is_visible=,
-1-female_medium_chest_is_visible=,
-1-female_large_chest_is_visible=,
-1-female_crotch_will_be_visible=,
-1-female_crotch_is_visible=happy,You're going on my nice list! 
 
 #lost jacket
-2-male_chest_will_be_visible=,
-2-male_chest_is_visible=,
-2-male_crotch_will_be_visible=,
-2-male_small_crotch_is_visible=,
-2-male_medium_crotch_is_visible=,
-2-male_large_crotch_is_visible=,
+3-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+3-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+3-male_small_crotch_is_visible=calm,How cute!
+3-male_large_crotch_is_visible=horny,Now the cavalry's really here, and he's brought horsepower!
+3-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+3-male_large_crotch_is_visible=horny,Wow...that's...big...
+3-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+3-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+3-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+3-female_medium_chest_is_visible=horny,Perky... so, so perky...
+3-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+3-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+3-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+3-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+3-female_large_chest_is_visible=shocked,They come that big??
+3-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+3-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+3-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-2-female_chest_will_be_visible=,
-2-female_small_chest_is_visible=,
-2-female_medium_chest_is_visible=,
-2-female_large_chest_is_visible=,
-2-female_crotch_will_be_visible=,
-2-female_crotch_is_visible=,
 
 #lost leggings
-3-male_chest_will_be_visible=,
-3-male_chest_is_visible=,
-3-male_crotch_will_be_visible=,
-3-male_small_crotch_is_visible=,
-3-male_medium_crotch_is_visible=,
-3-male_large_crotch_is_visible=horny,Now the cavalry's really here, and he's brought horsepower!
+4-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+4-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+4-male_small_crotch_is_visible=calm,How cute!
+4-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+4-male_large_crotch_is_visible=horny,Wow...that's...big...
+4-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+4-male_large_crotch_is_visible=interested,Wicked.
+4-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+4-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+4-female_medium_chest_is_visible=horny,Perky... so, so perky...
+4-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+4-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+4-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+4-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+4-female_large_chest_is_visible=shocked,They come that big??
+4-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+4-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+4-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-3-female_chest_will_be_visible=,
-3-female_small_chest_is_visible=,
-3-female_medium_chest_is_visible=,
-3-female_large_chest_is_visible=,
-3-female_crotch_will_be_visible=,
-3-female_crotch_is_visible=,
 
 #lost goggles
-4-male_chest_will_be_visible=,
-4-male_chest_is_visible=,
-4-male_crotch_will_be_visible=,
-4-male_small_crotch_is_visible=,
-4-male_medium_crotch_is_visible=,
-4-male_large_crotch_is_visible=interested,Wicked.
+5-male_small_crotch_is_visible=calm,How cute!
+5-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+5-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+5-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+5-male_large_crotch_is_visible=horny,Wow...that's...big...
+5-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+5-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+5-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+5-female_medium_chest_is_visible=horny,Perky... so, so perky...
+5-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+5-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+5-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+5-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+5-female_large_chest_is_visible=shocked,They come that big??
+5-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+5-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+5-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-4-female_chest_will_be_visible=,
-4-female_small_chest_is_visible=,
-4-female_medium_chest_is_visible=,
-4-female_large_chest_is_visible=,
-4-female_crotch_will_be_visible=,
-4-female_crotch_is_visible=,
 
 #lost bra
-5-male_chest_will_be_visible=,
-5-male_chest_is_visible=,
-5-male_crotch_will_be_visible=,
-5-male_small_crotch_is_visible=,
-5-male_medium_crotch_is_visible=,
-5-male_large_crotch_is_visible=,
-
-5-female_chest_will_be_visible=,
-5-female_small_chest_is_visible=,
-5-female_medium_chest_is_visible=,
-5-female_large_chest_is_visible=,
-5-female_crotch_will_be_visible=,
-5-female_crotch_is_visible=,
-
-#lost panties
-6-male_chest_will_be_visible=,
-6-male_chest_is_visible=,
-6-male_crotch_will_be_visible=,
-6-male_small_crotch_is_visible=,
-6-male_medium_crotch_is_visible=,
-6-male_large_crotch_is_visible=,
-
-6-female_chest_will_be_visible=,
+6-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+6-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+6-male_small_crotch_is_visible=calm,How cute!
+6-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+6-male_large_crotch_is_visible=horny,Wow...that's...big...
+6-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+6-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+6-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
 6-female_small_chest_is_visible=interested,There they are.
+6-female_medium_chest_is_visible=horny,Perky... so, so perky...
+6-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+6-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
 6-female_medium_chest_is_visible=interested,I came here to see some titties, and you did <i>not</i> disappoint!
-6-female_large_chest_is_visible=,
-6-female_crotch_will_be_visible=,
-6-female_crotch_is_visible=,
+6-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+6-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+6-female_large_chest_is_visible=shocked,They come that big??
+6-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+6-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+6-female_crotch_is_visible,target:alice=happy,It's high moon!
 
-#naked
--3-male_chest_will_be_visible=,
--3-male_chest_is_visible=,
--3-male_crotch_will_be_visible=,
--3-male_small_crotch_is_visible=,
--3-male_medium_crotch_is_visible=,
--3-male_large_crotch_is_visible=,~name~! You're an <i>animal</i>! Hehe!
+-3-male_small_crotch_is_visible=calm,How cute!
+-3-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+-3-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+-3-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+-3-male_large_crotch_is_visible=horny,Wow...that's...big...
+-3-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+-3-male_large_crotch_is_visible=shocked,~name~! You're an <i>animal</i>! Hehe!
+-3-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+-3-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
+-3-female_medium_chest_is_visible=horny,Perky... so, so perky...
+-3-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+-3-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+-3-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+-3-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+-3-female_large_chest_is_visible=shocked,They come that big??
+-3-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+-3-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
+-3-female_crotch_is_visible,target:alice=happy,It's high moon!
 
--3-female_chest_will_be_visible=,
--3-female_small_chest_is_visible=,
--3-female_medium_chest_is_visible=,
--3-female_large_chest_is_visible=,
--3-female_crotch_will_be_visible=,
--3-female_crotch_is_visible=,
-
-#masturbating
 -2-male_chest_will_be_visible=horny,Oooh, ~name~'s finally getting shirtless!
 -2-male_chest_is_visible=horny,Nice chest, ~name~! Don't mind me staring...
--2-male_crotch_will_be_visible=horny,Alright ~name~, dick's out! Let me see it!
--2-male_small_crotch_is_visible=horny,A little small... But we'll just have to see how you use it.
+-2-male_crotch_will_be_visible=interested,Alright ~name~, dick out! Let me see it!
+-2-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+-2-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+-2-male_small_crotch_is_visible=interested,A little small...but we'll just have to see how you use it.
 -2-male_medium_crotch_is_visible=horny,With that dick out on display, I'll finish my job any minute now...
 -2-male_large_crotch_is_visible=shocked,WOW! That's huge! I can't stop staring...
-
--2-female_chest_will_be_visible=horny,Oooh, ~name~'s finally going topless!
+-2-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+-2-male_large_crotch_is_visible=horny,Wow...that's...big...
+-2-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+-2-female_chest_will_be_visible=interested,Oooh, ~name~'s finally going topless!
 -2-female_small_chest_is_visible=horny,Those are really nice, ~name~. Don't mind me staring...
 -2-female_medium_chest_is_visible=horny,Those look like a handful, ~name~. Want me to see if they really are?
--2-female_large_chest_is_visible=horny,WOAH! Those are really bouncy, love! 
--2-female_crotch_will_be_visible=horny,I've been looking forward to this, ~name~...
--2-female_crotch_is_visible=horny,You look very wet, love. Is it because of me?
+-2-female_medium_chest_is_visible=horny,Perky... so, so perky...
+-2-female_medium_chest_is_visible=interested,I might need to dash over there and sneak a feel.
+-2-female_medium_chest_is_visible=interested,Trust me, love. No one here knows how to handle those better than me.
+-2-female_large_chest_is_visible=horny,WOAH! Those are really bouncy, love!
+-2-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+-2-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+-2-female_large_chest_is_visible=shocked,They come that big??
+-2-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
+-2-female_crotch_will_be_visible=horny,Make me hungry, ~name~.
+-2-female_crotch_will_be_visible=horny,Don't tally now. I need to see your pussy.
+-2-female_crotch_is_visible=interested,You look very wet, love. Is it because of me?
 
-#finished
--1-male_chest_will_be_visible=,
--1-male_chest_is_visible=,
--1-male_crotch_will_be_visible=,
--1-male_small_crotch_is_visible=,
--1-male_medium_crotch_is_visible=,
--1-male_large_crotch_is_visible=,
-
--1-female_chest_will_be_visible=,
--1-female_small_chest_is_visible=,
+-1-male_small_crotch_is_visible=calm,I guess the early bird really does get the worm...
+-1-male_small_crotch_is_visible=happy,Awww, it's so cute, ~name~!
+-1-male_small_crotch_is_visible=calm,How cute!
+-1-male_large_crotch_is_visible=shocked,I'd like to move that payload!
+-1-male_large_crotch_is_visible=horny,Wow...that's...big...
+-1-male_large_crotch_is_visible=horny,Maybe Emily would be down for a threesome...
+-1-female_small_chest_is_visible=happy,Those must be perfect for sprinting.
+-1-female_small_chest_is_visible=happy,So cute! I just want to gobble you up!
 -1-female_medium_chest_is_visible=horny,~name~, are you familiar with the term "symmetrical docking"?
--1-female_large_chest_is_visible=,
+-1-female_large_chest_is_visible=shocked,Woah! Look at those pulse bombs!
+-1-female_large_chest_is_visible=horny,What do I need to do to get a grab of those?
+-1-female_large_chest_is_visible=shocked,They come that big??
+-1-female_large_chest_is_visible=horny,I might need a handkerchief. I think I'm drooling.
 -1-female_crotch_will_be_visible=interested,You got what's coming to ya!
--1-female_crotch_is_visible=,
-
-#targeted
-0-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-1-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-2-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-3-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-4-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-5-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-6-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
--3-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
 -1-female_crotch_will_be_visible,target:alice=interested,I think I know your brother, American McCree's Alice.
-
-0-female_crotch_is_visible,target:alice=happy,It's high moon!
-1-female_crotch_is_visible,target:alice=happy,It's high moon!
-2-female_crotch_is_visible,target:alice=happy,It's high moon!
-3-female_crotch_is_visible,target:alice=happy,It's high moon!
-4-female_crotch_is_visible,target:alice=happy,It's high moon!
-5-female_crotch_is_visible,target:alice=happy,It's high moon!
-6-female_crotch_is_visible,target:alice=happy,It's high moon!
--3-female_crotch_is_visible,target:alice=happy,It's high moon!
 -1-female_crotch_is_visible,target:alice=happy,It's high moon!
 
 
 
-#OPPONENT MUST MASTURBATE
-#male masturbation default
-male_must_masturbate=interested,You lost, ~name~. Start jerking off! This is gonna be great!
-male_start_masturbating=horny,Yeah, just like that! Stroke it all over!
-male_masturbating=horny,Go faster, ~name~! Rub that dick good! 
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-specific lines that override the stage-generic ones
+male_must_masturbate=interested,You lost, ~name~. Start jerking off!
+male_must_masturbate=interested,Time to wank, ~name~.
+male_must_masturbate=interested,Luck you! Getting to wank in front of me.
+male_must_masturbate=interested,I figured you for a wanker as soon as I saw you, ~name~.
+male_start_masturbating=interested,Keep stroking it just like that, love.
+male_start_masturbating=calm,Have fun with all those dangly bits.
+male_start_masturbating=interested,Ooo, you are a dirty boy, aren't you, ~name~?
+male_masturbating=happy,Go faster, ~name~!
 male_masturbating=horny,Wait for it...
-male_finished_masturbating=shocked,Wow! I wish I could recall and see that again! 
-male_finished_masturbating=embarrassed,Nailed it!
-
-#female masturbation default
-female_must_masturbate=interested,You lost, ~name~. You don't have any clothes left, so time to start rubbing those folds! 
-female_must_masturbate=interested,You need a time out!
+male_masturbating=interested,Does it feel good wanking it like that, ~name~?
+male_masturbating=interested,Need something to visualize, ~name~? I had a quickie with Emily this morning.
+male_masturbating=happy,That's it! Just keep on pumping that cock good!
+male_masturbating=interested,Looks like someone is having fun.
+male_masturbating=interested,Bet you wouldn't mind a leg over with me right now, huh, ~name~?
+male_finished_masturbating=shocked,Wow! I wish I could recall and see that again!
+male_finished_masturbating=happy,Nailed it!
+male_finished_masturbating=happy,Great job, ~name~!
+male_finished_masturbating=happy,That's what I like to see! Big loads and happy faces!
+female_must_masturbate=interested,You lost, ~name~. You don't have any clothes left, so time to start rubbing those folds!
+female_must_masturbate=interested,Maybe I should run to Hollywood and grab some popcorn for this.
 female_must_masturbate=interested,Oi! This is no time for standin' around!
-female_start_masturbating=horny,Yeah, just like that! 
-female_masturbating=horny,Woah look at you. You are really going fast, even for me. 
-female_finished_masturbating=shocked,Nice orgasm, ~name~! Wicked! 
+female_must_masturbate=happy,Yes! I've been dying to see this!
+female_must_masturbate=happy,It's a happy day for Tracer!
+female_start_masturbating=interested,Just like that, ~name~.
+female_start_masturbating=interested,Do you like having me watch you, ~name~?
+female_start_masturbating=horny,As if I wasn't randy enough already...
+female_start_masturbating=horny,Need...to shag... rising...
+female_masturbating=horny,Woah look at you. You are really going fast, even for me.
+female_masturbating=interested,You're really treating that undercarriage good.
+female_masturbating=horny,You look so naughty touching yourself like that, ~name~.
+female_masturbating=horny,Just watching is like torture!
+female_masturbating=horny,Can I skip a turn and just watch ~name~ for a bit?
+female_finished_masturbating=happy,Nice orgasm, ~name~! Wicked!
+female_finished_masturbating=loss,That should have happened on my face.
+female_finished_masturbating=horny,So...much...liquid...
+female_finished_masturbating=horny,Over already? For once, something was too fast for me.
+female_finished_masturbating=interested,Thinking about me at all, love?
 
-#naked
--2-male_start_masturbating=horny,I could help you out if your arms are broken...
 
-#masturbating
+#fully clothed
+0-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+0-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+
+
+#lost gloves
+1-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+1-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+
+
+#lost shoes
+2-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+2-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+
+
+#lost jacket
+3-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+3-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+
+
+#lost leggings
+4-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+4-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+
+
+#lost goggles
+5-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+5-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+
+
+#lost bra
+6-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+6-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+
+-3-female_must_masturbate,target:d.va=horny,I'm not going to lie, D.Va. I was kind of hoping I'd get to see you do this.
+-3-female_must_masturbate,target:mercy=interested,You know, Mercy, I've yelled your name before when I was with Emily. Awkward, huh?
+
 -2-male_must_masturbate=happy,You want to join me, ~name~?
--2-male_start_masturbating=horny,Alright, try to keep up with me... I bet you can't!
--2-male_masturbating=horny,You'll have to stroke faster to finish before me!
--2-male_finished_masturbating=shocked,WHAT! You're faster than me?!? How did you get speed like that!?
-
+-2-male_must_masturbate=happy,Let's get off together! It'll be fun!
+-2-male_start_masturbating=horny,I could help you out if your arms are broken...
+-2-male_start_masturbating=interested,Alright, try to keep up with me... I bet you can't!
+-2-male_masturbating=interested,You'll have to stroke faster to finish before me!
+-2-male_masturbating=embarrassed,Wow, you're really going at it, ~name~!
+-2-male_finished_masturbating=shocked,I can't believe you finished first!
+-2-male_finished_masturbating=horny,Now that's a pay load.
 -2-female_must_masturbate=happy,You want to join me, ~name~?
+-2-female_must_masturbate=interested,Ooo, now this is really going to be fun.
 -2-female_start_masturbating=horny,Alright, try to keep up with me... I bet you can't!
--2-female_masturbating=horny,You'll have to rub faster to finish before me!
--2-female_finished_masturbating=shocked,WHAT! You're faster than me?!? How did you get speed like that!?
+-2-female_start_masturbating=happy,Race ya, ~name~!
+-2-female_masturbating=interested,You'll have to rub faster to finish before me!
+-2-female_masturbating=interested,Don't you think our pussies would feel better rubbing against each other?
+-2-female_finished_masturbating=shocked,What, you win??
+-2-female_finished_masturbating=heavy,I'm right behind you!
 
-#finished
--1-male_must_masturbate=horny,Who's ready for some fireworks?
--1-male_start_masturbating=horny,This is gonna be fun to watch...
--1-male_masturbating=horny,Keep going, ~name~. Just pick up the speed, it feels great!
--1-male_finished_masturbating=horny,Damn, you blew all your load... I hope you don't mind if I taste some...
-
--1-female_must_masturbate=horny,Looks like it's your turn, love! I bet you can't beat my time!
+-1-male_must_masturbate=calm,Who's ready for some fireworks?
+-1-male_must_masturbate=happy,Time for you to have some fun.
+-1-male_start_masturbating=calm,This is gonna be fun to watch...
+-1-male_start_masturbating=interested,Put on a good show for us, love.
+-1-male_masturbating=happy,Keep going, ~name~. Just pick up the speed, it feels great!
+-1-male_masturbating=interested,You should have plenty of material in the wank bank by now.
+-1-male_masturbating=horny,Do we really need to keep our hands to ourselves?
+-1-male_masturbating=happy,Enjoy it, ~name~! We're rooting for you.
+-1-male_finished_masturbating=horny,Wow. That was a big load you just blew.
+-1-male_finished_masturbating=interested,Didn't that feel great, ~name~?
+-1-male_finished_masturbating=happy,Great job, ~name~! I felt that orgasm from here!
+-1-female_must_masturbate=finished,Looks like it's your turn, love! I bet you can't beat my time!
+-1-female_must_masturbate=calm,I've seen Emily rub plenty of them out. Now it's your turn.
+-1-female_must_masturbate=interested,Ooo, I'm going to enjoy this!
 -1-female_start_masturbating=horny,This is gonna be fun to watch...
+-1-female_start_masturbating=horny,Ahhh, memoriessss. Can I have another go too?
 -1-female_masturbating=horny,Keep going, ~name~. Just pick up the speed, it feels great!
--1-female_finished_masturbating=horny,Nice orgasm, love! We should meet up some other time and I'll show you how you can do it even better.
+-1-female_masturbating=interested,You look delicous right now, ~name~.
+-1-female_masturbating=finished,Trust me, love. No one else here could get you off faster.
+-1-female_masturbating=happy,You look so cute getting off like that!
+-1-female_masturbating=horny,~name~ looks too good right now...
+-1-female_masturbating=horny,I'm usually all about running, but there's no way I'm going anywhere right now.
+-1-female_finished_masturbating=finished,Nice orgasm, love! We should meet up some other time. I'll show you how you can do it even better.
+-1-female_finished_masturbating=interested,I'll be thinking about that again later.
+-1-female_finished_masturbating=happy,That's the way! Finish strong and hard!
 
 
 
-#MASTURBATION
 
-must_masturbate_first=loss,Sheesh, why does this game not allow time travel...?
-must_masturbate_first=loss,I have to go first? I'll try to set the bar high then. 
-must_masturbate=happy,The world could always use more... masturbation!
-start_masturbating=starting,This won't take me very long. I'm all about speed.
-heavy_masturbating=heavy,Ahhhh... This feels great! 
-finishing_masturbating=finishing,Bombs away!
-finishing_masturbating=finishing,I'm on fire!
-finished_masturbating=finished,She shoots, she scores!
-finished_masturbating=finished,See? I told you it doesn't take me very long.
-finished_masturbating=finished,That felt good!
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=loss,Sheesh, why does this game not allow time travel...?
+-3-must_masturbate_first=calm,I have to go first? I'll try to set the bar high then.
+-3-must_masturbate_first=embarrassed,First one out, huh?
+-3-must_masturbate=happy,The world could always use more... masturbation!
+-3-must_masturbate=happy,Finally! I'm dying to wank one out right now!
+-3-must_masturbate=happy,Tracer doesn't fear anything! Especially when she's this randy!
+-3-start_masturbating=starting,This won't take me very long. I'm all about speed.
+-3-start_masturbating=starting,I can usually get myself off pretty fast, but I'll try to slow down a bit for you all.
+-3-start_masturbating=starting,I've had fantasies about wanking it in front of a group.
+
+-2-masturbating=calm,How long do I have to keep going for?
+-2-masturbating=embarrassed,So, what do you think? Prett good technique, huh?
+-2-masturbating=interested,Mmm, this feels even better than usual.
+-2-masturbating=calm,Oops, my legs are getting a bit messy. Heh.
+-2-masturbating=horny,Keep watching, loves. It's turning me on.
+-2-masturbating=horny,I like this. I like this a LOT.
+-2-masturbating=horny,I hope Overwatch's PR doesn't hear about this...
+-2-masturbating=interested,When it comes to masturbating, practice has definitely made perfect.
+-2-heavy_masturbating=heavy,Ahhhh... won't be long now.
+-2-heavy_masturbating=horny,Keep watching if you want to see me cum, loves.
+-2-heavy_masturbating=heavy,Mmm, my body's telling me it might be time for the finale.
+-2-heavy_masturbating=horny,Uhhh..umpffff...ohhh...I'm getting close...
+-2-finishing_masturbating=finishing,Oh god! Bombs away!
+-2-finishing_masturbating=finishing,Here it is! I'm cumming!
+-2-finishing_masturbating=finishing,Ahhhh...ahhhhh! Cum! I'm gonna cum!
+
+-1-finished_masturbating=finished,She shoots, she scores!
+-1-finished_masturbating=finished,See? I told you it doesn't take me very long.
+-1-finished_masturbating=finished,That felt good!
+-1-finished_masturbating=finished,You're welcome for the show, loves.
+-1-finished_masturbating=finished,I have a lot of energy, so it takes more than one orgasm to tire me out.
+-1-finished_masturbating=finished,Ahhh, that's better.
+-1-finished_masturbating=finished,That was the calvary. And it just came.
 
 
 
-#GAME OVER
-game_over_defeat=happy,Aw, thanks loves!
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#stage-specific lines that override the stage-generic ones
 game_over_victory=happy,Sensational!
+game_over_victory=calm,That's what happens when you go up against Tracer.
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=calm,Well, you can't win them all. Pub, anyone?
+
+#EPILOGUE/ENDING
