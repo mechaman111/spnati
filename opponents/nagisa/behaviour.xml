@@ -2931,10 +2931,10 @@
             <case tag="male_masturbating">
                 <state img="5-stripped.png">It's so hard! I didn't expect it to be so hard.</state>
                 <state img="5-maximumembarrassed.png">Your hands are so sticky! I can't look!</state>
-            </case>
-            <case priority="0" tag="male_masturbating">
-                <condition count="0" filter="nagisa_valentine" />
                 <state img="5-stripped.png">You're... you're not thinking about me, are you?</state>
+            </case>
+            <case priority="0" tag="male_masturbating" target="human">
+                <condition count="1" filter="nagisa_valentine" />
                 <state img="5-maximumembarrassed.png">I won't stop liking you just because you had to do this!</state>
             </case>
             <case tag="female_removed_minor">
@@ -3769,7 +3769,7 @@
                 <state img="7-nervous.png">Even the mean gun lady is doing it... Do I even have a chance?</state>
             </case>
             <case priority="0" tag="bad_hand">
-                <condition count="0" filter="nagisa_valentine" />
+                <condition count="1" filter="nagisa_valentine" />
                 <state img="7-nervous.png">I just want you to snatch me up and save me, ~player~.</state>
             </case>
             <case tag="start_masturbating">
@@ -4260,7 +4260,10 @@
             <case notSaidMarker="nagisa_finished_1" tag="finished_masturbating">
                 <condition count="0" filter="nagisa_valentine" />
                 <state img="9-embarrassed.png" marker="nagisa_finished_1">Oh! Forget you saw anything today, please? Please, please?</state>
-                <state img="9-finished.png" marker="nagisa_finished_1">This is really hard to say, but... I did this because I love you, ~player~...</state>
+            </case>
+            <case notSaidMarker="nagisa_finished_2" saidMarker="nagisa_finished_1" tag="finished_masturbating">
+                <condition count="1" filter="nagisa_valentine" />
+                <state img="9-embarrassed.png" marker="nagisa_finished_2">I can't believe I really confessed...</state>
             </case>
             <case notSaidMarker="nagisa_legs_apart_query" priority="0" saidMarker="nagisa_finished_2" tag="finished_masturbating">
                 <condition count="0" filter="nagisa_valentine" />
@@ -4270,8 +4273,12 @@
                 <condition count="1" filter="nagisa_valentine" />
                 <state img="9-finished.png">I'm sorry if I'm being jealous, ~player~, but I don't want you looking at anyone else.</state>
             </case>
+            <case notSaidMarker="nagisa_finished_1" tag="finished_masturbating" totalFemales="1-5">
+                <condition count="1" filter="nagisa_valentine" />
+                <state img="9-finished.png" marker="nagisa_finished_1">This is really hard to say, but... I did this because I love you, ~player~...</state>
+            </case>
             <case notSaidMarker="nagisa_finished_2" saidMarker="nagisa_finished_1" tag="finished_masturbating">
-                <state img="9-embarrassed.png" marker="nagisa_finished_2">I can't believe I really confessed...</state>
+                <state img="9-closedeyes.png" marker="nagisa_finished_2">Thank you for your support earlier, everyone. I got through somehow.</state>
             </case>
             <case saidMarker="nagisa_finished_2" tag="finished_masturbating">
                 <state img="9-unsure.png">I'm going to need to rest in bed after this...</state>

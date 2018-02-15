@@ -67,6 +67,7 @@ marker=d.va_lucio_playing,public,Hana heard that Lucio is playing at "Inner City
 marker=d.va_needs_a_hug,public,Some characters react to Hana saying she needs a hug via Hana using an alsoPlaying. This marker will replace that method in the future.
 marker=d.va_sonya_butt_kicked,public,Hana: 1, Sonya: 0.
 marker=d.va_sonya_talks_big,public,Hana jousts with Sonya.
+marker=human_first_piece,private,Used to track whether the human player has removed even a single item.
 
 marker=d.va_thinks_seven_is_moira,public,
 marker=d.va_noobs,public,
@@ -302,37 +303,37 @@ swap_cards=serene,~cards~ cards.
 0-female_must_strip=calm,Ooh, I'm curious what you'll take off...
 
 #Lost Gloves
-1-male_human_must_strip=heart,I hope you know this is the whole reason we came today, ~name~.
-1-male_human_must_strip=excited,Let me know if you need help choosing something to take off, ~name~.
+1-male_human_must_strip,marker:human_first_piece=heart,I hope you know this is the whole reason we came today, ~name~.
+1-male_human_must_strip,marker:human_first_piece=excited,Let me know if you need help choosing something to take off, ~name~.
 1-male_must_strip=stripped,Stop stalling, get to it!
-1-female_human_must_strip=heart,Time to take something off!
+1-female_human_must_strip,marker:human_first_piece=heart,Time to take something off!
 1-female_must_strip=peace,Viva D.Va!
 1-female_must_strip=winking,Yeah! Now, show us some good stuff, ~name~!
 1-female_must_strip=calm,Practice makes perfect.
 
 #Lost Shoes
-2-male_human_must_strip=excited,Take it off!
-2-male_human_must_strip=stripped,Whose turn is it to strip now? Not mine, that's who!
+2-male_human_must_strip,marker:human_first_piece=excited,Take it off!
+2-male_human_must_strip,marker:human_first_piece=stripped,Whose turn is it to strip now? Not mine, that's who!
 2-male_must_strip=winking,Got you, ~name~!
-2-female_human_must_strip=winking,Take it off!
+2-female_human_must_strip,marker:human_first_piece=winking,Take it off!
 2-female_must_strip=winking,Got you, ~name~!
 2-female_must_strip=stripped,Oh yeah! I'm the winner again!
 
 #Lost Headphones
-3-male_human_must_strip=stripped,I showed you my ears. I think the guy equivalent is bare chest at minimum.
+3-male_human_must_strip,marker:human_first_piece=stripped,I showed you my ears. I think the guy equivalent is bare chest at minimum.
 3-male_must_strip=excited,Sweet!
 3-male_must_strip=calm,Haven't had enough?
-3-female_human_must_strip=peace,Another victory for the blue team!
+3-female_human_must_strip,marker:human_first_piece=peace,Another victory for the blue team!
 3-female_must_strip=peaceside,All right!
 3-female_must_strip=calm,Time to take something off, ~name~!
 
 #Lost Suit
-4-male_human_must_strip=stripped,You got me out of my suit, so I'm hoping for a lot here!
-4-male_human_must_strip,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
-4-male_human_must_strip,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
+4-male_human_must_strip,marker:human_first_piece=stripped,You got me out of my suit, so I'm hoping for a lot here!
+4-male_human_must_strip,marker:human_first_piece,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
+4-male_human_must_strip,marker:human_first_piece,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
 4-male_must_strip=loss,Believe me that this is more than a fair trade!
-4-female_human_must_strip=winking,Why not take off two things? I had to take off my whole suit in one go.
-4-female_human_must_strip,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
+4-female_human_must_strip,marker:human_first_piece=winking,Why not take off two things? I had to take off my whole suit in one go.
+4-female_human_must_strip,marker:human_first_piece,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
 4-female_must_strip=heart,Configuration: Celebratory!
 4-female_must_strip=calm,The huntress lays a trap for her prey...
 4-female_must_strip=winking,Ding!
