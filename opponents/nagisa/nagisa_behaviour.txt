@@ -26,7 +26,7 @@ tag=visual_novel
 tag=nagisa
 
 #uncomment the following tag when generating Nagisa's behaviour.xml for Valentine's Day week
-tag=nagisa_valentine
+#tag=nagisa_valentine
 
 
 
@@ -38,11 +38,13 @@ marker=nagisa_finished2,private,This is Nagisa's second final stage line. It doe
 marker=nagisa_first_time_playing,public,Nagisa has never played strip poker before this game.
 marker=nagisa_food_motivation,public,Nagisa canonically promises herself food to motivate her to do difficult things.
 marker=nagisa_hairclips,public,Nagisa wears red hairclips not visible from the front. She doesn't think to use them as an extra layer.
+marker=nagisa_is_that_so,private,Nagisa can say "Oh, is that so?", seemingly replying to a number of contexts. This marker prevents it from happening twice.
 marker=nagisa_kanji,public,When introducing herself when Marinette is present, she mentions that her name can be written with one Chinese character (kanji).
 marker=nagisa_kyu_showing_panties,public,When the game starts, Nagisa is alarmed that Kyu's panties are already visible.
 marker=nagisa_legs_apart_query,public,Nagisa questions whether she's required to sit with her legs apart after losing.
 marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
 marker=nagisa_maid,public,Nagisa gets along fine without a maid.
+marker=nagisa_meia_blue_hair,public,Meia and her short blue hair remind Nagisa of Tomoya, a boy who is a friend.
 marker=nagisa_mysterious_scar,public,Nagisa's father claims that she has a mysterious scar on her butt.
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realize that boys would be playing too.
@@ -256,6 +258,7 @@ clothes=Panties,panties,important,lower
 2-good_hand,alsoPlaying:hermione,priority:0=handsbehindback,Is that your school uniform, Hermione? If you're an exchange student, I'd be happy to show you around!
 2-good_hand,alsoPlaying:mia,alsoPlayingStage:0-3,priority:0=handsbehindback,I'd love to meet your cousin Pearl, Mia! Does she live around here?
 2-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0-1,priority:0,marker:nagisa_swimsuit=worried,Your suit is very pretty, Marinette. I could never pull that off. I don't even look good in a swimsuit.
+2-okay_hand,alsoPlaying:meia,timeInStage:1,notSaidMarker:nagisa_meia_blue_hair,alsoPlayingNotSaidMarker:blue_hair,marker:nagisa_meia_blue_hair=happy,I like your blue hair, Meia. You remind me of T&mdash; you remind me of a boy I know.
 2-okay_hand,alsoPlaying:xander,totalExposed:0,priority:0=worried,So... which school does everyone go to? I go to Hikarizaka High! How about you, Xander?
 
 2-good_hand,alsoPlaying:kyu,totalRounds:4=shy,I'm sure your complete outfit looks very beautiful, Kyu. I wish we could've seen it.
@@ -741,7 +744,7 @@ clothes=Panties,panties,important,lower
 2-female_removing_accessory=calm,Don't give up, ~name~. You're doing great!
 2-female_removed_accessory=happy,I wish I could put myself in your shoes.
 2-female_removed_accessory=calm,On to the next round!
-2-female_removed_accessory=worried,Oh, is that so?
+2-female_removed_accessory,notSaidMarker:nagisa_is_that_so,marker:nagisa_is_that_so,priority:0=worried,Oh, is that so?
 2-female_removed_accessory=handsbehindback,Don't feel bad. Things can change before you know it.
 
 #lost jacket
@@ -1136,7 +1139,6 @@ clothes=Panties,panties,important,lower
 -1-female_removed_major=unsure,Should I say, "Ready, set, go" or something like that?
 
 #targeted
-
 0-male_removed_major,target:xander,targetStage:6,totalFemales:4=veryembarrassed,A boy's underwear... This is my first time seeing it...
 1-male_removed_major,target:xander,targetStage:6,totalFemales:4=maximumembarrassed,A boy's underwear... This is my first time seeing it...
 2-male_removed_major,target:xander,targetStage:6,totalFemales:4=embarrassed,A boy's underwear... This is my first time seeing it...
@@ -1156,6 +1158,15 @@ clothes=Panties,panties,important,lower
 6-female_removing_major,target:aimee,targetStage:0=maximumembarrassed,Ah!
 -3-female_removing_major,target:aimee,targetStage:0=exposed,Ah!
 -1-female_removing_major,target:aimee,targetStage:0=finished,Ah!
+0-female_removing_major,target:alice=embarrassed,I don't want you to lose your modesty, Alice...
+1-female_removing_major,target:alice=embarrassed,I don't want you to lose your modesty, Alice...
+2-female_removing_major,target:alice=shy,I don't want you to lose your modesty, Alice...
+3-female_removing_major,target:alice=shy,I don't want you to lose your modesty, Alice...
+4-female_removing_major,target:alice,totalMales:0=openarms,Even though this is immodest, at least there aren't any boys here to see us, Alice.
+5-female_removing_major,target:alice,totalMales:0=idea,Even though this is immodest, at least there aren't any boys here to see us, Alice.
+6-female_removing_major,target:alice,totalMales:0=peaceful,Even though this is immodest, at least there aren't any boys here to see us, Alice.
+-3-female_removing_major,target:alice,totalMales:0=happy,Even though this is immodest, at least there aren't any boys here to see us, Alice.
+-1-female_removing_major,target:alice,totalMales:0=closedeyes,Even though this is immodest, at least there aren't any boys here to see us, Alice.
 4-female_removing_major,target:asuna,targetStage:5=shy,Are you talking about a video game? I'm sorry, but I'm no good at games.
 5-female_removing_major,target:asuna,targetStage:5=covering,Are you talking about a video game? I'm sorry, but I'm no good at games.
 6-female_removing_major,target:asuna,targetStage:5=peaceful,Are you talking about a video game? I'm sorry, but I'm no good at games.
@@ -1839,10 +1850,12 @@ game_over_defeat=victorystanding,Congratulations! I hope I'll be the winner next
 game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the game's over, I can face this way, right?
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
 game_over_defeat,target:human,count-nagisa_valentine:1,priority:1000=embarrassed,Was this a good enough Valentine's present, ~name~? Let me know if it wasn't enough...
+game_over_defeat,target:alice=closedeyes,Even though this was embarrassing, thanks for making the game fun with your weird sayings, Alice.
 game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...
 game_over_defeat,target:dawn,totalMales:0=closedeyes,No hard feelings, Dawn. Good luck with your poke-monsters game!
 game_over_defeat,target:elaine=embarrassed,I know you're a pirate, Elaine, but please don't plunder my booty!
 game_over_defeat,target:kyu=embarrassed,How did Kyu win? She... she didn't even start with all of her clothes on.
+game_over_defeat,target:meia=embarrassed,Congratulations on winning, Meia. Just so you know, this planet has lot of less embarrassing games to play too...
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
 game_over_defeat,target:nugi-chan=embarrassed,Does anyone see my panties anywhere? I don't want to have to ride the train home without them...
 game_over_defeat,target:tina=embarrassed,I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...
