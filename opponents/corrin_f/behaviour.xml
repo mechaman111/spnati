@@ -4799,6 +4799,9 @@
             <case tag="female_must_strip" target="palutena" targetStage="5">
                 <state img="9-unsure.png">Let me guess, your other belt? Your crown?</state>
             </case>
+            <case tag="female_must_strip" timeInStage="0">
+                <state img="9-calm.png">Eh, whatever. I enjoyed myself.</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="9-happy.png">Oh, the ~clothing~? At least I'll get <i>something</i> to look at!</state>
                 <state img="9-happy.png">Oh, your ~clothing~? Amazing!</state>
@@ -4924,6 +4927,9 @@
             <case tag="male_must_masturbate" target="corrin_m">
                 <state img="9-invite.png">Hey, uhm... I'd be willing to go another round... Maybe we could... You know...</state>
             </case>
+            <case notSaidMarker="notallowed" priority="200" tag="male_must_masturbate" timeInStage="0">
+                <state img="9-invite.png" marker="fuckme">O-oh, ~name~'s turn now... I-I can go another round... How about if we...</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="9-unsure.png">Gods... I'm kinda jealous now...</state>
                 <state img="9-awkward.png">I'll be honest, this is kinda weird...</state>
@@ -4941,6 +4947,9 @@
                 <state img="9-cheer.png">Just play like you normally would, ~name~, maybe I could learn something!</state>
                 <state img="9-calm.png">So what will you take off, ~name~?</state>
             </case>
+            <case tag="female_human_must_strip" timeInStage="0">
+                <state img="9-calm.png">Eh, whatever. I enjoyed myself.</state>
+            </case>
             <case tag="female_crotch_is_visible">
                 <state img="9-happy.png">You still have a chance, ~name~! Don't give up!</state>
             </case>
@@ -4954,8 +4963,8 @@
                 <state img="9-unsure.png">Uhm, Streaming-chan... What are those?</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="9-calm.png">Let's see who did it better, ~name~! Heehee~</state>
                 <state img="9-cheer.png">Have fun, ~name~!</state>
+                <state img="9-cheer.png">It's okay, ~name~, have fun!</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="9-shock.png">Wait, what are you doing? What are those?</state>
@@ -4995,6 +5004,9 @@
             </case>
             <case tag="male_start_masturbating" target="corrin_m">
                 <state img="9-disappointed.png">What? Why not? ... What do you mean "That's not masturbating"? We are the same person, come on! ... You're such a buzzkill, dealer...</state>
+            </case>
+            <case notSaidMarker="notallowed" priority="200" saidMarker="fuckme" tag="male_start_masturbating" timeInStage="0">
+                <state img="9-sad.png" marker="notallowed">What? No? Aww... Come on, dealer...</state>
             </case>
             <case tag="male_chest_is_visible">
                 <state img="9-calm.png">I love this, thanks ~name~.</state>
@@ -5042,16 +5054,25 @@
             <case tag="male_must_strip" target="link" targetStage="4">
                 <state img="9-shock.png">Link? You can talk? Why did you never say anything at the meetings?</state>
             </case>
+            <case tag="male_must_strip" timeInStage="0">
+                <state img="9-calm.png">Eh, whatever. I enjoyed myself.</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="9-cheer.png">Aww, you lost? Oh well, I hope I showed you that losing isn't all that bad either! Heehee~</state>
             </case>
             <case tag="female_must_masturbate" target="streaming-chan">
                 <state img="9-shock.png">Wait, what are you doing? Why are you...</state>
             </case>
+            <case tag="female_must_masturbate" timeInStage="0">
+                <state img="9-calm.png">Well, at least I'm not the only one. Heehee~</state>
+            </case>
             <case tag="male_human_must_strip">
                 <state img="9-calm.png">Don't mind me, just play like you normally would!</state>
                 <state img="9-calm.png">So what will you take off, ~name~?</state>
                 <state img="9-cheer.png">I'd love for you to join me at some point, ~name~</state>
+            </case>
+            <case tag="male_human_must_strip" timeInStage="0">
+                <state img="9-calm.png">Eh, whatever. I enjoyed myself.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="9-sad.png" marker="sph">Really, that's all? ... I mean, it's not bad, but I hoped for something bigger...</state>
@@ -5176,12 +5197,31 @@
                 <state img="9-calm.png">Well, it's not like I couldn't see it already...</state>
             </case>
             <case tag="finished_masturbating">
-                <state img="9-finished.png">Gods..... That felt so good~</state>
-                <state img="9-finished.png">Ohhh..... It's been a long time since I felt this good~</state>
-                <state img="9-finished.png">That... was... amazing~</state>
+                <state img="9-horny.png">D-don't mind me...</state>
+                <state img="9-horny.png">I-I shouldn't...</state>
+                <state img="9-calm.png">...</state>
+                <state img="9-calm.png">Ahh, that was great.</state>
+                <state img="9-calm.png">It's been too long...</state>
+            </case>
+            <case notSaidMarker="finishmas" tag="finished_masturbating">
+                <state img="9-finished.png" marker="finishmas">Gods..... That felt so good~</state>
+                <state img="9-finished.png" marker="finishmas">Ohhh..... It's been a long time since I felt this good~</state>
+                <state img="9-finished.png" marker="finishmas">That... was... amazing~</state>
+            </case>
+            <case notSaidMarker="wasfun" priority="0" tag="finished_masturbating">
+                <state img="9-cheer.png" marker="wasfun">This was a lot of fun, ~player~, thanks for inviting me!</state>
+            </case>
+            <case tag="finished_masturbating" timeInStage="0">
+                <state img="9-awkward.png">W-whew... This is kind of weird now...</state>
+            </case>
+            <case notSaidMarker="takinglonger" priority="0" tag="finished_masturbating" timeInStage="25-100">
+                <state img="9-unsure.png" marker="takinglonger">C-can I have my clothes back now? It seems like this is going to take a while longer...</state>
             </case>
             <case tag="game_over_defeat">
-                <state img="9-calm.png">Congratulations, ~name~! Let's play again some time!</state>
+                <state img="9-finished.png">Congratulations, ~name~! Let's play again some time!</state>
+            </case>
+            <case notSaidMarker="wasfun" priority="0" tag="game_over_defeat">
+                <state img="9-cheer.png">This was a lot of fun, ~player~, thanks for inviting me!</state>
             </case>
             <case notSaidMarker="rinkahmiss" tag="game_over_defeat" target="rinkah">
                 <state img="9-cheer.png">Well, Rinkah, at least you're better at this than at hitting enemies. Heehee~</state>
