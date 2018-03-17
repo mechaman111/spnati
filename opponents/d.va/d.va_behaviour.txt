@@ -62,18 +62,24 @@ release=49
 
 
 
+marker=d.va_accuses_cheating,public,Hana has multiple lines which accuse other players of cheating.
 marker=d.va_kicks_butt_without_shoes,public,Hana doesn't need shoes to kick your butt.
+marker=d.va_high_score,public,As a gamer, Hana likes getting a high score.
 marker=d.va_lucio_playing,public,Hana heard that Lucio is playing at "Inner City Spectacle" tonight.
 marker=d.va_needs_a_hug,public,Some characters react to Hana saying she needs a hug via Hana using an alsoPlaying. This marker will replace that method in the future.
+marker=d.va_noobs,public,Hana can sometimes call other players "noobs".
 marker=d.va_sonya_butt_kicked,public,Hana: 1, Sonya: 0.
 marker=d.va_sonya_talks_big,public,Hana jousts with Sonya.
+marker=d.va_thinks_seven_is_moira,public,Hana mistakes Seven of Nine for Moira, her Overwatch adversary.
+marker=d.va_wager_set,public,If Hana gets an okay or good hand and has lost no clothing in the sixth round, she'll propose a side bet that the first loser does anything the winner asks.
+marker=d.va_wager_regret,public,If Hana is naked with a bad hand after making her bet, she will express some regret.
+marker=d.va_wager_loss,public,If Hana is first to lose, she will mention the side bet in her final defeat line.
 marker=human_first_piece,private,Used to track whether the human player has removed even a single item.
 
-marker=d.va_thinks_seven_is_moira,public,
-marker=d.va_noobs,public,
-marker=d.va_high_score,public,
-marker=d.va_accuses_cheating,public,
-
+marker=d.va_amelie,public,
+marker=d.va_bodysuit,public,
+marker=d.va_french_suits,public,
+marker=d.va_mari_art,public,
 
 
 #D.Va's Clothing:
@@ -135,8 +141,11 @@ swap_cards=serene,~cards~ cards.
 0-okay_hand,alsoPlaying:streaming-chan,totalRounds:1=strip,I don't remember agreeing to collaborate, Streaming-chan.
 0-bad_hand,alsoPlaying:streaming-chan,totalRounds:1=strip,I don't remember agreeing to collaborate, Streaming-chan.
 
-0-good_hand,totalRounds:5=heart,If you ever see anyone else get MVP, that's just the system being broken!
-0-okay_hand,totalRounds:5=heart,If you ever see anyone else get MVP, that's just the system being broken!
+0-good_hand,totalRounds:4=heart,If you ever see anyone else get MVP, that's just the system being broken!
+0-okay_hand,totalRounds:4=heart,If you ever see anyone else get MVP, that's just the system being broken!
+
+0-good_hand,totalRounds:5,marker:d.va_wager_set=winking,Who wants to raise the stakes? The first person to lose has to do anything the winner says. And I mean <i>anything</i>!
+0-okay_hand,totalRounds:5,marker:d.va_wager_set=winking,Who wants to raise the stakes? The first person to lose has to do anything the winner says. And I mean <i>anything</i>!
 
 #Lost Gloves
 1-good_hand=peaceside,Let's shoot for a new high score! 
@@ -205,6 +214,8 @@ swap_cards=serene,~cards~ cards.
 -3-bad_hand=shy,I'm too young to die...
 -3-bad_hand=shy,Critical failure...
 
+-3-bad_hand,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,notSaidMarker:d.va_wager_regret,marker:d.va_wager_regret=dismayed,Remember how I raised the stakes earlier? I'm starting to regret that...
+
 #Multi-round conversations
 0-good_hand,alsoPlaying:marinette,alsoPlayingSaidMarker:french_suits_mari,notSaidMarker:d.va_amelie,marker:d.va_amelie=awkward,You don't know Widowmaker, Marinette? She's a world-famous French assassin! She used to be a ballet dancer apparently.
 1-good_hand,alsoPlaying:marinette,alsoPlayingSaidMarker:french_suits_mari,notSaidMarker:d.va_amelie,marker:d.va_amelie=awkward,You don't know Widowmaker, Marinette? She's a world-famous French assassin! She used to be a ballet dancer apparently.
@@ -247,6 +258,7 @@ swap_cards=serene,~cards~ cards.
 0-stripping=strip,This is nothing. I won't lose again.
 0-stripping,count-d.va_cruiser:1,priority:0=strip,Tell you what, I'll take the ascot off, too.
 0-stripping,count-d.va_cruiser:1,priority:0=strip,I've got places to be, so how about I take this thing off, too?
+0-stripping,alsoPlaying:streaming-chan=heart,Quick shoutout to my fans: Thanks for all the love and support!
 1-stripped=stripped,I'm back in the fight!
 
 #Losing Shoes (accessory)
@@ -1452,6 +1464,13 @@ swap_cards=serene,~cards~ cards.
 
 #Targeted
 -3-male_must_masturbate,filter:video_game=ready,You first, ~name~! I'm game if you are.
+0-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+1-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+2-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+3-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+4-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+5-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
+-3-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
 
 0-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
 1-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
@@ -1462,6 +1481,13 @@ swap_cards=serene,~cards~ cards.
 -3-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
 -2-female_must_masturbate,target:jane=heart,Time for the Play of the Jane!
 -1-female_must_masturbate,target:jane=winking,Time for the Play of the Jane!
+0-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+1-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+2-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+4-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+5-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+-3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
 0-female_must_masturbate,target:moon=peace,GG, ez!
 1-female_must_masturbate,target:moon=peace,GG, ez!
 2-female_must_masturbate,target:moon=peace,GG, ez!
@@ -1533,9 +1559,9 @@ swap_cards=serene,~cards~ cards.
 #MASTURBATION
 #these situations relate to when the character is masturbating
 #these only come up in the relevant stages, so you don't need to include the stage numbers here
-#just remember which stage is which when you make the images
 must_masturbate_first=shy,I have to go first? That sounds like a challenge!
 must_masturbate_first=dismayed,I just realized what Mei meant when she said this game would give me feels...
+must_masturbate_first,saidMarker:d.va_wager_set,marker:d.va_wager_loss=ready,I... I lost my own bet...
 must_masturbate=horny,Time to show my skills!
 must_masturbate,alsoPlaying:marinette,alsoPlayingStage:0-8,alsoPlayingSaidMarker:d.va_competition=excited,Heh. I guess I owe you that autograph, huh, Marinette? You're the artist, maybe you can be creative with how you want me to give it to you.
 must_masturbate,alsoPlaying:marinette,alsoPlayingStage:9-10,alsoPlayingSaidMarker:d.va_competition=dismayed,Just because we both lost doesn't mean you won the bet, Marinette.
@@ -1579,6 +1605,13 @@ finished_masturbating=peace,Like, follow, subscribe!
 -3-game_over_victory=peace,That was close! Good game, you guys!
 -2-game_over_victory=shocked,Wait, how did I win? I already lost!
 -1-game_over_victory=excited,I won? Sure. I think we were <i>all</i> winners today.
+0-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+1-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+2-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+3-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+4-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+5-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
+-3-game_over_victory,saidMarker:d.va_wager_set=excited,Aw, yeah! And I won the side bet too. Who went out first? You have to do <i>anything</i> I tell you, and we have an audience today!
 
 game_over_defeat=shy,I guess I lost this round. I want a rematch!
 game_over_defeat=peace,I definitely like winning more... buuut still, I enjoyed this!
@@ -1601,12 +1634,13 @@ game_over_defeat,target:mia,targetStage:5-6=peace,Well played! I think I just fo
 game_over_defeat,target:revy=loss,Brought to my knees by a psycho waving two guns around... Story of my life...
 game_over_defeat,target:xander=calm,Xander with the surprise victory! Nice going!
 game_over_defeat,target:zoey=winking,Zoey, you really left us for dead!
- 
+game_over_defeat,saidMarker:d.va_wager_loss=peace,I'm a girl of my word, ~name~. I'll do <i>anything</i> you say... for the next ten minutes.
+game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost my own bet. Totally by accident. I'm yours to command, ~name~. Got any requests?
+
  
 
 #Consider sorting these targeted lines into the sections above
 
-0-stripping,alsoPlaying:streaming-chan=heart,Quick shoutout to my fans: Thanks for all the love and support!
 0-female_crotch_will_be_visible,target:elena=excited,Consider your nation conquered, princess!
 0-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
 0-female_finished_masturbating,target:tracer=hornier,Awesome! Tracer, how about you Recall and do that all again?
