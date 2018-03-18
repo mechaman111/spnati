@@ -807,6 +807,7 @@ function advanceGame () {
         actualMainButtonState = false;
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings
+        actualMainButtonState = false;
     } else {
         if (AUTO_FADE) forceTableVisibility(true);
         console.log("Invalid main button state: "+context);
@@ -824,6 +825,9 @@ function showRestartModal () {
     $restartModal.modal('show');
 }
 
+function closeRestartModal() {
+	$mainButton.attr('disabled', actualMainButtonState);
+}
 
 /************************************************************
  * A keybound handler.
