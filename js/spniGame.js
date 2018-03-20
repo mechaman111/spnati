@@ -801,14 +801,8 @@ function advanceGame () {
     } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
-		if (!gameOver) {
-			$mainButton.html("Deal");
-			$mainButton.attr('disabled', false);
-            actualMainButtonState = false;
-		} else {
-			handleGameOver(); //No delay here
-            return;
-		}
+		handleGameOver(); //No delay here
+        return;
 	} else if (context == "Restart?") {
         if (AUTO_FADE) forceTableVisibility(false);
 		showRestartModal(); //No delay here
