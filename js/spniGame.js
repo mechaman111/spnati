@@ -815,7 +815,9 @@ function advanceGame () {
         actualMainButtonState = false;
     } else {
         if (AUTO_FADE) forceTableVisibility(true);
-        console.log("Invalid main button state: "+context);
+		if (context != null) {
+			console.log("Invalid main button state: "+context);
+		}
     }
     if (players[HUMAN_PLAYER].out && AUTO_FORFEIT && !(timers[HUMAN_PLAYER] == 0 && context == null)) {
         $mainButton.attr('disabled', true);
