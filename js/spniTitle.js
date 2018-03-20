@@ -246,12 +246,6 @@ function validateTitleScreen () {
     /* dress the player */
     wearClothing();
 
-	/* reset any variables involving the player possibly being out of the game */
-	players[HUMAN_PLAYER].out = false;
-	timers[HUMAN_PLAYER] = 0;
-	gameover = false;
-	$gamePlayerCountdown.hide();
-
     /* set human id */
     players[HUMAN_PLAYER].folder = "opponents/human/";
 
