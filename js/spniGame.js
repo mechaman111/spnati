@@ -120,6 +120,7 @@ function loadGameScreen () {
             $gameBubbles[i-1].hide();
         }
     }
+    recentLoser = -1;
     $gamePlayerCardArea.show();
     
     /* set up the visuals */
