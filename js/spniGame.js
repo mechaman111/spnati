@@ -566,7 +566,9 @@ function completeRevealPhase () {
     
     /* set up the main button */
 	if (recentLoser != HUMAN_PLAYER && clothes > 0) {
-		$mainButton.html("Continue");
+	    $mainButton.html("Continue");
+	} else if (clothes == 0) {
+	    $mainButton.html("Masturbate");
 	} else {
 		$mainButton.html("Strip");
 	}
@@ -584,8 +586,11 @@ function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
-	
+    if (countClothes(recentLoser)) {
 	$mainButton.html("Strip");
+    } else {
+	$mainButton.html("Masturbate");
+    }
     if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
         setTimeout(advanceGame,FORFEIT_DELAY);
     }
@@ -783,7 +788,7 @@ function advanceGame () {
         if (AUTO_FADE) forceTableVisibility(false);
 		$mainButton.attr('disabled', true);
         actualMainButtonState = false;
-	} else if (context == "Strip") {
+	} else if (context == "Strip" || context == "Masturbate") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
         completeStripPhase();

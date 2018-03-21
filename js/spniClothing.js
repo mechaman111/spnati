@@ -517,12 +517,7 @@ function stripAIPlayer (player) {
 	var dialogueTrigger = getClothingTrigger(player, removedClothing, true);
 	
 	/* determine new AI stage */
-	var clothes = 0;
-    for (var i = 0; i < players[player].clothing.length; i++) {
-        if (players[player].clothing[i]) {
-            clothes++;
-        }
-    }
+    var clothes = countClothes(player);
     var startingClothes = players[player].clothing.length;
 	
 	players[player].stage = startingClothes - clothes;
@@ -546,24 +541,24 @@ function stripAIPlayer (player) {
  ************************************************************/
 function determineForfeitSituation (player) {
 	/* check to see how many players are out */
-	var out = 0;
 	for (var i = 0; i < players.length; i++) {
-        if (players[i]) {
-            for (var j = 0; j < players[i].clothing.length; j++) {
+            if (players[i] && players[i].out) {
                 if (players[i].out) {
-                    out++;
+		    return PLAYER_MUST_MASTURBATE;
                 }
             }
+	}
+    return PLAYER_MUST_MASTURBATE_FIRST;
+}
+
+function countClothes (player) {
+    var clothes = 0;
+    for (var i = 0; i < players[player].clothing.length; i++) {
+        if (players[player].clothing[i]) {
+            clothes++;
         }
-	}
-	console.log("Check:"+out);
-	
-	/* return appropriate trigger */
-	if (out > 0) {
-		return PLAYER_MUST_MASTURBATE;
-	} else {
-		return PLAYER_MUST_MASTURBATE_FIRST;
-	}
+    }
+    return clothes;
 }
 
 /************************************************************
@@ -573,13 +568,7 @@ function determineForfeitSituation (player) {
  ************************************************************/ 
 function stripPlayer (player) {
     /* count the clothing the player has remaining */
-    var clothes = 0;
-    for (var i = 0; i < players[player].clothing.length; i++) {
-        if (players[player] && players[player].clothing[i]) {
-            clothes++;
-        }
-    }
-    var startingClothes = players[player].clothing.length;
+    var clothes = countClothes(player);
 
 	/* determine the situation */
 	if (clothes > 0) {
