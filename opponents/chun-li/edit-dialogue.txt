@@ -1,0 +1,1367 @@
+#required for behaviour.xml
+first=Chun-Li
+last=
+label=Chun-Li
+gender=female
+size=large
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=25
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=impatient
+tag=kind
+tag=brave
+tag=chinese
+tag=athletic
+tag=busty
+tag=martial_artist
+tag=video_game
+tag=confident
+tag=competitive
+
+#required for meta.xml
+#select screen image
+pic=0-happy.png
+height=5'6"
+from=Street Fighter
+writer=metalytar13 & SPNATI
+artist=metalytar13
+description=Chun-Li is an expert martial artist and Interpol officer who relentlessly seeks revenge for the death of her father at the hands of M. Bison.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-victory,Do you really think you can defeat the strongest woman in the world?
+start=0-calm,Now, let's begin!
+start=0-calm,I can't lose this battle.
+start=0-calm,I'll show you my Kung-Fu!
+start=0-calm,Want to see my Kung-Fu? I'll show you.
+start=0-calm,I'll take you on.
+start=0-calm,Think you can keep up with me? This game is simple compared to a real fight.
+start=0-calm,I'm the strongest women in the world. Do you really think you can beat me in such a simple game of cards?
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Bracelets,bracelets,extra,other
+clothes=Waistband,waistband,extra,other
+clothes=Qipao,qipao,major,upper
+clothes=Boots,boots,minor,lower
+clothes=Leotard,leotard,major,upper
+clothes=Pantyhose,pantyhose,major,lower
+clothes=Bindings,bindings,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=calm,~cards~ cards should do.
+swap_cards=victory,Just ~cards~ cards for me, thank you.
+swap_cards=excited,Give me ~cards~ cards!
+swap_cards=annoyed,I'll need ~cards~ cards to win!
+
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#fully clothed
+0-good_hand=excited,There's no way I'll lose with this!
+0-okay_hand=calm,This should be enough.
+0-bad_hand=sad,Will this be enough?
+
+
+#lost bracelets
+1-good_hand=excited,You better don't expect me to lose with this hand!
+1-okay_hand=calm,No reason to worry.
+1-bad_hand=sad,Will I be okay with this?
+
+
+#lost waistband
+2-good_hand=excited,Nothing can stand in my way now!
+2-okay_hand=calm,This should be a fair game.
+2-bad_hand=sad,This won't be a picnic.
+
+
+#lost qipao
+3-good_hand=victory,Do you think you have what it takes to win?
+3-okay_hand=calm,I'm ready.
+3-bad_hand=angry,Are you serious?!
+
+
+#lost boots
+4-good_hand=excited,Ready or not, here I come!
+4-okay_hand=calm,You ready for this?
+4-bad_hand=angry,These cards?! You can't be serious!
+
+
+#lost leotard
+5-good_hand=interested,Try to beat me now.
+5-okay_hand=calm,Get ready.
+5-bad_hand=angry,Not good, I can't afford to lose anymore!
+
+
+#lost pantyhose
+6-good_hand=victory,Do your best, I'm ready!
+6-okay_hand=calm,I'm not done yet.
+6-bad_hand=angry,This isn't good.
+
+
+#lost bindings
+7-good_hand=excited,No chance for me to lose!
+7-okay_hand=annoyed,I need to win this time!
+7-bad_hand=angry,This is no joke, if I lose again...
+
+-3-good_hand=happy,Sorry! This round is already won.
+-3-okay_hand=annoyed,Ready when you are!
+-3-bad_hand=angry,This can't be!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing bracelets
+0-must_strip_winning=calm,No reason to worry, I still have the lead.
+0-must_strip_winning=sad,Aww, I thought I could get a perfect...
+0-must_strip_normal=sad,Not the best way to start I guess.
+0-must_strip_losing=loss,Uh-oh, I'm not off to a great start...
+0-stripping=stripping,I guess I'll start with my bracelets.
+0-stripping=stripping,I'll take off my bracelets first. It's the smallest item I got.
+
+
+#losing waistband
+1-stripped=stripped,They're kinda heavy, so they're perfect for training.
+1-stripped=stripped,Alright, let's continue. I'll have to play smarter next round.
+1-stripped=stripped,Hehe. Don't hold a grudge, okay?
+1-must_strip_winning=sad,I better step up my game if I don't want to lose the lead.
+1-must_strip_normal=loss,Rules are rules. I lost fair and square.
+1-must_strip_losing=loss,This isn't good. I lost again.
+1-stripping=stripping,Time to take off my waistband.
+1-stripping=stripping,I'll take off my waistband this time.
+
+
+#losing qipao
+2-stripped=stripped,Don't think you've won yet! I'm still warming up.
+2-stripped=stripped,I'm still not showing any skin. So why are you all staring?
+2-must_strip_winning=interested,Don't get used to winning, it won't happen again!
+2-must_strip_winning=sad,There goes my winning streak...
+2-must_strip_normal=loss,This won't be enough to bring me down!
+2-must_strip_losing=loss,I can't believe I'm losing so badly...
+2-stripping=stripping,It's finally time for me to strip something big...
+2-stripping=stripping,This is an elegant mandarin gown, but I think you care about what's underneath it more...
+
+
+#losing boots
+3-stripped=stripped,I love this dress, but it's getting a little hot here.
+3-stripped=stripped,I've fought in more revealing clothing before, so this isn't that big of a deal.
+3-stripped=stripped,Now you can see my muscles more. I don't mind if you stare, my hard work really paid off.
+3-stripped=stripped,Do you like what you see so far, ~player~? I can't wait for you to lose the next hand...
+3-must_strip_winning=interested,You really think you can take me, huh?
+3-must_strip_normal=calm,It's okay, I'm prepared for this.
+3-must_strip_losing=loss,I lost again? No way!
+3-stripping=stripping,I'll strip my boots for now. I don't want to strip something big again just yet.
+3-stripping=stripping,Just my boots this time. I'm not out of the game yet.
+
+
+#losing leotard
+4-stripped=stripped,I wanted to keep them in case I had to kick my way out of this, but oh well...
+4-stripped=stripped,Besides feeling shorter, it's no big deal. I still think I can win this game.
+4-must_strip_winning=interested,I'm still going to win, you should give up while you have the chance.
+4-must_strip_normal=angry,Dammit! I know I can do better than this!
+4-must_strip_losing=loss,I'm not do so good. This is a rough losing streak.
+4-must_strip_losing=loss,I'm taking a beating!
+4-stripping=stripping,I guess my leotard is next, it's less revealing than taking off my tights...
+4-stripping=stripping,Given the choice between my pantyhose or my leotard... I'll strip my leotard.
+
+
+#losing pantyhose
+5-stripped=stripped,Don't get cocky now, I can still keep fighting.
+5-stripped=stripped,I see you staring at my chest, ~player~. You must like what you see...
+5-stripped=stripped,Yes I bind by chest during battle, it helps keep them from bouncing around...
+5-stripped=stripped,As you can see by my muscles I can still win a fight without clothing...
+5-stripped=stripped,I'm not embarrassed, I'm proud of my body. I just really want to win this game!
+5-must_strip_winning=angry,This is the last time I lose, I assure you!
+5-must_strip_winning=calm,Well, I suppose it's fair...
+5-must_strip_normal=angry,Ugh, you haven't seen me at my best yet.
+5-must_strip_losing=loss,I lost again? I can't afford to lose again!
+5-must_strip_losing=loss,I really hope I don't lose again, this has to be my last loss of the game...
+5-stripping=stripping,I.. I'll take off my pantyhose.
+5-stripping=stripping,My only real choice is to take off my pantyhose...
+5-stripping=stripping,Looks like you'll finally get to see my bare legs in all their glory.
+5-stripping=stripping,Do you think my thighs are too thick or you like them like that?
+
+
+#losing bindings
+6-stripped=stripped,Now get ready! I'm coming at you with all I have! I won't lose again, I swear!
+6-stripped=stripped,I've never had to fight in my underwear before... But I still think I can win this! I just have to believe in myself!
+6-stripped=happy,Do you like my legs? I made sure to shave just in case I had to show them off.
+6-stripped=stripped,My favorite part of my body is my legs, I couldn't kick as hard without them in shape.
+6-stripped=stripped,I don't mind showing off, but I hope I win this game. It's getting a little embarrassing...
+6-stripped=stripped,If I lose again, I'll really have to bare it all... I can't let that happen, I know I can win!
+6-must_strip_winning=victory,Victory is close, I can't lose my focus now!
+6-must_strip_normal=angry,This isn't over yet!
+6-must_strip_losing=loss,Just you wait. When my back's against the wall is when I truly shine!
+6-stripping=stripping,I hoped it wouldn't come to this.
+6-stripping=stripping,I'll take off my bindings, it's a big deal but not as big of a deal as taking off my panties.
+6-stripping=stripping,Alright my bindings are coming off, but next round I won't hold back! I know I can win!
+6-stripping=stripping,I know you want to see my breasts, ~player~. I've seen you stare at my chest all game. Now you finally get your wish...
+
+
+#lost all clothing
+7-stripped=stripped,I suppose it's harder to fight with my breasts exposed.
+7-stripped=stripped,I couldn't imagine fighting like this but it makes sense for strip poker I guess...
+7-stripped=stripped,You can stare all you want. It's only fair. But next round, I won't lose!
+7-stripped=stripped,I know they are big, they really get in the way sometimes when fighting...
+7-must_strip_winning=angry,This has been a harder than I expected.
+7-must_strip_winning=calm,It's only fair that I get naked if everyone else is. I just hope I don't lose again...
+7-must_strip_normal=loss,I can't... I won't give up!
+7-must_strip_normal=annoyed,I wanted to keep my dignity, but I don't care anymore. I just want to win!
+7-must_strip_losing=embarrassed,This is bad, I'll be the first one naked!
+7-must_strip_losing=loss,I lost again? That means I have to be the first one naked!
+7-stripping=stripping,You should be happy. You're about to see what's between these legs.
+7-stripping=stripping,I bet you've all been waiting for this moment, to see me naked. Now it's finally happening.
+7-stripping=stripping,Now you get to see where these legs lead...
+7-stripping=stripping,Here goes my panties...
+
+-3-stripped=stripped,But I'm still in the fight. Let the final round begin!
+-3-stripped=embarrassed,I can't believe I lost all my clothing... I'm fully naked!
+-3-stripped=sad,There goes my modesty...
+-3-stripped=stripped,Do you want to see some naked kung fu? In your dreams!
+-3-stripped=stripped,This is it... If I lose again, I'll be out of the game... I can't let that happen.
+-3-stripped=happy,Even though I'm naked I still need to keep my hopes up. It's still possible for me to win, it all depends on my skill. I'll go for broke.
+-3-stripped=stripped,Are you happy now, ~player~? You finally got me naked!
+-3-stripped=embarrassed,I hope no one at the next world warriors tournament finds out about this... That would be so embarassing!
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-specific lines that override the stage-generic ones
+male_human_must_strip=happy,Sorry, ~name~! You lose this round.
+male_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+male_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+male_human_must_strip=happy,I apologize if I went a little hard this time.
+male_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+male_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+male_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+male_human_must_strip=interested,Give it your best, ~name~.
+male_human_must_strip=calm,Looks like you need more training, ~name~.
+male_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+male_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+male_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+male_human_must_strip=interested,Show me what you have, ~name~!
+male_must_strip=happy,Sorry, ~name~! You lose this round.
+male_must_strip=happy,Couldn't keep up with these legs, ~name~?
+male_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+male_must_strip=happy,I apologize if I went a little hard this time.
+male_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+male_must_strip=victory,You'll keep losing if you don't have something to fight for.
+male_must_strip=interested,You're not giving up yet, are you, ~name~?
+male_must_strip=interested,Give it your best, ~name~.
+male_must_strip=calm,Looks like you need more training, ~name~.
+male_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+male_must_strip=calm,It's better to just get it over quickly, ~name~.
+male_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+male_must_strip=interested,Show me what you have, ~name~!
+female_human_must_strip=excited,There's no way I'm gonna lose now!
+female_human_must_strip=victory,At this stage, every victory counts.
+female_must_strip=excited,There's no way I'm gonna lose now!
+female_must_strip=victory,At this stage, every victory counts.
+
+
+#fully clothed
+0-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+0-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+0-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+0-female_human_must_strip=happy,I apologize if I went a little hard this time.
+0-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+0-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+0-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+0-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+0-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+0-female_human_must_strip=interested,Give it your best, ~name~.
+0-female_human_must_strip=calm,Looks like you need more training, ~name~.
+0-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+0-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+0-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+0-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+0-female_must_strip=interested,Give it your best, ~name~.
+0-female_must_strip=calm,Looks like you need more training, ~name~.
+0-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+0-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+0-female_must_strip=happy,Sorry, ~name~! You lose this round.
+0-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+0-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+0-female_must_strip=happy,I apologize if I went a little hard this time.
+0-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+0-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+0-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+
+
+#lost bracelets
+1-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+1-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+1-female_human_must_strip=interested,Give it your best, ~name~.
+1-female_human_must_strip=calm,Looks like you need more training, ~name~.
+1-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+1-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+1-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+1-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+1-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+1-female_human_must_strip=happy,I apologize if I went a little hard this time.
+1-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+1-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+1-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+1-female_must_strip=happy,Sorry, ~name~! You lose this round.
+1-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+1-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+1-female_must_strip=happy,I apologize if I went a little hard this time.
+1-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+1-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+1-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+1-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+1-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+1-female_must_strip=interested,Give it your best, ~name~.
+1-female_must_strip=calm,Looks like you need more training, ~name~.
+1-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+1-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+
+#lost waistband
+2-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+2-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+2-female_human_must_strip=interested,Give it your best, ~name~.
+2-female_human_must_strip=calm,Looks like you need more training, ~name~.
+2-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+2-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+2-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+2-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+2-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+2-female_human_must_strip=happy,I apologize if I went a little hard this time.
+2-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+2-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+2-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+2-female_must_strip=happy,Sorry, ~name~! You lose this round.
+2-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+2-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+2-female_must_strip=happy,I apologize if I went a little hard this time.
+2-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+2-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+2-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+2-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+2-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+2-female_must_strip=interested,Give it your best, ~name~.
+2-female_must_strip=calm,Looks like you need more training, ~name~.
+2-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+2-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+
+#lost qipao
+3-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+3-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+3-female_human_must_strip=interested,Give it your best, ~name~.
+3-female_human_must_strip=calm,Looks like you need more training, ~name~.
+3-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+3-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+3-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+3-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+3-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+3-female_human_must_strip=happy,I apologize if I went a little hard this time.
+3-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+3-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+3-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+3-female_must_strip=happy,Sorry, ~name~! You lose this round.
+3-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+3-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+3-female_must_strip=happy,I apologize if I went a little hard this time.
+3-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+3-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+3-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+3-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+3-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+3-female_must_strip=interested,Give it your best, ~name~.
+3-female_must_strip=calm,Looks like you need more training, ~name~.
+3-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+3-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+
+#lost boots
+4-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+4-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+4-female_human_must_strip=interested,Give it your best, ~name~.
+4-female_human_must_strip=calm,Looks like you need more training, ~name~.
+4-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+4-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+4-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+4-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+4-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+4-female_human_must_strip=happy,I apologize if I went a little hard this time.
+4-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+4-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+4-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+4-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+4-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+4-female_must_strip=interested,Give it your best, ~name~.
+4-female_must_strip=calm,Looks like you need more training, ~name~.
+4-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+4-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+4-female_must_strip=happy,Sorry, ~name~! You lose this round.
+4-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+4-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+4-female_must_strip=happy,I apologize if I went a little hard this time.
+4-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+4-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+4-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+
+
+#lost leotard
+5-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
+5-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+5-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+5-female_human_must_strip=happy,I apologize if I went a little hard this time.
+5-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+5-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-female_human_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+5-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+5-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+5-female_human_must_strip=interested,Give it your best, ~name~.
+5-female_human_must_strip=calm,Looks like you need more training, ~name~.
+5-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+5-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+5-female_must_strip=happy,Sorry, ~name~! You lose this round.
+5-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+5-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+5-female_must_strip=happy,I apologize if I went a little hard this time.
+5-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
+5-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-female_must_strip=annoyed,You're gonna have to do better than that if you want to beat me!
+5-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+5-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+5-female_must_strip=interested,Give it your best, ~name~.
+5-female_must_strip=calm,Looks like you need more training, ~name~.
+5-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+5-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+
+#lost pantyhose
+6-male_human_must_strip=excited,There's no way I'm gonna lose now!
+6-male_human_must_strip=victory,At this stage, every victory counts.
+6-male_must_strip=excited,There's no way I'm gonna lose now!
+6-male_must_strip=victory,At this stage, every victory counts.
+
+
+#lost bindings
+7-male_human_must_strip=excited,There's no way I'm gonna lose now!
+7-male_human_must_strip=victory,At this stage, every victory counts.
+7-male_must_strip=excited,There's no way I'm gonna lose now!
+7-male_must_strip=victory,At this stage, every victory counts.
+
+-3-male_human_must_strip=excited,There's no way I'm gonna lose now!
+-3-male_human_must_strip=victory,At this stage, every victory counts.
+-3-male_must_strip=excited,There's no way I'm gonna lose now!
+-3-male_must_strip=victory,At this stage, every victory counts.
+
+-2-male_human_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-2-male_human_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-2-male_human_must_strip=interested,Come on, ~name~! What do you have for me?
+-2-male_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-2-male_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-2-male_must_strip=interested,Come on, ~name~! What do you have for me?
+-2-female_human_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
+-2-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+-2-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+-2-female_human_must_strip=interested,Give it your best, ~name~.
+-2-female_human_must_strip=calm,Looks like you need more training, ~name~.
+-2-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+-2-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+-2-female_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
+-2-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+-2-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+-2-female_must_strip=interested,Give it your best, ~name~.
+-2-female_must_strip=calm,Looks like you need more training, ~name~.
+-2-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+-2-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+-1-male_human_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-1-male_human_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-1-male_human_must_strip=interested,Come on, ~name~! What do you have for me?
+-1-male_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-1-male_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-1-male_must_strip=interested,Come on, ~name~! What do you have for me?
+-1-female_human_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
+-1-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+-1-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
+-1-female_human_must_strip=interested,Give it your best, ~name~.
+-1-female_human_must_strip=calm,Looks like you need more training, ~name~.
+-1-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
+-1-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+-1-female_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
+-1-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
+-1-female_must_strip=interested,You're not giving up yet, are you, ~name~?
+-1-female_must_strip=interested,Give it your best, ~name~.
+-1-female_must_strip=calm,Looks like you need more training, ~name~.
+-1-female_must_strip=calm,It's better to just get it over quickly, ~name~.
+-1-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-specific lines that override the stage-generic ones
+male_removed_accessory=sad,I can't believe I lost this badly.
+female_removed_accessory=sad,I can't believe I lost this badly.
+
+
+#fully clothed
+0-male_removing_accessory=disappointed,That... is kinda disappointing.
+0-male_removing_accessory=disappointed,You could try a little harder, you know?
+0-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+0-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+0-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+0-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+0-female_removing_accessory=disappointed,That... is kinda disappointing.
+0-female_removing_accessory=disappointed,You could try a little harder, you know?
+0-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+0-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+0-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+0-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost bracelets
+1-male_removing_accessory=disappointed,That... is kinda disappointing.
+1-male_removing_accessory=disappointed,You could try a little harder, you know?
+1-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+1-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+1-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+1-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+1-female_removing_accessory=disappointed,That... is kinda disappointing.
+1-female_removing_accessory=disappointed,You could try a little harder, you know?
+1-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+1-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+1-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+1-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost waistband
+2-male_removing_accessory=disappointed,That... is kinda disappointing.
+2-male_removing_accessory=disappointed,You could try a little harder, you know?
+2-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+2-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+2-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+2-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+2-female_removing_accessory=disappointed,That... is kinda disappointing.
+2-female_removing_accessory=disappointed,You could try a little harder, you know?
+2-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+2-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+2-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+2-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost qipao
+3-male_removing_accessory=disappointed,That... is kinda disappointing.
+3-male_removing_accessory=disappointed,You could try a little harder, you know?
+3-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+3-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+3-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+3-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+3-female_removing_accessory=disappointed,That... is kinda disappointing.
+3-female_removing_accessory=disappointed,You could try a little harder, you know?
+3-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+3-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+3-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+3-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost boots
+4-male_removing_accessory=disappointed,That... is kinda disappointing.
+4-male_removing_accessory=disappointed,You could try a little harder, you know?
+4-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+4-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+4-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+4-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+4-female_removing_accessory=disappointed,That... is kinda disappointing.
+4-female_removing_accessory=disappointed,You could try a little harder, you know?
+4-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+4-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+4-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+4-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost leotard
+5-male_removing_accessory=disappointed,That... is kinda disappointing.
+5-male_removing_accessory=disappointed,You could try a little harder, you know?
+5-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+5-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+5-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+5-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+5-female_removing_accessory=disappointed,That... is kinda disappointing.
+5-female_removing_accessory=disappointed,You could try a little harder, you know?
+5-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+5-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+5-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+5-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost pantyhose
+6-male_removing_accessory=disappointed,That... is kinda disappointing.
+6-male_removing_accessory=disappointed,You could try a little harder, you know?
+6-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+6-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+6-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+6-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+6-female_removing_accessory=disappointed,That... is kinda disappointing.
+6-female_removing_accessory=disappointed,You could try a little harder, you know?
+6-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+6-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+6-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+6-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+
+#lost bindings
+7-male_removing_accessory=angry,You seriously still have that?!
+7-male_removing_accessory=angry,Are you serious? I'm topless and you still have your ~clothing~?
+7-male_removing_accessory=disappointed,That... is kinda disappointing.
+7-male_removing_accessory=disappointed,You could try a little harder, you know?
+7-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+7-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+7-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+7-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+7-male_removed_accessory=sad,I can't believe I'm this far behind.
+7-female_removing_accessory=disappointed,That... is kinda disappointing.
+7-female_removing_accessory=disappointed,You could try a little harder, you know?
+7-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+7-female_removing_accessory=angry,You seriously still have that?!
+7-female_removing_accessory=angry,Are you serious? I'm topless and you still have your ~clothing~?
+7-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+7-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+7-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+7-female_removed_accessory=sad,I can't believe I'm this far behind.
+
+-3-male_removing_accessory=angry,You seriously still have that?!
+-3-male_removing_accessory=disappointed,That... is kinda disappointing.
+-3-male_removing_accessory=disappointed,You could try a little harder, you know?
+-3-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-3-male_removing_accessory=angry,Are you serious? I'm naked and you still have your ~clothing~?
+-3-male_removed_accessory=sad,I can't believe I'm this far behind.
+-3-male_removed_accessory=angry,Trust me, you don't want to see me angry.
+-3-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
+-3-male_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+-3-female_removing_accessory=disappointed,That... is kinda disappointing.
+-3-female_removing_accessory=disappointed,You could try a little harder, you know?
+-3-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-3-female_removing_accessory=angry,Are you serious? I'm naked and you still have your ~clothing~?
+-3-female_removing_accessory=angry,You seriously still have that?!
+-3-female_removed_accessory=sad,I can't believe I'm this far behind.
+-3-female_removed_accessory=angry,Trust me, you don't want to see me angry.
+-3-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
+-3-female_removed_accessory=annoyed,Looks like this is gonna be a tough fight.
+
+-2-male_removing_accessory=angry,Are you serious? I'm masturbating and you still have your ~clothing~?
+-2-male_removing_accessory=disappointed,That... is kinda disappointing.
+-2-male_removing_accessory=disappointed,You could try a little harder, you know?
+-2-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-2-male_removing_accessory=angry,You seriously still have that?!
+-2-female_removing_accessory=angry,You seriously still have that?!
+-2-female_removing_accessory=disappointed,That... is kinda disappointing.
+-2-female_removing_accessory=disappointed,You could try a little harder, you know?
+-2-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-2-female_removing_accessory=angry,Are you serious? I'm masturbating and you still have your ~clothing~?
+
+-1-male_removing_accessory=angry,Are you serious? I lost and you still have your ~clothing~?
+-1-male_removing_accessory=disappointed,That... is kinda disappointing.
+-1-male_removing_accessory=disappointed,You could try a little harder, you know?
+-1-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-1-male_removing_accessory=angry,You seriously still have that?!
+-1-female_removing_accessory=disappointed,That... is kinda disappointing.
+-1-female_removing_accessory=disappointed,You could try a little harder, you know?
+-1-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-1-female_removing_accessory=angry,Are you serious? I lost and you still have your ~clothing~?
+-1-female_removing_accessory=angry,You seriously still have that?!
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_minor=calm,You don't need to be a detective to know you were going to remove your ~clothing~.
+male_removing_minor=sad,I don't know why I keep expecting something more.
+male_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
+female_removing_minor=calm,You don't need to be a detective to know you were going to remove your ~clothing~.
+female_removing_minor=sad,I don't know why I keep expecting something more.
+female_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
+
+
+#fully clothed
+0-male_removed_minor=victory,I have to stay focused.
+0-male_removed_minor=excited,Next time it'll surely be better.
+0-male_removed_minor=calm,You have to start small I guess.
+0-female_removed_minor=excited,Next time it'll surely be better.
+0-female_removed_minor=calm,You have to start small I guess.
+0-female_removed_minor=victory,I have to stay focused.
+
+
+#lost bracelets
+1-male_removed_minor=excited,Next time it'll surely be better.
+1-male_removed_minor=calm,You have to start small I guess.
+1-male_removed_minor=victory,I have to stay focused.
+1-female_removed_minor=excited,Next time it'll surely be better.
+1-female_removed_minor=calm,You have to start small I guess.
+1-female_removed_minor=victory,I have to stay focused.
+
+
+#lost waistband
+2-male_removed_minor=excited,Next time it'll surely be better.
+2-male_removed_minor=calm,You have to start small I guess.
+2-male_removed_minor=victory,I have to stay focused.
+2-female_removed_minor=excited,Next time it'll surely be better.
+2-female_removed_minor=calm,You have to start small I guess.
+2-female_removed_minor=victory,I have to stay focused.
+
+
+#lost qipao
+3-male_removed_minor=excited,Next time it'll surely be better.
+3-male_removed_minor=calm,You have to start small I guess.
+3-male_removed_minor=victory,I have to stay focused.
+3-female_removed_minor=victory,I have to stay focused.
+3-female_removed_minor=excited,Next time it'll surely be better.
+3-female_removed_minor=calm,You have to start small I guess.
+
+
+#lost boots
+4-male_removed_minor=victory,I have to stay focused.
+4-male_removed_minor=excited,Next time it'll surely be better.
+4-male_removed_minor=calm,You have to start small I guess.
+4-female_removed_minor=victory,I have to stay focused.
+4-female_removed_minor=excited,Next time it'll surely be better.
+4-female_removed_minor=calm,You have to start small I guess.
+
+
+#lost leotard
+5-male_removed_minor=victory,I have to stay focused.
+5-male_removed_minor=excited,Next time it'll surely be better.
+5-male_removed_minor=calm,You have to start small I guess.
+5-female_removed_minor=excited,Next time it'll surely be better.
+5-female_removed_minor=calm,You have to start small I guess.
+5-female_removed_minor=victory,I have to stay focused.
+
+
+#lost pantyhose
+6-male_removed_minor=excited,Next time it'll surely be better.
+6-male_removed_minor=calm,You have to start small I guess.
+6-male_removed_minor=victory,I have to stay focused.
+6-female_removed_minor=victory,I have to stay focused.
+6-female_removed_minor=excited,Next time it'll surely be better.
+6-female_removed_minor=calm,You have to start small I guess.
+
+
+#lost bindings
+7-male_removed_minor=excited,Next time it'll surely be better.
+7-male_removed_minor=calm,You have to start small I guess.
+7-male_removed_minor=victory,I have to stay focused.
+7-female_removed_minor=victory,I have to stay focused.
+7-female_removed_minor=excited,Next time it'll surely be better.
+7-female_removed_minor=calm,You have to start small I guess.
+
+-3-male_removed_minor=excited,Next time it'll surely be better.
+-3-male_removed_minor=calm,You have to start small I guess.
+-3-male_removed_minor=victory,I have to stay focused.
+-3-female_removed_minor=excited,Next time it'll surely be better.
+-3-female_removed_minor=calm,You have to start small I guess.
+-3-female_removed_minor=victory,I have to stay focused.
+
+-2-male_removed_minor=excited,Next time it'll surely be better.
+-2-male_removed_minor=calm,You have to start small I guess.
+-2-male_removed_minor=annoyed,If I have to masturbate the least you could do is give me something to look at.
+-2-female_removed_minor=annoyed,If I have to masturbate the least you could do is give me something to look at.
+-2-female_removed_minor=excited,Next time it'll surely be better.
+-2-female_removed_minor=calm,You have to start small I guess.
+
+-1-male_removed_minor=annoyed,I masturbated in front of you and this is how you repay me?
+-1-male_removed_minor=excited,Next time it'll surely be better.
+-1-male_removed_minor=calm,You have to start small I guess.
+-1-female_removed_minor=excited,Next time it'll surely be better.
+-1-female_removed_minor=calm,You have to start small I guess.
+-1-female_removed_minor=annoyed,I masturbated in front of you and this is how you repay me?
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_major=interested,Now the fun part is about to begin.
+male_removing_major=shocked,Soon you'll have nothing left, ~name~!
+female_removing_major=interested,Now the fun part is about to begin.
+female_removing_major=shocked,Soon you'll have nothing left, ~name~!
+
+
+#fully clothed
+0-male_removed_major=excited,Let's keep going!
+0-male_removed_major=annoyed,Now is not the time to hesitate!
+0-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+0-female_removed_major=excited,Let's keep going!
+0-female_removed_major=annoyed,Now is not the time to hesitate!
+0-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost bracelets
+1-male_removed_major=excited,Let's keep going!
+1-male_removed_major=annoyed,Now is not the time to hesitate!
+1-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+1-female_removed_major=excited,Let's keep going!
+1-female_removed_major=annoyed,Now is not the time to hesitate!
+1-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost waistband
+2-male_removed_major=excited,Let's keep going!
+2-male_removed_major=annoyed,Now is not the time to hesitate!
+2-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+2-female_removed_major=excited,Let's keep going!
+2-female_removed_major=annoyed,Now is not the time to hesitate!
+2-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost qipao
+3-male_removed_major=excited,Let's keep going!
+3-male_removed_major=annoyed,Now is not the time to hesitate!
+3-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+3-female_removed_major=excited,Let's keep going!
+3-female_removed_major=annoyed,Now is not the time to hesitate!
+3-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost boots
+4-male_removed_major=excited,Let's keep going!
+4-male_removed_major=annoyed,Now is not the time to hesitate!
+4-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+4-female_removed_major=excited,Let's keep going!
+4-female_removed_major=annoyed,Now is not the time to hesitate!
+4-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost leotard
+5-male_removed_major=excited,Let's keep going!
+5-male_removed_major=annoyed,Now is not the time to hesitate!
+5-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+5-female_removed_major=excited,Let's keep going!
+5-female_removed_major=annoyed,Now is not the time to hesitate!
+5-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost pantyhose
+6-male_removed_major=excited,Let's keep going!
+6-male_removed_major=annoyed,Now is not the time to hesitate!
+6-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+6-female_removed_major=excited,Let's keep going!
+6-female_removed_major=annoyed,Now is not the time to hesitate!
+6-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+
+#lost bindings
+7-male_removed_major=excited,Let's keep going!
+7-male_removed_major=annoyed,Now is not the time to hesitate!
+7-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+7-female_removed_major=excited,Let's keep going!
+7-female_removed_major=annoyed,Now is not the time to hesitate!
+7-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+-3-male_removed_major=excited,Let's keep going!
+-3-male_removed_major=annoyed,Now is not the time to hesitate!
+-3-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-3-female_removed_major=excited,Let's keep going!
+-3-female_removed_major=annoyed,Now is not the time to hesitate!
+-3-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+-2-male_removed_major=horny,Ah, this is much better.
+-2-male_removed_major=excited,Let's keep going!
+-2-male_removed_major=annoyed,Now is not the time to hesitate!
+-2-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-2-female_removed_major=horny,Ah, this is much better.
+-2-female_removed_major=excited,Let's keep going!
+-2-female_removed_major=annoyed,Now is not the time to hesitate!
+-2-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+
+-1-male_removed_major=excited,Let's keep going!
+-1-male_removed_major=annoyed,Now is not the time to hesitate!
+-1-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-1-male_removed_major=horny,Ah, this is much better.
+-1-female_removed_major=excited,Let's keep going!
+-1-female_removed_major=annoyed,Now is not the time to hesitate!
+-1-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-1-female_removed_major=horny,Ah, this is much better.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-specific lines that override the stage-generic ones
+male_chest_will_be_visible=interested,Let me see your muscles, ~name~!
+male_chest_will_be_visible=interested,Show me what you're made of, ~name~.
+male_chest_will_be_visible=excited,Let's see what you have, ~name~!
+male_chest_is_visible=shocked,Impressive, how often do you exercise?
+male_chest_is_visible=annoyed,Not bad, do you think you could take one of my kicks?
+male_chest_is_visible=excited,Now that you're shirtless you don't have much clothing left. What will it be next time? I can't wait!
+male_chest_is_visible=excited,What will it be next time? I can't wait!
+male_small_crotch_is_visible=disappointed,That... is not very impressive.
+male_small_crotch_is_visible=sad,Hahaha... Sorry.
+male_medium_crotch_is_visible=horny,How does it feel to be the naked one now? You look excited.
+female_chest_will_be_visible=victory,Keep your cool, ~name~. It'll be easier.
+female_chest_will_be_visible=calm,Come on,~name~. I'm sure you have nothing to be ashamed of.
+female_chest_will_be_visible=excited,Well, you knew what you were getting into. Right, ~name~?
+female_small_chest_is_visible=calm,Don't be embarrassed, they're pretty cute.
+female_small_chest_is_visible=excited,Oh, so sweet!
+female_medium_chest_is_visible=interested,They're great! You should be proud.
+female_medium_chest_is_visible=calm,Perfect size for grabbing them!
+female_large_chest_is_visible=shocked,Must be hard to move without those bouncing. I would know!
+female_large_chest_is_visible=shocked,Hmmm.~name~, do you mind if we compare sizes later?
+female_crotch_is_visible=interested,Sorry, it's hard not to look at it.
+female_crotch_is_visible=annoyed,Don't give up ~name~, it's not over yet!
+female_crotch_is_visible=victory,You'll gain nothing by getting embarrassed now. Just try to focus.
+
+
+#fully clothed
+0-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+0-male_crotch_will_be_visible=excited,You're going to expose yourself already? This soon?
+0-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+0-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+0-male_small_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once! You must be so embarrassed!
+0-male_small_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
+0-male_medium_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once!
+0-male_medium_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
+0-male_large_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once!
+0-male_large_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
+0-female_crotch_will_be_visible=excited,~name~ is gonna show her private parts before I take off a single piece of clothes?
+0-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+0-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+0-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+0-female_crotch_is_visible=happy,Looks like I'm going for a perfect win here.
+0-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost bracelets
+1-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+1-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+1-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+1-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+1-male_small_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
+1-male_medium_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
+1-male_large_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
+1-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+1-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+1-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+1-female_crotch_will_be_visible=excited,~name~ is gonna show her private parts and I've only stripped once?
+1-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost waistband
+2-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+2-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+2-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+2-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+2-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+2-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+2-male_large_crotch_is_visible=shocked,Amazing!
+2-male_large_crotch_is_visible=horny,Perfect!
+2-male_large_crotch_is_visible=horny,That is just... Wow...
+2-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+2-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+2-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+2-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost qipao
+3-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+3-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+3-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+3-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+3-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+3-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+3-male_large_crotch_is_visible=shocked,Amazing!
+3-male_large_crotch_is_visible=horny,Perfect!
+3-male_large_crotch_is_visible=horny,That is just... Wow...
+3-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+3-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+3-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+3-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost boots
+4-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+4-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+4-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+4-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+4-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+4-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+4-male_large_crotch_is_visible=shocked,Amazing!
+4-male_large_crotch_is_visible=horny,Perfect!
+4-male_large_crotch_is_visible=horny,That is just... Wow...
+4-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+4-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+4-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+4-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost leotard
+5-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+5-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+5-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+5-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+5-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+5-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+5-male_large_crotch_is_visible=shocked,Amazing!
+5-male_large_crotch_is_visible=horny,Perfect!
+5-male_large_crotch_is_visible=horny,That is just... Wow...
+5-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+5-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+5-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+5-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost pantyhose
+6-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+6-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+6-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+6-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+6-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+6-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+6-male_medium_crotch_is_visible=horny,You must really like my legs... You look very excited!
+6-male_large_crotch_is_visible=shocked,Amazing!
+6-male_large_crotch_is_visible=horny,Perfect!
+6-male_large_crotch_is_visible=horny,That is just... Wow...
+6-male_large_crotch_is_visible=horny,You must really like my legs... You look very excited!
+6-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+6-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+6-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+6-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+#lost bindings
+7-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+7-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+7-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+7-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+7-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
+7-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
+7-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+7-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
+7-female_crotch_will_be_visible=sad,We all knew what was at stake here.
+7-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+7-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+-3-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+-3-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+-3-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+-3-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+-3-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-3-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-3-female_crotch_will_be_visible=excited,Just do it, ~name~! Being naked together is easier for both of us.
+-3-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
+-3-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+-2-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+-2-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+-2-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+-2-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+-2-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-2-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-2-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
+-2-female_crotch_will_be_visible=happy,Don't feel embarrassed, ~name~! Just look at me.
+-2-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+-1-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
+-1-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+-1-male_crotch_will_be_visible=shocked,We will finally see ~name~...
+-1-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+-1-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-1-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-1-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
+-1-female_crotch_will_be_visible=happy,Don't feel embarrassed, ~name~! Just look at me.
+-1-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-specific lines that override the stage-generic ones
+male_must_masturbate=horny,If you don't mind ~name~, I'll just enjoy it from over here.
+male_must_masturbate=interested,Do you rely on strength or technique?
+male_must_masturbate=excited,It's the rules! But that doesn't mean I can't enjoy it.
+male_start_masturbating=interested,I hope me looking doesn't make you uncomfortable.
+male_start_masturbating=shocked,Are you sure you should start so aggressively?
+male_start_masturbating=interested,I wonder how long you're gonna last.
+male_finished_masturbating=horny,That was truly something.
+male_finished_masturbating=shocked,That was practically a projectile!
+male_finished_masturbating=interested,To think you accumulated that much power.
+female_start_masturbating=happy,Now that you've nothing more to lose, at least try to enjoy yourself.
+female_start_masturbating=excited,I wonder what technique you're gonna use.
+female_start_masturbating=interested,I'll watch this closely, maybe I can learn something.
+female_masturbating=shocked,You're really enjoying that, aren't you ~name~?
+female_masturbating=excited,Maybe you can teach me a thing or two after you finish.
+female_masturbating=shocked,Such skill! I can tell you've had a lot of practice, ~name~.
+female_masturbating=interested,Do you think it's more stimulating to know you're being watched, ~name~?
+female_finished_masturbating=shocked,Impressive! How long have you been holding it, ~name~?
+female_finished_masturbating=shocked,That was quite a finish. I think I underestimated you.
+female_finished_masturbating=horny,For a second I thought you might catch on fire.
+
+
+#fully clothed
+0-male_masturbating=shocked,Wow! You really know how to work those muscles!
+0-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+0-male_masturbating=embarrassed,You truly are making the best out of this!
+0-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+0-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+0-female_must_masturbate=victory,At least be glad that you gave it your best.
+0-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost bracelets
+1-male_masturbating=shocked,Wow! You really know how to work those muscles!
+1-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+1-male_masturbating=embarrassed,You truly are making the best out of this!
+1-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+1-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+1-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+1-female_must_masturbate=victory,At least be glad that you gave it your best.
+
+
+#lost waistband
+2-male_masturbating=shocked,Wow! You really know how to work those muscles!
+2-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+2-male_masturbating=embarrassed,You truly are making the best out of this!
+2-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+2-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+2-female_must_masturbate=victory,At least be glad that you gave it your best.
+2-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost qipao
+3-male_masturbating=shocked,Wow! You really know how to work those muscles!
+3-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+3-male_masturbating=embarrassed,You truly are making the best out of this!
+3-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+3-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+3-female_must_masturbate=victory,At least be glad that you gave it your best.
+3-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost boots
+4-male_masturbating=shocked,Wow! You really know how to work those muscles!
+4-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+4-male_masturbating=embarrassed,You truly are making the best out of this!
+4-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+4-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+4-female_must_masturbate=victory,At least be glad that you gave it your best.
+4-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost leotard
+5-male_masturbating=shocked,Wow! You really know how to work those muscles!
+5-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+5-male_masturbating=embarrassed,You truly are making the best out of this!
+5-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+5-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+5-female_must_masturbate=victory,At least be glad that you gave it your best.
+5-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost pantyhose
+6-male_masturbating=shocked,Wow! You really know how to work those muscles!
+6-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+6-male_masturbating=embarrassed,You truly are making the best out of this!
+6-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+6-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+6-female_must_masturbate=victory,At least be glad that you gave it your best.
+6-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+
+#lost bindings
+7-male_start_masturbating=happy,You can look at me if it helps, ~name~.
+7-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
+7-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
+7-male_masturbating=shocked,Wow! You really know how to work those muscles!
+7-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+7-male_masturbating=embarrassed,You truly are making the best out of this!
+7-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+7-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+7-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+7-female_must_masturbate=victory,At least be glad that you gave it your best.
+
+-3-male_start_masturbating=happy,You can look at me if it helps, ~name~.
+-3-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
+-3-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
+-3-male_masturbating=shocked,Wow! You really know how to work those muscles!
+-3-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+-3-male_masturbating=embarrassed,You truly are making the best out of this!
+-3-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+-3-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+-3-female_must_masturbate=victory,At least be glad that you gave it your best.
+-3-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+
+-2-male_must_masturbate=happy,Alright, ~name~! Let's do it together!
+-2-male_start_masturbating=happy,You can look at me if it helps, ~name~.
+-2-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
+-2-male_masturbating=embarrassed,Do you like watching me?
+-2-male_masturbating=shocked,Wow! You really know how to work those muscles!
+-2-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+-2-male_masturbating=embarrassed,You truly are making the best out of this!
+-2-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+-2-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
+-2-male_finished_masturbating=embarrassed,Finished already? Why don't you just keep going until I'm finished? Please?
+-2-male_finished_masturbating=horny,Over already, ~name~? Come on, I know you can last more than that.
+-2-female_must_masturbate=happy,Join me, ~name~! Follow my lead!
+-2-female_must_masturbate=excited,Alright, ~name~. Let's see who finishes first.
+
+-1-male_start_masturbating=happy,You can look at me if it helps, ~name~.
+-1-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
+-1-male_masturbating=shocked,Wow! You really know how to work those muscles!
+-1-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
+-1-male_masturbating=embarrassed,You truly are making the best out of this!
+-1-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+-1-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
+-1-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
+-1-female_must_masturbate=victory,At least be glad that you gave it your best.
+-1-female_must_masturbate=happy,Come on ~name~! It's not that bad as you might think.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=embarrassed,I'LL HAVE TO DO WHAT?!
+-3-must_masturbate_first=embarrassed,I'm only used to doing this in private!
+-3-must_masturbate=loss,I... lost?
+-3-must_masturbate=loss,I actually lost? I tried so hard! I guess I have to do the forfeit now... How embarrassing...
+-3-must_masturbate=angry,I can't believe I lost! Everyone is gonna watch me masturbate!
+-3-start_masturbating=starting,Oh well, let's see if my training pays off.
+-3-start_masturbating=starting,You better appreciate how lucky you are to watch this.
+
+-2-masturbating=horny,This actually feels pretty good. Why did I fight this so much?
+-2-masturbating=horny,I'm getting dizzy, are those stars floating around my head?
+-2-masturbating=excited,Why is it so exciting to know I'm being watched?
+-2-masturbating=embarrassed,Wow! All eyes are on me!
+-2-masturbating=embarrassed,You keep staring at me ~player~... It's a little humiliating...
+-2-masturbating=shocked,I usually do this after a fight, but never in public.
+-2-masturbating=happy,Believe it or not, but this is actually a pretty good workout.
+-2-masturbating=horny,Oh yeah... just like that.
+-2-masturbating=horny,Maybe it would've been better if I'd lost sooner.
+-2-heavy_masturbating=heavy,Oh, I think I'm reaching the climax!
+-2-heavy_masturbating=heavy,Get ready for my special attack!
+-2-heavy_masturbating=heavy,I can't hold much longer!
+-2-finishing_masturbating=finishing,OH, TAKE THIS!!!
+-2-finishing_masturbating=finishing,I'm cumming!!!
+-2-finishing_masturbating=finishing,KIKOKEN!
+
+-1-finished_masturbating=finished,Losing has never felt this good.
+-1-finished_masturbating=finished,I think I discovered something new about myself.
+-1-finished_masturbating=finished,I don't think I've ever had an orgasm like that.
+-1-finished_masturbating=finished,Sorry if I made a mess.
+
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#fully clothed
+0-game_over_victory=happy,Yes! Perfect win!
+
+
+#lost bracelets
+1-game_over_victory=victory,Looks like you need more training.
+
+
+#lost waistband
+2-game_over_victory=victory,You don't have what it takes to match my skill.
+
+
+#lost qipao
+3-game_over_victory=happy,Sorry! Try harder next time.
+
+
+#lost boots
+4-game_over_victory=victory,Thank you, that was a good match. But I win.
+
+
+#lost leotard
+5-game_over_victory=happy,Looks like my training paid off.
+
+
+#lost pantyhose
+6-game_over_victory=victory,You're not yet at my level, keep practicing.
+
+
+#lost bindings
+7-game_over_victory=victory,That was a close match, you've earned my respect.
+
+-3-game_over_victory=happy,Yes! I did it!
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=excited,I'm ready for a rematch whenever you are.
+
+#EPILOGUE/ENDING
