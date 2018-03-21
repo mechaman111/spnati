@@ -9,31 +9,41 @@ function mergeObjects(a, b){
 		return b;
 	}
 	for(var v in b){
-		a[v] = b[v];
+		if (typeof a[v] === 'object') {
+			a[v] = mergeObjects(a[v], b[v])
+		} else {
+			a[v] = b[v];
+		}
 	}
 	return a;
 }
 
 function Save(){
 	this.data = {
-		'gender' : '',
-		'name' : '',
 		'background' : 1,
 		'masturbationTimer' : 20,
-		'name' : '',
 		'gender' : "male",
-		'size' : "medium",
 		'autoFade' : 1,
 		'cardSuggest' : 2,
 		'gameDelay' : 3,
 		'dealAnimation' : 3,
 		'autoForfeit' : 4,
-		'clothing' : [false, false, true, false, true,
-			false, true, true, false, true,
-			false, false, true, false, true],
+		'male' : {
+			'name' : '',
+			'clothing' : [false, false, true, false, true, false,
+				      false, true, true, false, false, true,
+				      false, false, true, true, false, true],
+			'size' : 'medium'
+		},
+		'female' : {
+			'name' : '',
+			'clothing' : [false, false, true, false, true, true,
+				      false, true, true, false, false, true,
+				      false, false, false, true, false, true],
+			'size' : 'medium'
+		},
 		'endings' : {}
 	};
-
 	this.saveCookie = function(){
 		Cookies.set('save', this.data, {expires: 3652});
 	};
@@ -43,17 +53,33 @@ function Save(){
 		if(cookie !== undefined){
 			this.data = mergeObjects(this.data, JSON.parse(cookie));
 		}
-		this.loadSave();
+		// Copy data from older cookie to the gender-specific substructure.
+		if (this.data['name'] !== undefined) {
+			this.data[this.data['gender']]['name'] = this.data['name'];
+			delete this.data['name'];
+		}
+		if (this.data['clothing'] !== undefined) {
+			this.data[this.data['gender']]['clothing'] = this.data['clothing'];
+			delete this.data['clothing'];
+		}
+		if (this.data['size'] !== undefined) {
+			this.data[this.data['gender']]['size'] = this.data['size'];
+			delete this.data['size'];
+		}
+		this.loadOptions();
+		this.loadPlayer();
 	};
 
-	this.loadSave = function(){
+	this.loadPlayer = function() {
+		$nameField.val(this.data[players[HUMAN_PLAYER].gender]['name']);
+		changePlayerSize(this.data[players[HUMAN_PLAYER].gender]['size']);
+		selectedChoices = this.data[players[HUMAN_PLAYER].gender]['clothing'];
+		updateTitleGender();
+	};
+	this.loadOptions = function(){
 		players[HUMAN_PLAYER].timer = this.data['masturbationTimer'];
-		$nameField.val(this.data['name']);
-		changePlayerGender(this.data['gender']);
-		changePlayerSize(this.data['size']);
+		players[HUMAN_PLAYER].gender = this.data['gender'];
 		setBackground(this.data['background']);
-		selectedChoices = this.data['clothing'].slice(0);
-		updateTitleClothing();
 
 		setAutoFade(this.data['autoFade']);
 		setCardSuggest(this.data['cardSuggest']);
@@ -106,10 +132,10 @@ function Save(){
 		this.saveCookie();
 	};
 	this.savePlayer = function(){
-		this.data['name'] = $nameField.val();
 		this.data['gender'] = players[HUMAN_PLAYER].gender;
-		this.data['size'] = players[HUMAN_PLAYER].size;
-		this.data['clothing'] = selectedChoices;
+		this.data[this.data['gender']]['name'] = $nameField.val();
+		this.data[this.data['gender']]['size'] = players[HUMAN_PLAYER].size;
+		this.data[this.data['gender']]['clothing'] = selectedChoices.slice();
 		this.saveCookie();
 	};
 

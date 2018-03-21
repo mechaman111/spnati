@@ -146,21 +146,29 @@ function holdTitleClothing () {
  * screen, or this was called by an internal source.
  ************************************************************/
 function changePlayerGender (gender) {
+	save.savePlayer();
 	players[HUMAN_PLAYER].gender = gender;
+	save.loadPlayer();
+}
 
+/************************************************************
+ * Updates the gender dependent controls on the title screen.
+ ************************************************************/
+function updateTitleGender() {
 	/* update visuals */
-	if (gender == eGender.MALE) {
+	if (players[HUMAN_PLAYER].gender == eGender.MALE) {
 		$genderButtons[0].css({opacity: 1});
 		$genderButtons[1].css({opacity: 0.4});
 		$playerSizeContainers[0].show();
 		$playerSizeContainers[1].hide();
-	} else if (gender == eGender.FEMALE) {
+	} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
 		$genderButtons[0].css({opacity: 0.4});
 		$genderButtons[1].css({opacity: 1});
 		$playerSizeContainers[0].hide();
 		$playerSizeContainers[1].show();
 	}
 	loadClothing();
+	updateTitleClothing();
 }
 
 /************************************************************
