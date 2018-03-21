@@ -514,7 +514,7 @@ function advanceSelectDialogue (slot) {
  * Filters the list of selectable opponents based on those
  * already selected and performs search and sort logic.
  ************************************************************/
-function updateSelectableOpponents() {
+function updateSelectableOpponents(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var tag = $searchTag.val().toLowerCase();
@@ -574,6 +574,13 @@ function updateSelectableOpponents() {
         }
     }
 
+    // If a unique match was made, automatically clear the search so
+    // another opponent can be found more quickly.
+    if (autoclear && (name != null || source != null) && selectableOpponents.length == 0) {
+        clearSearch();
+        return;
+    }
+
     /* sort opponents */
     // Since selectableOpponents is always reloaded here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
@@ -594,7 +601,7 @@ function selectOpponentSlot (slot) {
         selectedSlot = slot;
 		
 		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
-		updateSelectableOpponents();
+		updateSelectableOpponents(true);
 		
 		/* reload selection screen */
 		updateIndividualSelectScreen();
@@ -1035,6 +1042,13 @@ function closeSearchModal() {
     // update
     updateIndividualSelectScreen();
     updateIndividualCountStats();
+}
+
+function clearSearch() {
+    $searchName.val(null);
+    $searchTag.val(null);
+    $searchSource.val(null);
+    closeSearchModal();
 }
 
 function changeSearchGender(gender) {
