@@ -660,7 +660,7 @@ function handleGameOver() {
 	/* determine how many timers are left */
 	var left = 0;
 	for (var i = 0; i < timers.length; i++) {
-		if (timers[i] > 0) {
+		if (players[i] && timers[i] > 0) {
 			left++;
 		}
 	}
