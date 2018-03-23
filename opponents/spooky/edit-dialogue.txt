@@ -1,0 +1,859 @@
+#required for behaviour.xml
+first=Spooky
+last=
+label=Spooky
+gender=female
+size=small
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=30
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=video_game
+tag=mean
+tag=weapon
+tag=ghost
+tag=spooky
+tag=creepy
+
+#required for meta.xml
+#select screen image
+pic=0-welcome.png
+height=???
+from=Spooky's Jumpscare Mansion
+writer=Zombiqaz & BlueKoin
+artist=YourLocalTrash & BlueKoin
+description=Owner and operator of Spooky's Jumpscare Mansion, since an undisclosed time in the 60's. Maybe you can ask her for a tour? But whatever you do, do NOT call her cute.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-welcome,I... Am Spooky. You mortals are playing strip poker? I guess that game never gets old.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Knife,knife,extra,other
+clothes=Dress,dress,major,upper
+clothes=Bra,bra,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#EXCHANGING CARDS
+#This is what a character says while they're exchanging cards.
+#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-specific lines that override the stage-generic ones
+swap_cards=calm,You know what? I'll take ~cards~.
+swap_cards=calm,Hey, you can have these ~cards~.
+swap_cards=calm,You can take these ~cards~ cards back.
+
+
+
+
+#HAND QUALITY
+#These lines appear each round when a character is commenting on how good or bad their hand is.
+#The lines written here are examples only and should be replaced.
+
+#fully clothed
+0-good_hand=happy,All according to plan.
+0-good_hand=happy,Hey, these are pretty sweet.
+0-good_hand=happy,And you mortals thought you could beat me.
+0-good_hand=happy,Good luck beating me this round, mortals.
+0-good_hand,alsoPlaying:alice,totalRounds:0=happy,<i>Knife</i> to meet you, Alice!
+0-okay_hand=calm,Huh? Well, these will have to do.
+0-okay_hand=calm,Well this could be better.
+0-okay_hand=calm,This should be enough.
+0-okay_hand=calm,Hmm. Okay then.
+0-okay_hand,alsoPlaying:alice,totalRounds:0=happy,<i>Knife</i> to meet you, Alice!
+0-bad_hand=annoyed,How <I>dare</I> you give me these cards.
+0-bad_hand=sad,You know what? Let's just pretend this isn't my hand.
+0-bad_hand=sad,This is... Not great.
+0-bad_hand=sad,This is... Unfortunate.
+0-bad_hand,alsoPlaying:alice,totalRounds:0=happy,<i>Knife</i> to meet you, Alice!
+
+
+#lost knife
+1-good_hand=happy,See? You'll never get a look at my ghostly mysteries.
+1-good_hand=happy,Ever wonder what a naked ghost looks like? Well, keep wondering.
+1-good_hand=happy,Ever wonder what a naked ghost looks like? Too bad, you won't be finding out this round.
+1-good_hand=happy,Hah! Suck it, mortals.
+1-okay_hand=annoyed,This'll... yeah, this will be fine.
+1-okay_hand=calm,This performance is barely acceptable.
+1-okay_hand=calm,There's always someone who's doing worse than you.
+1-bad_hand=sad,This isn't great. Wait... If I lose I'll have to...
+1-bad_hand=annoyed,Come on! I can't do anything with these cards.
+
+
+#lost dress
+2-good_hand=calm,I could've used this a little while ago.
+2-good_hand=happy,Thought you had me beat? You should know that ghosts just don't stop.
+2-good_hand=happy,Yeah! Now it's one of you guys' turn to show what you're made of.
+2-okay_hand=calm,Eh, this'll do.
+2-okay_hand=annoyed,These are kinda meh.
+2-bad_hand=sad,I shouldn't be losing. Maybe you guys'll have something worse?
+2-bad_hand=sad,Not again!
+
+
+#lost bra
+3-good_hand=happy,Hah! No ghost bits for you!
+3-good_hand=happy,And you thought you could win.
+3-okay_hand=calm,Well, these should be enough.
+3-okay_hand=calm,As good as can be expected.
+3-bad_hand=annoyed,Hey, who keeps giving me these cards?!
+3-bad_hand=annoyed,Don't give me such bad cards! Some things are not meant for mortal eyes.
+
+-3-good_hand=happy,Hah! It's gonna be one of you showing your flesh this time.
+-3-good_hand=happy,Guess who's going to be haunting you a little bit longer?
+-3-okay_hand=annoyed,This... could be enough?
+-3-okay_hand=calm,Okay. This is still going according to plan.
+-3-bad_hand=sad,It can't get any worse, can it? Of course it can always get worse.
+-3-bad_hand=annoyed,If you guys are rigging this game, I'll find out. I'm a ghost, you know.
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing knife
+0-must_strip_winning,marker:SpookyWinning1=calm,Well, if things always went my way, I wouldn't be dead.
+0-must_strip_winning,marker:SpookyWinning1=calm,Well, if things always went my way, you'd all be de-- uh, down to nothing.
+0-must_strip_winning,alsoPlaying:chica=annoyed,I am <I>not</I> cute!
+0-must_strip_winning,alsoPlaying:chica=annoyed,Don't call me "cute"!
+0-must_strip_winning,alsoPlaying:chica=annoyed,Call me "cute" again and I'll turn you into a toaster!
+0-must_strip_winning,alsoPlaying:chica=annoyed,Call me "cute" again and I'll mangle you!
+0-must_strip_winning,alsoPlaying:chica=annoyed,Right, <I>you've</I> never seen a dead girl before. <I>Sure.</I>
+0-must_strip_winning,alsoPlaying:chica=annoyed,<I>You've</I> never seen a dead girl before? I'll believe that when pigs fly.
+0-must_strip_normal=loss,Urgh! That didn't take long.
+0-must_strip_normal=loss,Drat! I thought I could hold out longer.
+0-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:0=annoyed,Yeah, the scientific explanation is that ghosts are real, and you need to accept that.
+0-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:0=annoyed,Yeah, the scientific explanation is that ghosts are real. Deal with it.
+0-must_strip_normal,alsoPlaying:gogo,alsoPlayingStage:0-5=annoyed,What? You don't have ghosts at <I>every</I> match? That's discriminatory.
+0-must_strip_normal,alsoPlaying:gogo,alsoPlayingStage:0-5=annoyed,What? You don't have ghosts at <I>every</I> match? That's racist.
+0-must_strip_normal,alsoPlaying:gogo,alsoPlayingStage:0-5=interested,Yeah, it must not be normal for you to get invided to play strip poker, huh?
+0-must_strip_normal,alsoPlaying:ann,alsoPlayingStage:0-7=happy,Ha! I'd like to see you <I>try</I> to be me in a fight.
+0-must_strip_normal,alsoPlaying:ann,alsoPlayingStage:0-7=happy,If you're itching for a fight, Ann, you should come over to my mansion. You <I>won't</I> be disappointed.
+0-must_strip_normal,alsoPlaying:ann,alsoPlayingStage:0-7=calm,I'm not a shadow, I'm a ghost. There's a big difference, I'm sure.
+0-must_strip_normal,alsoPlaying:ann,alsoPlayingStage:0-7=calm,I'm not a shadow, I'm a ghost. There's a big difference. Probably.
+0-must_strip_normal,alsoPlaying:sei,alsoPlayingStage:0=interested,Nope. Genuine restless spirit, right here.
+0-must_strip_normal,alsoPlaying:sei,alsoPlayingStage:0=interested,Nope. I'm a 100% genuine dead girl.
+0-must_strip_normal,alsoPlaying:chica=annoyed,I am <I>not</I> cute!
+0-must_strip_normal,alsoPlaying:chica=annoyed,Don't call me "cute"!
+0-must_strip_normal,alsoPlaying:chica=annoyed,Call me "cute" again and I'll turn you into a toaster!
+0-must_strip_normal,alsoPlaying:chica=annoyed,Call me "cute" again and I'll mangle you!
+0-must_strip_normal,alsoPlaying:chica=annoyed,Right, <I>you've</I> never seen a dead girl before. <I>Sure.</I>
+0-must_strip_normal,alsoPlaying:chica=annoyed,<I>You've</I> never seen a dead girl before? I'll believe that when pigs fly.
+0-must_strip_normal,alsoPlaying:pit=annoyed,Don't be stupid. Clothes can't be ghosts, they don't have souls.
+0-must_strip_normal,alsoPlaying:pit=annoyed,Are you stupid? Clothes can't be ghosts, they don't have souls.
+0-must_strip_normal,alsoPlaying:elena,alsoPlayingStage:0=interested,You see through <I>me</I>, but not my clothes. Well, you do, but... Nevermind.
+0-must_strip_losing=loss,Well, this is a bad start.
+0-must_strip_losing=loss,Oof. Not a good start.
+0-must_strip_losing,alsoPlaying:chica=annoyed,I am <I>not</I> cute!
+0-must_strip_losing,alsoPlaying:chica=annoyed,Don't call me "cute"!
+0-must_strip_losing,alsoPlaying:chica=annoyed,Call me "cute" again and I'll turn you into a toaster!
+0-must_strip_losing,alsoPlaying:chica=annoyed,Call me "cute" again and I'll mangle you!
+0-must_strip_losing,alsoPlaying:chica=annoyed,Right, <I>you've</I> never seen a dead girl before. <I>Sure.</I>
+0-must_strip_losing,alsoPlaying:chica=annoyed,<I>You've</I> never seen a dead girl before? I'll believe that when pigs fly.
+0-stripping=strip,What? Okay, I'll put down the knife.
+0-stripping=strip,Fine, fine, I'll put the knife down.
+0-stripping,alsoPlaying:elaine,alsoPlayingStage:0-5=strip,Drat! My facade has been broken! Well, no point in hanging on to the knife, then...
+0-stripping,alsoPlaying:marceline,alsoPlayingStage:9=strip,What do you <I>think</I> the knife is for? Knife things! But I'm not wearing much, so now it's just for buffering...
+0-stripping,alsoPlaying:marceline,alsoPlayingStage:9=strip,What else would a knife be for? Knife things! Except now, it's just a buffer...
+0-stripping,alsoPlaying:mia,alsoPlayingStage:0-3=strip,How else? I brought it in through the wall, of course.
+0-stripping,alsoPlaying:mia,alsoPlayingStage:0-3=strip,How else? I made it incorporeal and brought it through the wall. Obviously.
+0-stripping,alsoPlaying:xander,alsoPlayingStage:0-7=strip,Well, good for you, Xander. Glad things are going well for you right now. No, really.
+0-stripping,alsoPlaying:xander,alsoPlayingStage:0-7=strip,Glad everythings going well in your life, Xanoder. No sarcasm here. Really.
+0-stripping,alsoPlaying:chica=strip,Aw, fine, I'll put the knife down nice and slowly.
+0-stripping,alsoPlaying:chica=strip,Alright, alright, I'll put the knife down carefully, just knock it off with the Robocop shtick.
+0-stripping,alsoPlaying:marinette=strip,Aw, fine! But this counts as my item!
+0-stripping,alsoPlaying:marinette=strip,Fine, but I'd better get it back later! It's my favorite knife!
+0-stripping,alsoPlaying:sei=strip,Argh, fine, but not because you told me to. I needed a buffer, anyway.
+0-stripping,alsoPlaying:sei=strip,Argh, fine. Not because you told me to, but because I needed a buffer.
+0-stripping,saidMarker:SpookyWinning1=strip,Knife? Oh, uh, you saw that?... Fine, I'll put it down.
+0-stripping,saidMarker:SpookyWinning1=strip,Knife? What knife?... Oh, <I>this</I> knife? Fine, I'll put it down.
+
+
+#losing dress
+1-stripped=stripped,You'd better all still find me terrifying.
+1-stripped,alsoPlaying:hermione,alsoPlayingStage:0=stripped,Yeah, sure, all ghosts know each other. <I>Racist.</I>
+1-stripped,alsoPlaying:hermione,alsoPlayingStage:0=stripped,Yeah, sure, he's in my contact list, right next to Casper and Boo Berry.
+1-stripped,alsoPlaying:alice=annoyed,Yeah, well, ghosts don't wear a lot of clothes, so my knife counts.
+1-stripped,alsoPlaying:alice=annoyed,Yeah, well, I'm not wearing a lot of clothes, so my knife counts.
+1-stripped,alsoPlaying:alice=annoyed,I'm not wearing a lot of clothes, so it's more fair if my knife counts.
+1-stripped,alsoPlaying:nagisa,alsoPlayingStage:9=stripped,Yeah, well, I didn't do it for <I>you</I>, I did it because I'm not wearing much.
+1-stripped,alsoPlaying:nagisa,alsoPlayingStage:9=stripped,Yeah, well, I didn't do it for <I>you</I>, I did it to keep my dress on.
+1-stripped,alsoPlaying:pit=stripped,Huh, funny, I once controlled the body of an annoying angel boy, and you remind me of him.
+1-must_strip_winning=loss,Thought you'd get me down to your level? How thought... ful.
+1-must_strip_normal=loss,Well, you've managed to pierce my shroud.
+1-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:1=happy,Only some people. Everyone you ever knew? Yeah, they're not ghosts, they're gone forever.
+1-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:1=happy,Only some people. Your friends and ancestors are likely gone forever, never to be seen again.
+1-must_strip_normal,alsoPlaying:elena,alsoPlayingStage:0=interested,You see through <I>me</I>, but not my clothes. Well, you do, but... Nevermind.
+1-must_strip_normal,alsoPlaying:elaine,alsoPlayingStage:0-5=annoyed,Yeah, well, the feeling's mutual, Elaine.
+1-must_strip_normal,alsoPlaying:elaine,alsoPlayingStage:0-5=annoyed,Yeah, well, I'm not exactly fond of mortals, so we're even.
+1-must_strip_losing=loss,Huh? Already?
+1-stripping=strip,I didn't really think this through...
+
+
+#losing bra
+2-stripped=stripped,Ghosts... don't... usually wear a lot of clothes.
+2-stripped=stripped,... Good thing I can just apparate some underwear.
+2-stripped,alsoPlaying:elaine,alsoPlayingStage:0-5=stripped,I could use a <I>real</I> bear, myself... What? I can drink. I've been dead for fifty years!
+2-stripped,alsoPlaying:elaine,alsoPlayingStage:0-5=stripped,I could use a <I>real</I> bear, myself... What? Ghost can drink!
+2-stripped,alsoPlaying:chica=stripped,... Good thing I can just apparate some underwear.
+2-stripped,alsoPlaying:palutena,alsoPlayingStage:0-7=stripped,Well, if you can think of a better game to play with ghosts, I'm all ears.
+2-stripped,alsoPlaying:palutena,alsoPlayingStage:0-7=stripped,If there's a better game to play with ghosts, I'd certainly like to hear what it is.
+2-must_strip_winning=loss,So I finally have to show you the goods?
+2-must_strip_normal=loss,I didn't apparate for fifty years just to lose like this.
+2-must_strip_normal=loss,What? Again? You people just... Keep on going, don't you?
+2-must_strip_normal,alsoPlaying:elena,alsoPlayingStage:0=interested,You see through <I>me</I>, but not my clothes. Well, you do, but... Nevermind.
+2-must_strip_losing=loss,And some people say that I'm mean.
+2-stripping=strip,You'd better not laugh.
+
+
+#lost all clothing
+3-stripped=stripped,These are some quality, mature, perfectly acceptable mammaries that command the respect of all who see them.
+3-stripped=stripped,Are you laughing at me?! Didn't think so.
+3-stripped=stripped,Well what did you expect fifty year old ghost breasts to look like? Did you expect more cobwebs?
+3-stripped,alsoPlaying:pit=stripped,Yeah, it'd better not be! I'll kill you if you laugh!
+3-stripped,alsoPlaying:pit=stripped,Good, because if it was, I'd kill you for laughing.
+3-stripped,alsoPlaying:streaming-chan,alsoPlayingStage:0-7=stripped,Jokes on you, Streaming-chan, I don't show up on film.
+3-stripped,alsoPlaying:hermione,alsoPlayingStage:0-3=stripped,I am <I>not</I> adorable! You should fear me!
+3-stripped,alsoPlaying:elaine,alsoPlayingStage:0-5=stripped,Well, maybe not the others, but I certainly will try to kill <I>you</I> later if you don't can it!
+3-stripped,alsoPlaying:elaine,alsoPlayingStage:0-5=stripped,Well, maybe not the others, but <I>you</I> are definitely in for some misfortune later!
+3-must_strip_winning=loss,Well. Congratulations. You made it. I didn't think you'd make it this far, but you got me naked.
+3-must_strip_normal=loss,Oh... Hai. I didn't think you'd make it this far.
+3-must_strip_normal,alsoPlaying:elena,alsoPlayingStage:0=interested,You see through <I>me</I>, but not my clothes. Well, you do, but... Nevermind.
+3-must_strip_losing=loss,You know you're picking on a dead girl, right?
+3-stripping=strip,But them's the rules.
+
+-3-stripped=stripped,Well. There you go. You've seen a naked ghost. You can cross that off your bucket list now. Which is good, because you might not be alive much longer.
+-3-stripped=stripped,Well. There you go. You've seen a naked ghost. You can cross that off your bucket list now. Which is good, because you might be kicking it soon.
+-3-stripped=stripped,What? I might be a bit wet. Just because I'm dead doesn't mean I'm not a woman with needs.
+-3-stripped,alsoPlaying:chica=stripped,Well. There you go. You've seen a naked ghost. You can cross that off your bucket list now. Which is good, because you might not be alive much longer.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-specific lines that override the stage-generic ones
+male_human_must_strip=interested,So what are you hiding, ~name~?
+male_human_must_strip=interested,Show us what you're hiding, ~name~.
+male_human_must_strip=interested,Let's see what you're hiding, ~name~.
+male_human_must_strip=interested,Well? We're waiting, ~name~.
+male_human_must_strip=interested,Don't keep us waiting, ~name~.
+male_human_must_strip=interested,Well? Let's see some skin, ~name~.
+male_human_must_strip=interested,You lost, ~name~. Time to pay up.
+female_human_must_strip=interested,So what are you hiding, ~name~?
+female_human_must_strip=interested,Show us what you're hiding, ~name~.
+female_human_must_strip=interested,Let's see what you're hiding, ~name~.
+female_human_must_strip=interested,Well? We're waiting, ~name~.
+female_human_must_strip=interested,Don't keep us waiting, ~name~.
+female_human_must_strip=interested,Well? Let's see some skin, ~name~.
+female_human_must_strip=interested,You lost, ~name~. Time to pay up.
+
+
+#fully clothed
+0-male_must_strip=interested,So what are you hiding, ~name~?
+0-male_must_strip=interested,Show us what you're hiding, ~name~.
+0-male_must_strip=interested,Let's see what you're hiding, ~name~.
+0-male_must_strip=interested,Well? We're waiting, ~name~.
+0-male_must_strip=interested,Don't keep us waiting, ~name~.
+0-male_must_strip=interested,Well? Let's see some skin, ~name~.
+0-male_must_strip=interested,You lost, ~name~. Time to pay up.
+0-female_must_strip=interested,So what are you hiding, ~name~?
+0-female_must_strip=interested,Show us what you're hiding, ~name~.
+0-female_must_strip=interested,Let's see what you're hiding, ~name~.
+0-female_must_strip=interested,Well? We're waiting, ~name~.
+0-female_must_strip=interested,Don't keep us waiting, ~name~.
+0-female_must_strip=interested,Well? Let's see some skin, ~name~.
+0-female_must_strip=interested,You lost, ~name~. Time to pay up.
+
+
+#lost knife
+1-male_must_strip=interested,Which of you flesh beings lost that hand?
+1-female_must_strip=interested,What offering do you have for us, ~name~?
+
+
+#lost dress
+2-male_human_must_strip=calm,It can't always be me who loses.
+2-male_human_must_strip=happy,Now it's your turn to suffer, ~name~.
+2-male_human_must_strip=happy,Time for some more suffering.
+2-male_human_must_strip=interested,Make it a good one this time, ~name~.
+2-male_human_must_strip=interested,It'd better be a good one this time, ~name~.
+2-male_must_strip=calm,It can't always be me who loses.
+2-male_must_strip=happy,Now it's your turn to suffer, ~name~.
+2-male_must_strip=happy,Time for some more suffering.
+2-male_must_strip=interested,Make it a good one this time, ~name~.
+2-male_must_strip=interested,It'd better be a good one this time, ~name~.
+2-female_human_must_strip=calm,It can't always be me who loses.
+2-female_human_must_strip=happy,Now it's your turn to suffer, ~name~.
+2-female_human_must_strip=happy,Time for some more suffering.
+2-female_human_must_strip=interested,Make it a good one this time, ~name~.
+2-female_human_must_strip=interested,It'd better be a good one this time, ~name~.
+2-female_must_strip=calm,It can't always be me who loses.
+2-female_must_strip=happy,Now it's your turn to suffer, ~name~.
+2-female_must_strip=happy,Time for some more suffering.
+2-female_must_strip=interested,Make it a good one this time, ~name~.
+2-female_must_strip=interested,It'd better be a good one this time, ~name~.
+
+
+#lost bra
+3-male_human_must_strip=happy,Yeah, come on, take it off.
+3-male_must_strip=happy,Yeah, come on, take it off.
+3-female_human_must_strip=happy,Yeah, come on, take it off.
+3-female_must_strip=happy,Yeah, come on, take it off.
+
+-3-male_human_must_strip=happy,Aw. You lost. Shame.
+-3-male_must_strip=happy,Aw. You lost. Shame.
+-3-female_human_must_strip=happy,Aw. You lost. Shame.
+-3-female_must_strip=happy,Aw. You lost. Shame.
+
+-2-male_human_must_strip=happy,Hah! You're not invincible.
+-2-male_must_strip=happy,Hah! You're not invincible.
+-2-female_human_must_strip=happy,Hah! You're not invincible.
+-2-female_must_strip=happy,Hah! You're not invincible.
+
+-1-male_human_must_strip=calm,Okay, okay, whip it off big boy.
+-1-male_human_must_strip=calm,It's not so fun when it's your turn to take it off, is it?
+-1-male_must_strip=calm,Okay, okay, whip it off big boy.
+-1-male_must_strip=calm,It's not so fun when it's your turn to take it off, is it?
+-1-female_human_must_strip=calm,Okay, okay, whip it off girl.
+-1-female_human_must_strip=calm,It's not so fun when it's your turn to take it off, is it?
+-1-female_must_strip=calm,Okay, okay, whip it off girl.
+-1-female_must_strip=calm,It's not so fun when it's your turn to take it off, is it?
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_accessory=calm,Well, I guess you can't give it all away too quickly.
+male_removing_accessory=calm,Your ~clothing~, huh? Makes sense, I guess.
+male_removing_accessory=calm,I guess your ~clothing~ had to come off eventually. Why not now?
+male_removing_accessory=calm,I guess not everyone wants to show off right away.
+female_removing_accessory=calm,Well, I guess you can't give it all away too quickly.
+female_removing_accessory=calm,Your ~clothing~, huh? Makes sense, I guess.
+female_removing_accessory=calm,I guess your ~clothing~ had to come off eventually. Why not now?
+female_removing_accessory=calm,I guess not everyone wants to show off right away.
+
+
+#fully clothed
+0-male_removed_accessory=calm,Gotta save some of the good stuff.
+0-male_removed_accessory=calm,I've got nothing but time. I'm immortal.
+0-male_removed_accessory=calm,I've got nothing but time. I'm dead.
+0-male_removed_accessory=calm,I can wait. It's not like I've got anywhere to be.
+0-male_removed_accessory=calm,You can only stall for so long.
+0-female_removed_accessory=calm,Gotta save some of the good stuff.
+0-female_removed_accessory=calm,I've got nothing but time. I'm immortal.
+0-female_removed_accessory=calm,I've got nothing but time. I'm dead.
+0-female_removed_accessory=calm,I can wait. It's not like I've got anywhere to be.
+0-female_removed_accessory=calm,You can only stall for so long.
+
+
+#lost knife
+1-male_removed_accessory=calm,Give us something better next time and maybe I'll forgive you.
+1-female_removed_accessory=calm,If you hadn't noticed, I'm not even wearing shoes.
+1-female_removed_accessory=calm,I remember when I had my very own ~clothing~.
+
+
+#lost dress
+2-male_removing_accessory=sad,Hmph. You've still got your ~clothing~ to take off? Good for you.
+2-male_removing_accessory=sad,Oh, your ~clothing~, huh? Great.
+2-male_removing_accessory=sad,You still have your ~clothing~? Wonderful.
+2-male_removing_accessory=sad,Oh, well, good for you for keeping your ~clothing~ this long, ~name~.
+2-male_removed_accessory=annoyed,Now lose something better.
+2-male_removed_accessory=annoyed,You'd better lose something better next time.
+2-male_removed_accessory=annoyed,<i>I'm</i> the one who's supposed to be doing the teasing.
+2-male_removed_accessory=annoyed,You <I>will</I> remove something better next time.
+2-female_removing_accessory=sad,Hmph. You've still got your ~clothing~ to take off? Good for you.
+2-female_removing_accessory=sad,Oh, your ~clothing~, huh? Great.
+2-female_removing_accessory=sad,You still have your ~clothing~? Wonderful.
+2-female_removing_accessory=sad,Oh, well, good for you for keeping your ~clothing~ this long, ~name~.
+2-female_removed_accessory=annoyed,Now lose something better.
+2-female_removed_accessory=annoyed,You'd better lose something better next time.
+2-female_removed_accessory=annoyed,<i>I'm</i> the one who's supposed to be doing the teasing.
+2-female_removed_accessory=annoyed,You <I>will</I> remove something better next time.
+
+
+#lost bra
+3-male_removing_accessory=annoyed,Oh. Your ~clothing~.
+3-male_removing_accessory=annoyed,Would it kill you to pick something else? Because this choice might.
+3-male_removing_accessory=annoyed,If you know what's good for you, you'll pick something else.
+3-male_removed_accessory=sad,Fantastic.
+3-male_removed_accessory=annoyed,Rude.
+3-male_removed_accessory=sad,How tasteless.
+3-male_removed_accessory=sad,What a tasteless choice.
+3-male_removed_accessory=annoyed,What a rude choice.
+3-female_removing_accessory=annoyed,Oh. Your ~clothing~.
+3-female_removing_accessory=annoyed,Would it kill you to pick something else? Because this choice might.
+3-female_removing_accessory=annoyed,If you know what's good for you, you'll pick something else.
+3-female_removed_accessory=sad,Fantastic.
+3-female_removed_accessory=annoyed,Rude.
+3-female_removed_accessory=sad,How tasteless.
+3-female_removed_accessory=sad,What a tasteless choice.
+3-female_removed_accessory=annoyed,What a rude choice.
+
+-3-male_removing_accessory=annoyed,I have a draft going <i>through</i> me, and that's all you're taking off?
+-3-male_removing_accessory=annoyed,Hmph. I had you pegged for a coward, ~name~.
+-3-male_removing_accessory=annoyed,You must think you're <I>real</I> clever, huh?
+-3-male_removing_accessory=annoyed,How very brave of you. Not from what your taking off, but who you're upsetting in the process.
+-3-male_removed_accessory=calm,I know you've got some better stuff under there.
+-3-female_removing_accessory=annoyed,I have a draft going <i>through</i> me, and that's all you're taking off?
+-3-female_removing_accessory=annoyed,Hmph. I had you pegged for a coward, ~name~.
+-3-female_removing_accessory=annoyed,You must think you're <I>real</I> clever, huh?
+-3-female_removing_accessory=annoyed,How very brave of you. Not from what your taking off, but who you're upsetting in the process.
+-3-female_removed_accessory=calm,I know you've got some better stuff under there.
+
+-2-male_removing_accessory=annoyed,Ahh! That's all you're taking off?
+-2-male_removed_accessory=sad,You put a little more effort into taking it off.
+-2-female_removing_accessory=annoyed,Ahh! That's all you're taking off?
+-2-female_removed_accessory=sad,You put a little more effort into taking it off.
+
+-1-male_removing_accessory=annoyed,Oh. You've still got your ~clothing~ on.
+-1-male_removing_accessory=annoyed,After all this, you have your ~clothing~ to take off?
+-1-male_removed_accessory=sad,You must be feeling fantastic there.
+-1-male_removed_accessory=sad,Where's my knife? I know a quick way for you to show more skin.
+-1-female_removing_accessory=annoyed,Oh. You've still got your ~clothing~ on.
+-1-female_removing_accessory=annoyed,After all this, you have your ~clothing~ to take off?
+-1-female_removed_accessory=sad,You must be feeling fantastic there.
+-1-female_removed_accessory=sad,Why is anything that small even allowed in the game?
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_minor=calm,Could be better, could be worse.
+male_removing_minor=calm,You choice could be better, but I can't complain.
+male_removing_minor=calm,I don't even know why you're wearing that, anyway.
+male_removing_minor=interested,On no. Not your ~clothing.~ What a shame.
+male_removing_minor=sad,Alas, poor ~name~. Taken from us too soon. And by "too soon" I mean before their ~clothing~ came back in style again.
+male_removed_minor=happy,You've lost a layer of defense, and there are many rounds yet to go.
+male_removed_minor=happy,You needed to take that off before you can get to the good stuff, anyway.
+male_removed_minor=happy,You won't be able to keep the good stuff on for longer, anyway.
+male_removed_minor=happy,It's only a matter of time before you must embarrass yourself.
+female_removing_minor=calm,Could be better, could be worse.
+female_removing_minor=calm,You choice could be better, but I can't complain.
+female_removing_minor=calm,I don't even know why you're wearing that, anyway.
+female_removing_minor=interested,On no. Not your ~clothing.~ What a shame.
+female_removing_minor=sad,Alas, poor ~name~. Taken from us too soon. And by "too soon" I mean before their ~clothing~ came back in style again.
+female_removed_minor=happy,You've lost a layer of defense, and there are many rounds yet to go.
+female_removed_minor=happy,You needed to take that off before you can get to the good stuff, anyway.
+female_removed_minor=happy,You won't be able to keep the good stuff on for longer, anyway.
+female_removed_minor=happy,It's only a matter of time before you must embarrass yourself.
+
+
+#lost dress
+2-male_removing_minor=calm,Your ~clothing~ huh?
+2-male_removed_minor=calm,I guess that's something.
+2-male_removed_minor=calm,You'll catch up eventually.
+2-female_removing_minor=calm,Your ~clothing~ huh?
+2-female_removed_minor=calm,I guess that's something.
+
+
+#lost bra
+3-male_removing_minor=annoyed,Can't bring yourself to show something important?
+3-male_removing_minor=annoyed,Is that all you can muster, ~name~?
+3-male_removing_minor=annoyed,Is that it? Seriously?
+3-male_removing_minor=annoyed,Are you kidding me?
+3-male_removed_minor=calm,I understand if you're not up to the challenge.
+3-male_removed_minor=calm,I never liked your ~clothing~ anyway.
+3-male_removed_minor=calm,I never liked your ~clothing~ to begin with.
+3-male_removed_minor=annoyed,You <I>will</I> catch up.
+3-female_removing_minor=annoyed,Can't bring yourself to show something important?
+3-female_removing_minor=annoyed,Is that all you can muster, ~name~?
+3-female_removing_minor=annoyed,Is that it? Seriously?
+3-female_removing_minor=annoyed,Are you kidding me?
+3-female_removed_minor=calm,I understand if you're not up to the challenge.
+3-female_removed_minor=calm,I never liked your ~clothing~ anyway.
+3-female_removed_minor=calm,I never liked your ~clothing~ to begin with.
+3-female_removed_minor=annoyed,You <I>will</I> catch up.
+
+-3-male_removing_minor=annoyed,Even you can do better than that, ~name~.
+-3-male_removed_minor=calm,At least you're closer to the good stuff.
+-3-female_removing_minor=annoyed,Even you can do better than that, ~name~.
+-3-female_removed_minor=calm,At least you're closer to the good stuff.
+
+-2-male_removing_minor=annoyed,Aww, really!?
+-2-male_removed_minor=sad,That's the best you can do?
+-2-female_removing_minor=annoyed,Aww, really!?
+-2-female_removed_minor=sad,That's the best you can do?
+
+-1-male_removing_minor=calm,Oh? Taking off your ~clothing~?
+-1-male_removing_minor=annoyed,Hmph. Is that it?
+-1-male_removed_minor=calm,Whoop-dee-doo.
+-1-male_removed_minor=sad,Look. This is not what the game is about. You're supposed to get naked.
+-1-female_removing_minor=calm,Oh? Taking off your ~clothing~?
+-1-female_removing_minor=annoyed,Hmph. Is that it?
+-1-female_removed_minor=calm,Whoop-dee-doo.
+-1-female_removed_minor=sad,Look. This is not what the game is about. You're supposed to get naked.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-specific lines that override the stage-generic ones
+male_removing_major=interested,Time to reveal some good stuff.
+male_removing_major=happy,Oh no, your ~clothing~? How... Unfortunate.
+male_removing_major=happy,Oh no, your ~clothing~? I'm so... Sad.
+male_removing_major=happy,Your ~clothing~? Are you sure? I'm so sad for you. No, really.
+male_removing_major=interested,Oh dear. You really don't have a choice, do you? That's sad.
+male_removed_major=interested,Mmmm... Feeling exposed? Vulnerable? Nice.
+male_removed_major=interested,Mmmm... Feeling exposed? Vulnerable? Good.
+male_removed_major=interested,And now we're on the same playing field. Because, y'know, I'm not wearing much either.
+male_removed_major=interested,How does it feel? I wouldn't know, since I'm still clothed.
+male_removed_major=interested,How does it feel? I wouldn't know, being clothed and all.
+female_removing_major=interested,Time to reveal some good stuff.
+female_removing_major=happy,Oh no, your ~clothing~? How... Unfortunate.
+female_removing_major=happy,Oh no, your ~clothing~? I'm so... Sad.
+female_removing_major=happy,Your ~clothing~? Are you sure? I'm so sad for you. No, really.
+female_removing_major=interested,Oh dear. You really don't have a choice, do you? That's sad.
+female_removed_major=interested,Mmmm... Feeling exposed? Vulnerable? Nice.
+female_removed_major=interested,Mmmm... Feeling exposed? Vulnerable? Good.
+female_removed_major=interested,And now we're on the same playing field. Because, y'know, I'm not wearing much either.
+female_removed_major=interested,How does it feel? I wouldn't know, since I'm still clothed.
+female_removed_major=interested,How does it feel? I wouldn't know, being clothed and all.
+
+
+#lost dress
+2-male_removing_major=happy,Hey, now it's your turn!
+2-male_removed_major=calm,Having fun yet, ~name~?
+2-female_removing_major=happy,Hey, now it's your turn!
+2-female_removed_major=calm,Having fun yet, ~name~?
+
+
+#lost bra
+3-male_removing_major=calm,Well, that's something.
+3-male_removed_major=happy,Feeling a bit... Cold?
+3-male_removed_major=happy,Cold? Too bad.
+3-female_removing_major=calm,Well, that's something.
+3-female_removed_major=happy,Feeling a bit... Cold?
+3-female_removed_major=happy,Cold? Too bad.
+
+-3-male_removing_major=calm,Heh. About time you took something good off.
+-3-male_removed_major=interested,Flex for me, ~name~.
+-3-female_removing_major=calm,Heh. About time you took something good off.
+-3-female_removed_major=interested,Stretch for me, ~name~.
+
+-2-male_removing_major=interested,A striptease? I could use that.
+-2-male_removed_major=happy,Nice and slow, there.
+-2-female_removing_major=interested,A striptease? I could use that.
+-2-female_removed_major=happy,Nice and slow, girl.
+
+-1-male_removing_major=calm,Well, better late than never.
+-1-male_removed_major=calm,Hope you're feeling a bit bare, there.
+-1-female_removing_major=calm,Well, better late than never.
+-1-female_removed_major=calm,Hope you're feeling a bit bare, there.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-specific lines that override the stage-generic ones
+male_chest_will_be_visible=excited,Skin time, ~name~.
+male_chest_is_visible=interested,I know how you could put those pecs to use. Wanna come by my place after?
+male_crotch_will_be_visible=horny,Hey, it's time for your fleshy bits, ~name~.
+male_medium_crotch_is_visible=horny,Oh, I can feel your blood pumping from here.
+female_chest_will_be_visible=horny,Yeah, show me your flesh sacks!
+female_small_chest_is_visible=interested,Awww... They're so cu... I mean they are a pair of perfectly respectable breasts.
+female_medium_chest_is_visible=horny,Now those are some boobs that command respect.
+female_large_chest_is_visible=annoyed,See, if I had jubblies like those everyone would take me seriously.
+female_large_chest_is_visible=shocked,How did they even <I>get</I> that big?
+female_crotch_will_be_visible=horny,Aw yeah, girly bits!
+female_crotch_is_visible=horny,Mmmm, that's some sweet flesh.
+female_crotch_is_visible=happy,Don't worry, girl, they stay wet, even when you die.
+
+
+#fully clothed
+0-male_small_crotch_is_visible=sad,Such an underwhelming specimen...
+0-male_small_crotch_is_visible=sad,What a disappointment.
+0-male_large_crotch_is_visible=shocked,It's not <i>me</i> who's supposed to get the jump scare!
+0-male_large_crotch_is_visible=shocked,<I>That</I> monster belongs in my mansion!
+
+
+#lost knife
+1-male_small_crotch_is_visible=calm,I suppose you gotta have something for everyone.
+1-male_large_crotch_is_visible=excited,Now that's a pulsating meat tube.
+
+
+#lost dress
+2-male_chest_will_be_visible=interested,Gonna take if off huh?
+2-male_chest_is_visible=calm,Yeah, I guess that's something.
+2-male_crotch_will_be_visible=happy,So you got a penis? Nice!
+2-male_small_crotch_is_visible=happy,I bet he fits in all sorts of places!
+2-male_medium_crotch_is_visible=interested,I bet all the ladies get distracted by that guy. Ahem. Not that I am.
+2-male_large_crotch_is_visible=shocked,You could kill someone with that thing. Say...
+2-female_chest_will_be_visible=horny,Guess what pretty little things are going to be on display?
+2-female_small_chest_is_visible=interested,Oh, I'm down with those little ladies.
+2-female_medium_chest_is_visible=horny,Ooh, I could just sink into those.
+2-female_large_chest_is_visible=shocked,You could smother someone with those. Say... wanna come by my place later?
+2-female_crotch_will_be_visible=horny,Oh ~name~, it's time to show us your pride and joy.
+2-female_crotch_is_visible=excited,Oh it's so pretty! I think I can see some wetness down there.
+
+
+#lost bra
+3-male_chest_will_be_visible=calm,Show us where you keep your internal organs!
+3-male_chest_is_visible=interested,Well, you look like you have some endurance.
+3-male_crotch_will_be_visible=interested,So you've got some flesh to show us?
+3-male_small_crotch_is_visible=horny,Don't underestimate the small things.
+3-male_medium_crotch_is_visible=excited,Oh, I think it's reacting to me.
+3-male_large_crotch_is_visible=shocked,Well, that's much bigger than I thought it would be.
+3-female_chest_will_be_visible=excited,Yeah, I'm not so cute now that someone else gets their tits out!
+3-female_small_chest_is_visible=interested,See, there's nothing wrong with a pair like that!
+3-female_medium_chest_is_visible=annoyed,It's not adorable when someone else exposes themselves.
+3-female_large_chest_is_visible=sad,Aww, no-one's going to take me seriously with boobs like that on the table.
+3-female_crotch_will_be_visible=horny,There's nothing protecting it now, ~name~.
+3-female_crotch_is_visible=excited,And now it's open and on display!
+
+-3-male_chest_will_be_visible=calm,About time you showed yourself off.
+-3-male_chest_is_visible=calm,I suppose it's good enough for a cage of meat.
+-3-male_crotch_will_be_visible=interested,Well, come on. Show us your meat stick.
+-3-male_small_crotch_is_visible=horny,I guess that's something to chew on.
+-3-male_medium_crotch_is_visible=excited,Yeah, just wave that sucker around.
+-3-male_large_crotch_is_visible=shocked,You could choke someone with that! Well, not me though, I'm already dead.
+-3-female_chest_will_be_visible=interested,Oh, finally getting your girls out, ~name~?
+-3-female_small_chest_is_visible=horny,Mmm... those are some nice toys.
+-3-female_medium_chest_is_visible=excited,Ooh... Would you mind if I... possessed those?
+-3-female_large_chest_is_visible=shocked,You could smother someone with those! Well, not me though, I'm already dead.
+-3-female_crotch_will_be_visible=calm,I may have stolen your thunder a bit, ~name~.
+-3-female_crotch_is_visible=horny,That's just not as exciting after having seen a dead girl's.
+
+-2-male_chest_will_be_visible=interested,At least there's someone here to show off.
+-2-male_chest_is_visible=calm,Flex for me, I want to see your sinew.
+-2-male_crotch_will_be_visible=interested,At least someone picked a good time to strip.
+-2-male_small_crotch_is_visible=horny,Take it from me, size isn't everything.
+-2-male_medium_crotch_is_visible=excited,I know where you could put that to use, ~name~.
+-2-male_large_crotch_is_visible=shocked,It must take a lot of blood to get that thing up. Hmm. What would happen if you lost it all?
+-2-female_chest_will_be_visible=interested,Mmmm... I could always do with another pair of tits.
+-2-female_small_chest_is_visible=horny,Yeah, they're so sweet.
+-2-female_small_chest_is_visible=excited,Nice!
+-2-female_medium_chest_is_visible=horny,Oh, wanna let me show you what you could do with them?
+-2-female_large_chest_is_visible=shocked,Oh, the things I could do with those...
+-2-female_crotch_will_be_visible=horny,My, you're giving me something to look forward to.
+-2-female_crotch_will_be_visible=excited,Showing me your pussy? How sweet of you.
+-2-female_crotch_is_visible=horny,Oh, I could show you so many things to do with that. You learn these things over the decades...
+-2-female_crotch_is_visible=interested,Hahh... Take a look at me and see how I use mine. I've had a lot of practice with it...
+
+-1-male_chest_will_be_visible=calm,Eh, now you're taking it off?
+-1-male_chest_is_visible=calm,That's serviceable, I guess.
+-1-male_crotch_will_be_visible=interested,You know, you could have done this earlier.
+-1-male_crotch_will_be_visible=calm,Aww, not so smug now, are you?
+-1-male_small_crotch_is_visible=calm,Or is that why you kept it hidden?
+-1-male_medium_crotch_is_visible=horny,Well, there's still time for you to put it to use.
+-1-male_large_crotch_is_visible=shocked,You could break someone with that. But who?
+-1-female_chest_will_be_visible=interested,Those would have been useful earlier.
+-1-female_chest_will_be_visible=calm,Eh, there's never a bad time for more breasts.
+-1-female_small_chest_is_visible=horny,You know, I don't have anything left to do now but float here and stare at those.
+-1-female_medium_chest_is_visible=excited,I'd kill for breasts like those. Not that it worked last time.
+-1-female_large_chest_is_visible=shocked,You're still in the game AND you have massive boobs! Some girls have all the luck.
+-1-female_crotch_will_be_visible=horny,I may have just done myself, but that doesn't mean I won't appreciate yours, ~name~.
+-1-female_crotch_will_be_visible=interested,Well, here's something nice.
+-1-female_crotch_is_visible=excited,Oh! You make me want to get started again.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#fully clothed
+0-male_must_masturbate=interested,You're out of clothes there, ~name~.
+0-male_must_masturbate=horny,Oh dear. It appears that you're out of clothes.
+0-male_must_masturbate=happy,Oh no. How sad. You've lost, ~name~.
+0-male_start_masturbating=horny,Buckle up, you've got a show to put on.
+0-male_masturbating=horny,Yeah, I like the way you handle that.
+0-male_finished_masturbating=happy,La petite mort. My second favourite kind of death.
+0-female_must_masturbate=interested,You're out of clothes there, ~name~.
+0-female_must_masturbate=horny,Oh dear. It appears that you're out of clothes.
+0-female_must_masturbate=happy,Oh no. How sad. You've lost, ~name~.
+0-female_start_masturbating=horny,Buckle up, missy, you've got a show to put on.
+0-female_masturbating=horny,Yeah, I like the way you handle yourself.
+0-female_finished_masturbating=happy,La petite mort. My second favourite kind of death.
+
+
+#lost knife
+1-male_must_masturbate=interested,Hah! Thought you could beat me. Time to enjoy yourself, while I enjoy myself.
+1-male_start_masturbating=horny,Don't pretend you haven't done this before.
+1-male_masturbating=horny,Hah! I can see you're enjoying this even more than I am!
+1-male_finished_masturbating=excited,Congratulations! You did it! It was interesting watching you swing your thing around like that. You could make a fine specimen...
+1-female_must_masturbate=interested,Hah! Thought you could beat me. Time to enjoy yourself, while I enjoy myself.
+1-female_start_masturbating=horny,Don't pretend you haven't done this before.
+1-female_masturbating=horny,Hah! I can see you're enjoying this even more than I am!
+1-female_finished_masturbating=excited,Congratulations! You did it! It was interesting watching you <i>use</i> yourself like that. You could make a fine specimen...
+
+
+#lost dress
+2-male_must_masturbate=interested,Welcome to the end... of your game. Can you, dear ~name~, masturbate to completion? Can humans even reliably achieve climax with an audience? Cuz I don't know.
+2-male_start_masturbating=horny,Anyway, just... go. Just go.
+2-male_masturbating=horny,So you've made it this far. But you need to keep going, ~name~.
+2-male_finished_masturbating=excited,Hey, you made it! I'm sure your parents are proud of you.
+2-female_must_masturbate=interested,Welcome to the end... of your game. Can you, dear ~name~, masturbate to completion? Can humans even reliably achieve climax with an audience? Cuz I don't know.
+2-female_start_masturbating=horny,Anyway, just... go. Just go.
+2-female_masturbating=horny,So you've made it this far. But you need to keep going, ~name~.
+2-female_finished_masturbating=excited,Hey, you made it! I'm sure your parents are proud of you.
+
+
+#lost bra
+3-male_must_masturbate=interested,Hey, you lost! It's not so romantic now, is it ~name~?
+3-male_start_masturbating=horny,But at least you have some ghost boobs to get you started.
+3-male_masturbating=horny,Don't worry, you're far from the only one to be bested by Spooky.
+3-male_finished_masturbating=excited,Awww, you came!
+3-female_must_masturbate=interested,Hey, you lost! It's not so romantic now, is it ~name~?
+3-female_start_masturbating=horny,But at least you have some ghost boobs to get you started.
+3-female_masturbating=horny,Don't worry, you're far from the only one to be bested by Spooky.
+3-female_finished_masturbating=excited,Awww, you came!
+
+-3-male_must_masturbate=horny,Well. You lost. In a pretty tragic way, too.
+-3-male_start_masturbating=horny,Buckle up soldier, you've got a show to put on.
+-3-male_masturbating=horny,No respite until you are truly finished.
+-3-male_finished_masturbating=excited,Oh! And your loss is now complete.
+-3-female_must_masturbate=horny,Well. You lost. In a pretty tragic way, too.
+-3-female_start_masturbating=horny,Buckle up soldier, you've got a show to put on.
+-3-female_masturbating=horny,No respite until you are truly finished.
+-3-female_finished_masturbating=excited,Oh! And your loss is now complete.
+
+-2-male_must_masturbate=interested,There are worse times for you to show off.
+-2-male_start_masturbating=horny,Ohhh... Just think of me and you'll be fine.
+-2-male_masturbating=horny,Mmmm... I can see you looking at me, ~name~. Ever been into necrophilia?
+-2-male_masturbating=horny,Don't stop now, ~name~, your performance is lovely.
+-2-male_finished_masturbating=excited,Ahh! You came. Don't feel bad, there's no-one alive who can match my stamina.
+-2-female_must_masturbate=interested,There are worse times for you to show off.
+-2-female_start_masturbating=horny,Ohhh... Just think of me and you'll be fine, girl.
+-2-female_masturbating=horny,Haaahh... How does it feel to have a ghost be wetter than you?
+-2-female_masturbating=horny,Oh, who do you think can last the longest?
+-2-female_masturbating=horny,Mmmm... I can see you looking at me, ~name~. Ever been into necrophilia?
+-2-female_masturbating=horny,Don't stop now, ~name~, your performance is lovely.
+-2-female_finished_masturbating=shocked,You're done already? After all I've done performing for you?
+-2-female_finished_masturbating=excited,Ahh! You came. Don't feel bad, there's no-one alive who can match my stamina.
+
+-1-male_must_masturbate=annoyed,Hmph. Finally.
+-1-male_must_masturbate=interested,Well, look who decided to get it on.
+-1-male_must_masturbate=calm,Hey, you're not the only one who had to diddle themselves.
+-1-male_must_masturbate=calm,Aww, feeling left out?
+-1-male_start_masturbating=calm,Stuck? Just close your eyes and stroke it back and forth. And don't stop until the white stuff comes out.
+-1-male_start_masturbating=horny,Just lie back and think of the sexiest ghost in the room.
+-1-male_start_masturbating=horny,There's no escape now, ~name~.
+-1-male_start_masturbating=horny,Just keep going, ~name~.
+-1-male_masturbating=horny,I bet you're longing for the sweet release of death. Or orgasm. Whichever comes first.
+-1-male_masturbating=calm,Jack it like this a lot? Your arm is quite strong.
+-1-male_masturbating=interested,You've come it this far, ~name~. Just a bit longer.
+-1-male_masturbating=horny,Oh, at least tonight wasn't a complete waste.
+-1-male_finished_masturbating=happy,La petite mort. My second favourite kind of death.
+-1-male_finished_masturbating=excited,Ah. There you go. Feeling better? I think you are.
+-1-male_finished_masturbating=shocked,Oh! A strong finish. Hmmm... wanna come by my place later, and show me what else you've got?
+-1-female_must_masturbate=annoyed,Hmph. Finally.
+-1-female_must_masturbate=interested,Well, look who decided to get it on.
+-1-female_must_masturbate=calm,Hey, you're not the only one who had to diddle themselves.
+-1-female_must_masturbate=calm,Aww, feeling left out?
+-1-female_start_masturbating=calm,Don't know what to do? Just close your eyes rub yourself, and don't stop until it feels like you're losing control of your mind.
+-1-female_start_masturbating=horny,Just lie back and think of the sexiest ghost in the room.
+-1-female_start_masturbating=horny,There's no escape now, ~name~.
+-1-female_start_masturbating=horny,Just keep going, ~name~.
+-1-female_masturbating=horny,I bet you're longing for the sweet release of death. Or orgasm. Whichever comes first.
+-1-female_masturbating=horny,You look so pretty jilling yourself like that. If your day job doesn't work out, you could always go into the entertainment business.
+-1-female_masturbating=interested,You've come it this far, ~name~. Just a bit longer.
+-1-female_masturbating=interested,Come on, ~name~, you've made it this far. Now finish this thing.
+-1-female_masturbating=horny,Oh, at least tonight wasn't a complete waste.
+-1-female_finished_masturbating=excited,Ah. There you go. Feeling better? I think you are.
+-1-female_finished_masturbating=shocked,Oh! A strong finish. Hmmm... wanna come by my place later, and show me what else you've got?
+-1-female_finished_masturbating=happy,La petite mort. My second favourite kind of death.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=loss,This... this wasn't planned. Grrrr. You win this time, mortals.
+-3-must_masturbate=loss,Playing this game was a bad idea. Well, I've had worse.
+-3-must_masturbate=loss,Well. Congratulations. You made it. Again.
+-3-start_masturbating=starting,Consider this a gift for progressing this far.
+-3-start_masturbating=starting,Yeah, ghosts can do this too.
+-3-start_masturbating=starting,Hey, you'll probably also be able to do this when you die.
+-3-start_masturbating,alsoPlaying:sei=starting,Ghosts have needs too, Sayla.
+-3-start_masturbating,alsoPlaying:sei=starting,Yeah, well, I'd like to see <I>you</I> go fifty years without being touched.
+
+-2-masturbating=calm,Ohhh... You're supposed to be fearing me...
+-2-masturbating=calm,Hah... Enjoy it while it lasts.
+-2-masturbating=calm,Well... hah... you can't question my dedication...
+-2-masturbating=horny,Okay... ohhhh... I might be enjoying this...
+-2-heavy_masturbating=heavy,Oooow... Ah... I'm leaking, aren't I?
+-2-heavy_masturbating=heavy,Haaah... Just have to... just have to keep going...
+-2-heavy_masturbating=heavy,Ohhhh... Almost...
+-2-heavy_masturbating=heavy,Ah Ah Ah Ahhh...
+-2-finishing_masturbating=finishing,AaaaaoooowaaaAAAAAH!
+-2-finishing_masturbating=finishing,ShiyaaaaaAAAAHH!
+
+-1-finished_masturbating=finished,Ah. Ooh. Hah. Whew, don't let anyone tell you that ghosts can't have fun.
+-1-finished_masturbating=finished,Heh. That was fun. And now you know where ectoplasm comes from!
+-1-finished_masturbating=finished,Hah. There. I did it. I bet it was pretty interesting watching me go.
+
+
+
+
+#GAME OVER VICTORY
+
+#stage-generic line that will be used for every individual stage that doesn't have a line written
+
+#stage-specific lines that override the stage-generic ones
+game_over_victory=horny,Well... I won! Say, ~player~, why don't you come by my place, and I'll show you what I've really got.
+
+
+
+
+#GAME OVER DEFEAT
+game_over_defeat=loss,Well... you won, ~name~. Say, why don't you come by my place, and I'll show you what I've really got.
+
+#EPILOGUE/ENDING
