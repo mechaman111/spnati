@@ -294,6 +294,7 @@ function loadOpponentMeta (folder, targetArray, index, onComplete) {
             onComplete();
       		},
       		error: function(err) {
+				console.log("Failed reading \""+folder+"\"");
       			if (index !== undefined) {
       				targetArray[index] = null;
       			}
