@@ -482,6 +482,7 @@ function completeExchangePhase () {
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);
     }
+    allowProgression();
 }
 
 /************************************************************
@@ -522,6 +523,7 @@ function completeRevealPhase () {
         
         /* reset the round */
         $mainButton.html("Deal");
+        allowProgression();
         return;
     }
 
@@ -562,6 +564,7 @@ function completeRevealPhase () {
 	} else {
 		$mainButton.html("Strip");
 	}
+    allowProgression();
 }
 
 /************************************************************
@@ -578,6 +581,7 @@ function completeContinuePhase () {
     } else {
 	    $mainButton.html("Masturbate");
     }
+    allowProgression();
 }
 
 /************************************************************
@@ -587,8 +591,7 @@ function completeContinuePhase () {
  ************************************************************/
 function completeStripPhase () {
     /* strip the player with the lowest hand */
-    var wait = stripPlayer(recentLoser);
-	return wait;
+    stripPlayer(recentLoser);
 }
 
 /************************************************************
@@ -622,10 +625,10 @@ function endRound () {
             }
         }
         
-		return handleGameOver();
+		handleGameOver();
 	} else {
 		$mainButton.html("Deal");
-		return false;
+		allowProgression();
 	}
 }
 
@@ -664,7 +667,6 @@ function handleGameOver() {
 		$mainButton.html("Ending?");
 		$mainButton.attr('disabled', false);
         actualMainButtonState = false;
-		return true;
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
         endWaitDisplay = endWaitDisplay >= 3 ? 0 : endWaitDisplay + 1;
@@ -675,7 +677,7 @@ function handleGameOver() {
         
 		/* someone is still forfeiting */
 		$mainButton.html("Wait" + dots);
-		return false;
+		allowProgression();
 	}
 }
  
@@ -755,12 +757,10 @@ function advanceGame () {
         if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Exchange");
         startDealPhase();
-        return;
     } else if (context == "Next") {
         /* advance to next round if human player is masturbating */
         if (AUTO_FADE) forceTableVisibility(false);
         continueDealPhase();
-        return;
     } else if (context == "Exchange") {
         /* exchanging cards */
         if (AUTO_FADE) forceTableVisibility(true);
@@ -777,26 +777,23 @@ function advanceGame () {
 	} else if (context == "Strip" || context == "Masturbate") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
-        if (completeStripPhase()) return;
+        completeStripPhase();
     } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
-		if (handleGameOver()) return; //No delay here
+		handleGameOver(); //No delay here
 	} else if (context == "Restart?") {
         if (AUTO_FADE) forceTableVisibility(false);
 		showRestartModal(); //No delay here
 		$mainButton.attr('disabled', false);
         actualMainButtonState = false;
-		return;
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings
         actualMainButtonState = false;
-		return;
     } else {
         if (AUTO_FADE) forceTableVisibility(true);
 		console.log("Invalid main button state: "+context);
     }
-	allowProgression();
 }
 
 /************************************************************

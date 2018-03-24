@@ -575,11 +575,10 @@ function stripPlayer (player) {
 		/* the player has clothes left and will strip */
 		if (player == HUMAN_PLAYER) {
 			showStrippingModal();
-			return false;
 		} else {
 			stripAIPlayer(player);
 			/* allow progression */
-			return endRound();
+			endRound();
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
@@ -612,7 +611,7 @@ function stripPlayer (player) {
 		}
 		
 		/* allow progression */
-		return endRound();
+		endRound();
 	}
 }
 
