@@ -440,9 +440,6 @@ function continueDealPhase () {
     if (!players[HUMAN_PLAYER].out) {
         showHand(HUMAN_PLAYER);
     }
-    for (var i = 1; i < players.length; i++) {
-        hideHand(i);
-    }
     
     /* enable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
