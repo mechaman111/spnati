@@ -777,7 +777,7 @@ function advanceGame () {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
         completeStripPhase();
-    } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
+    } else if (context.startsWith("Wait")) {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
 		handleGameOver(); //No delay here
