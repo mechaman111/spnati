@@ -342,8 +342,6 @@ function advanceTurn () {
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
             $mainButton.html("Reveal");
-        } else {
-            $mainButton.html("Exchange");
 		}
 		allowProgression();
 	} else if (!players[currentTurn]) {
@@ -760,6 +758,7 @@ function advanceGame () {
     } else if (context == "Next") {
         /* advance to next round if human player is masturbating */
         if (AUTO_FADE) forceTableVisibility(false);
+        $mainButton.html("Exchange");
         continueDealPhase();
     } else if (context == "Exchange") {
         /* exchanging cards */
