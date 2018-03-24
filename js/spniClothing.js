@@ -494,6 +494,7 @@ function closeStrippingModal () {
 		/* allow progression */
         $('#stripping-modal').modal('hide');
 		endRound();
+		allowProgression();
     } else {
         /* how the hell did this happen? */
         console.log("Error: there was no selected article.");
@@ -532,8 +533,6 @@ function stripAIPlayer (player) {
 	updateBehaviour(player, PLAYER_STRIPPED, replace, content, null);
     updateAllGameVisuals();
 	
-	/* allow progression */
-	endRound();
 }
 
 /************************************************************
@@ -576,8 +575,11 @@ function stripPlayer (player) {
 		/* the player has clothes left and will strip */
 		if (player == HUMAN_PLAYER) {
 			showStrippingModal();
+			return false;
 		} else {
 			stripAIPlayer(player);
+			/* allow progression */
+			return endRound();
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
@@ -610,7 +612,7 @@ function stripPlayer (player) {
 		}
 		
 		/* allow progression */
-		endRound();
+		return endRound();
 	}
 }
 

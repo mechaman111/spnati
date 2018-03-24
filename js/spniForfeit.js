@@ -66,6 +66,7 @@ function tickForfeitTimers (context) {
     var masturbatingPlayers = [];
 	var showMasturbatingThreshold = 0.2; //probability of doing a "this character is masturbating" event
 	var masturbationDelay = 400; //wait for 400ms so that the player can see what the characters are saying
+	var cumming = false;
 	
     for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && timers[i] > 0) {
@@ -80,17 +81,14 @@ function tickForfeitTimers (context) {
 					console.log(players[i].label+" is finishing!");
 					$gameClothingLabel.html("<b>You're 'Finished'</b>");
 					
-					/* save context */
-					savedContext = context;
-					context = null;
-					
 					/* set the button state */
 					$mainButton.html("Cumming...");
 					$mainButton.attr('disabled', true);
 					actualMainButtonState = true;
+					cumming = true;
 					
 					/* finish */
-					finishMasturbation(i);
+					finishMasturbation(i, context);
 				} else if (timers[i] <= 0) {
 					/* two people can't finish at the same time */
 					timers[i] = 1;
@@ -113,14 +111,11 @@ function tickForfeitTimers (context) {
 					oneFinished = true;
 					console.log(players[i].label+" is finishing!");
 					
-					/* save context */
-					savedContext = context;
-					context = null;
-					
 					/* set the button state */
 					$mainButton.html("Cumming...");
 					$mainButton.attr('disabled', true);
 					actualMainButtonState = true;
+					cumming = true;
 					
 					/* hide everyone else's dialogue bubble */
 					for (var j = 1; j < players.length; j++) {
@@ -140,7 +135,7 @@ function tickForfeitTimers (context) {
 					
 					/* trigger the callback */
 					var player = i;
-					window.setTimeout(function(){ finishMasturbation(player); }, ORGASM_DELAY);
+					window.setTimeout(function(){ finishMasturbation(player, context); }, ORGASM_DELAY);
 				} else if (timers[i] <= 0) {
 					/* two people can't finish at the same time */
 					timers[i] = 1;
@@ -172,13 +167,13 @@ function tickForfeitTimers (context) {
 		blockingSleep(masturbationDelay); // wait so that you can see what they say
 	}
 	
-	return context;
+	return cumming;
 }
 
 /************************************************************
  * A player has 'finished' masturbating.
  ************************************************************/
-function finishMasturbation (player) {
+function finishMasturbation (player, savedContext) {
 	// HARD SET STAGE
 	players[player].stage += 1;
 	players[player].timeInStage = -1;
@@ -201,9 +196,7 @@ function finishMasturbation (player) {
 	
 	/* update the button */
 	$mainButton.html(savedContext);
-	
-	/* allow progression */
-	$mainButton.attr('disabled', false);
-	actualMainButtonState = false;
+
+	allowProgression();
 	oneFinished = false;
 }
