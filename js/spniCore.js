@@ -98,7 +98,7 @@ $previousScreen = null;
  * state (array of PlayerState objects), their sequential states.
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
-function createNewPlayer (folder, first, last, label, gender, size, intelligence, timer, tags, xml) {
+function createNewPlayer (folder, first, last, label, gender, size, intelligence, clothing, out, forfeit, timer, tags, current, stage, state, xml) {
     var newPlayerObject = {folder:folder,
                            first:first,
                            last:last,
@@ -106,8 +106,14 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
 						   size:size,
 						   intelligence:intelligence,
                            gender:gender,
+                           clothing:clothing,
+                           out:out,
+                           forfeit:forfeit,
                            timer:timer,
                            tags:tags,
+                           current:current,
+						   stage:stage,
+                           state:state,
                            xml:xml,
                            timeInStage:-1,
                            consecutiveLosses:0,
@@ -142,22 +148,7 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
                            },
                        };
                            
-	initPlayerState(newPlayerObject);
     return newPlayerObject;
-}
-
-/*******************************************************************
- * (Re)Initialize the player properties that change during a game 
- *******************************************************************/
-function initPlayerState(player) {
-	player.out = player.finished = player.exposed = false;
-	player.forfeit = "";
-	player.stage = player.current = 0;
-	player.markers = {};
-	if (player.xml !== null) {
-		player.state = parseDialogue($(player.xml).find('start'), [], []);
-		loadOpponentWardrobe(player);
-	}
 }
 
 /**********************************************************************
@@ -169,7 +160,7 @@ function initPlayerState(player) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
+    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, [], false, "", 20, 0, 0, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
     
 	/* enable table opacity */
@@ -245,6 +236,9 @@ function advanceToNextScreen (screen) {
  ************************************************************/
 function returnToPreviousScreen (screen) {
     if (screen == $selectScreen) {
+		/* hold previous screen state */
+		holdTitleClothing();
+		
         /* return to the title screen */
         $selectScreen.hide();
         $titleScreen.show();
@@ -252,13 +246,12 @@ function returnToPreviousScreen (screen) {
 }
 
 /************************************************************
- * Resets the game state so that the game can be restarted.
+ * Clears the game state so that the game can be restarted.
  ************************************************************/
-function resetPlayers () {
+function clearState () {
+	/* clear players */
 	for (var i = 0; i < players.length; i++) {
-		if (players[i] != null) {
-			initPlayerState(players[i]);
-		}
+		players[i] = null;
 	}
 }
 
@@ -268,8 +261,14 @@ function resetPlayers () {
 function restartGame () {
     KEYBINDINGS_ENABLED = false;
 	
-	resetPlayers();
+	/* start by creating the human player object */
+    var humanPlayer = createNewPlayer("", "", "", "", players[HUMAN_PLAYER].gender, players[HUMAN_PLAYER].size, "average", [], false, "", save.data.masturbationTimer, 0, 0, [], null);
+	/* clean slate */
+	clearState();
 	
+	/* load the previous human player */
+	players[HUMAN_PLAYER] = humanPlayer;
+    
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
@@ -287,6 +286,7 @@ function restartGame () {
 	$epilogueSelectionModal.hide();
 	$gameScreen.hide();
 	$epilogueScreen.hide();
+	holdTitleClothing();
 	$titleScreen.show();
 }
 
