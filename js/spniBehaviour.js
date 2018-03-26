@@ -136,13 +136,8 @@ function loadBehaviour (folder, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, [], false, "", Number(timer), tagsArray, 0, 0, [], xml);
+            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
             
-            loadOpponentWardrobe(newPlayer);
-            
-            newPlayer.current = 0;
-			newPlayer.state = parseDialogue($(xml).find('start'), [], []);
-			
 			callFunction(newPlayer, slot);
 		}
 	});
@@ -155,6 +150,7 @@ function loadBehaviour (folder, callFunction, slot) {
 function loadOpponentWardrobe (player) {
 	/* grab the relevant XML file, assuming its already been loaded */
 	var xml = player.xml;
+	player.clothing = [];
 	
 	/* find and grab the wardrobe tag */
 	$wardrobe = $(xml).find('wardrobe');
