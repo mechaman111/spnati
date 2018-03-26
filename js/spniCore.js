@@ -109,9 +109,6 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
                            timer:timer,
                            tags:tags,
                            xml:xml,
-                           timeInStage:-1,
-                           consecutiveLosses:0,
-                           markers:{},
 
                            getIntelligence: function getIntelligence() {
 
@@ -152,7 +149,8 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
 function initPlayerState(player) {
 	player.out = player.finished = player.exposed = false;
 	player.forfeit = "";
-	player.stage = player.current = 0;
+	player.stage = player.current = player.consecutiveLosses = 0;
+	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
 		player.state = parseDialogue($(player.xml).find('start'), [], []);
@@ -259,6 +257,7 @@ function resetPlayers () {
 		if (players[i] != null) {
 			initPlayerState(players[i]);
 		}
+		timers[i] = 0;
 	}
 }
 
