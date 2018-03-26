@@ -117,6 +117,26 @@ function updateTitleClothing () {
 	//$warningLabel.html("");
 }
 
+/************************************************************
+ * Updates the clothing on the title screen based on already
+ * worn clothing.
+ ************************************************************/
+function holdTitleClothing () {
+	/* clear selection */
+	// for (var i = 0; i < selectedChoices.length; i++) {
+	// 	selectedChoices[i] = false;
+	// }
+
+	/* hold worn clothing */
+	for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
+		if (players[HUMAN_PLAYER].clothing[i]) {
+			selectedChoices[players[HUMAN_PLAYER].clothing[i].id] = true;
+		}
+	}
+	updateTitleClothing();
+}
+
+
 /**********************************************************************
  *****                   Interaction Functions                    *****
  **********************************************************************/
