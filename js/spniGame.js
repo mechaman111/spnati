@@ -125,6 +125,8 @@ function loadGameScreen () {
     gameOver = false;
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
+    chosenDebug = -1;
+    updateDebugState(showDebug);
     
     /* set up the visuals */
     updateAllGameVisuals();
