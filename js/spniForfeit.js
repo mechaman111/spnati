@@ -134,8 +134,9 @@ function tickForfeitTimers (context) {
 					updateGameVisual(i);
 					
 					/* trigger the callback */
-					var player = i;
-					window.setTimeout(function(){ finishMasturbation(player, context); }, ORGASM_DELAY);
+					var player = i, tableVisible = (tableOpacity > 0);
+					window.setTimeout(function(){ finishMasturbation(player, context, tableVisible); }, ORGASM_DELAY);
+					if (AUTO_FADE) forceTableVisibility(false);
 				} else if (timers[i] <= 0) {
 					/* two people can't finish at the same time */
 					timers[i] = 1;
@@ -173,7 +174,7 @@ function tickForfeitTimers (context) {
 /************************************************************
  * A player has 'finished' masturbating.
  ************************************************************/
-function finishMasturbation (player, savedContext) {
+function finishMasturbation (player, savedContext, savedTableVisibility) {
 	// HARD SET STAGE
 	players[player].stage += 1;
 	players[player].timeInStage = -1;
@@ -193,6 +194,9 @@ function finishMasturbation (player, savedContext) {
 		
 	}
 	updateAllGameVisuals();
+	if (AUTO_FADE && savedTableVisibility !== undefined) {
+		forceTableVisibility(savedTableVisibility);
+	}
 	
 	/* update the button */
 	$mainButton.html(savedContext);
