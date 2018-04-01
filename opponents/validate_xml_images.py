@@ -12,7 +12,7 @@ def check_referenced_images(filename):
 	directory = os.listdir(directory_name)
 	image_names = list()
 	for name in directory:
-		if name.endswith(".png"):
+		if name.endswith(".png") or name.endswith(".gif"):
 			#print "appending %s" % (name)
 			image_names.append(name)
 
