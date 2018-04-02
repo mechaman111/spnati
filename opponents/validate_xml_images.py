@@ -25,7 +25,13 @@ def check_referenced_images(filename):
 						image_filename = state.attrib["img"]
 						if image_filename not in image_names:
 							print "Image filename \"%s\" used by %s-%s-%s has not been found" % (image_filename, stage.attrib["id"].strip(), case.attrib["tag"].strip(), state.text.strip())
-		
+		elif entry.tag == "start":
+			for state in entry.iter('state'):
+				image_filename = state.attrib["img"]
+				if image_filename not in image_names:
+				    print "Image filename \"%s\" used by start-%s has not been found" % (image_filename, state.text.strip())
+
+
 if __name__ == "__main__":
 	xml_filename = "behaviour.xml"
 	if len(sys.argv) > 1:
