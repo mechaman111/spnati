@@ -10,20 +10,21 @@ intelligence=average
 timer=25
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
-tag=impatient
+tag=video_game
 tag=kind
 tag=brave
 tag=chinese
 tag=athletic
 tag=busty
 tag=martial_artist
-tag=video_game
+tag=impatient
 tag=confident
 tag=competitive
+tag=friendly
 
 #required for meta.xml
 #select screen image
-pic=0-happy.png
+pic=0-calm.png
 height=5'6"
 from=Street Fighter
 writer=metalytar13 & SPNATI
@@ -105,8 +106,18 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 
 #fully clothed
 0-good_hand=excited,There's no way I'll lose with this!
+0-good_hand,count-athletic:3=excited,So many strong looking players here. I feel right at home!
+0-good_hand,count-athletic:3=calm,With these many strong players around it's like I'm at a tournament.
+0-good_hand,alsoPlaying:revy,alsoPlayingStage:0,alsoPlayingTimeInStage:0=victory,Before we go on, I should tell you Revy that I'm a cop. Keep that in mind.
+0-good_hand,alsoPlaying:sonya,alsoPlayingStage:0,alsoPlayingTimeInStage:0=shocked,Sonya Blade? I wasn't expecting to run into another fighter here of all places.
 0-okay_hand=calm,This should be enough.
+0-okay_hand,alsoPlaying:revy,alsoPlayingStage:0,alsoPlayingTimeInStage:0=victory,Before we go on, I should tell you Revy that I'm a cop. Keep that in mind.
+0-okay_hand,alsoPlaying:sonya,alsoPlayingStage:0,alsoPlayingTimeInStage:0=shocked,Sonya Blade? I wasn't expecting to run into another fighter here of all places.
+0-okay_hand,count-athletic:3=excited,So many strong looking players here. I feel right at home!
 0-bad_hand=sad,Will this be enough?
+0-bad_hand,alsoPlaying:sonya,alsoPlayingStage:0,alsoPlayingTimeInStage:0=shocked,Sonya Blade? I wasn't expecting to run into another fighter here of all places.
+0-bad_hand,alsoPlaying:revy,alsoPlayingStage:0,alsoPlayingTimeInStage:0=victory,Before we go on, I should tell you Revy that I'm a cop. Keep that in mind.
+0-bad_hand,count-athletic:3=excited,So many strong looking players here. I feel right at home!
 
 
 #lost bracelets
@@ -147,7 +158,7 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 
 #lost bindings
 7-good_hand=excited,No chance for me to lose!
-7-okay_hand=annoyed,I need to win this time!
+7-okay_hand=fight,I need to win this time!
 7-bad_hand=angry,This is no joke, if I lose again...
 
 -3-good_hand=happy,Sorry! This round is already won.
@@ -163,10 +174,22 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 #losing bracelets
 0-must_strip_winning=calm,No reason to worry, I still have the lead.
 0-must_strip_winning=sad,Aww, I thought I could get a perfect...
+0-must_strip_winning=calm,Oh well, I guess it was unavoidable to take some damage.
+0-must_strip_winning=calm,This is nothing.
+0-must_strip_winning=sad,I wanted to walk out of here with all my clothes, but I guess it can't be avoided.
+0-must_strip_winning=fight,It'll take more than this to make me lose the lead.
 0-must_strip_normal=sad,Not the best way to start I guess.
+0-must_strip_normal=sad,Well, these are the rules of the game.
+0-must_strip_normal=calm,This isn't enough to make me worry.
+0-must_strip_normal=calm,I don't want anyone to say I don't follow the rules, so...
 0-must_strip_losing=loss,Uh-oh, I'm not off to a great start...
+0-must_strip_losing=loss,This isn't a good sign.
+0-must_strip_losing=loss,Not good.
+0-must_strip_losing=,get your head in the game.
 0-stripping=stripping,I guess I'll start with my bracelets.
 0-stripping=stripping,I'll take off my bracelets first. It's the smallest item I got.
+0-stripping=stripping,Accesories count, right? So I'll start with my bracelets.
+0-stripping=stripping,I'm not training now, so I'll take off my bracelets.
 
 
 #losing waistband
@@ -174,21 +197,29 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 1-stripped=stripped,Alright, let's continue. I'll have to play smarter next round.
 1-stripped=stripped,Hehe. Don't hold a grudge, okay?
 1-must_strip_winning=sad,I better step up my game if I don't want to lose the lead.
+1-must_strip_winning=calm,Doesn't matter, I'm still going to win this game.
 1-must_strip_normal=loss,Rules are rules. I lost fair and square.
+1-must_strip_normal=sad,Hmmm, should I change my strategy?
 1-must_strip_losing=loss,This isn't good. I lost again.
+1-must_strip_losing=sad,Oh, not again!
 1-stripping=stripping,Time to take off my waistband.
 1-stripping=stripping,I'll take off my waistband this time.
+1-stripping=stripping,Just my waistband should be fine for now.
 
 
 #losing qipao
 2-stripped=stripped,Don't think you've won yet! I'm still warming up.
 2-stripped=stripped,I'm still not showing any skin. So why are you all staring?
+2-stripped=stripped,This is just the beginning, don't get cocky yet.
 2-must_strip_winning=interested,Don't get used to winning, it won't happen again!
 2-must_strip_winning=sad,There goes my winning streak...
 2-must_strip_normal=loss,This won't be enough to bring me down!
+2-must_strip_normal=loss,I can't let this affect me.
 2-must_strip_losing=loss,I can't believe I'm losing so badly...
+2-must_strip_losing=loss,Again?! Is there something wrong with me today?
 2-stripping=stripping,It's finally time for me to strip something big...
-2-stripping=stripping,This is an elegant mandarin gown, but I think you care about what's underneath it more...
+2-stripping=stripping,This is an elegant mandarin gown, but I think you care more about what's underneath it...
+2-stripping=stripping,Do you like my dress? It's called a qipao.
 
 
 #losing boots
@@ -197,21 +228,29 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 3-stripped=stripped,Now you can see my muscles more. I don't mind if you stare, my hard work really paid off.
 3-stripped=stripped,Do you like what you see so far, ~player~? I can't wait for you to lose the next hand...
 3-must_strip_winning=interested,You really think you can take me, huh?
+3-must_strip_winning=interesting,This game is quite interesting.
 3-must_strip_normal=calm,It's okay, I'm prepared for this.
+3-must_strip_normal=fight,You still haven't pushed me to my limit.
 3-must_strip_losing=loss,I lost again? No way!
+3-must_strip_losing=loss,I can't keep losing like this!
 3-stripping=stripping,I'll strip my boots for now. I don't want to strip something big again just yet.
 3-stripping=stripping,Just my boots this time. I'm not out of the game yet.
+3-stripping=stripping,I'll remove my trusty boots.
 
 
 #losing leotard
 4-stripped=stripped,I wanted to keep them in case I had to kick my way out of this, but oh well...
 4-stripped=stripped,Besides feeling shorter, it's no big deal. I still think I can win this game.
+4-stripped=stripped,I can't remember how many people I've kicked with these, but I probably won't need them for that right now.
 4-must_strip_winning=interested,I'm still going to win, you should give up while you have the chance.
+4-must_strip_winning=calm,I'm still ahead of you, so I'm not worried.
 4-must_strip_normal=angry,Dammit! I know I can do better than this!
+4-must_strip_normal=loss,It looks like I'm not at my best today.
 4-must_strip_losing=loss,I'm not do so good. This is a rough losing streak.
 4-must_strip_losing=loss,I'm taking a beating!
 4-stripping=stripping,I guess my leotard is next, it's less revealing than taking off my tights...
 4-stripping=stripping,Given the choice between my pantyhose or my leotard... I'll strip my leotard.
+4-stripping=stripping,I'm running out of choices, so I'll take off my leotard.
 
 
 #losing pantyhose
@@ -223,9 +262,10 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 5-must_strip_winning=angry,This is the last time I lose, I assure you!
 5-must_strip_winning=calm,Well, I suppose it's fair...
 5-must_strip_normal=angry,Ugh, you haven't seen me at my best yet.
-5-must_strip_losing=loss,I lost again? I can't afford to lose again!
+5-must_strip_normal=loss,I still haven't shown you all I can do, so you better get ready.
+5-must_strip_losing=loss,I lost again? I'm in critical condition!
 5-must_strip_losing=loss,I really hope I don't lose again, this has to be my last loss of the game...
-5-stripping=stripping,I.. I'll take off my pantyhose.
+5-stripping=stripping,I'll take off my pantyhose.
 5-stripping=stripping,My only real choice is to take off my pantyhose...
 5-stripping=stripping,Looks like you'll finally get to see my bare legs in all their glory.
 5-stripping=stripping,Do you think my thighs are too thick or you like them like that?
@@ -234,13 +274,17 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 #losing bindings
 6-stripped=stripped,Now get ready! I'm coming at you with all I have! I won't lose again, I swear!
 6-stripped=stripped,I've never had to fight in my underwear before... But I still think I can win this! I just have to believe in myself!
+6-stripped=stripped,All right, here I come! I'm giving all I have left!
 6-stripped=happy,Do you like my legs? I made sure to shave just in case I had to show them off.
 6-stripped=stripped,My favorite part of my body is my legs, I couldn't kick as hard without them in shape.
 6-stripped=stripped,I don't mind showing off, but I hope I win this game. It's getting a little embarrassing...
 6-stripped=stripped,If I lose again, I'll really have to bare it all... I can't let that happen, I know I can win!
 6-must_strip_winning=victory,Victory is close, I can't lose my focus now!
+6-must_strip_winning=sad,I can't get distressed now! We're almost at the end of the game.
 6-must_strip_normal=angry,This isn't over yet!
-6-must_strip_losing=loss,Just you wait. When my back's against the wall is when I truly shine!
+6-must_strip_normal=sad,I didn't want to take off my underwear, but at least I can still win this game.
+6-must_strip_losing=loss,Just you wait. When my back is against the wall is when I truly shine!
+6-must_strip_losing=loss,Now I'm really starting to worry...
 6-stripping=stripping,I hoped it wouldn't come to this.
 6-stripping=stripping,I'll take off my bindings, it's a big deal but not as big of a deal as taking off my panties.
 6-stripping=stripping,Alright my bindings are coming off, but next round I won't hold back! I know I can win!
@@ -255,7 +299,7 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 7-must_strip_winning=angry,This has been a harder than I expected.
 7-must_strip_winning=calm,It's only fair that I get naked if everyone else is. I just hope I don't lose again...
 7-must_strip_normal=loss,I can't... I won't give up!
-7-must_strip_normal=annoyed,I wanted to keep my dignity, but I don't care anymore. I just want to win!
+7-must_strip_normal=fight,I wanted to keep my dignity, but I don't care anymore. I just want to win!
 7-must_strip_losing=embarrassed,This is bad, I'll be the first one naked!
 7-must_strip_losing=loss,I lost again? That means I have to be the first one naked!
 7-stripping=stripping,You should be happy. You're about to see what's between these legs.
@@ -280,272 +324,556 @@ swap_cards=fight,I'll need ~cards~ cards to win!
 #Writing different variations is important here, as these lines will be spoken about thirty times per game.
 #The "human" versions of the lines will only be spoken if the human player is stripping.
 
-#stage-specific lines that override the stage-generic ones
-male_human_must_strip=happy,Sorry, ~name~! You lose this round.
-male_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-male_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-male_human_must_strip=happy,I apologize if I went a little hard this time.
-male_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-male_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-male_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-male_human_must_strip=interested,Give it your best, ~name~.
-male_human_must_strip=calm,Looks like you need more training, ~name~.
-male_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-male_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-male_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-male_human_must_strip=interested,Show me what you have, ~name~!
-male_must_strip=happy,Sorry, ~name~! You lose this round.
-male_must_strip=happy,Couldn't keep up with these legs, ~name~?
-male_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-male_must_strip=happy,I apologize if I went a little hard this time.
-male_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-male_must_strip=victory,You'll keep losing if you don't have something to fight for.
-male_must_strip=interested,You're not giving up yet, are you, ~name~?
-male_must_strip=interested,Give it your best, ~name~.
-male_must_strip=calm,Looks like you need more training, ~name~.
-male_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-male_must_strip=calm,It's better to just get it over quickly, ~name~.
-male_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-male_must_strip=interested,Show me what you have, ~name~!
-female_human_must_strip=excited,There's no way I'm gonna lose now!
-female_human_must_strip=victory,At this stage, every victory counts.
-female_must_strip=excited,There's no way I'm gonna lose now!
-female_must_strip=victory,At this stage, every victory counts.
-
-
 #fully clothed
-0-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-0-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-0-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-0-female_human_must_strip=happy,I apologize if I went a little hard this time.
-0-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-0-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-0-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-0-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-0-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-0-female_human_must_strip=interested,Give it your best, ~name~.
-0-female_human_must_strip=calm,Looks like you need more training, ~name~.
-0-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-0-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-0-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-0-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-0-female_must_strip=interested,Give it your best, ~name~.
-0-female_must_strip=calm,Looks like you need more training, ~name~.
-0-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-0-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-0-female_must_strip=happy,Sorry, ~name~! You lose this round.
-0-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
-0-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-0-female_must_strip=happy,I apologize if I went a little hard this time.
-0-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-0-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-0-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+0-male_human_must_strip=calm,Give it your best, ~name~.
+0-male_human_must_strip=calm,This is just starting, ~name~. You can't let this get to you now.
+0-male_human_must_strip=fight,I'm just warming up, ~name~.
+0-male_human_must_strip=excited,Every round I stay fully clothed, is a huge victory.
+0-male_human_must_strip=victory,These are the rules, ~name~.
+0-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+0-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+0-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+0-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+0-male_must_strip=calm,Give it your best, ~name~.
+0-male_must_strip=calm,This is just starting, ~name~. You can't let this get to you now.
+0-male_must_strip=fight,I'm just warming up, ~name~.
+0-male_must_strip=excited,Every round I stay fully clothed, is a huge victory.
+0-male_must_strip=victory,These are the rules, ~name~.
+0-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+0-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+0-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+0-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+0-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+0-female_human_must_strip=calm,Give it your best, ~name~.
+0-female_human_must_strip=calm,This is just starting, ~name~. You can't let this get to you now.
+0-female_human_must_strip=fight,I'm just warming up, ~name~.
+0-female_human_must_strip=excited,Every round I stay fully clothed, is a huge victory.
+0-female_human_must_strip=victory,These are the rules, ~name~.
+0-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+0-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+0-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+0-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+0-female_must_strip=calm,Give it your best, ~name~.
+0-female_must_strip=calm,This is just starting, ~name~. You can't let this get to you now.
+0-female_must_strip=fight,I'm just warming up, ~name~.
+0-female_must_strip=excited,Every round I stay fully clothed, is a huge victory.
+0-female_must_strip=victory,These are the rules, ~name~.
+0-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+0-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+0-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+0-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+0-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+0-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+0-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+0-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+0-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+0-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+0-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+0-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+0-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+0-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+0-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
+0-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+0-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+0-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+0-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+0-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
 
 
 #lost bracelets
-1-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-1-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-1-female_human_must_strip=interested,Give it your best, ~name~.
+1-male_human_must_strip=calm,Looks like you need more training, ~name~.
+1-male_human_must_strip=calm,Go on and strip, ~name~. I already took off my bracelets, see?
+1-male_human_must_strip=interested,Show me what you have, ~name~!
+1-male_human_must_strip=fight,This is not the time to hesitate, this fight ahead will be much tougher.
+1-male_human_must_strip=victory,You have my thanks, ~name~.
+1-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+1-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+1-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+1-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+1-male_must_strip=calm,Looks like you need more training, ~name~.
+1-male_must_strip=calm,Go on and strip, ~name~. I already took off my bracelets, see?
+1-male_must_strip=interested,Show me what you have, ~name~!
+1-male_must_strip=fight,This is not the time to hesitate, this fight ahead will be much tougher.
+1-male_must_strip=victory,You have my thanks, ~name~.
+1-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+1-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+1-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+1-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+1-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
 1-female_human_must_strip=calm,Looks like you need more training, ~name~.
-1-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-1-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-1-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-1-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-1-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-1-female_human_must_strip=happy,I apologize if I went a little hard this time.
-1-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-1-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-1-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-1-female_must_strip=happy,Sorry, ~name~! You lose this round.
-1-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
-1-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-1-female_must_strip=happy,I apologize if I went a little hard this time.
-1-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-1-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-1-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-1-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-1-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-1-female_must_strip=interested,Give it your best, ~name~.
+1-female_human_must_strip=calm,Go on and strip, ~name~. I already took off my bracelets, see?
+1-female_human_must_strip=interested,Show me what you have, ~name~!
+1-female_human_must_strip=fight,This is not the time to hesitate, this fight ahead will be much tougher.
+1-female_human_must_strip=victory,You have my thanks, ~name~.
+1-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+1-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+1-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+1-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
 1-female_must_strip=calm,Looks like you need more training, ~name~.
-1-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-1-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+1-female_must_strip=calm,Go on and strip, ~name~. I already took off my bracelets, see?
+1-female_must_strip=interested,Show me what you have, ~name~!
+1-female_must_strip=fight,This is not the time to hesitate, this fight ahead will be much tougher.
+1-female_must_strip=victory,You have my thanks, ~name~.
+1-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+1-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+1-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+1-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+1-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+1-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+1-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+1-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+1-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
+1-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+1-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+1-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+1-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+1-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+1-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+1-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+1-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+1-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+1-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+1-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
 
 
 #lost waistband
-2-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-2-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-2-female_human_must_strip=interested,Give it your best, ~name~.
-2-female_human_must_strip=calm,Looks like you need more training, ~name~.
-2-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-2-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+2-male_human_must_strip=fight,Go on, ~name~! How do you hope to defeat me if you don't go through with this?
+2-male_human_must_strip=calm,Well, at least I get to keep my dress for another round.
+2-male_human_must_strip=happy,Sorry, ~name~! You lose this round.
+2-male_human_must_strip=excited,No hard feelings, right ~name~?
+2-male_human_must_strip=victory,It's better to just get it over quickly, ~name~.
+2-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+2-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+2-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+2-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+2-male_must_strip=fight,Go on, ~name~! How do you hope to defeat me if you don't go through with this?
+2-male_must_strip=calm,Well, at least I get to keep my dress for another round.
+2-male_must_strip=happy,Sorry, ~name~! You lose this round.
+2-male_must_strip=excited,No hard feelings, right ~name~?
+2-male_must_strip=victory,It's better to just get it over quickly, ~name~.
+2-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+2-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+2-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+2-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+2-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+2-female_human_must_strip=fight,Go on, ~name~! How do you hope to defeat me if you don't go through with this?
+2-female_human_must_strip=calm,Well, at least I get to keep my dress for another round.
 2-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-2-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-2-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-2-female_human_must_strip=happy,I apologize if I went a little hard this time.
-2-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-2-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-2-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+2-female_human_must_strip=excited,No hard feelings, right ~name~?
+2-female_human_must_strip=victory,It's better to just get it over quickly, ~name~.
+2-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+2-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+2-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+2-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+2-female_must_strip=fight,Go on, ~name~! How do you hope to defeat me if you don't go through with this?
+2-female_must_strip=calm,Well, at least I get to keep my dress for another round.
 2-female_must_strip=happy,Sorry, ~name~! You lose this round.
-2-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
-2-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-2-female_must_strip=happy,I apologize if I went a little hard this time.
-2-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-2-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-2-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-2-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-2-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-2-female_must_strip=interested,Give it your best, ~name~.
-2-female_must_strip=calm,Looks like you need more training, ~name~.
-2-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-2-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+2-female_must_strip=excited,No hard feelings, right ~name~?
+2-female_must_strip=victory,It's better to just get it over quickly, ~name~.
+2-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+2-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+2-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+2-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+2-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+2-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+2-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+2-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+2-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+2-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+2-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+2-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+2-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+2-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+2-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+2-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+2-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+2-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+2-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+2-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
 
 
 #lost qipao
+3-male_human_must_strip=calm,Show us that you're an honorable man, ~name~.
+3-male_human_must_strip=calm,I apologize if I went a little hard this time.
+3-male_human_must_strip=happy,I don't have my dress anymore, so I'm glad it's you and not me, ~name~.
+3-male_human_must_strip=calm,Defeat is just another chance to learn from your mistakes, ~name~.
+3-male_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
+3-male_human_must_strip=calm,We're still in the middle of this game, so don't falter now ~name~.
+3-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+3-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+3-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+3-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+3-male_must_strip=calm,Show us that you're an honorable man, ~name~.
+3-male_must_strip=calm,I apologize if I went a little hard this time.
+3-male_must_strip=happy,I don't have my dress anymore, so I'm glad it's you and not me, ~name~.
+3-male_must_strip=calm,Defeat is just another chance to learn from your mistakes, ~name~.
+3-male_must_strip=victory,You'll keep losing if you don't have something to fight for.
+3-male_must_strip=calm,We're still in the middle of this game, so don't falter now ~name~.
+3-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+3-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+3-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+3-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+3-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+3-female_human_must_strip=calm,Show us that you're an honorable woman, ~name~.
+3-female_human_must_strip=calm,I apologize if I went a little hard this time.
+3-female_human_must_strip=happy,I don't have my dress anymore, so I'm glad it's you and not me, ~name~.
+3-female_human_must_strip=calm,Defeat is just another chance to learn from your mistakes, ~name~.
 3-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-3-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-3-female_human_must_strip=interested,Give it your best, ~name~.
-3-female_human_must_strip=calm,Looks like you need more training, ~name~.
-3-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-3-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-3-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-3-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-3-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-3-female_human_must_strip=happy,I apologize if I went a little hard this time.
-3-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-3-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-3-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-3-female_must_strip=happy,Sorry, ~name~! You lose this round.
-3-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
-3-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-3-female_must_strip=happy,I apologize if I went a little hard this time.
-3-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-3-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-3-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+3-female_human_must_strip=calm,We're still in the middle of this game, so don't falter now ~name~.
+3-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+3-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+3-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+3-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+3-female_must_strip=calm,Show us that you're an honorable woman, ~name~.
+3-female_must_strip=calm,I apologize if I went a little hard this time.
+3-female_must_strip=happy,I don't have my dress anymore, so I'm glad it's you and not me, ~name~.
+3-female_must_strip=calm,Defeat is just another chance to learn from your mistakes, ~name~.
 3-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-3-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-3-female_must_strip=interested,Give it your best, ~name~.
-3-female_must_strip=calm,Looks like you need more training, ~name~.
-3-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-3-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+3-female_must_strip=calm,We're still in the middle of this game, so don't falter now ~name~.
+3-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+3-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+3-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+3-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+3-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+3-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+3-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+3-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+3-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+3-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+3-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+3-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+3-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+3-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+3-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+3-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+3-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+3-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+3-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+3-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
 
 
 #lost boots
-4-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-4-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-4-female_human_must_strip=interested,Give it your best, ~name~.
-4-female_human_must_strip=calm,Looks like you need more training, ~name~.
-4-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-4-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-4-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-4-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
+4-male_human_must_strip=happy,Yeah, victory!
+4-male_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity. But please don't I want to see this through to the end.
+4-male_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+4-male_human_must_strip=excited,I wonder what you're gonna take off, ~name~.
+4-male_human_must_strip=victory,This was a good round. At least for me.
+4-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+4-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+4-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+4-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+4-male_must_strip=happy,Yeah, victory!
+4-male_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity. But please don't I want to see this through to the end.
+4-male_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
+4-male_must_strip=excited,I wonder what you're gonna take off, ~name~.
+4-male_must_strip=victory,This was a good round. At least for me.
+4-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+4-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+4-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+4-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+4-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+4-female_human_must_strip=happy,Yeah, victory!
+4-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity. But please don't I want to see this through to the end.
 4-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-4-female_human_must_strip=happy,I apologize if I went a little hard this time.
-4-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-4-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-4-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-4-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-4-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-4-female_must_strip=interested,Give it your best, ~name~.
-4-female_must_strip=calm,Looks like you need more training, ~name~.
-4-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-4-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-4-female_must_strip=happy,Sorry, ~name~! You lose this round.
-4-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
+4-female_human_must_strip=excited,I wonder what you're gonna take off, ~name~.
+4-female_human_must_strip=victory,This was a good round. At least for me.
+4-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+4-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+4-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+4-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+4-female_must_strip=happy,Yeah, victory!
+4-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity. But please don't I want to see this through to the end.
 4-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-4-female_must_strip=happy,I apologize if I went a little hard this time.
-4-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-4-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
-4-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+4-female_must_strip=excited,I wonder what you're gonna take off, ~name~.
+4-female_must_strip=victory,This was a good round. At least for me.
+4-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+4-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+4-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+4-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+4-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+4-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+4-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+4-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+4-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+4-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+4-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+4-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+4-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+4-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+4-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+4-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+4-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+4-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+4-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+4-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
 
 
 #lost leotard
-5-female_human_must_strip=happy,Sorry, ~name~! You lose this round.
-5-female_human_must_strip=happy,Couldn't keep up with these legs, ~name~?
-5-female_human_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-5-female_human_must_strip=happy,I apologize if I went a little hard this time.
-5-female_human_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-5-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-male_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+5-male_human_must_strip=calm,You're not giving up yet, are you, ~name~?
+5-male_human_must_strip=interested,What are you going to take off this time, ~name~? I think maybe you...
+5-male_human_must_strip=excited,Let's move on!
+5-male_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+5-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+5-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+5-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+5-male_must_strip=fight,You're gonna have to do better than that if you want to beat me!
+5-male_must_strip=calm,You're not giving up yet, are you, ~name~?
+5-male_must_strip=interested,What are you going to take off this time, ~name~? I think maybe you...
+5-male_must_strip=excited,Let's move on!
+5-male_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+5-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+5-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+5-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+5-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
 5-female_human_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-5-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
-5-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
-5-female_human_must_strip=interested,Give it your best, ~name~.
-5-female_human_must_strip=calm,Looks like you need more training, ~name~.
-5-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
-5-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
-5-female_must_strip=happy,Sorry, ~name~! You lose this round.
-5-female_must_strip=happy,Couldn't keep up with these legs, ~name~?
-5-female_must_strip=excited,Don't be a sore loser, ~name~! Go on and strip!
-5-female_must_strip=happy,I apologize if I went a little hard this time.
-5-female_must_strip=interested,If you surrender now, ~name~,  you'll at least keep your dignity.
-5-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-female_human_must_strip=calm,You're not giving up yet, are you, ~name~?
+5-female_human_must_strip=interested,What are you going to take off this time, ~name~? I think maybe you...
+5-female_human_must_strip=excited,Let's move on!
+5-female_human_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+5-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+5-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+5-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
 5-female_must_strip=fight,You're gonna have to do better than that if you want to beat me!
-5-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
-5-female_must_strip=interested,You're not giving up yet, are you, ~name~?
-5-female_must_strip=interested,Give it your best, ~name~.
-5-female_must_strip=calm,Looks like you need more training, ~name~.
-5-female_must_strip=calm,It's better to just get it over quickly, ~name~.
-5-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+5-female_must_strip=calm,You're not giving up yet, are you, ~name~?
+5-female_must_strip=interested,What are you going to take off this time, ~name~? I think maybe you...
+5-female_must_strip=excited,Let's move on!
+5-female_must_strip=victory,You put up a good fight, ~name~. Try harder next time.
+5-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+5-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+5-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+5-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+5-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+5-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+5-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+5-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
+5-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+5-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+5-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+5-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+5-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+5-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+5-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+5-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+5-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+5-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+5-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+5-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
 
 
 #lost pantyhose
-6-male_human_must_strip=excited,There's no way I'm gonna lose now!
-6-male_human_must_strip=victory,At this stage, every victory counts.
-6-male_must_strip=excited,There's no way I'm gonna lose now!
-6-male_must_strip=victory,At this stage, every victory counts.
+6-male_human_must_strip=calm,Come on, ~name~. I'm sure it's not as bad as it seems.
+6-male_human_must_strip=fight,Couldn't keep up with these legs, ~name~?
+6-male_human_must_strip=fight,Sorry, ~name~. But I can't afford to go easy on you anymore.
+6-male_human_must_strip=excited,At this stage, every victory counts.
+6-male_human_must_strip=victory,I'm already in my underwear, so losing is no longer an option for me.
+6-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+6-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+6-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+6-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+6-male_must_strip=calm,Come on, ~name~. I'm sure it's not as bad as it seems.
+6-male_must_strip=fight,Couldn't keep up with these legs, ~name~?
+6-male_must_strip=fight,Sorry, ~name~. But I can't afford to go easy on you anymore.
+6-male_must_strip=excited,At this stage, every victory counts.
+6-male_must_strip=victory,I'm already in my underwear, so losing is no longer an option for me.
+6-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+6-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+6-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+6-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+6-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+6-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+6-female_human_must_strip=fight,Couldn't keep up with these legs, ~name~?
+6-female_human_must_strip=fight,Sorry, ~name~. But I can't afford to go easy on you anymore.
+6-female_human_must_strip=excited,At this stage, every victory counts.
+6-female_human_must_strip=victory,I'm already in my underwear, so losing is no longer an option for me.
+6-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+6-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+6-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+6-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+6-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+6-female_must_strip=fight,Couldn't keep up with these legs, ~name~?
+6-female_must_strip=fight,Sorry, ~name~. But I can't afford to go easy on you anymore.
+6-female_must_strip=excited,At this stage, every victory counts.
+6-female_must_strip=victory,I'm already in my underwear, so losing is no longer an option for me.
+6-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+6-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+6-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
+6-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+6-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+6-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+6-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+6-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+6-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+6-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+6-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+6-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+6-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+6-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+6-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+6-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+6-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+6-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+6-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+6-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
 
 
 #lost bindings
+7-male_human_must_strip=fight,I'm already showing my breasts, so I won't lose anymore!
+7-male_human_must_strip=calm,It had to be you, ~name~.
+7-male_human_must_strip=fight,You're taking this game seriously, right ~name~? Then strip!
 7-male_human_must_strip=excited,There's no way I'm gonna lose now!
-7-male_human_must_strip=victory,At this stage, every victory counts.
+7-male_human_must_strip=victory,I win this time.
+7-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+7-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+7-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+7-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+7-male_must_strip=fight,I'm already showing my breasts, so I won't lose anymore!
+7-male_must_strip=calm,It had to be you, ~name~.
+7-male_must_strip=fight,You're taking this game seriously, right ~name~? Then strip!
 7-male_must_strip=excited,There's no way I'm gonna lose now!
-7-male_must_strip=victory,At this stage, every victory counts.
+7-male_must_strip=victory,I win this time.
+7-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+7-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+7-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+7-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+7-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+7-female_human_must_strip=fight,I'm already showing my breasts, so I won't lose anymore!
+7-female_human_must_strip=calm,It had to be you, ~name~.
+7-female_human_must_strip=fight,You're taking this game seriously, right ~name~? Then strip!
+7-female_human_must_strip=excited,There's no way I'm gonna lose now!
+7-female_human_must_strip=victory,I win this time.
+7-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+7-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+7-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+7-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+7-female_must_strip=fight,I'm already showing my breasts, so I won't lose anymore!
+7-female_must_strip=calm,It had to be you, ~name~.
+7-female_must_strip=fight,You're taking this game seriously, right ~name~? Then strip!
+7-female_must_strip=excited,There's no way I'm gonna lose now!
+7-female_must_strip=victory,I win this time.
+7-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+7-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+7-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+7-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+7-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+7-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+7-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+7-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+7-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
+7-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+7-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+7-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+7-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+7-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+7-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+7-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+7-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+7-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+7-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+7-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
 
--3-male_human_must_strip=excited,There's no way I'm gonna lose now!
--3-male_human_must_strip=victory,At this stage, every victory counts.
--3-male_must_strip=excited,There's no way I'm gonna lose now!
--3-male_must_strip=victory,At this stage, every victory counts.
+-3-male_human_must_strip=excited,Couldn't keep up with these legs, ~name~?
+-3-male_human_must_strip=calm,I'm holding by a thread here, so I welcome every victory.
+-3-male_human_must_strip=excited,Soon you'll be naked, ~name~. Just like me.
+-3-male_human_must_strip=victory,I won fair and square.
+-3-male_human_must_strip=fight,Any hit I take now will mean K.O. I need to keep winning no matter what!
+-3-male_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+-3-male_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+-3-male_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+-3-male_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+-3-male_must_strip=excited,Couldn't keep up with these legs, ~name~?
+-3-male_must_strip=calm,I'm holding by a thread here, so I welcome every victory.
+-3-male_must_strip=excited,Soon you'll be naked, ~name~. Just like me.
+-3-male_must_strip=victory,I won fair and square.
+-3-male_must_strip=fight,Any hit I take now will mean K.O. I need to keep winning no matter what!
+-3-male_must_strip,target:pit,targetStage:0=sad,You look like a good boy, Pit. I feel kinda bad for going against you.
+-3-male_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+-3-male_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+-3-male_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+-3-male_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+-3-female_human_must_strip=excited,Couldn't keep up with these legs, ~name~?
+-3-female_human_must_strip=calm,I'm holding by a thread here, so I welcome every victory.
+-3-female_human_must_strip=excited,Soon you'll be naked, ~name~. Just like me.
+-3-female_human_must_strip=victory,I won fair and square.
+-3-female_human_must_strip=fight,Any hit I take now will mean K.O. I need to keep winning no matter what!
+-3-female_human_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+-3-female_human_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+-3-female_human_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+-3-female_human_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+-3-female_must_strip=excited,Couldn't keep up with these legs, ~name~?
+-3-female_must_strip=calm,I'm holding by a thread here, so I welcome every victory.
+-3-female_must_strip=excited,Soon you'll be naked, ~name~. Just like me.
+-3-female_must_strip=victory,I won fair and square.
+-3-female_must_strip=fight,Any hit I take now will mean K.O. I need to keep winning no matter what!
+-3-female_must_strip,target:videl,targetStage:0=excited,Hey Videl! Would you like to have a friendly fight after this game is over? I'm curious to see how strong you really are.
+-3-female_must_strip,target:wiifitfemale,targetStage:0=excited,I'm happy that you lost! It's nothing personal, I just want to see your muscles.
+-3-female_must_strip,oppHand:One Pair=sad,Losing with a pair? That's rough.
+-3-female_must_strip,oppHand:One Pair=sad,You had a pair and it still wasn't enough?
+-3-female_must_strip,oppHand:One Pair=fight,You lost with a pair? Looks like the competition is fierce in this game.
+-3-female_must_strip,oppHand:One Pair=sad,I thought having a pair would mean you're safe everytime, but I guess I was wrong.
+-3-female_must_strip,target:marinette,targetStage:0=calm,You sure do talk about "Akuma" a lot. Do you practice the Satsui no Hado?
+-3-female_must_strip,target:sonya,targetStage:0=interested,So Sonya, are you as interested as I am to discover which one of us is stronger?
+-3-female_must_strip,target:alice,targetStage:0=sad,That knife looks dangerous, Alice. Why don't you let me take it? Just in case.
+-3-female_must_strip,target:korra,targetStage:0=interested,You sure look like you can handle yourself in battle, Korra. Your occupation must require a lot of fighting.
+-3-female_must_strip,target:tracer,targetStage:0=excited,So you rely on mobility to fight, Tracer? Do you think you can dodge my kicks?
+-3-female_must_strip,target:mei,targetStage:0=happy,Come on, Mei. I'm rooting for you as a fellow chinese gal.
+-3-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+-3-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
+-3-female_must_strip,target:moon,targetStage:0=shocked,Wait, you want to lose Moon? Are you feeling ok?
+-3-female_must_strip,target:morrigan,targetStage:0=interested,Morrigan, looks like you haven't changed since we last met.
+-3-female_must_strip,target:revy,targetStage:0=fight,If you plan on using those guns to harm someone, I'll have no choice but to put you under arrest, Revy. I won't warn you again.
+-3-female_must_strip,target:rinkah,targetStage:0=excited,Rinkah, you look like someone you wouldn't want to get into a fight with. Just look at those abs!
+-3-female_must_strip,target:samus,targetStage:0=calm,Samus, you look like you've a lot of experience in battle. I don't think we're too different in that aspect.
+-3-female_must_strip,target:shantae,targetStage:0=calm,I love your exotic look, Shantae. What country are you from?
 
 -2-male_human_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
 -2-male_human_must_strip=horny,Come on, ~name~! Give me something worth looking at!
 -2-male_human_must_strip=interested,Come on, ~name~! What do you have for me?
+-2-male_human_must_strip=horny,Did you maybe lose because you were distracted while looking at me?
+-2-male_human_must_strip=excited,This is so exciting!
 -2-male_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
 -2-male_must_strip=horny,Come on, ~name~! Give me something worth looking at!
 -2-male_must_strip=interested,Come on, ~name~! What do you have for me?
--2-female_human_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
--2-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
--2-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
--2-female_human_must_strip=interested,Give it your best, ~name~.
--2-female_human_must_strip=calm,Looks like you need more training, ~name~.
--2-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
--2-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
--2-female_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
--2-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
--2-female_must_strip=interested,You're not giving up yet, are you, ~name~?
--2-female_must_strip=interested,Give it your best, ~name~.
--2-female_must_strip=calm,Looks like you need more training, ~name~.
--2-female_must_strip=calm,It's better to just get it over quickly, ~name~.
--2-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+-2-male_must_strip=horny,Did you maybe lose because you were distracted while looking at me?
+-2-male_must_strip=excited,This is so exciting!
+-2-female_human_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-2-female_human_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-2-female_human_must_strip=interested,Come on, ~name~! What do you have for me?
+-2-female_human_must_strip=horny,Did you maybe lose because you were distracted while looking at me?
+-2-female_human_must_strip=excited,This is so exciting!
+-2-female_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
+-2-female_must_strip=horny,Come on, ~name~! Give me something worth looking at!
+-2-female_must_strip=interested,Come on, ~name~! What do you have for me?
+-2-female_must_strip=horny,Did you maybe lose because you were distracted while looking at me?
+-2-female_must_strip=excited,This is so exciting!
+-2-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+-2-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
 
--1-male_human_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
--1-male_human_must_strip=horny,Come on, ~name~! Give me something worth looking at!
--1-male_human_must_strip=interested,Come on, ~name~! What do you have for me?
--1-male_must_strip=excited,Hurry, ~name~! Show me what you have under those clothes!
--1-male_must_strip=horny,Come on, ~name~! Give me something worth looking at!
--1-male_must_strip=interested,Come on, ~name~! What do you have for me?
--1-female_human_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
--1-female_human_must_strip=victory,You'll keep losing if you don't have something to fight for.
--1-female_human_must_strip=interested,You're not giving up yet, are you, ~name~?
--1-female_human_must_strip=interested,Give it your best, ~name~.
--1-female_human_must_strip=calm,Looks like you need more training, ~name~.
--1-female_human_must_strip=calm,It's better to just get it over quickly, ~name~.
--1-female_human_must_strip=calm,You have my support, ~name~. We girls have to stick together.
--1-female_must_strip=excited,Don't be a sore loser,~name~! Go on and strip!
--1-female_must_strip=victory,You'll keep losing if you don't have something to fight for.
--1-female_must_strip=interested,You're not giving up yet, are you, ~name~?
--1-female_must_strip=interested,Give it your best, ~name~.
--1-female_must_strip=calm,Looks like you need more training, ~name~.
--1-female_must_strip=calm,It's better to just get it over quickly, ~name~.
--1-female_must_strip=calm,You have my support, ~name~. We girls have to stick together.
+-1-male_human_must_strip=excited,Come on, ~name~! This can't be worse than what I've been through.
+-1-male_human_must_strip=interested,Now that I lost I can just sit back and enjoy the show.
+-1-male_human_must_strip=excited,I guess being able to watch without worrying about losing anymore is my consolation prize.
+-1-male_human_must_strip=horny,Show us what you have, ~name~.
+-1-male_human_must_strip=excited,This game is getting more and more exciting everytime!
+-1-male_must_strip=excited,Come on, ~name~! This can't be worse than what I've been through.
+-1-male_must_strip=interested,Now that I lost I can just sit back and enjoy the show.
+-1-male_must_strip=excited,I guess being able to watch without worrying about losing anymore is my consolation prize.
+-1-male_must_strip=horny,Show us what you have, ~name~.
+-1-male_must_strip=excited,This game is getting more and more exciting everytime!
+-1-female_human_must_strip=excited,Come on, ~name~! This can't be worse than what I've been through.
+-1-female_human_must_strip=interested,Now that I lost I can just sit back and enjoy the show.
+-1-female_human_must_strip=excited,I guess being able to watch without worrying about losing anymore is my consolation prize.
+-1-female_human_must_strip=horny,Show us what you have, ~name~.
+-1-female_human_must_strip=excited,This game is getting more and more exciting everytime!
+-1-female_must_strip=excited,Come on, ~name~! This can't be worse than what I've been through.
+-1-female_must_strip=interested,Now that I lost I can just sit back and enjoy the show.
+-1-female_must_strip=excited,I guess being able to watch without worrying about losing anymore is my consolation prize.
+-1-female_must_strip=horny,Show us what you have, ~name~.
+-1-female_must_strip=excited,This game is getting more and more exciting everytime!
+-1-female_must_strip,target:moon,targetStage:1-6=sad,Oh boy, here she goes again.
+-1-female_must_strip,target:moon,targetStage:1-6=calm,You're truly something, Moon.
 
 
 
@@ -555,176 +883,218 @@ female_must_strip=victory,At this stage, every victory counts.
 #Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
 #Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
 
-#stage-specific lines that override the stage-generic ones
-male_removed_accessory=sad,I can't believe I lost this badly.
-female_removed_accessory=sad,I can't believe I lost this badly.
-
-
 #fully clothed
-0-male_removing_accessory=disappointed,That... is kinda disappointing.
-0-male_removing_accessory=disappointed,You could try a little harder, you know?
-0-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-0-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-0-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-0-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-0-female_removing_accessory=disappointed,That... is kinda disappointing.
-0-female_removing_accessory=disappointed,You could try a little harder, you know?
-0-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-0-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-0-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-0-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+0-male_removing_accessory=interested,Hmmm, that' actually a smart choice.
+0-male_removing_accessory=calm,Not a bad starting point, ~name~.
+0-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+0-male_removed_accessory=victory,This is a game of resistance, so give it your best.
+0-male_removed_accessory=calm,There's a lot at stake here, so it's best to start small.
+0-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+0-female_removing_accessory=calm,Well, I guess it's ok for now to just remove your ~clothing~.
+0-female_removing_accessory=calm,You have to start somewhere, so I won't blame you for it.
+0-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+0-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+0-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+0-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+0-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+0-female_removed_accessory=interested,Just remember you won't be able to rely on small items forever.
+0-female_removed_accessory=calm,This is just the beginning, ~name~.
+0-female_removed_accessory=calm,This game has just begun.
+0-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+0-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+0-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
 
 
 #lost bracelets
-1-male_removing_accessory=disappointed,That... is kinda disappointing.
-1-male_removing_accessory=disappointed,You could try a little harder, you know?
-1-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-1-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-1-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-1-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-1-female_removing_accessory=disappointed,That... is kinda disappointing.
-1-female_removing_accessory=disappointed,You could try a little harder, you know?
-1-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-1-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-1-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-1-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+1-male_removing_accessory=calm,Just your ~clothing~? Ok.
+1-male_removing_accessory=interested,Yeah, that's not a bad idea.
+1-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+1-male_removed_accessory=calm,And so, the game continues.
+1-male_removed_accessory=interested,Next time you'll probably have to go bigger, ~name~.
+1-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+1-female_removing_accessory=calm,I guess this isn't any different from me removing my bracelets.
+1-female_removing_accessory=calm,Oh, I didn't notice you had that.
+1-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+1-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+1-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+1-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+1-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+1-female_removed_accessory=victory,Let's make this a fair game.
+1-female_removed_accessory=excited,Ok, let's keep going.
+1-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+1-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
+1-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
 
 
 #lost waistband
-2-male_removing_accessory=disappointed,That... is kinda disappointing.
-2-male_removing_accessory=disappointed,You could try a little harder, you know?
-2-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-2-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-2-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-2-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-2-female_removing_accessory=disappointed,That... is kinda disappointing.
-2-female_removing_accessory=disappointed,You could try a little harder, you know?
-2-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-2-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-2-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-2-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+2-male_removing_accessory=calm,Well, if you still have your ~clothing~ you might as well remove it now.
+2-male_removing_accessory=sad,Ok, if that's your choice.
+2-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+2-male_removed_accessory=calm,Are you already thinking on what you're gonna take off next?
+2-male_removed_accessory=interested,You're proving to be a tough opponent, ~name~.
+2-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+2-female_removing_accessory=sad,Oh, you're just removing your ~clothing~?
+2-female_removing_accessory=sad,Just your ~clothing~? Well, I guess I have no problem with that.
+2-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+2-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+2-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+2-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+2-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+2-female_removed_accessory=sad,This is kind of a bittersweet victory.
+2-female_removed_accessory=sad,I know I won, but this doesn't feel like much.
+2-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
+2-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+2-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
 
 
 #lost qipao
-3-male_removing_accessory=disappointed,That... is kinda disappointing.
-3-male_removing_accessory=disappointed,You could try a little harder, you know?
-3-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-3-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-3-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-3-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-3-female_removing_accessory=disappointed,That... is kinda disappointing.
-3-female_removing_accessory=disappointed,You could try a little harder, you know?
-3-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-3-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-3-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-3-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+3-male_removing_accessory=sad,That... is kinda disappointing.
+3-male_removing_accessory=sad,You could try a little harder, you know?
+3-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+3-male_removed_accessory=sad,At this stage, I expect something a little better.
+3-male_removed_accessory=sad,This game is much more interesting when you go the extra mile.
+3-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+3-female_removing_accessory=sad,You still have your ~clothing~? Sorry, I didn't notice.
+3-female_removing_accessory=sad,Oh, I actually thought it would be something bigger this time.
+3-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+3-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+3-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+3-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+3-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+3-female_removed_accessory=sad,I already took off my dress, and you're only removing your ~clothing~?
+3-female_removed_accessory=sad,I just think you can do better, ~name~.
+3-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+3-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
+3-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
 
 
 #lost boots
-4-male_removing_accessory=disappointed,That... is kinda disappointing.
-4-male_removing_accessory=disappointed,You could try a little harder, you know?
-4-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-4-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-4-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-4-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-4-female_removing_accessory=disappointed,That... is kinda disappointing.
-4-female_removing_accessory=disappointed,You could try a little harder, you know?
-4-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-4-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-4-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-4-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+4-male_removing_accessory=sad,Seriously? That's your choice?
+4-male_removing_accessory=sad,Oh, ~name~. I expected something better this time.
+4-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+4-male_removed_accessory=sad,This is proving to be much hard than I anticipated.
+4-male_removed_accessory=sad,At this rate, this is gonna take forever.
+4-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+4-female_removing_accessory=fight,Just your ~clothing~? Is this really acceptable?
+4-female_removing_accessory=fight,Is this really the best you can do, ~name~?
+4-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+4-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+4-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+4-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+4-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+4-female_removed_accessory=sad,I'm almost in my underwear and you still had that?
+4-female_removed_accessory=sad,Sorry if I lose my composure, I just really want to win.
+4-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+4-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+4-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
 
 
 #lost leotard
-5-male_removing_accessory=disappointed,That... is kinda disappointing.
-5-male_removing_accessory=disappointed,You could try a little harder, you know?
-5-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-5-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-5-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-5-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-5-female_removing_accessory=disappointed,That... is kinda disappointing.
-5-female_removing_accessory=disappointed,You could try a little harder, you know?
-5-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-5-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-5-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-5-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+5-male_removing_accessory=fight,Are you serious, ~name~? Isn't looking at my cleavage enough to make you try harder?
+5-male_removing_accessory=fight,I'm starting to question if this doesn't count as cheating.
+5-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+5-male_removed_accessory=fight,This doesn't feel like much of a reward for winning, you know?
+5-male_removed_accessory=fight,I think you might be missing the point of this game.
+5-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+5-female_removing_accessory=fight,Oh, come on!
+5-female_removing_accessory=fight,Seriously, ~name~. I think you can do better than that.
+5-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+5-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+5-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+5-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+5-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+5-female_removed_accessory=fight,You need to step up your game.
+5-female_removed_accessory=fight,Let's not turn this game into a boring spectacle.
+5-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
+5-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+5-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
 
 
 #lost pantyhose
-6-male_removing_accessory=disappointed,That... is kinda disappointing.
-6-male_removing_accessory=disappointed,You could try a little harder, you know?
-6-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-6-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-6-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-6-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-6-female_removing_accessory=disappointed,That... is kinda disappointing.
-6-female_removing_accessory=disappointed,You could try a little harder, you know?
-6-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-6-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-6-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-6-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+6-male_removing_accessory=angry,Are you serious, ~name~?! Your ~clothing~?
+6-male_removing_accessory=disappointed,You seriously need try a little harder, you know?
+6-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+6-male_removed_accessory=angry,We're approaching the final round, you need to try harder.
+6-male_removed_accessory=angry,That didn't cover any skin!
+6-male_removed_accessory=sad,Aren't my bare thighs enough motivation to make you try harder?
+6-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
+6-female_removing_accessory=angry,You're starting to make me angry, ~name~.
+6-female_removing_accessory=angry,~clothing~?! Is this for real?
+6-female_removing_accessory=angry,You shouldn't provoke me, ~name~.
+6-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+6-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+6-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+6-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+6-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+6-female_removed_accessory=angry,I don't think you want to see me lose my temper.
+6-female_removed_accessory=angry,I'm already in my underwear, you should be a little more daring!
+6-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+6-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+6-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
 
 
 #lost bindings
-7-male_removing_accessory=angry,You seriously still have that?!
-7-male_removing_accessory=angry,Are you serious? I'm topless and you still have your ~clothing~?
-7-male_removing_accessory=disappointed,That... is kinda disappointing.
-7-male_removing_accessory=disappointed,You could try a little harder, you know?
-7-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-7-male_removed_accessory=angry,Trust me, you don't want to see me angry.
-7-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
-7-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
-7-male_removed_accessory=sad,I can't believe I'm this far behind.
-7-female_removing_accessory=disappointed,That... is kinda disappointing.
-7-female_removing_accessory=disappointed,You could try a little harder, you know?
-7-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
-7-female_removing_accessory=angry,You seriously still have that?!
+7-male_removing_accessory=angry,Seriously, ~name~.
+7-male_removing_accessory=angry,Is this how you repay me after I've shown you my breasts?
+7-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+7-male_removed_accessory=angry,What more do you want from me?
+7-male_removed_accessory=angry,This isn't what a good loser would be like.
+7-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
 7-female_removing_accessory=angry,Are you serious? I'm topless and you still have your ~clothing~?
-7-female_removed_accessory=angry,Trust me, you don't want to see me angry.
-7-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
-7-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+7-female_removing_accessory=angry,You seriously still have that?!
+7-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+7-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+7-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+7-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+7-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
 7-female_removed_accessory=sad,I can't believe I'm this far behind.
+7-female_removed_accessory=angry,Now I'm convinced that this is cheating!
+7-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
+7-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+7-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
 
--3-male_removing_accessory=angry,You seriously still have that?!
--3-male_removing_accessory=disappointed,That... is kinda disappointing.
--3-male_removing_accessory=disappointed,You could try a little harder, you know?
--3-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
--3-male_removing_accessory=angry,Are you serious? I'm naked and you still have your ~clothing~?
--3-male_removed_accessory=sad,I can't believe I'm this far behind.
--3-male_removed_accessory=angry,Trust me, you don't want to see me angry.
--3-male_removed_accessory=disappointed,At this rate, this is gonna take forever.
--3-male_removed_accessory=fight,Looks like this is gonna be a tough fight.
--3-female_removing_accessory=disappointed,That... is kinda disappointing.
--3-female_removing_accessory=disappointed,You could try a little harder, you know?
--3-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-3-male_removing_accessory=angry,Is anyone else as angry as I am?
+-3-male_removing_accessory=angry,~name~! I'm showing you all I have and you're just taking off your ~clothing~?!
+-3-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+-3-male_removed_accessory=angry,If you think I'm going to surrender after this, you're wrong.
+-3-male_removed_accessory=angry,Be a man and take responsabiliy for your mistakes!
+-3-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
 -3-female_removing_accessory=angry,Are you serious? I'm naked and you still have your ~clothing~?
--3-female_removing_accessory=angry,You seriously still have that?!
--3-female_removed_accessory=sad,I can't believe I'm this far behind.
--3-female_removed_accessory=angry,Trust me, you don't want to see me angry.
--3-female_removed_accessory=disappointed,At this rate, this is gonna take forever.
--3-female_removed_accessory=fight,Looks like this is gonna be a tough fight.
+-3-female_removing_accessory=angry,~name~, you cheater!
+-3-female_removing_accessory=angry,That shouldn't count this far into the game!
+-3-female_removing_accessory,target:moon,targetStage:1-3=sad,I don't understand your strategy, Moon.
+-3-female_removing_accessory,target:moon,targetStage:1-3=shocked,Why are you in such a rush to get naked?
+-3-female_removing_accessory,target:sonya,targetStage:0=calm,We are both women, but our fighting styles are so different.
+-3-female_removing_accessory,target:revy,targetStage:3=interested,Oh, you're finally getting rid of your guns.
+-3-female_removing_accessory,target:tracer,targetStage:1=interested,Your shoes look very practical for running around, Tracer.
+-3-female_removed_accessory=angry,If I had known this was how you were going to play, I would've counted my hair ribbons and my earrings as clothing.
+-3-female_removed_accessory=sad,Looks like I was wrong when I expected this to be a fair game.
+-3-female_removed_accessory=angry,If everyone keeps doing this, I don't think I'll be able to win.
+-3-female_removed_accessory,target:tracer,targetStage:2=excited,I still wouldn't trade my boots for anything.
+-3-female_removed_accessory,target:sonya,targetStage:1=excited,Whenever you're ready for a fight, you let me know.
+-3-female_removed_accessory,target:revy,targetStage:4=calm,I think we can relax a little more now.
 
--2-male_removing_accessory=angry,Are you serious? I'm masturbating and you still have your ~clothing~?
--2-male_removing_accessory=disappointed,That... is kinda disappointing.
--2-male_removing_accessory=disappointed,You could try a little harder, you know?
--2-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
--2-male_removing_accessory=angry,You seriously still have that?!
--2-female_removing_accessory=angry,You seriously still have that?!
--2-female_removing_accessory=disappointed,That... is kinda disappointing.
--2-female_removing_accessory=disappointed,You could try a little harder, you know?
--2-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-2-male_removing_accessory=angry,I know I lost, but this still pissed me off.
+-2-male_removing_accessory=angry,~name~, does it make you happy to look at me now while you still have your ~clothing~?
+-2-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+-2-male_removed_accessory=angry,The least you could do for me now is to give me something to look at,
+-2-male_removed_accessory=embarrassed,This is the worst.
+-2-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
 -2-female_removing_accessory=angry,Are you serious? I'm masturbating and you still have your ~clothing~?
+-2-female_removing_accessory=angry,I have a feeling you're mocking me, ~name~.
+-2-female_removed_accessory=sad,I can't believe I lost this badly.
+-2-female_removed_accessory=embarrassed,Being in this position while you're just removing your ~clothing~ makes it much worse.
 
--1-male_removing_accessory=angry,Are you serious? I lost and you still have your ~clothing~?
--1-male_removing_accessory=disappointed,That... is kinda disappointing.
--1-male_removing_accessory=disappointed,You could try a little harder, you know?
--1-male_removing_accessory=angry,Seriously? Doesn't this count as cheating?
--1-male_removing_accessory=angry,You seriously still have that?!
--1-female_removing_accessory=disappointed,That... is kinda disappointing.
--1-female_removing_accessory=disappointed,You could try a little harder, you know?
--1-female_removing_accessory=angry,Seriously? Doesn't this count as cheating?
+-1-male_removing_accessory=angry,After watching me masturbate, you're just gonna take off your ~clothing~?
+-1-male_removing_accessory=angry,After what I did for you, you should give something better, ~name~.
+-1-male_removing_accessory,target:pit,targetStage:0=calm,You're not going to remove your wings?
+-1-male_removed_accessory=fight,Maybe a kick to the head will motivate you.
+-1-male_removed_accessory=fight,Is this your way of taunting me?
+-1-male_removed_accessory,target:pit,targetStage:1=shocked,Wait, those are real?
 -1-female_removing_accessory=angry,Are you serious? I lost and you still have your ~clothing~?
--1-female_removing_accessory=angry,You seriously still have that?!
+-1-female_removing_accessory=angry,It's like you're mocking me for losing before you.
+-1-female_removed_accessory=sad,Did I really lose by such a large margin?
+-1-female_removed_accessory=angry,It still pisses me to lose so quickly.
 
 
 
@@ -732,106 +1102,128 @@ female_removed_accessory=sad,I can't believe I lost this badly.
 #OPPONENT REMOVING MINOR CLOTHING
 #Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
 
-#stage-specific lines that override the stage-generic ones
-male_removing_minor=calm,You don't need to be a detective to know you were going to remove your ~clothing~.
-male_removing_minor=sad,I don't know why I keep expecting something more.
-male_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
-female_removing_minor=calm,You don't need to be a detective to know you were going to remove your ~clothing~.
-female_removing_minor=sad,I don't know why I keep expecting something more.
-female_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
-
-
 #fully clothed
-0-male_removed_minor=victory,I have to stay focused.
-0-male_removed_minor=excited,Next time it'll surely be better.
-0-male_removed_minor=calm,You have to start small I guess.
+0-male_removing_minor=calm,That's a decent choice.
+0-male_removing_minor=sad,Your ~clothing~? Very well.
+0-male_removed_minor=interested,You look better this way, ~name~.
+0-male_removed_minor=calm,That was a fair price to pay for your defeat.
+0-female_removing_minor=calm,You don't need to be a detective to know you were going to remove your ~clothing~.
+0-female_removing_minor=interested,Hmmm, that's not bad.
 0-female_removed_minor=excited,Next time it'll surely be better.
-0-female_removed_minor=calm,You have to start small I guess.
-0-female_removed_minor=victory,I have to stay focused.
+0-female_removed_minor=calm,You can't just jump to taking off your most important clothes.
+0-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost bracelets
-1-male_removed_minor=excited,Next time it'll surely be better.
-1-male_removed_minor=calm,You have to start small I guess.
-1-male_removed_minor=victory,I have to stay focused.
-1-female_removed_minor=excited,Next time it'll surely be better.
-1-female_removed_minor=calm,You have to start small I guess.
-1-female_removed_minor=victory,I have to stay focused.
+1-male_removing_minor=calm,Your ~clothing~? Ok.
+1-male_removing_minor=sad,So, your ~clothing~? That's a good choice.
+1-male_removed_minor=interested,Did you bring that just in case this happened, ~name~?
+1-male_removed_minor=excited,I wonder what will come next.
+1-female_removing_minor=calm,Huh, your ~clothing~ already?
+1-female_removing_minor=calm,Yep, this is what I was expecting.
+1-female_removed_minor=interested,Not a major item, but not bad either.
+1-female_removed_minor=calm,Are you feeling more comfortable now, ~name~?
+1-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost waistband
-2-male_removed_minor=excited,Next time it'll surely be better.
-2-male_removed_minor=calm,You have to start small I guess.
-2-male_removed_minor=victory,I have to stay focused.
-2-female_removed_minor=excited,Next time it'll surely be better.
-2-female_removed_minor=calm,You have to start small I guess.
-2-female_removed_minor=victory,I have to stay focused.
+2-male_removing_minor=calm,Oh, your ~clothing~. Not a bad choice.
+2-male_removing_minor=interested,I see, so it's gonna be your ~clothing~ this time.
+2-male_removed_minor=interested,Are you planning ahead what you're gonna remove next?
+2-male_removed_minor=calm,Very well, ~name~. Let's keep going.
+2-female_removing_minor=calm,Your ~clothing~? That would've been my choice too.
+2-female_removing_minor=calm,Good choice, ~name~.
+2-female_removed_minor=excited,You better be careful next time if you don't want to strip again.
+2-female_removed_minor=calm,Well, I hoped you learned something from this defeat.
+2-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost qipao
-3-male_removed_minor=excited,Next time it'll surely be better.
-3-male_removed_minor=calm,You have to start small I guess.
-3-male_removed_minor=victory,I have to stay focused.
-3-female_removed_minor=victory,I have to stay focused.
-3-female_removed_minor=excited,Next time it'll surely be better.
-3-female_removed_minor=calm,You have to start small I guess.
+3-male_removing_minor=calm,Are you sure about taking off your ~clothing~, ~name~?
+3-male_removing_minor=sad,Your ~clothing~? Oh, ok.
+3-male_removed_minor=excited,I kinda expected something more, if you don't mind me saying.
+3-male_removed_minor=calm,Well, maybe next time you'll give us something more.
+3-female_removing_minor=calm,~clothing~? Alright.
+3-female_removing_minor=calm,Ok, so it's gonna be your ~clothing~.
+3-female_removed_minor=disappointed,*yawn*...sorry.
+3-female_removed_minor=disappointed,Is anyone else feeling a little sleepy?
+3-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost boots
-4-male_removed_minor=victory,I have to stay focused.
-4-male_removed_minor=excited,Next time it'll surely be better.
-4-male_removed_minor=calm,You have to start small I guess.
-4-female_removed_minor=victory,I have to stay focused.
-4-female_removed_minor=excited,Next time it'll surely be better.
-4-female_removed_minor=calm,You have to start small I guess.
+4-male_removing_minor=sad,Well, if that's your choice I won't hold a grudge against you.
+4-male_removing_minor=sad,That's a fair choice I guess.
+4-male_removed_minor=excited,I like this game better when there's more at risk, so let's do our best ~name~.
+4-male_removed_minor=fight,If you lose again you'll have to pick something better, ~name~.
+4-female_removing_minor=sad,Oh well, just your ~clothing~ this time.
+4-female_removing_minor=sad,Well, yeah. Those are clothes too.
+4-female_removed_minor=disappointed,I don't know why, but I was expecting a little more.
+4-female_removed_minor=sad,I guess since I already took off my dress I thought you would follow my example.
+4-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost leotard
-5-male_removed_minor=victory,I have to stay focused.
-5-male_removed_minor=excited,Next time it'll surely be better.
-5-male_removed_minor=calm,You have to start small I guess.
-5-female_removed_minor=excited,Next time it'll surely be better.
-5-female_removed_minor=calm,You have to start small I guess.
-5-female_removed_minor=victory,I have to stay focused.
+5-male_removing_minor=calm,Oh, you ~clothing~? I forgot you still had that.
+5-male_removing_minor=calm,Ok, if that's you choice.
+5-male_removed_minor=sad,I still think you can do a little better, ~name~.
+5-male_removed_minor=fight,I challenge you to try a little harder next time, ~name~!
+5-female_removing_minor=calm,Well, we're one step closer to the primordial stuff.
+5-female_removing_minor=interested,You're gonna start running out of choices soon, ~name~.
+5-female_removed_minor=excited,What will it be next time?
+5-female_removed_minor=sad,I guess I'm running out of options too.
+5-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost pantyhose
-6-male_removed_minor=excited,Next time it'll surely be better.
-6-male_removed_minor=calm,You have to start small I guess.
-6-male_removed_minor=victory,I have to stay focused.
-6-female_removed_minor=victory,I have to stay focused.
-6-female_removed_minor=excited,Next time it'll surely be better.
-6-female_removed_minor=calm,You have to start small I guess.
+6-male_removing_minor=disappointed,Not the most interesting choice.
+6-male_removing_minor=disappointed,Sorry, ~name~. I'm a little disappointed of you.
+6-male_removed_minor=calm,I'm already in my underwear, so I guess I have the right to expect something a little better.
+6-male_removed_minor=interested,I just want to see a little more skin. You understand, right?
+6-female_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
+6-female_removing_minor=disappointed,I'm sorry to say this isn't what I'm here for.
+6-female_removed_minor=victory,No, the game isn't over yet. I have to stay focused.
+6-female_removed_minor=victory,I better don't get distracted, I need to keep my head in the game.
+6-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
 
 #lost bindings
-7-male_removed_minor=excited,Next time it'll surely be better.
-7-male_removed_minor=calm,You have to start small I guess.
-7-male_removed_minor=victory,I have to stay focused.
-7-female_removed_minor=victory,I have to stay focused.
-7-female_removed_minor=excited,Next time it'll surely be better.
-7-female_removed_minor=calm,You have to start small I guess.
+7-male_removing_minor=fight,I know you can do better than this, ~name~!
+7-male_removing_minor=sad,Oh, ok...
+7-male_removed_minor=horny,Will looking at my breasts give you the motivation you need to take off more clothes?
+7-male_removed_minor=interested,If you want to take off something else, I won't blame you.
+7-female_removing_minor=sad,Oh, I guess you still had that.
+7-female_removing_minor=sad,Are you sure you don't want to pick something else?
+7-female_removed_minor=sad,I'm so close to losing that this worries me a little.
+7-female_removed_minor=fight,I won't rest until you're completely naked, ~name~!
+7-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
--3-male_removed_minor=excited,Next time it'll surely be better.
--3-male_removed_minor=calm,You have to start small I guess.
--3-male_removed_minor=victory,I have to stay focused.
--3-female_removed_minor=excited,Next time it'll surely be better.
--3-female_removed_minor=calm,You have to start small I guess.
--3-female_removed_minor=victory,I have to stay focused.
+-3-male_removing_minor=angry,This is not looking good for me.
+-3-male_removing_minor=angry,To think you still had that on you.
+-3-male_removed_minor=sad,Why did I have to get naked before you?
+-3-male_removed_minor=victory,I need stay focused. Now more than ever.
+-3-female_removing_minor=fight,Hmmm, this game is getting tense.
+-3-female_removing_minor=sad,I wish I still had some clothes to take off, but I'm already naked.
+-3-female_removed_minor=fight,I know I'm almost out, but I still think I can win.
+-3-female_removed_minor=interested,As long as I believe in myself, I know I can win.
+-3-female_removed_minor,target:sonya,targetStage:6=calm,I don't understand why you needed to paint your face, but it's ok.
 
--2-male_removed_minor=excited,Next time it'll surely be better.
--2-male_removed_minor=calm,You have to start small I guess.
--2-male_removed_minor=annoyed,If I have to masturbate the least you could do is give me something to look at.
--2-female_removed_minor=annoyed,If I have to masturbate the least you could do is give me something to look at.
--2-female_removed_minor=excited,Next time it'll surely be better.
--2-female_removed_minor=calm,You have to start small I guess.
+-2-male_removing_minor=fight,If I have to masturbate the least you could do is give me something to look at.
+-2-male_removing_minor=angry,Just your ~clothing~? You know I'm masturbating here, right?
+-2-male_removed_minor=fight,You should make an effort to show me something more exciting.
+-2-male_removed_minor=sad,I want to see more skin next time, ok?
+-2-female_removing_minor=disappointed,That's it? This is dissapointing.
+-2-female_removing_minor=sad,Your ~clothing~? That doesn't look like a major loss for you.
+-2-female_removed_minor=calm,Well, sooner or later I know you'll be naked, ~name~.
+-2-female_removed_minor=excited,In this game, you can't stay dressed forever.
 
--1-male_removed_minor=annoyed,I masturbated in front of you and this is how you repay me?
--1-male_removed_minor=excited,Next time it'll surely be better.
--1-male_removed_minor=calm,You have to start small I guess.
--1-female_removed_minor=excited,Next time it'll surely be better.
--1-female_removed_minor=calm,You have to start small I guess.
--1-female_removed_minor=annoyed,I masturbated in front of you and this is how you repay me?
+-1-male_removing_minor=disappointed,Is that really all you can do?
+-1-male_removing_minor=sad,Once again, I'm disappointed.
+-1-male_removed_minor=fight,I masturbated in front of you, remember?
+-1-male_removed_minor=sad,Now that I lost and have nothing to do but watch, I want to see something better than this.
+-1-female_removing_minor=disappointed,Boring.
+-1-female_removing_minor=disappointed,I don't know why I keep expecting something more.
+-1-female_removed_minor=fight,Come on, ~name~! After what I just did, you should have no reason not to take off something better.
+-1-female_removed_minor=excited,Just promise me you'll try harder next time.
 
 
 
@@ -840,108 +1232,150 @@ female_removing_minor=disappointed,Just your ~clothing~? This is getting boring.
 #Major clothing reveals a significant amount of skin and likely underwear.
 #However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
 
-#stage-specific lines that override the stage-generic ones
-male_removing_major=interested,Now the fun part is about to begin.
-male_removing_major=shocked,Soon you'll have nothing left, ~name~!
-female_removing_major=interested,Now the fun part is about to begin.
-female_removing_major=shocked,Soon you'll have nothing left, ~name~!
-
-
 #fully clothed
-0-male_removed_major=excited,Let's keep going!
-0-male_removed_major=fight,Now is not the time to hesitate!
-0-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+0-male_removing_major=excited,Way to go, ~name~!
+0-male_removing_major=shocked,Are you sure you should be taking that off so soon?
+0-male_removed_major=calm,I'm still fully clothed and you already took off your ~clothing~.
+0-male_removed_major=calm,I'm glad that you're taking this game seriously.
+0-female_removing_major=excited,That's what I'm talking about!
+0-female_removing_major=shocked,Wow, way to step up ,~name~!
+0-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
 0-female_removed_major=excited,Let's keep going!
-0-female_removed_major=fight,Now is not the time to hesitate!
-0-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+0-female_removed_major=calm,I commend you for your effort.
+0-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
+0-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
 
 #lost bracelets
-1-male_removed_major=excited,Let's keep going!
-1-male_removed_major=fight,Now is not the time to hesitate!
+1-male_removing_major=interested,Now the fun part is about to begin.
+1-male_removing_major=interested,This is getting interesting.
+1-male_removed_major=victory,I admire how honorably you accept your defeat, ~name~. Let's keep going.
 1-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-1-female_removed_major=excited,Let's keep going!
-1-female_removed_major=fight,Now is not the time to hesitate!
-1-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+1-female_removing_major=shocked,Are you're taking off your ~clothing~ so soon?
+1-female_removing_major=interested,Your ~clothing~? Really?
+1-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+1-female_removed_major=shocked,Wow, that was covering a good amount of skin.
+1-female_removed_major=shocked,That was no minor damage you took, ~name~.
+1-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
+1-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
 
 
 #lost waistband
-2-male_removed_major=excited,Let's keep going!
-2-male_removed_major=fight,Now is not the time to hesitate!
-2-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-2-female_removed_major=excited,Let's keep going!
-2-female_removed_major=fight,Now is not the time to hesitate!
-2-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+2-male_removing_major=shocked,Are you sure it's not too soon to take off your ~clothing~?
+2-male_removing_major=shocked,Is that really the smartest choice, ~name~?
+2-male_removed_major=interested,I'm not complaining, I just think you need to play carefully.
+2-male_removed_major=calm,This game won't last much if you get naked fast.
+2-female_removing_major=interested,Oh, you're taking off your ~clothing~?
+2-female_removing_major=shocked,That's an interesting choice.
+2-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+2-female_removed_major=fight,Is this a challenge for me, ~name~? You're on!
+2-female_removed_major=calm,I have barely taking anything off yet.
+2-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
+2-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
 
 
 #lost qipao
-3-male_removed_major=excited,Let's keep going!
-3-male_removed_major=fight,Now is not the time to hesitate!
-3-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-3-female_removed_major=excited,Let's keep going!
-3-female_removed_major=fight,Now is not the time to hesitate!
-3-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+3-male_removing_major=excited,Alright, ~name~! Way to step up!
+3-male_removing_major=excited,This is getting exciting!
+3-male_removed_major=interested,This game is much more fun when there's more at risk.
+3-male_removed_major=interested,I want to see how much longer you can last.
+3-female_removing_major=calm,Are you following my example after I took off my dress, ~name~?
+3-female_removing_major=calm,Come on, ~name~. This is nothing you can't recover from.
+3-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+3-female_removed_major=interested,Maybe you just want to feel more comfortable.
+3-female_removed_major=victory,You're facing this challenge very well, don't give up.
+3-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
+3-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
 
 
 #lost boots
-4-male_removed_major=excited,Let's keep going!
-4-male_removed_major=fight,Now is not the time to hesitate!
-4-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-4-female_removed_major=excited,Let's keep going!
+4-male_removing_major=excited,Let's see more skin!
+4-male_removing_major=interested,I want to see what you're hiding under there, ~name~.
+4-male_removed_major=excited,That was a beautiful ~clothing~, but I think you look better without now.
+4-male_removed_major=calm,You'll probably feel more comfortable now. It's getting a little hot here.
+4-female_removing_major=shocked,So it's gonna be your ~clothing~?
+4-female_removing_major=shocked,Soon you won't have much to choose from, ~name~!
+4-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+4-female_removed_major=excited,I'm getting closer to winning!
 4-female_removed_major=fight,Now is not the time to hesitate!
-4-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+4-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
+4-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
 
 #lost leotard
-5-male_removed_major=excited,Let's keep going!
-5-male_removed_major=fight,Now is not the time to hesitate!
-5-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-5-female_removed_major=excited,Let's keep going!
-5-female_removed_major=fight,Now is not the time to hesitate!
-5-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+5-male_removing_major=shocked,Oh, so you're finally gonna take off your ~clothing~!
+5-male_removing_major=interested,I was just wondering when you were going to take off your ~clothing~.
+5-male_removed_major=interested,Are you running out of options, or do you want to get naked?
+5-male_removed_major=interested,It looks like you're getting experienced in taking off your clothes, ~name~.
+5-female_removing_major=interested,Now that I'm in a tougher situation I appreaciate the effort.
+5-female_removing_major=excited,Victory is feeling closer.
+5-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+5-female_removed_major=victory,It's nothing personal, ~name~. We are all here to win.
+5-female_removed_major=fight,I already lost my leotard, so it's only fair that you take off your ~clothing~.
+5-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
+5-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
 
 #lost pantyhose
-6-male_removed_major=excited,Let's keep going!
-6-male_removed_major=fight,Now is not the time to hesitate!
-6-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-6-female_removed_major=excited,Let's keep going!
-6-female_removed_major=fight,Now is not the time to hesitate!
-6-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+6-male_removing_major=excited,Good, this is just what I wanted!
+6-male_removing_major=excited,Alright! Sometimes winning feels great!
+6-male_removed_major=happy,Now that I'm in my underwear, if I lose again I'll have no choice but to show my private parts. That's why I welcome every victory.
+6-male_removed_major=happy,Sorry, ~name~. But if I'm going to win you'll need to get naked eventually.
+6-female_removing_major=fight,Alright! That did a good amount of damage!
+6-female_removing_major=fight,Yes! Take that off, ~name~!
+6-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+6-female_removed_major=calm,We've reached the critical stage in which losing is no longer an option.
+6-female_removed_major=victory,At this stage, every victory is important.
+6-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
+6-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
 
 
 #lost bindings
-7-male_removed_major=excited,Let's keep going!
-7-male_removed_major=fight,Now is not the time to hesitate!
-7-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
-7-female_removed_major=excited,Let's keep going!
-7-female_removed_major=fight,Now is not the time to hesitate!
-7-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+7-male_removing_major=excited,I can't wait to see you without you ~clothing~, ~name~.
+7-male_removing_major=horny,Since this game began I've wondered what you look like without your ~clothing~.
+7-male_removed_major=horny,You are already looking at my breasts, so I guess it goes both ways.
+7-male_removed_major=horny,Have you fantasized about me too? I guess that's why we're all here.
+7-female_removing_major=excited,Your ~clothing~? Awesome!
+7-female_removing_major=happy,You taking off your ~clothing~ is is a major victory for me!
+7-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+7-female_removed_major=calm,Now that my breasts are exposed, I can't afford to lose anymore.
+7-female_removed_major=interested,What could you possibly take off next time?
+7-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
+7-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
--3-male_removed_major=excited,Let's keep going!
--3-male_removed_major=fight,Now is not the time to hesitate!
--3-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
--3-female_removed_major=excited,Let's keep going!
--3-female_removed_major=fight,Now is not the time to hesitate!
--3-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-3-male_removing_major=excited,Better you than me, ~name~!
+-3-male_removing_major=excited,Do you want to get naked after looking at me, ~name~?
+-3-male_removed_major=calm,Now that I'm already naked, making a fuss about taking off my clothes seemed like an exageration.
+-3-male_removed_major=calm,If you no longer have any clothing to take off, you've no choice but to go for the big ones.
+-3-female_removing_major=interested,It looks like we're getting close to the end of this game.
+-3-female_removing_major=excited,Soon you'll be naked ~name~. Just like me.
+-3-female_removing_major=happy,A big victory for me.
+-3-female_removing_major,target:tracer,targetStage:2=shocked,I was just wondering what that strange device on your chest was.
+-3-female_removed_major=sad,Victory is so close! But I guess I'm also close to losing.
+-3-female_removed_major=calm,The stakes have never been higher than now.
+-3-female_removed_major=calm,The higher the risk, the bigger the reward.
+-3-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
+-3-female_removed_major,target:sonya,targetStage:5=interested,You seem to have some pretty strong legs, Sonya. Probably not as much as mine though.
 
--2-male_removed_major=horny,Ah, this is much better.
--2-male_removed_major=excited,Let's keep going!
--2-male_removed_major=fight,Now is not the time to hesitate!
--2-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
--2-female_removed_major=horny,Ah, this is much better.
--2-female_removed_major=excited,Let's keep going!
--2-female_removed_major=fight,Now is not the time to hesitate!
--2-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
+-2-male_removing_major=excited,Thank you, ~name~! That's just what I wanted.
+-2-male_removing_major=happy,Now we're familiar with each other, so there's no reason for modesty, ~name~.
+-2-male_removed_major=happy,I truly needed this.
+-2-male_removed_major=horny,Now you look much better.
+-2-female_removing_major=excited,Yeah, ~name~! Take off your ~clothing~!
+-2-female_removing_major=excited,Your ~clothing~ is the perfect choice! Take it off!
+-2-female_removed_major=calm,If you ever feel embarrased, just take a look at me.
+-2-female_removed_major=excited,I guess this isn't such a big deal compared to what I'm doing now.
+-2-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
--1-male_removed_major=excited,Let's keep going!
--1-male_removed_major=fight,Now is not the time to hesitate!
--1-male_removed_major=victory,If you lose, you have to pay. That is how this game goes.
--1-male_removed_major=horny,Ah, this is much better.
--1-female_removed_major=excited,Let's keep going!
--1-female_removed_major=fight,Now is not the time to hesitate!
--1-female_removed_major=victory,If you lose, you have to pay. That is how this game goes.
--1-female_removed_major=horny,Ah, this is much better.
+-1-male_removing_major=interested,Oh, I want to see this.
+-1-male_removing_major=excited,Nice, let's see how this goes.
+-1-male_removed_major=excited,I may have lost, but that doesn't mean I can't enjoy you taking off your ~clothing~.
+-1-male_removed_major=excited,It's so exciting watching you strip, ~name~.
+-1-female_removing_major=interested,That's a respectable choice, ~name~.
+-1-female_removing_major=calm,So you're taking off your ~clothing~ now?
+-1-female_removed_major=excited,As long as you're in the game you can still win. Good luck!
+-1-female_removed_major=excited,Go, ~name~! You still can win!
+-1-female_removed_major,target:korra,targetStage:5=shocked,You wear bindings, Korra? That's something else we have in common.
 
 
 
@@ -956,127 +1390,156 @@ male_chest_will_be_visible=excited,Let's see what you have, ~name~!
 male_chest_is_visible=shocked,Impressive, how often do you exercise?
 male_chest_is_visible=fight,Not bad, do you think you could take one of my kicks?
 male_chest_is_visible=excited,Now that you're shirtless you don't have much clothing left. What will it be next time? I can't wait!
-male_chest_is_visible=excited,What will it be next time? I can't wait!
+male_chest_is_visible=interested,That's actually not bad. What's your workout routine?
+male_crotch_will_be_visible=shocked,We will finally see ~name~...
+male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+male_crotch_will_be_visible=shocked,Are you really going through with this? You sure have balls! I mean...
 male_small_crotch_is_visible=disappointed,That... is not very impressive.
 male_small_crotch_is_visible=sad,Hahaha... Sorry.
 male_medium_crotch_is_visible=horny,How does it feel to be the naked one now? You look excited.
 female_chest_will_be_visible=victory,Keep your cool, ~name~. It'll be easier.
 female_chest_will_be_visible=calm,Come on,~name~. I'm sure you have nothing to be ashamed of.
-female_chest_will_be_visible=excited,Well, you knew what you were getting into. Right, ~name~?
+female_chest_will_be_visible=calm,Sorry, ~name~. You have no choice but to follow the rules.
 female_small_chest_is_visible=calm,Don't be embarrassed, they're pretty cute.
 female_small_chest_is_visible=excited,Oh, so sweet!
+female_small_chest_is_visible=calm,Having small breasts is nothing to be ashamed of.
+female_small_chest_is_visible=calm,Look on the bright side: at least they won't get in the way if you're in a fight.
 female_medium_chest_is_visible=interested,They're great! You should be proud.
 female_medium_chest_is_visible=calm,Perfect size for grabbing them!
+female_medium_chest_is_visible=excited,They look like two perfectly shaped dumplings! Now I'm getting hungry.
+female_medium_chest_is_visible=excited,The best of both worlds.
 female_large_chest_is_visible=shocked,Must be hard to move without those bouncing. I would know!
-female_large_chest_is_visible=shocked,Hmmm.~name~, do you mind if we compare sizes later?
+female_large_chest_is_visible=interested,Hmmm.~name~, do you mind if we compare sizes later?
+female_large_chest_is_visible=sad,I feel somewhat challenged by this reveal.
+female_large_chest_is_visible=shocked,Could they be bigger than mine?
 female_crotch_is_visible=interested,Sorry, it's hard not to look at it.
 female_crotch_is_visible=fight,Don't give up ~name~, it's not over yet!
 female_crotch_is_visible=victory,You'll gain nothing by getting embarrassed now. Just try to focus.
+female_crotch_is_visible=calm,It suits you perfectly, ~name~.
+female_crotch_is_visible=calm,Remember that you're still in the game, ~name~. Keep going!
 
 
 #fully clothed
 0-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-0-male_crotch_will_be_visible=excited,You're going to expose yourself already? This soon?
-0-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-0-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+0-male_crotch_will_be_visible=excited,You're going to expose yourself already? So soon?
+0-male_crotch_will_be_visible=shocked,Are you seriously going to show your crotch, ~name~? I still have all my clothes!
 0-male_small_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once! You must be so embarrassed!
 0-male_small_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
 0-male_medium_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once!
 0-male_medium_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
 0-male_large_crotch_is_visible=shocked,I can't believe ~name~ is nude before I even had to strip once!
 0-male_large_crotch_is_visible=interested,Are you not embarrassed to be nude this early? I haven't even taken anything off yet!
+0-female_chest_will_be_visible=shocked,You're going to show your breasts so soon?
+0-female_chest_will_be_visible=shocked,I haven't stripped once and you're going to show your breasts, ~name~!
+0-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+0-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 0-female_crotch_will_be_visible=excited,~name~ is gonna show her private parts before I take off a single piece of clothes?
 0-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 0-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 0-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+0-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
 0-female_crotch_is_visible=happy,Looks like I'm going for a perfect win here.
 0-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+0-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
+0-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 
 #lost bracelets
 1-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-1-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
-1-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-1-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+1-male_crotch_will_be_visible=shocked,Are you seriously going to show your crotch, ~name~? I still have almost all my clothes!
+1-male_crotch_will_be_visible=excited,You're going to expose yourself already? So soon?
 1-male_small_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
 1-male_medium_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
 1-male_large_crotch_is_visible=shocked,I can't believe ~name~ is nude already! I've only stripped once!
+1-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+1-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 1-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 1-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 1-female_crotch_will_be_visible=victory,Stay strong, ~name~.
 1-female_crotch_will_be_visible=excited,~name~ is gonna show her private parts and I've only stripped once?
+1-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+1-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 1-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+1-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 
 #lost waistband
 2-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-2-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-2-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
-2-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+2-male_crotch_will_be_visible=excited,You're going to expose yourself already? So soon?
+2-male_crotch_will_be_visible=shocked,Are you seriously going to show your crotch, ~name~? I still have almost all my clothes!
 2-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 2-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 2-male_large_crotch_is_visible=shocked,Amazing!
 2-male_large_crotch_is_visible=horny,Perfect!
 2-male_large_crotch_is_visible=horny,That is just... Wow...
+2-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+2-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 2-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 2-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 2-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+2-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+2-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 2-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+2-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 
 
 #lost qipao
 3-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-3-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
-3-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-3-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
 3-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 3-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 3-male_large_crotch_is_visible=shocked,Amazing!
 3-male_large_crotch_is_visible=horny,Perfect!
 3-male_large_crotch_is_visible=horny,That is just... Wow...
+3-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+3-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 3-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 3-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 3-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+3-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+3-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 3-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+3-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 
 #lost boots
 4-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-4-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
-4-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-4-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
 4-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 4-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 4-male_large_crotch_is_visible=shocked,Amazing!
 4-male_large_crotch_is_visible=horny,Perfect!
 4-male_large_crotch_is_visible=horny,That is just... Wow...
+4-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+4-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 4-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 4-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 4-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+4-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+4-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
+4-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 4-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
 
 
 #lost leotard
 5-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-5-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-5-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
-5-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
 5-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 5-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 5-male_large_crotch_is_visible=shocked,Amazing!
 5-male_large_crotch_is_visible=horny,Perfect!
 5-male_large_crotch_is_visible=horny,That is just... Wow...
+5-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+5-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 5-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 5-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 5-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+5-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+5-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 5-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+5-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 
 #lost pantyhose
 6-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-6-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-6-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
-6-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
 6-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 6-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 6-male_medium_crotch_is_visible=horny,You must really like my legs... You look very excited!
@@ -1084,54 +1547,85 @@ female_crotch_is_visible=victory,You'll gain nothing by getting embarrassed now.
 6-male_large_crotch_is_visible=horny,Perfect!
 6-male_large_crotch_is_visible=horny,That is just... Wow...
 6-male_large_crotch_is_visible=horny,You must really like my legs... You look very excited!
+6-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+6-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 6-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 6-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 6-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+6-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
 6-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+6-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
+6-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 
 #lost bindings
 7-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
-7-male_crotch_will_be_visible=shocked,We will finally see ~name~...
-7-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
-7-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
+7-male_crotch_will_be_visible=interested,I'm really curious to see what it looks like.
+7-male_crotch_will_be_visible=excited,Let's see if you can meet my expectations.
+7-male_crotch_will_be_visible=horny,I've shown you my breasts, so it's only fair that you give me something in return.
 7-male_medium_crotch_is_visible=interested,Hmm, not bad at all.
 7-male_medium_crotch_is_visible=horny,Skill is what truly matters, do you know how to use it?
 7-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+7-male_large_crotch_is_visible=interested,Is that your natural size, or is it because you're in this situation?
+7-female_chest_will_be_visible=happy,Now that my own breasts are exposed, I can tell you that it's not such a big deal, ~name~.
+7-female_chest_will_be_visible=calm,Do it, ~name~. At least you're not the first one to get topless.
+7-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+7-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 7-female_crotch_will_be_visible=shocked,Are you seriously going to show everyone your...
 7-female_crotch_will_be_visible=sad,We all knew what was at stake here.
 7-female_crotch_will_be_visible=victory,Stay strong, ~name~.
+7-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
 7-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+7-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
+7-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 
 -3-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
--3-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
--3-male_crotch_will_be_visible=shocked,We will finally see ~name~...
--3-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
+-3-male_crotch_will_be_visible=horny,I've shown you my body, so it's only fair that you give me something in return.
+-3-male_crotch_will_be_visible=interested,I'm really curious to see what it looks like.
+-3-male_crotch_will_be_visible=excited,Let's see if you can meet my expectations.
 -3-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-3-male_large_crotch_is_visible=interested,Is that your natural size, or is it because you're in this situation?
 -3-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-3-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+-3-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 -3-female_crotch_will_be_visible=excited,Just do it, ~name~! Being naked together is easier for both of us.
 -3-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
+-3-female_crotch_will_be_visible=happy,Don't feel embarrassed, ~name~! Just look at me.
+-3-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+-3-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 -3-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+-3-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 
 -2-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
--2-male_crotch_will_be_visible=shocked,We will finally see ~name~...
--2-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
--2-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
--2-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-2-male_crotch_will_be_visible=excited,Yes! It's finally time!
+-2-male_crotch_will_be_visible=happy,Come on, ~name~! Hurry up and show it to us.
+-2-male_crotch_will_be_visible=happy,Perfect timing! Let's see what you have, ~name~!
 -2-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-2-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-2-male_large_crotch_is_visible=interested,Is that your natural size, or is it because you're in this situation?
+-2-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+-2-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 -2-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
 -2-female_crotch_will_be_visible=happy,Don't feel embarrassed, ~name~! Just look at me.
+-2-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
+-2-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 -2-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+-2-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
 
 -1-male_chest_is_visible,filter:athletic=horny,Wow you look strong! You could be a great fighter!
--1-male_crotch_will_be_visible=excited,I would be lying if I said I haven't been expecting this moment.
--1-male_crotch_will_be_visible=shocked,We will finally see ~name~...
--1-male_crotch_will_be_visible=interested,I have to warn you, I'm not easily impressed.
--1-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-1-male_crotch_will_be_visible=embarrassed,I wish you had shown it a little earlier, ~name~. I still want to see it...
+-1-male_crotch_will_be_visible=excited,Let's see if if it's just I pictured it.
 -1-male_large_crotch_is_visible=horny,How does it feel to be the naked one now? You look VERY excited.
+-1-male_large_crotch_is_visible=shocked,So big! Is that because of me?
+-1-male_large_crotch_is_visible=interested,Is that your natural size, or is it because you're in this situation?
+-1-female_chest_will_be_visible,target:moon=calm,Well, looks like your wish is finally coming true, Moon.
+-1-female_medium_chest_is_visible,target:moon=sad,Are you happy now that you've finally exposed yourself?
 -1-female_crotch_will_be_visible=happy,Come on, ~name~! Being naked isn't so bad after all.
 -1-female_crotch_will_be_visible=happy,Don't feel embarrassed, ~name~! Just look at me.
+-1-female_crotch_will_be_visible,target:moon=sad,How long have you been waiting to do this, Moon?
 -1-female_crotch_is_visible,filter:hairy=shocked,Wow! You're almost as hairy as Zangief!
+-1-female_crotch_is_visible,target:moon=shocked,Wow! Already?!
+-1-female_crotch_is_visible,target:revy=sad,I don't think we could ever become friends, Revy.
 
 
 
@@ -1152,46 +1646,89 @@ male_start_masturbating=interested,I wonder how long you're gonna last.
 male_finished_masturbating=horny,That was truly something.
 male_finished_masturbating=shocked,That was practically a projectile!
 male_finished_masturbating=interested,To think you accumulated that much power.
+female_must_masturbate=victory,Sorry, ~name~. The winner can be only one.
+female_must_masturbate=calm,I'm truly sorry for putting you in this position, ~name~. If I can do something to make it easier for you just tell me.
+female_must_masturbate=sad,Seeing you go down doesn't make me happy, ~name~. I just really want to win.
 female_start_masturbating=happy,Now that you've nothing more to lose, at least try to enjoy yourself.
 female_start_masturbating=excited,I wonder what technique you're gonna use.
 female_start_masturbating=interested,I'll watch this closely, maybe I can learn something.
+female_start_masturbating=happy,Maybe we can exchange tips later, right?
+female_start_masturbating=excited,Go on! You don't know if you'll enjoy it until you try.
 female_masturbating=shocked,You're really enjoying that, aren't you ~name~?
 female_masturbating=excited,Maybe you can teach me a thing or two after you finish.
 female_masturbating=shocked,Such skill! I can tell you've had a lot of practice, ~name~.
 female_masturbating=interested,Do you think it's more stimulating to know you're being watched, ~name~?
+female_masturbating=interested,Look at that.
+female_masturbating=horny,How often do you do this, ~name~? If you don't mind me asking.
 female_finished_masturbating=shocked,Impressive! How long have you been holding it, ~name~?
-female_finished_masturbating=shocked,That was quite a finish. I think I underestimated you.
+female_finished_masturbating=shocked,That was quite a finish. I think I underestimated you, ~name~.
 female_finished_masturbating=horny,For a second I thought you might catch on fire.
+female_finished_masturbating=shocked,Your finishing move was impressive!
+female_finished_masturbating=interested,That was quite a show you put there, ~name~.
 
 
 #fully clothed
+0-male_must_masturbate=shocked,You're going to masturbate and I'm fully dressed?
+0-male_start_masturbating=sad,Are you not embarrassed to be doing this so soon, ~name~?
+0-male_start_masturbating=sad,Maybe I should lose a few rounds out of solidarity.
 0-male_masturbating=shocked,Wow! You really know how to work those muscles!
 0-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 0-male_masturbating=embarrassed,You truly are making the best out of this!
 0-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-0-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-0-female_must_masturbate=victory,At least be glad that you gave it your best.
-0-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+0-male_masturbating=interested,Men really do it different from women.
+0-male_finished_masturbating=sad,I think you got some of that on my dress. It's ok I guess...
+0-male_finished_masturbating=shocked,Dodging all that would prove to be almost impossible!
+0-female_must_masturbate=shocked,You're going to masturbate? I still have all my clothes!
+0-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+0-female_start_masturbating=sad,I feel a little overdressed now.
+0-female_start_masturbating=sad,So soon. Are you sure you didn't lose on purpose, ~name~?
+0-female_finished_masturbating=shocked,To think that you managed to accumulate that much energy in such a short amount of time.
+0-female_finished_masturbating=shocked,Well, at least now you won't mind losing for such a large margin.
+0-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost bracelets
+1-male_must_masturbate=shocked,Wow, I have almost all my clothes and you're going to masturbate?
+1-male_must_masturbate=sad,Isn't it a little soon for this?
+1-male_start_masturbating=sad,Are you not embarrassed to be doing this so soon, ~name~?
+1-male_start_masturbating=sad,Maybe I should lose a few rounds out of solidarity.
 1-male_masturbating=shocked,Wow! You really know how to work those muscles!
 1-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 1-male_masturbating=embarrassed,You truly are making the best out of this!
 1-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-1-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+1-male_masturbating=interested,Men really do it different from women.
+1-male_finished_masturbating=sad,I think you got some of that on my dress. It's ok I guess...
+1-male_finished_masturbating=shocked,Dodging all that would prove to be almost impossible!
 1-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
 1-female_must_masturbate=victory,At least be glad that you gave it your best.
+1-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+1-female_start_masturbating=sad,I feel a little overdressed now.
+1-female_start_masturbating=sad,So soon. Are you sure you didn't lose on purpose, ~name~?
+1-female_finished_masturbating=shocked,To think that you managed to accumulate that much energy in such a short amount of time.
+1-female_finished_masturbating=shocked,Well, at least now you won't mind losing for such a large margin.
+1-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost waistband
+2-male_must_masturbate=shocked,Wow, I have almost all my clothes and you're going to masturbate?
+2-male_must_masturbate=sad,Isn't it a little soon for this?
+2-male_start_masturbating=sad,Are you not embarrassed to be doing this so soon, ~name~?
+2-male_start_masturbating=sad,Maybe I should lose a few rounds out of solidarity.
 2-male_masturbating=shocked,Wow! You really know how to work those muscles!
 2-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 2-male_masturbating=embarrassed,You truly are making the best out of this!
 2-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+2-male_masturbating=interested,Men really do it different from women.
+2-male_finished_masturbating=sad,I think you got some of that on my dress. It's ok I guess...
+2-male_finished_masturbating=shocked,Dodging all that would prove to be almost impossible!
 2-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
 2-female_must_masturbate=victory,At least be glad that you gave it your best.
-2-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+2-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+2-female_start_masturbating=sad,I feel a little overdressed now.
+2-female_start_masturbating=sad,So soon. Are you sure you didn't lose on purpose, ~name~?
+2-female_finished_masturbating=shocked,To think that you managed to accumulate that much energy in such a short amount of time.
+2-female_finished_masturbating=shocked,Well, at least now you won't mind losing for such a large margin.
+2-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost qipao
@@ -1199,9 +1736,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 3-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 3-male_masturbating=embarrassed,You truly are making the best out of this!
 3-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-3-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-3-female_must_masturbate=victory,At least be glad that you gave it your best.
-3-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+3-male_masturbating=interested,Men really do it different from women.
+3-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+3-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost boots
@@ -1209,9 +1746,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 4-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 4-male_masturbating=embarrassed,You truly are making the best out of this!
 4-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-4-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-4-female_must_masturbate=victory,At least be glad that you gave it your best.
-4-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+4-male_masturbating=interested,Men really do it different from women.
+4-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+4-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost leotard
@@ -1219,9 +1756,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 5-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 5-male_masturbating=embarrassed,You truly are making the best out of this!
 5-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-5-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-5-female_must_masturbate=victory,At least be glad that you gave it your best.
-5-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+5-male_masturbating=interested,Men really do it different from women.
+5-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+5-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost pantyhose
@@ -1229,9 +1766,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 6-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 6-male_masturbating=embarrassed,You truly are making the best out of this!
 6-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-6-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-6-female_must_masturbate=victory,At least be glad that you gave it your best.
-6-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+6-male_masturbating=interested,Men really do it different from women.
+6-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+6-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 #lost bindings
@@ -1242,9 +1779,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 7-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 7-male_masturbating=embarrassed,You truly are making the best out of this!
 7-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
-7-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
-7-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
-7-female_must_masturbate=victory,At least be glad that you gave it your best.
+7-male_masturbating=interested,Men really do it different from women.
+7-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+7-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 -3-male_start_masturbating=happy,You can look at me if it helps, ~name~.
 -3-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
@@ -1253,11 +1790,12 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 -3-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 -3-male_masturbating=embarrassed,You truly are making the best out of this!
 -3-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
--3-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
--3-female_must_masturbate=victory,At least be glad that you gave it your best.
--3-female_must_masturbate=victory,Sorry,~name~ .The winner can be only one.
+-3-male_masturbating=interested,Men really do it different from women.
+-3-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+-3-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 -2-male_must_masturbate=happy,Alright, ~name~! Let's do it together!
+-2-male_must_masturbate=happy,Let's see if you can match my rhytm, ~name~.
 -2-male_start_masturbating=happy,You can look at me if it helps, ~name~.
 -2-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
 -2-male_masturbating=embarrassed,Do you like watching me?
@@ -1265,22 +1803,30 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 -2-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 -2-male_masturbating=embarrassed,You truly are making the best out of this!
 -2-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
+-2-male_masturbating=interested,Men really do it different from women.
 -2-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
 -2-male_finished_masturbating=embarrassed,Finished already? Why don't you just keep going until I'm finished? Please?
 -2-male_finished_masturbating=horny,Over already, ~name~? Come on, I know you can last more than that.
 -2-female_must_masturbate=happy,Join me, ~name~! Follow my lead!
--2-female_must_masturbate=excited,Alright, ~name~. Let's see who finishes first.
+-2-female_must_masturbate=excited,Alright, ~name~. Let's see who lasts longer.
+-2-female_must_masturbate=fight,I challenge you to see who can last more, ~name~!
+-2-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+-2-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
+-1-male_must_masturbate=excited,I wish you had lost a bit sooner so we could've done this together, ~name~.
 -1-male_start_masturbating=happy,You can look at me if it helps, ~name~.
 -1-male_start_masturbating=happy,Don't feel bad for losing, ~name~. As a consolation prize, you can look at me all you want.
+-1-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
 -1-male_masturbating=shocked,Wow! You really know how to work those muscles!
 -1-male_masturbating=interested,Looks like you've had a lot of practice, ~name~.
 -1-male_masturbating=embarrassed,You truly are making the best out of this!
 -1-male_masturbating=horny,Do you really think you are gonna last much longer if you keep that rhythm?
--1-male_masturbating=horny,Do you find it stimulating to look at me, ~name~?
--1-female_must_masturbate=sad,Don't feel bad, ~name~. I'm sure you'll do it better next time.
--1-female_must_masturbate=victory,At least be glad that you gave it your best.
--1-female_must_masturbate=happy,Come on ~name~! It's not that bad as you might think.
+-1-male_masturbating=interested,Men really do it different from women.
+-1-female_must_masturbate=happy,Come on, ~name~! It's not that bad as you might think.
+-1-female_must_masturbate=excited,It's much more enjoyable than you could expect, ~name~.
+-1-female_must_masturbate=excited,Come on, ~name~! There's nothing to fear, just try to enjoy yourself.
+-1-female_must_masturbate,target:moon=sad,Considering it's Moon, I have a feeling this will be overwhelming.
+-1-female_finished_masturbating,target:korra,targetStage:10=interested,After watching you, now I'm really intrigued to see your fighting style Korra.
 
 
 
@@ -1289,8 +1835,9 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 #If your character is naked and loses a hand, they have lost the game and must masturbate.
 #These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
--3-must_masturbate_first=embarrassed,I'LL HAVE TO DO WHAT?!
+-3-must_masturbate_first=embarrassed,Is this for real?!
 -3-must_masturbate_first=embarrassed,I'm only used to doing this in private!
+-3-must_masturbate_first=loss,I'm the first one out?! Where will my reputation go now?
 -3-must_masturbate=loss,I... lost?
 -3-must_masturbate=loss,I actually lost? I tried so hard! I guess I have to do the forfeit now... How embarrassing...
 -3-must_masturbate=angry,I can't believe I lost! Everyone is gonna watch me masturbate!
@@ -1306,17 +1853,22 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 -2-masturbating=happy,Believe it or not, but this is actually a pretty good workout.
 -2-masturbating=horny,Oh yeah... just like that.
 -2-masturbating=horny,Maybe it would've been better if I'd lost sooner.
--2-heavy_masturbating=heavy,Oh, I think I'm reaching the climax!
+-2-masturbating=embarrassed,To think that a few minutes ago I was hesitating about taking off my clothes, and now I'm masturbating in front of everyone.
+-2-masturbating=embarrassed,What would Ryu or Guile say if they saw me now?
+-2-heavy_masturbating=heavy,Oh, I think I'm reaching my climax!
 -2-heavy_masturbating=heavy,Get ready for my special attack!
 -2-heavy_masturbating=heavy,I can't hold much longer!
--2-finishing_masturbating=finishing,OH, TAKE THIS!!!
+-2-finishing_masturbating=finishing,Oh, take this!!!
 -2-finishing_masturbating=finishing,I'm cumming!!!
--2-finishing_masturbating=finishing,SPINNING BIRD KICK!!!
+-2-finishing_masturbating=finishing,Spinning Bird Kick!!!
 
 -1-finished_masturbating=finished,Losing has never felt this good.
 -1-finished_masturbating=finished,I think I discovered something new about myself.
 -1-finished_masturbating=finished,I don't think I've ever had an orgasm like that.
 -1-finished_masturbating=finished,Sorry if I made a mess.
+-1-finished_masturbating=finished,I feel just as tired as I do after a tough fight.
+-1-finished_masturbating=finished,I'll take a shower as soon as the game is over.
+-1-finished_masturbating=finished,After I take a shower, I think I'll go eat something. Does anybody wanna come?
 
 
 
@@ -1356,12 +1908,13 @@ female_finished_masturbating=horny,For a second I thought you might catch on fir
 #lost bindings
 7-game_over_victory=victory,That was a close match, you've earned my respect.
 
--3-game_over_victory=happy,Yes! I did it!
+-3-game_over_victory=happy,Yes! I did it! Barely...
 
 
 
 
 #GAME OVER DEFEAT
 game_over_defeat=excited,I'm ready for a rematch whenever you are.
+game_over_defeat=calm,Congratulations, ~name~! Now when are we gonna have a rematch?
 
 #EPILOGUE/ENDING
