@@ -120,7 +120,13 @@ function loadGameScreen () {
             $gameBubbles[i-1].hide();
         }
     }
+
+    recentLoser = -1;
+    gameOver = false;
     $gamePlayerCardArea.show();
+    $gamePlayerCountdown.hide();
+    chosenDebug = -1;
+    updateDebugState(showDebug);
     
     /* set up the visuals */
     updateAllGameVisuals();
@@ -656,7 +662,7 @@ function handleGameOver() {
 	/* determine how many timers are left */
 	var left = 0;
 	for (var i = 0; i < timers.length; i++) {
-		if (timers[i] > 0) {
+		if (players[i] && timers[i] > 0) {
 			left++;
 		}
 	}
@@ -797,14 +803,8 @@ function advanceGame () {
     } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
-		if (!gameOver) {
-			$mainButton.html("Deal");
-			$mainButton.attr('disabled', false);
-            actualMainButtonState = false;
-		} else {
-			handleGameOver(); //No delay here
-            return;
-		}
+		handleGameOver(); //No delay here
+        return;
 	} else if (context == "Restart?") {
         if (AUTO_FADE) forceTableVisibility(false);
 		showRestartModal(); //No delay here
@@ -815,7 +815,9 @@ function advanceGame () {
         actualMainButtonState = false;
     } else {
         if (AUTO_FADE) forceTableVisibility(true);
-        console.log("Invalid main button state: "+context);
+		if (context != null) {
+			console.log("Invalid main button state: "+context);
+		}
     }
     if (players[HUMAN_PLAYER].out && AUTO_FORFEIT && !(timers[HUMAN_PLAYER] == 0 && context == null)) {
         $mainButton.attr('disabled', true);
