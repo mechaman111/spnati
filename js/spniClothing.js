@@ -183,11 +183,7 @@ function determineStrippingSituation (player) {
 	var clothingCounts = [0, 0, 0, 0, 0];
 	for (var i = 0; i < players.length; i++) {
         if (players[i]) {
-            for (var j = 0; j < players[i].clothing.length; j++) {
-                if (players[i].clothing[j]) {
-                    clothingCounts[i]++;
-                }
-            }
+            clothingCounts[i] = countClothes(i);
         }
 	}
 	
@@ -429,12 +425,7 @@ function closeStrippingModal () {
         displayHumanPlayerClothing();
         
         /* count the clothing the player has remaining */
-        var clothes = 0;
-        for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-            if (players[HUMAN_PLAYER].clothing[i]) {
-                clothes++;
-            }
-        }
+        var clothes = countClothes(HUMAN_PLAYER);
         var startingClothes = players[HUMAN_PLAYER].clothing.length;
         
         /* update label */
@@ -588,13 +579,7 @@ function getNumPlayersInStage(stage) {
 				if (!players[i].out) { count++; }
 				break;
 			case STAGE_NAKED:
-				var clothes = 0;
-    				for (var j = 0; j < players[i].clothing.length; j++) {
-					if (players[i].clothing[j]) {
-						clothes++;
-					}
-				}
-				if (clothes === 0) { count++; }
+				if (!countClothes(i)) { count++; }
 				break;
 			case STAGE_MASTURBATING:
 				if (players[i].out && !players[i].finished) { count++; }
