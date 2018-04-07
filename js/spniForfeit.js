@@ -58,6 +58,43 @@ function blockingSleep(time){
 }
 
 /************************************************************
+ * Initiate masturbation for the selected player
+ ************************************************************/
+function startMasturbation (player) {
+	players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+	players[player].out = true;
+
+    if (chosenDebug === player) {
+        chosenDebug = -1;
+        updateDebugState(showDebug);
+    }
+
+	/* update behaviour */
+	if (player == HUMAN_PLAYER) {
+		if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
+		} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
+			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
+		}
+		$gameClothingLabel.html("You're Masturbating...");
+        $gamePlayerCountdown.show();
+		setForfeitTimer(player);
+	} else {
+		if (players[player].gender == eGender.MALE) {
+			updateAllBehaviours(player, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+		} else if (players[player].gender == eGender.FEMALE) {
+			updateAllBehaviours(player, FEMALE_START_MASTURBATING,[NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+		}
+		updateBehaviour(player, PLAYER_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
+		setForfeitTimer(player);
+	}
+	updateAllGameVisuals();
+
+	/* allow progression */
+	endRound();
+}
+
+/************************************************************
  * The forfeit timers of all players tick down, if they have 
  * been set.
  ************************************************************/

@@ -582,12 +582,23 @@ function completeContinuePhase () {
 
 /************************************************************
  * Processes everything required to complete the strip phase
- * of a round. Makes the losing player strip or start their
- * forfeit. May also end the game if only one player remains.
+ * of a round. Makes the losing player strip.
  ************************************************************/
 function completeStripPhase () {
     /* strip the player with the lowest hand */
     stripPlayer(recentLoser);
+}
+
+/************************************************************
+ * Processes everything required to complete the strip phase of a
+ * round when the loser has no clothes left. Makes the losing player
+ * start their forfeit. May also end the game if only one player
+ * remains.
+ ************************************************************/
+function completeMasturbatePhase () {
+    /* strip the player with the lowest hand */
+    startMasturbation(recentLoser);
+    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -771,10 +782,14 @@ function advanceGame () {
 		/* waiting for the loser to strip */
         if (AUTO_FADE) forceTableVisibility(false);
         completeContinuePhase();
-	} else if (context == "Strip" || context == "Masturbate") {
+	} else if (context == "Strip") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
         completeStripPhase();
+    } else if (context == "Masturbate") {
+        /* making the loser start masturbating */
+        if (AUTO_FADE) forceTableVisibility(false);
+		completeMasturbatePhase();
     } else if (context.substr(0, 4) == "Wait") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
