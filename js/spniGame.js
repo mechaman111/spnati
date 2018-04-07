@@ -757,7 +757,7 @@ function advanceGame () {
         startDealPhase();
     } else if (context == "Next") {
         /* advance to next round if human player is masturbating */
-        if (AUTO_FADE) forceTableVisibility(false);
+        if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Exchange");
         continueDealPhase();
     } else if (context == "Exchange") {
