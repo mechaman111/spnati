@@ -781,11 +781,6 @@ function advanceGame () {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
 		handleGameOver(); //No delay here
-	} else if (context == "Restart?") {
-        if (AUTO_FADE) forceTableVisibility(false);
-		showRestartModal(); //No delay here
-		$mainButton.attr('disabled', false);
-        actualMainButtonState = false;
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings
         actualMainButtonState = false;
