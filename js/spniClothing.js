@@ -311,50 +311,26 @@ function playerMustStrip (player) {
 
 /************************************************************
  * Manages the dialogue triggers as player begins to strip
- * or forfeit.
  ************************************************************/
 function prepareToStripPlayer (player) {
-    /* count the clothing the player has remaining */
-    var clothes = 0;
-    for (var i = 0; i < players[player].clothing.length; i++) {
-        if (players[player] && players[player].clothing[i]) {
-            clothes++;
-        }
-    }
-    var startingClothes = players[player].clothing.length;
-    
-	/* determine the situation */
-	if (clothes > 0) {
-		/* the player has clothes left and will strip */
-        if (player == HUMAN_PLAYER) {
-            if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-                updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-            } else {
-                updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-            }
+    if (player == HUMAN_PLAYER) { // Never happens (currently)
+        if (players[HUMAN_PLAYER].gender == eGender.MALE) {
+            updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
         } else {
-            var toBeRemovedClothing = players[player].clothing[startingClothes - 1];
-            var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
-            
-            /* set up the replaceable tags and content */
-            var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
-            var content = [players[player].label, toBeRemovedClothing.proper, toBeRemovedClothing.lower, players[HUMAN_PLAYER].label];
-        
-            updateAllBehaviours(player, dialogueTrigger, replace, content, players[player]);
-            updateBehaviour(player, PLAYER_STRIPPING, replace, content, null);
+            updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
         }
-	} else {
-		/* the player has no clothes and will have to accept a forfeit */
-		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_MUST_MASTURBATE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-		}
+    } else {
+        var startingClothes = players[player].clothing.length;
+        var toBeRemovedClothing = players[player].clothing[startingClothes - 1];
+        var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
 
-		if (player != HUMAN_PLAYER) {
-			updateBehaviour(player, PLAYER_MUST_MASTURBATE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
-		}
-	}
+        /* set up the replaceable tags and content */
+        var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
+        var content = [players[player].label, toBeRemovedClothing.proper, toBeRemovedClothing.lower, players[HUMAN_PLAYER].label];
+
+        updateAllBehaviours(player, dialogueTrigger, replace, content, players[player]);
+        updateBehaviour(player, PLAYER_STRIPPING, replace, content, null);
+    }
 }
 
 /************************************************************
