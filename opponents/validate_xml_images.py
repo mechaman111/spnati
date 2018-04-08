@@ -12,7 +12,7 @@ def check_referenced_images(filename):
 	directory = os.listdir(directory_name)
 	image_names = list()
 	for name in directory:
-		if name.endswith(".png"):
+		if name.endswith(".png") or name.endswith(".gif"):
 			#print "appending %s" % (name)
 			image_names.append(name)
 
@@ -21,11 +21,17 @@ def check_referenced_images(filename):
 		if entry.tag == "behaviour":
 			for stage in entry:
 				for case in stage:
-					for state in case:
+					for state in case.iter('state'):
 						image_filename = state.attrib["img"]
 						if image_filename not in image_names:
 							print "Image filename \"%s\" used by %s-%s-%s has not been found" % (image_filename, stage.attrib["id"].strip(), case.attrib["tag"].strip(), state.text.strip())
-		
+		elif entry.tag == "start":
+			for state in entry.iter('state'):
+				image_filename = state.attrib["img"]
+				if image_filename not in image_names:
+				    print "Image filename \"%s\" used by start-%s has not been found" % (image_filename, state.text.strip())
+
+
 if __name__ == "__main__":
 	xml_filename = "behaviour.xml"
 	if len(sys.argv) > 1:
