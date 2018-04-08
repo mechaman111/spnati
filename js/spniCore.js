@@ -286,6 +286,7 @@ function restartGame () {
 	$epilogueSelectionModal.hide();
 	$gameScreen.hide();
 	$epilogueScreen.hide();
+	loadClothing();
 	$titleScreen.show();
 }
 
