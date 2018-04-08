@@ -221,68 +221,41 @@ function determineStrippingSituation (player) {
 function playerMustStrip (player) {
     /* count the clothing the player has remaining */
     /* assume the player only has IMPORTANT_ARTICLES */
-    var importantOnly = true
-    var positionIsUpper = false
-    var positionIsLower = false
     var clothes = 0;
+	var remainingItem;
     for (var i = 0; i < players[player].clothing.length; i++) {
         if (players[player] && players[player].clothing[i]) {
-            clothes++;
-
-            /* determine if there is a non-important item of clothing worn */
-            if (players[player].clothing[i].type !== IMPORTANT_ARTICLE) {
-				importantOnly = false;
-				console.log(players[player].clothing[i].type);
-			
-			} else {
-               		/* determine if the posistion of an item of clothing is upper */
-                if (players[player].clothing[i].position === UPPER_ARTICLE) {
-					positionIsUpper = true;
-					console.log(players[player].clothing[i].position);
-                    /* determine the posistion of an item of clothing is lower */
-				} else if (players[player].clothing[i].position === LOWER_ARTICLE) {
-					   positionIsLower = true;
-					   console.log(players[player].clothing[i].position);
-					}
-				}
-			}
+            if (clothes++) break; // No need to check for more than two items
+			remainingItem = players[player].clothing[i];
 		}
+	}
 	
-
-    var startingClothes = players[player].clothing.length;
-	
-	if (clothes > 0) {
+	if (clothes) {
 		/* the player has clothes and will strip */
 		if (player == HUMAN_PLAYER) {
+			var trigger;
 			if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					if (clothes <2 && clothes > 0 &&importantOnly == true && positionIsLower == true) {
-						updateAllBehaviours(player, MALE_CROTCH_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+				if (clothes == 1 && remainingItem.type == IMPORTANT_ARTICLE) {
+					if (remainingItem.position == LOWER_ARTICLE) {
+						trigger = MALE_CROTCH_WILL_BE_VISIBLE;
 					} else {
-						if (clothes <2 && clothes > 0 &&importantOnly == true && positionIsUpper == true) {
-							updateAllBehaviours(player, MALE_CHEST_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
-						} 
-						else {
-							updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-						}
-					}							
-			}
-			else {
-				if (clothes < 3 && clothes > 1 && importantOnly == true) {				
-					updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-				} 
-				else {
-					if (clothes < 2 && clothes > 0 && importantOnly == true && positionIsUpper == true) {
-						updateAllBehaviours(player, FEMALE_CHEST_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
-					} 
-					else {
-						if (clothes < 2 && clothes > 0 && importantOnly == true && positionIsLower == true) {
-							updateAllBehaviours(player, FEMALE_CROTCH_WILL_BE_VISIBLE, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-						} else {
-							updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);	
-							}	
-						}
+						trigger = MALE_CHEST_WILL_BE_VISIBLE;
 					}
-			    }
+				} else {
+					trigger = MALE_HUMAN_MUST_STRIP;
+				}
+			} else {
+				if (clothes == 1 && remainingItem.type == IMPORTANT_ARTICLE) {
+					if (remainingItem.position == LOWER_ARTICLE) {
+						trigger = FEMALE_CROTCH_WILL_BE_VISIBLE;
+					} else {
+						trigger = FEMALE_CHEST_WILL_BE_VISIBLE;
+					}
+				} else {
+					trigger = FEMALE_HUMAN_MUST_STRIP;	
+				}
+			}
+			updateAllBehaviours(player, trigger, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 		} else { 
 				if (players[player].gender == eGender.MALE) {
 					updateAllBehaviours(player, MALE_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
