@@ -445,20 +445,28 @@ function closeStrippingModal () {
 	players[HUMAN_PLAYER].timeInStage = -1;
         
         /* figure out if it should be important */
-        var flag = false;
-        if (removedClothing.layer != EXTRA_ARTICLE) {
+        if (removedClothing.position != OTHER_ARTICLE) {
+			var otherClothing;
             for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-                if (players[HUMAN_PLAYER].clothing[i] !== null && players[HUMAN_PLAYER].clothing[i].position === removedClothing.position) {
+                if (players[HUMAN_PLAYER].clothing[i] !== null
+					&& players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
+					&& players[HUMAN_PLAYER].clothing[i].type != MINOR_ARTICLE) {
                     console.log(players[HUMAN_PLAYER].clothing[i]);
-                    flag = true;
+					otherClothing = players[HUMAN_PLAYER].clothing[i];
                     break;
                 }
             }
-        }
-        console.log(flag);
-        if (!flag) {
-            removedClothing.type = IMPORTANT_ARTICLE;
-            players[HUMAN_PLAYER].exposed = true;
+            console.log(otherClothing);
+            if (!otherClothing) {
+                removedClothing.type = IMPORTANT_ARTICLE;
+                players[HUMAN_PLAYER].exposed = true;
+            } else if (removedClothing.type == IMPORTANT_ARTICLE) {
+                removedClothing.type = MAJOR_ARTICLE;
+				/* Just make any other remaining article important instead,
+				   so that, if it is the last one, it's considered as such by
+				   playerMustStrip() */
+				otherClothing.type = IMPORTANT_ARTICLE;
+            }
         }
         
         /* determine its dialogue trigger */
