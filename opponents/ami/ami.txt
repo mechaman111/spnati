@@ -32,9 +32,19 @@ artist=AzideBen & SnSChase
 description=Ami Kawashima is known as a kind and generious model, and she'll do whatever she can to maintain that facade.
 #release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
 
+
+
+marker=ami_sonya_vintage,public,Ami teases Sonya about her retro outfit.
+marker=ami_taken_boyfriend_steal,private,Ami threatens to steal a fellow player's boyfriend.
+
+
+
+
 #You can have more than one start line
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-happytoplay,Oh, I like strip poker. Let's play!
+start=0-happy,Let's go for it!
+start=0-happy,Let's go for it!
 start=0-happy,Let's go for it!
 
 #CLOTHING
@@ -96,6 +106,8 @@ swap_cards=calm,~cards~, if you please.
 1-okay_hand=,Not bad.
 1-bad_hand=teasing,You might see some feet soon...
 
+1-good_hand,alsoPlaying:sonya,notSaidMarker:ami_sonya_vintage,marker:ami_sonya_vintage=laugh,Where did you get that amazing workout gear, Sonya? It's so... <i>vintage</i>.
+
 #lost 2 items
 2-good_hand=confident,Good this the red uniform looks good on me, because I'm keeping it this round.
 2-good_hand=happy,Hah, piece of cake.
@@ -143,7 +155,7 @@ swap_cards=calm,~cards~, if you please.
 
 #losing first item of clothing
 0-must_strip_winning=happytostrip,Whatever will I do without my shoes?
-0-must_strip_normal=happytostrip,I can afford to lose my shoes.
+0-must_strip_normal=happytostrip,Who wants to see some socks?
 0-must_strip_losing=happytostrip,Fair enough.
 0-stripping=stripping,No big deal.
 1-stripped=stripped,The uniform socks are cute, aren't they?
@@ -265,6 +277,13 @@ swap_cards=calm,~cards~, if you please.
 -1-female_human_must_strip=smug,Aren't you quite the pretty lady?
 -1-female_must_strip=tease,Come on, make a mess like I did already!
 
+#targeted
+0-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+1-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+2-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+3-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+0-female_must_strip,target:zoey=happytoplay,It's nice to see a familiar face. What did you say your name was again?
+
 
 
 #OPPONENT REMOVING ACCESSORY
@@ -275,6 +294,9 @@ swap_cards=calm,~cards~, if you please.
 #fully clothed
 0-male_removing_accessory=calm,Can't expect much yet, I guess.
 0-male_removed_accessory=,Onwards to the next round.
+0-female_removing_accessory,totalRounds:0=calm,This is about what I expected for the first round.
+0-female_removing_accessory,totalRounds:1=happytoplay,If you would just put everything you're wearing into a neat pile, that would be great.
+0-female_removing_accessory,totalRounds:4=happy,At this rate, I might never lose!
 0-female_removing_accessory=happytostrip,Eh, just some buildup for the fun parts later.
 0-female_removing_accessory=indifferent,We'll get the easy stuff off you soon enough.
 0-female_removed_accessory=calm,Shall we continue?
@@ -284,7 +306,7 @@ swap_cards=calm,~cards~, if you please.
 1-male_removing_accessory=teasing,I hope you don't have too many accessories.
 1-male_removed_accessory=happytostrip,Woohoo.
 1-female_removing_accessory=sad,Booring, hurry up.
-1-female_removed_accessory=teasing,Relish the small stuff while you still have them.
+1-female_removed_accessory=teasing,Relish the small stuff while you still have it.
 1-female_removed_accessory=calm,I hope you don't have too many small things, ~name~.
 
 #lost 2 items
@@ -324,10 +346,12 @@ swap_cards=calm,~cards~, if you please.
 -3-male_removed_accessory=worried,Can't believe this.
 -3-female_removing_accessory=angry,Show some good stuff already!
 -3-female_removed_accessory=worried,I can't believe I'm doing do bad.
+-3-female_removed_accessory,filter:taken,notSaidMarker:ami_taken_boyfriend_steal,marker:ami_taken_boyfriend_steal=interestedfemalesmaller,Are you always so slow? It's going to be so easy to steal your boyfriend.
 
 #masturbating
 -2-male_removing_accessory=annoyed,I'd be more annoyed if this didn't feel so good...
 -2-male_removed_accessory=base,Hurry up, big boy.
+-2-male_removed_accessory=annoyed,Really? That's it? Make yourself useful already!
 -2-female_removing_accessory=angry,Maybe getting to cum before you is a reward...
 -2-female_removed_accessory=tease,You have a long way to go before feeling this good...
 
@@ -449,6 +473,7 @@ swap_cards=calm,~cards~, if you please.
 #lost 5 items
 5-male_removing_major=happytostrip,Let's see some skin.
 5-male_removed_major=calm,Not bad, boy toy.
+5-male_removed_major=interestedfemalesmaller,So you finally removed your ~clothing~. I'm glad our hints weren't too subtle for you.
 5-female_removing_major=sassy,Let's see what you got. Don't try to one up me, though.
 5-female_removed_major=embarrassed,Doesn't seeing me undressed make you want to take some clothes off?
 
@@ -595,6 +620,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 
 5-female_chest_will_be_visible=happytostrip,If it makes you feel any better, I'm next.
 5-female_small_chest_is_visible=interestedfemalesmaller,Cute, but don't feel bad if I steal the show next.
+5-female_small_chest_is_visible=sassy,Aw, aren't those "toradorable"!
 5-female_medium_chest_is_visible=sassy,Ooh, bouncy.
 5-female_large_chest_is_visible=interestedfemalebigger,S-show off...
 5-female_crotch_will_be_visible=sassy,Your last lifeline's gone...
