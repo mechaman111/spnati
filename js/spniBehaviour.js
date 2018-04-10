@@ -603,12 +603,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// totalExposed (priority = 4)
 			if (typeof totalExposed !== typeof undefined) {
 				var count = 0;
-				for (var q = 0; q < players.length; q++) {
-					if (players[q] && !!players[q].exposed) {
-						count++;
-					}
-				}
-				if (inInterval(count, totalExposed)) {
+				if (inInterval(getNumPlayersInStage(STAGE_EXPOSED), totalExposed)) {
 					totalPriority += 4 + totalExposed.max; //priority is weighted by max, so that higher totals take priority
 				}
 				else {

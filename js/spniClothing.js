@@ -18,6 +18,7 @@ var UPPER_ARTICLE = "upper";
 var LOWER_ARTICLE = "lower";
 var OTHER_ARTICLE = "other";
 
+var STAGE_EXPOSED = 1;
 var STAGE_ALIVE = 0;
 var STAGE_NAKED = -3;
 var STAGE_MASTURBATING = -2;
@@ -578,6 +579,9 @@ function getNumPlayersInStage(stage) {
 	for (var i = 0; i < players.length; i++) {
 		if (!players[i]) { continue; }
 		switch (stage) {
+			case STAGE_EXPOSED:
+				if (players[i].exposed) { count++; }
+				break;
 			case STAGE_ALIVE:
 				if (!players[i].out) { count++; }
 				break;
