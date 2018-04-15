@@ -58,6 +58,7 @@ $titleScreen = $('#title-screen');
 $selectScreen = $('#main-select-screen');
 $individualSelectScreen = $('#individual-select-screen');
 $groupSelectScreen = $('#group-select-screen');
+$groupTestingSelectScreen = $('#group-testing-select-screen');
 $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
 $galleryScreen = $('#gallery-screen');

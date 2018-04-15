@@ -41,7 +41,18 @@ function createNewGroup (title, opponents) {
 						  
 	return newGroupObject;
 }
- 
+
+/**************************************************
+ * Stores meta information about Testing Tables
+ **************************************************/
+function createNewGroupTesting (title, opponents) {
+	var newGroupTestingObject = {title:title,
+						  opponents:opponents};
+						  
+	return newGroupTestingObject;
+}
+
+
 /**********************************************************************
  *****                  Select Screen UI Elements                 *****
  **********************************************************************/
@@ -125,6 +136,32 @@ $groupMaxPageIndicator = $("#group-max-page-indicator");
 
 $groupCreditsButton = $('.group-credits-btn');
 
+/* Testing Tables select screen */
+$groupTestingSelectTable = $("#group-testing-select-table");
+$groupTestingNameLabels = [$("#group-testing-name-label-1"), $("#group-testing-name-label-2"), $("#group-testing-name-label-3"), $("#group-testing-name-label-4")];
+$groupTestingPrefersLabels = [$("#group-testing-prefers-label-1"), $("#group-testing-prefers-label-2"), $("#group-testing-prefers-label-3"), $("#group-testing-prefers-label-4")];
+$groupTestingSexLabels = [$("#group-testing-sex-label-1"), $("#group-testing-sex-label-2"), $("#group-testing-sex-label-3"), $("#group-testing-sex-label-4")];
+$groupTestingHeightLabels = [$("#group-testing-height-label-1"), $("#group-testing-height-label-2"), $("#group-testing-height-label-3"), $("#group-testing-height-label-4")];
+$groupTestingSourceLabels = [$("#group-testing-source-label-1"), $("#group-testing-source-label-2"), $("#group-testing-source-label-3"), $("#group-testing-source-label-4")];
+$groupTestingWriterLabels = [$("#group-testing-writer-label-1"), $("#group-testing-writer-label-2"), $("#group-testing-writer-label-3"), $("#group-testing-writer-label-4")];
+$groupTestingArtistLabels = [$("#group-testing-artist-label-1"), $("#group-testing-artist-label-2"), $("#group-testing-artist-label-3"), $("#group-testing-artist-label-4")];
+$groupTestingCountBoxes = [$("#group-testing-counts-1"), $("#group-testing-counts-2"), $("#group-testing-counts-3"), $("#group-testing-counts-4")];
+$groupTestingLineCountLabels = [$("#group-testing-line-count-label-1"), $("#group-testing-line-count-label-2"), $("#group-testing-line-count-label-3"), $("#group-testing-line-count-label-4")];
+$groupTestingPoseCountLabels = [$("#group-testing-pose-count-label-1"), $("#group-testing-pose-count-label-2"), $("#group-testing-pose-count-label-3"), $("#group-testing-pose-count-label-4")];
+$groupTestingDescriptionLabels = [$("#group-testing-description-label-1"), $("#group-testing-description-label-2"), $("#group-testing-description-label-3"), $("#group-testing-description-label-4")];
+$groupTestingBadges = [$("#group-testing-badge-1"), $("#group-testing-badge-2"), $("#group-testing-badge-3"), $("#group-testing-badge-4")];
+$groupTestingLayers = [$("#group-testing-layer-1"), $("#group-testing-layer-2"), $("#group-testing-layer-3"), $("#group-testing-layer-4")];
+
+$groupTestingImages = [$("#group-testing-image-1"), $("#group-testing-image-2"), $("#group-testing-image-3"), $("#group-testing-image-4")];
+$groupTestingNameLabel = $("#group-testing-name-label");
+$groupTestingButton = $("#group-testing-button");
+
+$groupTestingPageIndicator = $("#group-testing-page-indicator");
+$groupTestingMaxPageIndicator = $("#group-testing-max-page-indicator");
+
+$groupTestingCreditsButton = $('.group-testing-credits-btn');
+
+
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
@@ -150,10 +187,12 @@ var loadedOpponents = [];
 var selectableOpponents = [];
 var hiddenOpponents = [];
 var loadedGroups = [];
+var loadedGroupsTesting = [];
 
 /* page variables */
 var individualPage = 0;
 var groupPage = 0;
+var groupTestingPage = 0;
 var chosenGender = -1;
 var sortingMode = "Featured";
 var sortingOptionsMap = {
@@ -164,12 +203,14 @@ var sortingOptionsMap = {
 };
 var individualCreditsShown = false;
 var groupCreditsShown = false;
+var groupTestingCreditsShown = false;
 
 /* consistence variables */
 var selectedSlot = 0;
 var individualSlot = 0;
 var shownIndividuals = [null, null, null, null];
 var shownGroup = [null, null, null, null];
+var shownGroupTesting = [null, null, null, null];
 var randomLock = false;
  
 /**********************************************************************
@@ -193,6 +234,7 @@ function loadListingFile () {
 	/* clear the previous meta information */
 	loadedOpponents = [];
 	loadedGroups = [];
+	loadedGroupsTesting = [];
 	
 	/* grab and parse the opponent listing file */
 	$.ajax({
@@ -223,6 +265,20 @@ function loadListingFile () {
 				var newGroup = createNewGroup(title, [opp1, opp2, opp3, opp4]);
 				loadGroupMeta(newGroup);
 			});
+
+			/* And here are the testing tables */
+			$groupTestingListings = $(xml).find('groupstesting');
+			$groupTestingListings.find('grouptesting').each(function () {
+				var title = $(this).attr('title');
+				var opp1 = $(this).attr('opp1');
+				var opp2 = $(this).attr('opp2');
+				var opp3 = $(this).attr('opp3');
+				var opp4 = $(this).attr('opp4');
+				
+				var newGroupTesting = createNewGroupTesting(title, [opp1, opp2, opp3, opp4]);
+				loadGroupTestingMeta(newGroupTesting);
+			});
+			
 		}
 	});
 }
@@ -368,6 +424,19 @@ function loadGroupMeta (group) {
 }
 
 /************************************************************
+ * Loads the meta information for an entire Testing Table
+ ************************************************************/
+function loadGroupTestingMeta (groupTesting) {
+	/* parse the individual information of each test member */
+	var groupTestingID = loadedGroupsTesting.length;
+	loadedGroupsTesting.push(groupTesting);
+	
+	for (var i = 0; i < 4; i++) {
+		loadGroupTestingMemberMeta (groupTesting.opponents[i], groupTestingID, i);
+	}
+}
+
+/************************************************************
  * Loads the meta information for a single group member.
  ************************************************************/
 function loadGroupMemberMeta (folder, groupID, member) {
@@ -404,6 +473,47 @@ function loadGroupMemberMeta (folder, groupID, member) {
 		},
 		error: function(err) {
 			loadedGroups[groupID].opponents[member] = null;
+		}
+	});
+}
+
+/************************************************************
+ * Loads the meta information for a single Testing Tables member
+ ************************************************************/
+function loadGroupTestingMemberMeta (folder, groupTestingID, member) {
+	/* grab and parse the opponent meta file */
+	$.ajax({
+		type: "GET",
+		url: folder + metaFile,
+		dataType: "text",
+		success: function(xml) {
+			/* grab all the info for this listing */
+			var enabled = $(xml).find('enabled').text();
+			var first = $(xml).find('first').text();
+			var last = $(xml).find('last').text();
+			var label = $(xml).find('label').text();
+			var pic = $(xml).find('pic').text();
+			var gender = $(xml).find('gender').text();
+			var height = $(xml).find('height').text();
+			var from = $(xml).find('from').text();
+			var artist = $(xml).find('artist').text();
+			var writer = $(xml).find('writer').text();
+			var description = $(xml).find('description').text();
+            var ending = $(xml).find('has_ending').text();
+            ending = ending === "true";
+            var layers = $(xml).find('layers').text();
+
+			var opponent = createNewOpponent(folder, enabled, first, last, label, pic, gender, height, from, artist, writer, description, ending, layers);
+			
+			/* add the opponent information to the group */
+			loadedGroupsTesting[groupTestingID].opponents[member] = opponent;
+	
+			/* load the individual select screen */
+			groupTestingPage = 0;
+			updateGroupTestingSelectScreen();
+		},
+		error: function(err) {
+			loadedGroupsTesting[groupTestingID].opponents[member] = null;
 		}
 	});
 }
@@ -471,6 +581,73 @@ function updateGroupSelectScreen () {
             $groupLayers[i].hide();
 			
 			$groupImages[i].attr('src', BLANK_PLAYER_IMAGE);
+		}
+    }
+}
+
+/************************************************************
+ * Loads opponents onto the Testing Tables based on the
+ * currently selected page.
+ ************************************************************/
+function updateGroupTestingSelectScreen () {
+	/* safety wrap around */
+	if (groupTestingPage < 0) {
+		/* wrap to last page */
+		groupTestingPage = (loadedGroupsTesting.length)-1;
+	} else if (groupTestingPage > loadedGroupsTesting.length-1) {
+		/* wrap to the first page */
+		groupTestingPage = 0;
+	}
+	$groupTestingPageIndicator.val(groupTestingPage+1);
+	
+    /* create and load all of the individual opponents */
+	for (var i = 0; i < 4; i++) {
+		var opponent = loadedGroupsTesting[groupTestingPage].opponents[i];
+
+		if (opponent) {
+			shownGroupTesting[i] = opponent;
+			
+			$groupTestingNameLabels[i].html(opponent.first + " " + opponent.last);
+			$groupTestingPrefersLabels[i].html(opponent.label);
+			$groupTestingSexLabels[i].html(opponent.gender);
+			$groupTestingSourceLabels[i].html(opponent.source);
+			$groupTestingWriterLabels[i].html(wordWrapHtml(opponent.writer));
+			$groupTestingArtistLabels[i].html(wordWrapHtml(opponent.artist));
+			$groupTestingDescriptionLabels[i].html(opponent.description);
+            
+            if (opponent.ending) {
+                $groupTestingBadges[i].show();
+            }
+            else {
+                $groupTestingBadges[i].hide();
+            }
+            
+            $groupTestingLayers[i].show();
+            $groupTestingLayers[i].attr("src", "opponents/layers" + opponent.layers + ".png");
+			
+			$groupTestingImages[i].attr('src', opponent.folder + opponent.image);
+			$groupTestingNameLabel.html(loadedGroupsTesting[groupTestingPage].title);
+			if (opponent.enabled == "true") {
+				$groupTestingButton.html('Select Group');
+				$groupTestingButton.attr('disabled', false);
+			} else {
+				$groupTestingButton.html('Unavailable');
+				$groupTestingButton.attr('disabled', true);
+			}
+		} else {
+			shownGroupTesting[i] = null;
+			
+			$groupTestingNameLabels[i].html("");
+			$groupTestingPrefersLabels[i].html("");
+			$groupTestingSexLabels[i].html("");
+			$groupTestingSourceLabels[i].html("");
+			$groupTestingWriterLabels[i].html("");
+			$groupTestingArtistLabels[i].html("");
+			$groupTestingDescriptionLabels[i].html("");
+            $groupTestingBadges[i].hide();
+            $groupTestingLayers[i].hide();
+			
+			$groupTestingImages[i].attr('src', BLANK_PLAYER_IMAGE);
 		}
     }
 }
@@ -627,6 +804,19 @@ function clickedSelectGroupButton () {
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
 }
+
+/************************************************************
+ * The player clicked on the Testing Tables button
+ ************************************************************/
+function clickedSelectGroupTestingButton () {
+	selectedSlot = 1;
+    
+    $groupTestingMaxPageIndicator.html("of "+loadedGroupsTesting.length);
+	
+	/* switch screens */
+	screenTransition($selectScreen, $groupTestingSelectScreen);
+}
+
 
 /************************************************************
  * The player clicked on the select random group slot.
@@ -789,6 +979,26 @@ function changeGroupStats (target) {
 }
 
 /************************************************************
+ * The player clicked on a change stats card button on the 
+ * Testing Tables screen.
+ ************************************************************/
+function changeGroupTestingStats (target) {
+    for (var i = 1; i < 5; i++) {
+        for (var j = 1; j < 4; j++) {
+            if (j != target) {
+                $('#group-testing-stats-page-'+i+'-'+j).hide();
+            }
+            else {
+                $('#group-testing-stats-page-'+i+'-'+j).show();
+            }
+        }
+    }
+    
+    groupTestingCreditsShown = (target == 2); // true when Credits button is clicked
+}
+
+
+/************************************************************
  * The player clicked the select opponent button on the
  * group select screen.
  ************************************************************/
@@ -808,6 +1018,25 @@ function selectGroup () {
 }
 
 /************************************************************
+ * The player clicked the select opponent button on the
+ * Testing Tables screen.
+ ************************************************************/
+function selectGroupTesting () {
+    /* clear the selection screen */
+	for (var i = 1; i < 5; i++) {
+		players[i] = null;
+	}
+	updateSelectionVisuals();
+	
+	/* load the group members */
+	for (var i = 0; i < 4; i++) {
+		if (loadedGroupsTesting[groupTestingPage].opponents[i]) {
+			loadBehaviour(loadedGroupsTesting[groupTestingPage].opponents[i].folder, groupTestingScreenCallback, i+1);
+		}
+	}
+}
+
+/************************************************************
  * This is the callback for the group select screen.
  ************************************************************/
 function groupScreenCallback (playerObject, slot) {
@@ -820,6 +1049,21 @@ function groupScreenCallback (playerObject, slot) {
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
 }
+
+/************************************************************
+ * This is the callback for the group select screen.
+ ************************************************************/
+function groupTestingScreenCallback (playerObject, slot) {
+	console.log(slot +" "+playerObject);
+    players[slot] = playerObject;
+    players[slot].current = 0;
+	
+	updateSelectionVisuals();
+    
+    /* switch screens */
+	screenTransition($groupTestingSelectScreen, $selectScreen);
+}
+
 
 /************************************************************
  * The player is changing the page on the group screen.
@@ -844,6 +1088,28 @@ function changeGroupPage (skip, page) {
 }
 
 /************************************************************
+ * The player is changing the page on the Testing Tables
+ ************************************************************/
+function changeGroupTestingPage (skip, page) {
+	if (skip) {
+		if (page == -1) {
+			/* go to first page */
+			groupTestingPage = 0;
+		} else if (page == 1) {
+			/* go to last page */
+			groupTestingPage = loadedGroupsTesting.length-1;
+		} else {
+			/* go to selected page */
+			groupTestingPage = Number($groupTestingPageIndicator.val()) - 1;
+		}
+	} else {
+		groupTestingPage += page;
+	}
+	updateGroupTestingSelectScreen();
+    updateGroupTestingCountStats();
+}
+
+/************************************************************
  * The player clicked on the back button on the individual or
  * group select screen.
  ************************************************************/
@@ -851,6 +1117,7 @@ function backToSelect () {
     /* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
+	screenTransition($groupTestingSelectScreen, $selectScreen);
 }
 
 /************************************************************
@@ -1016,7 +1283,7 @@ function hideSingleSelectionTable() {
 }
 
 /************************************************************
- * Hides the table on the single selection screen.
+ * Hides the table on the group screen.
  ************************************************************/
 function hideGroupSelectionTable() {
     groupSelectHidden = !groupSelectHidden;
@@ -1028,6 +1295,18 @@ function hideGroupSelectionTable() {
     }
 }
 
+/************************************************************
+ * Hides the table on the group screen.
+ ************************************************************/
+function hideGroupTestingSelectionTable() {
+    groupSelectTestingHidden = !groupTestingSelectHidden;
+    if (groupTestingSelectHidden) {
+        $groupTestingSelectTable.hide();
+    }
+    else {
+        $groupTestingSelectTable.show();
+    }
+}
 
 
 function openSearchModal() {
@@ -1217,6 +1496,18 @@ function updateGroupCountStats() {
             poseLabels : $groupPoseCountLabels
         };
         updateOpponentCountStats(shownGroup, groupUIElements);
+    }
+}
+
+/** Dialogue/image count update function for the Testing Tables */
+function updateGroupTestingCountStats() {
+    if (groupTestingCreditsShown) {
+        var groupUIElements = {
+            countBoxes : $groupTestingCountBoxes,
+            lineLabels : $groupLineTestingCountLabels,
+            poseLabels : $groupPoseTestingCountLabels
+        };
+        updateOpponentCountStats(shownGroupTesting, groupUIElements);
     }
 }
 
