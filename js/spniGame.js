@@ -122,6 +122,7 @@ function loadGameScreen () {
     }
 
     recentLoser = -1;
+    currentRound = -1;
     gameOver = false;
     $gamePlayerCardArea.show();
     $gamePlayerCountdown.hide();
