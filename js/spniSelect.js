@@ -230,7 +230,8 @@ function loadListingFile () {
 				var opp4 = $(this).attr('opp4');
 
 				var newGroup = createNewGroup(title, [opp1, opp2, opp3, opp4]);
-        loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, onComplete);
+				outstandingLoads += 4;
+				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, onComplete);
 			});
 		}
 	});
