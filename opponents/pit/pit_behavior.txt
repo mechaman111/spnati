@@ -4,7 +4,8 @@ last=
 label=Pit
 gender=male
 size=medium
-intelligence=average
+intelligence=average,0
+intelligence=good,5
 
 #Number of phases to "finish" masturbating
 timer=25
@@ -37,17 +38,20 @@ tag=single
 
 #required for meta.xml
 #select screen image
-pic=0-calm.png
+pic=0-calm
 height=5'6"
 from=Kid Icarus
-writer=TossawayCog
-artist=TossawayCog
+writer=PivotalCog
+artist=PivotalCog
 description=The captain of the goddess Palutena's personal bodyguards, and came to the Inventory at her request. Tends to get flustered easily.
 
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-awkward,Heya, I'm Pit. Guess you're who I'm playing against tonight?
 start=0-awkward,Sorry to keep you waiting! I'm Pit.
-
+start=0-awkward,Guess you're who I'm playing against tonight? That's cool.
+start=0-determined,I can't say I'm looking forward to this... but I can't let Lady Palutena down!
+start=0-joking,Ah, I may be new, but don't think you need to go easy on me or anything. I'm a very capable fighter!
+start=0-shy,I, uh, look forward to... undressing you? Wait, that came out wrong. You know what I mean.
+start=0-pumped,You don't seem <i>that</i> tough. I'll win this on behalf of the forces of Skyworld!
 
 #Items of clothing should be listed here in order of removal.
 #The values are formal name, lower case name, how much they cover, what they cover
@@ -72,20 +76,7 @@ clothes=Bottoms,bottoms,important,lower
 #Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
 #You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
 
-#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
-#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
-#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
 
-#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
-#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
-#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
-#~player~ can be used at any time and refers to the human player.
-#~cards~ can be used only in the swap_cards lines.
-#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
-
-#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
-#Here is an example line (note that targeted lines must have a stage number):
-#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
 
 
 
@@ -27944,8 +27935,238 @@ female_finished_masturbating=awkward,That was enjoyable, I think.
 7-female_start_masturbating,target:joey=happy,Ah! That makes sense now.
 7-female_masturbating,target:joey=thinking,Aren't you uncomfortable standing up like that? Pull up a chair or something, I don't mind.
 7-female_finished_masturbating,target:joey=happy,Good show! You make a good clown, you know that?
-
-
+0-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+0-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+0-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+0-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+0-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+0-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+0-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+0-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+0-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+0-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+0-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+0-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+0-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+0-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+0-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+0-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+0-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+0-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+0-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+0-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+0-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+0-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+0-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+0-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+0-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+0-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+0-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+0-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+0-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+1-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+1-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+1-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+1-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+1-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+1-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+1-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+1-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+1-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+1-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+1-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+1-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+1-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+1-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+1-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+1-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+1-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+1-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+1-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+1-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+1-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+1-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+1-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+1-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+1-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+1-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+1-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+1-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+1-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+2-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+2-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+2-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+2-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+2-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+2-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+2-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+2-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+2-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+2-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+2-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+2-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+2-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+2-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+2-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+2-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+2-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+2-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+2-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+2-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+2-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+2-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+2-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+2-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+2-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+2-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+2-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+2-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+2-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+3-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+3-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+3-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+3-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+3-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+3-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+3-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+3-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+3-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+3-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+3-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+3-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+3-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+3-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+3-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+3-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+3-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+3-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+3-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+3-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+3-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+3-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+3-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+3-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+3-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+3-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+3-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+3-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+3-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+4-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+4-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+4-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+4-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+4-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+4-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+4-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+4-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+4-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+4-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+4-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+4-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+4-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+4-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+4-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+4-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+4-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+4-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+4-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+4-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+4-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+4-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+4-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+4-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+4-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+4-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+4-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+4-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+4-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+5-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+5-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+5-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+5-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+5-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+5-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+5-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+5-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+5-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+5-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+5-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+5-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+5-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+5-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+5-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I want to get some actual wins here!
+5-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+5-female_removed_accessory,target:jura,targetStage:2=smug,Okay, Jura, let's keep going. I'll win this, one piece at a time! Er, two pieces in this case.
+5-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+5-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+5-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving!
+5-female_removed_accessory,target:jura,targetStage:4=annoyed,Can I leave yet? I can tell this is going to just keep happening and happening without reaching a satisfying conclusion... 
+5-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+5-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+5-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+5-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+5-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+5-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+5-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+5-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. I know now that I can beat space pirates wihout killing them!
+6-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+6-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+6-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+6-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+6-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+6-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+6-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+6-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+6-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+6-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+6-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+6-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+6-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+6-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+6-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I'd like to see some skin already...
+6-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+6-female_removed_accessory,target:jura,targetStage:2=sad,You're probably loving this, aren't you? I got beat so badly...
+6-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+6-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+6-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving! R-Really...
+6-female_removed_accessory,target:jura,targetStage:4=surprised,G-Geez... so condescending...
+6-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+6-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+6-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+6-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+6-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+6-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+6-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+6-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. You may have outlasted me, but I'll use this loss to make myself stronger!
+7-good_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+7-okay_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+7-bad_hand,alsoPlaying:felicia,totalRounds:0=embarrassed,Wait, this catgirl's naked already! W-Why is she playing with us?
+7-female_must_strip,target:felicia,targetStage:0=surprised,Wait, what? Right here?
+7-female_chest_will_be_visible,target:felicia=shy,This is so weird...
+7-female_large_chest_is_visible,target:felicia=embarrassed,That's... actually a pretty good shave job. Geez...
+7-female_crotch_will_be_visible,target:felicia=embarrassed,I've always been told shaving cats was a bad thing... but I guess it's different if she does it to herself...
+7-female_crotch_is_visible,target:felicia=beat,You really should have worn something else... you realize you'll have to go home like that, right?
+7-female_must_masturbate,target:felicia=shy,You aren't going to shave for your forfeit too, are you?
+7-female_start_masturbating,target:felicia=awkward,I guess that makes sense. Cats love their toys, after all.
+7-female_masturbating,target:felicia,priority:0=happy,Must be awkward using claws full time. I only use mine part of the time, and they're definitely a hassle!
+7-female_finished_masturbating,target:felicia=pumped,And with that, Felicia's me-out!
+7-female_must_strip,target:jura,targetStage:0=shy,A Space Pirate and a shameless one at that, huh? I'm scared already...
+7-female_removing_accessory,target:jura,targetStage:0=smug,That rapier is so low-tech! You can't even use it for long range combat.
+7-female_removed_accessory,target:jura,targetStage:1=angry,Let's not hold this up any longer. I'd like to see some skin already...
+7-female_removing_accessory,target:jura,targetStage:1=thinking,(Kind of reminds me of Lady Palutena and her fasionable footwear. Guess that type of fashion exists everywhere.)
+7-female_removed_accessory,target:jura,targetStage:2=sad,You're probably loving this, aren't you? I got beat so badly...
+7-female_removing_accessory,target:jura,targetStage:2=stunned,Oh. How does the sleeve connect to anything else then?
+7-female_removed_accessory,target:jura,targetStage:3=annoyed,This is going nowhere. She has an ego the size of a pirate ship.
+7-female_removing_accessory,target:jura,targetStage:3=angry,I'm not interested in what you're giving! R-Really...
+7-female_removed_accessory,target:jura,targetStage:4=surprised,G-Geez... so condescending...
+7-female_chest_will_be_visible,target:jura=annoyed,This is a fake-out, right? I don't trust you.
+7-female_large_chest_is_visible,target:jura=shy,Ah... so you were telling the truth. I'm... sorry for doubting you.
+7-female_crotch_will_be_visible,target:jura=smug,Then this is it. Right? Finally getting to the end?
+7-female_crotch_is_visible,target:jura=shy,Well, I didn't <i>mind</i> the hair. N-Not that I was looking there. I... uh...
+7-female_must_masturbate,target:jura=beat,So then. The space pirate's out. 
+7-female_start_masturbating,target:jura=awkward,Not that it was hard. You could put a mirror in front of her and she'd eliminate herself.
+7-female_masturbating,target:jura,priority:0=annoyed,Space piracy... I'll never understand it. And I'll never understand why they're all so <i>insufferable</i>.
+7-female_finished_masturbating,target:jura=pumped,I'm glad for this experience, Jura. You may have outlasted me, but I'll use this loss to make myself stronger!
 
 
 #SELF MASTURBATING
@@ -28004,9 +28225,9 @@ female_finished_masturbating=awkward,That was enjoyable, I think.
 -1-finished_masturbating=finished,So when do I get to put my clothes back on? I'm starting to get cold.
 -1-finished_masturbating=calm,I hope that I can be friends with some of you when this is all over. I've grown pretty fond of you all... mostly.
 -1-finished_masturbating=happy,I was expecting this to be way worse than it turned out being. Guess Lady Palutena had the right idea after all!
--1-finished_masturbating=thinking,It feels nice to socialize with the average and not-so-average humans for once. I practically feel like one of you!
--1-finished_masturbating,alsoPlaying:morrigan,priority:0=embarrassed,Say, y-you weren't really serious about wanting to ride me, were you Morrigan?
--1-finished_masturbating,alsoPlaying:morrigan,priority:0=shy,(H-How should I deal with this Morrigan situation? No one's ever wanted to "take me for a ride before", but she's a servent of evil. I'm stuck...)
+-1-finished_masturbating=happy,It feels nice to socialize with the average and not-so-average humans for once. I practically feel like one of you!
+-1-finished_masturbating,alsoPlaying:morrigan,priority:0=embarrassed,Say, y-you weren't really serious about before, were you Morrigan? It was just a trick, right?
+-1-finished_masturbating,alsoPlaying:morrigan,priority:0=shy,(H-How should I deal with this Morrigan situation? She's a servant of evil, but somehow one of the nicest ones to me here. I'm stuck...)
 -1-finished_masturbating,timeInStage:30=annoyed,Can you pick up the pace? As fun as that was, I still don't like being all exposed like this.
 -1-finished_masturbating,notSaidMarker:finished,marker:finished=finished,Sorry about the mess. I'll clean it up after the game.
 
@@ -28055,6 +28276,12 @@ game_over_defeat,target:palutena=awkward,I had faith you'd pull through, Lady Pa
 game_over_defeat,target:sharla=awkward,Made us look like a buncha jokers.
 game_over_defeat,target:sheva=shy,W-well, looks like we achieved complete global masturbation... so good job, Sheva?
 game_over_defeat,target:meia=annoyed,I was going to invite the winner to the hot springs, but you? No way.
+game_over_defeat,target:kyu=beat,Well this is embarrassing. I thought she was throwing the whole time.
+game_over_defeat,target:moon=embarrassed,I just have one word for you, ~player~: HOW?
+game_over_defeat,target:morrigan=shy,P-Please don't tell anyone about this, Morrigan.
+game_over_defeat,target:aimee=annoyed,How did the crazy gunwoman win?
+game_over_defeat,target:wiifitfemale=finished,Well, it was good to see you, Ms. Fit. Can we maybe keep tonight a secret?
+game_over_defeat,target:mercy=awkward,I lost to my impersonator? I don't know whether to be proud or upset.
 
 #EPILOGUE/ENDING
 
