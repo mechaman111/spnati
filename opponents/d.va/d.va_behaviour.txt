@@ -42,7 +42,7 @@ tag=d.va
 
 #Source material tags
 tag=overwatch
-tag=team_overwatch
+tag=overwatch_franchise
 tag=video_game
 tag=future
 tag=sci-fi
@@ -52,7 +52,7 @@ tag=bodysuit
 tag=brunette
 tag=korean
 tag=long_hair
-tag=brown_eyes
+tag=dark_eyes
 tag=medium_breasts
 tag=shaved
 
@@ -60,12 +60,14 @@ tag=shaved
 tag=confident
 tag=cheerful
 tag=fashionable
-tag=hero
-tag=gamer
 
 #Other tags
-tag=e-celeb
 tag=military
+tag=hero
+tag=gamer
+tag=celebrity
+tag=fighter
+
 
 
 
@@ -87,13 +89,15 @@ marker=d.va_high_score,public,As a gamer, Hana likes getting a high score.
 marker=d.va_lucio_playing,public,Hana heard that Lucio is playing at "Inner City Spectacle" tonight.
 marker=d.va_needs_a_hug,public,Some characters react to Hana saying she needs a hug via Hana using an alsoPlaying. This marker will replace that method in the future.
 marker=d.va_noobs,public,Hana can sometimes call other players "noobs".
+marker=d.va_second_place,private,D.Va must_masturbate when only two players are left, meaning she placed second.
 marker=d.va_sonya_butt_kicked,public,Hana: 1, Sonya: 0.
 marker=d.va_sonya_talks_big,public,Hana jousts with Sonya.
 marker=d.va_thinks_seven_is_moira,public,Hana mistakes Seven of Nine for Moira, her Overwatch adversary.
 marker=d.va_wager_set,public,If Hana gets an okay or good hand and has lost no clothing in the sixth round, she'll propose a side bet that the first loser does anything the winner asks.
 marker=d.va_wager_regret,public,If Hana is naked with a bad hand after making her bet, she will express some regret.
 marker=d.va_wager_loss,public,If Hana is first to lose, she will mention the side bet in her final defeat line.
-marker=human_first_piece,private,Used to track whether the human player has removed even a single item.
+marker=male_human_first_piece,private,Used to track whether the male human player has removed even a single item.
+marker=female_human_first_piece,private,Used to track whether the female_human player has removed even a single item.
 
 marker=d.va_amelie,public,
 marker=d.va_bodysuit,public,
@@ -211,7 +215,8 @@ swap_cards=serene,~cards~ cards.
 4-bad_hand=angry,Literally unplayable.
 4-bad_hand=awkward,Uh oh...
 
-4-bad_hand,notSaidMarker:human_first_piece=shocked,~player~, so OP!
+4-bad_hand,notSaidMarker:male_human_first_piece=shocked,~player~, so OP!
+4-bad_hand,notSaidMarker:female_human_first_piece=shocked,~player~, so OP!
 
 #Lost Bra
 5-good_hand=peace,I'm back in the game!
@@ -268,7 +273,7 @@ swap_cards=serene,~cards~ cards.
 0-must_strip_winning,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
 0-must_strip_winning,count-d.va_cruiser:1,priority:0=prestrip_cruiser,You guys are losing and I'm only <i>now</i> losing my bangles.
 0-must_strip_normal=loss,It's easier to play without gloves anyway...
-0-must_strip_normal=sad,Damn. I got these gloves custom made!
+0-must_strip_normal=excited,I'll need these gloves back. They're custom made.
 0-must_strip_normal,count-d.va_cruiser:1,priority:1000=prestrip_cruiser,I guess it's time to lose these snazzy bangles.
 0-must_strip_normal,alsoPlaying:mei,alsoPlayingStage:1=angry,I don't want Snowball to freeze me again. He is so rude!
 0-must_strip_losing=awkward,Aw, no fair. I should've been able to wear my mech as an extra layer.
@@ -353,47 +358,48 @@ swap_cards=serene,~cards~ cards.
 #other player must strip specific
 
 #Fully Clothed
-0-male_human_must_strip,marker:human_first_piece=winking,Hey there, ~name~!
-0-male_human_must_strip,marker:human_first_piece=calm,Are you really that easy to beat? That's surprising!
+0-male_human_must_strip,marker:male_human_first_piece=winking,Hey there, ~name~!
+0-male_human_must_strip,marker:male_human_first_piece=calm,Are you really that easy to beat? That's surprising!
 0-male_must_strip,totalRounds:0-1=peace,An early pick!
 0-male_must_strip=stripped,I won again! I just hope I won't get nerfed...
-0-female_human_must_strip,marker:human_first_piece=excited,Nice one! And I haven't even taken any damage yet!
+0-female_human_must_strip,marker:female_human_first_piece=excited,Nice one! And I haven't even taken any damage yet!
 0-female_must_strip=saluting,~name~ strip sequence initiated.
 0-female_must_strip=peaceside,I already like this game!
 0-female_must_strip=calm,Ooh, I'm curious what you'll take off...
 
 #Lost Gloves
-1-male_human_must_strip,marker:human_first_piece=heart,I hope you know this is the whole reason we came today, ~name~.
-1-male_human_must_strip,marker:human_first_piece=excited,Let me know if you need help choosing something to take off, ~name~.
+1-male_human_must_strip,marker:male_human_first_piece=heart,I hope you know this is the whole reason we came today, ~name~.
+1-male_human_must_strip,marker:male_human_first_piece=excited,Let me know if you need help choosing something to take off, ~name~.
 1-male_must_strip=stripped,Stop stalling, get to it!
-1-female_human_must_strip,marker:human_first_piece=heart,Time to take something off!
+1-female_human_must_strip,marker:female_human_first_piece=heart,Time to take something off!
 1-female_must_strip=peace,Viva D.Va!
 1-female_must_strip=winking,Yeah! Now, show us some good stuff, ~name~!
 1-female_must_strip=calm,Practice makes perfect.
 
 #Lost Shoes
-2-male_human_must_strip,marker:human_first_piece=excited,Take it off!
-2-male_human_must_strip,marker:human_first_piece=stripped,Whose turn is it to strip now? Not mine, that's who!
+2-male_human_must_strip,marker:male_human_first_piece=excited,Take it off!
+2-male_human_must_strip,marker:male_human_first_piece=stripped,Whose turn is it to strip now? Not mine, that's who!
 2-male_must_strip=winking,Got you, ~name~!
-2-female_human_must_strip,marker:human_first_piece=winking,Take it off!
+2-female_human_must_strip,marker:female_human_first_piece=winking,Take it off!
 2-female_must_strip=winking,Got you, ~name~!
 2-female_must_strip=stripped,Oh yeah! I'm the winner again!
 
 #Lost Headphones
-3-male_human_must_strip,marker:human_first_piece=stripped,I showed you my ears. I think the guy equivalent is bare chest at minimum.
+3-male_human_must_strip,marker:male_human_first_piece=stripped,I showed you my ears. I think the guy equivalent is bare chest at minimum.
 3-male_must_strip=excited,Sweet!
 3-male_must_strip=calm,Haven't had enough?
-3-female_human_must_strip,marker:human_first_piece=peace,Another victory for the blue team!
+3-female_human_must_strip,marker:female_human_first_piece=peace,Another victory for the blue team!
 3-female_must_strip=peaceside,All right!
 3-female_must_strip=calm,Time to take something off, ~name~!
 
 #Lost Suit
-4-male_human_must_strip,marker:human_first_piece=stripped,You got me out of my suit, so I'm hoping for a lot here!
-4-male_human_must_strip,marker:human_first_piece,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
-4-male_human_must_strip,marker:human_first_piece,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
+4-male_human_must_strip,marker:male_human_first_piece=stripped,You got me out of my suit, so I'm hoping for a lot here!
+4-male_human_must_strip,marker:male_human_first_piece,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
+4-male_human_must_strip,marker:male_human_first_piece,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
+#bug: target:human,targetStage:0 works on humans of all stages
 4-male_must_strip=loss,Believe me that this is more than a fair trade!
-4-female_human_must_strip,marker:human_first_piece=winking,Why not take off two things? I had to take off my whole suit in one go.
-4-female_human_must_strip,marker:human_first_piece,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
+4-female_human_must_strip,marker:female_human_first_piece=winking,Why not take off two things? I had to take off my whole suit in one go.
+4-female_human_must_strip,marker:female_human_first_piece,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
 4-female_must_strip=heart,Configuration: Celebratory!
 4-female_must_strip=calm,The huntress lays a trap for her prey...
 4-female_must_strip=winking,Ding!
@@ -600,7 +606,7 @@ swap_cards=serene,~cards~ cards.
 
 #Lost Gloves
 1-male_removing_accessory=sad,Just your ~clothing~? How long does this game last?
-1-male_removed_accessory=loss,As long as we don't go into overtime, I think we'll be okay...
+1-male_removed_accessory=calm,As long as we don't go into overtime, I think we'll be okay...
 1-female_removing_accessory=excited,So, what's the score now, after you remove your ~clothing~?
 1-female_removed_accessory=calm,Don't think for a minute that this match will be a draw!
 1-female_removed_accessory=stripped,D.Va now: best dressed. D.Va soon: only one dressed!
@@ -641,7 +647,7 @@ swap_cards=serene,~cards~ cards.
 #Masturbating
 -2-male_removing_accessory=shy,This is hardly a striptease...
 -2-male_removed_accessory=serene,I'm gonna close my eyes and imagine you got naked instead.
--2-female_removing_accessory=sad,I'm SO getting ready to pull my trigger!!
+-2-female_removing_accessory=sad,I'm <i>so</i> getting ready to pull my trigger!
 -2-female_removed_accessory=shy,Ahh, it was nice of you to take off your ~clothing~ for me, but I don't think that I should use it to masturbate!
 -2-female_removed_accessory=angry,I honestly hope the rest of your clothing gets hooked to point 2 of Ilios, right-fucking-now.
 -2-female_removed_accessory,count-d.va_cruiser:1,priority:1000=angry,I honestly hope the rest of your clothing gets hooked to point 2 of Ilios, right the heck now.
@@ -777,6 +783,7 @@ swap_cards=serene,~cards~ cards.
 #Lost Shoes
 2-male_removing_minor=winking,Up, up, down, down, left, right, left, right, B, A, start.
 2-male_removed_minor=sad,Aw, it didn't work. You still have clothes on...
+2-male_removed_minor,target:human=calm,I won't have to be patient for much longer.
 2-female_removing_minor=calm,This game sure is polished. There's definitely a high replay value, too!
 2-female_removing_minor=awkward,You're just taking that off?
 2-female_removed_minor=peaceside,Hey, you had to get rid of your ~clothing~ sometime. I'm not mad!
@@ -1582,6 +1589,7 @@ must_masturbate_first=shy,I have to go first? That sounds like a challenge!
 must_masturbate_first=dismayed,I just realized what Mei meant when she said this game would give me feels...
 must_masturbate_first,saidMarker:d.va_wager_set,marker:d.va_wager_loss=ready,I... I lost my own bet...
 must_masturbate=horny,Time to show my skills!
+must_masturbate,totalAlive:2,saidMarker:male_human_first_piece,marker:d.va_second_place=dismayed,Aw, so close!
 must_masturbate,alsoPlaying:marinette,alsoPlayingStage:0-8,alsoPlayingSaidMarker:d.va_competition=excited,Heh. I guess I owe you that autograph, huh, Marinette? You're the artist, maybe you can be creative with how you want me to give it to you.
 must_masturbate,alsoPlaying:marinette,alsoPlayingStage:9-10,alsoPlayingSaidMarker:d.va_competition=dismayed,Just because we both lost doesn't mean you won the bet, Marinette.
 start_masturbating=starting,I normally use my mech to do this, but I can manage with just my fingers.
@@ -1645,10 +1653,13 @@ game_over_defeat,target:human=winking,You charmed my pants off, but why stop the
 game_over_defeat,target:human=heart,~name~, I know a quiet place where we can get to know each other better...
 game_over_defeat,target:human,count-overwatch:4=7-winking,Wow, that's what I call a team kill! What do you say, girls? Has ~player~ earned a little treat?
 game_over_defeat,target:human,count-overwatch:4=awkward,The other Overwatch girls didn't stand a chance against you! I could've won if I wanted to, just so you know...
+game_over_defeat,target:human,saidMarker:d.va_second_place=7-winking,Congrats on first place, ~name~! Just so you know, it's not too late to come in second.
 game_over_defeat,target:buffy=peace,"Buffy"? More like "Buggy". I'll get you next time!
 game_over_defeat,target:daphne=calm,Wrestle with Daph, prepare for depth!
 game_over_defeat,target:gay_spaghetti_chef=calm,Wrestle with Chef, prepare for death!
 game_over_defeat,target:hermione,marker:d.va_accuses_cheating=sad,Did you cheat, Hermione? It's not fair to use magic, y'know!
+game_over_defeat,target:jura=winking,Jura, if you want to learn more about Earth girls, check out my cam show. I don't stream Starcraft anymore.
+game_over_defeat,target:kyu=peace,There's no shame in being beaten by the best. Let me know if you want to join Overwatch, Kyu. We could always use more healers.
 game_over_defeat,target:mia,targetStage:5-6=peace,Well played! I think I just found my new favorite channel!
 game_over_defeat,target:revy=loss,Brought to my knees by a psycho waving two guns around... Story of my life...
 game_over_defeat,target:xander=calm,Xander with the surprise victory! Nice going!
