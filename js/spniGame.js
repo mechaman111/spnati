@@ -631,7 +631,7 @@ function endRound () {
                 $gameOpponentAreas[i-1].hide();
             }
         }
-        
+        endWaitDisplay = 0;
 		handleGameOver();
 	} else {
 		$mainButton.html("Deal");
@@ -676,11 +676,11 @@ function handleGameOver() {
         actualMainButtonState = false;
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
-        endWaitDisplay = endWaitDisplay >= 3 ? 0 : endWaitDisplay + 1;
         var dots = "";
         for (var i = 0; i < endWaitDisplay; i++) {
             dots += ".";
         }
+        endWaitDisplay = (endWaitDisplay + 1) % 4;
         
 		/* someone is still forfeiting */
 		$mainButton.html("Wait" + dots);
