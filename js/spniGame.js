@@ -652,7 +652,7 @@ function handleGameOver() {
 				break;
 			}
 		}
-		for (var i = 0; i < players.length; i++){
+		for (var i = 1; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
 			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
 		}
