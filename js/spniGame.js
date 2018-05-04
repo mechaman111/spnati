@@ -414,13 +414,13 @@ function checkDealLock () {
 	if (dealLock < inGame * 5) {
 		window.setTimeout(checkDealLock, 100);
 	} else {
-             /*set up main button*/
+        /*set up main button*/
         if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
             continueDealPhase()
-        else if (players[HUMAN_PLAYER].out) { 
+      /*else if (players[HUMAN_PLAYER].out) { 
             $mainButton.html("Next");
             allowProgression();
-        } else {
+        }*/ else {
              continueDealPhase()          
         }
     }
