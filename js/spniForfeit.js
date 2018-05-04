@@ -191,7 +191,7 @@ function tickForfeitTimers (context) {
     }
 	
 	// Show a player masturbating while dealing or after the game, if there is one available
-	if (masturbatingPlayers.length > 0 && (context == "Deal" || (context.beginsWith("Wait") && Math.random() < showMasturbatingThreshold))) {
+	if (!cumming && masturbatingPlayers.length > 0 && (context == "Deal" || (context.beginsWith("Wait") && Math.random() < showMasturbatingThreshold))) {
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 1; i < players.length; i++) {
 			updateBehaviour(i, (i == playerToShow) ? players[i].forfeit[0] : (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), [NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], players[playerToShow]);
