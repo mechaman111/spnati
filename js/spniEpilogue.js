@@ -142,7 +142,8 @@ function drawEpilogueBox(num){
 	var newEpilogueDiv = $(document.createElement('div')).attr('id', boxDivName);
 
 	//allow the writer to use ~name~ to refer to the player
-	var content = boxData.text.replace([NAME], [players[HUMAN_PLAYER].label]);
+	var content = boxData.text.replace(NAME, players[HUMAN_PLAYER].label)
+		.replace(PLAYER_NAME, players[HUMAN_PLAYER].label);
 
 	//add the contents of the text box
 	var dialogueID = 'epilogue-dialogue-'+num;

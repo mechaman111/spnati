@@ -153,7 +153,7 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue($(player.xml).find('start'), [], []);
+		player.state = parseDialogue($(player.xml).find('start'), [PLAYER_NAME], [players[HUMAN_PLAYER].label]);
 		loadOpponentWardrobe(player);
 	}
 }
