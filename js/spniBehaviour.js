@@ -183,7 +183,7 @@ function parseDialogue (caseObject, replace, content) {
         
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
-				dialogue = dialogue.replace(replace[i], content[i]);
+				dialogue = dialogue.split(replace[i]).join(content[i]);
 			}
 		}
         
