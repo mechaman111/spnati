@@ -141,7 +141,7 @@ function tickForfeitTimers (context) {
 
                 /* trigger the callback */
                 var player = i, tableVisible = (tableOpacity > 0);
-                window.setTimeout(function(){ finishMasturbation(player, context, tableVisible); }, ORGASM_DELAY);
+                timeoutID = window.setTimeout(function(){ finishMasturbation(player, context, tableVisible); }, ORGASM_DELAY);
                 if (AUTO_FADE) forceTableVisibility(false);
             }
             return true;

@@ -38,8 +38,8 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 /* player array */
 var players = [null, null, null, null, null];
 
-
-
+/* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
+var timeoutID;
 
 /**********************************************************************
  * Game Wide Global Variables
@@ -257,8 +257,6 @@ function returnToPreviousScreen (screen) {
 function resetPlayers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] != null) {
-			collectPlayerHand(i);
-			$gameLabels[i].css({"background-color" : clearColour});
 			initPlayerState(players[i]);
 		}
 		timers[i] = 0;
@@ -270,7 +268,10 @@ function resetPlayers () {
  ************************************************************/
 function restartGame () {
     KEYBINDINGS_ENABLED = false;
-	
+
+	clearTimeout(timeoutID); // No error if undefined or no longer valid
+	timeoutID = autoForfeitTimeoutID = undefined;
+	stopCardAnimations();
 	resetPlayers();
 	
 	/* enable table opacity */

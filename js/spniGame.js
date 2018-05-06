@@ -113,6 +113,8 @@ function loadGameScreen () {
         if (players[i] != null) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
+            $gameLabels[i].css({"background-color" : clearColour});
+            clearHand(i);
         }
         else {
             $gameOpponentAreas[i-1].hide();
@@ -279,7 +281,7 @@ function makeAIDecision () {
 	updateGameVisual(currentTurn);
 	
 	/* wait and implement AI action */
-	window.setTimeout(implementAIAction, GAME_DELAY);
+	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
 }
 
 /************************************************************
@@ -305,7 +307,7 @@ function implementAIAction () {
 	}
 	
 	/* wait and then advance the turn */
-	window.setTimeout(advanceTurn, GAME_DELAY);
+	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
 }
 
 /************************************************************
@@ -333,7 +335,7 @@ function advanceTurn () {
             updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
             updateGameVisual(currentTurn);
 
-            window.setTimeout(advanceTurn, GAME_DELAY);
+            timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
             return;
         }
     }
@@ -395,7 +397,7 @@ function startDealPhase () {
 		$gameLabels[i].css({"background-color" : clearColour});
 	}
 
-	window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
+	timeoutID = window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
 }
 
 /************************************************************
@@ -412,7 +414,7 @@ function checkDealLock () {
 	
 	/* check the deal lock */
 	if (dealLock < inGame * 5) {
-		window.setTimeout(checkDealLock, 100);
+		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
         /*set up main button*/
         if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
@@ -738,7 +740,7 @@ function advanceGameDialogue (slot) {
  ************************************************************/
 function allowProgression () {
     if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-        setTimeout(advanceGame, FORFEIT_DELAY);
+        timeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
     } else {
         $mainButton.attr('disabled', false);
         actualMainButtonState = false;
