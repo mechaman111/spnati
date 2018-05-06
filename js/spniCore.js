@@ -255,6 +255,8 @@ function returnToPreviousScreen (screen) {
 function resetPlayers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] != null) {
+			collectPlayerHand(i);
+			$gameLabels[i].css({"background-color" : clearColour});
 			initPlayerState(players[i]);
 		}
 		timers[i] = 0;
