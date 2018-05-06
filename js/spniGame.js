@@ -96,6 +96,7 @@ var actualMainButtonState = false;
 var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
+var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
                       
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -756,6 +757,7 @@ function advanceGame () {
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', true);
     actualMainButtonState = true;
+    autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
     if (tickForfeitTimers(context)) return;
