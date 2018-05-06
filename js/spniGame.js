@@ -638,6 +638,7 @@ function endRound () {
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
                 $gamePlayerCardArea.hide();
+                $gamePlayerClothingArea.hide();
             } 
             else {
                 $gameOpponentAreas[i-1].hide();
