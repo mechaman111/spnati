@@ -373,14 +373,18 @@ function startDealPhase () {
 	dealLock = 0;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
+            /* collect the player's hand */
+            collectPlayerHand(i);
+        }
+    }
+    shuffleDeck();
+    for (var i = 0; i < players.length; i++) {
+        if (players[i]) {
             console.log(players[i] + " "+ i);
             if (!players[i].out) {
                 /* deal out a new hand to this player */
                 dealHand(i);
             } else {
-                /* collect the player's hand */
-                collectPlayerHand(i);
-
                 if (HUMAN_PLAYER == i) {
                     $gamePlayerCardArea.hide();
                     $gamePlayerClothingArea.hide();
@@ -393,13 +397,6 @@ function startDealPhase () {
         }
     }
     
-    /* reset trades ins */
-    for (var i = 0; i < players.length; i++) {
-        for (var j = 0; j < players.length; j++) {
-            hands[i].tradeIns[j] = false;
-        }
-    }
-	
 	/* IMPLEMENT STACKING/RANDOMIZED TRIGGERS HERE SO THAT AIs CAN COMMENT ON PLAYER "ACTIONS" */
 	
 	/* clear the labels */
