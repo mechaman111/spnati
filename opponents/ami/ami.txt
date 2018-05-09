@@ -21,16 +21,18 @@ tag=school_uniform
 tag=japanese
 tag=blue_hair
 tag=long_hair
+tag=exotic_hair
 tag=blue_eyes
-tag=light-skinned
+tag=fair-skinned
 tag=medium_breasts
+tag=trimmed
 
 #Personality tags
 tag=cheerful
 tag=mean
 tag=confident
+tag=seductive
 tag=boob_envy
-tag=bi-curious
 
 #Other tags
 tag=student
@@ -44,25 +46,27 @@ pic=0-calm
 height=5'5"
 from=Toradora!
 writer=AzideBen
-artist=AzideBen & SnSChase
+artist=Model and posing: AzideBen<br>Additional posing: SnSChase
 description=Ami Kawashima is known as a kind and generious model, and she'll do whatever she can to maintain that facade.
 #release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
 
 
 
+marker=ami_ever_seen_a_model,public,When Ami removes her skirt, she can say "Ever seen a model in only her underwear?"
 marker=ami_suggests_scissoring,public,When Ami is undressed and a female opponent undresses or masturbates, Ami might suggest scissoring.
 marker=ami_sonya_vintage,public,Ami teases Sonya about her retro outfit.
 marker=ami_taken_boyfriend_steal,private,Ami threatens to steal a fellow player's boyfriend.
 
 
 
-
 #You can have more than one start line
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-happytoplay,Oh, I like strip poker. Let's play!
+start=0-happytoplay,Oh, I like strip poker. I'll play!
 start=0-happy,Let's go for it!
 start=0-happy,Let's go for it!
 start=0-happy,Let's go for it!
+start=0-happy,Let's go for it!
+start=0-happytostrip,Just so you know, I'm a student model. But I might not be a model student.
 
 #CLOTHING
 #Items of clothing should be listed here in order of removal.
@@ -70,22 +74,10 @@ start=0-happy,Let's go for it!
 clothes=Shoes,shoes,extra,other
 clothes=Socks,socks,minor,other
 clothes=Blazer,blazer,minor,upper
-clothes=Sweater,sweater,major,upper
+clothes=Shirt,shirt,major,upper
 clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower
-
-
-
-#Notes on dialogue
-#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
-#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
-#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
-#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
-#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
-#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
-#Example emotions are sometimes used in the lines below, but you can replace these as needed. Your specified emotions should match your posed image names. If you don't have posed images yet, you can write the dialogue first and fill these in later.
-#The template below presumes that your character has a full eight layers of clothing. Remove unneeded stages if your character has fewer layers.
 
 
 
@@ -93,7 +85,6 @@ clothes=Panties,panties,important,lower
 #This is what a character says while they're exchanging cards.
 #The game will automatically put a display a number between 0-5 where you write ~cards~.
 #These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
-#The lines written here are examples only and should be replaced.
 swap_cards=calm,Let's try for ~cards~.
 swap_cards=calm,Just ~cards~ for now.
 swap_cards=calm,~cards~, if you please.
@@ -111,6 +102,10 @@ swap_cards=calm,~cards~, if you please.
 0-good_hand,totalRounds:0=happy,Looks like I'm off to a good start, huh?
 0-okay_hand,totalRounds:0=happytoplay,Looks like I'm off to an okay start, huh?
 0-bad_hand,totalRounds:0=indifferent,Looks like I'm off to a bad start, huh?
+
+0-good_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=interestedgeneric,You boys ready to get started?
+0-okay_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=happy,Thank you to whoever invited the cute boys!
+0-bad_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=interestedgeneric,I hope you boys are ready to go as far as I am.
 0-good_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
 0-okay_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
 0-bad_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
@@ -118,7 +113,7 @@ swap_cards=calm,~cards~, if you please.
 0-okay_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
 0-bad_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
 
-#lost 1 item
+#lost shoes
 1-good_hand,totalRounds:1=happy,Guess I won't have to go barefoot before the rest of you even start!
 1-good_hand=happy,Looking good, Ami, looking good.
 1-okay_hand=calm,Are you ready?
@@ -129,9 +124,10 @@ swap_cards=calm,~cards~, if you please.
 
 1-good_hand,alsoPlaying:sonya,notSaidMarker:ami_sonya_vintage,marker:ami_sonya_vintage=laugh,Where did you get that amazing workout gear, Sonya? It's so... <i>vintage</i>.
 
-#lost 2 items
+#lost socks
 2-good_hand=confident,Good this the red uniform looks good on me, because I'm keeping it this round.
 2-good_hand=happy,Hah, piece of cake.
+2-good_hand=sassy,Bring it on. I'm an Ami of One!
 2-okay_hand=indifferent,Eh, fair enough.
 2-bad_hand=teasing,Oh well, I can afford to drop the blazer.
 
@@ -174,54 +170,57 @@ swap_cards=calm,~cards~, if you please.
 #SELF STRIPPING
 #This is the character says once they've lost a hand, but before they strip.
 
-#losing first item of clothing
+#losing shoes
 0-must_strip_winning=happytostrip,Whatever will I do without my shoes?
 0-must_strip_normal=happytostrip,Who wants to see some socks?
 0-must_strip_losing=happytostrip,Fair enough.
 0-stripping=stripping,No big deal.
 1-stripped=stripped,The uniform socks are cute, aren't they?
 
-#losing second item of clothing
+#losing socks
 1-must_strip_winning=happytostrip,I can humor you with some feet, I guess.
 1-must_strip_normal=happytostrip,I hope you think my feet are cute.
 1-must_strip_losing=happytostrip,I guess it can't be helped.
 1-stripping=stripping,I'll just slip these off, don't mind me.
 2-stripped=stripped,All done! Good thing I polished my nails before.
 
-#losing third item of clothing
+#losing blazer
 2-must_strip_winning=teasing,Aw, I liked how the red complimented my hair.
 2-must_strip_normal=indifferent,Guess it's my turn. It was humid here anyway.
 2-must_strip_losing=teasing,Wow, it's like the deck wants me to get undressed fast!
 2-stripping=stripping,Off you go. No big deal.
 3-stripped=stripped,At least my skirt still matches.
 
-#losing fourth item of clothing
+#losing shirt
 3-must_strip_winning=happytostrip,Alright, alright, just don't stare too much. 
 3-must_strip_normal=teasing,Fair enough, my bra looks cute anyway.
 3-must_strip_losing=shocked,Me again? Oh well.
 3-stripping=stripping,Alright, here goes.
 4-stripped=stripped,See, is it cute?
 
-#losing fifth item of clothing
+#losing skirt
 4-must_strip_winning=happytostrip,Guess I'll join the party.
 4-must_strip_normal=calm,Get ready for some leg action.
 4-must_strip_losing=indifferent,At least I wore my matching set.
 4-stripping=stripping,I'll just slide this off.
-5-stripped=stripped,Ever seen a model in only her underwear?
+5-stripped,marker:ever_seen_a_model=stripped,Ever seen a model in only her underwear?
 
-#losing sixth item of clothing
+#losing bra
 5-must_strip_winning=sassy,My turn huh? Don't break your necks.
 5-must_strip_normal=happytostrip,Alright, alright, time to let the girls out.
-5-must_strip_losing=embarrassed,Oh boy, me first. Great.
+5-must_strip_losing,totalExposed:0=embarrassed,Oh boy, me first. Great.
+5-must_strip_losing=embarrassed,Oh boy, me next. Great.
 5-stripping=stripping,I'll just undo this here...
 6-stripped=stripped,Ta-da!
 
-#losing seventh item of clothing
+#losing panties
 6-must_strip_winning=shocked,Finally my turn?
 6-must_strip_normal=stripping,It was inevitable, huh.
 6-must_strip_losing=angry,Wonderful...
 6-stripping=stripping2,Feast your eyes...
 7-stripped=stripped,I hope all that junk food didn't do too much on me.
+7-stripped=stripped,This is my "Lost My Pieces" look.
+7-stripped=losshappy,I guess this can't be helped.
 
 
 
@@ -247,7 +246,7 @@ swap_cards=calm,~cards~, if you please.
 1-female_must_strip=happy,Oh, <i>too bad</i>, ~name~.
 1-female_must_strip=happy,Safe!
 1-female_must_strip=calm,When you're ready.
-1-female_must_strip,totalRounds:1=teasing,You didn't think I was just going to let you win, did you? That's so cute.
+1-female_must_strip,totalRounds:1=teasing,You didn't think I was going to just let you win, did you? That's so cute.
 1-female_must_strip,totalRounds:6=happytostrip,Another one bites the dust.
 
 #lost 2 items
@@ -309,6 +308,8 @@ swap_cards=calm,~cards~, if you please.
 1-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
 2-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
 3-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+1-female_must_strip,target:meia,targetStage:0=happy,We'll trade. My shoes for your... Is that whole spacesuit one piece? Score!
+2-female_must_strip,target:meia,targetStage:0=happy,We'll trade. My shoes and socks for your... Is that whole spacesuit one piece? Score!
 0-female_must_strip,target:zoey=happytoplay,It's nice to see a familiar face. What did you say your name was again?
 
 
@@ -387,6 +388,20 @@ swap_cards=calm,~cards~, if you please.
 -1-male_removed_accessory=sad,Come on.
 -1-female_removing_accessory=tease,Maybe give us a little flash?
 -1-female_removed_accessory=tease,I might touch myself again once you get more undressed, you know.
+
+#targeted
+1-female_removing_accessory,target:meia,targetStage:0=sad,Oh, your space monocle. Of course.
+2-female_removing_accessory,target:meia,targetStage:0=sad,Oh, your space monocle. Of course.
+0-female_removing_accessory,target:uravity=happytostrip,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+1-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+2-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+3-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+4-female_removing_accessory,target:uravity=calm,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+5-female_removing_accessory,target:uravity=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+6-female_removing_accessory,target:uravity=armsraised,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-3-female_removing_accessory,target:uravity=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-2-female_removing_accessory,target:uravity=base,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-1-female_removing_accessory=,target:uravity=smug,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
 
 
 
@@ -581,6 +596,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 1-male_chest_will_be_visible=calm,Show your stuff, boy.
 1-male_chest_is_visible=interestedfemalesmaller,Mm...
 1-male_crotch_will_be_visible=shocked,So soon?
+1-male_crotch_will_be_visible,target:human,totalRounds:0-3=interestedplayer,I'm not surprised, ~player~. You are a man of few clothes.
 1-male_small_crotch_is_visible=laugh,Pfft.
 1-male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, I like.
 1-male_large_crotch_is_visible=interestedmale,O-oh. Well now.
@@ -935,7 +951,7 @@ game_over_defeat,target:meia=8-disappointed,I can't believe I was beaten by the 
 
 
 #REACTIONS TO AIMEE'S GUNPLAY
-#Sort by category later, Arndress
+#Not sorted by category to enhance readability
 
 0-female_must_strip,target:aimee,targetStage:0=shocked,What?!
 1-female_must_strip,target:aimee,targetStage:0=shocked,What?!
