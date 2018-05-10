@@ -215,7 +215,7 @@ function addEpilogueEntry(epilogue){
 	var epilogueTitle = nameStr+": "+epilogue.title;
 	var idName = 'epilogue-option-'+num;
 	var clickAction = "selectEpilogue("+num+")";
-	var unlocked = save.hasEnding(getFolderName(player.folder), epilogue.title) ? " unlocked" : "";
+	var unlocked = save.hasEnding(player.id, epilogue.title) ? " unlocked" : "";
 
 	var htmlStr = '<li id="'+idName+'" class="epilogue-entry'+unlocked+'"><button onclick="'+clickAction+'">'+epilogueTitle+'</button></li>';
 
@@ -304,7 +304,7 @@ function doEpilogueModal(){
  * Start the Epilogue
  ************************************************************/
 function doEpilogue(){
-	save.addEnding(getFolderName(players[chosenEpilogue.player].folder), chosenEpilogue.title);
+	save.addEnding(players[chosenEpilogue.player].id, chosenEpilogue.title);
 	//just in case, clear any open text boxes
 	clearEpilogueBoxes();
 

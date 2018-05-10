@@ -10,10 +10,11 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (folder, enabled, first, last, label, image, gender,
+function createNewOpponent (id, enabled, first, last, label, image, gender,
                             height, source, artist, writer, description,
                             ending, layers, release) {
-	var newOpponentObject = {folder:folder,
+	var newOpponentObject = {id:id,
+							 folder:'opponents/'+id+'/',
 							 enabled:enabled,
                              first:first,
 							 last:last,
@@ -216,10 +217,12 @@ function loadListingFile () {
 
 			$individualListings = $(xml).find('individuals');
 			$individualListings.find('opponent').each(function () {
-				var folder = $(this).text();
-				console.log("Reading \""+folder+"\" from listing file");
-        outstandingLoads++;
-  				loadOpponentMeta(folder, loadedOpponents, oppDefaultIndex++, onComplete);
+                if ($(this).attr('status') === undefined || includedOpponentStatuses[$(this).attr('status')]) {
+                    var id = $(this).text();
+                    console.log("Reading \""+id+"\" from listing file");
+                    outstandingLoads++;
+                    loadOpponentMeta(id, loadedOpponents, oppDefaultIndex++, onComplete);
+                }
 			});
 
 			/* end by parsing and loading the group listings */
@@ -254,11 +257,11 @@ function loadGroupMeta (groupSelectScreen, group, onComplete) {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (folder, targetArray, index, onComplete) {
+function loadOpponentMeta (id, targetArray, index, onComplete) {
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
-		url: folder + metaFile,
+		url: 'opponents/' + id + '/' + metaFile,
 		dataType: "text",
 		success: function(xml) {
 			/* grab all the info for this listing */
@@ -277,7 +280,7 @@ function loadOpponentMeta (folder, targetArray, index, onComplete) {
             var layers = $(xml).find('layers').text();
             var release = $(xml).find('release').text();
 
-			var opponent = createNewOpponent(folder, enabled, first, last,
+			var opponent = createNewOpponent(id, enabled, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
                                              ending, layers, release);
@@ -294,7 +297,7 @@ function loadOpponentMeta (folder, targetArray, index, onComplete) {
             onComplete();
       		},
       		error: function(err) {
-				console.log("Failed reading \""+folder+"\"");
+				console.log("Failed reading \""+id+"\"");
       			if (index !== undefined) {
       				targetArray[index] = null;
       			}
@@ -631,10 +634,10 @@ function clickedRandomGroupButton () {
     console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
 
 	/* load the corresponding group */
-  loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0].folder, updateRandomSelection);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1].folder, updateRandomSelection);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2].folder, updateRandomSelection);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3].folder, updateRandomSelection);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0].id, updateRandomSelection);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1].id, updateRandomSelection);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2].id, updateRandomSelection);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3].id, updateRandomSelection);
 }
 
 /************************************************************
@@ -673,7 +676,7 @@ function clickedRandomFillButton (predicate) {
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-			loadBehaviour(loadedOpponentsCopy[randomOpponent].folder, updateRandomSelection);
+			loadBehaviour(loadedOpponentsCopy[randomOpponent].id, updateRandomSelection);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -718,7 +721,7 @@ function changeIndividualStats (target) {
 function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	individualSlot = slot;
-	loadBehaviour(shownIndividuals[slot-1].folder, individualScreenCallback, 0);
+	loadBehaviour(shownIndividuals[slot-1].id, individualScreenCallback, 0);
 }
 
 /************************************************************
@@ -790,7 +793,7 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
     if (loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-			loadBehaviour(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].folder, groupScreenCallback, i+1);
+			loadBehaviour(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].id, groupScreenCallback, i+1);
 		}
 	}
 }
