@@ -6,6 +6,7 @@ pages:
   # Include *.js and *.css to accomodate Monika.
   - cp -r css fonts img js player index.html config.xml .public
   - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
+  - cp opponents/*.png opponents/*.xml .public/opponents
   - mv .public public
   artifacts:
     paths:
