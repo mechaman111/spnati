@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from bottle import get, post, request, response, redirect, route, run, static_file
 import os
 import os.path as osp
