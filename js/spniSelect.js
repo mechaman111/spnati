@@ -1223,27 +1223,25 @@ function fetchBehaviour(path) {
  */
 function countLinesImages(xml) {
     // parse all lines of dialogue and all images
-    var lines = [];
-    var poses = [];
+	var numTotalLines = 0;
+	var numUniqueDialogueLines = 0;
+	var numUniqueUsedPoses = 0;
+    var lines = {};
+    var poses = {};
     $(xml).find('state').each(function(idx, data) {
-        lines.push(data.textContent.trim());
-        poses.push(data.getAttribute("img"));
+		numTotalLines++;
+		// count only unique lines of dialogue
+		if (lines[data.textContent.trim()] === undefined) numUniqueDialogueLines++;
+        lines[data.textContent.trim()] = 1;
+		// count unique number of poses used in dialogue
+		// note that this number may differ from actual image count if some images
+		// are never used, or if images that don't exist are used in the dialogue
+		if (poses[data.getAttribute("img")] === undefined) numUniqueUsedPoses++;
+        poses[data.getAttribute("img")] = 1;
     });
 
-    // count only unique lines of dialogue
-    var numUniqueDialogueLines = lines.filter(function(data, idx) {
-        return idx == lines.lastIndexOf(data);
-    }).length;
-
-    // count unique number of poses used in dialogue
-    // note that this number may differ from actual image count if some images
-    // are never used, or if images that don't exist are used in the dialogue
-    var numUniqueUsedPoses = poses.filter(function(data, idx) {
-        return idx == poses.lastIndexOf(data);
-    }).length;
-
     return {
-        numTotalLines : lines.length,
+        numTotalLines : numTotalLines,
         numUniqueLines : numUniqueDialogueLines,
         numPoses : numUniqueUsedPoses
     };
