@@ -344,9 +344,10 @@ function updateIndividualSelectScreen () {
             }
 
             $individualLayers[index].show();
-            $individualLayers[index].attr("src", "opponents/layers" + selectableOpponents[i].layers + ".png");
+            $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
 
 			$individualImages[index].attr('src', selectableOpponents[i].folder + selectableOpponents[i].image);
+			$individualImages[index].show();
 			if (selectableOpponents[i].enabled == "true") {
 				$individualButtons[index].html('Select Opponent');
 				$individualButtons[index].attr('disabled', false);
@@ -368,7 +369,7 @@ function updateIndividualSelectScreen () {
             $individualBadges[index].hide();
             $individualLayers[index].hide();
 
-			$individualImages[index].attr('src', BLANK_PLAYER_IMAGE);
+			$individualImages[index].hide();
 			$individualButtons[index].attr('disabled', true);
 
 			empty++;
@@ -423,6 +424,7 @@ function updateGroupSelectScreen () {
             $groupLayers[i].attr("src", "opponents/layers" + opponent.layers + ".png");
 
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
+			$groupImages[i].show();
 			$groupNameLabel.html(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].title);
 			if (opponent.enabled == "true") {
 				$groupButton.html('Select Group');
@@ -443,8 +445,7 @@ function updateGroupSelectScreen () {
 			$groupDescriptionLabels[i].html("");
             $groupBadges[i].hide();
             $groupLayers[i].hide();
-
-			$groupImages[i].attr('src', BLANK_PLAYER_IMAGE);
+			$groupImages[i].hide();
 		}
     }
 }
@@ -887,6 +888,7 @@ function updateSelectionVisuals () {
 
             /* update image */
             $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
+			$selectImages[i-1].show();
 
             /* update label */
             $selectLabels[i-1].html(players[i].label.initCap());
@@ -900,7 +902,7 @@ function updateSelectionVisuals () {
             $selectDialogues[i-1].html("");
             $selectAdvanceButtons[i-1].css({opacity : 0});
 			$selectBubbles[i-1].hide();
-            $selectImages[i-1].attr('src', BLANK_PLAYER_IMAGE);
+			$selectImages[i-1].hide();
             $selectLabels[i-1].html("Opponent "+i);
 
             /* change the button */

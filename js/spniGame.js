@@ -179,6 +179,7 @@ function updateGameVisual (player) {
 
             /* update image */
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
+			$gameImages[player-1].show()
 
             /* update label */
             $gameLabels[player].html(players[player].label.initCap());
@@ -207,8 +208,8 @@ function updateGameVisual (player) {
         $gameDialogues[player-1].html("");
         $gameAdvanceButtons[player-1].css({opacity : 0});
         $gameBubbles[player-1].hide();
-        
-        $gameImages[player-1].attr('src', BLANK_PLAYER_IMAGE);
+
+		$gameImages[player-1].hide();
     }
 }
  
