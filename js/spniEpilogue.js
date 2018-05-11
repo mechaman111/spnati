@@ -215,8 +215,9 @@ function addEpilogueEntry(epilogue){
 	var epilogueTitle = nameStr+": "+epilogue.title;
 	var idName = 'epilogue-option-'+num;
 	var clickAction = "selectEpilogue("+num+")";
+	var unlocked = save.hasEnding(getFolderName(player.folder), epilogue.title) ? " unlocked" : "";
 
-	var htmlStr = '<li id="'+idName+'" class="epilogue-entry"><button onclick="'+clickAction+'">'+epilogueTitle+'</button></li>';
+	var htmlStr = '<li id="'+idName+'" class="epilogue-entry'+unlocked+'"><button onclick="'+clickAction+'">'+epilogueTitle+'</button></li>';
 
 	$epilogueList.append(htmlStr);
 	epilogueSelections.push($('#'+idName));
