@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 from bottle import get, post, request, response, redirect, route, run, static_file
 import os
@@ -11,9 +11,11 @@ port=5000
 def redir_index():
     return redirect('/index.html')
 
+# Bottle should do this automatically, but it doesn't for some reason
 ext_mimetypes = {
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
+    '.svg': 'image/svg+xml',
     '.css': 'text/css',
     '.js': 'text/javascript',
     '.html': 'text/html',
@@ -31,4 +33,8 @@ def statics(filename):
 
     return static_file(filename, root=os.getcwd(), mimetype=mimetype)
 
-run(host=host, port=port, reloader=True)
+try:
+    import cherrypy
+    run(server='cherrypy', host=host, port=port)
+except ImportError:
+    run(host=host, port=port)

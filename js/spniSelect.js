@@ -843,6 +843,7 @@ function backToSelect () {
  * select screen.
  ************************************************************/
 function advanceSelectScreen () {
+    console.log("Starting game...");
     advanceToNextScreen($selectScreen);
 }
 

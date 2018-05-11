@@ -7,7 +7,7 @@
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
- 
+
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
@@ -17,14 +17,14 @@ function createNewState (dialogue, image, direction, silent, marker) {
                           direction:direction,
                           silent:silent,
                           marker:marker};
-						  
+
 	return newStateObject;
 }
 
 /**********************************************************************
  *****                      All Dialogue Tags                     *****
  **********************************************************************/
- 
+
 var NAME = "~name~";
 var PROPER_CLOTHING = "~Clothing~";
 var LOWERCASE_CLOTHING = "~clothing~";
@@ -39,7 +39,7 @@ var SWAP_CARDS = "swap_cards";
 var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
 var GOOD_HAND = "good_hand";
- 
+
 var PLAYER_MUST_STRIP_WINNING = "must_strip_winning";
 var PLAYER_MUST_STRIP_NORMAL = "must_strip_normal";
 var PLAYER_MUST_STRIP_LOSING = "must_strip_losing";
@@ -102,19 +102,21 @@ var FEMALE_FINISHED_MASTURBATING = "female_finished_masturbating";
 
 var GAME_OVER_VICTORY = "game_over_victory";
 var GAME_OVER_DEFEAT = "game_over_defeat";
- 
+
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
 /************************************************************
- * Loads and parses the start of the behaviour XML file of the 
+ * Loads and parses the start of the behaviour XML file of the
  * given opponent source folder.
  *
- * The callFunction parameter must be a function capable of 
+ * The callFunction parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
 function loadBehaviour (folder, callFunction, slot) {
+    console.log("Loading behavior from "+folder);
+
 	$.ajax({
         type: "GET",
 		url: folder + "behaviour.xml",
@@ -127,7 +129,7 @@ function loadBehaviour (folder, callFunction, slot) {
             var size = $(xml).find('size').text();
             var timer = $(xml).find('timer').text();
             var intelligence = $(xml).find('intelligence');
-            
+
             var tags = $(xml).find('tags');
             var tagsArray = [];
             if (typeof tags !== typeof undefined && tags !== false) {
@@ -135,35 +137,53 @@ function loadBehaviour (folder, callFunction, slot) {
                     tagsArray.push($(this).text());
                 });
             }
-            
+
             var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
-            
+
+
+            if(sw_is_active()) {
+                /* Ask SW to preload images for us.
+                 * First get all unique image files for this character.
+                 */
+                var player_imgs = [];
+
+                $(xml).find("state").each(function () {
+                    var img = folder+$(this).attr('img');
+                    if($.inArray(img, player_imgs) === -1) {
+                        player_imgs.push(img);
+                    }
+                });
+
+                console.log("Preloading "+player_imgs.length.toString()+" image files from "+folder+" ...");
+                request_url_caching(player_imgs);
+            }
+
 			callFunction(newPlayer, slot);
 		}
 	});
 }
 
 /************************************************************
- * Parses and loads the wardrobe section of an opponent's XML 
+ * Parses and loads the wardrobe section of an opponent's XML
  * file.
  ************************************************************/
 function loadOpponentWardrobe (player) {
 	/* grab the relevant XML file, assuming its already been loaded */
 	var xml = player.xml;
 	player.clothing = [];
-	
+
 	/* find and grab the wardrobe tag */
 	$wardrobe = $(xml).find('wardrobe');
-	
+
 	/* find and create all of their clothing */
 	$wardrobe.find('clothing').each(function () {
 		var properName = $(this).attr('proper-name');
 		var lowercase = $(this).attr('lowercase');
 		var type = $(this).attr('type');
 		var position = $(this).attr('position');
-		
+
 		var newClothing = createNewClothing(properName, lowercase, type, position, null, 0, 0);
-		
+
 		player.clothing.push(newClothing);
 	});
 }
@@ -173,35 +193,35 @@ function loadOpponentWardrobe (player) {
  ************************************************************/
 function parseDialogue (caseObject, replace, content) {
     var states = [];
-	
+
 	caseObject.find('state').each(function () {
         var image = $(this).attr('img');
         var dialogue = $(this).html();
         var direction = $(this).attr('direction');
         var silent = $(this).attr('silent');
         var marker = $(this).attr('marker');
-        
+
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
 				dialogue = dialogue.split(replace[i]).join(content[i]);
 			}
 		}
-        
+
         if (silent !== null && typeof silent !== typeof undefined) {
             silent = true;
         }
         else {
             silent = false;
         }
-        
+
         states.push(createNewState(dialogue, image, direction, silent, marker));
 	});
-	
+
 	return states;
 }
 
 /************************************************************
- * Updates the behaviour of the given player based on the 
+ * Updates the behaviour of the given player based on the
  * provided tag.
  ************************************************************/
 function updateBehaviour (player, tag, replace, content, opp) {
@@ -211,28 +231,28 @@ function updateBehaviour (player, tag, replace, content, opp) {
 		/* their is restricted to this only */
 		//tag = players[player].forfeit[0];
 	//}
-    
+
     if (!players[player]) {
         return;
     }
-	
+
     /* get the AI stage */
     var stageNum = players[player].stage;
-	
+
     /* try to find the stage */
     var stage = null;
     $(players[player].xml).find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
-       } 
+       }
     });
-    
+
     /* quick check to see if the stage exists */
     if (!stage) {
         console.log("Error: couldn't find stage for player "+player+" on stage number "+stageNum+" for tag "+tag);
         return;
     }
-    
+
     /* try to find the tag */
 	var states = [];
 	$(stage).find('case').each(function () {
@@ -254,7 +274,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
         // look for the best match
         var bestMatch = [];
 		var bestMatchPriority = -1;
-		
+
         for (var i = 0; i < states.length; i++) {
 
             var target =           states[i].attr("target");
@@ -294,12 +314,12 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			var totalPriority = 0; // this is used to determine which of the states that
 									// doesn't fail any conditions should be used
-			
-			
+
+
 			///////////////////////////////////////////////////////////////////////
 			// go through different conditions required until one of them fails
 			// if none of them fail, then this state is considered for use with a certain priority
-			
+
 			// target (priority = 300)
 			if (opp !== null && typeof target !== typeof undefined && target !== false) {
             target = target;
@@ -312,7 +332,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "target" requirement
 				}
 			}
-			
+
 			// filter (priority = 150)
 			if (opp !== null && typeof filter !== typeof undefined && filter !== false) {
 				// check against tags
@@ -327,7 +347,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "filter" requirement
 				}
 			}
-			
+
 			// targetStage (priority = 80)
 			if (opp !== null && typeof targetStage !== typeof undefined && targetStage !== false) {
 				var targetPieces = targetStage.split("-");
@@ -382,7 +402,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 				}
 			}
-			
+
 			// oppHand (priority = 30)
 			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
 				var failedOppHandReq = false;
@@ -416,7 +436,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "targetTimeInStage" requirement
 				}
 			}
-			
+
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
 				if (handStrengthToString(hands[player].strength) === hasHand) {
@@ -426,10 +446,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;				// failed "hasHand" requirement
 				}
 			}
-			
+
             // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
-			
+
 				var foundEm = false;
 				var j = 0;
 				for (j = 0; j < players.length && foundEm === false; j++) {
@@ -443,7 +463,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 				}
-				
+
 				if (foundEm === false)
 				{
 					continue;				// failed "alsoPlaying" requirement
@@ -555,7 +575,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;		// failed "timeInStage" requirement
 				}
 			}
-			
+
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
 				var count = 0;
@@ -576,7 +596,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;		// failed "totalMales" requirement
 				}
 			}
-			
+
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
 				var count = 0;
@@ -695,10 +715,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			if (typeof customPriority !== typeof undefined) {
 				totalPriority = parseInt(customPriority, 10); //priority override
 			}
-			
+
 			// Finished going through - if a state has still survived up to this point,
 			// it's then determined if it's the highest priority so far
-			
+
 			if (totalPriority > bestMatchPriority)
 			{
 				console.log("New best match with " + totalPriority + " priority.");
@@ -709,9 +729,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			{
 				bestMatch.push(states[i]);
 			}
-			
+
     }
-        
+
         if (bestMatch.length > 0) {
 			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
@@ -722,7 +742,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 }
 
 /************************************************************
- * Updates the behaviour of all players except the given player 
+ * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (player, tag, replace, content, opp) {
