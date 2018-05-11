@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 
+# Note: this script can be used to host a small, local web server using bottle
+# that can be used for testing.
+# It'll use gevent if you have that installed; otherwise it'll default to
+# bottle's built-in development server.
+
+try:
+    from gevent import monkey; monkey.patch_all()
+    gevent_available = True
+except ImportError:
+    gevent_available = False
+
 from bottle import get, post, request, response, redirect, route, run, static_file
 import os
 import os.path as osp
@@ -33,8 +44,10 @@ def statics(filename):
 
     return static_file(filename, root=os.getcwd(), mimetype=mimetype)
 
-try:
-    import cherrypy
-    run(server='cherrypy', host=host, port=port)
-except ImportError:
-    run(host=host, port=port)
+
+if gevent_available:
+    server = 'gevent'
+else:
+    server = None
+
+run(host=host, port=port, server=server)
