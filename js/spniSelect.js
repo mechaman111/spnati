@@ -162,6 +162,8 @@ var sortingOptionsMap = {
     "Oldest" : sortOpponentsByMultipleFields("release"),
     "Most Layers" : sortOpponentsByMultipleFields("-layers"),
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"),
+    "Name (A-Z)" : sortOpponentsByMultipleFields("first", "last"),
+    "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
 };
 var individualCreditsShown = false;
 var groupCreditsShown = false;
