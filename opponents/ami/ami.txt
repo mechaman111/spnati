@@ -53,10 +53,11 @@ description=Ami Kawashima is known as a kind and generious model, and she'll do 
 
 
 marker=ami_ever_seen_a_model,public,When Ami removes her skirt, she can say "Ever seen a model in only her underwear?"
+marker=ami_kyu_slutty_fairies,public,Ami strongly implies that Kyu is a slutty fairy.
 marker=ami_suggests_scissoring,public,When Ami is undressed and a female opponent undresses or masturbates, Ami might suggest scissoring.
 marker=ami_sonya_vintage,public,Ami teases Sonya about her retro outfit.
-marker=ami_taken_boyfriend_steal,private,Ami threatens to steal a fellow player's boyfriend.
-
+marker=ami_taken_boyfriend_steal,private,Ami threatens to steal a taken opponent's boyfriend.
+marker=ami_uravity_naturally_gifted,public,Ami lifts her shirt to show Ochako that she's naturally gifted.
 
 
 #You can have more than one start line
@@ -106,9 +107,9 @@ swap_cards=calm,~cards~, if you please.
 0-good_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=interestedgeneric,You boys ready to get started?
 0-okay_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=happy,Thank you to whoever invited the cute boys!
 0-bad_hand,alsoPlaying:jin,totalRounds:0,totalMales:2-4=interestedgeneric,I hope you boys are ready to go as far as I am.
-0-good_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
-0-okay_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
-0-bad_hand,alsoPlaying:kyu,totalRounds:0=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-good_hand,alsoPlaying:kyu,totalRounds:0,marker:ami_kyu_slutty_fairies=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-okay_hand,alsoPlaying:kyu,totalRounds:0,marker:ami_kyu_slutty_fairies=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
+0-bad_hand,alsoPlaying:kyu,totalRounds:0,marker:ami_kyu_slutty_fairies=shocked,Oh, I'm sorry. Were we <i>all</i> meant to dress up as slutty fairies?
 0-good_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
 0-okay_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
 0-bad_hand,alsoPlaying:streaming-chan,totalRounds:0=embarrassed,Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.
@@ -139,6 +140,9 @@ swap_cards=calm,~cards~, if you please.
 3-bad_hand=sad,Well, I guess it can't be helped, huh.
 3-bad_hand=sad,Greeeat.
 
+3-good_hand,alsoPlaying:uravity,alsoPlayingSaidMarker:quirk_talk3,notSaidMarker:ami_uravity_naturally_gifted,marker:ami_uravity_naturally_gifted=supertease,I might not have a Quirk, but you can tell I'm still naturally gifted.
+3-okay_hand,alsoPlaying:uravity,alsoPlayingSaidMarker:quirk_talk3,notSaidMarker:ami_uravity_naturally_gifted,marker:ami_uravity_naturally_gifted=supertease,I might not have a Quirk, but you can tell I'm still naturally gifted.
+
 #lost 4 items
 4-good_hand=happy,My skirt's not going anywhere. Sorry!
 4-okay_hand=,Eh, I'm sure someone did worse than me.
@@ -150,7 +154,7 @@ swap_cards=calm,~cards~, if you please.
 5-good_hand=happy,Yes! Victory is mine.
 5-okay_hand=embarrassed,You might see some skin, or you might not. Heh.
 5-okay_hand=calm,Not the best, but I can make these work.
-5-bad_hand=angry,I should have worn my bracelet, ugh.
+5-bad_hand=angry,I should have worn my bracelet. Ugh.
 5-bad_hand=angry,What's with these cards!?
 
 #lost 6 items
@@ -186,7 +190,8 @@ swap_cards=calm,~cards~, if you please.
 
 #losing blazer
 2-must_strip_winning=teasing,Aw, I liked how the red complimented my hair.
-2-must_strip_normal=indifferent,Guess it's my turn. It was humid here anyway.
+2-must_strip_normal=sassy,Me again? I'm Miss Popular today.
+2-must_strip_normal,consecutiveLosses:0=indifferent,Guess it's my turn. It'ss humid here anyway.
 2-must_strip_losing=teasing,Wow, it's like the deck wants me to get undressed fast!
 2-stripping=stripping,Off you go. No big deal.
 3-stripped=stripped,At least my skirt still matches.
@@ -225,9 +230,6 @@ swap_cards=calm,~cards~, if you please.
 
 
 #OPPONENT MUST STRIP
-#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
-#Writing different variations is important here, as these lines will be spoken about thirty times per game.
-#The "human" versions of the lines will only be spoken if the human player is stripping.
 
 #fully clothed
 0-male_human_must_strip=happytostrip,Let's go, ~name~!
@@ -290,6 +292,7 @@ swap_cards=calm,~cards~, if you please.
 -3-female_human_must_strip=embarrassed,I like what I see.
 -3-female_must_strip=embarrassed,Mmmm...
 -3-female_must_strip=leaning,Who had the worst hand?
+-3-female_must_strip,hasHand:High Card,priority:0=happy,Safe!
 
 #masturbating
 -2-male_human_must_strip=base,Yes, show me what you got...
@@ -308,6 +311,7 @@ swap_cards=calm,~cards~, if you please.
 1-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
 2-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
 3-female_must_strip,target:futaba,targetStage:0=calm,How tall are you anyway, Futaba? I only ask because of how out-of-scale you look.
+0-female_must_strip,target:kyu,totalRounds:0-1=shocked,Is the girl with the wings some sort of exhibitionist or something?
 1-female_must_strip,target:meia,targetStage:0=happy,We'll trade. My shoes for your... Is that whole spacesuit one piece? Score!
 2-female_must_strip,target:meia,targetStage:0=happy,We'll trade. My shoes and socks for your... Is that whole spacesuit one piece? Score!
 0-female_must_strip,target:zoey=happytoplay,It's nice to see a familiar face. What did you say your name was again?
@@ -329,13 +333,15 @@ swap_cards=calm,~cards~, if you please.
 0-female_removing_accessory=indifferent,We'll get the easy stuff off you soon enough.
 0-female_removed_accessory=calm,Shall we continue?
 0-female_removed_accessory=calm,Next round, please.
+0-female_removed_accessory,totalRounds:6=interestedgeneric,I'm wondering if you're planning to lose this game badly or <i>really</i> badly.
 
 #lost 1 item
 1-male_removing_accessory=teasing,I hope you don't have too many accessories.
 1-male_removed_accessory=happytostrip,Woohoo.
 1-female_removing_accessory=sad,<i>Borrring</i>, hurry up.
+1-female_removing_accessory=stripped,That's one thing you'll never see on me.
 1-female_removed_accessory=teasing,Relish the small stuff while you still have it.
-1-female_removed_accessory=calm,I hope you don't have too many small things, ~name~.
+1-female_removed_accessory=calm,All right.
 
 #lost 2 items
 2-male_removing_accessory=confident,About time, huh?
@@ -373,7 +379,7 @@ swap_cards=calm,~cards~, if you please.
 -3-male_removing_accessory=angry,God damn it, that's all?
 -3-male_removed_accessory=worried,Can't believe this.
 -3-female_removing_accessory=angry,Show some good stuff already!
--3-female_removed_accessory=worried,I can't believe I'm doing do bad.
+-3-female_removed_accessory=worried,I can't believe I'm doing so bad.
 -3-female_removed_accessory,filter:taken,notSaidMarker:ami_taken_boyfriend_steal,marker:ami_taken_boyfriend_steal=interestedfemalesmaller,Are you always so slow? It's going to be so easy to steal your boyfriend.
 
 #masturbating
@@ -392,16 +398,16 @@ swap_cards=calm,~cards~, if you please.
 #targeted
 1-female_removing_accessory,target:meia,targetStage:0=sad,Oh, your space monocle. Of course.
 2-female_removing_accessory,target:meia,targetStage:0=sad,Oh, your space monocle. Of course.
-0-female_removing_accessory,target:uravity=happytostrip,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-1-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-2-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-3-female_removing_accessory,target:uravity=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-4-female_removing_accessory,target:uravity=calm,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-5-female_removing_accessory,target:uravity=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
-6-female_removing_accessory,target:uravity=armsraised,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
--3-female_removing_accessory,target:uravity=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
--2-female_removing_accessory,target:uravity=base,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
--1-female_removing_accessory=,target:uravity=smug,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+0-female_removing_accessory,target:uravity,targetStage:0=happytostrip,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+1-female_removing_accessory,target:uravity,targetStage:0=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+2-female_removing_accessory,target:uravity,targetStage:0=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+3-female_removing_accessory,target:uravity,targetStage:0=teasing,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+4-female_removing_accessory,target:uravity,targetStage:0=calm,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+5-female_removing_accessory,target:uravity,targetStage:0=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+6-female_removing_accessory,target:uravity,targetStage:0=armsraised,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-3-female_removing_accessory,target:uravity,targetStage:0=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-2-female_removing_accessory,target:uravity,targetStage:0=base,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-1-female_removing_accessory=,target:uravity,targetStage:0=smug,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
 
 
 
@@ -440,7 +446,9 @@ swap_cards=calm,~cards~, if you please.
 4-male_removing_minor=interestedgeneric,You're up, ~name~.
 4-male_removed_minor=disappointed,Is that all?
 4-female_removing_minor=interestedgeneric,Your turn, ~name~.
+4-female_removing_minor=happytostrip,This is okay because I think I know what's next.
 4-female_removed_minor=confident,You'll get on my level soon enough.
+4-female_removed_minor=interestedgeneric,Let's see if you still feel that way next round.
 
 #lost 5 items
 5-male_removing_minor=disappointed,That's it?
@@ -517,7 +525,9 @@ swap_cards=calm,~cards~, if you please.
 5-male_removed_major=calm,Not bad, boy toy.
 5-male_removed_major=interestedfemalesmaller,So you finally removed your ~clothing~. I'm glad our hints weren't too subtle for you.
 5-female_removing_major=sassy,Let's see what you got. Don't try to one up me, though.
-5-female_removed_major=embarrassed,Doesn't seeing me undressed make you want to take some clothes off?
+5-female_removing_major=shocked,Is ~name~ finally doing the right thing?
+5-female_removed_major=embarrassed,Doesn't seeing me undressed make you want to take some more clothes off?
+5-female_removed_major=interestedfemalesmaller,Welcome to the game.
 
 #lost 6 items
 6-male_removing_major=happy,Oh boy, whatcha got?
@@ -733,7 +743,6 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 -1-female_crotch_is_visible=tease,If you want, I'll start again when you start...
 
 #targeted
-
 0-male_chest_is_visible,target:pit=interestedfemalesmaller,Would you like to do a photoshoot with me sometime, Pit? We could try a "topless male angels" theme.
 1-male_chest_is_visible,target:pit=interestedfemalesmaller,Would you like to do a photoshoot with me sometime, Pit? We could try a "topless male angels" theme.
 2-male_chest_is_visible,target:pit=interestedfemalesmaller,Would you like to do a photoshoot with me sometime, Pit? We could try a "topless male angels" theme.
@@ -759,10 +768,6 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 
 
 #OPPONENT MASTURBATING
-#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
-#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
-#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
-#When the opponent climaxes, your character will say the "finished_masturbating" line.
 
 #fully clothed
 0-male_must_masturbate=happytostrip,On one hand, you lost terribly. On the other, you get to have fun!
@@ -895,6 +900,8 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 -1-female_must_masturbate=horny,Want me to join?
 -1-female_start_masturbating=calm,Enjoy yourself.
 -1-female_masturbating=horny,You kind of make me want to do it again...
+-1-female_masturbating=8-base,You really know how to get everyone's attention even though you're not that pretty.
+-1-female_masturbating=smug,If you need something to think about, think about how badly you just lost.
 -1-female_finished_masturbating=tease,That was pretty hot, huh?
 
 #targeted
@@ -916,7 +923,7 @@ masturbating=base,Pay attention. A gorgeous model is right in front of you!
 masturbating=tease,Can't keep your eyes off me, can you?
 masturbating=tease,Oh no, I'm too tired to continue. ~player~, could you lend me a hand?
 heavy_masturbating=heavy,Oh god, I'm close, oh god...
-finishing_masturbating=finishing,Aah! Oh my GOD, Im c-cumming... ahh...
+finishing_masturbating=finishing,Aah! Oh my GOD, I'm c-cumming... ahh...
 finished_masturbating,notSaidMarker:ami_finished_1,marker:ami_finished_1=finished,I'm done...
 finished_masturbating,notSaidMarker:ami_finished_2,saidMarker:ami_finished_1,marker:ami_finished_2=shocked,S-sorry you guys had to see me like that, haha...
 finished_masturbating,saidMarker:ami_finished_2=tease,I'm sure you'll catch up.
@@ -924,6 +931,7 @@ finished_masturbating,saidMarker:ami_finished_2=sad,You don't think less of me n
 finished_masturbating,saidMarker:ami_finished_2=horny,I know a way to make this more interactive.
 finished_masturbating,saidMarker:ami_finished_2=smug,Something interesting is about to happen, isn't it?
 finished_masturbating,saidMarker:ami_finished_2=calm,I can be patient.
+finished_masturbating,saidMarker:ami_finished_2=calm,Don't feel safe. Not everything goes to plan.
 
 
 
@@ -946,6 +954,8 @@ game_over_victory=horny,Well played game, I guess.
 
 #GAME OVER DEFEAT
 game_over_defeat=finished,Good... good game, everyone...
+game_over_defeat=tease,Anyone up for a rematch?
+game_over_defeat,target:kyu=sad,Just to be clear, this doesn't mean I'll agree to be in HunieCam Studio 2.
 game_over_defeat,target:meia=8-disappointed,I can't believe I was beaten by the space cadet. I should be the one who's centerstage, not her.
 
 
