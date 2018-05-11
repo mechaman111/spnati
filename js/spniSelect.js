@@ -275,6 +275,9 @@ function loadOpponentMeta (folder, targetArray, index, onComplete) {
             var layers = $(xml).find('layers').text();
             var release = $(xml).find('release').text();
 
+            /* Attempt to preload this opponent's picture for selection. */
+            request_url_caching([folder+pic]);
+
 			var opponent = createNewOpponent(folder, enabled, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
