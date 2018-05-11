@@ -48,14 +48,9 @@ self.addEventListener('fetch', function(event) {
         return event.respondWith(fetch(event.request));
     }
 
-
-    if(event.request.headers.get('X-Worker-Initiated') != null) {
-        var alt_req = new Request(event.request);
-        alt_req.headers.delete("X-Worker-Initiated");
-
-        return event.respondWith(fetch(alt_req));
-    }
-
+    /* Ensure we can quickly reload scripts and etc. when developing;
+     * Cache only images when debugging is enabled.
+     */
     if(debug_active) {
         let file_ext = event.request.url.split('.').pop();
         if(file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg') {
@@ -127,12 +122,19 @@ self.addEventListener('message', function(event) {
     var msg = event.data;
 
     if (msg.type === 'cache') {
+        console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs...");
         event.waitUntil(
             caches.open(CACHE_NAME).then(
                 (cache) => cache.addAll(msg.urls)
             ).then(
-                (value) => event.ports[0].postMessage(true),
-                (error) => event.ports[0].postMessage(false)
+                function () {
+                    console.log("[SW] Preload successful.");
+                    event.ports[0].postMessage(true);
+                },
+                function (err) {
+                    console.log("[SW] Preload failed: "+err.toString());
+                    event.ports[0].postMessage(false);
+                }
             )
         );
     } else if(msg.type === 'set-debug') {
