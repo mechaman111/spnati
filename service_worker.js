@@ -104,7 +104,6 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function(cache) {
-            /* Combine all lists of stuff to cache on install */
             return cache.addAll(static_content);
         }).then(function () {
             /* Make sure we're active immediately */
@@ -122,17 +121,18 @@ self.addEventListener('message', function(event) {
     var msg = event.data;
 
     if (msg.type === 'cache') {
-        console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs...");
+        if(debug_active) console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs");
+
         event.waitUntil(
             caches.open(CACHE_NAME).then(
                 (cache) => cache.addAll(msg.urls)
             ).then(
                 function () {
-                    console.log("[SW] Preload successful.");
+                    if(debug_active) console.log("[SW] Preload successful.");
                     event.ports[0].postMessage(true);
                 },
                 function (err) {
-                    console.log("[SW] Preload failed: "+err.toString());
+                    console.error("[SW] Preload failed: "+err.toString());
                     event.ports[0].postMessage(false);
                 }
             )

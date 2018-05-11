@@ -23,6 +23,41 @@ if ('serviceWorker' in navigator) {
         /* Also set the debug status. */
         set_sw_debug(DEBUG);
     });
+
+    /* Array of images to cache in the background */
+    const static_images = [
+        'img/all.png',
+        'img/any.png',
+        'img/bisexual.jpg',
+        'img/blankcard.jpg',
+        'img/enter.png',
+        'img/female.png',
+        'img/female_large.png',
+        'img/female_medium.png',
+        'img/female_small.png',
+        'img/gallery.svg',
+        'img/icon.ico',
+        'img/icon.jpg',
+        'img/male.png',
+        'img/male_large.png',
+        'img/male_medium.png',
+        'img/male_small.png',
+        'img/reddit.png',
+        'img/title.png',
+        'img/unknown_s.jpg',
+        'img/unknown.jpg',
+        'img/unknown.svg',
+    ];
+
+    /* autogenerate lists of cards to save */
+    var cards = [];
+    for(suit of ['spade', 'heart', 'clubs', 'diamo']) { // filename prefixes
+        cards.push('img/'+suit+'.jpg');
+        for(let i=1;i<=13;i++) {
+            cards.push('img/'+suit+i.toString()+'.jpg');
+        }
+    }
+    request_url_caching(cards.concat(static_images));
 }
 
 function sw_is_active() {
@@ -55,9 +90,9 @@ function request_url_caching(urls) {
         return new Promise(
             function (resolve, reject) {
                 preload_queue.push({
-                    resolve: resolve,
-                    reject: reject,
-                    urls: urls
+                    'resolve': resolve,
+                    'reject': reject,
+                    'urls': urls.slice(),
                 });
             }
         );

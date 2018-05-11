@@ -79,7 +79,7 @@ var CARD_SUGGEST = false;
 var AUTO_FORFEIT = false;
 var AUTO_FADE = true;
 var KEYBINDINGS_ENABLED = false;
-var DEBUG = true;
+var DEBUG = false;
 
 /* colours */
 var currentColour = "#63AAE7"; 	/* indicates current turn */
@@ -97,31 +97,6 @@ var actualMainButtonState = false;
 var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
-
-/* Array of images to cache in the background */
-const static_images = [
-    'img/all.png',
-    'img/any.png',
-    'img/bisexual.jpg',
-    'img/blankcard.jpg',
-    'img/enter.png',
-    'img/female.png',
-    'img/female_large.png',
-    'img/female_medium.png',
-    'img/female_small.png',
-    'img/gallery.svg',
-    'img/icon.ico',
-    'img/icon.jpg',
-    'img/male.png',
-    'img/male_large.png',
-    'img/male_medium.png',
-    'img/male_small.png',
-    'img/reddit.png',
-    'img/title.png',
-    'img/unknown_s.jpg',
-    'img/unknown.jpg',
-    'img/unknown.svg',
-];
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -153,20 +128,6 @@ function loadGameScreen () {
     $gamePlayerCountdown.hide();
     chosenDebug = -1;
     updateDebugState(showDebug);
-
-
-    if(sw_is_active()) {
-        set_sw_debug(DEBUG);
-        /* autogenerate lists of cards to save */
-        var cards = [];
-        for(suit of [SPADES, HEARTS, CLUBS, DIAMONDS]) { // filename prefixes
-            cards.push('img/'+suit+'.jpg');
-            for(let i=1;i<=13;i++) {
-                cards.push('img/'+suit+i.toString()+'.jpg');
-            }
-        }
-        request_url_caching(cards.concat(static_images));
-    }
 
     /* set up the visuals */
     updateAllGameVisuals();
