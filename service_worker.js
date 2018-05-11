@@ -80,11 +80,15 @@ self.addEventListener('fetch', function(event) {
 
                 if(cached_response) {
                     var resp_time = new Date(cached_response.headers.get('Date'));
-                    var current_cache_age = resp_time.getTime() - Date.now(); // in milliseconds
+                    var current_cache_age = Date.now() - resp_time.getTime(); // in milliseconds
+
+                    if(debug_active) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
 
                     if(current_cache_age < CACHE_KEEPALIVE * 1000) {
                         /* We have fresh content cached. Return it. */
                         return cached_response;
+                    } else if(debug_active) {
+                        console.log("[SW] Refreshing stale file: "+event.request.url);
                     }
                 }
 
