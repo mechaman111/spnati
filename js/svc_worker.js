@@ -1,5 +1,6 @@
 var preload_queue = []; /* Used to store preload requests before the SW becomes available */
 
+/* Register the SW as soon as possible so we can take advantage of the cache as much as we can */
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service_worker.js').then(function(registration) {
       // Registration was successful
@@ -7,12 +8,6 @@ if ('serviceWorker' in navigator) {
     }, function(err) {
       // registration failed
       console.log('ServiceWorker registration failed: ', err);
-    });
-
-    window.addEventListener('load', function() {
-        if(sw_is_active()) {
-            set_sw_debug(true);
-        }
     });
 
     navigator.serviceWorker.addEventListener('controllerchange', function () {
@@ -24,6 +19,9 @@ if ('serviceWorker' in navigator) {
                 (err) => queued_request.reject(err),
             );
         }
+
+        /* Also set the debug status. */
+        set_sw_debug(DEBUG);
     });
 }
 
