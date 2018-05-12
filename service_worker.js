@@ -1,7 +1,7 @@
 /* NOTE: This file must be accessable from the root of the domain! */
 
 const CACHE_NAME = 'SPNATI-v1';
-const CACHE_KEEPALIVE = 600; // refetch cached content older than this many seconds, if online
+const CACHE_KEEPALIVE = 3600; // refetch cached content older than this many seconds, if online
 
 /* This list holds the URLs of resources that should always be cached
  * All URLs in this list and in `static_content` will be cached when the
