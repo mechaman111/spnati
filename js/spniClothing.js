@@ -530,6 +530,7 @@ function stripAIPlayer (player) {
 	/* update behaviour */
 	updateAllBehaviours(player, dialogueTrigger, replace, content, players[player]);
 	updateBehaviour(player, PLAYER_STRIPPED, replace, content, null);
+    updateAllGameVisuals();
 	
 	/* allow progression */
 	endRound();

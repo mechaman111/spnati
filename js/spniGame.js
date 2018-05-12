@@ -608,7 +608,6 @@ function completeContinuePhase () {
 function completeStripPhase () {
     /* strip the player with the lowest hand */
     stripPlayer(recentLoser);
-    updateAllGameVisuals();
 }
 
 /************************************************************
