@@ -108,7 +108,13 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function(cache) {
-            return cache.addAll(static_content);
+            /* Map each url to its own cache.add call so that one failed request doesn't invalidate the entire thing */
+            return Promise.all(static_content.map(
+                (url) => cache.add(url)
+            )).then(
+                () => true,
+                (err) => console.error("Error while caching static content: "+err.toString()+'\n'+err.stack),
+            )
         }).then(function () {
             /* Make sure we're active immediately */
             return self.skipWaiting();
@@ -129,10 +135,17 @@ self.addEventListener('message', function(event) {
 
         event.waitUntil(
             caches.open(CACHE_NAME).then(
-                (cache) => cache.addAll(msg.urls)
+                function (cache) {
+                    return Promise.all(msg.urls.map(
+                        (url) => cache.add(url)
+                    )).then(
+                        () => true,
+                        (err) => console.error("Error while preloading content: "+err.toString()+'\n'+err.stack),
+                    )
+                }
             ).then(
                 function () {
-                    if(debug_active) console.log("[SW] Preload successful.");
+                    if(debug_active) console.log("[SW] Preload complete.");
                     event.ports[0].postMessage(true);
                 },
                 function (err) {
