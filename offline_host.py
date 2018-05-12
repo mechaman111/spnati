@@ -27,6 +27,7 @@ ext_mimetypes = {
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
     '.svg': 'image/svg+xml',
+    '.gif': 'image/gif',
     '.css': 'text/css',
     '.js': 'text/javascript',
     '.html': 'text/html',
