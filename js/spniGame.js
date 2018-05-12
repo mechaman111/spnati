@@ -91,7 +91,6 @@ var currentTurn = 0;
 var currentRound = -1;
 var previousLoser = -1;
 var recentLoser = -1;
-var savedContext = "";
 var gameOver = false;
 var actualMainButtonState = false;
 var endWaitDisplay = 0;
@@ -343,17 +342,8 @@ function advanceTurn () {
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
             $mainButton.html("Reveal");
-            if (AUTO_FORFEIT) {
-                $mainButton.attr('disabled', true);
-                //actualMainButtonState = true;
-                setTimeout(advanceGame,FORFEIT_DELAY);
-                return;
-            }
-        } else {
-            $mainButton.html("Exchange");
-        }
-        $mainButton.attr('disabled', false);
-        actualMainButtonState = false;
+		}
+		allowProgression();
 	} else if (!players[currentTurn]) {
         /* There is no player here, move on. */
         advanceTurn();
@@ -428,13 +418,11 @@ function checkDealLock () {
             continueDealPhase()
         else if (players[HUMAN_PLAYER].out) { 
             $mainButton.html("Next");
-            $mainButton.attr('disabled', false);
-            actualMainButtonState = true
+            allowProgression();
         } else {
              continueDealPhase()          
         }
-    
-	}
+    }
 }
 
 /************************************************************
@@ -492,6 +480,7 @@ function completeExchangePhase () {
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);
     }
+    allowProgression();
 }
 
 /************************************************************
@@ -532,10 +521,7 @@ function completeRevealPhase () {
         
         /* reset the round */
         $mainButton.html("Deal");
-        $mainButton.attr('disabled', false);
-        if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-            setTimeout(advanceGame, FORFEIT_DELAY);
-        }
+        allowProgression();
         return;
     }
 
@@ -576,9 +562,7 @@ function completeRevealPhase () {
 	} else {
 		$mainButton.html("Strip");
 	}
-    if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-        setTimeout(advanceGame,FORFEIT_DELAY);
-    }
+    allowProgression();
 }
 
 /************************************************************
@@ -591,13 +575,11 @@ function completeContinuePhase () {
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
     if (countClothes(recentLoser)) {
-	$mainButton.html("Strip");
+	    $mainButton.html("Strip");
     } else {
-	$mainButton.html("Masturbate");
+	    $mainButton.html("Masturbate");
     }
-    if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-        setTimeout(advanceGame,FORFEIT_DELAY);
-    }
+    allowProgression();
 }
 
 /************************************************************
@@ -644,12 +626,8 @@ function endRound () {
 		handleGameOver();
 	} else {
 		$mainButton.html("Deal");
-        if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-            setTimeout(advanceGame,FORFEIT_DELAY);
-        }
+		allowProgression();
 	}
-	$mainButton.attr('disabled', false);
-    actualMainButtonState = false;
 }
 
 /************************************************************
@@ -697,7 +675,7 @@ function handleGameOver() {
         
 		/* someone is still forfeiting */
 		$mainButton.html("Wait" + dots);
-        $mainButton.attr('disabled', false);
+		allowProgression();
 	}
 }
  
@@ -746,6 +724,19 @@ function advanceGameDialogue (slot) {
 }
 
 /************************************************************
+ * Allow progression by enabling the main button *or* 
+ * setting up the auto forfeit timer.
+ ************************************************************/
+function allowProgression () {
+    if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
+        setTimeout(advanceGame, FORFEIT_DELAY);
+    } else {
+        $mainButton.attr('disabled', false);
+        actualMainButtonState = false;
+    }
+}
+
+/************************************************************
  * The player clicked the main button on the game screen.
  ************************************************************/
 function advanceGame () {
@@ -756,7 +747,7 @@ function advanceGame () {
     actualMainButtonState = true;
     
     /* lower the timers of everyone who is forfeiting */
-    context = tickForfeitTimers(context);
+    if (tickForfeitTimers(context)) return;
     
     /* handle the game */
     if (context == "Deal") {
@@ -764,62 +755,38 @@ function advanceGame () {
         if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Exchange");
         startDealPhase();
+    } else if (context == "Next") {
+        /* advance to next round if human player is masturbating */
+        if (AUTO_FADE) forceTableVisibility(true);
+        $mainButton.html("Exchange");
+        continueDealPhase();
     } else if (context == "Exchange") {
         /* exchanging cards */
         if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Reveal");
         completeExchangePhase();
-        $mainButton.attr('disabled', false);
-        actualMainButtonState = false;
     } else if (context == "Reveal") {
         /* revealing cards */
         if (AUTO_FADE) forceTableVisibility(true);
         completeRevealPhase();
-        $mainButton.attr('disabled', false);
-        actualMainButtonState = false;
     } else if (context == "Continue") {
 		/* waiting for the loser to strip */
         if (AUTO_FADE) forceTableVisibility(false);
         completeContinuePhase();
-		$mainButton.attr('disabled', false);
-        actualMainButtonState = false;
-    }else if (context == "Next") {
-        /* advance to next round if human player is masterbating */
-        if (AUTO_FADE) forceTableVisibility(false);
-        continueDealPhase();
-	} else if (context == "Cumming...") {
-		/* waiting for someone to finish */
-        if (AUTO_FADE) forceTableVisibility(false);
-		$mainButton.attr('disabled', true);
-        actualMainButtonState = false;
 	} else if (context == "Strip" || context == "Masturbate") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
         completeStripPhase();
-        $mainButton.attr('disabled', false);
-        actualMainButtonState = false;
-    } else if (context == "Wait" || context == "Wait." || context == "Wait.." || context == "Wait...") {
+    } else if (context.substr(0, 4) == "Wait") {
 		/* waiting for someone to finish */
         if (AUTO_FADE) forceTableVisibility(false);
 		handleGameOver(); //No delay here
-        return;
-	} else if (context == "Restart?") {
-        if (AUTO_FADE) forceTableVisibility(false);
-		showRestartModal(); //No delay here
-		$mainButton.attr('disabled', false);
-        actualMainButtonState = false;
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings
         actualMainButtonState = false;
     } else {
         if (AUTO_FADE) forceTableVisibility(true);
-		if (context != null) {
-			console.log("Invalid main button state: "+context);
-		}
-    }
-    if (players[HUMAN_PLAYER].out && AUTO_FORFEIT && !(timers[HUMAN_PLAYER] == 0 && context == null)) {
-        $mainButton.attr('disabled', true);
-        //actualMainButtonState = true;
+		console.log("Invalid main button state: "+context);
     }
 }
 
