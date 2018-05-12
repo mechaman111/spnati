@@ -141,7 +141,7 @@ function loadBehaviour (folder, callFunction, slot) {
             var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
 
 
-            if(sw_is_active()) {
+            if(sw_is_available()) {
                 /* Ask SW to preload images for us.
                  * First get all unique image files for this character.
                  */

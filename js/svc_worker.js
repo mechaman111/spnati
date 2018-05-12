@@ -60,6 +60,11 @@ if ('serviceWorker' in navigator) {
     request_url_caching(cards.concat(static_images));
 }
 
+/* Predicate: can we use SWs at all? */
+function sw_is_available() {
+    return ('serviceWorker' in navigator);
+}
+
 function sw_is_active() {
     /* check to see if we can load SWs in the first place
      * then make sure that the Controller object is not null/undefined/etc.
