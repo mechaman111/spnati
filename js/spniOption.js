@@ -181,12 +181,7 @@ function setAutoForfeit (choice) {
 }
 
 $("#options-modal").on("hidden.bs.modal", function () {
-	if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-		setTimeout(advanceGame, FORFEIT_DELAY);
-		$mainButton.attr('disabled', true);
-	} else {
-		$mainButton.attr('disabled', actualMainButtonState);
-	}
+	$mainButton.attr('disabled', actualMainButtonState);
 });
 
 
