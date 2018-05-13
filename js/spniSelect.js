@@ -175,6 +175,8 @@ var shownIndividuals = [null, null, null, null];
 var shownGroup = [null, null, null, null];
 var randomLock = false;
 
+var slot_is_loading = [false, false, false, false];
+
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
@@ -722,6 +724,10 @@ function changeIndividualStats (target) {
 function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	individualSlot = slot;
+
+    $individualButtons[slot-1].html("Loading...");
+    slot_is_loading[slot-1] = true;
+
 	loadBehaviour(shownIndividuals[slot-1].folder, individualScreenCallback, 0);
 }
 
@@ -731,6 +737,9 @@ function selectIndividualOpponent (slot) {
 function individualScreenCallback (playerObject, slot) {
     players[selectedSlot] = playerObject;
     players[selectedSlot].current = 0;
+
+    $individualButtons[selectedSlot-1].html("Select Opponent");
+    slot_is_loading[selectedSlot-1] = false;
 
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
@@ -787,15 +796,20 @@ function changeGroupStats (target) {
 function selectGroup () {
     /* clear the selection screen */
 	for (var i = 1; i < 5; i++) {
+        slot_is_loading[i-1] = true;
 		players[i] = null;
 	}
 	updateSelectionVisuals();
 
+    $groupButton.html("Loading...");
+
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
-    if (loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
+        if (loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
 			loadBehaviour(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].folder, groupScreenCallback, i+1);
-		}
+		} else {
+            slot_is_loading[i] = false;
+        }
 	}
 }
 
@@ -806,6 +820,9 @@ function groupScreenCallback (playerObject, slot) {
 	console.log(slot +" "+playerObject);
     players[slot] = playerObject;
     players[slot].current = 0;
+
+    $groupButton.html("Select Group");
+    slot_is_loading[slot-1] = false;
 
 	updateSelectionVisuals();
 
@@ -894,7 +911,11 @@ function updateSelectionVisuals () {
             $selectLabels[i-1].html(players[i].label);
 
             /* change the button */
-            $selectButtons[i-1].html("Remove Opponent");
+            if(slot_is_loading[i-1]) {
+                $selectButtons[i-1].html("Loading...");
+            } else {
+                $selectButtons[i-1].html("Remove Opponent");
+            }
             $selectButtons[i-1].removeClass("smooth-button-green");
             $selectButtons[i-1].addClass("smooth-button-red");
         } else {
@@ -906,7 +927,11 @@ function updateSelectionVisuals () {
             $selectLabels[i-1].html("Opponent "+i);
 
             /* change the button */
-            $selectButtons[i-1].html("Select Opponent");
+            if(slot_is_loading[i-1]) {
+                $selectButtons[i-1].html("Loading...");
+            } else {
+                $selectButtons[i-1].html("Select Opponent");
+            }
             $selectButtons[i-1].removeClass("smooth-button-red");
             $selectButtons[i-1].addClass("smooth-button-green");
         }
