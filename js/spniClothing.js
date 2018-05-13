@@ -199,7 +199,7 @@ function determineStrippingSituation (player) {
 		if (i != player) {
 			if (clothingCounts[player] > clothingCounts[i]) {
 				isMin = false;
-			} else if (clothingCounts[player] <= clothingCounts[i]) {
+			} else if (clothingCounts[player] - 1 <= clothingCounts[i]) {
 				isMax = false;
 			}
 		}
