@@ -617,6 +617,7 @@ function stripPlayer (player) {
 			updateBehaviour(player, PLAYER_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
 			setForfeitTimer(player);
 		}
+		updateAllGameVisuals();
 		
 		/* allow progression */
 		endRound();
