@@ -122,6 +122,8 @@ function loadGameScreen () {
             $gameBubbles[i-1].hide();
         }
     }
+    $gameLabels[HUMAN_PLAYER].css({"background-color" : clearColour});
+    clearHand(HUMAN_PLAYER);
 
     recentLoser = -1;
     currentRound = -1;
