@@ -42,6 +42,17 @@ const static_content = [
 /* When debugging is active, we always fetch and recache non-image data. */
 var debug_active = false;
 
+/* Makes a mutable clone of immutable headers
+ * (for example, those from event Requests or network Responses) */
+function clone_immutable_headers(headers) {
+    var new_headers = new Headers();
+    for(var kv of headers.entries()) {
+        new_headers.append(kv[0], kv[1]);
+    }
+
+    return new_headers
+}
+
 self.addEventListener('fetch', function(event) {
     /* Don't bother caching non-GET requests */
     if(event.request.method !== 'GET') {
@@ -93,9 +104,51 @@ self.addEventListener('fetch', function(event) {
                 }
 
                 /* Otherwise, get it from the network, cache a copy, and return it. */
-                var net_response = await fetch(event.request);
-                cache.put(event.request, net_response.clone());
-                return net_response;
+
+                /* When we make the network request, also make sure to set the `If-Modified-Since` header if we can */
+                if(cached_response) {
+                    /* We can't modify event.request directly-- copy it */
+                    var new_headers = clone_immutable_headers(event.request.headers);
+                    new_headers.set('If-Modified-Since', cached_response.headers.get('Date'));
+
+                    var new_request = new Request(event.request.url, {
+                        method: event.request.method,
+                        headers: new_headers,
+                        mode: 'same-origin',
+                        credentials: event.request.credentials
+                    });
+
+                    var net_response = await fetch(new_request);
+                    if(net_response.status.ok) {
+                        /* Content was modified on the server, re-cache the response data and return it */
+                        cache.put(event.request, net_response.clone());
+                        return net_response;
+                    } else if(net_response.status == 304) {
+                        // Update the Date on the cached response and return it
+                        if(debug_active) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
+
+                        var new_response_headers = clone_immutable_headers(cached_response.headers);
+                        new_response_headers.set('Date', net_response.headers.get('Date'));
+
+                        var new_response = new Response(
+                            cached_response.body,
+                            {
+                                status: cached_response.status,
+                                statusText: cached_response.statusText,
+                                headers: new_response_headers
+                            }
+                        );
+
+                        cache.put(event.request, new_response.clone());
+                        return new_response;
+                    } else {
+                        throw Error("Network request returned with error "+net_response.status.toString()+' '+net_response.statusText);
+                    }
+                } else {
+                    var net_response = await fetch(event.request);
+                    cache.put(event.request, net_response.clone());
+                    return net_response;
+                }
             }
         ).catch(function (err) {
             console.error("Caught error when responding to request: "+err.toString());
