@@ -728,7 +728,7 @@ function selectIndividualOpponent (slot) {
     $individualButtons[slot-1].html("Loading...");
     slot_is_loading[slot-1] = true;
 
-	loadBehaviour(shownIndividuals[slot-1].folder, individualScreenCallback, 0);
+	loadBehaviour(shownIndividuals[slot-1].folder, individualScreenCallback, slot);
 }
 
 /************************************************************
@@ -796,7 +796,6 @@ function changeGroupStats (target) {
 function selectGroup () {
     /* clear the selection screen */
 	for (var i = 1; i < 5; i++) {
-        slot_is_loading[i-1] = true;
 		players[i] = null;
 	}
 	updateSelectionVisuals();
@@ -806,6 +805,7 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
         if (loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
+            slot_is_loading[i-1] = true;
 			loadBehaviour(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].folder, groupScreenCallback, i+1);
 		} else {
             slot_is_loading[i] = false;

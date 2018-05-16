@@ -122,6 +122,8 @@ function loadBehaviour (folder, callFunction, slot) {
 		url: folder + "behaviour.xml",
 		dataType: "text",
 		success: function(xml) {
+            if(slot > 0) slot_is_loading[slot-1] = false;
+
             var first = $(xml).find('first').text();
             var last = $(xml).find('last').text();
             var label = $(xml).find('label').text();
