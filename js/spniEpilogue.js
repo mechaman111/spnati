@@ -85,8 +85,8 @@ function loadEpilogueData(player){
         var all_marker_attr = $(this).attr('markers');
         if(all_marker_attr) {
             var must_match_markers = all_marker_attr.split(' ');
-            for(let marker of must_match_markers) {
-                if(!(marker in players[player].markers)) {
+            for(var i=0;i<must_match_markers.length;i++) {
+                if(!(must_match_markers[i] in players[player].markers)) {
                     // if the given marker is not present, don't make this epilogue selectable
                     return false;
                 }
@@ -97,8 +97,8 @@ function loadEpilogueData(player){
         var no_marker_attr = $(this).attr('not-markers');
         if(no_marker_attr) {
             var must_not_match_markers = no_marker_attr.split(' ');
-            for(let marker of must_not_match_markers) {
-                if(marker in players[player].markers) {
+            for(var i=0;i<must_not_match_markers.length;i++) {
+                if(must_not_match_markers[i] in players[player].markers) {
                     // if the given marker is present, don't make this epilogue selectable
                     return false;
                 }
@@ -109,12 +109,13 @@ function loadEpilogueData(player){
         var any_marker_attr = $(this).attr('any-markers');
         if(any_marker_attr) {
             var one_must_match_markers = any_marker_attr.split(' ');
-            for(let marker of one_must_match_markers) {
-                if(marker in players[player].markers) {
+            for(var i=0;i<one_must_match_markers.length;i++) {
+                if(one_must_match_markers[i] in players[player].markers) {
                     // if the given marker is present, make this epilogue selectable
                     return true;
                 }
             }
+
             return false; // if no markers in the list matched, don't make this epilogue selectable.
         }
 
