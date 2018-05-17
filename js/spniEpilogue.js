@@ -67,7 +67,48 @@ function loadEpilogueData(player){
 
 	var epilogues = [];
 
-	$(xml).find('epilogue[gender="'+playerGender+'"],epilogue[gender="any"]').each(function() {
+    var all_epilogues = $(xml).find('epilogue').filter(function (index) {
+        /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
+         * Conversely, returning false from this function will make the current epilogue not selectable.
+         */
+
+        /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
+        var epilogue_gender = $(this).attr('gender');
+        if(epilogue_gender) {
+            if(epilogue_gender !== playerGender && epilogue_gender !== 'any') {
+                // if the gender doesn't match, don't make this epilogue selectable
+                return false;
+            }
+        }
+
+        /* 'all-markers' attribute: the epilogue will only be selectable if the character has ALL markers within the attribute set. */
+        var all_marker_attr = $(this).attr('all-markers');
+        if(all_marker_attr) {
+            var must_match_markers = all_marker_attr.split(' ');
+            for(let marker of must_match_markers) {
+                if(!(marker in players[player].markers)) {
+                    // if the given marker is not present, don't make this epilogue selectable
+                    return false;
+                }
+            }
+        }
+
+        /* 'any-marker' attribute: the epilogue will only be selectable if the character has at least ONE of the markers within the attribute set. */
+        var any_marker_attr = $(this).attr('any-marker');
+        if(any_marker_attr) {
+            var one_must_match_markers = any_marker_attr.split(' ');
+            for(let marker of one_must_match_markers) {
+                if(marker in players[player].markers) {
+                    // if the given marker is present, make this epilogue selectable
+                    return true;
+                }
+            }
+            return false; // if no markers in the list matched, don't make this epilogue selectable.
+        }
+
+        // if we made it this far the epilogue must be selectable
+        return true;
+    }).each(function() {
 		//use parseXML() so that <image> tags come through properly
 		//not using parseXML() because internet explorer doesn't like it
 
