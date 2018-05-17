@@ -81,7 +81,7 @@ function loadEpilogueData(player){
             }
         }
 
-        /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers within the attribute set. */
+        /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers listed within the attribute set. */
         var all_marker_attr = $(this).attr('markers');
         if(all_marker_attr) {
             var must_match_markers = all_marker_attr.split(' ');
@@ -93,7 +93,19 @@ function loadEpilogueData(player){
             }
         }
 
-        /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers within the attribute set. */
+        /* 'not-markers' attribute: the epilogue will only be selectable if the character has NO markers listed within the attribute set. */
+        var no_marker_attr = $(this).attr('not-markers');
+        if(no_marker_attr) {
+            var must_not_match_markers = no_marker_attr.split(' ');
+            for(let marker of must_not_match_markers) {
+                if(marker in players[player].markers) {
+                    // if the given marker is present, don't make this epilogue selectable
+                    return false;
+                }
+            }
+        }
+
+        /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers listed within the attribute set. */
         var any_marker_attr = $(this).attr('any-markers');
         if(any_marker_attr) {
             var one_must_match_markers = any_marker_attr.split(' ');
