@@ -81,8 +81,8 @@ function loadEpilogueData(player){
             }
         }
 
-        /* 'all-markers' attribute: the epilogue will only be selectable if the character has ALL markers within the attribute set. */
-        var all_marker_attr = $(this).attr('all-markers');
+        /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers within the attribute set. */
+        var all_marker_attr = $(this).attr('markers');
         if(all_marker_attr) {
             var must_match_markers = all_marker_attr.split(' ');
             for(let marker of must_match_markers) {
@@ -93,8 +93,8 @@ function loadEpilogueData(player){
             }
         }
 
-        /* 'any-marker' attribute: the epilogue will only be selectable if the character has at least ONE of the markers within the attribute set. */
-        var any_marker_attr = $(this).attr('any-marker');
+        /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers within the attribute set. */
+        var any_marker_attr = $(this).attr('any-markers');
         if(any_marker_attr) {
             var one_must_match_markers = any_marker_attr.split(' ');
             for(let marker of one_must_match_markers) {
