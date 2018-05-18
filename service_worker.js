@@ -155,9 +155,35 @@ self.addEventListener('fetch', function(event) {
                     }
                 } else {
                     var net_response = await fetch(event.request);
+
                     if(net_response.ok) {
-                        cache.put(event.request, net_response.clone());
+                        var cloned_response = net_response.clone();
+                        if('blob' in cloned_response) {
+                            /* If we can, verify that the response actually has body data associated with it
+                             * Sometimes we get zero-length responses on Firefox, but not on Chrome.
+                             * I don't know why that happens.
+                             */
+                            var data = await cloned_response.blob();
+                            var expected_content_length = parseInt(cloned_response.headers.get('Content-Length'), 10);
+                            if(data.size === expected_content_length) {
+                                if(debug_active && verbose) console.log("[SW] Verified response content length ("+cloned_response.headers.get('Content-Length')+" bytes)");
+                                cache.put(event.request, new Response(
+                                    data, {
+                                        status: cloned_response.status,
+                                        statusText: cloned_response.statusText,
+                                        headers: cloned_response.headers
+                                    }
+                                ));
+                            } else {
+                                console.error("[SW] Got invalid response for "+event.request.url+": expected "+cloned_response.headers.get('Content-Length')+" bytes, got "+data.size.toString()+" bytes instead");
+                                return Response.error();
+                            }
+                        } else {
+                            if(debug_active && verbose) console.log("[SW] Not verifying response data-- cannot use Response.blob");
+                            cache.put(event.request, cloned_response);
+                        }
                     }
+
                     return net_response;
                 }
             }
