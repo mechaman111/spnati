@@ -122,7 +122,7 @@ self.addEventListener('fetch', function(event) {
                     });
 
                     var net_response = await fetch(new_request);
-                    if(net_response.status.ok) {
+                    if(net_response.ok) {
                         /* Content was modified on the server, re-cache the response data and return it */
                         cache.put(event.request, net_response.clone());
                         return net_response;
