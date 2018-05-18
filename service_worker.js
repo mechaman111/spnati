@@ -3,6 +3,9 @@
 const CACHE_NAME = 'SPNATI-v1';
 const CACHE_KEEPALIVE = 3600; // refetch cached content older than this many seconds, if online
 
+const URLS_PER_PRELOAD_BATCH = 100;      // How many URLs to preload in an interval
+const PRELOAD_BATCH_INTERVAL = 2000;    // How often to pull URLs from the preload queue
+
 /* This list holds the URLs of resources that should always be cached
  * All URLs in this list and in `static_content` will be cached when the
  * ServiceWorker is installed (i.e. when SPNATI is loaded for the first time)
@@ -44,6 +47,8 @@ var debug_active = false;
 
 /* Set this to true to enable detailed logging of request handling. */
 var verbose = false;
+
+var current_preload_queue = [];
 
 /* Makes a mutable clone of immutable headers
  * (for example, those from event Requests or network Responses) */
@@ -186,31 +191,48 @@ self.addEventListener('activate', function (event) {
     return event.waitUntil(self.clients.claim());
 })
 
+function batch_preload(urls) {
+    if(debug_active && verbose) console.log("[SW] Beginning batch preload for "+urls.length.toString()+" URLs");
+    return caches.open(CACHE_NAME).then(
+        function (cache) {
+            return Promise.all(urls.map(
+                (url) => cache.add(url)
+            )).then(
+                () => true,
+                (err) => console.error("Error while preloading content: "+err.toString()+'\n'+err.stack),
+            )
+        }
+    ).then(
+        function () {
+            if(debug_active && verbose) console.log("[SW] Batch preload complete.");
+        },
+        function (err) {
+            console.error("[SW] Batch preload failed: "+err.toString());
+        }
+    )
+}
+
+/* Called periodically, to avoid overloading browsers with 100s of preload requests. */
+function process_preload_queue() {
+    if(current_preload_queue.length > 0) {
+        /* pop some elements off the front of the preload queue */
+        var urls = current_preload_queue.splice(0, URLS_PER_PRELOAD_BATCH);
+
+        /* Begin preloading this batch */
+        batch_preload(urls);
+
+        if(debug_active && verbose) console.log("[SW] "+current_preload_queue.length.toString()+" URLs left to preload");
+    }
+}
+
+setInterval(process_preload_queue, PRELOAD_BATCH_INTERVAL);
+
 self.addEventListener('message', function(event) {
     var msg = event.data;
 
     if (msg.type === 'cache') {
-        if(debug_active && verbose) console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs");
-
-        event.waitUntil(
-            caches.open(CACHE_NAME).then(
-                function (cache) {
-                    return Promise.all(msg.urls.map(
-                        (url) => cache.add(url)
-                    )).then(
-                        () => true,
-                        (err) => console.error("Error while preloading content: "+err.toString()+'\n'+err.stack),
-                    )
-                }
-            ).then(
-                function () {
-                    if(debug_active && verbose) console.log("[SW] Preload complete.");
-                },
-                function (err) {
-                    console.error("[SW] Preload failed: "+err.toString());
-                }
-            )
-        );
+        if(debug_active && verbose) console.log("[SW] Scheduling preload for "+msg.urls.length.toString()+" URLs");
+        current_preload_queue.push.apply(current_preload_queue, msg.urls);
     } else if(msg.type === 'set-debug') {
         debug_active = msg.debug;
 
