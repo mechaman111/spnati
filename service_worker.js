@@ -150,7 +150,9 @@ self.addEventListener('fetch', function(event) {
                     }
                 } else {
                     var net_response = await fetch(event.request);
-                    cache.put(event.request, net_response.clone());
+                    if(net_response.ok) {
+                        cache.put(event.request, net_response.clone());
+                    }
                     return net_response;
                 }
             }
