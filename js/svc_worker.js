@@ -114,7 +114,7 @@ function request_url_caching(urls) {
     if(!sw_is_active()) {
         preload_queue.push(urls.slice());
     } else {
-        return send_msg_to_sw({ 'type': 'cache', 'urls': urls });
+        send_msg_to_sw({ 'type': 'cache', 'urls': urls });
     }
 
 }
@@ -129,24 +129,11 @@ function request_url_caching(urls) {
  * regardless of the debug mode setting!
  ************************************************************/
 function set_sw_debug(debug_status) {
-    return send_msg_to_sw({ 'type': 'set-debug', 'debug': debug_status}).then(function (ok) {
-        if(!ok) {
-            console.error("Attempt to set ServiceWorker debug status failed.")
-        }
-
-        return ok;
-    });
-}
+    send_msg_to_sw({ 'type': 'set-debug', 'debug': debug_status});
 
 /************************************************************
  * Turn verbose request logging on and off in the Service Worker.
  ************************************************************/
 function set_sw_verbose(verbose_status) {
-    return send_msg_to_sw({ 'type': 'set-verbose', 'verbose': verbose_status}).then(function (ok) {
-        if(!ok) {
-            console.error("Attempt to set ServiceWorker verbose status failed.")
-        }
-
-        return ok;
-    });
+    send_msg_to_sw({ 'type': 'set-verbose', 'verbose': verbose_status});
 }
