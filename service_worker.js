@@ -203,11 +203,9 @@ self.addEventListener('message', function(event) {
             ).then(
                 function () {
                     if(debug_active && verbose) console.log("[SW] Preload complete.");
-                    event.ports[0].postMessage(true);
                 },
                 function (err) {
                     console.error("[SW] Preload failed: "+err.toString());
-                    event.ports[0].postMessage(false);
                 }
             )
         );

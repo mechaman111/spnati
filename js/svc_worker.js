@@ -15,10 +15,7 @@ if ('serviceWorker' in navigator) {
         console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
         for(var i=0;i<preload_queue.length;i++) {
             var queued_request = preload_queue[i];
-            send_msg_to_sw({ 'type': 'cache', 'urls': queued_request.urls }).then(
-                (v) => queued_request.resolve(v),
-                (err) => queued_request.reject(err),
-            );
+            send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
         }
 
         /* Also set the debug status. */
@@ -99,21 +96,7 @@ function sw_is_active() {
  * message type.
  ************************************************************/
 function send_msg_to_sw(msg) {
-    return new Promise(
-        function(resolve, reject) {
-            var reply_channel = new MessageChannel();
-
-            reply_channel.port1.onmessage = function(ev) {
-                if(ev.data.error) {
-                    return reject(ev.data.error);
-                } else {
-                    return resolve(ev.data);
-                }
-            }
-
-            navigator.serviceWorker.controller.postMessage(msg, [reply_channel.port2]);
-        }
-    );
+    navigator.serviceWorker.controller.postMessage(msg);
 }
 
 /************************************************************
@@ -129,15 +112,7 @@ function send_msg_to_sw(msg) {
  ************************************************************/
 function request_url_caching(urls) {
     if(!sw_is_active()) {
-        return new Promise(
-            function (resolve, reject) {
-                preload_queue.push({
-                    'resolve': resolve,
-                    'reject': reject,
-                    'urls': urls.slice(),
-                });
-            }
-        );
+        preload_queue.push(urls.slice());
     } else {
         return send_msg_to_sw({ 'type': 'cache', 'urls': urls });
     }
