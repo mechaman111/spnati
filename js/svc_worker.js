@@ -23,6 +23,7 @@ if ('serviceWorker' in navigator) {
 
         /* Also set the debug status. */
         set_sw_debug(DEBUG);
+        set_sw_verbose(DEBUG);
     });
 
     /* Array of images to cache in the background */
@@ -156,6 +157,19 @@ function set_sw_debug(debug_status) {
     return send_msg_to_sw({ 'type': 'set-debug', 'debug': debug_status}).then(function (ok) {
         if(!ok) {
             console.error("Attempt to set ServiceWorker debug status failed.")
+        }
+
+        return ok;
+    });
+}
+
+/************************************************************
+ * Turn verbose request logging on and off in the Service Worker.
+ ************************************************************/
+function set_sw_verbose(verbose_status) {
+    return send_msg_to_sw({ 'type': 'set-verbose', 'verbose': verbose_status}).then(function (ok) {
+        if(!ok) {
+            console.error("Attempt to set ServiceWorker verbose status failed.")
         }
 
         return ok;

@@ -100,6 +100,7 @@ self.addEventListener('fetch', function(event) {
 
                     if(current_cache_age < CACHE_KEEPALIVE * 1000) {
                         /* We have fresh content cached. Return it. */
+                        if(debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
                         return cached_response;
                     } else if(debug_active && verbose) {
                         console.log("[SW] Refreshing stale file: "+event.request.url);
