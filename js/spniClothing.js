@@ -483,6 +483,7 @@ function closeStrippingModal () {
             }
         }
         var startingClothes = players[HUMAN_PLAYER].clothing.length;
+        players[HUMAN_PLAYER].stage = startingClothes - clothes;
         
         /* update label */
         if (clothes > 0) {
