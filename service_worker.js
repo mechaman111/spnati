@@ -42,6 +42,9 @@ const static_content = [
 /* When debugging is active, we always fetch and recache non-image data. */
 var debug_active = false;
 
+/* Set this to true to enable detailed logging of request handling. */
+var verbose = false;
+
 /* Makes a mutable clone of immutable headers
  * (for example, those from event Requests or network Responses) */
 function clone_immutable_headers(headers) {
@@ -93,12 +96,12 @@ self.addEventListener('fetch', function(event) {
                     var resp_time = new Date(cached_response.headers.get('Date'));
                     var current_cache_age = Date.now() - resp_time.getTime(); // in milliseconds
 
-                    if(debug_active) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
+                    if(debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
 
                     if(current_cache_age < CACHE_KEEPALIVE * 1000) {
                         /* We have fresh content cached. Return it. */
                         return cached_response;
-                    } else if(debug_active) {
+                    } else if(debug_active && verbose) {
                         console.log("[SW] Refreshing stale file: "+event.request.url);
                     }
                 }
@@ -125,7 +128,7 @@ self.addEventListener('fetch', function(event) {
                         return net_response;
                     } else if(net_response.status == 304) {
                         // Update the Date on the cached response and return it
-                        if(debug_active) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
+                        if(debug_active && verbose) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
 
                         var new_response_headers = clone_immutable_headers(cached_response.headers);
                         new_response_headers.set('Date', net_response.headers.get('Date'));
@@ -184,7 +187,7 @@ self.addEventListener('message', function(event) {
     var msg = event.data;
 
     if (msg.type === 'cache') {
-        if(debug_active) console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs");
+        if(debug_active && verbose) console.log("[SW] Preloading "+msg.urls.length.toString()+" URLs");
 
         event.waitUntil(
             caches.open(CACHE_NAME).then(
@@ -198,7 +201,7 @@ self.addEventListener('message', function(event) {
                 }
             ).then(
                 function () {
-                    if(debug_active) console.log("[SW] Preload complete.");
+                    if(debug_active && verbose) console.log("[SW] Preload complete.");
                     event.ports[0].postMessage(true);
                 },
                 function (err) {
@@ -212,6 +215,12 @@ self.addEventListener('message', function(event) {
 
         if(debug_active) {
             console.log("[SW] Debugging enabled -- bypassing cache for non-image files");
+        }
+    } else if(msg.type === 'set-verbose') {
+        verbose = msg.verbose;
+
+        if(verbose) {
+            console.log("[SW] Verbose logging of request handling enabled");
         }
     }
 });
