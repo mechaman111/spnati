@@ -142,6 +142,7 @@ function loadBehaviour (folder, callFunction, slot) {
 
             var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
 
+			callFunction(newPlayer, slot);
 
             if(sw_is_available()) {
                 /* Ask SW to preload images for us.
@@ -159,8 +160,6 @@ function loadBehaviour (folder, callFunction, slot) {
                 console.log("Preloading "+player_imgs.length.toString()+" image files from "+folder+" ...");
                 request_url_caching(player_imgs);
             }
-
-			callFunction(newPlayer, slot);
 		}
 	});
 }
