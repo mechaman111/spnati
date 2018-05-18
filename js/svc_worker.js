@@ -130,6 +130,7 @@ function request_url_caching(urls) {
  ************************************************************/
 function set_sw_debug(debug_status) {
     send_msg_to_sw({ 'type': 'set-debug', 'debug': debug_status});
+}
 
 /************************************************************
  * Turn verbose request logging on and off in the Service Worker.
