@@ -918,7 +918,7 @@ if __name__ == "__main__":
 
 #make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
 #This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
-replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&lt;I&gt;':'<i>', '&lt;/I&gt;':'</i>', '&amp;':'&', '…':'...', '“':'"', '”':'"', '">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
+replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&lt;I&gt;':'<i>', '&lt;/I&gt;':'</i>', '&amp;':'&', '">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
 
 lines = []
 with open(behaviour_name) as infile:
