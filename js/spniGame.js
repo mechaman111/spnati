@@ -127,6 +127,8 @@ function loadGameScreen () {
     $gamePlayerCountdown.hide();
     chosenDebug = -1;
     updateDebugState(showDebug);
+
+    updateAllBehaviours(null, GAME_START, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
     
     /* set up the visuals */
     updateAllGameVisuals();

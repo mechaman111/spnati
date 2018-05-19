@@ -35,6 +35,9 @@ var PLAYER_NAME = "~player~";
  *****                    All Dialogue Triggers                   *****
  **********************************************************************/
 
+var SELECTED = "selected";
+var GAME_START = "start";
+
 var SWAP_CARDS = "swap_cards";
 var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
@@ -243,13 +246,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
     /* quick check to see if the tag exists */
 	if (states.length <= 0) {
-		players[player].state = null;
-		console.log("Error: couldn't find "+tag+" dialogue for player "+player+" at stage "+stageNum);
+		console.log("Warning: couldn't find "+tag+" dialogue for player "+player+" at stage "+stageNum);
+		return false;
 	}
-    else if (states.length == 1) {
-        players[player].current = 0;
-        players[player].state = parseDialogue(states[0], replace, content);
-    }
     else {
         // look for the best match
         var bestMatch = [];
@@ -710,15 +709,17 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				bestMatch.push(states[i]);
 			}
 			
-    }
+		}
         
         if (bestMatch.length > 0) {
 			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
             players[player].state = parseDialogue(bestMatch, replace, content);
+            return true;
         }
         console.log("-------------------------------------");
     }
+    return false;
 }
 
 /************************************************************
@@ -727,7 +728,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
  ************************************************************/
 function updateAllBehaviours (player, tag, replace, content, opp) {
 	for (i = 1; i < players.length; i++) {
-		if (players[i] && i != player) {
+		if (players[i] && (player === null || i != player)) {
 			updateBehaviour(i, tag, replace, content, opp);
 		}
 	}
