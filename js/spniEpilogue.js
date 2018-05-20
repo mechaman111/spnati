@@ -109,14 +109,96 @@ function loadEpilogueData(player){
         var any_marker_attr = $(this).attr('any-markers');
         if(any_marker_attr) {
             var one_must_match_markers = any_marker_attr.split(' ');
+            var match_found = false;
             for(var i=0;i<one_must_match_markers.length;i++) {
                 if(one_must_match_markers[i] in players[player].markers) {
-                    // if the given marker is present, make this epilogue selectable
-                    return true;
+                    match_found = true;
+                    break;
                 }
             }
 
-            return false; // if no markers in the list matched, don't make this epilogue selectable.
+            if(!match_found) {
+                /* if no markers in the list matched, don't make this epilogue selectable. */
+                return false;
+            }
+
+            /* if any marker within the attribute is set, then this condition passes-- fall through and check the other conditions though */
+        }
+
+        /* 'alsoplaying-markers' attribute: this epilogue will only be selectable if ALL markers within the attribute are set for any OTHER characters in the game. */
+        var alsoplaying_marker_attr = $(this).attr('alsoplaying-markers');
+        if(alsoplaying_marker_attr) {
+            var markers = alsoplaying_marker_attr.split(' ');
+            for(var i=0;i<markers.length;i++) {
+                var marker_set = false;
+
+                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
+                    if(pl_idx !== player) {
+                        if(markers[i] in players[pl_idx].markers) {
+                            marker_set = true;
+                            break;
+                        }
+                    }
+                }
+
+                /* if any marker within the attribute is not set, don't make this epilogue selectable */
+                if(!marker_set) {
+                    return false;
+                }
+            }
+        }
+
+        /* 'alsoplaying-not-markers' attribute: this epilogue will only be selectable if NO markers within the attribute are set for other characters in the game. */
+        var alsoplaying_not_marker_attr = $(this).attr('alsoplaying-not-markers');
+        if(alsoplaying_not_marker_attr) {
+            var markers = alsoplaying_not_marker_attr.split(' ');
+            for(var i=0;i<markers.length;i++) {
+                var marker_set = false;
+
+                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
+                    if(pl_idx !== player) {
+                        if(markers[i] in players[pl_idx].markers) {
+                            marker_set = true;
+                            break;
+                        }
+                    }
+                }
+
+                /* If any marker within the attribute is set, then don't make the epilogue selectable */
+                if(marker_set) {
+                    return false;
+                }
+            }
+        }
+
+        /* 'alsoplaying-any-markers' attribute: this epilogue will only be selectable if at least one marker within the attribute are set for any OTHER character in the game. */
+        var alsoplaying_any_marker_attr = $(this).attr('alsoplaying-any-markers');
+        if(alsoplaying_any_marker_attr) {
+            var markers = alsoplaying_any_marker_attr.split(' ');
+            var match_found = false;
+
+            for(var i=0;i<markers.length;i++) {
+                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
+                    if(pl_idx !== player) {
+                        if(markers[i] in players[pl_idx].markers) {
+                            match_found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(match_found) {
+                    /* break out of all loops */
+                    break;
+                }
+            }
+
+            /* if any marker within the attribute is set, then this condition passes-- fall through and check other conditions (if there are any).
+             * Otherwise, don't make this epilogue selectable.
+             */
+            if(!match_found) {
+                return false;
+            }
         }
 
         // if we made it this far the epilogue must be selectable
