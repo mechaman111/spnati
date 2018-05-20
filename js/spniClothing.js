@@ -180,27 +180,19 @@ function getClothingTrigger (player, clothing, removed) {
  * or losing and returns the appropriate dialogue trigger.
  ************************************************************/
 function determineStrippingSituation (player) {
-	/* gather the clothing amounts of each player */
-	var clothingCounts = [0, 0, 0, 0, 0];
-	for (var i = 0; i < players.length; i++) {
-        if (players[i]) {
-            clothingCounts[i] = countClothes(i);
-        }
-	}
-	
 	/* determine if this player's clothing count is the highest or lowest */
 	var isMax = true;
 	var isMin = true;
-	
-	for (var i = 0; i < players.length; i++) {
-		if (players[i] && i != player) {
-			if (clothingCounts[player] > clothingCounts[i]) {
+
+	players.forEach(function(p) {
+		if (p !== player) {
+			if (p.clothing.length <= player.clothing.length - 1) {
 				isMin = false;
-			} else if (clothingCounts[player] - 1 <= clothingCounts[i]) {
+			} else if (p.clothing.length >= player.clothing.length - 1) {
 				isMax = false;
 			}
 		}
-	}
+	});
 	
 	/* return appropriate trigger */
 	if (isMax) {
@@ -218,34 +210,27 @@ function determineStrippingSituation (player) {
 function playerMustStrip (player) {
     /* count the clothing the player has remaining */
     /* assume the player only has IMPORTANT_ARTICLES */
-    var clothes = 0;
-	var remainingItem;
-    for (var i = 0; i < players[player].clothing.length; i++) {
-        if (players[player] && players[player].clothing[i]) {
-            if (clothes++) break; // No need to check for more than two items
-			remainingItem = players[player].clothing[i];
-		}
-	}
+    var clothing = players[player].clothing;
 
-	if (clothes) {
+	if (clothing.length) {
 		/* the player has clothes and will strip */
 		if (player == HUMAN_PLAYER) {
 			var trigger;
-			if (clothes == 1 && remainingItem.type == IMPORTANT_ARTICLE) {
+			if (clothing.length == 1 && clothing[0].type == IMPORTANT_ARTICLE) {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					if (remainingItem.position == LOWER_ARTICLE) {
+					if (clothing[0].position == LOWER_ARTICLE) {
 						trigger = MALE_CROTCH_WILL_BE_VISIBLE;
 					} else {
 						trigger = MALE_CHEST_WILL_BE_VISIBLE;
 					}
 				} else {
-					if (remainingItem.position == LOWER_ARTICLE) {
+					if (clothing[0].position == LOWER_ARTICLE) {
 						trigger = FEMALE_CROTCH_WILL_BE_VISIBLE;
 					} else {
 						trigger = FEMALE_CHEST_WILL_BE_VISIBLE;
 					}
 				}
-				players[HUMAN_PLAYER].removedClothing = remainingItem;
+				players[HUMAN_PLAYER].removedClothing = clothing[0];
 			} else {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
 					trigger = MALE_HUMAN_MUST_STRIP;
@@ -261,7 +246,7 @@ function playerMustStrip (player) {
 				updateAllBehaviours(player, FEMALE_MUST_STRIP, players[player]);
 			}
 																		
-			var trigger = determineStrippingSituation(player);
+			var trigger = determineStrippingSituation(players[player]);
 			updateBehaviour(player, trigger);
 		}
 	} else {
@@ -277,7 +262,7 @@ function playerMustStrip (player) {
 		}
 	}
 	
-	return clothes;
+	return clothing.length;
 }
 
 /************************************************************
@@ -291,8 +276,7 @@ function prepareToStripPlayer (player) {
             updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, players[player]);
         }
     } else {
-        var startingClothes = players[player].clothing.length;
-        var toBeRemovedClothing = players[player].clothing[startingClothes - 1];
+        var toBeRemovedClothing = players[player].clothing[players[player].clothing.length - 1];
         players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
 
@@ -385,16 +369,15 @@ function closeStrippingModal () {
         /* grab the removed article of clothing */
         var removedClothing = players[HUMAN_PLAYER].clothing[selectedClothing];
 
-        players[HUMAN_PLAYER].clothing[selectedClothing] = null;
-	players[HUMAN_PLAYER].timeInStage = -1;
+        players[HUMAN_PLAYER].clothing.splice(selectedClothing, 1);
+        players[HUMAN_PLAYER].timeInStage = -1;
         players[HUMAN_PLAYER].removedClothing = removedClothing;
         
         /* figure out if it should be important */
         if (removedClothing.position != OTHER_ARTICLE) {
 			var otherClothing;
             for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-                if (players[HUMAN_PLAYER].clothing[i] !== null
-					&& players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
+                if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
 					&& players[HUMAN_PLAYER].clothing[i].type != MINOR_ARTICLE) {
                     console.log(players[HUMAN_PLAYER].clothing[i]);
 					otherClothing = players[HUMAN_PLAYER].clothing[i];
@@ -421,12 +404,10 @@ function closeStrippingModal () {
         displayHumanPlayerClothing();
         
         /* count the clothing the player has remaining */
-        var clothes = countClothes(HUMAN_PLAYER);
-        var startingClothes = players[HUMAN_PLAYER].clothing.length;
-        players[HUMAN_PLAYER].stage = startingClothes - clothes;
+        players[HUMAN_PLAYER].stage++
         
         /* update label */
-        if (clothes > 0) {
+        if (players[HUMAN_PLAYER].clothing.length > 0) {
             $gameClothingLabel.html("Your Remaining Clothing");
         } else {
             $gameClothingLabel.html("You're Naked");
@@ -460,14 +441,9 @@ function stripAIPlayer (player) {
 	if (removedClothing.type === IMPORTANT_ARTICLE) {
 		players[player].exposed = true;
 	}
-    players[player].clothing.unshift(null);
 	var dialogueTrigger = getClothingTrigger(player, removedClothing, true);
 	
-	/* determine new AI stage */
-    var clothes = countClothes(player);
-    var startingClothes = players[player].clothing.length;
-	
-	players[player].stage = startingClothes - clothes;
+	players[player].stage++;
 	players[player].timeInStage = -1;
 	players[player].updateLabel();
 	
@@ -492,16 +468,6 @@ function determineForfeitSituation (player) {
             }
 	}
     return PLAYER_MUST_MASTURBATE_FIRST;
-}
-
-function countClothes (player) {
-    var clothes = 0;
-    for (var i = 0; i < players[player].clothing.length; i++) {
-        if (players[player].clothing[i]) {
-            clothes++;
-        }
-    }
-    return clothes;
 }
 
 /************************************************************
@@ -534,7 +500,7 @@ function getNumPlayersInStage(stage) {
 				if (!players[i].out) { count++; }
 				break;
 			case STAGE_NAKED:
-				if (!countClothes(i)) { count++; }
+				if (players[i].clothing.length == 0) { count++; }
 				break;
 			case STAGE_MASTURBATING:
 				if (players[i].out && !players[i].finished) { count++; }

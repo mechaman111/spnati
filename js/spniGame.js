@@ -229,12 +229,9 @@ function updateAllGameVisuals () {
  ************************************************************/
 function displayHumanPlayerClothing () {
     /* collect the images */
-    var clothingImages = [];
-	for (var i = 0; i < 8; i++) {
-		if (players[HUMAN_PLAYER].clothing[i]) {
-			clothingImages.push(players[HUMAN_PLAYER].clothing[i].image);
-		}
-	}
+    var clothingImages = players[HUMAN_PLAYER].clothing.map(function(c) {
+		return c.image;
+	});
     
     /* display the remaining clothing items */
     clothingImages.reverse();
@@ -564,7 +561,7 @@ function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
-    if (countClothes(recentLoser)) {
+    if (players[recentLoser].clothing.length > 0) {
 	    $mainButton.html("Strip");
     } else {
 	    $mainButton.html("Masturbate");
