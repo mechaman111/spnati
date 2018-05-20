@@ -507,7 +507,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// filter counter targets (priority = 10)
 			var matchCounter = true;
 			for (var j = 0; j < counters.length; j++) {
-				var desiredCount = counters[j].attr('count');
+				var desiredCount = parseInterval(counters[j].attr('count'));
 				var filterTag = counters[j].attr('filter');
 				var count = 0;
 				for (var q = 0; q < players.length; q++) {
@@ -520,7 +520,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 				}
-				if (count + '' === desiredCount) {
+				if (inInterval(count, desiredCount)) {
 					totalPriority += 10;
 				}
 				else {
