@@ -277,7 +277,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
             var target =           states[i].attr("target");
             var filter =           states[i].attr("filter");
-			var targetStage =      states[i].attr("targetStage");
+			var targetStage =      parseInterval(states[i].attr("targetStage"));
 			var targetTimeInStage = parseInterval(states[i].attr("targetTimeInStage"));
 			var targetSaidMarker =        states[i].attr("targetSaidMarker");
 			var targetNotSaidMarker =     states[i].attr("targetNotSaidMarker");
