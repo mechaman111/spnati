@@ -157,6 +157,7 @@ function tickForfeitTimers (context) {
 				/* update the player label */
 				$gameClothingLabel.html("<b>'Finished' in "+timers[i]+" phases</b>");
 				$gamePlayerCountdown.html(timers[i]);	
+				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {
 				/* AI player */
 				/* random chance they go into heavy masturbation */
@@ -175,7 +176,7 @@ function tickForfeitTimers (context) {
     }
 	
 	// Show a player masturbating while dealing or after the game, if there is one available
-	if (masturbatingPlayers.length > 0 && (context == "Deal" || context == "Wait")) {
+	if (masturbatingPlayers.length > 0 && (context == "Deal" || context == "Exchange" || context.substr(0, 4) == "Wait")) {
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 1; i < players.length; i++) {
 			updateBehaviour(i, (i == playerToShow) ? players[i].forfeit[0] : (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), [NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], players[playerToShow]);
