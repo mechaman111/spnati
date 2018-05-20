@@ -348,14 +348,9 @@ function updateBehaviour (player, tag, opp) {
 			// filter (priority = 150)
 			if (opp && typeof filter !== typeof undefined && filter !== false) {
 				// check against tags
-				var found = false;
-                for (var j = 0; j < opp.tags.length && found === false; j++) {
-                    if (filter === opp.tags[j]) {
-						totalPriority += 150;	// priority
-						found = true;
-                    }
-                }
-				if (found === false) {
+				if (opp.tags.indexOf(filter) >= 0) {
+					totalPriority += 150;	// priority
+				} else {
 					continue;				// failed "filter" requirement
 				}
 			}
@@ -411,20 +406,9 @@ function updateBehaviour (player, tag, opp) {
 			
 			// oppHand (priority = 30)
 			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
-				var failedOppHandReq = false;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (opp === players[q]) {
-						if (handStrengthToString(players[q].hand.strength) === oppHand) {
-							totalPriority += 30;	// priority
-						}
-						else {
-							failedOppHandReq = true;
-							break;
-						}
-					}
-				}
-				if (failedOppHandReq) {
+				if (opp.hand.strength === oppHand) {
+					totalPriority += 30;	// priority
+				} else {
 					continue;
 				}
 			}
@@ -453,24 +437,14 @@ function updateBehaviour (player, tag, opp) {
             // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
 			
-				var foundEm = false;
 				var j = 0;
-				for (j = 0; j < players.length && foundEm === false; j++) {
-					if (players[j] && opp !== players[j]) {
-						if (alsoPlaying === players[j].id) {
-							totalPriority += 100; 	// priority
-							foundEm = true;
-                            break;
-						}
-					}
-				}
-				
-				if (foundEm === false)
-				{
-					continue;				// failed "alsoPlaying" requirement
-				}
-				else
-				{
+				if (!players.some(function(p) {
+					return p !== opp && p.id === alsoPlaying;
+				})) {
+					continue; // failed "alsoPlaying" requirement
+				} else {
+					totalPriority += 100; 	// priority
+
 					if (typeof alsoPlayingStage !== typeof undefined && alsoPlayingStage !== false) {
 						if (inInterval(players[j].stage, alsoPlayingStage)) {
 							totalPriority += 40;	// priority
@@ -521,17 +495,9 @@ function updateBehaviour (player, tag, opp) {
 			for (var j = 0; j < counters.length; j++) {
 				var desiredCount = parseInterval(counters[j].attr('count'));
 				var filterTag = counters[j].attr('filter');
-				var count = 0;
-				for (var q = 0; q < players.length; q++) {
-					if (players[q] && players[q].tags) {
-						for (var t = 0; t < players[q].tags.length; t++) {
-							if (filterTag === players[q].tags[t]) {
-								count++;
-								break;
-							}
-						}
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.tags && p.tags.indexOf(filterTag) >= 0;
+				}).length;
 				if (inInterval(count, desiredCount)) {
 					totalPriority += 10;
 				}
@@ -567,14 +533,9 @@ function updateBehaviour (player, tag, opp) {
 			
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
-				var count = 0;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (players[q] && players[q].gender === eGender.MALE)
-					{
-						count++;
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.gender === eGender.MALE;
+				}).length;
 				if (inInterval(count, totalMales)) {
 					totalPriority += 5;		// priority
 				}
@@ -585,14 +546,9 @@ function updateBehaviour (player, tag, opp) {
 			
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
-				var count = 0;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (players[q] && players[q].gender === eGender.FEMALE)
-					{
-						count++;
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.gender === eGender.FEMALE;
+				}).length;
 				if (inInterval(count, totalFemales)) {
 					totalPriority += 5;		// priority
 				}
