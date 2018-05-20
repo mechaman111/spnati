@@ -267,16 +267,8 @@ function makeAIDecision () {
 		}
 	}
 
-	/* determine how many cards are being swapped */
-	var swap = 0;
-	for (var i = 0; i < players[currentTurn].hand.cards.length; i++) {
-		if (players[currentTurn].hand.tradeIns[i]) {
-			swap++;
-		}
-	}
-	
 	/* update a few hardcoded visuals */
-	updateBehaviour(currentTurn, SWAP_CARDS, [CARDS, PLAYER_NAME], [swap, players[HUMAN_PLAYER].label], null);
+	updateBehaviour(currentTurn, SWAP_CARDS);
 	updateGameVisual(currentTurn);
 	
 	/* wait and implement AI action */
@@ -295,17 +287,15 @@ function implementAIAction () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
-		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
+		updateBehaviour(currentTurn, BAD_HAND);
 	} else if (players[currentTurn].hand.strength == PAIR
 			   || (players[currentTurn].hand.strength == TWO_PAIR && getNumPlayersInStage(STAGE_ALIVE) <= 2)) {
-		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
+		updateBehaviour(currentTurn, OKAY_HAND);
 	} else {
-		updateBehaviour(currentTurn, GOOD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
+		updateBehaviour(currentTurn, GOOD_HAND);
 	}
-	
+	updateGameVisual(currentTurn);
+
 	/* wait and then advance the turn */
 	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
 }
@@ -332,7 +322,7 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+            updateBehaviour(currentTurn, players[currentTurn].forfeit[0]);
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -669,7 +659,7 @@ function handleGameOver() {
 		}
 		for (var i = 1; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
+			updateBehaviour(i, tag, players[winner]);
 		}
 		
         updateAllGameVisuals();

@@ -227,8 +227,6 @@ function playerMustStrip (player) {
 		}
 	}
 
-	var replace = [NAME, PLAYER_NAME];
-	var content = [players[player].label, players[HUMAN_PLAYER].label];
 	if (clothes) {
 		/* the player has clothes and will strip */
 		if (player == HUMAN_PLAYER) {
@@ -247,8 +245,7 @@ function playerMustStrip (player) {
 						trigger = FEMALE_CHEST_WILL_BE_VISIBLE;
 					}
 				}
-				replace.push(PROPER_CLOTHING, LOWERCASE_CLOTHING);
-				content.push(remainingItem.Proper, remainingItem.lower);
+				players[HUMAN_PLAYER].removedClothing = remainingItem;
 			} else {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
 					trigger = MALE_HUMAN_MUST_STRIP;
@@ -256,27 +253,27 @@ function playerMustStrip (player) {
 					trigger = FEMALE_HUMAN_MUST_STRIP;
 				}
 			}
-			updateAllBehaviours(player, trigger, replace, content, players[player]);
+			updateAllBehaviours(player, trigger, players[player]);
 		} else { 
 			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_MUST_STRIP, replace, content, players[player]);
+				updateAllBehaviours(player, MALE_MUST_STRIP, players[player]);
 			} else {
-				updateAllBehaviours(player, FEMALE_MUST_STRIP, replace, content, players[player]);
+				updateAllBehaviours(player, FEMALE_MUST_STRIP, players[player]);
 			}
 																		
 			var trigger = determineStrippingSituation(player);
-			updateBehaviour(player, trigger, replace, content, null);
+			updateBehaviour(player, trigger);
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_MUST_MASTURBATE, replace, content, players[player]);
+			updateAllBehaviours(player, MALE_MUST_MASTURBATE, players[player]);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE, replace, content, players[player]);
+			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE, players[player]);
 		}
 		if (player != HUMAN_PLAYER) {
 			var trigger = determineForfeitSituation(player);
-			updateBehaviour(player, trigger, replace, content, null);
+			updateBehaviour(player, trigger);
 		}
 	}
 	
@@ -289,21 +286,18 @@ function playerMustStrip (player) {
 function prepareToStripPlayer (player) {
     if (player == HUMAN_PLAYER) { // Never happens (currently)
         if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-            updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+            updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, players[player]);
         } else {
-            updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+            updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, players[player]);
         }
     } else {
         var startingClothes = players[player].clothing.length;
         var toBeRemovedClothing = players[player].clothing[startingClothes - 1];
+        players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
 
-        /* set up the replaceable tags and content */
-        var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
-        var content = [players[player].label, toBeRemovedClothing.proper, toBeRemovedClothing.lower, players[HUMAN_PLAYER].label];
-
-        updateAllBehaviours(player, dialogueTrigger, replace, content, players[player]);
-        updateBehaviour(player, PLAYER_STRIPPING, replace, content, null);
+        updateAllBehaviours(player, dialogueTrigger, players[player]);
+        updateBehaviour(player, PLAYER_STRIPPING, null);
     }
 }
 
@@ -393,6 +387,7 @@ function closeStrippingModal () {
 
         players[HUMAN_PLAYER].clothing[selectedClothing] = null;
 	players[HUMAN_PLAYER].timeInStage = -1;
+        players[HUMAN_PLAYER].removedClothing = removedClothing;
         
         /* figure out if it should be important */
         if (removedClothing.position != OTHER_ARTICLE) {
@@ -437,12 +432,8 @@ function closeStrippingModal () {
             $gameClothingLabel.html("You're Naked");
         }
             
-        /* set up the replaceable tags and content */
-        var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
-        var content = [players[HUMAN_PLAYER].label, removedClothing.proper, removedClothing.lower, players[HUMAN_PLAYER].label];
-        
         /* update behaviour */
-        updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, replace, content, players[HUMAN_PLAYER]);
+        updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, players[HUMAN_PLAYER]);
         updateAllGameVisuals();
 		
 		/* allow progression */
@@ -465,6 +456,7 @@ function stripAIPlayer (player) {
 	
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
+	players[player].removedClothing = removedClothing;
 	if (removedClothing.type === IMPORTANT_ARTICLE) {
 		players[player].exposed = true;
 	}
@@ -479,13 +471,9 @@ function stripAIPlayer (player) {
 	players[player].timeInStage = -1;
 	players[player].updateLabel();
 	
-	/* set up the replaceable tags and content */
-	var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
-	var content = [players[player].label, removedClothing.proper, removedClothing.lower, players[HUMAN_PLAYER].label];
-	
 	/* update behaviour */
-	updateAllBehaviours(player, dialogueTrigger, replace, content, players[player]);
-	updateBehaviour(player, PLAYER_STRIPPED, replace, content, null);
+	updateAllBehaviours(player, dialogueTrigger, players[player]);
+	updateBehaviour(player, PLAYER_STRIPPED);
     updateAllGameVisuals();
 	
 }

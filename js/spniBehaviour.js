@@ -175,8 +175,26 @@ function loadOpponentWardrobe (player) {
 /************************************************************
  * Parses the dialogue states of a player, given the case object.
  ************************************************************/
-function parseDialogue (caseObject, replace, content) {
+function parseDialogue (caseObject, self, target) {
     var states = [];
+
+	var substitutions = {};
+	substitutions[PLAYER_NAME] = players[HUMAN_PLAYER].label;
+	if (target) {
+		substitutions[NAME] = target.label;
+		substitutions[CAPITALIZED_NAME] = target.label.initCap();
+		if (target.removedClothing) {
+			substitutions[PROPER_CLOTHING] = target.removedClothing.proper;
+			substitutions[LOWERCASE_CLOTHING] = target.removedClothing.lower;
+		}
+	} else if (self.removedClothing) {
+		substitutions[PROPER_CLOTHING] = self.removedClothing.proper;
+		substitutions[LOWERCASE_CLOTHING] = self.removedClothing.lower;
+	}
+	if (caseObject.attr('tag') == SWAP_CARDS) {
+		/* determine how many cards are being swapped */
+		substitutions[CARDS] = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+	}
 	
 	caseObject.find('state').each(function () {
         var image = $(this).attr('img');
@@ -185,14 +203,8 @@ function parseDialogue (caseObject, replace, content) {
         var silent = $(this).attr('silent');
         var marker = $(this).attr('marker');
         
-		if (replace && content) {
-			for (var i = 0; i < replace.length; i++) {
-				if (replace[i] == NAME) {
-					replace.push(CAPITALIZED_NAME);
-					content.push(content[i].initCap());
-				}
-				dialogue = dialogue.split(replace[i]).join(content[i]);
-			}
+		for (var placeholder in substitutions) {
+			dialogue = dialogue.split(placeholder).join(substitutions[placeholder]);
 		}
         
         if (silent !== null && typeof silent !== typeof undefined) {
@@ -230,7 +242,7 @@ function inInterval (value, interval) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-function updateBehaviour (player, tag, replace, content, opp) {
+function updateBehaviour (player, tag, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
@@ -682,7 +694,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
         if (bestMatch.length > 0) {
 			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
-            players[player].state = parseDialogue(bestMatch, replace, content);
+            players[player].state = parseDialogue(bestMatch, players[player], opp);
             return true;
         }
         console.log("-------------------------------------");
@@ -694,10 +706,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
  * Updates the behaviour of all players except the given player 
  * based on the provided tag.
  ************************************************************/
-function updateAllBehaviours (player, tag, replace, content, opp) {
+function updateAllBehaviours (player, tag, opp) {
 	for (i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
-			updateBehaviour(i, tag, replace, content, opp);
+			updateBehaviour(i, tag, opp);
 		}
 	}
 }
