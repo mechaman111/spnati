@@ -770,7 +770,6 @@ function advanceGame () {
         startDealPhase();
     } else if (context == "Next") {
         /* advance to next round if human player is masturbating */
-        if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Exchange");
         continueDealPhase();
     } else if (context == "Exchange") {
@@ -796,7 +795,6 @@ function advanceGame () {
 		completeMasturbatePhase();
     } else if (context.substr(0, 4) == "Wait") {
 		/* waiting for someone to finish */
-        if (AUTO_FADE) forceTableVisibility(false);
 		handleGameOver(); //No delay here
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings
