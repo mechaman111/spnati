@@ -404,7 +404,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				for (var q = 0; q < players.length; q++)
 				{
 					if (opp === players[q]) {
-						if (handStrengthToString(hands[q].strength) === oppHand) {
+						if (handStrengthToString(players[q].hand.strength) === oppHand) {
 							totalPriority += 30;	// priority
 						}
 						else {
@@ -431,7 +431,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(hands[player].strength) === hasHand) {
+				if (handStrengthToString(players[player].hand.strength) === hasHand) {
 					totalPriority += 20;		// priority
 				}
 				else {
@@ -477,7 +477,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
-						if (handStrengthToString(hands[j].strength) === alsoPlayingHand)
+						if (handStrengthToString(players[j].hand.strength) === alsoPlayingHand)
 						{
 							totalPriority += 5;		// priority
 						}

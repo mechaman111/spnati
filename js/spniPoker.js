@@ -71,9 +71,6 @@ var UNKNOWN_CARD_IMAGE = IMG + "unknown.jpg";
 var inDeck = [];	/* cards left in the deck */
 var outDeck = [];	/* cards waiting to be shuffled into the deck */
 
-/* player hands */
-var hands = [null, null, null, null, null];
-
 /* deal lock */
 var dealLock = 0;
  
@@ -86,9 +83,9 @@ var dealLock = 0;
  ************************************************************/
 function setupPoker () {
     /* set up the player hands */
-    for (var i = 0; i < hands.length; i++) {
-        hands[i] = createNewHand([null, null, null, null, null], NONE, 0, [false, false, false, false, false]);
-    }
+    players.forEach(function(player) {
+        player.hand = createNewHand([null, null, null, null, null], NONE, 0, [false, false, false, false, false]);
+    });
     
     /* compose a new deck */
     composeDeck();
@@ -175,8 +172,8 @@ function dullCard (player, card) {
  * Shows the given player's hand at full opacity.
  ************************************************************/
 function showHand (player) {
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		$cardCells[player][i].attr('src', IMG + hands[player].cards[i] + ".jpg");
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
 		fillCard(player, i);
 	}
 }
@@ -185,8 +182,8 @@ function showHand (player) {
  * Shows but completely dulls the given player's hand.
  ************************************************************/
 function dullHand (player) {
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		$cardCells[player][i].attr('src', IMG + hands[player].cards[i] + ".jpg");
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
 		dullCard(player, i);
 	}
 }
@@ -195,7 +192,7 @@ function dullHand (player) {
  * Hides the given player's hand based on their state.
  ************************************************************/
 function hideHand (player) {
-	for (var i = 0; i < hands[player].cards.length; i++) {
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
         if (players[player]) {
             if (!players[player].out) {
                 $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
@@ -211,8 +208,8 @@ function hideHand (player) {
  * Clears the given player's hand (in preparation of a new game).
  ************************************************************/
 function clearHand (player) {
-	if (hands[player] && hands[player].cards) {
-		for (var i = 0; i < hands[player].cards.length; i++) {
+	if (players[player] && players[player].hand) {
+		for (var i = 0; i < CARDS_PER_HAND; i++) {
 			$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 			fillCard(player, i);
 		}
@@ -225,10 +222,10 @@ function clearHand (player) {
 function stopCardAnimations () {
     $('.shown-card').stop(true, true);
     for (var p = 0; p < players.length; p++) {
-        if (hands[p]) {
-            for (var i = 0; i < hands[p].cards.length; i++) {
-                if (hands[p].cards[i]) {
-                    clearTimeout(hands[p].cards[i].timeoutID);
+        if (players[p].hand) {
+            for (var i = 0; i < CARDS_PER_HAND; i++) {
+                if (players[p].hand.cards[i]) {
+                    clearTimeout(players[p].hand.cards[i].timeoutID);
                 }
             }
         }
@@ -245,11 +242,11 @@ function stopCardAnimations () {
  ************************************************************/
 function collectPlayerHand (player) {
 	/* collect cards from the hand into the outDeck */
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		if (hands[player].cards[i]) {
-			outDeck.push(hands[player].cards[i]);
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		if (players[player].hand.cards[i]) {
+			outDeck.push(players[player].hand.cards[i]);
 		}
-		hands[player].cards[i] = null;
+		players[player].hand.cards[i] = null;
 		$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 	}
 }
@@ -275,16 +272,16 @@ function dealHand (player) {
 	collectPlayerHand (player);
 	
 	/* first make sure the deck has enough cards */
-	if (inDeck.length < hands[player].cards.length) {
+	if (inDeck.length < CARDS_PER_HAND) {
 		shuffleDeck();
 	}
 	
 	/* deal the new cards */
 	var drawnCard;
-	for (var i = 0; i < hands[player].cards.length; i++) {
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		drawnCard = getRandomNumber(0, inDeck.length);
         $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-		hands[player].cards[i] = inDeck[drawnCard];
+		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
 		delayDealtCard(player, i);
 	}
@@ -296,8 +293,8 @@ function dealHand (player) {
 function exchangeCards (player) {
 	/* determine how many cards are being swapped */
 	var swap = 0;
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		if (hands[player].tradeIns[i]) {
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		if (players[player].hand.tradeIns[i]) {
 			swap++;
 		}
 	}
@@ -308,21 +305,21 @@ function exchangeCards (player) {
 	}
 	
 	/* collect their old cards */
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		if (hands[player].tradeIns[i] && hands[player].cards[i]) {
-			outDeck.push(hands[player].cards[i]);
-			hands[player].cards[i] = null;
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
+			outDeck.push(players[player].hand.cards[i]);
+			players[player].hand.cards[i] = null;
 		}
 	}
 	
 	/* take the new cards */
 	var drawnCard;
-	for (var i = 0; i < hands[player].cards.length; i++) {
-		if (hands[player].tradeIns[i]) {
+	for (var i = 0; i < CARDS_PER_HAND; i++) {
+		if (players[player].hand.tradeIns[i]) {
 			drawnCard = getRandomNumber(0, inDeck.length);
-			hands[player].cards[i] = inDeck[drawnCard];
+			players[player].hand.cards[i] = inDeck[drawnCard];
 			inDeck.splice(drawnCard, 1);
-            hands[player].tradeIns[i] = false;
+            players[player].hand.tradeIns[i] = false;
 		}
 	}
 }
@@ -432,10 +429,10 @@ function determineLowestHand () {
     
 	for (i = 0; i < players.length; i++) {
 		if (players[i] && !players[i].out) {
-			if (hands[i].strength < lowestStrength) {
-				lowestStrength = hands[i].strength;
+			if (players[i].hand.strength < lowestStrength) {
+				lowestStrength = players[i].hand.strength;
 				lowestPlayers = [i];
-			} else if (hands[i].strength == lowestStrength) {
+			} else if (players[i].hand.strength == lowestStrength) {
 				lowestPlayers.push(i);
 			}
 		}
@@ -447,7 +444,7 @@ function determineLowestHand () {
 	}
 
 	/* need to break a tie */
-	var maxTieBreakers = hands[lowestPlayers[0]].value.length;
+	var maxTieBreakers = players[lowestPlayers[0]].hand.value.length;
 
 	for (var currentTieBreaker = 0; currentTieBreaker < maxTieBreakers; currentTieBreaker++) {
 		var lowestValue = 15;
@@ -455,13 +452,13 @@ function determineLowestHand () {
 		console.log("Players Tied: "+tiedPlayers);
 
 		for (var i = 0; i < tiedPlayers.length; i++) {
-			if (hands[tiedPlayers[i]].value[currentTieBreaker] < lowestValue) {
-				lowestValue = hands[tiedPlayers[i]].value[currentTieBreaker];
-				console.log("Player "+tiedPlayers[i]+" is the new lowest with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
+			if (players[tiedPlayers[i]].hand.value[currentTieBreaker] < lowestValue) {
+				lowestValue = players[tiedPlayers[i]].hand.value[currentTieBreaker];
+				console.log("Player "+tiedPlayers[i]+" is the new lowest with: "+players[tiedPlayers[i]].hand.value[currentTieBreaker]);
 				lowestPlayers = [tiedPlayers[i]];
-			} else if (hands[tiedPlayers[i]].value[currentTieBreaker] == lowestValue) {
+			} else if (players[tiedPlayers[i]].hand.value[currentTieBreaker] == lowestValue) {
 				lowestPlayers.push(tiedPlayers[i]);
-				console.log("Player "+tiedPlayers[i]+" is tied with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
+				console.log("Player "+tiedPlayers[i]+" is tied with: "+players[tiedPlayers[i]].hand.value[currentTieBreaker]);
 			}
 		}
 
@@ -476,12 +473,13 @@ function determineLowestHand () {
  
 /************************************************************
  * Determine value of a given player's hand.
+ * player is a player object, not an index.
  ************************************************************/
 function determineHand (player) {
 	/* start by getting a shorthand variable and resetting */
-	var hand = hands[player].cards;
-	hands[player].strength = NONE;
-	hands[player].value = 0;
+	var hand = player.hand.cards;
+	player.hand.strength = NONE;
+	player.hand.value = 0;
 	
 	/* look for each strength, in composition */
 	var have_pair = [];
@@ -504,8 +502,8 @@ function determineHand (player) {
 	/* look for four of a kind, three of a kind, and pairs */
 	for (var i = cardRanks.length-1; i > 0; i--) {
 		if (cardRanks[i] == 4) {
-			hands[player].strength = FOUR_OF_A_KIND;
-			hands[player].value = [i+1];
+			player.hand.strength = FOUR_OF_A_KIND;
+			player.hand.value = [i+1];
 			break;
 		} else if (cardRanks[i] == 3) {
 			have_three_kind = i+1;
@@ -515,15 +513,15 @@ function determineHand (player) {
 	}
 	
 	/* determine full house, three of a kind, two pair, and pair */
-	if (hands[player].strength == NONE) {
+	if (player.hand.strength == NONE) {
 		if (have_three_kind && have_pair.length > 0) {
-			hands[player].strength = FULL_HOUSE;
-			hands[player].value = [have_three_kind];
+			player.hand.strength = FULL_HOUSE;
+			player.hand.value = [have_three_kind];
 		} else if (have_three_kind) {
-			hands[player].strength = THREE_OF_A_KIND;
-			hands[player].value = [have_three_kind];
+			player.hand.strength = THREE_OF_A_KIND;
+			player.hand.value = [have_three_kind];
 		} else if (have_pair.length == 2) {
-			hands[player].strength = TWO_PAIR;
+			player.hand.strength = TWO_PAIR;
 			
 			var leftover = 0;
 			for (var i = 1; i < cardRanks.length; i++) {
@@ -532,21 +530,21 @@ function determineHand (player) {
 				}
 			}
 			
-            hands[player].value = have_pair.concat(leftover);
+            player.hand.value = have_pair.concat(leftover);
 		} else if (have_pair.length == 1) {
-			hands[player].strength = PAIR;
-			hands[player].value = have_pair;
+			player.hand.strength = PAIR;
+			player.hand.value = have_pair;
 			
 			for (var i = cardRanks.length-1; i > 0; i--) {
 				if (cardRanks[i] == 1) {
-					hands[player].value.push(i+1);
+					player.hand.value.push(i+1);
 				}
 			}
 		}
 	}
 	
 	/* look for straights and flushes */
-	if (hands[player].strength == NONE) {
+	if (player.hand.strength == NONE) {
 		/* first, straights */
 		var sequence = 0;
 
@@ -584,21 +582,21 @@ function determineHand (player) {
 		
 		/* determine royal flush, straight flush, flush, straight, and high card */
 		if (have_flush && have_straight == 14) {
-			hands[player].strength = ROYAL_FLUSH;
-			hands[player].value = [have_straight];
+			player.hand.strength = ROYAL_FLUSH;
+			player.hand.value = [have_straight];
 		} else if (have_flush && have_straight) {
-			hands[player].strength = STRAIGHT_FLUSH;
-			hands[player].value = [have_straight];
+			player.hand.strength = STRAIGHT_FLUSH;
+			player.hand.value = [have_straight];
 		} else if (have_straight) {
-			hands[player].strength = STRAIGHT;
-			hands[player].value = [have_straight];
+			player.hand.strength = STRAIGHT;
+			player.hand.value = [have_straight];
 		} else {
-			hands[player].strength = (have_flush ? FLUSH : HIGH_CARD);
-			hands[player].value = [];
+			player.hand.strength = (have_flush ? FLUSH : HIGH_CARD);
+			player.hand.value = [];
 			
 			for (var i = cardRanks.length-1; i > 0; i--) {
 				if (cardRanks[i] == 1) {
-					hands[player].value.push(i+1);
+					player.hand.value.push(i+1);
 				}
 			}
 		}
@@ -606,8 +604,8 @@ function determineHand (player) {
 
 	/* stats for the log */
     console.log();
-	console.log("Player "+player+" Hand Analysis");
+	console.log("Player "+player.label+" Hand Analysis");
 	console.log("Rank: "+cardRanks);
 	console.log("Suit: "+cardSuits);
-	console.log("Player has " +handStrengthToString(hands[player].strength)+" of value "+hands[player].value);
+	console.log("Player has " +handStrengthToString(player.hand.strength)+" of value "+player.hand.value);
 }

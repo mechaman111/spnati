@@ -256,19 +256,19 @@ function displayHumanPlayerClothing () {
  ************************************************************/
 function makeAIDecision () {	
 	/* determine the AI's decision */
-	determineAIAction(currentTurn);
+	determineAIAction(players[currentTurn]);
 	
 	/* dull the cards they are trading in */
-	for (var i = 0; i < hands[currentTurn].tradeIns.length; i++) {
-		if (hands[currentTurn].tradeIns[i]) {
+	for (var i = 0; i < players[currentTurn].hand.tradeIns.length; i++) {
+		if (players[currentTurn].hand.tradeIns[i]) {
 			dullCard(currentTurn, i);
 		}
 	}
 
 	/* determine how many cards are being swapped */
 	var swap = 0;
-	for (var i = 0; i < hands[currentTurn].cards.length; i++) {
-		if (hands[currentTurn].tradeIns[i]) {
+	for (var i = 0; i < players[currentTurn].hand.cards.length; i++) {
+		if (players[currentTurn].hand.tradeIns[i]) {
 			swap++;
 		}
 	}
@@ -291,12 +291,12 @@ function implementAIAction () {
 	hideHand(currentTurn);
 	
 	/* update behaviour */
-	determineHand(currentTurn);
-	if (hands[currentTurn].strength == HIGH_CARD) {
+	determineHand(players[currentTurn]);
+	if (players[currentTurn].hand.strength == HIGH_CARD) {
 		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
-	} else if (hands[currentTurn].strength == PAIR
-			   || (hands[currentTurn].strength == TWO_PAIR && getNumPlayersInStage(STAGE_ALIVE) <= 2)) {
+	} else if (players[currentTurn].hand.strength == PAIR
+			   || (players[currentTurn].hand.strength == TWO_PAIR && getNumPlayersInStage(STAGE_ALIVE) <= 2)) {
 		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	} else {
@@ -450,11 +450,11 @@ function continueDealPhase () {
 	
 	/* suggest cards to swap, if enabled */
 	if (CARD_SUGGEST && !players[HUMAN_PLAYER].out) {
-		determineAIAction(HUMAN_PLAYER);
+		determineAIAction(players[HUMAN_PLAYER]);
 		
 		/* dull the cards they are trading in */
-		for (var i = 0; i < hands[HUMAN_PLAYER].tradeIns.length; i++) {
-			if (hands[HUMAN_PLAYER].tradeIns[i]) {
+		for (var i = 0; i < players[HUMAN_PLAYER].hand.tradeIns.length; i++) {
+			if (players[HUMAN_PLAYER].hand.tradeIns[i]) {
 				dullCard(HUMAN_PLAYER, i);
 			}
 		}
@@ -491,7 +491,7 @@ function completeRevealPhase () {
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
-            determineHand(i);
+            determineHand(players[i]);
             showHand(i);
         }
     }
@@ -697,9 +697,9 @@ function handleGameOver() {
  * The player selected one of their cards.
  ************************************************************/
 function selectCard (card) {
-	hands[HUMAN_PLAYER].tradeIns[card] = !hands[HUMAN_PLAYER].tradeIns[card];
+	players[HUMAN_PLAYER].hand.tradeIns[card] = !players[HUMAN_PLAYER].hand.tradeIns[card];
 	
-	if (hands[HUMAN_PLAYER].tradeIns[card]) {
+	if (players[HUMAN_PLAYER].hand.tradeIns[card]) {
 		dullCard(HUMAN_PLAYER, card);
 	} else {
 		fillCard(HUMAN_PLAYER, card);
