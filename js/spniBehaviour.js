@@ -324,7 +324,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// if none of them fail, then this state is considered for use with a certain priority
 			
 			// target (priority = 300)
-			if (opp !== null && typeof target !== typeof undefined && target !== false) {
+			if (opp && typeof target !== typeof undefined && target !== false) {
             target = target;
 				if (target === opp.id) {
 					totalPriority += 300; 	// priority
@@ -335,7 +335,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 			
 			// filter (priority = 150)
-			if (opp !== null && typeof filter !== typeof undefined && filter !== false) {
+			if (opp && typeof filter !== typeof undefined && filter !== false) {
 				// check against tags
 				var found = false;
                 for (var j = 0; j < opp.tags.length && found === false; j++) {
@@ -350,7 +350,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 			
 			// targetStage (priority = 80)
-			if (opp !== null && typeof targetStage !== typeof undefined && targetStage !== false) {
+			if (opp && typeof targetStage !== typeof undefined && targetStage !== false) {
 				if (inInterval(opp.stage, targetStage)) {
 					totalPriority += 80;		// priority
 				}
@@ -361,7 +361,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (opp !== null && targetSaidMarker) {
+			if (opp && targetSaidMarker) {
 				if (targetSaidMarker in opp.markers) {
 					totalPriority += 1;
 				}
@@ -369,7 +369,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;
 				}
 			}
-			if (opp !== null && targetNotSaidMarker) {
+			if (opp && targetNotSaidMarker) {
 				if (!(targetNotSaidMarker in opp.markers)) {
 					totalPriority += 1;
 				}
@@ -380,7 +380,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// consecutiveLosses (priority = 60)
 			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
-				if (opp !== null) { // if there's a target, look at their losses
+				if (opp) { // if there's a target, look at their losses
 					if (inInterval(opp.consecutiveLosses, lossesInRow)) {
 						totalPriority += 60;
 					}
@@ -399,7 +399,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 			
 			// oppHand (priority = 30)
-			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
+			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
 				var failedOppHandReq = false;
 				for (var q = 0; q < players.length; q++)
 				{
@@ -419,7 +419,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 
 			// targetTimeInStage (priority = 25)
-			if (opp !== null && typeof targetTimeInStage !== typeof undefined) {
+			if (opp && typeof targetTimeInStage !== typeof undefined) {
 				if (inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
 							   : opp.timeInStage, targetTimeInStage)) {
 					totalPriority += 25;
@@ -445,7 +445,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var foundEm = false;
 				var j = 0;
 				for (j = 0; j < players.length && foundEm === false; j++) {
-					if (players[j] !== null && opp !== players[j]) {
+					if (players[j] && opp !== players[j]) {
 						if (alsoPlaying === players[j].id) {
 							totalPriority += 100; 	// priority
 							foundEm = true;
@@ -512,7 +512,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var filterTag = counters[j].attr('filter');
 				var count = 0;
 				for (var q = 0; q < players.length; q++) {
-					if (players[q] !== null && players[q].tags) {
+					if (players[q] && players[q].tags) {
 						for (var t = 0; t < players[q].tags.length; t++) {
 							if (filterTag === players[q].tags[t]) {
 								count++;
@@ -559,7 +559,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var count = 0;
 				for (var q = 0; q < players.length; q++)
 				{
-					if (players[q] !== null && players[q].gender === eGender.MALE)
+					if (players[q] && players[q].gender === eGender.MALE)
 					{
 						count++;
 					}
@@ -577,7 +577,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var count = 0;
 				for (var q = 0; q < players.length; q++)
 				{
-					if (players[q] !== null && players[q].gender === eGender.FEMALE)
+					if (players[q] && players[q].gender === eGender.FEMALE)
 					{
 						count++;
 					}

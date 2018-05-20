@@ -856,7 +856,7 @@ function updateDebugState(show)
     }
     else {
         for (var i = 0; i < $debugButtons.length; i++) {
-            if (players[i] !== null && !players[i].out) {
+            if (players[i] && !players[i].out) {
                 $debugButtons[i].show();
                 $debugButtons[i].removeClass("active");
             }

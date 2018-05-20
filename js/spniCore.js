@@ -36,7 +36,7 @@ $gameTable = $('#game-table');
 var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
-var players = [null, null, null, null, null];
+var players = Array(5);
 
 
 

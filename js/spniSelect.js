@@ -172,8 +172,8 @@ var groupCreditsShown = false;
 /* consistence variables */
 var selectedSlot = 0;
 var individualSlot = 0;
-var shownIndividuals = [null, null, null, null];
-var shownGroup = [null, null, null, null];
+var shownIndividuals = Array(4);
+var shownGroup = Array(4);
 var randomLock = false;
 
 /**********************************************************************
@@ -356,7 +356,7 @@ function updateIndividualSelectScreen () {
 				$individualButtons[index].attr('disabled', true);
 			}
 		} else {
-			shownIndividuals[index] = null;
+			delete shownIndividuals[index];
 
 			$individualNameLabels[index].html("");
 			$individualPrefersLabels[index].html("");
@@ -434,7 +434,7 @@ function updateGroupSelectScreen () {
 				$groupButton.attr('disabled', true);
 			}
 		} else {
-			shownGroup[i] = null;
+			delete shownGroup[i];
 
 			$groupNameLabels[i].html("");
 			$groupPrefersLabels[i].html("");
@@ -586,7 +586,7 @@ function selectOpponentSlot (slot) {
 		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
-        players[slot] = null;
+        delete players[slot];
         updateSelectionVisuals();
     }
 }
