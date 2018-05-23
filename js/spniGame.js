@@ -181,7 +181,7 @@ function updateGameVisual (player) {
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
 
             /* update label */
-            $gameLabels[player].html(players[player].label);
+            $gameLabels[player].html(players[player].label.initCap());
             
             /* check silence */
             if (chosenState.silent) {

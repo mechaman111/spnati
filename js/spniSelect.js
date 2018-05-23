@@ -886,7 +886,7 @@ function updateSelectionVisuals () {
             $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
 
             /* update label */
-            $selectLabels[i-1].html(players[i].label);
+            $selectLabels[i-1].html(players[i].label.initCap());
 
             /* change the button */
             $selectButtons[i-1].html("Remove Opponent");

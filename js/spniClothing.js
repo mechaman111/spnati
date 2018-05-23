@@ -476,6 +476,7 @@ function stripAIPlayer (player) {
 	
 	players[player].stage = startingClothes - clothes;
 	players[player].timeInStage = -1;
+	players[player].updateLabel();
 	
 	/* set up the replaceable tags and content */
 	var replace = [NAME, PROPER_CLOTHING, LOWERCASE_CLOTHING, PLAYER_NAME];
