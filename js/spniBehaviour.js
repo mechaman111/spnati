@@ -26,6 +26,7 @@ function createNewState (dialogue, image, direction, silent, marker) {
  **********************************************************************/
  
 var NAME = "~name~";
+var CAPITALIZED_NAME = "~Name~";
 var PROPER_CLOTHING = "~Clothing~";
 var LOWERCASE_CLOTHING = "~clothing~";
 var CARDS = "~cards~";
@@ -122,7 +123,7 @@ function loadBehaviour (folder, callFunction, slot) {
 		success: function(xml) {
             var first = $(xml).find('first').text();
             var last = $(xml).find('last').text();
-            var label = $(xml).find('label').text();
+            var labels = $(xml).find('label');
             var gender = $(xml).find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
             var size = $(xml).find('size').text();
             var timer = $(xml).find('timer').text();
@@ -136,7 +137,7 @@ function loadBehaviour (folder, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
+            var newPlayer = createNewPlayer(folder, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, xml);
             
 			callFunction(newPlayer, slot);
 		}
@@ -183,6 +184,10 @@ function parseDialogue (caseObject, replace, content) {
         
 		if (replace && content) {
 			for (var i = 0; i < replace.length; i++) {
+				if (replace[i] == NAME) {
+					replace.push(CAPITALIZED_NAME);
+					content.push(content[i].initCap());
+				}
 				dialogue = dialogue.split(replace[i]).join(content[i]);
 			}
 		}
