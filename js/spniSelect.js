@@ -868,6 +868,31 @@ function backToSelect () {
  ************************************************************/
 function advanceSelectScreen () {
     console.log("Starting game...");
+
+    if(sw_is_available()) {
+        /* Ask SW to preload all unique image files for all characters in the game. */
+        for(var i=0;i<players.length;i++) {
+            var xml = players[i].xml;
+        	if (!xml) {
+                continue;
+            }
+
+            var player_imgs = [];
+            var folder = players[i].folder;
+
+            /* Find all unique images for the current character */
+            $(xml).find("state").each(function () {
+                var img = folder+$(this).attr('img');
+                if($.inArray(img, player_imgs) === -1) {
+                    player_imgs.push(img);
+                }
+            });
+
+            console.log("Preloading "+player_imgs.length.toString()+" image files from "+folder+" ...");
+            request_url_caching(player_imgs);
+        }
+    }
+
     advanceToNextScreen($selectScreen);
 }
 

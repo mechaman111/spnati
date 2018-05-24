@@ -143,23 +143,6 @@ function loadBehaviour (folder, callFunction, slot) {
             var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
 
 			callFunction(newPlayer, slot);
-
-            if(sw_is_available()) {
-                /* Ask SW to preload images for us.
-                 * First get all unique image files for this character.
-                 */
-                var player_imgs = [];
-
-                $(xml).find("state").each(function () {
-                    var img = folder+$(this).attr('img');
-                    if($.inArray(img, player_imgs) === -1) {
-                        player_imgs.push(img);
-                    }
-                });
-
-                console.log("Preloading "+player_imgs.length.toString()+" image files from "+folder+" ...");
-                request_url_caching(player_imgs);
-            }
 		}
 	});
 }
