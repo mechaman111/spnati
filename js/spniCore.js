@@ -76,8 +76,6 @@ $previousScreen = null;
  * Game Wide Utility Functions
  ********************************************************************************/
 
-
-
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/
@@ -89,20 +87,22 @@ $previousScreen = null;
  * folder (string), the path to their folder
  * first (string), their first name.
  * last (string), their last name.
+ * labels (string or XML element), what's shown on screen and what other players refer to them as.
+ *   Can vary by stage.
+ * size (string): Their level of endowment
+ * intelligence (string or XML element), the name of their AI algorithm.
+ *   Can vary by stage.
  * gender (constant), their gender.
  * clothing (array of Clothing objects), their clothing.
- * out (boolean), is the player still in the game?
- * forfeit (string), state of their forfeit.
  * timer (integer), time until forfeit is finished.
- * current (integer), their current state.
  * state (array of PlayerState objects), their sequential states.
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
-function createNewPlayer (folder, first, last, label, gender, size, intelligence, timer, tags, xml) {
+function createNewPlayer (folder, first, last, labels, gender, size, intelligence, timer, tags, xml) {
     var newPlayerObject = {folder:folder,
                            first:first,
                            last:last,
-                           label:label,
+                           labels:labels,
 						   size:size,
 						   intelligence:intelligence,
                            gender:gender,
@@ -110,33 +110,28 @@ function createNewPlayer (folder, first, last, label, gender, size, intelligence
                            tags:tags,
                            xml:xml,
 
-                           getIntelligence: function getIntelligence() {
-
-                               if (typeof(this.intelligence) === "string") {
-
-                                   return this.intelligence;
+                           getByStage: function (arr) {
+                               if (typeof(arr) === "string") {
+                                   return arr;
                                }
-
                                var bestFitStage = -1;
                                var bestFit = null;
-                               for (var i = 0; i < this.intelligence.length; i++) {
-
-                                   var startStage = this.intelligence[i].getAttribute('stage');
+                               for (var i = 0; i < arr.length; i++) {
+                                   var startStage = arr[i].getAttribute('stage');
                                    startStage = parseInt(startStage, 10) || 0;
-                                   if (startStage > bestFitStage && startStage <= this.stage)
- {
-
-                                       bestFit = $(this.intelligence[i]).text();
-
+                                   if (startStage > bestFitStage && startStage <= this.stage) {
+                                       bestFit = $(arr[i]).text();
                                        bestFitStage = startStage;
-
                                    }
-
                                }
-
-                               return bestFit || eIntelligence.AVERAGE;
-
+                               return bestFit;
                            },
+                           getIntelligence: function () {
+                               return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
+                           },
+                           updateLabel: function () {
+                               if (this.labels) this.label = this.getByStage(this.labels);
+                           }
                        };
 
 	initPlayerState(newPlayerObject);
@@ -156,6 +151,7 @@ function initPlayerState(player) {
 		player.state = parseDialogue($(player.xml).find('start'), [PLAYER_NAME], [players[HUMAN_PLAYER].label]);
 		loadOpponentWardrobe(player);
 	}
+	player.updateLabel();
 }
 
 /**********************************************************************
@@ -344,6 +340,12 @@ function getRandomNumber (min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
 }
 
+/************************************************************
+ * Changes the first letter in a string to upper case.
+ ************************************************************/
+String.prototype.initCap = function() {
+	return this.substr(0, 1).toUpperCase() + this.substr(1);
+}
 
 /**********************************************************************
  * Returns the width of the visible screen in pixels.

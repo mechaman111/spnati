@@ -301,6 +301,7 @@ function loadOpponentMeta (folder, targetArray, index, onComplete) {
             onComplete();
       		},
       		error: function(err) {
+				console.log("Failed reading \""+folder+"\"");
       			if (index !== undefined) {
       				targetArray[index] = null;
       			}
@@ -937,7 +938,7 @@ function updateSelectionVisuals () {
             $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
 
             /* update label */
-            $selectLabels[i-1].html(players[i].label);
+            $selectLabels[i-1].html(players[i].label.initCap());
 
             /* change the button */
             if(slot_is_loading[i-1]) {

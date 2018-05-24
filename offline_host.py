@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Note: this script can be used to host a small, local web server using bottle
 # that can be used for testing.

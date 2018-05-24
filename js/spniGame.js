@@ -181,7 +181,7 @@ function updateGameVisual (player) {
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
 
             /* update label */
-            $gameLabels[player].html(players[player].label);
+            $gameLabels[player].html(players[player].label.initCap());
 
             /* check silence */
             if (chosenState.silent) {
@@ -440,9 +440,6 @@ function continueDealPhase () {
     if (!players[HUMAN_PLAYER].out) {
         showHand(HUMAN_PLAYER);
     }
-    for (var i = 1; i < players.length; i++) {
-        hideHand(i);
-    }
 
     /* enable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
@@ -655,7 +652,7 @@ function handleGameOver() {
 				break;
 			}
 		}
-		for (var i = 0; i < players.length; i++){
+		for (var i = 1; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
 			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
 		}
