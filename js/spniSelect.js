@@ -872,6 +872,10 @@ function advanceSelectScreen () {
     if(sw_is_available()) {
         /* Ask SW to preload all unique image files for all characters in the game. */
         for(var i=0;i<players.length;i++) {
+            if(!players[i]) {
+                continue;
+            }
+
             var xml = players[i].xml;
         	if (!xml) {
                 continue;
