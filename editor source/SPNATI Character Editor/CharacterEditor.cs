@@ -596,7 +596,7 @@ namespace SPNATI_Character_Editor
 				return;
 			if (tabControl.SelectedTab == tabDialogue)
 			{
-				if (_selectedCharacter.Layers <= 2)
+				if (_selectedCharacter.Layers < 2)
 				{
 					MessageBox.Show("You need to add at least two articles of clothing before adding dialogue.");
 					e.Cancel = true;
@@ -1046,7 +1046,7 @@ namespace SPNATI_Character_Editor
 				grpCase.Enabled = false;
 				return;
 			}
-			if (_selectedCharacter.Layers <= 2)
+			if (_selectedCharacter.Layers < 2)
 				return;
 			_populatingTree = true;
 
