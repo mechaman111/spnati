@@ -24,8 +24,10 @@ namespace SPNATI_Character_Editor
 			}
 			lines.Add("gender=" + character.Gender);
 			lines.Add("size=" + character.Size);
-			if (character.Intelligence.Count > 0)
-				lines.Add("intelligence=" + character.Intelligence[0].Value); //make_xml.py doesn't support multi-stage intelligence yet
+			foreach (StageSpecificValue intelligence in character.Intelligence)
+			{
+				lines.Add("intelligence=" + intelligence.Value + (intelligence.Stage != 0 ? "," + intelligence.Stage : ""));
+			}
 			lines.Add("");
 			lines.Add("#Number of phases to \"finish\" masturbating");
 			lines.Add("timer=" + character.Stamina);
