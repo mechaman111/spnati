@@ -1775,8 +1775,6 @@ namespace SPNATI_Character_Editor
 						needRegeneration = true;
 				}
 				
-				Trigger caseTrigger = TriggerDatabase.GetTrigger(c.Tag);
-
 				#region Target tab
 				if (trigger.HasTarget)
 				{
@@ -1785,8 +1783,7 @@ namespace SPNATI_Character_Editor
 					c.TargetHand = ReadComboBox(cboTargetHand);
 					c.Filter = ReadComboBox(cboLineFilter);
 					c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
-					c.ConsecutiveLosses = ReadRange(caseTrigger != null && caseTrigger.HasTarget ? valLosses : valOwnLosses,
-													caseTrigger != null && caseTrigger.HasTarget ? valMaxLosses : valMaxOwnLosses);
+					c.ConsecutiveLosses = ReadRange(valLosses, valMaxLosses);
 					c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
 					c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
 				}
@@ -1816,6 +1813,10 @@ namespace SPNATI_Character_Editor
 				c.NotSaidMarker = ReadComboBox(cboNotMarker);
 				c.HasHand = ReadComboBox(cboOwnHand);
 				c.TimeInStage = ReadRange(valOwnTimeInStage, valMaxOwnTimeInStage);
+				if (!trigger.HasTarget)
+				{
+					c.ConsecutiveLosses = ReadRange(valOwnLosses, valMaxOwnLosses);
+				}
 				#endregion
 
 				#region Misc tab
