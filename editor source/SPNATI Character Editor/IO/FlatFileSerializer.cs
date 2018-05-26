@@ -664,6 +664,8 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+			character.Behavior.EnsureDefaults(character);
+			character.Behavior.BuildWorkingCases(character);
 		}
 
 		private static Clothing MakeClothing(string value)
