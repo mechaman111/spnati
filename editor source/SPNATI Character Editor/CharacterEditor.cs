@@ -394,6 +394,7 @@ namespace SPNATI_Character_Editor
 		private void PopulateCharacterFields()
 		{
 			txtLabel.Text = _selectedCharacter.Label;
+			LoadLabels();
 			txtFirstName.Text = _selectedCharacter.FirstName;
 			txtLastName.Text = _selectedCharacter.LastName;
 			cboSize.SelectedItem = _selectedCharacter.Size;
@@ -430,11 +431,25 @@ namespace SPNATI_Character_Editor
 		private void LoadIntelligence()
 		{
 			gridAI.Rows.Clear();
-			foreach (Intelligence i in _selectedCharacter.Intelligence)
+			foreach (StageSpecificValue i in _selectedCharacter.Intelligence)
 			{
 				DataGridViewRow row = gridAI.Rows[gridAI.Rows.Add()];
 				row.Cells["ColAIStage"].Value = i.Stage;
-				row.Cells["ColDifficulty"].Value = i.Level;
+				row.Cells["ColDifficulty"].Value = i.Value;
+			}
+		}
+
+		/// <summary>
+		/// Populates the advanced labels grid
+		/// </summary>
+		private void LoadLabels()
+		{
+			gridLabels.Rows.Clear();
+			foreach (StageSpecificValue i in _selectedCharacter.Labels)
+			{
+				DataGridViewRow row = gridLabels.Rows[gridLabels.Rows.Add()];
+				row.Cells["ColLabelsStage"].Value = i.Stage;
+				row.Cells["ColLabelsLabel"].Value = i.Value;
 			}
 		}
 
@@ -446,7 +461,6 @@ namespace SPNATI_Character_Editor
 			if (_selectedCharacter == null)
 				return;
 			Cursor.Current = Cursors.WaitCursor;
-			_selectedCharacter.Label = txtLabel.Text;
 			_selectedCharacter.FirstName = txtFirstName.Text;
 			_selectedCharacter.LastName = txtLastName.Text;
 			_selectedCharacter.Stamina = (int)valRounds.Value;
@@ -459,6 +473,7 @@ namespace SPNATI_Character_Editor
 			_selectedCharacter.Metadata.Artist = txtArtist.Text;
 			SaveLayer();
 			SaveTags();
+			SaveLabels();
 			SaveIntelligence();
 			SaveCase(false);
 			if (tabControl.SelectedTab == tabMarkers)
@@ -507,7 +522,27 @@ namespace SPNATI_Character_Editor
 				int stage;
 				if (int.TryParse(stageString, out stage))
 				{
-					_selectedCharacter.Intelligence.Add(new Intelligence(stage, level));
+					_selectedCharacter.Intelligence.Add(new StageSpecificValue(stage, level));
+				}
+			}
+		}
+
+		//Saves the Labels grid into the current character
+		private void SaveLabels()
+		{
+			_selectedCharacter.Labels.Clear();
+			for (int i = 0; i < gridLabels.Rows.Count; i++)
+			{
+				DataGridViewRow row = gridLabels.Rows[i];
+				string label = row.Cells["ColLabelsLabel"].Value?.ToString();
+				string stageString = row.Cells["ColLabelsStage"].Value?.ToString();
+				if (string.IsNullOrEmpty(label))
+					continue;
+				stageString = stageString ?? string.Empty;
+				int stage;
+				if (int.TryParse(stageString, out stage))
+				{
+					_selectedCharacter.Labels.Add(new StageSpecificValue(stage, label));
 				}
 			}
 		}
@@ -2512,6 +2547,26 @@ namespace SPNATI_Character_Editor
 			if (wizard.Modified)
 			{
 				GenerateDialogueTree(false);	
+			}
+		}
+
+		private void txtLabel_Validated(object sender, EventArgs e)
+		{
+			foreach (DataGridViewRow row in gridLabels.Rows)
+			{
+				if (row.Cells["ColLabelsStage"].Value?.ToString() == "0")
+				{
+					row.Cells["ColLabelsLabel"].Value = txtLabel.Text;
+					return;
+				}
+			}
+			gridLabels.Rows.Add(new string[] { "0", txtLabel.Text });
+		}
+
+		private void gridLabels_CellValidated(object sender, DataGridViewCellEventArgs e)
+		{
+			if (gridLabels.Rows[e.RowIndex].Cells["ColLabelsStage"].ToString() == "0") {
+				txtLabel.Text = gridLabels.Rows[e.RowIndex].Cells["ColLabelsLabel"].ToString();
 			}
 		}
 	}

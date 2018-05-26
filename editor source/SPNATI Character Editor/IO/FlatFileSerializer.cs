@@ -18,11 +18,14 @@ namespace SPNATI_Character_Editor
 			lines.Add("#required for behaviour.xml");
 			lines.Add("first=" + character.FirstName);
 			lines.Add("last=" + character.LastName);
-			lines.Add("label=" + character.Label);
+			foreach (StageSpecificValue label in character.Labels)
+			{
+				lines.Add("label=" + label.Value + (label.Stage != 0 ? "," + label.Stage : ""));
+			}
 			lines.Add("gender=" + character.Gender);
 			lines.Add("size=" + character.Size);
 			if (character.Intelligence.Count > 0)
-				lines.Add("intelligence=" + character.Intelligence[0].Level); //make_xml.py doesn't support multi-stage intelligence yet
+				lines.Add("intelligence=" + character.Intelligence[0].Value); //make_xml.py doesn't support multi-stage intelligence yet
 			lines.Add("");
 			lines.Add("#Number of phases to \"finish\" masturbating");
 			lines.Add("timer=" + character.Stamina);
@@ -486,17 +489,17 @@ namespace SPNATI_Character_Editor
 						{
 							string[] pieces = value.Split(',');
 							int intStage;
-							var intelligence = new Intelligence();
+							var intelligence = new StageSpecificValue();
 							if (int.TryParse(pieces[1], out intStage))
 							{
-								intelligence.Level = pieces[0];
+								intelligence.Value = pieces[0];
 								intelligence.Stage = intStage;
 								character.Intelligence.Add(intelligence);
 							}
 						}
 						else
 						{
-							character.Intelligence.Add(new Intelligence(0, value));
+							character.Intelligence.Add(new StageSpecificValue(0, value));
 						}
 						break;
 					case "timer":

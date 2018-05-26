@@ -38,6 +38,9 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterEditor));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -257,6 +260,11 @@
 			this.epilogueEditor = new SPNATI_Character_Editor.Controls.EpilogueEditor();
 			this.tabMarkers = new System.Windows.Forms.TabPage();
 			this.markerGrid = new SPNATI_Character_Editor.Controls.MarkerGrid();
+			this.tabAdvanced = new System.Windows.Forms.TabPage();
+			this.gridLabels = new System.Windows.Forms.DataGridView();
+			this.colLabelsStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colLabelsLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.lblStageLabels = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
 			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -313,6 +321,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).BeginInit();
 			this.tabEndings.SuspendLayout();
 			this.tabMarkers.SuspendLayout();
+			this.tabAdvanced.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
 			this.splitMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -568,6 +578,7 @@
 			this.txtLabel.Name = "txtLabel";
 			this.txtLabel.Size = new System.Drawing.Size(100, 20);
 			this.txtLabel.TabIndex = 3;
+			this.txtLabel.Validated += new System.EventHandler(this.txtLabel_Validated);
 			// 
 			// label2
 			// 
@@ -730,6 +741,7 @@
 			this.tabControl.Controls.Add(this.tabDialogue);
 			this.tabControl.Controls.Add(this.tabEndings);
 			this.tabControl.Controls.Add(this.tabMarkers);
+			this.tabControl.Controls.Add(this.tabAdvanced);
 			this.tabControl.Location = new System.Drawing.Point(12, 51);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -2801,6 +2813,81 @@
 			this.markerGrid.Size = new System.Drawing.Size(931, 662);
 			this.markerGrid.TabIndex = 0;
 			// 
+			// tabAdvanced
+			// 
+			this.tabAdvanced.Controls.Add(this.gridLabels);
+			this.tabAdvanced.Controls.Add(this.lblStageLabels);
+			this.tabAdvanced.Location = new System.Drawing.Point(4, 22);
+			this.tabAdvanced.Name = "tabAdvanced";
+			this.tabAdvanced.Padding = new System.Windows.Forms.Padding(3);
+			this.tabAdvanced.Size = new System.Drawing.Size(937, 668);
+			this.tabAdvanced.TabIndex = 6;
+			this.tabAdvanced.Text = "Advanced";
+			this.tabAdvanced.UseVisualStyleBackColor = true;
+			// 
+			// gridLabels
+			// 
+			this.gridLabels.AllowUserToResizeColumns = false;
+			this.gridLabels.AllowUserToResizeRows = false;
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridLabels.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+			this.gridLabels.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridLabels.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colLabelsStage,
+            this.colLabelsLabel});
+			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridLabels.DefaultCellStyle = dataGridViewCellStyle11;
+			this.gridLabels.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+			this.gridLabels.Location = new System.Drawing.Point(119, 6);
+			this.gridLabels.Name = "gridLabels";
+			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridLabels.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+			this.gridLabels.RowHeadersVisible = false;
+			this.gridLabels.Size = new System.Drawing.Size(226, 111);
+			this.gridLabels.TabIndex = 83;
+			this.gridLabels.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridLabels_CellValidated);
+			// 
+			// colLabelsStage
+			// 
+			this.colLabelsStage.HeaderText = "Stage";
+			this.colLabelsStage.MinimumWidth = 50;
+			this.colLabelsStage.Name = "colLabelsStage";
+			this.colLabelsStage.Width = 50;
+			// 
+			// colLabelsLabel
+			// 
+			this.colLabelsLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.colLabelsLabel.HeaderText = "Label";
+			this.colLabelsLabel.Name = "colLabelsLabel";
+			this.colLabelsLabel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			// 
+			// lblStageLabels
+			// 
+			this.lblStageLabels.AutoSize = true;
+			this.lblStageLabels.Location = new System.Drawing.Point(8, 10);
+			this.lblStageLabels.Name = "lblStageLabels";
+			this.lblStageLabels.Size = new System.Drawing.Size(99, 13);
+			this.lblStageLabels.TabIndex = 82;
+			this.lblStageLabels.Text = "Vary label by stage:";
+			// 
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2992,6 +3079,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).EndInit();
 			this.tabEndings.ResumeLayout(false);
 			this.tabMarkers.ResumeLayout(false);
+			this.tabAdvanced.ResumeLayout(false);
+			this.tabAdvanced.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).EndInit();
 			this.splitMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -3233,6 +3323,11 @@
 		private Controls.WardrobeEditor wardrobeEditor;
 		private System.Windows.Forms.Label lblOffline;
 		private System.Windows.Forms.Label lblIncomplete;
+		private System.Windows.Forms.TabPage tabAdvanced;
+		private System.Windows.Forms.DataGridView gridLabels;
+		private System.Windows.Forms.Label lblStageLabels;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsStage;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsLabel;
 	}
 }
 
