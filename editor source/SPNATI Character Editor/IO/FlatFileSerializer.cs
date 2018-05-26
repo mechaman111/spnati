@@ -637,6 +637,11 @@ namespace SPNATI_Character_Editor
 			foreach (Case generic in genericCases)
 			{
 				//Add a case to every stage that doesn't already have this case
+				List<Stage> stages = character.Behavior.Stages;
+				while (character.Behavior.Stages.Count < character.Layers + Clothing.ExtraStages)
+				{
+					stages.Add(new Stage(stages.Count));
+				}
 				foreach (Stage stage in character.Behavior.Stages)
 				{
 					if (TriggerDatabase.UsedInStage(generic.Tag, character, stage.Id))
