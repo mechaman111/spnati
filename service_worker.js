@@ -155,6 +155,7 @@ self.addEventListener('fetch', function(event) {
                     }
                 } else {
                     var net_response = await fetch(event.request);
+                    var content_length = net_response.headers.get('Content-Length');
 
                     if(net_response.ok) {
                         var cloned_response = net_response.clone();
@@ -164,9 +165,9 @@ self.addEventListener('fetch', function(event) {
                              * I don't know why that happens.
                              */
                             var data = await cloned_response.blob();
-                            var expected_content_length = parseInt(cloned_response.headers.get('Content-Length'), 10);
-                            if(data.size === expected_content_length) {
-                                if(debug_active && verbose) console.log("[SW] Verified response content length ("+cloned_response.headers.get('Content-Length')+" bytes)");
+                            var expected_content_length = parseInt(content_length, 10);
+                            if(content_length && data.size === expected_content_length) {
+                                if(debug_active && verbose) console.log("[SW] Verified response content length ("+content_length+" bytes)");
                                 cache.put(event.request, new Response(
                                     data, {
                                         status: cloned_response.status,
@@ -175,11 +176,10 @@ self.addEventListener('fetch', function(event) {
                                     }
                                 ));
                             } else {
-                                console.error("[SW] Got invalid response for "+event.request.url+": expected "+cloned_response.headers.get('Content-Length')+" bytes, got "+data.size.toString()+" bytes instead");
-                                return Response.error();
+                                console.error("[SW] Got invalid response for "+event.request.url+": expected "+content_length+" bytes, got "+data.size.toString()+" bytes instead");
                             }
                         } else {
-                            if(debug_active && verbose) console.log("[SW] Not verifying response data-- cannot use Response.blob");
+                            if(debug_active && verbose) console.log("[SW] Not verifying response data");
                             cache.put(event.request, cloned_response);
                         }
                     }
