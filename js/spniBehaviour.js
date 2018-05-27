@@ -141,7 +141,7 @@ function loadBehaviour (folder, callFunction, slot) {
                 });
             }
 
-            var newPlayer = createNewPlayer(folder, first, last, label, gender, size, intelligence, Number(timer), tagsArray, xml);
+            var newPlayer = createNewPlayer(folder, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, xml);
             
 			callFunction(newPlayer, slot);
 		}
