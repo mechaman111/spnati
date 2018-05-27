@@ -175,9 +175,9 @@ self.addEventListener('fetch', function(event) {
                                         headers: cloned_response.headers
                                     }
                                 ));
-                            } else {
+                            } else if(content_length != null) {
                                 console.error("[SW] Got invalid response for "+event.request.url+": expected "+content_length+" bytes, got "+data.size.toString()+" bytes instead");
-                            }
+                            } // if content_length == null then the request was cross-origin and we can't access the Content-Length header
                         } else {
                             if(debug_active && verbose) console.log("[SW] Not verifying response data");
                             cache.put(event.request, cloned_response);
