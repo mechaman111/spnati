@@ -3,9 +3,13 @@ pages:
   script:
   # Evidently it's faster to copy everything and delete what we don't need 
   # than it is to just copy what we need...
+  #
+  # FarawayVision [05/30/2018] -- the deletion step deletes the JS and CSS files that
+  # allow Monika's effects to work properly. So we copy those back afterwards.
   - mkdir .public
   - cp -r css fonts img js player opponents index.html config.xml .public
   - find .public/opponents -type f ! \( -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" \) -delete
+  - cp -r opponents/monika/monika.js opponents/monika/js opponents/monika/css .public/opponents/monika
   - mv .public public
   artifacts:
     paths:
