@@ -54,6 +54,15 @@ def write_report(summary_data, failed_lines, fname, report_out):
     report_out.write("Passed: {}\n".format(total_lines - total_failed))
     report_out.write("Failed: {}\n".format(total_failed))
 
+def get_state_text(state):
+    # Get the complete inner text of the dialogue,
+    # along with all sub-tags
+    raw_text = (state.text or '')
+    for subelem in state:
+        raw_text += ET.tostring(subelem, encoding='unicode')
+    raw_text += (state.tail or '')
+    return raw_text
+
 def check_file(fname):
     print("Checking: {}".format(fname))
     
@@ -64,6 +73,26 @@ def check_file(fname):
     total_failed = 0
     
     failed_lines = []
+    
+    def check_state(stage_no, tag, i, state):
+        nonlocal total_lines, total_failed
+        
+        raw_text = get_state_text(state)
+        
+        if len(raw_text) == 0:
+            print("Stage {}, case {}: No text found for line {}, skipping...".format(stage_no, tag, i))
+        else:
+            total_lines += 1
+            cleaned_text = cleaner.clean(raw_text)
+            
+            if raw_text != cleaned_text:
+                print("Stage {}, case {}: Line {} failed validation".format(stage_no, tag, i))
+                total_failed += 1
+                failed_lines.append((stage_no, tag, i+1, raw_text, cleaned_text))
+                
+    # check start lines:
+    for i, state in enumerate(tree.find('start').iter('state')):
+        check_state(0, 'start', i, state)
         
     for stage in tree.iter('stage'):
         stage_no = int(stage.get('id'))
@@ -71,27 +100,8 @@ def check_file(fname):
         for case in stage.iter('case'):
             tag = case.get('tag')
             
-            for i, state in enumerate(case.iter('state')):                
-                # Get the complete inner text of the dialogue,
-                # along with all sub-tags
-                raw_text = (state.text or '')
-                for subelem in state:
-                    raw_text += ET.tostring(subelem, encoding='unicode')
-                raw_text += (state.tail or '')
-                
-                if len(raw_text) == 0:
-                    print("Stage {}, case {}: No text found for line {}, skipping...".format(stage_no, tag, i))
-                    continue
-                
-                total_lines += 1
-                
-                cleaned_text = cleaner.clean(raw_text)
-                
-                if raw_text != cleaned_text:
-                    total_failed += 1
-                    print("Stage {}, case {}: Line {} failed validation".format(stage_no, tag, i))
-                    
-                    failed_lines.append((stage_no, tag, i+1, raw_text, cleaned_text))
+            for i, state in enumerate(case.iter('state')): 
+                check_state(stage_no, tag, i, state)
                     
     print("Checked {} lines in total.".format(total_lines))
     print("Passed: {}".format(total_lines - total_failed))
@@ -137,6 +147,6 @@ if __name__ == "__main__":
 
     # single-file mode
     summary_data, failed_lines = check_file(xml_filename)
-    with open(report_fname, 'w') as report_out:
+    with open(report_filename, 'w') as report_out:
         write_report_header(report_out)
         write_report(summary_data, failed_lines, xml_filename, report_out)
