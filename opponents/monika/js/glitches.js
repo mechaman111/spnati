@@ -25,6 +25,14 @@ monika.schedule_when_loaded = function(jquery_elem, timeout_callback, delay) {
     })
 }
 
+monika.when_character_loaded = function(slot, callback) {
+    return monika.when_loaded($gameImages[slot-1], callback);
+}
+
+monika.schedule_when_character_loaded = function(slot, callback, delay) {
+    return monika.schedule_when_loaded($gameImages[slot-1], callback, delay);
+}
+
 monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, start_y, affected_height) {
     if(!glitchTime) glitchTime = 500;
     if(!normalTime) normalTime = 500;
@@ -79,10 +87,9 @@ monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, st
 
 /* Cause visual glitching in a given player's image. Will be reset as soon as they change poses.  */
 monika.glitchCharacter = function(slot, start_y, affected_height) {
-    var cv = monika.glitchElement($gameImages[slot-1], start_y, affected_height);
-    monika.active_effects.character_glitch[slot-1] = cv;
-
-    return cv;
+    monika.when_character_loaded(slot, function () {
+        monika.active_effects.character_glitch[slot-1] = monika.glitchElement($gameImages[slot-1], start_y, affected_height);
+    });
 }
 
 monika.undoCharacterGlitch = function(slot) {
