@@ -37,67 +37,92 @@ monika.display_dialogue = function(pose, html) {
 monika.extended_dialogue_continue = function () {
     if(!monika.current_ext_dialogue) {
         /* Try to bail as much as we can */
-        monika.display_dialogue("exasperated", "Oh, jeez... something must have broken really, really badly. I'm not actually sure what I'm supposed to be saying right now.");
-        $mainButton.html("Continue");
-        allowProgression();
-        return;
+        try {
+            monika.display_dialogue("exasperated", "Oh, jeez... something must have broken really, really badly. I'm not actually sure what I'm supposed to be saying right now. Sorry!");
+        } catch (e) {
+            console.error(e);
+        } finally {
+            $mainButton.html("Continue");
+            allowProgression();
+        }
     } else {
-        /* prevent double clicking on main button */
-        $mainButton.attr('disabled', true);
-        actualMainButtonState = true;
-        
-        var curr_info = monika.current_ext_dialogue;
-        var next_line = monika.ext_dialogues[curr_info.id][curr_info.line];
-        
-        monika.display_dialogue(next_line[0], next_line[1]);
-        curr_info.line++;
-        
-        if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
-            monika.extended_dialogue_end();
-        } else {
-            setTimeout(allowProgression, 500);
+        try {
+            /* prevent double clicking on main button */
+            $mainButton.attr('disabled', true);
+            actualMainButtonState = true;
+            
+            var curr_info = monika.current_ext_dialogue;
+            var next_line = monika.ext_dialogues[curr_info.id][curr_info.line];
+            
+            monika.display_dialogue(next_line[0], next_line[1]);
+            curr_info.line++;
+            
+            if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
+                monika.extended_dialogue_end();
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            allowProgression();
         }
     }
 }
 
 monika.extended_dialogue_start = function (id) {
-    var monika_slot = monika.find_slot();
-    
-    console.log("[Monika] Beginning extended dialogue with ID "+id);
-    
-    monika.current_ext_dialogue = {
-        'id': id,
-        'line': 0,
-        'prev_context': $mainButton.html(),
-    }
-    
-    if(AUTO_FADE) forceTableVisibility(false);
-    for(var i=1;i<players.length;i++) {
-        if(i !== monika_slot) {
-            $gameBubbles[i-1].hide();
-            monika.glitchCharacter(i);
+    try {
+        console.log("[Monika] Beginning extended dialogue with ID "+id);
+        
+        monika.current_ext_dialogue = {
+            'id': id,
+            'line': 0,
+            'prev_context': $mainButton.html(),
         }
+        
+        if(AUTO_FADE) forceTableVisibility(false);
+        
+        var monika_slot = monika.find_slot();
+        
+        for(var i=1;i<players.length;i++) {
+            if(i !== monika_slot) {
+                $gameBubbles[i-1].hide();
+                monika.glitchCharacter(i);
+            }
+        }
+        
+        $gameBubbles[monika_slot-1].show();
+    } catch(e) {
+        console.error(e);
+    } finally {
+        $mainButton.html("Talking...");
+        monika.extended_dialogue_continue();
     }
-    $gameBubbles[monika_slot-1].show();
-    
-    $mainButton.html("Talking...");
-    
-    monika.extended_dialogue_continue();
 }
 
 monika.extended_dialogue_end = function() {
-    var prev_context = monika.current_ext_dialogue.prev_context;
-    monika.current_ext_dialogue = null;
+    var prev_context = undefined;
     
-    if(AUTO_FADE) forceTableVisibility(true);
-    $mainButton.html(prev_context);
-    
-    for(var i=1;i<players.length;i++) {
-        if(players[i]) {
-            $gameBubbles[i-1].show();
-            monika.undoCharacterGlitch(i);
+    try {
+        prev_context = monika.current_ext_dialogue.prev_context;
+            
+        if(AUTO_FADE) forceTableVisibility(true);
+
+        monika.current_ext_dialogue = null; 
+
+        for(var i=1;i<players.length;i++) {
+            if(players[i]) {
+                $gameBubbles[i-1].show();
+                monika.undoCharacterGlitch(i);
+            }
         }
+    } catch (e) {
+        console.error(e);
+    } finally {
+        if(prev_context) {
+            $mainButton.html(prev_context);
+        } else {
+            $mainButton.html("Continue");
+        }
+        
+        allowProgression();
     }
-    
-    allowProgression();
 }
