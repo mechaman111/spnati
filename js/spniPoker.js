@@ -221,15 +221,15 @@ function clearHand (player) {
  *************************************************************/
 function stopCardAnimations () {
     $('.shown-card').stop(true, true);
-    for (var p = 0; p < players.length; p++) {
-        if (players[p].hand) {
+    players.forEach(function(player) {
+        if (player.hand) {
             for (var i = 0; i < CARDS_PER_HAND; i++) {
-                if (players[p].hand.cards[i]) {
-                    clearTimeout(players[p].hand.cards[i].timeoutID);
+                if (player.hand.cards[i]) {
+                    clearTimeout(player.hand.cards[i].timeoutID);
                 }
             }
         }
-    }
+    });
 }
 
 
