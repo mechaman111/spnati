@@ -421,7 +421,7 @@ function updateGroupSelectScreen () {
             }
 
             $groupLayers[i].show();
-            $groupLayers[i].attr("src", "opponents/layers" + opponent.layers + ".png");
+            $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
 
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
 			$groupImages[i].show();
