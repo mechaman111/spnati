@@ -110,15 +110,15 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
 
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the 
- * given opponent source folder.
+ * given opponent id.
  *
  * The callFunction parameter must be a function capable of 
  * receiving a new player object and a slot number.
  ************************************************************/
-function loadBehaviour (folder, callFunction, slot) {
+function loadBehaviour (id, callFunction, slot) {
 	$.ajax({
         type: "GET",
-		url: folder + "behaviour.xml",
+		url: 'opponents/' + id + "/behaviour.xml",
 		dataType: "text",
 		success: function(xml) {
             var first = $(xml).find('first').text();
@@ -137,7 +137,7 @@ function loadBehaviour (folder, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(folder, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, xml);
+            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, xml);
             
 			callFunction(newPlayer, slot);
 		}
@@ -326,9 +326,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// target (priority = 300)
 			if (opp !== null && typeof target !== typeof undefined && target !== false) {
             target = target;
-				var oppID = opp.folder.substr(0, opp.folder.length - 1);
-				oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
-				if (target === oppID) {
+				if (target === opp.id) {
 					totalPriority += 300; 	// priority
 				}
 				else {
@@ -448,9 +446,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 				var j = 0;
 				for (j = 0; j < players.length && foundEm === false; j++) {
 					if (players[j] !== null && opp !== players[j]) {
-						var oppID = players[j].folder.substr(0, players[j].folder.length - 1);
-						oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
-						if (alsoPlaying === oppID) {
+						if (alsoPlaying === players[j].id) {
 							totalPriority += 100; 	// priority
 							foundEm = true;
                             break;

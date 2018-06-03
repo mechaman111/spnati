@@ -247,7 +247,7 @@ function validateTitleScreen () {
     wearClothing();
 
     /* set human id */
-    players[HUMAN_PLAYER].folder = "opponents/human/";
+    players[HUMAN_PLAYER].id = "human";
 
 	save.savePlayer();
 	console.log(players[0]);

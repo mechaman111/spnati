@@ -25,7 +25,7 @@ var IMG = 'img/';
 var MALE_SYMBOL = IMG + 'male.png';
 var FEMALE_SYMBOL = IMG + 'female.png';
 
-
+var includedOpponentStatuses = {};
 
 
 /* game table */
@@ -98,9 +98,10 @@ $previousScreen = null;
  * state (array of PlayerState objects), their sequential states.
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
-function createNewPlayer (folder, first, last, labels, gender, size, intelligence, timer, tags, xml) {
-    var newPlayerObject = {folder:folder,
-                           first:first,
+function createNewPlayer (id, first, last, labels, gender, size, intelligence, timer, tags, xml) {
+    var newPlayerObject = {id:id,
+                           folder:'opponents/'+id+'/',
+						   first:first,
                            last:last,
                            labels:labels,
 						   size:size,
@@ -173,8 +174,9 @@ function initialSetup () {
     /* load the all content */
     loadTitleScreen();
     selectTitleCandy();
-	loadSelectScreen();
-    loadConfigFile();
+	/* Make sure that the config file is loaded before processing the
+	   opponent list, so that includedOpponentStatuses is populated. */
+    loadConfigFile().always(loadSelectScreen);
 	save.loadCookie();
 
 	/* show the title screen */
@@ -184,7 +186,7 @@ function initialSetup () {
 
 
 function loadConfigFile () {
-	$.ajax({
+	return $.ajax({
         type: "GET",
 		url: "config.xml",
 		dataType: "text",
@@ -199,6 +201,10 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
+			$(xml).find('include-status').each(function() {
+				includedOpponentStatuses[$(this).text()] = true;
+				console.log("Including", $(this).text(), "opponents");
+			});
 		}
 	});
 }
