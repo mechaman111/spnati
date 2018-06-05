@@ -506,12 +506,15 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by name
-        if (name != null && !loadedOpponents[i].label.toLowerCase().includes(name) && !loadedOpponents[i].first.toLowerCase().includes(name) && !loadedOpponents[i].last.toLowerCase().includes(name)) {
+        if (name
+            && loadedOpponents[i].label.toLowerCase().indexOf(name) < 0
+            && loadedOpponents[i].first.toLowerCase().indexOf(name) < 0
+            && loadedOpponents[i].last.toLowerCase().indexOf(name) < 0) {
             continue;
         }
 
         // filter by source
-        if (source != null && !loadedOpponents[i].source.toLowerCase().includes(source)) {
+        if (source && !loadedOpponents[i].source.toLowerCase().includes(source)) {
             continue;
         }
 
