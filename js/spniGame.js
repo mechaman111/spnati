@@ -296,7 +296,8 @@ function implementAIAction () {
 	if (hands[currentTurn].strength == HIGH_CARD) {
 		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
-	} else if (hands[currentTurn].strength <= TWO_PAIR) {
+	} else if (hands[currentTurn].strength == PAIR
+			   || (hands[currentTurn].strength == TWO_PAIR && getNumPlayersInStage(STAGE_ALIVE) <= 2)) {
 		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	} else {
