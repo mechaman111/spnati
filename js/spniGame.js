@@ -417,14 +417,15 @@ function checkDealLock () {
 	if (dealLock < inGame * 5) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
-        /*set up main button*/
-        if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
-            continueDealPhase()
-		else if (players[HUMAN_PLAYER].out && !ANIM_DELAY) { 
+        /* Set up main button.  If there is not pause for the human
+		   player to exchange cards, and someone is masturbating, and
+		   the card animation speed is to great, we need a pause so
+		   that the masturbation talk can be read. */
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
             $mainButton.html("Next");
             allowProgression();
         } else {
-             continueDealPhase()          
+            continueDealPhase();
         }
     }
 }
