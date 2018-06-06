@@ -199,12 +199,6 @@ function updateGameVisual (player) {
             $gameDialogues[player-1].html("");
             $gameAdvanceButtons[player-1].css({opacity : 0});
             $gameBubbles[player-1].hide();
-
-            /* hide their cards */
-            for (var i = 0; i < CARDS_PER_HAND; i++) {
-                $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-                fillCard(player, i);
-		    }
         }
     }
     else {
