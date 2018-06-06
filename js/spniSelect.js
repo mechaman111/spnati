@@ -731,6 +731,7 @@ function selectIndividualOpponent (slot) {
 function individualScreenCallback (playerObject, slot) {
     players[selectedSlot] = playerObject;
     players[selectedSlot].current = 0;
+	updateBehaviour(selectedSlot, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
 
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
@@ -806,6 +807,7 @@ function groupScreenCallback (playerObject, slot) {
 	console.log(slot +" "+playerObject);
     players[slot] = playerObject;
     players[slot].current = 0;
+	updateBehaviour(slot, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
 
 	updateSelectionVisuals();
 
@@ -975,6 +977,7 @@ function updateRandomSelection (playerObject) {
     for (var i = 0; i < players.length; i++) {
         if (!players[i]) {
             players[i] = playerObject;
+            updateBehaviour(i, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
             break;
         }
     }
