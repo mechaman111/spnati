@@ -28,7 +28,7 @@ function createNewOpponent (id, enabled, first, last, label, image, gender,
 							 description:description,
                              ending:ending,
                              layers:layers,
-                             release:parseInt(release)};
+                             release:parseInt(release, 10) || Number.POSITIVE_INFINITY};
 
 	return newOpponentObject;
 }
