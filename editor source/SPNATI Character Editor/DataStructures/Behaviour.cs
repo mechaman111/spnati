@@ -100,6 +100,8 @@ namespace SPNATI_Character_Editor
 
 		/// <summary>
 		/// Trashes all dialogue and replaces it with the default template
+		/// NB: This method is not in use. If used, should be checked if it needs
+		/// modification to support optional tags.
 		/// </summary>
 		/// <param name="character"></param>
 		public void RestoreToDefaults(Character character)
@@ -146,19 +148,19 @@ namespace SPNATI_Character_Editor
 			//Generate an index of expecte stage+tag combos
 			int layers = character.Layers + Clothing.ExtraStages;
 			Dictionary<string, HashSet<int>> requiredLineIndex = new Dictionary<string, HashSet<int>>();
-			foreach (string tag in TriggerDatabase.GetTags())
+			foreach (Trigger t in TriggerDatabase.Triggers)
 			{
-				if (tag == Trigger.StartTrigger)
+				if (t.Optional || t.Tag == Trigger.StartTrigger)
 					continue;
 				HashSet<int> stages = new HashSet<int>();
 				for (int stage = 0; stage < layers; stage++)
 				{
-					if (TriggerDatabase.UsedInStage(tag, character, stage))
+					if (TriggerDatabase.UsedInStage(t.Tag, character, stage))
 					{
 						stages.Add(stage);
 					}
 				}
-				requiredLineIndex[tag] = stages;
+				requiredLineIndex[t.Tag] = stages;
 			}
 
 			//Loop through the cases and remove any satisfied tags from the index
