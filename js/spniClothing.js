@@ -522,50 +522,10 @@ function countClothes (player) {
  * process.
  ************************************************************/ 
 function stripPlayer (player) {
-    /* count the clothing the player has remaining */
-    var clothes = countClothes(player);
-
-	/* determine the situation */
-	if (clothes > 0) {
-		/* the player has clothes left and will strip */
-		if (player == HUMAN_PLAYER) {
-			showStrippingModal();
-		} else {
-			stripAIPlayer(player);
-			/* allow progression */
-			endRound();
-		}
+	if (player == HUMAN_PLAYER) {
+		showStrippingModal();
 	} else {
-		/* the player has no clothes and will have to accept a forfeit */
-		players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
-		players[player].out = true;
-        
-        if (chosenDebug === player) {
-            chosenDebug = -1;
-            updateDebugState(showDebug);
-        }
-		
-		/* update behaviour */
-		if (player == HUMAN_PLAYER) {
-			if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-				updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
-			} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
-				updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
-			}
-			$gameClothingLabel.html("You're Masturbating...");
-            $gamePlayerCountdown.show();
-			setForfeitTimer(player);
-		} else {
-			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-			} else if (players[player].gender == eGender.FEMALE) {
-				updateAllBehaviours(player, FEMALE_START_MASTURBATING,[NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
-			}
-			updateBehaviour(player, PLAYER_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
-			setForfeitTimer(player);
-		}
-		updateAllGameVisuals();
-		
+		stripAIPlayer(player);
 		/* allow progression */
 		endRound();
 	}

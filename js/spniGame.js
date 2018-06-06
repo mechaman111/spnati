@@ -96,6 +96,7 @@ var actualMainButtonState = false;
 var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
+var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
                       
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -113,12 +114,16 @@ function loadGameScreen () {
         if (players[i] != null) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
+            $gameLabels[i].css({"background-color" : clearColour});
+            clearHand(i);
         }
         else {
             $gameOpponentAreas[i-1].hide();
             $gameBubbles[i-1].hide();
         }
     }
+    $gameLabels[HUMAN_PLAYER].css({"background-color" : clearColour});
+    clearHand(HUMAN_PLAYER);
 
     recentLoser = -1;
     currentRound = -1;
@@ -196,12 +201,6 @@ function updateGameVisual (player) {
             $gameDialogues[player-1].html("");
             $gameAdvanceButtons[player-1].css({opacity : 0});
             $gameBubbles[player-1].hide();
-
-            /* hide their cards */
-            for (var i = 0; i < CARDS_PER_HAND; i++) {
-                $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-                fillCard(player, i);
-		    }
         }
     }
     else {
@@ -279,7 +278,7 @@ function makeAIDecision () {
 	updateGameVisual(currentTurn);
 	
 	/* wait and implement AI action */
-	window.setTimeout(implementAIAction, GAME_DELAY);
+	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
 }
 
 /************************************************************
@@ -306,7 +305,7 @@ function implementAIAction () {
 	}
 	
 	/* wait and then advance the turn */
-	window.setTimeout(advanceTurn, GAME_DELAY);
+	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
 }
 
 /************************************************************
@@ -334,7 +333,7 @@ function advanceTurn () {
             updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
             updateGameVisual(currentTurn);
 
-            window.setTimeout(advanceTurn, GAME_DELAY);
+            timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
             return;
         }
     }
@@ -396,7 +395,7 @@ function startDealPhase () {
 		$gameLabels[i].css({"background-color" : clearColour});
 	}
 
-	window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
+	timeoutID = window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
 }
 
 /************************************************************
@@ -413,16 +412,17 @@ function checkDealLock () {
 	
 	/* check the deal lock */
 	if (dealLock < inGame * 5) {
-		window.setTimeout(checkDealLock, 100);
+		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
-             /*set up main button*/
-        if (players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].finished)
-            continueDealPhase()
-        else if (players[HUMAN_PLAYER].out) { 
+        /* Set up main button.  If there is not pause for the human
+		   player to exchange cards, and someone is masturbating, and
+		   the card animation speed is to great, we need a pause so
+		   that the masturbation talk can be read. */
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
             $mainButton.html("Next");
             allowProgression();
         } else {
-             continueDealPhase()          
+            continueDealPhase();
         }
     }
 }
@@ -583,12 +583,23 @@ function completeContinuePhase () {
 
 /************************************************************
  * Processes everything required to complete the strip phase
- * of a round. Makes the losing player strip or start their
- * forfeit. May also end the game if only one player remains.
+ * of a round. Makes the losing player strip.
  ************************************************************/
 function completeStripPhase () {
     /* strip the player with the lowest hand */
     stripPlayer(recentLoser);
+}
+
+/************************************************************
+ * Processes everything required to complete the strip phase of a
+ * round when the loser has no clothes left. Makes the losing player
+ * start their forfeit. May also end the game if only one player
+ * remains.
+ ************************************************************/
+function completeMasturbatePhase () {
+    /* strip the player with the lowest hand */
+    startMasturbation(recentLoser);
+    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -621,7 +632,7 @@ function endRound () {
                 $gameOpponentAreas[i-1].hide();
             }
         }
-        
+        endWaitDisplay = 0;
 		handleGameOver();
 	} else {
 		$mainButton.html("Deal");
@@ -666,11 +677,11 @@ function handleGameOver() {
         actualMainButtonState = false;
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
-        endWaitDisplay = endWaitDisplay >= 3 ? 0 : endWaitDisplay + 1;
         var dots = "";
         for (var i = 0; i < endWaitDisplay; i++) {
             dots += ".";
         }
+        endWaitDisplay = (endWaitDisplay + 1) % 4;
         
 		/* someone is still forfeiting */
 		$mainButton.html("Wait" + dots);
@@ -728,7 +739,7 @@ function advanceGameDialogue (slot) {
  ************************************************************/
 function allowProgression () {
     if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-        setTimeout(advanceGame, FORFEIT_DELAY);
+        timeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
     } else {
         $mainButton.attr('disabled', false);
         actualMainButtonState = false;
@@ -744,6 +755,7 @@ function advanceGame () {
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', true);
     actualMainButtonState = true;
+    autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
     if (tickForfeitTimers(context)) return;
@@ -756,7 +768,6 @@ function advanceGame () {
         startDealPhase();
     } else if (context == "Next") {
         /* advance to next round if human player is masturbating */
-        if (AUTO_FADE) forceTableVisibility(true);
         $mainButton.html("Exchange");
         continueDealPhase();
     } else if (context == "Exchange") {
@@ -772,13 +783,16 @@ function advanceGame () {
 		/* waiting for the loser to strip */
         if (AUTO_FADE) forceTableVisibility(false);
         completeContinuePhase();
-	} else if (context == "Strip" || context == "Masturbate") {
+	} else if (context == "Strip") {
         /* stripping the loser */
         if (AUTO_FADE) forceTableVisibility(false);
         completeStripPhase();
+    } else if (context == "Masturbate") {
+        /* making the loser start masturbating */
+        if (AUTO_FADE) forceTableVisibility(false);
+		completeMasturbatePhase();
     } else if (context.substr(0, 4) == "Wait") {
 		/* waiting for someone to finish */
-        if (AUTO_FADE) forceTableVisibility(false);
 		handleGameOver(); //No delay here
 	} else if (context == "Ending?") {
         doEpilogueModal(); //start the endings

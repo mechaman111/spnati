@@ -207,6 +207,35 @@ function hideHand (player) {
 	}
 }
 
+/************************************************************
+ * Clears the given player's hand (in preparation of a new game).
+ ************************************************************/
+function clearHand (player) {
+	if (hands[player] && hands[player].cards) {
+		for (var i = 0; i < hands[player].cards.length; i++) {
+			$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+			fillCard(player, i);
+		}
+	}
+}
+
+/*************************************************************
+ * Stops all card animations.
+ *************************************************************/
+function stopCardAnimations () {
+    $('.shown-card').stop(true, true);
+    for (var p = 0; p < players.length; p++) {
+        if (hands[p]) {
+            for (var i = 0; i < hands[p].cards.length; i++) {
+                if (hands[p].cards[i]) {
+                    clearTimeout(hands[p].cards[i].timeoutID);
+                }
+            }
+        }
+    }
+}
+
+
 /**********************************************************************
  *****                      Card Functions                        *****
  **********************************************************************/
@@ -306,13 +335,14 @@ function exchangeCards (player) {
  * Adds a short delay to the dealt card animation.
  ************************************************************/
 function delayDealtCard (player, card) {
-	window.setTimeout(function(){animateDealtCard(player, card)}, (player*(ANIM_DELAY/5)) + (card*ANIM_DELAY));
+	card.timeoutID = window.setTimeout(function(){animateDealtCard(player, card)}, (player*(ANIM_DELAY/5)) + (card*ANIM_DELAY));
 }
 
 /************************************************************
  * Animates a small card into a player's hand.
  ************************************************************/
 function animateDealtCard (player, card) {
+	card.timeoutID = undefined;
 	$clonedCard = $hiddenLargeCard.clone().prependTo($gameHiddenArea);
 	$clonedCard.addClass("shown-card");
 	$clonedCard.attr('id', 'dealt-card-'+player+'-'+card);
