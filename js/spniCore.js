@@ -261,7 +261,7 @@ function resetPlayers () {
 		}
 		timers[i] = 0;
 	}
-	updateAllBehaviours(null, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+	updateAllBehaviours(null, SELECTED);
 }
 
 /************************************************************

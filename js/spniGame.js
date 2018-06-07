@@ -133,7 +133,7 @@ function loadGameScreen () {
     chosenDebug = -1;
     updateDebugState(showDebug);
 
-    updateAllBehaviours(null, GAME_START, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+    updateAllBehaviours(null, GAME_START);
     
     /* set up the visuals */
     updateAllGameVisuals();
