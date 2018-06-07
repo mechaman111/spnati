@@ -180,23 +180,22 @@ function loadOpponentWardrobe (player) {
 function parseDialogue (caseObject, self, target) {
     var states = [];
 
-	var substitutions = {};
-	substitutions[PLAYER_NAME] = players[HUMAN_PLAYER].label;
-	if (target) {
-		substitutions[NAME] = target.label;
-		substitutions[CAPITALIZED_NAME] = target.label.initCap();
-		if (target.removedClothing) {
-			substitutions[PROPER_CLOTHING] = target.removedClothing.proper;
-			substitutions[LOWERCASE_CLOTHING] = target.removedClothing.lower;
-		}
-	} else if (self.removedClothing) {
-		substitutions[PROPER_CLOTHING] = self.removedClothing.proper;
-		substitutions[LOWERCASE_CLOTHING] = self.removedClothing.lower;
-	}
-	if (caseObject.attr('tag') == SWAP_CARDS) {
-		/* determine how many cards are being swapped */
-		substitutions[CARDS] = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
-	}
+    function substitute(placeholder) {
+        try {
+            switch (placeholder) {
+            case PLAYER_NAME: return players[HUMAN_PLAYER].label;
+            case NAME: return target.label;
+            case CAPITALIZED_NAME: return target.label.initCap();
+            case PROPER_CLOTHING: return (target||self).removedClothing.proper;
+            case LOWERCASE_CLOTHING: return (target||self).removedClothing.lower;
+            case CARDS: /* determine how many cards are being swapped */
+                return self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+            }
+        } catch (ex) {
+            console.log("Invalid substitution caused exception " + ex);
+        }
+        return placeholder;
+    }
 	
 	caseObject.find('state').each(function () {
         var image = $(this).attr('img');
@@ -204,10 +203,8 @@ function parseDialogue (caseObject, self, target) {
         var direction = $(this).attr('direction');
         var silent = $(this).attr('silent');
         var marker = $(this).attr('marker');
-        
-		for (var placeholder in substitutions) {
-			dialogue = dialogue.split(placeholder).join(substitutions[placeholder]);
-		}
+
+        dialogue = dialogue.replace(/~\w+~/g, substitute);
         
         if (silent !== null && typeof silent !== typeof undefined) {
             silent = true;
