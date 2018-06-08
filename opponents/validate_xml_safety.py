@@ -4,6 +4,7 @@ from __future__ import print_function    # in case we happen to be on python2...
 import sys
 import time
 import bleach.sanitizer
+import glob
 from behaviour_parser import ParseError, parse_file
 
 # A list of allowed HTML tags within dialogue.
@@ -115,22 +116,29 @@ def check_file(fname):
     return (stats['total_lines'], stats['total_failed']), failed_lines
 
 if __name__ == "__main__":
-    xml_filename = "behaviour.xml"
+    if len(sys.argv) < 2:
+        print("USAGE: python validate_xml_safety.py [input filename globs...]")
+        
     report_filename = "safety_validation.log"
     
-    if len(sys.argv) == 2:
-        xml_filename = sys.argv[1]
-    elif len(sys.argv) > 2:
+    files = []
+    
+    for input_glob in sys.argv[1:]:
+        files.extend(glob.glob(input_glob))
+
+    if len(files) > 1:
         # multiple file mode
+        
         report_filename = "safety_validation_multi.log"
         details_filename = "safety_validation_details.log"
-        print("Checking {} files...".format(len(sys.argv[1:])))
+        print("Checking {} files...".format(len(files)))
+        
         with open(report_filename, 'w') as summary_out:
             with open(details_filename, 'w') as details_out:
                 summary_out.write("<filename> : <validated / failed> : lines total / lines passed / lines failed\n")
                 write_report_header(details_out)
                 
-                for filename in sys.argv[1:]:
+                for filename in files:
                     try:
                         summary_data, failed_lines = check_file(filename)
                         total_lines, total_failed = summary_data
@@ -146,12 +154,11 @@ if __name__ == "__main__":
                         ))
                     except ParseError as e:
                         print("Warning: encountered error while checking {}: {}".format(filename, str(e)))
-                        summary_out.write("{} : error : {}\n".format(filename, str(e)))
-            
-        sys.exit()
-
-    # single-file mode
-    summary_data, failed_lines = check_file(xml_filename)
-    with open(report_filename, 'w') as report_out:
-        write_report_header(report_out)
-        write_report(summary_data, failed_lines, xml_filename, report_out)
+                        summary_out.write("{} : error : {}\n".format(filename, str(e)))    
+    else:
+        # single-file mode
+        xml_filename = files[0]
+        summary_data, failed_lines = check_file(xml_filename)
+        with open(report_filename, 'w') as report_out:
+            write_report_header(report_out)
+            write_report(summary_data, failed_lines, xml_filename, report_out)
