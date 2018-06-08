@@ -946,7 +946,7 @@ function updateSelectionVisuals () {
 
             /* update image */
             $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
-			$selectImages[i-1].show();
+            $selectImages[i-1].one('load', function() { $(this).show(); });
 
             /* update label */
             $selectLabels[i-1].html(players[i].label.initCap());
