@@ -75,7 +75,7 @@ $selectButtons = [$("#select-slot-button-1"),
                   $("#select-slot-button-3"),
                   $("#select-slot-button-4")];
 $selectMainButton = $("#main-select-button");
-$selectRandomButtons = [$("#select-random-button"), $("#select-random-female-button"), $("#select-random-male-button")];
+$selectRandomButtons = $("#select-random-button, #select-random-female-button, #select-random-male-button");
 $selectRemoveAllButton = $("#select-remove-all-button");
 
 /* individual select screen */
@@ -987,14 +987,10 @@ function updateSelectionVisuals () {
 
     /* if all opponents are loaded, disable fill buttons */
     if (loaded >= 4) {
-        for (var i = 0; i < $selectRandomButtons.length; i++) {
-            $selectRandomButtons[i].attr('disabled', true);
-        }
+        $selectRandomButtons.attr('disabled', true);
     }
     else {
-        for (var i = 0; i < $selectRandomButtons.length; i++) {
-            $selectRandomButtons[i].attr('disabled', false);
-        }
+        $selectRandomButtons.attr('disabled', false);
     }
 
     /* if no opponents are loaded, disable remove all button */
