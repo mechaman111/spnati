@@ -99,7 +99,7 @@ $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#
 $individualPageIndicator = $("#individual-page-indicator");
 $individualMaxPageIndicator = $("#individual-max-page-indicator");
 
-$individualCreditsButton = $('.individual-credits-btn');
+$individualCreditsButton = $('#individual-credits-button');
 
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
@@ -124,7 +124,7 @@ $groupButton = $("#group-button");
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
 
-$groupCreditsButton = $('.group-credits-btn');
+$groupCreditsButton = $('#group-credits-button');
 
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
