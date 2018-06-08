@@ -4,8 +4,7 @@ from __future__ import print_function    # in case we happen to be on python2...
 import sys
 import time
 import bleach.sanitizer
-from xml.etree.ElementTree import ParseError
-import defusedxml.ElementTree as ET
+from behaviour_parser import ParseError, parse_file
 
 # A list of allowed HTML tags within dialogue.
 #
@@ -41,9 +40,9 @@ def write_report(summary_data, failed_lines, fname, report_out):
     report_out.write("==============\n")
     report_out.write("Checking {} at {}\n".format(fname, time.asctime()))
     
-    for stage_no, tag, line, raw_text, cleaned_text in failed_lines:
+    for context, raw_text, cleaned_text in failed_lines:
         report_out.write("==============\n")
-        report_out.write("Stage {}, case {}, line {}:\n".format(stage_no, tag, line))
+        report_out.write(context+":\n")
         report_out.write(raw_text.strip()+'\n')
         report_out.write(cleaned_text.strip()+'\n')
     
@@ -54,60 +53,66 @@ def write_report(summary_data, failed_lines, fname, report_out):
     report_out.write("Passed: {}\n".format(total_lines - total_failed))
     report_out.write("Failed: {}\n".format(total_failed))
 
-def get_state_text(state):
-    # Get the complete inner text of the dialogue,
-    # along with all sub-tags
-    raw_text = (state.text or '')
-    for subelem in state:
-        raw_text += ET.tostring(subelem, encoding='unicode')
-    raw_text += (state.tail or '')
-    return raw_text
-
 def check_file(fname):
     print("Checking: {}".format(fname))
-    
-    tree = ET.parse(fname)
+    tree = parse_file(fname)
     cleaner = bleach.sanitizer.Cleaner(allowed_tags, allowed_attributes, allowed_styles, allowed_protocols)
     
-    total_lines = 0
-    total_failed = 0
+    stats = {
+        'total_lines': 0,
+        'total_failed': 0
+    }
     
     failed_lines = []
     
-    def check_state(stage_no, tag, i, state):
-        nonlocal total_lines, total_failed
-        
-        raw_text = get_state_text(state)
-        
-        if len(raw_text) == 0:
-            print("Stage {}, case {}: No text found for line {}, skipping...".format(stage_no, tag, i))
+    def check_text(raw_text, context):
+        if raw_text is None or len(raw_text) == 0:
+            print("{:s}: No text found, skipping...".format(context))
         else:
-            total_lines += 1
+            stats['total_lines'] = stats['total_lines'] + 1
             cleaned_text = cleaner.clean(raw_text)
             
             if raw_text != cleaned_text:
-                print("Stage {}, case {}: Line {} failed validation".format(stage_no, tag, i))
-                total_failed += 1
-                failed_lines.append((stage_no, tag, i+1, raw_text, cleaned_text))
+                print("{:s} failed validation...".format(context))
+                stats['total_failed'] = stats['total_failed'] + 1
+                failed_lines.append((context, raw_text, cleaned_text))
+                
+    check_text(tree.find('first').text, "First name")
+    check_text(tree.find('last').text, "Last name")
+    check_text(tree.find('label').text, "Label")
                 
     # check start lines:
     for i, state in enumerate(tree.find('start').iter('state')):
-        check_state(0, 'start', i, state)
+        check_text(state.text, "Starting line {}".format(i+1))
         
-    for stage in tree.iter('stage'):
+    # check clothing names:
+    for i, clothing in enumerate(tree.find('wardrobe').iter('clothing')):
+        check_text(clothing.get('lowercase'), "Lowercase name for wardrobe item {}".format(i+1))
+        check_text(clothing.get('proper-name'), "Proper name for wardrobe item {}".format(i+1))
+        
+    # check behaviour:
+    for stage in tree.find('behaviour').iter('stage'):
         stage_no = int(stage.get('id'))
         
-        for case in stage.iter('case'):
+        for case_i, case in enumerate(stage.iter('case')):
             tag = case.get('tag')
             
-            for i, state in enumerate(case.iter('state')): 
-                check_state(stage_no, tag, i, state)
-                    
-    print("Checked {} lines in total.".format(total_lines))
-    print("Passed: {}".format(total_lines - total_failed))
-    print("Failed: {}".format(total_failed))
+            for i, state in enumerate(case.iter('state')):
+                check_text(state.text, "Stage {}, case {} ({}), line {}".format(stage_no, case_i, tag, i+1))
+                
+    # check epilogues:
+    for epilogue_i, epilogue in enumerate(tree.iter('epilogue')):
+        check_text(epilogue.find('title').text, "Title for epilogue {}".format(epilogue_i+1))
         
-    return (total_lines, total_failed), failed_lines
+        for screen_i, screen in enumerate(epilogue.iter('screen')):
+            for i, text_elem in enumerate(screen.iter('text')):
+                check_text(text_elem.find('content').text, "Epilogue {}, screen {}, text box {}".format(epilogue_i+1, screen_i+1, i+1))
+                    
+    print("Checked {} lines in total.".format(stats['total_lines']))
+    print("Passed: {}".format(stats['total_lines'] - stats['total_failed']))
+    print("Failed: {}".format(stats['total_failed']))
+        
+    return (stats['total_lines'], stats['total_failed']), failed_lines
 
 if __name__ == "__main__":
     xml_filename = "behaviour.xml"
@@ -139,7 +144,7 @@ if __name__ == "__main__":
                         summary_out.write("{} : {} : {} / {} / {}\n".format(
                             filename, validated, total_lines, total_lines-total_failed, total_failed
                         ))
-                    except Exception as e:
+                    except ParseError as e:
                         print("Warning: encountered error while checking {}: {}".format(filename, str(e)))
                         summary_out.write("{} : error : {}\n".format(filename, str(e)))
             
