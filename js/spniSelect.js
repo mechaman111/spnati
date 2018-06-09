@@ -908,18 +908,17 @@ function updateSelectionVisuals () {
                 $selectAdvanceButtons[i-1].css({opacity : 0});
             }
 
-			/* show the bubble */
-			$selectBubbles[i-1].show();
-
             /* update image */
             if (players[i].folder + players[i].state[players[i].current].image
                 != $selectImages[i-1].attr('src')) {
                 var slot = i;
                 $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
                 $selectImages[i-1].one('load', function() {
+                    $selectBubbles[slot-1].show();
                     $selectImages[slot-1].show();
                 });
             } else {
+                $selectBubbles[i-1].show();
                 $selectImages[i-1].show();
             }
 
