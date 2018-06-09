@@ -246,9 +246,6 @@ function validateTitleScreen () {
     /* dress the player */
     wearClothing();
 
-    /* set human id */
-    players[HUMAN_PLAYER].id = "human";
-
 	save.savePlayer();
 	console.log(players[0]);
 

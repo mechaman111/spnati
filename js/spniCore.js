@@ -168,7 +168,7 @@ function initPlayerState(player) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
+    var humanPlayer = createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
     
 	/* enable table opacity */
