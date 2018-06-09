@@ -103,6 +103,7 @@ $individualCreditsButton = $('#individual-credits-button');
 
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
+$groupSwitchTestingButton = $("#group-switch-testing-button");
 $groupNameLabels = [$("#group-name-label-1"), $("#group-name-label-2"), $("#group-name-label-3"), $("#group-name-label-4")];
 $groupPrefersLabels = [$("#group-prefers-label-1"), $("#group-prefers-label-2"), $("#group-prefers-label-3"), $("#group-prefers-label-4")];
 $groupSexLabels = [$("#group-sex-label-1"), $("#group-sex-label-2"), $("#group-sex-label-3"), $("#group-sex-label-4")];
@@ -397,6 +398,7 @@ function updateGroupSelectScreen () {
 		groupPage[groupSelectScreen] = 0;
 	}
 	$groupPageIndicator.val(groupPage[groupSelectScreen]+1);
+    $groupMaxPageIndicator.html("of "+loadedGroups[groupSelectScreen].length);
 
     /* create and load all of the individual opponents */
 	for (var i = 0; i < 4; i++) {
@@ -592,33 +594,32 @@ function selectOpponentSlot (slot) {
 }
 
 /************************************************************
- * The player clicked on the select group slot.
+ * The player clicked on the Preset Tables or Testing Tables button.
  ************************************************************/
-function clickedSelectGroupButton () {
-	selectedSlot = 1;
-  groupSelectScreen = 0;
-	updateGroupSelectScreen();
-
-    $groupMaxPageIndicator.html("of "+loadedGroups[0].length);
+function clickedSelectGroupButton (screen) {
+    switchSelectGroupScreen(screen)
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
 }
 
 /************************************************************
-* The player clicked on the Testing Tables button
-************************************************************/
-function clickedSelectGroupTestingButton () {
- selectedSlot = 1;
- groupSelectScreen = 1;
- updateGroupSelectScreen();
-
-   $groupMaxPageIndicator.html("of "+loadedGroups[1].length);
-
- /* switch screens */
-	screenTransition($selectScreen, $groupSelectScreen);
+ * The player clicked on the Preset Tables or Testing Tables 
+ * button from within the table select screen.
+ ************************************************************/
+function switchSelectGroupScreen (screen) {
+    if (screen !== undefined) {
+        groupSelectScreen = screen;
+    } else {
+        groupSelectScreen = 1 - groupSelectScreen;
+    }
+    if (groupSelectScreen == 1) {
+        $groupSwitchTestingButton.html("Preset Tables");
+    } else {
+        $groupSwitchTestingButton.html("Testing Tables");
+    }
+    updateGroupSelectScreen();
 }
-
 
 /************************************************************
  * The player clicked on the select random group slot.
