@@ -804,6 +804,11 @@
           Preset Tables
         </button>
 
+        <button id='group-search-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="openGroupSearchModal()">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          Search
+        </button>
+
         <!-- Advance Button Casing -->
         <div class='bordered long-select-advance-top'> </div>
         <div class='bordered long-select-advance-bottom'> </div>
@@ -966,6 +971,71 @@
               <div class="modal-body-container" style="padding-top:4%;">
                 <button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeSearchModal()">Search</button>
                 <button class="bordered smooth-button smooth-button-red modal-button" data-dismiss="modal" onclick="clearSearch()">Clear</button>
+              </div>
+            </div>
+          </div>
+          <!-- End of Modal Content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- End of Search Modal -->
+
+<!-- Start of Group Search Modal -->
+<div id="group-search-modal" class="modal table-modal fade">
+  <div class="modal-table-container">
+    <div class="modal-cell-container">
+      <div class="bordered modal-dialog wide-modal-dialog">
+        <div class="bordered modal-dialog-surface">
+          <!-- Start of Modal Content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-center">Search Options</h4>
+            </div>
+            <div class="modal-body">
+              <table style="width:100%">
+                <!-- Table Style -->
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Table Name Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-group-name" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Player Name Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-name" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
+                  <td>
+                    <nav>
+                      <ul class="pagination">
+                        <li id="group-search-gender-1" class="active"><a href="#"  onclick="changeGroupSearchGender(1)">Any</a></li>
+                        <li id="group-search-gender-2"><a href="#" onclick="changeGroupSearchGender(2)">Male only</a></li>
+                        <li id="group-search-gender-3"><a href="#" onclick="changeGroupSearchGender(3)">Female only</a></li>
+                        <li id="group-search-gender-4"><a href="#" onclick="changeGroupSearchGender(4)">Mixed</a></li>
+                      </ul>
+                    </nav>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-source" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr hidden>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-tag" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+              </table>
+              <div class="modal-body-container" style="padding-top:4%;">
+                <button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeGroupSearchModal()">Search</button>
+                <button class="bordered smooth-button smooth-button-red modal-button" data-dismiss="modal" onclick="clearGroupSearch()">Clear</button>
               </div>
             </div>
           </div>
