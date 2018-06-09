@@ -207,10 +207,10 @@ function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
 	var onComplete = function() {
-		if (--outstandingLoads == 0) {
-			/* Remove any slots that failed to load */
-			loadedOpponents = loadedOpponents.filter(function(x) { return x !== null; });
-			selectableOpponents = loadedOpponents.slice();
+		if (--outstandingLoads % 16 == 0) {
+			updateSelectableOpponents();
+			updateIndividualSelectScreen();
+			updateGroupSelectScreen();
 		}
 	}
 
@@ -308,13 +308,10 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
                 targetArray.push(opponent);
             }
             onComplete();
-      		},
-      		error: function(err) {
-				console.log("Failed reading \""+id+"\"");
-      			if (index !== undefined) {
-      				delete targetArray[index];
-      			}
-      			onComplete();
+		},
+		error: function(err) {
+			console.log("Failed reading \""+id+"\"");
+			onComplete();
 		}
 	});
 }
@@ -419,7 +416,7 @@ function updateGroupSelectScreen () {
             selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i] :
             undefined;
 
-		if (opponent) {
+		if (opponent && typeof opponent == "object") {
 			shownGroup[i] = opponent;
 
 			$groupNameLabels[i].html(opponent.first + " " + opponent.last);
@@ -509,60 +506,43 @@ function updateSelectableOpponents(autoclear) {
     var source = $searchSource.val().toLowerCase();
     var tag = $searchTag.val().toLowerCase();
 
-    // reset filters
-    selectableOpponents = [];
-
-    // search for matches
-    for (var i = 0; i < loadedOpponents.length; i++) {
-        if (!loadedOpponents[i]) {
-            continue;
-        }
-
+    // Array.prototype.filter automatically skips empty slots
+    selectableOpponents = loadedOpponents.filter(function(opp) {
         // filter by name
         if (name
-            && loadedOpponents[i].label.toLowerCase().indexOf(name) < 0
-            && loadedOpponents[i].first.toLowerCase().indexOf(name) < 0
-            && loadedOpponents[i].last.toLowerCase().indexOf(name) < 0) {
-            continue;
+            && opp.label.toLowerCase().indexOf(name) < 0
+            && opp.first.toLowerCase().indexOf(name) < 0
+            && opp.last.toLowerCase().indexOf(name) < 0) {
+            return false;
         }
 
         // filter by source
-        if (source && loadedOpponents[i].source.toLowerCase().indexOf(source) < 0) {
-            continue;
+        if (source && !opp.source.toLowerCase().indexOf(source) < 0) {
+            return false;
         }
 
         // filter by tag
         if (tag) {
-            if (!loadedOpponents[i].tags || !loadedOpponents[i].tags.some(function(t) {
+            if (!opp.tags || !opp.tags.some(function(t) {
                 return t.toLowerCase().indexOf(tag) >= 0;
             })) {
-                continue;
+                return false;
             }
         }
 
         // filter by gender
-        if (chosenGender == 2 && loadedOpponents[i].gender !== eGender.MALE) {
-            continue;
-        }
-        else if (chosenGender == 3 && loadedOpponents[i].gender !== eGender.FEMALE) {
-            continue;
+        if ((chosenGender == 2 && opp.gender !== eGender.MALE)
+            || (chosenGender == 3 && opp.gender !== eGender.FEMALE)) {
+            return false;
         }
 
-        selectableOpponents.push(loadedOpponents[i]); // opponents will be in featured order
-    }
-
-    /* hide selected opponents */
-    for (var i = 1; i < players.length; i++) {
-        if (players[i]) {
-            /* find this opponent's placement in the selectable opponents */
-            for (var j = 0; j < selectableOpponents.length; j++) {
-                if (selectableOpponents[j].folder == players[i].folder) {
-                    /* this is a selected player */
-                    selectableOpponents.splice(j, 1);
-                }
-            }
+        /* hide selected opponents */
+        if (players.some(function(p) { return p && p.id == opp.id; })) {
+            return false;
         }
-    }
+
+        return true;
+    });
 
     // If a unique match was made, automatically clear the search so
     // another opponent can be found more quickly.
