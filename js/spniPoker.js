@@ -444,62 +444,34 @@ function determineLowestHand () {
 	
 	if (lowestPlayers.length == 1) {
 		return lowestPlayers[0];
-	} else {
-		/* need to break a tie */
-		if (lowestStrength > TWO_PAIR) {
-			/* anything higher than two pair only has one tie breaker */
-			var lowestValue = 15;
-            var lowestPlayer = -1;
-			var tiedPlayers = lowestPlayers;
-            
-            for (var i = 0; i < lowestPlayers.length; i++) {
-                if (hands[tiedPlayers[i]].value < lowestValue) {
-                    lowestValue = hands[tiedPlayers[i]].value;
-                    lowestPlayer = lowestPlayers[i];
-                }
-            }
-            
-            if (lowestPlayer != -1) {
-				return lowestPlayer;
-			} else {
-				/* unresolvable tie */
-				return -1;
-			}
-		} else {
-			/* two pair, pair, and high card have multiple tie breakers */
-			var lowestValue = 15;
-			var currentTieBreaker = 0;
-			var tiedPlayers = lowestPlayers;
-			var failSafe = 0;
-			
-			while (lowestPlayers.length > 1 && currentTieBreaker < hands[lowestPlayers[0]].value.length && failSafe <= hands[lowestPlayers[0]].cards.length) {
-				lowestValue = 15;
-				tiedPlayers = lowestPlayers;
-				console.log("Players Tied: "+tiedPlayers+" failSafe: "+failSafe);
-				
-				for (var i = 0; i < tiedPlayers.length; i++) {
-					if (hands[tiedPlayers[i]].value[currentTieBreaker] < lowestValue) {
-						lowestValue = hands[tiedPlayers[i]].value[currentTieBreaker];
-						console.log("Player "+tiedPlayers[i]+" is the new lowest with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
-						lowestPlayers = [tiedPlayers[i]];
-					} else if (hands[tiedPlayers[i]].value[currentTieBreaker] == lowestValue) {
-						lowestPlayers.push(tiedPlayers[i]);
-						console.log("Player "+tiedPlayers[i]+" is tied with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
-					}
-				}
-				
-				currentTieBreaker++;
-				failSafe++;
-			}
-			
-			if (lowestPlayers.length == 1) {
-				return lowestPlayers[0];
-			} else {
-				/* unresolvable tie */
-				return -1;
+	}
+
+	/* need to break a tie */
+	var maxTieBreakers = hands[lowestPlayers[0]].value.length;
+
+	for (var currentTieBreaker = 0; currentTieBreaker < maxTieBreakers; currentTieBreaker++) {
+		var lowestValue = 15;
+		var tiedPlayers = lowestPlayers;
+		console.log("Players Tied: "+tiedPlayers);
+
+		for (var i = 0; i < tiedPlayers.length; i++) {
+			if (hands[tiedPlayers[i]].value[currentTieBreaker] < lowestValue) {
+				lowestValue = hands[tiedPlayers[i]].value[currentTieBreaker];
+				console.log("Player "+tiedPlayers[i]+" is the new lowest with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
+				lowestPlayers = [tiedPlayers[i]];
+			} else if (hands[tiedPlayers[i]].value[currentTieBreaker] == lowestValue) {
+				lowestPlayers.push(tiedPlayers[i]);
+				console.log("Player "+tiedPlayers[i]+" is tied with: "+hands[tiedPlayers[i]].value[currentTieBreaker]);
 			}
 		}
+
+		if (lowestPlayers.length == 1) {
+			return lowestPlayers[0];
+		}
 	}
+
+	/* unresolvable tie */
+	return -1;
 }
  
 /************************************************************
@@ -512,11 +484,11 @@ function determineHand (player) {
 	hands[player].value = 0;
 	
 	/* look for each strength, in composition */
-	var have_pair = [-1, -1];
-	var have_three_kind = -1;
-	var have_straight = -1;
-	var have_flush = -1;
-	
+	var have_pair = [];
+	var have_three_kind = 0;
+	var have_straight = 0;
+	var have_flush = 0;
+
 	/* start by collecting the ranks and suits of the cards */
 	var cardRanks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	var cardSuits = [0, 0, 0, 0];
@@ -530,60 +502,29 @@ function determineHand (player) {
 	}
 	
 	/* look for four of a kind, three of a kind, and pairs */
-	for (var i = 0; i < cardRanks.length - 1; i++) {
+	for (var i = cardRanks.length-1; i > 0; i--) {
 		if (cardRanks[i] == 4) {
 			hands[player].strength = FOUR_OF_A_KIND;
-			hands[player].value = i+1;
+			hands[player].value = [i+1];
 			break;
 		} else if (cardRanks[i] == 3) {
 			have_three_kind = i+1;
 		} else if (cardRanks[i] == 2) {
-			if (have_pair[0] == -1) {
-				have_pair[0] = i+1;
-			} else {
-				have_pair[1] = i+1;
-			}
+			have_pair.push(i+1);
 		}
 	}
 	
 	/* determine full house, three of a kind, two pair, and pair */
 	if (hands[player].strength == NONE) {
-		if (have_three_kind >= 0 && have_pair[0] >= 0) {
+		if (have_three_kind && have_pair.length > 0) {
 			hands[player].strength = FULL_HOUSE;
-			hands[player].value = have_three_kind == 1 ? 14 : have_three_kind;
-		} else if (have_three_kind >= 0) {
+			hands[player].value = [have_three_kind];
+		} else if (have_three_kind) {
 			hands[player].strength = THREE_OF_A_KIND;
-			hands[player].value = have_three_kind == 1 ? 14 : have_three_kind;
-            if (have_pair[0] == 1) {
-				hands[player].value = [14, have_pair[1], leftover];
-			}
-		} else if (have_pair[0] >= 0 && have_pair[1] >= 0) {
-			hands[player].strength = TWO_PAIR;
-			
-			var leftover = 0;
-			for (var i = 1; i < cardRanks.length; i++) {
-				if (cardRanks[i] == 1) {
-					leftover = i+1;
-				}
-			}
-			
-			if (have_pair[0] == 1) {
-				hands[player].value = [14, have_pair[1], leftover];
-			} else {
-                if (have_pair[0] > have_pair[1]) {
-                    hands[player].value = [have_pair[0], have_pair[1], leftover];
-                }
-				else {
-                    hands[player].value = [have_pair[1], have_pair[0], leftover];
-                }
-			}
-		} else if (have_pair[0] >= 0) {
-			hands[player].strength = PAIR;
-			if (have_pair[0] == 1) {
-				hands[player].value = [14];
-			} else {
-				hands[player].value = [have_pair[0]];
-			}
+			hands[player].value = [have_three_kind];
+		} else if (have_pair.length > 0) {
+			hands[player].strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
+			hands[player].value = have_pair;
 			
 			for (var i = cardRanks.length-1; i > 0; i--) {
 				if (cardRanks[i] == 1) {
@@ -594,26 +535,25 @@ function determineHand (player) {
 	}
 	
 	/* look for straights and flushes */
-	var sequence = 0;
-	
 	if (hands[player].strength == NONE) {
 		/* first, straights */
+		var sequence = 0;
+
 		for (var i = 0; i < cardRanks.length; i++) {
 			if (cardRanks[i] == 1) {
 				sequence++;
 				if (sequence == hand.length) {
-					/* this is a straight */
+					/* one card each of five consecutive ranks is a
+					 * straight */
 					have_straight = i+1;
 					break;
 				}
-			} else if (cardRanks[i] > 1) {
-				/* can't have a straight */
-				break;
 			} else if (sequence > 0) {
                 if (i == 1) {
+					/* Ace but no deuce is OK - we might have 10-A */
                     sequence = 0;
                 } else {
-                    /* can't have a straight */
+                    /* A hole in the sequence - can't have a straight */
                     break;
                 }
 			}
@@ -632,26 +572,17 @@ function determineHand (player) {
 		}
 		
 		/* determine royal flush, straight flush, flush, straight, and high card */
-		if (have_flush >= 0 && have_straight == 14) {
+		if (have_flush && have_straight == 14) {
 			hands[player].strength = ROYAL_FLUSH;
-			hands[player].value = have_straight;
-		} else if (have_flush >= 0 && have_straight >= 0) {
+			hands[player].value = [have_straight];
+		} else if (have_flush && have_straight) {
 			hands[player].strength = STRAIGHT_FLUSH;
-			hands[player].value = have_straight;
-		} else if (have_straight >= 0) {
+			hands[player].value = [have_straight];
+		} else if (have_straight) {
 			hands[player].strength = STRAIGHT;
-			hands[player].value = have_straight;
-		} else if (have_flush >= 0) {
-			hands[player].strength = FLUSH;
-			hands[player].value = [];
-			
-			for (var i = cardRanks.length-1; i > 0; i--) {
-				if (cardRanks[i] == 1) {
-					hands[player].value.push(i+1);
-				}
-			}
+			hands[player].value = [have_straight];
 		} else {
-			hands[player].strength = HIGH_CARD;
+			hands[player].strength = (have_flush ? FLUSH : HIGH_CARD);
 			hands[player].value = [];
 			
 			for (var i = cardRanks.length-1; i > 0; i--) {
