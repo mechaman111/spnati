@@ -12,7 +12,7 @@
  **************************************************/
 function createNewOpponent (id, enabled, first, last, label, image, gender,
                             height, source, artist, writer, description,
-                            ending, layers, release) {
+                            ending, layers, release, tags) {
 	var newOpponentObject = {id:id,
 							 folder:'opponents/'+id+'/',
 							 enabled:enabled,
@@ -28,6 +28,7 @@ function createNewOpponent (id, enabled, first, last, label, image, gender,
 							 description:description,
                              ending:ending,
                              layers:layers,
+							 tags:tags,
                              release:parseInt(release, 10) || Number.POSITIVE_INFINITY};
 
 	return newOpponentObject;
@@ -279,11 +280,12 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
             var ending = $(xml).find('has_ending').text() === "true";
             var layers = $(xml).find('layers').text();
             var release = $(xml).find('release').text();
+			var tags = $(xml).find('tags').children().map(function() { return $(this).text(); }).get();
 
 			var opponent = createNewOpponent(id, enabled, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
-                                             ending, layers, release);
+                                             ending, layers, release, tags);
 
 			/* add the opponent to the list */
             if (index !== undefined) {
@@ -504,7 +506,7 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by name
-        if (name != null
+        if (name
             && loadedOpponents[i].label.toLowerCase().indexOf(name) < 0
             && loadedOpponents[i].first.toLowerCase().indexOf(name) < 0
             && loadedOpponents[i].last.toLowerCase().indexOf(name) < 0) {
@@ -512,21 +514,18 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by source
-        if (source != null && loadedOpponents[i].source.toLowerCase().indexOf(source) < 0) {
+        if (source && loadedOpponents[i].source.toLowerCase().indexOf(source) < 0) {
             continue;
         }
 
         // filter by tag
-//        var tagMatch = false;
-//        for (var j = 0; j < loadedOpponents[i].tags.length; j++) {
-//            if (loadedOpponents[i].tags[j].toLowerCase().includes(tag)) {
-//                tagMatch = true;
-//            }
-//        }
-//
-//        if (!tagMatch) {
-//            continue;
-//        }
+        if (tag) {
+            if (!loadedOpponents[i].tags || !loadedOpponents[i].tags.some(function(t) {
+                return t.toLowerCase().indexOf(tag) >= 0;
+            })) {
+                continue;
+            }
+        }
 
         // filter by gender
         if (chosenGender == 2 && loadedOpponents[i].gender !== eGender.MALE) {
