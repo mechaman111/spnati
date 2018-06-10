@@ -306,7 +306,7 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
       		error: function(err) {
 				console.log("Failed reading \""+id+"\"");
       			if (index !== undefined) {
-      				targetArray[index] = null;
+      				delete targetArray[index];
       			}
       			onComplete();
 		}
@@ -641,6 +641,8 @@ function updateSelectableGroups(screen) {
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
+        if (!group.opponents.some(function(opp) { return opp; })) return false;
+
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
         if (name && !group.opponents.some(function(opp) {
