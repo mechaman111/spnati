@@ -29,7 +29,7 @@ function createNewOpponent (id, enabled, first, last, label, image, gender,
                              ending:ending,
                              layers:layers,
 							 tags:tags,
-                             release:parseInt(release)};
+                             release:parseInt(release, 10) || Number.POSITIVE_INFINITY};
 
 	return newOpponentObject;
 }
@@ -514,7 +514,7 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by source
-        if (source && !loadedOpponents[i].source.toLowerCase().includes(source)) {
+        if (source && loadedOpponents[i].source.toLowerCase().indexOf(source) < 0) {
             continue;
         }
 
