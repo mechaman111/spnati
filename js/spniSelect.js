@@ -100,10 +100,11 @@ $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#
 $individualPageIndicator = $("#individual-page-indicator");
 $individualMaxPageIndicator = $("#individual-max-page-indicator");
 
-$individualCreditsButton = $('.individual-credits-btn');
+$individualCreditsButton = $('#individual-credits-button');
 
 /* group select screen */
 $groupSelectTable = $("#group-select-table");
+$groupSwitchTestingButton = $("#group-switch-testing-button");
 $groupNameLabels = [$("#group-name-label-1"), $("#group-name-label-2"), $("#group-name-label-3"), $("#group-name-label-4")];
 $groupPrefersLabels = [$("#group-prefers-label-1"), $("#group-prefers-label-2"), $("#group-prefers-label-3"), $("#group-prefers-label-4")];
 $groupSexLabels = [$("#group-sex-label-1"), $("#group-sex-label-2"), $("#group-sex-label-3"), $("#group-sex-label-4")];
@@ -125,7 +126,7 @@ $groupButton = $("#group-button");
 $groupPageIndicator = $("#group-page-indicator");
 $groupMaxPageIndicator = $("#group-max-page-indicator");
 
-$groupCreditsButton = $('.group-credits-btn');
+$groupCreditsButton = $('#group-credits-button');
 
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
@@ -133,6 +134,12 @@ $searchTag = $("#search-tag");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
+
+$groupSearchGroupName = $("#group-search-group-name");
+$groupSearchName = $("#group-search-name");
+$groupSearchSource = $("#group-search-source");
+$groupSearchTag = $("#group-search-tag");
+$groupSearchGenderOptions = [$("#group-search-gender-1"), $("#group-search-gender-2"), $("#group-search-gender-3"), $("#group-search-gender-4")];
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
@@ -151,13 +158,15 @@ var metaFile = "meta.xml";
 var loadedOpponents = [];
 var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
-var loadedGroups;
+var loadedGroups = [[], []];
+var selectableGroups = [loadedGroups[0], loadedGroups[1]];
 
 /* page variables */
 var groupSelectScreen = 0;
 var individualPage = 0;
 var groupPage = [0, 0];
 var chosenGender = -1;
+var chosenGroupGender = -1;
 var sortingMode = "Featured";
 var sortingOptionsMap = {
     "Newest" : sortOpponentsByMultipleFields("-release"),
@@ -196,8 +205,6 @@ function loadSelectScreen () {
  ************************************************************/
 function loadListingFile () {
 	/* clear the previous meta information */
-	loadedOpponents = [];
-	loadedGroups = loadedGroups = [[], []];
 	var outstandingLoads = 0;
 	var onComplete = function() {
 		if (--outstandingLoads == 0) {
@@ -393,16 +400,20 @@ function updateGroupSelectScreen () {
 	/* safety wrap around */
   if (groupPage[groupSelectScreen] < 0) {
 		/* wrap to last page */
-		groupPage[groupSelectScreen] = (loadedGroups[groupSelectScreen].length)-1;
-	} else if (groupPage[groupSelectScreen] > loadedGroups[groupSelectScreen].length-1) {
+		groupPage[groupSelectScreen] = (selectableGroups[groupSelectScreen].length)-1;
+	} else if (groupPage[groupSelectScreen] > selectableGroups[groupSelectScreen].length-1) {
 		/* wrap to the first page */
 		groupPage[groupSelectScreen] = 0;
 	}
 	$groupPageIndicator.val(groupPage[groupSelectScreen]+1);
+    $groupMaxPageIndicator.html("of "+selectableGroups[groupSelectScreen].length);
 
     /* create and load all of the individual opponents */
+	$groupButton.attr('disabled', false);
 	for (var i = 0; i < 4; i++) {
-		var opponent = loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i];
+		var opponent = selectableGroups[groupSelectScreen].length > 0 ?
+            selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i] :
+            undefined;
 
 		if (opponent) {
 			shownGroup[i] = opponent;
@@ -427,14 +438,6 @@ function updateGroupSelectScreen () {
 
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
 			$groupImages[i].show();
-			$groupNameLabel.html(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].title);
-			if (opponent.enabled == "true") {
-				$groupButton.html('Select Group');
-				$groupButton.attr('disabled', false);
-			} else {
-				$groupButton.html('Unavailable');
-				$groupButton.attr('disabled', true);
-			}
 		} else {
 			shownGroup[i] = null;
 
@@ -448,7 +451,13 @@ function updateGroupSelectScreen () {
             $groupBadges[i].hide();
             $groupLayers[i].hide();
 			$groupImages[i].hide();
+			$groupButton.attr('disabled', true);
 		}
+    }
+    if (selectableGroups[groupSelectScreen].length == 0) {
+        $groupNameLabel.html("(No matches)");
+    } else {
+        $groupNameLabel.html(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].title);
     }
 }
 
@@ -594,31 +603,70 @@ function selectOpponentSlot (slot) {
 }
 
 /************************************************************
- * The player clicked on the select group slot.
+ * The player clicked on the Preset Tables or Testing Tables button.
  ************************************************************/
-function clickedSelectGroupButton () {
-	selectedSlot = 1;
-  groupSelectScreen = 0;
-	updateGroupSelectScreen();
-
-    $groupMaxPageIndicator.html("of "+loadedGroups[0].length);
+function clickedSelectGroupButton (screen) {
+    switchSelectGroupScreen(screen)
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
 }
 
 /************************************************************
-* The player clicked on the Testing Tables button
-************************************************************/
-function clickedSelectGroupTestingButton () {
- selectedSlot = 1;
- groupSelectScreen = 1;
- updateGroupSelectScreen();
+ * The player clicked on the Preset Tables or Testing Tables 
+ * button from within the table select screen.
+ ************************************************************/
+function switchSelectGroupScreen (screen) {
+    if (screen !== undefined) {
+        groupSelectScreen = screen;
+    } else {
+        groupSelectScreen = 1 - groupSelectScreen;
+    }
+    if (groupSelectScreen == 1) {
+        $groupSwitchTestingButton.html("Preset Tables");
+    } else {
+        $groupSwitchTestingButton.html("Testing Tables");
+    }
+    updateSelectableGroups(groupSelectScreen);
+    updateGroupSelectScreen();
+}
 
-   $groupMaxPageIndicator.html("of "+loadedGroups[1].length);
+/************************************************************
+ * Filters the list of selectable opponents based on those
+ * already selected and performs search and sort logic.
+ ************************************************************/
+function updateSelectableGroups(screen) {
+    var groupname = $groupSearchGroupName.val().toLowerCase();
+    var name = $groupSearchName.val().toLowerCase();
+    var source = $groupSearchSource.val().toLowerCase();
+    var tag = $groupSearchTag.val().toLowerCase();
 
- /* switch screens */
-	screenTransition($selectScreen, $groupSelectScreen);
+    // reset filters
+    selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
+        if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
+
+        if (name && !group.opponents.some(function(opp) {
+            return opp.label.toLowerCase().indexOf(name) >= 0
+                || opp.first.toLowerCase().indexOf(name) >= 0
+                || opp.last.toLowerCase().indexOf(name) >= 0;
+        })) return false;
+
+        if (source && !group.opponents.some(function(opp) {
+            return opp.source.toLowerCase().indexOf(source) >= 0;
+        })) return false;
+
+        if ((chosenGroupGender == 2 || chosenGroupGender == 3)
+            && !group.opponents.every(function(opp) {
+                return opp.gender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
+            })) return false;
+
+        if (chosenGroupGender == 4
+            && !(group.opponents.some(function(opp) { return opp.gender == eGender.MALE; })
+                 && group.opponents.some(function(opp) { return opp.gender == eGender.FEMALE; })))
+            return false;
+
+        return true;
+    })
 }
 
 
@@ -796,8 +844,8 @@ function selectGroup () {
 
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
-    if (loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-			loadBehaviour(loadedGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].id, groupScreenCallback, i+1);
+        if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
+			loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].id, groupScreenCallback, i+1);
 		}
 	}
 }
@@ -827,7 +875,7 @@ function changeGroupPage (skip, page) {
       groupPage[groupSelectScreen] = 0;
 		} else if (page == 1) {
 			/* go to last page */
-			groupPage[groupSelectScreen] = loadedGroups[groupSelectScreen].length-1;
+			groupPage[groupSelectScreen] = selectableGroups[groupSelectScreen].length-1;
 		} else {
 			/* go to selected page */
 			groupPage[groupSelectScreen] = Number($groupPageIndicator.val()) - 1;
@@ -1051,6 +1099,33 @@ function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption($searchGenderOptions, gender);
 }
+
+function openGroupSearchModal() {
+    $groupSearchModal.modal('show');
+}
+
+function closeGroupSearchModal() {
+    // perform the search and sort logic
+    updateSelectableGroups(groupSelectScreen);
+
+    // update
+    updateGroupSelectScreen();
+    updateGroupCountStats();
+}
+
+function clearGroupSearch() {
+    $groupSearchName.val(null);
+    $groupSearchGroupName.val(null);
+    $groupSearchTag.val(null);
+    $groupSearchSource.val(null);
+    closeGroupSearchModal();
+}
+
+function changeGroupSearchGender(gender) {
+    chosenGroupGender = gender;
+    setActiveOption($groupSearchGenderOptions, gender);
+}
+
 
 /************************************************************
  * Sorting Functions

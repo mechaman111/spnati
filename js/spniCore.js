@@ -64,6 +64,7 @@ $galleryScreen = $('#gallery-screen');
 
 /* Modals */
 $searchModal = $('#search-modal');
+$groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
