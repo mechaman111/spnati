@@ -184,7 +184,7 @@ function tickForfeitTimers (context) {
 				updateBehaviour(i, players[i].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
 			} else if (Math.random() < 0.5) {
 				updateBehaviour(i, (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), [NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], players[playerToShow]);
-			} else {
+			} else if (players[i]) {
 				players[i].state = null;
 			}
 		}
