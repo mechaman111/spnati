@@ -209,6 +209,9 @@ function showGameSettingsModal () {
  ************************************************************/
 function setBackground (choice) {
 	/* implement the option change */
+	backgroundImage = new Image();
+	backgroundImage.src = "img/background"+choice+".png";
+	backgroundImage.onload = autoResizeFont;
     $("body").css("background-image", "url(img/background"+choice+".png)");
 	setActiveOption($backgroundSettings, choice);
 }
