@@ -67,7 +67,7 @@ function loadEpilogueData(player){
 
 	var epilogues = [];
 
-    var all_epilogues = $(xml).find('epilogue').filter(function (index) {
+    var all_epilogues = xml.find('epilogue').filter(function (index) {
         /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
          * Conversely, returning false from this function will make the current epilogue not selectable.
          */

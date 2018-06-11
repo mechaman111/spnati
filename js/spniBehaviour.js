@@ -159,7 +159,7 @@ function loadOpponentWardrobe (player) {
 	player.clothing = [];
 	
 	/* find and grab the wardrobe tag */
-	$wardrobe = $(xml).find('wardrobe');
+	$wardrobe = xml.find('wardrobe');
 	
 	/* find and create all of their clothing */
 	$wardrobe.find('clothing').each(function () {
@@ -249,7 +249,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 	
     /* try to find the stage */
     var stage = null;
-    $(players[player].xml).find('behaviour').find('stage').each(function () {
+    players[player].xml.find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
        } 
