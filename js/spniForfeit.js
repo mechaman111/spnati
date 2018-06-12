@@ -18,7 +18,7 @@ var CANNOT_SPEAK = false;
 var oneFinished = false;
 
 /* orgasm timer */
-var ORGASM_DELAY = 4000;
+var ORGASM_DELAY = 2000;
 
 /* The first and last rounds a character starts heavy masturbation, counted in phases before they finish */
 var HEAVY_FIRST_ROUND = 6
