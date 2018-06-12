@@ -22,7 +22,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.58.0
+      v11.60.0
     </button>
 
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -82,7 +82,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.58.0
+      v11.60.0
     </button>
 
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -279,13 +279,13 @@
       <div id='main-select-area' class='bordered'>
 
         <!-- Select Buttons -->
-        <button id='select-main-back-button' class='bordered main-select-button smooth-button smooth-button-red' onclick="backSelectScreen()">
+        <button id='select-main-back-button' class='bordered main-select-button select-back-button smooth-button smooth-button-red' onclick="backSelectScreen()">
           Back
         </button>
-        <button id='select-group-testing-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupTestingButton()">
+        <button id='select-group-testing-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton(1)">
           Testing Tables
         </button>
-        <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton()">
+        <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="clickedSelectGroupButton(0)">
           Preset Tables
         </button>
         <button id='select-random-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="clickedRandomGroupButton()">
@@ -312,7 +312,7 @@
           Random Fill
         </button>
 
-        <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()">
+        <button id='select-remove-all-button' class='bordered main-select-button  smooth-button smooth-button-red' onclick="clickedRemoveAllButton()" disabled="true">
           Remove All
         </button>
 
@@ -535,11 +535,13 @@
       <div id='main-select-area' class='bordered'>
 
         <!-- Buttons -->
-        <button id='select-main-back-button' class='bordered main-select-button smooth-button smooth-button-red' onclick="backToSelect()">
+        <button id='individual-back-button' class='bordered main-select-button select-back-button smooth-button smooth-button-red' onclick="backToSelect()">
           Back
         </button>
-        <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(1)">
-          Basic Info
+
+        <button id='individual-search-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="openSearchModal()">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          Search
         </button>
 
         <!-- Advance Button Casing -->
@@ -560,8 +562,8 @@
           <button class="bordered smooth-button left-page-button" onclick="changeIndividualPage(false, -1)">
             <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
           </button>
-          <button class="bordered smooth-button go-page-button" onclick="openSearchModal()">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          <button class="bordered smooth-button go-page-button" onclick="changeIndividualPage(true, 0)">
+            <div style="margin-top:2px"><b>Go</b></div>
           </button>
           <button class="bordered smooth-button right-page-button" onclick="changeIndividualPage(false, 1)">
             <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -572,10 +574,13 @@
         </div>
 
         <!-- More Buttons -->
-        <button id='select-random-male-button' class='bordered main-select-button smooth-button smooth-button-blue individual-credits-btn' onclick="changeIndividualStats(2)">
+        <button id='individual-basic-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(1)">
+          Basic Info
+        </button>
+        <button id='individual-credits-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(2)">
           Credits
         </button>
-        <button id='select-random-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(3)">
+        <button id='individual-more-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeIndividualStats(3)">
           More Info
         </button>
 
@@ -791,11 +796,17 @@
       <div id='main-select-area' class='bordered'>
 
         <!-- Buttons -->
-        <button id='select-main-back-button' class='bordered main-select-button smooth-button smooth-button-red' onclick="backToSelect()">
+        <button id='group-back-button' class='bordered main-select-button select-back-button smooth-button smooth-button-red' onclick="backToSelect()">
           Back
         </button>
-        <button id='select-group-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeGroupStats(1)">
-          Basic Info
+
+        <button id='group-switch-testing-button' class='bordered main-select-button smooth-button smooth-button-green' onclick="switchSelectGroupScreen()">
+          Preset Tables
+        </button>
+
+        <button id='group-search-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="openGroupSearchModal()">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          Search
         </button>
 
         <!-- Advance Button Casing -->
@@ -828,10 +839,13 @@
         </div>
 
         <!-- More Buttons -->
-        <button id='select-random-male-button' class='bordered main-select-button smooth-button smooth-button-blue group-credits-btn' onclick="changeGroupStats(2)">
+        <button id='group-basic-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeGroupStats(1)">
+          Basic Info
+        </button>
+        <button id='group-credits-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeGroupStats(2)">
           Credits
         </button>
-        <button id='select-random-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeGroupStats(3)">
+        <button id='group-more-info-button' class='bordered main-select-button smooth-button smooth-button-blue' onclick="changeGroupStats(3)">
           More Info
         </button>
 
@@ -926,7 +940,7 @@
                     <input type="text" id="search-source" class='bordered wide-textbox'/>
                   </td>
                 </tr>
-                <tr hidden>
+                <tr>
                   <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
                   <td>
                     <input type="text" id="search-tag" class='bordered wide-textbox'/>
@@ -957,6 +971,71 @@
               <div class="modal-body-container" style="padding-top:4%;">
                 <button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeSearchModal()">Search</button>
                 <button class="bordered smooth-button smooth-button-red modal-button" data-dismiss="modal" onclick="clearSearch()">Clear</button>
+              </div>
+            </div>
+          </div>
+          <!-- End of Modal Content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- End of Search Modal -->
+
+<!-- Start of Group Search Modal -->
+<div id="group-search-modal" class="modal table-modal fade">
+  <div class="modal-table-container">
+    <div class="modal-cell-container">
+      <div class="bordered modal-dialog wide-modal-dialog">
+        <div class="bordered modal-dialog-surface">
+          <!-- Start of Modal Content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-center">Search Options</h4>
+            </div>
+            <div class="modal-body">
+              <table style="width:100%">
+                <!-- Table Style -->
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Table Name Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-group-name" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Player Name Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-name" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Sex Filter</h4></td>
+                  <td>
+                    <nav>
+                      <ul class="pagination">
+                        <li id="group-search-gender-1" class="active"><a href="#"  onclick="changeGroupSearchGender(1)">Any</a></li>
+                        <li id="group-search-gender-2"><a href="#" onclick="changeGroupSearchGender(2)">Male only</a></li>
+                        <li id="group-search-gender-3"><a href="#" onclick="changeGroupSearchGender(3)">Female only</a></li>
+                        <li id="group-search-gender-4"><a href="#" onclick="changeGroupSearchGender(4)">Mixed</a></li>
+                      </ul>
+                    </nav>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-source" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+                <tr hidden>
+                  <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
+                  <td>
+                    <input type="text" id="group-search-tag" class='bordered wide-textbox'/>
+                  </td>
+                </tr>
+              </table>
+              <div class="modal-body-container" style="padding-top:4%;">
+                <button class="bordered smooth-button modal-button" data-dismiss="modal" onclick="closeGroupSearchModal()">Search</button>
+                <button class="bordered smooth-button smooth-button-red modal-button" data-dismiss="modal" onclick="clearGroupSearch()">Clear</button>
               </div>
             </div>
           </div>
@@ -1264,6 +1343,22 @@
 				<table class="modal-body-stretch-container" style="margin: 0 auto;">
 
                     <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.60.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Mahiru has joined the game!
+                    </td></tr>
+                    
+                     <tr><td style="width:10%; padding-bottom: 1.5%">
+                        v11.59.0
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        The roster has been resorted and new group tables have been added. Rainbow Mika has joined the game!
+                    </td></tr>
+                    
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
                         v11.58.0
                     </td>
                     <td style="width:5%"></td>
@@ -1333,22 +1428,6 @@
                     <td style="width:5%"></td>
                     <td style="width:85%; padding-bottom: 1.5%">
                         Pit has joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.49.0
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Meia, Alpha, and Sei have joined the game!
-                    </td></tr>
-
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.48.0
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Gwen has joined the game!
                     </td></tr>
 
 

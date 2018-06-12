@@ -520,19 +520,8 @@ function determineHand (player) {
 		} else if (have_three_kind) {
 			player.hand.strength = THREE_OF_A_KIND;
 			player.hand.value = [have_three_kind];
-		} else if (have_pair.length == 2) {
-			player.hand.strength = TWO_PAIR;
-			
-			var leftover = 0;
-			for (var i = 1; i < cardRanks.length; i++) {
-				if (cardRanks[i] == 1) {
-					leftover = i+1;
-				}
-			}
-			
-            player.hand.value = have_pair.concat(leftover);
-		} else if (have_pair.length == 1) {
-			player.hand.strength = PAIR;
+		} else if (have_pair.length > 0) {
+			player.hand.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
 			player.hand.value = have_pair;
 			
 			for (var i = cardRanks.length-1; i > 0; i--) {

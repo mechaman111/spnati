@@ -12,8 +12,8 @@ if(!monika) {
     
     /* Controls for glitch prob. scaling
      */
-    monika.GLITCH_MULT_MIN = 1.0;   // starting glitch chance multiplier
-    monika.GLITCH_MULT_MAX = 8.0;  // maximum glitch chance multiplier
+    monika.GLITCH_MULT_MIN = 1;   // starting glitch chance multiplier
+    monika.GLITCH_MULT_MAX = 3;  // maximum glitch chance multiplier
     monika.GLITCH_RAMP_ROUNDS = 30; // glitch chance will linearly scale to maximum over this many rounds
     
     monika.GLITCH_VISUAL = 'visual';  // continuous visual glitching

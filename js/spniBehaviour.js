@@ -124,15 +124,17 @@ function loadBehaviour (id, callFunction, slot) {
 		url: 'opponents/' + id + "/behaviour.xml",
 		dataType: "text",
 		success: function(xml) {
-            var first = $(xml).find('first').text();
-            var last = $(xml).find('last').text();
-            var labels = $(xml).find('label');
-            var gender = $(xml).find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
-            var size = $(xml).find('size').text();
-            var timer = $(xml).find('timer').text();
-            var intelligence = $(xml).find('intelligence');
+            var $xml = $(xml);
             
-            var tags = $(xml).find('tags');
+            var first = $xml.find('first').text();
+            var last = $xml.find('last').text();
+            var labels = $xml.find('label');
+            var gender = $xml.find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
+            var size = $xml.find('size').text();
+            var timer = $xml.find('timer').text();
+            var intelligence = $xml.find('intelligence');
+            
+            var tags = $xml.find('tags');
             var tagsArray = [];
             if (typeof tags !== typeof undefined && tags !== false) {
                 $(tags).find('tag').each(function () {
@@ -140,7 +142,7 @@ function loadBehaviour (id, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, xml);
+            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, $xml);
             
 			callFunction(newPlayer, slot);
 		}
@@ -157,7 +159,7 @@ function loadOpponentWardrobe (player) {
 	player.clothing = [];
 	
 	/* find and grab the wardrobe tag */
-	$wardrobe = $(xml).find('wardrobe');
+	$wardrobe = xml.find('wardrobe');
 	
 	/* find and create all of their clothing */
 	$wardrobe.find('clothing').each(function () {
@@ -259,7 +261,7 @@ function updateBehaviour (player, tag, opp) {
 	
     /* try to find the stage */
     var stage = null;
-    $(players[player].xml).find('behaviour').find('stage').each(function () {
+    players[player].xml.find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
        } 

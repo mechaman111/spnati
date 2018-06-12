@@ -17,6 +17,9 @@ var HUMAN_PLAYER = 0;
 
 /* Directory Constants */
 var IMG = 'img/';
+
+var backgroundImage;
+
 /*var OPP = 'opponents/';
 #The "OPP" folder abbreviation was used to slightly shorten a few lines in spniSelect that looked for opponents in the opponents folder.
 #Now that opponents can be specified in any folder, this is no longer required.*/
@@ -64,6 +67,7 @@ $galleryScreen = $('#gallery-screen');
 
 /* Modals */
 $searchModal = $('#search-modal');
+$groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
@@ -149,7 +153,7 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue($(player.xml).find('start'), player);
+		player.state = parseDialogue(player.xml.find('start'), player);
 		loadOpponentWardrobe(player);
 	}
 	player.updateLabel();
@@ -382,7 +386,20 @@ function autoResizeFont ()
 	/* resize font */
 	var screenWidth = getScreenWidth();
 	document.body.style.fontSize = (14*(screenWidth/1000))+'px';
-	
+
+	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
+		var w = window.innerWidth, h = window.innerHeight;
+		if (h > (3/4) * w) {
+			h = (3/4) * w;
+		} else {
+			w = Math.round((4 * h) / 3);
+		}
+		if (backgroundImage.height > (3/4) * backgroundImage.width) {
+			$("body").css("background-size", "auto " + Math.round(1.12 * h) + "px");
+		} else {
+			$("body").css("background-size", Math.round(1.12 * w) + "px auto");
+		}
+	}
 	/* set up future resizing */
 	window.onresize = autoResizeFont;
 }
