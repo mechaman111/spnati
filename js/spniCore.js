@@ -51,8 +51,8 @@ var timeoutID;
 var table = new Table();
 
 /* Masturbation Previous State Variables */
-$previousState = null;
-$savedTableVisibility = undefined;
+previousState = null;
+globalSavedTableVisibility = undefined;
 
 
 /**********************************************************************
