@@ -220,10 +220,12 @@ function loadListingFile () {
 		url: listingFile,
 		dataType: "text",
 		success: function(xml) {
+            var $xml = $(xml);
+            
 			/* start by parsing and loading the individual listings */
             var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-			$individualListings = $(xml).find('individuals');
+			$individualListings = $xml.find('individuals');
 			$individualListings.find('opponent').each(function () {
                 if ($(this).attr('status') === undefined || includedOpponentStatuses[$(this).attr('status')]) {
                     var id = $(this).text();
@@ -234,7 +236,7 @@ function loadListingFile () {
 			});
 
 			/* end by parsing and loading the group listings */
-			$groupListings = $(xml).find('groups');
+			$groupListings = $xml.find('groups');
 			$groupListings.find('group').each(function () {
 				var title = $(this).attr('title');
 				var opp1 = $(this).attr('opp1');
@@ -272,22 +274,24 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
 		url: 'opponents/' + id + '/' + metaFile,
 		dataType: "text",
 		success: function(xml) {
+            var $xml = $(xml);
+            
 			/* grab all the info for this listing */
-			var enabled = $(xml).find('enabled').text();
-			var first = $(xml).find('first').text();
-			var last = $(xml).find('last').text();
-			var label = $(xml).find('label').text();
-			var pic = $(xml).find('pic').text();
-			var gender = $(xml).find('gender').text();
-			var height = $(xml).find('height').text();
-			var from = $(xml).find('from').text();
-			var artist = $(xml).find('artist').text();
-			var writer = $(xml).find('writer').text();
-			var description = $(xml).find('description').text();
-            var ending = $(xml).find('has_ending').text() === "true";
-            var layers = $(xml).find('layers').text();
-            var release = $(xml).find('release').text();
-			var tags = $(xml).find('tags').children().map(function() { return $(this).text(); }).get();
+			var enabled = $xml.find('enabled').text();
+			var first = $xml.find('first').text();
+			var last = $xml.find('last').text();
+			var label = $xml.find('label').text();
+			var pic = $xml.find('pic').text();
+			var gender = $xml.find('gender').text();
+			var height = $xml.find('height').text();
+			var from = $xml.find('from').text();
+			var artist = $xml.find('artist').text();
+			var writer = $xml.find('writer').text();
+			var description = $xml.find('description').text();
+            var ending = $xml.find('has_ending').text() === "true";
+            var layers = $xml.find('layers').text();
+            var release = $xml.find('release').text();
+			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
 			var opponent = createNewOpponent(id, enabled, first, last,
                                              label, pic, gender, height, from,
