@@ -792,7 +792,7 @@ function advanceGame () {
         /* making the loser start masturbating */
         if (AUTO_FADE) forceTableVisibility(false);
 		    completeMasturbatePhase();
-    } else if (context == "Finish") {
+    } else if (context == "Continue...") {
         /* finished watching masturbation */
 		    endMasturbation();
     } else if (context.substr(0, 4) == "Wait") {
