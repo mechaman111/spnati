@@ -217,11 +217,11 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
 
 	}
-  if (savedContext !== "Finish") {
+  if (savedContext !== "Continue...") {
     previousState = savedContext;
   }
   globalSavedTableVisibility = savedTableVisibility;
-  $mainButton.html("Finish");
+  $mainButton.html("Continue...");
   allowProgression();
 }
 
