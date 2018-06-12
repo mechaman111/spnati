@@ -217,20 +217,22 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
 
 	}
-  $previousState = savedContext;
-  $savedTableVisibility = savedTableVisibility;
+  if (savedContext !== "Finish") {
+    previousState = savedContext;
+  }
+  globalSavedTableVisibility = savedTableVisibility;
   $mainButton.html("Finish");
   allowProgression();
 }
 
 function endMasturbation() {
   updateAllGameVisuals();
-	if (AUTO_FADE && $savedTableVisibility !== undefined) {
-		forceTableVisibility($savedTableVisibility);
+	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
+		forceTableVisibility(globalSavedTableVisibility);
 	}
 
 	/* update the button */
-	$mainButton.html($previousState);
+	$mainButton.html(previousState);
 
 	allowProgression();
 	oneFinished = false;
