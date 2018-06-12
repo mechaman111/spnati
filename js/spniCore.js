@@ -50,6 +50,10 @@ var timeoutID;
 
 var table = new Table();
 
+/* Masturbation Previous State Variables */
+$previousState = null;
+$savedTableVisibility = undefined;
+
 
 /**********************************************************************
  * Screens & Modals
@@ -75,9 +79,6 @@ $gameSettingsModal = $('#game-settings-modal');
 /* Screen State */
 $previousScreen = null;
 
-/* Masturbation Previous State Variables */
-$previousState = null;
-$savedTableVisibility = undefined;
 
 /********************************************************************************
  * Game Wide Utility Functions
