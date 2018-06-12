@@ -2,31 +2,31 @@
  This file contains the variables and functions that allow for players to have
  multiple potential forfeits.
  ********************************************************************************/
- 
+
 /**********************************************************************
  *****                 Forfeit Object Specification               *****
  **********************************************************************/
 
 var CAN_SPEAK = true;
 var CANNOT_SPEAK = false;
- 
+
 /**********************************************************************
  *****                      Forfeit Variables                     *****
  **********************************************************************/
- 
+
 /* locks */
 var oneFinished = false;
- 
+
 /* orgasm timer */
 var ORGASM_DELAY = 4000;
 
 /* The first and last rounds a character starts heavy masturbation, counted in phases before they finish */
 var HEAVY_FIRST_ROUND = 6
 var HEAVY_LAST_ROUND = 2
- 
+
 /* forfeit timers */
 var timers = [0, 0, 0, 0, 0];
- 
+
 /**********************************************************************
  *****                      Forfeit Functions                     *****
  **********************************************************************/
@@ -41,7 +41,7 @@ function setForfeitTimer (player) {
     if (player == HUMAN_PLAYER) {
       $gamePlayerCountdown.html(timers[player]);
     }
-	
+
 	// THE STAGE IS HARD SET RIGHT NOW
 	players[player].stage += 1;
 	players[player].timeInStage = -1;
@@ -95,12 +95,12 @@ function startMasturbation (player) {
 }
 
 /************************************************************
- * The forfeit timers of all players tick down, if they have 
+ * The forfeit timers of all players tick down, if they have
  * been set.
  ************************************************************/
 function tickForfeitTimers (context) {
     console.log("Ticking forfeit timers...");
-    
+
     var masturbatingPlayers = [];
 
     for (var i = 0; i < players.length; i++) {
@@ -156,14 +156,14 @@ function tickForfeitTimers (context) {
 				/* human player */
 				/* update the player label */
 				$gameClothingLabel.html("<b>'Finished' in "+timers[i]+" phases</b>");
-				$gamePlayerCountdown.html(timers[i]);	
+				$gamePlayerCountdown.html(timers[i]);
 				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {
 				/* AI player */
 				/* random chance they go into heavy masturbation */
 				// CHANGE THIS TO ACTIVATE ONLY IN THE LAST 4 TURNS
 				var randomChance = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
-				
+
 				if (randomChance > timers[i]-1) {
 					/* this player is now heavily masturbating */
 					players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
@@ -174,7 +174,7 @@ function tickForfeitTimers (context) {
 			masturbatingPlayers.push(i);
         }
     }
-	
+
 	// Show a player masturbating while dealing or after the game, if there is one available
 	if (masturbatingPlayers.length > 0
 		&& ((context == "Deal" && players[HUMAN_PLAYER].out) || context == "Exchange" || context.substr(0, 4) == "Wait")) {
@@ -190,7 +190,7 @@ function tickForfeitTimers (context) {
 		}
 		updateAllGameVisuals();
 	}
-	
+
 	return false;
 }
 
@@ -211,19 +211,26 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 	} else if (players[player].gender == eGender.FEMALE) {
 		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
 	}
-	
+
 	/* update their dialogue */
 	if (player != HUMAN_PLAYER) {
 		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
-		
+
 	}
-	updateAllGameVisuals();
-	if (AUTO_FADE && savedTableVisibility !== undefined) {
-		forceTableVisibility(savedTableVisibility);
+  $previousState = savedContext;
+  $savedTableVisibility = savedTableVisibility;
+  $mainButton.html("Finish");
+  allowProgression();
+}
+
+function endMasturbation() {
+  updateAllGameVisuals();
+	if (AUTO_FADE && $savedTableVisibility !== undefined) {
+		forceTableVisibility($savedTableVisibility);
 	}
-	
+
 	/* update the button */
-	$mainButton.html(savedContext);
+	$mainButton.html($previousState);
 
 	allowProgression();
 	oneFinished = false;
