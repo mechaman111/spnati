@@ -49,15 +49,6 @@ function setForfeitTimer (player) {
 }
 
 /************************************************************
- * Sleep for the specified amount of time in milliseconds.
- * Blocks the thread.
- ************************************************************/
-function blockingSleep(time){
-	var now = new Date().getTime();
-    while(new Date().getTime() < now + time){ /* wait */ }
-}
-
-/************************************************************
  * Initiate masturbation for the selected player
  ************************************************************/
 function startMasturbation (player) {
@@ -180,13 +171,10 @@ function tickForfeitTimers (context) {
 		&& ((context == "Deal" && players[HUMAN_PLAYER].out) || context == "Exchange" || context.substr(0, 4) == "Wait")) {
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 1; i < players.length; i++) {
-			if (i == playerToShow) {
-				updateBehaviour(i, players[i].forfeit[0]);
-			} else if (Math.random() < 0.5) {
-				updateBehaviour(i, (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING), players[playerToShow]);
-			} else if (players[i] {
-				players[i].state = null;
-			}
+			updateBehaviour(i,
+							(i == playerToShow) ? players[i].forfeit[0]
+							: (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
+							players[playerToShow]);
 		}
 		updateAllGameVisuals();
 	}
