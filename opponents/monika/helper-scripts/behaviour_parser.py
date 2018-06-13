@@ -66,6 +66,17 @@ meta_tag_spec = {
     }
 }
 
+listing_tag_spec = {
+    'catalog': {
+        'individuals': {
+            'opponent': None
+        },
+        'groups': {
+            'group': None
+        }
+    }
+}
+
 # skip whitespace and comments
 def _skip_chars(seq, index):
     match = _comment.match(seq, index)
@@ -216,3 +227,15 @@ def parse_meta(fname, progress_cb=None):
             return parse(seq, meta_tag_spec, wrapped_progress_cb)
         else:
             return parse(infile.read(), meta_tag_spec)
+            
+def parse_listing(fname, progress_cb=None):
+    with open(fname, encoding='utf-8') as infile:
+        if progress_cb is not None:
+            seq = infile.read()
+            
+            def wrapped_progress_cb(cur_index):
+                return progress_cb(len(seq), cur_index)
+                
+            return parse(seq, listing_tag_spec, wrapped_progress_cb)
+        else:
+            return parse(infile.read(), listing_tag_spec)
