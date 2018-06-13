@@ -149,7 +149,7 @@ function tickForfeitTimers (context) {
     }
 
     for (var i = 0; i < players.length; i++) {
-		if (players[i] && players[i].out && timers[i] > 1) {
+		if (players[i] && players[i].out && timers[i] > 1 && context !== "Continue...") {
         	timers[i]--;
 
 			if (i == HUMAN_PLAYER) {
