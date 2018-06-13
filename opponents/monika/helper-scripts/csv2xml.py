@@ -20,7 +20,12 @@ def generate_comment():
 
 def parse_interval(val):
     interval_tuple = val.split('-')
+    
+    if len(interval_tuple[0].strip()) == 0:  # handles intervals with a single negative number
+        return int(val), int(val)
+    
     low = int(interval_tuple[0].strip())
+    
     if len(interval_tuple) > 1:
         hi = int(interval_tuple[1].strip())
     else:
@@ -549,6 +554,14 @@ class Case(object):
                 if len(cond_tuple) == 3:
                     low = cond_tuple[1]
                     hi = cond_tuple[2]
+                    
+                # normalize attributes if possible
+                if attr not in cls.POSSIBLE_ATTRIBUTES:
+                    for possible_attr in cls.POSSIBLE_ATTRIBUTES:
+                        if attr.lower() == possible_attr.lower():
+                            print("[Info] Normalized attribute {} to {}".format(attr, possible_attr))
+                            attr = possible_attr
+                            break
 
                 tag_match = re.match(r'tag\s*\:\s*([^\=]+)', attr, re.IGNORECASE)
                 if tag_match is not None:
@@ -605,6 +618,19 @@ class Case(object):
 
     def states_set(self):
         return frozenset(state.to_tuple() for state in self.states)
+
+    def format_conditions(self):
+        attrs = []
+        for cond in self.conditions:
+            if len(cond) == 3:
+                attrs.append("{:s}={:s}".format(cond[0], format_interval(cond[1:3])))
+            else:
+                attrs.append("{:s}={:s}".format(cond[0], cond[1]))
+        
+        for counter in self.counters:
+            attrs.append("tag:{:s}={:s}".format(counter[0], format_interval(counter[1:3])))
+            
+        return ','.join(attrs)
 
     def __eq__(self, other):            
         if isinstance(other, Case):
@@ -959,17 +985,7 @@ def lineset_to_csv(lineset, opponent_meta, dict_writer):
         formatted_stage_set = format_stage_set(stage_set)
         
         for case in cases:
-            formatted_conditions = []
-            for cond in case.conditions:
-                if len(cond) == 3:
-                    formatted_conditions.append("{:s}={:s}".format(cond[0], format_interval(cond[1:3])))
-                else:
-                    formatted_conditions.append("{:s}={:s}".format(cond[0], cond[1]))
-            
-            for counter in case.counters:
-                formatted_conditions.append("tag:{:s}={:s}".format(counter[0], format_interval(counter[1:3])))
-                
-            formatted_conditions = ','.join(formatted_conditions)
+            formatted_conditions = case.format_conditions()
             
             priority = ''
             if case.priority is not None:
