@@ -160,16 +160,19 @@ if(!monika) {
         var oppID = targeted_player.folder.substr(0, targeted_player.folder.length - 1);
         oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
         
+        var type_glitch_marker = 'glitch-type-'+glitch_type;
         var base_glitch_marker = 'glitching-'+oppID;
         var specific_glitch_marker = base_glitch_marker+'-'+glitch_type;
         
         if(value) {
             monika_player.markers[base_glitch_marker] = value;
             monika_player.markers[specific_glitch_marker] = value;
+            monika_player.markers[type_glitch_marker] = value;
             monika_player.markers['glitched'] = true;
         } else {
             delete monika_player.markers[base_glitch_marker];
             delete monika_player.markers[specific_glitch_marker];
+            delete monika_player.markers[type_glitch_marker];
         }
     }
     
