@@ -9,6 +9,7 @@
 
 /* General Constants */
 var DEBUG = true;
+var EPILOGUES_ENABLED = true;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -195,6 +196,26 @@ function loadConfigFile () {
 		url: "config.xml",
 		dataType: "text",
 		success: function(xml) {           
+			var _epilogues = $(xml).find('epilogues').text();
+            if(_epilogues.toLowerCase() === 'false') {
+                EPILOGUES_ENABLED = false;
+                console.log("Epilogues are disabled.");
+                $("#title-gallery-edge").hide();
+            } else {
+                console.log("Epilogues are enabled.");
+                EPILOGUES_ENABLED = true;
+            }
+            
+            var _epilogue_badges = $(xml).find('epilogue_badges').text();
+            if(_epilogue_badges.toLowerCase() === 'false') {
+                EPILOGUE_BADGES_ENABLED = false;
+                console.log("Epilogue badges are disabled.");
+                $("#title-gallery-edge").hide();
+            } else {
+                console.log("Epilogue badges are enabled.");
+                EPILOGUE_BADGES_ENABLED = true;
+            }
+            
 			var _debug = $(xml).find('debug').text();
 
             if (_debug === "true") {
