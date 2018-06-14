@@ -211,7 +211,6 @@ function loadConfigFile () {
             if(_epilogue_badges.toLowerCase() === 'false') {
                 EPILOGUE_BADGES_ENABLED = false;
                 console.log("Epilogue badges are disabled.");
-                $("#title-gallery-edge").hide();
             } else {
                 console.log("Epilogue badges are enabled.");
                 EPILOGUE_BADGES_ENABLED = true;
