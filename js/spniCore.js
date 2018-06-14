@@ -10,6 +10,7 @@
 /* General Constants */
 var DEBUG = true;
 var EPILOGUES_ENABLED = true;
+var EPILOGUE_BADGES_ENABLED = true;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
