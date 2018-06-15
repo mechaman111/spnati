@@ -1,16 +1,16 @@
 /********************************************************************************
- This file contains the variables and functions that form the main game screen of
+ This file contains the variables and functions that form the main game screen of 
  the game. The main game progression (dealing, exchanging, revealing, stripping)
  and everything to do with displaying the main game screen.
  ********************************************************************************/
-
+ 
 /**********************************************************************
  *****                    Game Screen UI Elements                 *****
  **********************************************************************/
 
 /* game banner */
 $gameBanner = $("#game-banner");
-
+ 
 /* main UI elements */
 $gameBubbles = [$("#game-bubble-1"),
                 $("#game-bubble-2"),
@@ -62,10 +62,10 @@ $debugButtons = [$("#debug-button-0"),
 				 $("#debug-button-2"),
 				 $("#debug-button-3"),
 				 $("#debug-button-4")];
-
+				
 /* restart modal */
 $restartModal = $("#restart-modal");
-
+                    
 /**********************************************************************
  *****                   Game Screen Variables                    *****
  **********************************************************************/
@@ -80,12 +80,12 @@ var AUTO_FORFEIT = false;
 var AUTO_FADE = true;
 var KEYBINDINGS_ENABLED = false;
 var DEBUG = false;
-
+ 
 /* colours */
 var currentColour = "#63AAE7"; 	/* indicates current turn */
 var clearColour = "#FFFFFF";	/* indicates neutral */
 var loserColour = "#DD4444";	/* indicates loser of a round */
-
+ 
 /* game state */
 var currentTurn = 0;
 var currentRound = -1;
@@ -97,21 +97,21 @@ var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
 var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
-
+                      
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
-
+ 
 /************************************************************
- * Loads all of the content required to display the title
+ * Loads all of the content required to display the title 
  * screen.
  ************************************************************/
 function loadGameScreen () {
     $gameScreen.show();
-
+    
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] != null) {
+        if (players[i] !== null) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
             $gameLabels[i].css({"background-color" : clearColour});
@@ -134,28 +134,28 @@ function loadGameScreen () {
     updateDebugState(showDebug);
 
     updateAllBehaviours(null, GAME_START, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-
+    
     /* set up the visuals */
     updateAllGameVisuals();
-
+    
     /* set up the poker library */
     setupPoker();
-
+    
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
         $cardButtons[i].attr('disabled', true);
     }
-
+    
     /* enable and set up the main button */
     $mainButton.html("Deal");
     $mainButton.attr("disabled", false);
     actualMainButtonState = false;
-
+    
     /* late settings */
     KEYBINDINGS_ENABLED = true;
     document.addEventListener('keyup', game_keyUp, false);
 }
-
+                      
 /**********************************************************************
  *****                      Display Functions                     *****
  **********************************************************************/
@@ -182,7 +182,7 @@ function updateGameVisual (player) {
             if (players[player].state[players[player].current].direction) {
                 $gameBubbles[player-1].removeClass();
                 $gameBubbles[player-1].addClass("bordered dialogue-bubble dialogue-"+chosenState.direction);
-            }
+            } 
 
             /* update image */
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
@@ -190,7 +190,7 @@ function updateGameVisual (player) {
 
             /* update label */
             $gameLabels[player].html(players[player].label.initCap());
-
+            
             /* check silence */
             if (chosenState.silent) {
                 $gameBubbles[player-1].hide();
@@ -213,7 +213,7 @@ function updateGameVisual (player) {
 		$gameImages[player-1].hide();
     }
 }
-
+ 
 /************************************************************
  * Updates all of the main visuals on the main game screen.
  ************************************************************/
@@ -223,7 +223,7 @@ function updateAllGameVisuals () {
         updateGameVisual (i);
     }
 }
-
+ 
 /************************************************************
  * Updates the visuals of the player clothing cells.
  ************************************************************/
@@ -235,7 +235,7 @@ function displayHumanPlayerClothing () {
 			clothingImages.push(players[HUMAN_PLAYER].clothing[i].image);
 		}
 	}
-
+    
     /* display the remaining clothing items */
     clothingImages.reverse();
 	$gameClothingLabel.html("Your Clothing");
@@ -256,10 +256,10 @@ function displayHumanPlayerClothing () {
 /************************************************************
  * Determines what the AI's action will be.
  ************************************************************/
-function makeAIDecision () {
+function makeAIDecision () {	
 	/* determine the AI's decision */
 	determineAIAction(currentTurn);
-
+	
 	/* dull the cards they are trading in */
 	for (var i = 0; i < hands[currentTurn].tradeIns.length; i++) {
 		if (hands[currentTurn].tradeIns[i]) {
@@ -274,11 +274,11 @@ function makeAIDecision () {
 			swap++;
 		}
 	}
-
+	
 	/* update a few hardcoded visuals */
 	updateBehaviour(currentTurn, SWAP_CARDS, [CARDS, PLAYER_NAME], [swap, players[HUMAN_PLAYER].label], null);
 	updateGameVisual(currentTurn);
-
+	
 	/* wait and implement AI action */
 	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
 }
@@ -288,10 +288,10 @@ function makeAIDecision () {
  ************************************************************/
 function implementAIAction () {
 	exchangeCards(currentTurn);
-
+	
 	/* refresh the hand */
 	hideHand(currentTurn);
-
+	
 	/* update behaviour */
 	determineHand(currentTurn);
 	if (hands[currentTurn].strength == HIGH_CARD) {
@@ -304,7 +304,7 @@ function implementAIAction () {
 		updateBehaviour(currentTurn, GOOD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	}
-
+	
 	/* wait and then advance the turn */
 	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
 }
@@ -317,7 +317,7 @@ function advanceTurn () {
 	if (currentTurn >= players.length) {
 		currentTurn = 0;
 	}
-
+    
     if (players[currentTurn]) {
         /* highlight the player who's turn it is */
         for (var i = 0; i < players.length; i++) {
@@ -338,7 +338,7 @@ function advanceTurn () {
             return;
         }
     }
-
+	
 	/* allow them to take their turn */
 	if (currentTurn == 0) {
         /* human player's turn */
@@ -354,9 +354,9 @@ function advanceTurn () {
 		makeAIDecision();
 	}
 }
-
+ 
 /************************************************************
- * Deals cards to each player and resets all of the relevant
+ * Deals cards to each player and resets all of the relevant 
  * information.
  ************************************************************/
 function startDealPhase () {
@@ -380,7 +380,7 @@ function startDealPhase () {
                 if (HUMAN_PLAYER == i) {
                     $gamePlayerCardArea.hide();
                     $gamePlayerClothingArea.hide();
-                }
+                } 
                 else {
                     $gameOpponentAreas[i-1].hide();
                 }
@@ -388,9 +388,9 @@ function startDealPhase () {
             players[i].timeInStage++;
         }
     }
-
+    
 	/* IMPLEMENT STACKING/RANDOMIZED TRIGGERS HERE SO THAT AIs CAN COMMENT ON PLAYER "ACTIONS" */
-
+	
 	/* clear the labels */
 	for (var i = 0; i < players.length; i++) {
 		$gameLabels[i].css({"background-color" : clearColour});
@@ -410,7 +410,7 @@ function checkDealLock () {
 			inGame++;
 		}
 	}
-
+	
 	/* check the deal lock */
 	if (dealLock < inGame * 5) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
@@ -419,7 +419,7 @@ function checkDealLock () {
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
-        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) {
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
             $mainButton.html("Next");
             allowProgression();
         } else {
@@ -438,21 +438,21 @@ function continueDealPhase () {
         $gameAdvanceButtons[i-1].css({opacity : 0});
         $gameBubbles[i-1].hide();
     }
-
+	
 	/* set visual state */
     if (!players[HUMAN_PLAYER].out) {
         showHand(HUMAN_PLAYER);
     }
-
+    
     /* enable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', false);
     }
-
+	
 	/* suggest cards to swap, if enabled */
 	if (CARD_SUGGEST && !players[HUMAN_PLAYER].out) {
 		determineAIAction(HUMAN_PLAYER);
-
+		
 		/* dull the cards they are trading in */
 		for (var i = 0; i < hands[HUMAN_PLAYER].tradeIns.length; i++) {
 			if (hands[HUMAN_PLAYER].tradeIns[i]) {
@@ -460,7 +460,7 @@ function continueDealPhase () {
 			}
 		}
 	}
-
+    
     /* allow each of the AIs to take their turns */
     currentTurn = 0;
     advanceTurn();
@@ -475,7 +475,7 @@ function completeExchangePhase () {
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
     showHand(HUMAN_PLAYER);
-
+    
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);
@@ -496,29 +496,29 @@ function completeRevealPhase () {
             showHand(i);
         }
     }
-
+    
     /* figure out who has the lowest hand */
     previousLoser = recentLoser;
     recentLoser = determineLowestHand();
-
+    
     if (chosenDebug !== -1 && DEBUG) {
         recentLoser = chosenDebug;
     }
-
+    
     console.log("Player "+recentLoser+" is the loser.");
-
+    
     /* look for the unlikely case of an absolute tie */
     if (recentLoser == -1) {
         console.log("Fuck... there was an absolute tie");
         /* inform the player */
-
+        
         /* hide the dialogue bubbles */
         for (var i = 1; i < players.length; i++) {
             $gameDialogues[i-1].html("");
             $gameAdvanceButtons[i-1].css({opacity : 0});
             $gameBubbles[i-1].hide();
         }
-
+        
         /* reset the round */
         $mainButton.html("Deal");
         allowProgression();
@@ -539,12 +539,12 @@ function completeRevealPhase () {
         players[previousLoser].consecutiveLosses = 0; //reset last loser
         players[recentLoser].consecutiveLosses = 1;
     }
-
-
+    
+    
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);
     updateAllGameVisuals();
-
+    
     /* highlight the loser */
     for (var i = 0; i < players.length; i++) {
         if (recentLoser == i) {
@@ -553,7 +553,7 @@ function completeRevealPhase () {
             $gameLabels[i].css({"background-color" : clearColour});
         }
     }
-
+    
     /* set up the main button */
 	if (recentLoser != HUMAN_PLAYER && clothes > 0) {
 	    $mainButton.html("Continue");
@@ -567,7 +567,7 @@ function completeRevealPhase () {
 
 /************************************************************
  * Processes everything required to complete the continue phase
- * of a round. A very short phase in which a player removes an
+ * of a round. A very short phase in which a player removes an 
  * article of clothing.
  ************************************************************/
 function completeContinuePhase () {
@@ -617,18 +617,18 @@ function endRound () {
             lastPlayer = i;
         }
     }
-
+    
     /* if there is only one player left, end the game */
     if (inGame <= 1) {
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
-
+        
         for (var i = 0; i < players.length; i++) {
             if (HUMAN_PLAYER == i) {
                 $gamePlayerCardArea.hide();
                 $gamePlayerClothingArea.hide();
-            }
+            } 
             else {
                 $gameOpponentAreas[i-1].hide();
             }
@@ -653,11 +653,11 @@ function handleGameOver() {
 			left++;
 		}
 	}
-
+	
 	/* determine true end */
 	if (left == 0) {
 		/* true end */
-
+		
 		//identify winner
 		var winner = -1;
 		for (var i = 0; i < players.length; i++){
@@ -670,9 +670,9 @@ function handleGameOver() {
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
 			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
 		}
-
+		
         updateAllGameVisuals();
-
+        
 		$mainButton.html("Ending?");
 		$mainButton.attr('disabled', false);
         actualMainButtonState = false;
@@ -683,13 +683,13 @@ function handleGameOver() {
             dots += ".";
         }
         endWaitDisplay = (endWaitDisplay + 1) % 4;
-
+        
 		/* someone is still forfeiting */
 		$mainButton.html("Wait" + dots);
 		allowProgression();
 	}
 }
-
+ 
 /**********************************************************************
  *****                    Interaction Functions                   *****
  **********************************************************************/
@@ -699,43 +699,43 @@ function handleGameOver() {
  ************************************************************/
 function selectCard (card) {
 	hands[HUMAN_PLAYER].tradeIns[card] = !hands[HUMAN_PLAYER].tradeIns[card];
-
+	
 	if (hands[HUMAN_PLAYER].tradeIns[card]) {
 		dullCard(HUMAN_PLAYER, card);
 	} else {
 		fillCard(HUMAN_PLAYER, card);
 	}
 }
-
+ 
 /************************************************************
  * The player clicked the advance dialogue button on the main
  * game screen.
  ************************************************************/
 function advanceGameDialogue (slot) {
     players[slot].current++;
-
+    
     /* update dialogue */
     $gameDialogues[slot-1].html(players[slot].state[players[slot].current].dialogue);
-
+    
     /* determine if the advance dialogue button should be shown */
     if (players[slot].state.length > players[slot].current+1) {
         $gameAdvanceButtons[slot-1].css({opacity : 1});
     } else {
         $gameAdvanceButtons[slot-1].css({opacity : 0});
     }
-
+    
     /* direct the dialogue bubble */
     if (players[slot].state[players[slot].current].direction) {
         $gameBubbles[slot-1].removeClass();
 		$gameBubbles[slot-1].addClass("bordered dialogue-bubble dialogue-"+players[slot].state[players[slot].current].direction);
-	}
-
+	} 
+    
     /* update image */
     $gameImages[slot-1].attr('src', players[slot].folder + players[slot].state[players[slot].current].image);
 }
 
 /************************************************************
- * Allow progression by enabling the main button *or*
+ * Allow progression by enabling the main button *or* 
  * setting up the auto forfeit timer.
  ************************************************************/
 function allowProgression () {
@@ -752,15 +752,15 @@ function allowProgression () {
  ************************************************************/
 function advanceGame () {
     var context = $mainButton.html();
-
+    
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', true);
     actualMainButtonState = true;
     autoForfeitTimeoutID = undefined;
-
+    
     /* lower the timers of everyone who is forfeiting */
     if (tickForfeitTimers(context)) return;
-
+    
     /* handle the game */
     if (context == "Deal") {
         /* dealing the cards */
@@ -791,7 +791,7 @@ function advanceGame () {
     } else if (context == "Masturbate") {
         /* making the loser start masturbating */
         if (AUTO_FADE) forceTableVisibility(false);
-		    completeMasturbatePhase();
+		completeMasturbatePhase();
     } else if (context == "Continue...") {
         /* finished watching masturbation */
 		    endMasturbation();
@@ -821,7 +821,7 @@ function closeRestartModal() {
 /************************************************************
  * A keybound handler.
  ************************************************************/
-function game_keyUp(e)
+function game_keyUp(e) 
 {
     console.log(e);
     if (KEYBINDINGS_ENABLED) {
@@ -854,7 +854,7 @@ function game_keyUp(e)
 }
 
 
-function selectDebug(player)
+function selectDebug(player) 
 {
     if (chosenDebug === player) {
         chosenDebug = -1;
@@ -866,7 +866,7 @@ function selectDebug(player)
 }
 
 
-function updateDebugState(show)
+function updateDebugState(show) 
 {
     if (!show) {
         for (var i = 0; i < $debugButtons.length; i++) {
@@ -880,7 +880,7 @@ function updateDebugState(show)
                 $debugButtons[i].removeClass("active");
             }
         }
-
+        
         if (chosenDebug !== -1) {
             $debugButtons[chosenDebug].addClass("active");
         }
