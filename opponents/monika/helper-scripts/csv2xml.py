@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import sys
+if sys.version_info[0] < 3:
+    reload(sys)
+    sys.setdefaultencoding('UTF8')
+    from io import open
 
 import csv
 from collections import OrderedDict
@@ -11,7 +18,7 @@ import time
 from behaviour_parser import parse_file, parse_meta
 from ordered_xml import OrderedXMLElement
 
-VERSION = '0.10.0-alpha'  # will attempt to follow semver if possible
+VERSION = '0.11.0-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
 
@@ -1029,8 +1036,6 @@ def get_unique_line_count(lineset):
     
                 
 if __name__ == '__main__':
-    import sys
-    
     if len(sys.argv) < 3:
         print("USAGE: python csv2xml.py [infile(.csv|.xml)] [outfile(.csv|.xml)]")
         
@@ -1069,7 +1074,7 @@ if __name__ == '__main__':
         opponent_elem.children.insert(-1, start_elem)
         opponent_elem.children.append(behaviour_elem)
         
-        with open(outfile, 'w') as f:
+        with open(outfile, 'w', encoding='utf-8') as f:
             f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
             f.write('<!-- '+generate_comment()+' -->\n\n')
             f.write('<!--\n')
@@ -1081,7 +1086,7 @@ if __name__ == '__main__':
             f.write('-->\n\n'.format(num_targeted_cases))
             f.write(opponent_elem.serialize())
             
-        with open(osp.join(osp.dirname(outfile), 'meta.xml'), 'w') as meta_f:
+        with open(osp.join(osp.dirname(outfile), 'meta.xml'), 'w', encoding='utf-8') as meta_f:
             meta_f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
             meta_f.write('<!-- '+generate_comment()+' -->\n')
             meta_f.write(meta_elem.serialize())
