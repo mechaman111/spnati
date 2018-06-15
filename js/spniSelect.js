@@ -747,7 +747,7 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-        players[i] = null;
+        delete players[i];
     }
     updateSelectionVisuals();
 }
