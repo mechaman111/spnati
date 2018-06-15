@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-from __future__ import print_function    # in case we happen to be on python2...
+from __future__ import print_function, unicode_literals    # in case we happen to be on python2...
 
 import sys
+
+if sys.version_info[0] < 3:
+    from io import open
+
 import time
 import bleach.sanitizer
 import glob
@@ -133,8 +137,8 @@ if __name__ == "__main__":
         details_filename = "safety_validation_details.log"
         print("Checking {} files...".format(len(files)))
         
-        with open(report_filename, 'w') as summary_out:
-            with open(details_filename, 'w') as details_out:
+        with open(report_filename, 'w', encoding='utf-8') as summary_out:
+            with open(details_filename, 'w', encoding='utf-8') as details_out:
                 summary_out.write("<filename> : <validated / failed> : lines total / lines passed / lines failed\n")
                 write_report_header(details_out)
                 
@@ -159,6 +163,6 @@ if __name__ == "__main__":
         # single-file mode
         xml_filename = files[0]
         summary_data, failed_lines = check_file(xml_filename)
-        with open(report_filename, 'w') as report_out:
+        with open(report_filename, 'w', encoding='utf-8') as report_out:
             write_report_header(report_out)
             write_report(summary_data, failed_lines, xml_filename, report_out)
