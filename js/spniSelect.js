@@ -517,7 +517,7 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by source
-        if (source && !opp.source.toLowerCase().indexOf(source) < 0) {
+        if (source && opp.source.toLowerCase().indexOf(source) < 0) {
             return false;
         }
 
