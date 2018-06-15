@@ -950,7 +950,11 @@ function updateSelectionVisuals () {
     players.forEach(function(p, idx) {
         if (idx > 0) {
             filled++;
-            if (p !== null) loaded++;
+            if (p === null) {
+                $selectButtons[idx-1].html('Loading...');
+            } else {
+                loaded++;
+            }
             $selectButtons[idx-1].attr('disabled', p === null);
         }
     });
