@@ -72,7 +72,7 @@ self.addEventListener('fetch', function(event) {
      */
     if(debug_active) {
         let file_ext = event.request.url.split('.').pop();
-        if(file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg') {
+        if(file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
             return event.respondWith(
                 fetch(event.request).then(
                     async function (net_response) {
