@@ -51,9 +51,8 @@ var timeoutID;
 var table = new Table();
 
 /* Masturbation Previous State Variables */
-previousState = null;
-globalSavedTableVisibility = undefined;
-
+var previousState = null;
+var globalSavedTableVisibility;
 
 /**********************************************************************
  * Screens & Modals
@@ -148,7 +147,7 @@ function createNewPlayer (id, first, last, labels, gender, size, intelligence, t
 }
 
 /*******************************************************************
- * (Re)Initialize the player properties that change during a game
+ * (Re)Initialize the player properties that change during a game 
  *******************************************************************/
 function initPlayerState(player) {
 	player.out = player.finished = player.exposed = false;
@@ -174,11 +173,11 @@ function initialSetup () {
     /* start by creating the human player object */
     var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
-
+    
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
-
+	
     /* load the all content */
     loadTitleScreen();
     selectTitleCandy();
@@ -198,7 +197,7 @@ function loadConfigFile () {
         type: "GET",
 		url: "config.xml",
 		dataType: "text",
-		success: function(xml) {
+		success: function(xml) {           
 			var _debug = $(xml).find('debug').text();
 
             if (_debug === "true") {
@@ -231,7 +230,7 @@ function screenTransition (first, second) {
 	first.hide();
 	second.show();
 }
-
+ 
 /************************************************************
  * Switches to the next screen based on the screen provided.
  ************************************************************/
@@ -282,20 +281,20 @@ function restartGame () {
 	timeoutID = autoForfeitTimeoutID = undefined;
 	stopCardAnimations();
 	resetPlayers();
-
+	
 	/* enable table opacity */
 	tableOpacity = 1;
 	$gameTable.css({opacity:1});
     $gamePlayerClothingArea.show();
     $gamePlayerCardArea.show();
-
+	
 	/* trigger screen refreshes */
 	updateSelectionVisuals();
 	updateAllGameVisuals();
     selectTitleCandy();
-
+    
     forceTableVisibility(true);
-
+	
 	/* there is only one call to this right now */
 	$epilogueSelectionModal.hide();
 	$gameScreen.hide();
@@ -307,7 +306,7 @@ function restartGame () {
 /**********************************************************************
  *****                    Interaction Functions                   *****
  **********************************************************************/
-
+ 
 /************************************************************
  * The player clicked the credits button. Shows the credits modal.
  ************************************************************/
@@ -366,15 +365,15 @@ String.prototype.initCap = function() {
 /**********************************************************************
  * Returns the width of the visible screen in pixels.
  **/
-function getScreenWidth ()
+function getScreenWidth () 
 {
 	/* fetch all game screens */
 	var screens = document.getElementsByClassName('screen');
-
+	
 	/* figure out which screen is visible */
-	for (var i = 0; i < screens.length; i++)
+	for (var i = 0; i < screens.length; i++) 
     {
-		if (screens[i].offsetWidth > 0)
+		if (screens[i].offsetWidth > 0) 
         {
 			/* this screen is currently visible */
 			return screens[i].offsetWidth;
@@ -385,7 +384,7 @@ function getScreenWidth ()
 /**********************************************************************
  * Automatically adjusts the size of all font based on screen width.
  **/
-function autoResizeFont ()
+function autoResizeFont () 
 {
 	/* resize font */
 	var screenWidth = getScreenWidth();
