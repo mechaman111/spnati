@@ -123,9 +123,7 @@ function loadBehaviour (id, callFunction, slot) {
         type: "GET",
 		url: 'opponents/' + id + "/behaviour.xml",
 		dataType: "text",
-		success: function(xml) {
-            if(slot > 0) slot_is_loading[slot-1] = false;
-            
+		success: function(xml) {            
             var $xml = $(xml);
             
             var first = $xml.find('first').text();
