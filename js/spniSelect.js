@@ -609,6 +609,7 @@ function selectOpponentSlot (slot) {
     } else {
         /* remove the opponent that's there */
         players[slot] = null;
+        slot_is_loading[slot-1] = false;
         updateSelectionVisuals();
     }
 }
@@ -933,29 +934,20 @@ function advanceSelectScreen () {
 
     if(sw_is_available()) {
         /* Ask SW to preload all unique image files for all characters in the game. */
+        var player_imgs = [];
+        
         for(var i=0;i<players.length;i++) {
             if(!players[i]) {
                 continue;
             }
 
-            var xml = players[i].xml;
-        	if (!xml) {
+        	if (players[i].image_set.length <= 0) {
                 continue;
             }
 
-            var player_imgs = [];
-            var folder = players[i].folder;
-
-            /* Find all unique images for the current character */
-            $(xml).find("state").each(function () {
-                var img = folder+$(this).attr('img');
-                if($.inArray(img, player_imgs) === -1) {
-                    player_imgs.push(img);
-                }
-            });
-
-            console.log("Preloading "+player_imgs.length.toString()+" image files from "+folder+" ...");
-            request_url_caching(player_imgs);
+            console.log("Preloading "+players[i].image_set.length.toString()+" image files from "+players[i].folder+" ...");
+            
+            request_url_caching(players[i].image_set);
         }
     }
 
@@ -1003,13 +995,10 @@ function updateSelectionVisuals () {
             $selectLabels[i-1].html(players[i].label.initCap());
 
             /* change the button */
-            if(slot_is_loading[i-1]) {
-                $selectButtons[i-1].html("Loading...");
-            } else {
-                $selectButtons[i-1].html("Remove Opponent");
-            }
+            $selectButtons[i-1].html("Remove Opponent");
             $selectButtons[i-1].removeClass("smooth-button-green");
             $selectButtons[i-1].addClass("smooth-button-red");
+            slot_is_loading[i-1] = false;
         } else {
             /* clear the view */
             $selectDialogues[i-1].html("");

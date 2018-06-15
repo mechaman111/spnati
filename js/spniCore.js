@@ -103,6 +103,18 @@ $previousScreen = null;
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
 function createNewPlayer (id, first, last, labels, gender, size, intelligence, timer, tags, xml) {
+    var player_imgs = [];
+    if(xml) {
+        xml.find("state").each(function () {
+            var img = 'opponents/'+id+'/'+$(this).attr('img');
+            if($.inArray(img, player_imgs) === -1) {
+                player_imgs.push(img);
+            }
+        });
+        
+        console.log("Found "+player_imgs.length.toString()+" unique image files for "+id+"...");
+    }
+    
     var newPlayerObject = {id:id,
                            folder:'opponents/'+id+'/',
 						   first:first,
@@ -114,6 +126,7 @@ function createNewPlayer (id, first, last, labels, gender, size, intelligence, t
                            timer:timer,
                            tags:tags,
                            xml:xml,
+                           image_set: player_imgs,
 
                            getByStage: function (arr) {
                                if (typeof(arr) === "string") {
@@ -140,6 +153,7 @@ function createNewPlayer (id, first, last, labels, gender, size, intelligence, t
                        };
 
 	initPlayerState(newPlayerObject);
+    
     return newPlayerObject;
 }
 
