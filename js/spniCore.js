@@ -17,6 +17,9 @@ var HUMAN_PLAYER = 0;
 
 /* Directory Constants */
 var IMG = 'img/';
+
+var backgroundImage;
+
 /*var OPP = 'opponents/';
 #The "OPP" folder abbreviation was used to slightly shorten a few lines in spniSelect that looked for opponents in the opponents folder.
 #Now that opponents can be specified in any folder, this is no longer required.*/
@@ -25,7 +28,7 @@ var IMG = 'img/';
 var MALE_SYMBOL = IMG + 'male.png';
 var FEMALE_SYMBOL = IMG + 'female.png';
 
-
+var includedOpponentStatuses = {};
 
 
 /* game table */
@@ -38,8 +41,8 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 /* player array */
 var players = [null, null, null, null, null];
 
-
-
+/* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
+var timeoutID;
 
 /**********************************************************************
  * Game Wide Global Variables
@@ -64,6 +67,7 @@ $galleryScreen = $('#gallery-screen');
 
 /* Modals */
 $searchModal = $('#search-modal');
+$groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
@@ -98,9 +102,10 @@ $previousScreen = null;
  * state (array of PlayerState objects), their sequential states.
  * xml (jQuery object), the player's loaded XML file.
  ************************************************************/
-function createNewPlayer (folder, first, last, labels, gender, size, intelligence, timer, tags, xml) {
-    var newPlayerObject = {folder:folder,
-                           first:first,
+function createNewPlayer (id, first, last, labels, gender, size, intelligence, timer, tags, xml) {
+    var newPlayerObject = {id:id,
+                           folder:'opponents/'+id+'/',
+						   first:first,
                            last:last,
                            labels:labels,
 						   size:size,
@@ -148,7 +153,7 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue($(player.xml).find('start'), [PLAYER_NAME], [players[HUMAN_PLAYER].label]);
+		player.state = parseDialogue(player.xml.find('start'), [PLAYER_NAME], [players[HUMAN_PLAYER].label]);
 		loadOpponentWardrobe(player);
 	}
 	player.updateLabel();
@@ -173,8 +178,9 @@ function initialSetup () {
     /* load the all content */
     loadTitleScreen();
     selectTitleCandy();
-	loadSelectScreen();
-    loadConfigFile();
+	/* Make sure that the config file is loaded before processing the
+	   opponent list, so that includedOpponentStatuses is populated. */
+    loadConfigFile().always(loadSelectScreen);
 	save.loadCookie();
 
 	/* show the title screen */
@@ -184,7 +190,7 @@ function initialSetup () {
 
 
 function loadConfigFile () {
-	$.ajax({
+	return $.ajax({
         type: "GET",
 		url: "config.xml",
 		dataType: "text",
@@ -199,6 +205,10 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
+			$(xml).find('include-status').each(function() {
+				includedOpponentStatuses[$(this).text()] = true;
+				console.log("Including", $(this).text(), "opponents");
+			});
 		}
 	});
 }
@@ -251,12 +261,11 @@ function returnToPreviousScreen (screen) {
 function resetPlayers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] != null) {
-			collectPlayerHand(i);
-			$gameLabels[i].css({"background-color" : clearColour});
 			initPlayerState(players[i]);
 		}
 		timers[i] = 0;
 	}
+	updateAllBehaviours(null, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
 }
 
 /************************************************************
@@ -264,7 +273,10 @@ function resetPlayers () {
  ************************************************************/
 function restartGame () {
     KEYBINDINGS_ENABLED = false;
-	
+
+	clearTimeout(timeoutID); // No error if undefined or no longer valid
+	timeoutID = autoForfeitTimeoutID = undefined;
+	stopCardAnimations();
 	resetPlayers();
 	
 	/* enable table opacity */
@@ -374,7 +386,20 @@ function autoResizeFont ()
 	/* resize font */
 	var screenWidth = getScreenWidth();
 	document.body.style.fontSize = (14*(screenWidth/1000))+'px';
-	
+
+	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
+		var w = window.innerWidth, h = window.innerHeight;
+		if (h > (3/4) * w) {
+			h = (3/4) * w;
+		} else {
+			w = Math.round((4 * h) / 3);
+		}
+		if (backgroundImage.height > (3/4) * backgroundImage.width) {
+			$("body").css("background-size", "auto " + Math.round(1.12 * h) + "px");
+		} else {
+			$("body").css("background-size", Math.round(1.12 * w) + "px auto");
+		}
+	}
 	/* set up future resizing */
 	window.onresize = autoResizeFont;
 }
