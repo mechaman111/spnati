@@ -1,11 +1,14 @@
 pages:
   stage: deploy
   script:
-  # Evidently it's faster to copy everything and delete what we don't need
-  # than it is to just copy what we need...
-  - mkdir .public
-  - cp -r css fonts img js player opponents index.html config.xml service_worker.js .public
-  - find .public/opponents -type f ! \( -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" \) -delete
+  # tar may be the easiest way to copy an arbitrary
+  # list of files, keeping the directory structure.
+  # Include *.js and *.css to accomodate Monika.
+  - mkdir -p .public/opponents
+  - cp -r css fonts img js player index.html service_worker.js .public
+  - cp prod-config.xml .public/config.xml
+  - cp opponents/listing.xml .public/opponents
+  - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
   - mv .public public
   artifacts:
     paths:

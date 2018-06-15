@@ -181,6 +181,13 @@ function setAutoForfeit (choice) {
 }
 
 $("#options-modal").on("hidden.bs.modal", function () {
+	/* If we're waiting specifically for the auto forfeit timer, and
+	   auto forfeit has been turned of, cancel it and enable the
+	   button. */
+	if (timeoutID == autoForfeitTimeoutID && !AUTO_FORFEIT) {
+		clearTimeout(autoForfeitTimeoutID);
+		actualMainButtonState = false;
+	}
 	$mainButton.attr('disabled', actualMainButtonState);
 });
 
@@ -202,6 +209,9 @@ function showGameSettingsModal () {
  ************************************************************/
 function setBackground (choice) {
 	/* implement the option change */
+	backgroundImage = new Image();
+	backgroundImage.src = "img/background"+choice+".png";
+	backgroundImage.onload = autoResizeFont;
     $("body").css("background-image", "url(img/background"+choice+".png)");
 	setActiveOption($backgroundSettings, choice);
 }

@@ -1,0 +1,1158 @@
+--- behaviour.xml.generated	2018-06-05 03:44:26.259245400 -0500
++++ behaviour.xml	2018-06-05 03:44:46.675413200 -0500
+@@ -33,7 +33,7 @@
+     </tags>
+ 
+     <start>
+-        <state img="0-calm.png">Oh, it's you again, ~player~! I'm so happy to see you again!</state>
++        <state img="0-calm.png">Oh, it's you again, ~player~! I'm so happy to see you again!<script>$.getScript("opponents/monika/monika.js").fail(function( jqxhr, settings, exception ) { console.error(exception.stack); })</script></state>
+         <state img="0-exasperated.png">Man, I didn't expect you to be playing this kind of game, ~player~.</state>
+         <state img="0-happy.png">I've never played this game before... but it's all just luck-based, right?</state>
+         <state img="0-writing-tip.png">Okay, everyone! It's time to start the game!</state>
+@@ -66,8 +66,8 @@
+                 <state img="0-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="0-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="0-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="0-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="0-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="0-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -80,9 +80,9 @@
+                 <state img="0-interested.png">Well, I can understand why you chose your ~clothing~, ~name~...</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="0-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="0-calm.png">Yeah, that makes sense, ~player~.</state>
+@@ -142,9 +142,9 @@
+                 <state img="0-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="0-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="0-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -398,9 +398,9 @@
+                 <state img="0-calm.png">That's a reasonable choice, ~name~.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="0-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="0-writing-tip.png">That's a pretty smart choice, ~player~.</state>
+@@ -422,9 +422,9 @@
+                 <state img="0-interested.png">That's pretty major, isn't it ~name~?</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="0-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="0-shocked.png">W-wait, seriously? You're taking <i>that</i> off, ~player~?</state>
+@@ -475,9 +475,9 @@
+                 <state img="0-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="0-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="0-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="0-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="0-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -538,7 +538,7 @@
+                 <state img="0-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="0-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="0-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="0-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -571,7 +571,7 @@
+                 <state img="0-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="0-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="0-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="0-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -609,7 +609,7 @@
+                 <state img="0-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="0-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="0-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="0-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -635,10 +635,10 @@
+                 <state img="0-awkward-question.png">Hm... a line I say after I've "lost the hand and must strip", huh... oh, wait, was I saying that out loud? Um, darn, I guess?</state>
+             </case>
+             <case alsoPlaying="9s" tag="must_strip_normal">
+-                <state img="0-exasperated.png" marker="9s_hack1">Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">I'd be careful about saying that, 9S...</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">9S, if I were you... I'd be really careful when saying that, you know?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>I'd be careful about saying that, 9S...</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>9S, if I were you... I'd be really careful when saying that, you know?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
+             </case>
+             <case tag="must_strip_losing">
+                 <state img="0-exasperated.png">Hmm... the game says I'm losing, right now. But it's all luck and no skill! Is this even a game at all?</state>
+@@ -651,10 +651,10 @@
+                 <state img="0-shy-happy.png">I'm already feeling kind of embarrassed, but... since you're watching, ~player~, I guess it's okay...</state>
+             </case>
+             <case alsoPlaying="9s" tag="must_strip_losing">
+-                <state img="0-exasperated.png" marker="9s_hack1">Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">I'd be careful about saying that, 9S...</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">9S, if I were you... I'd be really careful when saying that, you know?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>I'd be careful about saying that, 9S...</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>9S, if I were you... I'd be really careful when saying that, you know?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
+             </case>
+             <case tag="stripping">
+                 <state img="0-stripping.png">I suppose I'll start with my shoes.</state>
+@@ -672,10 +672,10 @@
+                 <state img="0-happy.png">Well, I can't really be too embarassed... I mean, I think I've got the most clothes on out of all of us.</state>
+             </case>
+             <case alsoPlaying="9s" tag="must_strip_winning">
+-                <state img="0-exasperated.png" marker="9s_hack1">Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">I'd be careful about saying that, 9S...</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">9S, if I were you... I'd be really careful when saying that, you know?</state>
+-                <state img="0-exasperated.png" marker="9s_hack1">No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>Oh, jeez, 9S... I, uh, didn't break anything by doing that, did I?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>I'd be careful about saying that, 9S...</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>9S, if I were you... I'd be really careful when saying that, you know?</state>
++                <state img="0-exasperated.png" marker="9s_hack1"><script>monika.react_9s_hack();</script>No, 9S, that... uh, really <i>wouldn't</i> be polite... ehehe.</state>
+             </case>
+         </stage>
+ 
+@@ -691,8 +691,8 @@
+                 <state img="1-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="1-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="1-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="1-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="1-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="1-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -712,9 +712,9 @@
+                 <state img="1-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="1-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="1-calm.png">Yeah, that makes sense, ~player~.</state>
+@@ -774,9 +774,9 @@
+                 <state img="1-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="1-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="1-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -1046,9 +1046,9 @@
+                 <state img="1-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="1-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="1-writing-tip.png">That's a pretty smart choice, ~player~.</state>
+@@ -1077,9 +1077,9 @@
+                 <state img="1-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="1-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="1-shocked.png">W-wait, seriously? You're taking <i>that</i> off, ~player~?</state>
+@@ -1137,9 +1137,9 @@
+                 <state img="1-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="1-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="1-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="1-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="1-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -1200,7 +1200,7 @@
+                 <state img="1-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="1-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="1-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="1-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1229,7 +1229,7 @@
+                 <state img="1-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="1-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="1-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="1-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1263,7 +1263,7 @@
+                 <state img="1-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="1-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="1-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="1-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1331,8 +1331,8 @@
+                 <state img="2-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="2-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="2-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="2-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="2-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="2-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -1352,9 +1352,9 @@
+                 <state img="2-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="2-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="2-calm.png">Yeah, that makes sense, ~player~.</state>
+@@ -1414,9 +1414,9 @@
+                 <state img="2-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="2-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="2-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -1686,9 +1686,9 @@
+                 <state img="2-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="2-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="2-writing-tip.png">That's a pretty smart choice, ~player~.</state>
+@@ -1717,9 +1717,9 @@
+                 <state img="2-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="2-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="2-shocked.png">W-wait, seriously? You're taking <i>that</i> off, ~player~?</state>
+@@ -1777,9 +1777,9 @@
+                 <state img="2-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="2-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="2-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="2-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="2-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -1840,7 +1840,7 @@
+                 <state img="2-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="2-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="2-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="2-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1869,7 +1869,7 @@
+                 <state img="2-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="2-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="2-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="2-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1903,7 +1903,7 @@
+                 <state img="2-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="2-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="2-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="2-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -1941,12 +1941,12 @@
+                 <state img="2-shy-happy.png">I'm already feeling kind of embarrassed, but... since you're watching, ~player~, I guess it's okay...</state>
+             </case>
+             <case tag="stripping">
+-                <state img="2-stripping.png">Hm... I wonder if I could take my blazer off like <i>this</i>...</state>
+-                <state img="2-stripping.png">I could take my blazer off the <i>normal</i> way, or I could...</state>
+-                <state img="2-stripping.png">I wonder if I could just do this to get my blazer off...</state>
+-                <state img="2-stripping.png">I'm... about to try something with my blazer. Just give me a second...</state>
+-                <state img="2-stripping.png">I'm going to try something a bit different with my blazer. Well, here goes nothing...</state>
+-                <state img="2-stripping.png">I'm going to take my blazer off, but... I'm going to try something a bit different. Here goes...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>Hm... I wonder if I could take my blazer off like <i>this</i>...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>I could take my blazer off the <i>normal</i> way, or I could...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>I wonder if I could just do this to get my blazer off...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>I'm... about to try something with my blazer. Just give me a second...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>I'm going to try something a bit different with my blazer. Well, here goes nothing...</state>
++                <state img="2-stripping.png"><script>monika.delete_blazer();</script>I'm going to take my blazer off, but... I'm going to try something a bit different. Here goes...</state>
+             </case>
+             <case tag="must_strip_winning">
+                 <state img="2-shy-happy.png">I guess it's only fair, huh?</state>
+@@ -1970,8 +1970,8 @@
+                 <state img="3-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="3-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="3-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="3-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="3-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="3-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -1991,9 +1991,9 @@
+                 <state img="3-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="3-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="3-calm.png">Yeah, that makes sense, ~player~.</state>
+@@ -2053,9 +2053,9 @@
+                 <state img="3-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="3-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="3-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -2325,9 +2325,9 @@
+                 <state img="3-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="3-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="3-writing-tip.png">That's a pretty smart choice, ~player~.</state>
+@@ -2356,9 +2356,9 @@
+                 <state img="3-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="3-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="3-shocked.png">W-wait, seriously? You're taking <i>that</i> off, ~player~?</state>
+@@ -2416,9 +2416,9 @@
+                 <state img="3-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="3-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="3-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="3-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="3-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -2479,7 +2479,7 @@
+                 <state img="3-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="3-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="3-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="3-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -2508,7 +2508,7 @@
+                 <state img="3-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="3-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="3-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="3-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -2542,7 +2542,7 @@
+                 <state img="3-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="3-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="3-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="3-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -2609,8 +2609,8 @@
+                 <state img="4-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="4-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="4-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="4-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="4-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="4-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -2630,9 +2630,9 @@
+                 <state img="4-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="4-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="4-shy-nervous.png">W-well, I guess it's... uhm, better than nothing, right?</state>
+@@ -2690,9 +2690,9 @@
+                 <state img="4-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="4-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="4-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -2970,9 +2970,9 @@
+                 <state img="4-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="4-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="4-exasperated.png">...really, ~player~?</state>
+@@ -3002,9 +3002,9 @@
+                 <state img="4-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="4-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="4-shy-happy.png">W-well, fair's fair, right? Since I'm... um... like this...</state>
+@@ -3061,9 +3061,9 @@
+                 <state img="4-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="4-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="4-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="4-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="4-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -3124,7 +3124,7 @@
+                 <state img="4-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="4-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="4-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="4-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3153,7 +3153,7 @@
+                 <state img="4-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="4-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="4-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="4-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3187,7 +3187,7 @@
+                 <state img="4-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="4-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="4-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="4-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3251,8 +3251,8 @@
+                 <state img="5-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="5-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="5-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="5-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="5-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="5-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -3272,9 +3272,9 @@
+                 <state img="5-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="5-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="5-shy-nervous.png">W-well, I guess it's... uhm, better than nothing, right?</state>
+@@ -3332,9 +3332,9 @@
+                 <state img="5-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="5-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="5-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -3612,9 +3612,9 @@
+                 <state img="5-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="5-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="5-exasperated.png">...really, ~player~?</state>
+@@ -3644,9 +3644,9 @@
+                 <state img="5-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="5-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="5-shy-happy.png">W-well, fair's fair, right? Since I'm... um... like this...</state>
+@@ -3703,9 +3703,9 @@
+                 <state img="5-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="5-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="5-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="5-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="5-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -3766,7 +3766,7 @@
+                 <state img="5-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="5-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="5-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="5-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3795,7 +3795,7 @@
+                 <state img="5-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="5-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="5-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="5-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3829,7 +3829,7 @@
+                 <state img="5-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="5-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="5-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="5-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -3899,8 +3899,8 @@
+                 <state img="6-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="6-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="6-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="6-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="6-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="6-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -3920,9 +3920,9 @@
+                 <state img="6-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="6-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="6-shy-nervous.png">W-well, I guess it's... uhm, better than nothing, right?</state>
+@@ -3980,9 +3980,9 @@
+                 <state img="6-awkward-question.png">Y-you're really going to do it, huh...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="6-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="6-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -4260,9 +4260,9 @@
+                 <state img="6-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="6-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="6-exasperated.png">...really, ~player~?</state>
+@@ -4292,9 +4292,9 @@
+                 <state img="6-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="6-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="6-shy-happy.png">W-well, fair's fair, right? Since I'm... um... like this...</state>
+@@ -4351,9 +4351,9 @@
+                 <state img="6-awkward-question.png">The game is, uh... really getting serious, huh...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="6-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="6-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="6-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="6-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -4414,7 +4414,7 @@
+                 <state img="6-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="6-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="6-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="6-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -4443,7 +4443,7 @@
+                 <state img="6-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="6-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="6-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="6-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -4477,7 +4477,7 @@
+                 <state img="6-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="6-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="6-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="6-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -4551,8 +4551,8 @@
+                 <state img="7-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="7-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="7-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="7-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="7-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="7-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -4572,9 +4572,9 @@
+                 <state img="7-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="7-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="7-exasperated.png">W-well, go ahead and take that off, I guess...</state>
+@@ -4632,9 +4632,9 @@
+                 <state img="7-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="7-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="7-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -4893,9 +4893,9 @@
+                 <state img="7-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="7-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="7-shy-happy.png">Y-you know, ~player~, it turns out stalling doesn't really help, in the end...</state>
+@@ -4925,9 +4925,9 @@
+                 <state img="7-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="7-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="7-interested.png">I-uh, I can try not to stare while you're, um, stripping.</state>
+@@ -4985,9 +4985,9 @@
+                 <state img="7-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="7-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="7-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="7-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="7-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -5046,7 +5046,7 @@
+                 <state img="7-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="7-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="7-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="7-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5075,7 +5075,7 @@
+                 <state img="7-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="7-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="7-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="7-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5109,7 +5109,7 @@
+                 <state img="7-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="7-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="7-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="7-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5180,8 +5180,8 @@
+                 <state img="8-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="8-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="8-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="8-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="8-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="8-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -5201,9 +5201,9 @@
+                 <state img="8-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="8-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="8-exasperated.png">W-well, go ahead and take that off, I guess...</state>
+@@ -5261,9 +5261,9 @@
+                 <state img="8-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="8-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="8-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -5524,9 +5524,9 @@
+                 <state img="8-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="8-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="8-shy-happy.png">Y-you know, ~player~, it turns out stalling doesn't really help, in the end...</state>
+@@ -5556,9 +5556,9 @@
+                 <state img="8-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="8-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="8-interested.png">I-uh, I can try not to stare while you're, um, stripping.</state>
+@@ -5618,9 +5618,9 @@
+                 <state img="8-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="8-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="8-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="8-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="8-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -5679,7 +5679,7 @@
+                 <state img="8-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="good_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="8-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="8-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="good_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="8-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5708,7 +5708,7 @@
+                 <state img="8-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day: Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="8-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="8-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="okay_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="8-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5742,7 +5742,7 @@
+                 <state img="8-writing-tip.png">Okay, everyone! Here's Monika's Writing Tip of the Day! Setting a small writing quota to hit each day can help you avoid feeling burned-out, especially on large projects!</state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="psa_deliver" priority="0">
+-                <state img="8-questioning.png" marker="psa_deliver">Uh, hey, ~player~? Do you have a minute? Could you click that little triangle icon? I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.</state>
++                <state img="8-questioning.png" marker="psa_deliver"><div>Uh, hey, ~player~? Do you have a minute?</div><div>Could you click that little triangle icon?</div><div>I've kind of got a lot to talk about, though... so feel free to skip it if you want! I won't mind.<span class="glyphicon glyphicon-triangle-right monika-ext-dialogue-btn" aria-hidden="true" onclick="monika.extended_dialogue_start('psa1')"></span></div></state>
+             </case>
+             <case tag="bad_hand" notSaidMarker="did_i_break_anything" saidMarker="round-glitched">
+                 <state img="8-awkward-question.png" marker="did_i_break_anything">Oh, jeez... I didn't break anything, did I?</state>
+@@ -5805,8 +5805,8 @@
+                 <state img="9-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="9-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="9-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="9-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="9-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="9-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>
+@@ -5826,9 +5826,9 @@
+                 <state img="9-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_minor" target="aimee">
+-                <state img="9-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_minor" target="human">
+                 <state img="9-exasperated.png">W-well, go ahead and take that off, I guess...</state>
+@@ -5886,9 +5886,9 @@
+                 <state img="9-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_crotch_will_be_visible" target="aimee">
+-                <state img="9-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="male_removed_minor">
+                 <state img="9-calm.png">Well, he's taken off his ~clothing~. I guess we should continue.</state>
+@@ -6150,9 +6150,9 @@
+                 <state img="9-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_accessory" target="aimee">
+-                <state img="9-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_accessory" target="human">
+                 <state img="9-shy-happy.png">Y-you know, ~player~, it turns out stalling doesn't really help, in the end...</state>
+@@ -6176,9 +6176,9 @@
+                 <state img="9-awkward-question.png" marker="disappearing_clothes">I... uh, think the game might be deleting our clothes when we've taken them off.</state>
+             </case>
+             <case tag="female_removing_major" target="aimee">
+-                <state img="9-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_removing_major" target="human">
+                 <state img="9-interested.png">I-uh, I can try not to stare while you're, um, stripping.</state>
+@@ -6236,9 +6236,9 @@
+                 <state img="9-exasperated.png">We all kind of expected this to happen, right? Let's just get it done with as quickly as possible...</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="aimee">
+-                <state img="9-exasperated.png" marker="aimee_stripping">Yeah, I'm getting out of the way.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'm going to place myself as far away from this as possible.</state>
+-                <state img="9-exasperated.png" marker="aimee_stripping">I'll just.. stand over here while you do that, okay?</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>Yeah, I'm getting out of the way.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'm going to place myself as far away from this as possible.</state>
++                <state img="9-exasperated.png" marker="aimee_stripping"><script>monika.react_aimee_strip();</script>I'll just.. stand over here while you do that, okay?</state>
+             </case>
+             <case tag="female_chest_will_be_visible" target="human">
+                 <state img="9-shy-nervous.png">I-I'm not going to lie, ~player~, I-- uh, I've always kind of imagined this moment with... um, you. In your reality.</state>
+@@ -6280,39 +6280,39 @@
+                 <state img="9-shy-nervous.png">I've, uh... always imagined this moment would happen in your reality, but... um, I guess this is okay, too?</state>
+             </case>
+             <case tag="masturbating">
+-                <state img="9-mast-1.png">A-ah! T-this is easier to do in front of others than I-- hmm!-- thought...</state>
+-                <state img="9-mast-2.png">I-I didn't think this-- a-ah!-- would be this easy to do with everyone watching...</state>
+-                <state img="9-mast-3.png">T-this is easier than-- mmm!-- I thought it would be...</state>
+-                <state img="9-mast-4.png">~player~? A-are you still there? I-- <i>mmmm</i>-- just...</state>
+-                <state img="9-mast-5.png">O-oh! ~player~? Y-you're still here, right?</state>
+-                <state img="9-mast-6.png">F-feel free to w-watch, ~player~...</state>
+-                <state img="9-mast-7.png">G-go ahead and watch m-me, ~player~... it makes this a lot easier...</state>
+-                <state img="9-mast-8.png">T-this is e-easier with you here, ~player~...</state>
+-                <state img="9-mast-9.png">I-I'm sorry, ~player~, but I think h-having you here is... making this a bit easier...</state>
+-                <state img="9-mast-1.png">T-this feels s-so good...</state>
+-                <state img="9-mast-2.png">Mmm!</state>
+-                <state img="9-mast-3.png">Ahh!</state>
+-                <state img="9-mast-4.png">I-I feel so warm...</state>
+-                <state img="9-mast-5.png">I-I feel really warm, now...</state>
+-                <state img="9-mast-6.png">I-I feel so <i>good</i> right now...</state>
+-                <state img="9-mast-7.png">Hmm!</state>
+-                <state img="9-mast-8.png">T-this feels really, really n-nice...</state>
++                <state img="9-mast-1.png"><script>monika.start_masturbating();</script>A-ah! T-this is easier to do in front of others than I-- hmm!-- thought...</state>
++                <state img="9-mast-2.png"><script>monika.start_masturbating();</script>I-I didn't think this-- a-ah!-- would be this easy to do with everyone watching...</state>
++                <state img="9-mast-3.png"><script>monika.start_masturbating();</script>T-this is easier than-- mmm!-- I thought it would be...</state>
++                <state img="9-mast-4.png"><script>monika.start_masturbating();</script>~player~? A-are you still there? I-- <i>mmmm</i>-- just...</state>
++                <state img="9-mast-5.png"><script>monika.start_masturbating();</script>O-oh! ~player~? Y-you're still here, right?</state>
++                <state img="9-mast-6.png"><script>monika.start_masturbating();</script>F-feel free to w-watch, ~player~...</state>
++                <state img="9-mast-7.png"><script>monika.start_masturbating();</script>G-go ahead and watch m-me, ~player~... it makes this a lot easier...</state>
++                <state img="9-mast-8.png"><script>monika.start_masturbating();</script>T-this is e-easier with you here, ~player~...</state>
++                <state img="9-mast-9.png"><script>monika.start_masturbating();</script>I-I'm sorry, ~player~, but I think h-having you here is... making this a bit easier...</state>
++                <state img="9-mast-1.png"><script>monika.start_masturbating();</script>T-this feels s-so good...</state>
++                <state img="9-mast-2.png"><script>monika.start_masturbating();</script>Mmm!</state>
++                <state img="9-mast-3.png"><script>monika.start_masturbating();</script>Ahh!</state>
++                <state img="9-mast-4.png"><script>monika.start_masturbating();</script>I-I feel so warm...</state>
++                <state img="9-mast-5.png"><script>monika.start_masturbating();</script>I-I feel really warm, now...</state>
++                <state img="9-mast-6.png"><script>monika.start_masturbating();</script>I-I feel so <i>good</i> right now...</state>
++                <state img="9-mast-7.png"><script>monika.start_masturbating();</script>Hmm!</state>
++                <state img="9-mast-8.png"><script>monika.start_masturbating();</script>T-this feels really, really n-nice...</state>
+             </case>
+             <case tag="finishing_masturbating">
+-                <state img="9-finishing.png">A-AaaaAAAAAAaaaAAaa!</state>
+-                <state img="9-finishing.png">MMMMmmmmmm!</state>
+-                <state img="9-finishing.png"></state>
++                <state img="9-finishing.png"><script>monika.finish_masturbating();</script>A-AaaaAAAAAAaaaAAaa!</state>
++                <state img="9-finishing.png"><script>monika.finish_masturbating();</script>MMMMmmmmmm!</state>
++                <state img="9-finishing.png"><script>monika.finish_masturbating(); monika.scream_player_name();</script></state>
+             </case>
+             <case tag="heavy_masturbating">
+-                <state img="9-mast-1-alt.png">O-oh my god... t-this feels so, <i>so</i> good!</state>
+-                <state img="9-mast-2-alt.png">It f-feels so <i>hot</i> inside me...</state>
+-                <state img="9-mast-3-alt.png">I-I think... I think I'm... close...</state>
+-                <state img="9-mast-4-alt.png">I-it feels like... I'm...</state>
+-                <state img="9-mast-5-alt.png">I-it feels like I'm going to e-explode!</state>
+-                <state img="9-mast-6-alt.png">A-aaah!</state>
+-                <state img="9-mast-7-alt.png">M-mmm... ~player~?</state>
+-                <state img="9-mast-8-alt.png">~player~? A-are you still there? I-I think I'm about to...</state>
+-                <state img="9-mast-9-alt.png">~player~? I-I think I'm going to...</state>
++                <state img="9-mast-1-alt.png"><script>monika.start_heavy_masturbation();</script>O-oh my god... t-this feels so, <i>so</i> good!</state>
++                <state img="9-mast-2-alt.png"><script>monika.start_heavy_masturbation();</script>It f-feels so <i>hot</i> inside me...</state>
++                <state img="9-mast-3-alt.png"><script>monika.start_heavy_masturbation();</script>I-I think... I think I'm... close...</state>
++                <state img="9-mast-4-alt.png"><script>monika.start_heavy_masturbation();</script>I-it feels like... I'm...</state>
++                <state img="9-mast-5-alt.png"><script>monika.start_heavy_masturbation();</script>I-it feels like I'm going to e-explode!</state>
++                <state img="9-mast-6-alt.png"><script>monika.start_heavy_masturbation();</script>A-aaah!</state>
++                <state img="9-mast-7-alt.png"><script>monika.start_heavy_masturbation();</script>M-mmm... ~player~?</state>
++                <state img="9-mast-8-alt.png"><script>monika.start_heavy_masturbation();</script>~player~? A-are you still there? I-I think I'm about to...</state>
++                <state img="9-mast-9-alt.png"><script>monika.start_heavy_masturbation();</script>~player~? I-I think I'm going to...</state>
+             </case>
+         </stage>
+ 
+@@ -6329,8 +6329,8 @@
+                 <state img="10-awkward-question.png" marker="aimee_strip1">Oh jeez. ~name~, if you're going to do <i>that</i>--</state>
+             </case>
+             <case tag="female_must_strip" target="uravity" targetStage="3-6" notSaidMarker="import_antigravity">
+-                <state img="10-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to import antigravity?</state>
+-                <state img="10-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to import antigravity?</state>
++                <state img="10-questioning.png" marker="import_antigravity">Hey, ~name~. Have you, uh, ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
++                <state img="10-questioning.png" marker="import_antigravity">Um, ~name~? This might sound a bit weird to you, but have you ever tried to <div><kbd><span style="color:cyan">import</span> antigravity</kbd>?</div></state>
+             </case>
+             <case tag="male_chest_will_be_visible">
+                 <state img="10-awkward-question.png">D-don't worry, ~name~. It's nothing to get embarassed about... right?</state>

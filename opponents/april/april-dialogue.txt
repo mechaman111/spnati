@@ -1,4 +1,4 @@
-#required for behaviour.xml
+﻿#required for behaviour.xml
 first=April
 last=O'Neil
 label=April
@@ -25,15 +25,15 @@ tag=journalist
 
 #required for meta.xml
 #select screen image
-pic=0-calm.png
+pic=0-calm
 height=5’7”
 from=Teenage Mutant Ninja Turtles
 writer=FrostFireFive,The Other Dude,Sjrslev
-artist=FrostFireFive, Maniac with the Hex, Superfluous User
+artist=FrostFireFive, Maniac with the Hex
 description=Ace reporter April became friends with the Ninja Turtles when she and her father were kidnapped. Now she teaches them all about human society - like how to play strip poker.
 
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-reporting,This April O'Niel reporting live from the Inventory!
+start=0-reporting,This April O'Neil reporting live from the Inventory!
 
 
 #Items of clothing should be listed here in order of removal.
@@ -237,10 +237,10 @@ swap_cards=excited,I'm going to need ~cards~!
 
 #losing jumpsuit top
 3-stripped=sad,I miss my ~clothing~ already...
-3-stripped,saidMarker:leo=stripped_l,What? My jumpsuit covers more, and is really too tight.
 3-stripped,saidMarker:mikey=stripped_m,But this is better than being topless!
 3-stripped,saidMarker:raph=stripped_r,I'm basically wearing two bras with the jumpsuit anyway...
 3-stripped,saidMarker:donny=stripped,Adios bra, you don't cover me as well as my jumpsuit.
+3-stripped,saidMarker:leo=stripped_l,What? My jumpsuit covers more, and is really too tight.
 3-must_strip_winning=excited,It's OK, I'm getting a great story out of this game.
 3-must_strip_winning=happy,I was hoping I could win before it came to this. At least I still have the lead.
 3-must_strip_normal=calm_nips,My turn? Hopefully my editor doesn't ask me how much I lost.
@@ -294,16 +294,25 @@ swap_cards=excited,I'm going to need ~cards~!
 #The "human" versions of the lines will only be spoken if the human player is stripping.
 
 #stage-specific lines that override the stage-generic ones
-male_human_must_strip=happy,Go on, ~name~. Don't mind us if we pay a little extra attention.
-male_human_must_strip=horny,Maybe you can tell me why you're staring at me when you strip, ~name~.
-male_human_must_strip=horny,Hmm, the bigger question is why the bulge in your crotch is getting larger...
-male_human_must_strip=horny,Hmm, I'm begining to realize why it's getting so hot in here...
 female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 
 
 #fully clothed
+0-male_human_must_strip=horny,It's not like you didn't know what you were getting into, ~player~. Strip!
+0-male_human_must_strip=happy,One of us has to lose something ~player~. And it's not going to be me.
+0-male_human_must_strip=reporting,~player~ is over is head as he must remove an item.
+0-male_human_must_strip=horny,It's not like you didn't know what you were getting into, ~player~. Strip!
 0-male_must_strip=excited,This is why we are playing, ~name~. Let's take 'em off.
+0-male_must_strip=horny,Not going to lie, males stripping gives us a ratings boost in women 18-40.
+0-male_must_strip=happy,Don't worry, we're all going to stare.
+0-male_must_strip=reporting,This just in, my female viewers are about to get an eyeful.
 0-female_human_must_strip=calm,Them's the rules, ~name~. What's it gonna be?
+0-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+0-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+0-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+0-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+0-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+0-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
 
 
 #lost belt
@@ -311,11 +320,17 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 1-male_human_must_strip=reporting,This just in, local reporter might get to see some beef cake.
 1-male_human_must_strip=calm,I need to see your body if I'm going to report on this
 1-male_must_strip=excited,This is good for the story, ~name~. You don't see me whining about my belt.
+1-female_human_must_strip=horny,Trust me when I say you're going to be front page news...
+1-female_human_must_strip=excited,Yup, time to lose something else.  My viewers want some skin...
 1-female_human_must_strip=happy,Them's the rules, ~name~. Tell me, how do you feel? I need a quote for this report...
 1-female_human_must_strip=reporting,~name~ must take something off, more after her clothing hits the floor.
 1-female_human_must_strip=horny,Don't be shy, I need this exclusive look...
-1-female_human_must_strip=horny,Trust me when I say you're going to be front page news...
-1-female_human_must_strip=excited,Yup, time to lose something else.  My viewers want some skin...
+1-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+1-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+1-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+1-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+1-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+1-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
 
 
 #lost boots
@@ -326,12 +341,23 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 2-male_must_strip=angry,Please strip already, ~name~, I need an interesting report.
 2-female_human_must_strip=happy,Well someone has to strip, and as a reporter, I'm writing down everything.
 2-female_human_must_strip=happy,Don't worry ~name~, no one is going to ever hear about this.  Well maybe my audience.
-2-female_human_must_strip=calm,At least it's not me, ~name~.
 2-female_human_must_strip=horny,Trust me when I say you're going to be front page news...
 2-female_human_must_strip=excited,Yup, time to lose something else.  My viewers want some skin...
+2-female_human_must_strip=calm,At least it's not me, ~name~.
+2-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+2-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+2-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+2-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+2-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+2-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
 
 
 #lost bra
+3-male_human_must_strip=happy,Go on, ~name~. Don't mind us if we pay a little extra attention.
+3-male_human_must_strip=jealous,You know it's been <i>way</i> too long since a guy stripped for me
+3-male_human_must_strip=horny,Maybe you can tell me why you're staring at me when you strip, ~name~.
+3-male_human_must_strip=horny,Hmm, the bigger question is why the bulge in your crotch is getting larger...
+3-male_human_must_strip=horny,Hmm, I'm begining to realize why it's getting so hot in here...
 3-male_must_strip=reporting,Just asking for my viewers. What are you taking off?
 3-male_must_strip=reporting,This is April O'Neil, hopefully getting a full view of ~name~.
 3-female_human_must_strip=calm,At least it's not me, ~name~.
@@ -339,6 +365,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 3-female_human_must_strip=calm_nips,Maybe you can focus on looking at yourself when you strip, ~name~!
 3-female_human_must_strip=calm_nips,Maybe as you lose some clothes you can explain why everyone is staring at me.
 3-female_human_must_strip=sad,This will definitely distract people enough for me to get a good report...
+3-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+3-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+3-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+3-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+3-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+3-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
 
 
 #lost jumpsuit top
@@ -349,6 +381,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 4-female_human_must_strip=horny,Hmm, need to check my sources on what item you're going to lose, ~name~
 4-female_human_must_strip=excited,Look at it this way, my tits won't be the main story for a change, ~name~.
 4-female_human_must_strip=happy,This will definitely distract people enough for me to keep my jumpsuit
+4-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+4-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+4-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+4-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+4-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+4-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
 
 
 #lost jumpsuit bottoms
@@ -360,6 +398,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 5-female_human_must_strip=happy,Well, I'd like to think the main story here is that I get to keep my panties, ~name~.
 5-female_human_must_strip=excited,Look at it this way, one reporter gets to stay clothed!
 5-female_human_must_strip=happy,This will definitely distract people enough for me to keep my panties.
+5-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+5-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+5-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+5-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+5-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+5-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
 
 -3-male_human_must_strip=horny,It make a better story if I wasn't the only one naked, ~name~.
 -3-male_human_must_strip=angry,You still have clothes, ~name~?!
@@ -368,6 +412,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 -3-female_human_must_strip=jealous,My viewers may want to see more girls naked, ~name~.
 -3-female_human_must_strip=horny,Look at it this way, my pussy won't be the main story for a change, ~name~.
 -3-female_must_strip=calm,Note to self, report on the increasing heat in the room after ~name~ strips.
+-3-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+-3-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+-3-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+-3-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+-3-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+-3-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
 
 -2-male_human_must_strip=happy,Every little bit of stimulation helps.
 -2-male_human_must_strip=reporting,Yup, the breaking news is I'm going to get off on you, ~name~.
@@ -376,6 +426,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 -2-female_human_must_strip=happy,Just adding fuel to my fire, ~name~...
 -2-female_human_must_strip=horny,This just in, masturbating reporter finds new inspiration
 -2-female_must_strip=jealous,Beginning to realize why I would play this game twice...
+-2-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
+-2-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+-2-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+-2-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+-2-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+-2-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
 
 -1-male_human_must_strip=excited,Just gonna relax and enjoy the show from here. Take it off, ~name~!
 -1-male_human_must_strip=angry,Seriously! I'm dripping wet and you're still stripping.
@@ -383,6 +439,12 @@ female_must_strip=happy,Them's the rules, ~name~. What's it gonna be?
 -1-male_must_strip=sad,Well that's a little anti-climatic, I finished before you took everything off...
 -1-female_human_must_strip=happy,Just gonna relax and hope I can go another round later. For my report of course.
 -1-female_must_strip=calm,Come on, join me in my nudity, ~name~. It's not like I haven't seen a naked girl before.
+-1-female_must_strip,target:gwen,targetStage:3=calm,Look at it this way Gwen, the more you have to strip, the more people will be interested in your demo.
+-1-female_must_strip,target:gwen,targetStage:1=reporting,This just in, Spider-Woman must take something off.  Will her secret be reveiled?
+-1-female_must_strip,target:gwen,targetStage:4=sad,So Gwen has to strip again? I thought she had a spider sense or something?
+-1-female_must_strip,target:gwen,targetStage:2=happy,Well Gwen, after giving me the scoop of the life time, what's next?
+-1-female_must_strip,target:gwen,targetStage:0=excited,You're a walking scoop Spider Woman.  Who are you?
+-1-female_must_strip,target:gwen,targetStage:5=happy,Wow, I might get another scoop. How much flesh is Gwen willing to show?
 
 
 
@@ -400,6 +462,8 @@ female_removed_accessory=calm,At this rate, you'll be showing skin by the time m
 0-male_removing_accessory=calm,Time to give back to the others ~name~!
 0-male_removed_accessory=calm,This reporter thought you wanted to play strip poker.
 0-female_removing_accessory=happy,My story needs more excitement. The only way to do that is for you to strip, ~name~.
+0-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
+0-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 #lost belt
@@ -407,6 +471,8 @@ female_removed_accessory=calm,At this rate, you'll be showing skin by the time m
 1-male_removed_accessory=sad,Breaking news, it wasn't.
 1-female_removing_accessory=happy,My story needs more excitement. The only way to do that is for you to strip, ~name~.
 1-female_removing_accessory=happy,This game isn't about who's winning. It's about YOU losing, ~name~.
+1-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
+1-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 #lost boots
@@ -416,22 +482,28 @@ female_removed_accessory=calm,At this rate, you'll be showing skin by the time m
 2-male_removed_accessory=reporting,Tell me ~name~, why take off something so small?
 2-female_removing_accessory=reporting,Rest of table waits in bated breath as ~name~ decides to take something off.
 2-female_removing_accessory=reporting,This just in, ~name~ has to take something off.
+2-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 2-female_removed_accessory=sad,Unfortunately, ~name~ was all talk
 2-female_removed_accessory=happy,She is, however, still clothed.
+2-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 #lost bra
 3-male_removing_accessory=jealous,Some of us have taken real clothes off already. Let's get on with it!
 3-male_removed_accessory=angry,I can feel the breeze on my tits and that's what you take off!
 3-female_removing_accessory=sad,Come on, I need to make this story exciting, ~name~!
+3-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 3-female_removed_accessory=jealous,That's fine. I'm running around in my bra, you're just removing your ~clothing~.
+3-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 #lost jumpsuit top
 4-male_removing_accessory=calm,You can actually see my tits now, care to return the favor, ~name~.
 4-male_removed_accessory=angry,Seriously! Good to know you want help a topless reporter out, ~name~!
 4-female_removing_accessory=happy,Hopefully my breasts won't distract you from taking something good off...
+4-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 4-female_removed_accessory=sad,Guess they did...
+4-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 #lost jumpsuit bottoms
@@ -441,8 +513,10 @@ female_removed_accessory=calm,At this rate, you'll be showing skin by the time m
 5-male_removed_accessory=angry,Yup, figured it was going to be something small...
 5-female_removing_accessory=sad,Help a girl out here ~name~, I'm starting to feel the stares...
 5-female_removing_accessory=jealous,Come on, show a little solidarity, nudity sells.
+5-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 5-female_removed_accessory=angry,Thanks to you I feel even more naked, ~name~!
 5-female_removed_accessory=jealous,This is completely unfair to my report, ~name~...
+5-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 -3-male_removing_accessory=happy,You have a naked reporter asking you questions, ~name~. Care to return the favor...
 -3-male_removing_accessory=angry,This is crap. I'm TOTALLY naked! You can't take something good off, ~name~.
@@ -450,20 +524,26 @@ female_removed_accessory=calm,At this rate, you'll be showing skin by the time m
 -3-male_removed_accessory=jealous,Seriously, I should've expected you to only take off your ~clothing~.
 -3-female_removing_accessory=reporting,This just in. Naked reporter hopes, ~name~, joins them in nudity in order to take the attention off of her.
 -3-female_removing_accessory=horny,It's a little cold in here, if you strip I can report on body heat...
+-3-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 -3-female_removed_accessory=jealous,Unfortunately, that did not happen.
 -3-female_removed_accessory=sad,Looks like I'm going to shelve this report...
+-3-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 -2-male_removing_accessory=sad,Give me some inspiration for this touching report, ~name~!
 -2-male_removed_accessory=sad,A small piece of a bigger story, ~name~.
 -2-female_removing_accessory=sad,I'm not going to lie, the microphone is only getting me half way there.  Lose something big and I'll finish this "story".
+-2-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 -2-female_removed_accessory=sad,Looks like I'm still going to be working on this report, ~name~!
+-2-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 -1-male_removing_accessory=calm,I'm already done. I'm not in any hurry anymore.
 -1-male_removing_accessory=jealous,I mean, better late than never.
 -1-male_removing_accessory=horny,Any chance you could do more for a naked girl?
 -1-male_removed_accessory=jealous,*Sigh* It's fine. I'm not that interested anyhow.
 -1-female_removing_accessory=sad,I guess you could just take that off.
+-1-female_removing_accessory,target:gwen,targetStage:0=reporting,This just in. Spider-Woman is about to reveal her identity
 -1-female_removed_accessory=jealous,That's right. Let's not rush into anything like a crazy person.
+-1-female_removed_accessory,target:gwen,targetStage:1=reporting,I'm sorry she only took off her hood, hopefully we'll see more later.
 
 
 
@@ -482,59 +562,77 @@ male_removed_minor=sad,How in the world did you still have your ~clothing~ on?
 0-male_removed_minor=reporting,The crowd is <i>mostly</i> happy.
 0-female_removing_minor=happy,I'm curious, will a lack of clothing warm me...I mean the room up?
 0-female_removing_minor=jealous,Jeez, it seems you <i>are</i> starting to lose larger items ~name~.
+0-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 0-female_removed_minor=horny,Guess it is getting warmer already, ~name~.
 0-female_removed_minor=horny,It's a start ~name~...
 0-female_removed_minor=happy,But it seems you still have things left, ~name~.
+0-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 #lost belt
 1-male_removing_minor=calm,Are you actually taking something off this time around?
 1-male_removed_minor=jealous,I mean, I guess that counts as clothing. Technically.
 1-female_removing_minor=happy,Are you actually taking something off this round, ~name~?
+1-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 1-female_removed_minor=sad,Well, that did fit the dictionary definition of 'clothing.'
+1-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 #lost boots
 2-male_removing_minor=happy,Tell me, what's it like to actually remove real clothing,~name~.
 2-male_removed_minor=jealous,Go at your own pace, ~name~. This report goes all game.
 2-female_removing_minor=calm,I'm curious, will a lack of clothing warm me...I mean the room up?
+2-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 2-female_removed_minor=horny,Guess it is getting warmer already, ~name~.
 2-female_removed_minor=jealous,Well, that did fit the dictionary definition of "clothing".
+2-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 #lost bra
 3-male_removing_minor=happy,Well looks like it's up to you to make my report exciting, ~name~.
 3-male_removed_minor=angry,I'm bearing my breasts and you only took that off ~name~!
 3-female_removing_minor=sad,Some of us have taken real clothes off already. Let's get on with it!
+3-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 3-female_removed_minor=calm,That's fine. I'm running around with my tits out and you're just removing your ~clothing~.
+3-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 #lost jumpsuit top
 4-male_removing_minor=calm,Some of us have taken real clothes off already. Let's get on with it!
 4-female_removing_minor=calm,Some of us have taken real clothes off already. Let's get on with it!
+4-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 4-female_removed_minor=sad,How in the world did you still have your ~clothing~ on?
+4-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 #lost jumpsuit bottoms
 5-male_removing_minor=sad,Looks like it's time to show us alot more skin, ~name~.
 5-male_removed_minor=sad,Yup, I feel much better in my panties now that you took ~clothing~ off, ~name~.
 5-female_removing_minor=calm,I think you could warm me up name if you take something good off.
+5-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 5-female_removed_minor=sad,Yup, feeling warmer already
+5-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 -3-male_removing_minor=angry,This is crap. I'm TOTALLY naked and you're barely removing your ~clothing~?
 -3-male_removing_minor=jealous,I could use some company, the stares are getting awkard, ~name~.
 -3-female_removing_minor=happy,So what's next in The Exciting World of ~name~?
+-3-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 -3-female_removed_minor=sad,Really? Something so minor? You don't see people pointing at <i>me</i> saying "minor", do you?
+-3-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 -2-male_removing_minor=sad,Okay, maybe not EVERY bit.
 -2-male_removed_minor=sad,I'm jilling off publicly and you're just now stripping off your ~clothing~?
 -2-female_removing_minor=sad,Okay, maybe not EVERY bit.
+-2-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 -2-female_removed_minor=sad,I'm jilling off publically and you're just now stripping off your ~clothing~?
+-2-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 -1-male_removing_minor=sad,How many layers did you start with?!
 -1-male_removed_minor=calm,Hey, look. Something that counts as actual clothes.
 -1-female_removing_minor=finished,I'm done playing, so it's not like I care how slowly you strip anymore.
+-1-female_removing_minor,target:gwen,targetStage:2=happy,So do you prefer a zipper or velcro back there? I'm more of a zipper girl myself.
 -1-female_removed_minor=finished,Let's speed things up here a tad.
+-1-female_removed_minor,target:gwen,targetStage:3=jealous,Honestly I'm just happy you still have clothes on.  The only heroes I know run around naked.
 
 
 
@@ -551,54 +649,94 @@ female_removing_major=angry,It's about time you take something big off!
 
 #fully clothed
 0-male_removing_major=horny,Here we go. I finally have something for my story, ~name~!
+0-male_removing_major=reporting,~name~ is about to take something off again.  Let's hope for something major.
 0-male_removed_major=jealous,I can't possibly be the only reporter here...
+0-male_removed_major=reporting,Holy shi...~name~ has actually taken something important off.
 0-female_removing_major=angry,I'm a journalist. I should be allowed to film this.
+0-female_removing_major=reporting,And now we prepare for a satisfying stripping demonstration by ~name~.
+0-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
+0-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
 0-female_removed_major=horny,On second thought...I think all I need are my eyes, ~name~.
+0-female_removed_major=happy,Thanks, ~name~. The more you strip, the more our male audience goes up!
+0-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
+0-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
 
 
 #lost belt
 1-male_removing_major=happy,Well looks like this reporter is finally getting a "major" story.
 1-male_removed_major=jealous,That's a lot of skin to report on, ~name~.
 1-female_removing_major=happy,This isn't a big story considering I know what a female body looks like, ~name~.
+1-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
+1-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
 1-female_removed_major=horny,On second thought there maybe something here after all...
+1-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
+1-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
 
 
 #lost boots
 2-male_removing_major=reporting,Breaking news, ~name~ takes something major off.
 2-male_removed_major=horny,I can't possibly be the only one enjoying this...for story reasons of course.
 2-female_removing_major=happy,I'm a journalist. I should be allowed to film this.
+2-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
+2-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
 2-female_removed_major=jealous,I'd be mortified if I were you.
+2-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
+2-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
 
 
 #lost bra
 3-male_removed_major=happy,Yup, having a clear view is important as a journalist.
 3-female_removing_major=happy,Welcome to the "Indecently Dressed" party!
 3-female_removing_major=horny_nips,let's see what your hiding, ~name~.
+3-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
+3-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
 3-female_removed_major=shocked_nips,Wow, this is making my last report look small.
 3-female_removed_major=sad,I'd be mortified if I were you.
+3-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
+3-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
 
 
 #lost jumpsuit top
+4-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
+4-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
 4-female_removed_major=happy,See, was that so bad?
+4-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
+4-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
 
 
 #lost jumpsuit bottoms
+5-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
+5-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
 5-female_removed_major=happy,Better you than me, really.
+5-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
+5-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
 
 -3-male_removing_major=horny,Hey, look. You're almost caught up with me. Sorta.
 -3-male_removed_major=calm,I'll be more excited when you keep losing, ~name~
 -3-female_removing_major=reporting,Hey, look. You're almost caught up with me. Sorta.
+-3-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
+-3-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
 -3-female_removed_major=reporting,I'll be more excited when you keep losing, ~name~
+-3-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
+-3-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
 
 -2-male_removing_major=horny,Yes. Take it off nice and slowly for me.
 -2-male_removed_major=horny,Niiiice. Sooo veeery niiiice.
 -2-female_removing_major=angry,It's about time. Too late for me, but still.
+-2-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
+-2-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
 -2-female_removed_major=sad,Look over here at me. Embrace your fate.
+-2-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
+-2-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
 
 -1-male_removing_major=sad,Welp, this doesn't help me now, ~name~
 -1-male_removed_major=jealous,Keep going like this and I may have to file another "report"
 -1-female_removing_major=horny,Was this as enjoyable when I was the one stripping?
+-1-female_removing_major,target:gwen,targetStage:3=angry,Please Gwen my jumpsuit is practically sprayed on. I wish I had your lycra problems.
+-1-female_removing_major,target:gwen,targetStage:1=reporting,This just in. Spider-Woman is <i>actually</i> about to reveal her identity
 -1-female_removed_major=happy,Coming down to the wire.
+-1-female_removed_major,target:gwen,targetStage:4=calm,And being comfortable in this game is key. Did you know boy shorts are more popular? I did a report on it.
+-1-female_removed_major,target:gwen,targetStage:2=reporting,Spider-Woman is actually...Gwen Stacy? Stacy is the police captain's daughter and drummer of a punk band.
 
 
 
@@ -626,9 +764,20 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 0-male_medium_crotch_is_visible=happy,Breaking news! ~name~ has an average penis...
 0-female_chest_will_be_visible=happy,Don't worry, the lighting in this room doesn't hide anything, ~name~
 0-female_large_chest_is_visible=happy,Wow, I think I know the two big stories for tonight...
-0-female_crotch_is_visible=happy,No hiding in your shell now, ~name~.
+0-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+0-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+0-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+0-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 0-female_crotch_is_visible=sad,No hiding in your shell now, ~name~.
+0-female_crotch_is_visible=happy,No hiding in your shell now, ~name~.
 0-female_crotch_is_visible,filter:hairy=jealous,Ever hear the one about the tortoise and the hare?
+0-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+0-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+0-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+0-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+0-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+0-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+0-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
 
 
 #lost belt
@@ -638,7 +787,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 1-female_chest_will_be_visible=jealous,It's not like I don't know what breasts look like, ~name~. Don't be shy now...
 1-female_large_chest_is_visible=horny,Damn. Those might be bigger than a certain reporter, ~name~.
 1-female_crotch_will_be_visible=horny,Wow, that's a solid pussy, ~name~. Too bad you can't cover it like I can.
+1-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+1-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+1-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+1-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 1-female_crotch_is_visible=sad,Wow, it's a fine line between clothing and nudity.
+1-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+1-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+1-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+1-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+1-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+1-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+1-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
+1-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+1-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+1-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
 
 
 #lost boots
@@ -647,7 +810,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 2-female_small_chest_is_visible=jealous,Well, those certainly aren't mutant-sized, but they are still very nice.
 2-female_large_chest_is_visible=horny,Wow, those are large enough to carry an entire story, ~name~!
 2-female_crotch_will_be_visible=horny,Your pussy seems cold, like my feet.  Maybe you should've played better.
+2-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+2-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+2-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+2-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 2-female_crotch_is_visible=reporting,Breaking news, ~name~ has a fine pussy.
+2-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+2-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+2-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+2-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+2-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+2-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+2-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
+2-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+2-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+2-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
 
 
 #lost bra
@@ -657,7 +834,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 3-female_small_chest_is_visible=excited,Well, those certainly aren't mutant-sized, but they are still very nice.
 3-female_medium_chest_is_visible=excited,Now that's what I'm talking about!
 3-female_crotch_will_be_visible=horny,It seems like your taking the attention away from me with that pussy, ~name~.
+3-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+3-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+3-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
+3-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
 3-female_crotch_is_visible=happy,No hiding in your shell now, ~name~.
+3-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+3-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+3-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+3-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
+3-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+3-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+3-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+3-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+3-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+3-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
 
 
 #lost jumpsuit top
@@ -665,7 +856,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 4-female_small_chest_is_visible=calm,I know I might be distracting you, but those are great breasts too, ~name~.
 4-female_small_chest_is_visible=jealous,Those breasts are like local news, only important to the person who has to live with them.
 4-female_large_chest_is_visible=excited,Oh my god, those titties are divine! I might have to write a report on them...
+4-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+4-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+4-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
+4-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
 4-female_crotch_is_visible=jealous,No hiding in your shell now, ~name~.
+4-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
+4-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+4-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+4-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+4-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+4-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+4-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+4-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+4-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+4-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
 
 
 #lost jumpsuit bottoms
@@ -674,7 +879,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 5-male_large_crotch_is_visible=excited,Well, well. It looks like Donatello isn't the only one carrying a giant staff!
 5-female_small_chest_is_visible=calm,Well, those certainly aren't mutant-sized, but they are still very nice.
 5-female_medium_chest_is_visible=horny,Now that's what I'm talking about!
+5-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+5-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+5-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
+5-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
 5-female_crotch_is_visible=horny,No hiding in your shell now, ~name~.
+5-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+5-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+5-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+5-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+5-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+5-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+5-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+5-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+5-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+5-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
 
 -3-male_chest_will_be_visible=jealous,It's not that I'm not looking forward to seeing this, but it doesn't really help me much.
 -3-male_crotch_will_be_visible=happy,Well, well, ~name~, we're about to see if you're carrying a sai or a katana in your pants.
@@ -686,8 +905,22 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 -3-female_medium_chest_is_visible=jealous,Hey, you've been checking me out, it's my turn to repay the favor.
 -3-female_large_chest_is_visible=excited,Now that's worthy of a news story ~name~...
 -3-female_crotch_will_be_visible=horny,The view's pretty hot from over here, ~name~.
+-3-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+-3-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+-3-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+-3-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 -3-female_crotch_is_visible=happy,No hiding in your shell now, ~name~.
 -3-female_crotch_is_visible=sad,No hiding in your shell now, ~name~.
+-3-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+-3-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+-3-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+-3-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+-3-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+-3-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+-3-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
+-3-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+-3-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+-3-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
 
 -2-male_chest_will_be_visible=excited,It's a bit too late for me to win, but I'm still going to watch this closely!
 -2-male_chest_is_visible=happy,I've seen harder abs before, but I do usually hang around turtles. And ninjas.
@@ -700,7 +933,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 -2-female_medium_chest_is_visible=horny,I'd like to get my hands all over those right now.
 -2-female_large_chest_is_visible=happy,I'd like to get my hands all over those right now.
 -2-female_crotch_will_be_visible=horny,Could be worse, you could be humiliating yourself too.
+-2-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+-2-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+-2-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+-2-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 -2-female_crotch_is_visible=excited,I'll have a hand or two free here in just a second.
+-2-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+-2-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+-2-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+-2-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+-2-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+-2-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+-2-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+-2-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+-2-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+-2-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
 
 -1-male_chest_will_be_visible=happy,You can already tell how badly I want to see this.
 -1-male_chest_is_visible=horny,I've seen harder abs before, but I do usually hang around turtles. And ninjas.
@@ -713,7 +960,21 @@ female_crotch_will_be_visible=horny,You seem cold. Which is weird, because it's 
 -1-female_medium_chest_is_visible=reporting,Tonight's top(less) story: ~name~.
 -1-female_large_chest_is_visible=reporting,Tonight's top(less) story: ~name~.
 -1-female_crotch_will_be_visible=horny,Tonight on News 5: Naked people running rampant.
+-1-female_crotch_will_be_visible,filter:blonde=reporting,Are you a <i>true</i> blonde ~name~?
+-1-female_crotch_will_be_visible,filter:princess=reporting,This just in. ~name~ is about to show off the royal genitals.
+-1-female_crotch_will_be_visible,filter:princess=reporting,Tell me ~name~. By showing off the your buisness, does that hurt the royality?
+-1-female_crotch_will_be_visible,filter:princess=reporting,April O'Neil here, reporting on the live revealing of ~name~'s royal genitals.
 -1-female_crotch_is_visible=happy,You're almost done. All that's left is the humiliation.
+-1-female_crotch_is_visible,filter:shaved=reporting,Tell me, why do you prefer being smooth down there, ~name~?
+-1-female_crotch_is_visible,filter:shaved=reporting,~name~, which razor do you use to stay so smooth down there?
+-1-female_crotch_is_visible,filter:shaved=reporting,Do you prefer not having hair down there?
+-1-female_crotch_is_visible,filter:hairy=reporting,Did you not want to shave, or is it just a choice, ~name~?
+-1-female_crotch_is_visible,filter:hairy=reporting,My viewers want to know: why haven't you cut down that jungle?
+-1-female_crotch_is_visible,filter:hairy=reporting,Breaking news, ~name~ has brought back the 80's bush.
+-1-female_crotch_is_visible,filter:trimmed=reporting,~name~, how often do you groom down there?
+-1-female_crotch_is_visible,filter:trimmed=reporting,Do you trim that yourself, or does someone else do that. ~name~?
+-1-female_crotch_is_visible,filter:trimmed=reporting,Coming up the importance of grooming with, ~name~.
+-1-female_crotch_is_visible,filter:superhero=reporting,Does being naked in front of us limit your credibility, ~name~?
 
 
 
@@ -788,16 +1049,16 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 2-male_must_masturbate=sad,You are really bad at this game...
 2-male_must_masturbate=reporting,Mostly clothed reporter gets to see ~name~ jack off.
 2-male_must_masturbate=horny,Now lets get to the good stuff for my report.
+2-male_start_masturbating=horny,I have a feeling we are going to be here a while. Not that I'm complaining.
 2-male_start_masturbating=happy,Better grab that shaft ~name~. Use it like a bo staff.
 2-male_start_masturbating=reporting,This just in, ~name~ must masturbate in front of three other people.
 2-male_start_masturbating=sad,I knew you were going to do it, but I din't know you were actually going to do <i>it</i>.
 2-male_start_masturbating=excited,Way better than the VHS tape I've got at home...
-2-male_start_masturbating=horny,I have a feeling we are going to be here a while. Not that I'm complaining.
-2-male_masturbating=happy,There's a lot of people watching. No pressure.
 2-male_masturbating=horny,Damn. Irma would love this!
 2-male_masturbating=reporting,Tell me, how does it feel to jack it front of strangers?
 2-male_masturbating=jealous,Wait, are you looking at me for inspiration? Not sure how I feel about that...
 2-male_masturbating=sad,You're just going at it...(and I can't even join in...)
+2-male_masturbating=happy,There's a lot of people watching. No pressure.
 2-male_finished_masturbating=reporting,Tell me, is it like a fire hose ~name~?
 2-male_finished_masturbating=excited,That went everywhere!
 2-male_finished_masturbating=jealous,Jeez, first time I meet a non-reptile guy and he finishes everywhere...
@@ -808,11 +1069,11 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 2-female_must_masturbate=jealous,Look at it this way, you get rid of built up stress.
 2-female_must_masturbate=horny,The room <i>is</i> heating up...
 2-female_must_masturbate=jealous,Look at it this way, you get rid of built up stress...
+2-female_start_masturbating=sad,Wait. Hold on. I thought we were kidding. I'd better win now.
 2-female_start_masturbating=happy,Go to town girlfriend.
 2-female_start_masturbating=horny,Quick question. How long before you finish ~name~.
 2-female_start_masturbating=excited,Let's get a show for this report, ~name~!
 2-female_start_masturbating=jealous,Seems like you have expierience, ~name~...
-2-female_start_masturbating=sad,Wait. Hold on. I thought we were kidding. I'd better win now.
 2-female_masturbating=horny,Damn, that's hot!
 2-female_finished_masturbating=excited,DAMN. You look like you could use a towel.
 2-female_finished_masturbating=reporting,Was that the hardest you ever climaxed? My audience wants to know.
@@ -822,16 +1083,16 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 
 
 #lost bra
-3-male_must_masturbate=reporting,Breaking news from The Inventory: Things are about to get HOT!
 3-male_must_masturbate=horny_nips,Well...give us a show, ~name~
 3-male_must_masturbate=confident_nips,Damn, I didn't think you'd go through with it.
 3-male_must_masturbate=shocked_nips,Woah, you're <i>seriously</i> going to jack that.
 3-male_must_masturbate=large_nips,Why are you staring at me? You've got more important stuff to do.
-3-male_start_masturbating=horny,I have a feeling we are going to be here a while. Not that I'm complaining.
+3-male_must_masturbate=reporting,Breaking news from The Inventory: Things are about to get HOT!
 3-male_start_masturbating=happy,Wow...this should be...<i>informative</i>.
 3-male_start_masturbating=calm_nips,I still don't get why you're staring at me, it can't help you with <i>that</i>.
 3-male_start_masturbating=reporting,This just in, ~name~ reaches for his shaft.
 3-male_start_masturbating=horny,I think I appreciate this more than the last time was here.
+3-male_start_masturbating=horny,I have a feeling we are going to be here a while. Not that I'm complaining.
 3-male_masturbating=excited,There's a lot of people watching. No pressure.
 3-male_masturbating=happy,This is way better than pizza nights with my VCR...
 3-male_masturbating=large_nips,You're still going at it, <i>and</i> still staring at me.
@@ -846,11 +1107,11 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 3-female_must_masturbate=sad,Guess you to to do <i>it</i>
 3-female_must_masturbate=happy,I guess it's your turn!
 3-female_must_masturbate=jealous,Let's get this over with. I need to get this report back quickly.
+3-female_start_masturbating=horny,Don't stare, April. Don't stare.
 3-female_start_masturbating=excited,About time you get started down there ~name~.
 3-female_start_masturbating=jealous,If only this report was a first hand expierience
 3-female_start_masturbating=horny_nips,Don't mind me, my jumpsuit is...scratchy,..
 3-female_start_masturbating=sad,Gulp.  Guess you got to start now ~name~.
-3-female_start_masturbating=horny,Don't stare, April. Don't stare.
 3-female_masturbating=horny,Go ninja, go ninja, GO!
 3-female_masturbating=happy,You know those hands look like they've done this before.
 3-female_masturbating=confident_nips,Now this is a <i>show</i>.
@@ -864,20 +1125,20 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 
 
 #lost jumpsuit top
+4-male_must_masturbate=reporting,Breaking news from The Inventory: Things are about to get HOT!
 4-male_must_masturbate=horny,Well, at least you have two things to stare at, ~name~.
 4-male_must_masturbate=happy,It's pretty hot in here, and it looks to get even hotter.
 4-male_must_masturbate=excited,Damn! Looks like it's ok to stare if you need some help!
 4-male_must_masturbate=jealous,Wow...looks like someone is going to get a bit harder.
-4-male_must_masturbate=reporting,Breaking news from The Inventory: Things are about to get HOT!
 4-male_start_masturbating=happy,Seriously, it's completely fine to look at my chest,~name~.
 4-male_start_masturbating=reporting,As ~name~ moves his hands down to his penis, all eyes are on him.
 4-male_start_masturbating=excited,Get ready to work that bo-staff ~name~!
 4-male_start_masturbating=sad,I feel like I should cover my breasts when you do this.
-4-male_masturbating=happy,There's a lot of people watching. No pressure.
 4-male_masturbating=jealous,You really <i>are</i> staring at my tits, aren't you?
 4-male_masturbating=excited,Damn! This is way better than another night on my computer!
 4-male_masturbating=sad,Man, it seems you really are going at it...
 4-male_masturbating=reporting,This just in, ~name~ has perfected his stroke.
+4-male_masturbating=happy,There's a lot of people watching. No pressure.
 4-male_finished_masturbating=sad,I didn't realize it would be that much. What, I don't really go on a lot of dates.
 4-male_finished_masturbating=happy,Tell me, did my breasts help, ~name~?
 4-male_finished_masturbating=excited,DAMN!
@@ -940,11 +1201,11 @@ female_finished_masturbating=horny,You're hot, sticky and messy, ~name~. Kinda l
 5-female_masturbating=excited,Come on, I need this action for my report!
 5-female_masturbating=jealous,That...doesn't look fun at all
 5-female_masturbating=reporting,This just in, ~name~, is still going at it.
+5-female_finished_masturbating=excited,Best. Report. Ever!
 5-female_finished_masturbating=happy,Wow, that was definitely worth the wait.
 5-female_finished_masturbating=reporting,~name~ has finished, now we return to the game.
 5-female_finished_masturbating=jealous,Man those juices are everywhere. And I mean everywhere.
 5-female_finished_masturbating=jealous,You couldn't wait for me...
-5-female_finished_masturbating=excited,Best. Report. Ever!
 
 -3-male_must_masturbate=sad,Breaking news from The Inventory: Things are about to get HOT!
 -3-male_start_masturbating=horny,I have a feeling we are going to be here a while. Not that I'm complaining.

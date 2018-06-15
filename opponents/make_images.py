@@ -192,7 +192,7 @@ def make_images(image_data_file, output_directory, kkl_version):
 #python make_images.xml <character_image_file.txt> <output_directory>
 if __name__ == "__main__":
     output_directory = "."
-    kkl_version = 47 # Default Kisekae version for script to use
+    kkl_version = 63 # Default Kisekae version for script to use
     if len(sys.argv) > 2:
         output_directory = sys.argv[2]
     if len(sys.argv) > 3:
