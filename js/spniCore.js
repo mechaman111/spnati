@@ -52,6 +52,9 @@ var timeoutID;
 
 var table = new Table();
 
+/* Masturbation Previous State Variables */
+var previousState = null;
+var globalSavedTableVisibility;
 
 /**********************************************************************
  * Screens & Modals
