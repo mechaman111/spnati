@@ -18,11 +18,11 @@ var CANNOT_SPEAK = false;
 var oneFinished = false;
  
 /* orgasm timer */
-var ORGASM_DELAY = 4000;
+var ORGASM_DELAY = 2000;
 
 /* The first and last rounds a character starts heavy masturbation, counted in phases before they finish */
-var HEAVY_FIRST_ROUND = 6
-var HEAVY_LAST_ROUND = 2
+var HEAVY_FIRST_ROUND = 6;
+var HEAVY_LAST_ROUND = 2;
  
 /* forfeit timers */
 var timers = [0, 0, 0, 0, 0];
@@ -140,7 +140,7 @@ function tickForfeitTimers (context) {
     }
 
     for (var i = 0; i < players.length; i++) {
-		if (players[i] && players[i].out && timers[i] > 1) {
+		if (players[i] && players[i].out && timers[i] > 1 && context !== "Continue...") {
         	timers[i]--;
 
 			if (i == HUMAN_PLAYER) {
@@ -203,13 +203,23 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
 		
 	}
+	if (savedContext !== "Continue...") {
+        previousState = savedContext;
+    }
+    globalSavedTableVisibility = savedTableVisibility;
+    $mainButton.html("Continue...");
+    allowProgression();
+}
+
+function endMasturbation() {
+
 	updateAllGameVisuals();
-	if (AUTO_FADE && savedTableVisibility !== undefined) {
-		forceTableVisibility(savedTableVisibility);
+	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
+		forceTableVisibility(globalSavedTableVisibility);
 	}
 	
 	/* update the button */
-	$mainButton.html(savedContext);
+	$mainButton.html(previousState);
 
 	allowProgression();
 	oneFinished = false;

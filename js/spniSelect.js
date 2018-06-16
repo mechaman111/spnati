@@ -354,7 +354,7 @@ function updateIndividualSelectScreen () {
 			$individualArtistLabels[index].html(wordWrapHtml(selectableOpponents[i].artist));
 			$individualDescriptionLabels[index].html(selectableOpponents[i].description);
 
-            if (selectableOpponents[i].ending) {
+            if (EPILOGUE_BADGES_ENABLED && selectableOpponents[i].ending) {
                 $individualBadges[index].show();
             }
             else {
@@ -435,7 +435,7 @@ function updateGroupSelectScreen () {
 			$groupArtistLabels[i].html(wordWrapHtml(opponent.artist));
 			$groupDescriptionLabels[i].html(opponent.description);
 
-            if (opponent.ending) {
+            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
                 $groupBadges[i].show();
             }
             else {

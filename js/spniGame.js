@@ -111,7 +111,7 @@ function loadGameScreen () {
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] != null) {
+        if (players[i] !== null) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
             $gameLabels[i].css({"background-color" : clearColour});
@@ -297,7 +297,7 @@ function implementAIAction () {
 	if (hands[currentTurn].strength == HIGH_CARD) {
 		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
-	} else if (hands[currentTurn].strength <= TWO_PAIR) {
+	} else if (hands[currentTurn].strength == PAIR) {
 		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
         updateGameVisual(currentTurn);
 	} else {
@@ -792,6 +792,9 @@ function advanceGame () {
         /* making the loser start masturbating */
         if (AUTO_FADE) forceTableVisibility(false);
 		completeMasturbatePhase();
+    } else if (context == "Continue...") {
+        /* finished watching masturbation */
+		    endMasturbation();
     } else if (context.substr(0, 4) == "Wait") {
 		/* waiting for someone to finish */
 		handleGameOver(); //No delay here
