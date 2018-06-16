@@ -310,7 +310,7 @@ if(!monika) {
     /* monkey patch advanceGame() so we can intercept main button presses */
     var original_advanceGame = advanceGame;
     advanceGame = function() {
-        if(!monika.present()) { original_advanceGame(); }
+        if(!monika.present()) { return original_advanceGame.apply(null, arguments); }
         
         /* we don't use a finally... clause here, because if we're using a custom
          * context then we don't want the original function to be called.
@@ -334,7 +334,7 @@ if(!monika) {
     advanceTurn = function() {
         if(!monika.present()) {
             /* if Monika isn't in this game then strictly do normal behaviour */
-            return original_advanceTurn();
+            return original_advanceTurn.apply(null, arguments);
         }
         
         try {
@@ -376,7 +376,7 @@ if(!monika) {
     /* hook into completeContinuePhase to undo deletion glitches */
     var original_completeContinuePhase = completeContinuePhase;
     completeContinuePhase = function() {
-        if(!monika.present()) { return original_completeContinuePhase(); }
+        if(!monika.present()) { return original_completeContinuePhase.apply(null, arguments); }
             
         try {
             monika.undoDeleteGlitchEffect();
@@ -390,7 +390,7 @@ if(!monika) {
     /* hook into completeStripPhase to undo deletion glitches when the player loses the round */
     var original_completeStripPhase = completeStripPhase;
     completeStripPhase = function() {
-        if(!monika.present()) { return original_completeStripPhase(); }
+        if(!monika.present()) { return original_completeStripPhase.apply(null, arguments); }
         
         try {
             monika.undoDeleteGlitchEffect();
@@ -404,7 +404,7 @@ if(!monika) {
     /* hook into completeRevealPhase to stop glitching when a round is complete */
     var original_completeRevealPhase = completeRevealPhase;
     completeRevealPhase = function() {
-        if(!monika.present()) { return original_completeRevealPhase(); }
+        if(!monika.present()) { return original_completeRevealPhase.apply(null, arguments); }
         
         try {
             var targetedSlot = monika.active_effects.round_targeted_glitching;
@@ -436,7 +436,7 @@ if(!monika) {
      */
     var original_updateGameVisual = updateGameVisual;
     updateGameVisual = function(player) {
-        if(!monika.present()) { return original_updateGameVisual(player); }
+        if(!monika.present()) { return original_updateGameVisual.apply(null, arguments); }
         
         try {
             /* This is kind of a quick and dirty hack-- but we do these checks
