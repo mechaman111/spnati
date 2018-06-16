@@ -2,7 +2,7 @@ var preload_queue = []; /* Used to store preload requests before the SW becomes 
 
 /* Register the SW as soon as possible so we can take advantage of the cache as much as we can */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service_worker.js').then(function(registration) {
+    navigator.serviceWorker.register('service_worker.js').then(function(registration) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {
