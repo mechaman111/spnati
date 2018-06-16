@@ -229,12 +229,9 @@ function updateAllGameVisuals () {
  ************************************************************/
 function displayHumanPlayerClothing () {
     /* collect the images */
-    var clothingImages = [];
-	for (var i = 0; i < 8; i++) {
-		if (players[HUMAN_PLAYER].clothing[i]) {
-			clothingImages.push(players[HUMAN_PLAYER].clothing[i].image);
-		}
-	}
+    var clothingImages = players[HUMAN_PLAYER].clothing.map(function(c) {
+		return c.image;
+	});
     
     /* display the remaining clothing items */
     clothingImages.reverse();
@@ -288,7 +285,7 @@ function implementAIAction () {
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
 		updateBehaviour(currentTurn, BAD_HAND);
-	} else if (players[currentTurn].hand.strength <= TWO_PAIR) {
+	} else if (players[currentTurn].hand.strength == PAIR) {
 		updateBehaviour(currentTurn, OKAY_HAND);
 	} else {
 		updateBehaviour(currentTurn, GOOD_HAND);
@@ -564,7 +561,7 @@ function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
-    if (countClothes(recentLoser)) {
+    if (players[recentLoser].clothing.length > 0) {
 	    $mainButton.html("Strip");
     } else {
 	    $mainButton.html("Masturbate");
