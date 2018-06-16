@@ -6,6 +6,7 @@ import sys
 if sys.version_info[0] < 3:
     from io import open
 
+import os.path as osp
 import time
 import bleach.sanitizer
 import glob
@@ -162,6 +163,15 @@ if __name__ == "__main__":
     else:
         # single-file mode
         xml_filename = files[0]
+        
+        if not osp.exists(xml_filename):
+            print(xml_filename+" does not seem to exist! Did you type the file name in correctly?")
+            sys.exit()
+            
+        if not osp.isfile(xml_filename):
+            print(xml_filename+" is not a file! Ensure you're passing in a behaviour.xml file and not an opponent directory!")
+            sys.exit()
+            
         summary_data, failed_lines = check_file(xml_filename)
         with open(report_filename, 'w', encoding='utf-8') as report_out:
             write_report_header(report_out)
