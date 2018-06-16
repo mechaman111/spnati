@@ -916,21 +916,18 @@ function advanceSelectScreen () {
     console.log("Starting game...");
 
     if(sw_is_available()) {
-        /* Ask SW to preload all unique image files for all characters in the game. */
-        var player_imgs = [];
-        
+        /* Ask SW to preload stage 0 and stage 1 images for all characters in the game. */
         for(var i=0;i<players.length;i++) {
             if(!players[i]) {
                 continue;
             }
 
-        	if (players[i].image_set.length <= 0) {
-                continue;
-            }
+        	var images = players[i].getImagesForStage(0);
+            images.concat(players[i].getImagesForStage(1));
 
-            console.log("Preloading "+players[i].image_set.length.toString()+" image files from "+players[i].folder+" ...");
+            console.log("Preloading "+images.length.toString()+" image files from "+players[i].folder+" stages 0 and 1...");
             
-            request_url_caching(players[i].image_set);
+            request_url_caching(images);
         }
     }
 
