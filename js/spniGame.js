@@ -554,7 +554,7 @@ function completeRevealPhase () {
         }
     }
     
-    if(sw_is_available() && recentLoser != HUMAN_PLAYER) {
+    if (sw_is_available() && recentLoser != HUMAN_PLAYER) {
         /* Begin preloading images used by the loser for the stage after next. */
         var loadStage = players[recentLoser].stage+2;
         var images = players[recentLoser].getImagesForStage(loadStage);

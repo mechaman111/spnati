@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('controllerchange', function () {
         /* Now that we can send messages to the SW, start preloading queued URLs. */
         console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
-        for(var i=0;i<preload_queue.length;i++) {
+        for (var i=0;i<preload_queue.length;i++) {
             var queued_request = preload_queue[i];
             send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
         }
@@ -50,9 +50,9 @@ if ('serviceWorker' in navigator) {
 
     /* autogenerate lists of cards to save */
     var cards = [];
-    for(suit of ['spade', 'heart', 'clubs', 'diamo']) { // filename prefixes
+    for (suit of ['spade', 'heart', 'clubs', 'diamo']) { // filename prefixes
         cards.push('img/'+suit+'.jpg');
-        for(let i=1;i<=13;i++) {
+        for (let i=1;i<=13;i++) {
             cards.push('img/'+suit+i.toString()+'.jpg');
         }
     }
@@ -111,7 +111,7 @@ function send_msg_to_sw(msg) {
  * when beginning to load lots of heavy files.
  ************************************************************/
 function request_url_caching(urls) {
-    if(!sw_is_active()) {
+    if (!sw_is_active()) {
         preload_queue.push(urls.slice());
     } else {
         send_msg_to_sw({ 'type': 'cache', 'urls': urls });

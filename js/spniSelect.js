@@ -293,7 +293,7 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
             var release = $xml.find('release').text();
 			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
-            if(sw_is_available()) {
+            if (sw_is_available()) {
                 /* Attempt to preload this opponent's picture for selection. */
                 request_url_caching(['opponents/'+id+'/'+pic]);
             }
@@ -915,10 +915,10 @@ function backToSelect () {
 function advanceSelectScreen () {
     console.log("Starting game...");
 
-    if(sw_is_available()) {
+    if (sw_is_available()) {
         /* Ask SW to preload stage 0 and stage 1 images for all characters in the game. */
-        for(var i=0;i<players.length;i++) {
-            if(!players[i]) {
+        for (var i=0;i<players.length;i++) {
+            if (!players[i]) {
                 continue;
             }
 

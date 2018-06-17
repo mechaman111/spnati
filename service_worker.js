@@ -54,7 +54,7 @@ var current_preload_queue = [];
  * (for example, those from event Requests or network Responses) */
 function clone_immutable_headers(headers) {
     var new_headers = new Headers();
-    for(var kv of headers.entries()) {
+    for (var kv of headers.entries()) {
         new_headers.append(kv[0], kv[1]);
     }
 
@@ -63,16 +63,16 @@ function clone_immutable_headers(headers) {
 
 self.addEventListener('fetch', function(event) {
     /* Don't bother caching non-GET requests */
-    if(event.request.method !== 'GET') {
+    if (event.request.method !== 'GET') {
         return event.respondWith(fetch(event.request));
     }
 
     /* Ensure we can quickly reload scripts and etc. when developing;
      * Cache only images when debugging is enabled.
      */
-    if(debug_active) {
+    if (debug_active) {
         let file_ext = event.request.url.split('.').pop();
-        if(file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
+        if (file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
             return event.respondWith(
                 fetch(event.request).then(
                     async function (net_response) {
@@ -97,17 +97,17 @@ self.addEventListener('fetch', function(event) {
             async function(cache) {
                 var cached_response = await cache.match(event.request);
 
-                if(cached_response) {
+                if (cached_response) {
                     var resp_time = new Date(cached_response.headers.get('Date'));
                     var current_cache_age = Date.now() - resp_time.getTime(); // in milliseconds
 
-                    if(debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
+                    if (debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
 
-                    if(current_cache_age < CACHE_KEEPALIVE * 1000) {
+                    if (current_cache_age < CACHE_KEEPALIVE * 1000) {
                         /* We have fresh content cached. Return it. */
-                        if(debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
+                        if (debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
                         return cached_response;
-                    } else if(debug_active && verbose) {
+                    } else if (debug_active && verbose) {
                         console.log("[SW] Refreshing stale file: "+event.request.url);
                     }
                 }
@@ -115,7 +115,7 @@ self.addEventListener('fetch', function(event) {
                 /* Otherwise, get it from the network, cache a copy, and return it. */
 
                 /* When we make the network request, also make sure to set the `If-Modified-Since` header if we can */
-                if(cached_response) {
+                if (cached_response) {
                     /* We can't modify event.request directly-- copy it */
                     var new_headers = clone_immutable_headers(event.request.headers);
                     new_headers.set('If-Modified-Since', cached_response.headers.get('Date'));
@@ -128,13 +128,13 @@ self.addEventListener('fetch', function(event) {
                     });
 
                     var net_response = await fetch(new_request);
-                    if(net_response.ok) {
+                    if (net_response.ok) {
                         /* Content was modified on the server, re-cache the response data and return it */
                         cache.put(event.request, net_response.clone());
                         return net_response;
-                    } else if(net_response.status == 304) {
+                    } else if (net_response.status == 304) {
                         // Update the Date on the cached response and return it
-                        if(debug_active && verbose) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
+                        if (debug_active && verbose) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
 
                         var new_response_headers = clone_immutable_headers(cached_response.headers);
                         new_response_headers.set('Date', net_response.headers.get('Date'));
@@ -157,17 +157,17 @@ self.addEventListener('fetch', function(event) {
                     var net_response = await fetch(event.request);
                     var content_length = net_response.headers.get('Content-Length');
 
-                    if(net_response.ok) {
+                    if (net_response.ok) {
                         var cloned_response = net_response.clone();
-                        if('blob' in cloned_response) {
+                        if ('blob' in cloned_response) {
                             /* If we can, verify that the response actually has body data associated with it
                              * Sometimes we get zero-length responses on Firefox, but not on Chrome.
                              * I don't know why that happens.
                              */
                             var data = await cloned_response.blob();
                             var expected_content_length = parseInt(content_length, 10);
-                            if(expected_content_length === 0 || data.size > 0) {
-                                if(debug_active && verbose) console.log("[SW] Verified response content length (Content-Length: "+content_length.toString()+", data size: "+data.size.toString()+" bytes)");
+                            if (expected_content_length === 0 || data.size > 0) {
+                                if (debug_active && verbose) console.log("[SW] Verified response content length (Content-Length: "+content_length.toString()+", data size: "+data.size.toString()+" bytes)");
                                 cache.put(event.request, new Response(
                                     data, {
                                         status: cloned_response.status,
@@ -175,11 +175,11 @@ self.addEventListener('fetch', function(event) {
                                         headers: cloned_response.headers
                                     }
                                 ));
-                            } else if(content_length != null) {
+                            } else if (content_length != null) {
                                 console.error("[SW] Got invalid response for "+event.request.url+": expected "+content_length+" bytes, got "+data.size.toString()+" bytes instead");
                             } // if content_length == null then the request was cross-origin and we can't access the Content-Length header
                         } else {
-                            if(debug_active && verbose) console.log("[SW] Not verifying response data");
+                            if (debug_active && verbose) console.log("[SW] Not verifying response data");
                             cache.put(event.request, cloned_response);
                         }
                     }
@@ -218,7 +218,7 @@ self.addEventListener('activate', function (event) {
 })
 
 function batch_preload(urls) {
-    if(debug_active && verbose) console.log("[SW] Beginning batch preload for "+urls.length.toString()+" URLs");
+    if (debug_active && verbose) console.log("[SW] Beginning batch preload for "+urls.length.toString()+" URLs");
     return caches.open(CACHE_NAME).then(
         function (cache) {
             return Promise.all(urls.map(
@@ -230,7 +230,7 @@ function batch_preload(urls) {
         }
     ).then(
         function () {
-            if(debug_active && verbose) console.log("[SW] Batch preload complete.");
+            if (debug_active && verbose) console.log("[SW] Batch preload complete.");
         },
         function (err) {
             console.error("[SW] Batch preload failed: "+err.toString());
@@ -240,14 +240,14 @@ function batch_preload(urls) {
 
 /* Called periodically, to avoid overloading browsers with 100s of preload requests. */
 function process_preload_queue() {
-    if(current_preload_queue.length > 0) {
+    if (current_preload_queue.length > 0) {
         /* pop some elements off the front of the preload queue */
         var urls = current_preload_queue.splice(0, URLS_PER_PRELOAD_BATCH);
 
         /* Begin preloading this batch */
         batch_preload(urls);
 
-        if(debug_active && verbose) console.log("[SW] "+current_preload_queue.length.toString()+" URLs left to preload");
+        if (debug_active && verbose) console.log("[SW] "+current_preload_queue.length.toString()+" URLs left to preload");
     }
 }
 
@@ -257,18 +257,18 @@ self.addEventListener('message', function(event) {
     var msg = event.data;
 
     if (msg.type === 'cache') {
-        if(debug_active && verbose) console.log("[SW] Scheduling preload for "+msg.urls.length.toString()+" URLs");
+        if (debug_active && verbose) console.log("[SW] Scheduling preload for "+msg.urls.length.toString()+" URLs");
         current_preload_queue.push.apply(current_preload_queue, msg.urls);
-    } else if(msg.type === 'set-debug') {
+    } else if (msg.type === 'set-debug') {
         debug_active = msg.debug;
 
-        if(debug_active) {
+        if (debug_active) {
             console.log("[SW] Debugging enabled -- bypassing cache for non-image files");
         }
-    } else if(msg.type === 'set-verbose') {
+    } else if (msg.type === 'set-verbose') {
         verbose = msg.verbose;
 
-        if(verbose) {
+        if (verbose) {
             console.log("[SW] Verbose logging of request handling enabled");
         }
     }

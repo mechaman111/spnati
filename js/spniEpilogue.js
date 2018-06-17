@@ -456,7 +456,7 @@ function doEpilogueModal(){
 function doEpilogue(){
 	save.addEnding(players[chosenEpilogue.player].id, chosenEpilogue.title);
     
-    if(sw_is_available()) {
+    if (sw_is_available()) {
         /* Preload all epilogue screens. */
         var epilogue_images = chosenEpilogue.screens.map(function (s) {
             return s.image;

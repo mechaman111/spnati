@@ -271,7 +271,7 @@ function doEpilogueFromGallery(){
 		}
 	}
 
-    if(sw_is_available()) {
+    if (sw_is_available()) {
         /* Preload all epilogue screens. */
         var epilogue_images = chosenEpilogue.screens.map(function (s) {
             return s.image;
