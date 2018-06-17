@@ -18,7 +18,7 @@ import time
 from behaviour_parser import parse_file, parse_meta
 from ordered_xml import OrderedXMLElement
 
-VERSION = '0.11.0-alpha'  # will attempt to follow semver if possible
+VERSION = '0.11.1-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
 
@@ -477,7 +477,12 @@ class State(object):
         # assume all images are PNG files for now because:
         # - I am lazy
         # - this is meant for internal use only
-        elem.attributes['img'] = '{:d}-{:s}.png'.format(int(stage), self.image)
+        image = '{:d}-{:s}.png'.format(int(stage), self.image)
+        
+        if not osp.exists(osp.join(os.getcwd(), image)):
+            print("Warning: image {} does not exist! (Stage {}, linetext={})".format(image, stage, self.text))
+        
+        elem.attributes['img'] = image
 
         if self.marker is not None:
             elem.attributes['marker'] = self.marker
