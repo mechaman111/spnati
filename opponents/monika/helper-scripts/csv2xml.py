@@ -18,7 +18,7 @@ import time
 from behaviour_parser import parse_file, parse_meta
 from ordered_xml import OrderedXMLElement
 
-VERSION = '0.11.2-alpha'  # will attempt to follow semver if possible
+VERSION = '0.12.0-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
 
@@ -132,6 +132,26 @@ def get_target_stripped_case(target, stage):
         raise ValueError("Unknown clothing type for target '{}' stage {}: {}".format(target, stage, target_clothing_type))
         
     
+simple_pseudo_cases = {
+    'opponent_removing_accessory':      ['male_removing_accessory', 'female_removing_accessory'],
+    'opponent_removing_minor':          ['male_removing_minor', 'female_removing_minor'],
+    'opponent_removing_major':          ['male_removing_major', 'female_removing_major'],
+    'opponent_chest_will_be_visible':   ['male_chest_will_be_visible', 'female_chest_will_be_visible'],
+    'opponent_crotch_will_be_visible':  ['male_crotch_will_be_visible', 'female_crotch_will_be_visible'],
+    'opponent_must_masturbate':         ['male_must_masturbate', 'female_must_masturbate'],
+    
+    'must_strip_self':                  ['must_strip_winning', 'must_strip_normal', 'must_strip_losing'],
+    'self_must_strip':                  ['must_strip_winning', 'must_strip_normal', 'must_strip_losing'],
+    
+    'hand_quality':                     ['good_hand', 'okay_hand', 'bad_hand'],
+    'hand':                             ['good_hand', 'okay_hand', 'bad_hand'],
+    'any_hand':                         ['good_hand', 'okay_hand', 'bad_hand'],
+    'hand_chatter':                     ['good_hand', 'okay_hand', 'bad_hand'],
+    
+    'player_must_strip':                ['female_human_must_strip', 'male_human_must_strip'],
+    'human_must_strip':                 ['female_human_must_strip', 'male_human_must_strip'],
+}
+    
 def parse_case_name(name, cond_str):
     name = name.strip().lower()
     
@@ -149,12 +169,8 @@ def parse_case_name(name, cond_str):
         elif cond_tuple[0] == 'target':
             target_id = cond_tuple[1]
     
-    if name == 'hand_quality' or name == 'hand' or name == 'any_hand' or name == 'hand_chatter':
-        return ['good_hand', 'okay_hand', 'bad_hand']
-    elif name == 'must_strip_self' or name == 'self_must_strip':
-        return ['must_strip_winning', 'must_strip_normal', 'must_strip_losing']
-    elif name == 'player_must_strip' or name == 'human_must_strip':
-        return ['female_human_must_strip', 'male_human_must_strip']
+    if name in simple_pseudo_cases:
+        return simple_pseudo_cases[name]
     elif name == 'npc_must_strip' or name == 'opponent_must_strip':
         if target_id is not None:
             target_elem = get_target_xml(target_id)
