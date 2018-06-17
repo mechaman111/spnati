@@ -111,7 +111,7 @@ function loadGameScreen () {
     
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] !== null) {
+        if (players[i]) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
             $gameLabels[i].css({"background-color" : clearColour});
