@@ -166,8 +166,8 @@ self.addEventListener('fetch', function(event) {
                              */
                             var data = await cloned_response.blob();
                             var expected_content_length = parseInt(content_length, 10);
-                            if(content_length && data.size === expected_content_length) {
-                                if(debug_active && verbose) console.log("[SW] Verified response content length ("+content_length+" bytes)");
+                            if(expected_content_length === 0 || data.size > 0) {
+                                if(debug_active && verbose) console.log("[SW] Verified response content length (Content-Length: "+content_length.toString()+", data size: "+data.size.toString()+" bytes)");
                                 cache.put(event.request, new Response(
                                     data, {
                                         status: cloned_response.status,
