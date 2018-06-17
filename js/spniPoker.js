@@ -109,6 +109,7 @@ function composeDeck () {
 		
 		for (j = 1; j < 14; j++) {
 			inDeck.push(suit + j);
+			new Image().src = IMG + suit + j + '.jpg';
 		}
 	}
 }

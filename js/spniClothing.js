@@ -263,6 +263,7 @@ function playerMustStrip (player) {
 		}
 	}
 	
+	players[player].preloadStageImages(players[player].stage + 1);
 	return clothing.length;
 }
 
