@@ -18,7 +18,7 @@ import time
 from behaviour_parser import parse_file, parse_meta
 from ordered_xml import OrderedXMLElement
 
-VERSION = '0.11.1-alpha'  # will attempt to follow semver if possible
+VERSION = '0.11.2-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
 
@@ -135,6 +135,20 @@ def get_target_stripped_case(target, stage):
 def parse_case_name(name, cond_str):
     name = name.strip().lower()
     
+    target_id = None
+    target_stage_low = None
+    target_stage_high = None
+    
+    # we don't need the case tag or priority for this purpose
+    cond_set = Case.parse_conditions_set(cond_str, None, None)
+    
+    for cond_tuple in cond_set:
+        if cond_tuple[0] == 'targetStage':
+            target_stage_low = cond_tuple[1]
+            target_stage_high = cond_tuple[2]
+        elif cond_tuple[0] == 'target':
+            target_id = cond_tuple[1]
+    
     if name == 'hand_quality' or name == 'hand' or name == 'any_hand' or name == 'hand_chatter':
         return ['good_hand', 'okay_hand', 'bad_hand']
     elif name == 'must_strip_self' or name == 'self_must_strip':
@@ -142,29 +156,27 @@ def parse_case_name(name, cond_str):
     elif name == 'player_must_strip' or name == 'human_must_strip':
         return ['female_human_must_strip', 'male_human_must_strip']
     elif name == 'npc_must_strip' or name == 'opponent_must_strip':
-        return ['female_must_strip', 'male_must_strip']
+        if target_id is not None:
+            target_elem = get_target_xml(target_id)
+            gender = target_elem.find('gender').text.strip().lower()
+            
+            if gender == 'female' or gender == 'male':
+                return [gender+'_must_strip']
+            else:
+                raise ValueError("Invalid gender found for target '{}': {}".format(target_id, gender))
+        else:
+            return ['female_must_strip', 'male_must_strip']
     elif name == 'target_stripping' or  name == 'target_stripped':
-        target_id = None
-        target_stage = None
+        if target_stage_low != target_stage_high:
+            raise ValueError("The 'target_stripping' and 'target_stripped' pseudo-cases do not currently work with interval target stages.")
         
-        # we don't need the case tag or priority for this purpose
-        cond_set = Case.parse_conditions_set(cond_str, None, None)
-        
-        for cond_tuple in cond_set:
-            if cond_tuple[0] == 'targetStage':
-                if cond_tuple[1] != cond_tuple[2]:
-                    raise ValueError("The 'target_stripping' and 'target_stripped' pseudo-cases do not currently work with interval target stages.")
-                target_stage = cond_tuple[1]
-            elif cond_tuple[0] == 'target':
-                target_id = cond_tuple[1]
-        
-        if target_id is None or target_stage is None:
+        if target_id is None or target_stage_low is None:
             raise ValueError("Lines must have targets and target stages set in order to use the 'target_stripping' amd 'target_stripped' pseudo-cases!")
         else:
             if name == 'target_stripping':
-                return [get_target_stripping_case(target_id, target_stage)]
+                return [get_target_stripping_case(target_id, target_stage_low)]
             else:
-                return [get_target_stripped_case(target_id, target_stage)]
+                return [get_target_stripped_case(target_id, target_stage_low)]
                 
             #print("[debug] Mapped pseudo-case {} for targetID {} stage {} to {}".format(name, target_id, target_stage, ret_case[0]))
     else:
