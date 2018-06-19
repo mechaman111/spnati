@@ -133,6 +133,7 @@ function loadBehaviour (id, callFunction, slot) {
             var size = $xml.find('size').text();
             var timer = $xml.find('timer').text();
             var intelligence = $xml.find('intelligence');
+            var scale = Number($xml.find('scale').text()) || 100.0;
             
             var tags = $xml.find('tags');
             var tagsArray = [];
@@ -142,7 +143,7 @@ function loadBehaviour (id, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, $xml);
+            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), scale, tagsArray, $xml);
             
 			callFunction(newPlayer, slot);
 		},
