@@ -676,10 +676,10 @@ function clickedRandomGroupButton () {
     console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
 
 	/* load the corresponding group */
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0].id, updateRandomSelection, 1);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1].id, updateRandomSelection, 2);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2].id, updateRandomSelection, 3);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3].id, updateRandomSelection, 4);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0], updateRandomSelection, 1);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1], updateRandomSelection, 2);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2], updateRandomSelection, 3);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3], updateRandomSelection, 4);
 	updateSelectionVisuals();
 }
 
@@ -704,7 +704,7 @@ function clickedRandomFillButton (predicate) {
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-			loadBehaviour(loadedOpponentsCopy[randomOpponent].id, updateRandomSelection, i);
+			loadBehaviour(loadedOpponentsCopy[randomOpponent], updateRandomSelection, i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -752,7 +752,7 @@ function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = null;
 	updateSelectionVisuals();
-	loadBehaviour(shownIndividuals[slot-1].id, individualScreenCallback, selectedSlot);
+	loadBehaviour(shownIndividuals[slot-1], individualScreenCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 }
@@ -824,7 +824,7 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
         if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-			loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].id, groupScreenCallback, i+1);
+			loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], groupScreenCallback, i+1);
 		}
 	}
     /* switch screens */
