@@ -21,6 +21,12 @@ var winStr = "You've won the game, and possibly made some friends. Who among the
 var winStrNone = "You've won the game, and possibly made some friends? Unfortunately, none of your competitors are ready for a friend like you.<br>(None of the characters you played with have an ending written.)"; //Player won the game, but none of the characters have an ending written
 var lossStr = "Well you lost. And you didn't manage to make any new friends. But you saw some people strip down and show off, and isn't that what life is all about?<br>(You may only view an ending when you win.)"; //Player lost the game. Currently no support for ending scenes when other players win
 
+// Player won the game, but epilogues are disabled.
+var winEpiloguesDisabledStr = "You won... but epilogues have been disabled.";
+
+// Player lost the game with epilogues disabled.
+var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
+
 /* NPC chosen for epilogue */
 var epilogueCharacter = -1; //the character whose epilogue is playing
 var epilogueScreen = 0; //screen in the epilogue
@@ -405,7 +411,7 @@ function doEpilogueModal(){
 	//whether or not the human player won
 	var playerWon = (winner == HUMAN_PLAYER);
 
-	if (playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
+	if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
 		//load the epilogue data for each player
 		for (var i = 0; i < players.length; i++){
 			var playerIEpilogues = loadEpilogueData(i);
@@ -420,16 +426,24 @@ function doEpilogueModal(){
 	var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
 	$epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
 
-	//decide which header string to show the player. This describes the situation.
-	var headerStr = '';
-	if (playerWon){
-		headerStr = winStr; //player won, and there are epilogues available
-		if (!haveEpilogues){
-			headerStr = winStrNone; //player won, but none of the NPCs have epilogues
-		}
-	} else {
-		headerStr = lossStr; //player lost
-	}
+    if(EPILOGUES_ENABLED) {
+        //decide which header string to show the player. This describes the situation.
+    	var headerStr = '';
+    	if (playerWon){
+    		headerStr = winStr; //player won, and there are epilogues available
+    		if (!haveEpilogues){
+    			headerStr = winStrNone; //player won, but none of the NPCs have epilogues
+    		}
+    	} else {
+    		headerStr = lossStr; //player lost
+    	}
+    } else {
+        if(playerWon) {
+            headerStr = winEpiloguesDisabledStr;
+        } else {
+            headerStr = lossEpiloguesDisabledStr;
+        }
+    }
 
 	$epilogueHeader.html(headerStr); //set the header string
 	$epilogueSelectionModal.modal("show");//show the epilogue selection modal
