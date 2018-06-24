@@ -21,11 +21,12 @@ def search_opponent(opponent_folder, target_id, target_tags):
         for case in case_list:
             filter_condition = None
             target_condition = None
-            for condition in case.conditions:
-                if condition[0] == 'target':
-                    target_condition = condition[1] == target_id
-                elif condition[0] == 'filter':
-                    filter_condition = condition[1] in target_tags
+            
+            if 'target' in case.conditions:
+                target_condition = case.conditions['target'] == target_id
+            
+            if 'filter' in case.conditions:
+                filter_condition = case.conditions['filter'] in target_tags
             
             if filter_condition is not None and not filter_condition:
                 continue
