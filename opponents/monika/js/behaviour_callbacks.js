@@ -139,3 +139,34 @@ monika.setRealizationMarkers = function(id) {
         m.markers['realization_'+id] = true;
     }
 }
+
+monika.delayChange = function(text, delay) {
+    var slot = monika.find_slot();
+    var currentHTML = $gameDialogues[slot-1].html();
+    
+    if(slot) {
+        setTimeout(function () {
+            if($gameDialogues[slot-1].html() === currentHTML) {
+                $gameDialogues[slot-1].html(text);
+            }
+        }, delay);
+    }
+}
+
+monika.jealousGlitch = function() {
+    var slot = monika.find_slot();
+    for(var i=0;i<players.length;i++) {
+        if(players[i] && i !== slot) {
+            monika.temporaryCharacterGlitch(i, 500, 500);
+        }
+    }
+}
+
+monika.majorJealousGlitch = function() {
+    var slot = monika.find_slot();
+    for(var i=0;i<players.length;i++) {
+        if(players[i] && i !== slot) {
+            monika.temporaryCharacterGlitch(i, 250, 750);
+        }
+    }
+}

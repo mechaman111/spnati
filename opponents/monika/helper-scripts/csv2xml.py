@@ -139,6 +139,15 @@ simple_pseudo_cases = {
     'opponent_chest_will_be_visible':   ['male_chest_will_be_visible', 'female_chest_will_be_visible'],
     'opponent_crotch_will_be_visible':  ['male_crotch_will_be_visible', 'female_crotch_will_be_visible'],
     'opponent_must_masturbate':         ['male_must_masturbate', 'female_must_masturbate'],
+    
+    'opponent_removed_accessory':       ['male_removed_accessory', 'female_removed_accessory'],
+    'opponent_removed_minor':           ['male_removed_minor', 'female_removed_minor'],
+    'opponent_removed_major':           ['male_removed_major', 'female_removed_major'],
+    'opponent_chest_is_visible':        ['male_chest_is_visible', 'female_small_chest_is_visible', 'female_medium_chest_is_visible', 'female_large_chest_is_visible'],
+    'female_chest_is_visible':          ['female_small_chest_is_visible', 'female_medium_chest_is_visible', 'female_large_chest_is_visible'],
+    'opponent_crotch_is_visible':       ['female_crotch_is_visible', 'male_small_crotch_is_visible', 'male_medium_crotch_is_visible', 'male_large_crotch_is_visible'],
+    'male_crotch_is_visible':           ['male_small_crotch_is_visible', 'male_medium_crotch_is_visible', 'male_large_crotch_is_visible'],
+    'opponent_start_masturbating':      ['male_start_masturbating', 'female_start_masturbating'],
 
     'opponent_removing_any': [
         'male_removing_accessory',
@@ -1026,6 +1035,9 @@ def csv_to_lineset(dict_reader):
         silent = False
         if ('silent' in row) and (len(row['silent']) > 0):
             silent = (row['silent'].lower() == 'true')
+            
+        if len(row['image']) == 0 and len(row['text']) == 0:
+            continue
 
         for actual_case_tag in parse_case_name(row['case'], row['conditions']):
             cond_set = Case.parse_conditions_set(row['conditions'], actual_case_tag, priority)
