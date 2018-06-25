@@ -405,7 +405,7 @@ function updateBehaviour (player, tag, opp) {
 			
 			// oppHand (priority = 30)
 			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
-				if (opp.hand.strength === oppHand) {
+				if (handStrengthToString(opp.hand.strength) === oppHand) {
 					totalPriority += 30;	// priority
 				} else {
 					continue;
