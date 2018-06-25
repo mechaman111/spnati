@@ -435,17 +435,21 @@ function updateBehaviour (player, tag, opp) {
 			
             // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
-			
-				var j = 0;
-				if (!players.some(function(p) {
-					return p !== opp && p.id === alsoPlaying;
-				})) {
+                var ap = null;
+                for(var j=0;j<players.length;j++) {
+                    if (players[j] !== opp && players[j].id === alsoPlaying) {
+                        ap = players[j];
+                        break;
+                    }
+                }
+                
+				if (!ap) {
 					continue; // failed "alsoPlaying" requirement
 				} else {
 					totalPriority += 100; 	// priority
 
 					if (typeof alsoPlayingStage !== typeof undefined && alsoPlayingStage !== false) {
-						if (inInterval(players[j].stage, alsoPlayingStage)) {
+						if (inInterval(ap.stage, alsoPlayingStage)) {
 							totalPriority += 40;	// priority
 						}
 						else {
@@ -453,7 +457,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
-						if (inInterval(players[j].timeInStage, alsoPlayingTimeInStage)) {
+						if (inInterval(ap.timeInStage, alsoPlayingTimeInStage)) {
 							totalPriority += 15;
 						}
 						else {
@@ -461,7 +465,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
-						if (handStrengthToString(players[j].hand.strength) === alsoPlayingHand)
+						if (handStrengthToString(ap.hand.strength) === alsoPlayingHand)
 						{
 							totalPriority += 5;		// priority
 						}
@@ -471,7 +475,7 @@ function updateBehaviour (player, tag, opp) {
 					}
 					// marker checks have very low priority as they're mainly intended to be used with other target types
 					if (alsoPlayingSaidMarker) {
-						if (alsoPlayingSaidMarker in players[j].markers) {
+						if (alsoPlayingSaidMarker in ap.markers) {
 							totalPriority += 1;
 						}
 						else {
@@ -479,7 +483,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (alsoPlayingNotSaidMarker) {
-						if (!(alsoPlayingNotSaidMarker in players[j].markers)) {
+						if (!(alsoPlayingNotSaidMarker in ap.markers)) {
 							totalPriority += 1;
 						}
 						else {
