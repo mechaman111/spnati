@@ -41,7 +41,7 @@ $gameTable = $('#game-table');
 var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
-var players = [null, null, null, null, null];
+var players = Array(5);
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
@@ -158,7 +158,7 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue(player.xml.find('start'), [PLAYER_NAME], [players[HUMAN_PLAYER].label]);
+		player.state = parseDialogue(player.xml.find('start'), player);
 		loadOpponentWardrobe(player);
 	}
 	player.updateLabel();
@@ -173,7 +173,7 @@ function initPlayerState(player) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
+    var humanPlayer = createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
     
 	/* enable table opacity */
@@ -289,7 +289,7 @@ function resetPlayers () {
 		}
 		timers[i] = 0;
 	}
-	updateAllBehaviours(null, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+	updateAllBehaviours(null, SELECTED);
 }
 
 /************************************************************

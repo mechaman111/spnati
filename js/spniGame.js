@@ -111,7 +111,7 @@ function loadGameScreen () {
     
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] !== null) {
+        if (players[i]) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
             $gameLabels[i].css({"background-color" : clearColour});
@@ -133,7 +133,7 @@ function loadGameScreen () {
     chosenDebug = -1;
     updateDebugState(showDebug);
 
-    updateAllBehaviours(null, GAME_START, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+    updateAllBehaviours(null, GAME_START);
     
     /* set up the visuals */
     updateAllGameVisuals();
@@ -229,12 +229,9 @@ function updateAllGameVisuals () {
  ************************************************************/
 function displayHumanPlayerClothing () {
     /* collect the images */
-    var clothingImages = [];
-	for (var i = 0; i < 8; i++) {
-		if (players[HUMAN_PLAYER].clothing[i]) {
-			clothingImages.push(players[HUMAN_PLAYER].clothing[i].image);
-		}
-	}
+    var clothingImages = players[HUMAN_PLAYER].clothing.map(function(c) {
+		return c.image;
+	});
     
     /* display the remaining clothing items */
     clothingImages.reverse();
@@ -258,25 +255,17 @@ function displayHumanPlayerClothing () {
  ************************************************************/
 function makeAIDecision () {	
 	/* determine the AI's decision */
-	determineAIAction(currentTurn);
+	determineAIAction(players[currentTurn]);
 	
 	/* dull the cards they are trading in */
-	for (var i = 0; i < hands[currentTurn].tradeIns.length; i++) {
-		if (hands[currentTurn].tradeIns[i]) {
+	for (var i = 0; i < players[currentTurn].hand.tradeIns.length; i++) {
+		if (players[currentTurn].hand.tradeIns[i]) {
 			dullCard(currentTurn, i);
 		}
 	}
 
-	/* determine how many cards are being swapped */
-	var swap = 0;
-	for (var i = 0; i < hands[currentTurn].cards.length; i++) {
-		if (hands[currentTurn].tradeIns[i]) {
-			swap++;
-		}
-	}
-	
 	/* update a few hardcoded visuals */
-	updateBehaviour(currentTurn, SWAP_CARDS, [CARDS, PLAYER_NAME], [swap, players[HUMAN_PLAYER].label], null);
+	updateBehaviour(currentTurn, SWAP_CARDS);
 	updateGameVisual(currentTurn);
 	
 	/* wait and implement AI action */
@@ -293,18 +282,16 @@ function implementAIAction () {
 	hideHand(currentTurn);
 	
 	/* update behaviour */
-	determineHand(currentTurn);
-	if (hands[currentTurn].strength == HIGH_CARD) {
-		updateBehaviour(currentTurn, BAD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
-	} else if (hands[currentTurn].strength == PAIR) {
-		updateBehaviour(currentTurn, OKAY_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
+	determineHand(players[currentTurn]);
+	if (players[currentTurn].hand.strength == HIGH_CARD) {
+		updateBehaviour(currentTurn, BAD_HAND);
+	} else if (players[currentTurn].hand.strength == PAIR) {
+		updateBehaviour(currentTurn, OKAY_HAND);
 	} else {
-		updateBehaviour(currentTurn, GOOD_HAND, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-        updateGameVisual(currentTurn);
+		updateBehaviour(currentTurn, GOOD_HAND);
 	}
-	
+	updateGameVisual(currentTurn);
+
 	/* wait and then advance the turn */
 	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
 }
@@ -331,7 +318,7 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            updateBehaviour(currentTurn, players[currentTurn].forfeit[0], [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+            updateBehaviour(currentTurn, players[currentTurn].forfeit[0]);
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -451,11 +438,11 @@ function continueDealPhase () {
 	
 	/* suggest cards to swap, if enabled */
 	if (CARD_SUGGEST && !players[HUMAN_PLAYER].out) {
-		determineAIAction(HUMAN_PLAYER);
+		determineAIAction(players[HUMAN_PLAYER]);
 		
 		/* dull the cards they are trading in */
-		for (var i = 0; i < hands[HUMAN_PLAYER].tradeIns.length; i++) {
-			if (hands[HUMAN_PLAYER].tradeIns[i]) {
+		for (var i = 0; i < players[HUMAN_PLAYER].hand.tradeIns.length; i++) {
+			if (players[HUMAN_PLAYER].hand.tradeIns[i]) {
 				dullCard(HUMAN_PLAYER, i);
 			}
 		}
@@ -492,7 +479,7 @@ function completeRevealPhase () {
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
-            determineHand(i);
+            determineHand(players[i]);
             showHand(i);
         }
     }
@@ -574,7 +561,7 @@ function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
-    if (countClothes(recentLoser)) {
+    if (players[recentLoser].clothing.length > 0) {
 	    $mainButton.html("Strip");
     } else {
 	    $mainButton.html("Masturbate");
@@ -668,7 +655,7 @@ function handleGameOver() {
 		}
 		for (var i = 1; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			updateBehaviour(i, tag, [NAME, PLAYER_NAME], [players[winner].label, players[HUMAN_PLAYER].label], players[winner]);
+			updateBehaviour(i, tag, players[winner]);
 		}
 		
         updateAllGameVisuals();
@@ -698,9 +685,9 @@ function handleGameOver() {
  * The player selected one of their cards.
  ************************************************************/
 function selectCard (card) {
-	hands[HUMAN_PLAYER].tradeIns[card] = !hands[HUMAN_PLAYER].tradeIns[card];
+	players[HUMAN_PLAYER].hand.tradeIns[card] = !players[HUMAN_PLAYER].hand.tradeIns[card];
 	
-	if (hands[HUMAN_PLAYER].tradeIns[card]) {
+	if (players[HUMAN_PLAYER].hand.tradeIns[card]) {
 		dullCard(HUMAN_PLAYER, card);
 	} else {
 		fillCard(HUMAN_PLAYER, card);
@@ -875,7 +862,7 @@ function updateDebugState(show)
     }
     else {
         for (var i = 0; i < $debugButtons.length; i++) {
-            if (players[i] !== null && !players[i].out) {
+            if (players[i] && !players[i].out) {
                 $debugButtons[i].show();
                 $debugButtons[i].removeClass("active");
             }
