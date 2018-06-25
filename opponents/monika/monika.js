@@ -128,7 +128,9 @@ if(!monika) {
             var pl = monika.find_monika_player();
             var glitch_chance_mult = 0;
             
-            if (pl.stage === 3) {
+            if (pl.stage < 3) {
+                glitch_chance_mult = 0;
+            } else if (pl.stage === 3) {
                 glitch_chance_mult = 0.5;
             } else if (pl.stage <= 5) {
                 glitch_chance_mult = 1;

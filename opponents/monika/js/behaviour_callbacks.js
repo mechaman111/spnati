@@ -155,18 +155,18 @@ monika.delayChange = function(text, delay) {
 
 monika.jealousGlitch = function() {
     var slot = monika.find_slot();
-    for(var i=0;i<players.length;i++) {
+    for(var i=1;i<players.length;i++) {
         if(players[i] && i !== slot) {
-            monika.temporaryCharacterGlitch(i, 500, 500);
+            monika.temporaryCharacterGlitch(i, 100, 500);
         }
     }
 }
 
 monika.majorJealousGlitch = function() {
     var slot = monika.find_slot();
-    for(var i=0;i<players.length;i++) {
+    for(var i=1;i<players.length;i++) {
         if(players[i] && i !== slot) {
-            monika.temporaryCharacterGlitch(i, 250, 750);
+            monika.temporaryCharacterGlitch(i, 100, 750);
         }
     }
 }
