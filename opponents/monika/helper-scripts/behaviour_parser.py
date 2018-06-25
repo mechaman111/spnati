@@ -1,5 +1,11 @@
+from __future__ import unicode_literals
+    
 import re
+import sys
 from ordered_xml import OrderedXMLElement
+
+if sys.version_info[0] < 3:
+    from io import open
 
 class ParseError(Exception):
     """Represents an error encountered during parsing."""
@@ -66,14 +72,25 @@ meta_tag_spec = {
     }
 }
 
+listing_tag_spec = {
+    'catalog': {
+        'individuals': {
+            'opponent': None
+        },
+        'groups': {
+            'group': None
+        }
+    }
+}
+
 # skip whitespace and comments
 def _skip_chars(seq, index):
     match = _comment.match(seq, index)
     while match is not None:
-        if(len(match[0]) == 0):
+        if(len(match.group(0)) == 0):
             return index
             
-        index += len(match[0])
+        index += len(match.group(0))
         match = _comment.match(seq, index)
         
     return index
@@ -106,9 +123,9 @@ def parse_attribute_list(seq, elem):
     
     while attr_match is not None:
         try:
-            elem.attributes[attr_match[1]] = attr_match[3]
+            elem.attributes[attr_match.group(1)] = attr_match.group(3)
         except IndexError:
-            elem.attributes[attr_match[1]] = True
+            elem.attributes[attr_match.group(1)] = True
             
         attr_match, index = _consume_re(seq, _attribute, index, True)
         
@@ -124,16 +141,16 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
     if match is None:
         raise ParseError("Expected opening tag", index)
     
-    _tag_start_index = index - len(match[0])
+    _tag_start_index = index - len(match.group(0))
         
-    tag_type = match[1]
+    tag_type = match.group(1)
     if tag_type not in tag_spec:
         raise ParseError("Unexpected tag type '{}'".format(tag_type), index)
     
     elem = OrderedXMLElement(tag_type)
-    if len(match[2]) > 0:
-        parse_attribute_list(match[2], elem)
-    simple_tag_match = (len(match[3]) > 0)
+    if len(match.group(2)) > 0:
+        parse_attribute_list(match.group(2), elem)
+    simple_tag_match = (len(match.group(3)) > 0)
     
     try:
         # For simple tags (for example: <br />) just return the empty element
@@ -148,7 +165,7 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
                 if match is None:
                     raise ParseError("Could not find closing tag for <{:s}> element".format(tag_type), index)
                 
-                elem.text = match[1]
+                elem.text = match.group(1)
             else:
                 # Otherwise, parse this node's child elements.
                 # The tag-close regex here is slightly different from the one above.
@@ -216,3 +233,15 @@ def parse_meta(fname, progress_cb=None):
             return parse(seq, meta_tag_spec, wrapped_progress_cb)
         else:
             return parse(infile.read(), meta_tag_spec)
+            
+def parse_listing(fname, progress_cb=None):
+    with open(fname, encoding='utf-8') as infile:
+        if progress_cb is not None:
+            seq = infile.read()
+            
+            def wrapped_progress_cb(cur_index):
+                return progress_cb(len(seq), cur_index)
+                
+            return parse(seq, listing_tag_spec, wrapped_progress_cb)
+        else:
+            return parse(infile.read(), listing_tag_spec)
