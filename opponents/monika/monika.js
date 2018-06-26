@@ -316,16 +316,14 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            var context = $mainButton.html();
-            
-            if(context === "Talking...") {
+            if(monika.current_ext_dialogue) {
                 monika.extended_dialogue_continue();
             } else {
-                original_advanceGame();
+                original_advanceGame.apply(null, arguments);
             }
         } catch(e) {
             console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-            original_advanceGame();
+            original_advanceGame.apply(null, arguments);
         }
     }
 
