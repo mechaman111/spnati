@@ -437,7 +437,7 @@ function updateBehaviour (player, tag, opp) {
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
                 var ap = null;
                 for(var j=0;j<players.length;j++) {
-                    if (players[j] !== opp && players[j].id === alsoPlaying) {
+                    if (players[j] && players[j] !== opp && players[j].id === alsoPlaying) {
                         ap = players[j];
                         break;
                     }
