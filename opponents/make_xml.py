@@ -76,13 +76,22 @@ def get_situations_from_xml():
 	situations.sort(key=lambda x: (x['group'], x['order']))
 
 #get a set of cases from the dictionaries. First try stage-specific from the character's data, then general entries from the character's data, then stage-specific from the default data, then general cases from the default data.
-def get_cases(player_dictionary, situation, stage):
+def get_cases(player_dictionary, situation):
 	image_formats = ["png", "jpg", "jpeg", "gif", "gifv"] #image file format extensions
 	out_list = []
 	key = situation['key']
-	full_key = "%d-%s" % (stage, key)
 
 	result_list = list()
+	clothes_count = len(player_dictionary["clothes"])
+	def adjust_stage(stage):
+		if stage > 4:
+			return stage - 8 + clothes_count
+		else:
+			return stage
+
+        first_stage = adjust_stage(situation['start'])
+        last_stage = adjust_stage(situation['end'])
+
 	def is_generic_line(line_data):
 		for target_type in all_targets + ['tests', 'conditions']:
 			if target_type in line_data:
@@ -95,32 +104,29 @@ def get_cases(player_dictionary, situation, stage):
 				return True
 		return False
 	
-	have_generic_entry = False
+	need_default = False
 
-	#check character's data
-	if full_key in player_dictionary:
-		result_list += player_dictionary[full_key]
+        for stage in range(first_stage, last_stage + 1):
+	        full_key = "%d-%s" % (stage, key)
+        
+	        #check character's data
+	        if full_key in player_dictionary:
+		        result_list += player_dictionary[full_key]
 		
-		#check if whe have a line that doesn't have any targets or filters
-		#because we need at least one line that doesn't have one
-		if have_generic_line(result_list):
-			have_generic_entry = True
-		
+		        #check if whe have a line that doesn't have any targets or filters
+		        #because we need at least one line that doesn't have one
+		        if not have_generic_line(player_dictionary[full_key]):
+			        need_default = True
+                else:
+                        need_default = True
+
 	if key in player_dictionary:
-		for line_data in player_dictionary[key]:
-			# Don't add completely generic lines to a given stage when a
-			# stage-specific generic case exist for that stage,
-			# but do add targeted lines (because it's too complicated to
-			# look for matching targeted cases and it shouldn't cause any
-			# conflicts with workarounds for incorrectly added defaults).
-			if not is_generic_line(line_data) or not have_generic_entry:
-				result_list.append(line_data)
-
-		if have_generic_line(result_list):
-			have_generic_entry = True
+		result_list += player_dictionary[key]
+		if have_generic_line(player_dictionary[key]):
+			need_default = False
 	
 	#use the default data if there are no player-specific lines available
-	if not have_generic_entry and not situation['optional']:
+	if need_default and not situation['optional']:
 		result_list.append({'key': situation['key'], 'text': situation['text'], 'image': situation['image']})
 		print("Warning: Using default line for key %s, stage %d" % (key, stage))
 	
@@ -131,7 +137,10 @@ def get_cases(player_dictionary, situation, stage):
 		line_data = line_data.copy() #use a copy of the line_data entry
 		#because if we copy it then changing the stage number for images (below) for lines that don't have stage numbers
 		#will use the first stage number that doesn't have a stage-specific version for all the stages where the generic line is used
-	
+
+                if first_stage == last_stage and "stage" in line_data:
+                        del line_data["stage"]
+
 		image = line_data["image"]
 		text = line_data["text"]
 		if len(image) <= 0:
@@ -140,7 +149,13 @@ def get_cases(player_dictionary, situation, stage):
 		
 		#if the image name doesn't include a stage, prepend the current stage
 		if not image[0].isdigit():
-			image = "%d-%s" % (stage, image)
+                        # Try not to use # as placeholder unnecessarily
+                        if "stage" in line_data:
+                                image = "%s-%s" % (line_data["stage"], image)
+                        elif first_stage == last_stage:
+                                image = "%d-%s" % (first_stage, image)
+                        else:
+			        image = "#-%s" % (image)
 		
 		#if no file extension, assume .png
 		if "." not in image:
@@ -169,7 +184,11 @@ def create_case_xml(base_element, lines):
 	#this means that once the case changes, we know that the script won't see that case again
 	#give them a key to define an order
 	for line_data in lines:
-		sort_key = line_data["key"]
+                if "stage" in line_data:
+		        sort_key = str(line_data["stage"])
+                else:
+                        sort_key = '-'
+
 		if "conditions" in line_data:
 			for condition in line_data["conditions"]:
 				sort_key += "," + "count-" + condition[0]
@@ -198,7 +217,9 @@ def create_case_xml(base_element, lines):
 			current_sort = line_data["sort_key"]
 			
 			#make a new <case> element in the xml
-			tag_list = OrderedDict(tag=line_data["key"]) #every case needs a "tag" value that denotes the situation
+			tag_list = OrderedDict()
+                        if "stage" in line_data:
+                                tag_list["stage"] = str(line_data["stage"])
 			
 			for target_type in one_word_targets:
 				if target_type in line_data:
@@ -241,23 +262,6 @@ def create_case_xml(base_element, lines):
 		if "location" in line_data:
 			attrib["location"] = line_data["location"]
 		case_xml_element.subElement("state", line_data["text"], attrib) #add the image and text
-
-#add several values to the XML tree
-#specifically, adds the <case> and <state> elements to a <stage> base_element
-def add_values(base_element, player_dictionary, stage):
-	clothes_count = len(player_dictionary["clothes"])
-	def adjust_stage(stage):
-		if stage > 4:
-			return stage - 8 + clothes_count
-		else:
-			return stage
-
-	for situation in situations:
-		if stage < adjust_stage(situation['start']) or stage > adjust_stage(situation['end']):
-			continue
-		contents = get_cases(player_dictionary, situation, stage)
-		#add the target values, if any
-		create_case_xml(base_element, contents) #add the case element to the XML tree
 
 #write the xml file to the specified filename
 def write_xml(data, filename):
@@ -316,10 +320,13 @@ def write_xml(data, filename):
 	
 	#behaviour
 	bh = o.subElement("behaviour", blank_after=True)
-	for stage in range(0, clothes_count+3):
-		s = bh.subElement("stage", None, {'id': str(stage)}, blank_after=True)
-		add_values(s, data, stage)
-	
+	for situation in situations:
+		contents = get_cases(data, situation)
+                if len(contents):
+                        trig = bh.subElement("trigger", None, {'id': situation['key']})
+		        #add the target values, if any
+		        create_case_xml(trig, contents) #add the case element to the XML tree
+        
 	#endings
 	if "endings" in data:
 		#for each ending
@@ -768,11 +775,16 @@ def read_player_file(filename):
 			#if it starts with a * use the current stage
 			if stg[0] == '*':
 				key = "%d-%s" % (stage, part_key)
+                                line_data["stage"] = stage
 			
 			#negative numbers count from the end. -1 is finished, -2 is masturbating, -3 is nude. -4 is the last layer of clothing, and so on.
 			#using negative numbers assumes that they are after all the clothes entries
 			elif stg[0] == '-' and stg[1:].isdigit():
 				key = "%d-%s" % (stage + 4 + int(stg), part_key)
+                                line_data["stage"] = stage + 4 + int(stg)
+                        else:
+                                line_data["stage"] = stg
+                                
 		else:
 			part_key = key
 		

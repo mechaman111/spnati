@@ -792,15 +792,8 @@ function checkMarker(predicate, self, target, currentOnly) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml, stage) {
-    if (typeof stage === "number") {
-        this.stage = {min: stage, max: stage};
-    } else if (stage) {
-        this.stage = parseInterval(stage);
-    } else {
-        this.stage = parseInterval($xml.attr('stage'));
-    }
-    
+function Case($xml) {
+    this.stage =                    $xml.attr('stage');
     this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
     this.filter =                   $xml.attr("filter");
@@ -875,6 +868,7 @@ function Case($xml, stage) {
         this.priority = this.customPriority;
     } else {
     	this.priority = 0;
+        if (!this.stage)                   this.priority -= 1000;
     	if (this.target)                   this.priority += 300;
     	if (this.filter)                   this.priority += 150;
     	if (this.targetStage)              this.priority += 80;
@@ -1060,7 +1054,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
 
     // stage
     if (this.stage) {
-        if (!inInterval(self.stage, this.stage)) {
+        if (!checkStage(self.stage, this.stage)) {
             return false; // failed "stage" requirement
         }
     }
@@ -1374,6 +1368,12 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
+function checkStage(curStage, stageStr) {
+    return stageStr.split(/\s+/).some(function(s) {
+        return inInterval(curStage, parseInterval(s));
+    });
+}
+
 /************************************************************
  * Updates the behaviour of the given player based on the 
  * provided tag.
@@ -1393,27 +1393,21 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     /* get the AI stage */
     var stageNum = this.stage;
 
-    /* try to find the stage */
-    var stage = null;
-    this.xml.find('behaviour').find('stage').each(function () {
-       if (Number($(this).attr('id')) == stageNum) {
-           stage = $(this);
-       }
-    });
-
-    /* quick check to see if the stage exists */
-    if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tags "+tags);
-        return;
-    }
-
-    /* try to find the tag */
-    var cases = [];
-    $(stage).find('case').each(function () {
-        if (tags.indexOf($(this).attr('tag')) >= 0) {
-            cases.push($(this));
-        }
-    });
+    /* try to find the tags/stage.
+	   .get() returns a simple array with the matched
+	   elements. .map($) converts the individual elements back to
+	   jQuery objects. */
+	var cases = [];
+    var $stage = this.xml.find('behaviour>stage[id=' + stageNum + ']');
+    if ($stage.length) {
+        cases = $stage.children('case').filter(function() {
+            return tags.indexOf($(this).attr('tag')) >= 0;
+        }).get().map($);
+    } else {
+        cases = this.xml.find('behaviour>trigger').filter(function() {
+            return tags.indexOf($(this).attr('id')) >= 0;
+        }).children('case').get().map($);
+	}
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
@@ -1423,11 +1417,11 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
-    var bestMatchPriority = -1;
+    var bestMatchPriority = -1000;
     var volatileMatches = [];
     
     for (var i = 0; i < cases.length; i++) {
-        var curCase = new Case(cases[i], stageNum);
+        var curCase = new Case(cases[i]);
         
         if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
