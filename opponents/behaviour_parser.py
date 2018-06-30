@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+    
 import re
 import sys
 from ordered_xml import OrderedXMLElement
@@ -50,6 +52,36 @@ base_tag_spec = {
         }
     }
 } 
+
+meta_tag_spec = {
+    'opponent': {
+        'enabled': None,
+        'first': None,
+        'last': None,
+        'label': None,
+        'pic': None,
+        'gender': None,
+        'height': None,
+        'from': None,
+        'writer': None,
+        'artist': None,
+        'description': None,
+        'has_ending': None,
+        'layers': None,
+        'tags': { 'tag': None }
+    }
+}
+
+listing_tag_spec = {
+    'catalog': {
+        'individuals': {
+            'opponent': None
+        },
+        'groups': {
+            'group': None
+        }
+    }
+}
 
 # skip whitespace and comments
 def _skip_chars(seq, index):
@@ -155,11 +187,11 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
                 
     return elem, index
 
-def parse(seq, progress_cb=None):
+def parse(seq, tag_spec=base_tag_spec, progress_cb=None):
     _, index = _consume_re(seq, _decl_tag, 0)
     
     try:
-        base_elem, _ = parse_tag(seq, index, base_tag_spec, progress_cb)
+        base_elem, _ = parse_tag(seq, index, tag_spec, progress_cb)
         return base_elem
     except ParseError as e:
         error_index = e.args[1]
@@ -186,6 +218,30 @@ def parse_file(fname, progress_cb=None):
             def wrapped_progress_cb(cur_index):
                 return progress_cb(len(seq), cur_index)
                 
-            return parse(seq, wrapped_progress_cb)
+            return parse(seq, base_tag_spec, wrapped_progress_cb)
         else:
             return parse(infile.read())
+
+def parse_meta(fname, progress_cb=None):
+    with open(fname, encoding='utf-8') as infile:
+        if progress_cb is not None:
+            seq = infile.read()
+            
+            def wrapped_progress_cb(cur_index):
+                return progress_cb(len(seq), cur_index)
+                
+            return parse(seq, meta_tag_spec, wrapped_progress_cb)
+        else:
+            return parse(infile.read(), meta_tag_spec)
+            
+def parse_listing(fname, progress_cb=None):
+    with open(fname, encoding='utf-8') as infile:
+        if progress_cb is not None:
+            seq = infile.read()
+            
+            def wrapped_progress_cb(cur_index):
+                return progress_cb(len(seq), cur_index)
+                
+            return parse(seq, listing_tag_spec, wrapped_progress_cb)
+        else:
+            return parse(infile.read(), listing_tag_spec)

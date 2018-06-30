@@ -177,9 +177,26 @@ function loadOpponentWardrobe (player) {
 /************************************************************
  * Parses the dialogue states of a player, given the case object.
  ************************************************************/
-function parseDialogue (caseObject, replace, content) {
+function parseDialogue (caseObject, self, target) {
     var states = [];
 
+    function substitute(placeholder) {
+        try {
+            switch (placeholder) {
+            case PLAYER_NAME: return players[HUMAN_PLAYER].label;
+            case NAME: return target.label;
+            case CAPITALIZED_NAME: return target.label.initCap();
+            case PROPER_CLOTHING: return (target||self).removedClothing.proper;
+            case LOWERCASE_CLOTHING: return (target||self).removedClothing.lower;
+            case CARDS: /* determine how many cards are being swapped */
+                return self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+            }
+        } catch (ex) {
+            console.log("Invalid substitution caused exception " + ex);
+        }
+        return placeholder;
+    }
+	
 	caseObject.find('state').each(function () {
         var image = $(this).attr('img');
         var dialogue = $(this).html();
@@ -187,16 +204,8 @@ function parseDialogue (caseObject, replace, content) {
         var silent = $(this).attr('silent');
         var marker = $(this).attr('marker');
 
-		if (replace && content) {
-			for (var i = 0; i < replace.length; i++) {
-				if (replace[i] == NAME) {
-					replace.push(CAPITALIZED_NAME);
-					content.push(content[i].initCap());
-				}
-				dialogue = dialogue.split(replace[i]).join(content[i]);
-			}
-		}
-
+        dialogue = dialogue.replace(/~\w+~/g, substitute);
+        
         if (silent !== null && typeof silent !== typeof undefined) {
             silent = true;
         }
@@ -232,7 +241,7 @@ function inInterval (value, interval) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-function updateBehaviour (player, tag, replace, content, opp) {
+function updateBehaviour (player, tag, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
@@ -325,7 +334,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// if none of them fail, then this state is considered for use with a certain priority
 
 			// target (priority = 300)
-			if (opp !== null && typeof target !== typeof undefined && target !== false) {
+			if (opp && typeof target !== typeof undefined && target !== false) {
             target = target;
 				if (target === opp.id) {
 					totalPriority += 300; 	// priority
@@ -336,22 +345,17 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 
 			// filter (priority = 150)
-			if (opp !== null && typeof filter !== typeof undefined && filter !== false) {
+			if (opp && typeof filter !== typeof undefined && filter !== false) {
 				// check against tags
-				var found = false;
-                for (var j = 0; j < opp.tags.length && found === false; j++) {
-                    if (filter === opp.tags[j]) {
-						totalPriority += 150;	// priority
-						found = true;
-                    }
-                }
-				if (found === false) {
+				if (opp.tags.indexOf(filter) >= 0) {
+					totalPriority += 150;	// priority
+				} else {
 					continue;				// failed "filter" requirement
 				}
 			}
 
 			// targetStage (priority = 80)
-			if (opp !== null && typeof targetStage !== typeof undefined && targetStage !== false) {
+			if (opp && typeof targetStage !== typeof undefined && targetStage !== false) {
 				if (inInterval(opp.stage, targetStage)) {
 					totalPriority += 80;		// priority
 				}
@@ -362,7 +366,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (opp !== null && targetSaidMarker) {
+			if (opp && targetSaidMarker) {
 				if (targetSaidMarker in opp.markers) {
 					totalPriority += 1;
 				}
@@ -370,7 +374,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					continue;
 				}
 			}
-			if (opp !== null && targetNotSaidMarker) {
+			if (opp && targetNotSaidMarker) {
 				if (!(targetNotSaidMarker in opp.markers)) {
 					totalPriority += 1;
 				}
@@ -381,7 +385,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// consecutiveLosses (priority = 60)
 			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
-				if (opp !== null) { // if there's a target, look at their losses
+				if (opp) { // if there's a target, look at their losses
 					if (inInterval(opp.consecutiveLosses, lossesInRow)) {
 						totalPriority += 60;
 					}
@@ -400,27 +404,16 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			}
 
 			// oppHand (priority = 30)
-			if (opp !== null && typeof oppHand !== typeof undefined && oppHand !== false) {
-				var failedOppHandReq = false;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (opp === players[q]) {
-						if (handStrengthToString(hands[q].strength) === oppHand) {
-							totalPriority += 30;	// priority
-						}
-						else {
-							failedOppHandReq = true;
-							break;
-						}
-					}
-				}
-				if (failedOppHandReq) {
+			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
+				if (handStrengthToString(opp.hand.strength) === oppHand) {
+					totalPriority += 30;	// priority
+				} else {
 					continue;
 				}
 			}
 
 			// targetTimeInStage (priority = 25)
-			if (opp !== null && typeof targetTimeInStage !== typeof undefined) {
+			if (opp && typeof targetTimeInStage !== typeof undefined) {
 				if (inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
 							   : opp.timeInStage, targetTimeInStage)) {
 					totalPriority += 25;
@@ -432,7 +425,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(hands[player].strength) === hasHand) {
+				if (handStrengthToString(players[player].hand.strength) === hasHand) {
 					totalPriority += 20;		// priority
 				}
 				else {
@@ -442,27 +435,21 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
             // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
+                var ap = null;
+                for(var j=0;j<players.length;j++) {
+                    if (players[j] && players[j] !== opp && players[j].id === alsoPlaying) {
+                        ap = players[j];
+                        break;
+                    }
+                }
+                
+				if (!ap) {
+					continue; // failed "alsoPlaying" requirement
+				} else {
+					totalPriority += 100; 	// priority
 
-				var foundEm = false;
-				var j = 0;
-				for (j = 0; j < players.length && foundEm === false; j++) {
-					if (players[j] !== null && opp !== players[j]) {
-						if (alsoPlaying === players[j].id) {
-							totalPriority += 100; 	// priority
-							foundEm = true;
-                            break;
-						}
-					}
-				}
-
-				if (foundEm === false)
-				{
-					continue;				// failed "alsoPlaying" requirement
-				}
-				else
-				{
 					if (typeof alsoPlayingStage !== typeof undefined && alsoPlayingStage !== false) {
-						if (inInterval(players[j].stage, alsoPlayingStage)) {
+						if (inInterval(ap.stage, alsoPlayingStage)) {
 							totalPriority += 40;	// priority
 						}
 						else {
@@ -470,7 +457,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
-						if (inInterval(players[j].timeInStage, alsoPlayingTimeInStage)) {
+						if (inInterval(ap.timeInStage, alsoPlayingTimeInStage)) {
 							totalPriority += 15;
 						}
 						else {
@@ -478,7 +465,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
-						if (handStrengthToString(hands[j].strength) === alsoPlayingHand)
+						if (handStrengthToString(ap.hand.strength) === alsoPlayingHand)
 						{
 							totalPriority += 5;		// priority
 						}
@@ -488,7 +475,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 					}
 					// marker checks have very low priority as they're mainly intended to be used with other target types
 					if (alsoPlayingSaidMarker) {
-						if (alsoPlayingSaidMarker in players[j].markers) {
+						if (alsoPlayingSaidMarker in ap.markers) {
 							totalPriority += 1;
 						}
 						else {
@@ -496,7 +483,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 						}
 					}
 					if (alsoPlayingNotSaidMarker) {
-						if (!(alsoPlayingNotSaidMarker in players[j].markers)) {
+						if (!(alsoPlayingNotSaidMarker in ap.markers)) {
 							totalPriority += 1;
 						}
 						else {
@@ -511,17 +498,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			for (var j = 0; j < counters.length; j++) {
 				var desiredCount = parseInterval(counters[j].attr('count'));
 				var filterTag = counters[j].attr('filter');
-				var count = 0;
-				for (var q = 0; q < players.length; q++) {
-					if (players[q] !== null && players[q].tags) {
-						for (var t = 0; t < players[q].tags.length; t++) {
-							if (filterTag === players[q].tags[t]) {
-								count++;
-								break;
-							}
-						}
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.tags && p.tags.indexOf(filterTag) >= 0;
+				}).length;
 				if (inInterval(count, desiredCount)) {
 					totalPriority += 10;
 				}
@@ -557,14 +536,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
-				var count = 0;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (players[q] !== null && players[q].gender === eGender.MALE)
-					{
-						count++;
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.gender === eGender.MALE;
+				}).length;
 				if (inInterval(count, totalMales)) {
 					totalPriority += 5;		// priority
 				}
@@ -575,14 +549,9 @@ function updateBehaviour (player, tag, replace, content, opp) {
 
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
-				var count = 0;
-				for (var q = 0; q < players.length; q++)
-				{
-					if (players[q] !== null && players[q].gender === eGender.FEMALE)
-					{
-						count++;
-					}
-				}
+				var count = players.filter(function(p) {
+					return p.gender === eGender.FEMALE;
+				}).length;
 				if (inInterval(count, totalFemales)) {
 					totalPriority += 5;		// priority
 				}
@@ -604,12 +573,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
 			// totalExposed (priority = 4)
 			if (typeof totalExposed !== typeof undefined) {
 				var count = 0;
-				for (var q = 0; q < players.length; q++) {
-					if (players[q] && !!players[q].exposed) {
-						count++;
-					}
-				}
-				if (inInterval(count, totalExposed)) {
+				if (inInterval(getNumPlayersInStage(STAGE_EXPOSED), totalExposed)) {
 					totalPriority += 4 + totalExposed.max; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
@@ -689,7 +653,7 @@ function updateBehaviour (player, tag, replace, content, opp) {
         if (bestMatch.length > 0) {
 			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
-            players[player].state = parseDialogue(bestMatch, replace, content);
+            players[player].state = parseDialogue(bestMatch, players[player], opp);
             return true;
         }
         console.log("-------------------------------------");
@@ -701,10 +665,10 @@ function updateBehaviour (player, tag, replace, content, opp) {
  * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
-function updateAllBehaviours (player, tag, replace, content, opp) {
+function updateAllBehaviours (player, tag, opp) {
 	for (i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
-			updateBehaviour(i, tag, replace, content, opp);
+			updateBehaviour(i, tag, opp);
 		}
 	}
 }

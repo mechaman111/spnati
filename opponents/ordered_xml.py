@@ -1,16 +1,22 @@
+from __future__ import unicode_literals
+    
 from collections import OrderedDict
 
 INDENT = '    '
 
 class OrderedXMLElement(object):
     """Represents an XML element with an ordered set of attributes and either child elements or raw text within."""
-    def __init__(self, type):
+    def __init__(self, type, init_text=None, init_attrs=None):
         super(OrderedXMLElement, self).__init__()
         
         self.type = type
-        self.attributes = OrderedDict()
         self.children = []
-        self.text = None
+        self.text = init_text
+        
+        if init_attrs is not None:
+            self.attributes = OrderedDict(init_attrs)
+        else:
+            self.attributes = OrderedDict()
         
     def find(self, tag):
         for child in self.children:

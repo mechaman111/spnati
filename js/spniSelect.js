@@ -182,8 +182,8 @@ var groupCreditsShown = false;
 /* consistence variables */
 var selectedSlot = 0;
 var individualSlot = 0;
-var shownIndividuals = [null, null, null, null];
-var shownGroup = [null, null, null, null];
+var shownIndividuals = Array(4);
+var shownGroup = Array(4);
 var randomLock = false;
 
 /**********************************************************************
@@ -374,7 +374,7 @@ function updateIndividualSelectScreen () {
 				$individualButtons[index].attr('disabled', true);
 			}
 		} else {
-			shownIndividuals[index] = null;
+			delete shownIndividuals[index];
 
 			$individualNameLabels[index].html("");
 			$individualPrefersLabels[index].html("");
@@ -448,7 +448,7 @@ function updateGroupSelectScreen () {
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
 			$groupImages[i].show();
 		} else {
-			shownGroup[i] = null;
+			delete shownGroup[i];
 
 			$groupNameLabels[i].html("");
 			$groupPrefersLabels[i].html("");
@@ -606,7 +606,7 @@ function selectOpponentSlot (slot) {
 		screenTransition($selectScreen, $individualSelectScreen);
     } else {
         /* remove the opponent that's there */
-        players[slot] = null;
+        delete players[slot];
         updateSelectionVisuals();
     }
 }
@@ -752,7 +752,7 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-        players[i] = null;
+        delete players[i];
     }
     updateSelectionVisuals();
 }
@@ -792,8 +792,8 @@ function selectIndividualOpponent (slot) {
 function individualScreenCallback (playerObject, slot) {
     players[selectedSlot] = playerObject;
     players[selectedSlot].current = 0;
-	updateBehaviour(selectedSlot, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
-    
+	updateBehaviour(selectedSlot, SELECTED);
+
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 	updateSelectionVisuals();
@@ -868,7 +868,7 @@ function groupScreenCallback (playerObject, slot) {
 	console.log(slot +" "+playerObject);
     players[slot] = playerObject;
     players[slot].current = 0;
-	updateBehaviour(slot, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+	updateBehaviour(slot, SELECTED);
 
 	updateSelectionVisuals();
 
@@ -1056,7 +1056,7 @@ function updateRandomSelection (playerObject) {
     for (var i = 0; i < players.length; i++) {
         if (!players[i]) {
             players[i] = playerObject;
-            updateBehaviour(i, SELECTED, [PLAYER_NAME], [players[HUMAN_PLAYER].label], null);
+            updateBehaviour(i, SELECTED);
             break;
         }
     }

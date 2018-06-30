@@ -63,20 +63,20 @@ function startMasturbation (player) {
 	/* update behaviour */
 	if (player == HUMAN_PLAYER) {
 		if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
+			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING, players[HUMAN_PLAYER]);
 		} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
-			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[HUMAN_PLAYER]);
+			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING, players[HUMAN_PLAYER]);
 		}
 		$gameClothingLabel.html("You're Masturbating...");
         $gamePlayerCountdown.show();
 		setForfeitTimer(player);
 	} else {
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+			updateAllBehaviours(player, MALE_START_MASTURBATING, players[player]);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_START_MASTURBATING,[NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+			updateAllBehaviours(player, FEMALE_START_MASTURBATING, players[player]);
 		}
-		updateBehaviour(player, PLAYER_START_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
+		updateBehaviour(player, PLAYER_START_MASTURBATING);
 		setForfeitTimer(player);
 	}
 	updateAllGameVisuals();
@@ -127,7 +127,7 @@ function tickForfeitTimers (context) {
                 players[i].forfeit = [PLAYER_FINISHING_MASTURBATING, CAN_SPEAK];
 
                 /* show them cumming */
-                updateBehaviour(i, PLAYER_FINISHING_MASTURBATING, [NAME, PLAYER_NAME], [players[i].label, players[HUMAN_PLAYER].label], null);
+                updateBehaviour(i, PLAYER_FINISHING_MASTURBATING);
                 updateGameVisual(i);
 
                 /* trigger the callback */
@@ -158,7 +158,7 @@ function tickForfeitTimers (context) {
 				if (randomChance > timers[i]-1) {
 					/* this player is now heavily masturbating */
 					players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-					updateBehaviour(i, PLAYER_HEAVY_MASTURBATING, [NAME, PLAYER_NAME], [players[i].label, players[HUMAN_PLAYER].label], null);
+					updateBehaviour(i, PLAYER_HEAVY_MASTURBATING);
 					updateGameVisual(i);
 				}
 			}
@@ -171,8 +171,10 @@ function tickForfeitTimers (context) {
 		&& ((context == "Deal" && players[HUMAN_PLAYER].out) || context == "Exchange" || context.substr(0, 4) == "Wait")) {
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 1; i < players.length; i++) {
-			updateBehaviour(i, (i == playerToShow) ? players[i].forfeit[0] : (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
-							[NAME, PLAYER_NAME], [players[playerToShow].label, players[HUMAN_PLAYER].label], players[playerToShow]);
+			updateBehaviour(i,
+							(i == playerToShow) ? players[i].forfeit[0]
+							: (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
+							players[playerToShow]);
 		}
 		updateAllGameVisuals();
 	}
@@ -193,14 +195,14 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 
 	/* update other player dialogue */
 	if (players[player].gender == eGender.MALE) {
-		updateAllBehaviours(player, MALE_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+		updateAllBehaviours(player, MALE_FINISHED_MASTURBATING, players[player]);
 	} else if (players[player].gender == eGender.FEMALE) {
-		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], players[player]);
+		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING, players[player]);
 	}
 	
 	/* update their dialogue */
 	if (player != HUMAN_PLAYER) {
-		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING, [NAME, PLAYER_NAME], [players[player].label, players[HUMAN_PLAYER].label], null);
+		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING);
 		
 	}
 	if (savedContext !== "Continue...") {
