@@ -18,9 +18,15 @@ import time
 from behaviour_parser import parse_file, parse_meta
 from ordered_xml import OrderedXMLElement
 
-VERSION = '0.14.2-alpha'  # will attempt to follow semver if possible
+VERSION = '0.15.1-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
+
+_default_opponents_dir = None
+
+def config_default_opponents_dir(d):
+    global _default_opponents_dir
+    _default_opponents_dir = d
 
 def generate_comment():
     return WARNING_COMMENT.format(VERSION, time.strftime(COMMENT_TIME_FORMAT))
@@ -51,6 +57,11 @@ def format_interval(interval):
 
 __xml_cache = {}
 def get_target_xml(target, opponents_dir=None):
+    global _default_opponents_dir
+    if _default_opponents_dir is not None and opponents_dir is None:
+        if osp.basename(osp.abspath(_default_opponents_dir)) == 'opponents':
+            opponents_dir = osp.abspath(_default_opponents_dir)
+        
     if opponents_dir is None:
         # try to find the main opponents directory
         if osp.basename(os.getcwd()) == 'opponents':
