@@ -182,19 +182,10 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	backup_list = None
 	
 	#use the default data if there are no player-specific lines available
-	if full_key in default_dictionary:
-		backup_list = default_dictionary[full_key]
-		if not have_generic_entry:
-			result_list += backup_list
-			if have_generic_line():
-				have_generic_entry = True
-		
-	elif key in default_dictionary:
+	if key in default_dictionary:
 		backup_list = default_dictionary[key]
 		if not have_generic_entry:
 			result_list += backup_list
-			if have_generic_line():
-				have_generic_entry = True
 	
 	#debug
 	#if not using_player:
