@@ -145,20 +145,18 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	full_key = "%d-%s" % (stage, key)
 	
 	result_list = list()
+
+        def is_generic_line(line_data):
+	        for target_type in all_targets:
+			if target_type in line_data:
+				return False
+                return True
 	
-	def have_generic_line():
-		for line_data in result_list:
-			has_target = False
-			for target_type in all_targets:
-				if target_type in line_data:
-					has_target = True
-					break
-			if not has_target:
-				return True
-		#for line_data in result_list:
-		#	if "target" not in line_data and "filter" not in line_data and "targetstage" not in line_data:
-		#		return True
-		return False
+	def have_generic_line(lines):
+		for line_data in lines:
+                        if is_generic_line(line_data):
+                                return True
+                return False
 	
 	using_player = False
 	have_generic_entry = False
@@ -169,13 +167,21 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 		
 		#check if whe have a line that doesn't have any targets or filters
 		#because we need at least one line that doesn't have one
-		if have_generic_line():
+		if have_generic_line(result_list):
 			have_generic_entry = True
 			using_player = True
 		
-	if (not have_generic_entry) and key in player_dictionary:
-		result_list += player_dictionary[key]
-		if have_generic_line():
+	if key in player_dictionary:
+                for line_data in player_dictionary[key]:
+                        # Don't add completely generic lines to a given stage when a
+                        # stage-specific generic case exist for that stage,
+                        # but do add targeted lines (because it's too complicated to
+                        # look for matching targeted cases and it shouldn't cause any
+                        # conflicts with workarounds for incorrectly added defaults).
+                        if not is_generic_line(line_data) or not have_generic_entry:
+		                result_list.append(line_data)
+
+		if have_generic_line(result_list):
 			have_generic_entry = True
 			using_player = True
 	
