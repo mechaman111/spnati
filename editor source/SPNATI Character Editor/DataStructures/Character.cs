@@ -39,7 +39,27 @@ namespace SPNATI_Character_Editor
 		public string LastName;
 
 		[XmlElement("label")]
-		public string Label;
+		public List<StageSpecificValue> Labels;
+
+		[XmlIgnore]
+		public string Label // Compatibility property
+		{
+			get {
+				return Labels.Find(l => l.Stage == 0)?.Value;
+			}
+			set
+			{
+				StageSpecificValue s0lbl = Labels.Find(l => l.Stage == 0);
+				if (s0lbl != null)
+				{
+					s0lbl.Value = value;
+				}
+				else
+				{
+					Labels.Add(new StageSpecificValue(0, value));
+				}
+			}
+		}
 
 		[XmlElement("gender")]
 		public string Gender;
@@ -52,7 +72,7 @@ namespace SPNATI_Character_Editor
 
 		[XmlNewLine]
 		[XmlElement("intelligence")]
-		public List<Intelligence> Intelligence;
+		public List<StageSpecificValue> Intelligence;
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
@@ -82,10 +102,10 @@ namespace SPNATI_Character_Editor
 		{
 			FirstName = "New";
 			LastName = "Character";
-			Label = "Opponent";
+			Labels = new List<StageSpecificValue>();
 			Gender = "female";
 			Size = "medium";
-			Intelligence = new List<Intelligence>();
+			Intelligence = new List<StageSpecificValue>();
 			Stamina = 15;
 			Tags = new List<string>();
 			Metadata = new Metadata();
@@ -102,11 +122,11 @@ namespace SPNATI_Character_Editor
 		{
 			FirstName = "";
 			LastName = "";
-			Label = "";
+			Labels.Clear();
 			Gender = "";
 			Size = "";
 			Behavior = new Behaviour();
-			Intelligence = new List<Intelligence>();
+			Intelligence = new List<StageSpecificValue>();
 			Stamina = 15;
 			Tags.Clear();
 			Metadata = new Metadata();
@@ -591,7 +611,7 @@ namespace SPNATI_Character_Editor
 		MoveDown
 	}
 
-	public class Intelligence
+	public class StageSpecificValue
 	{
 		/// <summary>
 		/// Stages this intelligence begins at
@@ -604,16 +624,16 @@ namespace SPNATI_Character_Editor
 		/// Intelligence level
 		/// </summary>
 		[XmlText]
-		public string Level;
+		public string Value;
 
-		public Intelligence()
+		public StageSpecificValue()
 		{
 		}
 
-		public Intelligence(int stage, string level)
+		public StageSpecificValue(int stage, string value)
 		{
 			Stage = stage;
-			Level = level;
+			Value = value;
 		}
 	}
 
