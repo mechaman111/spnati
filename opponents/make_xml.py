@@ -385,7 +385,10 @@ def write_xml(data, filename):
 	for stage in range(0, clothes_count):
 		s = ET.SubElement(bh, "stage", id=str(stage))
 		add_values(s, data, [main_dict, plyr_dict, strp_dict], stage)
-	
+		if stage == 0:
+			for el in s.findall("./case[@tag='stripped']"):
+				s.remove(el)
+
 	#nude stage
 	stage += 1
 	s = ET.SubElement(bh, "stage", id=str(stage))
@@ -395,11 +398,15 @@ def write_xml(data, filename):
 	stage += 1
 	s = ET.SubElement(bh, "stage", id=str(stage))
 	add_values(s, data, [main_dict, mstb_dict], stage)
+	for el in s.findall("./case[@tag='game_over_victory']"):
+		s.remove(el)
 			
 	#finished stage
 	stage += 1
 	s = ET.SubElement(bh, "stage", id=str(stage))
 	add_values(s, data, [main_dict, fnsh_dict], stage)
+	for el in s.findall("./case[@tag='game_over_victory']"):
+		s.remove(el)
 	
 	#endings
 	if "endings" in data:
