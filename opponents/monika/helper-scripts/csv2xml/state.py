@@ -1,8 +1,9 @@
 import os
 import os.path as osp
 import re
-from .ordered_xml import OrderedXMLElement
 
+from .ordered_xml import OrderedXMLElement
+from . import utils
 
 class State(object):
     def __init__(self, text, img, marker=None, silent=False):
@@ -59,9 +60,9 @@ class State(object):
         # assume all images are PNG files for now because:
         # - I am lazy
         # - this is meant for internal use only
-        image = '{:d}-{:s}.png'.format(int(stage), self.image)
+        image = utils.find_image(self.image, int(stage))
 
-        if not osp.exists(osp.join(os.getcwd(), image)):
+        if not osp.exists(utils.get_image_path(image)):
             print("Warning: image {} does not exist! (Stage {}, linetext={})".format(image, stage, self.text))
 
         elem.attributes['img'] = image
