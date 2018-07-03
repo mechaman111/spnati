@@ -1,6 +1,14 @@
+from .behaviour_parser import parse_file
 from .ordered_xml import OrderedXMLElement
 from .case import Case
+from .state import State
 from .stage import Stage
+
+
+def parse_xml_to_lineset(fname):
+    opponent_elem = parse_file(fname)
+    return xml_to_lineset(opponent_elem)
+    
 
 def xml_to_lineset(opponent_elem):
     # cases maps case condition sets to other dictionaries.

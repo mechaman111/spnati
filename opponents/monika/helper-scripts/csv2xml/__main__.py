@@ -9,52 +9,38 @@ if sys.version_info[0] < 3:
     from io import open
 
 import csv
-from collections import OrderedDict
 import os
 import os.path as osp
-import time
+import argparse
 
-from .behaviour_parser import parse_file, parse_meta
-from .ordered_xml import OrderedXMLElement
-from .opponent import Opponent
-from .xml_format import xml_to_lineset, lineset_to_xml
-from .csv_format import csv_to_lineset, lineset_to_csv
-from .utils import get_unique_line_count
+import csv2xml as c2x
+import csv2xml.behaviour_parser as bp
 
-VERSION = '0.16.0-alpha'  # will attempt to follow semver if possible
-COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
-WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
+def main():
+    parser = argparse.ArgumentParser(description='Converts SPNATI behaviour files between .xml and .csv formats.')
+    parser.add_argument('--opponent-dir', '-d', default=os.getcwd(), help="Path to SPNATI's opponents/ directory. Defaults to the current working directory.")
+    parser.add_argument('infile', help='Input file to process.')
+    parser.add_argument('outfile', help='Output file to write to.')
+    args = parser.parse_args()
 
-def generate_comment():
-    return WARNING_COMMENT.format(VERSION, time.strftime(COMMENT_TIME_FORMAT))
+    c2x.config_default_opponents_dir(args.opponent_dir)
 
-def parse_xml_to_lineset(fname):
-    opponent_elem = parse_file(fname)
-    return xml_to_lineset(opponent_elem)
-
-if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print("USAGE: python csv2xml.py [infile(.csv|.xml)] [outfile(.csv|.xml)]")
-
-    infile = sys.argv[1]
-    outfile = sys.argv[2]
-
-    inroot, inext = osp.splitext(infile)
-    outroot, outext = osp.splitext(outfile)
+    inroot, inext = osp.splitext(args.infile)
+    outroot, outext = osp.splitext(args.outfile)
 
     print("Reading input file...")
     if inext == '.xml':
-        opponent_elem = parse_file(infile)
-        meta_elem = parse_meta(osp.join(osp.dirname(infile), 'meta.xml'))
+        opponent_elem = bp.parse_file(args.infile)
+        meta_elem = bp.parse_meta(osp.join(osp.dirname(args.infile), 'meta.xml'))
 
-        opponent_meta = Opponent.from_xml(opponent_elem, meta_elem)
-        lineset = xml_to_lineset(opponent_elem)
+        opponent_meta = c2x.Opponent.from_xml(opponent_elem, meta_elem)
+        lineset = c2x.xml_to_lineset(opponent_elem)
     elif inext == '.csv':
-        with open(infile, newline='', encoding='utf-8') as f:
+        with open(args.infile, newline='', encoding='utf-8') as f:
             reader = csv.DictReader(f)
-            lineset, opponent_meta = csv_to_lineset(reader)
+            lineset, opponent_meta = c2x.csv_to_lineset(reader)
 
-    unique_lines, unique_targeted_lines, num_cases, num_targeted_cases = get_unique_line_count(lineset)
+    unique_lines, unique_targeted_lines, num_cases, num_targeted_cases = c2x.get_unique_line_count(lineset)
 
     print("Statistics:")
     print("Unique Lines: {}".format(unique_lines))
@@ -67,13 +53,13 @@ if __name__ == '__main__':
         opponent_elem = opponent_meta.to_xml()
         meta_elem = opponent_meta.to_meta_xml()
 
-        behaviour_elem, start_elem = lineset_to_xml(lineset)
+        behaviour_elem, start_elem = c2x.lineset_to_xml(lineset)
         opponent_elem.children.insert(-1, start_elem)
         opponent_elem.children.append(behaviour_elem)
 
-        with open(outfile, 'w', encoding='utf-8') as f:
+        with open(args.outfile, 'w', encoding='utf-8') as f:
             f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
-            f.write('<!-- '+generate_comment()+' -->\n\n')
+            f.write('<!-- '+c2x.generate_comment()+' -->\n\n')
             f.write('<!--\n')
             f.write('    File Statistics:\n')
             f.write('    Unique Lines: {}\n'.format(unique_lines))
@@ -83,13 +69,13 @@ if __name__ == '__main__':
             f.write('-->\n\n'.format(num_targeted_cases))
             f.write(opponent_elem.serialize())
 
-        with open(osp.join(osp.dirname(outfile), 'meta.xml'), 'w', encoding='utf-8') as meta_f:
+        with open(osp.join(osp.dirname(args.outfile), 'meta.xml'), 'w', encoding='utf-8') as meta_f:
             meta_f.write("<?xml version='1.0' encoding='UTF-8'?>\n")
-            meta_f.write('<!-- '+generate_comment()+' -->\n')
+            meta_f.write('<!-- '+c2x.generate_comment()+' -->\n')
             meta_f.write(meta_elem.serialize())
 
     elif outext == '.csv':
-        with open(outfile, 'w', newline='', encoding='utf-8') as f:
+        with open(args.outfile, 'w', newline='', encoding='utf-8') as f:
             fieldnames = [
                 'stage',
                 'case',
@@ -103,10 +89,13 @@ if __name__ == '__main__':
 
             writer = csv.DictWriter(f, fieldnames, restval='')
             writer.writeheader()
-            writer.writerow({'stage': 'comment', 'text': generate_comment()})
+            writer.writerow({'stage': 'comment', 'text': c2x.generate_comment()})
             writer.writerow({'stage': 'comment', 'text': 'File Statistics:'})
             writer.writerow({'stage': 'comment', 'text': 'Unique Lines: {}'.format(unique_lines)})
             writer.writerow({'stage': 'comment', 'text': 'Unique Targeted Lines: {}'.format(unique_targeted_lines)})
             writer.writerow({'stage': 'comment', 'text': 'Total Cases: {}'.format(num_cases)})
             writer.writerow({'stage': 'comment', 'text': 'Total Targeted Cases: {}'.format(num_targeted_cases)})
-            lineset_to_csv(lineset, opponent_meta, writer)
+            c2x.lineset_to_csv(lineset, opponent_meta, writer)
+            
+if __name__ == '__main__':
+    main()

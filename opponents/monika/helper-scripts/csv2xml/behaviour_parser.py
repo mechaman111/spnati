@@ -135,8 +135,6 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
     if progress_cb is not None:
         progress_cb(index)
     
-    _start_index = index
-    
     match, index = _consume_re(seq, _tag_start, index)
     if match is None:
         raise ParseError("Expected opening tag", index)

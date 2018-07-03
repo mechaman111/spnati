@@ -1,4 +1,6 @@
+import os
 import os.path as osp
+import re
 from .ordered_xml import OrderedXMLElement
 
 

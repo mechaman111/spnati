@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from .ordered_xml import OrderedXMLElement
 
 

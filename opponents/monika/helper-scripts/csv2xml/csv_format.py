@@ -1,7 +1,9 @@
-import csv
 from collections import OrderedDict
 
-from .case import Case
+from .case import Case, parse_case_name
+from .state import State
+from .opponent import Opponent
+from .stage import parse_stage_selector, format_stage_set
 
 
 def csv_to_lineset(dict_reader):
@@ -69,7 +71,7 @@ def csv_to_lineset(dict_reader):
         silent = False
         if ('silent' in row) and (len(row['silent']) > 0):
             silent = (row['silent'].lower() == 'true')
-            
+
         if len(row['image']) == 0 and len(row['text']) == 0:
             continue
 
@@ -160,7 +162,7 @@ def lineset_to_csv(lineset, opponent_meta, dict_writer):
                     'stage': formatted_stage_set,
                     'case': case.tag,
                     'conditions': formatted_conditions,
-                    'priority': case.priority,
+                    'priority': priority,
                     'image': state.image,
                     'text': state.text,
                     'marker': state.marker,

@@ -1,3 +1,14 @@
+import time
+
+VERSION = '0.16.0-alpha'  # will attempt to follow semver if possible
+COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
+WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
+
+
+def generate_comment():
+    return WARNING_COMMENT.format(VERSION, time.strftime(COMMENT_TIME_FORMAT))
+
+
 def parse_interval(val):
     interval_tuple = val.split('-')
 

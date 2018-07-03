@@ -1,6 +1,7 @@
 import re
-from .utils import *
+from .utils import format_interval
 from .case import Case
+from .ordered_xml import OrderedXMLElement
 
 
 def parse_stage_name(name, opponent):

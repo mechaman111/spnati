@@ -1,7 +1,7 @@
 import os
 import os.path as osp
 
-import .behaviour_parser as bp
+from . import behaviour_parser as bp
 
 
 __xml_cache = {}
@@ -17,8 +17,8 @@ def get_target_xml(target, opponents_dir=None):
     global __default_opponents_dir, __xml_cache
     
     if __default_opponents_dir is not None and opponents_dir is None:
-        if osp.basename(osp.abspath(_default_opponents_dir)) == 'opponents':
-            opponents_dir = osp.abspath(_default_opponents_dir)
+        if osp.basename(osp.abspath(__default_opponents_dir)) == 'opponents':
+            opponents_dir = osp.abspath(__default_opponents_dir)
         
     if opponents_dir is None:
         # try to find the main opponents directory
@@ -34,6 +34,11 @@ def get_target_xml(target, opponents_dir=None):
         __xml_cache[target] = bp.parse_file(target_xml_file)
 
     return __xml_cache[target]
+    
+
+def get_target_gender(target_id):
+    target_elem = get_target_xml(target_id)
+    return target_elem.find('gender').text.strip().lower()
 
 
 def get_target_stripping_case(target, stage):

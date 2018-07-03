@@ -1,7 +1,9 @@
 import re
-from .utils import *
+from .utils import parse_interval, format_interval
+from .opponent_utils import get_target_gender, get_target_stripping_case, get_target_stripped_case
 from .state import State
 from .ordered_xml import OrderedXMLElement
+
 
 class Case(object):
     INTERVAL_CONDITIONS = [
@@ -306,8 +308,7 @@ def parse_case_name(case_tags, cond_str):
             tag_list.extend(simple_pseudo_cases[name])
         elif name == 'npc_must_strip' or name == 'opponent_must_strip':
             if target_id is not None:
-                target_elem = get_target_xml(target_id)
-                gender = target_elem.find('gender').text.strip().lower()
+                gender = get_target_gender(target_id)
 
                 if gender == 'female' or gender == 'male':
                     tag_list.append(gender+'_must_strip')
