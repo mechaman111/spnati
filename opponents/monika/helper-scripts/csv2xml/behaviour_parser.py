@@ -2,7 +2,7 @@ from __future__ import unicode_literals
     
 import re
 import sys
-from ordered_xml import OrderedXMLElement
+from .ordered_xml import OrderedXMLElement
 
 if sys.version_info[0] < 3:
     from io import open
