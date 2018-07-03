@@ -15,6 +15,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("tag")]
 		public string Tag;
 
+		[XmlAttribute("optional")]
+		public bool Optional;
+
 		[XmlAttribute("start")]
 		public int StartStage;
 

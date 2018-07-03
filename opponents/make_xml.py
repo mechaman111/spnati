@@ -807,7 +807,7 @@ def make_meta_xml(data, filename):
 	enabled = "true" if "enabled" not in data or data["enabled"] == "true" else "false"
 	ET.SubElement(o, "enabled").text = enabled
 	
-	values = ["first","last","label","pic","gender","height","from","writer","artist","description","has_ending","layers","release"]
+	values = ["first","last","label","pic","gender","height","from","writer","artist","description","has_ending","layers","character_tags","release"]
 	
 	for value in values:
 		content = ""
@@ -828,8 +828,14 @@ def make_meta_xml(data, filename):
 		if value == "has_ending":
 			#say whether or not they have an ending based on whether they have any ending data or not
 			content = "true" if "endings" in data else "false"
-			
-		ET.SubElement(o, value).text = content
+
+                if value == "character_tags":
+                        tags_elem = ET.SubElement(o, "tags")
+                        character_tags = set(data["character_tags"])
+	                for tag in character_tags:
+		                ET.SubElement(tags_elem, "tag").text = tag
+		else:
+		        ET.SubElement(o, value).text = content
 		
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
 	

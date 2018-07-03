@@ -1,5 +1,6 @@
 ﻿using SPNATI_Character_Editor.IO;
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -53,6 +54,10 @@ namespace SPNATI_Character_Editor
 		[XmlElement("layers")]
 		public int Layers;
 
+		[XmlArray("tags")]
+		[XmlArrayItem("tag")]
+		public List<string> Tags;
+
 		[XmlElement("release")]
 		public string ReleaseNumber;
 
@@ -77,6 +82,7 @@ namespace SPNATI_Character_Editor
 			Gender = c.Gender;
 			Layers = c.Layers;
 			HasEnding = c.Endings.Count > 0;
+			Tags = c.Tags;
 		}
 
 		public void OnBeforeSerialize()

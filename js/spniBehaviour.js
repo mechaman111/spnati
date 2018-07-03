@@ -135,7 +135,7 @@ function loadBehaviour (id, callFunction, slot) {
             var intelligence = $xml.find('intelligence');
             
             var tags = $xml.find('tags');
-            var tagsArray = [];
+            var tagsArray = [id];
             if (typeof tags !== typeof undefined && tags !== false) {
                 $(tags).find('tag').each(function () {
                     tagsArray.push($(this).text());
@@ -145,7 +145,11 @@ function loadBehaviour (id, callFunction, slot) {
             var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, $xml);
             
 			callFunction(newPlayer, slot);
-		}
+		},
+        error: function(err) {
+            console.log("Failed reading \""+id+"\" behaviour.xml");
+            delete players[slot];
+        }
 	});
 }
 
