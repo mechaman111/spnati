@@ -72,23 +72,26 @@ def format_interval(interval):
         return str(low)+'-'+str(hi)
 
 
+def all_cases(lineset):
+    for case_list in lineset.values():
+        for case in case_list:
+            yield case
+            
+
 def get_unique_line_count(lineset):
     unique_lines = set()
     unique_targeted_lines = set()
     n_cases = 0
     n_targeted_cases = 0
 
-    for stage_set, cases in lineset.items():
-        for case in cases:
-            case_targeted = (len(case.conditions) > 0) or (len(case.counters) > 0)
+    for case in all_cases(lineset):
+        for state in case.states:
+            unique_lines.add(state.to_tuple())
+            if case.is_targeted():
+                unique_targeted_lines.add(state.to_tuple())
 
-            for state in case.states:
-                unique_lines.add(state.to_tuple())
-                if case_targeted:
-                    unique_targeted_lines.add(state.to_tuple())
-
-            n_cases += 1
-            if case_targeted:
-                n_targeted_cases += 1
+        n_cases += 1
+        if case_targeted:
+            n_targeted_cases += 1
 
     return len(unique_lines), len(unique_targeted_lines), n_cases, n_targeted_cases

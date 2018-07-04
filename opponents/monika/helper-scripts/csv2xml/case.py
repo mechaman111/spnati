@@ -168,7 +168,12 @@ class Case(object):
             return self.conditions_set() == other
         else:
             raise NotImplementedError()
+            
+    def is_conditional(self):
+        return (len(self.conditions) > 0) or (len(self.counters) > 0)
 
+    def is_targeted(self):
+        return ('filter' in self.conditions) or ('alsoPlaying' in self.conditions) or ('target' in self.conditions) or (len(self.counters) > 0)
 
     @classmethod
     def from_condition_set(cls, cond_set, states=None):

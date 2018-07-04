@@ -68,6 +68,7 @@ meta_tag_spec = {
         'description': None,
         'has_ending': None,
         'layers': None,
+        'release': None,
         'tags': { 'tag': None }
     }
 }
