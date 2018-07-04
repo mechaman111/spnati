@@ -67,7 +67,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("notSaidMarker")]
 		public string NotSaidMarker;
 
-		[XmlElement("priority")]
+		[XmlAttribute("priority")]
 		public string CustomPriority;
 
 		[XmlAttribute("saidMarker")]

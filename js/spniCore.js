@@ -427,12 +427,15 @@ function autoResizeFont ()
 		if (h > (3/4) * w) {
 			h = (3/4) * w;
 		} else {
-			w = Math.round((4 * h) / 3);
+			w = 4 * h / 3;
 		}
-		if (backgroundImage.height > (3/4) * backgroundImage.width) {
-			$("body").css("background-size", "auto " + Math.round(1.12 * h) + "px");
+		var ar = backgroundImage.width / backgroundImage.height;
+		if (ar > 4/3) {
+			var scale = Math.sqrt(16/9 / ar);
+			$("body").css("background-size", "auto " + Math.round(scale * h) + "px");
 		} else {
-			$("body").css("background-size", Math.round(1.12 * w) + "px auto");
+			var scale = Math.sqrt(ar);
+			$("body").css("background-size", Math.round(scale * w) + "px auto");
 		}
 	}
 	/* set up future resizing */
