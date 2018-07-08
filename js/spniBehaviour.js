@@ -118,10 +118,10 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
  * The callFunction parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-function loadBehaviour (id, callFunction, slot) {
+function loadBehaviour (opponent, callFunction, slot) {
 	$.ajax({
         type: "GET",
-		url: 'opponents/' + id + "/behaviour.xml",
+		url: 'opponents/' + opponent.id + "/behaviour.xml",
 		dataType: "text",
 		success: function(xml) {            
             var $xml = $(xml);
@@ -142,12 +142,12 @@ function loadBehaviour (id, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, $xml);
+            var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             
 			callFunction(newPlayer, slot);
 		},
         error: function(err) {
-            console.log("Failed reading \""+id+"\" behaviour.xml");
+            console.log("Failed reading \""+opponent.id+"\" behaviour.xml");
             delete players[slot];
         }
 	});

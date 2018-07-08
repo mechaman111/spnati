@@ -114,6 +114,7 @@ function loadGameScreen () {
         if (players[i]) {
             players[i].current = 0;
             $gameOpponentAreas[i-1].show();
+            $gameImages[i-1].css('height', players[i].scale + '%');
             $gameLabels[i].css({"background-color" : clearColour});
             clearHand(i);
         }

@@ -12,7 +12,7 @@
  **************************************************/
 function createNewOpponent (id, enabled, first, last, label, image, gender,
                             height, source, artist, writer, description,
-                            ending, layers, release, tags) {
+                            ending, layers, release, scale, tags) {
 	var newOpponentObject = {id:id,
 							 folder:'opponents/'+id+'/',
 							 enabled:enabled,
@@ -28,6 +28,7 @@ function createNewOpponent (id, enabled, first, last, label, image, gender,
 							 description:description,
                              ending:ending,
                              layers:layers,
+							 scale:scale,
 							 tags:tags,
                              release:parseInt(release, 10) || Number.POSITIVE_INFINITY};
 
@@ -291,6 +292,7 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
             var ending = $xml.find('has_ending').text() === "true";
             var layers = $xml.find('layers').text();
             var release = $xml.find('release').text();
+			var scale = Number($xml.find('scale').text()) || 100.0;
 			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
             if (sw_is_available()) {
@@ -301,7 +303,7 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
 			var opponent = createNewOpponent(id, enabled, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
-                                             ending, layers, release, tags);
+                                             ending, layers, release, scale, tags);
 
 			/* add the opponent to the list */
             if (index !== undefined) {
@@ -362,6 +364,7 @@ function updateIndividualSelectScreen () {
             $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
 
 			$individualImages[index].attr('src', selectableOpponents[i].folder + selectableOpponents[i].image);
+			$individualImages[index].css('height', selectableOpponents[i].scale + '%');
 			$individualImages[index].show();
 			if (selectableOpponents[i].enabled == "true") {
 				$individualButtons[index].html('Select Opponent');
@@ -443,6 +446,7 @@ function updateGroupSelectScreen () {
             $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
 
 			$groupImages[i].attr('src', opponent.folder + opponent.image);
+			$groupImages[i].css('height', opponent.scale + '%');
 			$groupImages[i].show();
 		} else {
 			delete shownGroup[i];
@@ -677,10 +681,10 @@ function clickedRandomGroupButton () {
     console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
 
 	/* load the corresponding group */
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0].id, updateRandomSelection, 1);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1].id, updateRandomSelection, 2);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2].id, updateRandomSelection, 3);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3].id, updateRandomSelection, 4);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0], updateRandomSelection, 1);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1], updateRandomSelection, 2);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2], updateRandomSelection, 3);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3], updateRandomSelection, 4);
 	updateSelectionVisuals();
 }
 
@@ -705,7 +709,7 @@ function clickedRandomFillButton (predicate) {
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-			loadBehaviour(loadedOpponentsCopy[randomOpponent].id, updateRandomSelection, i);
+			loadBehaviour(loadedOpponentsCopy[randomOpponent], updateRandomSelection, i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -753,7 +757,7 @@ function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = null;
 	updateSelectionVisuals();
-	loadBehaviour(shownIndividuals[slot-1].id, individualScreenCallback, selectedSlot);
+	loadBehaviour(shownIndividuals[slot-1], individualScreenCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 }
@@ -825,7 +829,7 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
         if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i].id, groupScreenCallback, i+1);
+            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], groupScreenCallback, i+1);
 		}
 	}
     /* switch screens */
@@ -938,6 +942,7 @@ function updateSelectionVisuals () {
                 $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
                 $selectImages[i-1].one('load', function() {
                     $selectBubbles[slot-1].show();
+                    $selectImages[slot-1].css('height', players[slot].scale + '%');
                     $selectImages[slot-1].show();
                 });
             } else {
