@@ -91,7 +91,7 @@ def get_unique_line_count(lineset):
                 unique_targeted_lines.add(state.to_tuple())
 
         n_cases += 1
-        if case_targeted:
+        if case.is_targeted():
             n_targeted_cases += 1
 
     return len(unique_lines), len(unique_targeted_lines), n_cases, n_targeted_cases
