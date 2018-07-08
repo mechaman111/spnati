@@ -7,7 +7,7 @@
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
- 
+
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
@@ -17,14 +17,14 @@ function createNewState (dialogue, image, direction, silent, marker) {
                           direction:direction,
                           silent:silent,
                           marker:marker};
-						  
+
 	return newStateObject;
 }
 
 /**********************************************************************
  *****                      All Dialogue Tags                     *****
  **********************************************************************/
- 
+
 var NAME = "~name~";
 var CAPITALIZED_NAME = "~Name~";
 var PROPER_CLOTHING = "~Clothing~";
@@ -43,7 +43,7 @@ var SWAP_CARDS = "swap_cards";
 var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
 var GOOD_HAND = "good_hand";
- 
+
 var PLAYER_MUST_STRIP_WINNING = "must_strip_winning";
 var PLAYER_MUST_STRIP_NORMAL = "must_strip_normal";
 var PLAYER_MUST_STRIP_LOSING = "must_strip_losing";
@@ -106,7 +106,7 @@ var FEMALE_FINISHED_MASTURBATING = "female_finished_masturbating";
 
 var GAME_OVER_VICTORY = "game_over_victory";
 var GAME_OVER_DEFEAT = "game_over_defeat";
- 
+
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
@@ -115,15 +115,15 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
  * Loads and parses the start of the behaviour XML file of the 
  * given opponent id.
  *
- * The callFunction parameter must be a function capable of 
+ * The callFunction parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-function loadBehaviour (id, callFunction, slot) {
+function loadBehaviour (opponent, callFunction, slot) {
 	$.ajax({
         type: "GET",
-		url: 'opponents/' + id + "/behaviour.xml",
+		url: 'opponents/' + opponent.id + "/behaviour.xml",
 		dataType: "text",
-		success: function(xml) {
+		success: function(xml) {            
             var $xml = $(xml);
             
             var first = $xml.find('first').text();
@@ -142,26 +142,26 @@ function loadBehaviour (id, callFunction, slot) {
                 });
             }
             
-            var newPlayer = createNewPlayer(id, first, last, labels, gender, size, intelligence, Number(timer), tagsArray, $xml);
+            var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             
 			callFunction(newPlayer, slot);
 		},
         error: function(err) {
-            console.log("Failed reading \""+id+"\" behaviour.xml");
+            console.log("Failed reading \""+opponent.id+"\" behaviour.xml");
             delete players[slot];
         }
 	});
 }
 
 /************************************************************
- * Parses and loads the wardrobe section of an opponent's XML 
+ * Parses and loads the wardrobe section of an opponent's XML
  * file.
  ************************************************************/
 function loadOpponentWardrobe (player) {
 	/* grab the relevant XML file, assuming its already been loaded */
 	var xml = player.xml;
 	player.clothing = [];
-	
+
 	/* find and grab the wardrobe tag */
 	$wardrobe = xml.find('wardrobe');
 	
@@ -171,9 +171,9 @@ function loadOpponentWardrobe (player) {
 		var lowercase = $(this).attr('lowercase');
 		var type = $(this).attr('type');
 		var position = $(this).attr('position');
-		
+
 		var newClothing = createNewClothing(properName, lowercase, type, position, null, 0, 0);
-		
+
 		player.clothing.push(newClothing);
 	});
 }
@@ -216,10 +216,10 @@ function parseDialogue (caseObject, self, target) {
         else {
             silent = false;
         }
-        
+
         states.push(createNewState(dialogue, image, direction, silent, marker));
 	});
-	
+
 	return states;
 }
 
@@ -252,28 +252,28 @@ function updateBehaviour (player, tag, opp) {
 		/* their is restricted to this only */
 		//tag = players[player].forfeit[0];
 	//}
-    
+
     if (!players[player]) {
         return;
     }
-	
+
     /* get the AI stage */
     var stageNum = players[player].stage;
-	
+
     /* try to find the stage */
     var stage = null;
     players[player].xml.find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
-       } 
+       }
     });
-    
+
     /* quick check to see if the stage exists */
     if (!stage) {
         console.log("Error: couldn't find stage for player "+player+" on stage number "+stageNum+" for tag "+tag);
         return;
     }
-    
+
     /* try to find the tag */
 	var states = [];
 	$(stage).find('case').each(function () {
@@ -291,7 +291,7 @@ function updateBehaviour (player, tag, opp) {
         // look for the best match
         var bestMatch = [];
 		var bestMatchPriority = -1;
-		
+
         for (var i = 0; i < states.length; i++) {
 
             var target =           states[i].attr("target");
@@ -331,12 +331,12 @@ function updateBehaviour (player, tag, opp) {
 
 			var totalPriority = 0; // this is used to determine which of the states that
 									// doesn't fail any conditions should be used
-			
-			
+
+
 			///////////////////////////////////////////////////////////////////////
 			// go through different conditions required until one of them fails
 			// if none of them fail, then this state is considered for use with a certain priority
-			
+
 			// target (priority = 300)
 			if (opp && typeof target !== typeof undefined && target !== false) {
             target = target;
@@ -347,7 +347,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;				// failed "target" requirement
 				}
 			}
-			
+
 			// filter (priority = 150)
 			if (opp && typeof filter !== typeof undefined && filter !== false) {
 				// check against tags
@@ -357,7 +357,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;				// failed "filter" requirement
 				}
 			}
-			
+
 			// targetStage (priority = 80)
 			if (opp && typeof targetStage !== typeof undefined && targetStage !== false) {
 				if (inInterval(opp.stage, targetStage)) {
@@ -406,7 +406,7 @@ function updateBehaviour (player, tag, opp) {
 					}
 				}
 			}
-			
+
 			// oppHand (priority = 30)
 			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
 				if (handStrengthToString(opp.hand.strength) === oppHand) {
@@ -426,7 +426,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;				// failed "targetTimeInStage" requirement
 				}
 			}
-			
+
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
 				if (handStrengthToString(players[player].hand.strength) === hasHand) {
@@ -436,7 +436,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;				// failed "hasHand" requirement
 				}
 			}
-			
+
             // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
 			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
                 var ap = null;
@@ -537,7 +537,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;		// failed "timeInStage" requirement
 				}
 			}
-			
+
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
 				var count = players.filter(function(p) {
@@ -550,7 +550,7 @@ function updateBehaviour (player, tag, opp) {
 					continue;		// failed "totalMales" requirement
 				}
 			}
-			
+
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
 				var count = players.filter(function(p) {
@@ -637,10 +637,10 @@ function updateBehaviour (player, tag, opp) {
 			if (typeof customPriority !== typeof undefined) {
 				totalPriority = parseInt(customPriority, 10); //priority override
 			}
-			
+
 			// Finished going through - if a state has still survived up to this point,
 			// it's then determined if it's the highest priority so far
-			
+
 			if (totalPriority > bestMatchPriority)
 			{
 				console.log("New best match with " + totalPriority + " priority.");
@@ -666,7 +666,7 @@ function updateBehaviour (player, tag, opp) {
 }
 
 /************************************************************
- * Updates the behaviour of all players except the given player 
+ * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (player, tag, opp) {
