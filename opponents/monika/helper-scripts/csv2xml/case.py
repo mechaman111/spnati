@@ -1,5 +1,6 @@
 import re
-from .utils import parse_interval, format_interval, get_target_gender, get_target_stripping_case, get_target_stripped_case
+from .utils import parse_interval, format_interval
+from .opponent_utils import get_target_gender, get_target_stripping_case, get_target_stripped_case
 from .state import State
 from .ordered_xml import OrderedXMLElement
 
