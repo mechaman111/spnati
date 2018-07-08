@@ -2,7 +2,7 @@ from __future__ import unicode_literals
     
 import re
 import sys
-from ordered_xml import OrderedXMLElement
+from .ordered_xml import OrderedXMLElement
 
 if sys.version_info[0] < 3:
     from io import open
@@ -68,6 +68,7 @@ meta_tag_spec = {
         'description': None,
         'has_ending': None,
         'layers': None,
+        'release': None,
         'tags': { 'tag': None }
     }
 }
@@ -134,8 +135,6 @@ def parse_attribute_list(seq, elem):
 def parse_tag(seq, index, tag_spec, progress_cb=None):
     if progress_cb is not None:
         progress_cb(index)
-    
-    _start_index = index
     
     match, index = _consume_re(seq, _tag_start, index)
     if match is None:
