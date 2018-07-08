@@ -1,48 +1,70 @@
 import os
-import os.path as osp
+from pathlib import Path
 
 from . import behaviour_parser as bp
 
-
 __xml_cache = {}
-__default_opponents_dir = None
-
+__default_opponents_dir = Path(os.getcwd())
 
 def config_default_opponents_dir(d):
     global __default_opponents_dir
-    __default_opponents_dir = d
+    __default_opponents_dir = Path(d)
+
+
+def find_opponents_directory(search_from = None):
+    """
+    Attempt to find SPNATI's opponents/ directory.
+    """
+    global __default_opponents_dir
+    
+    def is_valid_opponent_directory(p):
+        if p is None:
+            return False
+        elif isinstance(p, str):
+            p = Path(p)
+            
+        listing_path = p.joinpath('listing.xml')
+        return listing_path.exists() and listing_path.is_file()
+    
+    if is_valid_opponent_directory(__default_opponents_dir):
+        return __default_opponents_dir
+    
+    if search_from is not None:
+        search_dir = Path(search_from).resolve()
+    else:
+        search_dir = Path(os.getcwd())
+    
+    if is_valid_opponent_directory(search_dir):
+        return search_dir
+    else:
+        for p in search_dir.parents:
+            if is_valid_opponent_directory(p):
+                return p
+    
+    return None
 
 
 def get_target_xml(target, opponents_dir=None):
-    global __default_opponents_dir, __xml_cache
+    global __xml_cache
     
-    if __default_opponents_dir is not None and opponents_dir is None:
-        if osp.basename(osp.abspath(__default_opponents_dir)) == 'opponents':
-            opponents_dir = osp.abspath(__default_opponents_dir)
-        
+    opponents_dir = find_opponents_directory(opponents_dir)
     if opponents_dir is None:
-        # try to find the main opponents directory
-        if osp.basename(os.getcwd()) == 'opponents':
-            opponents_dir = os.getcwd()
-        elif osp.basename(osp.abspath('..')) == 'opponents':
-            opponents_dir = osp.abspath('..')
-        else:
-            raise ValueError("Cannot find SPNATI opponents directory!")
+        raise ValueError("Cannot find SPNATI opponents directory!")
 
     if target not in __xml_cache:
-        target_xml_file = osp.join(opponents_dir, target+'/behaviour.xml')
-        __xml_cache[target] = bp.parse_file(target_xml_file)
+        target_xml_path = opponents_dir / target / 'behaviour.xml'
+        __xml_cache[target] = bp.parse_file(str(target_xml_path))
 
     return __xml_cache[target]
     
 
-def get_target_gender(target_id):
-    target_elem = get_target_xml(target_id)
+def get_target_gender(target_id, opponents_dir=None):
+    target_elem = get_target_xml(target_id, opponents_dir)
     return target_elem.find('gender').text.strip().lower()
 
 
-def get_target_stripping_case(target, stage):
-    target_elem = get_target_xml(target)
+def get_target_stripping_case(target, stage, opponents_dir=None):
+    target_elem = get_target_xml(target, opponents_dir)
     clothing_elems = [e for e in target_elem.find('wardrobe').iter('clothing')]
     clothing_elems.reverse()
 
@@ -68,8 +90,8 @@ def get_target_stripping_case(target, stage):
         raise ValueError("Unknown clothing type for target '{}' stage {}: {}".format(target, stage, target_clothing_type))
 
 
-def get_target_stripped_case(target, stage):
-    target_elem = get_target_xml(target)
+def get_target_stripped_case(target, stage, opponents_dir=None):
+    target_elem = get_target_xml(target, opponents_dir)
     clothing_elems = [e for e in target_elem.find('wardrobe').iter('clothing')]
     clothing_elems.reverse()
 
