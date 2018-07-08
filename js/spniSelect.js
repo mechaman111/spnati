@@ -210,6 +210,8 @@ function loadListingFile () {
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
 			updateIndividualSelectScreen();
+			updateSelectableGroups(0);
+			updateSelectableGroups(1);
 			updateGroupSelectScreen();
 		}
 	}
@@ -628,7 +630,7 @@ function updateSelectableGroups(screen) {
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
-        if (!group.opponents.some(function(opp) { return opp; })) return false;
+        if (!group.opponents.every(function(opp) { return opp; })) return false;
 
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
