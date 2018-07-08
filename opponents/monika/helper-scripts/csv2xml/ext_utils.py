@@ -1,6 +1,7 @@
 from . import behaviour_parser as bp
-from .xml_format import xml_to_lineset
 from .opponent import Opponent
+from .opponent_utils import find_opponents_directory
+from .xml_format import xml_to_lineset
 
 def load_character(char_id, opponents_path=None):
     """

@@ -24,7 +24,7 @@ def check_character_generics(cases_by_stage):
     
     def find_missing_tags_single(tag_list, stage):
         tag_set = frozenset(tag_list)
-        report(start, tag_set.difference(cases_by_stage[stage]))
+        report(stage, tag_set.difference(cases_by_stage[stage]))
     
     def find_missing_tags(tag_list, start, end):
         tag_set = frozenset(tag_list)
@@ -40,7 +40,7 @@ def check_character_generics(cases_by_stage):
     find_missing_tags_single(c2x.Case.FINISHED_STAGE_TAGS, -1)
 
 
-def check_impossible_cases(cases_by_stage):
+def check_impossible_cases(cases_by_stage, opponent_meta):
     """
     Check for impossible case and stage combinations.
     """
@@ -61,13 +61,13 @@ def check_impossible_cases(cases_by_stage):
             impossible_tags += c2x.Case.NAKED_STAGE_TAGS 
         
         if stage >= opponent_meta.masturbate_stage():
-            impossible_tags += c2x.Case.PLAYING_STAGE_TAGS
+            impossible_tags += c2x.Case.PLAYING_TAGS
         
         if stage >= opponent_meta.naked_stage():
             impossible_tags += c2x.Case.CLOTHED_STAGE_TAGS
             
         impossible_tags = frozenset(impossible_tags)
-        for case_tag in impossible_tags.intersection(case_set)
+        for case_tag in impossible_tags.intersection(case_set):
             print("Stage {:d} contains case {:s} that will never be used".format(stage, case_tag))
 
 
@@ -86,7 +86,7 @@ def main(args):
     cases_by_stage = get_cases_by_stage(lineset, opponent_meta)
     
     check_character_generics(cases_by_stage)
-    check_impossible_cases(cases_by_stage)
+    check_impossible_cases(cases_by_stage, opponent_meta)
     check_undefined_cases(cases_by_stage)
     
     
