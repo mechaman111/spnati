@@ -135,7 +135,7 @@ function loadBehaviour (opponent, callFunction, slot) {
             var intelligence = $xml.find('intelligence');
             
             var tags = $xml.find('tags');
-            var tagsArray = [id];
+            var tagsArray = [opponent.id];
             if (typeof tags !== typeof undefined && tags !== false) {
                 $(tags).find('tag').each(function () {
                     tagsArray.push($(this).text());
