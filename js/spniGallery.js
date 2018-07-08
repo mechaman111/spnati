@@ -270,6 +270,18 @@ function doEpilogueFromGallery(){
 			default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
 		}
 	}
+
+    if (sw_is_available()) {
+        /* Preload all epilogue screens. */
+        var epilogue_images = chosenEpilogue.screens.map(function (s) {
+            return s.image;
+        });
+
+        console.log("Preloading "+epilogue_images.length.toString()+" epilogue images...");
+
+        request_url_caching(epilogue_images);
+    }
+
 	clearEpilogueBoxes();
 	epilogueScreen = 0; //reset epilogue position in case a previous epilogue played before this one
 	epilogueText = 0;

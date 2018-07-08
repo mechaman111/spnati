@@ -295,6 +295,11 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
 			var scale = Number($xml.find('scale').text()) || 100.0;
 			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
+            if (sw_is_available()) {
+                /* Attempt to preload this opponent's picture for selection. */
+                request_url_caching(['opponents/'+id+'/'+pic]);
+            }
+
 			var opponent = createNewOpponent(id, enabled, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
@@ -824,7 +829,7 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
         if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-			loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], groupScreenCallback, i+1);
+            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], groupScreenCallback, i+1);
 		}
 	}
     /* switch screens */
@@ -879,6 +884,24 @@ function backToSelect () {
  * select screen.
  ************************************************************/
 function advanceSelectScreen () {
+    console.log("Starting game...");
+
+    if (sw_is_available()) {
+        /* Ask SW to preload stage 0 and stage 1 images for all characters in the game. */
+        for (var i=0;i<players.length;i++) {
+            if (!players[i]) {
+                continue;
+            }
+
+        	var images = players[i].getImagesForStage(0);
+            images.concat(players[i].getImagesForStage(1));
+
+            console.log("Preloading "+images.length.toString()+" image files from "+players[i].folder+" stages 0 and 1...");
+            
+            request_url_caching(images);
+        }
+    }
+
     advanceToNextScreen($selectScreen);
 }
 

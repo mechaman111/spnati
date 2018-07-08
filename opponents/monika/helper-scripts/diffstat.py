@@ -4,8 +4,8 @@ if __name__ == '__main__':
     with open(sys.argv[1]) as f:
         lines = [line.strip() for line in f]
         
-    added_lines = [l[1:] for l in lines if l[0] == '+' and not l.startswith('+++')]
-    deleted_lines = [l[1:] for l in lines if l[0] == '-' and not l.startswith('---')]
+    added_lines = [l[1:] for l in lines if len(l) > 1 and l[0] == '+' and not l.startswith('+++')]
+    deleted_lines = [l[1:] for l in lines if len(l) > 1 and l[0] == '-' and not l.startswith('---')]
 
     added_set = set(added_lines)
     deleted_set = set(deleted_lines)

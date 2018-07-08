@@ -10,12 +10,6 @@ if(!monika) {
     monika.EDIT_GLITCH_CHANCE = 0.05;
     monika.DELETE_GLITCH_CHANCE = 0.05;
     
-    /* Controls for glitch prob. scaling
-     */
-    monika.GLITCH_MULT_MIN = 1;   // starting glitch chance multiplier
-    monika.GLITCH_MULT_MAX = 3;  // maximum glitch chance multiplier
-    monika.GLITCH_RAMP_ROUNDS = 30; // glitch chance will linearly scale to maximum over this many rounds
-    
     monika.GLITCH_VISUAL = 'visual';  // continuous visual glitching
     monika.GLITCH_REPEAT = 'corrupt'; // dialogue corruption
     monika.GLITCH_EDIT = 'edit';      // edited dialogue
@@ -131,14 +125,20 @@ if(!monika) {
         if(monika.glitch_chance_mult) {
             var glitch_chance_mult = monika.glitch_chance_mult;
         } else {
-            var r = currentRound;
-            if(r <= 0) {
-                r = 1;
-            }
+            var pl = monika.find_monika_player();
+            var glitch_chance_mult = 0;
             
-            var glitch_chance_mult = monika.GLITCH_MULT_MAX - monika.GLITCH_MULT_MIN;
-            glitch_chance_mult *= Math.min(1, r / monika.GLITCH_RAMP_ROUNDS); // avoid scaling the multiplier by anything > 1
-            glitch_chance_mult += monika.GLITCH_MULT_MIN;
+            if (pl.stage < 3) {
+                glitch_chance_mult = 0;
+            } else if (pl.stage === 3) {
+                glitch_chance_mult = 0.5;
+            } else if (pl.stage <= 5) {
+                glitch_chance_mult = 1;
+            } else if (pl.stage <= 7) {
+                glitch_chance_mult = 1.5;
+            } else {
+                glitch_chance_mult = 2;
+            }
         }
         
         console.log("[Monika] Current glitch chance multiplier: "+glitch_chance_mult.toString());
@@ -160,16 +160,19 @@ if(!monika) {
         var oppID = targeted_player.folder.substr(0, targeted_player.folder.length - 1);
         oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
         
+        var type_glitch_marker = 'glitch-type-'+glitch_type;
         var base_glitch_marker = 'glitching-'+oppID;
         var specific_glitch_marker = base_glitch_marker+'-'+glitch_type;
         
         if(value) {
             monika_player.markers[base_glitch_marker] = value;
             monika_player.markers[specific_glitch_marker] = value;
+            monika_player.markers[type_glitch_marker] = value;
             monika_player.markers['glitched'] = true;
         } else {
             delete monika_player.markers[base_glitch_marker];
             delete monika_player.markers[specific_glitch_marker];
+            delete monika_player.markers[type_glitch_marker];
         }
     }
     
@@ -313,16 +316,14 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            var context = $mainButton.html();
-            
-            if(context === "Talking...") {
+            if(monika.current_ext_dialogue) {
                 monika.extended_dialogue_continue();
             } else {
-                original_advanceGame();
+                original_advanceGame.apply(null, arguments);
             }
         } catch(e) {
             console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-            original_advanceGame();
+            original_advanceGame.apply(null, arguments);
         }
     }
 
@@ -380,7 +381,20 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeContinuePhase prep: "+e.toString());
         } finally {
-            original_completeContinuePhase();
+            return original_completeContinuePhase.apply(null, arguments); 
+        }
+    }
+    
+    var original_completeMasturbatePhase = completeMasturbatePhase;
+    completeMasturbatePhase = function() {
+        if(!monika.present()) { return original_completeMasturbatePhase.apply(null, arguments); }
+            
+        try {
+            monika.undoDeleteGlitchEffect();
+        } catch (e) {
+            console.error("[Monika] Error in pre-completeMasturbatePhase prep: "+e.toString());
+        } finally {
+            return original_completeMasturbatePhase.apply(null, arguments); 
         }
     }
     
@@ -394,7 +408,7 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeStripPhase prep: "+e.toString());
         } finally {
-            original_completeStripPhase();
+            return original_completeStripPhase.apply(null, arguments);
         }
     }
     
@@ -422,7 +436,7 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeRevealPhase prep: "+e.toString());
         } finally {
-            original_completeRevealPhase();
+            return original_completeRevealPhase.apply(null, arguments); 
         }
     }
 

@@ -336,24 +336,6 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars))));
 						}
-						//Variables can only appear once. Why? Who knows
-						Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
-						HashSet<string> usedVars = new HashSet<string>();
-						HashSet<string> reportedVars = new HashSet<string>();
-						MatchCollection matches = varRegex.Matches(line.Text);
-						foreach (var match in matches)
-						{
-							string variable = match.ToString();
-							if (usedVars.Contains(variable) && !reportedVars.Contains(variable))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Variable {1} can only be used once in a line: {0}", caseLabel, variable)));
-								reportedVars.Add(variable);
-							}
-							else
-							{
-								usedVars.Add(variable);
-							}
-						}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
