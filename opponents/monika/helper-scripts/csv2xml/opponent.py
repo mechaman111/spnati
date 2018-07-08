@@ -58,6 +58,26 @@ class Opponent(object):
         return len(self.wardrobe) + 2
 
     @classmethod
+    def from_meta_xml(cls, meta_elem):
+        opp = cls()
+        
+        opp.first = meta_elem.find('first').text
+        opp.last = meta_elem.find('last').text
+        opp.label = meta_elem.find('label').text
+        opp.gender = meta_elem.find('gender').text.lower()
+        opp.size = meta_elem.find('size').text.lower()
+        opp.selection_pic = meta_elem.find('pic').text
+        opp.height = meta_elem.find('height').text
+        opp.source = meta_elem.find('from').text
+        opp.writer = meta_elem.find('writer').text
+        opp.artist = meta_elem.find('artist').text
+        opp.description = meta_elem.find('description').text
+        opp.has_ending = (meta_elem.find('has_ending').text.strip().lower() == 'true')
+        opp.tags = [tag.text for tag in opponent_elem.find('tags').iter('tag')]
+        
+        return opp
+
+    @classmethod
     def from_xml(cls, opponent_elem, meta_elem):
         opp = cls()
 

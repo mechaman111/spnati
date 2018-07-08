@@ -1,13 +1,18 @@
 import re
-from .utils import parse_interval, format_interval
-from .opponent_utils import get_target_gender, get_target_stripping_case, get_target_stripped_case
+from .utils import parse_interval, format_interval, get_target_gender, get_target_stripping_case, get_target_stripped_case
 from .state import State
 from .ordered_xml import OrderedXMLElement
 
 
 class Case(object):
-    # Contains all case tags used in the game.
-    CASE_TAGS = [
+    # Tags used by players at the start of a game (stage 0).
+    START_TAGS = [
+        "start",
+        "selected",
+    ]
+    
+    # Tags used by players in all stages.
+    ALWAYS_TAGS = [
         "male_human_must_strip",
         "male_must_strip",
         "male_removing_accessory",
@@ -44,28 +49,47 @@ class Case(object):
         "female_start_masturbating",
         "female_masturbating",
         "female_finished_masturbating",
-        "game_over_victory",
+    ]
+    
+    # Tags used by players when they are actively playing the game (stages 0:-2 in slice notation)
+    PLAYING_TAGS = [
+        "stripped",
         "swap_cards",
         "good_hand",
         "okay_hand",
         "bad_hand",
-        "stripped",
+        "game_over_victory",
+    ]
+    
+    # Tags that are only used for opponents that have clothing left (stages 0:-3 in slice notation)
+    CLOTHED_STAGE_TAGS = [
         "must_strip_winning",
         "must_strip_normal",
         "must_strip_losing",
         "stripping",
-        "stripped",
+    ]
+    
+    # Tags that are only used for opponents that are naked (stage -3)
+    NAKED_STAGE_TAGS = [
         "must_masturbate",
         "must_masturbate_first",
         "start_masturbating",
+    ]
+    
+    # Tags that are only used for opponents that are masturbating (stage -2)
+    MASTURBATION_STAGE_TAGS = [
         "masturbating",
         "heavy_masturbating",
         "finishing_masturbating",
+    ]
+    
+    # Tags that are only used for players that have finished masturbating (stage -1).
+    FINISHED_STAGE_TAGS = [
         "finished_masturbating",
         "game_over_defeat",
-        "start",
-        "selected"
     ]
+    
+    ALL_TAGS = START_TAGS + ALWAYS_TAGS + PLAYING_TAGS + CLOTHED_STAGE_TAGS + NAKED_STAGE_TAGS + MASTURBATION_STAGE_TAGS + FINISHED_STAGE_TAGS
     
     INTERVAL_CONDITIONS = [
         'targetStage',
