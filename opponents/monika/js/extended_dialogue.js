@@ -59,6 +59,8 @@ monika.extended_dialogue_continue = function () {
             
             if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
                 monika.extended_dialogue_end();
+            } else {
+                $mainButton.html("Talking...");
             }
         } catch (e) {
             console.error(e);

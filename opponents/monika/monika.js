@@ -316,16 +316,14 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            var context = $mainButton.html();
-            
-            if(context === "Talking...") {
+            if(monika.current_ext_dialogue) {
                 monika.extended_dialogue_continue();
             } else {
-                original_advanceGame();
+                original_advanceGame.apply(null, arguments);
             }
         } catch(e) {
             console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-            original_advanceGame();
+            original_advanceGame.apply(null, arguments);
         }
     }
 
@@ -383,7 +381,20 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeContinuePhase prep: "+e.toString());
         } finally {
-            original_completeContinuePhase();
+            return original_completeContinuePhase.apply(null, arguments); 
+        }
+    }
+    
+    var original_completeMasturbatePhase = completeMasturbatePhase;
+    completeMasturbatePhase = function() {
+        if(!monika.present()) { return original_completeMasturbatePhase.apply(null, arguments); }
+            
+        try {
+            monika.undoDeleteGlitchEffect();
+        } catch (e) {
+            console.error("[Monika] Error in pre-completeMasturbatePhase prep: "+e.toString());
+        } finally {
+            return original_completeMasturbatePhase.apply(null, arguments); 
         }
     }
     
@@ -397,7 +408,7 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeStripPhase prep: "+e.toString());
         } finally {
-            original_completeStripPhase();
+            return original_completeStripPhase.apply(null, arguments);
         }
     }
     
@@ -425,7 +436,7 @@ if(!monika) {
         } catch (e) {
             console.error("[Monika] Error in pre-completeRevealPhase prep: "+e.toString());
         } finally {
-            original_completeRevealPhase();
+            return original_completeRevealPhase.apply(null, arguments); 
         }
     }
 

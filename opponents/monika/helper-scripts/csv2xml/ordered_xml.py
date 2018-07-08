@@ -2,7 +2,9 @@ from __future__ import unicode_literals
     
 from collections import OrderedDict
 
+
 INDENT = '    '
+
 
 class OrderedXMLElement(object):
     """Represents an XML element with an ordered set of attributes and either child elements or raw text within."""

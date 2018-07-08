@@ -1,8 +1,11 @@
 import csv
 import os.path as osp
 from pathlib import Path
-import behaviour_parser as bp
-from csv2xml import xml_to_lineset, format_stage_set, format_interval, Opponent
+import csv2xml.behaviour_parser as bp
+from csv2xml.stage import format_stage_set
+from csv2xml.xml_format import xml_to_lineset
+from csv2xml.utils import format_interval
+from csv2xml.opponent import Opponent
 
 def search_opponent(opponent_folder, target_id, target_tags):
     id = opponent_folder.name
