@@ -66,18 +66,28 @@ self.addEventListener('fetch', function(event) {
     if (event.request.method !== 'GET') {
         return event.respondWith(fetch(event.request));
     }
+    
+    /* Clone the request so we can modify some of its options.
+     * Specifically: set mode='same-origin' to hopefully prevent CORS issues.
+     */
+    var actual_request = new Request(event.request.url, {
+        method: event.request.method,
+        headers: event.request.headers,
+        mode: 'same-origin',
+        credentials: event.request.credentials
+    });
 
     /* Ensure we can quickly reload scripts and etc. when developing;
      * Cache only images when debugging is enabled.
      */
     if (debug_active) {
-        let file_ext = event.request.url.split('.').pop();
+        let file_ext = actual_request.url.split('.').pop();
         if (file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
             return event.respondWith(
-                fetch(event.request).then(
+                fetch(actual_request).then(
                     async function (net_response) {
                         var cache = await caches.open(CACHE_NAME);
-                        cache.put(event.request, net_response.clone());
+                        cache.put(actual_request, net_response.clone());
 
                         return net_response;
                     }
@@ -85,7 +95,6 @@ self.addEventListener('fetch', function(event) {
             );
         }
     }
-
 
     /* Look for content in the cache first.
      * If we don't find it, or if the cached version is too old, attempt to
@@ -95,20 +104,20 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.open(CACHE_NAME).then(
             async function(cache) {
-                var cached_response = await cache.match(event.request);
-
+                var cached_response = await cache.match(actual_request);
+                
                 if (cached_response) {
                     var resp_time = new Date(cached_response.headers.get('Date'));
                     var current_cache_age = Date.now() - resp_time.getTime(); // in milliseconds
 
-                    if (debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
+                    if (debug_active && verbose) console.log("[SW] Cache age of "+actual_request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
 
                     if (current_cache_age < CACHE_KEEPALIVE * 1000) {
                         /* We have fresh content cached. Return it. */
-                        if (debug_active && verbose) console.log("[SW] Cache age of "+event.request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
+                        if (debug_active && verbose) console.log("[SW] Cache age of "+actual_request.url+": "+(current_cache_age/1000).toPrecision(3).toString()+" seconds");
                         return cached_response;
                     } else if (debug_active && verbose) {
-                        console.log("[SW] Refreshing stale file: "+event.request.url);
+                        console.log("[SW] Refreshing stale file: "+actual_request.url);
                     }
                 }
 
@@ -116,25 +125,25 @@ self.addEventListener('fetch', function(event) {
 
                 /* When we make the network request, also make sure to set the `If-Modified-Since` header if we can */
                 if (cached_response) {
-                    /* We can't modify event.request directly-- copy it */
-                    var new_headers = clone_immutable_headers(event.request.headers);
+                    /* Clone the request again so that we can change headers. */
+                    var new_headers = clone_immutable_headers(actual_request.headers);
                     new_headers.set('If-Modified-Since', cached_response.headers.get('Date'));
-
-                    var new_request = new Request(event.request.url, {
-                        method: event.request.method,
+                    
+                    var new_request = new Request(actual_request.url, {
+                        method: actual_request.method,
                         headers: new_headers,
                         mode: 'same-origin',
-                        credentials: event.request.credentials
+                        credentials: actual_request.credentials
                     });
-
+                    
                     var net_response = await fetch(new_request);
                     if (net_response.ok) {
                         /* Content was modified on the server, re-cache the response data and return it */
-                        cache.put(event.request, net_response.clone());
+                        cache.put(new_request, net_response.clone());
                         return net_response;
                     } else if (net_response.status == 304) {
                         // Update the Date on the cached response and return it
-                        if (debug_active && verbose) console.log("[SW] Got 304 Not Modified response for "+event.request.url+", updating cache date");
+                        if (debug_active && verbose) console.log("[SW] Got 304 Not Modified response for "+new_request.url+", updating cache date");
 
                         var new_response_headers = clone_immutable_headers(cached_response.headers);
                         new_response_headers.set('Date', net_response.headers.get('Date'));
@@ -148,13 +157,13 @@ self.addEventListener('fetch', function(event) {
                             }
                         );
 
-                        cache.put(event.request, new_response.clone());
+                        cache.put(new_request, new_response.clone());
                         return new_response;
                     } else {
                         throw Error("Network request returned with error "+net_response.status.toString()+' '+net_response.statusText);
                     }
                 } else {
-                    var net_response = await fetch(event.request);
+                    var net_response = await fetch(actual_request);
                     var content_length = net_response.headers.get('Content-Length');
 
                     if (net_response.ok) {
@@ -168,7 +177,7 @@ self.addEventListener('fetch', function(event) {
                             var expected_content_length = parseInt(content_length, 10);
                             if (expected_content_length === 0 || data.size > 0) {
                                 if (debug_active && verbose) console.log("[SW] Verified response content length (Content-Length: "+content_length.toString()+", data size: "+data.size.toString()+" bytes)");
-                                cache.put(event.request, new Response(
+                                cache.put(actual_request, new Response(
                                     data, {
                                         status: cloned_response.status,
                                         statusText: cloned_response.statusText,
@@ -176,11 +185,11 @@ self.addEventListener('fetch', function(event) {
                                     }
                                 ));
                             } else if (content_length != null) {
-                                console.error("[SW] Got invalid response for "+event.request.url+": expected "+content_length+" bytes, got "+data.size.toString()+" bytes instead");
+                                console.error("[SW] Got invalid response for "+actual_request.url+": expected "+content_length+" bytes, got "+data.size.toString()+" bytes instead");
                             } // if content_length == null then the request was cross-origin and we can't access the Content-Length header
                         } else {
                             if (debug_active && verbose) console.log("[SW] Not verifying response data");
-                            cache.put(event.request, cloned_response);
+                            cache.put(actual_request, cloned_response);
                         }
                     }
 
