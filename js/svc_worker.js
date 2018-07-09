@@ -13,61 +13,6 @@ if ('serviceWorker' in navigator) {
       
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      
-      navigator.serviceWorker.addEventListener('controllerchange', function () {
-          /* Now that we can send messages to the SW, start preloading queued URLs. */
-          console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
-          for (var i=0;i<preload_queue.length;i++) {
-              var queued_request = preload_queue[i];
-              send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
-          }
-  
-          /* Also set the debug status. */
-          set_sw_debug(DEBUG);
-          set_sw_verbose(DEBUG);
-      });
-      
-      /* Array of images to cache in the background */
-      var static_images = [
-          'img/all.png',
-          'img/any.png',
-          'img/bisexual.jpg',
-          'img/blankcard.jpg',
-          'img/enter.png',
-          'img/female.png',
-          'img/female_large.png',
-          'img/female_medium.png',
-          'img/female_small.png',
-          'img/gallery.svg',
-          'img/icon.ico',
-          'img/icon.jpg',
-          'img/male.png',
-          'img/male_large.png',
-          'img/male_medium.png',
-          'img/male_small.png',
-          'img/reddit.png',
-          'img/title.png',
-          'img/unknown_s.jpg',
-          'img/unknown.jpg',
-          'img/unknown.svg',
-      ];
-  
-      /* autogenerate lists of cards to save */
-      var cards = [
-          'img/spade.jpg',
-          'img/heart.jpg',
-          'img/clubs.jpg',
-          'img/diamo.jpg'
-      ];
-      
-      for (var i=1;i<=13;i++) {
-          cards.push('img/spade'+i.toString()+'.jpg');
-          cards.push('img/heart'+i.toString()+'.jpg');
-          cards.push('img/clubs'+i.toString()+'.jpg');
-          cards.push('img/diamo'+i.toString()+'.jpg');
-      }
-      
-      request_url_caching(cards.concat(static_images));
     }, function(err) {
       // registration failed
       sw_registered = false;
@@ -75,6 +20,61 @@ if ('serviceWorker' in navigator) {
       
       console.log('ServiceWorker registration failed: ', err);
     });
+    
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+        /* Now that we can send messages to the SW, start preloading queued URLs. */
+        console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
+        for (var i=0;i<preload_queue.length;i++) {
+            var queued_request = preload_queue[i];
+            send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
+        }
+
+        /* Also set the debug status. */
+        set_sw_debug(DEBUG);
+        set_sw_verbose(DEBUG);
+    });
+    
+    /* Array of images to cache in the background */
+    var static_images = [
+        'img/all.png',
+        'img/any.png',
+        'img/bisexual.jpg',
+        'img/blankcard.jpg',
+        'img/enter.png',
+        'img/female.png',
+        'img/female_large.png',
+        'img/female_medium.png',
+        'img/female_small.png',
+        'img/gallery.svg',
+        'img/icon.ico',
+        'img/icon.jpg',
+        'img/male.png',
+        'img/male_large.png',
+        'img/male_medium.png',
+        'img/male_small.png',
+        'img/reddit.png',
+        'img/title.png',
+        'img/unknown_s.jpg',
+        'img/unknown.jpg',
+        'img/unknown.svg',
+    ];
+
+    /* autogenerate lists of cards to save */
+    var cards = [
+        'img/spade.jpg',
+        'img/heart.jpg',
+        'img/clubs.jpg',
+        'img/diamo.jpg'
+    ];
+    
+    for (var i=1;i<=13;i++) {
+        cards.push('img/spade'+i.toString()+'.jpg');
+        cards.push('img/heart'+i.toString()+'.jpg');
+        cards.push('img/clubs'+i.toString()+'.jpg');
+        cards.push('img/diamo'+i.toString()+'.jpg');
+    }
+    
+    request_url_caching(cards.concat(static_images));
 }
 
 /************************************************************
