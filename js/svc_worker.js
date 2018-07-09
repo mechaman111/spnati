@@ -1,15 +1,26 @@
 var preload_queue = []; /* Used to store preload requests before the SW becomes available */
 
+// the only time the distinction between these two matters is the span of time
+// between page load and SW registration.
+var sw_registered = false;
+var sw_registration_failed = false;
+
 /* Register the SW as soon as possible so we can take advantage of the cache as much as we can */
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service_worker.js').then(function(registration) {
+      sw_registered = true;
+      sw_registration_failed = false;
+      
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {
       // registration failed
+      sw_registered = false;
+      sw_registration_failed = true;
+      
       console.log('ServiceWorker registration failed: ', err);
     });
-
+    
     navigator.serviceWorker.addEventListener('controllerchange', function () {
         /* Now that we can send messages to the SW, start preloading queued URLs. */
         console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
@@ -22,9 +33,9 @@ if ('serviceWorker' in navigator) {
         set_sw_debug(DEBUG);
         set_sw_verbose(DEBUG);
     });
-
+    
     /* Array of images to cache in the background */
-    const static_images = [
+    var static_images = [
         'img/all.png',
         'img/any.png',
         'img/bisexual.jpg',
@@ -49,13 +60,20 @@ if ('serviceWorker' in navigator) {
     ];
 
     /* autogenerate lists of cards to save */
-    var cards = [];
-    for (suit of ['spade', 'heart', 'clubs', 'diamo']) { // filename prefixes
-        cards.push('img/'+suit+'.jpg');
-        for (let i=1;i<=13;i++) {
-            cards.push('img/'+suit+i.toString()+'.jpg');
-        }
+    var cards = [
+        'img/spade.jpg',
+        'img/heart.jpg',
+        'img/clubs.jpg',
+        'img/diamo.jpg'
+    ];
+    
+    for (var i=1;i<=13;i++) {
+        cards.push('img/spade'+i.toString()+'.jpg');
+        cards.push('img/heart'+i.toString()+'.jpg');
+        cards.push('img/clubs'+i.toString()+'.jpg');
+        cards.push('img/diamo'+i.toString()+'.jpg');
     }
+    
     request_url_caching(cards.concat(static_images));
 }
 
@@ -67,7 +85,7 @@ if ('serviceWorker' in navigator) {
  * then the caching request will be queued until the SW is available.
  *************************************************************/
 function sw_is_available() {
-    return ('serviceWorker' in navigator);
+    return ('serviceWorker' in navigator) && !sw_registration_failed;
 }
 
 
@@ -84,8 +102,9 @@ function sw_is_active() {
     /* check to see if we can load SWs in the first place
      * then make sure that the Controller object is not null/undefined/etc.
      */
-    return ('serviceWorker' in navigator) && (navigator.serviceWorker.controller != null);
+    return sw_registered && ('serviceWorker' in navigator) && (navigator.serviceWorker.controller != null);
 }
+
 /************************************************************
  * Sends a message to the service worker.
  * See the 'message' event listener in service_worker.js
