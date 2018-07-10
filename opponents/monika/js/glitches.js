@@ -212,7 +212,7 @@ monika.get_masturbation_image = function() {
 
 monika.glitch_masturbation = function(slot) {
     var glitchTime = 500;
-    var normalTime = 4000;
+    var normalTime = 8000;
     var yuriTime = 1500;
 
     var glitch_count = 0;
