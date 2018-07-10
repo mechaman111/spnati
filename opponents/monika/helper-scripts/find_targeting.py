@@ -28,6 +28,9 @@ def search_opponent(opponent_folder, target_id, target_tags):
             if 'target' in case.conditions:
                 target_condition = case.conditions['target'] == target_id
             
+            if 'alsoPlaying' in case.conditions:
+                target_condition = case.conditions['alsoPlaying'] == target_id
+            
             if 'filter' in case.conditions:
                 filter_condition = case.conditions['filter'] in target_tags
             
