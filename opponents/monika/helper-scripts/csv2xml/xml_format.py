@@ -1,6 +1,6 @@
 from .behaviour_parser import parse_file
 from .ordered_xml import OrderedXMLElement
-from .case import Case
+from .case import Case, CaseSet
 from .state import State
 from .stage import Stage
 
@@ -82,41 +82,54 @@ def lineset_to_xml(lineset):
     behaviour_elem = OrderedXMLElement('behaviour')
     start_elem = OrderedXMLElement('start')
 
+    start_cases = CaseSet()
+    select_cases = CaseSet()
+
+    for stage_set, cases in filter(lambda kv: ('start' in kv[0]) or (0 in kv[0]), lineset.items()):
+        for case in cases:
+            if case.tag == 'select' or case.tag == 'selected':
+                case.tag = 'selected'
+                select_cases.add(case)
+            elif case.tag == 'start':
+                start_cases.add(case)
+
     stage_superset = set()
     for stage_set in lineset.keys():
-        stage_superset.update(stage_set)
+        for k in stage_set:
+            if isinstance(k, int):
+                stage_superset.add(k)
+            elif k != 'start':
+                print("[Warning] invalid stage ID found: {:s}".format(k))
 
-    for stage_id in stage_superset:
-        if stage_id == 'start':
-            for stage_set, cases in lineset.items():
-                if stage_id in stage_set:
-                    for case in cases:
-                        if case.tag == 'select':
-                            start_elem.children.insert(0, case.states[0].to_xml(0))
-                            if len(case.states) > 1:
-                                print("[Warning] Multiple 'select' lines found! Selecting only the first: {}".format(case.states[0].text))
-                        elif case.tag == 'start':
-                            for state in case.states:
-                                start_elem.children.append(state.to_xml(0))
-        else:
+    for stage_id in sorted(stage_superset):
+        if stage_id != 'start':
             stage_elem = OrderedXMLElement('stage')
             stage_elem.attributes['id'] = str(stage_id)
+            
+            stage_cases = CaseSet()
 
-            # attempt to merge together identical cases with different stage sets:
-            cases_by_cond_set = {}
+            for stage_set, cases in filter(lambda kv: stage_id in kv[0], lineset.items()):
+                for case in cases:
+                    stage_cases.add(case)
 
-            for stage_set, cases in lineset.items():
-                if stage_id in stage_set:
-                    for case in cases:
-                        cond_set = case.conditions_set()
-                        if cond_set not in cases_by_cond_set:
-                            cases_by_cond_set[cond_set] = case
-                        else:
-                            cases_by_cond_set[cond_set].states.extend(case.states)
+            if stage_id == 0:
+                for case in select_cases:
+                    stage_elem.children.append(case.to_xml(stage_id))
+                    
+                for case in start_cases:
+                    stage_elem.children.append(case.to_xml(stage_id))
 
-            for case in cases_by_cond_set.values():
+            for case in stage_cases:
                 stage_elem.children.append(case.to_xml(stage_id))
 
             behaviour_elem.children.append(stage_elem)
+            
+    for case in filter(lambda c: c.is_generic(), select_cases):
+        for state in case.states:
+            start_elem.children.insert(0, state.to_xml(0))
+    
+    for case in filter(lambda c: c.is_generic(), start_cases):
+        for state in case.states:
+            start_elem.children.append(state.to_xml(0))
 
     return behaviour_elem, start_elem

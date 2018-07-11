@@ -1,4 +1,6 @@
+from collections import OrderedDict
 import re
+
 from .utils import parse_interval, format_interval
 from .opponent_utils import get_target_gender, get_target_stripping_case, get_target_stripped_case
 from .state import State
@@ -129,8 +131,8 @@ class Case(object):
     def __init__(self, tag, conditions=None, custom_priority=None):
         self.tag = tag
         self.priority = custom_priority
-        self.conditions = {}
-        self.counters = {}
+        self.conditions = OrderedDict()
+        self.counters = OrderedDict()
         self.states = []
 
         if conditions is None:
@@ -143,13 +145,21 @@ class Case(object):
 
         if self.priority is None:
             self.priority = cond_priority
+            
+    def copy(self):
+        c = Case(self.tag, None, self.priority)
+        c.conditions = self.conditions.copy()
+        c.counters = self.counters.copy()
+        c.states = self.states.copy()
+        
+        return c
 
     @classmethod
     def parse_conditions(cls, conditions):
         priority = None
         tag = None
-        attr_conditions = {}
-        counters = {}
+        attr_conditions = OrderedDict()
+        counters = OrderedDict()
 
         if isinstance(conditions, str) and len(conditions) > 0:
             conditions = [cond.split('=') for cond in conditions.split(',')]
@@ -257,6 +267,9 @@ class Case(object):
             
     def is_conditional(self):
         return (len(self.conditions) > 0) or (len(self.counters) > 0)
+        
+    def is_generic(self):
+        return not self.is_conditional()
 
     def is_targeted(self):
         return ('filter' in self.conditions) or ('alsoPlaying' in self.conditions) or ('target' in self.conditions) or (len(self.counters) > 0)
@@ -313,6 +326,39 @@ class Case(object):
             elem.children.append(state.to_xml(stage))
 
         return elem
+        
+        
+class CaseSet(object):
+    def __init__(self):
+        """
+        Contains multiple distinct cases and attempts to merge together newly-added cases.
+        """
+        self._case_dict = {}
+        
+    def add(self, case):
+        cond_set = case.conditions_set()
+        if cond_set not in self._case_dict:
+            self._case_dict[cond_set] = case.copy()
+        else:
+            self._case_dict[cond_set].states.extend(case.states)
+                
+    def remove(self, case):
+        cond_set = case.conditions_set()
+        if cond_set not in self._case_dict:
+            raise KeyError("Case [tag={:s}] not contained within CaseSet.".format(case.tag))
+        
+        del self._case_dict[cond_set]
+    
+    def __len__(self):
+        return len(self._case_dict)
+    
+    def __iter__(self):
+        return self._case_dict.values().__iter__()
+        
+    def __contains__(self, case):
+        cond_set = case.conditions_set()
+        return cond_set in self._case_dict
+
 
 simple_pseudo_cases = {
     'opponent_removing_accessory':      ['male_removing_accessory', 'female_removing_accessory'],
