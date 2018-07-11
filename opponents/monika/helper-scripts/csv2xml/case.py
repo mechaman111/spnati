@@ -244,7 +244,7 @@ class Case(object):
     def states_set(self):
         return frozenset(state.to_tuple() for state in self.states)
 
-    def format_conditions(self):
+    def format_conditions(self, sort=False):
         attrs = []
         for attr, cond in self.conditions.items():
             if isinstance(cond, tuple):
@@ -255,8 +255,14 @@ class Case(object):
         for tag, counter in self.counters.items():
             attrs.append("tag:{:s}={:s}".format(tag, format_interval(counter)))
 
-        return ','.join(attrs)
+        if self.priority is not None:
+            attrs.append("priority={:d}".format(self.priority))
 
+        if not sort:
+            return ','.join(attrs)
+        else:
+            return ','.join(sorted(attrs))
+        
     def __eq__(self, other):
         if isinstance(other, Case):
             return self.conditions_set() == other.conditions_set()
