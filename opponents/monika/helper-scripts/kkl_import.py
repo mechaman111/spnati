@@ -14,7 +14,6 @@ SETUP_STRING_33   = "33***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]ua1.0.0.0_ub_uc7
 SETUP_STRING_36   = "36***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0_ub_u0_v0_uc7.0.30_ud7.0"
 SETUP_STRING_40   = "40***bc185.500.0.0.1*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v0_uc7.2.24_ud7.8"
 SETUP_STRING_68   = "68***ba50_bb6.0_bc410.500.8.0.1.0_bd6_be180_ad0.0.0.0.0.0.0.0.0.0_ae0.3.3.0.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v00_ud7.8_uc7.2.24"
-
 # SETUP_STRING_68 = "68***ba50_bb6.0_bc410.500.28.0.1.0_bd6_be180*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v00_ud7.8_uc7.2.24"
 # SETUP_STRING_68 = "68***f00*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.57.57.59.100_uf0.3.59.0_ue_ub_u0_v00_ud7.8_uc7.2.24"
 SEPARATOR = "#/]"
@@ -72,11 +71,6 @@ def open_image_file(path):
                 raise
             time.sleep(retry_interval)
 
-
-def import_as_image(code, scene_name='imported'):
-    output_path = process_kkl_code(code, scene_name)
-    return open_image_file(output_path)
-    
     
 def get_crop_box(width=600, height=1400, center_x=1000, margin_y=15):
     left = center_x - int(width // 2)
@@ -87,21 +81,33 @@ def get_crop_box(width=600, height=1400, center_x=1000, margin_y=15):
     return (left, upper, right, lower)
     
     
-def import_character(code, pose_name='imported', crop_box=None, remove_motion=True):
+def auto_crop_box(image, margin_y=15):
+    left, top, right, bottom = image.getbbox()
+    
+    out_width = right - left
+    if out_width < 600:
+        out_width = 600
+    
+    out_height = bottom - top
+    if out_height < 1400:
+        out_height = 1400
+        
+    center_x = int((right + left) / 2)
+    
+    crop_left = int(center_x - (out_width // 2))
+    crop_right = int(center_x + (out_width // 2))
+    crop_top = margin_y
+    crop_bottom = out_height + margin_y
+    
+    return (crop_left, crop_top, crop_right, crop_bottom)
+    
+    
+def import_character(code, pose_name='imported',remove_motion=True):
     if remove_motion:
         code = code + REMOVE_MOTION_CODE
         
-    img = import_as_image(code, pose_name)
-    
-    if crop_box is None:
-        crop_box = get_crop_box()
-    
-    cropped_image = img.crop(crop_box)
-    cropped_image.load()
-    
-    img.close()
-    
-    return cropped_image
+    output_path = process_kkl_code(code, pose_name)
+    return open_image_file(output_path)
     
 
 def setup_kkl_scene():
@@ -114,35 +120,131 @@ def setup_kkl_scene():
     output_path.unlink()
     
     
+def crop_and_save(img, crop_box, dest_filename):
+    cropped_img = img.crop(crop_box)
+    cropped_img.save(str(dest_filename))
+    cropped_img.close()
+    img.close()
+    
+def process_csv(infile, dest_dir):
+    setup_kkl_scene()
+    with infile.open('r', encoding='utf-8', newline='') as f:
+        reader = csv.DictReader(f, restval='')
+        for row in reader:
+            pose_name = row['name']
+            dest_filename = dest_dir.joinpath(pose_name+'.png')
+            
+            remove_motion = (row['remove_motion'].strip().lower() != 'false')
+            
+            width = row['width'].strip().lower()
+            height = row['height'].strip().lower()
+            center_x = row['center_x'].strip().lower()
+            margin_y = int(row['margin_y'].strip().lower())
+            
+            kkl_output = import_character(row['code'], pose_name, remove_motion)
+            
+            if width == 'auto' or height == 'auto' or center_x == 'auto':
+                crop_box = auto_crop_box(kkl_output, margin_y)
+            else:
+                crop_box = get_crop_box(int(width), int(height), int(center_x), margin_y)
+            
+            if dest_filename.is_file():
+                dest_filename.unlink()
+
+            crop_and_save(kkl_output, crop_box, dest_filename)
+            
+            print("Successfully exported: {:s}".format(pose_name))
+    
+
+def process_file(infile, dest_dir, **kwargs):
+    setup_kkl_scene()
+    with infile.open('r', encoding='utf-8') as f:
+        for line in f:
+            pose_name, code = line.split('=', 1)
+            pose_name = name.strip()
+            code = code.strip()
+            
+            dest_filename = dest_dir.joinpath(pose_name+'.png')
+            
+            kkl_output = import_character(code, pose_name, kwargs.get('remove_motion', True))
+            
+            if dest_filename.is_file():
+                dest_filename.unlink()
+                
+            width = int(kwargs.get('width', 600))
+            height = int(kwargs.get('height', 1400))
+            center_x = int(kwargs.get('center_x', 1000))
+            margin_y = int(kwargs.get('margin_y', 15))
+                
+            if kwargs.get('auto_crop', False):
+                crop_box = auto_crop_box(kkl_output, margin_y)
+            else:
+                crop_box = get_crop_box(width, height, center_x, margin_y)
+                
+            crop_and_save(kkl_output, crop_box, dest_filename)
+            
+            print("Successfully exported: {:s}".format(pose_name))
+            
+            
+def process_single(code, dest_dir, **kwargs):
+    setup_kkl_scene()
+    
+    if dest_dir.is_dir():
+        dest_filename = dest_dir.joinpath('out.png')
+    else:
+        dest_filename = dest_dir
+    
+    kkl_output = import_character(code, 'out', kwargs.get('remove_motion', True))
+    
+    if dest_filename.is_file():
+        dest_filename.unlink()
+        
+    width = int(kwargs.get('width', 600))
+    height = int(kwargs.get('height', 1400))
+    center_x = int(kwargs.get('center_x', 1000))
+    margin_y = int(kwargs.get('margin_y', 15))
+        
+    if kwargs.get('auto_crop', False):
+        crop_box = auto_crop_box(kkl_output, margin_y)
+    else:
+        crop_box = get_crop_box(width, height, center_x, margin_y)
+        
+    crop_and_save(kkl_output, crop_box, dest_filename)
+    
+    print("Successfully exported: out.png")
+    
+    
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Imports a pose into KisekaeLocal, saves it to an image, and automatically crops it.')
+    parser = argparse.ArgumentParser(description='Imports a pose into KisekaeLocal, and saves an automatically cropped image.')
     parser.add_argument('--width', '-w', default=600, help='Output image width.')
     parser.add_argument('--height', '-l', default=1400, help='Output image height.')
     parser.add_argument('--center-x', '-x', default=1000, help='X position to center the output image around.')
     parser.add_argument('--margin-y', '-y', default=15, help='Number of margin pixels from top when cropping output image.')
+    parser.add_argument('--auto-crop', '--auto', '-a', action='store_true', help='Automatically calculate crop with bounding box.')
     parser.add_argument('--no-remove-motion', action='store_false', dest='remove_motion', help="Do not automatically set motion parameters to 'Manual' on importing.")
-    parser.add_argument('--file', '-f', help='Load code from text file.')
-    parser.add_argument('--code', '-c', help='Load code as command line argument.')
-    parser.add_argument('dest', help='Destination file to output to.')
+    parser.add_argument('--file', '-f', help='Load codes from text file.')
+    parser.add_argument('--csv', '-c', help='Load codes from a CSV file.')
+    parser.add_argument('--code', '-i', help='Load code as command line argument. [dest_dir] is the destination image path in this case.')
+    parser.add_argument('dest_dir', help='Destination directory to output to.')
     args = parser.parse_args()
     
-    dest_filename = Path(args.dest).resolve()
+    kwargs = {
+        'width' : args.width,
+        'height' : args.height,
+        'center_x' : args.center_x,
+        'margin_y' : args.margin_y,
+        'auto_crop' : args.auto_crop,
+        'remove_motion' : args.remove_motion,
+    }
     
-    if args.file is not None:
-        code = Path(args.file).read_text(encoding='utf-8')
+    dest_dir = Path(args.dest_dir).resolve()
+    
+    if args.csv is not None:
+        process_csv(Path(args.csv), dest_dir, **kwargs)
+    elif args.file is not None:
+        process_file(Path(args.file), dest_dir, **kwargs)
     elif args.code is not None:
-        code = args.code
+        process_single(args.code, dest_dir, **kwargs)
     else:
-        raise ValueError("Must provide at least one of --file or --code.")
-    
-    if dest_filename.is_file():
-        dest_filename.unlink()
-    
-    crop_box = get_crop_box(args.width, args.height, args.center_x, args.margin_y)
-    
-    setup_kkl_scene()
-    
-    kkl_output = import_character(code, dest_filename.stem, crop_box, args.remove_motion)
-    kkl_output.save(str(dest_filename))
-    kkl_output.close()
+        raise ValueError("Must provide at least one of --csv, --file, or --code.")
     
