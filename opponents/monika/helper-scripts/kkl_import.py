@@ -1,3 +1,4 @@
+import argparse
 import os
 import os.path as osp
 from pathlib import Path
@@ -77,13 +78,14 @@ def import_as_image(code, scene_name='imported'):
     return open_image_file(output_path)
     
     
-def get_crop_box(width=600, height=1400, center_x = 1000, margin_y=15):
+def get_crop_box(width=600, height=1400, center_x=1000, margin_y=15):
     left = center_x - int(width // 2)
     right = center_x + int(width // 2)
     upper = margin_y
     lower = height + margin_y
     
     return (left, upper, right, lower)
+    
     
 def import_character(code, pose_name='imported', crop_box=None, remove_motion=True):
     if remove_motion:
@@ -113,15 +115,34 @@ def setup_kkl_scene():
     
     
 if __name__ == '__main__':
-    dest_filename = Path(sys.argv[1]).resolve()
-    code = sys.argv[2]
+    parser = argparse.ArgumentParser(description='Imports a pose into KisekaeLocal, saves it to an image, and automatically crops it.')
+    parser.add_argument('--width', '-w', default=600, help='Output image width.')
+    parser.add_argument('--height', '-l', default=1400, help='Output image height.')
+    parser.add_argument('--center-x', '-x', default=1000, help='X position to center the output image around.')
+    parser.add_argument('--margin-y', '-y', default=15, help='Number of margin pixels from top when cropping output image.')
+    parser.add_argument('--no-remove-motion', action='store_false', dest='remove_motion', help="Do not automatically set motion parameters to 'Manual' on importing.")
+    parser.add_argument('--file', '-f', help='Load code from text file.')
+    parser.add_argument('--code', '-c', help='Load code as command line argument.')
+    parser.add_argument('dest', help='Destination file to output to.')
+    args = parser.parse_args()
+    
+    dest_filename = Path(args.dest).resolve()
+    
+    if args.file is not None:
+        code = Path(args.file).read_text(encoding='utf-8')
+    elif args.code is not None:
+        code = args.code
+    else:
+        raise ValueError("Must provide at least one of --file or --code.")
     
     if dest_filename.is_file():
         dest_filename.unlink()
     
+    crop_box = get_crop_box(args.width, args.height, args.center_x, args.margin_y)
+    
     setup_kkl_scene()
     
-    kkl_output = import_character(code, dest_filename.stem)
+    kkl_output = import_character(code, dest_filename.stem, crop_box, args.remove_motion)
     kkl_output.save(str(dest_filename))
     kkl_output.close()
     
