@@ -13,13 +13,12 @@ import csv
 import os
 import os.path as osp
 from pathlib import Path
+import re
 import sys
 import time
 
 from PIL import Image
 
-
-REMOVE_MOTION_CODE = "_ad0.0.0.0.0.0.0.0.0.0_ae0.3.3.0.0"
 
 SETUP_STRING_33   = "33***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]ua1.0.0.0_ub_uc7.0.30_ud7.0"
 SETUP_STRING_36   = "36***bc185.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0_ub_u0_v0_uc7.0.30_ud7.0"
@@ -27,7 +26,152 @@ SETUP_STRING_40   = "40***bc185.500.0.0.1*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_
 SETUP_STRING_68   = "68***ba50_bb6.0_bc410.500.8.0.1.0_bd6_be180_ad0.0.0.0.0.0.0.0.0.0_ae0.3.3.0.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_e00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v00_ud7.8_uc7.2.24"
 SEPARATOR = "#/]"
 
+CODE_SPLIT_REGEX = r"(\d+?)\*\*\*?([^\#\/\]]+)(?:\#\/\](.+))?"
 
+
+class KisekaeComponent(object):
+    def __init__(self, data):
+        """
+        Represents a subcomponent of a Kisekae character or scene.
+        
+        Attributes:
+            id (str): An ID identifying this subcomponent's type.
+            prefix (str): A prefix identifying this subcomponent.
+            attributes (list of str): The attributes associated with this component.
+        """
+        
+        if data[1].isalpha():
+            self.id = data[0:2]      # code is 2 letters
+            self.prefix = data[0:2]
+        else:
+            self.id = data[0]
+            self.prefix = data[0:3]  # code is 1 letter + 2 digits
+        
+        self.attributes = data[len(self.prefix):].split('.')
+
+    def __str__(self):
+        return self.prefix + '.'.join(self.attributes)
+
+
+class KisekaeCharacter(object):
+    def __init__(self, character_data):
+        """
+        Represents a collection of subcodes.
+        
+        Attributes:
+            subcodes (list of KisekaeComponent): The subcodes contained within this object.
+        """
+        
+        self.subcodes = []
+        
+        for subcode in character_data.split('_'):
+            self.subcodes.append(KisekaeComponent(subcode))
+
+    def __str__(self):
+        return '_'.join(str(sc) for sc in self.subcodes)
+        
+    def find(self, subcode_id):
+        """
+        Find the first inner KisekaeComponent with the given `subcode_id`.
+        """
+        
+        for sc in self.subcodes:
+            if sc.id == subcode_id:
+                return sc
+                
+    def iter(self, subcode_id):
+        """
+        Iterate over all inner KisekaeComponents with the given `subcode_id`
+        """
+        
+        return filter(lambda sc: sc.id == subcode_id, self.subcodes)
+
+
+class KisekaeCode(object):
+    def __init__(self, code):
+        """
+        Represents an entire importable Kisekae code, possibly containing
+        character data and scene data.
+        
+        Attributes:
+            version (int): The version of Kisekae used to generate this code.
+            scene (KisekaeCharacter): Container for scene data and attributes.
+            characters (list of KisekaeCharacter): List of characters contained in the code.
+        """
+        
+        m = re.match(CODE_SPLIT_REGEX, code.strip())
+        if m is None:
+            return None
+            
+        version, character_data, scene_data = m.groups()
+        
+        self.version = int(version)
+        self.characters = []
+        
+        if scene_data is not None:
+            self.scene = KisekaeCharacter(scene_data)
+        else:
+            self.scene = None
+        
+        for character in character_data.split('*'):
+            if character == '0':
+                continue
+                
+            self.characters.append(KisekaeCharacter(character))
+            
+    def __str__(self):
+        ret = str(self.version) + '**'
+        
+        if self.scene is not None:
+            for i in range(9):
+                if i >= len(self.characters):
+                    ret += '*0'
+                else:
+                    ret += '*' + str(self.characters[i])
+                    
+            ret += SEPARATOR + str(self.scene)
+        else:
+            ret += str(self.characters[0])
+        
+        return ret
+            
+    
+def disable_character_motion(character):
+    """
+    Disables automatic motion for a character.
+    
+    Args:
+        character (KisekaeCharacter): The character to modify.
+    """
+    
+    ad = character.find('ad')
+    ae = character.find('ae')
+    
+    if ad is not None:
+        ad.attributes = ['0'] * 10
+        
+    if ae is not None:
+        ae.attributes = ['0', '3', '3', '0', '0']
+    
+    return character
+    
+
+def close_character_vagina(character):
+    """
+    Closes / un-spreads a Kisekae character's vagina.
+    
+    Args:
+        character (KisekaeCharacter): The character to modify.
+    """
+    
+    dc = character.find('dc')
+    
+    if dc is not None:
+        dc.attributes[5] = '0'
+    
+    return character
+    
+    
 def get_kkl_directory():
     """
     Retrieve the path to the main KisekaeLocal application directory.
@@ -145,21 +289,26 @@ def auto_crop_box(image, margin_y=15):
     return (crop_left, crop_top, crop_right, crop_bottom)
     
     
-def import_character(code, pose_name='imported', remove_motion=True):
+def import_character(import_code, pose_name='imported', remove_motion=True, close_vagina=True):
     """
     Import a code into KisekaeLocal and open the generated image file.
     
     Args:
-        code (str): The Kisekae code to import.
+        import_code (str): The Kisekae code to import.
         pose_name (str): A pose name to use when importing.
         remove_motion (bool): If True (default), then a code fragment will be automatically appended to the imported code to disable unwanted breast motion.
             This may potentially override settings from the imported code itself, so be wary.
     """
     
+    code = KisekaeCode(import_code)
+    
     if remove_motion:
-        code = code + REMOVE_MOTION_CODE
+        disable_character_motion(code.characters[0])
+    
+    if close_vagina:    
+        close_character_vagina(code.characters[0])
         
-    output_path = process_kkl_code(code, pose_name)
+    output_path = process_kkl_code(str(code), pose_name)
     
     img = open_image_file(output_path)
     img.load()
@@ -174,7 +323,7 @@ def setup_kkl_scene():
     This will clear away unnecessary characters, backgrounds, objects, etc.
     """
     
-    output_path = process_kkl_code(SETUP_STRING_68, 'scene_setup_file')
+    output_path = process_kkl_code(SETUP_STRING_68, 'scene_setup')
     output_path.unlink()
     
     sys.stdout.write("done.\n")
@@ -207,8 +356,8 @@ def process_csv(infile, dest_dir, **kwargs):
         dest_dir (pathlib.Path): The destination folder to save to.
     
     Kwargs:
-        stage (int, optional): If set, then only codes for this stage will be imported.
-        pose (str, optional): If set, then only codes for this pose will be imported.
+        stage (list of int, optional): If set, then only codes for these stages will be imported.
+        pose (list of str, optional): If set, then only codes for these poses will be imported.
     """
     
     setup_kkl_scene()
@@ -220,24 +369,25 @@ def process_csv(infile, dest_dir, **kwargs):
                 
             stage = int(row['stage'])
             
-            if kwargs['stage'] is not None and kwargs['stage'] != stage:
+            if kwargs['stage'] is not None and len(kwargs['stage']) > 0 and stage not in kwargs['stage']:
                 continue
             
-            if kwargs['pose'] is not None and kwargs['pose'] != row['pose']:
+            if kwargs['pose'] is not None and len(kwargs['stage']) > 0 and row['pose'] not in kwargs['pose']:
                 continue
                 
             pose_name = '{:d}-{:s}'.format(stage, row['pose'])
                 
             dest_filename = dest_dir.joinpath(pose_name+'.png')
             
-            remove_motion = (row['remove_motion'].strip().lower() != 'false')
+            remove_motion = (row.get('remove_motion', 'true').strip().lower() != 'false')
+            close_vagina = (row.get('close_vagina', 'true').strip().lower() != 'false')
             
             width = row['width'].strip().lower()
             height = row['height'].strip().lower()
             center_x = row['center_x'].strip().lower()
             margin_y = int(row['margin_y'].strip().lower())
             
-            kkl_output = import_character(row['code'], pose_name, remove_motion)
+            kkl_output = import_character(row['code'], pose_name, remove_motion=remove_motion, close_vagina=close_vagina)
             
             if width == 'auto' or height == 'auto' or center_x == 'auto':
                 crop_box = auto_crop_box(kkl_output, margin_y)
@@ -282,7 +432,7 @@ def process_file(infile, dest_dir, **kwargs):
             
             dest_filename = dest_dir.joinpath(pose_name+'.png')
             
-            kkl_output = import_character(code, pose_name, kwargs.get('remove_motion', True))
+            kkl_output = import_character(code, pose_name, **kwargs)
             
             if dest_filename.is_file():
                 dest_filename.unlink()
@@ -292,7 +442,7 @@ def process_file(infile, dest_dir, **kwargs):
             center_x = int(kwargs.get('center_x', 1000))
             margin_y = int(kwargs.get('margin_y', 15))
                 
-            if kwargs.get('auto_crop', False):
+            if kwargs.get('auto_crop', True):
                 crop_box = auto_crop_box(kkl_output, margin_y)
             else:
                 crop_box = get_crop_box(width, height, center_x, margin_y)
@@ -331,7 +481,7 @@ def process_single(code, dest, **kwargs):
     else:
         dest_filename = dest
     
-    kkl_output = import_character(code, 'out', kwargs.get('remove_motion', True))
+    kkl_output = import_character(code, 'out', **kwargs)
     
     if dest_filename.is_file():
         dest_filename.unlink()
@@ -341,7 +491,7 @@ def process_single(code, dest, **kwargs):
     center_x = int(kwargs.get('center_x', 1000))
     margin_y = int(kwargs.get('margin_y', 15))
         
-    if kwargs.get('auto_crop', False):
+    if kwargs.get('auto_crop', True):
         crop_box = auto_crop_box(kkl_output, margin_y)
     else:
         crop_box = get_crop_box(width, height, center_x, margin_y)
@@ -358,10 +508,11 @@ if __name__ == '__main__':
     parser.add_argument('--height', '-l', default=1400, help='Output image height.')
     parser.add_argument('--center-x', '-x', default=1000, help='X position to center the output image around.')
     parser.add_argument('--margin-y', '-y', default=15, help='Number of margin pixels from top when cropping output image.')
-    parser.add_argument('--auto-crop', '--auto', '-a', action='store_true', help='Automatically calculate crop with bounding box.')
-    parser.add_argument('--stage', type=int, help='(CSV-only) Import codes for a particular stage only')
-    parser.add_argument('--pose', help='(CSV-only) Import codes for a particular pose only')
+    parser.add_argument('--manual-crop', '--manual', '-m', action='store_false', dest='auto_crop', help='Do not automatically calculate crop with bounding box.')
+    parser.add_argument('--stage', nargs='*', type=int, help='(CSV-only) Import codes for a particular stage or set of stages only.')
+    parser.add_argument('--pose', nargs='*', help='(CSV-only) Import codes for a particular pose or set of poses only.')
     parser.add_argument('--no-remove-motion', action='store_false', dest='remove_motion', help="Do not automatically set motion parameters to 'Manual' on importing.")
+    parser.add_argument('--no-close-vagina', action='store_false', dest='close_vagina', help="Do not automatically close the flaps of a female character's vagina on importing.")
     parser.add_argument('--file', '-f', help='Load codes from text file.')
     parser.add_argument('--csv', '-c', help='Load codes from a CSV file.')
     parser.add_argument('--code', '-i', help='Load code as command line argument. [dest_dir] is the destination image path in this case.')

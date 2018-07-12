@@ -39,6 +39,7 @@ if __name__ == '__main__':
     
     char = KisekaeCharacter(sys.argv[1])
     
-    for key, comp_list in char.components.items():
-        for comp in comp_list:
-            print("{}: {}".format(key, comp))
+    with open(sys.argv[2], 'w') as f:
+        for key, comp_list in sorted(char.components.items(), key=lambda kv: kv[0]):
+            for comp in comp_list:
+                f.write("{}: {}\n".format(key, comp))
