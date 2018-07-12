@@ -4,7 +4,7 @@ import os
 import os.path as osp
 import sys
 
-import behaviour_parser as bp
+import csv2xml.behaviour_parser as bp
 import csv2xml as c2x
 #from csv2xml import xml_to_lineset, get_unique_line_count
 
