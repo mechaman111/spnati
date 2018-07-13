@@ -30,7 +30,7 @@ CODE_SPLIT_REGEX = r"(\d+?)\*\*\*?([^\#\/\]]+)(?:\#\/\](.+))?"
 
 
 class KisekaeComponent(object):
-    def __init__(self, data):
+    def __init__(self, data=None):
         """
         Represents a subcomponent of a Kisekae character or scene.
         
@@ -40,21 +40,28 @@ class KisekaeComponent(object):
             attributes (list of str): The attributes associated with this component.
         """
         
-        if data[1].isalpha():
-            self.id = data[0:2]      # code is 2 letters
-            self.prefix = data[0:2]
+        if isinstance(data, KisekaeComponent):
+            self.id = data.id
+            self.prefix = data.prefix
+            self.attributes = data.attributes.copy()
+        elif isinstance(data, str):
+            if data[1].isalpha():
+                self.id = data[0:2]      # code is 2 letters
+                self.prefix = data[0:2]
+            else:
+                self.id = data[0]
+                self.prefix = data[0:3]  # code is 1 letter + 2 digits
+            
+            self.attributes = data[len(self.prefix):].split('.')
         else:
-            self.id = data[0]
-            self.prefix = data[0:3]  # code is 1 letter + 2 digits
-        
-        self.attributes = data[len(self.prefix):].split('.')
+            raise ValueError("`data` must be either str or KisekaeComponent, not " + type(data).__name__)
 
     def __str__(self):
         return self.prefix + '.'.join(self.attributes)
 
 
 class KisekaeCharacter(object):
-    def __init__(self, character_data):
+    def __init__(self, character_data=None):
         """
         Represents a collection of subcodes.
         
@@ -64,9 +71,15 @@ class KisekaeCharacter(object):
         
         self.subcodes = []
         
-        for subcode in character_data.split('_'):
-            self.subcodes.append(KisekaeComponent(subcode))
-
+        if isinstance(character_data, str):
+            for subcode in character_data.split('_'):
+                self.subcodes.append(KisekaeComponent(subcode))
+        elif isinstance(character_data, KisekaeCharacter):
+            for subcode in character_data.subcodes:
+                self.subcodes.append(KisekaeComponent(subcode))
+        else:
+            raise ValueError("`character_data` must be either str or KisekaeCharacter, not " + type(data).__name__)
+            
     def __str__(self):
         return '_'.join(str(sc) for sc in self.subcodes)
         
@@ -101,7 +114,7 @@ class KisekaeCode(object):
         
         m = re.match(CODE_SPLIT_REGEX, code.strip())
         if m is None:
-            return None
+            return
             
         version, character_data, scene_data = m.groups()
         
@@ -172,14 +185,56 @@ def close_character_vagina(character):
     return character
     
     
+def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=True, close_vagina=True):
+    code = KisekaeCode(in_code)
+    
+    if remove_motion:
+        disable_character_motion(code.characters[0])
+    
+    if close_vagina:    
+        close_character_vagina(code.characters[0])
+    
+    gc = code.characters[0].find('gc')
+    dc = code.characters[0].find('dc')
+    
+    cur_blush = int(gc.attributes[0])
+    cur_anger = int(gc.attributes[1])
+    cur_juice = int(dc.attributes[0])
+    
+    gc.attributes = [str(blush), str(anger)]
+    dc.attributes[0] = str(juice)
+    
+    return code
+    
+def _get_wine_kkl_directory():
+    # look for kkl path under Wine:
+    username = Path.home().stem
+    wine_path = Path.home() / '.wine' / 'drive_c' / 'users' / username / 'Application Data' / "kkl" / "Local Store"
+    
+    return wine_path
+    
 def get_kkl_directory():
     """
     Retrieve the path to the main KisekaeLocal application directory.
     """
     
     if sys.platform == 'darwin':
-        return Path.home() / "Library" / "Application Support" / "kkl" / "Local Store"
-    else :
+        native_path = Path.home() / "Library" / "Application Support" / "kkl" / "Local Store"
+        if native_path.is_dir():
+            return native_path
+            
+        p = _get_wine_kkl_directory()
+        if p.is_dir():
+            return p
+        else:
+            raise FileNotFoundError("Could not find path to KKL.")
+    elif sys.platform.startswith('linux'):
+        p = _get_wine_kkl_directory()
+        if p.is_dir():
+            return p
+        else:
+            raise FileNotFoundError("Could not find path to KKL.")
+    else:   # We're on windows, presumably
         return Path(os.getenv('APPDATA')) / "kkl" / "Local Store"
 
 
@@ -289,26 +344,16 @@ def auto_crop_box(image, margin_y=15):
     return (crop_left, crop_top, crop_right, crop_bottom)
     
     
-def import_character(import_code, pose_name='imported', remove_motion=True, close_vagina=True):
+def import_character(import_code, pose_name='imported'):
     """
     Import a code into KisekaeLocal and open the generated image file.
     
     Args:
-        import_code (str): The Kisekae code to import.
+        import_code (str or KisekaeCode): The Kisekae code to import.
         pose_name (str): A pose name to use when importing.
-        remove_motion (bool): If True (default), then a code fragment will be automatically appended to the imported code to disable unwanted breast motion.
-            This may potentially override settings from the imported code itself, so be wary.
     """
-    
-    code = KisekaeCode(import_code)
-    
-    if remove_motion:
-        disable_character_motion(code.characters[0])
-    
-    if close_vagina:    
-        close_character_vagina(code.characters[0])
         
-    output_path = process_kkl_code(str(code), pose_name)
+    output_path = process_kkl_code(str(import_code), pose_name)
     
     img = open_image_file(output_path)
     img.load()
@@ -387,7 +432,8 @@ def process_csv(infile, dest_dir, **kwargs):
             center_x = row['center_x'].strip().lower()
             margin_y = int(row['margin_y'].strip().lower())
             
-            kkl_output = import_character(row['code'], pose_name, remove_motion=remove_motion, close_vagina=close_vagina)
+            process_code = preprocess_character_code(row['code'], int(row['blush']), int(row['anger']), int(row['juice']), remove_motion, close_vagina)
+            kkl_output = import_character(process_code, pose_name)
             
             if width == 'auto' or height == 'auto' or center_x == 'auto':
                 crop_box = auto_crop_box(kkl_output, margin_y)
@@ -432,7 +478,8 @@ def process_file(infile, dest_dir, **kwargs):
             
             dest_filename = dest_dir.joinpath(pose_name+'.png')
             
-            kkl_output = import_character(code, pose_name, **kwargs)
+            process_code = preprocess_character_code(code, **kwargs)
+            kkl_output = import_character(process_code, pose_name)
             
             if dest_filename.is_file():
                 dest_filename.unlink()
@@ -481,7 +528,8 @@ def process_single(code, dest, **kwargs):
     else:
         dest_filename = dest
     
-    kkl_output = import_character(code, 'out', **kwargs)
+    process_code = preprocess_character_code(code, **kwargs)
+    kkl_output = import_character(process_code, pose_name)
     
     if dest_filename.is_file():
         dest_filename.unlink()
