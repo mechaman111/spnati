@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import logging
 import re
 
 from .utils import parse_interval, format_interval
@@ -146,6 +147,9 @@ class Case(object):
         if self.priority is None:
             self.priority = cond_priority
             
+        if self.tag not in self.ALL_TAGS:
+            logging.error("Case tag not recognized: %s", self.tag)
+            
     def copy(self):
         c = Case(self.tag, None, self.priority)
         c.conditions = self.conditions.copy()
@@ -177,7 +181,7 @@ class Case(object):
                 if attr not in cls.POSSIBLE_ATTRIBUTES:
                     for possible_attr in cls.POSSIBLE_ATTRIBUTES:
                         if attr.lower() == possible_attr.lower():
-                            print("[Info] Normalized attribute {} to {}".format(attr, possible_attr))
+                            logging.info("Normalized attribute %s to %s", attr, possible_attr)
                             attr = possible_attr
                             break
 
@@ -204,7 +208,7 @@ class Case(object):
                     attr_conditions[attr] = val.strip()
 
                     if attr not in cls.ID_CONDITIONS:
-                        print("[Warning] case condition type not recognized: {}".format(attr))
+                        logging.warning("Case condition type not recognized: %s", attr)
 
         return attr_conditions, counters, tag, priority
 
