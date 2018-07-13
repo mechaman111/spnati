@@ -2,6 +2,7 @@ from .state import State
 from .case import Case, CaseSet
 from .stage import Stage
 from .opponent import Opponent
+from .epilogue import TextBox, Screen, Epilogue
 from .csv_format import csv_to_lineset, lineset_to_csv
 from .xml_format import xml_to_lineset, lineset_to_xml
 from .opponent_utils import find_opponents_directory, config_default_opponents_dir

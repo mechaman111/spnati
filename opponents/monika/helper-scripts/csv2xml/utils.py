@@ -88,9 +88,13 @@ def get_unique_line_count(lineset):
 
     for case in all_cases(lineset):
         for state in case.states:
-            unique_lines.add(state.to_tuple())
+            t = ''
+            if state.text is not None:
+                t = state.text.strip()
+                
+            unique_lines.add(t)
             if case.is_targeted():
-                unique_targeted_lines.add(state.to_tuple())
+                unique_targeted_lines.add(t)
 
         n_cases += 1
         if case.is_targeted():
