@@ -22,16 +22,18 @@ if ('serviceWorker' in navigator) {
     });
     
     navigator.serviceWorker.addEventListener('controllerchange', function () {
-        /* Now that we can send messages to the SW, start preloading queued URLs. */
-        console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
-        for (var i=0;i<preload_queue.length;i++) {
-            var queued_request = preload_queue[i];
-            send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
+        if(navigator.serviceWorker.controller) {
+            /* Now that we can send messages to the SW, start preloading queued URLs. */
+            console.log("Sending "+preload_queue.length.toString()+" queued preload requests to SW...");
+            for (var i=0;i<preload_queue.length;i++) {
+                var queued_request = preload_queue[i];
+                send_msg_to_sw({ 'type': 'cache', 'urls': queued_request });
+            }
+    
+            /* Also set the debug status. */
+            set_sw_debug(DEBUG);
+            set_sw_verbose(DEBUG);
         }
-
-        /* Also set the debug status. */
-        set_sw_debug(DEBUG);
-        set_sw_verbose(DEBUG);
     });
     
     /* Array of images to cache in the background */
