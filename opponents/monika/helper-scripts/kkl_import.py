@@ -174,25 +174,25 @@ class KisekaeCharacter(object):
         else:
             raise ValueError("Item must be either a KisekaeComponent or a subcode ID string.")
             
-    def find(self, subcode_id):
+    def find(self, subcode_prefix):
         """
-        Find the first inner KisekaeComponent with the given `subcode_id`.
+        Find the first inner KisekaeComponent with the given `subcode_prefix`.
         """
         
         for sc in self.subcodes:
-            if sc.id == subcode_id:
+            if sc.prefix == subcode_prefix:
                 return sc
                 
-    def iter(self, subcode_id):
+    def iter(self, subcode_prefix):
         """
-        Iterate over all inner KisekaeComponents with the given `subcode_id`
+        Iterate over all inner KisekaeComponents with the given `subcode_prefix`
         """
         
-        return filter(lambda sc: sc.id == subcode_id, self.subcodes)
+        return filter(lambda sc: sc.prefix.startswith(subcode_prefix), self.subcodes)
 
 
 class KisekaeCode(object):
-    def __init__(self, code):
+    def __init__(self, code=None):
         """
         Represents an entire importable Kisekae code, possibly containing
         character data and scene data.
@@ -203,25 +203,45 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        m = re.match(CODE_SPLIT_REGEX, code.strip())
-        if m is None:
-            return
-            
-        version, character_data, scene_data = m.groups()
-        
-        self.version = int(version)
+        self.version = 68
         self.characters = []
+        self.scene = None
         
-        if scene_data is not None:
-            self.scene = KisekaeCharacter(scene_data)
-        else:
-            self.scene = None
-        
-        for character in character_data.split('*'):
-            if character == '0':
-                continue
+        if isinstance(code, KisekaeCode):
+            self.version = code.version
+    
+            for character in code:
+                self.characters.append(KisekaeCharacter(character))
+            
+            if code.scene is not None:
+                self.scene = KisekaeCharacter(code.scene)
+            
+            return    
+        elif isinstance(code, KisekaeCharacter):
+            self.characters.append(KisekaeCharacter(code))
+            return
+        elif isinstance(code, str):
+            m = re.match(CODE_SPLIT_REGEX, code.strip())
+            if m is None:
+                return
                 
-            self.characters.append(KisekaeCharacter(character))
+            version, character_data, scene_data = m.groups()
+            
+            self.version = int(version)
+            self.characters = []
+            
+            if scene_data is not None:
+                self.scene = KisekaeCharacter(scene_data)
+            else:
+                self.scene = None
+            
+            for character in character_data.split('*'):
+                if character == '0':
+                    continue
+                    
+                self.characters.append(KisekaeCharacter(character))
+        else:
+            raise ValueError("`code` must be either a KisekaeCode, KisekaeCharacter, or str, not " + type(data).__name__)
             
     def __str__(self):
         ret = str(self.version) + '**'
@@ -519,6 +539,25 @@ def crop_and_save(img, crop_box, dest_filename):
     img.close()
     
     
+def read_ce_pose_file(path):
+    """
+    Read a pose file in the format used by the CE, discarding cropping information.
+    """
+    
+    poses = {}
+    
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            try:
+                pose_name, code = line.split('=', 1)
+            except ValueError:
+                continue
+            
+            poses[pose_name.strip()] = code.strip()
+    
+    return poses
+    
+    
 def process_csv(infile, dest_dir, **kwargs):
     """
     Import and process a set of Kisekae codes listed in a CSV file.
@@ -599,7 +638,11 @@ def process_file(infile, dest_dir, **kwargs):
     setup_kkl_scene()
     with infile.open('r', encoding='utf-8') as f:
         for line in f:
-            pose_name, code = line.split('=', 1)
+            try:
+                pose_name, code = line.split('=', 1)
+            except ValueError:
+                continue
+                
             pose_name = name.strip()
             code = code.strip()
             
@@ -656,7 +699,7 @@ def process_single(code, dest, **kwargs):
         dest_filename = dest
     
     process_code = preprocess_character_code(code, **kwargs)
-    kkl_output = import_character(process_code, pose_name)
+    kkl_output = import_character(process_code, dest_filename.stem)
     
     if dest_filename.is_file():
         dest_filename.unlink()
