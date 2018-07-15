@@ -56,6 +56,39 @@ class KisekaeComponent(object):
         else:
             raise ValueError("`data` must be either str or KisekaeComponent, not " + type(data).__name__)
 
+    def __eq__(self, other):
+        if isinstance(other, KisekaeComponent):
+            if self.id != other.id or self.prefix != other.prefix or len(self.attributes) != len(other.attributes):
+                return False
+            
+            for x, y in zip(self.attributes, other.attributes):
+                if x != y:
+                    return False
+            
+            return True
+        elif isinstance(other, str):
+            return str(self) == other
+        else:
+            raise NotImplemented("KisekaeComponents can only be compared to other Components or strings.")
+            
+    def __len__(self):
+        return len(self.attributes)
+
+    def __iter__(self):
+        return self.attributes.__iter__()
+        
+    def __getitem__(self, key):
+        return self.attributes[key]
+        
+    def __setitem__(self, key, val):
+        self.attributes[key] = str(val)
+    
+    def __delitem__(self, key):
+        del self.attributes[key]
+
+    def __contains__(self, item):
+        return self.attributes.__contains__(self, item)
+
     def __str__(self):
         return self.prefix + '.'.join(self.attributes)
 
@@ -83,25 +116,83 @@ class KisekaeCharacter(object):
     def __str__(self):
         return '_'.join(str(sc) for sc in self.subcodes)
         
-    def find(self, subcode_id):
+    def __len__(self):
+        return len(self.subcodes)
+
+    def __iter__(self):
+        return self.subcodes.__iter__()
+        
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return self.subcodes[key]
+        elif isinstance(key, str):
+            v = self.find(key)
+            if v is None:
+                raise KeyError("No subcode with ID {:s} in this character".format(key))
+            return v
+        else:
+            raise ValueError("Index value must be either an int or a subcode ID string.")
+        
+    def __setitem__(self, key, val):
+        if not isinstance(val, KisekaeComponent):
+            raise ValueError("Assignment value must be a KisekaeComponent.")
+        
+        if isinstance(key, int):
+            self.subcodes[key] = val
+        elif isinstance(key, str):
+            idx = None
+            
+            for i, sc in enumerate(self.subcodes):
+                if sc.id == key:
+                    idx = i
+                    break
+            else:
+                raise KeyError("No subcode with ID {:s} in this character".format(key))
+                
+            self.subcodes[idx] = val
+            
+    def __delitem__(self, key):
+        if isinstance(key, int):
+            del self.subcodes[key]
+        elif isinstance(key, str):
+            idx = None
+            
+            for i, sc in enumerate(self.subcodes):
+                if sc.id == key:
+                    idx = i
+                    break
+            else:
+                raise KeyError("No subcode with ID {:s} in this character".format(key))
+                
+            del self.subcodes[idx]
+            
+    def __contains__(self, item):
+        if isinstance(item, KisekaeComponent):
+            return self.subcodes.__contains__(self, item)
+        elif isinstance(item, str):
+            return self.find(item) is not None
+        else:
+            raise ValueError("Item must be either a KisekaeComponent or a subcode ID string.")
+            
+    def find(self, subcode_prefix):
         """
-        Find the first inner KisekaeComponent with the given `subcode_id`.
+        Find the first inner KisekaeComponent with the given `subcode_prefix`.
         """
         
         for sc in self.subcodes:
-            if sc.id == subcode_id:
+            if sc.prefix == subcode_prefix:
                 return sc
                 
-    def iter(self, subcode_id):
+    def iter(self, subcode_prefix):
         """
-        Iterate over all inner KisekaeComponents with the given `subcode_id`
+        Iterate over all inner KisekaeComponents with the given `subcode_prefix`
         """
         
-        return filter(lambda sc: sc.id == subcode_id, self.subcodes)
+        return filter(lambda sc: sc.prefix.startswith(subcode_prefix), self.subcodes)
 
 
 class KisekaeCode(object):
-    def __init__(self, code):
+    def __init__(self, code=None):
         """
         Represents an entire importable Kisekae code, possibly containing
         character data and scene data.
@@ -112,25 +203,45 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        m = re.match(CODE_SPLIT_REGEX, code.strip())
-        if m is None:
-            return
-            
-        version, character_data, scene_data = m.groups()
-        
-        self.version = int(version)
+        self.version = 68
         self.characters = []
+        self.scene = None
         
-        if scene_data is not None:
-            self.scene = KisekaeCharacter(scene_data)
-        else:
-            self.scene = None
-        
-        for character in character_data.split('*'):
-            if character == '0':
-                continue
+        if isinstance(code, KisekaeCode):
+            self.version = code.version
+    
+            for character in code:
+                self.characters.append(KisekaeCharacter(character))
+            
+            if code.scene is not None:
+                self.scene = KisekaeCharacter(code.scene)
+            
+            return    
+        elif isinstance(code, KisekaeCharacter):
+            self.characters.append(KisekaeCharacter(code))
+            return
+        elif isinstance(code, str):
+            m = re.match(CODE_SPLIT_REGEX, code.strip())
+            if m is None:
+                return
                 
-            self.characters.append(KisekaeCharacter(character))
+            version, character_data, scene_data = m.groups()
+            
+            self.version = int(version)
+            self.characters = []
+            
+            if scene_data is not None:
+                self.scene = KisekaeCharacter(scene_data)
+            else:
+                self.scene = None
+            
+            for character in character_data.split('*'):
+                if character == '0':
+                    continue
+                    
+                self.characters.append(KisekaeCharacter(character))
+        else:
+            raise ValueError("`code` must be either a KisekaeCode, KisekaeCharacter, or str, not " + type(data).__name__)
             
     def __str__(self):
         ret = str(self.version) + '**'
@@ -147,6 +258,24 @@ class KisekaeCode(object):
             ret += str(self.characters[0])
         
         return ret
+        
+    def __len__(self):
+        return len(self.characters)
+
+    def __iter__(self):
+        return self.characters.__iter__()
+        
+    def __getitem__(self, key):
+        return self.characters[key]
+        
+    def __setitem__(self, key, val):
+        self.characters[key] = str(val)
+    
+    def __delitem__(self, key):
+        del self.characters[key]
+
+    def __contains__(self, item):
+        return self.characters.__contains__(self, item)
             
     
 def disable_character_motion(character):
@@ -157,14 +286,15 @@ def disable_character_motion(character):
         character (KisekaeCharacter): The character to modify.
     """
     
-    ad = character.find('ad')
-    ae = character.find('ae')
-    
-    if ad is not None:
-        ad.attributes = ['0'] * 10
+    try:
+        character['ad'].attributes = ['0'] * 10
+    except KeyError:
+        pass
         
-    if ae is not None:
-        ae.attributes = ['0', '3', '3', '0', '0']
+    try:
+        character['ae'].attributes = ['0', '3', '3', '0', '0']
+    except KeyError:
+        pass
     
     return character
     
@@ -177,10 +307,10 @@ def close_character_vagina(character):
         character (KisekaeCharacter): The character to modify.
     """
     
-    dc = character.find('dc')
-    
-    if dc is not None:
-        dc.attributes[5] = '0'
+    try:
+        character['dc'][5] = '0'
+    except KeyError:
+        pass
     
     return character
     
@@ -194,17 +324,19 @@ def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=
     if close_vagina:    
         close_character_vagina(code.characters[0])
     
-    gc = code.characters[0].find('gc')
-    dc = code.characters[0].find('dc')
-    
-    cur_blush = int(gc.attributes[0])
-    cur_anger = int(gc.attributes[1])
-    cur_juice = int(dc.attributes[0])
-    
-    gc.attributes = [str(blush), str(anger)]
-    dc.attributes[0] = str(juice)
+    try:
+        code[0]['gc'][0] = blush
+        code[0]['gc'][1] = anger
+    except KeyError:
+        pass
+        
+    try:
+        code[0]['dc'][0] = juice
+    except KeyError:
+        pass
     
     return code
+    
     
 def _get_wine_kkl_directory():
     # look for kkl path under Wine:
@@ -212,6 +344,7 @@ def _get_wine_kkl_directory():
     wine_path = Path.home() / '.wine' / 'drive_c' / 'users' / username / 'Application Data' / "kkl" / "Local Store"
     
     return wine_path
+    
     
 def get_kkl_directory():
     """
@@ -244,7 +377,7 @@ def process_kkl_code(code, scene_name):
     Returns a Path object to the output image once it has been generated.
     
     Args:
-        code (str): The Kisekae code to import.
+        code (str or KisekaeCode): The Kisekae code to import.
         scene_name (str): A pose name to use when importing.
     """
     
@@ -262,7 +395,7 @@ def process_kkl_code(code, scene_name):
     sys.stdout.flush()
     
     with input_path.open('w', encoding='utf-8') as f:
-        f.write(code)
+        f.write(str(code))
         
     # wait for KKL to process the file
     #print("Waiting for output file to be generated...")
@@ -353,7 +486,7 @@ def import_character(import_code, pose_name='imported'):
         pose_name (str): A pose name to use when importing.
     """
         
-    output_path = process_kkl_code(str(import_code), pose_name)
+    output_path = process_kkl_code(import_code, pose_name)
     
     img = open_image_file(output_path)
     img.load()
@@ -362,17 +495,31 @@ def import_character(import_code, pose_name='imported'):
     
     return img
 
+
+def import_and_unlink(import_code, scene_name='temp'):
+    """
+    Import the specified `import_code` but immediately delete the generated image.
+    This is useful for scene resets, quickly opening characters for editing in KKL, etc.
+    
+    Args:
+        import_code (str or KisekaeCode): The Kisekae code to import.
+        pose_name (str): A pose name to use when importing.
+    """
+    
+    output_path = process_kkl_code(import_code, scene_name)
+    output_path.unlink()
+    
+    sys.stdout.write("done.\n")
+    sys.stdout.flush()
+
+
 def setup_kkl_scene():
     """
     Send a scene reset code to KKL to prepare for image importing.
     This will clear away unnecessary characters, backgrounds, objects, etc.
     """
     
-    output_path = process_kkl_code(SETUP_STRING_68, 'scene_setup')
-    output_path.unlink()
-    
-    sys.stdout.write("done.\n")
-    sys.stdout.flush()
+    import_and_unlink(SETUP_STRING_68, 'scene_setup')
     
     
 def crop_and_save(img, crop_box, dest_filename):
@@ -390,6 +537,25 @@ def crop_and_save(img, crop_box, dest_filename):
     cropped_img.save(dest_filename)
     cropped_img.close()
     img.close()
+    
+    
+def read_ce_pose_file(path):
+    """
+    Read a pose file in the format used by the CE, discarding cropping information.
+    """
+    
+    poses = {}
+    
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            try:
+                pose_name, code = line.split('=', 1)
+            except ValueError:
+                continue
+            
+            poses[pose_name.strip()] = code.strip()
+    
+    return poses
     
     
 def process_csv(infile, dest_dir, **kwargs):
@@ -472,7 +638,11 @@ def process_file(infile, dest_dir, **kwargs):
     setup_kkl_scene()
     with infile.open('r', encoding='utf-8') as f:
         for line in f:
-            pose_name, code = line.split('=', 1)
+            try:
+                pose_name, code = line.split('=', 1)
+            except ValueError:
+                continue
+                
             pose_name = name.strip()
             code = code.strip()
             
@@ -529,7 +699,7 @@ def process_single(code, dest, **kwargs):
         dest_filename = dest
     
     process_code = preprocess_character_code(code, **kwargs)
-    kkl_output = import_character(process_code, pose_name)
+    kkl_output = import_character(process_code, dest_filename.stem)
     
     if dest_filename.is_file():
         dest_filename.unlink()

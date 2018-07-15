@@ -433,6 +433,8 @@ simple_pseudo_cases = {
 
     'player_must_strip':                ['female_human_must_strip', 'male_human_must_strip'],
     'human_must_strip':                 ['female_human_must_strip', 'male_human_must_strip'],
+    
+    'select': ['selected'],
 }
 
 def parse_case_name(case_tags, cond_str):
