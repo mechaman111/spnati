@@ -3,7 +3,7 @@
 const CACHE_NAME = 'SPNATI-v1';
 const CACHE_KEEPALIVE = 3600; // refetch cached content older than this many seconds, if online
 
-const URLS_PER_PRELOAD_BATCH = 50;      // How many URLs to preload in an interval
+const URLS_PER_PRELOAD_BATCH = 100;      // How many URLs to preload in an interval
 const PRELOAD_BATCH_INTERVAL = 2000;    // How often to pull URLs from the preload queue
 
 /* This list holds the URLs of resources that should always be cached
@@ -77,22 +77,23 @@ self.addEventListener('fetch', function(event) {
         credentials: event.request.credentials
     });
 
-    /* Go to the site itself first for non-image resources. 
-     * If that fails (if we're offline for example) then go to cache.
+    /* Ensure we can quickly reload scripts and etc. when developing;
+     * Cache only images when debugging is enabled.
      */
-    var file_ext = actual_request.url.split('.').pop().toLowerCase();
-    if (file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
-        if (debug_active && verbose) console.log("[SW] Going to network for "+actual_request.url);
-        return event.respondWith(
-            caches.open(CACHE_NAME).then(function (cache) {
-                return fetch(actual_request).then(function (response) {
-                    cache.put(actual_request, response.clone());
-                    return response;
-                }).catch(function() {
-                    return caches.match(actual_request);
-                });
-            })
-        );
+    if (debug_active) {
+        let file_ext = actual_request.url.split('.').pop();
+        if (file_ext !== 'png' && file_ext !== 'jpg' && file_ext !== 'svg' && file_ext !== 'gif') {
+            return event.respondWith(
+                fetch(actual_request).then(
+                    async function (net_response) {
+                        var cache = await caches.open(CACHE_NAME);
+                        cache.put(actual_request, net_response.clone());
+
+                        return net_response;
+                    }
+                )
+            );
+        }
     }
 
     /* Look for content in the cache first.
@@ -271,7 +272,7 @@ self.addEventListener('message', function(event) {
         debug_active = msg.debug;
 
         if (debug_active) {
-            console.log("[SW] Debugging enabled");
+            console.log("[SW] Debugging enabled -- bypassing cache for non-image files");
         }
     } else if (msg.type === 'set-verbose') {
         verbose = msg.verbose;
