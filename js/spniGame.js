@@ -541,15 +541,6 @@ function completeRevealPhase () {
             $gameLabels[i].css({"background-color" : clearColour});
         }
     }
-    
-    if (sw_is_available() && recentLoser != HUMAN_PLAYER) {
-        /* Begin preloading images used by the loser for the stage after next. */
-        var loadStage = players[recentLoser].stage+2;
-        var images = players[recentLoser].getImagesForStage(loadStage);
-        console.log("Preloading "+images.length.toString()+" image files from "+players[recentLoser].folder+" for stage "+loadStage.toString()+"...");
-        
-        request_url_caching(images);
-    }
 
     /* set up the main button */
 	if (recentLoser != HUMAN_PLAYER && clothes > 0) {

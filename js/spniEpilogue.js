@@ -455,17 +455,6 @@ function doEpilogueModal(){
 function doEpilogue(){
 	save.addEnding(players[chosenEpilogue.player].id, chosenEpilogue.title);
     
-    if (sw_is_available()) {
-        /* Preload all epilogue screens. */
-        var epilogue_images = chosenEpilogue.screens.map(function (s) {
-            return s.image;
-        });
-
-        console.log("Preloading "+epilogue_images.length.toString()+" epilogue images...");
-
-        request_url_caching(epilogue_images);
-    }
-    
 	//just in case, clear any open text boxes
 	clearEpilogueBoxes();
 
