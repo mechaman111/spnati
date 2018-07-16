@@ -430,6 +430,11 @@ if(!monika) {
                 monika.removeEditedDialogueStyle(editedPlayer);
             }
             
+            var dialogueGlitchPlayer = monika.active_effects.round_dialogue_glitching;
+            if(dialogueGlitchPlayer) {
+                monika.setGlitchingMarker(dialogueGlitchPlayer, monika.GLITCH_REPEAT, null);
+            }
+            
             monika.active_effects.round_targeted_glitching = null;
             monika.active_effects.round_dialogue_glitching = null;
             monika.active_effects.round_edit_glitching = null;
@@ -465,9 +470,10 @@ if(!monika) {
             
             monika.active_effects.corrupted_dialogue[player-1] = null;
             if(monika.active_effects.overflow_text[player-1]) {
-                monika.setGlitchingMarker(player, monika.GLITCH_REPEAT, null);
                 monika.resetDialogueBoxStyles(player);
             }
+            
+            monika.setGlitchingMarker(player, monika.GLITCH_REPEAT, null);
         } catch (e) {
             console.error("[Monika] Error in pre-updateGameVisual prep: "+e.toString());
         } finally {
