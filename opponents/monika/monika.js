@@ -157,6 +157,10 @@ if(!monika) {
         var monika_player = monika.find_monika_player();
         var targeted_player = players[targetedSlot];
         
+        if (!targeted_player) {
+            return;
+        }
+        
         var oppID = targeted_player.folder.substr(0, targeted_player.folder.length - 1);
         oppID = oppID.substr(oppID.lastIndexOf("/") + 1);
         
@@ -473,7 +477,9 @@ if(!monika) {
                 monika.resetDialogueBoxStyles(player);
             }
             
-            monika.setGlitchingMarker(player, monika.GLITCH_REPEAT, null);
+            if (players[player]) {
+                monika.setGlitchingMarker(player, monika.GLITCH_REPEAT, null);
+            }
         } catch (e) {
             console.error("[Monika] Error in pre-updateGameVisual prep: "+e.toString());
         } finally {
