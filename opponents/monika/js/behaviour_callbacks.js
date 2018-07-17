@@ -154,19 +154,27 @@ monika.delayChange = function(text, delay) {
 }
 
 monika.jealousGlitch = function() {
-    var slot = monika.find_slot();
-    for(var i=1;i<players.length;i++) {
-        if(players[i] && i !== slot) {
-            monika.temporaryCharacterGlitch(i, 100, 500);
+    try {
+        var slot = monika.find_slot();
+        for(var i=1;i<players.length;i++) {
+            if(players[i] && i !== slot) {
+                monika.temporaryCharacterGlitch(i, 100, 500);
+            }
         }
+    } catch (e) {
+        console.error(e);
     }
 }
 
 monika.majorJealousGlitch = function() {
-    var slot = monika.find_slot();
-    for(var i=1;i<players.length;i++) {
-        if(players[i] && i !== slot) {
-            monika.temporaryCharacterGlitch(i, 100, 750);
+    try {
+        var slot = monika.find_slot();
+        for(var i=1;i<players.length;i++) {
+            if(players[i] && i !== slot) {
+                monika.temporaryCharacterGlitch(i, 100, 750);
+            }
         }
+    } catch (e) {
+        console.error(e);
     }
 }
