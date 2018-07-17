@@ -34,7 +34,7 @@ class OrderedXMLElement(object):
                 yield child
     
     def __serialize(self):
-        attr_string = " ".join(["{:s}=\"{:s}\"".format(k, v) for k,v in self.attributes.items()])
+        attr_string = " ".join(["{:s}=\"{:s}\"".format(k, str(v)) for k,v in self.attributes.items()])
         
         if len(attr_string) > 0:
             attr_string = ' '+attr_string
