@@ -315,7 +315,7 @@ def close_character_vagina(character):
     return character
     
     
-def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=True, close_vagina=True):
+def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=True, close_vagina=True, **kwargs):
     code = KisekaeCode(in_code)
     
     if remove_motion:
@@ -556,6 +556,59 @@ def read_ce_pose_file(path):
             poses[pose_name.strip()] = code.strip()
     
     return poses
+
+
+def process_single(code, dest, **kwargs):
+    """
+    Import and process a Kisekae code.
+    
+    Args:
+        code (str or KisekaeCode): The Kisekae code to import.
+        dest (str or pathlib.Path): The destination to save to. If the destination exists and is a directory, the image will be saved here as `out.png`.
+            Otherwise, it will be treated as a filename to save to.
+    
+    Kwargs:
+        remove_motion (bool, optional): If True (default), then a code fragment will be automatically appended to the imported codes to disable unwanted breast motion.
+            This may potentially override settings from the imported codes themselves, so be wary.
+        auto_crop (bool, optional): If True, then cropping boxes will be automatically calculated based on the generated image bounding boxes.
+            The `width`, `height`, and `center_x` kwargs will be ignored.
+        width (int): The width of the generated images (when using manual cropping).
+        height (int): The height of the generated images (when using manual cropping).
+        center_x (int): The position along the X-axis around which to center the generated images (when using manual cropping).
+        margin_y (int): When using manual cropping, this is how far down to position the cropping box.
+            When using automatic cropping, this controls how much empty space to add at the bottom of the generated images.
+    """
+    
+    dest = Path(dest)
+    
+    if dest.is_dir():
+        dest_filename = dest.joinpath('out.png')
+    else:
+        dest_filename = dest
+        
+    if kwargs.get('do_setup', True):
+        setup_kkl_scene()
+    
+    process_code = preprocess_character_code(code, **kwargs)
+    kkl_output = import_character(process_code, dest_filename.stem)
+    
+    if dest_filename.is_file():
+        dest_filename.unlink()
+    
+    margin_y = int(kwargs.get('margin_y', 15))
+        
+    if kwargs.get('auto_crop', True):
+        crop_box = auto_crop_box(kkl_output, margin_y)
+    else:
+        width = int(kwargs.get('width', 600))
+        height = int(kwargs.get('height', 1400))
+        center_x = int(kwargs.get('center_x', 1000))
+        crop_box = get_crop_box(width, height, center_x, margin_y)
+        
+    crop_and_save(kkl_output, crop_box, dest_filename)
+    
+    sys.stdout.write("done.\n")
+    sys.stdout.flush()
     
     
 def process_csv(infile, dest_dir, **kwargs):
@@ -587,32 +640,12 @@ def process_csv(infile, dest_dir, **kwargs):
                 continue
                 
             pose_name = '{:d}-{:s}'.format(stage, row['pose'])
-                
             dest_filename = dest_dir.joinpath(pose_name+'.png')
             
-            remove_motion = (row.get('remove_motion', 'true').strip().lower() != 'false')
-            close_vagina = (row.get('close_vagina', 'true').strip().lower() != 'false')
-            
-            width = row['width'].strip().lower()
-            height = row['height'].strip().lower()
-            center_x = row['center_x'].strip().lower()
-            margin_y = int(row['margin_y'].strip().lower())
-            
-            process_code = preprocess_character_code(row['code'], int(row['blush']), int(row['anger']), int(row['juice']), remove_motion, close_vagina)
-            kkl_output = import_character(process_code, pose_name)
-            
-            if width == 'auto' or height == 'auto' or center_x == 'auto':
-                crop_box = auto_crop_box(kkl_output, margin_y)
-            else:
-                crop_box = get_crop_box(int(width), int(height), int(center_x), margin_y)
-            
-            if dest_filename.is_file():
-                dest_filename.unlink()
+            row['remove_motion'] = (row.get('remove_motion', '').strip().lower() != 'false')
+            row['close_vagina'] = (row.get('close_vagina', '').strip().lower() != 'false')
 
-            crop_and_save(kkl_output, crop_box, dest_filename)
-            
-            sys.stdout.write("done.\n")
-            sys.stdout.flush()
+            process_single(dest=dest_filename, do_setup=False, **row)
     
 
 def process_file(infile, dest_dir, **kwargs):
@@ -635,89 +668,22 @@ def process_file(infile, dest_dir, **kwargs):
             When using automatic cropping, this controls how much empty space to add at the bottom of the generated images.
     """
         
+    dest_dir = Path(dest_dir)
+        
     setup_kkl_scene()
-    with infile.open('r', encoding='utf-8') as f:
+    with open(infile, 'r', encoding='utf-8') as f:
         for line in f:
             try:
                 pose_name, code = line.split('=', 1)
             except ValueError:
                 continue
                 
-            pose_name = name.strip()
+            pose_name = pose_name.strip()
             code = code.strip()
             
             dest_filename = dest_dir.joinpath(pose_name+'.png')
             
-            process_code = preprocess_character_code(code, **kwargs)
-            kkl_output = import_character(process_code, pose_name)
-            
-            if dest_filename.is_file():
-                dest_filename.unlink()
-                
-            width = int(kwargs.get('width', 600))
-            height = int(kwargs.get('height', 1400))
-            center_x = int(kwargs.get('center_x', 1000))
-            margin_y = int(kwargs.get('margin_y', 15))
-                
-            if kwargs.get('auto_crop', True):
-                crop_box = auto_crop_box(kkl_output, margin_y)
-            else:
-                crop_box = get_crop_box(width, height, center_x, margin_y)
-                
-            crop_and_save(kkl_output, crop_box, dest_filename)
-            
-            sys.stdout.write("done.\n")
-            sys.stdout.flush()
-            
-            
-def process_single(code, dest, **kwargs):
-    """
-    Import and process a Kisekae code.
-    
-    Args:
-        code (str): The Kisekae code to import.
-        dest (pathlib.Path): The destination to save to. If the destination exists and is a directory, the image will be saved here as `out.png`.
-            Otherwise, it will be treated as a filename to save to.
-    
-    Kwargs:
-        remove_motion (bool, optional): If True (default), then a code fragment will be automatically appended to the imported codes to disable unwanted breast motion.
-            This may potentially override settings from the imported codes themselves, so be wary.
-        auto_crop (bool, optional): If True, then cropping boxes will be automatically calculated based on the generated image bounding boxes.
-            The `width`, `height`, and `center_x` kwargs will be ignored.
-        width (int): The width of the generated images (when using manual cropping).
-        height (int): The height of the generated images (when using manual cropping).
-        center_x (int): The position along the X-axis around which to center the generated images (when using manual cropping).
-        margin_y (int): When using manual cropping, this is how far down to position the cropping box.
-            When using automatic cropping, this controls how much empty space to add at the bottom of the generated images.
-    """
-        
-    setup_kkl_scene()
-    
-    if dest.is_dir():
-        dest_filename = dest.joinpath('out.png')
-    else:
-        dest_filename = dest
-    
-    process_code = preprocess_character_code(code, **kwargs)
-    kkl_output = import_character(process_code, dest_filename.stem)
-    
-    if dest_filename.is_file():
-        dest_filename.unlink()
-        
-    width = int(kwargs.get('width', 600))
-    height = int(kwargs.get('height', 1400))
-    center_x = int(kwargs.get('center_x', 1000))
-    margin_y = int(kwargs.get('margin_y', 15))
-        
-    if kwargs.get('auto_crop', True):
-        crop_box = auto_crop_box(kkl_output, margin_y)
-    else:
-        crop_box = get_crop_box(width, height, center_x, margin_y)
-        
-    crop_and_save(kkl_output, crop_box, dest_filename)
-    
-    sys.stdout.write("done.\n")
-    sys.stdout.flush()
+            process_single(code, dest=dest_filename, do_setup=False, **kwargs)
     
     
 if __name__ == '__main__':
