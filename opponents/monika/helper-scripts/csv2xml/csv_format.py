@@ -1,3 +1,4 @@
+import logging
 from collections import OrderedDict
 
 from .case import Case, parse_case_name
@@ -19,17 +20,21 @@ def csv_to_lineset(dict_reader):
 
         case_tag = row['case'].lower()
         row['stage'] = row['stage'].lower()
+        
+        if len(row['image']) < 0 and len(row['text']) < 0:
+            logging.warning("Skipping line for case {:s}!".format(case_tag))
+            continue
 
         if row['stage'].startswith('comment') or row['stage'].startswith('#') or len(row['stage']) == 0:
             # treat this row as a comment
             continue
 
         if row['stage'].startswith('note'):
-            print("note [line {}]: {}".format(line_no, row['text']))
+            logging.info("note [line {}]: {}".format(line_no, row['text']))
             continue
 
         if row['stage'].startswith('todo') or row['stage'].startswith('to-do'):
-            print("todo [line {}]: {}".format(line_no, row['text']))
+            logging.info("todo [line {}]: {}".format(line_no, row['text']))
             continue
 
         if row['stage'].startswith('meta'):
@@ -86,7 +91,7 @@ def csv_to_lineset(dict_reader):
                 cond_map[cond_set] = ([], actual_case_tag, row['conditions'], priority)
 
             if len(row['text'].strip()) == 0:
-                print("Warning: empty state found (stages {}, case {}, row {})".format(row['stage'], row['case'], line_no))
+                logging.error("Warning: empty state found (stages {}, case {}, row {})".format(row['stage'], row['case'], line_no))
 
             cond_map[cond_set][0].append(State(row['text'], row['image'], marker, silent))
 

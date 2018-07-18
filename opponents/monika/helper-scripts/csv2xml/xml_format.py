@@ -99,7 +99,7 @@ def lineset_to_xml(lineset):
             if isinstance(k, int):
                 stage_superset.add(k)
             elif k != 'start':
-                print("[Warning] invalid stage ID found: {:s}".format(k))
+                logging.warning("Invalid stage ID found: {:s}".format(k))
 
     for stage_id in sorted(stage_superset):
         if stage_id != 'start':

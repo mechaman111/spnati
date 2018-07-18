@@ -1,3 +1,4 @@
+import logging
 import os
 import os.path as osp
 import re
@@ -63,7 +64,7 @@ class State(object):
         image = utils.find_image(self.image, int(stage))
 
         if not osp.exists(utils.get_image_path(image)):
-            print("Warning: image {} does not exist! (Stage {}, linetext={})".format(image, stage, self.text))
+            logging.error("Image {} does not exist! (Stage {}, linetext={})".format(image, stage, self.text))
 
         elem.attributes['img'] = image
 

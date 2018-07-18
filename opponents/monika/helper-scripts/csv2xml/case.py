@@ -34,6 +34,7 @@ class Case(object):
         "male_must_masturbate",
         "male_start_masturbating",
         "male_masturbating",
+        "male_heavy_masturbating",
         "male_finished_masturbating",
         "female_human_must_strip",
         "female_must_strip",
@@ -52,6 +53,7 @@ class Case(object):
         "female_must_masturbate",
         "female_start_masturbating",
         "female_masturbating",
+        "female_heavy_masturbating",
         "female_finished_masturbating",
     ]
     
@@ -480,7 +482,7 @@ def parse_case_name(case_tags, cond_str):
                 else:
                     tag_list.append(get_target_stripped_case(target_id, target_stage_low))
 
-                #print("[debug] Mapped pseudo-case {} for targetID {} stage {} to {}".format(name, target_id, target_stage, ret_case[0]))
+                #logging.debug("Mapped pseudo-case {} for targetID {} stage {} to {}".format(name, target_id, target_stage, ret_case[0]))
         else:
             tag_list.append(name)
     return tag_list
