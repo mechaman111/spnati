@@ -21,7 +21,7 @@ def csv_to_lineset(dict_reader):
         case_tag = row['case'].lower()
         row['stage'] = row['stage'].lower()
         
-        if len(row['image']) < 0 and len(row['text']) < 0:
+        if row['stage'] != 'meta' and len(row['image']) <= 0 and len(row['text']) <= 0:
             logging.warning("Skipping line for case {:s}!".format(case_tag))
             continue
 
