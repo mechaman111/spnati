@@ -315,7 +315,7 @@ def close_character_vagina(character):
     return character
     
     
-def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=True, close_vagina=True, **kwargs):
+def preprocess_character_code(in_code, blush=-1, anger=-1, juice=-1, remove_motion=True, close_vagina=True, **kwargs):
     code = KisekaeCode(in_code)
     
     if remove_motion:
@@ -324,16 +324,27 @@ def preprocess_character_code(in_code, blush=0, anger=0, juice=0, remove_motion=
     if close_vagina:    
         close_character_vagina(code.characters[0])
     
-    try:
-        code[0]['gc'][0] = blush
-        code[0]['gc'][1] = anger
-    except KeyError:
-        pass
+    blush = int(blush)
+    anger = int(anger)
+    juice = int(juice)
+    
+    if blush >= 0:
+        try:
+            code[0]['gc'][0] = blush
+        except KeyError:
+            pass
         
-    try:
-        code[0]['dc'][0] = juice
-    except KeyError:
-        pass
+    if anger >= 0:
+        try:
+            code[0]['gc'][1] = anger
+        except KeyError:
+            pass
+    
+    if juice >= 0:
+        try:
+            code[0]['dc'][0] = juice
+        except KeyError:
+            pass
     
     return code
     
@@ -628,7 +639,7 @@ def process_csv(infile, dest_dir, **kwargs):
     with infile.open('r', encoding='utf-8', newline='') as f:
         reader = csv.DictReader(f, restval='')
         for row in reader:
-            if len(row['stage']) <= 0:
+            if len(row['stage']) <= 0 or len(row['code']) <= 0:
                 continue
                 
             stage = int(row['stage'])
