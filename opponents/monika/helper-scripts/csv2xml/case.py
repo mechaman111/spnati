@@ -132,6 +132,11 @@ class Case(object):
     POSSIBLE_ATTRIBUTES = INTERVAL_CONDITIONS + ID_CONDITIONS + ['priority']
 
     def __init__(self, tag, conditions=None, custom_priority=None):
+        """
+        Represents a list of States as well as the set of conditions under which they play.
+        Corresponds to a <case> XML element.
+        """
+        
         self.tag = tag
         self.priority = custom_priority
         self.conditions = OrderedDict()
@@ -153,6 +158,10 @@ class Case(object):
             logging.error("Case tag not recognized: %s", self.tag)
             
     def copy(self):
+        """
+        Clone this set of conditions.
+        """
+        
         c = Case(self.tag, None, self.priority)
         c.conditions = self.conditions.copy()
         c.counters = self.counters.copy()
@@ -162,6 +171,16 @@ class Case(object):
 
     @classmethod
     def parse_conditions(cls, conditions):
+        """
+        Parse a condition set expressed as either a string or as an iterable of tuples.
+        
+        Returns:
+            * attr_conditions (OrderedDict): The parsed conditions, indexed by their XML attribute names.
+            * counters (OrderedDict): Tag count condition intervals, indexed by their corresponding tag.
+            * tag (str or None): any case tag found within the condition set. May be None if none were found.
+            * priority (int or None): any custom priority found within the condition set. May be None if none were found.
+        """
+        
         priority = None
         tag = None
         attr_conditions = OrderedDict()
@@ -216,6 +235,14 @@ class Case(object):
 
     @classmethod
     def parse_conditions_set(cls, conditions, tag, priority):
+        """
+        Create a condition set from a string or an iterable of tuples.
+        
+        See also:
+            * :meth:`parse_conditions`
+            * :meth:`condition_set`
+        """
+        
         attr_conditions, counters, cond_tag, cond_priority = cls.parse_conditions(conditions)
 
         if tag is None:
@@ -245,12 +272,36 @@ class Case(object):
         return frozenset(condition_tuples)
 
     def conditions_set(self):
+        """
+        Get all conditions describing this Case (incl. case tag and any custom priority) in a hashable container.
+        
+        Returns:
+            :obj:`frozenset`: a 'conditions set' containing all conditions describing this Case.
+        """
+        
         return self._make_conditions_set(self.conditions, self.counters, self.tag, self.priority)
 
     def states_set(self):
+        """
+        Get all States within this Case in a hashable container.
+        
+        Returns:
+            :obj:`frozenset`: a 'states set' containing States within this Case.
+        """
         return frozenset(state.to_tuple() for state in self.states)
 
     def format_conditions(self, sort=False):
+        """
+        Format this Case's conditions in a machine-parsable and human-readable format.
+        
+        Args:
+            sort (bool, optional): If true, then the attributes will be sorted in ascending
+                order in the returned string.
+                
+        Returns:
+            str: The formatted conditions.
+        """
+        
         attrs = []
         for attr, cond in self.conditions.items():
             if isinstance(cond, tuple):
@@ -278,16 +329,33 @@ class Case(object):
             raise NotImplementedError()
             
     def is_conditional(self):
+        """
+        Check whether this Case has any conditions attached to it.
+        """
+        
         return (len(self.conditions) > 0) or (len(self.counters) > 0)
         
     def is_generic(self):
+        """
+        Check whether this Case is generic; i.e. has no conditions attached to it.
+        """
+        
         return not self.is_conditional()
 
     def is_targeted(self):
+        """
+        Check whether this Case is 'targeted'; i.e. is specifically conditional w.r.t. a filter tag or an opponent.
+        Specifically, this function checks for 'filter', 'alsoPlaying', 'target', or tag-count conditions.
+        """
+        
         return ('filter' in self.conditions) or ('alsoPlaying' in self.conditions) or ('target' in self.conditions) or (len(self.counters) > 0)
 
     @classmethod
     def from_condition_set(cls, cond_set, states=None):
+        """
+        Create a Case from a condition set.
+        """
+        
         case = cls(None, cond_set)
         if states is not None:
             case.states.extend(states)
@@ -295,6 +363,10 @@ class Case(object):
 
     @classmethod
     def from_xml(cls, elem):
+        """
+        Create a Case from a <case> OrderedXMLElement.
+        """
+        
         conditions_list = []
 
         # including 'priority' and 'tag' attributes in conditions_list will work
@@ -314,6 +386,10 @@ class Case(object):
         return case
 
     def to_xml(self, stage):
+        """
+        Create a <case> OrderedXMLElement from this Case.
+        """
+        
         elem = OrderedXMLElement('case')
         elem.attributes['tag'] = self.tag
 
