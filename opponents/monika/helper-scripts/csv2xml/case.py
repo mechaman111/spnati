@@ -189,11 +189,11 @@ class Case(object):
 
                 tag_match = re.match(r'tag\s*\:\s*([^\=]+)', attr, re.IGNORECASE)
                 if tag_match is not None:
-                    tag = tag_match.group(1)
+                    matched_tag = tag_match.group(1)
                     if len(cond_tuple) == 2:
                         low, hi = parse_interval(val)
                         
-                    counters[tag] = (low, hi)
+                    counters[matched_tag] = (low, hi)
                 elif attr == 'priority':
                     priority = int(val)
                 elif attr == 'tag':
