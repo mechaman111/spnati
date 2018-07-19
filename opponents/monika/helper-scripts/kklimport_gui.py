@@ -104,7 +104,10 @@ class ImportInterface(tk.Frame):
         
             
     def select_output_path(self):
-        dir_str = filedialog.askdirectory().strip()
+        dir_str = filedialog.askdirectory()
+        if dir_str:
+            dir_str = dir_str.strip()
+        
         if len(dir_str) <= 0:
             return
             
