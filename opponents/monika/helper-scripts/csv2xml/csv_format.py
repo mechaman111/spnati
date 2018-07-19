@@ -1,15 +1,65 @@
 import logging
 from collections import OrderedDict
+import re
 
 from .case import Case, parse_case_name
 from .state import State
 from .opponent import Opponent
 from .stage import parse_stage_selector, format_stage_set
+from .epilogue import Epilogue, Screen, TextBox
+from . import utils
+
+
+# Called from csv_to_lineset below.
+def _handle_epilogue_row(row, epilogue_no, epilogues):
+    if epilogue_no not in epilogues:
+        epilogues[epilogue_no] = Epilogue(None)
+        
+    epilogue = epilogues[epilogue_no]
+    case_tag = row['case'].lower()
+    cond_tuples = [t.split('=', 1) for t in row['conditions'].split(',')]
+    conditions = OrderedDict()
+    
+    for attr, val in cond_tuples:
+        attr = attr.strip().lower()
+        conditions[attr] = val.strip()
+        
+    if case_tag == '' or case_tag == 'title':
+        epilogue.title = row['text']
+        epilogue.conditions = conditions
+    else:
+        screen_match = re.match(r'screen\s*(?:\:|\-)?\s*(\d+)', case_tag)
+        if screen_match is None:
+            raise ValueError("Invalid screen case syntax: {:s} in epilogue {:d}".format(case_tag, epilogue_no))
+        
+        screen_num = int(screen_match[1])
+        
+        if len(epilogue.screens) > screen_num:
+            raise KeyError("Invalid screen number {:d} in epilogue {:d}".format(screen_num, epilogue_no))
+        
+        if len(row['image']) > 0:
+            img = utils.find_image(row['image'])
+        else:
+            img = ''
+        
+        if screen_num == len(epilogue.screens):
+            # add a new screen:
+            screen = Screen(img)
+            epilogue.screens.append(screen)
+        else:
+            screen = epilogue.screens[screen_num]
+            if screen.image != img:
+                logging.warning("Ignoring redundant image definition for screen {:d} in epilogue {:d}".format(screen_num, epilogue_no))
+            
+        box = TextBox(row['text'], conditions['x'], conditions['y'], conditions.get('width', '20%'), conditions.get('arrow', None))
+        screen.boxes.append(box)
 
 
 def csv_to_lineset(dict_reader):
     opponent_meta = Opponent()
     stage_map = {} # maps stage sets to case condition sets to line lists.
+
+    epilogues = OrderedDict()
 
     for line_no, row in enumerate(dict_reader):
         # strip leading/trailing whitespace from all keys and values:
@@ -38,6 +88,15 @@ def csv_to_lineset(dict_reader):
 
         if row['stage'].startswith('todo') or row['stage'].startswith('to-do'):
             logging.info("todo [line {}]: {}".format(line_no, row['text']))
+            continue
+            
+        if row['stage'].startswith('epilogue'):
+            epilogue_match = re.match(r'epilogue\s*(?:\:|\-)?\s*(\d+)', row['stage'])
+            if epilogue_match is None:
+                logging.warning("Invalid epilogue stage syntax: {:s}".format(row['stage']))
+                continue
+            
+            _handle_epilogue_row(row, int(epilogue_match[1]), epilogues)
             continue
 
         if row['stage'].startswith('meta'):
@@ -110,8 +169,8 @@ def csv_to_lineset(dict_reader):
                 lineset[stage_set] = []
 
             lineset[stage_set].append(case)
-
-    return lineset, opponent_meta
+            
+    return lineset, opponent_meta, list(epilogues.values())
 
 
 def lineset_to_csv(lineset, opponent_meta, dict_writer):

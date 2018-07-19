@@ -41,12 +41,14 @@ def convert(infile, outfile, **kwargs):
 
             opponent_meta = c2x.Opponent.from_xml(opponent_elem, meta_elem)
             lineset = c2x.xml_to_lineset(opponent_elem)
+            
+            epilogues = None # TODO: deserialize epilogues later
         elif infile.suffix == '.csv':
             with infile.open('r', newline='', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                lineset, opponent_meta = c2x.csv_to_lineset(reader)
+                lineset, opponent_meta, epilogues = c2x.csv_to_lineset(reader)
     elif infile.is_dir():
-        lineset, opponent_meta = c2x.csv_to_lineset(many_csv_reader(infile))
+        lineset, opponent_meta, epilogues = c2x.csv_to_lineset(many_csv_reader(infile))
             
 
     unique_lines, unique_targeted_lines, num_cases, num_targeted_cases = c2x.get_unique_line_count(lineset)
@@ -65,6 +67,10 @@ def convert(infile, outfile, **kwargs):
         behaviour_elem, start_elem = c2x.lineset_to_xml(lineset)
         opponent_elem.children.insert(-1, start_elem)
         opponent_elem.children.append(behaviour_elem)
+        
+        if epilogues is not None:
+            for epilogue in epilogues:
+                opponent_elem.children.append(epilogue.to_xml())
 
         with outfile.open('w', encoding='utf-8') as f:
             f.write("<?xml version='1.0' encoding='UTF-8'?>\n")

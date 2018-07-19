@@ -109,7 +109,7 @@ class Screen(object):
         
         
 class Epilogue(object):
-    def __init__(self, title):
+    def __init__(self, title=None):
         """
         A character epilogue.
         
