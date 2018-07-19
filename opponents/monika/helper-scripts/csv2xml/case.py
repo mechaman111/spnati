@@ -390,6 +390,8 @@ simple_pseudo_cases = {
     'opponent_start_masturbating':      ['male_start_masturbating', 'female_start_masturbating'],
     
     'opponent_masturbating':      ['male_masturbating', 'female_masturbating'],
+    'opponent_heavy_masturbating':      ['male_heavy_masturbating', 'female_heavy_masturbating'],
+    'opponent_finished_masturbating':      ['male_finished_masturbating', 'female_finished_masturbating'],
 
     'opponent_removing_any': [
         'male_removing_accessory',
