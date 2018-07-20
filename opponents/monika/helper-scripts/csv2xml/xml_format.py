@@ -66,7 +66,7 @@ def xml_to_lineset(opponent_elem):
     start_elem = opponent_elem.find('start')
     start_stageset = frozenset(['start'])
 
-    select_case = Case('select')
+    select_case = Case('selected')
     select_case.states.append(State.from_xml(start_elem.children[0]))
 
     start_case = Case('start')
