@@ -118,6 +118,42 @@ function fixupTagFormatting(tag) {
     return tag.replace(/\s/g, '').toLowerCase();
 }
 
+function getRelevantStagesForTrigger(tag, layers) {
+    switch (tag) {
+    case SELECTED:
+    case GAME_START:
+        return { min: 0, max: 0 };
+    case SWAP_CARDS:
+    case GOOD_HAND:
+    case OKAY_HAND:
+    case BAD_HAND:
+    case ANY_HAND:
+    case GAME_OVER_VICTORY:
+        return { min: 0, max: layers };
+    case PLAYER_MUST_STRIP_WINNING:
+    case PLAYER_MUST_STRIP_NORMAL:
+    case PLAYER_MUST_STRIP_LOSING:
+    case PLAYER_MUST_STRIP:
+    case PLAYER_STRIPPING:
+        return { min: 0, max: layers - 1 };
+    case PLAYER_STRIPPED:
+        return { min: 1, max: layers };
+    case PLAYER_MUST_MASTURBATE_FIRST:
+    case PLAYER_MUST_MASTURBATE:
+    case PLAYER_START_MASTURBATING:
+        return { min: layers, max: layers };
+    case PLAYER_MASTURBATING:
+    case PLAYER_HEAVY_MASTURBATING:
+    case PLAYER_FINISHING_MASTURBATING:
+        return { min: layers + 1, max: layers + 1 };
+    case PLAYER_FINISHED_MASTURBATING:
+    case GAME_OVER_DEFEAT:
+        return { min: layers + 2, max: layers + 2 };
+    default:
+        return { min: 0, max: layers + 2 };
+    }
+}
+
 /**********************************************************************
  * Convert a tag to its 'canonical' form:
  * - Remove all whitespace characters
