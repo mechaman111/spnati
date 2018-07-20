@@ -7,95 +7,74 @@ from .opponent_utils import get_target_gender, get_target_stripping_case, get_ta
 from .state import State
 from .ordered_xml import OrderedXMLElement
 
-
 class Case(object):
-    # Tags used by players at the start of a game (stage 0).
-    START_TAGS = [
-        "start",
-        "selected",
-    ]
+    # Maps case tags to the stage intervals in which they can appear.
+    # These are slice objects, so they have start / stop / step attributes.
+    # -1 is the 'finished' stage
+    # -2 is the 'masturbating' stage
+    # -3 is the 'naked' stage
+    TAG_INTERVALS = OrderedDict([
+        ("start", slice(0, 1)),
+        ("selected", slice(0, 1)),
+        ("swap_cards", slice(None, -2)),
+        ("good_hand", slice(None, -2)),
+        ("okay_hand", slice(None, -2)),
+        ("bad_hand", slice(None, -2)),
+        ("male_human_must_strip", slice(None, None)),
+        ("male_must_strip", slice(None, None)),
+        ("male_removing_accessory", slice(None, None)),
+        ("male_removing_minor", slice(None, None)),
+        ("male_removing_major", slice(None, None)),
+        ("male_chest_will_be_visible", slice(None, None)),
+        ("male_crotch_will_be_visible", slice(None, None)),
+        ("male_removed_accessory", slice(None, None)),
+        ("male_removed_minor", slice(None, None)),
+        ("male_removed_major", slice(None, None)),
+        ("male_chest_is_visible", slice(None, None)),
+        ("male_small_crotch_is_visible", slice(None, None)),
+        ("male_medium_crotch_is_visible", slice(None, None)),
+        ("male_large_crotch_is_visible", slice(None, None)),
+        ("male_must_masturbate", slice(None, None)),
+        ("male_start_masturbating", slice(None, None)),
+        ("male_masturbating", slice(None, None)),
+        ("male_heavy_masturbating", slice(None, None)),
+        ("male_finished_masturbating", slice(None, None)),
+        ("female_human_must_strip", slice(None, None)),
+        ("female_must_strip", slice(None, None)),
+        ("female_removing_accessory", slice(None, None)),
+        ("female_removing_minor", slice(None, None)),
+        ("female_removing_major", slice(None, None)),
+        ("female_chest_will_be_visible", slice(None, None)),
+        ("female_crotch_will_be_visible", slice(None, None)),
+        ("female_removed_accessory", slice(None, None)),
+        ("female_removed_minor", slice(None, None)),
+        ("female_removed_major", slice(None, None)),
+        ("female_small_chest_is_visible", slice(None, None)),
+        ("female_medium_chest_is_visible", slice(None, None)),
+        ("female_large_chest_is_visible", slice(None, None)),
+        ("female_crotch_is_visible", slice(None, None)),
+        ("female_must_masturbate", slice(None, None)),
+        ("female_start_masturbating", slice(None, None)),
+        ("female_masturbating", slice(None, None)),
+        ("female_heavy_masturbating", slice(None, None)),
+        ("female_finished_masturbating", slice(None, None)),
+        ("must_strip_winning", slice(None, -3)),
+        ("must_strip_normal", slice(None, -3)),
+        ("must_strip_losing", slice(None, -3)),
+        ("stripping", slice(None, -3)),
+        ("stripped", slice(1, -2)),
+        ("must_masturbate", slice(-3, -2)),
+        ("must_masturbate_first", slice(-3, -2)),
+        ("start_masturbating", slice(-3, -2)),
+        ("masturbating", slice(-2, -1)),
+        ("heavy_masturbating", slice(-2, -1)),
+        ("finishing_masturbating", slice(-2, -1)),
+        ("finished_masturbating", slice(-1, None)),
+        ("game_over_victory", slice(None, -2)),
+        ("game_over_defeat", slice(-1, None)),
+    ])
     
-    # Tags used by players in all stages.
-    ALWAYS_TAGS = [
-        "male_human_must_strip",
-        "male_must_strip",
-        "male_removing_accessory",
-        "male_removing_minor",
-        "male_removing_major",
-        "male_chest_will_be_visible",
-        "male_crotch_will_be_visible",
-        "male_removed_accessory",
-        "male_removed_minor",
-        "male_removed_major",
-        "male_chest_is_visible",
-        "male_small_crotch_is_visible",
-        "male_medium_crotch_is_visible",
-        "male_large_crotch_is_visible",
-        "male_must_masturbate",
-        "male_start_masturbating",
-        "male_masturbating",
-        "male_heavy_masturbating",
-        "male_finished_masturbating",
-        "female_human_must_strip",
-        "female_must_strip",
-        "female_removing_accessory",
-        "female_removing_minor",
-        "female_removing_major",
-        "female_chest_will_be_visible",
-        "female_crotch_will_be_visible",
-        "female_removed_accessory",
-        "female_removed_minor",
-        "female_removed_major",
-        "female_small_chest_is_visible",
-        "female_medium_chest_is_visible",
-        "female_large_chest_is_visible",
-        "female_crotch_is_visible",
-        "female_must_masturbate",
-        "female_start_masturbating",
-        "female_masturbating",
-        "female_heavy_masturbating",
-        "female_finished_masturbating",
-    ]
-    
-    # Tags used by players when they are actively playing the game (stages 0:-2 in slice notation)
-    PLAYING_TAGS = [
-        "stripped",
-        "swap_cards",
-        "good_hand",
-        "okay_hand",
-        "bad_hand",
-        "game_over_victory",
-    ]
-    
-    # Tags that are only used for opponents that have clothing left (stages 0:-3 in slice notation)
-    CLOTHED_STAGE_TAGS = [
-        "must_strip_winning",
-        "must_strip_normal",
-        "must_strip_losing",
-        "stripping",
-    ]
-    
-    # Tags that are only used for opponents that are naked (stage -3)
-    NAKED_STAGE_TAGS = [
-        "must_masturbate",
-        "must_masturbate_first",
-        "start_masturbating",
-    ]
-    
-    # Tags that are only used for opponents that are masturbating (stage -2)
-    MASTURBATION_STAGE_TAGS = [
-        "masturbating",
-        "heavy_masturbating",
-        "finishing_masturbating",
-    ]
-    
-    # Tags that are only used for players that have finished masturbating (stage -1).
-    FINISHED_STAGE_TAGS = [
-        "finished_masturbating",
-        "game_over_defeat",
-    ]
-    
-    ALL_TAGS = START_TAGS + ALWAYS_TAGS + PLAYING_TAGS + CLOTHED_STAGE_TAGS + NAKED_STAGE_TAGS + MASTURBATION_STAGE_TAGS + FINISHED_STAGE_TAGS
+    ALL_TAGS = list(TAG_INTERVALS.keys())
     
     INTERVAL_CONDITIONS = [
         'targetStage',

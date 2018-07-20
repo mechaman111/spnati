@@ -65,7 +65,11 @@ def csv_to_lineset(dict_reader):
         # strip leading/trailing whitespace from all keys and values:
         row_replace = {}
         for key, value in row.items():
-            row_replace[key] = value.strip()
+            if value is None:
+                row_replace[key] = ''
+            else:
+                row_replace[key] = value.strip()
+                
         row = row_replace
 
         case_tag = row['case'].lower()
@@ -138,10 +142,7 @@ def csv_to_lineset(dict_reader):
         silent = False
         if ('silent' in row) and (len(row['silent']) > 0):
             silent = (row['silent'].lower() == 'true')
-
-        if len(row['image']) == 0 and len(row['text']) == 0:
-            continue
-
+            
         for actual_case_tag in parse_case_name(row['case'], row['conditions']):
             cond_set = Case.parse_conditions_set(row['conditions'], actual_case_tag, priority)
 
@@ -153,7 +154,7 @@ def csv_to_lineset(dict_reader):
                 cond_map[cond_set] = ([], actual_case_tag, row['conditions'], priority)
 
             if len(row['text'].strip()) == 0:
-                logging.error("Warning: empty state found (stages {}, case {}, row {})".format(row['stage'], row['case'], line_no))
+                logging.warning("empty state found (stages {}, case {}, row {})".format(row['stage'], row['case'], line_no))
 
             cond_map[cond_set][0].append(State(row['text'], row['image'], marker, silent))
 
