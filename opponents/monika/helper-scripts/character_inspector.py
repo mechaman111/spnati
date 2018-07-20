@@ -339,7 +339,7 @@ class App(tk.Frame):
         filter_cases = set(self.case_selector.selected_items())
         filter_stages = set(self.stage_selector.selected_items())
 
-        def iterate_cases():
+        def _iterate_cases():
             for stageset, case_list in self.lineset.items():
                 stageset = set(map(str, stageset))
                 
@@ -352,7 +352,10 @@ class App(tk.Frame):
                         
                     yield (stageset, case)
         
-        self.dialogue_view.update_view(self.opponent_id, self.opponent_meta, iterate_cases())
+        case_iter = sorted(_iterate_cases(), key=lambda sc: sorted(sc[0])[-1])
+        case_iter = sorted(case_iter, key=lambda sc: c2x.Case.ALL_TAGS.index(sc[1].tag))
+        
+        self.dialogue_view.update_view(self.opponent_id, self.opponent_meta, case_iter)
     
     def filter_changed(self, *args):
         self.update_view()
