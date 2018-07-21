@@ -280,6 +280,7 @@
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.lblOffline = new System.Windows.Forms.Label();
 			this.lblIncomplete = new System.Windows.Forms.Label();
+			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -1374,6 +1375,7 @@
 			this.cmdAddDialogue.Text = "Add";
 			this.cmdAddDialogue.UseVisualStyleBackColor = true;
 			this.cmdAddDialogue.Click += new System.EventHandler(this.cmdAddDialogue_Click);
+			this.cmdAddDialogue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmdAddDialogue_MouseDown);
 			// 
 			// label40
 			// 
@@ -3004,6 +3006,11 @@
 			this.lblIncomplete.TabIndex = 16;
 			this.lblIncomplete.Text = "INCOMPLETE CHARACTER";
 			// 
+			// triggerMenu
+			// 
+			this.triggerMenu.Name = "triggerMenu";
+			this.triggerMenu.Size = new System.Drawing.Size(61, 4);
+			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3328,6 +3335,7 @@
 		private System.Windows.Forms.Label lblStageLabels;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsStage;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsLabel;
+		private System.Windows.Forms.ContextMenuStrip triggerMenu;
 	}
 }
 

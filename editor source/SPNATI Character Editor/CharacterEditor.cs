@@ -81,6 +81,21 @@ namespace SPNATI_Character_Editor
 
 			TriggerDatabase.Load();
 			DialogueDatabase.Load();
+			List<Trigger> triggers = TriggerDatabase.Triggers;
+			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
+			int curGroup = -1;
+
+			foreach (Trigger t in triggers)
+			{
+				if (t.StartStage < 0) continue;
+				if (t.Group != curGroup)
+				{
+					triggerMenu.Items.Add(new ToolStripSeparator());
+					curGroup = t.Group;
+				}
+				triggerMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerMenuItem_Click, t.Tag));
+				
+			}
 
 			_listing = Serialization.ImportListing();
 			CharacterDatabase.Load();
@@ -1947,6 +1962,36 @@ namespace SPNATI_Character_Editor
 			string tag = _selectedCase == null ? "male_must_strip" : _selectedCase.Tag;
 			Case newCase = new Case(tag);
 			newCase.Stages.Add(stage.Id);
+			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
+			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
+			_selectedCharacter.Behavior.WorkingCases.Add(newCase);
+			newCase.Lines.Add(line);
+			_selectedCase = newCase;
+			GenerateDialogueTree(false);
+			PopulateCase();
+		}
+
+
+		private void cmdAddDialogue_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				triggerMenu.Show(sender as Control, new System.Drawing.Point((sender as Control).Width, 0), ToolStripDropDownDirection.Right);
+			}
+		}
+
+		private void triggerMenuItem_Click(object sender, System.EventArgs e)
+		{
+			if (_selectedCharacter == null || _selectedStage == null)
+				return;
+			SaveCase(true);
+			string tag = ((ToolStripMenuItem)sender).Name;
+			Case newCase = new Case(tag);
+			Trigger t = TriggerDatabase.GetTrigger(tag);
+			for (int stage = t.StartStage; stage <= t.EndStage; stage++)
+			{
+				newCase.Stages.Add(stage);
+			}
 			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
 			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
 			_selectedCharacter.Behavior.WorkingCases.Add(newCase);
