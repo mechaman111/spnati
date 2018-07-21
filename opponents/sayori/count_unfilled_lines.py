@@ -3,7 +3,8 @@ from pathlib import Path
 
 CSVS_DIR = Path('./csvs')
 
-block_target = 896
+start_linecount = 915
+last_progress = 106
 
 total_lines = 0
 filled_lines = 0
@@ -38,13 +39,15 @@ for file in filter(lambda p: p.suffix == '.csv', CSVS_DIR.iterdir()):
     
 
 unfilled_lines = total_lines - filled_lines
-progress = block_target - unfilled_lines
+progress = filled_lines - start_linecount
+new_progress = progress - last_progress
 
-print("==============================")
-print("    Lines Total: {:d}".format(total_lines))
-print("    Lines Finished: {:d}".format(filled_lines))
-print("    Unique Lines: {:d}".format(len(unique_lines)))
+print("="*80)
+print("    Lines Total:         {:d}".format(total_lines))
+print("    Lines Finished:      {:d}".format(filled_lines))
+print("    Unique Lines:        {:d}".format(len(unique_lines)))
 print("")
-print("    Left to Go: {:d}".format(unfilled_lines))
-print("    Current Progress: {:d}".format(progress))
-print("==============================")
+print("    Left to Go:          {:d}".format(unfilled_lines))
+print("    Current Progress:    {:d}".format(progress))
+print("    Progress from Last: {:+d}".format(new_progress))
+print("="*80)
