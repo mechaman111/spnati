@@ -444,9 +444,10 @@ simple_pseudo_cases = {
     'male_crotch_is_visible':           ['male_small_crotch_is_visible', 'male_medium_crotch_is_visible', 'male_large_crotch_is_visible'],
     'opponent_start_masturbating':      ['male_start_masturbating', 'female_start_masturbating'],
     
-    'opponent_masturbating':      ['male_masturbating', 'female_masturbating'],
+    'opponent_must_strip':              ['female_must_strip', 'male_must_strip'],
+    'opponent_masturbating':            ['male_masturbating', 'female_masturbating'],
     'opponent_heavy_masturbating':      ['male_heavy_masturbating', 'female_heavy_masturbating'],
-    'opponent_finished_masturbating':      ['male_finished_masturbating', 'female_finished_masturbating'],
+    'opponent_finished_masturbating':   ['male_finished_masturbating', 'female_finished_masturbating'],
 
     'opponent_removing_any': [
         'male_removing_accessory',
@@ -516,17 +517,6 @@ def parse_case_name(case_tags, cond_str):
 
         if name in simple_pseudo_cases:
             tag_list.extend(simple_pseudo_cases[name])
-        elif name == 'npc_must_strip' or name == 'opponent_must_strip':
-            if target_id is not None:
-                gender = get_target_gender(target_id)
-
-                if gender == 'female' or gender == 'male':
-                    tag_list.append(gender+'_must_strip')
-                else:
-                    raise ValueError("Invalid gender found for target '{}': {}".format(target_id, gender))
-            else:
-                tag_list.append('female_must_strip')
-                tag_list.append('male_must_strip')
         elif name == 'target_stripping' or  name == 'target_stripped':
             if target_stage_low != target_stage_high:
                 raise ValueError("The 'target_stripping' and 'target_stripped' pseudo-cases do not currently work with interval target stages.")
@@ -542,4 +532,23 @@ def parse_case_name(case_tags, cond_str):
                 #logging.debug("Mapped pseudo-case {} for targetID {} stage {} to {}".format(name, target_id, target_stage, ret_case[0]))
         else:
             tag_list.append(name)
+    
+    # if we have a target, remove any tags that don't match the target gender
+    if target_id is not None and target_id != 'human':
+        gender = get_target_gender(target_id)
+        
+        def case_matches_target_gender(tag):
+            male_tag = tag.startswith('male_')
+            female_tag = tag.startswith('female_')
+            
+            if not (male_tag or female_tag):
+                return True
+                
+            if (male_tag and gender == 'male') or (female_tag and gender == 'female'):
+                return True
+            
+            return False
+        
+        tag_list = filter(case_matches_target_gender, tag_list)
+    
     return tag_list

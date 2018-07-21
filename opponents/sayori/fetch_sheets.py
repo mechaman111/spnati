@@ -29,7 +29,7 @@ def get_all_sheet_info():
     sheet_info = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
     return sheet_info.get('sheets', [])
 
-def get_data(sheet_name, sheet_range='A1:Z900'):
+def get_data(sheet_name):
     sheet_info = get_all_sheet_info()
     full_range = None
     
@@ -39,12 +39,11 @@ def get_data(sheet_name, sheet_range='A1:Z900'):
         
         if title == sheet_name:
             full_range = "'{:s}'!A1:Z{:d}".format(sheet_name, n_rows)
-            logging.info("Grabbing {:d} rows from {:s}...".format(n_rows, sheet_name))
+            print("Grabbing {:d} rows from {:s}...".format(n_rows, sheet_name))
             break
     else:
         raise FileNotFoundError("Could not find sheet {:s} in spreadsheet!".format(sheet_name))
     
-    full_range = "'{:s}'!{:s}".format(sheet_name, sheet_range)
     result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                  range=full_range).execute()
     return result.get('values', None)
@@ -59,6 +58,7 @@ ALL_SHEETS = {
     'Stages 6-7': OUT_DIR / 'csvs' / '3-s6-s7.csv',
     'Stage 8': OUT_DIR / 'csvs' / '4-s8.csv',
     'Stage 9': OUT_DIR / 'csvs' / '5-s9.csv',
+    'DDLC Targeted Lines': OUT_DIR / 'csvs' / '6-ddlc.csv',
     'Poses': OUT_DIR / 'poses.csv'
 }
 
