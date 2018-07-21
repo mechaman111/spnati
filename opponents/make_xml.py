@@ -138,10 +138,12 @@ def get_finished_Cases_dictionary():
 	d["game_over_defeat"] = [{"key":"game_over_defeat", "image":"calm", "text":"Congrats, ~name~... I can't believe I lost..."}]
 	return d
 
-#default images for being selected at the start of the game
-def get_selected_cases_dictionary():
+#default images for being selected at the start of the game and the game starting.
+# These have no default text since they're new and we don't want to force everyone to use them
+def get_start_cases_dictionary():
 	d = {}
-	d["selected"] = [{"key":"selected", "image":"happy", "text":"Thanks for selecting me."}]
+	d["selected"] = []
+	d["game_start"] = []
 	return d
 
 
@@ -341,7 +343,7 @@ def write_xml(data, filename):
 	nude_dict = get_nude_cases_dictionary()
 	mstb_dict = get_masturbating_cases_dictionary()
 	fnsh_dict = get_finished_Cases_dictionary()
-	slct_dict = get_selected_cases_dictionary()
+	strt_dict = get_start_cases_dictionary()
 	
 
 	#f = open(filename)
@@ -395,7 +397,9 @@ def write_xml(data, filename):
 	bh = ET.SubElement(o, "behaviour")
 	for stage in range(0, clothes_count):
 		s = ET.SubElement(bh, "stage", id=str(stage))
-		add_values(s, data, [slct_dict, main_dict, plyr_dict, strp_dict], stage)
+                if stage == 0:
+		        add_values(s, data, [strt_dict], stage)
+		add_values(s, data, [main_dict, plyr_dict, strp_dict], stage)
 	
 	#nude stage
 	stage += 1
@@ -572,9 +576,9 @@ def read_player_file(filename):
 	nude_dict = get_nude_cases_dictionary()
 	mstb_dict = get_masturbating_cases_dictionary()
 	fnsh_dict = get_finished_Cases_dictionary()
-	slct_dict = get_selected_cases_dictionary()
+	strt_dict = get_start_cases_dictionary()
 	
-	case_names = list(main_dict.keys()) + list(plyr_dict.keys()) + list(strp_dict.keys()) + list(nude_dict.keys()) + list(mstb_dict.keys()) + list(fnsh_dict.keys()) + list(slct_dict.keys())
+	case_names = list(main_dict.keys()) + list(plyr_dict.keys()) + list(strp_dict.keys()) + list(nude_dict.keys()) + list(mstb_dict.keys()) + list(fnsh_dict.keys()) + list(strt_dict.keys())
 	
 	d = {}
 	
