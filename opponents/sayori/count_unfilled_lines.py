@@ -4,7 +4,8 @@ from pathlib import Path
 CSVS_DIR = Path('./csvs')
 
 start_linecount = 915
-last_progress = 346
+block_target = 926
+last_progress = 394
 
 total_lines = 0
 filled_lines = 0
@@ -42,12 +43,12 @@ unfilled_lines = total_lines - filled_lines
 progress = filled_lines - start_linecount
 new_progress = progress - last_progress
 
-print("="*80)
+print("="*79)
 print("    Lines Total:         {:d}".format(total_lines))
 print("    Lines Finished:      {:d}".format(filled_lines))
 print("    Unique Lines:        {:d}".format(len(unique_lines)))
 print("")
-print("    Left to Go:          {:d}".format(unfilled_lines))
-print("    Current Progress:    {:d}".format(progress))
+print("    Lines Unfilled:      {:d}".format(unfilled_lines))
+print("    Current Progress:    {:d}  ({:.2%})".format(progress, progress / block_target))
 print("    Progress from Last: {:+d}".format(new_progress))
-print("="*80)
+print("="*79)
