@@ -188,7 +188,8 @@ function determineStrippingSituation (player) {
 		if (p !== player) {
 			if (p.clothing.length <= player.clothing.length - 1) {
 				isMin = false;
-			} else if (p.clothing.length >= player.clothing.length - 1) {
+			}
+			if (p.clothing.length >= player.clothing.length - 1) {
 				isMax = false;
 			}
 		}
