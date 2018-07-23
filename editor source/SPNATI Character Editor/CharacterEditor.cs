@@ -119,21 +119,20 @@ namespace SPNATI_Character_Editor
 		/// Prompts the user to export the current character
 		/// </summary>
 		/// <returns></returns>
-		private DialogResult PromptToSave()
+		private bool PromptToSave()
 		{
 			if (_selectedCharacter == null)
-				return DialogResult.OK;
+				return true;
 			DialogResult result = MessageBox.Show(string.Format("Do you wish to save {0} first?", _selectedCharacter), "Save changes", MessageBoxButtons.YesNoCancel);
 			if (result == DialogResult.Yes)
 			{
-				Export();
-				result = DialogResult.OK;
+				return Export();
 			}
 			else if (result == DialogResult.No)
 			{
-				result = DialogResult.OK;
+				return true;
 			}
-			return result;
+			return false;
 		}
 
 		/// <summary>
@@ -143,7 +142,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void newToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			if (PromptToSave() != DialogResult.OK)
+			if (!PromptToSave())
 				return;
 			NewCharacterPrompt prompt = new NewCharacterPrompt();
 			if (prompt.ShowDialog() == DialogResult.OK)
@@ -239,6 +238,11 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void frmEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			if (!PromptToSave())
+			{
+				e.Cancel = true;
+				return;
+			}
 			Config.Save();
 		}
 
@@ -289,7 +293,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		private bool OpenCharacter()
 		{
-			if (PromptToSave() != DialogResult.OK)
+			if (!PromptToSave())
 				return false;
 			LoadCharacterPrompt prompt = new LoadCharacterPrompt();
 			if (_selectedCharacter != null)
@@ -575,14 +579,21 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Exports the current character to disk (i.e. updates the meta.xml and behaviour.xml files)
 		/// </summary>
-		private void Export()
+		private bool Export()
 		{
 			if (_selectedCharacter == null)
-				return;
+				return true;
 			SaveCharacter();
 			if (Serialization.ExportCharacter(_selectedCharacter))
+			{
 				SetStatus(string.Format("{0} exported successfully.", _selectedCharacter));
-			else SetStatus(string.Format("{0} failed to export.", _selectedCharacter));
+				return true;
+			}
+			else
+			{
+				SetStatus(string.Format("{0} failed to export.", _selectedCharacter));
+				return false;
+			}
 		}
 
 		/// <summary>
