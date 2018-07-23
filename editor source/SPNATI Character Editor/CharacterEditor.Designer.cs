@@ -139,14 +139,22 @@
 			this.imageImporter = new SPNATI_Character_Editor.Controls.ImageManager();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.splitDialogue = new System.Windows.Forms.SplitContainer();
+			this.tstrDialogue = new System.Windows.Forms.ToolStrip();
+			this.tsbtnAddDialogue = new System.Windows.Forms.ToolStripSplitButton();
+			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.tsbtnSplit = new System.Windows.Forms.ToolStripDropDownButton();
+			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.separateThisStageIntoANewCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitAtPoint = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitAll = new System.Windows.Forms.ToolStripMenuItem();
+			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsbtnRemoveDialogue = new System.Windows.Forms.ToolStripButton();
 			this.cboTreeTarget = new System.Windows.Forms.ComboBox();
-			this.cmdAddDialogue = new System.Windows.Forms.Button();
 			this.label40 = new System.Windows.Forms.Label();
 			this.cboTreeFilter = new System.Windows.Forms.ComboBox();
-			this.cmdRemoveDialogue = new System.Windows.Forms.Button();
 			this.label39 = new System.Windows.Forms.Label();
 			this.label33 = new System.Windows.Forms.Label();
-			this.cmdSplit = new System.Windows.Forms.Button();
 			this.label35 = new System.Windows.Forms.Label();
 			this.grpCase = new System.Windows.Forms.GroupBox();
 			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
@@ -276,12 +284,6 @@
 			this.lblStageLabels = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblLinesOfDialogue = new System.Windows.Forms.Label();
-			this.splitMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.separateThisStageIntoANewCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.splitAtPoint = new System.Windows.Forms.ToolStripMenuItem();
-			this.splitAll = new System.Windows.Forms.ToolStripMenuItem();
-			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -289,7 +291,6 @@
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.lblOffline = new System.Windows.Forms.Label();
 			this.lblIncomplete = new System.Windows.Forms.Label();
-			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -306,6 +307,8 @@
 			this.splitDialogue.Panel1.SuspendLayout();
 			this.splitDialogue.Panel2.SuspendLayout();
 			this.splitDialogue.SuspendLayout();
+			this.tstrDialogue.SuspendLayout();
+			this.splitMenu.SuspendLayout();
 			this.grpCase.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.grpConditions.SuspendLayout();
@@ -335,7 +338,6 @@
 			this.tabMarkers.SuspendLayout();
 			this.tabAdvanced.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
-			this.splitMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -640,9 +642,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.treeDialogue.HideSelection = false;
-			this.treeDialogue.Location = new System.Drawing.Point(3, 32);
+			this.treeDialogue.Location = new System.Drawing.Point(3, 38);
 			this.treeDialogue.Name = "treeDialogue";
-			this.treeDialogue.Size = new System.Drawing.Size(248, 538);
+			this.treeDialogue.Size = new System.Drawing.Size(248, 532);
 			this.treeDialogue.TabIndex = 1;
 			this.treeDialogue.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDialogue_AfterSelect);
 			this.treeDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeDialogue_KeyDown);
@@ -1347,15 +1349,13 @@
 			// 
 			// splitDialogue.Panel1
 			// 
+			this.splitDialogue.Panel1.Controls.Add(this.tstrDialogue);
 			this.splitDialogue.Panel1.Controls.Add(this.cboTreeTarget);
-			this.splitDialogue.Panel1.Controls.Add(this.cmdAddDialogue);
 			this.splitDialogue.Panel1.Controls.Add(this.label40);
 			this.splitDialogue.Panel1.Controls.Add(this.treeDialogue);
 			this.splitDialogue.Panel1.Controls.Add(this.cboTreeFilter);
-			this.splitDialogue.Panel1.Controls.Add(this.cmdRemoveDialogue);
 			this.splitDialogue.Panel1.Controls.Add(this.label39);
 			this.splitDialogue.Panel1.Controls.Add(this.label33);
-			this.splitDialogue.Panel1.Controls.Add(this.cmdSplit);
 			this.splitDialogue.Panel1.Controls.Add(this.label35);
 			// 
 			// splitDialogue.Panel2
@@ -1364,6 +1364,106 @@
 			this.splitDialogue.Size = new System.Drawing.Size(931, 662);
 			this.splitDialogue.SplitterDistance = 255;
 			this.splitDialogue.TabIndex = 15;
+			// 
+			// tstrDialogue
+			// 
+			this.tstrDialogue.AutoSize = false;
+			this.tstrDialogue.BackColor = System.Drawing.SystemColors.Control;
+			this.tstrDialogue.CanOverflow = false;
+			this.tstrDialogue.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.tstrDialogue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnAddDialogue,
+            this.tsbtnSplit,
+            this.tsbtnRemoveDialogue});
+			this.tstrDialogue.Location = new System.Drawing.Point(0, 0);
+			this.tstrDialogue.Name = "tstrDialogue";
+			this.tstrDialogue.Padding = new System.Windows.Forms.Padding(2, 2, 3, 2);
+			this.tstrDialogue.Size = new System.Drawing.Size(255, 35);
+			this.tstrDialogue.TabIndex = 0;
+			this.tstrDialogue.Text = "toolStrip1";
+			// 
+			// tsbtnAddDialogue
+			// 
+			this.tsbtnAddDialogue.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsbtnAddDialogue.DropDown = this.triggerMenu;
+			this.tsbtnAddDialogue.Name = "tsbtnAddDialogue";
+			this.tsbtnAddDialogue.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+			this.tsbtnAddDialogue.Padding = new System.Windows.Forms.Padding(3);
+			this.tsbtnAddDialogue.Size = new System.Drawing.Size(48, 28);
+			this.tsbtnAddDialogue.Text = "Add";
+			this.tsbtnAddDialogue.ButtonClick += new System.EventHandler(this.tsbtnAddDialogue_ButtonClick);
+			// 
+			// triggerMenu
+			// 
+			this.triggerMenu.Name = "triggerMenu";
+			this.triggerMenu.OwnerItem = this.tsbtnAddDialogue;
+			this.triggerMenu.Size = new System.Drawing.Size(156, 26);
+			// 
+			// tsbtnSplit
+			// 
+			this.tsbtnSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsbtnSplit.DropDown = this.splitMenu;
+			this.tsbtnSplit.Name = "tsbtnSplit";
+			this.tsbtnSplit.Padding = new System.Windows.Forms.Padding(3);
+			this.tsbtnSplit.Size = new System.Drawing.Size(79, 28);
+			this.tsbtnSplit.Text = "Copy Tools";
+			// 
+			// splitMenu
+			// 
+			this.splitMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.separateThisStageIntoANewCaseToolStripMenuItem,
+            this.splitAtPoint,
+            this.splitAll,
+            this.duplicateThisCaseToolStripMenuItem,
+            this.bulkReplaceToolToolStripMenuItem});
+			this.splitMenu.Name = "splitMenu";
+			this.splitMenu.ShowImageMargin = false;
+			this.splitMenu.Size = new System.Drawing.Size(282, 114);
+			// 
+			// separateThisStageIntoANewCaseToolStripMenuItem
+			// 
+			this.separateThisStageIntoANewCaseToolStripMenuItem.Name = "separateThisStageIntoANewCaseToolStripMenuItem";
+			this.separateThisStageIntoANewCaseToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
+			this.separateThisStageIntoANewCaseToolStripMenuItem.Text = "Separate This Stage into a New Case";
+			this.separateThisStageIntoANewCaseToolStripMenuItem.Click += new System.EventHandler(this.separateThisStageIntoANewCaseToolStripMenuItem_Click);
+			// 
+			// splitAtPoint
+			// 
+			this.splitAtPoint.Name = "splitAtPoint";
+			this.splitAtPoint.Size = new System.Drawing.Size(281, 22);
+			this.splitAtPoint.Text = "Separate This and Later Stages into a New Case";
+			this.splitAtPoint.Click += new System.EventHandler(this.splitAtPoint_Click);
+			// 
+			// splitAll
+			// 
+			this.splitAll.Name = "splitAll";
+			this.splitAll.Size = new System.Drawing.Size(281, 22);
+			this.splitAll.Text = "Split This Case into Individual Stages";
+			this.splitAll.Click += new System.EventHandler(this.splitAll_Click);
+			// 
+			// duplicateThisCaseToolStripMenuItem
+			// 
+			this.duplicateThisCaseToolStripMenuItem.Name = "duplicateThisCaseToolStripMenuItem";
+			this.duplicateThisCaseToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
+			this.duplicateThisCaseToolStripMenuItem.Text = "Duplicate this Case";
+			this.duplicateThisCaseToolStripMenuItem.Click += new System.EventHandler(this.cmdDupe_Click);
+			// 
+			// bulkReplaceToolToolStripMenuItem
+			// 
+			this.bulkReplaceToolToolStripMenuItem.Name = "bulkReplaceToolToolStripMenuItem";
+			this.bulkReplaceToolToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
+			this.bulkReplaceToolToolStripMenuItem.Text = "Bulk Replace Tool...";
+			this.bulkReplaceToolToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceToolToolStripMenuItem_Click);
+			// 
+			// tsbtnRemoveDialogue
+			// 
+			this.tsbtnRemoveDialogue.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsbtnRemoveDialogue.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsbtnRemoveDialogue.Name = "tsbtnRemoveDialogue";
+			this.tsbtnRemoveDialogue.Padding = new System.Windows.Forms.Padding(3);
+			this.tsbtnRemoveDialogue.Size = new System.Drawing.Size(56, 28);
+			this.tsbtnRemoveDialogue.Text = "Remove";
+			this.tsbtnRemoveDialogue.Click += new System.EventHandler(this.tsbtnRemoveDialogue_Click);
 			// 
 			// cboTreeTarget
 			// 
@@ -1376,17 +1476,6 @@
 			this.cboTreeTarget.Size = new System.Drawing.Size(196, 21);
 			this.cboTreeTarget.TabIndex = 39;
 			this.cboTreeTarget.SelectedIndexChanged += new System.EventHandler(this.cboTreeTarget_SelectedIndexChanged);
-			// 
-			// cmdAddDialogue
-			// 
-			this.cmdAddDialogue.Location = new System.Drawing.Point(3, 3);
-			this.cmdAddDialogue.Name = "cmdAddDialogue";
-			this.cmdAddDialogue.Size = new System.Drawing.Size(54, 23);
-			this.cmdAddDialogue.TabIndex = 29;
-			this.cmdAddDialogue.Text = "Add";
-			this.cmdAddDialogue.UseVisualStyleBackColor = true;
-			this.cmdAddDialogue.Click += new System.EventHandler(this.cmdAddDialogue_Click);
-			this.cmdAddDialogue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cmdAddDialogue_MouseDown);
 			// 
 			// label40
 			// 
@@ -1414,17 +1503,6 @@
 			this.cboTreeFilter.TabIndex = 37;
 			this.cboTreeFilter.SelectedIndexChanged += new System.EventHandler(this.cboTreeFilter_SelectedIndexChanged);
 			// 
-			// cmdRemoveDialogue
-			// 
-			this.cmdRemoveDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdRemoveDialogue.Location = new System.Drawing.Point(193, 3);
-			this.cmdRemoveDialogue.Name = "cmdRemoveDialogue";
-			this.cmdRemoveDialogue.Size = new System.Drawing.Size(58, 23);
-			this.cmdRemoveDialogue.TabIndex = 30;
-			this.cmdRemoveDialogue.Text = "Remove";
-			this.cmdRemoveDialogue.UseVisualStyleBackColor = true;
-			this.cmdRemoveDialogue.Click += new System.EventHandler(this.cmdRemoveDialogue_Click);
-			// 
 			// label39
 			// 
 			this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1445,16 +1523,6 @@
 			this.label33.Size = new System.Drawing.Size(134, 13);
 			this.label33.TabIndex = 31;
 			this.label33.Text = "Blue: Contains default lines";
-			// 
-			// cmdSplit
-			// 
-			this.cmdSplit.Location = new System.Drawing.Point(63, 3);
-			this.cmdSplit.Name = "cmdSplit";
-			this.cmdSplit.Size = new System.Drawing.Size(84, 23);
-			this.cmdSplit.TabIndex = 35;
-			this.cmdSplit.Text = "Copy Tools...";
-			this.cmdSplit.UseVisualStyleBackColor = true;
-			this.cmdSplit.Click += new System.EventHandler(this.cmdSplit_Click);
 			// 
 			// label35
 			// 
@@ -3021,53 +3089,6 @@
 			this.lblLinesOfDialogue.TabIndex = 14;
 			this.lblLinesOfDialogue.Text = "0";
 			// 
-			// splitMenu
-			// 
-			this.splitMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.separateThisStageIntoANewCaseToolStripMenuItem,
-            this.splitAtPoint,
-            this.splitAll,
-            this.duplicateThisCaseToolStripMenuItem,
-            this.bulkReplaceToolToolStripMenuItem});
-			this.splitMenu.Name = "splitMenu";
-			this.splitMenu.ShowImageMargin = false;
-			this.splitMenu.Size = new System.Drawing.Size(297, 114);
-			// 
-			// separateThisStageIntoANewCaseToolStripMenuItem
-			// 
-			this.separateThisStageIntoANewCaseToolStripMenuItem.Name = "separateThisStageIntoANewCaseToolStripMenuItem";
-			this.separateThisStageIntoANewCaseToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
-			this.separateThisStageIntoANewCaseToolStripMenuItem.Text = "Separate This Stage into a New Case";
-			this.separateThisStageIntoANewCaseToolStripMenuItem.Click += new System.EventHandler(this.separateThisStageIntoANewCaseToolStripMenuItem_Click);
-			// 
-			// splitAtPoint
-			// 
-			this.splitAtPoint.Name = "splitAtPoint";
-			this.splitAtPoint.Size = new System.Drawing.Size(296, 22);
-			this.splitAtPoint.Text = "Separate This and Later Stages into a New Case";
-			this.splitAtPoint.Click += new System.EventHandler(this.splitAtPoint_Click);
-			// 
-			// splitAll
-			// 
-			this.splitAll.Name = "splitAll";
-			this.splitAll.Size = new System.Drawing.Size(296, 22);
-			this.splitAll.Text = "Split This Case into Individual Stages";
-			this.splitAll.Click += new System.EventHandler(this.splitAll_Click);
-			// 
-			// duplicateThisCaseToolStripMenuItem
-			// 
-			this.duplicateThisCaseToolStripMenuItem.Name = "duplicateThisCaseToolStripMenuItem";
-			this.duplicateThisCaseToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
-			this.duplicateThisCaseToolStripMenuItem.Text = "Duplicate this Case";
-			this.duplicateThisCaseToolStripMenuItem.Click += new System.EventHandler(this.cmdDupe_Click);
-			// 
-			// bulkReplaceToolToolStripMenuItem
-			// 
-			this.bulkReplaceToolToolStripMenuItem.Name = "bulkReplaceToolToolStripMenuItem";
-			this.bulkReplaceToolToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
-			this.bulkReplaceToolToolStripMenuItem.Text = "Bulk Replace Tool...";
-			this.bulkReplaceToolToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceToolToolStripMenuItem_Click);
-			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
@@ -3117,11 +3138,6 @@
 			this.lblIncomplete.TabIndex = 16;
 			this.lblIncomplete.Text = "INCOMPLETE CHARACTER";
 			// 
-			// triggerMenu
-			// 
-			this.triggerMenu.Name = "triggerMenu";
-			this.triggerMenu.Size = new System.Drawing.Size(61, 4);
-			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3166,6 +3182,9 @@
 			this.splitDialogue.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitDialogue)).EndInit();
 			this.splitDialogue.ResumeLayout(false);
+			this.tstrDialogue.ResumeLayout(false);
+			this.tstrDialogue.PerformLayout();
+			this.splitMenu.ResumeLayout(false);
 			this.grpCase.ResumeLayout(false);
 			this.grpCase.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
@@ -3202,7 +3221,6 @@
 			this.tabAdvanced.ResumeLayout(false);
 			this.tabAdvanced.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).EndInit();
-			this.splitMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3299,8 +3317,6 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.FlowLayoutPanel flowStageChecks;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button cmdRemoveDialogue;
-		private System.Windows.Forms.Button cmdAddDialogue;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label33;
 		private System.Windows.Forms.Button cmdAddToListing;
@@ -3324,7 +3340,6 @@
 		private System.Windows.Forms.ToolStripMenuItem importtxtToolStripMenuItem;
 		private System.Windows.Forms.TabPage tabImages;
 		private Controls.ImageManager imageImporter;
-		private System.Windows.Forms.Button cmdSplit;
 		private System.Windows.Forms.ContextMenuStrip splitMenu;
 		private System.Windows.Forms.ToolStripMenuItem splitAll;
 		private System.Windows.Forms.ToolStripMenuItem splitAtPoint;
@@ -3447,6 +3462,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsStage;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colLabelsLabel;
 		private System.Windows.Forms.ContextMenuStrip triggerMenu;
+		private System.Windows.Forms.ToolStrip tstrDialogue;
+		private System.Windows.Forms.ToolStripSplitButton tsbtnAddDialogue;
+		private System.Windows.Forms.ToolStripDropDownButton tsbtnSplit;
+		private System.Windows.Forms.ToolStripButton tsbtnRemoveDialogue;
 		private System.Windows.Forms.NumericUpDown valMaxLayers;
 		private System.Windows.Forms.Label label74;
 		private System.Windows.Forms.NumericUpDown valLayers;

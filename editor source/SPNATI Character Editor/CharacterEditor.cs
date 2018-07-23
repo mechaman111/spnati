@@ -52,9 +52,8 @@ namespace SPNATI_Character_Editor
 			findToolStripMenuItem.Enabled = false;
 			replaceToolStripMenuItem.Enabled = false;
 			grpCase.Enabled = false;
-			cmdAddDialogue.Enabled = false;
-			cmdRemoveDialogue.Enabled = false;
-			cmdSplit.Enabled = false;
+			tsbtnRemoveDialogue.Enabled = false;
+			tsbtnSplit.Enabled = false;
 
 			//Initial setup
 			string appDir = Config.GameDirectory;
@@ -1339,9 +1338,8 @@ namespace SPNATI_Character_Editor
 			DialogueWrapper wrapper = node.Tag as DialogueWrapper;
 			if (wrapper == null)
 			{
-				cmdRemoveDialogue.Enabled = false;
-				cmdAddDialogue.Enabled = false;
-				cmdSplit.Enabled = false;
+				tsbtnRemoveDialogue.Enabled = false;
+				tsbtnSplit.Enabled = false;
 				return;
 			}
 
@@ -1355,9 +1353,8 @@ namespace SPNATI_Character_Editor
 				case NodeType.Start:
 					_selectedStage = null;
 					_selectedCase = new Case(Trigger.StartTrigger);
-					cmdRemoveDialogue.Enabled = false;
-					cmdAddDialogue.Enabled = false;
-					cmdSplit.Enabled = false;
+					tsbtnRemoveDialogue.Enabled = false;
+					tsbtnSplit.Enabled = false;
 					tabControlConditions.Enabled = false;
 					break;
 				case NodeType.Case:
@@ -1366,16 +1363,14 @@ namespace SPNATI_Character_Editor
 					parentWrapper = parent.Tag as DialogueWrapper;
 					_selectedStage = parentWrapper.Stage;
 					tabControlConditions.Enabled = true;
-					cmdRemoveDialogue.Enabled = true;
-					cmdAddDialogue.Enabled = true;
-					cmdSplit.Enabled = true;
+					tsbtnRemoveDialogue.Enabled = true;
+					tsbtnSplit.Enabled = true;
 					break;
 				case NodeType.Stage:
 					_selectedStage = wrapper.Stage;
 					_selectedCase = null;
-					cmdRemoveDialogue.Enabled = false;
-					cmdAddDialogue.Enabled = true;
-					cmdSplit.Enabled = false;
+					tsbtnRemoveDialogue.Enabled = false;
+					tsbtnSplit.Enabled = false;
 					break;
 			}
 			PopulateCase();
@@ -1966,10 +1961,13 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdAddDialogue_Click(object sender, EventArgs e)
+		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
 		{
 			if (_selectedCharacter == null || _selectedStage == null)
+			{
+				tsbtnAddDialogue.ShowDropDown();
 				return;
+			}
 			TreeNode node = treeDialogue.SelectedNode;
 			if (node == null)
 				return;
@@ -1990,15 +1988,6 @@ namespace SPNATI_Character_Editor
 			_selectedCase = newCase;
 			GenerateDialogueTree(false);
 			PopulateCase();
-		}
-
-
-		private void cmdAddDialogue_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				triggerMenu.Show(sender as Control, new System.Drawing.Point((sender as Control).Width, 0), ToolStripDropDownDirection.Right);
-			}
 		}
 
 		private void triggerMenuItem_Click(object sender, System.EventArgs e)
@@ -2062,7 +2051,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdSplit_Click(object sender, EventArgs e)
+		private void tsbtnSplit_Click(object sender, EventArgs e)
 		{
 			Control ctl = sender as Control;
 			splitMenu.Show(sender as Control, 0, ctl.Height);
@@ -2155,7 +2144,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdRemoveDialogue_Click(object sender, EventArgs e)
+		private void tsbtnRemoveDialogue_Click(object sender, EventArgs e)
 		{
 			DeleteSelectedCase();
 		}
