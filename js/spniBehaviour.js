@@ -37,7 +37,7 @@ var PLAYER_NAME = "~player~";
  **********************************************************************/
 
 var SELECTED = "selected";
-var GAME_START = "start";
+var GAME_START = "game_start";
 
 var SWAP_CARDS = "swap_cards";
 var BAD_HAND = "bad_hand";
