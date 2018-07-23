@@ -1397,6 +1397,7 @@
 			// 
 			this.triggerMenu.Name = "triggerMenu";
 			this.triggerMenu.OwnerItem = this.tsbtnAddDialogue;
+			this.triggerMenu.ShowImageMargin = false;
 			this.triggerMenu.Size = new System.Drawing.Size(156, 26);
 			// 
 			// tsbtnSplit

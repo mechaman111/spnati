@@ -469,6 +469,7 @@ namespace SPNATI_Character_Editor
 					ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
 					groupMenuItem.Text = TriggerDatabase.GetGroupName(curGroup);
 					curGroupMenu = new ContextMenuStrip();
+					curGroupMenu.ShowImageMargin = false;
 					groupMenuItem.DropDown = curGroupMenu;
 					triggerMenu.Items.Add(groupMenuItem);
 				}
