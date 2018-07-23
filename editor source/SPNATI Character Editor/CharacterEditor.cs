@@ -1993,7 +1993,7 @@ namespace SPNATI_Character_Editor
 
 		private void triggerMenuItem_Click(object sender, System.EventArgs e)
 		{
-			if (_selectedCharacter == null || _selectedStage == null)
+			if (_selectedCharacter == null)
 				return;
 			SaveCase(true);
 			string tag = ((ToolStripMenuItem)sender).Name;
@@ -2007,6 +2007,17 @@ namespace SPNATI_Character_Editor
 			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
 			_selectedCharacter.Behavior.WorkingCases.Add(newCase);
 			newCase.Lines.Add(line);
+			if (_selectedStage == null || !newCase.Stages.Contains(_selectedStage.Id))
+			{
+				foreach (TreeNode n in treeDialogue.Nodes)
+				{
+					DialogueWrapper w = n.Tag as DialogueWrapper;
+					if (w.NodeType == NodeType.Stage && w.Stage.Id == newCase.Stages[0])
+					{
+						_selectedStage = w.Stage;
+					}
+				}
+			}
 			_selectedCase = newCase;
 			GenerateDialogueTree(false);
 			PopulateCase();
