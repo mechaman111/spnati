@@ -80,22 +80,8 @@ namespace SPNATI_Character_Editor
 			}
 
 			TriggerDatabase.Load();
+			PopulateTriggerMenu();
 			DialogueDatabase.Load();
-			List<Trigger> triggers = TriggerDatabase.Triggers;
-			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
-			int curGroup = -1;
-
-			foreach (Trigger t in triggers)
-			{
-				if (t.StartStage < 0) continue;
-				if (t.Group != curGroup)
-				{
-					triggerMenu.Items.Add(new ToolStripSeparator());
-					curGroup = t.Group;
-				}
-				triggerMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerMenuItem_Click, t.Tag));
-				
-			}
 
 			_listing = Serialization.ImportListing();
 			CharacterDatabase.Load();
@@ -465,6 +451,30 @@ namespace SPNATI_Character_Editor
 				DataGridViewRow row = gridLabels.Rows[gridLabels.Rows.Add()];
 				row.Cells["ColLabelsStage"].Value = i.Stage;
 				row.Cells["ColLabelsLabel"].Value = i.Value;
+			}
+		}
+
+		private void PopulateTriggerMenu()
+		{
+			List<Trigger> triggers = TriggerDatabase.Triggers;
+			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
+			int curGroup = -1;
+			ContextMenuStrip curGroupMenu = null;
+
+			foreach (Trigger t in triggers)
+			{
+				if (t.StartStage < 0) continue;
+				if (t.Group != curGroup)
+				{
+					curGroup = t.Group;
+					ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
+					groupMenuItem.Text = TriggerDatabase.GetGroupName(curGroup);
+					curGroupMenu = new ContextMenuStrip();
+					groupMenuItem.DropDown = curGroupMenu;
+					triggerMenu.Items.Add(groupMenuItem);
+				}
+				curGroupMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerMenuItem_Click, t.Tag));
+
 			}
 		}
 
