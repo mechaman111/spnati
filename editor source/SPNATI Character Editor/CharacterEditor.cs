@@ -1590,7 +1590,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="minBox"></param>
 		/// <param name="maxBox"></param>
 		/// <param name="value"></param>
-		private void SetRange(ComboBox minBox, ComboBox maxBox, string value)
+		public static void SetRange(ComboBox minBox, ComboBox maxBox, string value)
 		{
 			if (value == null)
 			{
@@ -1629,7 +1629,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="minBox"></param>
 		/// <param name="maxBox"></param>
 		/// <param name="value"></param>
-		private void SetRange(NumericUpDown minBox, NumericUpDown maxBox, string value)
+		public static void SetRange(NumericUpDown minBox, NumericUpDown maxBox, string value)
 		{
 			if (value == null)
 			{
@@ -1648,7 +1648,7 @@ namespace SPNATI_Character_Editor
 			SetNumericBox(maxBox, max);
 		}
 
-		private string ReadRange(ComboBox minBox, ComboBox maxBox)
+		public static string ReadRange(ComboBox minBox, ComboBox maxBox)
 		{
 			string min = minBox.Text;
 			if (string.IsNullOrEmpty(min))
@@ -1659,7 +1659,7 @@ namespace SPNATI_Character_Editor
 			return min + "-" + max;
 		}
 
-		private string ReadRange(NumericUpDown minBox, NumericUpDown maxBox)
+		public static string ReadRange(NumericUpDown minBox, NumericUpDown maxBox)
 		{
 			string min = ReadNumericBox(minBox);
 			if (string.IsNullOrEmpty(min))
@@ -1721,7 +1721,7 @@ namespace SPNATI_Character_Editor
 			else return value;
 		}
 
-		private void SetNumericBox(NumericUpDown box, string value)
+		private static void SetNumericBox(NumericUpDown box, string value)
 		{
 			if (string.IsNullOrEmpty(value))
 			{
@@ -1738,7 +1738,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private string ReadNumericBox(NumericUpDown box)
+		static string ReadNumericBox(NumericUpDown box)
 		{
 			if (string.IsNullOrEmpty(box.Text))
 				return null;
