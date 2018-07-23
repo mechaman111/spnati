@@ -80,6 +80,12 @@ def all_cases(lineset):
             yield case
             
 
+def iter_lineset(lineset):
+    for stage_set, case_list in lineset.items():
+        for case in case_list:
+            yield stage_set, case
+            
+
 def get_unique_line_count(lineset):
     unique_lines = set()
     unique_targeted_lines = set()
