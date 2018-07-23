@@ -2649,5 +2649,10 @@ namespace SPNATI_Character_Editor
 			tssepBeforeRemove.Visible = true;
 			tsmiRemove.Visible = true;
 		}
+
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
 	}
 }
