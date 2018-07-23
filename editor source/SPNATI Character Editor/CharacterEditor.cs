@@ -1964,7 +1964,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
 		{
-			if (_selectedCharacter == null || _selectedStage == null)
+			if (_selectedCharacter == null || _selectedStage == null || _selectedCase == null)
 			{
 				tsbtnAddDialogue.ShowDropDown();
 				return;
@@ -1979,7 +1979,7 @@ namespace SPNATI_Character_Editor
 			TreeNode stageNode = (wrapper.NodeType == NodeType.Stage ? node : node.Parent);
 			Stage stage = ((DialogueWrapper)stageNode.Tag).Stage;
 			SaveCase(true);
-			string tag = _selectedCase == null ? "male_must_strip" : _selectedCase.Tag;
+			string tag = _selectedCase.Tag;
 			Case newCase = new Case(tag);
 			newCase.Stages.Add(stage.Id);
 			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
