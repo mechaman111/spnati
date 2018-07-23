@@ -1456,6 +1456,7 @@ namespace SPNATI_Character_Editor
 				SetComboBox(cboLineTarget, _selectedCase.Target);
 				SetComboBox(cboTargetHand, _selectedCase.TargetHand);
 				SetComboBox(cboLineFilter, _selectedCase.Filter);
+				SetComboBox(cboTargetStatus, _selectedCase.TargetStatus);
 				Character target = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.Target);
 				_selectedCase.SplitTargetStage(out minStage, out maxStage);
 				PopulateStageCombo(cboTargetStage, target, true);
@@ -1468,6 +1469,7 @@ namespace SPNATI_Character_Editor
 				cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
 				SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
 				SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
+				SetRange(valLayers, valMaxLayers, _selectedCase.TargetLayers);
 				valOwnLosses.Enabled = false;
 				valMaxOwnLosses.Enabled = false;
 			}
@@ -1760,20 +1762,21 @@ namespace SPNATI_Character_Editor
 			if (_selectedCase == null)
 				return;
 			gridFilters.Rows.Clear();
-			DataGridViewComboBoxColumn col = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
+			DataGridViewComboBoxColumn colTags = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
 			foreach (TargetCondition condition in _selectedCase.Conditions)
 			{
-				if (string.IsNullOrEmpty(condition.Filter))
-					continue;
 				DataGridViewRow row = gridFilters.Rows[gridFilters.Rows.Add()];
-				if (!col.Items.Contains(condition.Filter))
+				if (condition.Filter != null && !colTags.Items.Contains(condition.Filter))
 				{
-					col.Items.Add(condition.Filter);
+					colTags.Items.Add(condition.Filter);
 				}
 				try
 				{
 					row.Cells["ColTagFilter"].Value = condition.Filter;
-					row.Cells["ColTagCount"].Value = condition.Count;
+					row.Cells["ColGenderFilter"].Value = condition.Gender;
+					row.Cells["ColStatusFilter"].Value = condition.Status;
+					row.Cells["ColStatusFilterNegated"].Value = condition.NegateStatus;
+					row.Cells["ColFilterCount"].Value = condition.Count;
 				}
 				catch { }
 			}
@@ -1791,10 +1794,14 @@ namespace SPNATI_Character_Editor
 			{
 				DataGridViewRow row = gridFilters.Rows[i];
 				string filter = row.Cells["ColTagFilter"].Value?.ToString();
-				string countValue = row.Cells["ColTagCount"].Value?.ToString();
-				if (string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(countValue))
+				string countValue = row.Cells["ColFilterCount"].Value?.ToString();
+				string gender = row.Cells["ColGenderFilter"].Value?.ToString();
+				string status = row.Cells["ColStatusFilter"].Value?.ToString();
+				object negStatus = row.Cells["ColStatusFilterNegated"].Value;
+
+				if (string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(gender) && string.IsNullOrEmpty(status) && string.IsNullOrEmpty(countValue))
 					continue;
-				TargetCondition condition = new TargetCondition(filter, countValue);
+				TargetCondition condition = new TargetCondition(filter, gender, status, negStatus != null && (bool)negStatus, countValue);
 				_selectedCase.Conditions.Add(condition);
 			}
 		}
@@ -1844,6 +1851,8 @@ namespace SPNATI_Character_Editor
 					c.Filter = ReadComboBox(cboLineFilter);
 					c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
 					c.ConsecutiveLosses = ReadRange(valLosses, valMaxLosses);
+					c.TargetLayers = ReadRange(valLayers, valMaxLayers);
+					c.TargetStatus = ReadComboBox(cboTargetStatus);
 					c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
 					c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
 				}
@@ -1851,6 +1860,8 @@ namespace SPNATI_Character_Editor
 				{
 					c.Target = null;
 					c.TargetStage = null;
+					c.TargetLayers = null;
+					c.TargetStatus = null;
 					c.TargetHand = null;
 					c.Filter = null;
 					c.TargetTimeInStage = null;
