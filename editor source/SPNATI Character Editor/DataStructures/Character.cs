@@ -217,16 +217,15 @@ namespace SPNATI_Character_Editor
 			if (advancingStage)
 			{
 				layer++;
-				if (layer < Wardrobe.Count)
+				if (layer <= Wardrobe.Count)
 				{
 					Clothing clothes = Wardrobe[Layers - layer];
 					label = "losing " + clothes.Name;
 				}
-				else if (layer == Wardrobe.Count)
+				else
 				{
 					label = "lost all clothing";
 				}
-				else label = "";
 			}
 			else
 			{
