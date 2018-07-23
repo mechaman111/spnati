@@ -224,7 +224,7 @@ namespace SPNATI_Character_Editor
 			{
 				int stageId = TriggerDatabase.ToFlatFileStage(character, outputCase.Stages[0]);
 				if (outputCase.IsDefault)
-					stageId = -1;
+					stageId = -9;
 				string tag = outputCase.Tag;
 				Trigger trigger = TriggerDatabase.GetTrigger(tag);
 				int group = trigger.Group;
@@ -252,10 +252,15 @@ namespace SPNATI_Character_Editor
 					if (outputCase.IsDefault)
 					{
 						lines.Add("");
-						lines.Add("#stage-specific lines that override the stage-generic ones");
+						lines.Add("#stage-generic lines that will be used for every individual stage that doesn't have a line written");
 					}
 					else
 					{
+						if (lastStage == -9)
+						{
+							lines.Add("");
+							lines.Add("#stage-specific lines that override the stage-generic ones");
+						}
 						StageName label = character.LayerToFlatFileName(stageId, appliesToNext);
 						if (label?.DisplayName != null)
 						{
