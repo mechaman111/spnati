@@ -295,6 +295,7 @@ function wearClothing () {
 	for (var i = 0; i < position[2].length; i++) {
 		players[HUMAN_PLAYER].clothing.push(position[2][i]);
 	}
+	players[HUMAN_PLAYER].startingLayers = players[HUMAN_PLAYER].clothing.length;
 
 	/* update the visuals */
     displayHumanPlayerClothing();
