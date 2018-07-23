@@ -1213,6 +1213,7 @@ namespace SPNATI_Character_Editor
 
 			if (wrapper.NodeType == NodeType.Case)
 			{
+				node.ContextMenuStrip = splitMenu;
 				if (wrapper.Case.HasFilters)
 				{
 					//Highlight targeted dialogue
@@ -2635,6 +2636,18 @@ namespace SPNATI_Character_Editor
 			if (gridLabels.Rows[e.RowIndex].Cells["ColLabelsStage"].ToString() == "0") {
 				txtLabel.Text = gridLabels.Rows[e.RowIndex].Cells["ColLabelsLabel"].ToString();
 			}
+		}
+
+		private void tsbtnSplit_DropDownOpening(object sender, EventArgs e)
+		{
+			tssepBeforeRemove.Visible = false;
+			tsmiRemove.Visible = false;
+		}
+
+		private void tsbtnSplit_DropDownClosed(object sender, EventArgs e)
+		{
+			tssepBeforeRemove.Visible = true;
+			tsmiRemove.Visible = true;
 		}
 	}
 }

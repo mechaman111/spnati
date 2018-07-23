@@ -149,6 +149,8 @@
 			this.splitAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.duplicateThisCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bulkReplaceToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tssepBeforeRemove = new System.Windows.Forms.ToolStripSeparator();
+			this.tsmiRemove = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsbtnRemoveDialogue = new System.Windows.Forms.ToolStripButton();
 			this.cboTreeTarget = new System.Windows.Forms.ComboBox();
 			this.label40 = new System.Windows.Forms.Label();
@@ -1408,6 +1410,8 @@
 			this.tsbtnSplit.Padding = new System.Windows.Forms.Padding(3);
 			this.tsbtnSplit.Size = new System.Drawing.Size(79, 28);
 			this.tsbtnSplit.Text = "Copy Tools";
+			this.tsbtnSplit.DropDownClosed += new System.EventHandler(this.tsbtnSplit_DropDownClosed);
+			this.tsbtnSplit.DropDownOpening += new System.EventHandler(this.tsbtnSplit_DropDownOpening);
 			// 
 			// splitMenu
 			// 
@@ -1416,10 +1420,13 @@
             this.splitAtPoint,
             this.splitAll,
             this.duplicateThisCaseToolStripMenuItem,
-            this.bulkReplaceToolToolStripMenuItem});
+            this.bulkReplaceToolToolStripMenuItem,
+            this.tssepBeforeRemove,
+            this.tsmiRemove});
 			this.splitMenu.Name = "splitMenu";
+			this.splitMenu.OwnerItem = this.tsbtnSplit;
 			this.splitMenu.ShowImageMargin = false;
-			this.splitMenu.Size = new System.Drawing.Size(282, 114);
+			this.splitMenu.Size = new System.Drawing.Size(282, 164);
 			// 
 			// separateThisStageIntoANewCaseToolStripMenuItem
 			// 
@@ -1455,6 +1462,18 @@
 			this.bulkReplaceToolToolStripMenuItem.Size = new System.Drawing.Size(281, 22);
 			this.bulkReplaceToolToolStripMenuItem.Text = "Bulk Replace Tool...";
 			this.bulkReplaceToolToolStripMenuItem.Click += new System.EventHandler(this.bulkReplaceToolToolStripMenuItem_Click);
+			// 
+			// tssepBeforeRemove
+			// 
+			this.tssepBeforeRemove.Name = "tssepBeforeRemove";
+			this.tssepBeforeRemove.Size = new System.Drawing.Size(278, 6);
+			// 
+			// tsmiRemove
+			// 
+			this.tsmiRemove.Name = "tsmiRemove";
+			this.tsmiRemove.Size = new System.Drawing.Size(281, 22);
+			this.tsmiRemove.Text = "&Remove";
+			this.tsmiRemove.Click += new System.EventHandler(this.tsbtnRemoveDialogue_Click);
 			// 
 			// tsbtnRemoveDialogue
 			// 
@@ -3478,6 +3497,8 @@
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColStatusFilterNegated;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColStatusFilter;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColFilterCount;
+		private System.Windows.Forms.ToolStripSeparator tssepBeforeRemove;
+		private System.Windows.Forms.ToolStripMenuItem tsmiRemove;
 	}
 }
 
