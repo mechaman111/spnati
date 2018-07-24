@@ -1401,7 +1401,7 @@
 			this.triggerMenu.Name = "triggerMenu";
 			this.triggerMenu.OwnerItem = this.tsbtnAddDialogue;
 			this.triggerMenu.ShowImageMargin = false;
-			this.triggerMenu.Size = new System.Drawing.Size(156, 26);
+			this.triggerMenu.Size = new System.Drawing.Size(36, 4);
 			// 
 			// tsbtnSplit
 			// 
@@ -1427,7 +1427,7 @@
 			this.splitMenu.Name = "splitMenu";
 			this.splitMenu.OwnerItem = this.tsbtnSplit;
 			this.splitMenu.ShowImageMargin = false;
-			this.splitMenu.Size = new System.Drawing.Size(282, 164);
+			this.splitMenu.Size = new System.Drawing.Size(282, 142);
 			// 
 			// separateThisStageIntoANewCaseToolStripMenuItem
 			// 
