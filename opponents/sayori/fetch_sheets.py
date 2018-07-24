@@ -8,8 +8,8 @@ import logging
 import functools
 
 parser = argparse.ArgumentParser(parents=[tools.argparser])
-parser.add_argument('--secrets-file', '-s', default='client_id.json', help='Path to the secrets file.')
-parser.add_argument('--store-file', '-t', default='token.json', help='Path to store the client token under.')
+parser.add_argument('--secrets-file', '-s', default=str(Path.home() / 'Programming' / 'spnati-client-secrets.json'), help='Path to the secrets file.')
+parser.add_argument('--store-file', '-t', default=str(Path.home() / 'Programming' / 'spnati-fetch-token.json'), help='Path to store the client token under.')
 parser.add_argument('--out-dir', '-o', default='.', help='Relative output path to store fetched files under.')
 flags = parser.parse_args()
 
