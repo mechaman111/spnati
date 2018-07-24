@@ -96,6 +96,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("epilogue")]
 		public List<Epilogue> Endings;
 
+		[XmlAnyElement]
+		public List<System.Xml.XmlElement> ExtraXml;
+
 		private bool _built;
 
 		public Character()
