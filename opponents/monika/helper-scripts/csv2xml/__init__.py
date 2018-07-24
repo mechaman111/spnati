@@ -1,6 +1,6 @@
 from .state import State
 from .case import Case, CaseSet
-from .stage import Stage, format_stage_set, parse_stage_set
+from .stage import Stage, format_stage_set, parse_stage_selector
 from .opponent import Opponent
 from .epilogue import TextBox, Screen, Epilogue
 from .csv_format import csv_to_lineset, lineset_to_csv
