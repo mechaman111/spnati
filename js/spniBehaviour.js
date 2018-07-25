@@ -657,7 +657,16 @@ function updateBehaviour (player, tag, opp) {
         if (bestMatch.length > 0) {
 			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
             players[player].current = 0;
-            players[player].state = parseDialogue(bestMatch, players[player], opp);
+			
+			var states = parseDialogue(bestMatch, players[player], opp);
+			var chosenState = states[getRandomNumber(0, states.length)];
+			
+			if (chosenState.marker) {
+				players[player].markers[chosenState.marker] = true;
+			}
+			
+            players[player].allStates = states;
+			players[player].chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");

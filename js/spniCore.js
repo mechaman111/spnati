@@ -170,7 +170,9 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue(player.xml.find('start'), player);
+		player.allStates = parseDialogue(player.xml.find('start'), player);
+		player.chosenState = player.allStates[getRandomNumber(0, player.allStates.length)];
+        
 		loadOpponentWardrobe(player);
 	}
 	player.updateLabel();
