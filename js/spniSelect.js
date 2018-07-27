@@ -176,6 +176,7 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var loadingOpponents = Array(4);
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -588,6 +589,10 @@ function updateSelectableOpponents(autoclear) {
         if (players.some(function(p) { return p && p.id == opp.id; })) {
             return false;
         }
+        
+        if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
+            return false;
+        }
 
         return true;
     });
@@ -620,6 +625,8 @@ function suggestionSelected(slot, quad) {
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].label === selectedLabel) {
             players[slot] = null;
+            loadingOpponents[slot-1] = loadedOpponents[i].id;
+            
         	updateSelectionVisuals();
             loadBehaviour(loadedOpponents[i], individualScreenCallback, slot);
             return;
@@ -824,8 +831,10 @@ function changeIndividualStats (target) {
 function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = null;
+    loadingOpponents[selectedSlot-1] = shownIndividuals[slot-1].id;
+    
 	updateSelectionVisuals();
-	
+    
     loadBehaviour(shownIndividuals[slot-1], individualScreenCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
@@ -836,6 +845,8 @@ function selectIndividualOpponent (slot) {
  ************************************************************/
 function individualScreenCallback (playerObject, slot) {
     players[slot] = playerObject;
+    delete loadingOpponents[slot-1];
+    
 	updateBehaviour(slot, SELECTED);
 
 	updateSelectionVisuals();
@@ -1062,6 +1073,11 @@ function updateSelectionVisuals () {
             if (players.some(function(p) { return p && p.id == opp.id; })) {
                 return false;
             }
+            
+            if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
+                return false;
+            }
+            
             return true;
         });
     
