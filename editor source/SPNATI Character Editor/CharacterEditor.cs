@@ -2011,9 +2011,13 @@ namespace SPNATI_Character_Editor
 			string tag = ((ToolStripMenuItem)sender).Name;
 			Case newCase = new Case(tag);
 			Trigger t = TriggerDatabase.GetTrigger(tag);
-			for (int stage = t.StartStage; stage <= t.EndStage; stage++)
+			for (int stage = 0; stage < flowStageChecks.Controls.Count; stage++)
+
 			{
-				newCase.Stages.Add(stage);
+				if (TriggerDatabase.UsedInStage(tag, _selectedCharacter, stage))
+				{
+					newCase.Stages.Add(stage);
+				}
 			}
 			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
 			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
