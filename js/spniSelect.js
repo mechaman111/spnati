@@ -611,6 +611,25 @@ function updateSelectableOpponents(autoclear) {
 }
 
 /************************************************************
+ * The player clicked on a suggested character button.
+ ************************************************************/
+function suggestionSelected(slot, quad) {
+    var selectedLabel = $suggestionQuads[slot-1][quad-1].children('.opponent-suggestion-label').text();
+    
+    /* Find the character they selected. */
+    for (var i=0; i<loadedOpponents.length; i++) {
+        if (loadedOpponents[i].label === selectedLabel) {
+            players[slot] = null;
+        	updateSelectionVisuals();
+            loadBehaviour(loadedOpponents[i], individualScreenCallback, slot);
+            return;
+        }
+    }
+    
+    console.error("Could not find opponent with label "+selectedLabel);
+}
+
+/************************************************************
  * The player clicked on an opponent slot.
  ************************************************************/
 function selectOpponentSlot (slot) {
@@ -818,12 +837,6 @@ function selectIndividualOpponent (slot) {
 function individualScreenCallback (playerObject, slot) {
     players[slot] = playerObject;
 	updateBehaviour(slot, SELECTED);
-    
-    var player_count = countLoadedOpponents();
-    
-    if (player_count >= 3) {
-        setSortingMode("Targeted most by selected");
-    }
 
 	updateSelectionVisuals();
 }
@@ -1041,15 +1054,24 @@ function updateSelectionVisuals () {
     $groupButton.attr('disabled', loaded < filled);
     
     /* Update suggestions images. */
-    updateSelectableOpponents();
-    
     var current_player_count = countLoadedOpponents();
     
     if (current_player_count >= 3) {
+        var suggested_opponents = loadedOpponents.filter(function(opp) {
+            /* hide selected opponents */
+            if (players.some(function(p) { return p && p.id == opp.id; })) {
+                return false;
+            }
+            return true;
+        });
+    
+        /* sort opponents */
+        suggested_opponents.sort(sortOpponentsByMostTargeted());
+        
         var suggestion_idx = 0;
         for (var i=1;i<players.length;i++) {
-            if (!players[i]) {
-                updateSuggestions(i-1, selectableOpponents, suggestion_idx);
+            if (players[i] === undefined) {
+                updateSuggestions(i-1, suggested_opponents, suggestion_idx);
                 $selectSuggestions[i-1].show();
                 suggestion_idx += 4;
             } else {
