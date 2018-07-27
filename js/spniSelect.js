@@ -177,6 +177,7 @@ var sortingOptionsMap = {
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"),
     "Name (A-Z)" : sortOpponentsByMultipleFields("first", "last"),
     "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
+    "Targeted most by selected" : sortOpponentsByMostTargeted(),
 };
 var individualCreditsShown = false;
 var groupCreditsShown = false;
@@ -1155,6 +1156,27 @@ function sortOpponentsByMultipleFields() {
         }
         return compare;
     }
+}
+
+/**
+ * Special Callback for Arrays.sort to sort an array of opponents on
+ * the total number of lines targeting them the currently selected
+ * opponents have.
+ */
+function sortOpponentsByMostTargeted() {
+	return function(opp1, opp2) {
+		counts = [opp1, opp2].map(function(opp) {
+			return players.reduce(function(sum, p) {
+				if (p.targetedLines && opp.id in p.targetedLines) {
+					sum += p.targetedLines[opp.id].count;
+				}
+				return sum;
+			}, 0);
+		});
+		if (counts[0] > counts[1]) return -1;
+		if (counts[0] < counts[1]) return 1;
+		return 0;
+	}
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
