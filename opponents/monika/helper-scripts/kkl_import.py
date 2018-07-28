@@ -639,6 +639,9 @@ def process_csv(infile, dest_dir, **kwargs):
     with infile.open('r', encoding='utf-8', newline='') as f:
         reader = csv.DictReader(f, restval='')
         for row in reader:
+            if 'enabled' in row and row['enabled'].strip().lower() == "false":
+                continue
+             
             if len(row['stage']) <= 0 or len(row['code']) <= 0:
                 continue
                 
