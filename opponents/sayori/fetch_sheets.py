@@ -54,8 +54,7 @@ OUT_DIR = Path(flags.out_dir)
 ALL_SHEETS = {
     'Meta Info and Start Lines': OUT_DIR / 'csvs' / '0-meta.csv',
     'Stages 0-3': OUT_DIR / 'csvs' / '1-s0-s3.csv',
-    'Stages 4-5': OUT_DIR / 'csvs' / '2-s4-s5.csv',
-    'Stages 6-7': OUT_DIR / 'csvs' / '3-s6-s7.csv',
+    'Stages 4-7': OUT_DIR / 'csvs' / '2-s4-s7.csv',
     'Stage 8': OUT_DIR / 'csvs' / '4-s8.csv',
     'Stage 9': OUT_DIR / 'csvs' / '5-s9.csv',
     'DDLC Targeted Lines': OUT_DIR / 'csvs' / '6-ddlc.csv',
