@@ -139,7 +139,9 @@ function loadGameScreen () {
      * characters using new-style start lines.
      */
     players.forEach(function (p) {
-        p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+        if (p.allStates) {
+            p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+        }
     });
 
     updateAllBehaviours(null, GAME_START);
