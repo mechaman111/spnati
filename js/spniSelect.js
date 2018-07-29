@@ -872,17 +872,15 @@ function backSelectScreen () {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-        if (players[i]) {
-            var legacySelectState = players[i].allStates[0];
-            
+        if (players[i]) {            
             /* update dialogue */
-            $selectDialogues[i-1].html(legacySelectState.dialogue);
+            $selectDialogues[i-1].html(players[i].chosenState.dialogue);
 
             /* update image */
-            if (players[i].folder + legacySelectState.image
+            if (players[i].folder + players[i].chosenState.image
                 != $selectImages[i-1].attr('src')) {
                 var slot = i;
-                $selectImages[i-1].attr('src', players[i].folder + legacySelectState.image);
+                $selectImages[i-1].attr('src', players[i].folder + players[i].chosenState.image);
                 $selectImages[i-1].one('load', function() {
                     $selectBubbles[slot-1].show();
                     $selectImages[slot-1].css('height', players[slot].scale + '%');
