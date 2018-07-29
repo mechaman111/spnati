@@ -170,7 +170,14 @@ function initPlayerState(player) {
 	player.timeInStage = -1;
 	player.markers = {};
 	if (player.xml !== null) {
-		player.state = parseDialogue(player.xml.find('start'), player);
+        /* Load in the legacy "start" lines, and also
+         * initialize player.chosenState to the first listed line.
+         * This may be overridden by later updateBehaviour calls if
+         * the player has (new-style) selected or game start case lines.
+         */
+		player.allStates = parseDialogue(player.xml.find('start'), player);
+		player.chosenState = player.allStates[0];
+        
 		loadOpponentWardrobe(player);
 	}
 	player.updateLabel();
