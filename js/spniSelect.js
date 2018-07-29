@@ -212,6 +212,8 @@ function loadListingFile () {
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
 			updateIndividualSelectScreen();
+			updateSelectableGroups(0);
+			updateSelectableGroups(1);
 			updateGroupSelectScreen();
 		}
 	}
@@ -246,9 +248,9 @@ function loadListingFile () {
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
 
-				var newGroup = createNewGroup(title, [opp1, opp2, opp3, opp4]);
+				var newGroup = createNewGroup(title, Array(4));
 				outstandingLoads += 4;
-				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, onComplete);
+				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, [opp1, opp2, opp3, opp4], onComplete);
 			});
 		}
 	});
@@ -257,12 +259,12 @@ function loadListingFile () {
 /************************************************************
 * Loads the meta information for an entire group.
 ************************************************************/
-function loadGroupMeta (groupSelectScreen, group, onComplete) {
+function loadGroupMeta (groupSelectScreen, group, opponents, onComplete) {
  /* parse the individual information of each group member */
  loadedGroups[groupSelectScreen].push(group);
 
  for (var i = 0; i < 4; i++) {
-   loadOpponentMeta(group.opponents[i], group.opponents, i, onComplete);
+   loadOpponentMeta(opponents[i], group.opponents, i, onComplete);
  }
 }
 
@@ -633,7 +635,7 @@ function updateSelectableGroups(screen) {
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
-        if (!group.opponents.some(function(opp) { return opp; })) return false;
+        if (!group.opponents.every(function(opp) { return opp; })) return false;
 
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
