@@ -141,8 +141,22 @@ function loadBehaviour (opponent, callFunction, slot) {
                     tagsArray.push($(this).text());
                 });
             }
-            
+            var targetedLines = {};
+            $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
+                var $case = $(this.parentNode);
+                ['target', 'alsoPlaying'].forEach(function(attr) {
+                    var id = $case.attr(attr);
+                    if (id) {
+                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: {} }; }
+                        if (!(this.textContent in targetedLines[id].seen)) {
+                            targetedLines[id].seen[this.textContent] = true;
+                            targetedLines[id].count++;
+                        }
+                    }
+                }, this);
+            });
             var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
+            newPlayer.targetedLines = targetedLines;
             
 			callFunction(newPlayer, slot);
 		},

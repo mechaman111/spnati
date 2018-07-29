@@ -56,6 +56,7 @@ marker=nugi-chan_blames_ai,public,Because Nugi-chan is a web site mascot, she kn
 marker=nugi-chan_corrin_f_panties,public,Nugi-chan comments that she can see female Corrin's panties.
 marker=nugi-chan_elizabeth_will_lose,public,Nugi-chan expects that Elizabeth will lose first.
 marker=nugi-chan_elizabeth_false_innocence,public,If Nugi-chan's first hand is bad in a game with Elizabeth, she'll pretend to be pure and innocent (for a line).
+marker=nugi-chan_elizabeth_first_blood,private,Nugi-chan transports Elizabeth's "first blood" remark to a new context.
 marker=nugi-chan_kyu_casual_friday,public,Kyu's outfit makes for good material. Not MUCH material, though.
 marker=nugi-chan_privacy_policy,private,When an embarrassed girl removes her first major item, Nugi-chan says "we've updated your privacy policy".
 marker=nugi-chan_tweeting_raven,public,Nugi-chan says she'll live-tweet Raven's stripping.
@@ -146,6 +147,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=calm,Hey, Zone-tan! Long time, no see!
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=calm,Hey, Zone-tan! Long time, no see!
 
+0-good_hand,alsoPlaying:elizabeth,targetSaidMarker:first_blood,notSaidMarker:nugi-chan_elizabeth_first_blood,marker:nugi-chan_elizabeth_first_blood=devious,If you get lucky, that might not be the only "first blood" we draw tonight.
 0-good_hand,alsoPlaying:jasmine,alsoPlayingStage:0,priority:0=devious,Those are some sexy ankles you have there, Jasmine-sama.
 0-good_hand,alsoPlaying:nagisa,alsoPlayingStage:5,alsoPlayingHand:High Card=mean,Who else is ready to be the first ever to see Nagisa-sama's titties? <3
 0-good_hand,alsoPlaying:xander,priority:0=devious,Who do you think is going to win today, Xander-sama? Because if I win, I'll want to be appropriately compensated.
@@ -175,6 +177,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 3-good_hand=happy,I have the high ground!
 3-good_hand=happy,Insert line here. Nah, just messing. I don't have any missing lines. But one of you is about to have missing clothes!
 3-good_hand=calm,I'm back on track!
+3-good_hand=interested,Don't you just love my hair? It tastes even better than it looks.
 3-okay_hand=,
 3-bad_hand=,
 
@@ -193,6 +196,8 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 4-good_hand,alsoPlaying:nagisa,alsoPlayingStage:5,alsoPlayingHand:High Card=mean,Who else is ready to be the first ever to see Nagisa-sama's titties? <3
 4-bad_hand,saidMarker:nugi-chan_sph,notSaidMarker:nugi-chan_sph_lifetime,marker:nugi-chan_sph_lifetime=mean,This hand is more disappointing than ~player~-sama's little dick. Just kidding! How could I compare it to a <i>lifetime</i> of disappointment?
 
+4-bad_hand,alsoPlaying:revy,alsoPlayingStage:5-7,priority:0=sad,This is just awful. But at least Revy-sama is having a worse time than I am.
+
 #lost skirt (underwear only)
 5-good_hand=,
 5-okay_hand=,
@@ -206,6 +211,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 6-good_hand=,
 6-okay_hand=awkward,This game is pretty tough, but it's not the hardest I've played. There's no combat or mandatory peeing... as far as I know.
 6-bad_hand,marker:nugi-chan_blames_ai=sad,I thought that my AI was going to improve as I revealed more! Apparently not...
+6-bad_hand=awkward,Can anyone remind me how to load from a previous save state?
 
 6-bad_hand,totalRounds:13=calm,Don't start thinking you're better than me just because I lost a few hands.
 
@@ -219,6 +225,7 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 
 #lost panties (naked)
 -3-good_hand=awkward,Normally I'm against the idea of winning back clothing, but right now I could make an exception for this game!
+-3-good_hand=mean,If I'm going down, I'm taking you all down with me!
 -3-okay_hand=,
 -3-bad_hand=sad,Who else thinks that we should play a long piece of classical music between each hand?
 -3-bad_hand=annoyed,Is this hand okay? Is <i>Pepsi</i> "okay"?
@@ -347,13 +354,13 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 6-male_must_strip=,
 6-female_human_must_strip=,
 6-female_must_strip=happy,This is more like it! Take if off, ~name~!
-6-female_must_strip=happy,~name~-sama is about to strip for us. But this time it will be very slowly and very <i>sexually</i>.
+6-female_must_strip=happy,~Name~-sama is about to strip for us. But this time it will be very slowly and very <i>sexually</i>.
 
 #lost panties (naked)
 -3-male_human_must_strip=,
 -3-male_must_strip=,
 -3-female_human_must_strip=,
--3-female_must_strip=embarrassed,~name~-sama, I need you so show me something special...
+-3-female_must_strip=embarrassed,~Name~-sama, I need you so show me something special...
 -3-female_must_strip=devious,I bet you'd like to know what I'm thinking right now, ~name~-sama.
 -3-female_must_strip=happy,Let's chip away at this armor until she's sticky!
 
@@ -369,7 +376,7 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 -1-female_human_must_strip=,
 -1-female_must_strip=mean,Ha, suck it, ~name~-sama!
 -1-female_must_strip=interested,So, how are you going to compensate me for losing?
--1-female_must_strip=loss,~name~-sama? Not my first choice, but I guess I can be patient.
+-1-female_must_strip=loss,~Name~-sama? Not my first choice, but I guess I can be patient.
 -1-female_must_strip,consecutiveLosses:0,priority:0=sad,Could it be? ~name~-sama isn't invincible?
 -1-female_must_strip,consecutiveLosses:0,priority:0=shocked,Really? The slowest girl here is joining in?
 
@@ -714,7 +721,8 @@ female_removed_accessory=awkward,Don't worry, ~name~-sama. I barely noticed that
 #lost bra (topless)
 6-male_removing_accessory=,
 6-male_removed_accessory=,
-6-female_removing_accessory=calm,I feel like I'm giving more than I'm getting here.
+6-female_removing_accessory=calm,I feel like I'm giving more than I'm getting.
+6-female_removing_accessory=calm,Hurry it up, would you? I'm not getting any younger or older here.
 6-female_removed_accessory=annoyed,Oh, nice dialogue, ~name~-sama. How about <i>some nudity</i> next time?
 6-female_removed_accessory=annoyed,Does anyone know if there's a garbage can nearby? ~name~-sama is <i>finally</i> giving up her ~clothing~.
 
@@ -1606,6 +1614,7 @@ female_crotch_is_visible=devious,You're all naked, ~name~-sama!. I said no cover
 -3-female_crotch_is_visible,target:jasmine=mean,No panties? I <i>knew</i> it!
 -2-female_crotch_is_visible,target:jasmine=mean,No panties? I thought I was going to have to beg...
 -1-female_crotch_is_visible,target:jasmine=mean,No panties? Everybody, <i>this</i> is how to play strip poker!
+female_crotch_is_visible,target:jura=sad,Oh no. Now we'll never find out if you're a natural blonde.
 0-female_crotch_is_visible,target:kim=horny,Anyone know where to enroll in "Cheer Camp"? Asking for a friend...
 1-female_crotch_is_visible,target:kim=horny,Anyone know where to enroll in "Cheer Camp"? Asking for a friend...
 2-female_crotch_is_visible,target:kim=horny,Anyone know where to enroll in "Cheer Camp"? Asking for a friend...
@@ -1994,6 +2003,7 @@ game_over_victory=happy,Not surprising. I know everything there is to know about
 0-game_over_victory=shocked,Is this some sort of spectator mode? That was awesome!
 1-game_over_victory=happy,It took almost no strategy to defeat you all! <3
 2-game_over_victory=loss,Too easy! Maybe I'll start out like this next time just to give you a chance.
+
 0-game_over_victory,alsoPlaying:yang=happy,Oh yeah, revenge is sweet, Yang-sama!
 1-game_over_victory,alsoPlaying:yang=happy,Oh yeah, revenge is sweet, Yang-sama!
 2-game_over_victory,alsoPlaying:yang=happy,Oh yeah, revenge is sweet, Yang-sama!
