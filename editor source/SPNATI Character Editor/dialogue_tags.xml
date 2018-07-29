@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tags xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <triggers>
-  <trigger tag="-" start="-1" end="-1" label="Selected" description="Legacy initial state">
+  <trigger tag="-" start="-1" end="-1" label="Start" description="Legacy initial state">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says after they've been selected if the new triggers aren't used</defaultText>
   </trigger>
-  <trigger tag="selected" optional="true" start="0" end="0" label="Selected" description="When added to the selection screen">
+  <trigger tag="selected" optional="true" start="0" end="0" label="Selected" description="When added to the selection screen" group="0" order="0">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says after they've been selected</defaultText>
   </trigger>
-  <trigger tag="game_start" optional="true" start="0" end="0" label="Start Game" description="When the game starts">
+  <trigger tag="game_start" optional="true" start="0" end="0" label="Game start" description="When the game starts" group="0" order="1">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says when the game starts</defaultText>
   </trigger>
@@ -21,24 +21,24 @@
     <defaultImage>sad</defaultImage>
     <defaultText>What the character says just after they take their clothes off. Note that this is the start of a new stage.</defaultText>
   </trigger>
-  <trigger tag="swap_cards" start="0" end="8" label="Swapping Cards" description="When exchanging cards" group="0" order="0" xmlGroup="1" xmlOrder="2">
+  <trigger tag="swap_cards" start="0" end="8" label="Swapping Cards" description="When exchanging cards" group="1" order="0" xmlGroup="1" xmlOrder="2">
     <vars>
       <string>cards</string>
     </vars>
     <defaultImage>calm</defaultImage>
     <defaultText>I'll exchange ~cards~ cards.</defaultText>
   </trigger>
-  <trigger tag="good_hand" start="0" end="8" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="0" xmlGroup="1" xmlOrder="0">
+  <trigger tag="good_hand" start="0" end="8" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="1" xmlGroup="1" xmlOrder="0">
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>I've got a good hand.</defaultText>
   </trigger>
-  <trigger tag="okay_hand" start="0" end="8" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="1" xmlGroup="1" xmlOrder="1">
+  <trigger tag="okay_hand" start="0" end="8" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2" xmlGroup="1" xmlOrder="1">
     <vars />
     <defaultImage>calm</defaultImage>
     <defaultText>I've got an okay hand.</defaultText>
   </trigger>
-  <trigger tag="bad_hand" start="0" end="8" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="2" xmlGroup="1" xmlOrder="3">
+  <trigger tag="bad_hand" start="0" end="8" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3" xmlGroup="1" xmlOrder="3">
     <vars />
     <defaultImage>sad</defaultImage>
     <defaultText>I've got a bad hand.</defaultText>
@@ -462,7 +462,7 @@
     <defaultImage>happy</defaultImage>
     <defaultText>What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</defaultText>
   </trigger>
-  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" hasTarget="true" description="The game is over and this character lost" group="11" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
+  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" hasTarget="true" description="The game is over and this character lost" group="10" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
     <vars>
       <string>name</string>
     </vars>
@@ -471,28 +471,28 @@
   </trigger>
 </triggers>
 <groups>
-  <textGroup id="0">
+  <textGroup id="0" name="Intro">
+	<description><![CDATA[
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	]]></description>
+  </textGroup>
+  <textGroup id="1" name="Poker">
     <description><![CDATA[
-#EXCHANGING CARDS
-#This is what a character says while they're exchanging cards.
-#The game will automatically put a display a number between 0-5 where you write ~cards~.
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
 #These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
 ]]></description>
   </textGroup>
-  <textGroup id="1">
-    <description><![CDATA[
-#HAND QUALITY
-#These lines appear each round when a character is commenting on how good or bad their hand is.
-#The lines written here are examples only and should be replaced.
-]]></description>
-  </textGroup>
-  <textGroup id="2" future="true">
+  <textGroup id="2" future="true" name="Self stripping">
     <description><![CDATA[
 #SELF STRIPPING
 #This is the character says once they've lost a hand, but before they strip.
 ]]></description>
   </textGroup>
-  <textGroup id="3">
+  <textGroup id="3" name="Opponent must strip">
     <description><![CDATA[
 #OPPONENT MUST STRIP
 #These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
@@ -500,7 +500,7 @@
 #The "human" versions of the lines will only be spoken if the human player is stripping.
 ]]></description>
   </textGroup>
-  <textGroup id="4">
+  <textGroup id="4" name="Opponent removing accessory">
     <description><![CDATA[
 #OPPONENT REMOVING ACCESSORY
 #These lines are spoken when an opponent removes a small item that does not cover any skin.
@@ -508,26 +508,26 @@
 #Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
 ]]></description>
   </textGroup>
-  <textGroup id="5">
+  <textGroup id="5" name="Opponent removing minor">
     <description><![CDATA[
 #OPPONENT REMOVING MINOR CLOTHING
 #Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
 ]]></description>
   </textGroup>
-  <textGroup id="6">
+  <textGroup id="6" name="Opponent removing major">
     <description><![CDATA[
 #OPPONENT REMOVING MAJOR CLOTHING
 #Major clothing reveals a significant amount of skin and likely underwear.
 #However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
 ]]></description>
   </textGroup>
-  <textGroup id="7">
+  <textGroup id="7" name="Opponent exposed">
     <description><![CDATA[
 #OPPONENT REVEALING CHEST OR CROTCH
 #Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
 ]]></description>
   </textGroup>
-  <textGroup id="8">
+  <textGroup id="8" name="Opponent masturbating">
     <description><![CDATA[
 #OPPONENT MASTURBATING
 #When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
@@ -536,7 +536,7 @@
 #When the opponent climaxes, your character will say the "finished_masturbating" line.
 ]]></description>
   </textGroup>
-  <textGroup id="9">
+  <textGroup id="9" name="Self masturbating">
     <description><![CDATA[
 #SELF MASTURBATING
 #If your character is naked and loses a hand, they have lost the game and must masturbate.
@@ -544,16 +544,10 @@
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
 ]]></description>
   </textGroup>
-  <textGroup id="10">
+  <textGroup id="10" name="Game over">
     <description><![CDATA[
-#GAME OVER VICTORY
-
-#stage-generic line that will be used for every individual stage that doesn't have a line written
-]]></description>
-  </textGroup>
-  <textGroup id="11">
-    <description><![CDATA[
-#GAME OVER DEFEAT
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
 ]]></description>
   </textGroup>
 </groups>

@@ -224,7 +224,7 @@ namespace SPNATI_Character_Editor
 			{
 				int stageId = TriggerDatabase.ToFlatFileStage(character, outputCase.Stages[0]);
 				if (outputCase.IsDefault)
-					stageId = -1;
+					stageId = -9;
 				string tag = outputCase.Tag;
 				Trigger trigger = TriggerDatabase.GetTrigger(tag);
 				int group = trigger.Group;
@@ -252,10 +252,15 @@ namespace SPNATI_Character_Editor
 					if (outputCase.IsDefault)
 					{
 						lines.Add("");
-						lines.Add("#stage-specific lines that override the stage-generic ones");
+						lines.Add("#stage-generic lines that will be used for every individual stage that doesn't have a line written");
 					}
 					else
 					{
+						if (lastStage == -9)
+						{
+							lines.Add("");
+							lines.Add("#stage-specific lines that override the stage-generic ones");
+						}
 						StageName label = character.LayerToFlatFileName(stageId, appliesToNext);
 						if (label?.DisplayName != null)
 						{
@@ -436,7 +441,11 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var condition in stageCase.Conditions)
 				{
-					filters.Add(string.Format("count-{0}:{1}", condition.Filter, condition.Count));
+					string fmt = "count-{0}"
+						+ (condition.Gender != null || condition.Status != null ? "/{1}" : "")
+						+ (condition.Status != null ? "/{2}" : "")
+						+ ":{3}";
+					filters.Add(string.Format("count-{1}/{2}/{3}:{0}", condition.Count, condition.Filter ?? "*", condition.Gender ?? "*", condition.Status ?? "*"));
 				}
 			}
 			return filters;
@@ -872,7 +881,11 @@ namespace SPNATI_Character_Editor
 						if (key.StartsWith("count-"))
 						{
 							string filter = key.Substring(6);
-							lineCase.Conditions.Add(new TargetCondition(filter, value));
+							string[] parts = filter.Split('/');
+							string tag = parts[0] == "*" || parts[0] == "" ? null : parts[0];
+							string gender = parts.Length < 2 || parts[1] == "*" || parts[1] == "" ? null : parts[1];
+							string status = parts.Length < 3 || parts[2] == "*" || parts[2] == "" ? null : parts[2];
+							lineCase.Conditions.Add(new TargetCondition(tag, gender, status, value));
 						}
 						break;
 				}

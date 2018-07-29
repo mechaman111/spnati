@@ -52,9 +52,8 @@ namespace SPNATI_Character_Editor
 			findToolStripMenuItem.Enabled = false;
 			replaceToolStripMenuItem.Enabled = false;
 			grpCase.Enabled = false;
-			cmdAddDialogue.Enabled = false;
-			cmdRemoveDialogue.Enabled = false;
-			cmdSplit.Enabled = false;
+			tsbtnRemoveDialogue.Enabled = false;
+			tsbtnSplit.Enabled = false;
 
 			//Initial setup
 			string appDir = Config.GameDirectory;
@@ -80,6 +79,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			TriggerDatabase.Load();
+			PopulateTriggerMenu();
 			DialogueDatabase.Load();
 
 			_listing = Serialization.ImportListing();
@@ -119,21 +119,20 @@ namespace SPNATI_Character_Editor
 		/// Prompts the user to export the current character
 		/// </summary>
 		/// <returns></returns>
-		private DialogResult PromptToSave()
+		private bool PromptToSave()
 		{
 			if (_selectedCharacter == null)
-				return DialogResult.OK;
+				return true;
 			DialogResult result = MessageBox.Show(string.Format("Do you wish to save {0} first?", _selectedCharacter), "Save changes", MessageBoxButtons.YesNoCancel);
 			if (result == DialogResult.Yes)
 			{
-				Export();
-				result = DialogResult.OK;
+				return Export();
 			}
 			else if (result == DialogResult.No)
 			{
-				result = DialogResult.OK;
+				return true;
 			}
-			return result;
+			return false;
 		}
 
 		/// <summary>
@@ -143,7 +142,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void newToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			if (PromptToSave() != DialogResult.OK)
+			if (!PromptToSave())
 				return;
 			NewCharacterPrompt prompt = new NewCharacterPrompt();
 			if (prompt.ShowDialog() == DialogResult.OK)
@@ -239,6 +238,11 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void frmEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			if (!PromptToSave())
+			{
+				e.Cancel = true;
+				return;
+			}
 			Config.Save();
 		}
 
@@ -289,7 +293,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		private bool OpenCharacter()
 		{
-			if (PromptToSave() != DialogResult.OK)
+			if (!PromptToSave())
 				return false;
 			LoadCharacterPrompt prompt = new LoadCharacterPrompt();
 			if (_selectedCharacter != null)
@@ -453,6 +457,31 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private void PopulateTriggerMenu()
+		{
+			List<Trigger> triggers = TriggerDatabase.Triggers;
+			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
+			int curGroup = -1;
+			ContextMenuStrip curGroupMenu = null;
+
+			foreach (Trigger t in triggers)
+			{
+				if (t.StartStage < 0) continue;
+				if (t.Group != curGroup)
+				{
+					curGroup = t.Group;
+					ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
+					groupMenuItem.Text = TriggerDatabase.GetGroupName(curGroup);
+					curGroupMenu = new ContextMenuStrip();
+					curGroupMenu.ShowImageMargin = false;
+					groupMenuItem.DropDown = curGroupMenu;
+					triggerMenu.Items.Add(groupMenuItem);
+				}
+				curGroupMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerMenuItem_Click, t.Tag));
+
+			}
+		}
+
 		/// <summary>
 		/// Saves the fields into the current Character object, but does NOT save to disk. That's Export()
 		/// </summary>
@@ -550,14 +579,21 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Exports the current character to disk (i.e. updates the meta.xml and behaviour.xml files)
 		/// </summary>
-		private void Export()
+		private bool Export()
 		{
 			if (_selectedCharacter == null)
-				return;
+				return true;
 			SaveCharacter();
 			if (Serialization.ExportCharacter(_selectedCharacter))
+			{
 				SetStatus(string.Format("{0} exported successfully.", _selectedCharacter));
-			else SetStatus(string.Format("{0} failed to export.", _selectedCharacter));
+				return true;
+			}
+			else
+			{
+				SetStatus(string.Format("{0} failed to export.", _selectedCharacter));
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -1188,6 +1224,7 @@ namespace SPNATI_Character_Editor
 
 			if (wrapper.NodeType == NodeType.Case)
 			{
+				node.ContextMenuStrip = splitMenu;
 				if (wrapper.Case.HasFilters)
 				{
 					//Highlight targeted dialogue
@@ -1314,9 +1351,8 @@ namespace SPNATI_Character_Editor
 			DialogueWrapper wrapper = node.Tag as DialogueWrapper;
 			if (wrapper == null)
 			{
-				cmdRemoveDialogue.Enabled = false;
-				cmdAddDialogue.Enabled = false;
-				cmdSplit.Enabled = false;
+				tsbtnRemoveDialogue.Enabled = false;
+				tsbtnSplit.Enabled = false;
 				return;
 			}
 
@@ -1330,9 +1366,8 @@ namespace SPNATI_Character_Editor
 				case NodeType.Start:
 					_selectedStage = null;
 					_selectedCase = new Case(Trigger.StartTrigger);
-					cmdRemoveDialogue.Enabled = false;
-					cmdAddDialogue.Enabled = false;
-					cmdSplit.Enabled = false;
+					tsbtnRemoveDialogue.Enabled = false;
+					tsbtnSplit.Enabled = false;
 					tabControlConditions.Enabled = false;
 					break;
 				case NodeType.Case:
@@ -1341,16 +1376,14 @@ namespace SPNATI_Character_Editor
 					parentWrapper = parent.Tag as DialogueWrapper;
 					_selectedStage = parentWrapper.Stage;
 					tabControlConditions.Enabled = true;
-					cmdRemoveDialogue.Enabled = true;
-					cmdAddDialogue.Enabled = true;
-					cmdSplit.Enabled = true;
+					tsbtnRemoveDialogue.Enabled = true;
+					tsbtnSplit.Enabled = true;
 					break;
 				case NodeType.Stage:
 					_selectedStage = wrapper.Stage;
 					_selectedCase = null;
-					cmdRemoveDialogue.Enabled = false;
-					cmdAddDialogue.Enabled = true;
-					cmdSplit.Enabled = false;
+					tsbtnRemoveDialogue.Enabled = false;
+					tsbtnSplit.Enabled = false;
 					break;
 			}
 			PopulateCase();
@@ -1431,6 +1464,7 @@ namespace SPNATI_Character_Editor
 				SetComboBox(cboLineTarget, _selectedCase.Target);
 				SetComboBox(cboTargetHand, _selectedCase.TargetHand);
 				SetComboBox(cboLineFilter, _selectedCase.Filter);
+				SetComboBox(cboTargetStatus, _selectedCase.TargetStatus);
 				Character target = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.Target);
 				_selectedCase.SplitTargetStage(out minStage, out maxStage);
 				PopulateStageCombo(cboTargetStage, target, true);
@@ -1443,6 +1477,7 @@ namespace SPNATI_Character_Editor
 				cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
 				SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
 				SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
+				SetRange(valLayers, valMaxLayers, _selectedCase.TargetLayers);
 				valOwnLosses.Enabled = false;
 				valMaxOwnLosses.Enabled = false;
 			}
@@ -1555,7 +1590,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="minBox"></param>
 		/// <param name="maxBox"></param>
 		/// <param name="value"></param>
-		private void SetRange(ComboBox minBox, ComboBox maxBox, string value)
+		public static void SetRange(ComboBox minBox, ComboBox maxBox, string value)
 		{
 			if (value == null)
 			{
@@ -1594,7 +1629,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="minBox"></param>
 		/// <param name="maxBox"></param>
 		/// <param name="value"></param>
-		private void SetRange(NumericUpDown minBox, NumericUpDown maxBox, string value)
+		public static void SetRange(NumericUpDown minBox, NumericUpDown maxBox, string value)
 		{
 			if (value == null)
 			{
@@ -1613,7 +1648,7 @@ namespace SPNATI_Character_Editor
 			SetNumericBox(maxBox, max);
 		}
 
-		private string ReadRange(ComboBox minBox, ComboBox maxBox)
+		public static string ReadRange(ComboBox minBox, ComboBox maxBox)
 		{
 			string min = minBox.Text;
 			if (string.IsNullOrEmpty(min))
@@ -1624,7 +1659,7 @@ namespace SPNATI_Character_Editor
 			return min + "-" + max;
 		}
 
-		private string ReadRange(NumericUpDown minBox, NumericUpDown maxBox)
+		public static string ReadRange(NumericUpDown minBox, NumericUpDown maxBox)
 		{
 			string min = ReadNumericBox(minBox);
 			if (string.IsNullOrEmpty(min))
@@ -1686,7 +1721,7 @@ namespace SPNATI_Character_Editor
 			else return value;
 		}
 
-		private void SetNumericBox(NumericUpDown box, string value)
+		private static void SetNumericBox(NumericUpDown box, string value)
 		{
 			if (string.IsNullOrEmpty(value))
 			{
@@ -1703,7 +1738,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private string ReadNumericBox(NumericUpDown box)
+		static string ReadNumericBox(NumericUpDown box)
 		{
 			if (string.IsNullOrEmpty(box.Text))
 				return null;
@@ -1735,20 +1770,21 @@ namespace SPNATI_Character_Editor
 			if (_selectedCase == null)
 				return;
 			gridFilters.Rows.Clear();
-			DataGridViewComboBoxColumn col = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
+			DataGridViewComboBoxColumn colTags = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
 			foreach (TargetCondition condition in _selectedCase.Conditions)
 			{
-				if (string.IsNullOrEmpty(condition.Filter))
-					continue;
 				DataGridViewRow row = gridFilters.Rows[gridFilters.Rows.Add()];
-				if (!col.Items.Contains(condition.Filter))
+				if (condition.Filter != null && !colTags.Items.Contains(condition.Filter))
 				{
-					col.Items.Add(condition.Filter);
+					colTags.Items.Add(condition.Filter);
 				}
 				try
 				{
 					row.Cells["ColTagFilter"].Value = condition.Filter;
-					row.Cells["ColTagCount"].Value = condition.Count;
+					row.Cells["ColGenderFilter"].Value = condition.Gender;
+					row.Cells["ColStatusFilter"].Value = condition.Status;
+					row.Cells["ColStatusFilterNegated"].Value = condition.NegateStatus;
+					row.Cells["ColFilterCount"].Value = condition.Count;
 				}
 				catch { }
 			}
@@ -1766,10 +1802,14 @@ namespace SPNATI_Character_Editor
 			{
 				DataGridViewRow row = gridFilters.Rows[i];
 				string filter = row.Cells["ColTagFilter"].Value?.ToString();
-				string countValue = row.Cells["ColTagCount"].Value?.ToString();
-				if (string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(countValue))
+				string countValue = row.Cells["ColFilterCount"].Value?.ToString();
+				string gender = row.Cells["ColGenderFilter"].Value?.ToString();
+				string status = row.Cells["ColStatusFilter"].Value?.ToString();
+				object negStatus = row.Cells["ColStatusFilterNegated"].Value;
+
+				if (string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(gender) && string.IsNullOrEmpty(status) && string.IsNullOrEmpty(countValue))
 					continue;
-				TargetCondition condition = new TargetCondition(filter, countValue);
+				TargetCondition condition = new TargetCondition(filter, gender, status, negStatus != null && (bool)negStatus, countValue);
 				_selectedCase.Conditions.Add(condition);
 			}
 		}
@@ -1819,6 +1859,8 @@ namespace SPNATI_Character_Editor
 					c.Filter = ReadComboBox(cboLineFilter);
 					c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
 					c.ConsecutiveLosses = ReadRange(valLosses, valMaxLosses);
+					c.TargetLayers = ReadRange(valLayers, valMaxLayers);
+					c.TargetStatus = ReadComboBox(cboTargetStatus);
 					c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
 					c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
 				}
@@ -1826,6 +1868,8 @@ namespace SPNATI_Character_Editor
 				{
 					c.Target = null;
 					c.TargetStage = null;
+					c.TargetLayers = null;
+					c.TargetStatus = null;
 					c.TargetHand = null;
 					c.Filter = null;
 					c.TargetTimeInStage = null;
@@ -1930,10 +1974,13 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdAddDialogue_Click(object sender, EventArgs e)
+		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
 		{
-			if (_selectedCharacter == null || _selectedStage == null)
+			if (_selectedCharacter == null || _selectedStage == null || _selectedCase == null)
+			{
+				tsbtnAddDialogue.ShowDropDown();
 				return;
+			}
 			TreeNode node = treeDialogue.SelectedNode;
 			if (node == null)
 				return;
@@ -1944,13 +1991,49 @@ namespace SPNATI_Character_Editor
 			TreeNode stageNode = (wrapper.NodeType == NodeType.Stage ? node : node.Parent);
 			Stage stage = ((DialogueWrapper)stageNode.Tag).Stage;
 			SaveCase(true);
-			string tag = _selectedCase == null ? "male_must_strip" : _selectedCase.Tag;
+			string tag = _selectedCase.Tag;
 			Case newCase = new Case(tag);
 			newCase.Stages.Add(stage.Id);
 			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
 			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
 			_selectedCharacter.Behavior.WorkingCases.Add(newCase);
 			newCase.Lines.Add(line);
+			_selectedCase = newCase;
+			GenerateDialogueTree(false);
+			PopulateCase();
+		}
+
+		private void triggerMenuItem_Click(object sender, System.EventArgs e)
+		{
+			if (_selectedCharacter == null)
+				return;
+			SaveCase(true);
+			string tag = ((ToolStripMenuItem)sender).Name;
+			Case newCase = new Case(tag);
+			Trigger t = TriggerDatabase.GetTrigger(tag);
+			for (int stage = 0; stage < flowStageChecks.Controls.Count; stage++)
+
+			{
+				if (TriggerDatabase.UsedInStage(tag, _selectedCharacter, stage))
+				{
+					newCase.Stages.Add(stage);
+				}
+			}
+			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
+			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
+			_selectedCharacter.Behavior.WorkingCases.Add(newCase);
+			newCase.Lines.Add(line);
+			if (_selectedStage == null || !newCase.Stages.Contains(_selectedStage.Id))
+			{
+				foreach (TreeNode n in treeDialogue.Nodes)
+				{
+					DialogueWrapper w = n.Tag as DialogueWrapper;
+					if (w.NodeType == NodeType.Stage && w.Stage.Id == newCase.Stages[0])
+					{
+						_selectedStage = w.Stage;
+					}
+				}
+			}
 			_selectedCase = newCase;
 			GenerateDialogueTree(false);
 			PopulateCase();
@@ -1996,7 +2079,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdSplit_Click(object sender, EventArgs e)
+		private void tsbtnSplit_Click(object sender, EventArgs e)
 		{
 			Control ctl = sender as Control;
 			splitMenu.Show(sender as Control, 0, ctl.Height);
@@ -2089,7 +2172,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void cmdRemoveDialogue_Click(object sender, EventArgs e)
+		private void tsbtnRemoveDialogue_Click(object sender, EventArgs e)
 		{
 			DeleteSelectedCase();
 		}
@@ -2568,6 +2651,23 @@ namespace SPNATI_Character_Editor
 			if (gridLabels.Rows[e.RowIndex].Cells["ColLabelsStage"].ToString() == "0") {
 				txtLabel.Text = gridLabels.Rows[e.RowIndex].Cells["ColLabelsLabel"].ToString();
 			}
+		}
+
+		private void tsbtnSplit_DropDownOpening(object sender, EventArgs e)
+		{
+			tssepBeforeRemove.Visible = false;
+			tsmiRemove.Visible = false;
+		}
+
+		private void tsbtnSplit_DropDownClosed(object sender, EventArgs e)
+		{
+			tssepBeforeRemove.Visible = true;
+			tsmiRemove.Visible = true;
+		}
+
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

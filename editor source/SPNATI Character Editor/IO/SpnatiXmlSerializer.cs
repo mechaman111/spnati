@@ -224,6 +224,20 @@ namespace SPNATI_Character_Editor.IO
 				}
 			}
 
+			foreach (var field in fields)
+			{
+				XmlAnyElementAttribute any = field.GetCustomAttribute<XmlAnyElementAttribute>();
+				if (any != null)
+				{
+					foreach (XmlElement el in field.GetValue(data) as List<XmlElement>)
+					{
+						el.WriteTo(writer);
+					}
+					foundSomething = true;
+				}
+
+			}
+
 			if (!foundSomething)
 			{
 				text = data.ToString();
