@@ -677,10 +677,10 @@ function clickedRandomGroupButton () {
     console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
 
 	/* load the corresponding group */
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0], updateRandomSelection, 1);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1], updateRandomSelection, 2);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2], updateRandomSelection, 3);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3], updateRandomSelection, 4);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0], playerLoadedCallback, 1);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1], playerLoadedCallback, 2);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2], playerLoadedCallback, 3);
+	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3], playerLoadedCallback, 4);
 	updateSelectionVisuals();
 }
 
@@ -705,7 +705,7 @@ function clickedRandomFillButton (predicate) {
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-			loadBehaviour(loadedOpponentsCopy[randomOpponent], updateRandomSelection, i);
+            loadBehaviour(loadedOpponentsCopy[randomOpponent], playerLoadedCallback, i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -753,18 +753,19 @@ function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = null;
 	updateSelectionVisuals();
-	loadBehaviour(shownIndividuals[slot-1], individualScreenCallback, selectedSlot);
+	loadBehaviour(shownIndividuals[slot-1], playerLoadedCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 }
 
 /************************************************************
- * This is the callback for the individual select screen.
+ * This callback is called after an opponent's behaviour file is loaded,
+ * in all selection cases: indiv. select, group select, random selection, etc.
  ************************************************************/
-function individualScreenCallback (playerObject, slot) {
-    players[selectedSlot] = playerObject;
-	updateBehaviour(selectedSlot, SELECTED);
-
+function playerLoadedCallback (playerObject, slot) {
+    console.log(slot+": "+playerObject);
+    players[slot] = playerObject;
+	updateBehaviour(slot, SELECTED);
 	updateSelectionVisuals();
 }
 
@@ -825,22 +826,11 @@ function selectGroup () {
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
         if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], groupScreenCallback, i+1);
+            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], playerLoadedCallback, i+1);
 		}
 	}
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
-}
-
-/************************************************************
- * This is the callback for the group select screen.
- ************************************************************/
-function groupScreenCallback (playerObject, slot) {
-	console.log(slot +" "+playerObject);
-    players[slot] = playerObject;
-	updateBehaviour(slot, SELECTED);
-
-	updateSelectionVisuals();
 }
 
 /************************************************************
@@ -999,15 +989,6 @@ function updateGroupScreen (playerObject) {
 
 	/* enable the button */
 	$groupButton.attr('disabled', false);
-}
-
-/************************************************************
- * This is the callback for the random buttons.
- ************************************************************/
-function updateRandomSelection (playerObject, slot) {
-    players[slot] = playerObject;
-    updateBehaviour(slot, SELECTED);
-    updateSelectionVisuals();
 }
 
 /************************************************************
