@@ -458,5 +458,10 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 		}
+
+		private void cmdAdvancedConditions_Click(object sender, EventArgs e)
+		{
+			new AdvancedEpilogueConditions(_character, _ending).ShowDialog();
+		}
 	}
 }

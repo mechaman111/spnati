@@ -28,7 +28,7 @@ var winEpiloguesDisabledStr = "You won... but epilogues have been disabled.";
 var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
 
 /* NPC chosen for epilogue */
-var epilogueCharacter = -1; //the character whose epilogue is playing
+var epilogueCharacter; //the character whose epilogue is playing
 var epilogueScreen = 0; //screen in the epilogue
 var epilogueTextCount = 0; //current latest text box in the current screen of the epilogue
 
@@ -58,13 +58,10 @@ function getCenteredPosition(width){
 /************************************************************
  * Load the Epilogue data for a character
  ************************************************************/
-function loadEpilogueData(player){
-    if (!players[player]) {
+function loadEpilogueData(player) {
+    if (!player || !player.xml) { //return an empty list if a character doesn't have an XML variable. (Most likely because they're the player.)
         return [];
     }
-
-	var xml = players[player].xml;
-	if (!xml) {return [];} //return an empty list if a character doesn't have an XML variable. (Most likely because they're the player.)
 
 	var playerGender = players[HUMAN_PLAYER].gender;
 
@@ -73,138 +70,92 @@ function loadEpilogueData(player){
 
 	var epilogues = [];
 
-    var all_epilogues = xml.find('epilogue').filter(function (index) {
+    var all_epilogues = player.xml.find('epilogue').filter(function (index) {
         /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
          * Conversely, returning false from this function will make the current epilogue not selectable.
          */
 
         /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
         var epilogue_gender = $(this).attr('gender');
-        if(epilogue_gender) {
-            if(epilogue_gender !== playerGender && epilogue_gender !== 'any') {
-                // if the gender doesn't match, don't make this epilogue selectable
-                return false;
-            }
+        if (epilogue_gender && epilogue_gender !== playerGender && epilogue_gender !== 'any') {
+            // if the gender doesn't match, don't make this epilogue selectable
+            return false;
+        }
+
+        var alsoPlaying = $(this).attr('alsoPlaying');
+        if (alsoPlaying !== undefined && !(players.some(function(p) { return p.id == alsoPlaying; }))) {
+            return false;
+        }
+
+        var playerStartingLayers = parseInterval($(this).attr('playerStartingLayers'));
+        if (playerStartingLayers !== undefined && !inInterval(players[HUMAN_PLAYER].startingLayers, playerStartingLayers)) {
+            return false;
         }
 
         /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers listed within the attribute set. */
         var all_marker_attr = $(this).attr('markers');
-        if(all_marker_attr) {
-            var must_match_markers = all_marker_attr.split(' ');
-            for(var i=0;i<must_match_markers.length;i++) {
-                if(!(must_match_markers[i] in players[player].markers)) {
-                    // if the given marker is not present, don't make this epilogue selectable
-                    return false;
-                }
-            }
+        if (all_marker_attr !== undefined
+            && !all_marker_attr.trim().split(/\s+/).every(function(marker) {
+                return marker in player.markers;
+            })) {
+            // not every marker set
+            return false;
         }
 
         /* 'not-markers' attribute: the epilogue will only be selectable if the character has NO markers listed within the attribute set. */
         var no_marker_attr = $(this).attr('not-markers');
-        if(no_marker_attr) {
-            var must_not_match_markers = no_marker_attr.split(' ');
-            for(var i=0;i<must_not_match_markers.length;i++) {
-                if(must_not_match_markers[i] in players[player].markers) {
-                    // if the given marker is present, don't make this epilogue selectable
-                    return false;
-                }
-            }
+        if (no_marker_attr !== undefined
+            && no_marker_attr.trim().split(/\s+/).some(function(marker) {
+                return marker in player.markers;
+            })) {
+            // some disallowed marker set
+            return false;
         }
 
         /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers listed within the attribute set. */
         var any_marker_attr = $(this).attr('any-markers');
-        if(any_marker_attr) {
-            var one_must_match_markers = any_marker_attr.split(' ');
-            var match_found = false;
-            for(var i=0;i<one_must_match_markers.length;i++) {
-                if(one_must_match_markers[i] in players[player].markers) {
-                    match_found = true;
-                    break;
-                }
-            }
-
-            if(!match_found) {
-                /* if no markers in the list matched, don't make this epilogue selectable. */
-                return false;
-            }
-
-            /* if any marker within the attribute is set, then this condition passes-- fall through and check the other conditions though */
+        if (any_marker_attr !== undefined
+            && !any_marker_attr.trim().split(/\s+/).some(function(marker) {
+                return marker in player.markers;
+            })) {
+            // none of the markers set
+            return false;
         }
 
         /* 'alsoplaying-markers' attribute: this epilogue will only be selectable if ALL markers within the attribute are set for any OTHER characters in the game. */
         var alsoplaying_marker_attr = $(this).attr('alsoplaying-markers');
-        if(alsoplaying_marker_attr) {
-            var markers = alsoplaying_marker_attr.split(' ');
-            for(var i=0;i<markers.length;i++) {
-                var marker_set = false;
-
-                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
-                    if(pl_idx !== player) {
-                        if(markers[i] in players[pl_idx].markers) {
-                            marker_set = true;
-                            break;
-                        }
-                    }
-                }
-
-                /* if any marker within the attribute is not set, don't make this epilogue selectable */
-                if(!marker_set) {
-                    return false;
-                }
-            }
+        if (alsoplaying_marker_attr !== undefined
+            && !alsoplaying_marker_attr.trim().split(/\s+/).every(function(marker) {
+                return players.some(function(p) {
+                    return p !== player && marker in p.markers;
+                });
+            })) {
+            // not every marker set by some other character
+            return false;
         }
 
         /* 'alsoplaying-not-markers' attribute: this epilogue will only be selectable if NO markers within the attribute are set for other characters in the game. */
         var alsoplaying_not_marker_attr = $(this).attr('alsoplaying-not-markers');
-        if(alsoplaying_not_marker_attr) {
-            var markers = alsoplaying_not_marker_attr.split(' ');
-            for(var i=0;i<markers.length;i++) {
-                var marker_set = false;
-
-                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
-                    if(pl_idx !== player) {
-                        if(markers[i] in players[pl_idx].markers) {
-                            marker_set = true;
-                            break;
-                        }
-                    }
-                }
-
-                /* If any marker within the attribute is set, then don't make the epilogue selectable */
-                if(marker_set) {
-                    return false;
-                }
-            }
+        if (alsoplaying_not_marker_attr !== undefined
+            && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function(marker) {
+                return players.some(function(p) {
+                    return p !== player && marker in p.markers;
+                });
+            })) {
+            // some disallowed marker set by some other character
+            return false;
         }
 
         /* 'alsoplaying-any-markers' attribute: this epilogue will only be selectable if at least one marker within the attribute are set for any OTHER character in the game. */
         var alsoplaying_any_marker_attr = $(this).attr('alsoplaying-any-markers');
-        if(alsoplaying_any_marker_attr) {
-            var markers = alsoplaying_any_marker_attr.split(' ');
-            var match_found = false;
-
-            for(var i=0;i<markers.length;i++) {
-                for(var pl_idx=0;pl_idx<players.length;pl_idx++) {
-                    if(pl_idx !== player) {
-                        if(markers[i] in players[pl_idx].markers) {
-                            match_found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if(match_found) {
-                    /* break out of all loops */
-                    break;
-                }
-            }
-
-            /* if any marker within the attribute is set, then this condition passes-- fall through and check other conditions (if there are any).
-             * Otherwise, don't make this epilogue selectable.
-             */
-            if(!match_found) {
-                return false;
-            }
+        if (alsoplaying_any_marker_attr !== undefined
+            && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function(marker) {
+                return players.some(function(p) {
+                    return p !== player && marker in p.markers;
+                });
+            })) {
+            // none of the markers set by any other player
+            return false;
         }
 
         // if we made it this far the epilogue must be selectable
@@ -218,7 +169,7 @@ function loadEpilogueData(player){
 		var screens = []; //the list of screens for the epilogue
 
 		$(this).find("screen").each(function() {
-			var image = players[player].folder + $(this).attr("img").trim(); //get the full path for the screen's image
+			var image = player.folder + $(this).attr("img").trim(); //get the full path for the screen's image
 			//use an attribute rather than a tag because IE doesn't like parsing XML
 
 			//get the information for all the text boxes
@@ -346,7 +297,8 @@ function clearEpilogueBoxes(){
 
 function addEpilogueEntry(epilogue){
 	var num = epilogues.length; //index number of the new epilogue
-	var player = players[epilogue.player]
+	epilogues.push(epilogue);
+	var player = epilogue.player
 
 	var nameStr = player.first+" "+player.last;
 	if (player.first.length <= 0 || player.last.length <= 0){
@@ -399,34 +351,21 @@ function doEpilogueModal(){
 	chosenEpilogue = null; //reset any currently-chosen epilogue
 	$epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one
 
-	//identify the winning player
-	var winner = -1;
-	for (var i = 0; i < players.length; i++){
-		if (players[i] && !players[i].out){
-			winner = i;
-			break;
-		}
-	}
-
 	//whether or not the human player won
-	var playerWon = (winner == HUMAN_PLAYER);
+	var playerWon = !players[HUMAN_PLAYER].out;
 
 	if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
 		//load the epilogue data for each player
-		for (var i = 0; i < players.length; i++){
-			var playerIEpilogues = loadEpilogueData(i);
-			for (var j = 0; j < playerIEpilogues.length; j++){
-				addEpilogueEntry(playerIEpilogues[j]);
-				epilogues.push(playerIEpilogues[j]);
-			}
-		}
+		players.forEach(function(p) {
+			loadEpilogueData(p).forEach(addEpilogueEntry);
+		});
 	}
 
 	//are there any epilogues available for the player to see?
 	var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
 	$epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
 
-    if(EPILOGUES_ENABLED) {
+    if (EPILOGUES_ENABLED) {
         //decide which header string to show the player. This describes the situation.
     	var headerStr = '';
     	if (playerWon){
@@ -438,7 +377,7 @@ function doEpilogueModal(){
     		headerStr = lossStr; //player lost
     	}
     } else {
-        if(playerWon) {
+        if (playerWon) {
             headerStr = winEpiloguesDisabledStr;
         } else {
             headerStr = lossEpiloguesDisabledStr;
@@ -453,7 +392,7 @@ function doEpilogueModal(){
  * Start the Epilogue
  ************************************************************/
 function doEpilogue(){
-	save.addEnding(players[chosenEpilogue.player].id, chosenEpilogue.title);
+	save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
     
 	//just in case, clear any open text boxes
 	clearEpilogueBoxes();

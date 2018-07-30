@@ -55,6 +55,7 @@
 			this.wb = new System.Windows.Forms.WebBrowser();
 			this.cmdAddEnding = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.cmdAdvancedConditions = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.gridText)).BeginInit();
 			this.groupScreen.SuspendLayout();
 			this.SuspendLayout();
@@ -63,9 +64,9 @@
 			// 
 			this.cboEnding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboEnding.FormattingEnabled = true;
-			this.cboEnding.Location = new System.Drawing.Point(65, 3);
+			this.cboEnding.Location = new System.Drawing.Point(52, 3);
 			this.cboEnding.Name = "cboEnding";
-			this.cboEnding.Size = new System.Drawing.Size(185, 21);
+			this.cboEnding.Size = new System.Drawing.Size(170, 21);
 			this.cboEnding.TabIndex = 0;
 			this.toolTip1.SetToolTip(this.cboEnding, "Select an ending to edit");
 			this.cboEnding.SelectedIndexChanged += new System.EventHandler(this.cboEnding_SelectedIndexChanged);
@@ -73,7 +74,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 6);
+			this.label1.Location = new System.Drawing.Point(6, 8);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(43, 13);
 			this.label1.TabIndex = 2;
@@ -82,7 +83,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(333, 6);
+			this.label2.Location = new System.Drawing.Point(309, 8);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(101, 13);
 			this.label2.TabIndex = 11;
@@ -96,7 +97,7 @@
             "male",
             "female",
             "any"});
-			this.cboGender.Location = new System.Drawing.Point(440, 2);
+			this.cboGender.Location = new System.Drawing.Point(416, 3);
 			this.cboGender.Name = "cboGender";
 			this.cboGender.Size = new System.Drawing.Size(87, 21);
 			this.cboGender.TabIndex = 12;
@@ -110,15 +111,15 @@
 			// 
 			this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtTitle.Location = new System.Drawing.Point(569, 3);
+			this.txtTitle.Location = new System.Drawing.Point(642, 3);
 			this.txtTitle.Name = "txtTitle";
-			this.txtTitle.Size = new System.Drawing.Size(294, 20);
+			this.txtTitle.Size = new System.Drawing.Size(221, 20);
 			this.txtTitle.TabIndex = 13;
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(533, 6);
+			this.label3.Location = new System.Drawing.Point(606, 8);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(30, 13);
 			this.label3.TabIndex = 14;
@@ -220,7 +221,7 @@
 			// cmdDeleteEnding
 			// 
 			this.cmdDeleteEnding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdDeleteEnding.Location = new System.Drawing.Point(869, 1);
+			this.cmdDeleteEnding.Location = new System.Drawing.Point(869, 2);
 			this.cmdDeleteEnding.Name = "cmdDeleteEnding";
 			this.cmdDeleteEnding.Size = new System.Drawing.Size(101, 23);
 			this.cmdDeleteEnding.TabIndex = 20;
@@ -308,7 +309,7 @@
 			// 
 			// cmdAddEnding
 			// 
-			this.cmdAddEnding.Location = new System.Drawing.Point(256, 1);
+			this.cmdAddEnding.Location = new System.Drawing.Point(228, 2);
 			this.cmdAddEnding.Name = "cmdAddEnding";
 			this.cmdAddEnding.Size = new System.Drawing.Size(75, 23);
 			this.cmdAddEnding.TabIndex = 21;
@@ -317,10 +318,22 @@
 			this.cmdAddEnding.UseVisualStyleBackColor = true;
 			this.cmdAddEnding.Click += new System.EventHandler(this.cmdAddEnding_Click);
 			// 
+			// cmdAdvancedConditions
+			// 
+			this.cmdAdvancedConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdAdvancedConditions.Location = new System.Drawing.Point(509, 2);
+			this.cmdAdvancedConditions.Name = "cmdAdvancedConditions";
+			this.cmdAdvancedConditions.Size = new System.Drawing.Size(90, 23);
+			this.cmdAdvancedConditions.TabIndex = 22;
+			this.cmdAdvancedConditions.Text = "Advanced...";
+			this.cmdAdvancedConditions.UseVisualStyleBackColor = true;
+			this.cmdAdvancedConditions.Click += new System.EventHandler(this.cmdAdvancedConditions_Click);
+			// 
 			// EpilogueEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdAdvancedConditions);
 			this.Controls.Add(this.cmdAddEnding);
 			this.Controls.Add(this.wb);
 			this.Controls.Add(this.groupScreen);
@@ -368,5 +381,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button cmdAddEnding;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Button cmdAdvancedConditions;
 	}
 }
