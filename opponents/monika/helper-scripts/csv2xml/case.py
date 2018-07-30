@@ -14,7 +14,7 @@ class Case(object):
     # -2 is the 'masturbating' stage
     # -3 is the 'naked' stage
     TAG_INTERVALS = OrderedDict([
-        ("start", slice(0, 1)),
+        ("game_start", slice(0, 1)),
         ("selected", slice(0, 1)),
         ("swap_cards", slice(None, -2)),
         ("good_hand", slice(None, -2)),
@@ -91,6 +91,7 @@ class Case(object):
         'totalMasturbating',
         'totalFinished',
         'totalRounds',
+        'targetLayers',
     ]
 
     ID_CONDITIONS = [
@@ -106,6 +107,7 @@ class Case(object):
         'alsoPlayingNotSaidMarker',
         'saidMarker',
         'notSaidMarker',
+        'targetStatus',
     ]
 
     POSSIBLE_ATTRIBUTES = INTERVAL_CONDITIONS + ID_CONDITIONS + ['priority']
@@ -449,6 +451,24 @@ simple_pseudo_cases = {
     'opponent_heavy_masturbating':      ['male_heavy_masturbating', 'female_heavy_masturbating'],
     'opponent_finished_masturbating':   ['male_finished_masturbating', 'female_finished_masturbating'],
 
+    'male_removing_any': [
+        'male_removing_accessory',
+        'male_removing_minor',
+        'male_removing_major',
+        'male_crotch_will_be_visible',
+        'male_chest_will_be_visible',
+        'male_must_masturbate',
+    ],
+    
+    'female_removing_any': [
+        'female_removing_accessory',
+        'female_removing_minor',
+        'female_removing_major',
+        'female_chest_will_be_visible',
+        'female_crotch_will_be_visible',
+        'female_must_masturbate',
+    ],
+
     'opponent_removing_any': [
         'male_removing_accessory',
         'female_removing_accessory',
@@ -482,6 +502,28 @@ simple_pseudo_cases = {
         'male_start_masturbating',
         'female_start_masturbating',
     ],
+    
+    'male_removed_any': [
+        'male_removed_accessory',
+        'male_removed_minor',
+        'male_removed_major',
+        'male_small_crotch_is_visible',
+        'male_medium_crotch_is_visible',
+        'male_large_crotch_is_visible',
+        'male_chest_is_visible',
+        'male_start_masturbating',
+    ],
+    
+    'female_removed_any': [
+        'female_removed_accessory',
+        'female_removed_minor',
+        'female_removed_major',
+        'female_small_chest_is_visible',
+        'female_medium_chest_is_visible',
+        'female_large_chest_is_visible',
+        'female_crotch_is_visible',
+        'female_start_masturbating',
+    ],
 
     'must_strip_self':                  ['must_strip_winning', 'must_strip_normal', 'must_strip_losing'],
     'self_must_strip':                  ['must_strip_winning', 'must_strip_normal', 'must_strip_losing'],
@@ -494,6 +536,7 @@ simple_pseudo_cases = {
     'player_must_strip':                ['female_human_must_strip', 'male_human_must_strip'],
     'human_must_strip':                 ['female_human_must_strip', 'male_human_must_strip'],
     
+    'start': ['game_start'],
     'select': ['selected'],
 }
 

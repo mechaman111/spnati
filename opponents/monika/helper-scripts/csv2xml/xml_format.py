@@ -69,7 +69,7 @@ def xml_to_lineset(opponent_elem):
     select_case = Case('selected')
     select_case.states.append(State.from_xml(start_elem.children[0]))
 
-    start_case = Case('start')
+    start_case = Case('game_start')
     for state in start_elem.children[1:]:
         start_case.states.append(State.from_xml(state))
 
@@ -90,7 +90,8 @@ def lineset_to_xml(lineset):
             if case.tag == 'select' or case.tag == 'selected':
                 case.tag = 'selected'
                 select_cases.add(case)
-            elif case.tag == 'start':
+            elif case.tag == 'start' or case.tag == 'game_start':
+                case.tag = 'game_start'
                 start_cases.add(case)
 
     stage_superset = set()
