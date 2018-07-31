@@ -58,6 +58,12 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
 
+		[XmlAttribute("targetLayers")]
+		public string TargetLayers;
+
+		[XmlAttribute("targetStatus")]
+		public string TargetStatus;
+
 		[XmlAttribute("targetSaidMarker")]
 		public string TargetSaidMarker;
 
@@ -982,13 +988,69 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public string Filter;
 
+		[XmlAttribute("gender")]
+		public string Gender;
+
+		[XmlAttribute("status")]
+		public string Status;
+
+		[XmlIgnore]
+		public string StatusType
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(Status) && Status[0] == '!')
+				{
+					return Status.Substring(1);
+				}
+				else
+				{
+					return Status;
+				}
+			}
+			set
+			{
+				if (!String.IsNullOrEmpty(Status) && Status[0] == '!')
+				{
+					Status = "!" + value;
+				}
+				else
+				{
+					Status = value;
+				}
+			}
+		}
+
+		[XmlIgnore]
+		public bool NegateStatus {
+			get
+			{
+				return (!String.IsNullOrEmpty(Status) && Status[0] == '!');
+			}
+			set
+			{
+				Status = StatusType != null ? (value ? "!" : "") + StatusType : null;
+			}
+		}
+
 		public TargetCondition()
 		{
 		}
 
-		public TargetCondition(string filter, string count)
+		public TargetCondition(string tag, string gender, string status, string count)
 		{
-			Filter = filter;
+			Filter = tag;
+			Gender = gender;
+			Status = status;
+			Count = count;
+		}
+
+		public TargetCondition(string tag, string gender, string status, bool negateStatus, string count)
+		{
+			Filter = tag;
+			Gender = gender;
+			StatusType = status;
+			NegateStatus = negateStatus;
 			Count = count;
 		}
 
@@ -996,17 +1058,42 @@ namespace SPNATI_Character_Editor
 		{
 			if (Filter == "")
 				Filter = null;
+			if (Gender == "")
+				Gender = null;
+			if (Status == "")
+				Status = null;
 		}
 
 		public TargetCondition Copy()
 		{
-			TargetCondition copy = new TargetCondition(Filter, Count);
+			TargetCondition copy = new TargetCondition(Filter, Gender, Status, NegateStatus, Count);
 			return copy;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("{0}={1}", Filter, Count);
+			string str = Count;
+			if (Filter == null && Status == null && Gender == null)
+			{
+				str += " players";
+			}
+			else
+			{
+				if (Status != null)
+				{
+					str += " " + Status.Replace("!", "not ");
+				}
+				if (Gender != null)
+				{
+					str += " " + Gender + "s";
+				}
+				if (Filter != null)
+				{
+					str += " " + Filter;
+				}
+
+			}
+			return str;
 		}
 	}
 

@@ -9,6 +9,30 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("gender")]
 		public string Gender = "any";
 
+		[XmlAttribute("playerStartingLayers")]
+		public string PlayerStartingLayers;
+
+		[XmlAttribute("markers")]
+		public string AllMarkers;
+
+		[XmlAttribute("not-markers")]
+		public string NotMarkers;
+
+		[XmlAttribute("any-markers")]
+		public string AnyMarkers;
+
+		[XmlAttribute("alsoplaying-markers")]
+		public string AlsoPlayingAllMarkers;
+
+		[XmlAttribute("alsoplaying-not-markers")]
+		public string AlsoPlayingNotMarkers;
+
+		[XmlAttribute("alsoplaying-any-markers")]
+		public string AlsoPlayingAnyMarkers;
+
+		[XmlAttribute("alsoPlaying")]
+		public string AlsoPlaying;
+
 		[XmlElement("title")]
 		public string Title = "New Ending";
 

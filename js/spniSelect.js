@@ -227,6 +227,8 @@ function loadListingFile () {
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
 			updateIndividualSelectScreen();
+			updateSelectableGroups(0);
+			updateSelectableGroups(1);
 			updateGroupSelectScreen();
 		}
 	}
@@ -261,9 +263,9 @@ function loadListingFile () {
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
 
-				var newGroup = createNewGroup(title, [opp1, opp2, opp3, opp4]);
+				var newGroup = createNewGroup(title, Array(4));
 				outstandingLoads += 4;
-				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, onComplete);
+				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, [opp1, opp2, opp3, opp4], onComplete);
 			});
 		}
 	});
@@ -272,12 +274,12 @@ function loadListingFile () {
 /************************************************************
 * Loads the meta information for an entire group.
 ************************************************************/
-function loadGroupMeta (groupSelectScreen, group, onComplete) {
+function loadGroupMeta (groupSelectScreen, group, opponents, onComplete) {
  /* parse the individual information of each group member */
  loadedGroups[groupSelectScreen].push(group);
 
  for (var i = 0; i < 4; i++) {
-   loadOpponentMeta(group.opponents[i], group.opponents, i, onComplete);
+   loadOpponentMeta(opponents[i], group.opponents, i, onComplete);
  }
 }
 
@@ -516,37 +518,6 @@ function updateSuggestions(slot, suggestionsArray, startIndex) {
  **********************************************************************/
 
 /************************************************************
- * The player clicked the advance dialogue button on the main
- * select screen.
- ************************************************************/
-function advanceSelectDialogue (slot) {
-    players[slot].current++;
-
-    /* update dialogue */
-    $selectDialogues[slot-1].html(players[slot].state[players[slot].current].dialogue);
-
-    /* determine if the advance dialogue button should be shown */
-    if (players[slot].state.length > players[slot].current+1) {
-        $selectAdvanceButtons[slot-1].css({opacity : 1});
-    } else {
-        $selectAdvanceButtons[slot-1].css({opacity : 0});
-    }
-
-    /* direct the dialogue bubble */
-    if (players[slot].state[players[slot].current].direction) {
-        $selectBubbles[slot-1].removeClass();
-
-		$selectBubbles[slot-1].addClass("dialogue-bubble dialogue-"+players[slot].state[players[slot].current].direction);
-	} else {
-		$selectBubbles[slot-1].removeClass();
-		$selectBubbles[slot-1].addClass("dialogue-bubble dialogue-centre");
-	}
-
-    /* update image */
-    $selectImages[slot-1].attr('src', players[slot].folder + players[slot].state[players[slot].current].image);
-}
-
-/************************************************************
  * Filters the list of selectable opponents based on those
  * already selected and performs search and sort logic.
  ************************************************************/
@@ -712,7 +683,7 @@ function updateSelectableGroups(screen) {
 
     // reset filters
     selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
-        if (!group.opponents.some(function(opp) { return opp; })) return false;
+        if (!group.opponents.every(function(opp) { return opp; })) return false;
 
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
@@ -976,22 +947,15 @@ function backSelectScreen () {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-        if (players[i]) {
+        if (players[i]) {            
             /* update dialogue */
-            $selectDialogues[i-1].html(players[i].state[players[i].current].dialogue);
-
-            /* determine if the advance dialogue button should be shown */
-            if (players[i].state.length > players[i].current+1) {
-                $selectAdvanceButtons[i-1].css({opacity : 1});
-            } else {
-                $selectAdvanceButtons[i-1].css({opacity : 0});
-            }
+            $selectDialogues[i-1].html(players[i].chosenState.dialogue);
 
             /* update image */
-            if (players[i].folder + players[i].state[players[i].current].image
+            if (players[i].folder + players[i].chosenState.image
                 != $selectImages[i-1].attr('src')) {
                 var slot = i;
-                $selectImages[i-1].attr('src', players[i].folder + players[i].state[players[i].current].image);
+                $selectImages[i-1].attr('src', players[i].folder + players[i].chosenState.image);
                 $selectImages[i-1].one('load', function() {
                     $selectBubbles[slot-1].show();
                     $selectImages[slot-1].css('height', players[slot].scale + '%');

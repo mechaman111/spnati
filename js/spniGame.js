@@ -133,6 +133,16 @@ function loadGameScreen () {
     $gamePlayerCountdown.hide();
     chosenDebug = -1;
     updateDebugState(showDebug);
+    
+    /* randomize start lines for characters using legacy start lines.
+     * The updateAllBehaviours() call below will override this for any
+     * characters using new-style start lines.
+     */
+    players.forEach(function (p) {
+        if (p.allStates) {
+            p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+        }
+    });
 
     updateAllBehaviours(null, GAME_START);
     
@@ -167,24 +177,12 @@ function loadGameScreen () {
 function updateGameVisual (player) {
     /* update all opponents */
     if (players[player]) {
-        if (players[player].state) {
-            var chosenState = players[player].state[getRandomNumber(0, players[player].state.length)];
-
-            /* track markers */
-            if (!!chosenState.marker) {
-                players[player].markers[chosenState.marker] = true;
-            }
+        if (players[player].chosenState) {
+            var chosenState = players[player].chosenState;
 
             /* update dialogue */
             $gameDialogues[player-1].html(chosenState.dialogue);
-
-            /* direct the dialogue bubble */
-            $gameBubbles[player-1].show();
-            if (players[player].state[players[player].current].direction) {
-                $gameBubbles[player-1].removeClass();
-                $gameBubbles[player-1].addClass("bordered dialogue-bubble dialogue-"+chosenState.direction);
-            }
-
+            
             /* update image */
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
 			$gameImages[player-1].show()
@@ -693,33 +691,6 @@ function selectCard (card) {
 	} else {
 		fillCard(HUMAN_PLAYER, card);
 	}
-}
-
-/************************************************************
- * The player clicked the advance dialogue button on the main
- * game screen.
- ************************************************************/
-function advanceGameDialogue (slot) {
-    players[slot].current++;
-
-    /* update dialogue */
-    $gameDialogues[slot-1].html(players[slot].state[players[slot].current].dialogue);
-
-    /* determine if the advance dialogue button should be shown */
-    if (players[slot].state.length > players[slot].current+1) {
-        $gameAdvanceButtons[slot-1].css({opacity : 1});
-    } else {
-        $gameAdvanceButtons[slot-1].css({opacity : 0});
-    }
-
-    /* direct the dialogue bubble */
-    if (players[slot].state[players[slot].current].direction) {
-        $gameBubbles[slot-1].removeClass();
-		$gameBubbles[slot-1].addClass("bordered dialogue-bubble dialogue-"+players[slot].state[players[slot].current].direction);
-	}
-
-    /* update image */
-    $gameImages[slot-1].attr('src', players[slot].folder + players[slot].state[players[slot].current].image);
 }
 
 /************************************************************

@@ -139,6 +139,8 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlAttribute("id")]
 		public int Id;
+		[XmlAttribute("name")]
+		public string Name;
 		[XmlElement("description")]
 		public string Description;
 		[XmlAttribute("future")]
@@ -343,6 +345,19 @@ namespace SPNATI_Character_Editor
 			TextGroup group;
 			if (_groups.TryGetValue(id, out group))
 				return group.Description;
+			return "";
+		}
+
+		/// <summary>
+		/// Gets the short name for a text export group
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static string GetGroupName(int id)
+		{
+			TextGroup group;
+			if (_groups.TryGetValue(id, out group))
+				return group.Name;
 			return "";
 		}
 

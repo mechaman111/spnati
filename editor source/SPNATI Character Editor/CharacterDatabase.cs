@@ -33,7 +33,12 @@ namespace SPNATI_Character_Editor
 						{
 							string tag = character.Tags[i].ToLowerInvariant();
 							character.Tags[i] = tag;
-							TagDatabase.AddTag(tag);
+							if (!string.IsNullOrEmpty(tag))
+								TagDatabase.AddTag(tag);
+						}
+						if (!character.Tags.Contains(key))
+						{
+							TagDatabase.AddTag(character.DisplayName);
 						}
 					}
 				}
