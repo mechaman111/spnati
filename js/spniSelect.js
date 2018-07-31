@@ -599,7 +599,7 @@ function suggestionSelected(slot, quad) {
             loadingOpponents[slot-1] = loadedOpponents[i].id;
             
         	updateSelectionVisuals();
-            loadBehaviour(loadedOpponents[i], individualScreenCallback, slot);
+            loadBehaviour(loadedOpponents[i], playerLoadedCallback, slot);
             return;
         }
     }
