@@ -59,6 +59,7 @@ ALL_SHEETS = {
     'Stage 9': OUT_DIR / 'csvs' / '5-s9.csv',
     'DDLC Targeted Lines': OUT_DIR / 'csvs' / '6-ddlc.csv',
     'Tag-Filtered Lines': OUT_DIR / 'csvs' / '7-filtered.csv',
+    'Other Targeted Lines': OUT_DIR / 'csvs' / '8-other-targeting.csv',
     'Poses': OUT_DIR / 'poses.csv'
 }
 
