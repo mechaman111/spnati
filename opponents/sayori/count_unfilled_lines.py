@@ -4,8 +4,8 @@ from pathlib import Path
 CSVS_DIR = Path('./csvs')
 
 start_linecount = 1172
-block_target = 174
-last_progress = 52
+block_target = 164
+last_progress = 74
 
 total_lines = 0
 filled_lines = 0
