@@ -201,6 +201,7 @@ var groupCreditsShown = false;
 var selectedSlot = 0;
 var shownIndividuals = Array(4);
 var shownGroup = Array(4);
+var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
 /**********************************************************************
@@ -494,6 +495,7 @@ function updateSuggestionQuad(slot, quad, opponent) {
     var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
     
+    shownSuggestions[slot][quad] = opponent.id;
     img_elem.attr('src', opponent.folder+opponent.image);
     label_elem.text(opponent.label);
 }
@@ -590,13 +592,19 @@ function updateSelectableOpponents(autoclear) {
  * The player clicked on a suggested character button.
  ************************************************************/
 function suggestionSelected(slot, quad) {
-    var selectedLabel = $suggestionQuads[slot-1][quad-1].children('.opponent-suggestion-label').text();
+    var selectedID = shownSuggestions[slot-1][quad-1];
+    
+    if(!selectedID) {
+        /* This shouldn't happen. */
+        console.error("Could not find suggested opponent ID for slot " + slot + " and quad " + quad);
+        return;
+    }
     
     /* Find the character they selected. */
     for (var i=0; i<loadedOpponents.length; i++) {
-        if (loadedOpponents[i].label === selectedLabel) {
+        if (loadedOpponents[i].id === selectedID) {
             players[slot] = null;
-            loadingOpponents[slot-1] = loadedOpponents[i].id;
+            loadingOpponents[slot-1] = selectedID;
             
         	updateSelectionVisuals();
             loadBehaviour(loadedOpponents[i], playerLoadedCallback, slot);
@@ -604,7 +612,8 @@ function suggestionSelected(slot, quad) {
         }
     }
     
-    console.error("Could not find opponent with label "+selectedLabel);
+    /* This shouldn't happen, either. */
+    console.error("Could not find opponent with ID " + selectedID);
 }
 
 /************************************************************
