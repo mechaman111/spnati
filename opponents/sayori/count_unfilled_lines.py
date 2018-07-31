@@ -5,7 +5,7 @@ CSVS_DIR = Path('./csvs')
 
 start_linecount = 1172
 block_target = 174
-last_progress = 14
+last_progress = 52
 
 total_lines = 0
 filled_lines = 0
