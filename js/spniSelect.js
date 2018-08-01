@@ -80,6 +80,20 @@ $selectRandomButtons = $("#select-random-button, #select-random-female-button, #
 $selectRandomTableButton = $("#select-random-group-button");
 $selectRemoveAllButton = $("#select-remove-all-button");
 
+$selectSuggestions = [
+    $("#opponent-suggestions-1"),
+    $("#opponent-suggestions-2"),
+    $("#opponent-suggestions-3"),
+    $("#opponent-suggestions-4"),
+];
+
+$suggestionQuads = [
+    [$("#opponent-suggestion-1-1"), $("#opponent-suggestion-1-2"), $("#opponent-suggestion-1-3"), $("#opponent-suggestion-1-4")],
+    [$("#opponent-suggestion-2-1"), $("#opponent-suggestion-2-2"), $("#opponent-suggestion-2-3"), $("#opponent-suggestion-2-4")],
+    [$("#opponent-suggestion-3-1"), $("#opponent-suggestion-3-2"), $("#opponent-suggestion-3-3"), $("#opponent-suggestion-3-4")],
+    [$("#opponent-suggestion-4-1"), $("#opponent-suggestion-4-2"), $("#opponent-suggestion-4-3"), $("#opponent-suggestion-4-4")],
+]
+
 /* individual select screen */
 $individualSelectTable = $("#individual-select-table");
 $individualNameLabels = [$("#individual-name-label-1"), $("#individual-name-label-2"), $("#individual-name-label-3"), $("#individual-name-label-4")];
@@ -162,6 +176,7 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var loadingOpponents = Array(4);
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -186,6 +201,7 @@ var groupCreditsShown = false;
 var selectedSlot = 0;
 var shownIndividuals = Array(4);
 var shownGroup = Array(4);
+var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
 /**********************************************************************
@@ -469,6 +485,36 @@ function updateGroupSelectScreen () {
     }
 }
 
+/* Sets the suggested opponent to be displayed in a given slot and quadrant.
+ * Arguments:
+ * - opponent: the opponent object to display
+ * - slot: the selection slot to load into
+ * - quad: the quadrant of said selection slot to load into
+ */
+function updateSuggestionQuad(slot, quad, opponent) {
+    var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
+    var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
+    
+    shownSuggestions[slot][quad] = opponent.id;
+    img_elem.attr('src', opponent.folder+opponent.image);
+    label_elem.text(opponent.label);
+}
+
+/* Sets the given selection screen slot to display 4 opponents from an array.
+ * Arguments:
+ * - slot: the main select screen slot to update (zero-indexed)
+ * - suggestionsArray: the array to draw suggestions from
+ * - startIndex: the index into suggestionsArray to begin drawing suggestions from
+ */
+function updateSuggestions(slot, suggestionsArray, startIndex) {
+    for(var i=0;i<4;i++) {
+        if (suggestionsArray[startIndex+i]) {
+            updateSuggestionQuad(slot, i, suggestionsArray[startIndex+i]);
+        }
+    }
+}
+
+
 /**********************************************************************
  *****                   Interaction Functions                    *****
  **********************************************************************/
@@ -516,6 +562,10 @@ function updateSelectableOpponents(autoclear) {
         if (players.some(function(p) { return p && p.id == opp.id; })) {
             return false;
         }
+        
+        if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
+            return false;
+        }
 
         return true;
     });
@@ -539,12 +589,49 @@ function updateSelectableOpponents(autoclear) {
 }
 
 /************************************************************
+ * The player clicked on a suggested character button.
+ ************************************************************/
+function suggestionSelected(slot, quad) {
+    var selectedID = shownSuggestions[slot-1][quad-1];
+    
+    if(!selectedID) {
+        /* This shouldn't happen. */
+        console.error("Could not find suggested opponent ID for slot " + slot + " and quad " + quad);
+        return;
+    }
+    
+    /* Find the character they selected. */
+    for (var i=0; i<loadedOpponents.length; i++) {
+        if (loadedOpponents[i].id === selectedID) {
+            players[slot] = null;
+            loadingOpponents[slot-1] = selectedID;
+            
+        	updateSelectionVisuals();
+            loadBehaviour(loadedOpponents[i], playerLoadedCallback, slot);
+            return;
+        }
+    }
+    
+    /* This shouldn't happen, either. */
+    console.error("Could not find opponent with ID " + selectedID);
+}
+
+/************************************************************
  * The player clicked on an opponent slot.
  ************************************************************/
 function selectOpponentSlot (slot) {
     if (!(slot in players)) {
         /* add a new opponent */
         selectedSlot = slot;
+
+        /* Make sure the user doesn't have target-count sorting set if
+         * the amount of loaded opponents drops to 0. */
+        if (sortingMode === "Targeted most by selected") {
+            var player_count = countLoadedOpponents();
+            if (player_count <= 1) { 
+                setSortingMode("Featured");
+            }
+        }
 
 		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
 		updateSelectableOpponents(true);
@@ -559,6 +646,7 @@ function selectOpponentSlot (slot) {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
         delete players[slot];
+        
         updateSelectionVisuals();
     }
 }
@@ -723,6 +811,8 @@ function changeIndividualStats (target) {
 function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = null;
+    loadingOpponents[selectedSlot-1] = shownIndividuals[slot-1].id;
+    
 	updateSelectionVisuals();
 	loadBehaviour(shownIndividuals[slot-1], playerLoadedCallback, selectedSlot);
 	/* switch screens */
@@ -736,6 +826,7 @@ function selectIndividualOpponent (slot) {
 function playerLoadedCallback (playerObject, slot) {
     console.log(slot+": "+playerObject);
     players[slot] = playerObject;
+    delete loadingOpponents[slot-1];
 	updateBehaviour(slot, SELECTED);
 	updateSelectionVisuals();
 }
@@ -933,6 +1024,42 @@ function updateSelectionVisuals () {
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled);
     $groupButton.attr('disabled', loaded < filled);
+    
+    /* Update suggestions images. */
+    var current_player_count = countLoadedOpponents();
+    
+    if (current_player_count >= 3) {
+        var suggested_opponents = loadedOpponents.filter(function(opp) {
+            /* hide selected opponents */
+            if (players.some(function(p) { return p && p.id == opp.id; })) {
+                return false;
+            }
+            
+            if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
+                return false;
+            }
+            
+            return true;
+        });
+    
+        /* sort opponents */
+        suggested_opponents.sort(sortOpponentsByMostTargeted());
+        
+        var suggestion_idx = 0;
+        for (var i=1;i<players.length;i++) {
+            if (players[i] === undefined) {
+                updateSuggestions(i-1, suggested_opponents, suggestion_idx);
+                $selectSuggestions[i-1].show();
+                suggestion_idx += 4;
+            } else {
+                $selectSuggestions[i-1].hide();
+            }
+        }
+    } else {
+        for (var i=0;i<4;i++) {
+            $selectSuggestions[i].hide();
+        }
+    }
 }
 
 
@@ -1112,7 +1239,7 @@ function sortOpponentsByMostTargeted() {
 	return function(opp1, opp2) {
 		counts = [opp1, opp2].map(function(opp) {
 			return players.reduce(function(sum, p) {
-				if (p.targetedLines && opp.id in p.targetedLines) {
+				if (p && p.targetedLines && opp.id in p.targetedLines) {
 					sum += p.targetedLines[opp.id].count;
 				}
 				return sum;
@@ -1124,10 +1251,15 @@ function sortOpponentsByMostTargeted() {
 	}
 }
 
+function setSortingMode(mode) {
+    sortingMode = mode;
+    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+    individualPage = 0; // reset the page number
+}
+
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    sortingMode = $(this).find('a').html();
-    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+    setSortingMode($(this).find('a').html());
 });
 
 /************************************************************
