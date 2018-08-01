@@ -517,7 +517,7 @@ function updateBehaviour (player, tag, opp) {
 				var desiredCount = parseInterval(counters[j].attr('count'));
 				var filterTag = counters[j].attr('filter');
 				var count = players.filter(function(p) {
-					return p.tags && p.tags.indexOf(filterTag) >= 0;
+					return p && p.tags && p.tags.indexOf(filterTag) >= 0;
 				}).length;
 				if (inInterval(count, desiredCount)) {
 					totalPriority += 10;
@@ -555,7 +555,7 @@ function updateBehaviour (player, tag, opp) {
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
 				var count = players.filter(function(p) {
-					return p.gender === eGender.MALE;
+					return p && p.gender === eGender.MALE;
 				}).length;
 				if (inInterval(count, totalMales)) {
 					totalPriority += 5;		// priority
@@ -568,7 +568,7 @@ function updateBehaviour (player, tag, opp) {
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
 				var count = players.filter(function(p) {
-					return p.gender === eGender.FEMALE;
+					return p && p.gender === eGender.FEMALE;
 				}).length;
 				if (inInterval(count, totalFemales)) {
 					totalPriority += 5;		// priority
