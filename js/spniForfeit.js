@@ -14,9 +14,6 @@ var CANNOT_SPEAK = false;
  *****                      Forfeit Variables                     *****
  **********************************************************************/
  
-/* locks */
-var oneFinished = false;
- 
 /* orgasm timer */
 var ORGASM_DELAY = 2000;
 
@@ -89,12 +86,20 @@ function startMasturbation (player) {
  * The forfeit timers of all players tick down, if they have 
  * been set.
  ************************************************************/
-function tickForfeitTimers (context) {
+function tickForfeitTimers () {
     console.log("Ticking forfeit timers...");
     
     var masturbatingPlayers = [];
 
-    for (var i = 0; i < players.length; i++) {
+	for (var i = 0; i < players.length; i++) {
+		if (players[i] && players[i].out && !players[i].finished && timers[i] == 0) {
+			finishMasturbation(i);
+			allowProgression();
+			return true;
+		}
+	}
+
+    if (gamePhase != eGamePhase.STRIP) for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && timers[i] == 1) {
             timers[i] = 0;
             /* set the button state */
@@ -105,12 +110,11 @@ function tickForfeitTimers (context) {
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
                 $gamePlayerCountdown.hide();
-                oneFinished = true;
                 console.log(players[i].label+" is finishing!");
                 $gameClothingLabel.html("<b>You're 'Finished'</b>");
 
                 /* finish */
-                finishMasturbation(i, context);
+                finishMasturbation(i);
             } else {
                 console.log(players[i].label+" is finishing!");
 
@@ -132,7 +136,8 @@ function tickForfeitTimers (context) {
 
                 /* trigger the callback */
                 var player = i, tableVisible = (tableOpacity > 0);
-                timeoutID = window.setTimeout(function(){ finishMasturbation(player, context, tableVisible); }, ORGASM_DELAY);
+                timeoutID = window.setTimeout(function(){ allowProgression(eGamePhase.END_FORFEIT); }, ORGASM_DELAY);
+				globalSavedTableVisibility = tableVisible;
                 if (AUTO_FADE) forceTableVisibility(false);
             }
             return true;
@@ -140,7 +145,7 @@ function tickForfeitTimers (context) {
     }
 
     for (var i = 0; i < players.length; i++) {
-		if (players[i] && players[i].out && timers[i] > 1 && context !== "Continue...") {
+		if (players[i] && players[i].out && timers[i] > 1) {
         	timers[i]--;
 
 			if (i == HUMAN_PLAYER) {
@@ -168,7 +173,7 @@ function tickForfeitTimers (context) {
 	
 	// Show a player masturbating while dealing or after the game, if there is one available
 	if (masturbatingPlayers.length > 0
-		&& ((context == "Deal" && players[HUMAN_PLAYER].out) || context == "Exchange" || context.substr(0, 4) == "Wait")) {
+		&& ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
 		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
 		for (var i = 1; i < players.length; i++) {
 			updateBehaviour(i,
@@ -185,7 +190,7 @@ function tickForfeitTimers (context) {
 /************************************************************
  * A player has 'finished' masturbating.
  ************************************************************/
-function finishMasturbation (player, savedContext, savedTableVisibility) {
+function finishMasturbation (player) {
 	// HARD SET STAGE
 	players[player].stage += 1;
 	players[player].timeInStage = -1;
@@ -205,24 +210,10 @@ function finishMasturbation (player, savedContext, savedTableVisibility) {
 		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING);
 		
 	}
-	if (savedContext !== "Continue...") {
-        previousState = savedContext;
-    }
-    globalSavedTableVisibility = savedTableVisibility;
-    $mainButton.html("Continue...");
-    allowProgression();
-}
-
-function endMasturbation() {
-
 	updateAllGameVisuals();
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
+		globalSavedTableVisibility = undefined;
 	}
-	
-	/* update the button */
-	$mainButton.html(previousState);
-
 	allowProgression();
-	oneFinished = false;
 }

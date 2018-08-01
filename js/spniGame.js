@@ -87,6 +87,23 @@ var clearColour = "#FFFFFF";	/* indicates neutral */
 var loserColour = "#DD4444";	/* indicates loser of a round */
 
 /* game state */
+var eGamePhase = {
+	DEAL:      [ "Deal", function() { startDealPhase(); }, true ],
+	AITURN:    [ "Next", function() { continueDealPhase(); } ],
+	EXCHANGE:  [ "Exchange", function() { completeExchangePhase(); }, true ],
+	REVEAL:    [ "Reveal", function() { completeRevealPhase(); }, true ],
+	PRESTRIP:  [ "Continue", function() { completeContinuePhase(); }, false ],
+	STRIP:     [ "Strip", function() { completeStripPhase(); }, false ],
+	FORFEIT:   [ "Masturbate", function() { completeMasturbatePhase(); }, false ],
+	END_LOOP:  [ undefined, function() { handleGameOver(); } ],
+	GAME_OVER: [ "Ending?", function() { doEpilogueModal(); } ],
+	END_FORFEIT: [ "Continue..." ], // Specially handled; not a real phase. tickForfeitTimers() will always return true in this state.
+};
+
+/* Masturbation Previous State Variables */
+var gamePhase = eGamePhase.DEAL;
+var globalSavedTableVisibility;
+
 var currentTurn = 0;
 var currentRound = -1;
 var previousLoser = -1;
@@ -158,10 +175,8 @@ function loadGameScreen () {
     }
 
     /* enable and set up the main button */
-    $mainButton.html("Deal");
-    $mainButton.attr("disabled", false);
-    actualMainButtonState = false;
-
+	allowProgression(eGamePhase.DEAL);
+    
     /* late settings */
     KEYBINDINGS_ENABLED = true;
     document.addEventListener('keyup', game_keyUp, false);
@@ -329,9 +344,10 @@ function advanceTurn () {
 	if (currentTurn == 0) {
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
-            $mainButton.html("Reveal");
+			allowProgression(eGamePhase.REVEAL);
+		} else {
+			allowProgression(eGamePhase.EXCHANGE);
 		}
-		allowProgression();
 	} else if (!players[currentTurn]) {
         /* There is no player here, move on. */
         advanceTurn();
@@ -401,12 +417,12 @@ function checkDealLock () {
 	if (dealLock < inGame * 5) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
+		gamePhase = eGamePhase.AITURN;
         /* Set up main button.  If there is not pause for the human
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
         if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
-            $mainButton.html("Next");
             allowProgression();
         } else {
             continueDealPhase();
@@ -430,6 +446,8 @@ function continueDealPhase () {
         showHand(HUMAN_PLAYER);
     }
 
+	$mainButton.html("Wait...");
+    
     /* enable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', false);
@@ -466,7 +484,7 @@ function completeExchangePhase () {
     for (var i = 0; i < $cardButtons.length; i++) {
        $cardButtons[i].attr('disabled', true);
     }
-    allowProgression();
+    allowProgression(eGamePhase.REVEAL);
 }
 
 /************************************************************
@@ -506,8 +524,7 @@ function completeRevealPhase () {
         }
 
         /* reset the round */
-        $mainButton.html("Deal");
-        allowProgression();
+        allowProgression(eGamePhase.DEAL);
         return;
     }
 
@@ -542,13 +559,13 @@ function completeRevealPhase () {
 
     /* set up the main button */
 	if (recentLoser != HUMAN_PLAYER && clothes > 0) {
-	    $mainButton.html("Continue");
+		allowProgression(eGamePhase.PRESTRIP);
 	} else if (clothes == 0) {
-	    $mainButton.html("Masturbate");
+		allowProgression(eGamePhase.FORFEIT);
 	} else {
-		$mainButton.html("Strip");
+		allowProgression(eGamePhase.STRIP);
 	}
-    allowProgression();
+
 }
 
 /************************************************************
@@ -560,12 +577,7 @@ function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
     updateAllGameVisuals();
-    if (players[recentLoser].clothing.length > 0) {
-	    $mainButton.html("Strip");
-    } else {
-	    $mainButton.html("Masturbate");
-    }
-    allowProgression();
+    allowProgression(eGamePhase.STRIP);
 }
 
 /************************************************************
@@ -622,8 +634,7 @@ function endRound () {
         endWaitDisplay = 0;
 		handleGameOver();
 	} else {
-		$mainButton.html("Deal");
-		allowProgression();
+		allowProgression(eGamePhase.DEAL);
 	}
 }
 
@@ -659,20 +670,10 @@ function handleGameOver() {
 
         updateAllGameVisuals();
 
-		$mainButton.html("Ending?");
-		$mainButton.attr('disabled', false);
-        actualMainButtonState = false;
+		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
-        var dots = "";
-        for (var i = 0; i < endWaitDisplay; i++) {
-            dots += ".";
-        }
-        endWaitDisplay = (endWaitDisplay + 1) % 4;
-        
-		/* someone is still forfeiting */
-		$mainButton.html("Wait" + dots);
-		allowProgression();
+		allowProgression(eGamePhase.END_LOOP);
 	}
 }
 
@@ -697,73 +698,52 @@ function selectCard (card) {
  * Allow progression by enabling the main button *or*
  * setting up the auto forfeit timer.
  ************************************************************/
-function allowProgression () {
-    if (players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
+function allowProgression (nextPhase) {
+	if (nextPhase !== undefined && nextPhase !== eGamePhase.END_FORFEIT) {
+		gamePhase = nextPhase;
+	} else if (nextPhase === undefined) {
+		nextPhase = gamePhase;
+	}
+	
+    if (nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
         timeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
     } else {
         $mainButton.attr('disabled', false);
         actualMainButtonState = false;
     }
+
+	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && timers[HUMAN_PLAYER] == 1 && gamePhase != eGamePhase.STRIP) {
+		$mainButton.html("Cum!");
+	} else if (nextPhase[0]) {
+		$mainButton.html(nextPhase[0]);
+	} else if (nextPhase === eGamePhase.END_LOOP) { // Special case
+        var dots = "";
+        for (var i = 0; i < endWaitDisplay; i++) {
+            dots += ".";
+        }
+        endWaitDisplay = (endWaitDisplay + 1) % 4;
+        
+		/* someone is still forfeiting */
+		$mainButton.html("Wait" + dots);
+	}
 }
 
 /************************************************************
  * The player clicked the main button on the game screen.
  ************************************************************/
 function advanceGame () {
-    var context = $mainButton.html();
-
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', true);
     actualMainButtonState = true;
     autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
-    if (tickForfeitTimers(context)) return;
+    if (tickForfeitTimers()) return;
 
-    /* handle the game */
-    if (context == "Deal") {
-        /* dealing the cards */
-        if (AUTO_FADE) forceTableVisibility(true);
-        $mainButton.html("Exchange");
-        startDealPhase();
-    } else if (context == "Next") {
-        /* advance to next round if human player is masturbating */
-        $mainButton.html("Exchange");
-        continueDealPhase();
-    } else if (context == "Exchange") {
-        /* exchanging cards */
-        if (AUTO_FADE) forceTableVisibility(true);
-        $mainButton.html("Reveal");
-        completeExchangePhase();
-    } else if (context == "Reveal") {
-        /* revealing cards */
-        if (AUTO_FADE) forceTableVisibility(true);
-        completeRevealPhase();
-    } else if (context == "Continue") {
-		/* waiting for the loser to strip */
-        if (AUTO_FADE) forceTableVisibility(false);
-        completeContinuePhase();
-	} else if (context == "Strip") {
-        /* stripping the loser */
-        if (AUTO_FADE) forceTableVisibility(false);
-        completeStripPhase();
-    } else if (context == "Masturbate") {
-        /* making the loser start masturbating */
-        if (AUTO_FADE) forceTableVisibility(false);
-		completeMasturbatePhase();
-    } else if (context == "Continue...") {
-        /* finished watching masturbation */
-		    endMasturbation();
-    } else if (context.substr(0, 4) == "Wait") {
-		/* waiting for someone to finish */
-		handleGameOver(); //No delay here
-	} else if (context == "Ending?") {
-        doEpilogueModal(); //start the endings
-        actualMainButtonState = false;
-    } else {
-        if (AUTO_FADE) forceTableVisibility(true);
-		console.log("Invalid main button state: "+context);
-    }
+	if (AUTO_FADE && gamePhase[2] !== undefined) {
+		forceTableVisibility(gamePhase[2]);
+	}
+	gamePhase[1]();
 }
 
 /************************************************************

@@ -421,7 +421,6 @@ function closeStrippingModal () {
 		/* allow progression */
         $('#stripping-modal').modal('hide');
 		endRound();
-		allowProgression();
     } else {
         /* how the hell did this happen? */
         console.log("Error: there was no selected article.");
