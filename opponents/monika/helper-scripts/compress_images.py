@@ -5,6 +5,7 @@ import os.path as osp
 import sys
 from PIL import Image
 import math
+import glob
 
 resize_images = False
 resize_rgba = False
@@ -116,15 +117,13 @@ def compress_file(f):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("USAGE: compress_images.py [directory with .png images]")
+        print("USAGE: compress_images.py [file globs...]")
         sys.exit()
-
-    target_dir = sys.argv[1]
+    
+    
     target_files = []
-
-    for f in os.listdir(target_dir):
-        if osp.splitext(f)[-1].lower() == '.png':
-            target_files.append(osp.normpath(osp.join(target_dir, f)))
+    for arg in sys.argv[1:]:
+        target_files.extend(glob.iglob(arg))
 
     with mp.Pool(processes=os.cpu_count()*2) as p:
         print("Compressing {:n} PNG files".format(len(target_files)))

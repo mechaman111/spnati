@@ -37,7 +37,7 @@ if __name__ == '__main__':
             opp_path = opponents_dir.joinpath(opponent, 'behaviour.xml')
             if opp_path.exists() and opp_path.is_file():
                 try:
-                    lineset = c2x.xml_to_lineset(bp.parse_file(str(opp_path)))
+                    lineset, opponent_meta = c2x.load_character(opponent)
                     unique_lines, unique_targeted_lines, num_cases, num_targeted_cases = c2x.get_unique_line_count(lineset)
                     print("{}  -  {}  -  {}  -  {}  -  {}".format(opponent, unique_lines, unique_targeted_lines, num_cases, num_targeted_cases))
                     writer.writerow([opponent, unique_lines, unique_targeted_lines, num_cases, num_targeted_cases])

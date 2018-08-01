@@ -66,10 +66,10 @@ def xml_to_lineset(opponent_elem):
     start_elem = opponent_elem.find('start')
     start_stageset = frozenset(['start'])
 
-    select_case = Case('select')
+    select_case = Case('selected')
     select_case.states.append(State.from_xml(start_elem.children[0]))
 
-    start_case = Case('start')
+    start_case = Case('game_start')
     for state in start_elem.children[1:]:
         start_case.states.append(State.from_xml(state))
 
@@ -90,7 +90,8 @@ def lineset_to_xml(lineset):
             if case.tag == 'select' or case.tag == 'selected':
                 case.tag = 'selected'
                 select_cases.add(case)
-            elif case.tag == 'start':
+            elif case.tag == 'start' or case.tag == 'game_start':
+                case.tag = 'game_start'
                 start_cases.add(case)
 
     stage_superset = set()
@@ -99,7 +100,7 @@ def lineset_to_xml(lineset):
             if isinstance(k, int):
                 stage_superset.add(k)
             elif k != 'start':
-                print("[Warning] invalid stage ID found: {:s}".format(k))
+                logging.warning("Invalid stage ID found: {:s}".format(k))
 
     for stage_id in sorted(stage_superset):
         if stage_id != 'start':

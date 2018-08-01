@@ -4,7 +4,7 @@ from pathlib import Path
 import time
 
 
-VERSION = '0.20.0-alpha'  # will attempt to follow semver if possible
+VERSION = '0.22.3-alpha'  # will attempt to follow semver if possible
 COMMENT_TIME_FORMAT = 'at %X %Z on %A, %B %d, %Y'  # strftime format
 WARNING_COMMENT = 'This file was machine generated using csv2xml.py {:s} {:s}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.'
 IMAGE_FORMATS = ["png", "jpg", "jpeg", "gif", "gifv"]
@@ -17,7 +17,7 @@ def config_image_directory(d):
     __image_directory = Path(d)
 
 
-def find_image(pose_file, stage, directory=None):
+def find_image(pose_file, stage=None, directory=None):
     global __image_directory
     if directory is None:
         directory = __image_directory
@@ -27,7 +27,7 @@ def find_image(pose_file, stage, directory=None):
         return pose_file
 
     # If the pose_file isn't prefixed with the stage then do that
-    if not pose_file[0].isdigit():
+    if stage is not None and not pose_file[0].isdigit():
         pose_file = "{:d}-{:s}".format(stage, pose_file)
     
     root, ext = osp.splitext(pose_file)

@@ -40,8 +40,7 @@ class Opponent(object):
 
     def lost_clothing_stage(self, clothing_name):
         if len(self.wardrobe) == 0:
-            print("[Warning] Attempting to access wardrobe data that hasn't been loaded yet! Are you sure your metadata is at the top of your input file?")
-            return
+            raise ValueError("Attempting to access wardrobe data that hasn't been loaded yet! Are you sure your metadata is at the top of your input file?")
 
         clothing_name = clothing_name.lower()
         for stage, clothing in enumerate(self.wardrobe):

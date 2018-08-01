@@ -13,9 +13,17 @@ import os
 import os.path as osp
 from pathlib import Path
 import argparse
+import logging
 
 import csv2xml as c2x
 import csv2xml.behaviour_parser as bp
+
+def many_csv_reader(indir):
+    for file in filter(lambda f: f.suffix == '.csv', indir.iterdir()):
+        logging.info("Reading input file: {:s}".format(file.name))
+        with file.open('r', newline='', encoding='utf-8') as f:
+            yield from csv.DictReader(f)
+
 
 def convert(infile, outfile, **kwargs):  
     opp_dir = Path(kwargs.get('opponent_dir', os.getcwd()))
@@ -25,27 +33,33 @@ def convert(infile, outfile, **kwargs):
     c2x.config_default_opponents_dir(opp_dir)
     c2x.config_image_directory(infile.parent)
 
-    print("Reading input file...")
-    if infile.suffix == '.xml':
-        opponent_elem = bp.parse_file(str(infile))
-        meta_elem = bp.parse_meta(str(infile.parent.joinpath('meta.xml'))) # osp.join(osp.dirname(infile), 'meta.xml')
+    if infile.is_file():
+        logging.info("Reading input file...")
+        if infile.suffix == '.xml':
+            opponent_elem = bp.parse_file(str(infile))
+            meta_elem = bp.parse_meta(str(infile.parent.joinpath('meta.xml'))) # osp.join(osp.dirname(infile), 'meta.xml')
 
-        opponent_meta = c2x.Opponent.from_xml(opponent_elem, meta_elem)
-        lineset = c2x.xml_to_lineset(opponent_elem)
-    elif infile.suffix == '.csv':
-        with infile.open('r', newline='', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            lineset, opponent_meta = c2x.csv_to_lineset(reader)
+            opponent_meta = c2x.Opponent.from_xml(opponent_elem, meta_elem)
+            lineset = c2x.xml_to_lineset(opponent_elem)
+            
+            epilogues = None # TODO: deserialize epilogues later
+        elif infile.suffix == '.csv':
+            with infile.open('r', newline='', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                lineset, opponent_meta, epilogues = c2x.csv_to_lineset(reader)
+    elif infile.is_dir():
+        lineset, opponent_meta, epilogues = c2x.csv_to_lineset(many_csv_reader(infile))
+            
 
     unique_lines, unique_targeted_lines, num_cases, num_targeted_cases = c2x.get_unique_line_count(lineset)
 
-    print("Statistics:")
-    print("Unique Lines: {}".format(unique_lines))
-    print("Unique Targeted Lines: {}".format(unique_targeted_lines))
-    print("Total Cases: {}".format(num_cases))
-    print("Total Targeted Cases: {}".format(num_targeted_cases))
+    logging.info("Statistics:")
+    logging.info("Unique Lines: {}".format(unique_lines))
+    logging.info("Unique Targeted Lines: {}".format(unique_targeted_lines))
+    logging.info("Total Cases: {}".format(num_cases))
+    logging.info("Total Targeted Cases: {}".format(num_targeted_cases))
 
-    print("Writing output file...")
+    logging.info("Writing output file...")
     if outfile.suffix == '.xml':
         opponent_elem = opponent_meta.to_xml()
         meta_elem = opponent_meta.to_meta_xml()
@@ -53,6 +67,10 @@ def convert(infile, outfile, **kwargs):
         behaviour_elem, start_elem = c2x.lineset_to_xml(lineset)
         opponent_elem.children.insert(-1, start_elem)
         opponent_elem.children.append(behaviour_elem)
+        
+        if epilogues is not None:
+            for epilogue in epilogues:
+                opponent_elem.children.append(epilogue.to_xml())
 
         with outfile.open('w', encoding='utf-8') as f:
             f.write("<?xml version='1.0' encoding='UTF-8'?>\n")

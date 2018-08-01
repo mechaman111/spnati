@@ -1,93 +1,71 @@
 import csv2xml as c2x
 import csv2xml.behaviour_parser as bp
 import argparse
+import logging
+import functools
 
-def get_cases_by_stage(lineset, opponent_meta):
+def get_cases_by_stage(lineset, opponent_meta, mode=None):
     cases_by_stage = [set() for _ in range(opponent_meta.len_stages())]
     
     for stage_set, cases in lineset.items():
-        for case in filter(lambda case: not case.is_conditional(), cases):
+        for case in cases:
+            if case.is_conditional() and mode == 'generic':
+                continue
+                
+            if not case.is_conditional() and mode == 'conditional':
+                continue
+                
+            if not case.is_targeted() and mode == 'target':
+                continue
+                
             for stage in filter(lambda x: isinstance(x, int), stage_set):
                 cases_by_stage[stage].add(case.tag)
     
     return cases_by_stage
 
 
-def check_character_generics(cases_by_stage):
+def check_character_generics(lineset, opponent_meta):
     """
     Ensure a character has generics for all cases.
     """
-    
-    def report(stage, missing_cases):
-        for case_tag in missing_cases:
-            print("Stage {:d} is missing generic lines for case {:s}".format(stage, case_tag))
-    
-    def find_missing_tags_single(tag_list, stage):
-        tag_set = frozenset(tag_list)
-        report(stage, tag_set.difference(cases_by_stage[stage]))
-    
-    def find_missing_tags(tag_list, start, end):
-        tag_set = frozenset(tag_list)
-        for stage, case_set in enumerate(cases_by_stage[start:end]):
-            report(stage+start, tag_set.difference(case_set))
-    
-    find_missing_tags(c2x.Case.ALWAYS_TAGS, 0, None)
-    find_missing_tags(c2x.Case.PLAYING_TAGS, 0, -2)
-    find_missing_tags(c2x.Case.CLOTHED_STAGE_TAGS, 0, -3)
-    find_missing_tags_single(c2x.Case.START_TAGS, 0)
-    find_missing_tags_single(c2x.Case.NAKED_STAGE_TAGS, -3)
-    find_missing_tags_single(c2x.Case.MASTURBATION_STAGE_TAGS, -2)
-    find_missing_tags_single(c2x.Case.FINISHED_STAGE_TAGS, -1)
+    cases_by_stage = get_cases_by_stage(lineset, opponent_meta, 'generic')
+
+    stages = range(opponent_meta.len_stages())
+    for tag, interval in c2x.Case.TAG_INTERVALS.items():
+        for stage in filter(lambda s: tag not in cases_by_stage[s], stages[interval]):
+            logging.error("Stage {:d} is missing generic lines for case {:s}".format(stage, tag))
 
 
-def check_impossible_cases(cases_by_stage, opponent_meta):
+def check_impossible_cases(lineset, opponent_meta):
     """
     Check for impossible case and stage combinations.
     """
     
-    for stage, case_set in enumerate(cases_by_stage):
-        impossible_tags = []
-        
-        if stage != 0:
-            impossible_tags += c2x.Case.START_TAGS
-        
-        if stage != opponent_meta.masturbate_stage():
-            impossible_tags += c2x.Case.MASTURBATION_STAGE_TAGS
-            
-        if stage != opponent_meta.finished_stage():
-            impossible_tags += c2x.Case.FINISHED_STAGE_TAGS
-            
-        if stage != opponent_meta.naked_stage():
-            impossible_tags += c2x.Case.NAKED_STAGE_TAGS 
-        
-        if stage >= opponent_meta.masturbate_stage():
-            impossible_tags += c2x.Case.PLAYING_TAGS
-        
-        if stage >= opponent_meta.naked_stage():
-            impossible_tags += c2x.Case.CLOTHED_STAGE_TAGS
-            
-        impossible_tags = frozenset(impossible_tags)
-        for case_tag in impossible_tags.intersection(case_set):
-            print("Stage {:d} contains case {:s} that will never be used".format(stage, case_tag))
+    cases_by_stage = get_cases_by_stage(lineset, opponent_meta)
+    stages = range(opponent_meta.len_stages())
+    for stage, tag_set in enumerate(cases_by_stage):
+        for tag in tag_set:
+            if stage not in stages[c2x.Case.TAG_INTERVALS[tag]]:
+                logging.error("Stage {:d} contains case {:s} that will never be used".format(stage, tag))
 
 
-def check_undefined_cases(cases_by_stage):
+def check_undefined_cases(lineset, opponent_meta):
     """
     Check for undefined cases.
     """
     
+    cases_by_stage = get_cases_by_stage(lineset, opponent_meta)
     for stage, case_set in enumerate(cases_by_stage):
         for case_tag in filter(lambda x: x not in c2x.Case.ALL_TAGS, case_set):
-            print("Stage {:d} contains unknown case {:s}".format(stage, case_tag))
+            logging.error("Stage {:d} contains unknown case {:s}".format(stage, case_tag))
 
 
 def main(args):
     lineset, opponent_meta = c2x.load_character(args.opponent_id, args.opponents_dir)
-    cases_by_stage = get_cases_by_stage(lineset, opponent_meta)
     
-    check_character_generics(cases_by_stage)
-    check_impossible_cases(cases_by_stage, opponent_meta)
-    check_undefined_cases(cases_by_stage)
+    check_character_generics(lineset, opponent_meta)
+    check_impossible_cases(lineset, opponent_meta)
+    check_undefined_cases(lineset, opponent_meta)
     
     
 if __name__ == '__main__':
