@@ -22,8 +22,35 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  *****                    Title Screen Variables                  *****
  **********************************************************************/
 
-var CANDY_OPTIONS = 17;
-var CANDY_VARIANTS = 4;
+var CANDY_LIST = [
+	"meia/0-disappointed.png",
+	"elizabeth/0-calm.png",
+	"marinette/0-calm.png",
+	"uravity/0-calm.png",
+	"misato/0-Start.png",
+	"zone-tan/0-calm.png",
+	"videl/0-calm.png",
+	"palutena/0-divine.png",
+	"chun-li/0-calm.png",
+	"kyu/0-happy-neutral.png",
+	"aimee/0-happy.png",
+	"lyn/0-calm.png",
+	"corrin_f/0-start.png",
+	"florina/0-calm.png",
+	"rinkah/0-calm.png",
+	"corrin_m/0-calm.png",
+	"nagisa/0-dango.png",
+	"wiifitfemale/0-calm.png",
+	"hermione/0-calm.png",
+	"ann/0-calm.png",
+	"futaba/0-calm.png",
+	"streaming-chan/0-neutral.png",
+	"sei/0-neutral.png",
+	"zizou/0-menu.png",
+	"kyoko/0-calm.png",
+	"chiaki/0-happy.png",
+	"9s/0-calm.png",
+];
 
 var clothingChoices = [];
 var selectedChoices = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
@@ -307,18 +334,13 @@ function wearClothing () {
  ************************************************************/
 function selectTitleCandy() {
     console.log("Selecting Candy...");
-    var rand1 = getRandomNumber(1, CANDY_OPTIONS + 1);
-    var rand2 = getRandomNumber(1, CANDY_OPTIONS + 1);
-    var rand3 = getRandomNumber(1, CANDY_VARIANTS + 1);
-    var rand4 = getRandomNumber(1, CANDY_VARIANTS + 1);
+    var candy1 = getRandomNumber(0, CANDY_LIST.length);
+	var candy2 = getRandomNumber(0, CANDY_LIST.length);
 
-    if (rand2 == rand1) {
-        rand2 += 1;
-        if (rand2 == CANDY_OPTIONS + 1) {
-            rand2 = 1;
-        }
-    }
+    while (candy2 == candy1) {
+		var candy2 = getRandomNumber(0, CANDY_LIST.length);
+	}
 
-    $titleCandy[0].attr("src", IMG + "candy/" + rand1 + "-" + rand3 + ".png");
-    $titleCandy[1].attr("src", IMG + "candy/" + rand2 + "-" + rand4 + ".png");
+    $titleCandy[0].attr("src", "opponents/" + CANDY_LIST[candy1]);
+    $titleCandy[1].attr("src", "opponents/" + CANDY_LIST[candy2]);
 }
