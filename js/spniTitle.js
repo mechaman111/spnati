@@ -334,13 +334,13 @@ function wearClothing () {
  ************************************************************/
 function selectTitleCandy() {
     console.log("Selecting Candy...");
-    var candy1 = getRandomNumber(0, CANDY_LIST.length);
-	var candy2 = getRandomNumber(0, CANDY_LIST.length);
+    var candy1 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
+	var candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 
-    while (candy2 == candy1) {
-		var candy2 = getRandomNumber(0, CANDY_LIST.length);
+    while (candy1.slice(0, candy1.indexOf("/")) == candy2.slice(0, candy2.indexOf("/"))) {
+		candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 	}
 
-    $titleCandy[0].attr("src", "opponents/" + CANDY_LIST[candy1]);
-    $titleCandy[1].attr("src", "opponents/" + CANDY_LIST[candy2]);
+    $titleCandy[0].attr("src", "opponents/" + candy1);
+    $titleCandy[1].attr("src", "opponents/" + candy2);
 }
