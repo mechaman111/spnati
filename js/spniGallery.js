@@ -6,7 +6,16 @@
 function GEnding(player, ending){
 	this.player = player;
 	this.gender = $(ending).attr('gender');
-	this.image = player.folder + $(ending).find('screen').eq(0).attr('img');
+	
+	var previewImage = $(ending).attr('img');
+	if (!previewImage) {
+		/* Default to using the first screen 'img' attribute if there is none
+		 * on the epilogue itself.
+		 */
+		previewImage = $(ending).find('screen').eq(0).attr('img');
+	}
+	
+	this.image = player.folder + previewImage;
 	this.title = $(ending).find('title').html();
 	this.unlocked = save.hasEnding(player.id, this.title);
 	//Same as in spniEpilogue.js

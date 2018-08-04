@@ -21,13 +21,14 @@ def get_value(dictionary, key, stage, default=""):
 #tags that relate to ending sequences
 ending_tag = "ending" #name for the ending
 ending_gender_tag = "ending_gender" #player gender the ending is shown to
+ending_preview_tag = "gallery_image" # image to use for the preview in the gallery
 screen_tag = "screen"
 text_tag = "text"
 x_tag = "x"
 y_tag = "y"
 width_tag = "width"
 arrow_tag = "arrow"
-ending_tags = [ending_tag, ending_gender_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
+ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter", "silent"]
@@ -425,6 +426,10 @@ def write_xml(data, filename):
 		#for each ending
 		for ending in data["endings"]:
 			ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
+			
+			if 'img' in ending:
+				ending_xml.set('img', ending['img'])
+			
 			ET.SubElement(ending_xml, "title").text = ending["title"]
 			
 			#for each screen in an ending
@@ -505,6 +510,10 @@ def handle_ending_string(key, content, ending, d):
 		if len(content) <= 0: #if the gender wasn't specified, use "any"
 			content = "any"
 		ending["gender"] = content
+		return
+	elif key == ending_preview_tag:
+		if len(content) > 0:
+			ending['img'] = content
 		return
 		
 	#get the screens variable
