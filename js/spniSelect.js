@@ -239,6 +239,7 @@ function loadListingFile () {
 			updateSelectableGroups(0);
 			updateSelectableGroups(1);
 			updateGroupSelectScreen();
+            updateCollectiblesScreen();
 		}
         if (outstandingLoads == 0) {
             $tagList.append(Object.keys(tagSet).sort().map(function(tag) {

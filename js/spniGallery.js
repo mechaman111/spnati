@@ -3,6 +3,40 @@
  the game.
  ********************************************************************************/
 
+ /**********************************************************************
+  *****                   Gallery Screen UI Elements               *****
+  **********************************************************************/
+
+$galleryEndingsScreen = $('#epilogue-gallery-screen');
+$galleryCollectiblesScreen = $('#collectible-gallery-screen');
+
+/**********************************************************************
+ *****          Epilogues Gallery Screen UI Elements              *****
+ **********************************************************************/
+ 
+$genderTypeButtons = [$('#gallery-gender-all'), $('#gallery-gender-any'), $('#gallery-gender-male'), $('#gallery-gender-female')];
+$galleryEndings = $('#gallery-endings-block').children();
+$galleryPrevButton = $('#gallery-prev-page-button');
+$galleryNextButton = $('#gallery-next-page-button');
+$galleryStartButton = $('#gallery-start-ending-button');
+$selectedEndingPreview = $('#selected-ending-previev');
+$selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
+$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
+
+/**********************************************************************
+ *****          Collectibles Gallery Screen UI Elements           *****
+ **********************************************************************/
+$collectibleListPane = $('#collectibles-list-pane');
+$collectibleImagePane = $('#collectibles-image-pane');
+$collectibleTextPane = $('#collectibles-text-pane');
+ 
+$collectibleTitle = $('#collectible-title');
+$collectibleSubtitle = $('#collectible-subtitle');
+$collectibleCharacter = $('#collectible-character');
+$collectibleUnlock = $('#collectible-unlock');
+$collectibleText = $('#collectible-text');
+$collectibleImage = $('#collectible-image');
+
 function GEnding(player, ending){
 	this.player = player;
 	this.gender = $(ending).attr('gender');
@@ -20,29 +54,82 @@ function GEnding(player, ending){
 	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
- /**********************************************************************
-  *****                   Gallery Screen UI Elements               *****
-  **********************************************************************/
-
-$genderTypeButtons = [$('#gallery-gender-all'), $('#gallery-gender-any'), $('#gallery-gender-male'), $('#gallery-gender-female')];
-$galleryEndings = $('#gallery-endings-block').children();
-$galleryPrevButton = $('#gallery-prev-page-button');
-$galleryNextButton = $('#gallery-next-page-button');
-$galleryStartButton = $('#gallery-start-ending-button');
-$selectedEndingPreview = $('#selected-ending-previev');
-$selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
-$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
-
-function loadGalleryScreen(){
-	screenTransition($titleScreen, $galleryScreen);
-	loadGalleryEndings();
-	galleryGender(GALLERY_GENDER);
+/* Base class for all collectibles. */
+function Collectible(id, image, thumbnail, source, title, subtitle, unlock_hint, text) {
+	this.id = id;
+	this.image = image;
+	this.thumbnail = thumbnail;
+	this.source = source;
+	this.title = title;
+	this.subtitle = subtitle;
+	this.unlock_hint = unlock_hint;
+	this.text = text;
 }
 
-function backGalleryScreen(){
-	screenTransition($galleryScreen, $titleScreen);
-}
+Collectible.prototype.display = function () {
+	$collectibleTitle.html(this.title);
+	$collectibleSubtitle.html(this.subtitle);
+	$collectibleCharacter.text(this.source);
+	$collectibleUnlock.html(this.unlock_hint);
+	$collectibleText.html(this.text);
+	
+	if (this.image) {
+		$collectibleImage.attr('src', this.image);
+		$collectibleImagePane.show();
+	} else {
+		$collectibleImagePane.hide();
+	}
+};
 
+Collectible.prototype.listElement = function () {
+	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
+	var imgElem = $('<img class="collectibles-item-icon">').attr('src', this.thumbnail);
+	var titleElem = $('<div class="collectibles-item-title"></div>').html(this.title);
+	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>').html(this.subtitle);
+	
+	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
+	
+	return baseElem;
+};
+
+
+/* Class for collectibles attached to a specific player.*/
+function PlayerCollectible(player, xmlElem) {	
+	this.player = player;
+	this.id = xmlElem.attr('id');
+	this.source = player.label;
+	this.image = xmlElem.find('image').text();
+	this.thumbnail = xmlElem.find('thumbnail').text();
+	this.title = xmlElem.find('title').html();
+	this.subtitle = xmlElem.find('subtitle').html();	
+	this.unlock_hint = xmlElem.find('unlock').html();
+	this.text = xmlElem.find('text').html();
+}
+PlayerCollectible.prototype = Object.create(Collectible);
+PlayerCollectible.prototype.constructor = PlayerCollectible;
+
+
+/* Class for collectibles not attached to a specific character.
+ * These are marked as coming from The Inventory itself. */
+function InventoryCollectible(xmlElem) {
+	this.id = xmlElem.attr('id');
+	this.source = 'The Inventory';
+	this.image = xmlElem.find('image').text();
+	this.thumbnail = xmlElem.find('thumbnail').text();
+	this.title = xmlElem.find('title').html();
+	this.subtitle = xmlElem.find('subtitle').html();	
+	this.unlock_hint = xmlElem.find('unlock').html();
+	this.text = xmlElem.find('text').html();
+}
+InventoryCollectible.prototype = Object.create(Collectible);
+InventoryCollectible.prototype.constructor = InventoryCollectible;
+
+
+/**********************************************************************
+ *****                   Gallery Screen UI Functions              *****
+ **********************************************************************/
+ 
+ 
 /* opponent listing file */
 var galleryEndings = [];
 var allEndings = [];
@@ -54,6 +141,62 @@ var galleryPages = -1;
 var epp = 20;
 var selectedEnding = -1;
 var GALLERY_GENDER = 'all';
+
+var playerCollectibles = {}; /* Indexed by player ID. */
+
+function goToEpiloguesScreen() {
+	$galleryEndingsScreen.show();
+	$galleryCollectiblesScreen.hide();
+	loadGalleryEndings();
+}
+
+function goToCollectiblesScreen() {
+	$galleryCollectiblesScreen.show();
+	$galleryEndingsScreen.hide();
+}
+
+function loadGalleryScreen(){
+	screenTransition($titleScreen, $galleryScreen);
+    loadGalleryEndings();
+	galleryGender(GALLERY_GENDER);
+}
+
+function backGalleryScreen(){
+	screenTransition($galleryScreen, $titleScreen);
+}
+
+
+function loadPlayerCollectibles(player) {
+	if (!player.collectibles || playerCollectibles[player.id] !== undefined) {
+		return;
+	}
+	
+	playerCollectibles[player.id] = null;
+	
+	$.ajax({
+		type: "GET",
+		url: player.folder + 'collectibles.xml',
+		dataType: "text",
+		success: function(xml) {
+			var collectiblesArray = [];
+			$(xml).find('collectible').each(function () {
+				collectiblesArray.push(new PlayerCollectible(player, $(this)));
+			});
+			
+			playerCollectibles[player.id] = collectiblesArray;
+		}
+	});
+}
+
+
+/* called from spniSelect.js */
+function updateCollectiblesScreen() {
+	for (var i=0; i<loadedOpponents.length; i++) {
+		if (!loadedOpponents[i]) continue;
+		loadPlayerCollectibles(loadedOpponents[i]);	
+	}
+}
+
 
 function loadGalleryEndings(){
 	if(allEndings.length > 0){

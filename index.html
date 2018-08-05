@@ -985,49 +985,80 @@
 
 <!-- Gallery Screen -->
 <div id="gallery-screen" class="screen-container" hidden>
-  <div class="screen">
-	  <div id="gallery-gender-block">
-		  <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
-		  <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
-		  <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
-		  <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
-	  </div>
-	  <div id="gallery-endings-block">
-		  <div class="gallery-ending" onclick="selectEnding(0)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(1)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(2)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(3)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(4)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(5)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(6)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(7)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(8)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(9)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(10)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(11)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(12)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(13)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(14)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(15)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(16)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(17)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(18)"></div>
-		  <div class="gallery-ending" onclick="selectEnding(19)"></div>
-	  </div>
-	  <div id="gallery-controls-block">
-		  <button id="gallery-main-back-button" class="bordered main-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
-		  <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
-		  <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
-		  <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
-	  </div>
-	  <div id="gallery-selected-ending-block">
-		  <div id="selected-ending-previev"></div>
-		  <label id="selected-ending-title"></label>
-		  <label>Character: <span id="selected-ending-character"></span></label>
-		  <label>For: <span id="selected-ending-gender"></label>
-		  <label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
-	  </div>
-  </div>
+    <div id="collectible-gallery-screen" class="screen">
+        <div id="gallery-select-block">
+            <button class="bordered gallery-collectibles-button gallery-select-button smooth-button smooth-button-blue" onclick="goToCollectiblesScreen()">>Collectibles<</button>
+            <button class="bordered gallery-epilogues-button gallery-select-button smooth-button smooth-button-red" onclick="goToEpiloguesScreen()">Epilogues</button>
+        </div>
+        <div class="collectibles-pane bordered" id="collectibles-list-pane"></div>
+        <div class="collectibles-pane bordered" id="collectibles-text-pane">
+            <h3 class="collectible-content text-center" id="collectible-title">Title</h3>
+            <h3 class="collectible-content collectible-subtitle-container text-center"><small id="collectible-subtitle">Subtitle</small></h3>
+            <hr/>
+            <h4 class="collectible-content text-center collectible-character-container">
+                From: <i id="collectible-character">Test</i>
+            </h4>
+            <div class="collectible-content collectible-unlock-container">
+                <h4 class="text-center">To Unlock:</h4>
+                <div class="text-center" id="collectible-unlock">Unlock description</div>
+            </div>
+            <hr/>
+            <div class="collectible-content collectible-text-container">
+                <h4 class="text-center">Description:</h4>
+                <div id="collectible-text">Flavor text</div>
+            </div>
+        </div>
+        <div class="collectibles-pane bordered" id="collectibles-image-pane">
+            <img id="collectible-image">
+        </div>
+    </div>
+    <div id="epilogue-gallery-screen" class="screen" hidden>
+        <div id="gallery-select-block">
+            <button class="bordered gallery-collectibles-button gallery-select-button smooth-button smooth-button-red" onclick="goToCollectiblesScreen()">Collectibles</button>
+            <button class="bordered gallery-epilogues-button gallery-select-button smooth-button smooth-button-blue" onclick="goToEpiloguesScreen()">>Epilogues<</button>
+        </div>
+        <div id="gallery-gender-block">
+            <input type="image" id="gallery-gender-all" class="gallery-gender-button bordered" src='img/all.png' onclick="galleryGender('all')"/>
+            <input type="image" id="gallery-gender-any" class="gallery-gender-button bordered" src='img/any.png' style="opacity:0.4;" onclick="galleryGender('any')" />
+            <input type="image" id="gallery-gender-male" class="gallery-gender-button bordered" src='img/male.png' style="opacity:0.4;" onclick="galleryGender('male')" />
+            <input type="image" id="gallery-gender-female" class="gallery-gender-button bordered" src="img/female.png" style="opacity:0.4;" onclick="galleryGender('female')" />
+        </div>
+        <div id="gallery-endings-block">
+            <div class="gallery-ending" onclick="selectEnding(0)"></div>
+            <div class="gallery-ending" onclick="selectEnding(1)"></div>
+            <div class="gallery-ending" onclick="selectEnding(2)"></div>
+            <div class="gallery-ending" onclick="selectEnding(3)"></div>
+            <div class="gallery-ending" onclick="selectEnding(4)"></div>
+            <div class="gallery-ending" onclick="selectEnding(5)"></div>
+            <div class="gallery-ending" onclick="selectEnding(6)"></div>
+            <div class="gallery-ending" onclick="selectEnding(7)"></div>
+            <div class="gallery-ending" onclick="selectEnding(8)"></div>
+            <div class="gallery-ending" onclick="selectEnding(9)"></div>
+            <div class="gallery-ending" onclick="selectEnding(10)"></div>
+            <div class="gallery-ending" onclick="selectEnding(11)"></div>
+            <div class="gallery-ending" onclick="selectEnding(12)"></div>
+            <div class="gallery-ending" onclick="selectEnding(13)"></div>
+            <div class="gallery-ending" onclick="selectEnding(14)"></div>
+            <div class="gallery-ending" onclick="selectEnding(15)"></div>
+            <div class="gallery-ending" onclick="selectEnding(16)"></div>
+            <div class="gallery-ending" onclick="selectEnding(17)"></div>
+            <div class="gallery-ending" onclick="selectEnding(18)"></div>
+            <div class="gallery-ending" onclick="selectEnding(19)"></div>
+        </div>
+        <div id="gallery-controls-block">
+            <button id="gallery-main-back-button" class="bordered main-select-button smooth-button smooth-button-red" onclick="backGalleryScreen()">Back</button>
+            <button id="gallery-prev-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryPrevPage()" disabled="true">prev</button>
+            <button id="gallery-next-page-button" class="bordered main-select-button smooth-button smooth-button-blue" onclick="galleryNextPage()">next</button>
+            <button id="gallery-start-ending-button" class="bordered main-select-button smooth-button smooth-button-green" onclick="doEpilogueFromGallery()" disabled="true" >Start</button>
+        </div>
+        <div id="gallery-selected-ending-block">
+            <div id="selected-ending-previev"></div>
+            <label id="selected-ending-title"></label>
+            <label>Character: <span id="selected-ending-character"></span></label>
+            <label>For: <span id="selected-ending-gender"></label>
+      		<label id="selected-ending-hint-container">To Unlock: <span id="selected-ending-hint"></label>
+        </div>
+    </div>
 </div>
 
 <!-- Tab completion lists shared by individual and group filter modals -->
