@@ -84,8 +84,11 @@ Collectible.prototype.display = function () {
 Collectible.prototype.listElement = function () {
 	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
 	var imgElem = $('<img class="collectibles-item-icon">').attr('src', this.thumbnail);
-	var titleElem = $('<div class="collectibles-item-title"></div>').html(this.title);
-	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>').html(this.subtitle);
+	var titleElem = $('<div class="collectibles-item-title"></div>');
+	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
+	
+	titleElem.html(this.title);
+	subtitleElem.html(this.subtitle);
 	
 	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
 	
@@ -94,18 +97,19 @@ Collectible.prototype.listElement = function () {
 
 
 /* Class for collectibles attached to a specific player.*/
-function PlayerCollectible(player, xmlElem) {	
+function PlayerCollectible(player, xmlElem) {
+	console.log(xmlElem);
 	this.player = player;
 	this.id = xmlElem.attr('id');
 	this.source = player.label;
-	this.image = xmlElem.find('image').text();
-	this.thumbnail = xmlElem.find('thumbnail').text();
-	this.title = xmlElem.find('title').html();
-	this.subtitle = xmlElem.find('subtitle').html();	
-	this.unlock_hint = xmlElem.find('unlock').html();
+	this.image = player.folder + xmlElem.attr('img');
+	this.thumbnail = xmlElem.attr('thumbnail');
+	this.title = xmlElem.find('title').text();
+	this.subtitle = xmlElem.find('subtitle').text();	
+	this.unlock_hint = xmlElem.find('unlock').text();
 	this.text = xmlElem.find('text').html();
 }
-PlayerCollectible.prototype = Object.create(Collectible);
+PlayerCollectible.prototype = Object.create(Collectible.prototype);
 PlayerCollectible.prototype.constructor = PlayerCollectible;
 
 
@@ -114,14 +118,14 @@ PlayerCollectible.prototype.constructor = PlayerCollectible;
 function InventoryCollectible(xmlElem) {
 	this.id = xmlElem.attr('id');
 	this.source = 'The Inventory';
-	this.image = xmlElem.find('image').text();
-	this.thumbnail = xmlElem.find('thumbnail').text();
-	this.title = xmlElem.find('title').html();
-	this.subtitle = xmlElem.find('subtitle').html();	
-	this.unlock_hint = xmlElem.find('unlock').html();
+	this.image = xmlElem.attr('img');
+	this.thumbnail = xmlElem.attr('thumbnail');
+	this.title = xmlElem.find('title').text();
+	this.subtitle = xmlElem.find('subtitle').text();	
+	this.unlock_hint = xmlElem.find('unlock').text();
 	this.text = xmlElem.find('text').html();
 }
-InventoryCollectible.prototype = Object.create(Collectible);
+InventoryCollectible.prototype = Object.create(Collectible.prototype);
 InventoryCollectible.prototype.constructor = InventoryCollectible;
 
 
@@ -153,6 +157,7 @@ function goToEpiloguesScreen() {
 function goToCollectiblesScreen() {
 	$galleryCollectiblesScreen.show();
 	$galleryEndingsScreen.hide();
+	updateCollectiblesScreen();
 }
 
 function loadGalleryScreen(){
@@ -190,10 +195,28 @@ function loadPlayerCollectibles(player) {
 
 
 /* called from spniSelect.js */
-function updateCollectiblesScreen() {
+function updateLoadedCollectibles() {
 	for (var i=0; i<loadedOpponents.length; i++) {
 		if (!loadedOpponents[i]) continue;
 		loadPlayerCollectibles(loadedOpponents[i]);	
+	}
+	
+	updateCollectiblesScreen();
+}
+
+function updateCollectiblesScreen() {	
+	$collectibleListPane.empty();
+	
+	for (var i=0; i<loadedOpponents.length; i++) {
+		var player = loadedOpponents[i];
+		if (!player) continue;
+		
+		var colList = playerCollectibles[player.id];
+		if (!colList) continue;
+		
+		for (var j=0; j<colList.length;j++) {
+			$collectibleListPane.append(colList[j].listElement());
+		}
 	}
 }
 
