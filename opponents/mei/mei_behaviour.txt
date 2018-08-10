@@ -11,12 +11,9 @@ timer=12
 
 
 
-#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
-tag=mei
-
 #Source material tags
 tag=overwatch
-tag=team_overwatch
+tag=overwatch_franchise
 tag=video_game
 tag=sci-fi
 tag=future
@@ -26,9 +23,8 @@ tag=chubby
 tag=glasses
 tag=brunette
 tag=short_hair
-tag=hair_bun
-tag=brown_eyes
-tag=light-skinned
+tag=dark_eyes
+tag=fair-skinned
 tag=hairy
 tag=large_breasts
 tag=chinese
@@ -43,6 +39,7 @@ tag=scientist
 
 
 
+marker=mei_climate_change,public,Mei, a Chinese climatologist, denies that climate change is a Chinese lie.
 marker=mei_dawn_light,public,Mei makes a pun on Dawn's name when Dawn removes something 'light'.
 marker=mei_keeping_florina_company,public,Mei gets topless with Florina.
 marker=mei_ice_block,public,When threatened, the female of the species must briefly hibernate.
@@ -54,6 +51,8 @@ marker=mei_no_boyfriend,public,Mei is single and available.
 marker=mei_other_planets,public,Mei acknowledges that Samus can travel beyond Earth.
 marker=mei_overdressed,public,Mei thick coat is for cold weather. She occasionally remarks that she is overdressed.
 marker=mei_reaper_bounty,public,Meeting Samus gives Mei the idea of getting a bounty hunter to capture Reaper.
+marker=mei_revy_nice_to_meet_you,public,If Revy is the first one to strip, Mei hasn't yet experienced Revy's behaviour and therefor mistakenly suggests that it's nice to meet her.
+marker=mei_revy_toxic,public,Mei accuses Revy of being toxic.
 marker=mei_samus_bodysuit,public,Mei's thick coat hides her curves, unlike Samus's bodysuit.
 marker=mei_samus_mech,public,Samus reminds Mei of D.Va, so she asks if she too can call a mech suit on command.
 marker=mei_speaking_chinese,public,Mei frequently drops in random Mandarin into her speech, as per her Overwatch representation. Her penalty stage is entirely in Mandarin. Note that this marker is not set on her Chinese swap_cards line, as this will be seen within the first few rounds of the game.
@@ -81,11 +80,23 @@ clothes=Panties,panties,important,lower
  
 #starting picture and text
 start=0-interested,Let's gather some valuable data on this mission.
-start=0-happy,I can't wait to get started.
-start=0-shocked,Hey, wait for me!
-start=0-happy,It's good to get out of the lab.
-start=0-calm,Mei on duty!
-start=0-happy,Okay gang, let's go!
+
+selected=interested,Let's gather some valuable data on this mission.
+selected=happy,It's good to get out of the lab.
+selected=calm,Mei on duty!
+
+selected,alsoPlaying:d.va=interested,Don't worry, Hana. I'm here to supervise.
+selected,alsoPlaying:d.va=embarrassed,Do you think Hana will mind if I play too? This isn't just for teenagers, right?
+selected,alsoPlaying:kyu=loss,I dressed as warmly as possible. Is that okay?
+selected,alsoPlaying:lyn=interested,I can tell that you're all skilled warriors, but would any of you be willing to switch to healing?
+selected,alsoPlaying:mercy=happy,Angela, it's so good to see a familiar face! Do you remember when we played this game one time in Dorado?
+selected,alsoPlaying:tracer=happy,Lena, good to see you! If we broadcast this on all channels, maybe we could have a big reunion!
+selected,alsoPlaying:tracer=calm,Hey Lena, how is Winston doing? I wonder what he's researching these days...
+selected,alsoPlaying:tracer=horny,There you are, Lena. This time I'm going to stop you in your tracks.
+
+game_start=happy,I can't wait to get started.
+game_start=shocked,Hey, wait for me!
+game_start=happy,Okay gang, let's go!
 
 
 
@@ -198,7 +209,7 @@ swap_cards=calm,Just ~cards~ more.
 1-okay_hand=happy,This is fun! Nobody wanted to play this game when I was in Antarctica...
 1-bad_hand=calm,I'm sure I can make up for this.
 1-bad_hand=loss,Forecast: stormy times ahead.
-1-bad_hand=sad,Just to let everyone know, climate change is <i>not</i> a lie from the Chinese. And we're trying our best to fix it!
+1-bad_hand,notSaidMarker:mei_climate_change,saidMarker:mei_climate_change,priority:0=sad,Just to let everyone know, climate change is <i>not</i> a lie from the Chinese. And we're trying our best to fix it!
 
 1-good_hand,alsoPlaying:weiss=happy,It's nice to finally meet you, Weiss. I use Schnee Dust to power my endothermic blaster!
 1-good_hand,alsoPlaying:weiss=interested,I'm safe this time. Did you get a good hand too, Weiss?
@@ -482,7 +493,6 @@ swap_cards=calm,Just ~cards~ more.
 0-female_must_strip,target:marceline,targetStage:0=interested,How do you float like that, Marceline? Could you show me the trick?
 1-female_must_strip,target:marceline,targetStage:0=interested,How do you float like that, Marceline? Could you show me the trick?
 0-female_must_strip,target:may,targetStage:0=calm,Oh, hello, May! You have a beautiful name!
-0-female_must_strip,target:mercy,targetStage:0=calm,Angela, it's so good to see a familiar face! Do you remember when we played this game one time in Dorado?
 0-female_must_strip,target:misty,targetStage:0=interested,Time to make a splash, Misty!
 1-female_must_strip,target:misty,targetStage:0=interested,Time to make a splash, Misty!
 2-female_must_strip,target:misty,targetStage:0=interested,Time to make a splash, Misty!
@@ -525,8 +535,11 @@ swap_cards=calm,Just ~cards~ more.
 1-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
 2-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
 3-female_must_strip,target:raven,targetStage:4=loss,Let's not make Raven mad!
-0-female_must_strip,target:revy,targetStage:0=happy,It's nice to meet you, Revy. Is it true that you're half Chinese? I hope that we can be friends.
-3-female_must_strip,target:revy=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+0-female_must_strip,target:revy,totalRounds:0,marker:mei_revy_nice_to_meet_you=happy,It's nice to meet you, Revy. Is it true that you're half Chinese? I hope that we can be friends.
+0-female_must_strip,target:revy,targetStage:4,marker:mei_revy_toxic=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+1-female_must_strip,target:revy,targetStage:4,marker:mei_revy_toxic=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+2-female_must_strip,target:revy,targetStage:4,marker:mei_revy_toxic=loss,Revy, maybe you'd start playing better if you weren't so toxic.
+3-female_must_strip,target:revy,targetStage:4,marker:mei_revy_toxic=loss,Revy, maybe you'd start playing better if you weren't so toxic.
 0-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 1-female_must_strip,target:samus,targetStage:0=happy,Hello, Samus! I only know you by reputation, but I'd love to study your Ice Beam sometime!
 0-female_must_strip,target:seven,targetStage:0=calm,Excuse me, Ms. Nine, but are you an astronaut? Maybe you've met my friend Winston at the Lunar Colony?
@@ -534,7 +547,6 @@ swap_cards=calm,Just ~cards~ more.
 2-female_must_strip,target:seven,targetStage:0=calm,Excuse me, Ms. Nine, but are you an astronaut? Maybe you've met my friend Winston at the Lunar Colony?
 0-female_must_strip,target:spooky,targetStage:0=sad,I'm sure there's a reasonable, scientific explanation for your being here, Spooky.
 1-female_must_strip,target:spooky,targetStage:1=loss,Do all people become ghosts or just some? Sometimes I wonder about my ancestors... and my friends...
-0-female_must_strip,target:tracer,targetStage:0=calm,Hey Tracer, how is Winston doing? I wonder what he's researching these days...
 0-female_must_strip,target:twilight,targetStage:0=happy,Nice to meet you, Twilight! Is it true that you and I both share a love of studying the Elements?
 1-female_must_strip,target:twilight,targetStage:0=happy,Nice to meet you, Twilight! Is it true that you and I both share a love of studying the Elements?
 0-female_must_strip,target:velma,targetStage:0=happy,Velma, I love your glasses!
@@ -566,8 +578,8 @@ swap_cards=calm,Just ~cards~ more.
 
 #fully clothed
 0-male_removing_accessory=calm,It's okay to take it slow. The game has barely started.
-0-male_removed_accessory=interested,~name~, you would make the perfect research assistant.
-0-male_removed_accessory=happy,~name~, you are such a gentleman!
+0-male_removed_accessory=interested,~Name~, you would make the perfect research assistant.
+0-male_removed_accessory=happy,~Name~, you are such a gentleman!
 0-female_removing_accessory=interested,Wow, that's actually a really good strategy.
 0-female_removing_accessory=happy,Nobody needs to teach <i>you</i> how to play, ~name~.
 0-female_removing_accessory=calm,Let's all have a fun game.
@@ -722,7 +734,7 @@ swap_cards=calm,Just ~cards~ more.
 #lost gloves
 1-male_removing_minor=calm,What small sample do you have for us, ~name~?
 1-male_removed_minor=interested,I think we can all be happy with that!
-1-female_removing_minor=interested,~name~, why not take off your ~clothing~?
+1-female_removing_minor=interested,~Name~, why not take off your ~clothing~?
 1-female_removed_minor=happy,It doesn't matter if we only made a little progress, as long as we're still ahead!
  
 #lost shoes
@@ -870,7 +882,7 @@ swap_cards=calm,Just ~cards~ more.
 3-male_removed_major,marker:mei_speaking_chinese=embarrassed,&#x6709;&#x672C;&#x4E8B;&#x5C31;&#x8FC7;&#x6765;&#x3002;
 3-male_removed_major=stripped,You should visit me sometime at The Hanamura Inclement Climate Center!
 3-female_removing_major=happy,Victory is still within my grasp!
-3-female_removed_major=shocked,~name~, you're so awesome! Just like Sun Wukong!
+3-female_removed_major=shocked,~Name~, you're so awesome! Just like Sun Wukong!
 3-female_removed_major=interested,Good choice.
 3-female_removed_major=adjusting,Nobody can complain about that.
  
@@ -901,7 +913,7 @@ swap_cards=calm,Just ~cards~ more.
 -3-male_removed_major=shocked,Well, color me impressed, ~name~!
 -3-female_removing_major=calm,Maybe you'd never take off your ~clothing~ on the train, but it's okay when you won't be the least dressed...
 -3-female_removed_major=interested,I hope you learned your lesson.
--3-female_removed_major=happy,~name~, you're so amazing! You inspire me.
+-3-female_removed_major=happy,~Name~, you're so amazing! You inspire me.
  
 #masturbating
 -2-male_removing_major,marker:mei_speaking_chinese=finishing,&#x54E6;&#xFF0C;&#x662F;&#x7684;&#xFF0C;&#x7EE7;&#x7EED;&#x8FD9;&#x6837;&#x505A;.
@@ -1039,10 +1051,10 @@ swap_cards=calm,Just ~cards~ more.
 #fully clothed
 0-male_chest_will_be_visible=horny,Feel free to take it off at your own pace!
 0-male_chest_is_visible=shocked,Oh my!
-0-male_crotch_will_be_visible=embarrassed,~name~, I don't understand why you started the game wearing so little. You are about to be naked!
+0-male_crotch_will_be_visible=embarrassed,~Name~, I don't understand why you started the game wearing so little. You are about to be naked!
 0-male_small_crotch_is_visible=loss,I'm glad I dressed warm. You seem like you are freezing.
 0-male_small_crotch_is_visible=shocked,Oh, no! Was it cut off in an accident?
-0-male_medium_crotch_is_visible=horny,~name~, rub some ice cubes on it. I want to see if you can really handle the cold.
+0-male_medium_crotch_is_visible=horny,~Name~, rub some ice cubes on it. I want to see if you can really handle the cold.
 0-male_large_crotch_is_visible=shocked,You started the game with that between your legs!? You must be really excited!
  
 0-female_chest_will_be_visible=loss,I'm sorry... It was up to you to change this outcome.
@@ -1059,7 +1071,7 @@ swap_cards=calm,Just ~cards~ more.
 1-male_small_crotch_is_visible=loss,Oh my! You must be freezing!
 1-male_small_crotch_is_visible=horny,Oh, it's flaccid. Maybe that will change as the game goes on. It just started, after all.
 1-male_medium_crotch_is_visible=embarrassed,If your plan was to show me your thing early to make me blush... Mission success...
-1-male_medium_crotch_is_visible=horny,~name~, rub some ice cubes on it. I want to see if you can really handle the cold.
+1-male_medium_crotch_is_visible=horny,~Name~, rub some ice cubes on it. I want to see if you can really handle the cold.
 1-male_large_crotch_is_visible=happy,You don't disappoint!
 1-male_large_crotch_is_visible=happy,Are you ranked Diamond, because you look very hard!
  
@@ -1088,18 +1100,18 @@ swap_cards=calm,Just ~cards~ more.
  
 #lost jacket
 3-male_chest_will_be_visible=interested,I should take notes for next time. Study on why I did so well and the results.
-3-male_chest_is_visible=horny,~name~ took off shirt, has nice chest, very impressive.
+3-male_chest_is_visible=horny,~Name~ took off shirt, has nice chest, very impressive.
 3-male_chest_is_visible=embarrassed,I'm starting to better understand the laws of attraction...
-3-male_crotch_will_be_visible=embarrassed,~name~ must now take off underwear, currently feeling excited and a little embarrassed.
+3-male_crotch_will_be_visible=embarrassed,~Name~ must now take off underwear, currently feeling excited and a little embarrassed.
 3-male_small_crotch_is_visible=stripped,Result: ~name~ is flaccid. Could be cold or just naturally small. Should try not to laugh.
 3-male_medium_crotch_is_visible=horny,Result: ~name~ seems to be very excited about playing. Should attempt a hands on experiment
 3-male_large_crotch_is_visible=shocked,Result: Oh my gosh!
  
 3-female_chest_will_be_visible=,Let me make some notes so I can learn the progression.
-3-female_small_chest_is_visible=,~name~ might be a boy. I'm just kidding. I didn't write that.
-3-female_medium_chest_is_visible=,~name~ has average breasts, very bouncy, erect nipples.
-3-female_large_chest_is_visible=,~name~ might be bigger than me! May also experience back problems. 
-3-female_crotch_will_be_visible=,~name~ must remove her underwear. Further observation reveals that they are soaked.
+3-female_small_chest_is_visible=,~Name~ might be a boy. I'm just kidding. I didn't write that.
+3-female_medium_chest_is_visible=,~Name~ has average breasts, very bouncy, erect nipples.
+3-female_large_chest_is_visible=,~Name~ might be bigger than me! May also experience back problems. 
+3-female_crotch_will_be_visible=,~Name~ must remove her underwear. Further observation reveals that they are soaked.
 3-female_crotch_is_visible=,As I thought! ~name~ is very excited! Should get a closer look for better research.
  
 #lost shirt
@@ -1127,7 +1139,7 @@ swap_cards=calm,Just ~cards~ more.
 5-male_small_crotch_is_visible=horny,Say hello to the team's littlest member!
 5-male_small_crotch_is_visible=embarrassed,Oh it's surprisingly small. Did you stick it in the snow?
 5-male_medium_crotch_is_visible=shocked,My glasses are fogging up! I can't see properly!
-5-male_medium_crotch_is_visible=horny,~name~, rub some ice cubes on it. I want to see if you can really handle the cold.
+5-male_medium_crotch_is_visible=horny,~Name~, rub some ice cubes on it. I want to see if you can really handle the cold.
 5-male_large_crotch_is_visible=shocked,Whoa! That's huge!
 5-male_large_crotch_is_visible=interested,It seems the cold doesn't affect you! Your penis hasn't shriveled up at all! Very impressive, ~name~.
  
@@ -1197,7 +1209,7 @@ swap_cards=calm,Just ~cards~ more.
 -1-male_crotch_will_be_visible=horny,Come on out. 
 -1-male_small_crotch_is_visible=embarrassed,Hmmm, where is it? Oh, there it is!
 -1-male_small_crotch_is_visible=sad,Oh, it's all shriveled up and small. Did you stick it in the snow?
--1-male_medium_crotch_is_visible=interested,~name~, rub some ice cubes on it. I want to see if you can really handle the cold.
+-1-male_medium_crotch_is_visible=interested,~Name~, rub some ice cubes on it. I want to see if you can really handle the cold.
 -1-male_medium_crotch_is_visible=horny,This is the hardest my nipples have ever been... and I've been in cryofreeze!
 -1-male_large_crotch_is_visible=shocked,I'm surprised something so big could hide from us.
 -1-male_large_crotch_is_visible,target:human=embarrassed,One vs one me... please. I'll give you my number.
@@ -1284,10 +1296,10 @@ swap_cards=calm,Just ~cards~ more.
 2-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. I don't want you to feel embarrassed around us.
 3-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. I don't want you to feel embarrassed around us.
 4-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. I don't want you to feel embarrassed around us.
-5-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Tracer?
-6-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Tracer?
--3-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Tracer?
--1-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Tracer?
+5-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Lena?
+6-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Lena?
+-3-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Lena?
+-1-female_small_chest_is_visible,target:weiss,alsoPlaying:tracer=embarrassed,Sorry, Weiss. Don't feel bad. Every woman is different, and we're all special in our own way! Right, Lena?
 
 0-female_medium_chest_is_visible,target:aimee=interested,Wow. Time is running out for you, Aimee!
 1-female_medium_chest_is_visible,target:aimee=interested,Wow. Time is running out for you, Aimee!
@@ -1418,7 +1430,7 @@ swap_cards=calm,Just ~cards~ more.
 0-male_finished_masturbating=embarrassed,I... I didn't expect to feel like this after only a few minutes!
  
 0-female_must_masturbate=shocked,Oh, of course. The penalty...
-0-female_start_masturbating=shocked,~name~!
+0-female_start_masturbating=shocked,~Name~!
 0-female_masturbating=loss,Sorry again!
 0-female_finished_masturbating=embarrassed,I didn't think your loss would affect me so much, ~name~.
  
@@ -1464,7 +1476,7 @@ swap_cards=calm,Just ~cards~ more.
 4-male_masturbating=happy,This is awesome!
 4-male_finished_masturbating=happy,Haha! That was great!
  
-4-female_must_masturbate=calm,~name~ is out!
+4-female_must_masturbate=calm,~Name~ is out!
 4-female_start_masturbating=interested,Supervisor Mei, reporting for duty.
 4-female_masturbating=interested,Come on, ~name~! Just a little bit longer. 
 4-female_finished_masturbating,marker:mei_speaking_chinese=happy,&#x54C7;&#xFF01;&#x771F;&#x597D;&#x73A9;&#x513F;&#xFF01;
@@ -1536,7 +1548,7 @@ swap_cards=calm,Just ~cards~ more.
 -1-female_finished_masturbating=calm,We should compare notes some time.
 
 #targeted
--1-female_must_masturbate,filter:innocent=embarrassed,~name~, you lost the hand, so it's time to do what I did.
+-1-female_must_masturbate,filter:innocent=embarrassed,~Name~, you lost the hand, so it's time to do what I did.
 0-female_must_masturbate,target:d.va=shocked,Wow! Is this what they call "early access"?
 1-female_must_masturbate,target:d.va=embarrassed,Oh, Hana... I guess you really wanted to show us...
 2-female_must_masturbate,target:d.va=horny,Hana, I guess we're going to see what your fans are always begging for...
@@ -1680,7 +1692,6 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,
 #Stay on your guard.
 #Uh oh, he's getting angry!
 #We can't let him get another one.
-#
 #Where are you?
 #Yeti popsicle!
 #Yeti's over here.
