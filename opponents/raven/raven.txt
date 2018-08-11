@@ -5,6 +5,7 @@ label=Raven
 gender=female
 size=small
 intelligence=average
+intelligence=good,5
 
 #Number of phases to "finish"
 timer=20
@@ -37,7 +38,7 @@ tag=gloomy
 
 #required for meta.xml
 #start picture
-pic=0-calm
+pic=0-start
 height=5'4"
 from=Teen Titans
 writer=mefatguy90 & Patrickisdom
@@ -53,8 +54,10 @@ clothes=Leotard,leotard,important,lower
 clothes=Bra,bra,important,upper
 
 #starting picture and text
-start=calm,Let's get this disaster started.
-0-selected=calm,I'm not one to back down on a challenge... Even freaky ones, like these.
+start=start,A more immature version of regular Poker... Fun...
+0-selected=selected,All right, let's get this disaster started.
+0-selected=selected,I'm not one to back down from a challenge... Even freaky ones, like these.
+0-selected=selected,I can't believe I got dragged into this... Fine, I'll play your silly game.
 
 ##individual behaviour
 #entries without a number are used when there are no stage-specific entries
@@ -62,10 +65,24 @@ start=calm,Let's get this disaster started.
 #default card behaviour
 #you can include multiple entries to give the character multiple lines and/or appearances in that situation.
 #This is what a character says while they're exchanging cards.
-swap_cards=calm,I'll need ~cards~ new cards.
-swap_cards=calm,~cards~ cards.
+swap_cards=calm,... Hm...
 swap_cards=calm,Give me ~cards~ cards.
 swap_cards=calm,Just ~cards~ for now.
+swap_cards=calm,I'll change ~cards~, I guess...
+4-swap_cards,hasHand:Two Pair,priority:0=calm,I'll just exchange this one.
+4-swap_cards,hasHand:Full House,priority:0=calm,Nope, I'm good.
+4-swap_cards=calm,Okay, focus... Give me ~cards~.
+4-swap_cards=calm,Just ~cards~ cards this time.
+4-swap_cards=calm,I'll need ~cards~.
+4-swap_cards=calm,What's my best move here...?
+-3-swap_cards,hasHand:Two Pair,priority:0=calm,I'll just exchange this one.
+-3-swap_cards,hasHand:Full House,priority:0=calm,Nope, I'm good.
+-3-swap_cards=calm,Okay, focus... Give me ~cards~.
+-3-swap_cards=calm,Just ~cards~ cards this time.
+-3-swap_cards=calm,Concentrate.
+-3-swap_cards=calm,This is my best move.
+
+
 
 #masturbation
 #these situations relate to when the character is masturbating
@@ -77,25 +94,25 @@ must_masturbate=loss,Usually, I just meditate.
 start_masturbating=starting,Nobody come close.
 start_masturbating=starting,Azarath Metrion Zinthos.
 start_masturbating=starting,Don't even THINK about looking while I'm doing this!
-masturbating=calm,Starfire's been asking to watch me do this for a while...
-masturbating=calm,W-Wow... This feels great...
-masturbating=calm,Hmmm... Why don't I do this more often?
-masturbating=calm,I must cleanse myself of darkness...
+masturbating,marker:starfire_watching=calm,Starfire's been asking to watch me do this for a while...
+masturbating=calm,W-wow. Am I... enjoying this?
+masturbating=calm,I must cleanse myself of darkness.
 masturbating=calm,Azarath... Metrion... Zinthos...
+masturbating=calm,I-I guess you could consider this some form of meditation, technically...
 masturbating=horny,This is kinda nice...
 masturbating=horny,I can't believe I'm doing this...
 masturbating=horny,This feels so... strange...
-heavy_masturbating,marker:getting_off_to_teen_titans=heavy,B-beast boy.... Cyborg... R-robin...
+heavy_masturbating,marker:getting_off_to_teen_titans=heavy,B-Beast Boy... Cyborg... R-Robin...
 heavy_masturbating=heavy,Az-arath.. Met-rion... Zin-thos!
-heavy_masturbating=heavy,Y-ye-YES!  I'm so close!
-heavy_masturbating=heavy,I-I can't hold it any lo-..
-finishing_masturbating=finishing,Oh... OH! FUCK!
-finishing_masturbating=finishing,AZ...a-rath MET...ri-on ZIN...thos
-finished_masturbating=finished,M-maybe I should let Starfire watch me next time.
-finished_masturbating=finished,I should do that more often, instead of just meditating.
-finished_masturbating=finished,Maybe I'll start to do this more often...
-finished_masturbating=finished,I actually liked this more than I like waffles...
-
+heavy_masturbating=heavy,Y-ye-YES! I'm so close!
+heavy_masturbating=heavy,I-I can't hold it any lo-...
+finishing_masturbating=finishing,AZ...a-rath MET...ri-on ZIN...thos!
+finished_masturbating,saidMarker:starfire_watching,marker:starfire_watching1,notSaidMarker:starfire_watching1=finished,Hmmm... Maybe I <i>should</i> ask Starfire to join me next time...
+finished_masturbating=finished,I should incorporate this act more often in my meditation sessions.
+finished_masturbating=finished,I suppose it couldn't hurt to do this more often...
+finished_masturbating,marker:waffles,notSaidMarker:waffles,priority:0=finished,Pff... I am <i>craving</i> waffles after all this...
+finished_masturbating,timeInStage:0-3,priority:0=finished,Pff... That was a wild ride.
+finished_masturbating=finished,This was weirdly... relaxing.
 
 #These responses are stage specific.
 #Refer to the above entries to see what sort of situations these refer to, and what the default images are.
@@ -107,80 +124,90 @@ finished_masturbating=finished,I actually liked this more than I like waffles...
 #character is stripping situations***
 #Losing Boots (accessory)
 0-must_strip_winning=loss,I guess this had to happen eventually.
-0-must_strip_winning=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
+0-must_strip_winning,marker:victory_dance,notSaidMarker:victory_dance=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
 0-must_strip_normal=loss,Whatever...
-0-must_strip_losing=loss,Are you kidding? Me first?
-0-stripping=strip,Oh no... I have to remove my boots...
-0-stripping=strip,No problem...
-1-stripped=stripped,Floor's a little colder than I expected...
+0-must_strip_normal,marker:victory_dance,notSaidMarker:victory_dance=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
+0-must_strip_losing,totalRounds:0=loss,Are you kidding? Me first?
+0-must_strip_losing=loss,Whatever...
+0-stripping=strip,Oh nooo... I have to remove my boots...
+0-stripping=strip,No problem.
+1-stripped=stripped,Floor's a little colder than I expected.
 
 #Losing Belt (minor)
 1-must_strip_winning=loss,Oh well.
+1-must_strip_winning,marker:victory_dance,notSaidMarker:victory_dance=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
 1-must_strip_normal=loss,Let's get this over with.
+1-must_strip_normal,marker:victory_dance,notSaidMarker:victory_dance=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
 1-must_strip_losing=loss,Apparently, I'm not very good at this.
 1-must_strip_losing,marker:teleport=loss,I'll teleport away if it goes on like this...
 1-stripping=strip,I guess the belt is next...
 2-stripped=stripped,This must be sooo worth it...
+2-stripped=stripped,Poof! Aaand it's gone!
 
 #Losing Hood (major)
 2-must_strip_winning=loss,Eh, I was tired of winning, anyway...
+2-must_strip_winning,marker:victory_dance,notSaidMarker:victory_dance=loss,Did it ever occur to you to practice the actual game instead of your stupid victory dance, ~player~...?
 2-must_strip_normal=loss,So... what now?
+2-must_strip_normal=loss,I suppose the cloak doesn't cover that much anyway.
 2-must_strip_losing=loss,I lost again... Yaayyy...
 2-must_strip_losing=loss,This game is rigged!
 2-stripping=strip,Here goes...
-2-stripping=strip,I guess my hood has to go now...
-3-stripped=stripped,There, you can see my face now.
+2-stripping=strip,Bummer. I prefer the shadows.
+3-stripped=stripped,There. You can see my face now.
+3-stripped=stripped,The hood can make my hair really messy sometimes. <i>Especially</i> if I've been wearing while fighting off some bad dudes.
 
 #Losing Leotard (crotch)
-3-must_strip_winning=loss,Eh, Starfire barges into my room in worse situations.
-3-must_strip_winning=loss,I guess you'll be able to see my Hot Spot now...
+3-must_strip_winning=loss,Afraid? Me? I don't do fear.
 3-must_strip_winning=loss,Here goes my little secret...
-3-must_strip_normal=loss,I suppose the cloak doesn't cover that much anyway.
 3-must_strip_normal=loss,Afraid? Me? I don't do fear.
-3-must_strip_losing=loss,Stop looking at me! 
+3-must_strip_losing=loss,I should have taken more precautions...
+3-must_strip_losing,marker:strategic_decision=loss,I can't help but feel like I've made some terrible strategic decisions.
 3-stripping=strip,Get a good look, cause this is all you're gonna see.
 3-stripping,marker:no_underwear_surprise=strip,Well... Here it goes... You might be surprised what I'm not wearing under this...
-4-stripped=stripped,I made a tactical mistake...
+4-stripped,notSaidMarker:strategic_decision,priority:0=stripped,I made a tactical mistake...
 4-stripped=stripped,S-so I don't wear panties! Is that a problem?
 4-stripped=stripped,No, I don't wear panties under my leotard... Try not to stare <i>too</i> much...
-4-stripped,marker:bad_decision=stripped,Not wearing panties was probably a bad decision... I guess we'll see...
+4-stripped,marker:bad_decision=stripped,Not wearing panties was probably a bad decision. I guess we'll see...
+4-stripped=stripped,Eh, Starfire barges into my room in worse situations. I've almost gotten used to it. <i>Almost</i>...
 
 #Losing Bra (small breast)
 4-must_strip_winning=loss,Ooh, now this is getting interesting.
 4-must_strip_winning=loss,Sounds like a trick, but I got a treat for you...
 4-must_strip_winning=loss,Focus on your cards, not me.
 4-must_strip_normal=loss,Oh boy.
+4-must_strip_normal,timeInStage:0=loss,Oh my God, are you <i>kidding</i> me?!
+4-must_strip_losing,timeInStage:0=loss,Oh my God, are you <i>kidding</i> me?!
 4-must_strip_losing=loss,I'm not used to being the center of attention.
 4-must_strip_losing=loss,I'm not used to being the one everyone looks at.
 4-stripping=strip,Here goes...
-4-stripping=strip,Off comes the bra...
--3-stripped=stripped,Don't stare too much: only warning.
+4-stripping=strip,Off comes the bra.
+-3-stripped=stripped,Don't stare too much; only warning.
 -3-stripped=stripped,You'd better hope my dad doesn't find out about this.
--3-stripped=stripped,There... Now you can see all of me...
+-3-stripped=stripped,There. Now you can see all of me.
 
 #victory lines. one for each stage.
 0-game_over_victory=happy,If you feel like losing again, give me a call.
 1-game_over_victory=happy,I knew I was the best at this.
 2-game_over_victory=happy,Rest in peace...
-3-game_over_victory=calm, A little close for comfort, but a win's a win.
+3-game_over_victory=happy,The moral of the story is...? I'm the best!
 3-game_over_victory=calm,Don't worry, It's not the first time I've watched this... might be the first time they've known about it though. 
-4-game_over_victory=happy,Even without panties I was still able to win.
-4-game_over_victory=happy,The moral of the story is...? I'm the best!
+4-game_over_victory=happy,Even without panties I was still able to keep my cool and defeat you.
+4-game_over_victory=calm, A little too close to comfort, but a win's a win.
 -3-game_over_victory=happy,That's how I play!
--3-game_over_victory=calm,It truly is darkest before the dawn.
+-3-game_over_victory,timeInStage:6-99,priority:0=calm,It truly is darkest before the dawn.
 -3-game_over_victory=happy,I knew this was gonna be tight, but <i>damn</i>!
-game_over_defeat=horny,This mess is your fault. Clean it up... w-with... your t-tongue, maybe?
+-3-game_over_victory,timeInStage:8-99=calm,The most exciting battles are the ones with the greatest comebacks.
+game_over_defeat=horny,This mess is your fault, ~name~. Now, could you clean it up..?
 game_over_defeat=calm,It's over?
 game_over_defeat,target:zone-tan=angry,You won this time, Zone-tan... but I <i>will</i> get my revenge.
 game_over_defeat,target:zone-tan=angry,This is not over... One day, you will feel my wrath, Zone-tan. I'll make you pay for what you've done.
-
 
 #card cases
 #fully clothed
 0-good_hand=calm,Not even Trigon could beat this hand.
 0-good_hand=happy,I should be fine... If Beast Boy really knows the rules like he claimed.
 0-okay_hand=calm,This should suffice.
-0-okay_hand=calm,This'll probably do... maybe...
+0-okay_hand=calm,This'll probably do... maybe.
 0-bad_hand=calm, This could be a problem.
 0-bad_hand=sad,We get a second draw, right?
 
@@ -188,7 +215,7 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 1-good_hand=happy,This is guaranteed to win.
 1-good_hand=happy,Good.
 1-okay_hand=calm,This should be good enough.
-1-okay_hand=calm,Sigh...
+1-okay_hand=calm,*<i>Sigh</i>*
 1-bad_hand=calm,This could be troublesome.
 1-bad_hand=sad,These cards are as dark as my powers.
 
@@ -215,14 +242,14 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 4-bad_hand=sad,Let me just fade into the shadows.
 
 #lost bra
-5-good_hand=calm,Not this round. 
-5-good_hand=calm,I'll hold on for now...
-5-good_hand=happy,Even Beast Boy could win with this!
-5-okay_hand=awkward,Please let this be enough.
-5-okay_hand=awkward,This could be the end.
-5-okay_hand=calm,Hm... Let's see what you guys got.
-5-bad_hand=angry,Not even Robin could work with this!
-5-bad_hand=awkward,Guess Starfire won't be the only one to catch me masturbating.
+-3-good_hand=calm,Not this round. 
+-3-good_hand=calm,I'll hold on for now...
+-3-good_hand=happy,Even Beast Boy could win with this!
+-3-okay_hand=awkward,Please let this be enough.
+-3-okay_hand=awkward,This could be the end.
+-3-okay_hand=calm,Hm... Let's see what you guys got.
+-3-bad_hand=angry,Not even Robin could work with this!
+-3-bad_hand=awkward,Guess Starfire won't be the only one to catch me masturbating.
 
 
 ##other player must strip specific
@@ -516,7 +543,8 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 #fully clothed
 0-male_chest_will_be_visible=interested,Yeah, show me.
 0-male_chest_is_visible=interested,Nice...
-0-male_crotch_will_be_visible=interested,I haven't stripped at all and you are just going to pull out your dick?
+0-male_crotch_will_be_visible=calm,How exciting, I just met the world's worst Strip Poker player.
+0-male_crotch_will_be_visible,target:human=awkward,I-it doesn't seem like you're all that upset about the situation you're in, ~name~.
 0-male_small_crotch_is_visible=awkward,So tiny and weak.
 0-male_medium_crotch_is_visible=interested,Meh...
 0-male_large_crotch_is_visible=interested,Whoa, impressive.
@@ -535,13 +563,14 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 1-male_chest_is_visible=interested,Nice...
 1-male_crotch_will_be_visible=interested,Was this worth seeing me without my boots on?
 1-male_crotch_will_be_visible=interested,Finally. Some excitement.
+1-male_crotch_will_be_visible,target:human=awkward,I-it doesn't seem like you're all that upset about the situation you're in, ~name~.
 1-male_small_crotch_is_visible=calm,Just another figment of my imagination, don't even look.
 1-male_small_crotch_is_visible=happy,Hahahahaha!
 1-male_medium_crotch_is_visible=interested,Must be embarrassing standing here all naked.
 1-male_large_crotch_is_visible=shocked,How are you so hard already? It's throbbing!
 1-male_large_crotch_is_visible=shocked,How is that not falling off?!
 
-1-female_chest_will_be_visible=interested,The chances that you will win are quite slim, so you might as well get naked right now...
+1-female_chest_will_be_visible=interested,The chances of you winning are extremely low at this point. You might as well get naked right now, ~name~...
 1-female_small_chest_is_visible=calm,You'll get there someday.
 1-female_medium_chest_is_visible=calm,Not bad.
 1-female_small_chest_is_visible=calm,This game is finally paying off.
@@ -552,8 +581,9 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 #lost belt
 2-male_chest_will_be_visible=interested,Are you really worried about losing that ~clothing~?
 2-male_chest_is_visible=interested,Nice...
-2-male_crotch_will_be_visible=interested,Dick out. Now.
-2-male_small_crotch_is_visible=shocked,G-get away from... that... creepy... little..... THING!
+2-male_crotch_will_be_visible=interested,You're just gonna... whip it out, just like that?
+2-male_crotch_will_be_visible,target:human=awkward,I-it doesn't seem like you're all that upset about the situation you're in, ~name~.
+2-male_small_crotch_is_visible=shocked,G-get away from... that... creepy... little... THING!
 2-male_small_crotch_is_visible=calm,That thing's got to go...
 2-male_medium_crotch_is_visible=interested,Are you not embarrassed? You look really turned on...
 2-male_large_crotch_is_visible=shocked,How are you so hard already? It's throbbing!
@@ -587,12 +617,12 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 3-female_large_chest_is_visible=interested,... Nice.
 3-female_crotch_will_be_visible=calm,Let's see it.
 3-female_crotch_is_visible=calm,Not bad.
-3-female_crotch_is_visible=calm,Not bad, but mine's better!
 
 #lost leotard
 4-male_chest_will_be_visible=interested,Don't disappoint.
 4-male_chest_is_visible=horny,Oh, this has been worth it.
 4-male_crotch_will_be_visible=horny,You saw mine, show me yours.
+4-male_crotch_will_be_visible=calm,Time to get even.
 4-male_small_crotch_is_visible=awkward,You're a sad little man, aren't you...?
 4-male_medium_crotch_is_visible=horny,Not bad... It's very erect.
 4-male_medium_crotch_is_visible=horny,You're as hard as Cyborg!
@@ -1050,4 +1080,22 @@ game_over_defeat,target:zone-tan=angry,This is not over... One day, you will fee
 -1-female_crotch_will_be_visible,target:aimee=Angry,Ugh.
 -1-female_crotch_is_visible,target:aimee=calm,Now that you're done, hand over that weapon.
 
-0-selected,alsoPlaying:spooky=calm,You guys invited a literal <i>ghost</i>? How awfully edgy...
+0-selected,alsoPlaying:spooky=calm,You guys invited a literal <i>ghost</i>? How <i>awfully</i> edgy...
+
+0-female_finished_masturbating,target:nagisa=horny,Your poetry is surprisingly dark, Nagisa. I'm into it.
+
+3-stripped,alsoPlaying:jura,priority:101=stripped,Ugh... You're starting to piss me off, Jura. Back down.
+
+3-good_hand,alsoPlaying:jura,marker:jura_calm,notSaidMarker:jura_calm=calm,Focus, Raven... Keep your cool.
+3-okay_hand,alsoPlaying:jura,marker:jura_calm,notSaidMarker:jura_calm=calm,Focus, Raven... Keep your cool.
+3-bad_hand,alsoPlaying:jura,marker:jura_calm,notSaidMarker:jura_calm=calm,Focus, Raven... Keep your cool.
+
+4-good_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,You guys have no idea how uncomfortable it is to wear panties under my suit... Besides, they pop out under my suit because of its shape.
+4-okay_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,You guys have no idea how uncomfortable it is to wear panties under my suit... Besides, they pop out under my suit because of its shape.
+4-bad_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,You guys have no idea how uncomfortable it is to wear panties under my suit... Besides, they pop out under my suit because of its shape.
+
+4-good_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,I've tried wearing panties under my suit. I find them uncomfortable and it looks <i>way</i> too goofy.
+4-okay_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,I've tried wearing panties under my suit. I find them uncomfortable and it looks <i>way</i> too goofy.
+4-bad_hand,marker:uncomfortable,notSaidMarker:uncomfortable=calm,I've tried wearing panties under my suit. I find them uncomfortable and it looks <i>way</i> too goofy.
+
+3-stripped,alsoPlaying:meia,alsoPlayingStage:1-7,priority:100=stripped,You know what, Meia... I feel like I misjudged you earlier. You're not as bad as I initially thought. 
