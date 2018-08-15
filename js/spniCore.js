@@ -81,6 +81,52 @@ $previousScreen = null;
  * Game Wide Utility Functions
  ********************************************************************************/
 
+/* Fetch a possibly compressed file.
+ * Attempts to fetch a compressed version of the file first,
+ * then fetches the uncompressed version of the file if that isn't found.
+ */
+function fetchCompressedURL(baseUrl, successCb, errorCb) {
+    /*
+     * The usual Jquery AJAX request function doesn't play nice with
+     * the binary-encoded data we'll get here, so we do the XHR manually.
+     * (I would use fetch() were it not for compatibility issues.)
+     */
+    var req = new XMLHttpRequest();
+    req.open('GET', baseUrl+'.gz', true);
+    req.responseType = 'arraybuffer';
+    
+    req.onload = function(ev) {
+        if (req.status < 400 && req.response) {
+            var data = new Uint8Array(req.response);
+            var decompressed = pako.inflate(data, { to: 'string' });
+            successCb(decompressed);
+        } else if (req.status === 404) {
+            $.ajax({
+                type: "GET",
+        		url: baseUrl,
+        		dataType: "text",
+                success: successCb,
+                error: errorCb,
+            });
+        } else {
+            errorCb();
+        }
+    }
+    
+    req.onerror = function(err) {
+        $.ajax({
+            type: "GET",
+            url: baseUrl,
+            dataType: "text",
+            success: successCb,
+            error: errorCb,
+        });
+    }
+    
+    req.send(null);
+}
+
+
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/

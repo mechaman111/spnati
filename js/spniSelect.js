@@ -1305,7 +1305,14 @@ function updateOpponentCountStats(opponentArr, uiElements) {
             if (DEBUG) {
                 console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx);
             }
-            var countsPromise = Promise.resolve(fetchBehaviour(opp.folder));
+            
+            var countsPromise = new Promise(function (resolve, reject) {
+                fetchCompressedURL(
+                    opp.folder + 'behaviour.xml',
+                    resolve, reject
+                );
+            });
+            
             countsPromise.then(countLinesImages).then(function(response) {
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
@@ -1362,17 +1369,6 @@ function updateGroupCountStats() {
         };
         updateOpponentCountStats(shownGroup, groupUIElements);
     }
-}
-
-/**
- * Fetches the behaviour.xml file of the specified opponent directory.
- */
-function fetchBehaviour(path) {
-    return $.ajax({
-        type: "GET",
-        url: path + "behaviour.xml",
-        dataType: "text"
-    });
 }
 
 /**

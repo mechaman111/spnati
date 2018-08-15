@@ -119,11 +119,10 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
  * receiving a new player object and a slot number.
  ************************************************************/
 function loadBehaviour (opponent, callFunction, slot) {
-	$.ajax({
-        type: "GET",
-		url: 'opponents/' + opponent.id + "/behaviour.xml",
-		dataType: "text",
-		success: function(xml) {            
+	fetchCompressedURL(
+		'opponents/' + opponent.id + "/behaviour.xml",
+		/* Success callback. */
+		function(xml) {            
             var $xml = $(xml);
             
             var first = $xml.find('first').text();
@@ -160,11 +159,12 @@ function loadBehaviour (opponent, callFunction, slot) {
             
 			callFunction(newPlayer, slot);
 		},
-        error: function(err) {
+		/* Error callback. */
+        function(err) {
             console.log("Failed reading \""+opponent.id+"\" behaviour.xml");
             delete players[slot];
         }
-	});
+	);
 }
 
 /************************************************************

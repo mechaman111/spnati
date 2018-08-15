@@ -147,15 +147,13 @@ function fetchLoadedEndings(){
 }
 
 function loadEndingXml(index){
-	$.ajax({
-		type: "GET",
-		url: loadedOpponents[index].folder + 'behaviour.xml',
-		dataType: "text",
-		success: function(xml){
+	fetchCompressedURL(
+		loadedOpponents[index].folder + 'behaviour.xml',
+		function(xml){
 			var endings = $(xml).find('epilogue');
 			isEndingLoaded[index] = endings;
 		}
-	});
+	);
 }
 
 function loadEndingThunbnail(element, ending){
