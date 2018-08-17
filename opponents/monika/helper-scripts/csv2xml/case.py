@@ -201,10 +201,13 @@ class Case(object):
                 elif attr in cls.INTERVAL_CONDITIONS:
                     # attribute condition taking an integer interval
                     # split condition interval if necessary
-                    if len(cond_tuple) == 2:
-                        low, hi = parse_interval(val)
-                        
-                    attr_conditions[attr] = (low, hi)
+                    try:
+                        if len(cond_tuple) == 2:
+                            low, hi = parse_interval(val)
+                            
+                        attr_conditions[attr] = (low, hi)
+                    except ValueError as e:
+                        logging.error("Caught ValueError: {:s}".format(str(e)))
                 else:
                     # attribute condition taking an identifier
                     attr_conditions[attr] = val.strip()
@@ -538,6 +541,7 @@ simple_pseudo_cases = {
     
     'start': ['game_start'],
     'select': ['selected'],
+    'start': ['game_start']
 }
 
 def parse_case_name(case_tags, cond_str):

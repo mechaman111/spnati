@@ -12,7 +12,7 @@ monika.delete_blazer = function() {
 }
 
 monika.start_masturbating = function() {
-    if(!monika.active_effects.glitch_masturbation) {
+    if(!monika.active_effects.glitch_masturbation && !monika.active_effects.affections_glitch) {
         var slot = monika.find_slot();
         monika.glitch_mast_heavy(false);
         monika.glitch_masturbation(slot);
@@ -155,6 +155,8 @@ monika.delayChange = function(text, delay) {
 
 monika.jealousGlitch = function() {
     try {
+        if(!monika.effects_enabled()) return;
+        
         var slot = monika.find_slot();
         for(var i=1;i<players.length;i++) {
             if(players[i] && i !== slot) {
@@ -168,6 +170,8 @@ monika.jealousGlitch = function() {
 
 monika.majorJealousGlitch = function() {
     try {
+        if(!monika.effects_enabled()) return;
+        
         var slot = monika.find_slot();
         for(var i=1;i<players.length;i++) {
             if(players[i] && i !== slot) {
@@ -176,5 +180,115 @@ monika.majorJealousGlitch = function() {
         }
     } catch (e) {
         console.error(e);
+    }
+}
+
+
+/* The player responded "Yes." to the Sayonika start prompt. */
+monika.sayonikaYes = function () {
+    try {
+        var slot = monika.find_slot();
+        var sayori_slot = monika.find_slot_by_id('sayori');
+        
+        monika.active_effects['affections_glitch'] = true;
+        
+        players[sayori_slot].markers['affections-glitch'] = true;
+        players[slot].markers['affections-glitch'] = true;
+        
+        $gameDialogues[slot-1].html("W-Wait, really? I wasn't expecting you to answer-- whoops!");
+        $gameImages[slot-1].attr('src', 'opponents/monika/2-shocked.png');
+        
+        monika.temporaryCharacterGlitch(sayori_slot, 0, 500);
+        
+        setTimeout(function () {
+            $gameDialogues[slot-1].html("S-Sorry about that... your answer kinda caught me by surprise. A-And, uhm, I think I just messed up something in the code...");
+            $gameImages[slot-1].attr('src', 'opponents/monika/2-awkward-question.png');
+        }, 1500);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+
+/* The player responded "No." to the Sayonika start prompt.*/
+monika.sayonikaNo = function () {
+    try {
+        var slot = monika.find_slot();
+        $gameDialogues[slot-1].html("Oh, I was just teasing you a bit! I didn't expect you to actually answer that, ehehe~!");
+        $gameImages[slot-1].attr('src', 'opponents/monika/2-happy.png');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+monika.saved_sayori_player = null;
+monika.saved_sayori_slot = null;
+
+monika.startJointMasturbation = function () {
+    try {
+        monika.stop_glitch_masturbation();
+        
+        var monika_slot = monika.find_slot();
+        var sayori_slot = monika.find_slot_by_id('sayori');
+        
+        monika.active_effects['joint_masturbation'] = true;
+        
+        players[monika_slot].markers['joint-masturbation'] = true;
+        players[sayori_slot].markers['joint-masturbation'] = true;
+        
+        players[monika_slot].tags.push('tandem');
+        
+        /* Hard reset stage and forfeit timers for Monika. */
+        players[monika_slot].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+        
+    	players[monika_slot].out = true;
+        timers[monika_slot] = 25;
+        
+    	players[monika_slot].stage = 8;
+        
+        $gameImages[monika_slot-1].off('load');
+        
+        setTimeout(function () {
+            /* Make Sayori's player entry disappear for the time being. */
+            monika.saved_sayori_player = players[sayori_slot];
+            monika.saved_sayori_slot = sayori_slot;
+            delete players[sayori_slot];
+            
+            updateAllBehaviours(monika_slot, FEMALE_MASTURBATING, players[monika_slot]);
+            updateBehaviour(monika_slot, PLAYER_START_MASTURBATING);
+            updateAllGameVisuals();
+            
+        	players[monika_slot].stage = 9;
+        }, 0);
+    } catch (e) {
+        console.error("Error in monika.startJointMasturbation(): "+e.toString());
+    }
+}
+
+monika.endJointMasturbation = function () {
+    try {
+        var monika_slot = monika.find_slot();
+        var sayori_slot = monika.saved_sayori_slot;
+        
+        monika.active_effects['joint_masturbation'] = false;
+        
+        var pos = players[monika_slot].tags.indexOf('tandem');
+        if (pos >= 0) {
+            players[monika_slot].tags.splice(pos, 1);
+        }
+        
+        setTimeout(function () {
+            /* Put Sayori back in her slot. */
+            players[sayori_slot] = monika.saved_sayori_player;
+            
+            /* Hard reset stage, forfeit status, and other data for Sayori. */
+            players[sayori_slot].stage = 9;
+            players[sayori_slot].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
+        	players[sayori_slot].timeInStage = -1;
+        	players[sayori_slot].finished = true;
+            timers[sayori_slot] = 0;
+        }, 0);
+    } catch (e) {
+        console.error("Error in monika.endJointMasturbation(): "+e.toString());
     }
 }

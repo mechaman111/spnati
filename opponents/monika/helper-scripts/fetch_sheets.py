@@ -54,7 +54,8 @@ OUT_DIR = Path(flags.out_dir)
 # Maps sheets to filenames
 ALL_SHEETS = {
     (POSE_SPREADSHEET, 'poses.csv',): OUT_DIR / 'poses.csv',
-    (DIALOGUE_SPREADSHEET, 'behaviour.csv',): OUT_DIR / 'behaviour.csv',
+    (DIALOGUE_SPREADSHEET, 'behaviour.csv',): OUT_DIR / 'csvs' / '0-main.csv',
+    (DIALOGUE_SPREADSHEET, 'Outbound Targeting - Sayori',): OUT_DIR / 'csvs' / '1-sayori.csv',
 }
 
 for sheet_tup, output_path in ALL_SHEETS.items():
