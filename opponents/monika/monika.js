@@ -4,16 +4,60 @@ if(!monika) {
     console.log("[Monika] Executing monika.js...");
 
     /* Base probabilities for glitch effects */
-    monika.CHARACTER_CONT_GLITCH_CHANCE = 0.05;
-    monika.CHARACTER_GLITCH_CHANCE = 0.05;
-    monika.DIALOGUE_GLITCH_CHANCE = 0.05;
-    monika.EDIT_GLITCH_CHANCE = 0.05;
-    monika.DELETE_GLITCH_CHANCE = 0.05;
+    monika.CHARACTER_CONT_GLITCH_CHANCE = 0;
+    monika.CHARACTER_GLITCH_CHANCE = 0;
+    monika.DIALOGUE_GLITCH_CHANCE = 0;
+    monika.EDIT_GLITCH_CHANCE = 0;
+    monika.DELETE_GLITCH_CHANCE = 0;
     
     monika.GLITCH_VISUAL = 'visual';  // continuous visual glitching
     monika.GLITCH_REPEAT = 'corrupt'; // dialogue corruption
     monika.GLITCH_EDIT = 'edit';      // edited dialogue
     monika.GLITCH_DELETE = 'delete';  // fake-deleted character
+
+    monika.configureGlitchChance = function (mode) {
+        console.log("[Monika] Glitches configured to mode "+mode);
+        
+        $("#options-monika-glitches-1").removeClass("active");
+        $("#options-monika-glitches-2").removeClass("active");
+        $("#options-monika-glitches-3").removeClass("active");
+        
+        switch (mode) {
+        /* Off */
+        case 3:
+            $("#options-monika-glitches-3").addClass("active");
+            monika.effects_flag = false;
+            monika.CHARACTER_CONT_GLITCH_CHANCE = 0;
+            monika.CHARACTER_GLITCH_CHANCE = 0;
+            monika.DIALOGUE_GLITCH_CHANCE = 0;
+            monika.EDIT_GLITCH_CHANCE = 0;
+            monika.DELETE_GLITCH_CHANCE = 0;
+            break;
+        
+        /* Low */
+        case 2:
+            $("#options-monika-glitches-2").addClass("active");
+            monika.effects_flag = true;
+            monika.CHARACTER_CONT_GLITCH_CHANCE = 0.025;
+            monika.CHARACTER_GLITCH_CHANCE = 0.025;
+            monika.DIALOGUE_GLITCH_CHANCE = 0.025;
+            monika.EDIT_GLITCH_CHANCE = 0.025;
+            monika.DELETE_GLITCH_CHANCE = 0.025;
+            break;
+            
+        /* Normal */
+        case 1:
+        default:
+            $("#options-monika-glitches-1").addClass("active");
+            monika.effects_flag = true;
+            monika.CHARACTER_CONT_GLITCH_CHANCE = 0.05;
+            monika.CHARACTER_GLITCH_CHANCE = 0.05;
+            monika.DIALOGUE_GLITCH_CHANCE = 0.05;
+            monika.EDIT_GLITCH_CHANCE = 0.05;
+            monika.DELETE_GLITCH_CHANCE = 0.05;
+            break;
+        }
+    }
 
     monika.incognito = false;
 
@@ -63,21 +107,25 @@ if(!monika) {
     /* Load CSS: */
     $('head').append('<link rel="stylesheet" type="text/css" href="opponents/monika/css/monika.css">');
 
-    monika.extract_oppID = function(folder) {
-        var oppID = folder.substr(0, folder.length - 1);
-        return oppID.substr(oppID.lastIndexOf("/") + 1).toLowerCase();
-    }
+    /* Add Options Modal settings: */
+    var glitchOptionsContainer = $('<tr><td style="width:25%"><h4 class="modal-title modal-left">Monika Glitches</h4></td></tr>');
+    glitchOptionsContainer.append('<td><nav><ul class="pagination" id="monika-glitch-options-list"></ul></nav>')
+
+    $("#options-modal table").append(glitchOptionsContainer);
+
+    var glitchOptionsList = $("#monika-glitch-options-list");
+    glitchOptionsList.append('<li id="options-monika-glitches-3"><a href="#" onclick="monika.configureGlitchChance(3)">Off</a></li>')
+    glitchOptionsList.append('<li id="options-monika-glitches-2"><a href="#" onclick="monika.configureGlitchChance(2)">Low</a></li>')
+    glitchOptionsList.append('<li id="options-monika-glitches-1" class="active"><a href="#" onclick="monika.configureGlitchChance(1)">Normal</a></li>')
+
+    monika.configureGlitchChance(1);
 
     monika.find_slot_by_id = function(id) {
         var lowercase_id = id.toLowerCase();
         
         for(var i=0;i<players.length;i++) {
-            if(players[i]) {
-                var oppID = monika.extract_oppID(players[i].folder);
-                
-                if(oppID === lowercase_id) {
-                    return i;
-                }
+            if(players[i] && players[i].id == lowercase_id) {
+                return i;
             }
         }
     }
@@ -109,7 +157,7 @@ if(!monika) {
         var activeSlots = [];
         for(var i=1;i<players.length;i++) {
             if(players[i]) {
-                if(include_monika || monika.extract_oppID(players[i].folder) !== 'monika') {
+                if(include_monika || players[i].id !== 'monika') {
                     if(include_glitched || !monika.active_effects.character_glitching[i]) {
                         activeSlots.push(i);
                     }
@@ -311,6 +359,22 @@ if(!monika) {
         console.log("[Monika] It's Monika's turn!");
     }
     
+    var original_showOptionsModal = showOptionsModal;
+    showOptionsModal = function () {
+        try {
+            if(monika.present()) {
+                glitchOptionsContainer.show();
+            } else {
+                glitchOptionsContainer.hide();
+            }
+        } catch (e) {
+            console.error("[Monika] Error in pre-showOptionsModal prep: "+e.toString());
+            glitchOptionsContainer.hide();
+        } finally {
+            return original_showOptionsModal.apply(null, arguments);
+        }
+    }
+    
     /* monkey patch advanceGame() so we can intercept main button presses */
     var original_advanceGame = advanceGame;
     advanceGame = function() {
@@ -322,12 +386,11 @@ if(!monika) {
         try {
             if(monika.current_ext_dialogue) {
                 monika.extended_dialogue_continue();
-            } else {
-                original_advanceGame.apply(null, arguments);
             }
         } catch(e) {
             console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-            original_advanceGame.apply(null, arguments);
+        } finally {
+            return original_advanceGame.apply(null, arguments);
         }
     }
 
@@ -355,9 +418,9 @@ if(!monika) {
         }
         
         if(active_slot != undefined && players[active_slot]) {
-            if(players[active_slot].folder === 'opponents/human/') {
+            if(players[active_slot].id === 'human') {
                 monika.onPlayerTurn();
-            } else if(players[active_slot].folder === 'opponents/monika/') {
+            } else if(players[active_slot].id === 'monika') {
                 monika.onMonikaTurn();
             } else if(active_slot === monika.active_effects.round_targeted_glitching) {
                 monika.startCharacterGlitching(active_slot, 750, 750);
@@ -526,12 +589,18 @@ if(!monika) {
             monika.applyEditedDialogueStyle(player);
         }
         
-        if(players[player] && players[player].folder === 'opponents/monika/' && players[player].stage === 9) {
-            var current_img = $gameImages[player-1].attr('src').substr(17);
-            monika.when_loaded($gameImages[player-1], function () {
-                console.log("[Monika] image loaded, glitching to new pose...");
-                monika.glitch_pose_transition(player, current_img, 0, 500);
-            });
+        if(players[player] && players[player].id === 'monika' && players[player].stage === 9) {
+            if (monika.active_effects['joint_masturbation']) {
+                /* Joint masturbation */
+                $gameLabels[player].html("Monika & Sayori");
+            } else {
+                /* 'Regular' glitch masturbation */
+                var current_img = $gameImages[player-1].attr('src').substr(17);
+                monika.when_loaded($gameImages[player-1], function () {
+                    console.log("[Monika] image loaded, glitching to new pose...");
+                    monika.glitch_pose_transition(player, current_img, 0, 200);
+                });
+            }
             
             /*
             if(!$gameImages[player-1][0].complete) {

@@ -21,6 +21,8 @@ monika.active_effects = {
     
     'glitch_masturbation': null,
     'glitch_heavy_masturbation': false,
+    'joint_masturbation': false,
+    'affections_glitch': false,
     
     'round_targeted_glitching': null,   // for the continuous-glitching round effect; set to targeted character's slot
     'round_dialogue_glitching': null,

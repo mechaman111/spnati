@@ -153,7 +153,7 @@ def csv_to_lineset(dict_reader):
             if cond_set not in cond_map:
                 cond_map[cond_set] = ([], actual_case_tag, row['conditions'], priority)
 
-            if len(row['text'].strip()) == 0:
+            if len(row['text'].strip()) == 0 and not silent:
                 logging.warning("empty state found (stages {}, case {}, row {})".format(row['stage'], row['case'], line_no))
 
             cond_map[cond_set][0].append(State(row['text'], row['image'], marker, silent))
