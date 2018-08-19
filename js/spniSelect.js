@@ -10,12 +10,13 @@
 /**************************************************
  * Stores meta information about opponents.
  **************************************************/
-function createNewOpponent (id, enabled, first, last, label, image, gender,
+function createNewOpponent (id, enabled, status, first, last, label, image, gender,
                             height, source, artist, writer, description,
                             ending, layers, release, scale, tags) {
 	var newOpponentObject = {id:id,
 							 folder:'opponents/'+id+'/',
 							 enabled:enabled,
+                             status: status,
                              first:first,
 							 last:last,
 							 label:label,
@@ -38,9 +39,10 @@ function createNewOpponent (id, enabled, first, last, label, image, gender,
 /**************************************************
  * Stores meta information about groups.
  **************************************************/
-function createNewGroup (title, opponents) {
+function createNewGroup (title, opponents, status) {
 	var newGroupObject = {title:title,
-						  opponents:opponents};
+						  opponents:opponents,
+                          status:status};
 
 	return newGroupObject;
 }
@@ -108,6 +110,7 @@ $individualLineCountLabels = [$("#individual-line-count-label-1"), $("#individua
 $individualPoseCountLabels = [$("#individual-pose-count-label-1"), $("#individual-pose-count-label-2"), $("#individual-pose-count-label-3"), $("#individual-pose-count-label-4")];
 $individualDescriptionLabels = [$("#individual-description-label-1"), $("#individual-description-label-2"), $("#individual-description-label-3"), $("#individual-description-label-4")];
 $individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
+$individualStatuses = [$("#individual-status-1"), $("#individual-status-2"), $("#individual-status-3"), $("#individual-status-4")];
 $individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
 
 $individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
@@ -133,6 +136,7 @@ $groupLineCountLabels = [$("#group-line-count-label-1"), $("#group-line-count-la
 $groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-label-2"), $("#group-pose-count-label-3"), $("#group-pose-count-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
+$groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
@@ -204,6 +208,11 @@ var shownGroup = Array(4);
 var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
+/* Status icon tooltips */
+var TESTING_STATUS_TOOLTIP = "This opponent is currently in testing.";
+var OFFLINE_STATUS_TOOLTIP = "This opponent has been retired from the official version of the game.";
+var INCOMPLETE_STATUS_TOOLTIP = "This opponent is incomplete and currently not in development.";
+
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
@@ -244,14 +253,18 @@ function loadListingFile () {
             
 			/* start by parsing and loading the individual listings */
             var oppDefaultIndex = 0; // keep track of an opponent's default placement
+            var opponentStatuses = {}; // keep track of an opponent's offline/testing status for loading group listings
 
 			$individualListings = $xml.find('individuals');
 			$individualListings.find('opponent').each(function () {
-                if ($(this).attr('status') === undefined || includedOpponentStatuses[$(this).attr('status')]) {
-                    var id = $(this).text();
+                var oppStatus = $(this).attr('status');
+                var id = $(this).text();
+                
+                opponentStatuses[id] = oppStatus;
+                if (oppStatus === undefined || includedOpponentStatuses[oppStatus]) {
                     console.log("Reading \""+id+"\" from listing file");
                     outstandingLoads++;
-                    loadOpponentMeta(id, loadedOpponents, oppDefaultIndex++, onComplete);
+                    loadOpponentMeta(id, loadedOpponents, oppDefaultIndex++, oppStatus, onComplete);
                 }
 			});
 
@@ -263,10 +276,15 @@ function loadListingFile () {
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
+                
+                var ids = [opp1, opp2, opp3, opp4];
+                var status = ids.map(function (id) {
+                    return opponentStatuses[id];
+                });
 
-				var newGroup = createNewGroup(title, Array(4));
+				var newGroup = createNewGroup(title, Array(4), status);
 				outstandingLoads += 4;
-				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, [opp1, opp2, opp3, opp4], onComplete);
+				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, ids, onComplete);
 			});
 		}
 	});
@@ -276,18 +294,18 @@ function loadListingFile () {
 * Loads the meta information for an entire group.
 ************************************************************/
 function loadGroupMeta (groupSelectScreen, group, opponents, onComplete) {
- /* parse the individual information of each group member */
- loadedGroups[groupSelectScreen].push(group);
+    /* parse the individual information of each group member */
+    loadedGroups[groupSelectScreen].push(group);
 
- for (var i = 0; i < 4; i++) {
-   loadOpponentMeta(opponents[i], group.opponents, i, onComplete);
- }
+    for (var i = 0; i < 4; i++) {
+        loadOpponentMeta(opponents[i], group.opponents, i, group.status[i], onComplete);
+    }
 }
 
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, targetArray, index, onComplete) {
+function loadOpponentMeta (id, targetArray, index, status, onComplete) {
 	/* grab and parse the opponent meta file */
 	$.ajax({
         type: "GET",
@@ -314,7 +332,7 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
 			var scale = Number($xml.find('scale').text()) || 100.0;
 			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
-			var opponent = createNewOpponent(id, enabled, first, last,
+			var opponent = createNewOpponent(id, enabled, status, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
                                              ending, layers, release, scale, tags);
@@ -335,6 +353,32 @@ function loadOpponentMeta (id, targetArray, index, onComplete) {
 			onComplete();
 		}
 	});
+}
+
+function updateStatusIcon(elem, status) {
+    var icon_img = 'img/testing-badge.png';
+    var tooltip = TESTING_STATUS_TOOLTIP;
+    
+    if(!status) {
+        elem.removeAttr('title').removeAttr('data-original-title').hide();
+        return;
+    }
+    
+    if (status === 'offline') {
+        icon_img = 'img/offline-badge.png';
+        tooltip = OFFLINE_STATUS_TOOLTIP;
+    } else if (status === 'incomplete') {
+        icon_img = 'img/incomplete-badge.png';
+        tooltip = INCOMPLETE_STATUS_TOOLTIP;
+    }
+    
+    elem.attr({
+        'src': icon_img,
+        'title': tooltip,
+        'data-original-title': tooltip,
+    }).show().tooltip({
+        'placement': 'left'
+    });
 }
 
 /************************************************************
@@ -373,7 +417,9 @@ function updateIndividualSelectScreen () {
             else {
                 $individualBadges[index].hide();
             }
-
+            
+            updateStatusIcon($individualStatuses[index], selectableOpponents[i].status);
+            
             $individualLayers[index].show();
             $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
 
@@ -399,6 +445,7 @@ function updateIndividualSelectScreen () {
             $individualCountBoxes[index].css("visibility", "hidden");
 			$individualDescriptionLabels[index].html("");
             $individualBadges[index].hide();
+            $individualStatuses[index].hide();
             $individualLayers[index].hide();
 
 			$individualImages[index].hide();
@@ -455,7 +502,9 @@ function updateGroupSelectScreen () {
             else {
                 $groupBadges[i].hide();
             }
-
+            
+            updateStatusIcon($groupStatuses[i], opponent.status);
+            
             $groupLayers[i].show();
             $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
 
@@ -473,6 +522,7 @@ function updateGroupSelectScreen () {
 			$groupArtistLabels[i].html("");
 			$groupDescriptionLabels[i].html("");
             $groupBadges[i].hide();
+            $groupStatuses[i].hide();
             $groupLayers[i].hide();
 			$groupImages[i].hide();
 			$groupButton.attr('disabled', true);
@@ -494,9 +544,24 @@ function updateGroupSelectScreen () {
 function updateSuggestionQuad(slot, quad, opponent) {
     var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
+    var tooltip = null;
+    
+    if (opponent.status === 'testing') {
+        tooltip = TESTING_STATUS_TOOLTIP;
+    } else if (opponent.status === 'offline') {
+        tooltip = OFFLINE_STATUS_TOOLTIP;
+    } else if (opponent.status === 'incomplete') {
+        tooltip = INCOMPLETE_STATUS_TOOLTIP;
+    }
     
     shownSuggestions[slot][quad] = opponent.id;
-    img_elem.attr('src', opponent.folder+opponent.image);
+    
+    img_elem.attr({
+        'title': tooltip,
+        'data-original-title': tooltip,
+        'src': opponent.folder+opponent.image
+    }).tooltip();
+    
     label_elem.text(opponent.label);
 }
 
