@@ -64,6 +64,7 @@ tag=fashionable
 
 #Other tags
 tag=military
+tag=mech_pilot
 tag=hero
 tag=gamer
 tag=celebrity
@@ -97,6 +98,7 @@ marker=d.va_thinks_seven_is_moira,public,Hana mistakes Seven of Nine for Moira, 
 marker=d.va_wager_set,public,If Hana gets an okay or good hand and has lost no clothing in the sixth round, she'll propose a side bet that the first loser does anything the winner asks.
 marker=d.va_wager_regret,public,If Hana is naked with a bad hand after making her bet, she will express some regret.
 marker=d.va_wager_loss,public,If Hana is first to lose, she will mention the side bet in her final defeat line.
+marker=d.va_with_meia,public,Meia has lost first, so Hana brings up the side bet.
 marker=male_human_first_piece,private,Used to track whether the male human player has removed even a single item.
 marker=female_human_first_piece,private,Used to track whether the female_human player has removed even a single item.
 
@@ -179,6 +181,7 @@ swap_cards=serene,~cards~ cards.
 #Lost Gloves
 1-good_hand=peaceside,Let's shoot for a new high score! 
 1-good_hand=winking,Think you can keep up with me? 
+1-good_hand=peace,Amazing!
 1-okay_hand=shy,These are... cards, I guess...
 1-okay_hand=serene,I don't have to worry. D.Va always wins, anyway!
 1-bad_hand=sad,I'll lose with this setup!
@@ -191,6 +194,7 @@ swap_cards=serene,~cards~ cards.
 2-good_hand=heart,I'm the boss!
 2-good_hand,count-d.va_cruiser:1,priority:0=winking,Hot dog!
 2-okay_hand=calm,This isn't the best defense I've seen, but it should be enough.
+2-okay_hand=calm,No problem.
 2-okay_hand,notSaidMarker:d.va_lucio_playing,marker:d.va_lucio_playing=awkward,I heard that Lucio's playing a set at Inner City Spectacle tonight. Oh... I hope they let me in.
 2-bad_hand=excited,Is it too late to just spectate this match?
 2-bad_hand=loss,Uggh, this is what I call a hard counter.
@@ -317,6 +321,7 @@ swap_cards=serene,~cards~ cards.
 2-stripping=strip,But how can I listen to Lucio's new album now?
 3-stripped=sad,I've lost my awareness advantage now.
 3-stripped=stripped,Time to get serious!
+3-stripped=stripped,Down, but not out.
 
 #Losing Suit (major)
 3-must_strip_winning=excited,There goes my winning streak...
@@ -642,6 +647,7 @@ swap_cards=serene,~cards~ cards.
 5-male_removed_accessory=sad,Payload stopped. Let's get it moving again.
 5-female_removing_accessory=angry,Your ~clothing~? No hacks allowed!
 5-female_removed_accessory=winking,Why has the payload stopped? Everyone, get on it!
+5-female_removed_accessory=shy,Let's not let that happen again.
 
 #Lost Panties/Fully Nude
 -3-male_removing_accessory=sad,Are you even trying?
@@ -680,15 +686,7 @@ swap_cards=serene,~cards~ cards.
 -3-female_removing_accessory,target:marinette,targetStage:0=peace,Leave it to the professionals, Marinette.
 -2-female_removing_accessory,target:marinette,targetStage:0=peace,Leave it to the professionals, Marinette.
 -1-female_removing_accessory,target:marinette,targetStage:0=peace,Leave it to the professionals, Marinette.
-0-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
-1-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
-2-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
-3-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
-4-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
-5-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
--3-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
--2-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
--1-female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
+female_removing_accessory,target:marinette,targetStage:2=awkward,That's super weird. How did you do that without any visible clothing lines? Though, I guess my bodysuit has pockets. Is this your way of having space in your outfit?
 
 0-female_removed_accessory,target:blake,targetStage:6=shocked,Wow, cute ears! Can I... can I touch them?
 1-female_removed_accessory,target:blake,targetStage:6=shocked,Wow, cute ears! Can I... can I touch them?
@@ -721,35 +719,11 @@ swap_cards=serene,~cards~ cards.
 3-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
 4-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
 5-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
-6-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
-8-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
-0-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-1-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-2-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-3-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-4-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-5-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
--3-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
--2-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
--1-female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
-0-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-1-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-2-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-3-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-4-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-5-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
--3-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
--2-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
--1-female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
-0-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
-1-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
-2-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
-3-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
-4-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
-5-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
--3-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
--2-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
--1-female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
+-3-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
+-1-female_removed_accessory,target:kim=sad,Kim, if you want to show off your curves, don't wear so much black!
+female_removed_accessory,target:marinette,targetStage:1,marker:d.va_bodysuit=awkward,How do you even put a suit like that on, Marinette? With a paint roller?
+female_removed_accessory,target:marinette,targetStage:3=winking,You consider really weird things, Marinette.
+female_removed_accessory,target:marinette,targetStage:3,targetSaidMarker:d.va_competition=shy,... Only a little.
 0-female_removed_accessory,target:nagisa,targetStage:1=excited,Get used to being on your knees.
 1-female_removed_accessory,target:nagisa,targetStage:1=excited,Get used to being on your knees.
 0-female_removed_accessory,target:nugi-chan,targetStage:1=calm,Your webmaster has great taste!
@@ -761,15 +735,7 @@ swap_cards=serene,~cards~ cards.
 -3-female_removed_accessory,target:nugi-chan,targetStage:1=angry,Wait, so you're never going to be fully naked? Lame.
 -2-female_removed_accessory,target:nugi-chan,targetStage:1=angry,Wait, so you're never going to be fully naked? Lame.
 -1-female_removed_accessory,target:nugi-chan,targetStage:1=angry,Wait, so you're never going to be fully naked? Lame.
-0-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
-1-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
-2-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
-3-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
-4-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
-5-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
--3-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
--2-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
--1-female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
+female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your guns on the ground. Plenty more where those came from, edgelord.
 
 
 
@@ -836,24 +802,8 @@ swap_cards=serene,~cards~ cards.
 -1-female_removed_minor=sad,Is this an ARG? I feel like I've been waiting forever for this reveal!
 
 #Targeted
-0-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-1-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-2-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-3-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-4-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-5-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
--3-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
--2-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
--1-female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
-0-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
-1-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
-2-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
-3-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
-4-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
-5-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
--3-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
--2-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
--1-female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
+female_removing_minor,target:aimee,targetStage:1=excited,Hah, you missed everybody this time!
+female_removing_minor,target:aimee,targetStage:2=serene,My Defense Matrix eats bullets for breakfast!
 0-female_removing_minor,target:kim,targetStage:0=winking,I hope you're not a sore loser, because you're going to be doing that a lot!
 0-female_removing_minor,target:marinette,targetStage:3=winking,It doesn't seem like it's working for you.
 1-female_removing_minor,target:marinette,targetStage:3=winking,It doesn't seem like it's working for you.
@@ -868,34 +818,10 @@ swap_cards=serene,~cards~ cards.
 5-female_removing_minor,target:nagisa,targetStage:1=calm,Time for your socks, Nagisa. We're leading the way, so don't get cold feet!
 -3-female_removing_minor,target:nagisa,targetStage:1=calm,Time for your socks, Nagisa. We're leading the way, so don't get cold feet!
 -1-female_removing_minor,target:nagisa,targetStage:1=loss,You don't seem very good at this. How did I lose to you?
-0-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
-1-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
-2-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
-3-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
-4-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
-5-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
--3-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
--2-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
--1-female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
+female_removing_minor,target:ruby,targetStage:2=winking,Peekaboo!
 
-0-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-1-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-2-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-3-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-4-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-5-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
--3-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
--2-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
--1-female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
-0-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
-1-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
-2-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
-3-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
-4-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
-5-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
--3-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
--2-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
--1-female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
+female_removed_minor,target:aimee,targetStage:2=loss,Lucky shot... I could do that.
+female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accuracy percentage, Aimee.
 
 
  
@@ -1092,10 +1018,10 @@ swap_cards=serene,~cards~ cards.
 2-female_crotch_is_visible=shy,I'm just glad I'm not the one getting wrecked!
  
 #Lost Headphones
-3-male_chest_will_be_visible=shy,Dear, ~name~, I am your newest fan!
+3-male_chest_will_be_visible=shy,Dear ~name~, I am your newest fan!
 3-male_chest_is_visible=heart,Love, D.Va.
 3-male_crotch_will_be_visible=hornier,Let it leave the base!
-3-male_small_crotch_is_visible=loss,When I said I was hoping to get my own short, this isn't what I meant!
+3-male_small_crotch_is_visible=loss,I already have my own short. I don't need <i>that</i> kind.
 3-male_medium_crotch_is_visible=excited,And off we go!
 3-male_medium_crotch_is_visible=horny,Not bad considering it's not nano-boosted.
 3-male_large_crotch_is_visible=shocked,Wow! Even Hanzo's logs would be jealous!
@@ -1292,15 +1218,8 @@ swap_cards=serene,~cards~ cards.
 -2-female_medium_chest_is_visible,target:zoey=serene,If it helps, I'm really into your new look!
 -1-female_medium_chest_is_visible,target:zoey=winking,Girlfriend, you have <i>nothing</i> to be embarrassed about.
 
-0-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
-1-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
-2-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
-3-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
-4-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
-5-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
--3-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
--2-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
--1-female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+female_large_chest_is_visible,target:annie=shocked,Whoa! Where were you hidding <i>those</i> puppies?
+female_large_chest_is_visible,target:nugi-chan=winking,Nice try.
 
 0-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I have gold damage.
 1-female_crotch_will_be_visible,target:aimee=peace,Could you switch to hitscan? I have gold damage.
@@ -1513,6 +1432,20 @@ swap_cards=serene,~cards~ cards.
 5-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
 -3-male_must_masturbate,target:pit,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Pit. You have to do <i>anything</i> the winner wants. And if I win... let's just say you'll never play "Halo" again.
 
+0-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+1-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+2-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+3-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+4-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+5-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+-3-female_must_masturbate,target:elizabeth,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Lizzie. You have to do <i>anything</i> the winner wants. If you're <i>woman</i> enough, that is.
+0-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+1-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+2-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+3-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+4-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+5-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
+-3-female_must_masturbate,target:gwen,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=horny,Don't forget our little side bet, Gwen. You have to do <i>anything</i> the winner wants. And if I win, I might make you pose for page 3 of the Daily Bugle...
 0-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
 1-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
 2-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
@@ -1522,13 +1455,13 @@ swap_cards=serene,~cards~ cards.
 -3-female_must_masturbate,target:jane=peace,Time for the Play of the Jane!
 -2-female_must_masturbate,target:jane=heart,Time for the Play of the Jane!
 -1-female_must_masturbate,target:jane=winking,Time for the Play of the Jane!
-0-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
-1-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
-2-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
-3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
-4-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
-5-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
--3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+0-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+1-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+2-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+4-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+5-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
+-3-female_must_masturbate,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_set,marker:d.va_wager_with_meia=winking,Don't forget our little side bet, Meia. You have to do <i>anything</i> the winner wants. And if I win, I'm going to show you what the Overwatch girls do when the men aren't around.
 0-female_must_masturbate,target:moon=peace,GG, ez!
 1-female_must_masturbate,target:moon=peace,GG, ez!
 2-female_must_masturbate,target:moon=peace,GG, ez!
@@ -1538,15 +1471,7 @@ swap_cards=serene,~cards~ cards.
 -3-female_must_masturbate,target:mei=heart,Aw, yeah! This is the emote that I wanted to unlock for you, Mei!
 female_must_masturbate,target:natsuki=winking,You're as cute as a button, Natsuki. But now it's time to button mash!
 
-0-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
-1-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
-2-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
-3-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
-4-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
-5-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
--3-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
--2-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
--1-female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
+female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my chances at being promoted in Asuna's guild...
 0-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
 1-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
 2-female_start_masturbating,target:hermione=shy,That's one way to raise your APM...
@@ -1556,6 +1481,13 @@ female_must_masturbate,target:natsuki=winking,You're as cute as a button, Natsuk
 -3-female_start_masturbating,target:hermione=shocked,Wow, ghostly hands with the assist!
 -2-female_start_masturbating,target:hermione=shocked,Wow, ghostly hands with the assist!
 -1-female_start_masturbating,target:hermione=shocked,Wow, ghostly hands with the assist!
+0-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+1-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+2-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+3-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+4-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+5-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
+-3-female_start_masturbating,target:meia,totalMasturbating:0,totalFinished:0,saidMarker:d.va_wager_with_meia=winking,Go on, Meia. Play along for us. Sometimes it's fun to lose control!
 0-female_start_masturbating,target:mia=winking,Whoa, now that's what I call the one finger challenge!
 1-female_start_masturbating,target:mia=winking,Whoa, now that's what I call the one finger challenge!
 2-female_start_masturbating,target:mia=winking,Whoa, now that's what I call the one finger challenge!
@@ -1568,15 +1500,7 @@ female_must_masturbate,target:natsuki=winking,You're as cute as a button, Natsuk
 -2-female_start_masturbating,target:tifa=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! F-fuck...!
 -2-female_start_masturbating,target:tifa,count-d.va_cruiser:1,priority:1000=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! G-gosh...!
 
-0-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
-1-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
-2-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
-3-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
-4-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
-5-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
--3-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
--2-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!1
--1-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
+female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
 
 5-female_finished_masturbating,target:mei=winking,Mei, this isn't the first time I've given you a little bump over the edge!
 -3-female_finished_masturbating,target:mei=winking,Mei, this isn't the first time I've given you a little bump over the edge!
@@ -1967,3 +1891,26 @@ ending=Cam Show
 				y=65%
 				width=18%
 				arrow=left
+
+#The following lines are voiced by D.Va in Heroes of the Storm. Some may be able to be adapted for future use, especially as targeted lines.
+
+#This is D.Va!
+#D.Va #1 tank KR!
+#I met this <i>old lady</i> earlier. Sylv.. Slyvia? I dunno, something like that. She kept saying she had no time for games. How boring!
+#Watch where you're clicking! This thing self-destructs!
+#Hey, my Defence Matrix button is stuck again! Uh, didn't my engineers just patch this?
+#Huge rez!
+#See ya.
+#Upgrade complete!
+#Demonstration mode activated.
+#Let's finish them right now.
+#Now's our chance: push!
+#Give it all you got.
+#You need me to tank that?
+#Don't fight solo, let's co-op!
+#Let's get aggressive.
+#Oh no, CC! Can't move!
+#GLHF.
+#Are you trying to rattle me? You'll have to do better than that.
+#Uh, L2P.
+#That's a star performance.
