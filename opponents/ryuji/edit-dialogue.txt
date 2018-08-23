@@ -3,22 +3,26 @@ first=Ryuji
 last=Sakamoto
 label=Ryuji
 gender=male
-size=large
+size=medium
 intelligence=average
 
 #Number of phases to "finish" masturbating
 timer=15
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
-tag=male
+tag=persona
 tag=bi-curious
 tag=blonde
-tag=brown_eyes
+tag=dark_eyes
 tag=japanese
-tag=phanthom_thieves
+tag=phantom_thieves
 tag=persona_5
 tag=aggressive
 tag=ditzy
+tag=school_uniform
+tag=hairy
+tag=athletic
+tag=excitable
 
 #required for meta.xml
 #select screen image
@@ -27,11 +31,12 @@ height=5'9
 from=Persona 5
 writer=Thursday
 artist=Thursday
-description=Ryuji is a college student athlete and the muscle of the Phanthom Thieves. His days of deliquency weren't left behind, but he's still loyal to his friends to a fault.
+description=Ryuji is a third-year former athelete student and the muscle of the Phanthom Thieves, whose days of deliquency weren't left behind. Despite his attitude, he's really a nice guy.
 
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
 start=0-neutral,Poker? Alright man, I'll play!
-start=0-allout,Wassup!
+start=0-shrug,Wassup!
+start=0-cheerful,Ready to play? I know I am!
 
 
 #Items of clothing should be listed here in order of removal.
@@ -82,13 +87,73 @@ clothes=Underwear,underwear,important,lower
 #The game will automatically put a display a number between 0-5 where you write ~cards~.
 #These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
 
-#stage-specific lines that override the stage-generic ones
-swap_cards=neutral,Gimmie ~cards~ cards.
-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
-swap_cards=okie,~cards~ cards. Thanks dude!
-swap_cards=happy,I'm feelin' lucky! ~cards~ cards!
-swap_cards=okie,Alright, gimmie ~cards~ cards.
-swap_cards=awkward,Uhhh. ~cards~ cards.
+#fully clothed
+0-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+0-swap_cards=neutral,Gimmie ~cards~ cards.
+0-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+0-swap_cards=cheerful,~cards~ cards. Thanks dude!
+0-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+0-swap_cards=thinking,Uhhh. ~cards~ cards.
+
+
+#lost blazer
+1-swap_cards=neutral,Gimmie ~cards~ cards.
+1-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+1-swap_cards=cheerful,~cards~ cards. Thanks dude!
+1-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+1-swap_cards=thinking,Uhhh. ~cards~ cards.
+1-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+
+
+#lost sneakers
+2-swap_cards=neutral,Gimmie ~cards~ cards.
+2-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+2-swap_cards=cheerful,~cards~ cards. Thanks dude!
+2-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+2-swap_cards=thinking,Uhhh. ~cards~ cards.
+2-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+
+
+#lost socks
+3-swap_cards=neutral,Gimmie ~cards~ cards.
+3-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+3-swap_cards=cheerful,~cards~ cards. Thanks dude!
+3-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+3-swap_cards=thinking,Uhhh. ~cards~ cards.
+3-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+
+
+#lost belt
+4-swap_cards=neutral,Gimmie ~cards~ cards.
+4-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+4-swap_cards=cheerful,~cards~ cards. Thanks dude!
+4-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+4-swap_cards=thinking,Uhhh. ~cards~ cards.
+4-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+
+
+#lost shirt
+5-swap_cards=neutral,Gimmie ~cards~ cards.
+5-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+5-swap_cards=cheerful,~cards~ cards. Thanks dude!
+5-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+5-swap_cards=thinking,Uhhh. ~cards~ cards.
+5-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+
+
+#lost pants
+6-swap_cards=pumped,I'm feelin' lucky! ~cards~ cards.
+6-swap_cards=neutral,Gimmie ~cards~ cards.
+6-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+6-swap_cards=cheerful,~cards~ cards. Thanks dude!
+6-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+6-swap_cards=thinking,Uhhh. ~cards~ cards.
+
+-3-swap_cards=neutral,Gimmie ~cards~ cards.
+-3-swap_cards=neutral,Gimmie ~cards~ cards, dealer.
+-3-swap_cards=cheerful,~cards~ cards. Thanks dude!
+-3-swap_cards=cheerful,Alright, gimmie ~cards~ cards.
+-3-swap_cards=thinking,Uhhh. ~cards~ cards.
 
 
 
@@ -98,6 +163,12 @@ swap_cards=awkward,Uhhh. ~cards~ cards.
 #The lines written here are examples only and should be replaced.
 
 #stage-specific lines that override the stage-generic ones
+okay_hand=awkward,Uhhhh, is this a good hand?
+okay_hand=thinking,I ain't great at poker, so I can't really tell here.
+okay_hand=thinking,Will this do?
+okay_hand=shrug,Don't lemme down, cards!
+okay_hand=thinking,This hand is good, right?
+okay_hand=thinking,<i>I know bluffing is involved, but how do I do it?</i>
 bad_hand=awkward,I don't think this is good.
 bad_hand=awkward,Fuck...
 bad_hand=grumpy,These cards sure ain't takin' me to victory anytime soon.
@@ -105,114 +176,229 @@ bad_hand=grumpy,Ugh.
 
 
 #fully clothed
-0-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-0-good_hand=allout,Try and beat THESE cards!
+0-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+0-good_hand=cocky,Try and beat THESE cards!
 0-good_hand=pumped,Awesome!
-0-good_hand=happy,~silent~
+0-good_hand=thumbsup,~silent~
 0-good_hand=pumped,I know this is a good hand!
-0-good_hand,count-innocent:1=awkward,Should you really be playin' this, dude?
-0-good_hand,count-innocent:1=startled,Way to make this awkward!
-0-good_hand,totalRounds:0-3,count-american:3=happy,So you guys are all American? I've been there once!
-0-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=smirk,Hey Ann, watch me whoop ya ass!
-0-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=allout,What do you have, Ann?
-0-good_hand,count-hero:2=happy,Awesome!! You're a hero?
-0-good_hand,count-hero:2=okie,You fight evil-doers too?
-0-good_hand,timeInStage:0-3=chillax,Awesome!
-0-good_hand,timeInStage:0-3=smirk,Way to kick things off!
+0-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+0-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+0-good_hand,timeInStage:0-2,count-small:1=cheerful,Hey there, short stuff.
+0-good_hand,timeInStage:0-2,count-small:1=cheerful,You're as small as Futaba... If not smaller.
+0-good_hand,totalRounds:0-3,count-american:3=thumbsup,So you guys are all American? I've been there once!
+0-good_hand,hasHand:Straight Flush=startled,Holy shit!!
+0-good_hand,hasHand:Royal Flush=startled,HOLY SHIT!
+0-good_hand,count-american:3,count-dark_eyes:1=thinking,Weird... I thought you Americans all had light-colored eyes.
+0-good_hand,count-tall:1,count-female:1=thumbsup,Tall girls are awesome! Joker must be jacked up in the head to think otherwise.
+0-good_hand,totalRounds:0-1,count-innocent:1=awkward,Should you really be playin' this, dude?
+0-good_hand,totalRounds:0-1,count-innocent:1=disgusted,Way to make this awkward!
+0-good_hand,alsoPlaying:futaba,count-small:2=thumbsup,Hey, there's finally someone as short as you Futaba!
+0-good_hand,alsoPlaying:futaba,count-small:2=awkward,You're as little as Futaba! ...Err, no offense, Futaba.
+0-good_hand,alsoPlaying:futaba,count-small:2=shrug,I don't care how tiny you are. Girls are great no matter the height!
+0-good_hand,timeInStage:0-3=pumped,Awesome!
+0-good_hand,timeInStage:0-3=pumped,Way to kick things off!
 0-good_hand,timeInStage:0-3=confident,I sure as hell ain't gonna be the first to lose!
-0-good_hand,timeInStage:0-3=pumped,Woo!
-0-okay_hand=awkward,Uhhhh, is this a good hand?
-0-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-0-okay_hand=awkward,W-Will this do?
-0-okay_hand=happy,Don't lemme down, cards!
-0-okay_hand=awkward,This hand is good, right?
-0-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-0-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
-0-okay_hand,totalRounds:0-3,count-persona_5:3=allout,Wassup, guys! I'm glad we're together here.
-0-okay_hand,totalRounds:0-3,count-persona_5:3=smirk,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+0-good_hand,count-hero:2=pumped,Awesome!! You're a hero?
+0-good_hand,count-hero:2=pumped,You fight evil guys too?
+0-good_hand,count-hero:2=thumbsup,Maybe you should join the Phanthom Thieves. We rid the world of shitty people too!
+0-good_hand,count-hero:2=thumbsup,Nice to see another vigilante!
+0-good_hand,alsoPlaying:velma=thinking,You kinda look familiar. Are you a part of that gang who solves mysterys?
+0-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+0-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+0-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+0-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+0-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+0-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=cocky,You may be smarter, but can ya beat me at cards Futaba?
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=thumbsup,Glad to see you're out there bein' social! Was it Joker's idea?
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=cheerful,I don't see how poker can help you with your social anxierty, but I can't really talk.
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=thumbsup,Nice of you to join us, Futaba!
+0-good_hand,alsoPlaying:marinette=neutral,You okay there?
+0-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+0-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=confident,Hey Ann, watch me whoop ya ass!
+0-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=neutral,What do you have, Ann?
+0-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=thinking,<i>Does it matter if her hand's better than mine?</i>
+0-good_hand,alsoPlaying:kyu,count-futaba:1=pissed,Back off, asshole! Don't force her into anything she doesn't want to do!
+0-good_hand,alsoPlaying:kyu,count-futaba:1=what,Who the hell are you? And what do you want with Futaba?
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-8,alsoPlayingSaidMarker:metaverse=awkward,I know you're a perv Futaba, but <i>jeez</i>.
+0-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-8,alsoPlayingSaidMarker:metaverse=thinking,<I>Ann has been really getting into the dominatrix thing, hasn't she?</i>
+0-okay_hand,count-american:1=thumbsup,So you guys are all American? I've been there once!
+0-okay_hand,count-exotic_hair:1=thumbsup,Nice hair! Did you dye yours too?
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thinking,Can we have the whole group play at some point. Joker might wanna play.
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+0-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+0-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+0-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+0-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
+0-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,Oh... You're a maid.
+0-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=thinking,</i>Are those ears real or just a part of the outfit? Must be fake.</i>
+0-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,So, uhh... What sorta maid are ya?
+0-okay_hand,count-female:1,count-tall:1=thumbsup,Tall girls are awesome! Joker must be jacked up in the head to think otherwise.
+0-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+0-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
+0-okay_hand,alsoPlaying:kyu,count-futaba:1=pissed,Back off, asshole! Don't force her into anything she doesn't want to do!
+0-okay_hand,alsoPlaying:kyu,count-futaba:1=what,Who the hell are you? And what do you want with Futaba?
 0-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 0-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 0-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
+0-bad_hand,alsoPlaying:kyu,count-futaba:1=what,Who the hell are you? And what do you want with Futaba?
+0-bad_hand,alsoPlaying:kyu,count-futaba:1=pissed,Back off, asshole! Don't force her into anything she doesn't want to do!
 
 
 #lost blazer
-1-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-1-good_hand=allout,Try and beat THESE cards!
+1-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+1-good_hand=cocky,Try and beat THESE cards!
 1-good_hand=pumped,Awesome!
-1-good_hand=happy,~silent~
+1-good_hand=thumbsup,~silent~
 1-good_hand=pumped,I know this is a good hand!
-1-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=smirk,Hey Ann, watch me whoop ya ass!
-1-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=allout,What do you have, Ann?
-1-good_hand,totalRounds:0-3,count-american:3=happy,So you guys are all American? I've been there once!
-1-good_hand,count-innocent:1=awkward,Should you really be playin' this, dude?
-1-good_hand,count-innocent:1=startled,Way to make this awkward!
-1-okay_hand=awkward,Uhhhh, is this a good hand?
-1-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-1-okay_hand=awkward,W-Will this do?
-1-okay_hand=happy,Don't lemme down, cards!
-1-okay_hand=awkward,This hand is good, right?
-1-okay_hand,totalRounds:0-3,count-persona_5:3=allout,Wassup, guys! I'm glad we're together here.
-1-okay_hand,totalRounds:0-3,count-persona_5:3=smirk,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
-1-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-1-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
+1-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+1-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+1-good_hand,alsoPlaying:marinette=neutral,You okay there?
+1-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+1-good_hand,totalRounds:0-1,count-innocent:1=awkward,Should you really be playin' this, dude?
+1-good_hand,totalRounds:0-1,count-innocent:1=disgusted,Way to make this awkward!
+1-good_hand,timeInStage:0-2,count-small:1=cheerful,Hey there, short stuff.
+1-good_hand,timeInStage:0-2,count-small:1=cheerful,You're as small as Futaba... If not smaller.
+1-good_hand,totalRounds:0-3,count-american:3=thumbsup,So you guys are all American? I've been there once!
+1-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=cocky,You may be smarter, but can ya beat me at cards Futaba?
+1-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=thumbsup,Glad to see you're out there bein' social! Was it Joker's idea?
+1-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=cheerful,I don't see how poker can help you with your social anxierty, but I can't really talk.
+1-good_hand,alsoPlaying:futaba,alsoPlayingStage:0-4,timeInStage:0-1=thumbsup,Nice of you to join us, Futaba!
+1-good_hand,count-tall:1,count-female:1=thumbsup,Tall girls are awesome! Joker must be jacked up in the head to think otherwise.
+1-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=confident,Hey Ann, watch me whoop ya ass!
+1-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=neutral,What do you have, Ann?
+1-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=thinking,<i>Does it matter if her hand's better than mine?</i>
+1-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+1-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+1-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+1-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+1-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+1-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+1-okay_hand,count-female:1,count-tall:1=thumbsup,Tall girls are awesome! Joker must be jacked up in the head to think otherwise.
+1-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+1-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thinking,Can we have the whole group play at some point. Joker might wanna play.
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+1-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+1-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+1-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+1-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
+1-okay_hand,count-aggressive:2=pissed,You wanna go or somethin'!?
+1-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,Oh... You're a maid.
+1-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=thinking,</i>Are those ears real or just a part of the outfit? Must be fake.</i>
+1-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,So, uhh... What sorta maid are ya?
 1-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 1-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 1-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
 
 
 #lost sneakers
-2-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-2-good_hand=allout,Try and beat THESE cards!
+2-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+2-good_hand=cocky,Try and beat THESE cards!
 2-good_hand=pumped,Awesome!
-2-good_hand=happy,~silent~
+2-good_hand=thumbsup,~silent~
 2-good_hand=pumped,I know this is a good hand!
-2-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=smirk,Hey Ann, watch me whoop ya ass!
-2-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=allout,What do you have, Ann?
-2-okay_hand=awkward,Uhhhh, is this a good hand?
-2-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-2-okay_hand=awkward,W-Will this do?
-2-okay_hand=happy,Don't lemme down, cards!
-2-okay_hand=awkward,This hand is good, right?
-2-okay_hand,totalRounds:0-3,count-persona_5:3=allout,Wassup, guys! I'm glad we're together here.
-2-okay_hand,totalRounds:0-3,count-persona_5:3=smirk,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
-2-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-2-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
+2-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+2-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+2-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+2-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+2-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+2-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+2-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+2-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+2-good_hand,timeInStage:0-2,count-small:1=cheerful,Hey there, short stuff.
+2-good_hand,timeInStage:0-2,count-small:1=cheerful,You're as small as Futaba... If not smaller.
+2-good_hand,alsoPlaying:marinette=neutral,You okay there?
+2-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+2-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=confident,Hey Ann, watch me whoop ya ass!
+2-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=neutral,What do you have, Ann?
+2-good_hand,alsoPlaying:ann,alsoPlayingTimeInStage:0-5=thinking,<i>Does it matter if her hand's better than mine?</i>
+2-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+2-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thinking,Can we have the whole group play at some point. Joker might wanna play.
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+2-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+2-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,Oh... You're a maid.
+2-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=thinking,</i>Are those ears real or just a part of the outfit? Must be fake.</i>
+2-okay_hand,alsoPlaying:jenetta,alsoPlayingStage:0-2=awkward,So, uhh... What sorta maid are ya?
+2-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+2-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+2-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
 2-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 2-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 2-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
 
 
 #lost socks
-3-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-3-good_hand=allout,Try and beat THESE cards!
+3-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+3-good_hand=cocky,Try and beat THESE cards!
 3-good_hand=pumped,Awesome!
-3-good_hand=happy,~silent~
+3-good_hand=thumbsup,~silent~
 3-good_hand=pumped,I know this is a good hand!
-3-okay_hand=awkward,Uhhhh, is this a good hand?
-3-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-3-okay_hand=awkward,W-Will this do?
-3-okay_hand=happy,Don't lemme down, cards!
-3-okay_hand=awkward,This hand is good, right?
-3-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-3-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
+3-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+3-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+3-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+3-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+3-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+3-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+3-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+3-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+3-good_hand,timeInStage:0-2,count-small:1=cheerful,Hey there, short stuff.
+3-good_hand,timeInStage:0-2,count-small:1=cheerful,You're as small as Futaba... If not smaller.
+3-good_hand,alsoPlaying:marinette=neutral,You okay there?
+3-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thinking,Can we have the whole group play at some point. Joker might wanna play.
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+3-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+3-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+3-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+3-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
+3-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+3-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
 3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
 
 
 #lost belt
-4-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-4-good_hand=allout,Try and beat THESE cards!
+4-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+4-good_hand=cocky,Try and beat THESE cards!
 4-good_hand=pumped,Awesome!
-4-good_hand=happy,~silent~
+4-good_hand=thumbsup,~silent~
 4-good_hand=pumped,I know this is a good hand!
-4-okay_hand=awkward,Uhhhh, is this a good hand?
-4-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-4-okay_hand=awkward,W-Will this do?
-4-okay_hand=happy,Don't lemme down, cards!
-4-okay_hand=awkward,This hand is good, right?
-4-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-4-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
+4-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+4-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+4-good_hand,alsoPlaying:marinette=neutral,You okay there?
+4-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+4-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+4-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+4-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+4-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+4-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+4-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+4-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+4-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+4-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
+4-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+4-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=thinking,Can we have the whole group play at some point. Joker might wanna play.
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+4-okay_hand,totalRounds:0-4,priority:175,count-persona_5:3=shrug,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
 4-bad_hand=awkward,Uh oh...
 4-bad_hand=startled,<i>Shit...</i>
 4-bad_hand=awkward,That ain't good!
@@ -223,56 +409,72 @@ bad_hand=grumpy,Ugh.
 
 
 #lost shirt
-5-good_hand=pumped,Oh thank god!
-5-good_hand=pumped,Someone out there heard my prayer!
-5-good_hand=pumped,Finally, some good luck!!
-5-good_hand=allout,Sweeeet! Guess who ain't strippin' this round!
-5-good_hand=allout,Try and beat THESE cards!
+5-good_hand=cheerful,Sweeeet! Guess who ain't strippin' this round!
+5-good_hand=cocky,Try and beat THESE cards!
 5-good_hand=pumped,Awesome!
-5-good_hand=happy,~silent~
+5-good_hand=thumbsup,~silent~
 5-good_hand=pumped,I know this is a good hand!
-5-okay_hand=awkward,Uhhhh, is this a good hand?
-5-okay_hand=awkward,I ain't great at poker, so I can't really tell here.
-5-okay_hand=awkward,W-Will this do?
-5-okay_hand=happy,Don't lemme down, cards!
-5-okay_hand=awkward,This hand is good, right?
-5-okay_hand=pumped,D-Don't let me down now!
+5-good_hand=cheerful,♫ You'll never see it coooomiiiing!~ ♫
+5-good_hand=cheerful,♫ Give into temptatiiiiooooooon!~ ♫
+5-good_hand=cheerful,Oh thank god!
+5-good_hand=pissed,I could've had these cards before I took it off! The hell!?
+5-good_hand=cheerful,Finally, some good luck!!
+5-good_hand,alsoPlaying:futaba=grumpy,You ain't gonna see anything!
+5-good_hand,alsoPlaying:futaba=grumpy,If you think you're gonna see my junk, think again.
+5-good_hand,alsoPlaying:futaba=awkward,<i>Does she mind playin' with me?</i>
+5-good_hand,alsoPlaying:marinette=neutral,You okay there?
+5-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+5-good_hand,count-persona_5:3=thumbsup,Wassup, guys! I'm glad we're together here.
+5-good_hand,count-persona_5:3=shrug,This doesn't seem like the kind of thing the Phanthom Thieves would do, but who am I to judge, right?
+5-good_hand,count-persona_5:3=confident,Time to show ya who's the man at Poker!
+5-good_hand,count-persona_5:3=thinking,Can we have the whole group play at some point? Joker might wanna play.
+5-good_hand,count-persona_5:3=shrug,Yusuke would love this game. Too bad he probably don't know how to play.
+5-good_hand,count-persona_5:3=cheerful,So after the whole thing with the Casino palace, I've actually been learning how to play Poker!
+5-okay_hand=awkward,D-Don't let me down now!
 5-okay_hand=awkward,A-Am I safe?
-5-okay_hand=blushing,I hope I'm...
-5-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1,marker:kyu=startled,Woah dude, you're a fairy!?
-5-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-1=okie,You from the metaverse or somethin', Kyu?
+5-okay_hand=awkward,I hope I'm...
+5-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2,marker:kyu=startled,Woah dude, you're a fairy!?
+5-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You from the metaverse or somethin'?
+5-okay_hand,alsoPlaying:kyu,alsoPlayingStage:0-6,totalRounds:0-2=thinking,You're too.... <i>pink</i> to be a Shadow. Are you from the Metaverse?
+5-okay_hand,totalRounds:0-4,priority:170=thinking,This kinda reminds me of that casino Palace.
+5-okay_hand,totalRounds:0-4,priority:170=shrug,I'm glad I ain't playing it in my Metaverse outfit. Sick as it is, there ain't much to it.
 5-bad_hand=startled,If I lose, that means...
-5-bad_hand=forreal,Goddamnit, for real...?
+5-bad_hand=thinking,What happens when I run out of clothes?
 5-bad_hand=startled,Shit! <i>Shit!</i>
 
 
 #lost pants
-6-good_hand=pumped,Oh thank god!
-6-good_hand=pumped,Someone out there heard my prayer!
-6-good_hand=pumped,Finally, some good luck!!
-6-okay_hand=pumped,D-Don't let me down now!
+6-good_hand=cheerful,Oh thank god!
+6-good_hand=pissed,I could've had these cards before I took it off! The hell!?
+6-good_hand=cheerful,Finally, some good luck!!
+6-good_hand,alsoPlaying:marinette=neutral,You okay there?
+6-good_hand,alsoPlaying:marinette=thinking,Wait a minute, do you have a Persona?
+6-good_hand,alsoPlaying:futaba=grumpy,You ain't gonna see anything!
+6-good_hand,alsoPlaying:futaba=grumpy,If you think you're gonna see my junk, think again.
+6-good_hand,alsoPlaying:futaba=awkward,<i>Does she mind playin' with me?</i>
+6-okay_hand=awkward,D-Don't let me down now!
 6-okay_hand=awkward,A-Am I safe?
-6-okay_hand=blushing,I hope I'm...
-6-bad_hand=forreal,FOR REAL!?
-6-bad_hand=forreal,Are you fuckin' kidding me?
-6-bad_hand=mamamia,W-What happens if I lose?
+6-okay_hand=awkward,I hope I'm...
+6-bad_hand=startled,FOR REAL!?
+6-bad_hand=pissed,Are you fuckin' kidding me?
+6-bad_hand=thinking,...
 6-bad_hand=pissed,Hey dealer! How about I punch your goddamn lights out for screwin' me up!
-6-bad_hand=mamamia,Oh shit...
+6-bad_hand=startled,Oh shit...
 6-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 6-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 6-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
 
--3-good_hand=pumped,Oh thank god!
--3-good_hand=pumped,Someone out there heard my prayer!
--3-good_hand=pumped,Finally, some good luck!!
--3-okay_hand=pumped,D-Don't let me down now!
+-3-good_hand=cheerful,Oh thank god!
+-3-good_hand=pissed,I could've had these cards before I took it off! The hell!?
+-3-good_hand=cheerful,Finally, some good luck!!
+-3-okay_hand=awkward,D-Don't let me down now!
 -3-okay_hand=awkward,A-Am I safe?
--3-okay_hand=blushing,I hope I'm...
--3-bad_hand=forreal,FOR REAL!?
--3-bad_hand=forreal,Are you fuckin' kidding me?
--3-bad_hand=mamamia,W-What happens if I lose?
+-3-okay_hand=awkward,I hope I'm...
+-3-bad_hand=startled,FOR REAL!?
+-3-bad_hand=pissed,Are you fuckin' kidding me?
+-3-bad_hand=thinking,...
 -3-bad_hand=pissed,Hey dealer! How about I punch your goddamn lights out for screwin' me up!
--3-bad_hand=mamamia,Oh shit...
+-3-bad_hand=startled,Oh shit...
 -3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,The hell, man!? What is <i>this</i> guy doin' here!
 -3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You try any funny business and I'll introduce ya to Captain Kidd!
 -3-bad_hand,totalRounds:0-3,priority:230,count-villain:1=pissed,You know what I do to shitstains like you, right?
@@ -284,28 +486,25 @@ bad_hand=grumpy,Ugh.
 #This is the character says once they've lost a hand, but before they strip.
 
 #stage-specific lines that override the stage-generic ones
-must_strip_winning=amused,No biggie! I got more clothes.
-must_strip_winning=amused,At least I'm not losin'!
-must_strip_winning=grumpy,Whatever! I still got plenty of layers!
+must_strip_winning=shrug,No biggie! I got more clothes.
+must_strip_winning=confident,At least I'm not losin'!
+must_strip_winning=confident,Whatever! I still got plenty of layers!
 must_strip_winning=grumpy,Whatever! I still wrecked your expectations, didn't I?
-must_strip_normal=startled,Seriously!?
-must_strip_normal=forreal,For real!?
-must_strip_normal=blushing,You just got lucky!
-must_strip_normal=blushing,Ugh. It's fine, I still got plenty...
-must_strip_losing=pissed,Who the hell is rigging these cards!?
-must_strip_losing=mamamia,Goddamnit! I shouldn't be this bad!
-must_strip_losing=startled,I'm gettin' my ass kicked!
-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
 
 
 #losing blazer
-0-must_strip_winning,totalRounds:0-3,count-witty:2=allout,How'd you like that shit, smartass?
+0-must_strip_winning,totalRounds:0-3,count-witty:2=confident,How'd you like that shit, smartass?
+0-must_strip_normal=grumpy,Seriously!?
+0-must_strip_normal=startled,For real!?
+0-must_strip_normal=grumpy,You just got lucky!
+0-must_strip_normal=neutral,Ugh. It's fine, I still got plenty...
+0-must_strip_normal,alsoPlaying:ann,timeInStage:0-4=awkward,Ermmm,,, Ann, I don't like the look you're givin' me.
 0-must_strip_losing=startled,Seriously?
 0-must_strip_losing=pissed,That's bull, man!
-0-must_strip_losing=blushing,Ughh, screw this!
-0-must_strip_losing=pissed,Fuck that!
+0-must_strip_losing=grumpy,Ughh, screw this!
+0-must_strip_losing=disgusted,Fuck that!
 0-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
-0-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,I'm not dumb!
+0-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 0-stripping=strip,Now we're gettin' the ball rollin'!
 0-stripping=strip,My jacket? I never liked that thing anyways.
 0-stripping=strip,Time to take off my jacket! Or my blazer? I dunno, man.
@@ -317,87 +516,207 @@ must_strip_losing=pissed,Wipe that goddamn smirk off your face!
 #losing sneakers
 1-stripped=neutral,Whatever, man!
 1-stripped=neutral,Alright, let's move on!
-1-stripped=smirk,Don't hate! I'm just playin' by the rules for once!
-1-stripped=smirk,Hehehe...
-1-stripped=neutral,Alright, they're off.
-1-must_strip_winning,totalRounds:0-3,count-witty:2=allout,How'd you like that shit, smartass?
+1-stripped=shrug,Don't hate! I'm just playin' by the rules for once!
+1-stripped=confident,Hehehe...
+1-stripped=neutral,Alright, it's off.
+1-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+1-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+1-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+1-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+1-must_strip_winning,totalRounds:0-3,count-witty:2=confident,How'd you like that shit, smartass?
+1-must_strip_normal=grumpy,Seriously!?
+1-must_strip_normal=startled,For real!?
+1-must_strip_normal=grumpy,You just got lucky!
+1-must_strip_normal=neutral,Ugh. It's fine, I still got plenty...
+1-must_strip_normal=pissed,Why the hell do I keep losing!?
+1-must_strip_normal=pissed,What the HELL, dealer!?
+1-must_strip_normal,alsoPlaying:ann,timeInStage:0-4=awkward,Ermmm,,, Ann, I don't like the look you're givin' me.
+1-must_strip_losing=startled,Seriously?
+1-must_strip_losing=pissed,That's bull, man!
+1-must_strip_losing=grumpy,Ughh, screw this!
+1-must_strip_losing=disgusted,Fuck that!
+1-must_strip_losing=pissed,Who the hell is rigging these cards!?
+1-must_strip_losing=grumpy,Goddamnit! I shouldn't be this bad!
+1-must_strip_losing=grumpy,I'm gettin' my ass kicked!
+1-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
 1-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
-1-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,I'm not dumb!
+1-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 1-stripping=strip,Don't hassle me!
 1-stripping=strip,Gimme a moment.
 1-stripping=strip,Guess my shoes are next.
 1-stripping=strip,Too bad, I like these sneakers!
 1-stripping=strip,Let's hope my leg will support me here.
+1-stripping,alsoPlaying:9s,alsoPlayingStage:0-5=awkward,Uhhhh, no. It's just dyed.. Sorry to disappoint.
+1-stripping,alsoPlaying:marinette,alsoPlayingStage:2-4=shrug,Well this ain't natural, but I do like to have fun!
+1-stripping,alsoPlaying:marinette,alsoPlayingStage:2-4=shrug,Thanks, dude! Yellow's my color.
 1-stripping,totalRounds:0-3,count-aggressive:1=strip,Chill out, it's just my ~clothing~.
 
 
 #losing socks
 2-stripped=poststrip,Nothin' serious.
-2-stripped=pissed,You better take care of them! Those were really expensive.
+2-stripped=grumpy,You better take care of them! Those were really expensive.
 2-stripped=poststrip,No trouble here.
-2-must_strip_winning,totalRounds:0-3,count-witty:2=allout,How'd you like that shit, smartass?
+2-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+2-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+2-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+2-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+2-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-school_uniform=neutral,I'm a third-year at Shujin Academy. Where you from?
+2-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-school_uniform=awkward,<i>A girl's never called me cute...</i>
+2-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-school_uniform=neutral,Oh! I'm from Shujin Academy!
+2-must_strip_winning,totalRounds:0-3,count-witty:2=confident,How'd you like that shit, smartass?
+2-must_strip_normal=pissed,Why the hell do I keep losing!?
+2-must_strip_normal=pissed,What the HELL, dealer!?
+2-must_strip_normal=grumpy,Seriously!?
+2-must_strip_normal=startled,For real!?
+2-must_strip_normal=grumpy,You just got lucky!
+2-must_strip_normal=neutral,Ugh. It's fine, I still got plenty...
+2-must_strip_normal,alsoPlaying:marinette,alsoPlayingStage:2-4=thinking,Nah, calling cards are important... Wait, what's de-akumitizing?
+2-must_strip_normal,alsoPlaying:marinette,alsoPlayingStage:2-4=thinking,You got into the metaverse?
+2-must_strip_normal,alsoPlaying:marinette,alsoPlayingStage:2-4=thumbsup,You'll have to take it up with our leader, but sure! Another member can't hurt!
+2-must_strip_normal,alsoPlaying:marinette,alsoPlayingStage:2-4=thumbsup,You have a Persona, right? You should join the phantom thieves!
+2-must_strip_normal,alsoPlaying:ann,timeInStage:0-4=awkward,Ermmm,,, Ann, I don't like the look you're givin' me.
+2-must_strip_losing=pissed,Who the hell is rigging these cards!?
+2-must_strip_losing=grumpy,Goddamnit! I shouldn't be this bad!
+2-must_strip_losing=grumpy,I'm gettin' my ass kicked!
+2-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
+2-must_strip_losing=startled,Seriously?
+2-must_strip_losing=pissed,That's bull, man!
+2-must_strip_losing=grumpy,Ughh, screw this!
+2-must_strip_losing=disgusted,Fuck that!
 2-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
-2-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,I'm not dumb!
+2-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 2-stripping=strip,Don't hassle me!
 2-stripping=strip,Gimme a moment.
+2-stripping,alsoPlaying:9s,alsoPlayingStage:0-5=awkward,Uhhhh, no. It's just dyed.. Sorry to disappoint.
 2-stripping,totalRounds:0-3,count-aggressive:1=strip,Chill out, it's just my ~clothing~.
 
 
 #losing belt
-3-stripped=poststrip,Those things were annoying as hell anyways!
-3-stripped=poststrip,Don't need 'em!
+3-stripped=shrug,Those things were annoying as hell anyways!
+3-stripped=shrug,Don't need 'em!
+3-stripped=thinking,Why is the floor so cold?
+3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+3-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+3-must_strip_normal=pissed,Why the hell do I keep losing!?
+3-must_strip_normal=pissed,What the HELL, dealer!?
+3-must_strip_normal=grumpy,Seriously!?
+3-must_strip_normal=startled,For real!?
+3-must_strip_normal=grumpy,You just got lucky!
+3-must_strip_normal=neutral,Ugh. It's fine, I still got plenty...
+3-must_strip_normal,alsoPlaying:ann,timeInStage:0-4=awkward,Ermmm,,, Ann, I don't like the look you're givin' me.
+3-must_strip_losing=pissed,Who the hell is rigging these cards!?
+3-must_strip_losing=grumpy,Goddamnit! I shouldn't be this bad!
+3-must_strip_losing=grumpy,I'm gettin' my ass kicked!
+3-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
+3-must_strip_losing=startled,Seriously?
+3-must_strip_losing=pissed,That's bull, man!
+3-must_strip_losing=grumpy,Ughh, screw this!
+3-must_strip_losing=disgusted,Fuck that!
+3-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
+3-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 3-stripping=strip,Off with the belt then.
 3-stripping=strip,Adios, belt. You were a real trooper!
 3-stripping,totalRounds:0-3,count-aggressive:1=strip,Chill out, it's just my ~clothing~.
+3-stripping,alsoPlaying:9s,alsoPlayingStage:0-5=awkward,Uhhhh, no. It's just dyed.. Sorry to disappoint.
 
 
 #losing shirt
-4-stripped=poststrip,Adios belt.
-4-stripped=awkward,Shit... I think I'm out of small stuff after this.
+4-stripped=thumbsup,Adios belt.
+4-stripped=what,Shit... I think I'm out of small stuff after this.
+4-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+4-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-aggressive=allout,Well, I <i>do</i> kick ass!
+4-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-aggressive=cocky,I'll take that as a compliment!
+4-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-aggressive=cocky,I'll take it as a compliment!
+4-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-aggressive=grumpy,I'm RIGHT HERE, you know.
+4-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+4-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+4-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+4-stripped,alsoPlaying:buffy,alsoPlayingStage:6-8=confident,Jokes on you! I ain't even a real blonde!
+4-stripped,alsoPlaying:marinette,alsoPlayingStage:3=thinking,Whatt the hell's an akuma?
+4-stripped,alsoPlaying:marinette,alsoPlayingStage:3=thinking,Akuma... Is that French?
+4-must_strip_normal=grumpy,Seriously!?
+4-must_strip_normal=startled,For real!?
+4-must_strip_normal=grumpy,You just got lucky!
+4-must_strip_normal=neutral,Ugh. It's fine, I still got plenty...
+4-must_strip_normal=pissed,Why the hell do I keep losing!?
+4-must_strip_normal=pissed,What the HELL, dealer!?
+4-must_strip_losing=pissed,Who the hell is rigging these cards!?
+4-must_strip_losing=grumpy,Goddamnit! I shouldn't be this bad!
+4-must_strip_losing=grumpy,I'm gettin' my ass kicked!
+4-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
+4-must_strip_losing=startled,Seriously?
+4-must_strip_losing=pissed,That's bull, man!
+4-must_strip_losing=grumpy,Ughh, screw this!
+4-must_strip_losing=disgusted,Fuck that!
+4-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
+4-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 4-stripping=strip,Alright, gimmie a moment.
 4-stripping=strip,No biggie. It's like goin' to the beach, right?
 4-stripping=strip,Time to show off my abs.
 
 
 #losing pants
-5-stripped=poststrip,I think I see someone staring. I don't blame ya!
-5-stripped=poststrip,Heh. I work out a lot.
-5-stripped=poststrip,So my pushup counts been going up.
-5-stripped=poststrip,I ran laps everyday. Still do!
-5-stripped,totalFemales:2-4=amused,Taking my shirt off in front of a bunch of pretty girls. Never thought I'd see the day!
-5-must_strip_normal=forreal,A-Are you serious!?
+5-stripped=cheerful,I think I see someone staring. I don't blame ya!
+5-stripped=thumbsup,Heh. I work out a lot.
+5-stripped=cocky,So my pushup counts been going up.
+5-stripped=cheerful,I ran laps everyday. Still do!
+5-stripped=cocky,All eyes on me!
+5-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+5-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+5-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+5-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+5-stripped,totalFemales:2-4=shrug,Taking my shirt off in front of a bunch of pretty girls. Never thought I'd see the day!
+5-stripped,alsoPlaying:wiifitfemale=shrug,Thanks, miss Trainer! Y'know, I wouldn't even if you taught me a few things...
+5-stripped,alsoPlaying:wiifitfemale=cheerful,Oh! I-I mean, yeah!
+5-stripped,alsoPlaying:shantae=shrug,O-Oh! Thanks! I work out a lot.
+5-must_strip_normal=pissed,Why the hell do I keep losing!?
+5-must_strip_normal=pissed,What the HELL, dealer!?
+5-must_strip_normal=startled,A-Are you serious!?
 5-must_strip_normal=startled,W-What!? My pants?
 5-must_strip_normal=pissed,You gotta be fuckin' kidding me!
+5-must_strip_losing=pissed,Who the hell is rigging these cards!?
+5-must_strip_losing=grumpy,Goddamnit! I shouldn't be this bad!
+5-must_strip_losing=grumpy,I'm gettin' my ass kicked!
+5-must_strip_losing=pissed,Wipe that goddamn smirk off your face!
+5-must_strip_losing,totalRounds:0-3,count-witty:1=pissed,Cut it out with the crap!
+5-must_strip_losing,totalRounds:0-3,count-witty:1=disgusted,I'm not dumb!
 5-stripping=strip,Don't hassle me!
 5-stripping=strip,Gimme a moment.
+5-stripping=strip,I-It's fine...
 5-stripping=strip,I-I got underwear on. N-No biggie, right?
-5-stripping=strip,<i>Gulp!</i>
 
 
 #lost all clothing
-6-stripped=awkward,Can we move to the next round please!?
-6-stripped=pissed,Alright, you've seen my underwear! Moving on!
-6-stripped=blushing,D-Don't stare at me, g-guys...
-6-must_strip_winning=blushing,A-At least I ain't alone.
+6-stripped=disgusted,Can we move to the next round please!?
+6-stripped=grumpy,Alright, you've seen my underwear! Moving on!
+6-stripped=awkward,D-Don't stare at me, g-guys...
+6-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
+6-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+6-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+6-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+6-must_strip_winning=awkward,A-At least I ain't alone.
 6-must_strip_winning=startled,Oh fuck, oh fuck...
-6-must_strip_normal=pissed,FOR REAL!?
+6-must_strip_normal=disgusted,FOR REAL!?
 6-must_strip_normal=startled,Fuck, <i>fuck</i>!
-6-must_strip_normal=mamamia,Ummmm....
 6-must_strip_normal=startled,WHAT!?
 6-must_strip_normal=startled,You're saying I have to show you my JUNK!?
-6-must_strip_losing=forreal,F-FOR REAL!?
+6-must_strip_losing=startled,F-FOR REAL!?
 6-must_strip_losing=pissed,This is BULLSHIT?
 6-must_strip_losing=pissed,Dealer, if I hear you're riggin' these cards, I'M GONNA KNOCK YOUR LIGHTS OUT!
-6-must_strip_losing=mamamia,No...
 6-stripping=strip,I can't believe I'm doing this!
 6-stripping=strip,Everyone's gonna see my...
 6-stripping=strip,<i>Fine. You got this, Ryuji. Don't look, don't think, just...</i>
 6-stripping=strip,F-For real...?
 
--3-stripped=blushing,God...
--3-stripped=blushing,There! You've seen it!
--3-stripped=mamamia,C-Can't I just leave!?
--3-stripped=mamamia,This is so embarassing!
+-3-stripped=grumpy,God...
+-3-stripped=grumpy,There! You've seen it!
+-3-stripped=disgusted,...
+-3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=awkward,You really think I'm hot?
+-3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Uhhh... Thanks?
+-3-stripped,alsoPlaying:velma,alsoPlayingStage:0-4=shrug,Wow, girls are actually checking me out!
+-3-stripped,alsoPlaying:sayori,alsoPlayingStage:0-7,alsoPlayingNotSaidMarker:filter-athletic=shrug,Hell yeah I do! I jog at least once a day.
 
 
 
@@ -408,223 +727,312 @@ must_strip_losing=pissed,Wipe that goddamn smirk off your face!
 #The "human" versions of the lines will only be spoken if the human player is stripping.
 
 #stage-specific lines that override the stage-generic ones
-male_human_must_strip=amused,Sorry, man.
-male_human_must_strip=amused,You alright there?
-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
-male_human_must_strip=amused,Tough luck, ~player~
-male_human_must_strip=allout,Slam!
-female_human_must_strip=awkward,Sorry, dude! Them's the rules!
+male_must_strip=neutral,C'mon man, you can do better than THAT!
+male_must_strip=confident,Step up your game, ~name~!
+male_must_strip=cheerful,Sorry dude, but your loss is my gain!
+male_must_strip=cheerful,Better you than me! And not because I wanna see you in the buff.
+male_must_strip=shrug,Tough luck, ~name~
+male_must_strip=allout,That's all she wrote!
+male_must_strip=allout,Slam!
+female_human_must_strip=cocky,Sorry, dude! Them's the rules!
 female_human_must_strip=allout,Awwww yeah!
 female_human_must_strip=allout,Slam!
 female_human_must_strip=allout,That's all she wrote!
 female_must_strip=awkward,Whoops.
-female_must_strip=blushing,Sorry, dude! Them's the rules!
-female_must_strip=okie,Slam!
+female_must_strip=awkward,Sorry, dude! Them's the rules!
+female_must_strip=awkward,Gee, you really had nothin'!
 
 
 #fully clothed
-0-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+0-male_human_must_strip=cocky,Sorry, man.
+0-male_human_must_strip=cheerful,You alright there?
+0-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
+0-male_human_must_strip=cocky,Tough luck, ~player~
+0-male_human_must_strip=allout,Slam!
+0-male_human_must_strip=allout,That's all she wrote!
+0-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 0-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-0-male_must_strip=amused,C'mon man, you can do better than THAT!
-0-male_must_strip=amused,Step up your game, ~name~!
-0-male_must_strip=okie,At least I'm winnin'!
-0-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-0-male_must_strip=amused,Tough luck, ~name~
-0-male_must_strip=allout,That's all she wrote!
-0-male_must_strip=allout,Slam!
-0-male_must_strip,target:pit=amused,We're waitin'.
-0-male_must_strip,target:mettaton=happy,Time to see what's under all that!
-0-male_must_strip,totalRounds:0-1,count-british:1=okie,I like your accent! Where you from, man?
+0-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+0-male_human_must_strip,oppHand:Full House=allout,Full house, baby!!
+0-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+0-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+0-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+0-male_must_strip,totalRounds:0-1,count-british:1=thumbsup,I like your accent! Where you from, man?
+0-male_must_strip,oppHand:Full House=allout,Full house, baby!
+0-male_must_strip,target:mettaton=allout,Time to see what's under all that!
+0-male_must_strip,target:mettaton=confident,We're takin' apart this metal guy little by little!
+0-male_must_strip,target:mettaton=cocky,What's wrong, Mettaton? Got no guts?
+0-female_human_must_strip,oppHand:Full House=allout,Full house, baby!
+0-female_must_strip,oppHand:Full House=allout,Full house, baby!
+0-female_must_strip,target:jenetta=startled,Woah, an actual maid is playin' with us!
+0-female_must_strip,target:jenetta=cheerful,I'm guessin' this ain't part of the job.
+0-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+0-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+0-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+0-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
+0-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,I like your enthusiasm, ~name~!
+0-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,At glad you're postive abut this! Let's roll!
+0-female_must_strip,totalRounds:0-1,count-cheerful:1=pumped,I'm pumped! You pumped! Yeah, you are!
 0-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 0-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 0-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 0-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
-0-female_must_strip,totalRounds:0-1,count-british:1=blushing,I like your accent... It's cute.
-0-female_must_strip,totalRounds:0-1,count-british:1=blushing,<i>She's cute. And her voice...</i>
-0-female_must_strip,target:ann=allout,Make it good, Ann!
-0-female_must_strip,target:ann=okie,Don't worry, you still got this!
+0-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+0-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+0-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+0-female_must_strip,target:futaba=thinking,Does she even know how to play?
 
 
 #lost blazer
-1-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+1-male_human_must_strip=cocky,Sorry, man.
+1-male_human_must_strip=cheerful,You alright there?
+1-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
+1-male_human_must_strip=cocky,Tough luck, ~player~
+1-male_human_must_strip=allout,Slam!
+1-male_human_must_strip=allout,That's all she wrote!
+1-male_human_must_strip,oppHand:Full House=allout,Full house, baby!!
+1-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 1-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-1-male_must_strip=amused,C'mon man, you can do better than THAT!
-1-male_must_strip=amused,Step up your game, ~name~!
-1-male_must_strip=okie,At least I'm winnin'!
-1-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-1-male_must_strip=amused,Tough luck, ~name~
-1-male_must_strip=allout,That's all she wrote!
-1-male_must_strip=allout,Slam!
-1-male_must_strip,target:mettaton=happy,Time to see what's under all that!
-1-male_must_strip,target:pit=amused,We're waitin'.
+1-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+1-male_must_strip,target:mettaton=allout,Time to see what's under all that!
+1-male_must_strip,target:mettaton=confident,We're takin' apart this metal guy little by little!
+1-male_must_strip,target:mettaton=cocky,What's wrong, Mettaton? Got no guts?
+1-male_must_strip,oppHand:Full House=allout,Full house, baby!
+1-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+1-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+1-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+1-female_human_must_strip,oppHand:Full House=allout,Full house, baby!
+1-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+1-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+1-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+1-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
 1-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 1-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 1-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 1-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
+1-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+1-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+1-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+1-female_must_strip,target:futaba=thinking,Does she even know how to play?
 1-female_must_strip,alsoPlaying:ann=neutral,You alright there, Ann?
-1-female_must_strip,target:ann=allout,Make it good, Ann!
-1-female_must_strip,target:ann=okie,Don't worry, you still got this!
+1-female_must_strip,oppHand:Full House=allout,Full house, baby!
+1-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,I like your enthusiasm, ~name~!
+1-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,At glad you're postive abut this! Let's roll!
+1-female_must_strip,totalRounds:0-1,count-cheerful:1=pumped,I'm pumped! You pumped! Yeah, you are!
 
 
 #lost sneakers
-2-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+2-male_human_must_strip=cocky,Sorry, man.
+2-male_human_must_strip=cheerful,You alright there?
+2-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
+2-male_human_must_strip=cocky,Tough luck, ~player~
+2-male_human_must_strip=allout,Slam!
+2-male_human_must_strip=allout,That's all she wrote!
+2-male_human_must_strip,oppHand:Full House=allout,Full house, baby!!
+2-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 2-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-2-male_must_strip=amused,C'mon man, you can do better than THAT!
-2-male_must_strip=amused,Step up your game, ~name~!
-2-male_must_strip=okie,At least I'm winnin'!
-2-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-2-male_must_strip=amused,Tough luck, ~name~
-2-male_must_strip=allout,That's all she wrote!
-2-male_must_strip=allout,Slam!
-2-male_must_strip,target:pit=amused,We're waitin'.
-2-male_must_strip,target:mettaton=happy,Time to see what's under all that!
+2-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+2-male_must_strip,oppHand:Full House=allout,Full house, baby!
+2-male_must_strip,target:mettaton=allout,Time to see what's under all that!
+2-male_must_strip,target:mettaton=confident,We're takin' apart this metal guy little by little!
+2-male_must_strip,target:mettaton=cocky,What's wrong, Mettaton? Got no guts?
+2-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+2-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+2-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+2-female_human_must_strip,oppHand:Full House=allout,Full house, baby!
+2-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+2-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+2-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+2-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
+2-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,I like your enthusiasm, ~name~!
+2-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,At glad you're postive abut this! Let's roll!
+2-female_must_strip,totalRounds:0-1,count-cheerful:1=pumped,I'm pumped! You pumped! Yeah, you are!
 2-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 2-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 2-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 2-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
-2-female_must_strip,target:ann=allout,Make it good, Ann!
-2-female_must_strip,target:ann=okie,Don't worry, you still got this!
+2-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+2-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+2-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+2-female_must_strip,target:futaba=thinking,Does she even know how to play?
+2-female_must_strip,oppHand:Full House=allout,Full house, baby!
 
 
 #lost socks
-3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+3-male_human_must_strip=cocky,Sorry, man.
+3-male_human_must_strip=cheerful,You alright there?
+3-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
+3-male_human_must_strip=cocky,Tough luck, ~player~
+3-male_human_must_strip=allout,Slam!
+3-male_human_must_strip=allout,That's all she wrote!
+3-male_human_must_strip,oppHand:Full House=allout,Full house, baby!!
+3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-3-male_must_strip=amused,C'mon man, you can do better than THAT!
-3-male_must_strip=amused,Step up your game, ~name~!
-3-male_must_strip=okie,At least I'm winnin'!
-3-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-3-male_must_strip=amused,Tough luck, ~name~
-3-male_must_strip=allout,That's all she wrote!
-3-male_must_strip=allout,Slam!
-3-male_must_strip,totalRounds:0-1,count-british:1=okie,I like your accent! Where you from, man?
-3-male_must_strip,target:pit=amused,We're waitin'.
-3-male_must_strip,target:mettaton=happy,Time to see what's under all that!
+3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+3-male_must_strip,totalRounds:0-1,count-british:1=thumbsup,I like your accent! Where you from, man?
+3-male_must_strip,oppHand:Full House=allout,Full house, baby!
+3-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+3-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+3-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+3-male_must_strip,target:mettaton=allout,Time to see what's under all that!
+3-male_must_strip,target:mettaton=confident,We're takin' apart this metal guy little by little!
+3-male_must_strip,target:mettaton=cocky,What's wrong, Mettaton? Got no guts?
+3-female_human_must_strip,oppHand:Full House=allout,Full house, baby!
 3-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 3-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 3-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 3-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
-3-female_must_strip,target:ann=allout,Make it good, Ann!
-3-female_must_strip,target:ann=okie,Don't worry, you still got this!
+3-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+3-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+3-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+3-female_must_strip,target:futaba=thinking,Does she even know how to play?
+3-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,I like your enthusiasm, ~name~!
+3-female_must_strip,totalRounds:0-1,count-cheerful:1=thumbsup,At glad you're postive abut this! Let's roll!
+3-female_must_strip,totalRounds:0-1,count-cheerful:1=pumped,I'm pumped! You pumped! Yeah, you are!
+3-female_must_strip,oppHand:Full House=allout,Full house, baby!
+3-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+3-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+3-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+3-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
 
 
 #lost belt
-4-male_human_must_strip=blushing,Tough luck.
-4-male_human_must_strip=blushing,I already finished dude.
-4-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+4-male_human_must_strip=cocky,Sorry, man.
+4-male_human_must_strip=cheerful,You alright there?
+4-male_human_must_strip=neutral,Better you than me! And not because I wanna see you in the buff.
+4-male_human_must_strip=cocky,Tough luck, ~player~
+4-male_human_must_strip=allout,Slam!
+4-male_human_must_strip=allout,That's all she wrote!
+4-male_human_must_strip=awkward,Tough luck.
+4-male_human_must_strip=grumpy,I already finished dude.
+4-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 4-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-4-male_must_strip=amused,C'mon man, you can do better than THAT!
-4-male_must_strip=amused,Step up your game, ~name~!
-4-male_must_strip=okie,At least I'm winnin'!
-4-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-4-male_must_strip=amused,Tough luck, ~name~
-4-male_must_strip=allout,That's all she wrote!
-4-male_must_strip=allout,Slam!
-4-male_must_strip,target:pit=amused,We're waitin'.
-4-male_must_strip,target:mettaton=happy,Time to see what's under all that!
-4-female_must_strip,target:ann=allout,Make it good, Ann!
-4-female_must_strip,target:ann=okie,Don't worry, you still got this!
+4-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+4-male_human_must_strip,oppHand:Full House=allout,Full house, baby!!
+4-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+4-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+4-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+4-male_must_strip,oppHand:Full House=allout,Full house, baby!
+4-male_must_strip,target:mettaton=allout,Time to see what's under all that!
+4-male_must_strip,target:mettaton=confident,We're takin' apart this metal guy little by little!
+4-male_must_strip,target:mettaton=cocky,What's wrong, Mettaton? Got no guts?
+4-female_human_must_strip,oppHand:Full House=allout,Full house, baby!
+4-female_must_strip,oppHand:Full House=allout,Full house, baby!
+4-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+4-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+4-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+4-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
 4-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 4-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 4-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 4-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
+4-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+4-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+4-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+4-female_must_strip,target:futaba=thinking,Does she even know how to play?
 
 
 #lost shirt
-5-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+5-male_human_must_strip=pissed,Don't pull any bullshit!
+5-male_human_must_strip=grumpy,It better be good! 'Cause I'm nearly outta clothes.
+5-male_human_must_strip=cocky,Feelin' the heat yet?
+5-male_human_must_strip=confident,How'd ya like the taste of defeat?
+5-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 5-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-5-male_must_strip=amused,C'mon man, you can do better than THAT!
-5-male_must_strip=amused,Step up your game, ~name~!
-5-male_must_strip=okie,At least I'm winnin'!
-5-male_must_strip=amused,Better you than me! And not because I wanna see you in the buff.
-5-male_must_strip=amused,Tough luck, ~name~
-5-male_must_strip=allout,That's all she wrote!
-5-male_must_strip=allout,Slam!
-5-male_must_strip=happy,Better you than me!
-5-male_must_strip=happy,I'm safe!
+5-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+5-male_must_strip=neutral,Better you than me!
+5-male_must_strip=cheerful,I'm safe!
 5-male_must_strip=pissed,D-Don't pull any bullshit on me!
-5-male_must_strip=happy,Make it good!
-5-male_must_strip,target:pit=amused,We're waitin'.
-5-male_must_strip,target:mettaton=happy,Time to see what's under all that!
+5-male_must_strip=cheerful,Make it good!
+5-male_must_strip,target:pit=cocky,We're waitin', angel boy.
+5-male_must_strip,target:pit=thinking,Has anyone actually seen an angel strip?
+5-male_must_strip,target:pit=disgusted,Aren't you angels supposed to be pure, virgin beings? Whatcha doin' playing this game?
+5-female_human_must_strip=cheerful,I already took off my shirt, so you might as well lose something!
+5-female_human_must_strip=confident,Take that!
+5-female_human_must_strip=cocky,We're waitin', ~player~!
 5-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 5-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 5-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 5-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
-5-female_must_strip,target:ann=allout,Make it good, Ann!
-5-female_must_strip,target:ann=okie,Don't worry, you still got this!
+5-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+5-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+5-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+5-female_must_strip,target:futaba=thinking,Does she even know how to play?
+5-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+5-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+5-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+5-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
 
 
 #lost pants
-6-male_human_must_strip=pumped,Thank god...
-6-male_human_must_strip=allout,YES! Take that!
-6-male_human_must_strip=pissed,Don't pull any bullshit!
-6-male_human_must_strip=smirk,Make it good!
-6-male_human_must_strip=allout,I'm still in it!
+6-male_human_must_strip=cheerful,Thank god...
+6-male_human_must_strip=confident,Make it good!
+6-male_human_must_strip=cocky,I'm still in it!
 6-male_human_must_strip=pumped,Woo!
-6-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+6-male_human_must_strip=pissed,Don't pull any bullshit!
+6-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 6-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
-6-male_must_strip=happy,Better you than me!
-6-male_must_strip=happy,I'm safe!
+6-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+6-male_must_strip=neutral,Better you than me!
+6-male_must_strip=cheerful,I'm safe!
 6-male_must_strip=pissed,D-Don't pull any bullshit on me!
-6-male_must_strip=happy,Make it good!
+6-male_must_strip=cheerful,Make it good!
 6-female_human_must_strip=awkward,Gee, you really had nothin'!
-6-female_human_must_strip=hooboy,Shit, dude...
-6-female_human_must_strip=neutral,Sorry, ~name~. Better you than me!
-6-female_human_must_strip=awkward,Sorry, man.
-6-female_human_must_strip=awkward,Tough luck, dude.
-6-female_must_strip=hooboy,S-Sorry, dude.
-6-female_must_strip=hooboy,A-At least you won't be alone.
+6-female_human_must_strip=awkward,Shit, dude...
+6-female_human_must_strip=neutral,Sorry, ~name~. Better you than me.
+6-female_must_strip=awkward,S-Sorry, dude.
+6-female_must_strip=neutral,A-At least you won't be alone.
+6-female_must_strip,target:ann=thumbsup,Make it good, Ann!
+6-female_must_strip,target:ann=thumbsup,Don't worry, you still got this!
+6-female_must_strip,target:ann=neutral,You remember the Casino Palace?
+6-female_must_strip,target:ann=cheerful,Hah! Score one to Skull!
 6-female_must_strip,target:futaba=awkward,Ooooo-kaaaay?
 6-female_must_strip,target:futaba=startled,I'm surprised you're even playin'!
 6-female_must_strip,target:futaba=awkward,You don't mind Futaba?
 6-female_must_strip,target:futaba=awkward,You can always forfeit, right? ....Right?
-6-female_must_strip,target:ann=allout,Make it good, Ann!
-6-female_must_strip,target:ann=okie,Don't worry, you still got this!
+6-female_must_strip,target:futaba=neutral,You remember the Casino Palace?
+6-female_must_strip,target:futaba=cocky,For a genius, you ain't that great at cards.
+6-female_must_strip,target:futaba=cocky,I'm countin' on ya not to loose next time!
+6-female_must_strip,target:futaba=thinking,Does she even know how to play?
 
--3-male_human_must_strip=pumped,Thank god...
--3-male_human_must_strip=allout,YES! Take that!
 -3-male_human_must_strip=pissed,Don't pull any bullshit!
--3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=awkward,With a pair? Damn dude...
+-3-male_human_must_strip=cheerful,Thank god...
+-3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=shrug,With a pair? Damn dude...
 -3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=neutral,Tough luck, ~player~
--3-male_must_strip=happy,Better you than me!
--3-male_must_strip=happy,I'm safe!
+-3-male_human_must_strip,consecutiveLosses:1-10,oppHand:One Pair=thinking,Can you really lose without a high card? Weird, dude...
+-3-male_must_strip=neutral,Better you than me!
+-3-male_must_strip=cheerful,I'm safe!
 -3-male_must_strip=pissed,D-Don't pull any bullshit on me!
--3-male_must_strip=happy,Make it good!
+-3-male_must_strip=cheerful,Make it good!
 -3-female_human_must_strip=awkward,Gee, you really had nothin'!
--3-female_human_must_strip=hooboy,Shit, dude...
--3-female_human_must_strip=neutral,Sorry, ~name~. Better you than me!
--3-female_human_must_strip=awkward,Sorry, man.
--3-female_human_must_strip=awkward,Tough luck, dude.
--3-female_must_strip=hooboy,S-Sorry, dude.
--3-female_must_strip=hooboy,A-At least you won't be alone.
+-3-female_human_must_strip=awkward,Shit, dude...
+-3-female_human_must_strip=neutral,Sorry, ~name~. Better you than me.
+-3-female_must_strip=awkward,S-Sorry, dude.
+-3-female_must_strip=neutral,A-At least you won't be alone.
 
--2-male_human_must_strip=hooboy,Make it good!
+-2-male_human_must_strip=cheerful,Make it good!
 -2-male_human_must_strip=pissed,D-Don't pull any bullshit on me!
--2-male_human_must_strip=happy,I'm safe!
 -2-male_human_must_strip=neutral,I'm over here masturbatin', so you m-might as well...
--2-male_must_strip=happy,Better you than me!
--2-male_must_strip=happy,I'm safe!
+-2-male_must_strip=neutral,Better you than me!
+-2-male_must_strip=cheerful,I'm safe!
 -2-male_must_strip=pissed,D-Don't pull any bullshit on me!
--2-male_must_strip=happy,Make it good!
+-2-male_must_strip=cheerful,Make it good!
 -2-female_human_must_strip=awkward,Gee, you really had nothin'!
--2-female_human_must_strip=hooboy,Shit, dude...
--2-female_human_must_strip=neutral,Sorry, ~name~. Better you than me!
--2-female_human_must_strip=awkward,Sorry, man.
--2-female_human_must_strip=awkward,Tough luck, dude.
--2-female_human_must_strip=hooboy,M-Might as well join me, r-right!?
--2-female_human_must_strip=hooboy,Unfh...
--2-female_must_strip=hooboy,S-Sorry, dude.
--2-female_must_strip=hooboy,A-At least you won't be alone.
+-2-female_human_must_strip=awkward,Shit, dude...
+-2-female_human_must_strip=neutral,Sorry, ~name~. Better you than me.
+-2-female_human_must_strip=awkward,M-Might as well join me, r-right!?
+-2-female_human_must_strip=masturbating_a,Unfh...
+-2-female_must_strip=awkward,S-Sorry, dude.
+-2-female_must_strip=neutral,A-At least you won't be alone.
 
--1-male_human_must_strip=blushing,Tough luck.
--1-male_human_must_strip=blushing,I already finished dude.
--1-male_must_strip=blushing,Tough luck, dude.
--1-male_must_strip=blushing,I already finished.
+-1-male_human_must_strip=awkward,Tough luck.
+-1-male_human_must_strip=grumpy,I already finished dude.
+-1-male_must_strip=awkward,Tough luck, dude.
+-1-male_must_strip=grumpy,I already finished.
 -1-male_must_strip=pissed,You better not pull any bullshit!
 -1-female_human_must_strip=awkward,Gee, you really had nothin'!
--1-female_human_must_strip=hooboy,Shit, dude...
--1-female_human_must_strip=neutral,Sorry, ~name~. Better you than me!
--1-female_human_must_strip=awkward,Sorry, man.
--1-female_human_must_strip=awkward,Tough luck, dude.
+-1-female_human_must_strip=awkward,Shit, dude...
+-1-female_human_must_strip=neutral,Sorry, ~name~. Better you than me.
 
 
 
@@ -636,86 +1044,140 @@ female_must_strip=okie,Slam!
 
 #stage-specific lines that override the stage-generic ones
 male_removing_accessory=grumpy,Really? Your ~clothing~?
-male_removing_accessory=okie,Guess I can't complain.
-male_removing_accessory=amused,That's kind of a pussy move, but whatever.
-female_removing_accessory=amused,Guess I can't complain.
-female_removing_accessory=amused,Heh.
-female_removing_accessory=awkward,Uhhh, sure, let's go with your ~clothing~.
-female_removing_accessory=grumpy,Really now?
-female_removed_accessory=amused,Lighten up, dude.
-female_removed_accessory=amused,Kind of a pussy move, but whatever.
-female_removed_accessory=amused,How fitting.
+male_removing_accessory=thumbsup,Guess I can't complain.
+male_removing_accessory=cocky,That's kind of a pussy move, but whatever.
+female_removing_accessory=pissed,For real!?
+female_removing_accessory=disgusted,For fuck's sake...
+female_removing_accessory=pissed,Goddamnit!
+female_removed_accessory=cocky,Lighten up, dude.
+female_removed_accessory=cocky,Kind of a pussy move, but whatever.
+female_removed_accessory=cocky,How fitting.
 
 
 #fully clothed
+0-male_removing_accessory,totalRounds:0-1,priority:150,count-weapon:1=grumpy,<I>Damnit, I could've bought my pipe.</i>
+0-male_removing_accessory,totalRounds:0-1,priority:150,count-weapon:1=grumpy,<I>Damnit, I could've bought my mace.</i>
+0-male_removing_accessory,totalRounds:0-1,priority:150,count-weapon:1=grumpy,<I>Damnit, I could've bought my battle hammer.</i>
+0-male_removing_accessory,totalRounds:0-1,priority:150,count-weapon:1=grumpy,<I>Damnit, I could've bought my bat.</i>
 0-male_removed_accessory=neutral,Cool. Let's move on!
-0-male_removed_accessory=okie,Nice choice, ~name~!
-0-male_removed_accessory=amused,Guess I can't complain
-0-female_removing_accessory,target:ann=amused,Hah! I knew it!
-0-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
+0-male_removed_accessory=thumbsup,Nice choice, ~name~!
+0-male_removed_accessory=cheerful,Guess I can't complain
+0-male_removed_accessory=cocky,How fittin'.
+0-female_removing_accessory=shrug,Guess I can't complain.
+0-female_removing_accessory=shrug,Heh.
+0-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+0-female_removing_accessory=grumpy,Really now?
+0-female_removing_accessory=grumpy,<I>Damnit, I could've bought my pipe.</i>
+0-female_removing_accessory=grumpy,<I>Damnit, I could've bought my battle hammer.</i>
+0-female_removing_accessory=grumpy,<I>Damnit, I could've bought my mace.</i>
+0-female_removing_accessory=grumpy,<I>Damnit, I could've bought my bat.</i>
+0-female_removing_accessory,target:ann=confident,Hah! I knew it!
+0-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+0-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+0-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
 0-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 0-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost blazer
 1-male_removed_accessory=neutral,Cool. Let's move on!
-1-male_removed_accessory=okie,Nice choice, ~name~!
-1-male_removed_accessory=amused,Guess I can't complain
-1-female_removing_accessory,target:ann=amused,Hah! I knew it!
-1-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
-1-female_removing_accessory,alsoPlaying:ann=amused,Didn't expect anythin' else.
+1-male_removed_accessory=thumbsup,Nice choice, ~name~!
+1-male_removed_accessory=cheerful,Guess I can't complain
+1-male_removed_accessory=cocky,How fittin'.
+1-female_removing_accessory=shrug,Guess I can't complain.
+1-female_removing_accessory=shrug,Heh.
+1-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+1-female_removing_accessory=grumpy,Really now?
+1-female_removing_accessory,target:kyu,targetStage:0,targetSaidMarker:footfet,priority:100=disgusted,I don't get the foot fetish, man. It's gross as fuck.
+1-female_removing_accessory,alsoPlaying:ann=cocky,Didn't expect anythin' else.
 1-female_removing_accessory,alsoPlaying:ann=allout,That's a victory for me!
+1-female_removing_accessory,target:ann=confident,Hah! I knew it!
+1-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+1-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+1-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
 1-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 1-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost sneakers
 2-male_removed_accessory=neutral,Cool. Let's move on!
-2-male_removed_accessory=okie,Nice choice, ~name~!
-2-male_removed_accessory=amused,Guess I can't complain
-2-female_removing_accessory,target:ann=amused,Hah! I knew it!
-2-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
+2-male_removed_accessory=thumbsup,Nice choice, ~name~!
+2-male_removed_accessory=cheerful,Guess I can't complain
+2-male_removed_accessory=cocky,How fittin'.
+2-female_removing_accessory=shrug,Guess I can't complain.
+2-female_removing_accessory=shrug,Heh.
+2-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+2-female_removing_accessory=grumpy,Really now?
+2-female_removing_accessory,target:ann=confident,Hah! I knew it!
+2-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+2-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+2-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
 2-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
+2-female_removing_accessory,target:kyu,targetStage:0,targetSaidMarker:footfet,priority:100=disgusted,I don't get the foot fetish, man. It's gross as fuck.
 2-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost socks
 3-male_removed_accessory=neutral,Cool. Let's move on!
-3-male_removed_accessory=okie,Nice choice, ~name~!
-3-male_removed_accessory=amused,Guess I can't complain
+3-male_removed_accessory=thumbsup,Nice choice, ~name~!
+3-male_removed_accessory=cheerful,Guess I can't complain
+3-male_removed_accessory=cocky,How fittin'.
+3-female_removing_accessory=shrug,Guess I can't complain.
+3-female_removing_accessory=shrug,Heh.
+3-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+3-female_removing_accessory=grumpy,Really now?
 3-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
-3-female_removing_accessory,target:ann=amused,Hah! I knew it!
-3-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
+3-female_removing_accessory,target:ann=confident,Hah! I knew it!
+3-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+3-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+3-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
+3-female_removing_accessory,target:kyu,targetStage:0,targetSaidMarker:footfet,priority:100=disgusted,I don't get the foot fetish, man. It's gross as fuck.
 3-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost belt
 4-male_removed_accessory=neutral,Cool. Let's move on!
-4-male_removed_accessory=okie,Nice choice, ~name~!
-4-male_removed_accessory=amused,Guess I can't complain
+4-male_removed_accessory=thumbsup,Nice choice, ~name~!
+4-male_removed_accessory=cheerful,Guess I can't complain
+4-male_removed_accessory=cocky,How fittin'.
+4-female_removing_accessory=shrug,Guess I can't complain.
+4-female_removing_accessory=shrug,Heh.
+4-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+4-female_removing_accessory=grumpy,Really now?
 4-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
-4-female_removing_accessory,target:ann=amused,Hah! I knew it!
-4-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
+4-female_removing_accessory,target:ann=confident,Hah! I knew it!
+4-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+4-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+4-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
+4-female_removing_accessory,target:kyu,targetStage:0,targetSaidMarker:footfet,priority:100=disgusted,I don't get the foot fetish, man. It's gross as fuck.
 4-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost shirt
-5-male_removed_accessory=neutral,Cool. Let's move on!
-5-male_removed_accessory=okie,Nice choice, ~name~!
-5-male_removed_accessory=amused,Guess I can't complain
 5-male_removed_accessory=pissed,I'm nearly ass-naked over here, and you're over here taking off ~clothing~!?
 5-male_removed_accessory=pissed,How 'bout I give you a broken jaw! Free of charge!
 5-male_removed_accessory=pissed,How 'bout I sic Captain Kidd on your ass, huh?
+5-male_removed_accessory=neutral,Cool. Let's move on!
+5-male_removed_accessory=thumbsup,Nice choice, ~name~!
+5-male_removed_accessory=cheerful,Guess I can't complain
+5-male_removed_accessory=cocky,How fittin'.
+5-female_removing_accessory=shrug,Guess I can't complain.
+5-female_removing_accessory=shrug,Heh.
+5-female_removing_accessory=shrug,Uhhh, sure, let's go with your ~clothing~.
+5-female_removing_accessory=grumpy,Really now?
+5-female_removing_accessory,target:ann=confident,Hah! I knew it!
+5-female_removing_accessory,target:ann=thumbsup,That's cool, Ann! I ain't judging.
+5-female_removing_accessory,target:ann=cheerful,I get it, Ann! Don't wanna show off the goods, right?
+5-female_removing_accessory,target:ann=thinking,This ain't part of your modelling job, right...?
 5-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
-5-female_removing_accessory,target:ann=amused,Hah! I knew it!
-5-female_removing_accessory,target:ann=okie,That's cool, Ann! I ain't judging.
+5-female_removing_accessory,target:kyu,targetStage:0,targetSaidMarker:footfet,priority:100=disgusted,I don't get the foot fetish, man. It's gross as fuck.
 5-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 
 #lost pants
 6-male_removing_accessory=pissed,Are you serious!?
-6-male_removing_accessory=forreal,For real!?
-6-male_removing_accessory=forreal,Goddamnit!
+6-male_removing_accessory=startled,For real!?
+6-male_removing_accessory=grumpy,Goddamnit!
 6-male_removed_accessory=pissed,I'm nearly ass-naked over here, and you're over here taking off ~clothing~!?
 6-male_removed_accessory=pissed,How 'bout I give you a broken jaw! Free of charge!
 6-male_removed_accessory=pissed,How 'bout I sic Captain Kidd on your ass, huh?
@@ -723,11 +1185,8 @@ female_removed_accessory=amused,How fitting.
 6-male_removed_accessory=pissed,Are you fuckin' serious?
 6-male_removed_accessory=pissed,I'm over here ass-naked in front of everyone and that's ALL you take off!? C'mon, dude!
 6-male_removed_accessory=startled,Yeah. Laugh it up, asshole!
-6-male_removed_accessory=awkward,Way to rub pepper on the wound... Is that the right way to say it?
+6-male_removed_accessory=thinking,Way to rub pepper on the wound... Is that the right way to say it?
 6-male_removed_accessory=pissed,You want a broke jaw on me, pal?
-6-female_removing_accessory=pissed,For real!?
-6-female_removing_accessory=pissed,For fuck's sake!!
-6-female_removing_accessory=pissed,Goddamnit!
 6-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 6-female_removed_accessory=pissed,Oh screw you!
 6-female_removed_accessory=pissed,C'mon!
@@ -735,20 +1194,18 @@ female_removed_accessory=amused,How fitting.
 6-female_removed_accessory,target:blake,targetStage:6=neutral,Don't worry about it. I ain't gonna judge.
 
 -3-male_removing_accessory=pissed,Are you serious!?
--3-male_removing_accessory=forreal,For real!?
--3-male_removing_accessory=forreal,Goddamnit!
+-3-male_removing_accessory=startled,For real!?
+-3-male_removing_accessory=grumpy,Goddamnit!
 -3-male_removed_accessory=pissed,How about I give you a broken jaw! Free of charge!
 -3-male_removed_accessory=pissed,I'm ass-naked over here and you're just taking off ~clothing~!? For fuck's sake, dude!
 -3-male_removed_accessory=pissed,For real!? While I'm like this?
+-3-male_removed_accessory=pissed,How would your face to meet my FIST?
 -3-male_removed_accessory=pissed,I'm nearly ass-naked and that's ALL you take off!? C'mon, dude?
 -3-male_removed_accessory=pissed,Are you fuckin' serious?
 -3-male_removed_accessory=pissed,I'm over here ass-naked in front of everyone and that's ALL you take off!? C'mon, dude!
 -3-male_removed_accessory=startled,Yeah. Laugh it up, asshole!
--3-male_removed_accessory=awkward,Way to rub pepper on the wound... Is that the right way to say it?
+-3-male_removed_accessory=thinking,Way to rub pepper on the wound... Is that the right way to say it?
 -3-male_removed_accessory=pissed,You want a broke jaw on me, pal?
--3-female_removing_accessory=pissed,For real!?
--3-female_removing_accessory=pissed,For fuck's sake!!
--3-female_removing_accessory=pissed,Goddamnit!
 -3-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 -3-female_removed_accessory=pissed,Oh screw you!
 -3-female_removed_accessory=pissed,C'mon!
@@ -759,9 +1216,7 @@ female_removed_accessory=amused,How fitting.
 -2-male_removed_accessory=pissed,How about I give you a broken jaw! Free of charge!
 -2-male_removed_accessory=pissed,I'm ass-naked over here and you're just taking off ~clothing~!? For fuck's sake, dude!
 -2-male_removed_accessory=pissed,For real!? While I'm like this?
--2-female_removing_accessory=pissed,For real!?
--2-female_removing_accessory=pissed,For fuck's sake!!
--2-female_removing_accessory=pissed,Goddamnit!
+-2-male_removed_accessory=pissed,How would your face to meet my FIST?
 -2-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 -2-female_removed_accessory=pissed,Oh screw you!
 -2-female_removed_accessory=pissed,C'mon!
@@ -774,14 +1229,12 @@ female_removed_accessory=amused,How fitting.
 -1-male_removed_accessory=pissed,Are you fuckin' serious?
 -1-male_removed_accessory=pissed,I'm over here ass-naked in front of everyone and that's ALL you take off!? C'mon, dude!
 -1-male_removed_accessory=startled,Yeah. Laugh it up, asshole!
--1-male_removed_accessory=awkward,Way to rub pepper on the wound... Is that the right way to say it?
+-1-male_removed_accessory=thinking,Way to rub pepper on the wound... Is that the right way to say it?
 -1-male_removed_accessory=pissed,You want a broke jaw on me, pal?
 -1-male_removed_accessory=pissed,How about I give you a broken jaw! Free of charge!
 -1-male_removed_accessory=pissed,I'm ass-naked over here and you're just taking off ~clothing~!? For fuck's sake, dude!
 -1-male_removed_accessory=pissed,For real!? While I'm like this?
--1-female_removing_accessory=pissed,For real!?
--1-female_removing_accessory=pissed,For fuck's sake!!
--1-female_removing_accessory=pissed,Goddamnit!
+-1-male_removed_accessory=pissed,How would your face to meet my FIST?
 -1-female_removing_accessory,target:blake,targetStage:5=awkward,Oh...
 -1-female_removed_accessory=pissed,Oh screw you!
 -1-female_removed_accessory=pissed,C'mon!
@@ -795,48 +1248,84 @@ female_removed_accessory=amused,How fitting.
 #Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
 
 #stage-specific lines that override the stage-generic ones
-male_removing_minor=amused,Your ~clothing~? Whatever, man.
-male_removing_minor=okie,~Clothing?~ Not a bad choice, dude.
-male_removing_minor=neutral,Huh.
-male_removed_minor=amused,Whatever, man.
+male_removing_minor=cocky,Your ~clothing~? Whatever, man.
+male_removing_minor=thumbsup,~Clothing?~ Not a bad choice, dude.
+male_removing_minor=thumbsup,Nice save!
+male_removed_minor=shrug,Whatever, man.
 male_removed_minor=neutral,Cool! Next round, guys? Next round!
-male_removed_minor=amused,Could be worse.
+male_removed_minor=shrug,Could be worse!
 female_removing_minor=neutral,Whatever, dude!
-female_removing_minor=amused,Just your ~clothing~? Alright then!
-female_removing_minor=amused,Heh.
-female_removed_minor=amused,Whatever, man.
+female_removing_minor=cheerful,Just your ~clothing~? Alright then!
+female_removing_minor=cocky,Heh.
+female_removed_minor=cocky,Whatever, man.
 female_removed_minor=grumpy,Lighten up a bit, will ya?
-female_removed_minor=amused,You'll run out soon, won't ya?
+female_removed_minor=cocky,You'll run out soon, won't ya?
 
 
 #fully clothed
+0-female_removing_minor,target:ann,targetStage:0=thinking,Why do our uniforms have these jacket things anyways? I don't get it.
+0-female_removing_minor,target:ann,targetStage:0=pumped,Can you believe we're gonna graduate soon? Goodbye, Shujin Academy!
+0-female_removing_minor,target:ann,targetStage:0=thinking,I honestly wonder how you ain't chubby yet...
+0-female_removing_minor,target:futaba,targetStage:0=thinking,I never got why you wore that off the shoulder. How does it not keep sliding off?
+0-female_removing_minor,target:futaba,targetStage:0=startled,But you have boots!
+0-female_removing_minor,target:futaba,targetStage:0=allout,Whatever! That means I'm a step closer to victory!
 0-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
+0-female_removed_minor,target:ann,targetStage:1=cocky,If you wore that bodysuit from the Metaverse, you'd be done for already!
+0-female_removed_minor,target:ann,targetStage:1=thinking,What if we played in our Metaverse outfits?
+0-female_removed_minor,target:ann,targetStage:1=grumpy,Relax, dude! It's just your jacket.
 0-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+0-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 #lost blazer
+1-female_removing_minor,target:ann,targetStage:0=thinking,Why do our uniforms have these jacket things anyways? I don't get it.
+1-female_removing_minor,target:ann,targetStage:0=pumped,Can you believe we're gonna graduate soon? Goodbye, Shujin Academy!
+1-female_removing_minor,target:ann,targetStage:0=thinking,I honestly wonder how you ain't chubby yet...
 1-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
 1-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+1-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
+1-female_removed_minor,target:ann,targetStage:1=cocky,If you wore that bodysuit from the Metaverse, you'd be done for already!
+1-female_removed_minor,target:ann,targetStage:1=thinking,What if we played in our Metaverse outfits?
+1-female_removed_minor,target:ann,targetStage:1=grumpy,Relax, dude! It's just your jacket.
 
 
 #lost sneakers
+2-female_removing_minor,target:ann,targetStage:0=thinking,Why do our uniforms have these jacket things anyways? I don't get it.
+2-female_removing_minor,target:ann,targetStage:0=pumped,Can you believe we're gonna graduate soon? Goodbye, Shujin Academy!
+2-female_removing_minor,target:ann,targetStage:0=thinking,I honestly wonder how you ain't chubby yet...
 2-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
+2-female_removed_minor,target:ann,targetStage:1=cocky,If you wore that bodysuit from the Metaverse, you'd be done for already!
+2-female_removed_minor,target:ann,targetStage:1=thinking,What if we played in our Metaverse outfits?
+2-female_removed_minor,target:ann,targetStage:1=grumpy,Relax, dude! It's just your jacket.
 2-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+2-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 #lost socks
 3-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
+3-female_removing_minor,target:ann,targetStage:0=thinking,Why do our uniforms have these jacket things anyways? I don't get it.
+3-female_removing_minor,target:ann,targetStage:0=pumped,Can you believe we're gonna graduate soon? Goodbye, Shujin Academy!
+3-female_removing_minor,target:ann,targetStage:0=thinking,I honestly wonder how you ain't chubby yet...
+3-female_removed_minor,target:ann,targetStage:1=cocky,If you wore that bodysuit from the Metaverse, you'd be done for already!
+3-female_removed_minor,target:ann,targetStage:1=thinking,What if we played in our Metaverse outfits?
+3-female_removed_minor,target:ann,targetStage:1=grumpy,Relax, dude! It's just your jacket.
 3-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+3-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 #lost belt
 4-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
+4-female_removed_minor,target:ann,targetStage:1=cocky,If you wore that bodysuit from the Metaverse, you'd be done for already!
+4-female_removed_minor,target:ann,targetStage:1=thinking,What if we played in our Metaverse outfits?
+4-female_removed_minor,target:ann,targetStage:1=grumpy,Relax, dude! It's just your jacket.
 4-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+4-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 #lost shirt
 5-female_removing_minor,target:kyoko,targetStage:5=awkward,I-I had no idea...
 5-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+5-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 #lost pants
@@ -852,6 +1341,7 @@ female_removed_minor=amused,You'll run out soon, won't ya?
 6-female_removed_minor=pissed,Goddamnit!
 6-female_removed_minor=pissed,This is a load of bull!
 6-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+6-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 -3-male_removing_minor=pissed,How 'bout I give you a broken jaw! Free of charge!
 -3-male_removing_minor=pissed,For real!? Dick move, ~name!~
@@ -865,6 +1355,7 @@ female_removed_minor=amused,You'll run out soon, won't ya?
 -3-female_removed_minor=pissed,Goddamnit!
 -3-female_removed_minor=pissed,This is a load of bull!
 -3-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+-3-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 -2-male_removing_minor=pissed,How 'bout I give you a broken jaw! Free of charge!
 -2-male_removing_minor=pissed,For real!? Dick move, ~name!~
@@ -878,6 +1369,7 @@ female_removed_minor=amused,You'll run out soon, won't ya?
 -2-female_removed_minor=pissed,Goddamnit!
 -2-female_removed_minor=pissed,This is a load of bull!
 -2-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+-2-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 -1-male_removing_minor=pissed,How 'bout I give you a broken jaw! Free of charge!
 -1-male_removing_minor=pissed,For real!? Dick move, ~name!~
@@ -891,6 +1383,7 @@ female_removed_minor=amused,You'll run out soon, won't ya?
 -1-female_removed_minor=pissed,Goddamnit!
 -1-female_removed_minor=pissed,This is a load of bull!
 -1-female_removed_minor,target:kyoko,targetStage:6=pissed,Whoever did this to you is gonna get their ass kicked!
+-1-female_removed_minor,target:kyoko,targetStage:6=disgusted,Who the hell did this to you? Or was it some kinda freak accident?
 
 
 
@@ -901,167 +1394,180 @@ female_removed_minor=amused,You'll run out soon, won't ya?
 
 #stage-specific lines that override the stage-generic ones
 male_removing_major=awkward,Woah, dude.
-male_removing_major=neutral,Ballsy. I like it!
+male_removing_major=cheerful,Ballsy. I like it!
 male_removing_major=neutral,Your ~clothing~? Shit dude, you got guts.
-male_removed_major=allout,Now we got a party goin' on!
-male_removed_major=happy,Woo!
-male_removed_major=okie,Not bad.
-female_removed_major=forreal,Are you really...?
-female_removed_major=blushing,S-Sorry, but them's the rules.
-female_removed_major=mamamia,I...
+male_removed_major=pumped,Now we got a party goin' on!
+male_removed_major=pumped,Woo!
+male_removed_major=thumbsup,Not bad.
+female_removed_major=startled,Are you really...?
+female_removed_major=awkward,S-Sorry, but them's the rules.
+female_removed_major=aroused,I...
 
 
 #fully clothed
-0-female_removing_major=forreal,F-For real?
+0-female_removing_major=startled,F-For real?
 0-female_removing_major=startled,Woah...
-0-female_removing_major=mamamia,I-I ain't lookin'!
-0-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-0-female_removing_major,target:futaba=awkward,W-Well, you're of age...
-0-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+0-female_removing_major=startled,I-I ain't lookin'!
+0-female_removing_major,target:ann,targetStage:1-3,alsoPlaying:futaba,alsoPlayingStage:0-8=startled,You're enjoyin' this more than I expected.
+0-female_removing_major,target:ann,targetStage:1-3,alsoPlaying:futaba,alsoPlayingStage:0-8=startled,Shit, Futaba, you're really enjoyin' this.
+0-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+0-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+0-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
+0-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
 0-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-0-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-0-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-0-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
+0-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+0-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+0-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
+0-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 0-female_removed_major,target:futaba=awkward,This is so awkward.
 0-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
 
 
 #lost blazer
-1-female_removing_major=forreal,F-For real?
+1-female_removing_major=startled,F-For real?
 1-female_removing_major=startled,Woah...
-1-female_removing_major=mamamia,I-I ain't lookin'!
-1-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-1-female_removing_major,target:futaba=awkward,W-Well, you're of age...
+1-female_removing_major=startled,I-I ain't lookin'!
+1-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
+1-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+1-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+1-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
 1-female_removed_major,target:futaba=awkward,This is so awkward.
 1-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
-1-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+1-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 1-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-1-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-1-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-1-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
+1-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+1-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+1-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
 
 
 #lost sneakers
-2-female_removing_major=forreal,F-For real?
+2-female_removing_major=startled,F-For real?
 2-female_removing_major=startled,Woah...
-2-female_removing_major=mamamia,I-I ain't lookin'!
-2-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-2-female_removing_major,target:futaba=awkward,W-Well, you're of age...
+2-female_removing_major=startled,I-I ain't lookin'!
+2-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
+2-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+2-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+2-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
 2-female_removed_major,target:futaba=awkward,This is so awkward.
 2-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
+2-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 2-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-2-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-2-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-2-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
-2-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+2-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+2-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+2-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
 
 
 #lost socks
-3-female_removing_major=forreal,F-For real?
+3-female_removing_major=startled,F-For real?
 3-female_removing_major=startled,Woah...
-3-female_removing_major=mamamia,I-I ain't lookin'!
-3-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-3-female_removing_major,target:futaba=awkward,W-Well, you're of age...
+3-female_removing_major=startled,I-I ain't lookin'!
+3-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
+3-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+3-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+3-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
 3-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-3-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-3-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-3-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
-3-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+3-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+3-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+3-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
+3-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 3-female_removed_major,target:futaba=awkward,This is so awkward.
 3-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
 
 
 #lost belt
-4-female_removing_major=forreal,F-For real?
+4-female_removing_major=startled,F-For real?
 4-female_removing_major=startled,Woah...
-4-female_removing_major=mamamia,I-I ain't lookin'!
-4-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-4-female_removing_major,target:futaba=awkward,W-Well, you're of age...
+4-female_removing_major=startled,I-I ain't lookin'!
+4-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+4-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+4-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
+4-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
 4-female_removed_major,target:futaba=awkward,This is so awkward.
 4-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
 4-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-4-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-4-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-4-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
-4-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+4-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+4-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+4-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
+4-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 
 
 #lost shirt
-5-female_removing_major=forreal,F-For real?
+5-female_removing_major=startled,F-For real?
 5-female_removing_major=startled,Woah...
-5-female_removing_major=mamamia,I-I ain't lookin'!
-5-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-5-female_removing_major,target:futaba=awkward,W-Well, you're of age...
-5-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
-5-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-5-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-5-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-5-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
+5-female_removing_major=startled,I-I ain't lookin'!
+5-female_removing_major,target:moon,targetStage:0=startled,Woah woah WOAH! What!?
+5-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+5-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+5-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
 5-female_removed_major,target:futaba=awkward,This is so awkward.
 5-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
+5-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+5-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
+5-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+5-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+5-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
 
 
 #lost pants
-6-female_removing_major=forreal,F-For real?
+6-female_removing_major=startled,F-For real?
 6-female_removing_major=startled,Woah...
-6-female_removing_major=mamamia,I-I ain't lookin'!
-6-female_removing_major=hooboy,<i>Yes!</i>
-6-female_removing_major=hooboy,W-Woah!
-6-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
-6-female_removing_major,target:futaba=awkward,W-Well, you're of age...
-6-female_removed_major=hooboy,A-At least we're in this together.
-6-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
-6-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
-6-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
-6-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
+6-female_removing_major=startled,I-I ain't lookin'!
+6-female_removing_major=aroused,<i>Yes!</i>
+6-female_removing_major=startled,W-Woah!
+6-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+6-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+6-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
+6-female_removed_major=awkward,A-At least we're in this together.
+6-female_removed_major=aroused,Nice view...
+6-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 6-female_removed_major,target:futaba=awkward,This is so awkward.
 6-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
-6-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+6-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
+6-female_removed_major,target:marinette,targetStage:2=thinking,You sure you're not some other phanthom thief from an alternate universe!
+6-female_removed_major,target:marinette,targetStage:2=pumped,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
+6-female_removed_major,target:marinette,targetStage:2=thinking,Are you from the Metaverse too? You got a Persona?
 
 -3-male_removed_major=neutral,Nice...
 -3-male_removed_major=neutral,I like it.
 -3-male_removed_major=neutral,Guess that makes us the boner squad!
--3-female_removing_major=hooboy,<i>Yes!</i>
--3-female_removing_major=hooboy,W-Woah!
--3-female_removing_major=forreal,F-For real?
+-3-female_removing_major=startled,F-For real?
 -3-female_removing_major=startled,Woah...
--3-female_removing_major=mamamia,I-I ain't lookin'!
--3-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
--3-female_removing_major,target:futaba=awkward,W-Well, you're of age...
--3-female_removed_major=hooboy,A-At least we're in this together.
--3-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
--3-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
--3-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
--3-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
--3-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
+-3-female_removing_major=startled,I-I ain't lookin'!
+-3-female_removing_major=aroused,<i>Yes!</i>
+-3-female_removing_major=startled,W-Woah!
+-3-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+-3-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+-3-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
+-3-female_removed_major=awkward,A-At least we're in this together.
+-3-female_removed_major=aroused,Nice view...
 -3-female_removed_major,target:futaba=awkward,This is so awkward.
 -3-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
+-3-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 
 -2-male_removed_major=neutral,Nice...
 -2-male_removed_major=neutral,I like it.
 -2-male_removed_major=neutral,Guess that makes us the boner squad!
--2-female_removing_major=hooboy,<i>Yes!</i>
--2-female_removing_major=hooboy,W-Woah!
--2-female_removing_major,target:futaba=awkward,A-Are you serious, Futaba!?
--2-female_removing_major,target:futaba=awkward,W-Well, you're of age...
--2-female_removed_major=hooboy,A-At least we're in this together.
--2-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+-2-female_removing_major=aroused,<i>Yes!</i>
+-2-female_removing_major=startled,W-Woah!
+-2-female_removing_major,target:futaba,targetStage:2,priority:170=startled,A-Are you serious, Futaba!?
+-2-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,W-Well, you're of age...
+-2-female_removing_major,target:futaba,targetStage:2,priority:170=awkward,You sure you wanna do this?
+-2-female_removed_major=awkward,A-At least we're in this together.
+-2-female_removed_major=aroused,Nice view...
+-2-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 -2-female_removed_major,target:futaba=awkward,This is so awkward.
 -2-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
--2-female_removed_major,target:marinette,targetStage:2=neutral,I can relate, man. It's nice to switch out of that leather bodysuit after a long day at Mementos!
--2-female_removed_major,target:marinette,targetStage:2=happy,You sure you're not some other phanthom thief from an alternate universe!
--2-female_removed_major,target:marinette,targetStage:2=happy,Maybe you should join the Phanthom Thieves! We're dedicated to changing  the hearts of evil bastards!
--2-female_removed_major,target:marinette,targetStage:2=happy,Are you from the Metaverse too? You got a Persona?
 
 -1-male_removed_major=neutral,Nice...
 -1-male_removed_major=neutral,I like it.
 -1-male_removed_major=neutral,Guess that makes us the boner squad!
--1-female_removing_major=hooboy,<i>Yes!</i>
--1-female_removing_major=hooboy,W-Woah!
--1-female_removed_major=hooboy,A-At least we're in this together.
--1-female_removed_major,target:futaba,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
+-1-female_removing_major=aroused,<i>Yes!</i>
+-1-female_removing_major=startled,W-Woah!
+-1-female_removed_major=awkward,A-At least we're in this together.
+-1-female_removed_major=aroused,Nice view...
 -1-female_removed_major,target:futaba=awkward,This is so awkward.
 -1-female_removed_major,target:futaba=awkward,I shouldn't be angry. You <i>are</i> technically an adult
+-1-female_removed_major,target:futaba,targetStage:3,totalMales:3-5=pissed,If any of you stare, I'm gonna give you two black eyes!
 
 
 
@@ -1071,178 +1577,285 @@ female_removed_major=mamamia,I...
 
 #stage-specific lines that override the stage-generic ones
 male_chest_will_be_visible=awkward,Shit dude.
-male_chest_will_be_visible=hooboy,Can we get a drumroll up in here?
-male_chest_is_visible=okie,Nice.
-male_chest_is_visible=okie,Not bad, dude.
-male_chest_is_visible=okie,Cool!
-male_crotch_will_be_visible=hooboy,Woah...
-male_crotch_will_be_visible=hooboy,Damn.
+male_chest_will_be_visible=cheerful,Can we get a drumroll up in here?
+male_chest_is_visible=cheerful,Nice.
+male_chest_is_visible=cheerful,Not bad, dude.
+male_chest_is_visible=thumbsup,Cool!
+male_crotch_will_be_visible=aroused,<i>I shouldn't be this excited but...<i>
+male_crotch_will_be_visible=awkward,Sorry, man.
 male_small_crotch_is_visible=awkward,Don't be ashamed, man.
 male_small_crotch_is_visible=awkward,Does size really matter?
-male_small_crotch_is_visible=blushing,Mine's bigger. Doesn't matter though.
-male_small_crotch_is_visible=blushing,I've only seen another guy's penis once before... D-Don't ask! It's a college thing!
+male_small_crotch_is_visible=cheerful,Mine's bigger. Doesn't matter though.
+male_small_crotch_is_visible=awkward,I've only seen another guy's penis once before... D-Don't ask! It's a college thing!
 male_small_crotch_is_visible=startled,I... didn't expect this.
 male_medium_crotch_is_visible=awkward,I've only seen another guy's penis once before... D-Don't ask! It's a college thing!
-male_medium_crotch_is_visible=hooboy,Uhhh...
+male_medium_crotch_is_visible=awkward,Uhhh...
 male_medium_crotch_is_visible=awkward,Nice dick, I guess...? D-Don't take this the wrong way.
-male_large_crotch_is_visible=awkward,Holy shit!
-male_large_crotch_is_visible=hooboy,Daaaaamn, dude!
-male_large_crotch_is_visible=neutral,Hope you don't impale your girlfriend on that thing!
-female_chest_will_be_visible=hooboy,Hooooly shit...
-female_chest_will_be_visible=hooboy,I can't believe I'm gonna see boobs.
-female_chest_will_be_visible=hooboy,This is it, dudes...
-female_chest_will_be_visible=hooboy,Is t-this heaven?
+female_chest_will_be_visible=aroused,Hooooly shit...
+female_chest_will_be_visible=startled,For real!?
+female_chest_will_be_visible=aroused,This is it, dudes...
 female_small_chest_is_visible=awkward,W-Whatever, man! Size doesn't matter.
 female_small_chest_is_visible=awkward,T-They're still great tits! Don't worry 'bout it!
-female_small_chest_is_visible=hooboy,Wow...
-female_medium_chest_is_visible=hooboy,Oooooh.
-female_medium_chest_is_visible=hooboy,<i>Dude...</i>
-female_medium_chest_is_visible=hooboy,Did I just die and go to heaven?
-female_medium_chest_is_visible=mamamia,Wow... I-I mean, I ain't lookin'!
-female_large_chest_is_visible=hooboy,Dude, DUDE!
-female_large_chest_is_visible=hooboy,Holy shit!
+female_small_chest_is_visible=aroused,Wow...
+female_medium_chest_is_visible=awkward,You have a nice bo--Nevermind.
+female_medium_chest_is_visible=aroused,<i>Dude...</i>
+female_medium_chest_is_visible=aroused,Did I just die and go to heaven?
+female_medium_chest_is_visible=awkward,Wow... I-I mean, I ain't lookin'!
+female_large_chest_is_visible=startled,Dude, DUDE!
+female_large_chest_is_visible=startled,Holy shit!
 female_large_chest_is_visible=awkward,You have great tits! ...I-I mean, sorry! I stepped outta' line there...
-female_large_chest_is_visible=hooboy,Did I die and go to heaven?
-female_large_chest_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-female_crotch_will_be_visible=hooboy,Oh lord...
-female_crotch_will_be_visible=hooboy,I can't believe it... I'm actually gonna see some pussy!
-female_crotch_will_be_visible=hooboy,Did I just die and go to heaven?
+female_large_chest_is_visible=aroused,Did I die and go to heaven?
+female_crotch_will_be_visible=aroused,Oh lord...
+female_crotch_will_be_visible=startled,I can't believe it... I'm actually gonna see some pussy!
+female_crotch_will_be_visible=aroused,<i>Yessss!</i>
 
 
 #fully clothed
+0-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+0-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+0-male_large_crotch_is_visible=startled,Holy shit!
+0-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+0-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+0-male_large_crotch_is_visible=startled,HOLY SHIT!
+0-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+0-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
 0-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-0-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-0-female_small_chest_is_visible,target:futaba=blushing,....
+0-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+0-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+0-female_small_chest_is_visible,target:futaba=grumpy,....
 0-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-0-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+0-female_small_chest_is_visible,target:futaba=awkward,Umm....
+0-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
 0-female_crotch_is_visible=awkward,~silent~
 0-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-0-female_crotch_is_visible=hooboy,I think I got a hard-on...
+0-female_crotch_is_visible=aroused,I think I got a hard-on...
 0-female_crotch_is_visible=awkward,That's... a lot of hair.
-0-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+0-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 
 
 #lost blazer
+1-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+1-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+1-male_large_crotch_is_visible=startled,HOLY SHIT!
+1-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+1-male_large_crotch_is_visible=startled,Holy shit!
+1-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+1-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
 1-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-1-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-1-female_small_chest_is_visible,target:futaba=blushing,....
+1-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+1-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+1-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
+1-female_small_chest_is_visible,target:futaba=grumpy,....
 1-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-1-female_small_chest_is_visible,target:futaba=mamamia,Umm....
-1-female_crotch_is_visible=awkward,That's... a lot of hair.
-1-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+1-female_small_chest_is_visible,target:futaba=awkward,Umm....
+1-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+1-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 1-female_crotch_is_visible=awkward,~silent~
 1-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-1-female_crotch_is_visible=hooboy,I think I got a hard-on...
+1-female_crotch_is_visible=aroused,I think I got a hard-on...
+1-female_crotch_is_visible=awkward,That's... a lot of hair.
+1-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 
 
 #lost sneakers
+2-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+2-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+2-male_large_crotch_is_visible=startled,HOLY SHIT!
+2-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+2-male_large_crotch_is_visible=startled,Holy shit!
+2-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+2-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
 2-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-2-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-2-female_small_chest_is_visible,target:futaba=blushing,....
+2-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+2-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+2-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
+2-female_small_chest_is_visible,target:futaba=grumpy,....
 2-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-2-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+2-female_small_chest_is_visible,target:futaba=awkward,Umm....
+2-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+2-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 2-female_crotch_is_visible=awkward,~silent~
 2-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-2-female_crotch_is_visible=hooboy,I think I got a hard-on...
+2-female_crotch_is_visible=aroused,I think I got a hard-on...
 2-female_crotch_is_visible=awkward,That's... a lot of hair.
-2-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+2-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 
 
 #lost socks
+3-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+3-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+3-male_large_crotch_is_visible=startled,HOLY SHIT!
+3-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+3-male_large_crotch_is_visible=startled,Holy shit!
+3-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+3-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+3-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
 3-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-3-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-3-female_small_chest_is_visible,target:futaba=blushing,....
+3-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+3-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+3-female_small_chest_is_visible,target:futaba=grumpy,....
 3-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-3-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+3-female_small_chest_is_visible,target:futaba=awkward,Umm....
+3-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+3-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
+3-female_crotch_is_visible=awkward,That's... a lot of hair.
+3-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 3-female_crotch_is_visible=awkward,~silent~
 3-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-3-female_crotch_is_visible=hooboy,I think I got a hard-on...
-3-female_crotch_is_visible=awkward,That's... a lot of hair.
-3-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+3-female_crotch_is_visible=aroused,I think I got a hard-on...
 
 
 #lost belt
+4-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+4-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+4-male_large_crotch_is_visible=startled,HOLY SHIT!
+4-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+4-male_large_crotch_is_visible=startled,Holy shit!
+4-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+4-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
 4-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-4-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-4-female_small_chest_is_visible,target:futaba=blushing,....
+4-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+4-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+4-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
+4-female_small_chest_is_visible,target:futaba=grumpy,....
 4-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-4-female_small_chest_is_visible,target:futaba=mamamia,Umm....
-4-female_crotch_is_visible=awkward,That's... a lot of hair.
-4-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+4-female_small_chest_is_visible,target:futaba=awkward,Umm....
+4-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+4-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 4-female_crotch_is_visible=awkward,~silent~
 4-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-4-female_crotch_is_visible=hooboy,I think I got a hard-on...
+4-female_crotch_is_visible=aroused,I think I got a hard-on...
+4-female_crotch_is_visible=awkward,That's... a lot of hair.
+4-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 
 
 #lost shirt
+5-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+5-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+5-male_large_crotch_is_visible=startled,HOLY SHIT!
+5-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+5-male_large_crotch_is_visible=startled,Holy shit!
+5-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+5-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+5-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
 5-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-5-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-5-female_small_chest_is_visible,target:futaba=blushing,....
+5-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+5-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+5-female_small_chest_is_visible,target:futaba=grumpy,....
 5-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-5-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+5-female_small_chest_is_visible,target:futaba=awkward,Umm....
+5-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+5-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
+5-female_crotch_is_visible=awkward,That's... a lot of hair.
+5-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 5-female_crotch_is_visible=awkward,~silent~
 5-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-5-female_crotch_is_visible=hooboy,I think I got a hard-on...
-5-female_crotch_is_visible=awkward,That's... a lot of hair.
-5-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+5-female_crotch_is_visible=aroused,I think I got a hard-on...
 
 
 #lost pants
+6-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+6-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+6-male_large_crotch_is_visible=startled,HOLY SHIT!
+6-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
+6-male_large_crotch_is_visible=startled,Holy shit!
+6-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+6-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
 6-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
-6-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
-6-female_small_chest_is_visible,target:futaba=blushing,....
+6-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+6-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+6-female_chest_will_be_visible,alsoPlaying:hermione=startled,W-Who's Victor Krum!?
+6-female_small_chest_is_visible,target:futaba=grumpy,....
 6-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
-6-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+6-female_small_chest_is_visible,target:futaba=awkward,Umm....
+6-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+6-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
+6-female_crotch_is_visible=awkward,That's... a lot of hair.
+6-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 6-female_crotch_is_visible=awkward,~silent~
 6-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
-6-female_crotch_is_visible=hooboy,I think I got a hard-on...
-6-female_crotch_is_visible=awkward,That's... a lot of hair.
-6-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+6-female_crotch_is_visible=aroused,I think I got a hard-on...
 
+-3-male_chest_is_visible=cheerful,Nice!
+-3-male_chest_is_visible=cheerful,No biggie. Just pretend you're at the beach.
+-3-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+-3-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+-3-male_crotch_will_be_visible=disgusted,Just get on with it.
+-3-male_crotch_will_be_visible=neutral,C'mon, it's your turn.
+-3-male_large_crotch_is_visible=startled,Holy shit!
+-3-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+-3-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+-3-male_large_crotch_is_visible=startled,HOLY SHIT!
+-3-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
 -3-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
--3-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
--3-female_small_chest_is_visible,target:futaba=blushing,....
+-3-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+-3-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+-3-female_small_chest_is_visible,target:futaba=grumpy,....
 -3-female_small_chest_is_visible,target:futaba=startled,It's like you don't even care!
--3-female_small_chest_is_visible,target:futaba=mamamia,Umm....
+-3-female_small_chest_is_visible,target:futaba=awkward,Umm....
+-3-female_small_chest_is_visible,target:futaba=awkward,It's fine if you have small tits, Futaba. Not like I care...
+-3-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 -3-female_crotch_is_visible=awkward,That's... a lot of hair.
--3-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+-3-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 -3-female_crotch_is_visible=awkward,~silent~
 -3-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
--3-female_crotch_is_visible=hooboy,I think I got a hard-on...
+-3-female_crotch_is_visible=aroused,I think I got a hard-on...
 
--2-male_chest_is_visible=hooboy,Oh wow....
--2-male_chest_is_visible=hooboy,Ohh...
--2-male_small_crotch_is_visible=hooboy,D-Doesn't matter... At all!
+-2-male_chest_is_visible=aroused,Oh wow....
+-2-male_chest_is_visible=aroused,Ohh...
+-2-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+-2-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+-2-male_crotch_will_be_visible=disgusted,Just get on with it.
+-2-male_crotch_will_be_visible=neutral,C'mon, it's your turn.
+-2-male_small_crotch_is_visible=awkward,D-Doesn't matter... At all!
 -2-male_small_crotch_is_visible=neutral,No judgement here.
 -2-male_small_crotch_is_visible=pissed,Don't you mock him!
+-2-male_large_crotch_is_visible=startled,Holy shit!
+-2-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+-2-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+-2-male_large_crotch_is_visible=startled,HOLY SHIT!
+-2-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
 -2-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
--2-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
--2-female_small_chest_is_visible=hooboy,Oh, <i>fuck!</i>!
--2-female_small_chest_is_visible=happy,S-Still really good.
--2-female_medium_chest_is_visible=hooboy,Oh, <i>fuck!</i>!
--2-female_medium_chest_is_visible=happy,Thank you lord...
--2-female_medium_chest_is_visible=hooboy,Oh wow!
--2-female_large_chest_is_visible=hooboy,Oh, <i>fuck!</i>!
--2-female_large_chest_is_visible=happy,Thank you, lord!
--2-female_large_chest_is_visible=hooboy,I-I would fuck those, dude! Holy shit!
+-2-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+-2-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+-2-female_small_chest_is_visible=masturbating_b,Oh, <i>fuck!</i>!
+-2-female_small_chest_is_visible=neutral,S-Still really good.
+-2-female_medium_chest_is_visible=aroused,Oh, <i>fuck!</i>!
+-2-female_medium_chest_is_visible=masturbating_b,Thank you lord...
+-2-female_medium_chest_is_visible=neutral,Oh wow!
+-2-female_large_chest_is_visible=cheerful,<i>Yes!</i>
+-2-female_large_chest_is_visible=masturbating_b,Thank you, lord!
+-2-female_large_chest_is_visible=aroused,I-I would fuck those, dude! Holy shit!
+-2-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 -2-female_crotch_is_visible=awkward,That's... a lot of hair.
--2-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
--2-female_crotch_is_visible=happy,So that's what...
+-2-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
+-2-female_crotch_is_visible=startled,So that's what...
 -2-female_crotch_is_visible=awkward,I-I've never seen a girl's pussy.
--2-female_crotch_is_visible=hooboy,<i>Hooooly shit.</i>
+-2-female_crotch_is_visible=masturbating_b,<i>Hooooly shit.</i>
 
--1-male_chest_is_visible=hooboy,Oh wow....
--1-male_chest_is_visible=hooboy,Ohh...
--1-male_small_crotch_is_visible=hooboy,D-Doesn't matter... At all!
+-1-male_chest_is_visible=cheerful,Nice!
+-1-male_chest_is_visible=cheerful,No biggie. Just pretend you're at the beach.
+-1-male_chest_is_visible,alsoPlaying:mettaton=startled,Wait, you got boobs too!?
+-1-male_chest_is_visible,alsoPlaying:mettaton=what,Woah...
+-1-male_crotch_will_be_visible=disgusted,Just get on with it.
+-1-male_crotch_will_be_visible=neutral,C'mon, it's your turn.
+-1-male_small_crotch_is_visible=awkward,D-Doesn't matter... At all!
 -1-male_small_crotch_is_visible=neutral,No judgement here.
 -1-male_small_crotch_is_visible=pissed,Don't you mock him!
+-1-male_large_crotch_is_visible=startled,Holy shit!
+-1-male_large_crotch_is_visible=startled,Daaaaamn, dude!
+-1-male_large_crotch_is_visible=startled,Hope you don't impale your girlfriend on that thing!
+-1-male_large_crotch_is_visible=startled,HOLY SHIT!
+-1-male_large_crotch_is_visible=what,I'm not sure whether to be impressed or grossed out.
 -1-female_chest_will_be_visible,alsoPlaying:futaba=awkward,Oh boy...
--1-female_chest_will_be_visible,alsoPlaying:futaba=awkward,I-I won't look!
--1-female_crotch_is_visible=awkward,That's... a lot of hair.
--1-female_crotch_is_visible=hooboy,Nothing wrong with body hair on a girl...
+-1-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,I know you're a perv and you wanted to play, but wouldn't Joker be upset?
+-1-female_chest_will_be_visible,alsoPlaying:futaba=disgusted,This game is kinda fucked up, y'know?
+-1-female_large_chest_is_visible,count-exhibitionist:1=cheerful,Well if you got 'em, flaunt 'em!
 -1-female_crotch_is_visible=awkward,~silent~
 -1-female_crotch_is_visible=awkward,I-I ain't havin' a boner! Nuh-uh, not me!
--1-female_crotch_is_visible=hooboy,I think I got a hard-on...
+-1-female_crotch_is_visible=aroused,I think I got a hard-on...
+-1-female_crotch_is_visible=awkward,That's... a lot of hair.
+-1-female_crotch_is_visible=aroused,Nothing wrong with body hair on a girl...
 
 
 
@@ -1255,231 +1868,267 @@ female_crotch_will_be_visible=hooboy,Did I just die and go to heaven?
 
 #stage-specific lines that override the stage-generic ones
 male_must_masturbate=awkward,Tough luck, dude.
-male_must_masturbate=startled,Woah!!
-male_must_masturbate=okie,C'mon, don't be chicken!
-male_start_masturbating=awkward,Just close your eyes and pretend you're at home.
-male_start_masturbating=blushing,Sorry, dude... I'll try not to watch.
-male_start_masturbating=hooboy,Oh...
-male_start_masturbating=mamamia,You're really...
+male_must_masturbate=disgusted,This game is weird.
+male_start_masturbating=cheerful,Just close your eyes and pretend you're at home.
+male_start_masturbating=awkward,Sorry, dude... I'll try not to watch.
+male_start_masturbating=awkward,Oh...
+male_start_masturbating=thinking,Huh.
 male_masturbating=awkward,I've never done it like THAT before.
 male_masturbating=awkward,Damn, you're really goin' at it...
-male_masturbating=hooboy,This is actually... really hot.
-male_masturbating=hooboy,I'm actually kind of turned on.
+male_masturbating=aroused,This is actually... really hot.
+male_masturbating=aroused,I'm actually kind of turned on.
+male_masturbating=cheerful,Try strokin' your balls a little.
+male_masturbating=cheerful,Try pinchin' your nipples... i-if you're into that kinda stuff.
 male_finished_masturbating=pissed,Can you not get that over me, dude?
-male_finished_masturbating=blushing,Jeez, man. Someone call a cleaning person or somethin'!
+male_finished_masturbating=disgusted,Jeez, man. Someone call a cleaning person or somethin'!
 male_finished_masturbating=awkward,Did you enjoy it at least?
 female_must_masturbate=awkward,I'll try not to look if that helps!
 female_must_masturbate=awkward,You're seriously gonna do it?
-female_must_masturbate=hooboy,Holy cow...
-female_start_masturbating=hooboy,W-Woah...
+female_must_masturbate=startled,Holy cow...
+female_start_masturbating=aroused,W-Woah...
+female_start_masturbating=awkward,I'll try not to look.
 female_finished_masturbating=awkward,Shit....
 female_finished_masturbating=awkward,Uhhh...
-female_finished_masturbating=hooboy,T-That was actually really hot.
-female_finished_masturbating=awkward,D-Did you enjoy it at least?
+female_finished_masturbating=aroused,T-That was actually really hot.
+female_finished_masturbating=cheerful,D-Did you enjoy it at least?
 
 
 #fully clothed
-0-male_must_masturbate,count-villain:1=smirk,Hah!
-0-male_must_masturbate,count-villain:1=grumpy,Trust me, I'd rather not look.
-0-male_must_masturbate,count-villain:1=smirk,How'd you like the taste of defeat, asshole?
-0-male_start_masturbating,count-villain:1=grumpy,Ugh.
-0-male_start_masturbating,count-villain:1=grumpy,Looking away now...
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,Ugh!
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=grumpy,...
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,...!
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=startled,Jesus, you're really going at it!
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,God!
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
-0-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,I'd rather be taking a midterm, honestly!
+0-male_must_masturbate,count-villain:1=confident,Hah!
+0-male_must_masturbate,count-villain:1=disgusted,Trust me, I'd rather not look.
+0-male_must_masturbate,count-villain:1=grumpy,How'd you like the taste of defeat, asshole?
+0-male_start_masturbating,count-villain:1=disgusted,Ugh.
+0-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Ugh!
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...!
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Jesus, you're really going at it!
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,God!
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'd rather be taking a midterm, honestly!
+0-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'm gonna hurl.
 0-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-0-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-0-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
-0-female_masturbating=awkward,This game, dude...
-0-female_masturbating=hooboy,Heh...
-0-female_masturbating=hooboy,That's really hot...
-0-female_masturbating=hooboy,So that's how...
+0-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+0-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
+0-female_masturbating=aroused,This game, dude...
+0-female_masturbating=aroused,<i>Awesome.</i>
+0-female_masturbating=aroused,That's really hot...
+0-female_masturbating=thinking,So that's how...
 0-female_masturbating=awkward,S-So that's....
 0-female_masturbating=awkward,I'm not looking! Promise!
-0-female_masturbating=hooboy,That's so hot...
-0-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-0-female_masturbating=hooboy,Best day of my life...
+0-female_masturbating=aroused,That's so hot...
+0-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+0-female_masturbating=cheerful,Best day of my life...
+0-female_finished_masturbating,alsoPlaying:nagisa=what,....
+0-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost blazer
-1-male_must_masturbate,count-villain:1=smirk,Hah!
-1-male_must_masturbate,count-villain:1=grumpy,Trust me, I'd rather not look.
-1-male_must_masturbate,count-villain:1=smirk,How'd you like the taste of defeat, asshole?
-1-male_start_masturbating,count-villain:1=grumpy,Ugh.
-1-male_start_masturbating,count-villain:1=grumpy,Looking away now...
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,Ugh!
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=grumpy,...
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,...!
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=startled,Jesus, you're really going at it!
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,God!
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
-1-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,I'd rather be taking a midterm, honestly!
+1-male_must_masturbate,count-villain:1=confident,Hah!
+1-male_must_masturbate,count-villain:1=disgusted,Trust me, I'd rather not look.
+1-male_must_masturbate,count-villain:1=grumpy,How'd you like the taste of defeat, asshole?
+1-male_start_masturbating,count-villain:1=disgusted,Ugh.
+1-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Ugh!
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...!
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Jesus, you're really going at it!
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,God!
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'd rather be taking a midterm, honestly!
+1-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'm gonna hurl.
 1-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-1-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-1-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
+1-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+1-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
+1-female_masturbating=aroused,This game, dude...
+1-female_masturbating=aroused,<i>Awesome.</i>
+1-female_masturbating=aroused,That's really hot...
+1-female_masturbating=thinking,So that's how...
 1-female_masturbating=awkward,S-So that's....
 1-female_masturbating=awkward,I'm not looking! Promise!
-1-female_masturbating=hooboy,That's so hot...
-1-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-1-female_masturbating=hooboy,Best day of my life...
-1-female_masturbating=awkward,This game, dude...
-1-female_masturbating=hooboy,Heh...
-1-female_masturbating=hooboy,That's really hot...
-1-female_masturbating=hooboy,So that's how...
+1-female_masturbating=aroused,That's so hot...
+1-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+1-female_masturbating=cheerful,Best day of my life...
+1-female_finished_masturbating,alsoPlaying:nagisa=what,....
+1-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost sneakers
-2-male_must_masturbate,count-villain:1=smirk,Hah!
-2-male_must_masturbate,count-villain:1=grumpy,Trust me, I'd rather not look.
-2-male_must_masturbate,count-villain:1=smirk,How'd you like the taste of defeat, asshole?
-2-male_start_masturbating,count-villain:1=grumpy,Ugh.
-2-male_start_masturbating,count-villain:1=grumpy,Looking away now...
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,Ugh!
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=grumpy,...
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,...!
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=startled,Jesus, you're really going at it!
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,God!
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
-2-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,I'd rather be taking a midterm, honestly!
+2-male_must_masturbate,count-villain:1=confident,Hah!
+2-male_must_masturbate,count-villain:1=disgusted,Trust me, I'd rather not look.
+2-male_must_masturbate,count-villain:1=grumpy,How'd you like the taste of defeat, asshole?
+2-male_start_masturbating,count-villain:1=disgusted,Ugh.
+2-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Ugh!
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...!
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Jesus, you're really going at it!
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,God!
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'd rather be taking a midterm, honestly!
+2-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'm gonna hurl.
 2-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-2-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-2-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
+2-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+2-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
+2-female_masturbating=aroused,This game, dude...
+2-female_masturbating=aroused,<i>Awesome.</i>
+2-female_masturbating=aroused,That's really hot...
+2-female_masturbating=thinking,So that's how...
 2-female_masturbating=awkward,S-So that's....
 2-female_masturbating=awkward,I'm not looking! Promise!
-2-female_masturbating=hooboy,That's so hot...
-2-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-2-female_masturbating=hooboy,Best day of my life...
-2-female_masturbating=awkward,This game, dude...
-2-female_masturbating=hooboy,Heh...
-2-female_masturbating=hooboy,That's really hot...
-2-female_masturbating=hooboy,So that's how...
+2-female_masturbating=aroused,That's so hot...
+2-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+2-female_masturbating=cheerful,Best day of my life...
+2-female_masturbating,target:launch=awkward,Can you at least drop the gun?
+2-female_finished_masturbating,alsoPlaying:nagisa=what,....
+2-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost socks
-3-male_start_masturbating,count-villain:1=grumpy,Ugh.
-3-male_start_masturbating,count-villain:1=grumpy,Looking away now...
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,Ugh!
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=grumpy,...
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,...!
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=startled,Jesus, you're really going at it!
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,God!
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
-3-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,I'd rather be taking a midterm, honestly!
+3-male_start_masturbating,count-villain:1=disgusted,Ugh.
+3-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Ugh!
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...!
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Jesus, you're really going at it!
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,God!
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'd rather be taking a midterm, honestly!
+3-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'm gonna hurl.
 3-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-3-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-3-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
-3-female_masturbating=awkward,This game, dude...
-3-female_masturbating=hooboy,Heh...
-3-female_masturbating=hooboy,That's really hot...
-3-female_masturbating=hooboy,So that's how...
+3-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+3-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
+3-female_masturbating=aroused,This game, dude...
+3-female_masturbating=aroused,<i>Awesome.</i>
+3-female_masturbating=aroused,That's really hot...
+3-female_masturbating=thinking,So that's how...
 3-female_masturbating=awkward,S-So that's....
 3-female_masturbating=awkward,I'm not looking! Promise!
-3-female_masturbating=hooboy,That's so hot...
-3-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-3-female_masturbating=hooboy,Best day of my life...
+3-female_masturbating=aroused,That's so hot...
+3-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+3-female_masturbating=cheerful,Best day of my life...
+3-female_finished_masturbating,alsoPlaying:nagisa=what,....
+3-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost belt
-4-male_start_masturbating,count-villain:1=grumpy,Ugh.
-4-male_start_masturbating,count-villain:1=grumpy,Looking away now...
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,Ugh!
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=grumpy,...
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,...!
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=startled,Jesus, you're really going at it!
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=disgusted,God!
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
-4-male_masturbating,totalRounds:0,priority:300,count-villain:1=pissed,I'd rather be taking a midterm, honestly!
+4-male_start_masturbating,count-villain:1=disgusted,Ugh.
+4-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Ugh!
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,...!
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,Jesus, you're really going at it!
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,God!
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=pissed,Will you not moan so loudly please?
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'd rather be taking a midterm, honestly!
+4-male_masturbating,totalRounds:0-15,priority:300,count-villain:1=disgusted,I'm gonna hurl.
 4-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-4-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-4-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
+4-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+4-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
 4-female_masturbating=awkward,S-So that's....
 4-female_masturbating=awkward,I'm not looking! Promise!
-4-female_masturbating=hooboy,That's so hot...
-4-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-4-female_masturbating=hooboy,Best day of my life...
-4-female_masturbating=awkward,This game, dude...
-4-female_masturbating=hooboy,Heh...
-4-female_masturbating=hooboy,That's really hot...
-4-female_masturbating=hooboy,So that's how...
+4-female_masturbating=aroused,That's so hot...
+4-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+4-female_masturbating=cheerful,Best day of my life...
+4-female_masturbating=aroused,This game, dude...
+4-female_masturbating=aroused,<i>Awesome.</i>
+4-female_masturbating=aroused,That's really hot...
+4-female_masturbating=thinking,So that's how...
+4-female_finished_masturbating,alsoPlaying:nagisa=what,....
+4-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost shirt
-5-male_start_masturbating,count-villain:1=grumpy,Ugh.
-5-male_start_masturbating,count-villain:1=grumpy,Looking away now...
+5-male_start_masturbating,count-villain:1=disgusted,Ugh.
+5-male_start_masturbating,count-villain:1=disgusted,Looking away now...
 5-female_start_masturbating,target:hermione,targetStage:9=startled,Wh... What are you doing!?
-5-female_start_masturbating,target:hermione,targetStage:9=forreal,WOAAAAH!!
-5-female_start_masturbating,target:hermione,targetStage:9=forreal,Y-You're using m-magic to... WHAT!?
+5-female_start_masturbating,target:hermione,targetStage:9=shrug,WOAAAAH!!
+5-female_start_masturbating,target:hermione,targetStage:9=startled,Y-You're using m-magic to... WHAT!?
 5-female_masturbating=awkward,S-So that's....
 5-female_masturbating=awkward,I'm not looking! Promise!
-5-female_masturbating=hooboy,That's so hot...
-5-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-5-female_masturbating=hooboy,Best day of my life...
-5-female_masturbating=awkward,This game, dude...
-5-female_masturbating=hooboy,Heh...
-5-female_masturbating=hooboy,That's really hot...
-5-female_masturbating=hooboy,So that's how...
+5-female_masturbating=aroused,That's so hot...
+5-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+5-female_masturbating=cheerful,Best day of my life...
+5-female_masturbating=aroused,This game, dude...
+5-female_masturbating=aroused,<i>Awesome.</i>
+5-female_masturbating=aroused,That's really hot...
+5-female_masturbating=thinking,So that's how...
+5-female_finished_masturbating,alsoPlaying:nagisa=what,....
+5-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 #lost pants
-6-male_start_masturbating,count-villain:1=grumpy,Ugh.
-6-male_start_masturbating,count-villain:1=grumpy,Looking away now...
+6-male_start_masturbating,count-villain:1=disgusted,Ugh.
+6-male_start_masturbating,count-villain:1=disgusted,Looking away now...
+6-female_masturbating=aroused,This game, dude...
+6-female_masturbating=aroused,<i>Awesome.</i>
+6-female_masturbating=aroused,That's really hot...
+6-female_masturbating=thinking,So that's how...
 6-female_masturbating=awkward,S-So that's....
 6-female_masturbating=awkward,I'm not looking! Promise!
-6-female_masturbating=hooboy,That's so hot...
-6-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
-6-female_masturbating=hooboy,Best day of my life...
-6-female_masturbating=awkward,This game, dude...
-6-female_masturbating=hooboy,Heh...
-6-female_masturbating=hooboy,That's really hot...
-6-female_masturbating=hooboy,So that's how...
+6-female_masturbating=aroused,That's so hot...
+6-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+6-female_masturbating=cheerful,Best day of my life...
+6-female_finished_masturbating,alsoPlaying:nagisa=what,....
+6-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
+-3-female_masturbating=aroused,This game, dude...
+-3-female_masturbating=aroused,<i>Awesome.</i>
+-3-female_masturbating=aroused,That's really hot...
+-3-female_masturbating=thinking,So that's how...
 -3-female_masturbating=awkward,S-So that's....
 -3-female_masturbating=awkward,I'm not looking! Promise!
--3-female_masturbating=hooboy,That's so hot...
--3-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
--3-female_masturbating=hooboy,Best day of my life...
--3-female_masturbating=awkward,This game, dude...
--3-female_masturbating=hooboy,Heh...
--3-female_masturbating=hooboy,That's really hot...
--3-female_masturbating=hooboy,So that's how...
+-3-female_masturbating=aroused,That's so hot...
+-3-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+-3-female_masturbating=cheerful,Best day of my life...
+-3-female_finished_masturbating,alsoPlaying:nagisa=what,....
+-3-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 -2-male_must_masturbate=neutral,At least w-we're in this together...
--2-male_must_masturbate=pissed,Just join me already!
--2-male_must_masturbate=happy,I'm doing it too, don't worry.
+-2-male_must_masturbate=disgusted,Just join me already!
+-2-male_must_masturbate=neutral,I'm doing it too, don't worry.
+-2-male_must_masturbate=cheerful,Join the boner squad!
 -2-male_start_masturbating=neutral,Hahaha, yeah! Boner squad unite!
 -2-male_start_masturbating=neutral,We're in this together, man!
--2-male_start_masturbating=happy,A-At least you can join me.
--2-male_finished_masturbating=hooboy,I'm still...
--2-male_finished_masturbating=happy,I'll j-join you too, don't worry
--2-male_finished_masturbating=hooboy,So hot!
--2-female_must_masturbate=happy,A-At least we're in this together.
--2-female_must_masturbate=masturbating,~silent~
--2-female_must_masturbate=masturbating,S-Sorry...
+-2-male_start_masturbating=masturbating_b,And away we--<i>ah!</i>
+-2-male_masturbating=masturbating_b,That's it...!
+-2-male_masturbating,count-villain:1=disgusted,...
+-2-male_masturbating,count-villain:1=disgusted,Don't... ruin this... for me...
+-2-male_masturbating,count-villain:1=pissed,Well this is just fuckin' peachy!
+-2-male_masturbating,count-villain:1=pissed,This isn't the shit a Phantom Thief would do, jacking off with a villain! I should be stealin' your heart!
+-2-male_finished_masturbating=masturbating_a,I'm still...
+-2-male_finished_masturbating=cheerful,I'll j-join you too, don't worry
+-2-male_finished_masturbating=masturbating_b,So hot!
+-2-male_finished_masturbating,count-villain:1=disgusted,Real boner-killer. dude...
+-2-male_finished_masturbating,count-villain:1=disgusted,...
+-2-female_must_masturbate=masturbating,A-At least we're in this together.
+-2-female_must_masturbate=awkward,~silent~
+-2-female_must_masturbate=awkward,S-Sorry...
 -2-female_masturbating=awkward,S-So that's....
 -2-female_masturbating=awkward,I'm not looking! Promise!
--2-female_masturbating=hooboy,That's so hot...
--2-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
--2-female_masturbating=hooboy,Best day of my life...
--2-female_masturbating=happy,<i>So hot...</i>
--2-female_masturbating=hooboy,This is really hot...
--2-female_masturbating=hooboy,This ain't half-bad.
--2-female_masturbating=hooboy,<i>Oh yes...</i>
+-2-female_masturbating=aroused,That's so hot...
+-2-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+-2-female_masturbating=cheerful,Best day of my life...
+-2-female_masturbating=masturbating_b,<i>So hot...</i>
+-2-female_masturbating=awkward,You're really pretty like that, y'know...
+-2-female_masturbating=aroused,I love this game!
+-2-female_masturbating=masturbating_b,<i>Oh yes...</i>
 -2-female_masturbating=masturbating,At least w-we're in this together...
--2-female_masturbating=hooboy,So hot...
--2-female_masturbating=happy,This is gonna make things so much easier...
+-2-female_masturbating=masturbating_b,So hot...
+-2-female_masturbating=cheerful,This is gonna make things so much easier...
+-2-female_finished_masturbating,alsoPlaying:nagisa=what,....
+-2-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
--1-male_must_masturbate=blushing,I did my part, dude. Now do yours.
--1-male_must_masturbate=blushing,I won't look.
+-1-male_must_masturbate=disgusted,I did my part, dude. Now do yours.
+-1-male_must_masturbate=awkward,I won't look.
 -1-female_masturbating=awkward,S-So that's....
 -1-female_masturbating=awkward,I'm not looking! Promise!
--1-female_masturbating=hooboy,That's so hot...
--1-female_masturbating=hooboy,I can't believe I'm watching a chick masturbate!
--1-female_masturbating=hooboy,Best day of my life...
--1-female_masturbating=blushing,Too bad I already came...
+-1-female_masturbating=aroused,That's so hot...
+-1-female_masturbating=aroused,I can't believe I'm watching a chick masturbate!
+-1-female_masturbating=cheerful,Best day of my life...
+-1-female_masturbating=aroused,Too bad I already came...
+-1-female_finished_masturbating,alsoPlaying:nagisa=what,....
+-1-female_finished_masturbating,alsoPlaying:nagisa=what,That's kinda fucked up.
 
 
 
@@ -1488,44 +2137,59 @@ female_finished_masturbating=awkward,D-Did you enjoy it at least?
 #If your character is naked and loses a hand, they have lost the game and must masturbate.
 #These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
--3-must_masturbate_first=forreal,S-Seriously!?
+-3-must_masturbate_first=startled,S-Seriously!?
 -3-must_masturbate_first=pissed,W-What the FUCK, man!?
--3-must_masturbate_first=forreal,I-I have to WHAT!?
--3-must_masturbate_first=forreal,For real!?
+-3-must_masturbate_first=startled,I-I have to WHAT!?
+-3-must_masturbate_first=startled,For real!?
 -3-must_masturbate=startled,I-I have to WHAT!?
--3-must_masturbate=forreal,S-Seriously!?
--3-must_masturbate=blushing,A-At least I ain't the first.
--3-must_masturbate=blushing,A-At least I ain't the first loser...
--3-start_masturbating=blushing,F-Fine.
--3-start_masturbating=pissed,You guys are disgusting!
--3-start_masturbating=blushing,Ugh, <i>in front of everyone?</i>
+-3-must_masturbate=startled,S-Seriously!?
+-3-must_masturbate=awkward,A-At least I ain't the first.
+-3-must_masturbate=awkward,A-At least I ain't the first loser...
+-3-start_masturbating=disgustedd,F-Fine.
+-3-start_masturbating=disgustedd,You guys are disgusting!
+-3-start_masturbating=disgustedd,Ugh, <i>in front of everyone?</i>
 
 -2-masturbating=masturbating,Ummm...
--2-masturbating=awkward,Woah...
+-2-masturbating=masturbating,Woah...
 -2-masturbating=masturbating,So awkward...
--2-masturbating=happy,T-This ain't so bad...
--2-masturbating=hooboy,This is...
+-2-masturbating=neutral,T-This ain't so bad...
+-2-masturbating=masturbating_a,This is...
 -2-masturbating=masturbating,I've done this before, but never in a crowd.
--2-masturbating=pissed,Stop starin'!
--2-masturbating=happy,D-Don't mind me...
--2-masturbating=hooboy,Ah...
--2-masturbating=happy,Hahahaha....
--2-heavy_masturbating=hooboy,Oh yes, <i>yes!</i>
--2-heavy_masturbating=hooboy,I-I think I'm close.
--2-heavy_masturbating=hooboy,Ohhh...
--2-heavy_masturbating=hooboy,Fuck!
--2-heavy_masturbating=hooboy,Shit, oh fuck!
--2-heavy_masturbating=hooboy,A-Ah, fuck!
--2-finishing_masturbating=finishing,PERRRSONAAAAA!
--2-finishing_masturbating=finishing,FUCK YEAAAAH!
--2-finishing_masturbating=finishing,Yes, yes, YES! YESSSS!
--2-finishing_masturbating=finishing,OH FUUUCK!
+-2-masturbating=disgusted,Stop starin'!
+-2-masturbating=masturbating,D-Don't mind me...
+-2-masturbating=aroused,Ah...
+-2-masturbating=neutral,Ahahaha....
+-2-masturbating=masturbating_a,Sorry....
+-2-masturbating=awkward,I can't tell if you're enjoyin' it or not...
+-2-masturbating=masturbating_a,Mmph--!
+-2-masturbating=masturbating_a,<i>(whimper)</i>
+-2-masturbating,totalMasturbating:2-4=cheerful,Now rthat's a party!
+-2-heavy_masturbating=masturbating_b,Oh yes, <i>yes!</i>
+-2-heavy_masturbating=masturbating_b,I-I think I'm close.
+-2-heavy_masturbating=masturbating_a,Ohhh...
+-2-heavy_masturbating=aroused,Fuck!
+-2-heavy_masturbating=masturbating_a,Shit, oh fuck!
+-2-heavy_masturbating=masturbating_a,A-Ah, fuck!
+-2-heavy_masturbating=neutral,Help me out...
+-2-heavy_masturbating=cheerful,This is great
+-2-heavy_masturbating=masturbating_b,Oh!
+-2-heavy_masturbating=masturbating_a,I'm gonna...!
+-2-finishing_masturbating=finishing,YEAAAH!!
+-2-finishing_masturbating=finishing,Yes, yes, OH YES!
+-2-finishing_masturbating=finishing,Oh <i>fuuuuck!</i>
+-2-finishing_masturbating=finishing,I'M CUMMING! I'M CUMMING!!
 
 -1-finished_masturbating=awkward,Sorry 'bout that.
 -1-finished_masturbating=startled,That was way more than I thought...
--1-finished_masturbating=awkward,W-Woah...
--1-finished_masturbating=hooboy,That was... actually pretty awesome!
+-1-finished_masturbating=aroused,W-Woah...
+-1-finished_masturbating=cheerful,That was... actually pretty awesome!
 -1-finished_masturbating=pissed,Don't mention this to Joker!
+-1-finished_masturbating=awkward,Anyone wanna take a trip down to the hot springs... A-Anyone?
+-1-finished_masturbating=disgusted,...Does this place have a cleanin' person?
+-1-finished_masturbating=disgusted,Eugh. How many people came on this floor?
+-1-finished_masturbating=disgusted,What is this place anyways?
+-1-finished_masturbating=grumpy,Well, I masturbated in front of everyone. You're welcome.
+-1-finished_masturbating=awkward,Does that mean I lost?
 
 
 
@@ -1534,69 +2198,81 @@ female_finished_masturbating=awkward,D-Did you enjoy it at least?
 
 #stage-generic line that will be used for every individual stage that doesn't have a line written
 
-#stage-specific lines that override the stage-generic ones
-game_over_victory=awkward,Shit... That was <i>close</i>.
-game_over_victory=blushing,Doesn't matter, I still lost my dignity here.
-game_over_victory=blushing,At least I won...
-
-
 #fully clothed
+0-game_over_victory=confident,Hah, too easy! I barely took off anything!
+0-game_over_victory=confident,Damn, you guys suck!
+0-game_over_victory=confident,Hah!
 0-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
 0-game_over_victory=allout,Hah! Skull represent!
 0-game_over_victory=allout,Woohoohoo, I won!
-0-game_over_victory=allout,Hah, suck it!
-0-game_over_victory=smirk,Hah, too easy! I barely took off anything!
-0-game_over_victory=smirk,Damn, you guys suck!
-0-game_over_victory=smirk,Hah!
+0-game_over_victory=allout,I expected your expectations, didn't I?
 
 
 #lost blazer
 1-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
 1-game_over_victory=allout,Hah! Skull represent!
 1-game_over_victory=allout,Woohoohoo, I won!
-1-game_over_victory=allout,Hah, suck it!
-1-game_over_victory=smirk,Hah, too easy! I barely took off anything!
-1-game_over_victory=smirk,Damn, you guys suck!
-1-game_over_victory=smirk,Hah!
+1-game_over_victory=allout,I expected your expectations, didn't I?
+1-game_over_victory=confident,Hah, too easy! I barely took off anything!
+1-game_over_victory=confident,Damn, you guys suck!
+1-game_over_victory=confident,Hah!
 
 
 #lost sneakers
 2-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
 2-game_over_victory=allout,Hah! Skull represent!
 2-game_over_victory=allout,Woohoohoo, I won!
-2-game_over_victory=allout,Hah, suck it!
-2-game_over_victory=smirk,Hah, too easy! I barely took off anything!
-2-game_over_victory=smirk,Damn, you guys suck!
-2-game_over_victory=smirk,Hah!
+2-game_over_victory=allout,I expected your expectations, didn't I?
+2-game_over_victory=confident,Hah, too easy! I barely took off anything!
+2-game_over_victory=confident,Damn, you guys suck!
+2-game_over_victory=confident,Hah!
 
 
 #lost socks
 3-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
 3-game_over_victory=allout,Hah! Skull represent!
 3-game_over_victory=allout,Woohoohoo, I won!
-3-game_over_victory=allout,Hah, suck it!
+3-game_over_victory=allout,I expected your expectations, didn't I?
 
 
 #lost belt
 4-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
 4-game_over_victory=allout,Hah! Skull represent!
 4-game_over_victory=allout,Woohoohoo, I won!
-4-game_over_victory=allout,Hah, suck it!
+4-game_over_victory=allout,I expected your expectations, didn't I?
 
 
 #lost shirt
-5-game_over_victory=allout,Wooo! One point to the Phantom Thieves!
-5-game_over_victory=allout,Hah! Skull represent!
-5-game_over_victory=allout,Woohoohoo, I won!
-5-game_over_victory=allout,Hah, suck it!
+5-game_over_victory=cheerful,So I got to show off <i>and</i> see people naked and masterbatin'? This was a good day!
+5-game_over_victory=cocky,Let's be real, you didn't think I'd win, did ya?
+5-game_over_victory=pumped,We GOTTA play again sometime!
+
+
+#lost pants
+6-game_over_victory=awkward,Shit... That was <i>close</i>.
+6-game_over_victory=cheerful,Phew! That was close!
+6-game_over_victory=awkward,At least I won...
+6-game_over_victory=what,Hoooly shit, that was close!
+6-game_over_victory=awkward,At least I didn't have to jerk off in front of everyone.
+
+-3-game_over_victory=awkward,Shit... That was <i>close</i>.
+-3-game_over_victory=cheerful,Phew! That was close!
+-3-game_over_victory=awkward,At least I won...
+-3-game_over_victory=what,Hoooly shit, that was close!
+-3-game_over_victory=awkward,At least I didn't have to jerk off in front of everyone.
 
 
 
 
 #GAME OVER DEFEAT
 game_over_defeat=awkward,G-Good game.
-game_over_defeat=mamamia,I'm so embarassed...
+game_over_defeat=aroused,At least I wasn't the only one.
 game_over_defeat=awkward,A-At least we had a good time. Right? <i>Right?</i>
-game_over_defeat=blushing,I'm out, man.
+game_over_defeat=disgusted,I'm out, man.
+game_over_defeat=disgusted,The hell kinda poker is this?
+game_over_defeat,target:futaba,targetStage:6=startled,No you didn't!
+game_over_defeat,target:ann,targetStage:0-7=grumpy,You're never gonna let me live this down, are ya Ann?
+game_over_defeat,target:ann,targetStage:0-7=neutral,Ughhhhhhhh!
+game_over_defeat,target:futaba,targetStage:0-5=blushing,You won, Futaba. Don't rub It in my face.
 
 #EPILOGUE/ENDING
