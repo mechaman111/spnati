@@ -65,6 +65,15 @@ marker=nagisa_kanji,public,When introducing herself when Marinette is present, s
 marker=nagisa_kyu_showing_panties,public,When the game starts, Nagisa is alarmed that Kyu's panties are already visible.
 marker=nagisa_legs_apart_query,public,Nagisa questions whether she's required to sit with her legs apart after losing.
 marker=nagisa_little_sister,public,Nagisa wants a little sister like the innocent female who removed a minor item.
+marker=nagisa_mahiru_camera_0,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_1,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_2,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_3,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_4,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_5,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_6,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_7,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
+marker=nagisa_mahiru_camera_9,public,Nagisa reacts differently to Mahiru's camera depending on her state of undress.
 marker=nagisa_maid,public,Nagisa gets along fine without a maid.
 marker=nagisa_meanie,private,Nagisa calls out a meanie.
 marker=nagisa_meia_blue_hair,public,Meia and her short blue hair remind Nagisa of Tomoya, a boy who is a friend.
@@ -73,6 +82,7 @@ marker=nagisa_pit_perfect_body,public,Defeated Nagisa asks Pit if he has a perfe
 marker=nagisa_played_tomoyo_after,public,Nagisa claims to have played the Tomoyo After game.
 marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce that she didn't realize that boys would be playing too.
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
+marker=nagisa_revy_mean_gun_lady,public,Nagisa dares to call Revy the "mean gun lady" while the latter is masturbating.
 marker=nagisa_saki_read_manga,public,Did Nagisa read Emergence? Surely not.
 marker=nagisa_skirt_in_danger,private,Nagisa doesn't know how she got into this mess.
 marker=nagisa_student_council_president,public,In an episode of Clannad, Nagisa's friends win school sporting games to advertise their friend for Student Council President.
@@ -348,7 +358,7 @@ clothes=Panties,panties,important,lower
 
 5-good_hand,alsoPlaying:zizou,alsoPlayingStage:6,notSaidMarker:nagisa_zizou_amulet,marker:nagisa_zizou_amulet=veryembarrassed,You can take off your amulet next if want, Zizou. Because it's either that or...
 5-bad_hand,alsoPlaying:elena,alsoPlayingStage:5,count-nagisa_valentine:0,priority:0=veryembarrassed,Princess, um... could you make a law against this game? Or should I have asked before you dropped your scepter?
-5-bad_hand,alsoPlaying:tracer,priority:0,count-nagisa_valentine:0,priority:0=veryembarrassed,Is it true that you can rewind time, Tracer? Maybe to about fifteen minutes ago?
+5-bad_hand,alsoPlaying:tracer,count-nagisa_valentine:0,priority:0=veryembarrassed,Is it true that you can rewind time, Tracer? Maybe to about fifteen minutes ago?
 
 #lost 6 items: topless
 6-good_hand=happy,It's all right. I was pretty scared for a second there, though.
@@ -364,7 +374,7 @@ clothes=Panties,panties,important,lower
 #lost all clothing
 -3-good_hand=happy,Yay! These are really good cards!
 -3-good_hand=embarrassed,For a second there, I was afraid I was going to have to do... that.
--3-good_hand=shocked,I just realized what I'm going to see if I win! Oh no!
+-3-good_hand,totalMasturbating:0,totalFinished:0,priority:0=shocked,I just realized what I'm going to see if I win! Oh no!
 -3-okay_hand=embarrassed,I have something, at least.
 -3-okay_hand=worried,This is okay, I guess.
 -3-okay_hand=determined,Just because I lost my clothes doesn't mean I should give up without a fight!
@@ -377,8 +387,10 @@ clothes=Panties,panties,important,lower
 -3-okay_hand,totalNaked:5,totalMasturbating:0,totalFinished:0=veryembarrassed,I'm not sure if I can do this. Maybe I should try to picture everyone with their clothes on.
 -3-bad_hand,totalNaked:5,totalMasturbating:0,totalFinished:0=maximumembarrassed,But... but I was so close!
 
+-3-good_hand,alsoPlaying:futaba,alsoPlayingStage:6,priority:0=happy,I think I'm going to make if through this round. Will you be okay too, Futaba?
+-3-bad_hand,alsoPlaying:futaba,alsoPlayingStage:6,priority:0=veryembarrassed,It's probably going to be you or me, Futaba. It was nice playing with you.
 -3-bad_hand,alsoPlaying:kyu,priority:0=nervous,Kyu, if you can grant wishes, I really think I need your help!
--3-bad_hand,alsoPlaying:revy,alsoPlayingStage:8,totalFinished:1-3,priority:0=nervous,Even the mean gun lady is doing it... Do I even have a chance?
+-3-bad_hand,alsoPlaying:revy,alsoPlayingStage:8,totalFinished:1-3,priority:0,notSaidMarker:nagisa_revy_mean_gun_lady,marker:nagisa_revy_mean_gun_lady=nervous,Even the mean gun lady is doing it... Do I even have a chance?
 
 
 
@@ -404,7 +416,7 @@ clothes=Panties,panties,important,lower
 1-must_strip_normal=shy,No, it's okay. I don't mind taking my socks off.
 1-must_strip_losing=sad,I'm a complete amateur.
 1-stripping=strip,This is kinda fun!
-2-stripped=calm,The ground isn't as cold as I expected.
+2-stripped=calm,That wasn't hard at all.
 2-stripped,alsoPlaying:hermione,alsoPlayingStage:0=calm,I'm fine, Hermione. Thank you for asking!
 
 #losing jacket (accessory)
@@ -684,6 +696,15 @@ clothes=Panties,panties,important,lower
 1-female_must_strip,target:lara,targetStage:0=happy,Lara, you're from England, aren't you? It would be fun to visit there someday!
 2-female_must_strip,target:lara,targetStage:0=handsbehindback,Lara, you're from England, aren't you? It would be fun to visit there someday!
 3-female_must_strip,target:lara,targetStage:0=thinking,Lara, you're from England, aren't you? It would be fun to visit there someday!
+0-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_0=thinking,I thinking putting down the camera would be a good idea.
+1-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_1=raisedhand,Does anyone else feel weird with a camera around?
+2-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_2=shy,You're not going to be taking any photos of me, are you?
+3-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_3=shy,I'd really appreciate it if you weren't holding your camera now.
+4-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_4=shy,I don't think it's right to bring a camera to a game like this.
+5-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_5=veryembarrassed,You don't really have film in that camera, do you?
+6-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_6=peaceful,You're so funny, Mahiru. I like your pretend camera.
+-3-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_7=rear,Let me know when Mahiru is going to take photos so that I can turn around.
+-1-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_9=embarrassed,You're... you're not going to share your photos with anyone, right?
 0-female_must_strip,target:may,targetStage:0=happy,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
 1-female_must_strip,target:may,targetStage:0=singing,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
 2-female_must_strip,target:may,targetStage:0=happy,I like your hair, May. I should try to style mine like yours, but it always sticks up at the front...
@@ -1389,7 +1410,7 @@ clothes=Panties,panties,important,lower
 2-male_large_crotch_is_visible=maximumembarrassed,I'm feeling really lightheaded. Please catch me if I faint. Um, not you, ~name~...
 
 2-female_chest_will_be_visible=sad,After all that, I wouldn't blame you if you hated me.
-2-female_small_chest_is_visible=veryembarrassed,It's okay, ~name~. I was just like you. You just have a bit more growing to do.
+2-female_small_chest_is_visible=worried,It's okay, ~name~. I was just like you. You just have a bit more growing to do.
 2-female_medium_chest_is_visible=sad,I'm sorry that you had to do this because of me...
 2-female_large_chest_is_visible=sad,I'm no good at all. I don't have what boys want like you do, ~name~.
 2-female_crotch_will_be_visible=embarrassed,Isn't there anything else at all you can choose?
@@ -1877,6 +1898,7 @@ heavy_masturbating=eyesopentwofingersin,<i>A-and then, as if answering the girl'
 heavy_masturbating=calm,<i>If we try hard enough, w-with time, we may be able to make something truly wonderful!</i>
 heavy_masturbating=eyesopentwofingersin,<i>W-what is this light? I would not know a sight like this.</i>
 heavy_masturbating=twofingersin,<i>S-somewhere, far far away, there was another world for them to live in - one full of warmth and life.</i>
+heavy_masturbating=handinfist,<i>At every turn, f-feelings of doubt still haunt her.</i>
 finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Ahhh! Ahhh!
 finishing_masturbating=finishing,<i>My long journey has finally come to an end.</i> Oh... omigosh...
 finished_masturbating,notSaidMarker:nagisa_finished_1,marker:nagisa_finished_1,count-nagisa_valentine:0=embarrassed,Oh! Forget you saw anything today, please? Please, please?
@@ -1890,6 +1912,9 @@ finished_masturbating,saidMarker:nagisa_finished_2=embarrassed,Don't tell my fri
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,Now that I have nothing left to lose, waiting's not so hard.
 finished_masturbating,saidMarker:nagisa_finished_2=closedeyes,I guess I'm braver than I thought.
 finished_masturbating,saidMarker:nagisa_finished_2,notSaidMarker:nagisa_hairclips,marker:nagisa_hairclips,priority:0=unsure,Could... could I have used my hairclips as a piece of clothing?
+finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:futaba,alsoPlayingStage:6,priority:0=peaceful,You're so brave, Futaba!
+finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:futaba,alsoPlayingStage:6,priority:0=determined,You can do it, Futaba! I believe in you.
+finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:futaba,alsoPlayingStage:6,priority:0=embarrassed,Don't pick on Futaba. She's doing her best.
 finished_masturbating,saidMarker:nagisa_finished_2,alsoPlaying:kyu,priority:0=embarrassed,Kyu, were you... were you making fun of me during my play?
 finished_masturbating,saidMarker:nagisa_finished_2,totalNaked:5,priority:0=embarrassed,If it's not too much to ask, could we all maybe cover ourselves with our hands?
 finished_masturbating,saidMarker:nagisa_finished_2,totalNaked:5,priority:0=closedeyes,When I close my eyes, it's almost like I'm not in a room full of people with no clothes on.
