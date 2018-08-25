@@ -69,6 +69,9 @@ namespace SPNATI_Character_Editor
 
 	public class Group
 	{
+		[XmlAttribute("testing")]
+		[DefaultValue(false)]
+		public bool Test;
 		[XmlAttribute("title")]
 		public string Name;
 		[XmlAttribute("opp1")]
