@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -16,21 +17,24 @@ namespace SPNATI_Character_Editor
 			string dir = Path.Combine(Config.GameDirectory, "opponents");
 			string filename = Path.Combine(dir, "listing.xml");
 			XmlSerializer serializer = new XmlSerializer(typeof(Listing), "");
-			TextWriter writer = null;
+			XmlWriter writer = null;
 			try
 			{
-				writer = new StreamWriter(filename);
+				XmlWriterSettings settings = new XmlWriterSettings();
+				settings.IndentChars = "\t";
+				settings.Indent = true;
+				settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+				writer = XmlWriter.Create(filename, settings);
 				serializer.Serialize(writer, listing);
-
 				writer.Close();
 
 				//Manually clean up the file to put the comments back. Doing this instead of a custom serializer since I'm lazy
 				string contents = File.ReadAllText(filename);
-				contents = contents.Replace("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"", "");
+				contents = contents.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"", "");
 				int index = contents.IndexOf(">");
-				contents = contents.Substring(0, index + 1) + "\r\n<!-- This file contains listings for all of the opponents in the game. It is used to compile the opponents on the select screen. -->" + contents.Substring(index + 1);
-				contents = contents.Replace("<individuals>", "\r\n    <!-- Individual Listings -->\r\n    <individuals>");
-				contents = contents.Replace("<groups>", "\r\n    <!-- Group Listings -->\r\n    <groups>");
+				contents = contents.Substring(0, index + 1) + "\r\n<!--\r\n This file contains listings for all of the opponents in the game.\r\n It is used to compile the opponents on the select screen.\r\n -->\r\n" + contents.Substring(index + 1);
+				contents = contents.Replace("\t<individuals>", "\r\n\t<!-- Individual Listings -->\r\n\t<individuals>");
+				contents = contents.Replace("\t<groups>", "\r\n\t<!-- Group Listings -->\r\n\t<groups>");
 				File.WriteAllText(filename, contents);
 			}
 			catch (IOException e)
