@@ -284,6 +284,8 @@
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.lblOffline = new System.Windows.Forms.Label();
 			this.lblIncomplete = new System.Windows.Forms.Label();
+			this.lblTesting = new System.Windows.Forms.Label();
+			this.lblUnlisted = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -3048,11 +3050,33 @@
 			this.lblIncomplete.TabIndex = 16;
 			this.lblIncomplete.Text = "INCOMPLETE CHARACTER";
 			// 
+			// lblTesting
+			// 
+			this.lblTesting.AutoSize = true;
+			this.lblTesting.ForeColor = System.Drawing.Color.Olive;
+			this.lblTesting.Location = new System.Drawing.Point(161, 28);
+			this.lblTesting.Name = "lblTesting";
+			this.lblTesting.Size = new System.Drawing.Size(104, 13);
+			this.lblTesting.TabIndex = 17;
+			this.lblTesting.Text = "TEST CHARACTER";
+			// 
+			// lblUnlisted
+			// 
+			this.lblUnlisted.AutoSize = true;
+			this.lblUnlisted.ForeColor = System.Drawing.Color.DarkOrange;
+			this.lblUnlisted.Location = new System.Drawing.Point(161, 28);
+			this.lblUnlisted.Name = "lblUnlisted";
+			this.lblUnlisted.Size = new System.Drawing.Size(130, 13);
+			this.lblUnlisted.TabIndex = 18;
+			this.lblUnlisted.Text = "UNLISTED CHARACTER";
+			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1217, 770);
+			this.Controls.Add(this.lblUnlisted);
+			this.Controls.Add(this.lblTesting);
 			this.Controls.Add(this.lblIncomplete);
 			this.Controls.Add(this.lblOffline);
 			this.Controls.Add(this.lblLinesOfDialogue);
@@ -3378,6 +3402,8 @@
 		private System.Windows.Forms.ToolStripButton tsbtnRemoveDialogue;
 		private System.Windows.Forms.ToolStripSeparator tssepBeforeRemove;
 		private System.Windows.Forms.ToolStripMenuItem tsmiRemove;
+		private System.Windows.Forms.Label lblTesting;
+		private System.Windows.Forms.Label lblUnlisted;
 	}
 }
 

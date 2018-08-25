@@ -21,9 +21,6 @@ namespace SPNATI_Character_Editor
 		/// Where did this character come from?
 		/// </summary>
 		[XmlIgnore]
-		public CharacterSource Source = CharacterSource.Main;
-
-		[XmlIgnore]
 		public Metadata Metadata;
 
 		[XmlIgnore]

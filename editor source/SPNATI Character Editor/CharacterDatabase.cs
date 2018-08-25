@@ -16,16 +16,13 @@ namespace SPNATI_Character_Editor
 		/// <param name="listing"></param>
 		public static void Load()
 		{
-			string[] dirs = new string[] { Path.Combine(Config.GameDirectory, "opponents"),
-											Path.Combine(Config.GameDirectory, "saves", "offline_opponents"),
-											Path.Combine(Config.GameDirectory, "saves", "incomplete_opponents") };
-			CharacterSource[] sources = new CharacterSource[] { CharacterSource.Main, CharacterSource.Offline, CharacterSource.Incomplete };
+			string[] dirs = new string[] { Path.Combine(Config.GameDirectory, "opponents") };
 			for (int d = 0; d < dirs.Length; d++)
 			{
 				string dir = dirs[d];
 				foreach (string key in Directory.EnumerateDirectories(dir))
 				{
-					Character character = Serialization.ImportCharacter(key, sources[d]);
+					Character character = Serialization.ImportCharacter(key);
 					if (character != null)
 					{
 						Characters.Add(character);

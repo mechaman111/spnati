@@ -198,13 +198,16 @@ namespace SPNATI_Character_Editor
 					imageImporter.SetCharacter(c);
 				if (treeDialogue.Nodes.Count > 0)
 					treeDialogue.SelectedNode = treeDialogue.Nodes[0];
-				lblIncomplete.Visible = c.Source == CharacterSource.Incomplete;
-				lblOffline.Visible = c.Source == CharacterSource.Offline;
+				OpponentStatus status = _listing.GetCharacterStatus(c.FolderName);
+				lblIncomplete.Visible = (status == OpponentStatus.Incomplete);
+				lblOffline.Visible = (status == OpponentStatus.Offline);
+				lblTesting.Visible = (status == OpponentStatus.Testing);
+				lblUnlisted.Visible = (status == OpponentStatus.Unlisted);
+				cmdAddToListing.Enabled = (status == OpponentStatus.Unlisted);
 			}
 			else
 			{
-				lblIncomplete.Visible = false;
-				lblOffline.Visible = false;
+				lblIncomplete.Visible = lblOffline.Visible = lblTesting.Visible = lblUnlisted.Visible = cmdAddToListing.Enabled = false;
 			}
 		}
 
@@ -2190,15 +2193,17 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void cmdAddToListing_Click(object sender, EventArgs e)
 		{
-			if (_listing.Characters.Contains(_selectedCharacter.FolderName))
+			if (_listing.Characters.Exists(opp => opp.Name == _selectedCharacter.FolderName))
 			{
 				MessageBox.Show("This character is already in the listing.");
 				return;
 			}
 			_selectedCharacter.Metadata.Enabled = true;
-			_listing.Characters.Add(_selectedCharacter.FolderName);
+			_listing.Characters.Add(new Opponent(_selectedCharacter.FolderName, OpponentStatus.Testing));
 			Serialization.ExportListing(_listing);
 			Export();
+			lblUnlisted.Visible = false;
+			lblTesting.Visible = true;
 		}
 		
 		private void gridDialogue_HighlightRow(object sender, int index)
@@ -2324,7 +2329,7 @@ namespace SPNATI_Character_Editor
 			SaveCharacter();
 			_selectedCharacter.Behavior.BuildStageTree(_selectedCharacter);
 			List<ValidationError> warnings;
-			bool valid = CharacterValidator.Validate(_selectedCharacter, out warnings);
+			bool valid = CharacterValidator.Validate(_selectedCharacter, _listing, out warnings);
 			if (valid)
 			{
 				MessageBox.Show("Everything checks out!");
@@ -2403,12 +2408,13 @@ namespace SPNATI_Character_Editor
 					int current = 0;
 					foreach (Character c in CharacterDatabase.Characters)
 					{
-						if (c.Source != CharacterSource.Main)
+						OpponentStatus status = _listing.GetCharacterStatus(c.FolderName);
+						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline)
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
 						current++;
 						progress.Report(current);
 						List<ValidationError> warnings;
-						if (!CharacterValidator.Validate(c, out warnings))
+						if (!CharacterValidator.Validate(c, _listing, out warnings))
 						{
 							allWarnings[c] = warnings;
 						}

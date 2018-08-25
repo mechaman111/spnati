@@ -27,7 +27,7 @@ namespace SPNATI_Character_Editor
 		private void cmdOK_Click(object sender, System.EventArgs e)
 		{
 			string name = txtFile.Text;
-			string folder = Config.GetRootDirectory(name, CharacterSource.Main);
+			string folder = Config.GetRootDirectory(name);
 
 			if (name != FolderName && Directory.Exists(folder))
 			{

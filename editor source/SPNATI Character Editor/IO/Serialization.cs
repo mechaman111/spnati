@@ -19,13 +19,6 @@ namespace SPNATI_Character_Editor
 			TextWriter writer = null;
 			try
 			{
-				for (int i = 0; i < listing.Characters.Count; i++)
-				{
-					//Add back / to characters
-					if (!listing.Characters[i].EndsWith("/"))
-						listing.Characters[i] += "/";
-				}
-
 				writer = new StreamWriter(filename);
 				serializer.Serialize(writer, listing);
 
@@ -97,12 +90,6 @@ namespace SPNATI_Character_Editor
 				XmlSerializer serializer = new XmlSerializer(typeof(Listing), "");
 				reader = new StreamReader(filename);
 				Listing listing = serializer.Deserialize(reader) as Listing;
-				for (int i = 0; i < listing.Characters.Count; i++)
-				{
-					//Strip away trailing / which will be added back when exporting
-					if (listing.Characters[i].EndsWith("/"))
-						listing.Characters[i] = listing.Characters[i].Substring(0, listing.Characters[i].Length - 1);
-				}
 				return listing;
 			}
 			finally
@@ -112,9 +99,9 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public static Character ImportCharacter(string folderName, CharacterSource source)
+		public static Character ImportCharacter(string folderName)
 		{
-			string folder = Config.GetRootDirectory(folderName, source);
+			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
 				return null;
 
@@ -129,15 +116,14 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
-			character.Source = source;
 			character.FolderName = Path.GetFileName(folderName);
 
-			Metadata metadata = ImportMetadata(folderName, source);
+			Metadata metadata = ImportMetadata(folderName);
 			if (metadata == null)
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
 
-			MarkerData markers = ImportMarkerData(folderName, source);
+			MarkerData markers = ImportMarkerData(folderName);
 			if (markers != null)
 			{
 				character.Markers.Merge(markers);
@@ -221,9 +207,9 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static Metadata ImportMetadata(string folderName, CharacterSource source)
+		private static Metadata ImportMetadata(string folderName)
 		{
-			string folder = Config.GetRootDirectory(folderName, source);
+			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
 				return null;
 
@@ -258,9 +244,9 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
-		private static MarkerData ImportMarkerData(string folderName, CharacterSource source)
+		private static MarkerData ImportMarkerData(string folderName)
 		{
-			string folder = Config.GetRootDirectory(folderName, source);
+			string folder = Config.GetRootDirectory(folderName);
 			if (!Directory.Exists(folder))
 				return null;
 
