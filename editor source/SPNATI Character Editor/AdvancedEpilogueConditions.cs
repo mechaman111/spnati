@@ -63,12 +63,12 @@ namespace SPNATI_Character_Editor
 		{
 			_epilogue.AlsoPlaying = (string)cboAlsoPlaying.SelectedItem;
 			_epilogue.PlayerStartingLayers = CharacterEditor.ReadRange(valPlayerStartingLayers, valMaxPlayerStartingLayers);
-			_epilogue.AllMarkers = String.Join(" ", selAllMarkers.SelectedItems);
-			_epilogue.NotMarkers = String.Join(" ", selNotMarkers.SelectedItems);
-			_epilogue.AnyMarkers = String.Join(" ", selAnyMarkers.SelectedItems);
-			_epilogue.AlsoPlayingAllMarkers = String.Join(" ", selAlsoPlayingAllMarkers.SelectedItems);
-			_epilogue.AlsoPlayingNotMarkers = String.Join(" ", selAlsoPlayingNotMarkers.SelectedItems);
-			_epilogue.AlsoPlayingAnyMarkers = String.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems);
+			_epilogue.AllMarkers = selAllMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAllMarkers.SelectedItems) : null;
+			_epilogue.NotMarkers = selNotMarkers.SelectedItems.Length > 0 ? String.Join(" ", selNotMarkers.SelectedItems) : null;
+			_epilogue.AnyMarkers = selAnyMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAnyMarkers.SelectedItems) : null;
+			_epilogue.AlsoPlayingAllMarkers = selAlsoPlayingAllMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAlsoPlayingAllMarkers.SelectedItems) : null;
+			_epilogue.AlsoPlayingNotMarkers = selAlsoPlayingNotMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAlsoPlayingNotMarkers.SelectedItems) : null;
+			_epilogue.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 		}
 
 		private void markerControl_Enter(object sender, EventArgs e)
