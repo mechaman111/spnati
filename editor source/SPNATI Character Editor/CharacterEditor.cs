@@ -2204,6 +2204,7 @@ namespace SPNATI_Character_Editor
 			Export();
 			lblUnlisted.Visible = false;
 			lblTesting.Visible = true;
+			cmdAddToListing.Enabled = false;
 		}
 		
 		private void gridDialogue_HighlightRow(object sender, int index)
