@@ -227,7 +227,7 @@ namespace SPNATI_Character_Editor.IO
 			foreach (var field in fields)
 			{
 				XmlAnyElementAttribute any = field.GetCustomAttribute<XmlAnyElementAttribute>();
-				if (any != null)
+				if (any != null && field.GetValue(data) != null)
 				{
 					foreach (XmlElement el in field.GetValue(data) as List<XmlElement>)
 					{
