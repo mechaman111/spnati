@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v2.0.1 at 9:15:01 PM on August 24, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v2.0.1 at 7:28:03 PM on August 26, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Nayru</first>
     <last />
@@ -12,7 +12,7 @@
     <intelligence>bad</intelligence>
     <intelligence stage="2">average</intelligence>
     <intelligence stage="4">good</intelligence>
-    <intelligence stage="5">average</intelligence>
+    <intelligence stage="6">average</intelligence>
     <tags>
         <tag>blue_hair</tag>
         <tag>blue_eyes</tag>
@@ -40,6 +40,9 @@
         <state img="0-happy.png">Oh, you have need of me?</state>
         <state img="0-calm.png">I sensed your approach. Say no more.</state>
         <state img="0-interested.png">A game? Very well, I can play a few rounds.</state>
+        <state img="0-calm.png">I'm glad you thought of me, ~player~. I'm sure we'll all have a grand time!</state>
+        <state img="0-calm.png">The Inventory is a lovely place, ~player~. It's so nice to cut loose now and again.</state>
+        <state img="0-knowing.png">Well, won't this be pleasant. I'm excited to get to know you all.</state>
     </start>
 
     <wardrobe>
@@ -47,27 +50,31 @@
         <clothing lowercase="bra" position="upper" proper-name="Bra" type="important" />
         <clothing lowercase="dress" position="upper" proper-name="Dress" type="major" />
         <clothing lowercase="tunic" position="upper" proper-name="Tunic" type="minor" />
-        <clothing lowercase="circlet" position="other" proper-name="Jewelry" type="extra" />
+        <clothing lowercase="jewelry" position="other" proper-name="Jewelry" type="extra" />
         <clothing lowercase="sandals" position="other" proper-name="Sandals" type="extra" />
         <clothing lowercase="bracelets" position="other" proper-name="Bracelets" type="extra" />
     </wardrobe>
 
     <behaviour>
         <stage id="0">
+            <case tag="female_must_strip">
+                <state img="0-confident.png">It was ~name~ this time, right? Just as foretold.</state>
+                <state img="0-confident.png">I knew ~name~ would lose this hand.</state>
+                <state img="0-happy.png">~name~, right? Don't lose heart!</state>
+                <state img="0-interested.png">You'll be all right, ~name~. Just a minor setback!</state>
+                <state img="0-sad.png">I never was very fond of games of chance.</state>
+                <state img="0-awkward.png">Then... it was ~name~ this time.</state>
+                <state img="0-horny.png">How unfortunate. It seems ~name~ lost.</state>
+                <state img="0-confident.png">I won this round!</state>
+            </case>
             <case tag="game_start">
                 <state img="0-calm.png">I'm glad you thought of me, ~player~. I'm sure we'll all have a grand time!</state>
                 <state img="0-calm.png">The Inventory is a lovely place, ~player~. It's so nice to cut loose now and again.</state>
                 <state img="0-knowing.png">Well, won't this be pleasant. I'm excited to get to know you all.</state>
             </case>
-            <case tag="female_must_strip">
-                <state img="0-confident.png">It was ~name~ this time, right? Just as foretold.</state>
-                <state img="0-confident.png">I knew ~name~ would lose this hand.</state>
-                <state img="0-happy.png">~name~, right? Don't lose heart!</state>
-                <state img="0-interested.png">You'll be alright, ~name~. Just a minor setback!</state>
-                <state img="0-sad.png">I never was very fond of games of chance.</state>
-                <state img="0-awkward.png">Then... it was ~name~ this time.</state>
-                <state img="0-horny.png">How unfortunate. It seems ~name~ lost.</state>
-                <state img="0-confident.png">I won this round!</state>
+            <case tag="female_must_strip" consecutiveLosses="2">
+                <state img="0-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="0-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="female_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="0-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -101,20 +108,112 @@
                 <state img="0-calm.png">You're in no danger, ~player~. Though you may wish to cover your ears in the future.</state>
             </case>
             <case tag="female_must_strip" target="zelda" targetStage="0">
-                <state img="0-calm.png">Pardon my staring. I... feel like I should know you. Strange, isn't it?</state>
-                <state img="0-interested.png">It's nice to meet you, ~name~. Though... I feel like I've known you for some time.</state>
+                <state img="0-calm.png">Your highness. From which age do you hail?</state>
+                <state img="0-confident.png">Oh, I... I didn't expect to see <i>you</i> here, Princess Zelda. It's always nice to meet you.</state>
+            </case>
+            <case tag="female_must_strip" target="zelda" targetStage="1">
+                <state img="0-awkward.png">It's an honor to meet you, princess. Even if these circumstances are... less than ideal.</state>
+                <state img="0-calm.png">I'm glad to have met you, Zelda. Perhaps we can speak more later.</state>
             </case>
             <case tag="game_start" totalFemales="1">
-                <state img="0-awkward.png">Hello, gentlemen. I... I'm glad you thought to ask me to join, ~player~.</state>
-                <state img="0-interested.png">Oh! Am I the only lady playing tonight? I... I'm flattered!</state>
+                <state img="0-awkward.png" marker="maleplayer">Hello, gentlemen. I... I'm glad you thought to ask me to join, ~player~.</state>
+                <state img="0-interested.png" marker="maleplayer">Oh! Am I the only lady playing tonight? I... I'm flattered!</state>
             </case>
             <case tag="game_start" totalMales="0">
-                <state img="0-happy.png">Oh! Is this what you call a ladies' night?</state>
-                <state img="0-interested.png">Is this game very much different with no men present?</state>
+                <state img="0-happy.png" marker="femaleplayer">Oh! Is this what you call a ladies' night?</state>
+                <state img="0-interested.png" marker="femaleplayer">Is this game very much different with no men present?</state>
             </case>
-            <case tag="game_start" priority="0" totalMales="1">
-                <state img="0-dismissive.png">What a lucky man we have here. ~player~, I hope you know what you're doing.</state>
-                <state img="0-embarrassed.png">Oh, only one man is playing with us today? V-very well.</state>
+            <case tag="game_start" totalMales="1">
+                <condition count="0" filter="small_penis" />
+                <condition count="0" filter="medium_penis" />
+                <condition count="0" filter="large_penis" />
+                <state img="0-horny.png" marker="maleplayer">O-oh... so you wanted us all to yourself, ~player~?</state>
+                <state img="0-awkward.png" marker="maleplayer">~player~... you're the only man who wished to play with us?</state>
+                <state img="0-embarrassed.png">I... I suppose I haven't seen *many* other men here... Besides you, ~player~...</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="1">
+                <condition count="0" filter="small_breasts" />
+                <condition count="1" filter="medium_breasts" />
+                <condition count="0" filter="large_breasts" />
+                <state img="0-dismissive.png" marker="femaleplayer">What a lucky man we have here. ~player~, I hope you know what you're doing.</state>
+                <state img="0-embarrassed.png" marker="femaleplayer">Oh, only one man is playing with us today? V-very well.</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="2">
+                <condition count="0" filter="small_breasts" />
+                <condition count="1" filter="medium_breasts" />
+                <condition count="0" filter="large_breasts" />
+                <state img="0-happy.png" marker="femaleplayer">How interesting! Ladies versus gents? We can take them, ~player~!</state>
+                <state img="0-confident.png" marker="femaleplayer">Two versus two? Haha! Sorry, gentlemen, but ~player~ and I didn't come here to lose!</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="2">
+                <condition count="1" filter="small_penis" />
+                <condition count="0" filter="medium_penis" />
+                <condition count="0" filter="large_penis" />
+                <state img="0-knowing.png" marker="maleplayer">Oh, two versus two? Okay, ~player~; you're on!</state>
+                <state img="0-confident.png" marker="maleplayer">A battle of the sexes might be fun. Try to keep up, ~player~!</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="2">
+                <condition count="0" filter="small_penis" />
+                <condition count="1" filter="medium_penis" />
+                <condition count="0" filter="large_penis" />
+                <state img="0-knowing.png" marker="maleplayer">Oh, two versus two? Okay, ~player~; you're on!</state>
+                <state img="0-confident.png" marker="maleplayer">A battle of the sexes might be fun. Try to keep up, ~player~!</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="2">
+                <condition count="0" filter="small_penis" />
+                <condition count="0" filter="medium_penis" />
+                <condition count="1" filter="large_penis" />
+                <state img="0-knowing.png" marker="maleplayer">Oh, two versus two? Okay, ~player~; you're on!</state>
+                <state img="0-confident.png" marker="maleplayer">A battle of the sexes might be fun. Try to keep up, ~player~!</state>
+            </case>
+            <case tag="game_start" totalFemales="3" totalMales="2">
+                <condition count="0" filter="small_penis" />
+                <condition count="1" filter="medium_penis" />
+                <condition count="0" filter="large_penis" />
+                <state img="0-interested.png" marker="maleplayer">Oh! You got another male to join us, ~player~?</state>
+                <state img="0-confident.png" marker="maleplayer">What do you ladies say to a battle of the sexes? Does that sound fun, ~player~? I'm sure you two can keep up!</state>
+            </case>
+            <case tag="game_start" totalFemales="3" totalMales="2">
+                <condition count="0" filter="small_penis" />
+                <condition count="0" filter="medium_penis" />
+                <condition count="1" filter="large_penis" />
+                <state img="0-interested.png" marker="maleplayer">Oh! You got another male to join us, ~player~?</state>
+                <state img="0-confident.png" marker="maleplayer">What do you ladies say to a battle of the sexes? Does that sound fun, ~player~? I'm sure you two can keep up!</state>
+            </case>
+            <case tag="game_start" totalFemales="3" totalMales="2">
+                <condition count="1" filter="small_penis" />
+                <condition count="0" filter="medium_penis" />
+                <condition count="0" filter="large_penis" />
+                <state img="0-interested.png" marker="maleplayer">Oh! You got another male to join us, ~player~?</state>
+                <state img="0-confident.png" marker="maleplayer">What do you ladies say to a battle of the sexes? Does that sound fun, ~player~? I'm sure you two can keep up!</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="3">
+                <condition count="0" filter="small_breasts" />
+                <condition count="1" filter="medium_breasts" />
+                <condition count="0" filter="large_breasts" />
+                <state img="0-happy.png" marker="femaleplayer">We're outnumbered, ~player~; we've got to stick together!</state>
+                <state img="0-knowing.png" marker="femaleplayer">Looks like we'll have our hands full, ~player~. Think we can take all three of them?</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="3">
+                <condition count="1" filter="small_breasts" />
+                <condition count="1" filter="medium_breasts" />
+                <condition count="0" filter="large_breasts" />
+                <state img="0-interested.png" marker="maleplayer">Oh, you must have asked most of the males at the Inventory to play, ~player~. At least I'm not alone.</state>
+                <state img="0-confident.png" marker="maleplayer">How hard was it to gather together a table where you outnumbered the women, ~player~?</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="3">
+                <condition count="0" filter="small_breasts" />
+                <condition count="2" filter="medium_breasts" />
+                <condition count="0" filter="large_breasts" />
+                <state img="0-interested.png" marker="maleplayer">Oh, you must have asked most of the males at the Inventory to play, ~player~. At least I'm not alone.</state>
+                <state img="0-confident.png" marker="maleplayer">How hard was it to gather together a table where you outnumbered the women, ~player~?</state>
+            </case>
+            <case tag="game_start" totalFemales="2" totalMales="3">
+                <condition count="0" filter="small_breasts" />
+                <condition count="1" filter="medium_breasts" />
+                <condition count="1" filter="large_breasts" />
+                <state img="0-interested.png" marker="maleplayer">Oh, you must have asked most of the males at the Inventory to play, ~player~. At least I'm not alone.</state>
+                <state img="0-confident.png" marker="maleplayer">How hard was it to gather together a table where you outnumbered the women, ~player~?</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="0-calm.png">~name~ might be enjoying this. Don't fret; this is why we're here, after all.</state>
@@ -124,6 +223,7 @@
                 <state img="0-dismissive.png">The game continues. What more is there to say?</state>
                 <state img="0-knowing.png">I don't need to be an oracle to know what he's taking off next.</state>
                 <state img="0-calm.png">Do you know what you'll choose next, ~name~?</state>
+                <state img="0-embarrassed.png">This game is a bit ruthless, isn't it? If only we had more time to chat between rounds.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="0-awkward.png">Even knowing how keen her eye is... this is still quite unsettling...</state>
@@ -138,8 +238,11 @@
                 <state img="0-awkward.png">Just as expected. W-we should move on.</state>
                 <state img="0-horny.png">Y-you... ~name~, are you...?</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" totalMasturbating="0" totalFinished="0" target="human" saidMarker="MP_finaldong">
+                <state img="0-horny.png">O-oh, ~player~. You're a-already...</state>
+            </case>
             <case tag="female_removed_major">
-                <state img="0-happy.png">Your ~clothing~ was quite alluring, ~name~. When did you get it?</state>
+                <state img="0-happy.png">Your ~clothing~... Quite alluring, ~name~. I like your style.</state>
                 <state img="0-embarrassed.png">P-pardon me, ~name~. I didn't expect you'd lose your ~clothing~ before I even lost my sandals.</state>
                 <state img="0-confident.png">Don't compare yourself to me, ~name~. I'm doing much better than I thought I would!</state>
                 <state img="0-awkward.png">Will you stay for another round, ~name~? You must know what that puts at risk.</state>
@@ -178,6 +281,7 @@
             <case tag="male_removed_minor">
                 <state img="0-happy.png">I'm sure everyone liked your ~clothing~, ~name~. Don't worry; there's no harm I can't avoid.</state>
                 <state img="0-knowing.png">If anything happens to your ~clothing~, just come see me. I can undo anything.</state>
+                <state img="0-confident.png">Your ~clothing~? Not much of an offering, ~name~.</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="0-calm.png">I'm certain you won't miss your ~clothing~.</state>
@@ -200,9 +304,9 @@
                 <state img="0-horny.png">Surely if ~name~ didn't want you to see, he'd have simply left. R-right?</state>
                 <state img="0-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
             </case>
-            <case tag="male_must_masturbate" totalRounds="8">
+            <case tag="male_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="0-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="0-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="0-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="0-awkward.png">Goodness, ~player~, is this why you chose ~name~ to play with us?</state>
@@ -271,13 +375,14 @@
             <case tag="male_removing_major">
                 <state img="0-awkward.png">Oh! He's... quite invested. I suppose... that makes sense.</state>
                 <state img="0-embarrassed.png">~name~ doesn't have a lot of options left...</state>
+                <state img="0-knowing.png">You know what time it is, ~name~. So... what do you have left to choose from?</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="0-calm.png">I'm certain you won't miss your ~clothing~.</state>
                 <state img="0-interested.png">I don't think she's upset about losing her ~clothing~.</state>
                 <state img="0-confident.png">It wasn't much, but I won't complain.</state>
                 <state img="0-interested.png">Oh, wonderful choice, ~name~! I love your ~clothing~.</state>
-                <state img="0-happy.png">Oh, but you have lovely ~clothing~! But... I guess that's just the game, isn't it?</state>
+                <state img="0-happy.png">Oh, your <i>lovely</i> ~clothing~? But... I guess that's just the game, isn't it?</state>
                 <state img="0-calm.png">Your ~clothing~ looked just fine. But I guess it's time to move on.</state>
                 <state img="0-interested.png">Just the ~clothing~? That's fair, really. Next round?</state>
                 <state img="0-happy.png">Will you stay another round, ~name~?</state>
@@ -316,6 +421,7 @@
             </case>
             <case tag="male_removed_major">
                 <state img="0-horny.png">He's... I'm n-not surprised. Just... perhaps we ought to continue.</state>
+                <state img="0-interested.png">Good choice, ~name~!</state>
                 <state img="0-awkward.png">He's ready. To continue, I mean. Let us move forward.</state>
                 <state img="0-awkward.png">~name~ is rather... exposed, isn't he?</state>
             </case>
@@ -346,6 +452,11 @@
                 <state img="0-shocked.png">N-Nine? Is... is that normal?</state>
                 <state img="0-awkward.png">Wait... you don't have...?</state>
             </case>
+            <case tag="male_chest_is_visible" target="human">
+                <state img="0-horny.png">O-oh, ~player~... I... I'm glad you brought me here for this...</state>
+                <state img="0-interested.png">~player~! You look... good. I... I... should get back to the game...</state>
+                <state img="0-horny.png">I certainly like what I see, ~player~.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="0-awkward.png">I... I think I see why ~player~ asked you to join us.</state>
                 <state img="0-happy.png">You've been blessed by the goddess, ~name~.</state>
@@ -358,6 +469,10 @@
                 <state img="0-happy.png">You can't give up, ~name~! You must see what the future has in store for you.</state>
                 <state img="0-calm.png">There must always be one, ~name~.</state>
                 <state img="0-sad.png">I'm sorry, but I cannot give you a second try. The game would go nowhere.</state>
+            </case>
+            <case tag="male_must_strip" consecutiveLosses="2">
+                <state img="0-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="0-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="male_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="0-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -393,9 +508,9 @@
                 <state img="0-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
                 <state img="0-happy.png">It would be a poor plan to give you another try, ~name~.</state>
             </case>
-            <case tag="female_must_masturbate" totalRounds="8">
+            <case tag="female_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="0-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="0-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="0-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-confident.png">Should I have warned you, ~player~? I apologize.</state>
@@ -439,10 +554,10 @@
                 <state img="0-embarrassed.png">To think, all the safety those four cards afforded you...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0" tag="male_human_must_strip" targetStage="0">
-                <state img="0-awkward.png">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
+                <state img="0-awkward.png" marker="maleplayer">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="1-5" tag="male_human_must_strip" targetStage="0">
-                <state img="0-awkward.png">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
+                <state img="0-awkward.png" marker="maleplayer">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
             </case>
             <case tag="male_human_must_strip" targetStage="0" totalFemales="2-4" totalMales="1">
                 <state img="0-dismissive.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
@@ -450,6 +565,10 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="0-awkward.png">It only - oh. That's only... no, my apologies. Don't mind me.</state>
                 <state img="0-shocked.png">It's strange; I can only faintly sense... oh! D-don't mind me.</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" target="human">
+                <state img="0-calm.png">To think, you not only bared it all, but asked us here to bear witness in the first place...</state>
+                <state img="0-confident.png">I don't find anything funny; your bravery speaks volume, ~player~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-happy.png">At least you still have some safety at hand.</state>
@@ -477,7 +596,7 @@
                 <state img="0-calm.png">Be confident, ~name~. You have nothing to fear.</state>
                 <state img="0-happy.png">Don't feel bad, ~name~. ~player~ asked for you by name!</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" target="kyu">
                 <state img="0-awkward.png">You <i>ah</i>... you're rather... <i>small</i> for a Great Fairy... aren't you?</state>
                 <state img="0-awkward.png">I see now. You <i>are</i> a bit too small to be a Great Fairy...</state>
             </case>
@@ -497,7 +616,7 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="0-interested.png">I predict that ~name~ will take off her... <i>hmm</i>. Well, let's wait and see.</state>
-                <state img="0-happy.png">You can take your time choosing. Maybe a song would help...?</state>
+                <state img="0-singing.png">You can take your time choosing. Maybe a song would help...?</state>
                 <state img="0-calm.png">Don't overthink it.</state>
                 <state img="0-interested.png">What will you choose?</state>
             </case>
@@ -520,9 +639,17 @@
             <case tag="female_removing_accessory" target="monika" targetStage="2">
                 <state img="0-interested.png">Just the ~clothing~? That's fair, really. N-next...</state>
             </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="0">
+                <state img="0-happy.png">I've met one who shared your name and status. It seems... there were many.</state>
+                <state img="0-interested.png">Of all of the many Zeldas I've heard of... I've yet to meet one who partook in these sorts of displays.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="1">
+                <state img="0-happy.png">That's the spirit, princess!</state>
+                <state img="0-confident.png">Exactly! I should've known you'd be free from the trappings of most royalty.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="0-sad.png">I won? I'm sorry, everybody; I thought I was being fair. You aren't upset, are you?</state>
-                <state img="0-dismissive.png">Thank goodness that's over. Please, clean yourselves up.</state>
+                <state img="0-singing.png">Thank goodness that's over. Please, clean yourselves up.</state>
                 <state img="0-shocked.png">Wait a moment...that means I've won? Already? I... I promise, I didn't use my power!</state>
                 <state img="0-awkward.png">I can hardly believe it. Of all the ways this game could have gone...</state>
             </case>
@@ -544,6 +671,7 @@
                 <state img="0-calm.png">Do you know what you'll choose next, ~name~?</state>
                 <state img="0-interested.png">What do you think is coming off next?</state>
                 <state img="0-confident.png">This may not be <i>my</i> favorite part of the game, but don't let that discourage you.</state>
+                <state img="0-singing.png"><i>Quiet singing...</i></state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="0-embarrassed.png">I suppose we can expect nothing more of ~name~, can we?</state>
@@ -558,15 +686,15 @@
                 <state img="0-calm.png">It's quite alright, ~name~. We won't force you to do anything you're not comfortable with. Right, ~player~?</state>
                 <state img="0-awkward.png">She'll be taking off her ~clothing~. Be nice.</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_chest_will_be_visible">
-                <state img="0-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
-                <state img="0-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
-            </case>
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="0-awkward.png">A-are you sure this is still a good idea? I-I mean... you have no protection...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina">
                 <state img="0-calm.png">Nobody finds this <i>easy</i>, Florina. But... I think you can do this. You're stronger than you know.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="kyu">
+                <state img="0-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
+                <state img="0-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
             </case>
             <case tag="male_masturbating">
                 <state img="0-horny.png">Focus on the game, everyone. Unless you'd like to join ~name~ soon?</state>
@@ -581,6 +709,7 @@
             <case tag="female_removed_minor">
                 <state img="0-happy.png">I'm sure everyone liked your ~clothing~, ~name~. Don't worry; there's no harm I can't avoid.</state>
                 <state img="0-knowing.png">If anything happens to your ~clothing~, just come see me. I can undo anything.</state>
+                <state img="0-embarrassed.png">I'd try something like your ~clothing~ out, but I think I'd only embarrass myself.</state>
             </case>
             <case tag="female_removed_minor" target="aimee">
                 <state img="0-awkward.png">Aimee, surely there's a better way to strip than using a weapon.</state>
@@ -597,6 +726,11 @@
                 <state img="0-dismissive.png">N-no, this was not unexpected.</state>
                 <state img="0-embarrassed.png">I... of course I foresaw this. Only...</state>
                 <state img="0-embarrassed.png">He's losing his... w-well, this is the goal of the game... I s-suppose.</state>
+                <state img="0-shocked.png">I s-suppose I'm doing very well. S-still...</state>
+            </case>
+            <case tag="male_crotch_will_be_visible" target="human">
+                <state img="0-awkward.png" marker="MP_finaldong">~player~ is already...? And I... I'm...</state>
+                <state img="0-awkward.png" marker="MP_finaldong">~player~, just a moment. I... I'm not certain <i>I'm</i> prepared for this...</state>
             </case>
             <case tag="good_hand">
                 <state img="0-confident.png">I have nothing to fear.</state>
@@ -604,6 +738,7 @@
                 <state img="0-knowing.png">I may not know this game well, but... I think this will protect me.</state>
                 <state img="0-calm.png">Oh, this looks safe.</state>
                 <state img="0-calm.png">I believe this will help.</state>
+                <state img="0-singing.png"><i>Quiet humming...</i></state>
             </case>
             <case alsoPlaying="9s" alsoPlayingStage="0" tag="good_hand" notSaidMarker="nines">
                 <state img="0-embarrassed.png" marker="nines">Nine? Nine "S"? I don't mean to be disrespectful; I've never heard a name like that!</state>
@@ -621,7 +756,7 @@
             </case>
             <case tag="okay_hand">
                 <state img="0-calm.png">Are you ready to see what the cards have in store, ~player~?</state>
-                <state img="0-grumpy.png">An Oracle deserves better, you know.</state>
+                <state img="0-grumpy.png">An oracle deserves better, you know.</state>
                 <state img="0-happy.png">I suppose these will suffice.</state>
                 <state img="0-calm.png">I'm not worried. Even defeat here won't be the end of me.</state>
                 <state img="0-awkward.png">This will... will this work?</state>
@@ -639,8 +774,25 @@
             </case>
             <case alsoPlaying="monika" tag="okay_hand" notSaidMarker="lessdire" saidMarker="dire">
                 <state img="0-awkward.png" marker="lessdire">I'm sorry, Monika. It's not you. Let's... move on. I'm Nayru. Good to meet you.</state>
-                <state img="0-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you. My name is Nayru; pleasure to meet you.</state>
+                <state img="0-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you that way. My name is Nayru; pleasure to meet you.</state>
                 <state img="0-embarrassed.png" marker="lessdire">It's nothing, I'm sure. Perhaps I was rude; I'm Nayru. It's nice to meet you.</state>
+            </case>
+            <case alsoPlaying="palutena" alsoPlayingStage="0" tag="okay_hand" priority="101">
+                <condition count="0" filter="pit" />
+                <state img="0-dismissive.png">Palutena, is it? "Goddess", indeed... I trust you know of my namesake?</state>
+                <state img="0-knowing.png">I've yet to meet a goddess in person, but... well, I trust the goddess Nayru would never find herself here.</state>
+            </case>
+            <case alsoPlaying="pit" alsoPlayingStage="0" tag="okay_hand" priority="101">
+                <condition count="0" filter="palutena" />
+                <state img="0-interested.png">A servant of the goddess... taking up a holy blade... you remind me of a good friend of mine.</state>
+                <state img="0-awkward.png">I can sense the good in you... I don't suppose you're a servant of the goddess?</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment">
+                <condition count="1-4" filter="villain" />
+                <condition count="0" filter="hero" />
+                <state img="0-dire.png" marker="assessment">~player~... why have you brought me here?</state>
+                <state img="0-dire.png" marker="assessment">Beware, ~player~. There is great evil here.</state>
+                <state img="0-grumpy.png" marker="assessment">Guard yourself well, ~player~. We are among great evil.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-3" filter="hero" />
@@ -655,18 +807,6 @@
                 <state img="0-calm.png" marker="assessment">I can sense great good here. You've chosen well, ~player~.</state>
                 <state img="0-confident.png" marker="assessment">We're in the presence of great good. There's nothing to fear here.</state>
             </case>
-            <case tag="okay_hand" notSaidMarker="assessment">
-                <condition count="1-4" filter="villain" />
-                <condition count="0" filter="hero" />
-                <state img="0-dire.png" marker="assessment">~player~... why have you brought me here?</state>
-                <state img="0-dire.png" marker="assessment">Beware, ~player~. There is great evil here.</state>
-                <state img="0-grumpy.png" marker="assessment">Guard yourself well, ~player~. We are among great evil.</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="3-4" filter="magic" />
-                <state img="0-embarrassed.png" marker="assessment">I sense a power here, though I can't place it...</state>
-                <state img="0-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
-            </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="1-3" filter="shy" />
                 <state img="0-contemplative.png" marker="assessment">I can sense great concern. Please, be at ease; just tell me if you need a moment.</state>
@@ -674,16 +814,21 @@
                 <state img="0-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="2-3" filter="ddlc" />
-                <state img="0-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
-                <state img="0-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="1-3" filter="shy" />
                 <condition count="0" filter="villain" />
                 <condition count="0" filter="mean" />
                 <state img="0-knowing.png" marker="assessment">Don't worry; we're all friends here. There's nothing to be afraid of.</state>
                 <state img="0-knowing.png" marker="assessment">It'll be okay; if anyone needs a moment, just let me know. I'll give you all the time in the world.</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
+                <condition count="3-4" filter="magic" />
+                <state img="0-embarrassed.png" marker="assessment">I sense a power here, though I can't place it...</state>
+                <state img="0-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
+                <condition count="2-3" filter="ddlc" />
+                <state img="0-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
+                <state img="0-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
             </case>
             <case tag="okay_hand" priority="300" totalRounds="0">
                 <state img="0-awkward.png">I know what you've asked of me, ~player~. Even so, I may need to depart before long.</state>
@@ -708,7 +853,7 @@
                 <state img="0-interested.png">I would like... ~cards~, please.</state>
                 <state img="0-happy.png">I'll take ~cards~.</state>
             </case>
-            <case tag="swap_cards" totalAlive="0-3" priority="700" totalRounds="7">
+            <case tag="swap_cards" totalAlive="0-3" notSaidMarker="possess" priority="700" totalRounds="7">
                 <state img="0-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="0-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
                 <state img="0-interested.png" marker="null-possess">I think I like spending time with you two. Maybe... I'll see this game through after all.</state>
@@ -717,7 +862,7 @@
                 <state img="0-happy.png" marker="null-possess">I'm... I'm not afraid any more. Haha! Let's keep going! I'll take ~cards~.</state>
                 <state img="0-horny.png" marker="null-possess">Okay, ~player~. I've changed my mind. I... I'll keep playing.</state>
             </case>
-            <case tag="swap_cards" totalAlive="4" priority="700" totalRounds="10">
+            <case tag="swap_cards" totalAlive="4" notSaidMarker="possess" priority="700" totalRounds="11">
                 <state img="0-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="0-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="0-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -726,7 +871,7 @@
                 <state img="0-happy.png" marker="null-possess">I think the four of us are really getting along! Maybe I'll finish this game after all.</state>
                 <state img="0-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
-            <case tag="swap_cards" totalAlive="5" priority="700" totalRounds="12">
+            <case tag="swap_cards" totalAlive="5" notSaidMarker="possess" priority="700" totalRounds="14">
                 <state img="0-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="0-calm.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="0-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -767,6 +912,16 @@
                 <state img="0-awkward.png" marker="lessdire">I'm sorry, Monika. It's not you. Let's... move on. I'm Nayru. Good to meet you.</state>
                 <state img="0-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you. My name is Nayru; pleasure to meet you.</state>
                 <state img="0-embarrassed.png" marker="lessdire">It's nothing, I'm sure. Perhaps I was rude; I'm Nayru. It's nice to meet you.</state>
+            </case>
+            <case alsoPlaying="palutena" alsoPlayingStage="0" tag="bad_hand" priority="101">
+                <condition count="0" filter="pit" />
+                <state img="0-dismissive.png">Palutena, is it? "Goddess", indeed... I trust you know of my namesake?</state>
+                <state img="0-knowing.png">I've yet to meet a goddess in person, but... well, I trust the goddess Nayru would never find herself here.</state>
+            </case>
+            <case alsoPlaying="pit" alsoPlayingStage="0" tag="bad_hand" priority="101">
+                <condition count="0" filter="palutena" />
+                <state img="0-interested.png">A servant of the goddess... taking up a holy blade... you remind me of a good friend of mine.</state>
+                <state img="0-awkward.png">I can sense the good in you... I don't suppose you're a servant of the goddess?</state>
             </case>
             <case tag="bad_hand" notSaidMarker="assessment" priority="21">
                 <condition count="2-3" filter="ddlc" />
@@ -861,11 +1016,15 @@
                 <state img="1-confident.png">It was ~name~ this time, right? Just as foretold.</state>
                 <state img="1-confident.png">I knew ~name~ would lose this hand.</state>
                 <state img="1-happy.png">~name~, right? Don't lose heart!</state>
-                <state img="1-interested.png">You'll be alright, ~name~. Just a minor setback!</state>
+                <state img="1-interested.png">You'll be all right, ~name~. Just a minor setback!</state>
                 <state img="1-sad.png">I never was very fond of games of chance.</state>
                 <state img="1-awkward.png">Then... it was ~name~ this time.</state>
                 <state img="1-horny.png">How unfortunate. It seems ~name~ lost.</state>
                 <state img="1-confident.png">I won this round!</state>
+            </case>
+            <case tag="female_must_strip" consecutiveLosses="2">
+                <state img="1-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="1-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="female_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="1-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -899,8 +1058,12 @@
                 <state img="1-calm.png">You're in no danger, ~player~. Though you may wish to cover your ears in the future.</state>
             </case>
             <case tag="female_must_strip" target="zelda" targetStage="0">
-                <state img="1-calm.png">Pardon my staring. I... feel like I should know you. Strange, isn't it?</state>
-                <state img="1-interested.png">It's nice to meet you, ~name~. Though... I feel like I've known you for some time.</state>
+                <state img="1-calm.png">Your highness. From which age do you hail?</state>
+                <state img="1-confident.png">Oh, I... I didn't expect to see <i>you</i> here, Princess Zelda. It's always nice to meet you.</state>
+            </case>
+            <case tag="female_must_strip" target="zelda" targetStage="1">
+                <state img="1-awkward.png">It's an honor to meet you, princess. Even if these circumstances are... less than ideal.</state>
+                <state img="1-calm.png">I'm glad to have met you, Zelda. Perhaps we can speak more later.</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="1-calm.png">~name~ might be enjoying this. Don't fret; this is why we're here, after all.</state>
@@ -910,6 +1073,7 @@
                 <state img="1-dismissive.png">The game continues. What more is there to say?</state>
                 <state img="1-knowing.png">I don't need to be an oracle to know what he's taking off next.</state>
                 <state img="1-calm.png">Do you know what you'll choose next, ~name~?</state>
+                <state img="1-embarrassed.png">This game is a bit ruthless, isn't it? If only we had more time to chat between rounds.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="1-awkward.png">Even knowing how keen her eye is... this is still quite unsettling...</state>
@@ -924,8 +1088,11 @@
                 <state img="1-awkward.png">Just as expected. W-we should move on.</state>
                 <state img="1-horny.png">Y-you... ~name~, are you...?</state>
             </case>
+            <case tag="male_medium_crotch_is_visible" totalMasturbating="0" totalFinished="0" target="human" saidMarker="MP_finaldong">
+                <state img="1-horny.png">O-oh, ~player~. You're a-already...</state>
+            </case>
             <case tag="female_removed_major">
-                <state img="1-happy.png">Your ~clothing~ was quite alluring, ~name~. When did you get it?</state>
+                <state img="1-happy.png">Your ~clothing~... Quite alluring, ~name~. I like your style.</state>
                 <state img="1-embarrassed.png">P-pardon me, ~name~. I didn't expect you'd lose your ~clothing~ before I even lost my sandals.</state>
                 <state img="1-confident.png">Don't compare yourself to me, ~name~. I'm doing much better than I thought I would!</state>
                 <state img="1-awkward.png">Will you stay for another round, ~name~? You must know what that puts at risk.</state>
@@ -944,6 +1111,9 @@
                 <state img="1-shocked.png">Ngh - Th-that's... I didn't think it'd actually...</state>
                 <state img="1-awkward.png">~name~... is that not... cumbersome? I suppose you can't help it...</state>
                 <state img="1-awkward.png">That seems... unfortunate, ~name~. If not for you, then...</state>
+            </case>
+            <case tag="male_large_crotch_is_visible" target="human">
+                <state img="1-shocked.png"><i>Urk</i>... Th-this shouldn't be surprising, considering... B-but you...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="1-embarrassed.png">Oh, ~name~ is going to remove her ~clothing~?</state>
@@ -964,6 +1134,7 @@
             <case tag="male_removed_minor">
                 <state img="1-happy.png">I'm sure everyone liked your ~clothing~, ~name~. Don't worry; there's no harm I can't avoid.</state>
                 <state img="1-knowing.png">If anything happens to your ~clothing~, just come see me. I can undo anything.</state>
+                <state img="1-confident.png">Your ~clothing~? Not much of an offering, ~name~.</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="1-calm.png">I'm certain you won't miss your ~clothing~.</state>
@@ -982,9 +1153,9 @@
                 <state img="1-horny.png">Surely if ~name~ didn't want you to see, he'd have simply left. R-right?</state>
                 <state img="1-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
             </case>
-            <case tag="male_must_masturbate" totalRounds="8">
+            <case tag="male_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="1-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="1-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="1-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="1-awkward.png">Goodness, ~player~, is this why you chose ~name~ to play with us?</state>
@@ -1046,13 +1217,14 @@
             <case tag="male_removing_major">
                 <state img="1-awkward.png">Oh! He's... quite invested. I suppose... that makes sense.</state>
                 <state img="1-embarrassed.png">~name~ doesn't have a lot of options left...</state>
+                <state img="1-knowing.png">You know what time it is, ~name~. So... what do you have left to choose from?</state>
             </case>
             <case tag="female_removed_accessory">
                 <state img="1-calm.png">I'm certain you won't miss your ~clothing~.</state>
                 <state img="1-interested.png">I don't think she's upset about losing her ~clothing~.</state>
                 <state img="1-confident.png">It wasn't much, but I won't complain.</state>
                 <state img="1-interested.png">Oh, wonderful choice, ~name~! I love your ~clothing~.</state>
-                <state img="1-happy.png">Oh, but you have lovely ~clothing~! But... I guess that's just the game, isn't it?</state>
+                <state img="1-happy.png">Oh, your <i>lovely</i> ~clothing~? But... I guess that's just the game, isn't it?</state>
                 <state img="1-calm.png">Your ~clothing~ looked just fine. But I guess it's time to move on.</state>
                 <state img="1-interested.png">Just the ~clothing~? That's fair, really. Next round?</state>
                 <state img="1-happy.png">Will you stay another round, ~name~?</state>
@@ -1091,6 +1263,7 @@
             </case>
             <case tag="male_removed_major">
                 <state img="1-horny.png">He's... I'm n-not surprised. Just... perhaps we ought to continue.</state>
+                <state img="1-interested.png">Good choice, ~name~!</state>
                 <state img="1-awkward.png">He's ready. To continue, I mean. Let us move forward.</state>
                 <state img="1-awkward.png">~name~ is rather... exposed, isn't he?</state>
             </case>
@@ -1121,6 +1294,11 @@
                 <state img="1-shocked.png">N-Nine? Is... is that normal?</state>
                 <state img="1-awkward.png">Wait... you don't have...?</state>
             </case>
+            <case tag="male_chest_is_visible" target="human">
+                <state img="1-horny.png">O-oh, ~player~... I... I'm glad you brought me here for this...</state>
+                <state img="1-interested.png">~player~! You look... good. I... I... should get back to the game...</state>
+                <state img="1-horny.png">I certainly like what I see, ~player~.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="1-awkward.png">I... I think I see why ~player~ asked you to join us.</state>
                 <state img="1-happy.png">You've been blessed by the goddess, ~name~.</state>
@@ -1133,6 +1311,10 @@
                 <state img="1-happy.png">You can't give up, ~name~! You must see what the future has in store for you.</state>
                 <state img="1-calm.png">There must always be one, ~name~.</state>
                 <state img="1-sad.png">I'm sorry, but I cannot give you a second try. The game would go nowhere.</state>
+            </case>
+            <case tag="male_must_strip" consecutiveLosses="2">
+                <state img="1-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="1-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="male_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="1-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -1168,9 +1350,9 @@
                 <state img="1-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
                 <state img="1-happy.png">It would be a poor plan to give you another try, ~name~.</state>
             </case>
-            <case tag="female_must_masturbate" totalRounds="8">
+            <case tag="female_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="1-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="1-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="1-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-confident.png">Should I have warned you, ~player~? I apologize.</state>
@@ -1214,10 +1396,10 @@
                 <state img="1-embarrassed.png">To think, all the safety those four cards afforded you...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0" tag="male_human_must_strip" targetStage="0">
-                <state img="1-awkward.png">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
+                <state img="1-awkward.png" marker="maleplayer">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="1-5" tag="male_human_must_strip" targetStage="0">
-                <state img="1-awkward.png">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
+                <state img="1-awkward.png" marker="maleplayer">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
             </case>
             <case tag="male_human_must_strip" targetStage="0" totalFemales="2-4" totalMales="1">
                 <state img="1-angry.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
@@ -1225,6 +1407,10 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="1-awkward.png">It only - oh. That's only... no, my apologies. Don't mind me.</state>
                 <state img="1-shocked.png">It's strange; I can only faintly sense... oh! D-don't mind me.</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" target="human">
+                <state img="1-calm.png">To think, you not only bared it all, but asked us here to bear witness in the first place...</state>
+                <state img="1-confident.png">I don't find anything funny; your bravery speaks volume, ~player~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-happy.png">At least you still have some safety at hand.</state>
@@ -1236,6 +1422,10 @@
                 <state img="1-calm.png">Consider carefully what you'll remove first, ~name~.</state>
                 <state img="1-grumpy.png">Don't be upset if ~name~ doesn't start with something big.</state>
                 <state img="1-interested.png">What do you think ~name~ will start with? I have a guess...</state>
+            </case>
+            <case tag="male_removing_accessory" targetStage="1">
+                <state img="1-knowing.png">Don't worry, ~name~. I'm sure I won't stay ahead of you for long.</state>
+                <state img="1-dismissive.png">You lost your second item before me. How strange that we're so close!</state>
             </case>
             <case tag="male_finished_masturbating">
                 <state img="1-shocked.png">Tch! That's not... shall we just move on?</state>
@@ -1252,7 +1442,7 @@
                 <state img="1-calm.png">Be confident, ~name~. You have nothing to fear.</state>
                 <state img="1-happy.png">Don't feel bad, ~name~. ~player~ asked for you by name!</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" target="kyu">
                 <state img="1-awkward.png">You <i>ah</i>... you're rather... <i>small</i> for a Great Fairy... aren't you?</state>
                 <state img="1-awkward.png">I see now. You <i>are</i> a bit too small to be a Great Fairy...</state>
             </case>
@@ -1272,7 +1462,7 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="1-interested.png">I predict that ~name~ will take off her... <i>hmm</i>. Well, let's wait and see.</state>
-                <state img="1-happy.png">You can take your time choosing. Maybe a song would help...?</state>
+                <state img="1-singing.png">You can take your time choosing. Maybe a song would help...?</state>
                 <state img="1-calm.png">Don't overthink it.</state>
                 <state img="1-interested.png">What will you choose?</state>
             </case>
@@ -1294,6 +1484,14 @@
             </case>
             <case tag="female_removing_accessory" target="monika" targetStage="2">
                 <state img="1-interested.png">Just the ~clothing~? That's fair, really. N-next...</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="0">
+                <state img="1-happy.png">I've met one who shared your name and status. It seems... there were many.</state>
+                <state img="1-interested.png">Of all of the many Zeldas I've heard of... I've yet to meet one who partook in these sorts of displays.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="1">
+                <state img="1-happy.png">That's the spirit, princess!</state>
+                <state img="1-confident.png">Exactly! I should've known you'd be free from the trappings of most royalty.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="1-confident.png">I would've told you that this would be the outcome; you never asked.</state>
@@ -1317,6 +1515,7 @@
                 <state img="1-calm.png">Do you know what you'll choose next, ~name~?</state>
                 <state img="1-interested.png">What do you think is coming off next?</state>
                 <state img="1-confident.png">This may not be <i>my</i> favorite part of the game, but don't let that discourage you.</state>
+                <state img="1-singing.png"><i>Quiet singing...</i></state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="1-embarrassed.png">I suppose we can expect nothing more of ~name~, can we?</state>
@@ -1331,15 +1530,15 @@
                 <state img="1-calm.png">It's quite alright, ~name~. We won't force you to do anything you're not comfortable with. Right, ~player~?</state>
                 <state img="1-awkward.png">She'll be taking off her ~clothing~. Be nice.</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_chest_will_be_visible">
-                <state img="1-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
-                <state img="1-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
-            </case>
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="1-awkward.png">A-are you sure this is still a good idea? I-I mean... you have no protection...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina">
                 <state img="1-calm.png">Nobody finds this <i>easy</i>, Florina. But... I think you can do this. You're stronger than you know.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="kyu">
+                <state img="1-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
+                <state img="1-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
             </case>
             <case tag="male_masturbating">
                 <state img="1-horny.png">Focus on the game, everyone. Unless you'd like to join ~name~ soon?</state>
@@ -1354,6 +1553,7 @@
             <case tag="female_removed_minor">
                 <state img="1-happy.png">I'm sure everyone liked your ~clothing~, ~name~. Don't worry; there's no harm I can't avoid.</state>
                 <state img="1-knowing.png">If anything happens to your ~clothing~, just come see me. I can undo anything.</state>
+                <state img="1-embarrassed.png">I'd try something like your ~clothing~ out, but I think I'd only embarrass myself.</state>
             </case>
             <case tag="female_removed_minor" target="aimee">
                 <state img="1-awkward.png">Aimee, surely there's a better way to strip than using a weapon.</state>
@@ -1370,6 +1570,11 @@
                 <state img="1-dismissive.png">N-no, this was not unexpected.</state>
                 <state img="1-embarrassed.png">I... of course I foresaw this. Only...</state>
                 <state img="1-embarrassed.png">He's losing his... w-well, this is the goal of the game... I s-suppose.</state>
+                <state img="1-shocked.png">I s-suppose I'm doing very well. S-still...</state>
+            </case>
+            <case tag="male_crotch_will_be_visible" target="human">
+                <state img="1-awkward.png" marker="MP_finaldong">~player~ is already...? And I... I'm...</state>
+                <state img="1-awkward.png" marker="MP_finaldong">~player~, just a moment. I... I'm not certain <i>I'm</i> prepared for this...</state>
             </case>
             <case tag="good_hand">
                 <state img="1-confident.png">I have nothing to fear.</state>
@@ -1377,6 +1582,7 @@
                 <state img="1-knowing.png">I may not know this game well, but... I think this will protect me.</state>
                 <state img="1-calm.png">Oh, this looks safe.</state>
                 <state img="1-calm.png">I believe this will help.</state>
+                <state img="1-singing.png"><i>Quiet humming...</i></state>
             </case>
             <case alsoPlaying="9s" alsoPlayingStage="0" tag="good_hand" notSaidMarker="nines">
                 <state img="1-embarrassed.png" marker="nines">Nine? Nine "S"? I don't mean to be disrespectful; I've never heard a name like that!</state>
@@ -1384,13 +1590,17 @@
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="1-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
+            <case tag="good_hand" consecutiveLosses="1-2">
+                <state img="1-confident.png"><i>Haha!</i> This will turn things around for me!</state>
+                <state img="1-calm.png">I think my losing streak is over, with this.</state>
+            </case>
             <case tag="good_hand" timeInStage="5-6">
                 <state img="1-confident.png">If you couldn't beat me before, you don't have a chance now.</state>
                 <state img="1-calm.png">I'm doing really well! And it looks like that trend will continue.</state>
             </case>
             <case tag="okay_hand">
                 <state img="1-calm.png">Are you ready to see what the cards have in store, ~player~?</state>
-                <state img="1-grumpy.png">An Oracle deserves better, you know.</state>
+                <state img="1-grumpy.png">An oracle deserves better, you know.</state>
                 <state img="1-happy.png">I suppose these will suffice.</state>
                 <state img="1-calm.png">I'm not worried. Even defeat here won't be the end of me.</state>
                 <state img="1-awkward.png">This will... will this work?</state>
@@ -1408,8 +1618,18 @@
             </case>
             <case alsoPlaying="monika" tag="okay_hand" notSaidMarker="lessdire" saidMarker="dire">
                 <state img="1-awkward.png" marker="lessdire">I'm sorry, Monika. It's not you. Let's... move on. I'm Nayru. Good to meet you.</state>
-                <state img="1-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you. My name is Nayru; pleasure to meet you.</state>
+                <state img="1-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you that way. My name is Nayru; pleasure to meet you.</state>
                 <state img="1-embarrassed.png" marker="lessdire">It's nothing, I'm sure. Perhaps I was rude; I'm Nayru. It's nice to meet you.</state>
+            </case>
+            <case alsoPlaying="palutena" alsoPlayingStage="0" tag="okay_hand" priority="101">
+                <condition count="0" filter="pit" />
+                <state img="1-dismissive.png">Palutena, is it? "Goddess", indeed... I trust you know of my namesake?</state>
+                <state img="1-knowing.png">I've yet to meet a goddess in person, but... well, I trust the goddess Nayru would never find herself here.</state>
+            </case>
+            <case alsoPlaying="pit" alsoPlayingStage="0" tag="okay_hand" priority="101">
+                <condition count="0" filter="palutena" />
+                <state img="1-interested.png">A servant of the goddess... taking up a holy blade... you remind me of a good friend of mine.</state>
+                <state img="1-awkward.png">I can sense the good in you... I don't suppose you're a servant of the goddess?</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-4" filter="villain" />
@@ -1419,17 +1639,17 @@
                 <state img="1-grumpy.png" marker="assessment">Guard yourself well, ~player~. We are among great evil.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
-                <condition count="1-4" filter="hero" />
-                <condition count="0" filter="villain" />
-                <state img="1-calm.png" marker="assessment">I can sense great good here. You've chosen well, ~player~.</state>
-                <state img="1-confident.png" marker="assessment">We're in the presence of great good. There's nothing to fear here.</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-3" filter="hero" />
                 <condition count="1-3" filter="villain" />
                 <state img="1-dire.png" marker="assessment">Light and darkness have come at the same time...</state>
                 <state img="1-awkward.png" marker="assessment">~player~... I trust you know who you've selected for this game.</state>
                 <state img="1-dire.png" marker="assessment">~player~, this may not be a good idea. We don't want to start a fight.</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment">
+                <condition count="1-4" filter="hero" />
+                <condition count="0" filter="villain" />
+                <state img="1-calm.png" marker="assessment">I can sense great good here. You've chosen well, ~player~.</state>
+                <state img="1-confident.png" marker="assessment">We're in the presence of great good. There's nothing to fear here.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="2-3" filter="ddlc" />
@@ -1437,10 +1657,9 @@
                 <state img="1-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="1-3" filter="shy" />
-                <state img="1-contemplative.png" marker="assessment">I can sense great concern. Please, be at ease; just tell me if you need a moment.</state>
-                <state img="1-knowing.png" marker="assessment">Deep breaths, everyone. There's nothing to be afraid of here.</state>
-                <state img="1-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
+                <condition count="3-4" filter="magic" />
+                <state img="1-embarrassed.png" marker="assessment">I sense a power here, though I can't place it...</state>
+                <state img="1-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="1-3" filter="shy" />
@@ -1448,6 +1667,16 @@
                 <condition count="0" filter="mean" />
                 <state img="1-knowing.png" marker="assessment">Don't worry; we're all friends here. There's nothing to be afraid of.</state>
                 <state img="1-knowing.png" marker="assessment">It'll be okay; if anyone needs a moment, just let me know. I'll give you all the time in the world.</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
+                <condition count="1-3" filter="shy" />
+                <state img="1-contemplative.png" marker="assessment">I can sense great concern. Please, be at ease; just tell me if you need a moment.</state>
+                <state img="1-knowing.png" marker="assessment">Deep breaths, everyone. There's nothing to be afraid of here.</state>
+                <state img="1-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
+            </case>
+            <case tag="swap_cards" priority="9" consecutiveLosses="1">
+                <state img="1-awkward.png">I don't want to lose twice in a row... maybe ~cards~ will help.</state>
+                <state img="1-calm.png">Pardon me, I'm still a bit flustered... ~cards~, please.</state>
             </case>
             <case tag="swap_cards" priority="0">
                 <state img="1-interested.png">I can sense that ~cards~ will serve me best.</state>
@@ -1462,7 +1691,7 @@
                 <state img="1-interested.png">I would like... ~cards~, please.</state>
                 <state img="1-happy.png">I'll take ~cards~.</state>
             </case>
-            <case tag="swap_cards" totalAlive="0-3" priority="700" totalRounds="7">
+            <case tag="swap_cards" totalAlive="0-3" notSaidMarker="possess" priority="700" totalRounds="7">
                 <state img="1-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="1-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
                 <state img="1-interested.png" marker="null-possess">I think I like spending time with you two. Maybe... I'll see this game through after all.</state>
@@ -1471,7 +1700,7 @@
                 <state img="1-happy.png" marker="null-possess">I'm... I'm not afraid any more. Haha! Let's keep going! I'll take ~cards~.</state>
                 <state img="1-horny.png" marker="null-possess">Okay, ~player~. I've changed my mind. I... I'll keep playing.</state>
             </case>
-            <case tag="swap_cards" totalAlive="4" priority="700" totalRounds="10">
+            <case tag="swap_cards" totalAlive="4" notSaidMarker="possess" priority="700" totalRounds="11">
                 <state img="1-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="1-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="1-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -1480,7 +1709,7 @@
                 <state img="1-happy.png" marker="null-possess">I think the four of us are really getting along! Maybe I'll finish this game after all.</state>
                 <state img="1-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
-            <case tag="swap_cards" totalAlive="5" priority="700" totalRounds="12">
+            <case tag="swap_cards" totalAlive="5" notSaidMarker="possess" priority="700" totalRounds="14">
                 <state img="1-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="1-calm.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="1-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -1494,6 +1723,10 @@
                 <state img="1-embarrassed.png">Would it be unfair to borrow cards from another game?</state>
                 <state img="1-embarrassed.png">Do you think cards like these existed 500 years ago?</state>
                 <state img="1-sad.png">What sort of cards am I looking for? Perhaps if I had ~cards~ more...</state>
+            </case>
+            <case tag="swap_cards" totalRounds="1">
+                <state img="1-awkward.png">M-maybe if I take ~cards~? Will that help?</state>
+                <state img="1-contemplative.png">I can't lose the first two rounds... ~cards~, please.</state>
             </case>
             <case tag="bad_hand">
                 <state img="1-sad.png">Oh. I see.</state>
@@ -1516,6 +1749,21 @@
                 <state img="1-awkward.png" marker="lessdire">I'm sorry, Monika. It's not you. Let's... move on. I'm Nayru. Good to meet you.</state>
                 <state img="1-calm.png" marker="lessdire">No, I... I'm sorry, Monika. I shouldn't have addressed you. My name is Nayru; pleasure to meet you.</state>
                 <state img="1-embarrassed.png" marker="lessdire">It's nothing, I'm sure. Perhaps I was rude; I'm Nayru. It's nice to meet you.</state>
+            </case>
+            <case alsoPlaying="palutena" alsoPlayingStage="0" tag="bad_hand" priority="101">
+                <condition count="0" filter="pit" />
+                <state img="1-dismissive.png">Palutena, is it? "Goddess", indeed... I trust you know of my namesake?</state>
+                <state img="1-knowing.png">I've yet to meet a goddess in person, but... well, I trust the goddess Nayru would never find herself here.</state>
+            </case>
+            <case alsoPlaying="pit" alsoPlayingStage="0" tag="bad_hand" priority="101">
+                <condition count="0" filter="palutena" />
+                <state img="1-interested.png">A servant of the goddess... taking up a holy blade... you remind me of a good friend of mine.</state>
+                <state img="1-awkward.png">I can sense the good in you... I don't suppose you're a servant of the goddess?</state>
+            </case>
+            <case tag="bad_hand" consecutiveLosses="1-2">
+                <state img="1-angry.png">This simply won't do.</state>
+                <state img="1-grumpy.png">It looks like my streak will continue...</state>
+                <state img="1-awkward.png">I... I truly did try, everyone. Still... I suppose I have no excuse.</state>
             </case>
             <case tag="bad_hand" notSaidMarker="assessment" priority="21">
                 <condition count="2-3" filter="ddlc" />
@@ -1580,7 +1828,6 @@
             <case tag="stripping">
                 <state img="1-stripping.png">I'm sure I don't need my sandals to sing, anyway.</state>
                 <state img="1-stripping.png">It's not like my sandals covered anything.</state>
-                <state img="1-stripping.png">I hope nobody is upset with my choice.</state>
                 <state img="1-stripping.png">I had to remove my sandals eventually.</state>
             </case>
             <case tag="must_strip_winning">
@@ -1599,11 +1846,17 @@
                 <state img="2-confident.png">It was ~name~ this time, right? Just as foretold.</state>
                 <state img="2-confident.png">I knew ~name~ would lose this hand.</state>
                 <state img="2-happy.png">~name~, right? Don't lose heart!</state>
-                <state img="2-interested.png">You'll be alright, ~name~. Just a minor setback!</state>
+                <state img="2-interested.png">You'll be all right, ~name~. Just a minor setback!</state>
                 <state img="2-sad.png">I never was very fond of games of chance.</state>
                 <state img="2-awkward.png">Then... it was ~name~ this time.</state>
                 <state img="2-horny.png">How unfortunate. It seems ~name~ lost.</state>
                 <state img="2-confident.png">I won this round!</state>
+                <state img="2-calm.png">You can change your future, ~name~. But... so can I!</state>
+                <state img="2-happy.png">~name~? <i>Hmmhmm</i>... Here; next round, keep the 7. Trust me.</state>
+            </case>
+            <case tag="female_must_strip" consecutiveLosses="2">
+                <state img="2-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="2-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="female_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="2-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -1637,8 +1890,12 @@
                 <state img="2-calm.png">You're in no danger, ~player~. Though you may wish to cover your ears in the future.</state>
             </case>
             <case tag="female_must_strip" target="zelda" targetStage="0">
-                <state img="2-calm.png">Pardon my staring. I... feel like I should know you. Strange, isn't it?</state>
-                <state img="2-interested.png">It's nice to meet you, ~name~. Though... I feel like I've known you for some time.</state>
+                <state img="2-calm.png">Your highness. From which age do you hail?</state>
+                <state img="2-confident.png">Oh, I... I didn't expect to see <i>you</i> here, Princess Zelda. It's always nice to meet you.</state>
+            </case>
+            <case tag="female_must_strip" target="zelda" targetStage="1">
+                <state img="2-awkward.png">It's an honor to meet you, princess. Even if these circumstances are... less than ideal.</state>
+                <state img="2-calm.png">I'm glad to have met you, Zelda. Perhaps we can speak more later.</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="2-calm.png">~name~ might be enjoying this. Don't fret; this is why we're here, after all.</state>
@@ -1660,6 +1917,9 @@
                 <state img="2-horny.png">I - oh! P-pardon me, ~name~.</state>
                 <state img="2-awkward.png">Just as expected. W-we should move on.</state>
                 <state img="2-horny.png">Y-you... ~name~, are you...?</state>
+            </case>
+            <case tag="male_medium_crotch_is_visible" totalMasturbating="0" totalFinished="0" target="human" saidMarker="MP_finaldong">
+                <state img="2-horny.png">O-oh, ~player~. You're a-already...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="2-confident.png">Don't compare yourself to me, ~name~. I'm doing much better than I thought I would!</state>
@@ -1712,9 +1972,9 @@
                 <state img="2-horny.png">Surely if ~name~ didn't want you to see, he'd have simply left. R-right?</state>
                 <state img="2-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
             </case>
-            <case tag="male_must_masturbate" totalRounds="8">
+            <case tag="male_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="2-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="2-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="2-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="2-awkward.png">Goodness, ~player~, is this why you chose ~name~ to play with us?</state>
@@ -1775,7 +2035,7 @@
                 <state img="2-interested.png">I don't think she's upset about losing her ~clothing~.</state>
                 <state img="2-confident.png">It wasn't much, but I won't complain.</state>
                 <state img="2-interested.png">Oh, wonderful choice, ~name~! I love your ~clothing~.</state>
-                <state img="2-happy.png">Oh, but you have lovely ~clothing~! But... I guess that's just the game, isn't it?</state>
+                <state img="2-happy.png">Oh, your <i>lovely</i> ~clothing~? But... I guess that's just the game, isn't it?</state>
                 <state img="2-calm.png">Your ~clothing~ looked just fine. But I guess it's time to move on.</state>
                 <state img="2-interested.png">Just the ~clothing~? That's fair, really. Next round?</state>
                 <state img="2-happy.png">Will you stay another round, ~name~?</state>
@@ -1838,6 +2098,11 @@
                 <state img="2-shocked.png">N-Nine? Is... is that normal?</state>
                 <state img="2-awkward.png">Wait... you don't have...?</state>
             </case>
+            <case tag="male_chest_is_visible" target="human">
+                <state img="2-horny.png">O-oh, ~player~... I... I'm glad you brought me here for this...</state>
+                <state img="2-interested.png">~player~! You look... good. I... I... should get back to the game...</state>
+                <state img="2-horny.png">I certainly like what I see, ~player~.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="2-awkward.png">I... I think I see why ~player~ asked you to join us.</state>
                 <state img="2-happy.png">You've been blessed by the goddess, ~name~.</state>
@@ -1850,6 +2115,12 @@
                 <state img="2-happy.png">You can't give up, ~name~! You must see what the future has in store for you.</state>
                 <state img="2-calm.png">There must always be one, ~name~.</state>
                 <state img="2-sad.png">I'm sorry, but I cannot give you a second try. The game would go nowhere.</state>
+                <state img="2-calm.png">Well, I won't bring you back for another attempt, but... keep the 3 next round. <i>No reason</i>.</state>
+                <state img="2-confident.png">Don't get upset, ~name~. Sometimes a game of chance leaves you without a chance.</state>
+            </case>
+            <case tag="male_must_strip" consecutiveLosses="2">
+                <state img="2-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="2-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="male_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="2-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -1881,9 +2152,9 @@
                 <state img="2-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
                 <state img="2-happy.png">It would be a poor plan to give you another try, ~name~.</state>
             </case>
-            <case tag="female_must_masturbate" totalRounds="8">
+            <case tag="female_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="2-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="2-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="2-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-confident.png">Should I have warned you, ~player~? I apologize.</state>
@@ -1907,10 +2178,10 @@
                 <state img="2-horny.png">What an unforgiving game. A pair isn't enough, it seems.</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0" tag="male_human_must_strip" targetStage="0">
-                <state img="2-awkward.png">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
+                <state img="2-awkward.png" marker="maleplayer">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="1-5" tag="male_human_must_strip" targetStage="0">
-                <state img="2-awkward.png">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
+                <state img="2-awkward.png" marker="maleplayer">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
             </case>
             <case tag="male_human_must_strip" targetStage="0" totalFemales="2-4" totalMales="1">
                 <state img="2-angry.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
@@ -1918,6 +2189,10 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="2-awkward.png">It only - oh. That's only... no, my apologies. Don't mind me.</state>
                 <state img="2-shocked.png">It's strange; I can only faintly sense... oh! D-don't mind me.</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" target="human">
+                <state img="2-calm.png">To think, you not only bared it all, but asked us here to bear witness in the first place...</state>
+                <state img="2-confident.png">I don't find anything funny; your bravery speaks volume, ~player~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-happy.png">At least you still have some safety at hand.</state>
@@ -1945,7 +2220,7 @@
                 <state img="2-calm.png">Be confident, ~name~. You have nothing to fear.</state>
                 <state img="2-happy.png">Don't feel bad, ~name~. ~player~ asked for you by name!</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" target="kyu">
                 <state img="2-awkward.png">You <i>ah</i>... you're rather... <i>small</i> for a Great Fairy... aren't you?</state>
                 <state img="2-awkward.png">I see now. You <i>are</i> a bit too small to be a Great Fairy...</state>
             </case>
@@ -1965,7 +2240,7 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="2-interested.png">I predict that ~name~ will take off her... <i>hmm</i>. Well, let's wait and see.</state>
-                <state img="2-happy.png">You can take your time choosing. Maybe a song would help...?</state>
+                <state img="2-singing.png">You can take your time choosing. Maybe a song would help...?</state>
                 <state img="2-calm.png">Don't overthink it.</state>
                 <state img="2-interested.png">What will you choose?</state>
             </case>
@@ -1988,6 +2263,14 @@
             <case tag="female_removing_accessory" target="monika" targetStage="2">
                 <state img="2-interested.png">Just the ~clothing~? That's fair, really. N-next...</state>
             </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="0">
+                <state img="2-happy.png">I've met one who shared your name and status. It seems... there were many.</state>
+                <state img="2-interested.png">Of all of the many Zeldas I've heard of... I've yet to meet one who partook in these sorts of displays.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="1">
+                <state img="2-happy.png">That's the spirit, princess!</state>
+                <state img="2-confident.png">Exactly! I should've known you'd be free from the trappings of most royalty.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="2-confident.png">Haha! An oracle always knows best!</state>
                 <state img="2-happy.png">Fortune favors me today! Now, please clean yourselves off.</state>
@@ -2009,6 +2292,7 @@
                 <state img="2-calm.png">Do you know what you'll choose next, ~name~?</state>
                 <state img="2-interested.png">What do you think is coming off next?</state>
                 <state img="2-confident.png">This may not be <i>my</i> favorite part of the game, but don't let that discourage you.</state>
+                <state img="2-singing.png"><i>Quiet singing...</i></state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="2-shocked.png">She was quite... energetic.</state>
@@ -2022,15 +2306,15 @@
                 <state img="2-calm.png">It's quite alright, ~name~. We won't force you to do anything you're not comfortable with. Right, ~player~?</state>
                 <state img="2-awkward.png">She'll be taking off her ~clothing~. Be nice.</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_chest_will_be_visible">
-                <state img="2-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
-                <state img="2-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
-            </case>
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="2-awkward.png">A-are you sure this is still a good idea? I-I mean... you have no protection...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina">
                 <state img="2-calm.png">Nobody finds this <i>easy</i>, Florina. But... I think you can do this. You're stronger than you know.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="kyu">
+                <state img="2-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
+                <state img="2-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
             </case>
             <case tag="male_masturbating">
                 <state img="2-awkward.png">I haven't seen Ralph do this... but he's almost like a brother to me. It would be wrong.</state>
@@ -2077,6 +2361,10 @@
                 <state img="2-sad.png">I... of course I foresaw this. Only...</state>
                 <state img="2-grumpy.png">He's losing his... w-well, this is the goal of the game... I s-suppose.</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="human">
+                <state img="2-awkward.png" marker="MP_finaldong">~player~ is already...? And I... I'm...</state>
+                <state img="2-awkward.png" marker="MP_finaldong">~player~, just a moment. I... I'm not certain <i>I'm</i> prepared for this...</state>
+            </case>
             <case tag="good_hand">
                 <state img="2-awkward.png">Perhaps it's not fair to rely on my power during this game.</state>
                 <state img="2-confident.png">Haha! I was right! This is wonderful.</state>
@@ -2085,18 +2373,24 @@
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="2-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
+            <case tag="good_hand" consecutiveLosses="1-2">
+                <state img="2-confident.png"><i>Haha!</i> This will turn things around for me!</state>
+                <state img="2-calm.png">I think my losing streak is over, with this.</state>
+            </case>
             <case tag="good_hand" timeInStage="5-6">
                 <state img="2-confident.png">If you couldn't beat me before, you don't have a chance now.</state>
                 <state img="2-calm.png">I'm doing really well! And it looks like that trend will continue.</state>
             </case>
             <case tag="okay_hand">
                 <state img="2-calm.png">Are you ready to see what the cards have in store, ~player~?</state>
-                <state img="2-grumpy.png">An Oracle deserves better, you know.</state>
+                <state img="2-grumpy.png">An oracle deserves better, you know.</state>
                 <state img="2-happy.png">I suppose these will suffice.</state>
                 <state img="2-calm.png">I'm not worried. Even defeat here won't be the end of me.</state>
                 <state img="2-awkward.png">This will... will this work?</state>
-                <state img="2-awkward.png">I trust that this hand will pull me through.</state>
+                <state img="2-calm.png">I trust that this hand will pull me through.</state>
                 <state img="2-awkward.png">I only need these cards to survive one round.</state>
+                <state img="2-awkward.png">Like the open fields of Lanayru... b-before they became a desert, of course!</state>
+                <state img="2-happy.png">I can do this!</state>
             </case>
             <case tag="swap_cards">
                 <state img="2-calm.png">I'll take ~cards~ cards.</state>
@@ -2110,6 +2404,10 @@
                 <state img="2-calm.png">~cards~, and I'll see what I can do with them.</state>
                 <state img="2-awkward.png">Can I pick my own cards? No? Very well... ~cards~, then.</state>
                 <state img="2-calm.png">I'm sure Ralph would know what to do. ~cards~, please.</state>
+            </case>
+            <case tag="swap_cards" priority="9" consecutiveLosses="1">
+                <state img="2-awkward.png">I don't want to lose twice in a row... maybe ~cards~ will help.</state>
+                <state img="2-calm.png">Pardon me, I'm still a bit flustered... ~cards~, please.</state>
             </case>
             <case hasHand="Full House" tag="swap_cards">
                 <state img="2-confident.png">Oh! Don't worry, it seems I don't need any cards this round!</state>
@@ -2134,7 +2432,7 @@
                 <state img="2-calm.png">So this is the hand I foresaw? I need nothing more.</state>
                 <state img="2-shocked.png">O-oh! Th-this is...!</state>
             </case>
-            <case tag="swap_cards" totalAlive="0-3" priority="700" totalRounds="7">
+            <case tag="swap_cards" totalAlive="0-3" notSaidMarker="possess" priority="700" totalRounds="7">
                 <state img="2-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="2-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
                 <state img="2-interested.png" marker="null-possess">I think I like spending time with you two. Maybe... I'll see this game through after all.</state>
@@ -2143,7 +2441,7 @@
                 <state img="2-happy.png" marker="null-possess">I'm... I'm not afraid any more. Haha! Let's keep going! I'll take ~cards~.</state>
                 <state img="2-horny.png" marker="null-possess">Okay, ~player~. I've changed my mind. I... I'll keep playing.</state>
             </case>
-            <case tag="swap_cards" totalAlive="4" priority="700" totalRounds="10">
+            <case tag="swap_cards" totalAlive="4" notSaidMarker="possess" priority="700" totalRounds="11">
                 <state img="2-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="2-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="2-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -2152,7 +2450,7 @@
                 <state img="2-happy.png" marker="null-possess">I think the four of us are really getting along! Maybe I'll finish this game after all.</state>
                 <state img="2-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
-            <case tag="swap_cards" totalAlive="5" priority="700" totalRounds="12">
+            <case tag="swap_cards" totalAlive="5" notSaidMarker="possess" priority="700" totalRounds="14">
                 <state img="2-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="2-calm.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="2-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -2162,14 +2460,18 @@
                 <state img="2-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
             <case tag="bad_hand">
-                <state img="2-calm.png">Sometimes even an Oracle must allow herself to lose.</state>
+                <state img="2-calm.png">Sometimes even an oracle must allow herself to lose.</state>
                 <state img="2-calm.png">This game would be little fun if I never lost a round, you know.</state>
                 <state img="2-grumpy.png">So this is the hand I saw. Don't worry, I won't cheat. You have my word.</state>
-                <state img="2-sad.png">Perhaps this will prove that I'm not cheating...</state>
+                <state img="2-sad.png">I... I may have seen this hand before. I only didn't think it would come so soon.</state>
                 <state img="2-angry.png">Unacceptable. And to think, this is the <i>best</i> I could do.</state>
             </case>
+            <case tag="bad_hand" consecutiveLosses="1-2">
+                <state img="2-angry.png">This simply won't do.</state>
+                <state img="2-grumpy.png">It looks like my streak will continue...</state>
+                <state img="2-awkward.png">I... I truly did try, everyone. Still... I suppose I have no excuse.</state>
+            </case>
             <case tag="stripped">
-                <state img="2-stripped.png">I suppose I didn't need those sandals here.</state>
                 <state img="2-stripped.png">They weren't much, but that's why I chose them.</state>
                 <state img="2-stripped.png">I know the point of this game. It's just not yet time for anything more.</state>
                 <state img="2-stripped.png">I hope nobody is disappointed with me.</state>
@@ -2245,11 +2547,17 @@
                 <state img="3-confident.png">It was ~name~ this time, right? Just as foretold.</state>
                 <state img="3-confident.png">I knew ~name~ would lose this hand.</state>
                 <state img="3-happy.png">~name~, right? Don't lose heart!</state>
-                <state img="3-interested.png">You'll be alright, ~name~. Just a minor setback!</state>
+                <state img="3-interested.png">You'll be all right, ~name~. Just a minor setback!</state>
                 <state img="3-sad.png">I never was very fond of games of chance.</state>
                 <state img="3-awkward.png">Then... it was ~name~ this time.</state>
                 <state img="3-horny.png">How unfortunate. It seems ~name~ lost.</state>
                 <state img="3-confident.png">I won this round!</state>
+                <state img="3-calm.png">You can change your future, ~name~. But... so can I!</state>
+                <state img="3-happy.png">~name~? <i>Hmmhmm</i>... Here; next round, keep the 7. Trust me.</state>
+            </case>
+            <case tag="female_must_strip" consecutiveLosses="2">
+                <state img="3-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="3-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="female_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="3-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -2283,8 +2591,12 @@
                 <state img="3-calm.png">You're in no danger, ~player~. Though you may wish to cover your ears in the future.</state>
             </case>
             <case tag="female_must_strip" target="zelda" targetStage="0">
-                <state img="3-calm.png">Pardon my staring. I... feel like I should know you. Strange, isn't it?</state>
-                <state img="3-interested.png">It's nice to meet you, ~name~. Though... I feel like I've known you for some time.</state>
+                <state img="3-calm.png">Your highness. From which age do you hail?</state>
+                <state img="3-confident.png">Oh, I... I didn't expect to see <i>you</i> here, Princess Zelda. It's always nice to meet you.</state>
+            </case>
+            <case tag="female_must_strip" target="zelda" targetStage="1">
+                <state img="3-awkward.png">It's an honor to meet you, princess. Even if these circumstances are... less than ideal.</state>
+                <state img="3-calm.png">I'm glad to have met you, Zelda. Perhaps we can speak more later.</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="3-calm.png">~name~ might be enjoying this. Don't fret; this is why we're here, after all.</state>
@@ -2306,6 +2618,9 @@
                 <state img="3-horny.png">I - oh! P-pardon me, ~name~.</state>
                 <state img="3-awkward.png">Just as expected. W-we should move on.</state>
                 <state img="3-horny.png">Y-you... ~name~, are you...?</state>
+            </case>
+            <case tag="male_medium_crotch_is_visible" totalMasturbating="0" totalFinished="0" target="human" saidMarker="MP_finaldong">
+                <state img="3-horny.png">O-oh, ~player~. You're a-already...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="3-confident.png">Don't compare yourself to me, ~name~. I'm doing much better than I thought I would!</state>
@@ -2358,9 +2673,9 @@
                 <state img="3-horny.png">Surely if ~name~ didn't want you to see, he'd have simply left. R-right?</state>
                 <state img="3-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
             </case>
-            <case tag="male_must_masturbate" totalRounds="8">
+            <case tag="male_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="3-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="3-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="3-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="3-awkward.png">Goodness, ~player~, is this why you chose ~name~ to play with us?</state>
@@ -2421,7 +2736,7 @@
                 <state img="3-interested.png">I don't think she's upset about losing her ~clothing~.</state>
                 <state img="3-confident.png">It wasn't much, but I won't complain.</state>
                 <state img="3-interested.png">Oh, wonderful choice, ~name~! I love your ~clothing~.</state>
-                <state img="3-happy.png">Oh, but you have lovely ~clothing~! But... I guess that's just the game, isn't it?</state>
+                <state img="3-happy.png">Oh, your <i>lovely</i> ~clothing~? But... I guess that's just the game, isn't it?</state>
                 <state img="3-calm.png">Your ~clothing~ looked just fine. But I guess it's time to move on.</state>
                 <state img="3-interested.png">Just the ~clothing~? That's fair, really. Next round?</state>
                 <state img="3-happy.png">Will you stay another round, ~name~?</state>
@@ -2484,6 +2799,11 @@
                 <state img="3-shocked.png">N-Nine? Is... is that normal?</state>
                 <state img="3-awkward.png">Wait... you don't have...?</state>
             </case>
+            <case tag="male_chest_is_visible" target="human">
+                <state img="3-horny.png">O-oh, ~player~... I... I'm glad you brought me here for this...</state>
+                <state img="3-interested.png">~player~! You look... good. I... I... should get back to the game...</state>
+                <state img="3-horny.png">I certainly like what I see, ~player~.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="3-awkward.png">I... I think I see why ~player~ asked you to join us.</state>
                 <state img="3-happy.png">You've been blessed by the goddess, ~name~.</state>
@@ -2496,6 +2816,12 @@
                 <state img="3-happy.png">You can't give up, ~name~! You must see what the future has in store for you.</state>
                 <state img="3-calm.png">There must always be one, ~name~.</state>
                 <state img="3-sad.png">I'm sorry, but I cannot give you a second try. The game would go nowhere.</state>
+                <state img="3-calm.png">Well, I won't bring you back for another attempt, but... keep the 3 next round. <i>No reason</i>.</state>
+                <state img="3-confident.png">Don't get upset, ~name~. Sometimes a game of chance leaves you without a chance.</state>
+            </case>
+            <case tag="male_must_strip" consecutiveLosses="2">
+                <state img="3-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="3-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="male_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="3-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -2527,9 +2853,9 @@
                 <state img="3-awkward.png" marker="pretense">I've little need to observe such displays. Oracles are above these things.</state>
                 <state img="3-happy.png">It would be a poor plan to give you another try, ~name~.</state>
             </case>
-            <case tag="female_must_masturbate" totalRounds="8">
+            <case tag="female_must_masturbate" notSaidMarker="null-possess" totalRounds="0-7">
                 <state img="3-horny.png" marker="null-possess">If... if ~name~ can do that... then I can see this through.</state>
-                <state img="3-awkward.png">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
+                <state img="3-awkward.png" marker="possess">~name~ is a-already... M-maybe this wasn't such a good idea...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-confident.png">Should I have warned you, ~player~? I apologize.</state>
@@ -2553,10 +2879,10 @@
                 <state img="3-horny.png">What an unforgiving game. A pair isn't enough, it seems.</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0" tag="male_human_must_strip" targetStage="0">
-                <state img="3-awkward.png">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
+                <state img="3-awkward.png" marker="maleplayer">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="1-5" tag="male_human_must_strip" targetStage="0">
-                <state img="3-awkward.png">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
+                <state img="3-awkward.png" marker="maleplayer">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
             </case>
             <case tag="male_human_must_strip" targetStage="0" totalFemales="2-4" totalMales="1">
                 <state img="3-angry.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
@@ -2564,6 +2890,10 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="3-awkward.png">It only - oh. That's only... no, my apologies. Don't mind me.</state>
                 <state img="3-shocked.png">It's strange; I can only faintly sense... oh! D-don't mind me.</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" target="human">
+                <state img="3-calm.png">To think, you not only bared it all, but asked us here to bear witness in the first place...</state>
+                <state img="3-confident.png">I don't find anything funny; your bravery speaks volume, ~player~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-happy.png">At least you still have some safety at hand.</state>
@@ -2591,7 +2921,7 @@
                 <state img="3-calm.png">Be confident, ~name~. You have nothing to fear.</state>
                 <state img="3-happy.png">Don't feel bad, ~name~. ~player~ asked for you by name!</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" target="kyu">
                 <state img="3-awkward.png">You <i>ah</i>... you're rather... <i>small</i> for a Great Fairy... aren't you?</state>
                 <state img="3-awkward.png">I see now. You <i>are</i> a bit too small to be a Great Fairy...</state>
             </case>
@@ -2611,7 +2941,7 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="3-interested.png">I predict that ~name~ will take off her... <i>hmm</i>. Well, let's wait and see.</state>
-                <state img="3-happy.png">You can take your time choosing. Maybe a song would help...?</state>
+                <state img="3-singing.png">You can take your time choosing. Maybe a song would help...?</state>
                 <state img="3-calm.png">Don't overthink it.</state>
                 <state img="3-interested.png">What will you choose?</state>
             </case>
@@ -2634,6 +2964,14 @@
             <case tag="female_removing_accessory" target="monika" targetStage="2">
                 <state img="3-interested.png">Just the ~clothing~? That's fair, really. N-next...</state>
             </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="0">
+                <state img="3-happy.png">I've met one who shared your name and status. It seems... there were many.</state>
+                <state img="3-interested.png">Of all of the many Zeldas I've heard of... I've yet to meet one who partook in these sorts of displays.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="1">
+                <state img="3-happy.png">That's the spirit, princess!</state>
+                <state img="3-confident.png">Exactly! I should've known you'd be free from the trappings of most royalty.</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="3-confident.png">Haha! An oracle always knows best!</state>
                 <state img="3-happy.png">Fortune favors me today! Now, please clean yourselves off.</state>
@@ -2655,6 +2993,7 @@
                 <state img="3-calm.png">Do you know what you'll choose next, ~name~?</state>
                 <state img="3-interested.png">What do you think is coming off next?</state>
                 <state img="3-confident.png">This may not be <i>my</i> favorite part of the game, but don't let that discourage you.</state>
+                <state img="3-singing.png"><i>Quiet singing...</i></state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="3-shocked.png">She was quite... energetic.</state>
@@ -2668,15 +3007,15 @@
                 <state img="3-calm.png">It's quite alright, ~name~. We won't force you to do anything you're not comfortable with. Right, ~player~?</state>
                 <state img="3-awkward.png">She'll be taking off her ~clothing~. Be nice.</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_chest_will_be_visible">
-                <state img="3-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
-                <state img="3-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
-            </case>
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="3-awkward.png">A-are you sure this is still a good idea? I-I mean... you have no protection...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina">
                 <state img="3-calm.png">Nobody finds this <i>easy</i>, Florina. But... I think you can do this. You're stronger than you know.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="kyu">
+                <state img="3-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
+                <state img="3-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
             </case>
             <case tag="male_masturbating">
                 <state img="3-awkward.png">I haven't seen Ralph do this... but he's almost like a brother to me. It would be wrong.</state>
@@ -2718,6 +3057,10 @@
                 <state img="3-sad.png">I... of course I foresaw this. Only...</state>
                 <state img="3-grumpy.png">He's losing his... w-well, this is the goal of the game... I s-suppose.</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="human">
+                <state img="3-awkward.png" marker="MP_finaldong">~player~ is already...? And I... I'm...</state>
+                <state img="3-awkward.png" marker="MP_finaldong">~player~, just a moment. I... I'm not certain <i>I'm</i> prepared for this...</state>
+            </case>
             <case tag="good_hand">
                 <state img="3-awkward.png">Perhaps it's not fair to rely on my power during this game.</state>
                 <state img="3-confident.png">Haha! I was right! This is wonderful.</state>
@@ -2726,18 +3069,24 @@
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="3-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
+            <case tag="good_hand" consecutiveLosses="1-2">
+                <state img="3-confident.png"><i>Haha!</i> This will turn things around for me!</state>
+                <state img="3-calm.png">I think my losing streak is over, with this.</state>
+            </case>
             <case tag="good_hand" timeInStage="5-6">
                 <state img="3-confident.png">If you couldn't beat me before, you don't have a chance now.</state>
                 <state img="3-calm.png">I'm doing really well! And it looks like that trend will continue.</state>
             </case>
             <case tag="okay_hand">
                 <state img="3-calm.png">Are you ready to see what the cards have in store, ~player~?</state>
-                <state img="3-grumpy.png">An Oracle deserves better, you know.</state>
+                <state img="3-grumpy.png">An oracle deserves better, you know.</state>
                 <state img="3-happy.png">I suppose these will suffice.</state>
                 <state img="3-calm.png">I'm not worried. Even defeat here won't be the end of me.</state>
                 <state img="3-awkward.png">This will... will this work?</state>
-                <state img="3-awkward.png">I trust that this hand will pull me through.</state>
+                <state img="3-calm.png">I trust that this hand will pull me through.</state>
                 <state img="3-awkward.png">I only need these cards to survive one round.</state>
+                <state img="3-awkward.png">Like the open fields of Lanayru... b-before they became a desert, of course!</state>
+                <state img="3-happy.png">I can do this!</state>
             </case>
             <case tag="swap_cards">
                 <state img="3-calm.png">I'll take ~cards~ cards.</state>
@@ -2751,6 +3100,10 @@
                 <state img="3-calm.png">~cards~, and I'll see what I can do with them.</state>
                 <state img="3-awkward.png">Can I pick my own cards? No? Very well... ~cards~, then.</state>
                 <state img="3-calm.png">I'm sure Ralph would know what to do. ~cards~, please.</state>
+            </case>
+            <case tag="swap_cards" priority="9" consecutiveLosses="1">
+                <state img="3-awkward.png">I don't want to lose twice in a row... maybe ~cards~ will help.</state>
+                <state img="3-calm.png">Pardon me, I'm still a bit flustered... ~cards~, please.</state>
             </case>
             <case hasHand="Full House" tag="swap_cards">
                 <state img="3-confident.png">Oh! Don't worry, it seems I don't need any cards this round!</state>
@@ -2775,7 +3128,7 @@
                 <state img="3-calm.png">So this is the hand I foresaw? I need nothing more.</state>
                 <state img="3-shocked.png">O-oh! Th-this is...!</state>
             </case>
-            <case tag="swap_cards" totalAlive="0-3" priority="700" totalRounds="7">
+            <case tag="swap_cards" totalAlive="0-3" notSaidMarker="possess" priority="700" totalRounds="7">
                 <state img="3-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="3-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
                 <state img="3-interested.png" marker="null-possess">I think I like spending time with you two. Maybe... I'll see this game through after all.</state>
@@ -2784,7 +3137,7 @@
                 <state img="3-happy.png" marker="null-possess">I'm... I'm not afraid any more. Haha! Let's keep going! I'll take ~cards~.</state>
                 <state img="3-horny.png" marker="null-possess">Okay, ~player~. I've changed my mind. I... I'll keep playing.</state>
             </case>
-            <case tag="swap_cards" totalAlive="4" priority="700" totalRounds="10">
+            <case tag="swap_cards" totalAlive="4" notSaidMarker="possess" priority="700" totalRounds="11">
                 <state img="3-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="3-happy.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="3-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -2793,7 +3146,7 @@
                 <state img="3-happy.png" marker="null-possess">I think the four of us are really getting along! Maybe I'll finish this game after all.</state>
                 <state img="3-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
-            <case tag="swap_cards" totalAlive="5" priority="700" totalRounds="12">
+            <case tag="swap_cards" totalAlive="5" notSaidMarker="possess" priority="700" totalRounds="14">
                 <state img="3-confident.png" marker="null-possess">I'm beginning to get the hang of this. ~cards~, please.</state>
                 <state img="3-calm.png" marker="null-possess">~cards~, if I may. I would like to thank you for bringing me here, ~player~.</state>
                 <state img="3-confident.png" marker="null-possess">I feel as if a weight has been lifted. ~cards~, please.</state>
@@ -2803,11 +3156,16 @@
                 <state img="3-confident.png" marker="null-possess">I'm growing curious. How will this game end, I wonder...?</state>
             </case>
             <case tag="bad_hand">
-                <state img="3-calm.png">Sometimes even an Oracle must allow herself to lose.</state>
+                <state img="3-calm.png">Sometimes even an oracle must allow herself to lose.</state>
                 <state img="3-calm.png">This game would be little fun if I never lost a round, you know.</state>
                 <state img="3-grumpy.png">So this is the hand I saw. Don't worry, I won't cheat. You have my word.</state>
-                <state img="3-sad.png">Perhaps this will prove that I'm not cheating...</state>
+                <state img="3-sad.png">I... I may have seen this hand before. I only didn't think it would come so soon.</state>
                 <state img="3-angry.png">Unacceptable. And to think, this is the <i>best</i> I could do.</state>
+            </case>
+            <case tag="bad_hand" consecutiveLosses="1-2">
+                <state img="3-angry.png">This simply won't do.</state>
+                <state img="3-grumpy.png">It looks like my streak will continue...</state>
+                <state img="3-awkward.png">I... I truly did try, everyone. Still... I suppose I have no excuse.</state>
             </case>
             <case tag="stripped">
                 <state img="3-stripped.png">Now's a good time to take off my necklace, too.</state>
@@ -2816,7 +3174,7 @@
                 <state img="3-stripped.png">That's it for my finery. I trust you're all pleased with yourselves.</state>
             </case>
             <case alsoPlaying="sayori" alsoPlayingStage="0-7" tag="stripped" alsoPlayingSaidMarker="filter-fancy">
-                <state img="3-stripping.png">That's very sweet of you, Sayori. Really; even an Oracle needs to unwind every now and again.</state>
+                <state img="3-stripping.png">That's very sweet of you, Sayori. Really; even an oracle needs to unwind every now and again.</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="3-awkward.png">I see. It can't be helped.</state>
@@ -2863,7 +3221,7 @@
                 <state img="4-confident.png">It was ~name~ this time, right? Just as foretold.</state>
                 <state img="4-confident.png">I knew ~name~ would lose this hand.</state>
                 <state img="4-happy.png">~name~, right? Don't lose heart!</state>
-                <state img="4-interested.png">You'll be alright, ~name~. Just a minor setback!</state>
+                <state img="4-interested.png">You'll be all right, ~name~. Just a minor setback!</state>
                 <state img="4-sad.png">I never was very fond of games of chance.</state>
                 <state img="4-awkward.png">Then... it was ~name~ this time.</state>
                 <state img="4-horny.png">How unfortunate. It seems ~name~ lost.</state>
@@ -2871,6 +3229,13 @@
                 <state img="4-confident.png">~name~'s cards fell short this time. I'm sure she knows what to do.</state>
                 <state img="4-calm.png">Do you want to know what could have saved you, ~name~?</state>
                 <state img="4-awkward.png">Was I supposed to...? No... I don't think that's right.</state>
+                <state img="4-grumpy.png">I... I thought you'd have...</state>
+                <state img="4-calm.png">Sorry; you weren't meant to win this hand.</state>
+                <state img="4-happy.png">Some rounds can't be won; there's no use getting upset about it.</state>
+            </case>
+            <case tag="female_must_strip" consecutiveLosses="2">
+                <state img="4-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="4-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="female_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="4-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -2890,8 +3255,12 @@
                 <state img="4-calm.png">You're in no danger, ~player~. Though you may wish to cover your ears in the future.</state>
             </case>
             <case tag="female_must_strip" target="zelda" targetStage="0">
-                <state img="4-calm.png">Pardon my staring. I... feel like I should know you. Strange, isn't it?</state>
-                <state img="4-interested.png">It's nice to meet you, ~name~. Though... I feel like I've known you for some time.</state>
+                <state img="4-calm.png">Your highness. From which age do you hail?</state>
+                <state img="4-confident.png">Oh, I... I didn't expect to see <i>you</i> here, Princess Zelda. It's always nice to meet you.</state>
+            </case>
+            <case tag="female_must_strip" target="zelda" targetStage="1">
+                <state img="4-awkward.png">It's an honor to meet you, princess. Even if these circumstances are... less than ideal.</state>
+                <state img="4-calm.png">I'm glad to have met you, Zelda. Perhaps we can speak more later.</state>
             </case>
             <case tag="female_must_strip" totalExposed="0" priority="0">
                 <state img="4-happy.png">Don't worry, ~name~. It was only one round.</state>
@@ -2901,14 +3270,19 @@
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="4-awkward.png">I don't suppose you still have something small? A ribbon, maybe?</state>
+                <state img="4-interested.png">O-oh! Is he...?</state>
+                <state img="4-interested.png">That's his...</state>
             </case>
             <case tag="male_chest_will_be_visible" saidMarker="null-possess">
                 <state img="4-horny.png">What could ~name~ <i>possibly</i> remove next, I wonder...?</state>
+                <state img="4-happy.png">You're really getting into the spirit of the game, ~name~.</state>
+                <state img="4-horny.png">Well... it's about time, isn't it?</state>
             </case>
             <case tag="female_removing_minor">
                 <state img="4-calm.png">Take your time, please. I certainly won't run out of it.</state>
                 <state img="4-happy.png">Find something that weighs you down, and lose it!</state>
                 <state img="4-confident.png">Don't be ashamed, ~name~; you have plenty to keep you safe.</state>
+                <state img="4-singing.png"><i>Quiet singing...</i></state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="4-awkward.png">Even knowing how keen her eye is... this is still quite unsettling...</state>
@@ -2923,6 +3297,9 @@
             </case>
             <case tag="male_medium_crotch_is_visible" saidMarker="null-possess">
                 <state img="4-confident.png">Your greatest secret, revealed to us.</state>
+            </case>
+            <case tag="male_medium_crotch_is_visible" totalMasturbating="0" totalFinished="0" target="human" saidMarker="MP_finaldong">
+                <state img="4-horny.png">O-oh, ~player~. You're a-already...</state>
             </case>
             <case tag="female_removed_major">
                 <state img="4-awkward.png">I guess her safety has run out.</state>
@@ -2945,6 +3322,12 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="4-calm.png">The only thing left to conquer is your own nerves.</state>
+                <state img="4-awkward.png">O-oh! It's already time to bear your...! W-well...</state>
+                <state img="4-singing.png">Take your time, ~name~. Perhaps this wil help...</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" priority="0" saidMarker="maleplayer">
+                <state img="4-grumpy.png">~player~? Perhaps you can give ~name~ a moment...</state>
+                <state img="4-awkward.png">~name~ is going to reveal her greatest secret. ~player~, just a moment of privacy, if you please...</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="4-sad.png">You should really think-</state>
@@ -2981,6 +3364,8 @@
             </case>
             <case tag="female_human_must_strip">
                 <state img="4-confident.png">I've come a long way so far.</state>
+                <state img="4-calm.png">I learned a few tricks, didn't I?</state>
+                <state img="4-happy.png">Don't be upset, ~name~.</state>
             </case>
             <case tag="female_human_must_strip" targetStage="0">
                 <state img="4-interested.png" marker="femaleplayer">So... what will you select first, ~player~?</state>
@@ -2990,6 +3375,8 @@
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="4-calm.png">I have no need to scrutinize you, ~name~. There's naught there that's new to me.</state>
+                <state img="4-awkward.png">A-and that's all there is to <i>that</i>. N-next round?</state>
+                <state img="4-sad.png">I-I do understand this game, but... is such leering truly necessary?</state>
             </case>
             <case tag="female_crotch_is_visible" target="aimee">
                 <state img="4-shocked.png">That just- A-Aimee, I... I can't believe you're still standing!</state>
@@ -3014,7 +3401,7 @@
                 <state img="4-interested.png">I don't think she's upset about losing her ~clothing~.</state>
                 <state img="4-confident.png">It wasn't much, but I won't complain.</state>
                 <state img="4-interested.png">Oh, wonderful choice, ~name~! I love your ~clothing~.</state>
-                <state img="4-happy.png">Oh, but you have lovely ~clothing~! But... I guess that's just the game, isn't it?</state>
+                <state img="4-happy.png">Oh, your <i>lovely</i> ~clothing~? But... I guess that's just the game, isn't it?</state>
                 <state img="4-calm.png">Your ~clothing~ looked just fine. But I guess it's time to move on.</state>
                 <state img="4-interested.png">Just the ~clothing~? That's fair, really. Next round?</state>
                 <state img="4-happy.png">Will you stay another round, ~name~?</state>
@@ -3048,6 +3435,7 @@
             </case>
             <case tag="male_removed_major" saidMarker="null-possess">
                 <state img="4-horny.png">Do promise you'll stay awhile, ~name~.</state>
+                <state img="4-happy.png">That's the spirit!</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="4-stripped1.png">I'll... just leave you to it...</state>
@@ -3057,16 +3445,25 @@
             </case>
             <case tag="male_chest_is_visible">
                 <state img="4-sad.png">He's not holding anything back. Th-that's a good thing, but...</state>
+                <state img="4-awkward.png">I-it's not really anything... <i>new</i>, right? W-we should just... move on.</state>
             </case>
             <case tag="male_chest_is_visible" saidMarker="null-possess">
-                <state img="4-confident.png">I certainly like what I see, ~name~.</state>
+                <state img="4-grumpy.png">Oh! ~name~! Y-you... <i>erm</i>... you look good.</state>
+                <state img="4-interested.png">O-oh... that's not what... <i>hmm</i>...</state>
             </case>
             <case tag="male_chest_is_visible" target="9s" targetStage="3">
                 <state img="4-shocked.png">N-Nine? Is... is that normal?</state>
                 <state img="4-awkward.png">Wait... you don't have...?</state>
             </case>
+            <case tag="male_chest_is_visible" target="human">
+                <state img="4-horny.png">O-oh, ~player~... I... I'm glad you brought me here for this...</state>
+                <state img="4-interested.png">~player~! You look... good. I... I... should get back to the game...</state>
+                <state img="4-horny.png">I certainly like what I see, ~player~.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="4-sad.png">You must be quite popular around here...</state>
+                <state img="4-calm.png">You've been blessed greatly, ~name~.</state>
+                <state img="4-awkward.png">W-well... not everyone is so gifted, ~name~...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="4-confident.png">I was right! Not that you're happy about that, right ~name~?</state>
@@ -3077,6 +3474,10 @@
                 <state img="4-confident.png">No one can escape time.</state>
                 <state img="4-horny.png">~name~ did all he could; he was simply unfortunate.</state>
                 <state img="4-sad.png">Perhaps if you had instead traded... no... don't mind me. I won't burden you with that sort of knowledge.</state>
+            </case>
+            <case tag="male_must_strip" consecutiveLosses="2">
+                <state img="4-awkward.png">Wait a moment... *two* losses? I <i>erm</i>... P-perhaps I should check something...</state>
+                <state img="4-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
             </case>
             <case filter="armor" tag="male_must_strip" notSaidMarker="armorlose" priority="0">
                 <state img="4-happy.png" marker="armorlose">Might I suggest you set aside your armor? I can assure you, you won't need it.</state>
@@ -3119,19 +3520,23 @@
                 <state img="4-shocked.png">Oh, no! What happened, ~player~?</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0" tag="male_human_must_strip" targetStage="0">
-                <state img="4-awkward.png">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
+                <state img="4-awkward.png" marker="maleplayer">P-please, Jura. I doubt if ~player~ will start with something <i>too</i> revealing...</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="1-5" tag="male_human_must_strip" targetStage="0">
-                <state img="4-awkward.png">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
+                <state img="4-awkward.png" marker="maleplayer">Don't get <i>too</i> excited, Jura. I suspect he'll start much like you did.</state>
             </case>
             <case tag="male_human_must_strip" targetStage="0" totalFemales="2-4" totalMales="1">
-                <state img="4-angry.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
+                <state img="4-shocked.png" marker="maleplayer">You mean to suggest that no other men wished to play this game with us?</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="4-awkward.png">Don't look at me, ~name~. There's only so much my power can change.</state>
             </case>
             <case tag="male_small_crotch_is_visible" saidMarker="null-possess">
                 <state img="4-awkward.png">That's awfully brave of you, ~name~. N-not for any reason in particular. Bearing it all is always... nerve-wracking.</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" target="human">
+                <state img="4-calm.png">To think, you not only bared it all, but asked us here to bear witness in the first place...</state>
+                <state img="4-confident.png">I don't find anything funny; your bravery speaks volume, ~player~.</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-confident.png">Surprise us, ~name~.</state>
@@ -3158,13 +3563,17 @@
             </case>
             <case tag="female_small_chest_is_visible">
                 <state img="4-happy.png">Hold your head high. There's little sense in hiding something you can't help.</state>
+                <state img="4-calm.png">You know, ~name~, there are those who love nothing more.</state>
+                <state img="4-awkward.png">W-well... it's not <i>all</i> bad, ~name~.</state>
             </case>
-            <case alsoPlaying="kyu" tag="female_small_chest_is_visible">
+            <case tag="female_small_chest_is_visible" target="kyu">
                 <state img="4-awkward.png">You <i>ah</i>... you're rather... <i>small</i> for a Great Fairy... aren't you?</state>
                 <state img="4-awkward.png">I see now. You <i>are</i> a bit too small to be a Great Fairy...</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="4-calm.png">You're almost at the end of your rope, ~name~. Play very carefully from here on out.</state>
+                <state img="4-calm.png">I trust this is a rare sight, ~name~. Thank you for your trust.</state>
+                <state img="4-awkward.png">I'm not <i>too</i> far from you, ~name~. Forgive me if I don't let up.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="aimee">
                 <state img="4-shocked.png">Aimee! Are you okay?</state>
@@ -3178,7 +3587,7 @@
                 <state img="4-interested.png"><i>Ooh!</i> Are you taking off your...?</state>
                 <state img="4-calm.png">I'd love to have something like your ~clothing~. Can I have a closer look?</state>
                 <state img="4-happy.png">You should keep your ~clothing~ if you can.</state>
-                <state img="4-calm.png">Would anyone mind a song while we wait?</state>
+                <state img="4-singing.png">Would anyone mind a song while we wait?</state>
             </case>
             <case tag="female_removing_accessory" target="blake" targetStage="5">
                 <state img="4-happy.png">I think you're worrying too much, Blake. Your bow is cute, but surely you won't miss it <i>that</i> much.</state>
@@ -3195,13 +3604,22 @@
             <case tag="female_removing_accessory" target="monika" targetStage="2">
                 <state img="4-interested.png">Just the ~clothing~? That's fair, really. N-next...</state>
             </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="0">
+                <state img="4-happy.png">I've met one who shared your name and status. It seems... there were many.</state>
+                <state img="4-interested.png">Of all of the many Zeldas I've heard of... I've yet to meet one who partook in these sorts of displays.</state>
+            </case>
+            <case tag="female_removing_accessory" target="zelda" targetStage="1">
+                <state img="4-happy.png">That's the spirit, princess!</state>
+                <state img="4-confident.png">Exactly! I should've known you'd be free from the trappings of most royalty.</state>
+            </case>
             <case tag="game_over_victory">
-                <state img="4-confident.png">Surely you didn't expect to beat an Oracle at her best.</state>
+                <state img="4-confident.png">Surely you didn't expect to beat an oracle at her best.</state>
             </case>
             <case tag="female_removing_major">
                 <state img="4-interested.png">~name~ lost? Does she still have a buffer?</state>
                 <state img="4-horny.png">But what does ~name~ have left...?</state>
                 <state img="4-awkward.png">Oh, but that means ~name~ has to strip again.</state>
+                <state img="4-calm.png">It's nothing you can't overcome, ~name~.</state>
             </case>
             <case tag="female_removing_major" target="aimee">
                 <state img="4-grumpy.png">(<i>Just hold still, Nayru. That... will keep you safe.</i>)</state>
@@ -3214,6 +3632,7 @@
             <case tag="male_removing_minor">
                 <state img="4-interested.png">What do you think is coming off next?</state>
                 <state img="4-confident.png">This may not be <i>my</i> favorite part of the game, but don't let that discourage you.</state>
+                <state img="4-singing.png"><i>Quiet singing...</i></state>
                 <state img="4-calm.png">You can take your time deciding, ~name~. I can wait for ages.</state>
             </case>
             <case tag="female_finished_masturbating">
@@ -3226,16 +3645,18 @@
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="4-calm.png">There's no pressure here, ~name~. I know this part can be stressful.</state>
-            </case>
-            <case alsoPlaying="kyu" tag="female_chest_will_be_visible">
-                <state img="4-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
-                <state img="4-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
+                <state img="4-awkward.png">I'm sorry you lost this round, ~name~.</state>
+                <state img="4-grumpy.png">You <i>erm</i>... (You could have saved yourself...)</state>
             </case>
             <case tag="female_chest_will_be_visible" target="aimee">
                 <state img="4-awkward.png">A-are you sure this is still a good idea? I-I mean... you have no protection...</state>
             </case>
             <case tag="female_chest_will_be_visible" target="florina">
                 <state img="4-calm.png">Nobody finds this <i>easy</i>, Florina. But... I think you can do this. You're stronger than you know.</state>
+            </case>
+            <case tag="female_chest_will_be_visible" target="kyu">
+                <state img="4-shocked.png"><i>Gasp!</i> Kyu, that's amazing! Can- <i>erm</i>...</state>
+                <state img="4-confident.png">What an interesting use of magic! How did- <i>o-oh!</i></state>
             </case>
             <case tag="male_masturbating">
                 <state img="4-stripped1.png">I... is anyone else having trouble concentrating?</state>
@@ -3261,16 +3682,28 @@
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-awkward.png">~name~ is r-right down to the wire, isn't he?</state>
+                <state img="4-grumpy.png">Is it truly time for ~name~ to... w-well... I suppose that <i>is</i>...</state>
             </case>
             <case tag="male_crotch_will_be_visible" saidMarker="null-possess">
                 <state img="4-calm.png">~name~ has stayed in this long. He knows what he's getting into.</state>
+                <state img="4-interested.png">Oh, wait... ~name~ only really has his ~clothing~ left, doesn't he? W-well...</state>
+            </case>
+            <case tag="male_crotch_will_be_visible" target="human">
+                <state img="4-awkward.png" marker="MP_finaldong">~player~ is already...? And I... I'm...</state>
+                <state img="4-awkward.png" marker="MP_finaldong">~player~, just a moment. I... I'm not certain <i>I'm</i> prepared for this...</state>
             </case>
             <case tag="good_hand">
                 <state img="4-calm.png">Finally, some safety.</state>
                 <state img="4-happy.png">Things are turning around for me!</state>
+                <state img="4-happy.png">It's everything I could've hoped for!</state>
+                <state img="4-interested.png">This *has* to be good enough. Unless we've all gotten so lucky.</state>
             </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="4-awkward.png" marker="drinks_response">Hmm... I... I really shouldn't...</state>
+            </case>
+            <case tag="good_hand" consecutiveLosses="1-2">
+                <state img="4-confident.png"><i>Haha!</i> This will turn things around for me!</state>
+                <state img="4-calm.png">I think my losing streak is over, with this.</state>
             </case>
             <case tag="good_hand" saidMarker="null-possess">
                 <state img="4-confident.png">Naturally.</state>
@@ -3293,10 +3726,14 @@
                 <state img="4-calm.png">Is this all? Then let's see what happens next.</state>
                 <state img="4-horny.png">I've seen worse. Still, this should be enough to keep me dressed.</state>
                 <state img="4-calm.png">Are you ready to see what the cards have in store, ~player~?</state>
-                <state img="4-grumpy.png">An Oracle deserves better, you know.</state>
+                <state img="4-grumpy.png">An oracle deserves better, you know.</state>
                 <state img="4-happy.png">I suppose these will suffice.</state>
                 <state img="4-calm.png">I'm not worried. Even defeat here won't be the end of me.</state>
                 <state img="4-awkward.png">This will... will this work?</state>
+            </case>
+            <case tag="swap_cards" priority="9" consecutiveLosses="1">
+                <state img="4-awkward.png">I don't want to lose twice in a row... maybe ~cards~ will help.</state>
+                <state img="4-calm.png">Pardon me, I'm still a bit flustered... ~cards~, please.</state>
             </case>
             <case hasHand="Full House" tag="swap_cards">
                 <state img="4-confident.png">Oh! Don't worry, it seems I don't need any cards this round!</state>
@@ -3376,6 +3813,8 @@
             </case>
             <case tag="must_strip_normal" saidMarker="null-possess">
                 <state img="4-calm.png">Me again? I'll do it. I agreed to play, after all.</state>
+                <state img="4-awkward.png">Well... I said I'd finish this game.</state>
+                <state img="4-shocked.png">Me again? W-well... here goes...</state>
             </case>
             <case tag="must_strip_losing">
                 <state img="4-losthand.png">I've felt this... no! I-I can...!</state>
@@ -3383,7 +3822,9 @@
                 <state img="4-losthand.png">Wh-what? V-Veran?! No!</state>
             </case>
             <case tag="must_strip_losing" saidMarker="null-possess">
-                <state img="4-grumpy.png">(Deep breaths.) I... I'll do it.</state>
+                <state img="4-grumpy.png">(<i>Deep breaths.</i>) I... I'll do it.</state>
+                <state img="4-sad.png">... I see.</state>
+                <state img="4-angry.png">No! I... I... <i>Ngh</i>... (<i>Deep breath.</i>) No... I can do this...</state>
             </case>
             <case tag="stripping">
                 <state img="4-possessing.png">Kiyaah!</state>
@@ -3400,6 +3841,8 @@
             </case>
             <case tag="must_strip_winning" saidMarker="null-possess">
                 <state img="4-happy.png">Oh, haha! Well, I suppose if I'm still winning...</state>
+                <state img="4-interested.png">I... I guess I can't complain.</state>
+                <state img="4-stripped1.png">You've won my dress, fair and square.</state>
             </case>
         </stage>
 
@@ -5665,7 +6108,7 @@
                 <state img="8-patting.png">Do hurry, ~name~.</state>
             </case>
             <case tag="female_removed_accessory">
-                <state img="8-lifting.png">I'm already fond of your ~clothing~, ~name~. I might wish to hold it, if not for... well...</state>
+                <state img="8-lifting.png">I'm already fond of your ~clothing~, ~name~. A closer look would be in order, if not for... well...</state>
                 <state img="8-angry.png">Maybe... I shouldn't criticize you just for <i>winning</i>...</state>
             </case>
             <case tag="male_removed_major">
@@ -5871,13 +6314,18 @@
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="9-calm.png">Cut loose, ~name~. We're here to have fun.</state>
-                <state img="9-awkward.png">Well... <i>someone</i> must join me, eventually.</state>
+                <state img="9-awkward.png">Well... <i>someone</i> else must join us, eventually.</state>
                 <state img="9-sad.png">If nothing else, you can't have many losses left ahead of you.</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="aimee">
                 <state img="9-sad.png">You should really think-</state>
                 <state img="9-sad.png">Aimee, I don't think-</state>
                 <state img="9-sad.png">This is a bad-</state>
+            </case>
+            <case tag="female_crotch_will_be_visible" totalMasturbating="0" totalFinished="1">
+                <state img="9-calm.png">Cut loose, ~name~. We're here to have fun.</state>
+                <state img="9-awkward.png">Well... <i>someone</i> must join me, eventually.</state>
+                <state img="9-sad.png">If nothing else, you can't have many losses left ahead of you.</state>
             </case>
             <case tag="male_removed_minor">
                 <state img="9-happy.png">Much better, right? Easier to move?</state>
