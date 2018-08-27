@@ -94,7 +94,7 @@ function loadEpilogueData(player) {
 
         /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers listed within the attribute set. */
         var all_marker_attr = $(this).attr('markers');
-        if (all_marker_attr !== undefined
+        if (all_marker_attr
             && !all_marker_attr.trim().split(/\s+/).every(function(marker) {
                 return marker in player.markers;
             })) {
@@ -104,7 +104,7 @@ function loadEpilogueData(player) {
 
         /* 'not-markers' attribute: the epilogue will only be selectable if the character has NO markers listed within the attribute set. */
         var no_marker_attr = $(this).attr('not-markers');
-        if (no_marker_attr !== undefined
+        if (no_marker_attr
             && no_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return marker in player.markers;
             })) {
@@ -114,7 +114,7 @@ function loadEpilogueData(player) {
 
         /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers listed within the attribute set. */
         var any_marker_attr = $(this).attr('any-markers');
-        if (any_marker_attr !== undefined
+        if (any_marker_attr
             && !any_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return marker in player.markers;
             })) {
@@ -124,7 +124,7 @@ function loadEpilogueData(player) {
 
         /* 'alsoplaying-markers' attribute: this epilogue will only be selectable if ALL markers within the attribute are set for any OTHER characters in the game. */
         var alsoplaying_marker_attr = $(this).attr('alsoplaying-markers');
-        if (alsoplaying_marker_attr !== undefined
+        if (alsoplaying_marker_attr
             && !alsoplaying_marker_attr.trim().split(/\s+/).every(function(marker) {
                 return players.some(function(p) {
                     return p !== player && marker in p.markers;
@@ -136,7 +136,7 @@ function loadEpilogueData(player) {
 
         /* 'alsoplaying-not-markers' attribute: this epilogue will only be selectable if NO markers within the attribute are set for other characters in the game. */
         var alsoplaying_not_marker_attr = $(this).attr('alsoplaying-not-markers');
-        if (alsoplaying_not_marker_attr !== undefined
+        if (alsoplaying_not_marker_attr
             && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
                     return p !== player && marker in p.markers;
@@ -148,7 +148,7 @@ function loadEpilogueData(player) {
 
         /* 'alsoplaying-any-markers' attribute: this epilogue will only be selectable if at least one marker within the attribute are set for any OTHER character in the game. */
         var alsoplaying_any_marker_attr = $(this).attr('alsoplaying-any-markers');
-        if (alsoplaying_any_marker_attr !== undefined
+        if (alsoplaying_any_marker_attr
             && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
                     return p !== player && marker in p.markers;
