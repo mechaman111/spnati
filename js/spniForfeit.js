@@ -94,7 +94,6 @@ function tickForfeitTimers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] && players[i].out && !players[i].finished && timers[i] == 0) {
 			finishMasturbation(i);
-			allowProgression();
 			return true;
 		}
 	}
