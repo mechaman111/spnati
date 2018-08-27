@@ -73,10 +73,12 @@ $restartModal = $("#restart-modal");
 /* pseudo constants */
 var GAME_DELAY = 600;
 var FORFEIT_DELAY = 7500;
+var ENDING_DELAY = 7500;
 var GAME_OVER_DELAY = 1000;
 var SHOW_ENDING_DELAY = 5000; //5 seconds
 var CARD_SUGGEST = false;
 var AUTO_FORFEIT = false;
+var AUTO_ENDING = false;
 var AUTO_FADE = true;
 var KEYBINDINGS_ENABLED = false;
 var DEBUG = false;
@@ -721,8 +723,11 @@ function allowProgression (nextPhase) {
 		nextPhase = gamePhase;
 	}
 	
-    if (nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && AUTO_FORFEIT) {
-        timeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
+    if (AUTO_FORFEIT && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && timers[HUMAN_PLAYER] > 1) {
+        timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
+    } else if (AUTO_ENDING && nextPhase != eGamePhase.GAME_OVER && (players[HUMAN_PLAYER].finished || (!players[HUMAN_PLAYER].out && gameOver))) {
+        /* Human is finished or human is the winner */
+        timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, ENDING_DELAY);
     } else {
         $mainButton.attr('disabled', false);
         actualMainButtonState = false;

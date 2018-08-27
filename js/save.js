@@ -128,6 +128,17 @@ function Save(){
 				case 10000: this.data['autoForfeit'] = 3; break;
 			}
 		}
+		if(!AUTO_ENDING){
+			this.data['autoEnding'] = 4;
+		}
+		else{
+			switch(ENDING_DELAY){
+				case 4000: this.data['autoEnding'] = 1; break;
+				default:
+				case 7500: this.data['autoEnding'] = 2; break;
+				case 10000: this.data['autoEnding'] = 3; break;
+			}
+		}
 
 		this.saveCookie();
 	};
