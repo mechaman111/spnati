@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v1.15 at 1:23:03 AM on July 30, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v1.15 at 11:25:58 AM on August 28, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Rinkah</first>
     <last>of the Flame Tribe</last>
     <label>Rinkah</label>
     <gender>female</gender>
-    <size>large</size>
+    <size>medium</size>
     <timer>27</timer>
 
     <intelligence>average</intelligence>
@@ -24,12 +24,13 @@
         <tag>muscular</tag>
         <tag>athletic</tag>
         <tag>hairy</tag>
-        <tag>large_breasts</tag>
+        <tag>medium_breasts</tag>
         <tag>thong</tag>
         <tag>bisexual</tag>
         <tag>fighter</tag>
         <tag>confident</tag>
         <tag>princess</tag>
+        <tag>dominant</tag>
     </tags>
 
     <start>
@@ -50,12 +51,6 @@
 
     <behaviour>
         <stage id="0">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="0-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="0-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="aggressive" tag="female_must_strip" notSaidMarker="agro">
                 <state img="0-calm.png" marker="agro">Looks like your aggressiveness didn't help you much in this fight, ~name~.</state>
             </case>
@@ -194,6 +189,14 @@
             <case alsoPlaying="corrin_m" tag="female_must_strip" target="corrin_f" targetStage="0" notSaidMarker="twocorrins">
                 <state img="0-shocked.png" marker="twocorrins">Two Corrins? What the hell's going on?</state>
             </case>
+            <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="female_must_strip" target="corrin_f" targetStage="0">
+                <state img="0-embarrassed.png">Corrin and I's relationship is nothing like that! I just respect her is all!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="female_must_strip" target="corrin_f" targetStage="0">
+                <state img="0-proud.png">That's right! Corrin's the best damn leader our army could ask for!</state>
+                <state img="0-proud.png">That's right! Corrin's the best damn leader I could ask for!</state>
+                <state img="0-proud.png">That's right! Corrin's the best damn leader Hoshido could ask for!</state>
+            </case>
             <case tag="female_must_strip" target="corrin_f" targetStage="1">
                 <state img="0-embarrassed.png" marker="charlotte">I'm surprised you'd play this sort of game Corrin. Charlotte maybe, but not you...</state>
                 <state img="0-embarrassed.png" marker="orochi">I'm surprised you'd play this sort of game Corrin. Orochi maybe, but not you...</state>
@@ -295,6 +298,10 @@
             <case tag="female_must_strip" target="jura" targetStage="0">
                 <state img="0-think.png">Let me guess... You're gonna get rid of your sword?</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="jura" targetStage="0">
+                <condition count="1" filter="meia" />
+                <state img="0-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
             <case tag="female_must_strip" target="korra" targetStage="1">
                 <state img="0-proud.png">So you're Korra? I've heard that you could do interesting things with fire. Care to show me once this is over?</state>
             </case>
@@ -306,6 +313,9 @@
             </case>
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="0-think.png">Are you trying to throw this game, Kyu?</state>
+            </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="0-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="0-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
@@ -333,6 +343,13 @@
             </case>
             <case tag="female_must_strip" target="mei" targetStage="0">
                 <state img="0-proud.png">You really shouldn't play with fire Mei, it's very damaging to ice.</state>
+            </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="meia" targetStage="0">
+                <condition count="1" filter="jura" />
+                <state img="0-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="0-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="0-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -426,9 +443,12 @@
             <case tag="female_must_strip" target="revy" targetStage="0">
                 <state img="0-calm.png">I like your tattoos Revy, they remind me of the Flame Tribe.</state>
                 <state img="0-proud.png">Your tattoos remind me of some of the ones worn by the Flame Tribe.</state>
+                <state img="0-think.png">I get the feeling you and I are talking about very different Flame Tribes.</state>
+                <state img="0-think.png">I... don't think I've ever seen you around the Flame Tribe...</state>
             </case>
             <case tag="female_must_strip" target="revy" targetStage="1">
                 <state img="0-proud.png">So, how are you at hand to hand combat Revy? You seem like you'd be fun to fight!</state>
+                <state img="0-angry.png">Oh, is this a challenge? I've fought dragons, zombies, dragon zombies, gods, dragon gods...</state>
             </case>
             <case tag="female_must_strip" target="rinkah" targetStage="0">
                 <state img="0-shocked.png">Wait a minute... Is that me? What the hell is going on here?</state>
@@ -893,6 +913,7 @@
             <case tag="male_removed_accessory">
                 <state img="0-calm.png">The battle has only just begun I suppose.</state>
                 <state img="0-calm.png">Now we can get started for real.</state>
+                <state img="0-calm.png">A bit boring, but I won't complain.</state>
             </case>
             <case tag="male_removed_accessory" target="9s" targetStage="6">
                 <state img="0-happy.png">But for real, why keep it for so long if you were gonna remove it anyway?</state>
@@ -941,36 +962,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="0-shocked.png">Multiverse shit is crazy.</state>
+                <state img="0-shocked.png">What the hell is going on?</state>
+                <state img="0-shocked.png">Where did she come from!?</state>
+                <state img="0-shocked.png">Is anyone else lost right now?</state>
+                <state img="0-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="0-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="0-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="0-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="0-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="0-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="0-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="0-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="0-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="0-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="0-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="0-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="0-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="0-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="0-sad.png">This isn't really doing anything for me.</state>
+                <state img="0-sad.png">Something about you feels... wrong.</state>
+                <state img="0-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="0-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="0-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -979,7 +1006,7 @@
                 <state img="0-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="0-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="0-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -989,6 +1016,7 @@
             <case tag="female_human_must_strip">
                 <state img="0-proud.png">Skip the fluff. You can see my abs, it's only fair you show us some skin, ~player~.</state>
                 <state img="0-proud.png">Come on ~player~, what's your reclassed outfit gonna look like?</state>
+                <state img="0-proud.png">I haven't lost yet, ~player~. You better step it up!</state>
             </case>
             <case tag="female_human_must_strip" oppHand="One Pair">
                 <state img="0-happy.png">Losing with a pair has got to sting, right ~player~?</state>
@@ -1173,6 +1201,7 @@
                 <state img="0-calm.png">Well I was gonna start with my gloves, so it would be hypocritical of me to get mad at you.</state>
                 <state img="0-calm.png">Smart move. I was gonna do the same.</state>
                 <state img="0-calm.png">It's a start.</state>
+                <state img="0-calm.png">Well... it's a start, I suppose.</state>
             </case>
             <case tag="female_removed_accessory" target="aella" targetStage="1">
                 <state img="0-think.png">So there's a need for armor in your world...</state>
@@ -1202,8 +1231,18 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="0-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="0-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="0-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
             <case tag="female_removed_accessory" target="jura" targetStage="1">
                 <state img="0-sad.png">I should've brought my club...</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="0-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="0-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -1262,6 +1301,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="0-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="0-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="0-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -1568,6 +1608,9 @@
                 <state img="0-calm.png">Well, it's gone now.</state>
                 <state img="0-calm.png">Better to get rid of it now.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="0-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="0-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -1656,6 +1699,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="0-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="0-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="0-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -1785,6 +1831,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="0-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="0-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="0-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -1813,6 +1864,7 @@
                 <state img="0-proud.png">Ha! I can see you're getting tense!</state>
                 <state img="0-proud.png">Looks like we're getting closer to the good stuff.</state>
                 <state img="0-proud.png">Running out of options, ~name~?</state>
+                <state img="0-happy.png">Alright! Better than another boring accessory.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="0-horny.png">Seemed fun... I know what I'm doing later tonight.</state>
@@ -1904,10 +1956,6 @@
                 <state img="0-happy.png">Finally some progress!</state>
                 <state img="0-proud.png">Another step forward!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="0-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="0-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="0-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -1940,6 +1988,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="0-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="0-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="0-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="0-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -2027,11 +2079,19 @@
                 <state img="0-happy.png">Not losing this hand!</state>
                 <state img="0-proud.png">I don't want to fight you Corrin, but I guess I have no choice.</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0" tag="good_hand" notSaidMarker="FireEmblemVsVandread">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="meia" />
+                <state img="0-happy.png" marker="FireEmblemVsVandread">Come on, Lady Corrin! We can't let these two beat us!</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="good_hand" notSaidMarker="lastnames" priority="100">
                 <state img="0-think.png" marker="lastnames">How come we don't have last names, Lady Corrin?</state>
             </case>
             <case alsoPlaying="futaba" tag="good_hand" notSaidMarker="bunchaperverts" priority="110" alsoPlayingSaidMarker="fztentacles">
                 <state img="0-embarrassed.png" marker="bunchaperverts">Tentacle porn? I'm playing with a bunch of perverts.</state>
+            </case>
+            <case alsoPlaying="jura" tag="good_hand" totalRounds="0-1">
+                <state img="0-proud.png">Wow, someone's hostile.</state>
             </case>
             <case alsoPlaying="kool-aid" tag="good_hand" priority="666" totalRounds="0-1">
                 <state img="0-shocked.png">JESUS FUCK WHAT THE SHIT IS THAT?</state>
@@ -2073,11 +2133,19 @@
                 <state img="0-calm.png">I can keep the flames burning with this.</state>
                 <state img="0-calm.png">This should be enough.</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0" tag="okay_hand" notSaidMarker="FireEmblemVsVandread">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="meia" />
+                <state img="0-happy.png" marker="FireEmblemVsVandread">Come on, Lady Corrin! We can't let these two beat us!</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="okay_hand" notSaidMarker="lastnames">
                 <state img="0-calm.png" marker="lastnames">How come we don't have last names, Lady Corrin?</state>
             </case>
             <case alsoPlaying="futaba" tag="okay_hand" notSaidMarker="bunchaperverts" alsoPlayingSaidMarker="fztentacles">
                 <state img="0-embarrassed.png" marker="bunchaperverts">Futaba and Zone... Jeez, I'm playing with a bunch of perverts.</state>
+            </case>
+            <case alsoPlaying="jura" tag="okay_hand" totalRounds="0-1">
+                <state img="0-proud.png">Wow, someone's hostile.</state>
             </case>
             <case alsoPlaying="kool-aid" tag="okay_hand" priority="666" totalRounds="0-1">
                 <state img="0-shocked.png">JESUS FUCK WHAT THE SHIT IS THAT?</state>
@@ -2137,11 +2205,19 @@
                 <state img="0-shocked.png">Is this a prank?</state>
                 <state img="0-embarrassed.png">So should I start stripping now, or...?</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0" tag="bad_hand" notSaidMarker="FireEmblemVsVandread">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="meia" />
+                <state img="0-happy.png" marker="FireEmblemVsVandread">Come on, Lady Corrin! We can't let these two beat us!</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="bad_hand" notSaidMarker="lastnames">
                 <state img="0-sad.png" marker="lastnames">How come we don't have last names, Lady Corrin?</state>
             </case>
             <case alsoPlaying="futaba" tag="bad_hand" notSaidMarker="bunchaperverts" alsoPlayingSaidMarker="fztentacles">
                 <state img="0-embarrassed.png" marker="bunchaperverts">Jeez, you two sure are into some wierd shit.</state>
+            </case>
+            <case alsoPlaying="jura" tag="bad_hand" totalRounds="0-1">
+                <state img="0-proud.png">Wow, someone's hostile.</state>
             </case>
             <case alsoPlaying="kool-aid" tag="bad_hand" priority="666" totalRounds="0-1">
                 <state img="0-shocked.png">JESUS FUCK WHAT THE SHIT IS THAT?</state>
@@ -2193,6 +2269,10 @@
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="must_strip_normal">
                 <state img="0-embarrassed.png">Uh... Thanks, Jura. I think?</state>
             </case>
+            <case alsoPlaying="juri" tag="must_strip_normal">
+                <state img="0-proud.png">Glad to hear that, Juri. Hopefully I won't disappoint.</state>
+                <state img="0-proud.png">Well, hopefully I don't let you down, Juri.</state>
+            </case>
             <case alsoPlaying="kim" alsoPlayingStage="3" tag="must_strip_normal" notSaidMarker="likechallenge">
                 <state img="0-happy.png" marker="likechallenge">Yes! I like your spirit Kim! Go all out!</state>
                 <state img="0-happy.png" marker="likechallenge">Finally! Yes! Get pumped up Kim! Hit me with all you've got!</state>
@@ -2233,6 +2313,9 @@
             </case>
             <case alsoPlaying="twilight" alsoPlayingStage="2-9" tag="must_strip_normal">
                 <state img="0-calm.png">I get the feeling that you and I are VERY different types of princesses.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="must_strip_normal">
+                <state img="0-proud.png">The Flame Tribe doesn't let this kind of thing get to us, Ochako.</state>
             </case>
             <case alsoPlaying="wiifitfemale" tag="must_strip_normal" notSaidMarker="Workout">
                 <state img="0-strip.png" marker="Workout">I wonder which of us is in better shape, Trainer?</state>
@@ -2290,6 +2373,9 @@
                 <state img="0-happy.png" marker="tina">Hell yes! I'm always down for a fight!</state>
                 <state img="0-happy.png" marker="tina">Sounds good to me!</state>
             </case>
+            <case alsoPlaying="uravity" tag="stripping">
+                <state img="0-strip.png">No, nothing like that, Ochako.</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-calm.png">I guess this is fair. Don't want this battle to be too easy.</state>
                 <state img="0-proud.png">I guess I shouldn't have been taking it so easy on you guys.</state>
@@ -2327,12 +2413,6 @@
         </stage>
 
         <stage id="1">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="1-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="1-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="aggressive" tag="female_must_strip" notSaidMarker="agro">
                 <state img="1-calm.png" marker="agro">Looks like your aggressiveness didn't help you much in this fight, ~name~.</state>
             </case>
@@ -2571,6 +2651,10 @@
             <case tag="female_must_strip" target="jura" targetStage="0">
                 <state img="1-think.png">Let me guess... You're gonna get rid of your sword?</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="jura" targetStage="0">
+                <condition count="1" filter="meia" />
+                <state img="1-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
             <case tag="female_must_strip" target="korra" targetStage="1">
                 <state img="1-proud.png">So you're Korra? I've heard that you could do interesting things with fire. Care to show me once this is over?</state>
             </case>
@@ -2582,6 +2666,9 @@
             </case>
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="1-think.png">Are you trying to throw this game, Kyu?</state>
+            </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="1-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="1-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
@@ -2609,6 +2696,13 @@
             </case>
             <case tag="female_must_strip" target="mei" targetStage="0">
                 <state img="1-proud.png">You really shouldn't play with fire Mei, it's very damaging to ice.</state>
+            </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="meia" targetStage="0">
+                <condition count="1" filter="jura" />
+                <state img="1-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="1-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="1-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -2702,9 +2796,12 @@
             <case tag="female_must_strip" target="revy" targetStage="0">
                 <state img="1-calm.png">I like your tattoos Revy, they remind me of the Flame Tribe.</state>
                 <state img="1-proud.png">Your tattoos remind me of some of the ones worn by the Flame Tribe.</state>
+                <state img="1-think.png">I get the feeling you and I are talking about very different Flame Tribes.</state>
+                <state img="1-think.png">I... don't think I've ever seen you around the Flame Tribe...</state>
             </case>
             <case tag="female_must_strip" target="revy" targetStage="1">
                 <state img="1-proud.png">So, how are you at hand to hand combat Revy? You seem like you'd be fun to fight!</state>
+                <state img="1-angry.png">Oh, is this a challenge? I've fought dragons, zombies, dragon zombies, gods, dragon gods...</state>
             </case>
             <case tag="female_must_strip" target="rinkah" targetStage="0">
                 <state img="1-shocked.png">Wait a minute... Is that me? What the hell is going on here?</state>
@@ -3220,36 +3317,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="1-shocked.png">Multiverse shit is crazy.</state>
+                <state img="1-shocked.png">What the hell is going on?</state>
+                <state img="1-shocked.png">Where did she come from!?</state>
+                <state img="1-shocked.png">Is anyone else lost right now?</state>
+                <state img="1-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="1-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="1-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="1-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="1-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="1-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="1-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="1-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="1-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="1-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="1-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="1-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="1-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="1-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="1-sad.png">This isn't really doing anything for me.</state>
+                <state img="1-sad.png">Something about you feels... wrong.</state>
+                <state img="1-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="1-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="1-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -3258,7 +3361,7 @@
                 <state img="1-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="1-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="1-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -3481,8 +3584,18 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="1-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="1-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="1-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
             <case tag="female_removed_accessory" target="jura" targetStage="1">
                 <state img="1-sad.png">I should've brought my club...</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="1-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="1-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -3541,6 +3654,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="1-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="1-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="1-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -3841,6 +3955,9 @@
                 <state img="1-proud.png">Think that accessories are gonna save you from the storm that is me? Think again!</state>
                 <state img="1-proud.png">Whatever, you'll run out of HP soon enough.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="1-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="1-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -3931,6 +4048,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="1-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="1-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="1-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -4057,6 +4177,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="1-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="1-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="1-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -4085,6 +4210,7 @@
                 <state img="1-proud.png">Ha! I can see you're getting tense!</state>
                 <state img="1-proud.png">Looks like we're getting closer to the good stuff.</state>
                 <state img="1-proud.png">Running out of options, ~name~?</state>
+                <state img="1-happy.png">Alright! Better than another boring accessory.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="1-horny.png">Seemed fun... I know what I'm doing later tonight.</state>
@@ -4178,10 +4304,6 @@
                 <state img="1-happy.png">Finally some progress!</state>
                 <state img="1-proud.png">Another step forward!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="1-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="1-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="1-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -4214,6 +4336,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="1-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="1-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="1-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="1-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -4427,11 +4553,14 @@
                 <state img="1-proud.png">I've still got plenty of HP, Lady Corrin. Let's enjoy this battle.</state>
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="stripped">
-                <state img="1-proud.png">Sure, Jura. I'd love to meet this friend of yours.</state>
-            </case>
-            <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="stripped">
                 <condition count="1" filter="meia" />
                 <state img="1-proud.png">Is that so, Jura? Well, Meia, I'd be down for a good time any time you are.</state>
+            </case>
+            <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="stripped">
+                <state img="1-proud.png">Sure, Jura. I'd love to meet this friend of yours.</state>
+            </case>
+            <case alsoPlaying="juri" tag="stripped">
+                <state img="1-embarrassed.png">I mean... I've heard some people are into that. Didn't expect to ever meet one...</state>
             </case>
             <case alsoPlaying="kira" tag="stripped">
                 <state img="1-angry.png">I'm not sure I like how you're looking at me Kira...</state>
@@ -4448,6 +4577,9 @@
             </case>
             <case alsoPlaying="pit" tag="stripped" priority="145">
                 <state img="1-proud.png">The gloves are off now!</state>
+            </case>
+            <case alsoPlaying="uravity" tag="stripped">
+                <state img="1-proud.png">Of course not! My blood burns with the pride of my people!</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="1-calm.png">The night is young, and the battle is just getting started!</state>
@@ -4512,6 +4644,10 @@
             <case alsoPlaying="jasmine" alsoPlayingStage="0-1" tag="stripping">
                 <state img="1-embarrassed.png">Please don't call me Princess. Just Rinkah is fine.</state>
             </case>
+            <case alsoPlaying="juri" tag="stripping">
+                <condition count="0" filter="chun-li" />
+                <state img="1-proud.png">Oh really? Maybe you should focus on what's in front of you.</state>
+            </case>
             <case alsoPlaying="tina" alsoPlayingStage="3-10" tag="stripping" notSaidMarker="tina">
                 <state img="1-happy.png" marker="tina">Hell yes! I'm always down for a fight!</state>
                 <state img="1-happy.png" marker="tina">Sounds good to me!</state>
@@ -4526,12 +4662,6 @@
         </stage>
 
         <stage id="2">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="2-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="2-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="aggressive" tag="female_must_strip" notSaidMarker="agro">
                 <state img="2-calm.png" marker="agro">Looks like your aggressiveness didn't help you much in this fight, ~name~.</state>
             </case>
@@ -4761,6 +4891,10 @@
             <case tag="female_must_strip" target="jura" targetStage="0">
                 <state img="2-think.png">Let me guess... You're gonna get rid of your sword?</state>
             </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="jura" targetStage="0">
+                <condition count="1" filter="meia" />
+                <state img="2-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
             <case tag="female_must_strip" target="korra" targetStage="1">
                 <state img="2-proud.png">So you're Korra? I've heard that you could do interesting things with fire. Care to show me once this is over?</state>
             </case>
@@ -4772,6 +4906,9 @@
             </case>
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="2-think.png">Are you trying to throw this game, Kyu?</state>
+            </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="2-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="2-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
@@ -4799,6 +4936,13 @@
             </case>
             <case tag="female_must_strip" target="mei" targetStage="0">
                 <state img="2-proud.png">You really shouldn't play with fire Mei, it's very damaging to ice.</state>
+            </case>
+            <case alsoPlaying="corrin_f" alsoPlayingStage="0-2" tag="female_must_strip" target="meia" targetStage="0">
+                <condition count="1" filter="jura" />
+                <state img="2-proud.png">I wouldn't underestimate Lady Corrin and I, you two.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="2-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="2-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -4892,9 +5036,12 @@
             <case tag="female_must_strip" target="revy" targetStage="0">
                 <state img="2-calm.png">I like your tattoos Revy, they remind me of the Flame Tribe.</state>
                 <state img="2-proud.png">Your tattoos remind me of some of the ones worn by the Flame Tribe.</state>
+                <state img="2-think.png">I get the feeling you and I are talking about very different Flame Tribes.</state>
+                <state img="2-think.png">I... don't think I've ever seen you around the Flame Tribe...</state>
             </case>
             <case tag="female_must_strip" target="revy" targetStage="1">
                 <state img="2-proud.png">So, how are you at hand to hand combat Revy? You seem like you'd be fun to fight!</state>
+                <state img="2-angry.png">Oh, is this a challenge? I've fought dragons, zombies, dragon zombies, gods, dragon gods...</state>
             </case>
             <case tag="female_must_strip" target="rinkah" targetStage="0">
                 <state img="2-shocked.png">Wait a minute... Is that me? What the hell is going on here?</state>
@@ -5404,36 +5551,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="2-shocked.png">Multiverse shit is crazy.</state>
+                <state img="2-shocked.png">What the hell is going on?</state>
+                <state img="2-shocked.png">Where did she come from!?</state>
+                <state img="2-shocked.png">Is anyone else lost right now?</state>
+                <state img="2-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="2-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="2-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="2-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="2-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="2-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="2-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="2-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="2-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="2-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="2-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="2-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="2-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="2-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="2-sad.png">This isn't really doing anything for me.</state>
+                <state img="2-sad.png">Something about you feels... wrong.</state>
+                <state img="2-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="2-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="2-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -5442,7 +5595,7 @@
                 <state img="2-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="2-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="2-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -5666,8 +5819,18 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="2-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="2-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="2-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
             <case tag="female_removed_accessory" target="jura" targetStage="1">
                 <state img="2-sad.png">I should've brought my club...</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="2-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="2-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -5726,6 +5889,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="2-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="2-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="2-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -6016,6 +6180,9 @@
                 <state img="2-calm.png">Whatever, I just tossed my boots, so I guess that's fair.</state>
                 <state img="2-sad.png">I suppose I'm still removing accessories, so that's fair.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="2-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="2-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -6106,6 +6273,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="2-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="2-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="2-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -6233,6 +6403,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="2-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="2-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="2-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -6261,6 +6436,7 @@
                 <state img="2-proud.png">Ha! I can see you're getting tense!</state>
                 <state img="2-proud.png">Looks like we're getting closer to the good stuff.</state>
                 <state img="2-proud.png">Running out of options, ~name~?</state>
+                <state img="2-happy.png">Alright! Better than another boring accessory.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="2-horny.png">Seemed fun... I know what I'm doing later tonight.</state>
@@ -6354,10 +6530,6 @@
                 <state img="2-happy.png">Finally some progress!</state>
                 <state img="2-proud.png">Another step forward!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="2-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="2-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="2-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -6390,6 +6562,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="2-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="2-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="2-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="2-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -6592,6 +6768,10 @@
                 <state img="2-calm.png">Don't worry about me. I've never been scared of the cold.</state>
                 <state img="2-proud.png">As princess of the Flame Tribe, the cold isn't an issue for me. Let's keep going!</state>
             </case>
+            <case alsoPlaying="juri" tag="stripped">
+                <condition count="0" filter="chun-li" />
+                <state img="2-think.png">As much as <i>who</i>, Juri?</state>
+            </case>
             <case alsoPlaying="pit" tag="stripped">
                 <state img="2-proud.png">Sorry Pit. Nothing that exciting.</state>
                 <state img="2-calm.png">Sorry Pit. Nothing that exciting.</state>
@@ -6667,12 +6847,6 @@
         </stage>
 
         <stage id="3">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="3-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="3-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="3-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -6873,6 +7047,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="3-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="3-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="3-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -6890,6 +7067,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="3-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="3-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="3-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -6968,9 +7148,12 @@
             <case tag="female_must_strip" target="revy" targetStage="0">
                 <state img="3-calm.png">I like your tattoos Revy, they remind me of the Flame Tribe.</state>
                 <state img="3-proud.png">Your tattoos remind me of some of the ones worn by the Flame Tribe.</state>
+                <state img="3-think.png">I get the feeling you and I are talking about very different Flame Tribes.</state>
+                <state img="3-think.png">I... don't think I've ever seen you around the Flame Tribe...</state>
             </case>
             <case tag="female_must_strip" target="revy" targetStage="1">
                 <state img="3-proud.png">So, how are you at hand to hand combat Revy? You seem like you'd be fun to fight!</state>
+                <state img="3-angry.png">Oh, is this a challenge? I've fought dragons, zombies, dragon zombies, gods, dragon gods...</state>
             </case>
             <case alsoPlaying="yang" tag="female_must_strip" target="ruby" notSaidMarker="sister">
                 <state img="3-embarrassed.png" marker="sister">Do you normally bring your sister to this sort of stuff?</state>
@@ -7458,36 +7641,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="3-shocked.png">Multiverse shit is crazy.</state>
+                <state img="3-shocked.png">What the hell is going on?</state>
+                <state img="3-shocked.png">Where did she come from!?</state>
+                <state img="3-shocked.png">Is anyone else lost right now?</state>
+                <state img="3-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="3-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="3-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="3-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="3-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="3-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="3-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="3-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="3-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="3-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="3-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="3-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="3-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="3-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="3-sad.png">This isn't really doing anything for me.</state>
+                <state img="3-sad.png">Something about you feels... wrong.</state>
+                <state img="3-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="3-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="3-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -7496,7 +7685,7 @@
                 <state img="3-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="3-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="3-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -7719,8 +7908,18 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="3-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="3-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="3-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
             <case tag="female_removed_accessory" target="jura" targetStage="1">
                 <state img="3-sad.png">I should've brought my club...</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="3-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="3-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -7779,6 +7978,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="3-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="3-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="3-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -8063,6 +8263,9 @@
                 <state img="3-calm.png">I'll let that slide this time. I've shed all my accessories too.</state>
                 <state img="3-calm.png">I'll let you get away with that this time, just because I've finished getting rid of all of my accessories.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="3-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="3-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -8153,6 +8356,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="3-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="3-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="3-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -8282,6 +8488,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="3-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="3-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="3-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -8310,6 +8521,7 @@
                 <state img="3-proud.png">Ha! I can see you're getting tense!</state>
                 <state img="3-proud.png">Looks like we're getting closer to the good stuff.</state>
                 <state img="3-proud.png">Running out of options, ~name~?</state>
+                <state img="3-happy.png">Alright! Better than another boring accessory.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="3-horny.png">Seemed fun... I know what I'm doing later tonight.</state>
@@ -8403,10 +8615,6 @@
                 <state img="3-happy.png">Finally some progress!</state>
                 <state img="3-proud.png">Another step forward!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="3-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="3-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="3-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -8439,6 +8647,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="3-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="3-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="3-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="3-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -8596,6 +8808,9 @@
                 <state img="3-proud.png">The real fight has just begun. I'm done going easy on you guys.</state>
                 <state img="3-angry.png">Don't count me out just yet! I'm done playing easy!</state>
             </case>
+            <case alsoPlaying="juri" tag="stripped">
+                <state img="3-proud.png">Is that so, Juri? Then come at me with everything you've got!</state>
+            </case>
             <case alsoPlaying="raven" alsoPlayingStage="4-5" tag="stripped">
                 <state img="3-proud.png">Maybe to others Raven, but being princess of the Flame Tribe keeps things exciting.</state>
             </case>
@@ -8658,12 +8873,6 @@
         </stage>
 
         <stage id="4">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="4-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="4-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="4-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -8828,6 +9037,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="4-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="4-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="4-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -8845,6 +9057,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="4-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="4-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="4-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -9338,36 +9553,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="4-shocked.png">Multiverse shit is crazy.</state>
+                <state img="4-shocked.png">What the hell is going on?</state>
+                <state img="4-shocked.png">Where did she come from!?</state>
+                <state img="4-shocked.png">Is anyone else lost right now?</state>
+                <state img="4-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="4-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="4-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="4-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="4-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="4-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="4-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="4-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="4-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="4-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="4-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="4-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="4-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="4-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="4-sad.png">This isn't really doing anything for me.</state>
+                <state img="4-sad.png">Something about you feels... wrong.</state>
+                <state img="4-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="4-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="4-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -9376,7 +9597,7 @@
                 <state img="4-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="4-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="4-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -9593,6 +9814,16 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="4-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="4-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="4-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="4-shocked.png">That seems a little... intense.</state>
+            </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="4-shocked.png">Yikes. Someone's trigger happy.</state>
             </case>
@@ -9650,6 +9881,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="4-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="4-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="4-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -9907,6 +10139,9 @@
                 <state img="4-angry.png">Come on! Aren't you gonna take this seriously?</state>
                 <state img="4-angry.png">Are you serious?</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="4-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="4-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -9985,6 +10220,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="4-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="4-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="4-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -10105,6 +10343,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="4-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="4-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="4-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -10218,10 +10461,6 @@
                 <state img="4-proud.png">Get ready for defeat!</state>
                 <state img="4-angry.png">Don't let your guard down! I'm just getting started!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="4-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="4-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="4-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -10254,6 +10493,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="4-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="4-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="4-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="4-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -10413,6 +10656,9 @@
             <case alsoPlaying="jura" tag="stripped">
                 <state img="4-angry.png">Hey now! Are you trying to insult the Flame Tribe!?</state>
             </case>
+            <case alsoPlaying="juri" tag="stripped">
+                <state img="4-proud.png">The Flame Tribe doesn't get embarrassed. It gets proud!</state>
+            </case>
             <case alsoPlaying="kim" alsoPlayingStage="4-5" tag="stripped">
                 <state img="4-angry.png">The fuck do you mean by that?</state>
                 <state img="4-angry.png">The fuck is that supposed to mean?</state>
@@ -10447,6 +10693,9 @@
                 <state img="4-proud.png">... I'm tempted to take you up on that offer.</state>
                 <state img="4-proud.png">... That's not a bad offer Shantae.</state>
                 <state img="4-proud.png">Sorry, my game has singers. But I won't stop you from dancing for me!</state>
+            </case>
+            <case alsoPlaying="twilight" alsoPlayingStage="0-5" tag="stripped">
+                <state img="4-think.png">Um... No, Twilight. Sorry.</state>
             </case>
             <case alsoPlaying="zoey" tag="stripped">
                 <state img="4-proud.png">Hey, if you want to work out together, I'm down.</state>
@@ -10535,12 +10784,6 @@
         </stage>
 
         <stage id="5">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="5-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="5-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="5-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -10676,6 +10919,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="5-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="5-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="5-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -10693,6 +10939,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="5-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="5-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="5-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -11165,36 +11414,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="5-shocked.png">Multiverse shit is crazy.</state>
+                <state img="5-shocked.png">What the hell is going on?</state>
+                <state img="5-shocked.png">Where did she come from!?</state>
+                <state img="5-shocked.png">Is anyone else lost right now?</state>
+                <state img="5-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="5-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="5-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="5-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="5-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="5-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="5-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="5-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="5-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="5-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="5-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="5-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="5-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="5-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="5-sad.png">This isn't really doing anything for me.</state>
+                <state img="5-sad.png">Something about you feels... wrong.</state>
+                <state img="5-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="5-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="5-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -11203,7 +11458,7 @@
                 <state img="5-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="5-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="5-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -11410,6 +11665,16 @@
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="5-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
             </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="5-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="5-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="5-shocked.png">That seems a little... intense.</state>
+            </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="5-shocked.png">Yikes. Someone's trigger happy.</state>
             </case>
@@ -11461,6 +11726,7 @@
             </case>
             <case tag="female_removed_accessory" target="revy" targetStage="4">
                 <state img="5-angry.png">Wait, weapons count? Since when!?</state>
+                <state img="5-angry.png">I don't need a club to deal with people like you.</state>
             </case>
             <case tag="female_removed_accessory" target="saki" targetStage="1" targetSaidMarker="rinkahrespond">
                 <state img="5-calm.png">Don't sweat it, Saki, everything will be just fine.</state>
@@ -11710,6 +11976,9 @@
                 <state img="5-angry.png">I've got my tits out and you're just gonna take off that? Can you even call yourself a warrior?</state>
                 <state img="5-angry.png">Seriously!? Is this your idea of a joke?</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="5-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="5-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -11782,6 +12051,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="5-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="5-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="5-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -11889,6 +12161,11 @@
             </case>
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="5-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
+            </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="5-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
             </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="5-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
@@ -11999,10 +12276,6 @@
                 <state img="5-angry.png">Feh, you can do better.</state>
                 <state img="5-angry.png">Weak!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="5-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="5-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="5-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -12035,6 +12308,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="5-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="5-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="5-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="5-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -12259,12 +12536,6 @@
         </stage>
 
         <stage id="6">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="6-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="6-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="6-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -12398,6 +12669,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="6-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="6-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="6-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -12412,6 +12686,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="6-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="6-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="6-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -12871,36 +13148,42 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="6-shocked.png">Multiverse shit is crazy.</state>
+                <state img="6-shocked.png">What the hell is going on?</state>
+                <state img="6-shocked.png">Where did she come from!?</state>
+                <state img="6-shocked.png">Is anyone else lost right now?</state>
+                <state img="6-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="6-calm.png">Today ended up being much... cuter than expected...</state>
-            </case>
-            <case tag="female_masturbating" target="futaba">
-                <state img="6-horny.png">Oh yeah, there certainly rivers in my desert.</state>
-                <state img="6-horny.png">Time to make history, Futaba.</state>
             </case>
             <case tag="female_masturbating" target="futaba" notSaidMarker="headpats">
                 <state img="6-happy.png" marker="headpats">Heard ya like headpats, is that true Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="futaba" priority="0">
+                <state img="6-horny.png">Oh yeah, there certainly rivers in my desert.</state>
+                <state img="6-horny.png">Time to make history, Futaba.</state>
+            </case>
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="6-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="6-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="6-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="6-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="6-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="6-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="6-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="6-sad.png">This isn't really doing anything for me.</state>
+                <state img="6-sad.png">Something about you feels... wrong.</state>
+                <state img="6-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="6-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="6-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -12909,7 +13192,7 @@
                 <state img="6-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="6-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="6-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -13115,6 +13398,16 @@
             </case>
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="6-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="6-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="6-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="6-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="6-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -13410,6 +13703,9 @@
             <case tag="male_removing_accessory">
                 <state img="6-angry.png">I'm naked, and you're just gonna take off something like that? Do you think this is a joke? Do you think I'm a joke? I'll MAKE you take this seriously.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="6-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="6-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -13487,6 +13783,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="6-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="6-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="6-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -13596,6 +13895,11 @@
             <case alsoPlaying="lyn" tag="game_over_victory">
                 <state img="6-happy.png">Not even the legendary Lyn of Sacae plains can stand up to me!</state>
             </case>
+            <case alsoPlaying="meia" tag="game_over_victory">
+                <condition count="1" filter="jura" />
+                <condition count="1" filter="corrin_f" />
+                <state img="6-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
+            </case>
             <case tag="game_over_victory" saidMarker="sph">
                 <state img="6-happy.png">Of course I won. I couldn't possibly lose to such a small dick.</state>
             </case>
@@ -13703,10 +14007,6 @@
                 <state img="6-angry.png">Come on! Quit stalling already!</state>
                 <state img="6-angry.png">Quit with the stalling already! It's pointless!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="6-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="6-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="6-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -13733,6 +14033,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="6-sad.png">...</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="6-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="6-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="6-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -13874,6 +14178,9 @@
             <case alsoPlaying="futaba" alsoPlayingStage="5-6" tag="start_masturbating">
                 <state img="6-happy.png">You're not really good at the whole "dirty talk" thing, are you Futaba?</state>
             </case>
+            <case alsoPlaying="juri" tag="start_masturbating">
+                <state img="6-horny.png">I promise you Juri, these abs aren't just painted on.</state>
+            </case>
             <case alsoPlaying="pit" tag="start_masturbating">
                 <state img="6-horny.png">Veeery funny Pit. Try not to fly too close to the sun this time.</state>
             </case>
@@ -13926,6 +14233,9 @@
             </case>
             <case alsoPlaying="hermione" alsoPlayingStage="8" tag="stripped">
                 <state img="6-angry.png">The fuck did you just call me?</state>
+            </case>
+            <case alsoPlaying="juri" tag="stripped">
+                <state img="6-proud.png">Stare all you want, Juri. I work hard to stay in shape.</state>
             </case>
             <case alsoPlaying="kyoko" alsoPlayingStage="0-2" tag="stripped">
                 <state img="6-proud.png">Did you figure that out with your detective work?</state>
@@ -14029,12 +14339,6 @@
         </stage>
 
         <stage id="7">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="7-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="7-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="7-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -14159,6 +14463,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="7-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="7-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="7-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -14173,6 +14480,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="7-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="7-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="7-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -14629,32 +14939,38 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="7-shocked.png">Multiverse shit is crazy.</state>
+                <state img="7-shocked.png">What the hell is going on?</state>
+                <state img="7-shocked.png">Where did she come from!?</state>
+                <state img="7-shocked.png">Is anyone else lost right now?</state>
+                <state img="7-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="7-calm.png">Today ended up being much... cuter than expected...</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="7-happy.png">Up for some carpet grinding, Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="7-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="7-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="7-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="7-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="7-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="7-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="7-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="7-sad.png">This isn't really doing anything for me.</state>
+                <state img="7-sad.png">Something about you feels... wrong.</state>
+                <state img="7-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="7-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="7-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -14663,7 +14979,7 @@
                 <state img="7-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="7-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="7-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -14864,6 +15180,16 @@
             </case>
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="7-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="7-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="7-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="7-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="7-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -15149,6 +15475,9 @@
                 <state img="7-angry.png">That's not doing anything for me.</state>
                 <state img="7-sad.png">Well... that's a letdown.</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="7-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="7-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -15221,6 +15550,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="7-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="7-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="7-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -15412,10 +15744,6 @@
             <case tag="female_removed_minor">
                 <state img="7-embarrassed.png">If Hinoka and the others saw me now...</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="7-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="7-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="7-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -15439,6 +15767,10 @@
             </case>
             <case alsoPlaying="zone-tan" tag="female_removed_minor" target="futaba" targetStage="4">
                 <state img="7-shocked.png">I don't think it's a good idea to volunteer Futaba. She's crazy.</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="7-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="7-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="7-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -15517,12 +15849,6 @@
         </stage>
 
         <stage id="8">
-            <case alsoPlaying="kyu" alsoPlayingStage="0" tag="female_must_strip">
-                <state img="8-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
-            </case>
-            <case alsoPlaying="meia" alsoPlayingStage="1" tag="female_must_strip">
-                <state img="8-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
-            </case>
             <case filter="japanese" tag="female_must_strip" targetStage="0" priority="50">
                 <state img="8-think.png">So, you're Japanese, ~name~? I wonder if that's anything like Hoshido?</state>
             </case>
@@ -15647,6 +15973,9 @@
             <case tag="female_must_strip" target="kyu" consecutiveLosses="4">
                 <state img="8-think.png">Are you trying to throw this game, Kyu?</state>
             </case>
+            <case tag="female_must_strip" target="kyu" targetStage="0">
+                <state img="8-happy.png">You know, Kyu, I think I know a certain Nohrian mercenary who could really use your help.</state>
+            </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="kyu" targetStage="0">
                 <state img="8-happy.png" marker="laslow">Hey, Corrin, do you think we should get Kyu to help out Laslow?</state>
             </case>
@@ -15661,6 +15990,9 @@
             </case>
             <case tag="female_must_strip" target="marinette" targetStage="0">
                 <state img="8-think.png" marker="arthur">What's with the costume, Ladybug? It reminds me of Arthur.</state>
+            </case>
+            <case tag="female_must_strip" target="meia" targetStage="1">
+                <state img="8-sad.png">So Meia, I've heard you've also fought in a war, I hope you realize the other side isn't as bad as you might think.</state>
             </case>
             <case alsoPlaying="corrin_f" tag="female_must_strip" target="mercy" targetStage="0">
                 <state img="8-calm.png">Hey Lady Corrin, do you think Mercy would make a good healer in our army?</state>
@@ -16106,32 +16438,38 @@
             </case>
             <case tag="female_masturbating" target="elizabeth">
                 <state img="8-shocked.png">Multiverse shit is crazy.</state>
+                <state img="8-shocked.png">What the hell is going on?</state>
+                <state img="8-shocked.png">Where did she come from!?</state>
+                <state img="8-shocked.png">Is anyone else lost right now?</state>
+                <state img="8-shocked.png">Why are there two of her?</state>
             </case>
-            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina">
+            <case alsoPlaying="nagisa" alsoPlayingStage="8-9" tag="female_masturbating" target="florina" priority="0">
                 <state img="8-calm.png">Today ended up being much... cuter than expected...</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="8-happy.png">Up for some carpet grinding, Futaba?</state>
             </case>
-            <case tag="female_masturbating" target="gwen">
+            <case tag="female_masturbating" target="gwen" priority="0">
                 <state img="8-horny.png">What else can you do with that web, Gwen?</state>
             </case>
-            <case tag="female_masturbating" target="hermione">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione" priority="0">
+                <state img="8-sad.png">When did my life get so weird?</state>
+            </case>
+            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione" priority="0">
+                <state img="8-sad.png">When did my life get so weird?</state>
+            </case>
+            <case tag="female_masturbating" target="hermione" priority="0">
                 <state img="8-horny.png">That's one way to use magic...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="hermione">
-                <state img="8-sad.png">When did my life get so weird?</state>
-            </case>
-            <case alsoPlaying="vriska" alsoPlayingStage="1-10" tag="female_masturbating" target="hermione">
-                <state img="8-sad.png">When did my life get so weird?</state>
-            </case>
-            <case tag="female_masturbating" target="kyoko">
+            <case tag="female_masturbating" target="kyoko" priority="0">
                 <state img="8-embarrassed.png">Well, I guess you're still able to enjoy yourself, Kyoko...</state>
             </case>
             <case tag="female_masturbating" target="moon">
                 <state img="8-sad.png">This isn't really doing anything for me.</state>
+                <state img="8-sad.png">Something about you feels... wrong.</state>
+                <state img="8-embarrassed.png">...</state>
             </case>
-            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon">
+            <case alsoPlaying="aimee" alsoPlayingStage="1-7" tag="female_masturbating" target="moon" priority="0">
                 <state img="8-sad.png" marker="kagero">I miss playing this with Kagero. It was more normal. No guns. No exhibitionists. Just normal.</state>
                 <state img="8-sad.png" marker="orochi">I miss playing this with Orochi. It was more normal. No guns. No exhibitionists. Just normal.</state>
             </case>
@@ -16140,7 +16478,7 @@
                 <state img="8-embarrassed.png" marker="kagero">I should've asked Kagero to come with me...</state>
                 <state img="8-embarrassed.png" marker="kagero">If I had known we could have someone come with us, I would've brought Kagero...</state>
             </case>
-            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa">
+            <case alsoPlaying="florina" alsoPlayingStage="9-10" tag="female_masturbating" target="nagisa" priority="0">
                 <state img="8-happy.png">Today ended up being much... cuter, than I expected.</state>
             </case>
             <case tag="female_masturbating" target="rainbow_mika">
@@ -16340,6 +16678,16 @@
             </case>
             <case tag="female_removed_accessory" target="jenetta">
                 <state img="8-proud.png">Name's Rinkah. Nice to meet you, Jenetta.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <condition count="1" filter="pit" />
+                <state img="8-proud.png">Of course, Mahiru. Hoshido has plenty.</state>
+            </case>
+            <case alsoPlaying="mahiru" tag="female_removed_accessory" target="jenetta" targetStage="1">
+                <state img="8-proud.png">Of course, Mahiru. Hoshido has plenty. They even come with hotsprings!</state>
+            </case>
+            <case alsoPlaying="juri" tag="female_removed_accessory" target="jura" targetStage="4">
+                <state img="8-shocked.png">That seems a little... intense.</state>
             </case>
             <case tag="female_removed_accessory" target="launch" targetStage="1">
                 <state img="8-shocked.png">Yikes. Someone's trigger happy.</state>
@@ -16622,6 +16970,9 @@
             <case tag="male_removing_accessory">
                 <state img="8-horny.png">To think I've already lost and you haven't even started to get serious... Something about that... turns me on...</state>
             </case>
+            <case alsoPlaying="mahiru" alsoPlayingStage="0-7" tag="male_removing_accessory" target="9s" targetStage="0">
+                <state img="8-think.png">Yeah, I'm pretty lost here.</state>
+            </case>
             <case tag="male_removing_accessory" target="9s" targetStage="5">
                 <state img="8-calm.png">Huh, didn't think you'd actually be taking that off.</state>
             </case>
@@ -16700,6 +17051,9 @@
             </case>
             <case tag="female_medium_chest_is_visible" target="joey" notSaidMarker="joey">
                 <state img="8-shocked.png" marker="joey">Woah. Didn't see that coming.</state>
+            </case>
+            <case tag="female_medium_chest_is_visible" target="kyu">
+                <state img="8-horny.png">That's... very impressive, Kyu.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="lyn">
                 <state img="8-sad.png">Well... that's an oddly depressing thing to say in a game of strip poker.</state>
@@ -16887,10 +17241,6 @@
                 <state img="8-angry.png">Come on! Quit stalling already!</state>
                 <state img="8-angry.png">Quit with the stalling already! It's pointless!</state>
             </case>
-            <case alsoPlaying="marinette" alsoPlayingStage="4" tag="female_removed_minor">
-                <state img="8-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
-                <state img="8-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
-            </case>
             <case tag="female_removed_minor" target="aella" targetStage="3">
                 <state img="8-happy.png">Now that I look at you, you are pretty tall, Aella. Care for a spar later?</state>
             </case>
@@ -16917,6 +17267,10 @@
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="8-sad.png">Part of me likes how they look. I'm sorry, should I not have said that?</state>
+            </case>
+            <case tag="female_removed_minor" target="marinette" targetStage="4">
+                <state img="8-happy.png">That's a cute shirt. Reminds me of Hoshido.</state>
+                <state img="8-happy.png" marker="oboro">That's a cute shirt. I think Oboro would like it.</state>
             </case>
             <case tag="female_removed_minor" target="meia" targetStage="2">
                 <state img="8-sad.png">What's that armor made of Meia? I wonder if it'd be good for battles in my world.</state>
@@ -17006,6 +17360,9 @@
             </case>
             <case tag="game_over_defeat" target="corrin_f">
                 <state img="8-horny.png">Well played Lady Corrin. How about a trip to the hotsprings after this?</state>
+            </case>
+            <case alsoPlaying="meia" tag="game_over_defeat" target="corrin_f">
+                <state img="8-happy.png">That's what you get for underestimating Lady Corrin and I!</state>
             </case>
             <case alsoPlaying="zizou" tag="game_over_defeat" target="corrin_m" targetStage="0">
                 <state img="8-proud.png">Tell Superfluous_User thanks for my remodel, okay Corrin?</state>
