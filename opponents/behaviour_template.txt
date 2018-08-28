@@ -28,12 +28,11 @@ artist=Who made and posed the character's Kisekae model
 description=Description of the character for the More Info button
 release=what number character this was in release order if it has been released
 
-#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand. Other than for an epilogue, this is the only place in this document where the order in which you write the lines is important. Note that "start" lines are legacy and will be replaced by a combination of "selected" and "game_start" lines to serve these functions better.
+#"start" lines are legacy and will be overridden by a combination of "selected" and "game_start" lines. However, your file will still need one start line to generate correctly.
 start=0-calm,This is what the character says after they've been selected.
-start=0-calm,This could be what the character says after you've commenced the game, as the game will randomly select from all start lines.
 
 #The following lines override start lines. At a future time, the start line paragraph will be removed from this document.
-0-selected=,This is what the character says when you select her. You can use alsoPlaying with this line to have her react to who else has been selected.
+0-selected=,This is what the character says when you select her. You can use alsoPlaying with this line to have her react to who else has been selected. You can also use markers and other advanced conditions as described below.
 0-game_start=,This is what the character says after you've commenced the game but before the first hand is dealt.
 
 #CLOTHING
@@ -904,7 +903,8 @@ start_masturbating=starting,What the character says as they start masturbating.
 masturbating=calm,What the character says while they're masturbating.
 heavy_masturbating=heavy,What the character says while they're masturbating, and closer to "finishing".
 finishing_masturbating=finishing,What the masturbating character says as they "finish".
-finished_masturbating=finished,What the character says just after they've finished masturbating.
+
+finished_masturbating=finished,What the character says just after they've finished masturbating and again every time characters are commenting on their hands.
 
 
 
@@ -939,6 +939,7 @@ game_over_defeat=calm,What the character says when someone else has won the game
 
 ending=This is the title of the character's ending, and the start of a new ending
 	ending_gender="male", "female", or "any". This is the gender of player that can see the ending
+	gallery_image=You can use this optional parameter to specify an image other than the first image for the epilogue gallery thumbnail
 
 	#each ending has a number of screens. each screen has an image, and one or more text boxes
 	#the entry "screen" marks the start of a new screen
