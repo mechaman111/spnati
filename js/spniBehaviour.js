@@ -22,17 +22,6 @@ function createNewState (dialogue, image, direction, silent, marker) {
 }
 
 /**********************************************************************
- *****                      All Dialogue Tags                     *****
- **********************************************************************/
-
-var NAME = "~name~";
-var CAPITALIZED_NAME = "~Name~";
-var PROPER_CLOTHING = "~Clothing~";
-var LOWERCASE_CLOTHING = "~clothing~";
-var CARDS = "~cards~";
-var PLAYER_NAME = "~player~";
-
-/**********************************************************************
  *****                    All Dialogue Triggers                   *****
  **********************************************************************/
 
@@ -185,8 +174,9 @@ function loadOpponentWardrobe (player) {
 		var lowercase = $(this).attr('lowercase');
 		var type = $(this).attr('type');
 		var position = $(this).attr('position');
+		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
 
-		var newClothing = createNewClothing(properName, lowercase, type, position, null, 0, 0);
+		var newClothing = createNewClothing(properName, lowercase, type, position, null, plural, 0);
 
 		player.clothing.push(newClothing);
 	});
@@ -198,21 +188,32 @@ function loadOpponentWardrobe (player) {
 function parseDialogue (caseObject, self, target) {
     var states = [];
 
-    function substitute(placeholder) {
+    function substitute(match, ph, fn, args) {
         try {
-            switch (placeholder) {
-            case PLAYER_NAME: return players[HUMAN_PLAYER].label;
-            case NAME: return target.label;
-            case CAPITALIZED_NAME: return target.label.initCap();
-            case PROPER_CLOTHING: return (target||self).removedClothing.proper;
-            case LOWERCASE_CLOTHING: return (target||self).removedClothing.lower;
-            case CARDS: /* determine how many cards are being swapped */
-                return self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+            switch (ph) {
+            case 'player': return players[HUMAN_PLAYER].label;
+            case 'name': return target.label;
+            case 'Name': return target.label.initCap();
+            case 'Clothing': return (target||self).removedClothing.proper;
+            case 'clothing':
+                if (fn == 'plural') {
+                    return args.split('|')[(target||self).removedClothing.plural ? 1 : 0];
+                } else if (fn === undefined) {
+                    return (target||self).removedClothing.lower;
+                }
+            case 'cards': /* determine how many cards are being swapped */
+				var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+                if (fn == 'plural') {
+                    return args.split('|')[n == 1 ? 0 : 1];
+                } else if (fn === undefined) {
+                    return n;
+                }
             }
         } catch (ex) {
             console.log("Invalid substitution caused exception " + ex);
         }
-        return placeholder;
+        // Substitution failed - return match unchanged.
+        return match;
     }
 	
 	caseObject.find('state').each(function () {
@@ -222,7 +223,7 @@ function parseDialogue (caseObject, self, target) {
         var silent = $(this).attr('silent');
         var marker = $(this).attr('marker');
 
-        dialogue = dialogue.replace(/~\w+~/g, substitute);
+        dialogue = dialogue.replace(/~(\w+)(?:\.(\w+)\(([^)]*)\))?~/g, substitute);
         
         if (silent !== null && typeof silent !== typeof undefined) {
             silent = true;
