@@ -136,6 +136,10 @@ namespace SPNATI_Character_Editor.IO
 					foundSomething = true;
 					if (value == null)
 						continue;
+					if (field.FieldType==typeof(bool))
+					{
+						value = value.ToLowerInvariant();
+					}
 					writer.WriteAttributeString(attribute.AttributeName, value);
 					continue;
 				}

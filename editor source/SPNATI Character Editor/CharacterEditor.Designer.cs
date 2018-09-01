@@ -286,6 +286,7 @@
 			this.lblIncomplete = new System.Windows.Forms.Label();
 			this.lblTesting = new System.Windows.Forms.Label();
 			this.lblUnlisted = new System.Windows.Forms.Label();
+			this.ckbClothesPlural = new System.Windows.Forms.CheckBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -1136,6 +1137,7 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.ckbClothesPlural);
 			this.groupBox1.Controls.Add(this.lblPositionHelp);
 			this.groupBox1.Controls.Add(this.lblTypeHelp);
 			this.groupBox1.Controls.Add(this.txtClothesProperName);
@@ -3070,6 +3072,16 @@
 			this.lblUnlisted.TabIndex = 18;
 			this.lblUnlisted.Text = "UNLISTED CHARACTER";
 			// 
+			// ckbClothesPlural
+			// 
+			this.ckbClothesPlural.AutoSize = true;
+			this.ckbClothesPlural.Location = new System.Drawing.Point(240, 21);
+			this.ckbClothesPlural.Name = "ckbClothesPlural";
+			this.ckbClothesPlural.Size = new System.Drawing.Size(75, 17);
+			this.ckbClothesPlural.TabIndex = 15;
+			this.ckbClothesPlural.Text = "Plural form";
+			this.ckbClothesPlural.UseVisualStyleBackColor = true;
+			// 
 			// CharacterEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3404,6 +3416,7 @@
 		private System.Windows.Forms.ToolStripMenuItem tsmiRemove;
 		private System.Windows.Forms.Label lblTesting;
 		private System.Windows.Forms.Label lblUnlisted;
+		private System.Windows.Forms.CheckBox ckbClothesPlural;
 	}
 }
 

@@ -765,6 +765,7 @@ namespace SPNATI_Character_Editor
 			txtClothesLowerCase.Text = _selectedLayer.Lowercase;
 			cboClothesPosition.SelectedItem = _selectedLayer.Position;
 			cboClothesType.SelectedItem = _selectedLayer.Type;
+			ckbClothesPlural.Checked = _selectedLayer.Plural;
 		}
 
 		private void SaveLayer()
@@ -775,6 +776,7 @@ namespace SPNATI_Character_Editor
 			_selectedLayer.Lowercase = txtClothesLowerCase.Text;
 			_selectedLayer.Position = cboClothesPosition.SelectedItem.ToString();
 			_selectedLayer.Type = cboClothesType.SelectedItem.ToString();
+			_selectedLayer.Plural = ckbClothesPlural.Checked;
 		}
 
 		private void lstClothes_SelectedIndexChanged(object sender, System.EventArgs e)
