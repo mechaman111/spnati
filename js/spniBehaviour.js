@@ -186,8 +186,25 @@ function loadOpponentWardrobe (player) {
  * Parses the dialogue states of a player, given the case object.
  ************************************************************/
 function parseDialogue (caseObject, self, target) {
-    var states = [];
+	var states = [];
+	caseObject.find('state').each(function () {
+		var image = $(this).attr('img');
+		var dialogue = $(this).html();
+		var direction = $(this).attr('direction');
+		var silent = $(this).attr('silent');
+		var marker = $(this).attr('marker');
+		silent = (silent !== null && typeof silent !== typeof undefined);
 
+		states.push(createNewState(expandDialogue(dialogue, self, target),
+								   image, direction, silent, marker));
+	});
+	return states;
+}
+
+/************************************************************
+ * Expands variables etc. in a line of dialogue.
+ ************************************************************/
+function expandDialogue (dialogue, self, target) {
     function substitute(match, ph, fn, args) {
         try {
             switch (ph) {
@@ -216,26 +233,7 @@ function parseDialogue (caseObject, self, target) {
         return match;
     }
 	
-	caseObject.find('state').each(function () {
-        var image = $(this).attr('img');
-        var dialogue = $(this).html();
-        var direction = $(this).attr('direction');
-        var silent = $(this).attr('silent');
-        var marker = $(this).attr('marker');
-
-        dialogue = dialogue.replace(/~(\w+)(?:\.(\w+)\(([^)]*)\))?~/g, substitute);
-        
-        if (silent !== null && typeof silent !== typeof undefined) {
-            silent = true;
-        }
-        else {
-            silent = false;
-        }
-
-        states.push(createNewState(dialogue, image, direction, silent, marker));
-	});
-
-	return states;
+    return dialogue.replace(/~(\w+)(?:\.(\w+)\(([^)]*)\))?~/g, substitute);
 }
 
 /************************************************************
