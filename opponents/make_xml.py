@@ -9,15 +9,6 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import datetime
 
-#get a single value from the dictionary
-def get_value(dictionary, key, stage, default=""):
-	full_key = "%d-%s" % (stage, key)
-	if full_key in dictionary:
-		return dictionary[full_key]
-	if key in dictionary:
-		return dictionary[key]
-	return default
-
 #tags that relate to ending sequences
 ending_tag = "ending" #name for the ending
 ending_gender_tag = "ending_gender" #player gender the ending is shown to
@@ -377,7 +368,7 @@ def write_xml(data, filename):
 		
 	#start image
 	start = ET.SubElement(o, "start")
-	start_data = get_value(data, "start", stage=0, default="0-calm,So we'll be playing strip poker... I hope we have fun.")
+	start_data = data["start"] if "start" in data else ["0-calm,So we'll be playing strip poker... I hope we have fun."]
 	start_count = len(start_data)
 	for i in range(0, start_count):
 		start_image, start_text = start_data[i].split(",", 1)
