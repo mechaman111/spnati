@@ -245,14 +245,16 @@ function parseDialogue (caseObject, self, target) {
 function parseInterval (str) {
 	if (!str) return undefined;
 	var pieces = str.split("-");
-	var min = parseInt(pieces[0], 10);
-	var max = pieces.length > 1 ? parseInt(pieces[1], 10) : min;
+	var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
+	var max = pieces.length == 1 ? min
+		: pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
 	return { min : min,
 			 max : max };
 }
 
 function inInterval (value, interval) {
-	return interval.min <= value && value <= interval.max;
+	return (interval.min === null || interval.min <= value)
+		&& (interval.max === null || value <= interval.max);
 }
 
 /************************************************************
