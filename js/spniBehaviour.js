@@ -702,12 +702,12 @@ function updateBehaviour (player, tag, opp) {
 			
 		}
         
-        if (bestMatch.length > 0) {
-			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
-            players[player].current = 0;
-			
-			var states = parseDialogue(bestMatch, players[player], opp);
-			var chosenState = states[getRandomNumber(0, states.length)];
+        states = bestMatch.reduce(function(list, caseObject) {
+            return list.concat(parseDialogue(caseObject, players[player], opp));
+        }, []);
+
+        if (states.length > 0) {
+            var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
 				var match = chosenState.marker.match(/(?:(\+|\-)([\w\-]+))|(?:([\w\-]+)\s*\=\s*(\-?\d+))/);
@@ -737,7 +737,7 @@ function updateBehaviour (player, tag, opp) {
 			}
 			
             players[player].allStates = states;
-			players[player].chosenState = chosenState;
+            players[player].chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");
