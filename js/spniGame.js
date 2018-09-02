@@ -212,6 +212,7 @@ function updateGameVisual (player) {
             }
             else {
                 $gameBubbles[player-1].show();
+                $gameBubbles[player-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+(chosenState.direction||'down'));
             }
         } else {
             /* hide their dialogue bubble */
