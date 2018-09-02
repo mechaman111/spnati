@@ -287,6 +287,8 @@ def create_case_xml(base_element, lines):
 		attrib = {"img": line_data["image"]}
 		if "marker" in line_data:
 			attrib["marker"] = line_data["marker"]
+                if "direction" in line_data:
+                        attrib["direction"] = line_data["direction"]
 		ET.SubElement(case_xml_element, "state", attrib).text = line_data["text"] #add the image and text
 
 #add several values to the XML tree
@@ -680,8 +682,8 @@ def read_player_file(filename):
 					#skip this target type
 					pass
 
-				elif target_type == "marker":
-					line_data["marker"] = target_value
+				elif target_type in ["marker", "direction"]:
+					line_data[target_type] = target_value
 					pass
 
 				elif target_type.startswith("count-"):
