@@ -13,6 +13,7 @@ $cardSuggestOptions = [$("#options-card-suggest-1"), $("#options-card-suggest-2"
 $AITurnTimeOptions = [$("#options-ai-turn-time-1"), $("#options-ai-turn-time-2"), $("#options-ai-turn-time-3"), $("#options-ai-turn-time-4"), $("#options-ai-turn-time-5")];
 $dealSpeedOptions = [$("#options-deal-speed-1"), $("#options-deal-speed-2"), $("#options-deal-speed-3"), $("#options-deal-speed-4")];
 $autoForfeitOptions = [$("#options-auto-forfeit-1"), $("#options-auto-forfeit-2"), $("#options-auto-forfeit-3"), $("#options-auto-forfeit-4")];
+$autoEndingOptions = [$("#options-auto-ending-1"), $("#options-auto-ending-2"), $("#options-auto-ending-3"), $("#options-auto-ending-4")];
 
 $masturbationTimerBox = $("#player-masturbation-timer-box");
 $masturbationWarningLabel = $("#masturbation-warning-label");
@@ -180,15 +181,38 @@ function setAutoForfeit (choice) {
 	}
 }
 
-$("#options-modal").on("hidden.bs.modal", function () {
-	/* If we're waiting specifically for the auto forfeit timer, and
-	   auto forfeit has been turned of, cancel it and enable the
-	   button. */
-	if (timeoutID == autoForfeitTimeoutID && !AUTO_FORFEIT) {
-		clearTimeout(autoForfeitTimeoutID);
-		actualMainButtonState = false;
+function setAutoEnding (choice) {
+	switch (choice) {
+		case 4: AUTO_ENDING = false;
+				break;
+		default: AUTO_ENDING = true;
+				 break;
 	}
-	$mainButton.attr('disabled', actualMainButtonState);
+	setActiveOption($autoEndingOptions, choice);
+
+    switch (choice) {
+		case 1: ENDING_DELAY = 4000;
+				break;
+		case 2: ENDING_DELAY = 7500;
+				break;
+		case 3: ENDING_DELAY = 10000;
+				break;
+		default: ENDING_DELAY = 7500;
+				 break;
+	}
+}
+
+$("#options-modal").on("hidden.bs.modal", function () {
+	if (autoForfeitTimeoutID) {
+		/* If we're waiting specifically for the auto forfeit timer,
+		   cancel it and restart it or enable the button. */
+		clearTimeout(autoForfeitTimeoutID);
+		allowProgression();
+	} else if (!actualMainButtonState) {
+		/* Start auto advance if enabled in pertinent state. */
+        $mainButton.attr('disabled', (actualMainButtonState = true));
+		allowProgression();
+	}
 });
 
 
