@@ -257,6 +257,39 @@ function inInterval (value, interval) {
 		&& (interval.max === null || value <= interval.max);
 }
 
+
+/************************************************************
+ * Check to see if a given marker predicate string is fulfilled
+ * w.r.t. a given character.
+ ************************************************************/
+function checkMarker(predicate, target) {
+	var match = predicate.match(/([\w\-]+)\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\d+)/);
+	
+	if (!match) {
+		if (target.markers[predicate]) return true;
+		return false;
+	}
+	
+	var val = target.markers[match[1]];
+	if (!val) {
+		val = 0;
+	}
+	
+	var cmpVal = parseInt(match[3], 10);
+	
+	switch (match[2]) {
+		case '>': return val > cmpVal;
+		case '>=': return val >= cmpVal;
+		case '<': return val < cmpVal;
+		case '<=': return val <= cmpVal;
+		case '!=': return val != cmpVal;
+		default:
+		case '=':
+		case '==':
+			return val == cmpVal;
+	}
+}
+
 /************************************************************
  * Updates the behaviour of the given player based on the 
  * provided tag.
@@ -387,7 +420,7 @@ function updateBehaviour (player, tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (opp && targetSaidMarker) {
-				if (targetSaidMarker in opp.markers) {
+				if (checkMarker(targetSaidMarker, opp)) {
 					totalPriority += 1;
 				}
 				else {
@@ -395,7 +428,7 @@ function updateBehaviour (player, tag, opp) {
 				}
 			}
 			if (opp && targetNotSaidMarker) {
-				if (!(targetNotSaidMarker in opp.markers)) {
+				if (!opp.markers[targetNotSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -495,7 +528,7 @@ function updateBehaviour (player, tag, opp) {
 					}
 					// marker checks have very low priority as they're mainly intended to be used with other target types
 					if (alsoPlayingSaidMarker) {
-						if (alsoPlayingSaidMarker in ap.markers) {
+						if (checkMarker(alsoPlayingSaidMarker, ap)) {
 							totalPriority += 1;
 						}
 						else {
@@ -503,7 +536,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (alsoPlayingNotSaidMarker) {
-						if (!(alsoPlayingNotSaidMarker in ap.markers)) {
+						if (!ap.markers[alsoPlayingNotSaidMarker]) {
 							totalPriority += 1;
 						}
 						else {
@@ -634,7 +667,7 @@ function updateBehaviour (player, tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (saidMarker) {
-				if (saidMarker in players[player].markers) {
+				if (checkMarker(saidMarker, players[player])) {
 					totalPriority += 1;
 				}
 				else {
@@ -642,7 +675,7 @@ function updateBehaviour (player, tag, opp) {
 				}
 			}
 			if (notSaidMarker) {
-				if (!(notSaidMarker in players[player].markers)) {
+				if (!players[player].markers[notSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -678,7 +711,30 @@ function updateBehaviour (player, tag, opp) {
 			var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
-				players[player].markers[chosenState.marker] = true;
+				var match = chosenState.marker.match(/(?:(\+|\-)([\w\-]+))|(?:([\w\-]+)\s*\=\s*(\-?\d+))/);
+				if (match) {
+					if (match[1] === '+') {
+						// increment marker value
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 1;
+						} else {
+							players[player].markers[match[2]] += 1;
+						}
+						
+					} else if (match[1] === '-') {
+						// decrement marker value
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 0;
+						} else {
+							players[player].markers[match[2]] -= 1;
+						}
+					} else {
+						// set marker value
+						players[player].markers[match[3]] = parseInt(match[4], 10);
+					}
+				} else if (!players[player].markers[chosenState.marker]) {
+					players[player].markers[chosenState.marker] = 1;
+				}
 			}
 			
             players[player].allStates = states;

@@ -96,7 +96,7 @@ function loadEpilogueData(player) {
         var all_marker_attr = $(this).attr('markers');
         if (all_marker_attr
             && !all_marker_attr.trim().split(/\s+/).every(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // not every marker set
             return false;
@@ -106,7 +106,7 @@ function loadEpilogueData(player) {
         var no_marker_attr = $(this).attr('not-markers');
         if (no_marker_attr
             && no_marker_attr.trim().split(/\s+/).some(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // some disallowed marker set
             return false;
@@ -116,7 +116,7 @@ function loadEpilogueData(player) {
         var any_marker_attr = $(this).attr('any-markers');
         if (any_marker_attr
             && !any_marker_attr.trim().split(/\s+/).some(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // none of the markers set
             return false;
@@ -127,7 +127,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_marker_attr
             && !alsoplaying_marker_attr.trim().split(/\s+/).every(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // not every marker set by some other character
@@ -139,7 +139,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_not_marker_attr
             && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // some disallowed marker set by some other character
@@ -151,7 +151,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_any_marker_attr
             && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // none of the markers set by any other player
