@@ -380,7 +380,10 @@ def write_xml(data, filename):
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-		ET.SubElement(clth, "clothing", **{"proper-name":pname, "lowercase":lname, "type":tp, "position":pos, "plural":str(num=="plural").lower()})
+                clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
+                if num=="plural":
+                        clothesattr["plural"] = "true"
+		ET.SubElement(clth, "clothing", clothesattr)
 	
 	#behaviour
 	bh = ET.SubElement(o, "behaviour")
