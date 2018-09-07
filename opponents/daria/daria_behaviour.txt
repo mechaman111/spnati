@@ -8,11 +8,13 @@ size=medium
 #Number of phases to "finish"
 timer=22
 
+intelligence=average
+
 tag=sarcastic
 tag=hairy
 tag=glasses
 tag=cartoon
-tag=American
+tag=american
 
 #required for meta.xml
 #start picture
@@ -26,19 +28,18 @@ release=60
 
 #Daria's clothes
 clothes=Jacket,jacket,extra,upper
-clothes=Boots,boots,extra,lower
-clothes=Socks,socks,extra,lower
+clothes=Boots,boots,extra,lower,plural
+clothes=Socks,socks,extra,lower,plural
 clothes=Shirt,shirt,major,upper
 clothes=Skirt,skirt,major,lower
-clothes=Glasses,glasses,extra,other
+clothes=Glasses,glasses,extra,other,plural
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
 
 #starting picture and text
 start=0-calm,Strip poker? Sure, I could use another public humiliation today.
-#make_xml.py ignores subsequent start lines, but they can be added manually by pasting them in below the first one.
-#<state img="0-calm.png">Jane talked me into this. For any humiliation I suffer from this moment on, I hold her responsible.</state>
-#<state img="0-sarcastic.png">Oh, what a joy I didn't wake up dead.</state>
+start=0-calm,Jane talked me into this. For any humiliation I suffer from this moment on, I hold her responsible.
+start=0-sarcastic,Oh, what a joy I didn't wake up dead.
 
 ##individual behaviour
 
@@ -64,7 +65,7 @@ swap_cards=calm,~cards~.
 #losing socks
 2-must_strip_winning=lost,Right now I'm selling you the concept of hope; the hope that you can walk out of here with some of your clothes on and a little bit of dignity... I'm thinking of going into politics.
 2-must_strip_winning=lost,You do realize I am still winning right?
-2-must_strip_normal=lost,I wonder... will you have wet dreams or wet nightmares with the image of me stripping?
+2-must_strip_normal,marker:wet_dreams=lost,I wonder... will you have wet dreams or wet nightmares with the image of me stripping?
 2-must_strip_losing=lost,I'd like to register as a conscientious objector.
 2-must_strip_losing=lost,I bet you must feel so proud winning a hand of strip poker.
 2-stripping=strip,I have 6 toes on my left foot... Wanna check them out?
@@ -73,7 +74,7 @@ swap_cards=calm,~cards~.
 #losing shirt
 3-must_strip_winning=lost,You do realize I am still winning right?
 3-must_strip_winning=lost,I've been busy procrastinating all day.
-3-must_strip_normal=lost,I wonder... will you have wet dreams or wet nightmares with the image of me stripping?
+3-must_strip_normal,marker:wet_dreams=lost,I wonder... will you have wet dreams or wet nightmares with the image of me stripping?
 3-must_strip_losing=lost,Your cat is going to die and will go to kitty hell, because of this.
 3-stripping=strip,I totally get why you're playing this. I mean, the possibilities of finding shirtless women on the internet are next to zero, right?
 4-stripped=stripped,I need to tell you this: You're not seeing me shirtless. This is a hologram. I am actually in Mexico, eating a burrito... with chimichanga.
@@ -94,7 +95,7 @@ swap_cards=calm,~cards~.
 5-must_strip_losing=lost,I feel like my IQ is dropping to a very Quinn-like state right now.
 5-stripping=strip,Are you aroused by the idea of me taking off my glasses? 
 5-stripping=strip,I'm an exotic dancer. You know, at a club. I take off my clothes and dance for strange men.
-6-stripped=stripped, I can still see without my glasses. I'm telling the eight of you. 
+6-stripped=stripped,I can still see without my glasses. I'm telling the eight of you. 
 
 #losing bra.
 6-must_strip_winning=lost,I might be winning, but this is still embarrassing.
@@ -522,6 +523,7 @@ swap_cards=calm,~cards~.
 7-female_removed_minor=frustrated,Talk about anticlimactic.
 7-male_removing_major=embarrassed,Why didn't I just stay home where is nice and quiet and nothing ever happens?
 7-male_removed_major=interested,My hormones don't rage. Oh, sure, they get mad sometimes, but then they just stop speaking to each other.
+#7-female_removing_major=,
 7-female_removed_major=interested,My hormones don't rage. Oh, sure, they get mad sometimes, but then they just stop speaking to each other.
 7-male_chest_will_be_visible=embarrassed,Actually, I want to see your bare... chest.
 7-male_chest_is_visible=happy,Well, at least my chest is bigger than yours.
@@ -690,7 +692,7 @@ must_masturbate_first=lost,Good. I was feeling too dry.
 must_masturbate_first=lost,All right, all right! that's check and mate.
 
 must_masturbate=lost,No, no, absolutely not! It's unethical, it's immoral, it may well be illegal. I'll have no part of it..... Okay, I'll do it.
-must_masturbate=lost,Can somebody record this and then upload it to the internet? I'll give you 10% of the money I make.
+must_masturbate,marker:profit_margins=lost,Can somebody record this and then upload it to the internet? I'll give you 10% of the money I make.
 must_masturbate=lost,Okay... I'll try and fake that I'm shocked: "What am I doing here? How am I going to get through this? Dear God, help me."
 
 start_masturbating=starting,Is life always tawdry, stupid and humiliating? Or is it just a phase?
