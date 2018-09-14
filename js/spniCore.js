@@ -166,13 +166,13 @@ function Player (id) {
     this.xml = null;
     this.metaXml = null;
     
-    this.reset();
+    this.resetState();
 }
 
 /*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
-Player.prototype.reset = function () {
+Player.prototype.resetState = function () {
     this.out = this.finished = this.exposed = false;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
@@ -189,12 +189,12 @@ Player.prototype.reset = function () {
 		this.chosenState = this.allStates[0];
         
 		/* Load the player's wardrobe. */
-        this.clothing = [];
-    
+            
     	/* Find and grab the wardrobe tag */
     	$wardrobe = this.xml.find('wardrobe');
     	
     	/* find and create all of their clothing */
+        var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
     		var properName = $(this).attr('proper-name');
     		var lowercase = $(this).attr('lowercase');
@@ -204,8 +204,10 @@ Player.prototype.reset = function () {
     
     		var newClothing = createNewClothing(properName, lowercase, type, position, null, plural, 0);
     
-    		this.clothing.push(newClothing);
+    		clothingArr.push(newClothing);
     	});
+        
+        this.clothing = clothingArr;
 	}
     
 	this.updateLabel();
@@ -288,8 +290,10 @@ Opponent.prototype.constructor = Opponent;
 Opponent.prototype.loadBehaviour = function (onLoadFinished, slot) {
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
-		/* Success callback. */
-		function(xml) {            
+		/* Success callback.
+         * 'this' is bound to the Opponent object.
+         */
+		function(xml) {
             var $xml = $(xml);
             
             this.xml = $xml;
@@ -299,12 +303,14 @@ Opponent.prototype.loadBehaviour = function (onLoadFinished, slot) {
             this.intelligence = $xml.find('intelligence');
             
             var tags = $xml.find('tags');
-            this.tags = [opponent.id];
+            var tagsArray = [this.id];
             if (typeof tags !== typeof undefined && tags !== false) {
                 $(tags).find('tag').each(function () {
-                    this.tags.push($(this).text());
+                    tagsArray.push($(this).text());
                 });
             }
+            
+            this.tags = tagsArray;
             
             var targetedLines = {};
             
@@ -325,13 +331,15 @@ Opponent.prototype.loadBehaviour = function (onLoadFinished, slot) {
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
             
+            this.resetState();
+            
             onLoadFinished(this, slot);
-		},
+		}.bind(this),
 		/* Error callback. */
         function(err) {
-            console.log("Failed reading \""+opponent.id+"\" behaviour.xml");
+            console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[slot];
-        }
+        }.bind(this)
 	);
 }
 
@@ -457,7 +465,7 @@ function returnToPreviousScreen (screen) {
 function resetPlayers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] != null) {
-            players[i].reset();
+            players[i].resetState();
 		}
 		timers[i] = 0;
 	}
