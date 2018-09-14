@@ -143,17 +143,18 @@ function fetchLoadedEndings(){
 			}
 		}
 	}
+	
 	setTimeout(fetchLoadedEndings, 200);
 }
 
-function loadEndingXml(index){
-	fetchCompressedURL(
-		loadedOpponents[index].folder + 'behaviour.xml',
-		function(xml){
-			var endings = $(xml).find('epilogue');
-			isEndingLoaded[index] = endings;
-		}
-	);
+function loadEndingXml (index) {
+	if (!loadedOpponents[index].xml) {
+		loadedOpponents[index].loadBehaviour(function (opponent) {
+			isEndingLoaded[index] = opponent.xml.find('epilogue');
+		});
+	} else {
+		isEndingLoaded[index] = loadedOpponents[index].xml.find('epilogue');
+	}
 }
 
 function loadEndingThunbnail(element, ending){
