@@ -30,7 +30,8 @@ var eSize = {
 var eIntelligence = {
     BAD  : "bad",
     AVERAGE : "average",
-    GOOD  : "good"
+    GOOD  : "good",
+    BEST  : "best"
 };
 
 
