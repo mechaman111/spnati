@@ -246,11 +246,14 @@ def create_case_xml(base_element, lines):
 		if "conditions" in line_data:
 			for condition in line_data["conditions"]:
 				sort_key += "," + "count-" + condition[0]
+		if "tests" in line_data:
+			for test in line_data["tests"]:
+				sort_key += "," + "test:" + test[0]
 		for target_type in all_targets:
 			if target_type in line_data:
 				sort_key += "," + target_type + ":" +line_data[target_type]
 		line_data["sort_key"] = sort_key
-		
+
 	#now do the sorting
 	lines.sort(key=lambda l: l["sort_key"])
 	
@@ -281,6 +284,11 @@ def create_case_xml(base_element, lines):
 			if "conditions" in line_data:
 				for condition in line_data["conditions"]:
 					ET.SubElement(case_xml_element, "condition", {"filter": condition[0], "count": condition[1]})
+
+                        if "tests" in line_data:
+                                for test in line_data["tests"]:
+                                        ET.SubElement(case_xml_element, "test", { 'expr': test[0], 'value': test[1]})
+
 
 		#now add the individual line
 		#remember that this happens regardless of if the <case> is new
@@ -657,7 +665,7 @@ def read_player_file(filename):
 			for t in targets:
 			
 				try:
-					target_type, target_value = t.split(":")
+					target_type, target_value = t.rsplit(":", 1)
 				except ValueError:
 					#make sure the target has a format we can understand
 					print("Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line))
@@ -693,6 +701,12 @@ def read_player_file(filename):
 						line_data["conditions"] = [[condition_filter, target_value]]
 					else: line_data["conditions"].append([condition_filter, target_value])
 					
+				elif target_type.startswith("test:"):
+					test_expr = target_type[5::]
+					if "tests" not in line_data:
+						line_data["tests"] = [[test_expr, target_value]]
+					else: line_data["tests"].append([test_expr, target_value])
+
 				else:
 					#unknown target type
 					print("Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line))

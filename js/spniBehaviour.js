@@ -376,6 +376,10 @@ function updateBehaviour (player, tag, opp) {
 					counters.push(counter);
 				}
 			});
+			var tests = [];
+			states[i].find("test").each(function () {
+				tests.push($(this));
+			});
 
 			var totalPriority = 0; // this is used to determine which of the states that
 									// doesn't fail any conditions should be used
@@ -564,6 +568,18 @@ function updateBehaviour (player, tag, opp) {
 			if (!matchCounter) {
 				continue; // failed filter count
 			}
+
+			if (!tests.every(function(test) {
+				var expr = expandDialogue(test.attr('expr'), players[player], opp);
+				var value = test.attr('value')
+				var interval = parseInterval(value);
+				if (interval ? inInterval(Number(expr), interval) : expr == value) {
+					totalPriority += 50;
+					return true;
+				} else return false;
+			})) {
+				continue;
+			} 
 
 			// totalRounds (priority = 10)
 			if (typeof totalRounds !== typeof undefined) {
