@@ -30,7 +30,7 @@ all_targets = one_word_targets + lower_multi_targets
 #default images and text for most cases
 def get_cases_dictionary():
 	d = {}#male pre-strip scenes
-	d["male_human_must_strip"] = [{"key":"male_human_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["male_human_must_strip"] = [] # Optional
 	d["male_must_strip"] = [{"key":"male_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
 	d["male_removing_accessory"] = [{"key":"male_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
 	d["male_removing_minor"] = [{"key":"male_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
@@ -54,7 +54,7 @@ def get_cases_dictionary():
 	d["male_finished_masturbating"] = [{"key":"male_finished_masturbating", "image":"shocked", "text":"Wow... uh... I guess you're done then..."}]
 	
 	#female pre-strip
-	d["female_human_must_strip"] = [{"key":"female_human_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
+	d["female_human_must_strip"] = [] # Optional
 	d["female_must_strip"] = [{"key":"female_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
 	d["female_removing_accessory"] = [{"key":"female_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
 	d["female_removing_minor"] = [{"key":"female_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
