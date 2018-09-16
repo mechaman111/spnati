@@ -710,7 +710,7 @@ function updateBehaviour (player, tag, opp) {
 			var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
-				var match = chosenState.marker.match(/(?:(\+|\-)([\w\-]+))|(?:([\w\-]+)\s*\=\s*(\-?\d+))/);
+				var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
 				if (match) {
 					if (match[1] === '+') {
 						// increment marker value
