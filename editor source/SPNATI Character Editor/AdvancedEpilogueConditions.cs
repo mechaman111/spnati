@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace SPNATI_Character_Editor
 			_epilogue.AlsoPlayingAllMarkers = String.Join(" ", selAlsoPlayingAllMarkers.SelectedItems);
 			_epilogue.AlsoPlayingNotMarkers = String.Join(" ", selAlsoPlayingNotMarkers.SelectedItems);
 			_epilogue.AlsoPlayingAnyMarkers = String.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems);
+            _epilogue.GalleryImage = (string)valGalleryImage.Text;
 		}
 
 		private void markerControl_Enter(object sender, EventArgs e)
@@ -91,5 +93,33 @@ namespace SPNATI_Character_Editor
 		{
 			valPlayerStartingLayers.Maximum = valMaxPlayerStartingLayers.Value;
 		}
-	}
+
+        private void GalleryImageSelectBtn_Click(object sender, EventArgs e)
+        {
+            string dir = Config.GetRootDirectory(_character);
+            galleryImageFileDialog.InitialDirectory = dir;
+            DialogResult result = DialogResult.OK;
+            bool invalid;
+            do
+            {
+                invalid = false;
+                result = galleryImageFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if (Path.GetDirectoryName(galleryImageFileDialog.FileName) != dir)
+                    {
+                        MessageBox.Show("Images need to come from the character's folder.");
+                        invalid = true;
+                    }
+                }
+            }
+            while (invalid);
+
+            if (result == DialogResult.OK)
+            {
+                string file = Path.GetFileName(galleryImageFileDialog.FileName);
+                valGalleryImage.Text = file;
+            }
+        }
+    }
 }
