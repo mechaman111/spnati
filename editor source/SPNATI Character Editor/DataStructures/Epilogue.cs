@@ -33,6 +33,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
+        [XmlAttribute("img")]
+        public string GalleryImage;
+
 		[XmlElement("title")]
 		public string Title = "New Ending";
 

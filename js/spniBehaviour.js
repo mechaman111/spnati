@@ -750,9 +750,15 @@ function updateBehaviour (player, tag, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (player, tag, opp) {
-	for (i = 1; i < players.length; i++) {
+	for (var i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
-			updateBehaviour(i, tag, opp);
+			if (typeof tag === 'object') {
+				tag.some(function(t) {
+					return updateBehaviour(i, t, opp);
+				});
+			} else {
+				updateBehaviour(i, tag, opp);
+			}
 		}
 	}
 }
