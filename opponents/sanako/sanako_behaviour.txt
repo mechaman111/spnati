@@ -4,7 +4,12 @@ last=Isogai
 label=Sanako
 gender=female
 size=medium
-intelligence=average
+
+intelligence=good,0
+intelligence=average,1
+intelligence=average,2
+intelligence=average,3
+intelligence=good,4
 
 #Number of phases to "finish" masturbating (the larger the number, the longer they will masturbate)
 timer=18
@@ -46,6 +51,7 @@ release=
 
 
 
+marker=sanako_bad_start,public,Sanako is off to a bad start.
 marker=sanako_drama_club_costumes,private,Sanako thinks a princess is just in costume.
 marker=sanako_baked,public,Sanako has some baked goodies for everyone after the game.
 marker=sanako_hot,private,Sanako blames the heat for her skirt removal.
@@ -53,6 +59,7 @@ marker=sanako_press_buttons,private,Sanako observes that we're pressing a sarcas
 marker=sanako_younger_guy,public,If any males are playing, Sanako might remark that she sometimes enjoys going out with younger guys.
 
 marker=sanako_human_male_taking_the_lead,public,Sanako is happy to let the human male player "take the lead".
+marker=sanako_shimakaze_flying_robot,public,Sanako notices Shimakaze's flying robot.
 marker=sanako_zone-tan_strapless,public,Sanako mistakes Zone-tan's bare shoulders for a strapless bra.
 
 
@@ -62,6 +69,8 @@ selected=wave,I'm Sanako Isogai, eighteen years old.
 
 game_start=headtilt,It's so very nice to make your acquaintance!
 game_start=headtilt,Let's all get along, okay?
+
+game_start,alsoPlaying:shimakaze,marker:sanako_shimakaze_flying_robot=wondering,Is that a flying robot?
 
 
 #CLOTHING
@@ -203,9 +212,10 @@ clothes=Panties,panties,important,lower,plural
 0-must_strip_normal,totalRounds:0=wave,My name is Sanako Isogai. Please call me Sanako.
 0-must_strip_normal=happy,It's my first loss, but hopefully not my last.
 0-must_strip_normal=bodytilt,No problem. Leave it to me.
-0-must_strip_losing=concerned,Oh, you're targeting me now? Even though I have the least to lose?
+0-must_strip_losing,marker:sanako_bad_start=concerned,Oh, you're targeting me now? Even though I have the least to lose?
 0-stripping=zzzstripping1,I want help in any way that I can. How about I take off my socks too?
 0-stripping=zzzstripping1,I thought I might take off my socks too if that's all right.
+0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes and socks be enough?
 0-stripping,totalExposed:1-4=zzzstripping2,It's only fair that I take my socks off too.
 1-stripped=aaastripped1,There! I'm ready for the next round.
 
@@ -213,7 +223,7 @@ clothes=Panties,panties,important,lower,plural
 1-must_strip_winning=calm,I don't mind at all.
 1-must_strip_normal=bodytilt,Lucky you! It's my turn again.
 1-must_strip_normal,consecutiveLosses:2=bodytilt,Lucky you! That's two in a row for me.
-1-must_strip_losing=bodytilt,Are you sure you don't want to make the game last a bit longer? Maybe someone else could go before I do again.
+1-must_strip_losing=bodytilt,Are you sure you don't want to make the game last a bit longer? Maybe someone else could go before it's my turn again.
 1-stripping=zzzstripping1,Of course, taking your shirt off is a normal part of strip poker.
 2-stripped=aaastripped,This is my bra today. How do you like it?
 
@@ -254,8 +264,12 @@ clothes=Panties,panties,important,lower,plural
 0-male_human_must_strip=headtilt,This game keeps getting better and better.
 0-male_must_strip=wondering,So, uh...
 0-female_human_must_strip=headtilt,We get to see more of ~name~? I'm happy to hear it.
-0-female_must_strip=headtilt,This going to be fun, isn't it?
-0-female_must_strip=wondering,Hmmm?
+0-female_must_strip,totalRounds:0=headtilt,This going to be fun, isn't it?
+0-female_must_strip,hasHand:High Card=wondering,Was it me?
+0-female_must_strip=happy,Okay.
+0-female_must_strip=pointingatself,One item per round. That's the rule.
+0-female_must_strip,totalFemales:3-5,priority:0=lookingtoside,Who's the lucky girl?
+0-female_must_strip,targetStage:4=warning,Don't you all pick on ~name~. She's doing her best.
 
 #lost shoes and socks
 1-male_human_must_strip=headtilt,Would you mind taking a turn?
@@ -405,14 +419,27 @@ clothes=Panties,panties,important,lower,plural
 -1-female_removed_accessory,totalFinished:1,priority:0=cold,How can you keep playing at a time like this? Did my penalty mean nothing to you?
 -1-female_removed_accessory,totalFinished:2-4,priority:0=cold,How can you keep playing at a time like this? Did our penalties mean nothing to you?
 
+#targeted
+0-female_removing_accessory,target:shimakaze=tiptoe,Excuse me, Miss, but your clothes are on fire!
+1-female_removing_accessory,target:shimakaze=concerned,Excuse me, Miss, but your clothes are on fire!
+2-female_removing_accessory,target:shimakaze=shocked,Sh-Shimakaze! Your clothes are on fire!
+3-female_removing_accessory,target:shimakaze=jumpscare,Sh-Shimakaze! Your clothes are on fire!
+4-female_removing_accessory,target:shimakaze=surprised,Sh-Shimakaze! Your clothes are on fire!
+-3-female_removing_accessory,target:shimakaze=covering,Sh-Shimakaze! Your clothes are on fire!
+-2-female_removing_accessory,target:shimakaze=masturbating_e,N-Noooooo!
+-1-female_removing_accessory,target:shimakaze=ahhhhhh,Help! What do we do? She's on fire!
+
+
 
 #OPPONENT REMOVING MINOR CLOTHING
 #fully clothed
 0-male_removing_minor=lookingtoside,Please be a darling and take off your ~clothing~, name.
 0-male_removed_minor=interested,Good boy!
+0-male_removed_minor,totalRounds:1-3,totalExposed:0,priority:0=headtilt,It's okay if we start slow.
 0-female_removing_minor=wave,Don't worry about it.
 0-female_removed_minor=warning,Put your ~clothing~ to the side. We don't want anything getting stepped on.
 0-female_removed_minor=happy,I hope this is okay with you.
+0-female_removed_minor,totalExposed:0,priority:0=calm,If you're okay with it, we're okay it with it too.
 
 #lost shoes and socks
 1-male_removing_minor=calm,It's more fun if we strip at the same speed, don't you think?

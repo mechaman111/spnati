@@ -9,7 +9,11 @@
     <size>medium</size>
     <timer>18</timer>
 
-    <intelligence>average</intelligence>
+    <intelligence stage="1">average</intelligence>
+    <intelligence stage="0">good</intelligence>
+    <intelligence stage="3">average</intelligence>
+    <intelligence stage="2">average</intelligence>
+    <intelligence stage="4">good</intelligence>
     <tags>
         <tag>long_hair</tag>
         <tag>kind</tag>
@@ -50,12 +54,18 @@
                 <state img="0-headtilt.png">It's so very nice to make your acquaintance!</state>
                 <state img="0-headtilt.png">Let's all get along, okay?</state>
             </case>
+            <case alsoPlaying="shimakaze" tag="game_start">
+                <state img="0-wondering.png" marker="sanako_shimakaze_flying_robot">Is that a flying robot?</state>
+            </case>
             <case tag="female_must_strip">
-                <state img="0-headtilt.png">This going to be fun, isn't it?</state>
-                <state img="0-wondering.png">Hmmm?</state>
+                <state img="0-happy.png">Okay.</state>
+                <state img="0-pointingatself.png">One item per round. That's the rule.</state>
             </case>
             <case filter="princess" notSaidMarker="sanako_drama_club_costumes" tag="female_must_strip">
                 <state img="0-wondering.png" marker="sanako_drama_club_costumes">Goodness, the drama club sure has a lot of different costumes, doesn't it?</state>
+            </case>
+            <case hasHand="High Card" tag="female_must_strip">
+                <state img="0-wondering.png">Was it me?</state>
             </case>
             <case tag="female_must_strip" target="corrin_f" targetStage="0">
                 <state img="0-wave.png">So your name is Corrin? It's a pleasure to meet you. For a moment, I thought Corrin was a boy's name.</state>
@@ -68,6 +78,15 @@
             </case>
             <case tag="female_must_strip" target="zizou" targetStage="0">
                 <state img="0-interested.png">My, what a handsome prince!</state>
+            </case>
+            <case tag="female_must_strip" targetStage="4">
+                <state img="0-warning.png">Don't you all pick on ~name~. She's doing her best.</state>
+            </case>
+            <case priority="0" tag="female_must_strip" totalFemales="3-5">
+                <state img="0-lookingtoside.png">Who's the lucky girl?</state>
+            </case>
+            <case tag="female_must_strip" totalRounds="0">
+                <state img="0-headtilt.png">This going to be fun, isn't it?</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="0-interested.png">This is an unexpected but happy turn of events.</state>
@@ -92,6 +111,9 @@
             </case>
             <case tag="male_removed_minor">
                 <state img="0-interested.png">Good boy!</state>
+            </case>
+            <case priority="0" tag="male_removed_minor" totalExposed="0" totalRounds="1-3">
+                <state img="0-headtilt.png">It's okay if we start slow.</state>
             </case>
             <case tag="male_removed_accessory">
                 <state img="0-happy.png">That's the way to do it.</state>
@@ -183,6 +205,9 @@
                 <state img="0-happy.png">You can think of this as like a practise round if you like, ~name~.</state>
                 <state img="0-lookingtoside.png">Take your time. No need to rush.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="0-tiptoe.png">Excuse me, Miss, but your clothes are on fire!</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="0-zzzstripping1.png">Now this doesn't seem very fair, does it? If it's okay, I'd like to join you all.</state>
             </case>
@@ -210,6 +235,9 @@
             <case tag="female_removed_minor">
                 <state img="0-warning.png">Put your ~clothing~ to the side. We don't want anything getting stepped on.</state>
                 <state img="0-happy.png">I hope this is okay with you.</state>
+            </case>
+            <case priority="0" tag="female_removed_minor" totalExposed="0">
+                <state img="0-calm.png">If you're okay with it, we're okay it with it too.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="0-tasty.png">So early! Someone's a go-getter.</state>
@@ -315,11 +343,14 @@
                 <state img="0-wave.png">My name is Sanako Isogai. Please call me Sanako.</state>
             </case>
             <case tag="must_strip_losing">
-                <state img="0-concerned.png">Oh, you're targeting me now? Even though I have the least to lose?</state>
+                <state img="0-concerned.png" marker="sanako_bad_start">Oh, you're targeting me now? Even though I have the least to lose?</state>
             </case>
             <case tag="stripping">
                 <state img="0-zzzstripping1.png">I want help in any way that I can. How about I take off my socks too?</state>
                 <state img="0-zzzstripping1.png">I thought I might take off my socks too if that's all right.</state>
+            </case>
+            <case saidMarker="sanako_bad_start" tag="stripping">
+                <state img="0-zzzstripping2.png">Will my shoes and socks be enough?</state>
             </case>
             <case tag="stripping" totalExposed="1-4">
                 <state img="0-zzzstripping2.png">It's only fair that I take my socks off too.</state>
@@ -461,6 +492,9 @@
             <case tag="female_removing_accessory">
                 <state img="1-calm.png">It might take us a few rounds to get started.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="1-concerned.png">Excuse me, Miss, but your clothes are on fire!</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="1-horny.png">If you're all done teasing me, I believe it's my turn.</state>
             </case>
@@ -519,7 +553,7 @@
                 <state img="1-bodytilt.png">Lucky you! That's two in a row for me.</state>
             </case>
             <case tag="must_strip_losing">
-                <state img="1-bodytilt.png">Are you sure you don't want to make the game last a bit longer? Maybe someone else could go before I do again.</state>
+                <state img="1-bodytilt.png">Are you sure you don't want to make the game last a bit longer? Maybe someone else could go before it's my turn again.</state>
             </case>
             <case tag="stripping">
                 <state img="1-zzzstripping1.png">Of course, taking your shirt off is a normal part of strip poker.</state>
@@ -650,6 +684,9 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="2-handonheart.png">Could I take a closer look at your cute ~clothing~?</state>
+            </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="2-shocked.png">Sh-Shimakaze! Your clothes are on fire!</state>
             </case>
             <case tag="game_over_victory">
                 <state img="2-coy.png">I think the winner should get a little kiss, don't you?</state>
@@ -833,6 +870,9 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="3-headtilt.png">Aha, ~name~ seems to be a very defensive player.</state>
+            </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="3-jumpscare.png">Sh-Shimakaze! Your clothes are on fire!</state>
             </case>
             <case tag="game_over_victory">
                 <state img="3-callme.png">~player~, let me give you my telephone number. We can play with each other more later.</state>
@@ -1040,6 +1080,9 @@
             <case tag="female_removing_accessory">
                 <state img="4-cleavage.png">Remember that for everything you have as a pair, we want both of them. I hope that's fair.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="4-surprised.png">Sh-Shimakaze! Your clothes are on fire!</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="4-breasthold.png">You didn't even get to see me play with this. But I suppose there's always next game.</state>
             </case>
@@ -1219,6 +1262,9 @@
             <case tag="female_removing_accessory">
                 <state img="5-hopeful.png">Life rewards a kind and generous soul.</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="5-covering.png">Sh-Shimakaze! Your clothes are on fire!</state>
+            </case>
             <case tag="game_over_victory">
                 <state img="5-peacesign.png">Yeah! I knew I could do it.</state>
                 <state img="5-tasty.png">I don't want to feel left out. Should we all do it at the same time?</state>
@@ -1379,6 +1425,9 @@
             <case tag="female_removing_accessory">
                 <state img="6-masturbating_m.png">Ah! Ahhh!</state>
             </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="6-masturbating_e.png">N-Noooooo!</state>
+            </case>
             <case tag="female_removing_major">
                 <state img="6-masturbating_b.png">Oh!</state>
             </case>
@@ -1537,6 +1586,9 @@
             </case>
             <case tag="female_removing_accessory">
                 <state img="7-concerned.png">But I...</state>
+            </case>
+            <case tag="female_removing_accessory" target="shimakaze">
+                <state img="7-ahhhhhh.png">Help! What do we do? She's on fire!</state>
             </case>
             <case tag="female_removing_major">
                 <state img="7-concerned.png">Is it finally time... for <i>that</i>?</state>
