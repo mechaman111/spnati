@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					{
 						if (!string.IsNullOrEmpty(stageCase.Target))
 						{
-							if (!targets.Contains(stageCase.Target))
+							if (!targets.Contains(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
 							{
 								Tuple<int, int> current;
 								if (!targetMap.TryGetValue(stageCase.Target, out current))
@@ -71,7 +71,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 								}
 							}
 						}
-						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
 						{
 							if (!targets.Contains(stageCase.AlsoPlaying))
 							{
