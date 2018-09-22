@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public override string GetTitle()
 		{
-			return "Markers Referenced by Other Characters (Top 30 Characters)";
+			return "Markers Referenced by Other Characters";
 		}
 
 		protected override List<Tuple<Character, int>> GetData()
