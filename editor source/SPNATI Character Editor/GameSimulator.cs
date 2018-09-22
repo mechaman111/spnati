@@ -358,25 +358,25 @@ namespace SPNATI_Character_Editor
 					}
 					break;
 				case GamePhase.BeforeLoss:
-					bool winning = true;
-					bool losing = true;
 					if (standardStage < 8)
 					{
 						int stage = standardStage;
-						foreach (var character in state.Characters)
-						{
-							if (character != this)
-							{
-								int otherStage = TriggerDatabase.ShiftStage(character.Character, character.Stage);
-								if (otherStage <= stage)
-									winning = false;
-								else if (otherStage > stage)
-									losing = false;
-							}
-						}
 
 						if (isTarget)
 						{
+							bool winning = true;
+							bool losing = true;
+							foreach (var character in state.Characters)
+							{
+								if (character != this)
+								{
+									int otherStage = TriggerDatabase.ShiftStage(character.Character, character.Stage);
+									if (otherStage <= stage + 1)
+										winning = false;
+									if (otherStage >= stage + 1)
+										losing = false;
+								}
+							}
 							if (winning)
 								tag = "must_strip_winning";
 							else if (losing)
