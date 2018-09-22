@@ -585,15 +585,17 @@ namespace SPNATI_Character_Editor
 		{
 			if (string.IsNullOrEmpty(range))
 				return true;
-			int min = 0;
-			int max = 0;
+			int min;
+			int max;
 			string[] pieces = range.Split('-');
-			if (!int.TryParse(pieces[0], out min))
-				return true;
+			if (pieces[0] == "") min = 0;
+			else if (!int.TryParse(pieces[0], out min))
+				return false;
 			if (pieces.Length > 1)
 			{
-				if (!int.TryParse(pieces[1], out max))
-					return true;
+				if (pieces[1] == "") max = int.MaxValue;
+				else if (!int.TryParse(pieces[1], out max))
+					return false;
 				return min <= value && value <= max;
 			}
 			return value == min;
