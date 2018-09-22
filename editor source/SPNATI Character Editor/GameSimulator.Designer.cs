@@ -177,7 +177,7 @@
 			this.Controls.Add(this.char1);
 			this.Name = "GameSimulator";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Simulator";
+			this.Text = "Simulator - SEE HELP FOR LIMITATIONS";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
