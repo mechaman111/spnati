@@ -173,14 +173,8 @@
 			this.grpConditions = new System.Windows.Forms.GroupBox();
 			this.tabControlConditions = new System.Windows.Forms.TabControl();
 			this.tabTarget = new System.Windows.Forms.TabPage();
-			this.valMaxLayers = new System.Windows.Forms.NumericUpDown();
-			this.label74 = new System.Windows.Forms.Label();
-			this.valLayers = new System.Windows.Forms.NumericUpDown();
-			this.lblTargetLayers = new System.Windows.Forms.Label();
 			this.cboTargetNotMarker = new System.Windows.Forms.ComboBox();
 			this.label72 = new System.Windows.Forms.Label();
-			this.cboTargetStatus = new System.Windows.Forms.ComboBox();
-			this.label75 = new System.Windows.Forms.Label();
 			this.cboTargetMarker = new System.Windows.Forms.ComboBox();
 			this.label66 = new System.Windows.Forms.Label();
 			this.valMaxTimeInStage = new System.Windows.Forms.NumericUpDown();
@@ -219,10 +213,7 @@
 			this.tabConditions = new System.Windows.Forms.TabPage();
 			this.gridFilters = new System.Windows.Forms.DataGridView();
 			this.ColTagFilter = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColGenderFilter = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColStatusFilterNegated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ColStatusFilter = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColFilterCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColTagCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabSelf = new System.Windows.Forms.TabPage();
 			this.cboNotMarker = new System.Windows.Forms.ComboBox();
 			this.label70 = new System.Windows.Forms.Label();
@@ -316,8 +307,6 @@
 			this.grpConditions.SuspendLayout();
 			this.tabControlConditions.SuspendLayout();
 			this.tabTarget.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.valMaxLayers)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.valLayers)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxTimeInStage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxLosses)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTimeInStage)).BeginInit();
@@ -731,7 +720,7 @@
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 130);
+			this.label6.Location = new System.Drawing.Point(6, 103);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(29, 13);
 			this.label6.TabIndex = 11;
@@ -742,7 +731,7 @@
 			this.cboLineFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboLineFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboLineFilter.FormattingEnabled = true;
-			this.cboLineFilter.Location = new System.Drawing.Point(81, 127);
+			this.cboLineFilter.Location = new System.Drawing.Point(81, 100);
 			this.cboLineFilter.Name = "cboLineFilter";
 			this.cboLineFilter.Size = new System.Drawing.Size(242, 21);
 			this.cboLineFilter.TabIndex = 6;
@@ -1583,9 +1572,9 @@
 			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridDialogue.Location = new System.Drawing.Point(6, 452);
+			this.gridDialogue.Location = new System.Drawing.Point(6, 414);
 			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.Size = new System.Drawing.Size(654, 201);
+			this.gridDialogue.Size = new System.Drawing.Size(654, 239);
 			this.gridDialogue.TabIndex = 42;
 			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
 			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
@@ -1602,7 +1591,7 @@
 			// cmdPasteAll
 			// 
 			this.cmdPasteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdPasteAll.Location = new System.Drawing.Point(585, 423);
+			this.cmdPasteAll.Location = new System.Drawing.Point(585, 385);
 			this.cmdPasteAll.Name = "cmdPasteAll";
 			this.cmdPasteAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdPasteAll.TabIndex = 40;
@@ -1613,7 +1602,7 @@
 			// cmdCopyAll
 			// 
 			this.cmdCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCopyAll.Location = new System.Drawing.Point(504, 423);
+			this.cmdCopyAll.Location = new System.Drawing.Point(504, 385);
 			this.cmdCopyAll.Name = "cmdCopyAll";
 			this.cmdCopyAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdCopyAll.TabIndex = 39;
@@ -1644,7 +1633,7 @@
 			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(6, 423);
+			this.label8.Location = new System.Drawing.Point(6, 385);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(52, 13);
 			this.label8.TabIndex = 33;
@@ -1653,7 +1642,7 @@
 			// lblAvailableVars
 			// 
 			this.lblAvailableVars.AutoSize = true;
-			this.lblAvailableVars.Location = new System.Drawing.Point(6, 436);
+			this.lblAvailableVars.Location = new System.Drawing.Point(6, 398);
 			this.lblAvailableVars.Name = "lblAvailableVars";
 			this.lblAvailableVars.Size = new System.Drawing.Size(53, 13);
 			this.lblAvailableVars.TabIndex = 32;
@@ -1700,7 +1689,7 @@
 			this.grpConditions.Controls.Add(this.tabControlConditions);
 			this.grpConditions.Location = new System.Drawing.Point(9, 184);
 			this.grpConditions.Name = "grpConditions";
-			this.grpConditions.Size = new System.Drawing.Size(651, 233);
+			this.grpConditions.Size = new System.Drawing.Size(651, 198);
 			this.grpConditions.TabIndex = 38;
 			this.grpConditions.TabStop = false;
 			this.grpConditions.Text = "Conditions";
@@ -1718,19 +1707,13 @@
 			this.tabControlConditions.Location = new System.Drawing.Point(6, 19);
 			this.tabControlConditions.Name = "tabControlConditions";
 			this.tabControlConditions.SelectedIndex = 0;
-			this.tabControlConditions.Size = new System.Drawing.Size(639, 211);
+			this.tabControlConditions.Size = new System.Drawing.Size(639, 176);
 			this.tabControlConditions.TabIndex = 30;
 			// 
 			// tabTarget
 			// 
-			this.tabTarget.Controls.Add(this.valMaxLayers);
-			this.tabTarget.Controls.Add(this.label74);
-			this.tabTarget.Controls.Add(this.valLayers);
-			this.tabTarget.Controls.Add(this.lblTargetLayers);
 			this.tabTarget.Controls.Add(this.cboTargetNotMarker);
 			this.tabTarget.Controls.Add(this.label72);
-			this.tabTarget.Controls.Add(this.cboTargetStatus);
-			this.tabTarget.Controls.Add(this.label75);
 			this.tabTarget.Controls.Add(this.cboTargetMarker);
 			this.tabTarget.Controls.Add(this.label66);
 			this.tabTarget.Controls.Add(this.valMaxTimeInStage);
@@ -1755,49 +1738,17 @@
 			this.tabTarget.Location = new System.Drawing.Point(4, 22);
 			this.tabTarget.Name = "tabTarget";
 			this.tabTarget.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTarget.Size = new System.Drawing.Size(631, 185);
+			this.tabTarget.Size = new System.Drawing.Size(631, 150);
 			this.tabTarget.TabIndex = 0;
 			this.tabTarget.Text = "Target";
 			this.tabTarget.UseVisualStyleBackColor = true;
-			// 
-			// valMaxLayers
-			// 
-			this.valMaxLayers.Location = new System.Drawing.Point(542, 74);
-			this.valMaxLayers.Name = "valMaxLayers";
-			this.valMaxLayers.Size = new System.Drawing.Size(43, 20);
-			this.valMaxLayers.TabIndex = 43;
-			// 
-			// label74
-			// 
-			this.label74.AutoSize = true;
-			this.label74.Location = new System.Drawing.Point(517, 76);
-			this.label74.Name = "label74";
-			this.label74.Size = new System.Drawing.Size(19, 13);
-			this.label74.TabIndex = 45;
-			this.label74.Text = "to:";
-			// 
-			// valLayers
-			// 
-			this.valLayers.Location = new System.Drawing.Point(468, 74);
-			this.valLayers.Name = "valLayers";
-			this.valLayers.Size = new System.Drawing.Size(43, 20);
-			this.valLayers.TabIndex = 42;
-			// 
-			// lblTargetLayers
-			// 
-			this.lblTargetLayers.AutoSize = true;
-			this.lblTargetLayers.Location = new System.Drawing.Point(344, 76);
-			this.lblTargetLayers.Name = "lblTargetLayers";
-			this.lblTargetLayers.Size = new System.Drawing.Size(58, 13);
-			this.lblTargetLayers.TabIndex = 44;
-			this.lblTargetLayers.Text = "Layers left:";
 			// 
 			// cboTargetNotMarker
 			// 
 			this.cboTargetNotMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboTargetNotMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboTargetNotMarker.FormattingEnabled = true;
-			this.cboTargetNotMarker.Location = new System.Drawing.Point(416, 154);
+			this.cboTargetNotMarker.Location = new System.Drawing.Point(416, 127);
 			this.cboTargetNotMarker.Name = "cboTargetNotMarker";
 			this.cboTargetNotMarker.Size = new System.Drawing.Size(209, 21);
 			this.cboTargetNotMarker.TabIndex = 10;
@@ -1807,39 +1758,18 @@
 			this.label72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label72.AutoSize = true;
-			this.label72.Location = new System.Drawing.Point(344, 157);
+			this.label72.Location = new System.Drawing.Point(344, 130);
 			this.label72.Name = "label72";
 			this.label72.Size = new System.Drawing.Size(49, 13);
 			this.label72.TabIndex = 41;
 			this.label72.Text = "Not said:";
-			// 
-			// cboTargetStatus
-			// 
-			this.cboTargetStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-			this.cboTargetStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.cboTargetStatus.FormattingEnabled = true;
-			this.cboTargetStatus.Location = new System.Drawing.Point(81, 72);
-			this.cboTargetStatus.Name = "cboTargetStatus";
-			this.cboTargetStatus.Size = new System.Drawing.Size(242, 21);
-			this.cboTargetStatus.TabIndex = 9;
-			// 
-			// label75
-			// 
-			this.label75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label75.AutoSize = true;
-			this.label75.Location = new System.Drawing.Point(6, 76);
-			this.label75.Name = "label75";
-			this.label75.Size = new System.Drawing.Size(40, 13);
-			this.label75.TabIndex = 39;
-			this.label75.Text = "Status:";
 			// 
 			// cboTargetMarker
 			// 
 			this.cboTargetMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cboTargetMarker.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cboTargetMarker.FormattingEnabled = true;
-			this.cboTargetMarker.Location = new System.Drawing.Point(81, 154);
+			this.cboTargetMarker.Location = new System.Drawing.Point(81, 127);
 			this.cboTargetMarker.Name = "cboTargetMarker";
 			this.cboTargetMarker.Size = new System.Drawing.Size(242, 21);
 			this.cboTargetMarker.TabIndex = 9;
@@ -1849,7 +1779,7 @@
 			this.label66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label66.AutoSize = true;
-			this.label66.Location = new System.Drawing.Point(6, 157);
+			this.label66.Location = new System.Drawing.Point(6, 130);
 			this.label66.Name = "label66";
 			this.label66.Size = new System.Drawing.Size(66, 13);
 			this.label66.TabIndex = 39;
@@ -1857,7 +1787,7 @@
 			// 
 			// valMaxTimeInStage
 			// 
-			this.valMaxTimeInStage.Location = new System.Drawing.Point(542, 128);
+			this.valMaxTimeInStage.Location = new System.Drawing.Point(542, 101);
 			this.valMaxTimeInStage.Name = "valMaxTimeInStage";
 			this.valMaxTimeInStage.Size = new System.Drawing.Size(43, 20);
 			this.valMaxTimeInStage.TabIndex = 8;
@@ -1865,7 +1795,7 @@
 			// label53
 			// 
 			this.label53.AutoSize = true;
-			this.label53.Location = new System.Drawing.Point(517, 130);
+			this.label53.Location = new System.Drawing.Point(517, 103);
 			this.label53.Name = "label53";
 			this.label53.Size = new System.Drawing.Size(19, 13);
 			this.label53.TabIndex = 38;
@@ -1873,7 +1803,7 @@
 			// 
 			// valMaxLosses
 			// 
-			this.valMaxLosses.Location = new System.Drawing.Point(542, 101);
+			this.valMaxLosses.Location = new System.Drawing.Point(542, 74);
 			this.valMaxLosses.Name = "valMaxLosses";
 			this.valMaxLosses.Size = new System.Drawing.Size(43, 20);
 			this.valMaxLosses.TabIndex = 5;
@@ -1881,7 +1811,7 @@
 			// label52
 			// 
 			this.label52.AutoSize = true;
-			this.label52.Location = new System.Drawing.Point(517, 103);
+			this.label52.Location = new System.Drawing.Point(517, 76);
 			this.label52.Name = "label52";
 			this.label52.Size = new System.Drawing.Size(19, 13);
 			this.label52.TabIndex = 36;
@@ -1889,7 +1819,7 @@
 			// 
 			// valTimeInStage
 			// 
-			this.valTimeInStage.Location = new System.Drawing.Point(468, 128);
+			this.valTimeInStage.Location = new System.Drawing.Point(468, 101);
 			this.valTimeInStage.Name = "valTimeInStage";
 			this.valTimeInStage.Size = new System.Drawing.Size(43, 20);
 			this.valTimeInStage.TabIndex = 7;
@@ -1897,7 +1827,7 @@
 			// label45
 			// 
 			this.label45.AutoSize = true;
-			this.label45.Location = new System.Drawing.Point(344, 130);
+			this.label45.Location = new System.Drawing.Point(344, 103);
 			this.label45.Name = "label45";
 			this.label45.Size = new System.Drawing.Size(87, 13);
 			this.label45.TabIndex = 34;
@@ -1905,7 +1835,7 @@
 			// 
 			// valLosses
 			// 
-			this.valLosses.Location = new System.Drawing.Point(468, 101);
+			this.valLosses.Location = new System.Drawing.Point(468, 74);
 			this.valLosses.Name = "valLosses";
 			this.valLosses.Size = new System.Drawing.Size(43, 20);
 			this.valLosses.TabIndex = 4;
@@ -1913,7 +1843,7 @@
 			// label43
 			// 
 			this.label43.AutoSize = true;
-			this.label43.Location = new System.Drawing.Point(344, 103);
+			this.label43.Location = new System.Drawing.Point(344, 76);
 			this.label43.Name = "label43";
 			this.label43.Size = new System.Drawing.Size(101, 13);
 			this.label43.TabIndex = 32;
@@ -1954,7 +1884,7 @@
 			this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label25.AutoSize = true;
-			this.label25.Location = new System.Drawing.Point(6, 103);
+			this.label25.Location = new System.Drawing.Point(6, 76);
 			this.label25.Name = "label25";
 			this.label25.Size = new System.Drawing.Size(36, 13);
 			this.label25.TabIndex = 16;
@@ -1977,7 +1907,7 @@
             "Four of a Kind",
             "Straight Flush",
             "Royal Flush"});
-			this.cboTargetHand.Location = new System.Drawing.Point(81, 100);
+			this.cboTargetHand.Location = new System.Drawing.Point(81, 73);
 			this.cboTargetHand.Name = "cboTargetHand";
 			this.cboTargetHand.Size = new System.Drawing.Size(242, 21);
 			this.cboTargetHand.TabIndex = 3;
@@ -2027,7 +1957,7 @@
 			this.tabOther.Location = new System.Drawing.Point(4, 22);
 			this.tabOther.Name = "tabOther";
 			this.tabOther.Padding = new System.Windows.Forms.Padding(3);
-			this.tabOther.Size = new System.Drawing.Size(631, 185);
+			this.tabOther.Size = new System.Drawing.Size(631, 150);
 			this.tabOther.TabIndex = 1;
 			this.tabOther.Text = "Other Player";
 			this.tabOther.UseVisualStyleBackColor = true;
@@ -2224,9 +2154,9 @@
 			this.tabConditions.Location = new System.Drawing.Point(4, 22);
 			this.tabConditions.Name = "tabConditions";
 			this.tabConditions.Padding = new System.Windows.Forms.Padding(3);
-			this.tabConditions.Size = new System.Drawing.Size(631, 185);
+			this.tabConditions.Size = new System.Drawing.Size(631, 150);
 			this.tabConditions.TabIndex = 3;
-			this.tabConditions.Text = "Tag/gender/status counts";
+			this.tabConditions.Text = "Tags";
 			this.tabConditions.UseVisualStyleBackColor = true;
 			// 
 			// gridFilters
@@ -2245,10 +2175,7 @@
 			this.gridFilters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridFilters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColTagFilter,
-            this.ColGenderFilter,
-            this.ColStatusFilterNegated,
-            this.ColStatusFilter,
-            this.ColFilterCount});
+            this.ColTagCount});
 			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2267,60 +2194,22 @@
 			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.gridFilters.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-			this.gridFilters.Size = new System.Drawing.Size(619, 173);
+			this.gridFilters.Size = new System.Drawing.Size(619, 138);
 			this.gridFilters.TabIndex = 0;
 			// 
 			// ColTagFilter
 			// 
 			this.ColTagFilter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColTagFilter.HeaderText = "Tag";
+			this.ColTagFilter.HeaderText = "Filter on Tag";
 			this.ColTagFilter.Name = "ColTagFilter";
+			this.ColTagFilter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.ColTagFilter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
-			// ColGenderFilter
+			// ColTagCount
 			// 
-			this.ColGenderFilter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColGenderFilter.FillWeight = 80F;
-			this.ColGenderFilter.HeaderText = "Gender";
-			this.ColGenderFilter.Items.AddRange(new object[] {
-            "",
-            "female",
-            "male"});
-			this.ColGenderFilter.Name = "ColGenderFilter";
-			// 
-			// ColStatusFilterNegated
-			// 
-			this.ColStatusFilterNegated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-			this.ColStatusFilterNegated.HeaderText = "Not";
-			this.ColStatusFilterNegated.Name = "ColStatusFilterNegated";
-			this.ColStatusFilterNegated.Width = 30;
-			// 
-			// ColStatusFilter
-			// 
-			this.ColStatusFilter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColStatusFilter.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-			this.ColStatusFilter.HeaderText = "Status";
-			this.ColStatusFilter.Items.AddRange(new object[] {
-            "",
-            "fully-clothed",
-            "decent",
-            "exposed",
-            "exposed-top",
-            "exposed-bottom",
-            "topless",
-            "bottomless",
-            "naked",
-            "undressed",
-            "alive",
-            "masturbating",
-            "finished"});
-			this.ColStatusFilter.Name = "ColStatusFilter";
-			// 
-			// ColFilterCount
-			// 
-			this.ColFilterCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColFilterCount.HeaderText = "Desired matching count";
-			this.ColFilterCount.Name = "ColFilterCount";
+			this.ColTagCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColTagCount.HeaderText = "Total Playing with Tag";
+			this.ColTagCount.Name = "ColTagCount";
 			// 
 			// tabSelf
 			// 
@@ -2342,7 +2231,7 @@
 			this.tabSelf.Location = new System.Drawing.Point(4, 22);
 			this.tabSelf.Name = "tabSelf";
 			this.tabSelf.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSelf.Size = new System.Drawing.Size(631, 185);
+			this.tabSelf.Size = new System.Drawing.Size(631, 150);
 			this.tabSelf.TabIndex = 4;
 			this.tabSelf.Text = "Self";
 			this.tabSelf.UseVisualStyleBackColor = true;
@@ -2539,7 +2428,7 @@
 			this.tabMisc.Location = new System.Drawing.Point(4, 22);
 			this.tabMisc.Name = "tabMisc";
 			this.tabMisc.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMisc.Size = new System.Drawing.Size(631, 185);
+			this.tabMisc.Size = new System.Drawing.Size(631, 150);
 			this.tabMisc.TabIndex = 2;
 			this.tabMisc.Text = "Misc";
 			this.tabMisc.UseVisualStyleBackColor = true;
@@ -3214,8 +3103,6 @@
 			this.tabControlConditions.ResumeLayout(false);
 			this.tabTarget.ResumeLayout(false);
 			this.tabTarget.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.valMaxLayers)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.valLayers)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxTimeInStage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxLosses)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTimeInStage)).EndInit();
@@ -3389,6 +3276,8 @@
 		private System.Windows.Forms.DataGridView gridAI;
 		private System.Windows.Forms.TabPage tabConditions;
 		private System.Windows.Forms.DataGridView gridFilters;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColTagFilter;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColTagCount;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColAIStage;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDifficulty;
 		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
@@ -3487,17 +3376,6 @@
 		private System.Windows.Forms.ToolStripSplitButton tsbtnAddDialogue;
 		private System.Windows.Forms.ToolStripDropDownButton tsbtnSplit;
 		private System.Windows.Forms.ToolStripButton tsbtnRemoveDialogue;
-		private System.Windows.Forms.NumericUpDown valMaxLayers;
-		private System.Windows.Forms.Label label74;
-		private System.Windows.Forms.NumericUpDown valLayers;
-		private System.Windows.Forms.Label lblTargetLayers;
-		private System.Windows.Forms.ComboBox cboTargetStatus;
-		private System.Windows.Forms.Label label75;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColTagFilter;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColGenderFilter;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColStatusFilterNegated;
-		private System.Windows.Forms.DataGridViewComboBoxColumn ColStatusFilter;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColFilterCount;
 		private System.Windows.Forms.ToolStripSeparator tssepBeforeRemove;
 		private System.Windows.Forms.ToolStripMenuItem tsmiRemove;
 	}
