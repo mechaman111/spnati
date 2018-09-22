@@ -47,6 +47,10 @@ namespace SPNATI_Character_Editor
 		{
 			return Characters.Find(ch => ch.FolderName == folderName);
 		}
+
+		public static bool Exists(string folderName)
+		{
+			return Characters.Exists(ch => ch.FolderName == folderName);
 		}
 
 		public static void Set(string folderName, Character character)
