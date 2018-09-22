@@ -94,6 +94,7 @@ namespace SPNATI_Character_Editor
 
 			_state.Phase = (GamePhase)cboTrigger.SelectedItem;
 			_state.Filter = txtFilter.Text;
+			_state.TotalRounds = (int)valTotalRounds.Value;
 
 			_state.TargetState = null;
 			if (_state.Phase == GamePhase.BeforeLoss || _state.Phase == GamePhase.DuringLoss || _state.Phase == GamePhase.AfterLoss ||
@@ -150,6 +151,11 @@ namespace SPNATI_Character_Editor
 		{
 			UpdateGameState();
 		}
+
+		private void valTotalRounds_ValueChanged(object sender, EventArgs e)
+		{
+			UpdateGameState();
+		}
 	}
 
 	public class GameState
@@ -159,6 +165,7 @@ namespace SPNATI_Character_Editor
 		public string Filter;
 		public List<CharacterState> Characters = new List<CharacterState>();
 		public CharacterState TargetState;
+		public int TotalRounds;
 		private Dictionary<string, string> _variables = new Dictionary<string, string>();
 
 		public string Target
@@ -771,6 +778,11 @@ namespace SPNATI_Character_Editor
 							total++;
 					}
 					if (!InRange(possibleCase.TotalFinished, total))
+						continue;
+				}
+				if (!string.IsNullOrEmpty(possibleCase.TotalRounds))
+				{
+					if (!InRange(possibleCase.TotalRounds, state.TotalRounds))
 						continue;
 				}
 

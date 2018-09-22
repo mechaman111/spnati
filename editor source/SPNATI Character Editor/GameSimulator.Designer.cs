@@ -40,6 +40,9 @@
 			this.char3 = new SPNATI_Character_Editor.Controls.TestCharacter();
 			this.char2 = new SPNATI_Character_Editor.Controls.TestCharacter();
 			this.char1 = new SPNATI_Character_Editor.Controls.TestCharacter();
+			this.label4 = new System.Windows.Forms.Label();
+			this.valTotalRounds = new System.Windows.Forms.NumericUpDown();
+			((System.ComponentModel.ISupportInitialize)(this.valTotalRounds)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// cmdGo
@@ -61,7 +64,7 @@
 			this.cboTrigger.FormattingEnabled = true;
 			this.cboTrigger.Location = new System.Drawing.Point(87, 689);
 			this.cboTrigger.Name = "cboTrigger";
-			this.cboTrigger.Size = new System.Drawing.Size(223, 21);
+			this.cboTrigger.Size = new System.Drawing.Size(201, 21);
 			this.cboTrigger.TabIndex = 5;
 			this.cboTrigger.SelectedIndexChanged += new System.EventHandler(this.cboTrigger_SelectedIndexChanged);
 			// 
@@ -79,7 +82,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(324, 692);
+			this.label2.Location = new System.Drawing.Point(306, 692);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(41, 13);
 			this.label2.TabIndex = 7;
@@ -90,7 +93,7 @@
 			this.cboTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cboTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboTarget.FormattingEnabled = true;
-			this.cboTarget.Location = new System.Drawing.Point(371, 689);
+			this.cboTarget.Location = new System.Drawing.Point(353, 689);
 			this.cboTarget.Name = "cboTarget";
 			this.cboTarget.Size = new System.Drawing.Size(132, 21);
 			this.cboTarget.TabIndex = 8;
@@ -99,7 +102,7 @@
 			// lblReaction
 			// 
 			this.lblReaction.AutoSize = true;
-			this.lblReaction.Location = new System.Drawing.Point(509, 692);
+			this.lblReaction.Location = new System.Drawing.Point(491, 692);
 			this.lblReaction.Name = "lblReaction";
 			this.lblReaction.Size = new System.Drawing.Size(0, 13);
 			this.lblReaction.TabIndex = 9;
@@ -108,7 +111,7 @@
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(509, 693);
+			this.label3.Location = new System.Drawing.Point(491, 693);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(32, 13);
 			this.label3.TabIndex = 10;
@@ -117,7 +120,7 @@
 			// txtFilter
 			// 
 			this.txtFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.txtFilter.Location = new System.Drawing.Point(545, 689);
+			this.txtFilter.Location = new System.Drawing.Point(527, 689);
 			this.txtFilter.Name = "txtFilter";
 			this.txtFilter.Size = new System.Drawing.Size(100, 20);
 			this.txtFilter.TabIndex = 11;
@@ -158,11 +161,37 @@
 			this.char1.Size = new System.Drawing.Size(207, 643);
 			this.char1.TabIndex = 0;
 			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(640, 693);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(42, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Round:";
+			// 
+			// valTotalRounds
+			// 
+			this.valTotalRounds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.valTotalRounds.Location = new System.Drawing.Point(688, 689);
+			this.valTotalRounds.Maximum = new decimal(new int[] {
+            45,
+            0,
+            0,
+            0});
+			this.valTotalRounds.Name = "valTotalRounds";
+			this.valTotalRounds.Size = new System.Drawing.Size(67, 20);
+			this.valTotalRounds.TabIndex = 13;
+			this.valTotalRounds.ValueChanged += new System.EventHandler(this.valTotalRounds_ValueChanged);
+			// 
 			// GameSimulator
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(870, 722);
+			this.Controls.Add(this.valTotalRounds);
+			this.Controls.Add(this.label4);
 			this.Controls.Add(this.txtFilter);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.lblReaction);
@@ -178,6 +207,7 @@
 			this.Name = "GameSimulator";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Simulator - SEE HELP FOR LIMITATIONS";
+			((System.ComponentModel.ISupportInitialize)(this.valTotalRounds)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -197,5 +227,7 @@
 		private System.Windows.Forms.Label lblReaction;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox txtFilter;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.NumericUpDown valTotalRounds;
 	}
 }
