@@ -108,6 +108,7 @@ namespace SPNATI_Character_Editor
 				if (target != null)
 				{
 					_state.SetVariable("name", target.Label);
+					_state.SetVariable("Name", target.Label.Substring(0, 1).ToUpper() + target.Label.Substring(1));
 				}
 				int state = _state.TargetState.Stage;
 				if (state < target.Layers)
