@@ -294,8 +294,11 @@ namespace SPNATI_Character_Editor
 			}
 			switch (state.Phase)
 			{
+				case GamePhase.Selected:
+					tag = "selected";
+					break;
 				case GamePhase.Start:
-					tag = Trigger.StartTrigger;
+					tag = "game_start";
 					break;
 				case GamePhase.ExchangingCards:
 					if (standardStage < 9)
@@ -795,6 +798,7 @@ namespace SPNATI_Character_Editor
 
 	public enum GamePhase
 	{
+		Selected,
 		Start,
 		ExchangingCards,
 		GoodHand,
