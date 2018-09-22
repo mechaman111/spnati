@@ -278,7 +278,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="state"></param>
 		/// <returns></returns>
-		public Trigger GetTrigger(GameState state)
+		public Trigger GetTrigger(GameState state, bool fallback = false)
 		{
 			bool isTarget = (state.TargetState != null && state.TargetState == this);
 			string tag = "";
@@ -610,10 +610,10 @@ namespace SPNATI_Character_Editor
 			return value == min;
 		}
 
-		public List<Case> GetPossibleCases(GameState state)
+		public List<Case> GetPossibleCases(GameState state, bool fallback = false)
 		{
 			List<Case> availableCases = new List<Case>();
-			Trigger trigger = GetTrigger(state);
+			Trigger trigger = GetTrigger(state, fallback);
 			if (trigger == null)
 			{
 				return availableCases;

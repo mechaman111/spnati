@@ -136,6 +136,10 @@ namespace SPNATI_Character_Editor.Controls
 				state.TargetState.Stage++;
 			}
 			List<Case> availableCases = State.GetPossibleCases(state);
+			if (availableCases.Count == 0)
+			{
+				availableCases = State.GetPossibleCases(state, true);
+			}
 			if (state.Phase == GamePhase.AfterLoss)
 			{
 				state.TargetState.Stage--;
