@@ -45,10 +45,8 @@ namespace SPNATI_Character_Editor
 
 		public static Character Get(string folderName)
 		{
-			Character c = Characters.Find(ch => ch.FolderName == folderName);
-			if (c != null)
-				c.PrepareForEdit();
-			return c;
+			return Characters.Find(ch => ch.FolderName == folderName);
+		}
 		}
 
 		public static void Set(string folderName, Character character)
