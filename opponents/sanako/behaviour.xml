@@ -118,11 +118,11 @@
             <case tag="male_removed_accessory">
                 <state img="0-happy.png">That's the way to do it.</state>
             </case>
-            <case tag="male_removed_accessory" target="human" targetStage="1">
+            <case tag="male_removed_accessory" target="human" totalRounds="0-2">
                 <state img="0-headtilt.png">Thanks, ~name~. You don't mind me using your first name, do you?</state>
             </case>
             <case tag="male_removed_accessory" totalRounds="0">
-                <state img="0-pointingatself.png">I'll take care of your clothing~, ~name~. You can start with your ~clothing~.</state>
+                <state img="0-pointingatself.png">I'll take care of your clothing. You can start with your ~clothing~.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="0-concerned.png">If... if you're sure that's what you want...</state>
@@ -135,6 +135,9 @@
             </case>
             <case tag="female_human_must_strip">
                 <state img="0-headtilt.png">We get to see more of ~name~? I'm happy to hear it.</state>
+            </case>
+            <case tag="female_human_must_strip" totalRounds="0-2">
+                <state img="0-headtilt.png">Sorry, but these are the rules.</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="0-warning.png">If your life can change once, it can change again for the better.</state>
@@ -150,6 +153,8 @@
             </case>
             <case tag="female_removed_accessory">
                 <state img="0-pointingatself.png">Oh, I was wanting to see one of those!</state>
+            </case>
+            <case priority="0" tag="female_removed_accessory" totalRounds="0-2">
                 <state img="0-wondering.png">Would you mind if I call you ~name~?</state>
             </case>
             <case tag="male_removed_major">
@@ -157,13 +162,21 @@
             </case>
             <case tag="male_removed_major" target="human">
                 <state img="0-headtilt.png">If you're determined to keep fighting, then I won't stop you.</state>
-                <state img="0-concerned.png">Didn't you want to wait for the rest of us, ~name~?</state>
+            </case>
+            <case tag="male_removed_major" target="human" totalRounds="0-2">
+                <state img="0-concerned.png">Didn't you want to wait for the rest of us?</state>
+            </case>
+            <case tag="male_removed_major" totalRounds="0-2">
+                <state img="0-concerned.png">We didn't make you mad, did we,?</state>
             </case>
             <case tag="male_start_masturbating">
                 <state img="0-surprised.png">You're just going for it? You didn't want one of us to start you off?</state>
             </case>
             <case tag="male_chest_is_visible">
                 <state img="0-lookingtoside.png">How lovely. If I can share a secret, seeing ~name~ take his shirt off was my motivation for being here.</state>
+            </case>
+            <case tag="male_chest_is_visible" totalRounds="0-2">
+                <state img="0-lookingtoside.png">How lovely. If I can share a secret, seeing him take his shirt off was my motivation for being here.</state>
             </case>
             <case tag="female_large_chest_is_visible">
                 <state img="0-surprised.png">Oh my, you're setting expectations high on the rest of us, aren't you?</state>
@@ -189,8 +202,14 @@
             <case tag="male_small_crotch_is_visible">
                 <state img="0-concerned.png">Oh, I'm sorry. I thought you were old enough to play with us, ~name~. I can walk you home right now if you like.</state>
             </case>
+            <case tag="male_small_crotch_is_visible" totalRounds="0-2">
+                <state img="0-concerned.png">Oh, I'm sorry. I thought you were old enough to play with us. I can walk you home right now if you like.</state>
+            </case>
             <case tag="male_removing_accessory">
                 <state img="0-bodytilt.png">Ready, ~name~?</state>
+            </case>
+            <case tag="male_removing_accessory" totalRounds="0-2">
+                <state img="0-bodytilt.png">Ready?</state>
             </case>
             <case tag="male_finished_masturbating">
                 <state img="0-zzzstripping2.png">That was close. Were you aiming for me?</state>
@@ -202,11 +221,16 @@
                 <state img="0-tasty.png">Looks like someone has buttons to press.</state>
             </case>
             <case tag="female_removing_accessory">
-                <state img="0-happy.png">You can think of this as like a practise round if you like, ~name~.</state>
+                <state img="0-pointingatself.png">Don't let that get to you, ~name~. You're still doing great.</state>
+                <state img="0-headtilt.png">Beautiful girl, equally beautiful ~clothing~.</state>
+                <state img="0-concerned.png">Oh, I hope your ~clothing~ wasn't something very precious to you.</state>
                 <state img="0-lookingtoside.png">Take your time. No need to rush.</state>
             </case>
             <case tag="female_removing_accessory" target="shimakaze">
                 <state img="0-tiptoe.png">Excuse me, Miss, but your clothes are on fire!</state>
+            </case>
+            <case tag="female_removing_accessory" totalRounds="0-2">
+                <state img="0-happy.png">You can think of this as like a practise round if you like.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="0-zzzstripping1.png">Now this doesn't seem very fair, does it? If it's okay, I'd like to join you all.</state>
@@ -229,6 +253,9 @@
             <case tag="female_chest_will_be_visible" totalExposed="0">
                 <state img="0-shocked.png">Be brave, ~name~. You can do it!</state>
             </case>
+            <case tag="female_chest_will_be_visible" totalExposed="0" totalRounds="0-2">
+                <state img="0-shocked.png">Be brave. You can do it!</state>
+            </case>
             <case tag="male_masturbating">
                 <state img="0-tasty.png">This is what the game is all about!</state>
             </case>
@@ -249,10 +276,13 @@
                 <state img="0-wondering.png">Dressing as a pirate was a good idea. Maybe I should have done that too.</state>
             </case>
             <case alsoPlaying="kyu" tag="good_hand" totalRounds="0">
-                <state img="0-bodytilt.png">Oh my! A fairy? Are you from the drama club?</state>
+                <state img="0-bodytilt.png" marker="sanako_kyu_drama_club">Oh my! A fairy? Are you from the drama club?</state>
             </case>
             <case alsoPlaying="marinette" tag="good_hand" totalRounds="1">
                 <state img="0-bodytilt.png">Some of you really went all out on your costumes! The ladybird girl is very pretty.</state>
+            </case>
+            <case alsoPlaying="navi" tag="good_hand" totalRounds="0">
+                <state img="0-wondering.png" marker="sanako_navi_orb_of_light">Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.</state>
             </case>
             <case alsoPlaying="yang" alsoPlayingStage="0" tag="good_hand" totalRounds="1">
                 <state img="0-bodytilt.png">That's a beautiful scarf, young lady. It goes wonderfully with your lovely blonde hair.</state>
@@ -267,7 +297,7 @@
                 <state img="0-headtilt.png">I have a feeling the three of us will have a great time!</state>
             </case>
             <case tag="good_hand" totalRounds="0">
-                <state img="0-happy.png">This is the first round, so let's introduce ourselves!</state>
+                <state img="0-happy.png" marker="sanako_introductions">This is the first round, so let's introduce ourselves!</state>
             </case>
             <case tag="good_hand" totalRounds="2">
                 <state img="0-headtilt.png">Everybody is so cute. I hope we can have fun together.</state>
@@ -280,10 +310,13 @@
                 <state img="0-wondering.png">Dressing as a pirate was a good idea. Maybe I should have done that too.</state>
             </case>
             <case alsoPlaying="kyu" tag="okay_hand" totalRounds="0">
-                <state img="0-bodytilt.png">Oh my! A fairy? Are you from the drama club?</state>
+                <state img="0-bodytilt.png" marker="sanako_kyu_drama_club">Oh my! A fairy? Are you from the drama club?</state>
             </case>
             <case alsoPlaying="marinette" tag="okay_hand" totalRounds="1">
                 <state img="0-bodytilt.png">Some of you really went all out on your costumes! The ladybird girl is very pretty.</state>
+            </case>
+            <case alsoPlaying="navi" tag="okay_hand" totalRounds="0">
+                <state img="0-wondering.png" marker="sanako_navi_orb_of_light">Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.</state>
             </case>
             <case alsoPlaying="yang" alsoPlayingStage="0" tag="okay_hand" totalRounds="1">
                 <state img="0-bodytilt.png">That's a beautiful scarf, young lady. It goes wonderfully with your lovely blonde hair.</state>
@@ -301,7 +334,7 @@
                 <state img="0-headtilt.png">I have a feeling the three of us will have a great time!</state>
             </case>
             <case tag="okay_hand" totalRounds="0">
-                <state img="0-happy.png">This is the first round, so let's introduce ourselves!</state>
+                <state img="0-happy.png" marker="sanako_introductions">This is the first round, so let's introduce ourselves!</state>
             </case>
             <case tag="okay_hand" totalRounds="2">
                 <state img="0-headtilt.png">Everybody is so cute. I hope we can have fun together.</state>
@@ -318,10 +351,13 @@
                 <state img="0-wondering.png">Dressing as a pirate was a good idea. Maybe I should have done that too.</state>
             </case>
             <case alsoPlaying="kyu" tag="bad_hand" totalRounds="0">
-                <state img="0-bodytilt.png">Oh my! A fairy? Are you from the drama club?</state>
+                <state img="0-bodytilt.png" marker="sanako_kyu_drama_club">Oh my! A fairy? Are you from the drama club?</state>
             </case>
             <case alsoPlaying="marinette" tag="bad_hand" totalRounds="1">
                 <state img="0-bodytilt.png">Some of you really went all out on your costumes! The ladybird girl is very pretty.</state>
+            </case>
+            <case alsoPlaying="navi" tag="bad_hand" totalRounds="0">
+                <state img="0-wondering.png" marker="sanako_navi_orb_of_light">Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.</state>
             </case>
             <case alsoPlaying="yang" alsoPlayingStage="0" tag="bad_hand" totalRounds="1">
                 <state img="0-bodytilt.png">That's a beautiful scarf, young lady. It goes wonderfully with your lovely blonde hair.</state>
@@ -330,7 +366,7 @@
                 <state img="0-headtilt.png">I have a feeling the three of us will have a great time!</state>
             </case>
             <case tag="bad_hand" totalRounds="0">
-                <state img="0-happy.png">This is the first round, so let's introduce ourselves!</state>
+                <state img="0-happy.png" marker="sanako_introductions">This is the first round, so let's introduce ourselves!</state>
             </case>
             <case tag="bad_hand" totalRounds="2">
                 <state img="0-headtilt.png">Everybody is so cute. I hope we can have fun together.</state>
@@ -383,6 +419,10 @@
             <case tag="female_must_strip" target="zizou" targetStage="0">
                 <state img="1-headtilt.png">My, what a handsome prince!</state>
             </case>
+            <case tag="female_must_strip" totalRounds="0-2">
+                <state img="1-headtilt.png">Now it's your turn.</state>
+                <state img="1-thinking.png">It's more fun if we take turns.</state>
+            </case>
             <case tag="male_chest_will_be_visible">
                 <state img="1-interested.png">What woman could say no to such a hunky young man offering to go shirtless.</state>
             </case>
@@ -393,7 +433,6 @@
                 <state img="1-interested.png">How interesting.</state>
             </case>
             <case tag="female_removed_major">
-                <state img="1-yeah.png">You're the best.</state>
                 <state img="1-concerned.png">Are you okay, ~name~?</state>
             </case>
             <case filter="sarcastic" notSaidMarker="sanako_press_buttons" tag="female_removed_major">
@@ -401,6 +440,9 @@
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2">
                 <state img="1-thinking.png">I guess a ladybird really <i>can</i> change her spots!</state>
+            </case>
+            <case tag="female_removed_major" totalRounds="0-2">
+                <state img="1-yeah.png">You're the best.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="1-interested.png">How bold of you! You might just inspire me to do something bold too...</state>
@@ -414,9 +456,15 @@
             <case tag="male_removed_minor" target="human">
                 <state img="1-happy.png">Perfect!</state>
             </case>
+            <case tag="male_removed_minor" totalRounds="0-2">
+                <state img="1-waiting.png">Don't be so grouchy. It's fine.</state>
+            </case>
             <case tag="male_removed_accessory">
                 <state img="1-calm.png">I look forward to working with you further, ~name~.</state>
                 <state img="1-calm.png">Let's keep moving forward.</state>
+            </case>
+            <case tag="male_removed_accessory" totalRounds="0-2">
+                <state img="1-calm.png">I look forward to working with you further.</state>
             </case>
             <case tag="male_must_masturbate">
                 <state img="1-yeah.png">Wow! I'm really doing great today!</state>
@@ -430,8 +478,14 @@
             <case tag="female_masturbating" target="samus">
                 <state img="1-interested.png">My, Samus! How scandalous!</state>
             </case>
+            <case tag="female_masturbating" totalRounds="0-2">
+                <state img="1-headtilt.png">She must be a natural performer.</state>
+            </case>
             <case tag="female_human_must_strip">
                 <state img="1-headtilt.png">~Name~ is very pretty. She must be quite popular.</state>
+            </case>
+            <case tag="female_human_must_strip" totalRounds="0-2">
+                <state img="1-headtilt.png">You are very pretty. You must be quite popular.</state>
             </case>
             <case tag="female_crotch_is_visible">
                 <state img="1-happy.png">Don't give up yet. If you work hard enough, you can do it.</state>
@@ -458,14 +512,23 @@
             <case tag="male_chest_is_visible">
                 <state img="1-horny.png">Say, ~name~. I might have some chores that need doing around the house if you wanted to visit next weekend.</state>
             </case>
+            <case tag="male_chest_is_visible" totalRounds="0-2">
+                <state img="1-horny.png">Say, I might have some chores that need doing around the house if you wanted to visit next weekend.</state>
+            </case>
             <case tag="female_large_chest_is_visible">
                 <state img="1-happy.png">Please don't feel embarrassed. I'm sure that all of us are impressed!</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-yeah.png">All right, ~name~!</state>
             </case>
+            <case tag="male_must_strip" totalRounds="0-2">
+                <state img="1-yeah.png">All right!</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="1-worried.png">I'm sorry, ~name~. This game must feel so unfair right now.</state>
+            </case>
+            <case tag="female_must_masturbate" totalRounds="0-2">
+                <state img="1-worried.png">I'm sorry. This game must feel so unfair right now.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-headtilt.png">Would you mind taking a turn?</state>
@@ -485,6 +548,9 @@
             </case>
             <case tag="female_small_chest_is_visible">
                 <state img="1-concerned.png">I'm sorry if that was hard for you. We should all give ~name~ a hug.</state>
+            </case>
+            <case tag="female_small_chest_is_visible" totalRounds="0-2">
+                <state img="1-concerned.png">I'm sorry if that was hard for you. We should all give her a hug.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="1-bodytilt.png">Just a moment and I'll join you!</state>
@@ -512,6 +578,9 @@
             </case>
             <case tag="male_masturbating">
                 <state img="1-horny.png">~Name~ is still going strong. Keep up the fight.</state>
+            </case>
+            <case tag="male_masturbating" totalRounds="0-2">
+                <state img="1-horny.png">He's still going strong. Keep up the fight.</state>
             </case>
             <case tag="female_removed_minor">
                 <state img="1-calm.png">There's nothing wrong with that.</state>
@@ -565,7 +634,7 @@
 
         <stage id="2">
             <case tag="female_must_strip">
-                <state img="2-handonheart.png">What time is it? It's ~name~ Time!</state>
+                <state img="2-handonheart.png">What time is it? It's ~Name~ Time!</state>
                 <state img="2-handonheart.png">You're up, ~name~.</state>
             </case>
             <case filter="princess" notSaidMarker="sanako_drama_club_costumes" tag="female_must_strip">
@@ -582,6 +651,9 @@
             </case>
             <case tag="female_must_strip" targetTimeInStage="1">
                 <state img="2-unsure.png">Again? We're sorry, ~name~.</state>
+            </case>
+            <case tag="female_must_strip" totalRounds="0-2">
+                <state img="2-coy.png">Why, look who it is this time.</state>
             </case>
             <case tag="male_chest_will_be_visible">
                 <state img="2-coy.png">It's okay if you want to lose your ~clothing~. I'm sure none of us would mind.</state>
@@ -602,6 +674,9 @@
             <case tag="male_large_crotch_is_visible">
                 <state img="2-coy.png">Oh my, ~name~...</state>
             </case>
+            <case tag="male_large_crotch_is_visible" totalRounds="0-2">
+                <state img="2-coy.png">Oh my...</state>
+            </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="2-unsure.png">Are you okay with doing this so soon?</state>
             </case>
@@ -614,12 +689,18 @@
             <case tag="male_must_masturbate">
                 <state img="2-readytopounce.png">Don't mind me if I pounce on you, ~name~. I might not be able to control myself.</state>
             </case>
+            <case tag="male_must_masturbate" totalRounds="0-2">
+                <state img="2-readytopounce.png">Don't mind me if I pounce on you. I might not be able to control myself.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="2-coy.png">~Name~ seems to be enjoying herself, at least.</state>
                 <state img="2-coy.png">Now, now, let's not stare at poor ~name~.</state>
             </case>
             <case priority="0" tag="female_masturbating" totalFinished="0" totalMasturbating="1">
                 <state img="2-interested.png">If you'd like to slow down a little, ~name~, maybe all of us could do this together.</state>
+            </case>
+            <case tag="female_masturbating" totalRounds="0-2">
+                <state img="2-coy.png">She seems to be enjoying herself, at least.</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="2-unsure.png">Time to take of another piece of your disguise. Your outfit, I mean, Of course you're not wearing a disguise.</state>
@@ -657,18 +738,29 @@
             <case tag="male_must_strip">
                 <state img="2-interested.png">Oh! Hi, ~name~!</state>
             </case>
+            <case tag="male_must_strip" totalRounds="0-2">
+                <state img="2-interested.png">Oh! Hi!</state>
+            </case>
             <case tag="female_must_masturbate">
                 <state img="2-handonheart.png">It's so thoughtful of you to join in, ~name~. I know it will be appreciated.</state>
             </case>
             <case tag="female_must_masturbate" totalFinished="0" totalMasturbating="0">
                 <state img="2-handonheart.png">~Name~ is a real go-getter! She's getting an early start on all of us.</state>
             </case>
+            <case tag="female_must_masturbate" totalFinished="0" totalMasturbating="0" totalRounds="0-2">
+                <state img="2-handonheart.png">She's a real go-getter! She's getting an early start on all of us.</state>
+            </case>
             <case tag="male_human_must_strip">
-                <state img="2-readytopounce.png">We got him! Good work, everyone.</state>
                 <state img="2-coy.png">What a surprise, ~name~.</state>
+            </case>
+            <case tag="male_human_must_strip" totalRounds="0-2">
+                <state img="2-readytopounce.png">We got him! Good work, everyone.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="2-sad.png">I wish you had warned us, ~name~. I was getting excited for no reason...</state>
+            </case>
+            <case tag="male_small_crotch_is_visible" totalRounds="0-2">
+                <state img="2-sad.png">I wish you had warned us. I was getting excited for no reason...</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-handonheart.png">Even something as small as your ~clothing~ would be a good contribution to the game.</state>
@@ -676,8 +768,14 @@
             <case tag="male_finished_masturbating">
                 <state img="2-coy.png">~Name~ really makes a splash, doesn't he?</state>
             </case>
+            <case tag="male_finished_masturbating" totalRounds="0-2">
+                <state img="2-coy.png">He really makes a splash, doesn't he?</state>
+            </case>
             <case tag="female_small_chest_is_visible">
                 <state img="2-shy.png">There. That's done. We wouldn't mind if ~name~ covered up now, would we?</state>
+            </case>
+            <case tag="female_small_chest_is_visible" totalRounds="0-2">
+                <state img="2-shy.png">There. That's done. We wouldn't mind if she covered up now, would we?</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="2-coy.png">Oho, you must be quite popular with the boys!</state>
@@ -709,6 +807,9 @@
             </case>
             <case tag="female_removed_minor">
                 <state img="2-handonheart.png">Come on, ~name~! Give 'em a good fight!</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-2">
+                <state img="2-handonheart.png">Come on! Give 'em a good fight!</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-interested.png">It's time to find out whether you're a boy or a man.</state>
@@ -1509,6 +1610,15 @@
             </case>
             <case tag="female_masturbating">
                 <state img="7-confident.png">Should we hold hands? Here, don't be shy.</state>
+                <state img="7-covering.png">Let's not get too loud.</state>
+                <state img="7-concerned.png">Was I good enough when it was my turn? What do you think, ~player~?</state>
+                <state img="7-happy.png">Everyone gets a turn to show off.</state>
+            </case>
+            <case filter="confident" priority="0" tag="female_masturbating">
+                <state img="7-covering.png">Maybe you should be a little more ladylike about this, ~name~.</state>
+            </case>
+            <case priority="0" tag="female_masturbating" totalAlive="2">
+                <state img="7-happy.png">The game is quickly drawing to a close.</state>
             </case>
             <case priority="0" tag="female_masturbating" totalMasturbating="2">
                 <state img="7-covering.png">Keep it down, you two!</state>
@@ -1636,5 +1746,20 @@
         </stage>
 
     </behaviour>
+
+    <epilogue gender="any">
+        <title>Sanako feedback form (not an epilogue)</title>
+        <screen img="0-advanced_graphics.png">
+            <text>
+                <x>centered</x>
+                <y>80%</y>
+                <width>80%</width>
+                <arrow>none</arrow>
+                <content>Thank you very much for testing Sanako! If you would like to give feedback, please comment on her channel on the game's Discord server and/or via the following survey form: https://goo.gl/forms/WyFo3wJ3p03nCz3Z2</content>
+            </text>
+
+        </screen>
+
+    </epilogue>
 
 </opponent>
