@@ -48,6 +48,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					}
 					linesPerStage[stage] = ++count;
 				}
+				if (linesPerStage.Count == 0) continue;
 				//Average the stages
 				double average = linesPerStage.Values.Average();
 				_data.Add(new Tuple<Character, double>(c, average));
