@@ -39,10 +39,9 @@ function createNewOpponent (id, enabled, status, first, last, label, image, gend
 /**************************************************
  * Stores meta information about groups.
  **************************************************/
-function createNewGroup (title, opponents, status) {
+function createNewGroup (title) {
 	var newGroupObject = {title:title,
-						  opponents:opponents,
-                          status:status};
+						  opponents:Array(4)};
 
 	return newGroupObject;
 }
@@ -233,7 +232,13 @@ function loadSelectScreen () {
 function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
-	var onComplete = function() {
+	var opponentGroupMap = {};
+	var onComplete = function(opp) {
+		if (opp) {
+			opponentGroupMap[opp.id].forEach(function(groupPos) {
+				groupPos.group.opponents[groupPos.idx] = opp;
+			});
+		}
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
 			updateIndividualSelectScreen();
@@ -253,14 +258,12 @@ function loadListingFile () {
             
 			/* start by parsing and loading the individual listings */
             var oppDefaultIndex = 0; // keep track of an opponent's default placement
-            var opponentStatuses = {}; // keep track of an opponent's offline/testing status for loading group listings
 
 			$individualListings = $xml.find('individuals');
 			$individualListings.find('opponent').each(function () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 
-                opponentStatuses[id] = oppStatus;
                 if (oppStatus === undefined || includedOpponentStatuses[oppStatus]) {
                     console.log("Reading \""+id+"\" from listing file");
                     outstandingLoads++;
@@ -269,8 +272,7 @@ function loadListingFile () {
 			});
 
 			/* end by parsing and loading the group listings */
-			$groupListings = $xml.find('groups');
-			$groupListings.find('group').each(function () {
+			$xml.find('groups>group').each(function () {
 				var title = $(this).attr('title');
 				var opp1 = $(this).attr('opp1');
 				var opp2 = $(this).attr('opp2');
@@ -278,28 +280,18 @@ function loadListingFile () {
 				var opp4 = $(this).attr('opp4');
                 
                 var ids = [opp1, opp2, opp3, opp4];
-                var status = ids.map(function (id) {
-                    return opponentStatuses[id];
-                });
 
-				var newGroup = createNewGroup(title, Array(4), status);
-				outstandingLoads += 4;
-				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, ids, onComplete);
+				var newGroup = createNewGroup(title);
+				ids.forEach(function(id, idx) {
+					if (!(id in opponentGroupMap)) {
+						opponentGroupMap[id] = [];
+					}
+					opponentGroupMap[id].push({ group: newGroup, idx: idx });
+				});
+				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
 			});
 		}
 	});
-}
-
-/************************************************************
-* Loads the meta information for an entire group.
-************************************************************/
-function loadGroupMeta (groupSelectScreen, group, opponents, onComplete) {
-    /* parse the individual information of each group member */
-    loadedGroups[groupSelectScreen].push(group);
-
-    for (var i = 0; i < 4; i++) {
-        loadOpponentMeta(opponents[i], group.opponents, i, group.status[i], onComplete);
-    }
 }
 
 /************************************************************
@@ -346,7 +338,7 @@ function loadOpponentMeta (id, targetArray, index, status, onComplete) {
             else {
                 targetArray.push(opponent);
             }
-            onComplete();
+            onComplete(opponent);
 		},
 		error: function(err) {
 			console.log("Failed reading \""+id+"\"");
