@@ -338,6 +338,10 @@ namespace SPNATI_Character_Editor
 					{
 						tag = "masturbating";
 					}
+					else if (standardStage == 10)
+					{
+						tag = "finished_masturbating";
+					}
 					break;
 				case GamePhase.BadHand:
 					if (standardStage < 9)
@@ -347,6 +351,10 @@ namespace SPNATI_Character_Editor
 					else if (standardStage == 9)
 					{
 						tag = "masturbating";
+					}
+					else if (standardStage == 10)
+					{
+						tag = "finished_masturbating";
 					}
 					break;
 				case GamePhase.BeforeLoss:
