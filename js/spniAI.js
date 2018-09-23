@@ -93,7 +93,7 @@ function determineAIAction (player) {
 				straight_draw_discard = sorted_ranks[0];
 			} else if (sorted_ranks[3] - sorted_ranks[0] == 3) { // Likewise (unless A-4), with a higher card (e.g. 6 7 8 9 Q)
 				straight_draw_discard = sorted_ranks[4];
-			} else if (sorted_ranks[0] == 1 && sorted_ranks[2] >= 10) { // Special case: A x J Q K or e.g. A x 10 J K
+			} else if (sorted_ranks[4] == 14 && sorted_ranks[2] <= 5) { // Special case: 2 3 4 x A or e.g. 3 4 5 x A
 				straight_draw_discard = sorted_ranks[1];
 			} else if (sorted_ranks[4] - sorted_ranks[1] == 4) { // Inside straight draw with a lower card (e.g. 3 6 7 9 10)
 				straight_draw_discard = sorted_ranks[0];
