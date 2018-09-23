@@ -11,8 +11,12 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUE_BADGES_ENABLED = true;
+var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
+
+var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
+var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -51,6 +55,8 @@ var timeoutID;
  **********************************************************************/
 
 var table = new Table();
+var jsErrors = [];
+var sessionID = '';
 
 /**********************************************************************
  * Screens & Modals
@@ -66,12 +72,16 @@ $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
 $galleryScreen = $('#gallery-screen');
 
+var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
+
 /* Modals */
 $searchModal = $('#search-modal');
 $groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
+$bugReportModal = $('#bug-report-modal');
+$usageTrackingModal = $('#usage-reporting-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -80,6 +90,105 @@ $previousScreen = null;
 /********************************************************************************
  * Game Wide Utility Functions
  ********************************************************************************/
+
+function getReportedOrigin () {
+    var origin = window.location.origin;
+    
+    if (origin.toLowerCase().startsWith('file:')) {
+        return '<local filesystem origin>';
+    } else {
+        return origin;
+    }
+}
+
+/* Gathers most of the generic information for an error report. */
+function compileBaseErrorReport(userDesc, bugType) {
+    var tableReports = [];
+    for (let i=1;i<players.length;i++) {
+        if (players[i]) {
+            playerData = {
+                'id': players[i].id,
+                'slot': i,
+                'stage': players[i].stage,
+                'timeInStage': players[i].timeInStage,
+                'markers': players[i].markers
+            }
+            
+            if (players[i].chosenState) {
+                playerData.currentLine    = players[i].chosenState.dialogue;
+                playerData.currentImage   = players[i].chosenState.image;
+            }
+            
+            tableReports[i-1] = playerData;
+        } else {
+            tableReports[i-1] = null;
+        }
+    }
+    
+    var circumstances = {
+        'userAgent': navigator.userAgent,
+        'origin': getReportedOrigin(),
+        'currentRound': currentRound,
+        'currentTurn': currentTurn,
+        'visibleScreens': []
+    }
+    
+    if (gamePhase) {
+        circumstances.gamePhase = gamePhase[0];
+    }
+    
+    for (let i=0;i<allScreens.length;i++) {
+        if (allScreens[i].css('display') !== 'none') {
+            circumstances.visibleScreens.push(allScreens[i].attr('id'));
+        }
+    }
+    
+    var bugCharacter = null;
+    if (bugType.startsWith('character')) {
+        bugCharacter = bugType.split('-', 2)[1];
+        bugType = 'character';
+    }
+    
+    return {
+        'date': (new Date()).toISOString(),
+        'session': sessionID,
+        'type': bugType,
+        'character': bugCharacter,
+        'description': userDesc, 
+        'circumstances': circumstances,
+        'table': tableReports,
+        'player': {
+            'gender': players[HUMAN_PLAYER].gender,
+            'size': players[HUMAN_PLAYER].size,
+        },
+        'jsErrors': jsErrors,
+    };
+}
+
+window.addEventListener('error', function (ev) {
+    jsErrors.push({
+        'date': (new Date()).toISOString(),
+        'type': ev.error.name,
+        'message': ev.message,
+        'filename': ev.filename,
+        'lineno': ev.lineno,
+        'stack': ev.error.stack
+    });
+    
+    if (USAGE_TRACKING) {
+        var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
+        
+        $.ajax({
+            url: BUG_REPORTING_ENDPOINT,
+            method: 'POST',
+            data: JSON.stringify(report),
+            contentType: 'application/json',
+            error: function (jqXHR, status, err) {
+                console.error("Could not send bug report - error "+status+": "+err);
+            },
+        });
+    }
+});
 
 /* Fetch a possibly compressed file.
  * Attempts to fetch a compressed version of the file first,
@@ -252,6 +361,11 @@ function initialSetup () {
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
+    
+    /* Generate a random session ID. */
+    for (let i=0;i<10;i++) {
+        sessionID += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
+    }
 }
 
 
@@ -388,6 +502,105 @@ function restartGame () {
 /**********************************************************************
  *****                    Interaction Functions                   *****
  **********************************************************************/
+
+/*
+ * Bug Report Modal functions
+ */
+
+function getBugReportJSON() {
+    var desc = $('#bug-report-desc').val();
+    var type = $('#bug-report-type').val();
+    var character = undefined;
+
+    var report = compileBaseErrorReport(desc, type);
+    return JSON.stringify(report);
+}
+
+/* Update the bug report text dump. */
+function updateBugReportOutput() {
+    $('#bug-report-output').val(getBugReportJSON());
+}
+
+function copyBugReportOutput() {
+    var elem = $('#bug-report-output')[0];
+    elem.select();
+    document.execCommand("copy");
+}
+
+function sendBugReport() {
+    $.ajax({
+        url: BUG_REPORTING_ENDPOINT,
+        method: 'POST',
+        data: getBugReportJSON(),
+        contentType: 'application/json',
+        error: function (jqXHR, status, err) {
+            console.error("Could not send bug report - error "+status+": "+err);
+        },
+    });
+    
+    closeBugReportModal();
+}
+
+$('#bug-report-type').change(updateBugReportOutput);
+$('#bug-report-desc').change(updateBugReportOutput);
+$('#bug-report-copy-btn').click(copyBugReportOutput);
+
+ /************************************************************
+  * The player clicked a bug-report button. Shows the bug reports modal.
+  ************************************************************/
+function showBugReportModal () {
+    /* Set up possible bug report types. */    
+    var bugReportTypes = [
+        ['freeze', 'Game Freeze or Crash'],
+        ['display', 'Game Graphical Problem'],
+        ['other', 'Other Game Issue'],
+    ]
+    
+    for (var i=1;i<5;i++) {
+        if (players[i]) {
+            var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
+            bugReportTypes.push(['character-'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
+        }
+    }
+    
+    $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
+        return $('<option value="'+t[0]+'">'+t[1]+'</option>');
+    }));
+    
+    $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
+    updateBugReportOutput();
+    
+    KEYBINDINGS_ENABLED = false;
+    
+    $bugReportModal.modal('show');
+}
+
+function closeBugReportModal() {
+    KEYBINDINGS_ENABLED = true;
+    $bugReportModal.modal('hide');
+}
+
+/*
+ * Show the usage tracking consent modal.
+ */
+ 
+function showUsageTrackingModal() {
+    $usageTrackingModal.modal('show');
+}
+
+function enableUsageTracking() {
+    save.data.askedUsageTracking = true;
+    USAGE_TRACKING = true;
+    
+    save.saveOptions();
+}
+
+function disableUsageTracking() {
+    save.data.askedUsageTracking = true;
+    USAGE_TRACKING = false;
+    
+    save.saveOptions();
+}
 
 /************************************************************
  * The player clicked the credits button. Shows the credits modal.

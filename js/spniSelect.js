@@ -999,6 +999,32 @@ function backToSelect () {
 function advanceSelectScreen () {
     console.log("Starting game...");
 
+    if (USAGE_TRACKING) {
+        var usage_tracking_payload = {
+            'date': (new Date()).toISOString(),
+            'session': sessionID,
+            'userAgent': navigator.userAgent,
+            'origin': window.location.origin,
+            'table': {}
+        };
+        
+        for (let i=1;i<5;i++) {
+            if (players[i]) {
+                usage_tracking_payload.table[i] = players[i].id;
+            }
+        }
+        
+        $.ajax({
+            url: USAGE_TRACKING_ENDPOINT,
+            method: 'POST',
+            data: JSON.stringify(usage_tracking_payload),
+            contentType: 'application/json',
+            error: function (jqXHR, status, err) {
+                console.error("Could not send usage tracking report - error "+status+": "+err);
+            },
+        });
+    }
+
     advanceToNextScreen($selectScreen);
 }
 
