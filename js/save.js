@@ -42,7 +42,9 @@ function Save(){
 				      false, false, false, true, false, true],
 			'size' : 'medium'
 		},
-		'endings' : {}
+		'endings' : {},
+		'askedUsageTracking': false,
+		'usageTracking': false,
 	};
 	this.saveCookie = function(){
 		Cookies.set('save', this.data, {expires: 3652});
@@ -77,6 +79,7 @@ function Save(){
 		updateTitleGender();
 	};
 	this.loadOptions = function(){
+		USAGE_TRACKING = this.data['usageTracking'];
 		players[HUMAN_PLAYER].timer = this.data['masturbationTimer'];
 		players[HUMAN_PLAYER].gender = this.data['gender'];
 		setBackground(this.data['background']);
@@ -89,6 +92,7 @@ function Save(){
 	};
 
 	this.saveOptions = function(){
+		this.data['usageTracking'] = USAGE_TRACKING;
 		this.data['masturbationTimer'] = parseInt($masturbationTimerBox.val());
 		var back = $("body").css('background-image');
 		var ind = back.indexOf('background')+10;
