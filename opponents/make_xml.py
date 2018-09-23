@@ -362,7 +362,7 @@ def write_xml(data, filename):
 
 	#tags
 	tags_elem = ET.SubElement(o, "tags")
-	character_tags = set(data["character_tags"])
+	character_tags = data["character_tags"]
 	for tag in character_tags:
 		ET.SubElement(tags_elem, "tag").text = tag
 		
@@ -778,7 +778,10 @@ def read_player_file(filename):
 		#	tags=blond, athletic
 		elif key == "tag":
 			if "character_tags" in d:
-				d["character_tags"].append(stripped)
+				if not stripped in d["character_tags"]:
+					d["character_tags"].append(stripped)
+				else:
+					print("Warning - duplicated tag: '%s'" % stripped)
 			else:
 				d["character_tags"] = [stripped]
 
