@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -23,12 +24,17 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string Type;
 
+		[XmlAttribute("plural")]
+		[DefaultValue(false)]
+		public bool Plural;
+
 		public Clothing()
 		{
 			Position = "upper";
 			Type = "major";
 			Name = "New item";
 			Lowercase = "new item";
+			Plural = false;
 		}
 
 		public override string ToString()
