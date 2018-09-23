@@ -23,6 +23,9 @@
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
       v11.67
     </button>
+    <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+    </button>
 
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
       Credits
@@ -82,6 +85,9 @@
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
       v11.67
+    </button>
+    <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
 
     <button id="title-credits-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showCreditModal()">
@@ -345,6 +351,9 @@
     <button class='bordered hide-table-button' onclick="hideSelectionTable()">
       <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
     </button>
+    <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+    </button>
 
     <div id="select-table">
 
@@ -607,6 +616,9 @@
     <!-- Hide Button -->
     <button class='bordered hide-table-button' onclick="hideSingleSelectionTable()">
       <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+    </button>
+    <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
 
     <!-- Dock Area -->
@@ -880,6 +892,9 @@
     <!-- Hide Button -->
     <button id="group-hide-button" class='bordered' onclick="hideGroupSelectionTable()">
       <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+    </button>
+    <button class='bordered table-bug-report-button group-bug-report-button' onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
 
     <!-- Dock Area -->
@@ -1408,6 +1423,56 @@
 </div>
 <!-- End of Options Modal -->
 
+<!-- Start of Bug Report Modal -->
+<div id="bug-report-modal" class="modal table-modal fade" role="dialog">
+	<div class="modal-table-container">
+	<div class="modal-cell-container">
+	<div class="bordered modal-dialog wide-modal-dialog">
+	<div class="bordered modal-dialog-surface">
+		<!-- Start of Modal Content -->
+		<div class="modal-content">
+			<div class="modal-header">
+              <h3 class="modal-title text-center"><b>Submit an Issue Report</b></h3>
+            </div>
+			<div class="modal-body">
+                <div class="bug-report-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="bug-report-type">Issue Type</label>
+                            <select class="form-control" id="bug-report-type"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bug-report-desc">Issue Description</label>
+                            <textarea class="form-control" id="bug-report-desc" rows="5" cols="80"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="bug-report-out-wrapper">
+                    <label>
+                        Issue Report Data
+                        <span id="bug-report-copy-btn" class="glyphicon glyphicon-scissors" data-toggle="tooltip" data-placement="right" title="Copy Report Text"></span>
+                    </label>
+                    <textarea rows="4" cols="80" readonly="true" id="bug-report-output"></textarea>
+                    <div class="bug-report-out-explanation">
+                        To submit an issue report:
+                        <ol>
+                            <li>Copy the Issue Report Data above into a text-sharing service such as <a href="https://pastebin.com/">Pastebin</a> or <a href="https://gist.github.com">Gist</a>.</li>
+                            <li>Submit your issue report (with the Data above!) to the developers on our subreddit, <a href="https://www.reddit.com/r/spnati">/r/spnati</a> or through our <a href="https://reddit.com/r/spnati/comments/98k7s4/reminder_95_percent_of_the_discussion_about_this/">Discord server</a>.</li>
+                        </ol>
+                    </div>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button id="bug-report-modal-button" class="bordered smooth-button modal-button" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- End of Modal Content -->
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<!-- End of Bug Report Modal -->
 
 <!-- Start of Credits Modal -->
 <div id="credit-modal" class="modal table-modal fade" role="dialog">
@@ -1604,6 +1669,9 @@
     <!-- Option Buttons -->
     <button class='bordered hide-table-button' onclick="toggleTableVisibility()">
       <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+    </button>
+    <button class='bordered table-bug-report-button' onclick="showBugReportModal()">
+      <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
     </button>
     <button id="game-home-button" class="bordered smooth-button smooth-button-red dock-options-button" onclick="showRestartModal()"><!-- doEpilogueModal -->
       <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
