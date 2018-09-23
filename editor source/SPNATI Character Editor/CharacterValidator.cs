@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 		/// Validates the character's dialogue and returns a list of warnings (bad images, targets, etc.)
 		/// </summary>
 		/// <returns></returns>
-		public static bool Validate(Character character, out List<ValidationError> warnings)
+		public static bool Validate(Character character, Listing listing, out List<ValidationError> warnings)
 		{
 			warnings = new List<ValidationError>();
 			string[] hands = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight",
@@ -107,11 +107,12 @@ namespace SPNATI_Character_Editor
 						}
 						else
 						{
-							if (target.Source == CharacterSource.Incomplete)
+							OpponentStatus status = listing.GetCharacterStatus(target.FolderName);
+							if (status == OpponentStatus.Incomplete)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is in the incomplete opponents folder. {0}", caseLabel, stageCase.Target)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.Target)));
 							}
-							else if (target.Source == CharacterSource.Offline)
+							else if (status == OpponentStatus.Offline)
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target)));
 							}
@@ -194,11 +195,12 @@ namespace SPNATI_Character_Editor
 						}
 						else
 						{
-							if (other.Source == CharacterSource.Incomplete)
+							OpponentStatus status = listing.GetCharacterStatus(other.FolderName);
+							if (status == OpponentStatus.Incomplete)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is in the incomplete opponents folder. {0}", caseLabel, stageCase.AlsoPlaying)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.AlsoPlaying)));
 							}
-							else if (other.Source == CharacterSource.Offline)
+							else if (status == OpponentStatus.Offline)
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is offline only. {0}", caseLabel, stageCase.AlsoPlaying)));
 							}

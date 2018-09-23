@@ -198,13 +198,16 @@ namespace SPNATI_Character_Editor
 					imageImporter.SetCharacter(c);
 				if (treeDialogue.Nodes.Count > 0)
 					treeDialogue.SelectedNode = treeDialogue.Nodes[0];
-				lblIncomplete.Visible = c.Source == CharacterSource.Incomplete;
-				lblOffline.Visible = c.Source == CharacterSource.Offline;
+				OpponentStatus status = _listing.GetCharacterStatus(c.FolderName);
+				lblIncomplete.Visible = (status == OpponentStatus.Incomplete);
+				lblOffline.Visible = (status == OpponentStatus.Offline);
+				lblTesting.Visible = (status == OpponentStatus.Testing);
+				lblUnlisted.Visible = (status == OpponentStatus.Unlisted);
+				cmdAddToListing.Enabled = (status == OpponentStatus.Unlisted);
 			}
 			else
 			{
-				lblIncomplete.Visible = false;
-				lblOffline.Visible = false;
+				lblIncomplete.Visible = lblOffline.Visible = lblTesting.Visible = lblUnlisted.Visible = cmdAddToListing.Enabled = false;
 			}
 		}
 
@@ -762,6 +765,7 @@ namespace SPNATI_Character_Editor
 			txtClothesLowerCase.Text = _selectedLayer.Lowercase;
 			cboClothesPosition.SelectedItem = _selectedLayer.Position;
 			cboClothesType.SelectedItem = _selectedLayer.Type;
+			ckbClothesPlural.Checked = _selectedLayer.Plural;
 		}
 
 		private void SaveLayer()
@@ -772,6 +776,7 @@ namespace SPNATI_Character_Editor
 			_selectedLayer.Lowercase = txtClothesLowerCase.Text;
 			_selectedLayer.Position = cboClothesPosition.SelectedItem.ToString();
 			_selectedLayer.Type = cboClothesType.SelectedItem.ToString();
+			_selectedLayer.Plural = ckbClothesPlural.Checked;
 		}
 
 		private void lstClothes_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -1464,7 +1469,6 @@ namespace SPNATI_Character_Editor
 				SetComboBox(cboLineTarget, _selectedCase.Target);
 				SetComboBox(cboTargetHand, _selectedCase.TargetHand);
 				SetComboBox(cboLineFilter, _selectedCase.Filter);
-				SetComboBox(cboTargetStatus, _selectedCase.TargetStatus);
 				Character target = CharacterDatabase.Characters.Find(c => c.FolderName == _selectedCase.Target);
 				_selectedCase.SplitTargetStage(out minStage, out maxStage);
 				PopulateStageCombo(cboTargetStage, target, true);
@@ -1477,7 +1481,6 @@ namespace SPNATI_Character_Editor
 				cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
 				SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
 				SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
-				SetRange(valLayers, valMaxLayers, _selectedCase.TargetLayers);
 				valOwnLosses.Enabled = false;
 				valMaxOwnLosses.Enabled = false;
 			}
@@ -1770,21 +1773,20 @@ namespace SPNATI_Character_Editor
 			if (_selectedCase == null)
 				return;
 			gridFilters.Rows.Clear();
-			DataGridViewComboBoxColumn colTags = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
+			DataGridViewComboBoxColumn col = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
 			foreach (TargetCondition condition in _selectedCase.Conditions)
 			{
+				if (string.IsNullOrEmpty(condition.Filter))
+					continue;
 				DataGridViewRow row = gridFilters.Rows[gridFilters.Rows.Add()];
-				if (condition.Filter != null && !colTags.Items.Contains(condition.Filter))
+				if (!col.Items.Contains(condition.Filter))
 				{
-					colTags.Items.Add(condition.Filter);
+					col.Items.Add(condition.Filter);
 				}
 				try
 				{
 					row.Cells["ColTagFilter"].Value = condition.Filter;
-					row.Cells["ColGenderFilter"].Value = condition.Gender;
-					row.Cells["ColStatusFilter"].Value = condition.Status;
-					row.Cells["ColStatusFilterNegated"].Value = condition.NegateStatus;
-					row.Cells["ColFilterCount"].Value = condition.Count;
+					row.Cells["ColTagCount"].Value = condition.Count;
 				}
 				catch { }
 			}
@@ -1802,14 +1804,10 @@ namespace SPNATI_Character_Editor
 			{
 				DataGridViewRow row = gridFilters.Rows[i];
 				string filter = row.Cells["ColTagFilter"].Value?.ToString();
-				string countValue = row.Cells["ColFilterCount"].Value?.ToString();
-				string gender = row.Cells["ColGenderFilter"].Value?.ToString();
-				string status = row.Cells["ColStatusFilter"].Value?.ToString();
-				object negStatus = row.Cells["ColStatusFilterNegated"].Value;
-
-				if (string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(gender) && string.IsNullOrEmpty(status) && string.IsNullOrEmpty(countValue))
+				string countValue = row.Cells["ColTagCount"].Value?.ToString();
+				if (string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(countValue))
 					continue;
-				TargetCondition condition = new TargetCondition(filter, gender, status, negStatus != null && (bool)negStatus, countValue);
+				TargetCondition condition = new TargetCondition(filter, countValue);
 				_selectedCase.Conditions.Add(condition);
 			}
 		}
@@ -1859,8 +1857,6 @@ namespace SPNATI_Character_Editor
 					c.Filter = ReadComboBox(cboLineFilter);
 					c.TargetTimeInStage = ReadRange(valTimeInStage, valMaxTimeInStage);
 					c.ConsecutiveLosses = ReadRange(valLosses, valMaxLosses);
-					c.TargetLayers = ReadRange(valLayers, valMaxLayers);
-					c.TargetStatus = ReadComboBox(cboTargetStatus);
 					c.TargetSaidMarker = ReadComboBox(cboTargetMarker);
 					c.TargetNotSaidMarker = ReadComboBox(cboTargetNotMarker);
 				}
@@ -1868,8 +1864,6 @@ namespace SPNATI_Character_Editor
 				{
 					c.Target = null;
 					c.TargetStage = null;
-					c.TargetLayers = null;
-					c.TargetStatus = null;
 					c.TargetHand = null;
 					c.Filter = null;
 					c.TargetTimeInStage = null;
@@ -2201,15 +2195,18 @@ namespace SPNATI_Character_Editor
 		/// <param name="e"></param>
 		private void cmdAddToListing_Click(object sender, EventArgs e)
 		{
-			if (_listing.Characters.Contains(_selectedCharacter.FolderName))
+			if (_listing.Characters.Exists(opp => opp.Name == _selectedCharacter.FolderName))
 			{
 				MessageBox.Show("This character is already in the listing.");
 				return;
 			}
 			_selectedCharacter.Metadata.Enabled = true;
-			_listing.Characters.Add(_selectedCharacter.FolderName);
+			_listing.Characters.Add(new Opponent(_selectedCharacter.FolderName, OpponentStatus.Testing));
 			Serialization.ExportListing(_listing);
 			Export();
+			lblUnlisted.Visible = false;
+			lblTesting.Visible = true;
+			cmdAddToListing.Enabled = false;
 		}
 		
 		private void gridDialogue_HighlightRow(object sender, int index)
@@ -2335,7 +2332,7 @@ namespace SPNATI_Character_Editor
 			SaveCharacter();
 			_selectedCharacter.Behavior.BuildStageTree(_selectedCharacter);
 			List<ValidationError> warnings;
-			bool valid = CharacterValidator.Validate(_selectedCharacter, out warnings);
+			bool valid = CharacterValidator.Validate(_selectedCharacter, _listing, out warnings);
 			if (valid)
 			{
 				MessageBox.Show("Everything checks out!");
@@ -2414,12 +2411,13 @@ namespace SPNATI_Character_Editor
 					int current = 0;
 					foreach (Character c in CharacterDatabase.Characters)
 					{
-						if (c.Source != CharacterSource.Main)
+						OpponentStatus status = _listing.GetCharacterStatus(c.FolderName);
+						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline)
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
 						current++;
 						progress.Report(current);
 						List<ValidationError> warnings;
-						if (!CharacterValidator.Validate(c, out warnings))
+						if (!CharacterValidator.Validate(c, _listing, out warnings))
 						{
 							allWarnings[c] = warnings;
 						}
