@@ -278,6 +278,30 @@ function doEpilogueFromGallery(){
 		}
 	}
 	
+	if (USAGE_TRACKING) {
+		var usage_tracking_report = {
+			'date': (new Date()).toISOString(),
+			'type': 'gallery',
+			'session': sessionID,
+			'userAgent': navigator.userAgent,
+			'origin': getReportedOrigin(),
+			'chosen': {
+				'id': chosenEpilogue.player.id,
+				'title': chosenEpilogue.title
+			}
+		};
+		
+		$.ajax({
+			url: USAGE_TRACKING_ENDPOINT,
+			method: 'POST',
+			data: JSON.stringify(usage_tracking_report),
+			contentType: 'application/json',
+			error: function (jqXHR, status, err) {
+				console.error("Could not send usage tracking report - error "+status+": "+err);
+			},
+		});
+	}
+	
 	clearEpilogueBoxes();
 	epilogueScreen = 0; //reset epilogue position in case a previous epilogue played before this one
 	epilogueText = 0;

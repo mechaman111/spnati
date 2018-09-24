@@ -636,6 +636,35 @@ function endRound () {
 
     /* if there is only one player left, end the game */
     if (inGame <= 1) {
+        if (USAGE_TRACKING) {
+            var usage_tracking_report = {
+                'date': (new Date()).toISOString(),
+                'type': 'end_game',
+                'session': sessionID,
+                'game': gameID,
+                'userAgent': navigator.userAgent,
+                'origin': getReportedOrigin(),
+                'table': {},
+                'winner': players[lastPlayer].id
+            };
+            
+            for (let i=1;i<5;i++) {
+                if (players[i]) {
+                    usage_tracking_report.table[i] = players[i].id;
+                }
+            }
+            
+            $.ajax({
+                url: USAGE_TRACKING_ENDPOINT,
+                method: 'POST',
+                data: JSON.stringify(usage_tracking_report),
+                contentType: 'application/json',
+                error: function (jqXHR, status, err) {
+                    console.error("Could not send usage tracking report - error "+status+": "+err);
+                },
+            });
+        }
+        
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
