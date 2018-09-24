@@ -205,23 +205,24 @@ function parseDialogue (caseObject, self, target) {
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
 function expandDialogue (dialogue, self, target) {
-    function substitute(match, ph, fn, args) {
+    function substitute(match, variable, fn, args) {
+		//var initCap = variable[0] == variable[0].toUpperCase();
         try {
-            switch (ph) {
+            switch (variable) {
             case 'player': return players[HUMAN_PLAYER].label;
             case 'name': return target.label;
             case 'Name': return target.label.initCap();
             case 'Clothing': return (target||self).removedClothing.proper;
             case 'clothing':
-                if (fn == 'plural') {
-                    return args.split('|')[(target||self).removedClothing.plural ? 1 : 0];
+                if (fn == 'ifPlural') {
+                    return expandDialogue(args.split('|')[(target||self).removedClothing.plural ? 0 : 1], self, target);
                 } else if (fn === undefined) {
                     return (target||self).removedClothing.lower;
                 }
             case 'cards': /* determine how many cards are being swapped */
 				var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
-                if (fn == 'plural') {
-                    return args.split('|')[n == 1 ? 0 : 1];
+                if (fn == 'ifPlural') {
+                    return expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
                 } else if (fn === undefined) {
                     return n;
                 }
