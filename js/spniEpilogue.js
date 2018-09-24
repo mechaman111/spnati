@@ -392,6 +392,38 @@ function doEpilogueModal(){
  ************************************************************/
 function doEpilogue(){
 	save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
+	
+	if (USAGE_TRACKING) {
+		var usage_tracking_report = {
+			'date': (new Date()).toISOString(),
+			'type': 'epilogue',
+			'session': sessionID,
+			'game': gameID,
+			'userAgent': navigator.userAgent,
+			'origin': getReportedOrigin(),
+			'table': {},
+			'chosen': {
+				'id': chosenEpilogue.player.id,
+				'title': chosenEpilogue.title
+			}
+		};
+		
+		for (let i=1;i<5;i++) {
+			if (players[i]) {
+				usage_tracking_report.table[i] = players[i].id;
+			}
+		}
+		
+		$.ajax({
+			url: USAGE_TRACKING_ENDPOINT,
+			method: 'POST',
+			data: JSON.stringify(usage_tracking_report),
+			contentType: 'application/json',
+			error: function (jqXHR, status, err) {
+				console.error("Could not send usage tracking report - error "+status+": "+err);
+			},
+		});
+	}
     
 	//just in case, clear any open text boxes
 	clearEpilogueBoxes();

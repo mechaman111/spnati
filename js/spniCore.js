@@ -57,6 +57,7 @@ var timeoutID;
 var table = new Table();
 var jsErrors = [];
 var sessionID = '';
+var gameID = '';
 
 /**********************************************************************
  * Screens & Modals
@@ -152,6 +153,7 @@ function compileBaseErrorReport(userDesc, bugType) {
     return {
         'date': (new Date()).toISOString(),
         'session': sessionID,
+        'game': gameID,
         'type': bugType,
         'character': bugCharacter,
         'description': userDesc, 
@@ -363,9 +365,7 @@ function initialSetup () {
     autoResizeFont();
     
     /* Generate a random session ID. */
-    for (let i=0;i<10;i++) {
-        sessionID += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
-    }
+    sessionID = generateRandomID();
 }
 
 
@@ -655,6 +655,18 @@ function getRandomNumber (min, max) {
  ************************************************************/
 String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
+}
+
+/************************************************************
+ * Generate a random alphanumeric ID.
+ ************************************************************/
+function generateRandomID() {
+    var ret = ''
+    for (let i=0;i<10;i++) {
+        ret += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
+    }
+    
+    return ret;
 }
 
 /**********************************************************************
