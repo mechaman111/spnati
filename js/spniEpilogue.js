@@ -230,6 +230,11 @@ function drawEpilogueBox(num){
 	var boxDivName = textBoxDivName+num;
 	var screenData = chosenEpilogue.screens[epilogueScreen];
 	var boxData = screenData.textBoxes[num];
+	
+	if (!boxData) {
+		/* Don't draw nonexistent boxes (in case the current epilogue screen is empty, for example) */
+		return;
+	}
 
 	//make new div element
 	var newEpilogueDiv = $(document.createElement('div')).attr('id', boxDivName);
