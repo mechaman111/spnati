@@ -123,23 +123,24 @@ function parseDialogue (caseObject, self, target) {
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
 function expandDialogue (dialogue, self, target) {
-    function substitute(match, ph, fn, args) {
+    function substitute(match, variable, fn, args) {
+		//var initCap = variable[0] == variable[0].toUpperCase();
         try {
-            switch (ph) {
+            switch (variable) {
             case 'player': return players[HUMAN_PLAYER].label;
             case 'name': return target.label;
             case 'Name': return target.label.initCap();
             case 'Clothing': return (target||self).removedClothing.proper;
             case 'clothing':
-                if (fn == 'plural') {
-                    return args.split('|')[(target||self).removedClothing.plural ? 1 : 0];
+                if (fn == 'ifPlural') {
+                    return expandDialogue(args.split('|')[(target||self).removedClothing.plural ? 0 : 1], self, target);
                 } else if (fn === undefined) {
                     return (target||self).removedClothing.lower;
                 }
             case 'cards': /* determine how many cards are being swapped */
 				var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
-                if (fn == 'plural') {
-                    return args.split('|')[n == 1 ? 0 : 1];
+                if (fn == 'ifPlural') {
+                    return expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
                 } else if (fn === undefined) {
                     return n;
                 }
@@ -620,15 +621,15 @@ function updateBehaviour (player, tag, opp) {
 			
 		}
         
-        if (bestMatch.length > 0) {
-			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
-            players[player].current = 0;
-			
-			var states = parseDialogue(bestMatch, players[player], opp);
-			var chosenState = states[getRandomNumber(0, states.length)];
+        states = bestMatch.reduce(function(list, caseObject) {
+            return list.concat(parseDialogue(caseObject, players[player], opp));
+        }, []);
+
+        if (states.length > 0) {
+            var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
-				var match = chosenState.marker.match(/(?:(\+|\-)([\w\-]+))|(?:([\w\-]+)\s*\=\s*(\-?\d+))/);
+				var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
 				if (match) {
 					if (match[1] === '+') {
 						// increment marker value
@@ -655,7 +656,7 @@ function updateBehaviour (player, tag, opp) {
 			}
 			
             players[player].allStates = states;
-			players[player].chosenState = chosenState;
+            players[player].chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");
@@ -668,9 +669,15 @@ function updateBehaviour (player, tag, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (player, tag, opp) {
-	for (i = 1; i < players.length; i++) {
+	for (var i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
-			updateBehaviour(i, tag, opp);
+			if (typeof tag === 'object') {
+				tag.some(function(t) {
+					return updateBehaviour(i, t, opp);
+				});
+			} else {
+				updateBehaviour(i, tag, opp);
+			}
 		}
 	}
 }

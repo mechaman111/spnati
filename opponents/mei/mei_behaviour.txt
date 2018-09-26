@@ -70,13 +70,13 @@ description=Mei-Ling is a scientist who has taken the fight to preserve the envi
 release=93
 
 #Mei's Clothing:
-clothes=Gloves,gloves,extra,other
-clothes=Shoes,shoes,extra,other
+clothes=Gloves,gloves,extra,other,plural
+clothes=Shoes,shoes,extra,other,plural
 clothes=Jacket,jacket,minor,upper
 clothes=Shirt,shirt,major,upper
-clothes=Pants,pants,major,lower
+clothes=Pants,pants,major,lower,plural
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
  
 #starting picture and text
 start=0-interested,Let's gather some valuable data on this mission.
@@ -107,13 +107,13 @@ game_start=happy,Okay gang, let's go!
 0-must_strip_normal=calm,Oh, it's my turn now?
 0-must_strip_losing=loss,I lost first? Uhm... very well.
 0-stripping=strip,Okay, I guess I'll take my gloves off first.
+0-stripping=strip,Things are going to heat up soon!
 1-stripped=interested,It's for the best. My hands were getting warm.
 1-stripped=happy,There! Now I can feel the cards better.
 
 0-must_strip_winning,alsoPlaying:korra,alsoPlayingStage:0-4=interested,Uhmmm... I've been stationed at the South Pole for my job, if that's what you mean!
 0-must_strip_normal,alsoPlaying:korra,alsoPlayingStage:0-4=interested,Uhmmm... I've been stationed at the South Pole for my job, if that's what you mean!
 0-must_strip_losing,alsoPlaying:korra,alsoPlayingStage:0-4=interested,Uhmmm... I've been stationed at the South Pole for my job, if that's what you mean!
-0-stripping,alsoPlaying:raven,alsoPlayingStage:0=strip,Don't be bored, Raven. Things are going to heat up soon!
 
 #Losing Boots
 1-must_strip_winning=horny,Oh look! It's my turn again.
@@ -148,6 +148,7 @@ game_start=happy,Okay gang, let's go!
 4-stripping=strip,Here go the pants. Please don't stare too much...
 5-stripped=stripped,Don't look at me that way, or I'll have to wall you off!
 5-stripped=stripped,Now that I'm down to my underwear, I'll have to play for real next round.
+5-stripped,alsoPlaying:revy,totalRounds:5-6=sad,Hmmph. I hate bullies.
  
 #Losing Bra
 5-must_strip_winning=embarrassed,I guess there is no way around this...
@@ -201,6 +202,9 @@ swap_cards=calm,Just ~cards~ more.
 0-good_hand,totalFemales:4,priority:0=interested,I'm good for this round! What did everyone else get?
 0-okay_hand,alsoPlaying:florina,alsoPlayingStage:0,alsoPlayingSaidMarker:bee=interested,If a bee starts bothering you, Florina, then I'll have to get out my beekeeper gear!
 0-okay_hand,alsoPlaying:samus,alsoPlayingStage:0,totalRounds:3-30,notSaidMarker:mei_samus_mech,marker:mei_samus_mech=calm,You seem like a good fighter, Samus. Can you call down a mech like D.Va?
+
+0-good_hand,totalRounds:5=happy,I'm getting good at this!
+0-okay_hand,totalRounds:5=happy,I'm getting good at this!
 
 #lost gloves
 1-good_hand=happy,I'm on fire! Well, you know what I mean.
@@ -393,6 +397,7 @@ swap_cards=calm,Just ~cards~ more.
 0-female_must_strip,alsoPlaying:human,alsoPlayingStage:0=happy,Thanks for not making me go first!
 0-female_must_strip,alsoPlaying:human,alsoPlayingStage:0=interested,Time to make a good first impression, ~name~!
 0-female_must_strip,filter:cheerful,targetStage:2=sad,Sorry again... But you seem to be taking losing well!
+0-female_must_strip,filter:glasses,targetStage:0=happy,I love your glasses, ~name~. So cute!
 0-female_must_strip,filter:princess,targetStage:0=shocked,Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed... 
 1-female_must_strip,filter:princess,targetStage:0=shocked,Oh, are you really a princess, ~name~? I'm sorry if we end up making you feel embarrassed... 
 -3-female_must_strip,filter:villain=interested,Time to put your evil plans on ice!
@@ -663,9 +668,6 @@ swap_cards=calm,Just ~cards~ more.
 4-female_removing_accessory,target:korra,targetStage:1=embarrassed,So, Korra, you can control water using your body's energy? That doesn't seem very scientific.
 5-female_removing_accessory,target:korra,targetStage:1=embarrassed,So, Korra, you can control water using your body's energy? That doesn't seem very scientific.
 -1-female_removing_accessory,target:korra,targetStage:1=embarrassed,So, Korra, you can control water using your body's energy? That doesn't seem very scientific.
-0-female_removing_accessory,target:raven,targetStage:0=calm,Kicking things off with your boots?
-1-female_removing_accessory,target:raven,targetStage:0=calm,Kicking things off with your boots?
-2-female_removing_accessory,target:raven,targetStage:0=calm,Kicking things off with your boots?
 0-female_removing_accessory,target:shego,targetStage:2=loss,That was a mean trick...
 1-female_removing_accessory,target:shego,targetStage:2=loss,That was a mean trick...
 2-female_removing_accessory,target:shego,targetStage:2=loss,That was a mean trick...
@@ -700,23 +702,15 @@ swap_cards=calm,Just ~cards~ more.
 3-female_removed_accessory,target:hermione,targetStage:4=happy,Do we both have four pieces to go, Hermione? I guess you could call this a <i>tie</i>!
 -3-female_removed_accessory,target:mercy=embarrassed,Angela, would you consider throwing this game... for a price?
 -1-female_removed_accessory,target:mercy=embarrassed,This is like a game of Mystery Heroes. Maybe I should find the nearest cliff...
-0-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-1-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-2-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-3-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-4-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-5-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
-6-female_removed_accessory,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
--3-female_removed_accessory,target:raven,targetStage:1=sad,Some of us have more than cold feet to worry about, Raven!
-0-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-1-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-2-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-3-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-4-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-5-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
-6-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
--3-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
--1-female_removed_accessory,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+0-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+1-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+2-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+3-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+4-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+5-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+6-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+-3-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+-1-female_removed_accessory,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
 0-female_removed_accessory,target:weiss,targetStage:1=interested,You must be feeling confident!
 1-female_removed_accessory,target:weiss,targetStage:1=interested,You must be feeling confident!
 2-female_removed_accessory,target:weiss,targetStage:1=interested,You must be feeling confident!
@@ -813,6 +807,9 @@ swap_cards=calm,Just ~cards~ more.
 -1-female_removing_minor,target:aimee,targetStage:2=calm,What were you aiming for this time?
 1-female_removing_minor,target:kim,targetStage:1=interested,Haha, I agree, Kim! Let's get serious!
 2-female_removing_minor,target:kim,targetStage:1=interested,Haha, I agree, Kim! Let's get serious!
+0-female_removing_minor,target:raven,targetStage:0=calm,Kicking things off with your boots?
+1-female_removing_minor,target:raven,targetStage:0=calm,Kicking things off with your boots?
+2-female_removing_minor,target:raven,targetStage:0=calm,Kicking things off with your boots?
 0-female_removing_minor,target:zone-tan,targetStage:0=embarrassed,Um, which of us do you think are foot fetishists, Zone-tan?
 1-female_removing_minor,target:zone-tan,targetStage:0=embarrassed,Um, which of us do you think are foot fetishists, Zone-tan?
 2-female_removing_minor,target:zone-tan,targetStage:0=embarrassed,Um, which of us do you think are foot fetishists, Zone-tan?
@@ -841,15 +838,24 @@ swap_cards=calm,Just ~cards~ more.
 6-female_removed_minor,target:aimee,targetStage:3=happy,That was close! You almost caught up to me in a single shot!
 -3-female_removed_minor,target:aimee,targetStage:3=happy,That was close. You almost showed us a little more than you expected.
 -1-female_removed_minor,target:aimee,targetStage:3=happy,That was close. You almost showed us a little more than you expected.
-0-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-1-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-2-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-3-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-4-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-5-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
-6-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
--3-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
--1-female_removed_minor,target:raven,targetStage:2=happy,It sure was worth it! We're one step closer to seeing the real you!
+0-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+1-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+2-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+3-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+4-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+5-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+6-female_removed_minor,target:raven,targetStage:1=interested,If you think it's cold here, you should try being assigned to the Antarctic!
+-3-female_removed_minor,target:raven,targetStage:1=sad,Some of us have more than cold feet to worry about, Raven!
+0-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+1-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+2-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+3-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+4-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+5-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+6-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+-3-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+-1-female_removed_minor,target:raven,targetStage:1,alsoPlaying:zone-tan,marker:mei_suspicious_of_raven=shocked,Were you Zone-tan's prisoner? Oh no! She didn't reprogram you to be a Talon agent, did she?
+
 4-female_removed_minor,target:zone-tan,targetStage:1=strip,You're too good at this! I started with more, but now we're even.
 
 
@@ -862,6 +868,7 @@ swap_cards=calm,Just ~cards~ more.
 0-female_removing_major=shocked,I'm sorry, ~name~.
 0-female_removed_major=calm,It's okay. Just pull yourself together and have another try at it!
 0-female_removed_major=calm,I'm doing really well this game. This is a personal best for me!
+0-female_removed_major=shocked,You'd better watch your step.
  
 #lost gloves
 1-male_removing_major,marker:mei_speaking_chinese=embarrassed,&#x7B49;&#x7B49;&#x6211;&#xFF01;
@@ -1051,6 +1058,7 @@ swap_cards=calm,Just ~cards~ more.
 #fully clothed
 0-male_chest_will_be_visible=horny,Feel free to take it off at your own pace!
 0-male_chest_is_visible=shocked,Oh my!
+0-male_chest_is_visible=shocked,Oh, you shouldn't have!
 0-male_crotch_will_be_visible=embarrassed,~Name~, I don't understand why you started the game wearing so little. You are about to be naked!
 0-male_small_crotch_is_visible=loss,I'm glad I dressed warm. You seem like you are freezing.
 0-male_small_crotch_is_visible=shocked,Oh, no! Was it cut off in an accident?
@@ -1156,6 +1164,7 @@ swap_cards=calm,Just ~cards~ more.
 6-male_crotch_will_be_visible=interested,I've read a lot of scientific research on this topic, but I haven't participated in many hands-on trials.
 6-male_small_crotch_is_visible=loss,A lot of advancement has been made in the field of prosthetics. I think they can even restore function to your lower region...
 6-male_small_crotch_is_visible=loss,I thought guys loved large breasts...
+6-male_small_crotch_is_visible=sad,Don't hold it against me, okay?
 6-male_medium_crotch_is_visible=interested,I wonder, if I did some jumping jacks, would it get any bigger?
 6-male_large_crotch_is_visible=horny,If my hypothesis is correct, that would fit perfectly between my breasts!
 6-male_large_crotch_is_visible=stripped,Now that I can see more of you, I recognize you from a video of Mercy I saw on the internet! Oh, maybe I shouldn't have mentioned that...
@@ -1519,6 +1528,7 @@ swap_cards=calm,Just ~cards~ more.
 -3-female_must_masturbate=happy,That was a close one. You had me so worried!
 -3-female_start_masturbating=loss,But I feel bad for you. I'll join you next round if I can.
 -3-female_masturbating=embarrassed,This is definitely the most sordid part of the game!
+-3-female_masturbating=interested,Curiosity leads to new adventures.
 -3-female_finished_masturbating=embarrassed,Oh, you're already finished? I was hoping you'd still be distracting everyone when I start...
  
 #masturbating
@@ -1545,7 +1555,12 @@ swap_cards=calm,Just ~cards~ more.
 -1-female_start_masturbating=happy,Look at this girl: you're gonna do great!
 -1-female_start_masturbating=embarrassed,You were asking for it.
 -1-female_masturbating=interested,If you want this to last longer, I know a way to slow you down...
--1-female_finished_masturbating=calm,We should compare notes some time.
+-1-female_masturbating=happy,Cool!
+-1-female_masturbating=horny,This place is my favorite.
+-1-female_masturbating=shocked,Wow, fascinating.
+-1-female_masturbating=interested,Way to go!
+-1-female_masturbating=adjusting,Are you almost there?
+-1-female_finished_masturbating=calm,We should compare notes sometime.
 
 #targeted
 -1-female_must_masturbate,filter:innocent=embarrassed,~Name~, you lost the hand, so it's time to do what I did.
@@ -1595,6 +1610,12 @@ swap_cards=calm,Just ~cards~ more.
 -3-female_start_masturbating,target:hermione=shocked,Oh my! It's like the hands of a thousand ancestors have come to greet you!
 -2-female_start_masturbating,target:hermione=shocked,Oh my! It's like the hands of a thousand ancestors have come to greet you!
 -1-female_start_masturbating,target:hermione=shocked,Oh my! It's like the hands of a thousand ancestors have come to greet you!
+3-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
+4-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
+5-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
+6-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
+-3-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
+-1-female_start_masturbating,target:kyu=adjusting,This is <i>fairy</i> embarrassing...
 0-female_start_masturbating,target:mercy=embarrassed,I had no idea that you really were this promiscuous!
 1-female_start_masturbating,target:mercy=embarrassed,I had no idea that you really were this promiscuous!
 0-female_start_masturbating,target:tracer=embarrassed,Um, your girlfriend is a very lucky lady...
@@ -1608,6 +1629,15 @@ swap_cards=calm,Just ~cards~ more.
 -2-female_start_masturbating,target:tracer,marker:mei_speaking_chinese=embarrassed,&#x4F60;&#x7684;&#x5973;&#x670B;&#x53CB;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x5E78;&#x8FD0;&#x7684;&#x5973;&#x58EB;&#x3002;
 -1-female_start_masturbating,target:tracer=embarrassed,Um, your girlfriend is a very lucky lady...
 
+0-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+1-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+2-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+3-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+4-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+5-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+6-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+-3-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
+-1-female_masturbating,filter:creepy=embarrassed,Science holds the key to understanding...
 -3-female_masturbating,target:hermione=happy,How enchanting!
 -2-female_masturbating,target:hermione=happy,How enchanting!
 -1-female_masturbating,target:hermione=happy,How enchanting!
@@ -1642,6 +1672,7 @@ finished_masturbating=interested,Sometimes I surprise myself.
 
 
 game_over_defeat=interested,Well played, ~name~! But you'll be in my shoes next time.
+game_over_defeat=interested,Okay, everyone, let's do it again!
 game_over_defeat,target:marinette,targetSaidMarker:twiceloss=interested,Good job, Marinette. I didn't think you had a chance when you started that losing streak.
 game_over_defeat,target:nugi-chan=happy,Haha, it's not every day I get Mei'd by a maid!
 game_over_defeat,target:raven=interested,I've never lost to a zombie before. Great game, Raven!
@@ -1695,5 +1726,4 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,
 #Where are you?
 #Yeti popsicle!
 #Yeti's over here.
-#You'd better watch your step.
 #-XMAS 2017 END-

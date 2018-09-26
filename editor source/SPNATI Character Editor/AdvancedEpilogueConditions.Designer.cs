@@ -44,6 +44,10 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.lblAlsoPlaying = new System.Windows.Forms.Label();
 			this.cboAlsoPlaying = new System.Windows.Forms.ComboBox();
+			this.GalleryImageSelectBtn = new System.Windows.Forms.Button();
+			this.valGalleryImage = new System.Windows.Forms.TextBox();
+			this.galleryImageFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.label7 = new System.Windows.Forms.Label();
 			this.selAlsoPlayingAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.selAlsoPlayingNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.selAlsoPlayingAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
@@ -226,6 +230,36 @@
 			this.cboAlsoPlaying.Size = new System.Drawing.Size(149, 21);
 			this.cboAlsoPlaying.TabIndex = 45;
 			// 
+			// GalleryImageSelectBtn
+			// 
+			this.GalleryImageSelectBtn.Location = new System.Drawing.Point(334, 416);
+			this.GalleryImageSelectBtn.Name = "GalleryImageSelectBtn";
+			this.GalleryImageSelectBtn.Size = new System.Drawing.Size(43, 23);
+			this.GalleryImageSelectBtn.TabIndex = 46;
+			this.GalleryImageSelectBtn.Text = "...";
+			this.GalleryImageSelectBtn.UseVisualStyleBackColor = true;
+			this.GalleryImageSelectBtn.Click += new System.EventHandler(this.GalleryImageSelectBtn_Click);
+			// 
+			// valGalleryImage
+			// 
+			this.valGalleryImage.Location = new System.Drawing.Point(95, 418);
+			this.valGalleryImage.Name = "valGalleryImage";
+			this.valGalleryImage.Size = new System.Drawing.Size(234, 20);
+			this.valGalleryImage.TabIndex = 47;
+			// 
+			// galleryImageFileDialog
+			// 
+			this.galleryImageFileDialog.FileName = "openFileDialog1";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(16, 421);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(73, 13);
+			this.label7.TabIndex = 48;
+			this.label7.Text = "Gallery image:";
+			// 
 			// selAlsoPlayingAnyMarkers
 			// 
 			this.selAlsoPlayingAnyMarkers.Location = new System.Drawing.Point(10, 262);
@@ -286,7 +320,10 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(672, 406);
+			this.ClientSize = new System.Drawing.Size(672, 447);
+			this.Controls.Add(this.label7);
+			this.Controls.Add(this.valGalleryImage);
+			this.Controls.Add(this.GalleryImageSelectBtn);
 			this.Controls.Add(this.cboAlsoPlaying);
 			this.Controls.Add(this.lblAlsoPlaying);
 			this.Controls.Add(this.groupBox2);
@@ -301,7 +338,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "AdvancedEpilogueConditions";
-			this.Text = "Advanced Epilogue Conditions";
+			this.Text = "Advanced Epilogue Conditions and Properties";
 			this.Load += new System.EventHandler(this.AdvancedEpilogueConditions_Load);
 			((System.ComponentModel.ISupportInitialize)(this.valMaxPlayerStartingLayers)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valPlayerStartingLayers)).EndInit();
@@ -338,5 +375,9 @@
 		private System.Windows.Forms.NumericUpDown valPlayerStartingLayers;
 		private System.Windows.Forms.Label lblAlsoPlaying;
 		private System.Windows.Forms.ComboBox cboAlsoPlaying;
-	}
+        private System.Windows.Forms.Button GalleryImageSelectBtn;
+        private System.Windows.Forms.TextBox valGalleryImage;
+        private System.Windows.Forms.OpenFileDialog galleryImageFileDialog;
+        private System.Windows.Forms.Label label7;
+    }
 }
