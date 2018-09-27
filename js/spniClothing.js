@@ -27,10 +27,10 @@ var STAGE_FINISHED = -1;
 /************************************************************
  * Stores information on an article of clothing.
  ************************************************************/
-function createNewClothing (proper, lower, type, position, image, plural, id) {
-	var newClothingObject = {proper:proper, 
-						     lower:lower, 
-						     type:type, 
+function createNewClothing (formal, generic, type, position, image, plural, id) {
+	var newClothingObject = {formal:formal,
+						     generic:generic,
+						     type:type,
 						     position:position,
                              image:image,
 							 plural:plural||false,
