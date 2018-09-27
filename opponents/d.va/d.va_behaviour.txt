@@ -5,12 +5,12 @@
 #tag=d.va_cruiser
 
 ##2. Uncomment the following clothing and start lines and DELETE the original ones further below.
-#clothes=Gloves,gloves,extra,other
-#clothes=Boots,boots,extra,other
-#clothes=Headphones,headphones,extra,other
-#clothes=Jeans and shirt,jeans and shirt,major,other
+#clothes=Gloves,gloves,extra,other,plural
+#clothes=Boots,boots,extra,other,plural
+#clothes=Headphones,headphones,extra,other,plural
+#clothes=Jeans and shirt,jeans and shirt,major,other,plural
 #clothes=Bra,bra,important,upper
-#clothes=Panties,panties,important,lower
+#clothes=Panties,panties,important,lower,plural
 #start=0-peaceside,What's happenin', Daddio?
 #selected=peaceside,What's happenin', Daddio?
 #game_start=calm,Wow, nice comp. This is gonna be easy!
@@ -37,9 +37,6 @@ intelligence=average
 timer=24
 
 
-
-#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
-tag=d.va
 
 #Source material tags
 tag=overwatch
@@ -79,7 +76,7 @@ pic=0-calm
 height=5'2"
 from=Overwatch
 writer=Arndress & Patrickisdom
-artist=Model: humdumthrow<br>Posing: Arndress
+artist=Model: humdumthrow<br />Posing: Arndress
 description=Hana Song, known as "D.Va", is a former professional gamer who now uses her skills to pilot a state-of-the-art mech in defense of her homeland.
 release=49
 
@@ -109,12 +106,12 @@ marker=d.va_mari_art,public,
 
 
 #D.Va's Clothing:
-clothes=Gloves,gloves,extra,other
-clothes=Boots,boots,extra,other
-clothes=Headphones,headphones,extra,other
+clothes=Gloves,gloves,extra,other,plural
+clothes=Boots,boots,extra,other,plural
+clothes=Headphones,headphones,extra,other,plural
 clothes=Suit,suit,major,other
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
 
 #starting picture and text
 
@@ -123,6 +120,7 @@ start=0-peaceside,Hiya, I'm D.Va. Game on!
 
 selected=peaceside,Hiya, I'm D.Va. Game on!
 selected,alsoPlaying:chiaki=calm,Hi, Chiaki. Here to do your placement matches?
+selected,alsoPlaying:mercy=calm,Mercy, I'm always glad to have you around. I hope you don't mind being schooled now that you're an older lady.
 selected,alsoPlaying:zone-tan=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
 
 game_start=calm,Wow, nice comp. This is gonna be easy!
@@ -562,7 +560,13 @@ swap_cards=serene,~cards~ cards.
 -2-female_must_strip,target:marinette,targetStage:3,marker:d.va_mari_art=angry,You're some kind of art student? Well, you must have all the time in the world to practice to be winning like this!
 -1-female_must_strip,target:marinette,targetStage:3,marker:d.va_mari_art=angry,You're some kind of art student? Well, you must have all the time in the world to practice to be winning like this!
 0-female_must_strip,target:mei,targetStage:0=calm,Mei, how's my favorite international climatologist?
-0-female_must_strip,target:mercy,targetStage:0=calm,Mercy, I'm always glad to have you around. I hope you don't mind being schooled now that you're an older lady.
+0-female_must_strip,target:mercy,totalRounds:0=winking,Sorry, Mercy, but you know we have to take out the healer first.
+0-female_must_strip,target:mercy,targetStage:0=serene,I hope I'm still pretty like Mercy when I'm old like she is.
+0-female_must_strip,target:mercy,targetStage:1=warpaint,Don't take it personally, but I'm going to destroy you.
+0-female_must_strip,target:mercy,targetStage:2=awkward,Mercy is doing so bad. Maybe it's time for another rework.
+0-female_must_strip,target:mercy,targetStage:3=calm,You're taking losing really well. Do they teach you that in medical school?
+0-female_must_strip,target:mercy,targetStage:4=winking,So is it true that you have the second-cutest nipples in Overwatch?
+0-female_must_strip,target:mercy,targetStage:5=shocked,It... it can't be true! You can't be a healslut because you never do any healing.
 0-female_must_strip,target:nugi-chan,targetStage:0=warpaint,Maid, consider this role reversal. I'm about to clean the floor with you!
 1-female_must_strip,target:nugi-chan,targetStage:0=calm,Maid, consider this role reversal. I'm about to clean the floor with you!
 0-female_must_strip,target:nugi-chan,targetStage:1=warpaint,Let's see who the <i>real</i> gaming expert is!
@@ -590,7 +594,7 @@ swap_cards=serene,~cards~ cards.
 0-female_must_strip,target:tracer,targetStage:0=peaceside,Hiya, Tracer! Are you ready for action?
 1-female_must_strip,target:tracer,targetStage:0=peaceside,Hiya, Tracer! Are you ready for action?
 2-female_must_strip,target:tracer,targetStage:0=peaceside,Hiya, Tracer! Are you ready for action?
-0-female_must_strip,target:zelda,targetStage:0,alsoPlaying:human,alsoPlayingStage:0=awkward,Sorry, Zelda, but it's a standard tactic to take out the healer first.
+0-female_must_strip,target:zelda,totalRounds:0=awkward,Sorry, Zelda, but it's a standard tactic to take out the healer first.
 4-female_must_strip,target:zoey,targetStage:2=calm,Are you <i>finally</i> going to unzip that jacket?
 5-female_must_strip,target:zoey,targetStage:2=calm,Are you <i>finally</i> going to unzip that jacket?
 -3-female_must_strip,target:zoey,targetStage:2=loss,Are you <i>finally</i> going to unzip that jacket?
@@ -1139,6 +1143,10 @@ female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accur
 7-male_chest_is_visible,target:xander=winking,Xander, you just moved up to second place of people I want to see after the game! If first place doesn't want to do anything, maybe we can hang out?
 8-male_chest_is_visible,target:xander=heart,Xander, you just moved up to second place of people I want to see after the game! If first place doesn't want to do anything, maybe we can hang out?
 
+4-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
+5-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
+-3-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
+
 0-male_medium_crotch_is_visible,target:xander=excited,Hey, it's Xander the Great! Nice!
 1-male_medium_crotch_is_visible,target:xander=excited,Hey, it's Xander the Great! Nice!
 2-male_medium_crotch_is_visible,target:xander=excited,Hey, it's Xander the Great! Nice!
@@ -1193,6 +1201,9 @@ female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accur
 -3-female_medium_chest_is_visible,target:aimee=heart,Two for one? Aw, yeah!
 -2-female_medium_chest_is_visible,target:aimee=horny,Two for one? Aw, yeah!
 -1-female_medium_chest_is_visible,target:aimee=heart,Two for one? Aw, yeah!
+4-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
+5-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
+-3-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
 0-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
 1-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
 2-female_medium_chest_is_visible,target:revy=loss,Ugh, so salty...
@@ -1274,6 +1285,9 @@ female_large_chest_is_visible,target:nugi-chan=winking,Nice try.
 4-female_crotch_is_visible,target:lux=angry,You're not even a real blonde?! Lame.
 5-female_crotch_is_visible,target:lux=angry,You're not even a real blonde?! Lame.
 -3-female_crotch_is_visible,target:lux=winking,If you shave your secret, you can save your secret.
+3-female_crotch_is_visible,target:mercy=winking,You should go into battle like that, Angela. You look amazing for an old woman!
+-3-female_crotch_is_visible,target:mercy=hornier,M-Mercy... I've n-never felt like this about you before...
+-2-female_crotch_is_visible,target:mercy=horny,M-Mercy... I've n-never felt like this about you before...
 0-female_crotch_is_visible,target:mia=shocked,Oh, that's so bold!
 1-female_crotch_is_visible,target:mia=shocked,Oh, that's so bold!
 2-female_crotch_is_visible,target:mia=shocked,Oh, that's so bold!
@@ -1500,20 +1514,15 @@ female_start_masturbating,target:asuna=awkward,I hope this doesn't affect my cha
 -2-female_start_masturbating,target:tifa=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! F-fuck...!
 -2-female_start_masturbating,target:tifa,count-d.va_cruiser:1,priority:1000=hornier,Pleasuring myself together with Tifa Lockhart? This really is my final fantasy! G-gosh...!
 
-female_masturbating,target:elena=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
+female_masturbating,target:elena,priority:0=horny,I don't know who Chancellor Esteban is, but I bet he wishes he could see this!
+-3-female_masturbating,target:mercy,priority:0=hornier,Oh my god, Mercy. You've never b-boosted me up like this before...
+-2-female_masturbating,target:mercy,priority:0=horny,Oh my god, Mercy. You've never b-boosted me up like this before...
+-2-female_masturbating,target:mercy,priority:0=peaceblush,M-Mercy...! T-thanks for the support!
 
 5-female_finished_masturbating,target:mei=winking,Mei, this isn't the first time I've given you a little bump over the edge!
 -3-female_finished_masturbating,target:mei=winking,Mei, this isn't the first time I've given you a little bump over the edge!
 -1-female_finished_masturbating,target:mei=winking,Mei, this isn't the first time I've given you a little bump over the edge!
-0-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
-1-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
-2-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
-3-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
-4-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
-5-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
--3-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
--2-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
--1-female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
+female_finished_masturbating,target:mercy=horny,I love your new ult, Mercy...
 1-female_finished_masturbating,target:mia=calm,The first part of the game is over and Mia is already out. I'm not surprised.
 2-female_finished_masturbating,target:mia=calm,The first part of the game is over and Mia is already out. I'm not surprised.
 3-female_finished_masturbating,target:mia=calm,The first part of the game is over and Mia is already out. I'm not surprised.
@@ -1640,7 +1649,6 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 3-good_hand,alsoPlaying:hermione=calm,Hermione, I thought of something we have in common! We've both had bad experiences with trolls.
 3-stripped,alsoPlaying:kim=stripped,Time to get serious!
 3-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
-3-female_crotch_is_visible,target:mercy=winking,You should go into battle like that, Angela. You look amazing for an old woman!
 3-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
 3-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
 3-male_large_crotch_is_visible,alsoPlaying:korra=shocked,Hmmm... Korra, did you bloodbend him or something?
@@ -1655,10 +1663,8 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 4-female_removed_accessory,target:buffy=excited,You should consider wearing a bodysuit into combat. Did you see the awesome reaction I got when I took it off?
 4-female_removed_accessory,target:elena=awkward,I wish I had a traditional dress to wear, but I spent all my credits on Anniversary cosmetics...
 4-female_removing_minor,target:marie=horny,Marie, you look like you belong in some sort of hentai!
-4-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
 4-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
 4-female_crotch_is_visible,filter:shaved=peace,Silky smooth! That's my style!
-4-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
 4-male_large_crotch_is_visible,alsoPlaying:korra=shocked,Hmmm... Korra, did you bloodbend him or something?
 4-female_start_masturbating,target:zone-tan=excited,Err... You're... probably right, Zone-tan. I must admit, I've taken a peek at that video as well, I just <i>couldn't</i> resist!... You have nothing to be ashamed about, babe!
 
@@ -1667,10 +1673,8 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 5-male_must_strip,hasHand:High Card=excited,I didn't lose?! But I didn't even have a pair! RNG must really be on my side...
 5-female_removed_accessory,target:elena=awkward,I wish I had a traditional dress to wear, but I spent all my credits on Anniversary cosmetics...
 5-female_removing_minor,target:marie=horny,Marie, you look like you belong in some sort of hentai!
-5-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
 5-female_large_chest_is_visible,alsoPlaying:harley=shocked,Whoa! Hm, I bet you've sucked on tits like these a lot, right, Harley? Poison Ivy comes to mind...
 5-female_crotch_is_visible,filter:shaved=peace,Silky smooth! That's my style!
-5-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
 5-male_large_crotch_is_visible,alsoPlaying:korra=horny,Hey Korra, I bet Bolin's dick is as big as this!
 5-male_large_crotch_is_visible,alsoPlaying:korra=shocked,Hmmm... Korra, did you bloodbend him or something?
 5-female_start_masturbating,target:zone-tan=excited,Err... You're... probably right, Zone-tan. I must admit, I've taken a peek at that video as well, I just <i>couldn't</i> resist!... You have nothing to be ashamed about, babe!
@@ -1686,20 +1690,13 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 -3-female_removing_minor,target:marie=horny,Marie, you look like you belong in some sort of hentai!
 -3-female_removing_major,target:buffy=calm,You've got skills! Team up with me next time Junkenstein's Revenge comes back.
 -3-female_medium_chest_is_visible,alsoPlaying:harley=dismayed,I've seen those pictures you made of Selina all tied up, Harley. I wouldn't mind being dominated like that by you...
--3-female_medium_chest_is_visible,target:mercy=excited,I can't believe this is the first time I'm seeing your cute boobs, Mercy!
--3-female_crotch_is_visible,target:mercy=hornier,M-Mercy... I've n-never felt like this about you before...
 -3-female_crotch_is_visible,filter:shaved=starting,You're also completely smooth down there? I love it!
--3-male_small_crotch_is_visible,alsoPlaying:mercy=excited,Wow, did you expect this, Mercy? It's so freaking small! Wicked!
 -3-male_large_crotch_is_visible,alsoPlaying:korra=shocked,Hmmm... Korra, did you bloodbend him or something?
 -3-male_large_crotch_is_visible,alsoPlaying:korra=horny,Hey Korra, I bet Bolin's dick is as big as this!
 -3-female_start_masturbating,target:zone-tan=excited,Err... You're... probably right, Zone-tan. I must admit, I've taken a peek at that video as well, I just <i>couldn't</i> resist!... You have nothing to be ashamed about, babe!
--3-female_masturbating,target:mercy=hornier,Oh my god, Mercy. You've never b-boosted me up like this before...
 
 -2-female_medium_chest_is_visible,alsoPlaying:harley=hornier,I've seen those hot pictures you made of Selina all tied up, Harley. I-I wouldn't mind being dominated like that by you...
--2-female_crotch_is_visible,target:mercy=horny,M-Mercy... I've n-never felt like this about you before...
 -2-female_start_masturbating,target:zone-tan=finishing,Ohhh, that video was <i>so</i> hot... Seeing your cute body like that... was... <i>ahhhh</i>...
--2-female_masturbating,target:mercy=horny,Oh my god, Mercy. You've never b-boosted me up like this before...
--2-female_masturbating,target:mercy=peaceblush,M-Mercy...! T-thanks for the support!
 -2-female_masturbating,target:tracer=horny,Ohh Tracer... I've n-never felt like this about you before...
 -2-female_finished_masturbating,target:korra=awkward,K-Korra... would you mind inviting Asami over after we're done here, so we can just play... w-with the three of us...?
 
