@@ -233,11 +233,17 @@ function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
 	var opponentGroupMap = {};
-	var onComplete = function(opp) {
-		if (opp && opponentGroupMap[opp.id]) {
-			opponentGroupMap[opp.id].forEach(function(groupPos) {
-				groupPos.group.opponents[groupPos.idx] = opp;
-			});
+	var opponentMap = {};
+	var onComplete = function(opp, index) {
+		if (opp) {
+			if (opp.id in opponentMap) {
+				loadedOpponents[opponentMap[opp.id]] = opp;
+			}
+			if (opp.id in opponentGroupMap) {
+				opponentGroupMap[opp.id].forEach(function(groupPos) {
+					groupPos.group.opponents[groupPos.idx] = opp;
+				});
+			}
 		}
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
@@ -255,30 +261,16 @@ function loadListingFile () {
 		dataType: "text",
 		success: function(xml) {
             var $xml = $(xml);
-            
-			/* start by parsing and loading the individual listings */
-            var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-			$individualListings = $xml.find('individuals');
-			$individualListings.find('opponent').each(function () {
-                var oppStatus = $(this).attr('status');
-                var id = $(this).text();
-                
-                if (oppStatus === undefined || includedOpponentStatuses[oppStatus]) {
-                    console.log("Reading \""+id+"\" from listing file");
-                    outstandingLoads++;
-                    loadOpponentMeta(id, loadedOpponents, oppDefaultIndex++, oppStatus, onComplete);
-                }
-			});
-
-			/* end by parsing and loading the group listings */
+			/* start by parsing the group descriptions to know which
+			 * characters to load in addition to the main roster and any included statuses */
 			$xml.find('groups>group').each(function () {
 				var title = $(this).attr('title');
 				var opp1 = $(this).attr('opp1');
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
-                
+
                 var ids = [opp1, opp2, opp3, opp4];
 
 				var newGroup = createNewGroup(title);
@@ -290,6 +282,25 @@ function loadListingFile () {
 				});
 				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
 			});
+
+            /* now actually load the characters */
+            var oppDefaultIndex = 0; // keep track of an opponent's default placement
+
+            $individualListings = $xml.find('individuals');
+            $individualListings.find('opponent').each(function () {
+                var oppStatus = $(this).attr('status');
+                var id = $(this).text();
+                var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
+
+                if (doInclude || id in opponentGroupMap) {
+                    outstandingLoads++;
+					if (doInclude) {
+						opponentMap[id] = oppDefaultIndex++;
+					}
+                    loadOpponentMeta(id, oppStatus, onComplete);
+                }
+            });
+
 		}
 	});
 }
@@ -297,8 +308,9 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, targetArray, index, status, onComplete) {
+function loadOpponentMeta (id, status, onComplete) {
 	/* grab and parse the opponent meta file */
+    console.log("Loading metadata for \""+id+"\"");
 	$.ajax({
         type: "GET",
 		url: 'opponents/' + id + '/' + metaFile,
@@ -330,14 +342,6 @@ function loadOpponentMeta (id, targetArray, index, status, onComplete) {
                                              ending, layers, release, scale, tags);
 
 			/* add the opponent to the list */
-            if (index !== undefined) {
-                // enforces opponent default order according to listing file
-                // (instead of order being determined by when the AJAX call completes)
-                targetArray[index] = opponent;
-            }
-            else {
-                targetArray.push(opponent);
-            }
             onComplete(opponent);
 		},
 		error: function(err) {
