@@ -234,7 +234,7 @@ function loadListingFile () {
 	var outstandingLoads = 0;
 	var opponentGroupMap = {};
 	var onComplete = function(opp) {
-		if (opp) {
+		if (opp && opponentGroupMap[opp.id]) {
 			opponentGroupMap[opp.id].forEach(function(groupPos) {
 				groupPos.group.opponents[groupPos.idx] = opp;
 			});
