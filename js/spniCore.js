@@ -535,10 +535,14 @@ function sendBugReport() {
         contentType: 'application/json',
         error: function (jqXHR, status, err) {
             console.error("Could not send bug report - error "+status+": "+err);
+            $('#bug-report-status').text("Failed to send bug report (error "+status+")");
         },
+        success: function () {
+            $('#bug-report-status').text("Bug report sent!");
+        }
     });
     
-    closeBugReportModal();
+    
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
