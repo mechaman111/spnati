@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor
 			for (int i = character.Wardrobe.Count - 1; i >= 0; i--)
 			{
 				Clothing clothes = character.Wardrobe[i];
-				lines.Add(string.Format("clothes={0},{1},{2},{3}", clothes.Name, clothes.Lowercase, clothes.Type, clothes.Position));
+				lines.Add(string.Format("clothes={0},{1},{2},{3}{4}", clothes.Name, clothes.Lowercase, clothes.Type, clothes.Position, clothes.Plural ? ",plural" : ""));
 			}
 
 			#region Lines commentary
