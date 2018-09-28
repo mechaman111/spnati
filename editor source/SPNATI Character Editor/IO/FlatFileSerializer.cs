@@ -305,6 +305,10 @@ namespace SPNATI_Character_Editor
 				lines.Add("");
 				lines.Add(string.Format("ending={0}", ending.Title));
 				lines.Add(string.Format("\tending_gender={0}", ending.Gender));
+				if (ending.GalleryImage != null)
+				{
+					lines.Add(string.Format("\tgallery_image={0}", ending.GalleryImage));
+				}
 				foreach (Screen screen in ending.Screens)
 				{
 					lines.Add("");
