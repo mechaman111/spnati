@@ -48,7 +48,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			List<ChartData> series0 = new List<ChartData>();
 
 			data.Add(series0);
-			for (int i = 0; i < 30 && i < _data.Count; i++)
+			for (int i = 0; i < _data.Count; i++)
 			{
 				var item = _data[i];
 				series0.Add(new ChartData(item.Item1.Label, item.Item2));
@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public string GetTitle()
 		{
-			return "Lines per MB (Top 30 Characters)";
+			return "Lines per MB";
 		}
 
 		public string[] GetViews()

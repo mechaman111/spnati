@@ -94,6 +94,7 @@ namespace SPNATI_Character_Editor
 
 			_state.Phase = (GamePhase)cboTrigger.SelectedItem;
 			_state.Filter = txtFilter.Text;
+			_state.TotalRounds = (int)valTotalRounds.Value;
 
 			_state.TargetState = null;
 			if (_state.Phase == GamePhase.BeforeLoss || _state.Phase == GamePhase.DuringLoss || _state.Phase == GamePhase.AfterLoss ||
@@ -107,6 +108,7 @@ namespace SPNATI_Character_Editor
 				if (target != null)
 				{
 					_state.SetVariable("name", target.Label);
+					_state.SetVariable("Name", target.Label.Substring(0, 1).ToUpper() + target.Label.Substring(1));
 				}
 				int state = _state.TargetState.Stage;
 				if (state < target.Layers)
@@ -150,6 +152,11 @@ namespace SPNATI_Character_Editor
 		{
 			UpdateGameState();
 		}
+
+		private void valTotalRounds_ValueChanged(object sender, EventArgs e)
+		{
+			UpdateGameState();
+		}
 	}
 
 	public class GameState
@@ -159,6 +166,7 @@ namespace SPNATI_Character_Editor
 		public string Filter;
 		public List<CharacterState> Characters = new List<CharacterState>();
 		public CharacterState TargetState;
+		public int TotalRounds;
 		private Dictionary<string, string> _variables = new Dictionary<string, string>();
 
 		public string Target
@@ -270,7 +278,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="state"></param>
 		/// <returns></returns>
-		public Trigger GetTrigger(GameState state)
+		public Trigger GetTrigger(GameState state, bool fallback = false)
 		{
 			bool isTarget = (state.TargetState != null && state.TargetState == this);
 			string tag = "";
@@ -287,8 +295,11 @@ namespace SPNATI_Character_Editor
 			}
 			switch (state.Phase)
 			{
+				case GamePhase.Selected:
+					tag = "selected";
+					break;
 				case GamePhase.Start:
-					tag = Trigger.StartTrigger;
+					tag = "game_start";
 					break;
 				case GamePhase.ExchangingCards:
 					if (standardStage < 9)
@@ -327,6 +338,10 @@ namespace SPNATI_Character_Editor
 					{
 						tag = "masturbating";
 					}
+					else if (standardStage == 10)
+					{
+						tag = "finished_masturbating";
+					}
 					break;
 				case GamePhase.BadHand:
 					if (standardStage < 9)
@@ -337,27 +352,31 @@ namespace SPNATI_Character_Editor
 					{
 						tag = "masturbating";
 					}
+					else if (standardStage == 10)
+					{
+						tag = "finished_masturbating";
+					}
 					break;
 				case GamePhase.BeforeLoss:
-					bool winning = true;
-					bool losing = true;
 					if (standardStage < 8)
 					{
 						int stage = standardStage;
-						foreach (var character in state.Characters)
-						{
-							if (character != this)
-							{
-								int otherStage = TriggerDatabase.ShiftStage(character.Character, character.Stage);
-								if (otherStage <= stage)
-									winning = false;
-								else if (otherStage > stage)
-									losing = false;
-							}
-						}
 
 						if (isTarget)
 						{
+							bool winning = true;
+							bool losing = true;
+							foreach (var character in state.Characters)
+							{
+								if (character != this)
+								{
+									int otherStage = TriggerDatabase.ShiftStage(character.Character, character.Stage);
+									if (otherStage <= stage + 1)
+										winning = false;
+									if (otherStage >= stage + 1)
+										losing = false;
+								}
+							}
 							if (winning)
 								tag = "must_strip_winning";
 							else if (losing)
@@ -575,24 +594,26 @@ namespace SPNATI_Character_Editor
 		{
 			if (string.IsNullOrEmpty(range))
 				return true;
-			int min = 0;
-			int max = 0;
+			int min;
+			int max;
 			string[] pieces = range.Split('-');
-			if (!int.TryParse(pieces[0], out min))
-				return true;
+			if (pieces[0] == "") min = 0;
+			else if (!int.TryParse(pieces[0], out min))
+				return false;
 			if (pieces.Length > 1)
 			{
-				if (!int.TryParse(pieces[1], out max))
-					return true;
+				if (pieces[1] == "") max = int.MaxValue;
+				else if (!int.TryParse(pieces[1], out max))
+					return false;
 				return min <= value && value <= max;
 			}
 			return value == min;
 		}
 
-		public List<Case> GetPossibleCases(GameState state)
+		public List<Case> GetPossibleCases(GameState state, bool fallback = false)
 		{
 			List<Case> availableCases = new List<Case>();
-			Trigger trigger = GetTrigger(state);
+			Trigger trigger = GetTrigger(state, fallback);
 			if (trigger == null)
 			{
 				return availableCases;
@@ -773,6 +794,11 @@ namespace SPNATI_Character_Editor
 					if (!InRange(possibleCase.TotalFinished, total))
 						continue;
 				}
+				if (!string.IsNullOrEmpty(possibleCase.TotalRounds))
+				{
+					if (!InRange(possibleCase.TotalRounds, state.TotalRounds))
+						continue;
+				}
 
 				availableCases.Add(possibleCase);
 			}
@@ -783,6 +809,7 @@ namespace SPNATI_Character_Editor
 
 	public enum GamePhase
 	{
+		Selected,
 		Start,
 		ExchangingCards,
 		GoodHand,

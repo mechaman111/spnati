@@ -48,6 +48,9 @@ namespace SPNATI_Character_Editor
 
 	public class Opponent
 	{
+		[XmlAttribute("release")]
+		public string ReleaseNumber;
+
 		[XmlAttribute("status")]
 		[DefaultValue(OpponentStatus.Main)]
 		public OpponentStatus Status;

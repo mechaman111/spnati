@@ -39,8 +39,17 @@
 			// 
 			chartArea1.AxisX.Interval = 1D;
 			chartArea1.AxisX.IsReversed = true;
+			chartArea1.AxisX.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.IncreaseFont | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont) 
+            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
+            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
 			chartArea1.AxisX.MajorGrid.Enabled = false;
 			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.CursorX.IsUserSelectionEnabled = true;
+			chartArea1.InnerPlotPosition.Auto = false;
+			chartArea1.InnerPlotPosition.Height = 94F;
+			chartArea1.InnerPlotPosition.Width = 87F;
+			chartArea1.InnerPlotPosition.X = 12F;
+			chartArea1.InnerPlotPosition.Y = 5F;
 			chartArea1.Name = "ChartArea1";
 			this.chart.ChartAreas.Add(chartArea1);
 			this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
