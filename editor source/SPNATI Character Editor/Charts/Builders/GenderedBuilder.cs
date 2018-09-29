@@ -47,7 +47,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				}
 			}
 
-			for (int i = 0; i < 30 && i < filteredData.Count; i++)
+			for (int i = 0; i < filteredData.Count; i++)
 			{
 				var item = filteredData[i];
 				chartData.Add(new ChartData(item.Item1.Label, item.Item2));

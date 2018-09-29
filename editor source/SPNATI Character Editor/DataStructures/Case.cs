@@ -829,6 +829,10 @@ namespace SPNATI_Character_Editor
 				{
 					//speaker is the target, so use the opposite tag
 					response.Tag = TriggerDatabase.GetOppositeTag(Tag, speaker, min);
+					if (response.Tag == null)
+					{
+						return null; //There is no way to respond to this tag
+					}
 					response.Target = speaker.FolderName;
 					response.TargetStage = speakerStageRange;
 					response.TargetTimeInStage = TimeInStage;

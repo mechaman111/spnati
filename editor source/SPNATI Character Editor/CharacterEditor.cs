@@ -184,6 +184,7 @@ namespace SPNATI_Character_Editor
 			EnableControls(c != null);
 			if (c != null)
 			{
+				c.PrepareForEdit();
 				Config.LastCharacter = c.FolderName;
 				_selectedCharacter = c;
 				_imageLibrary.Load(c);
