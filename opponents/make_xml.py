@@ -830,7 +830,7 @@ def make_meta_xml(data, filename):
 	enabled = "true" if "enabled" not in data or data["enabled"] == "true" else "false"
 	ET.SubElement(o, "enabled").text = enabled
 	
-	values = ["first","last","label","pic","gender","height","from","writer","artist","description","has_ending","layers","character_tags","release"]
+	values = ["first","last","label","pic","gender","height","from","writer","artist","description","has_ending","layers","character_tags"]
 	
 	for value in values:
 		content = ""
