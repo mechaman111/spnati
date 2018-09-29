@@ -290,6 +290,7 @@ function loadListingFile () {
             $individualListings.find('opponent').each(function () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
+                var releaseNumber = $(this).attr('release');
                 var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
                 if (doInclude || id in opponentGroupMap) {
@@ -297,7 +298,7 @@ function loadListingFile () {
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
 					}
-                    loadOpponentMeta(id, oppStatus, onComplete);
+                    loadOpponentMeta(id, oppStatus, releaseNumber, onComplete);
                 }
             });
 
@@ -308,7 +309,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, status, onComplete) {
+function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 	/* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 	$.ajax({
@@ -332,14 +333,13 @@ function loadOpponentMeta (id, status, onComplete) {
 			var description = $xml.find('description').text();
             var ending = $xml.find('has_ending').text() === "true";
             var layers = $xml.find('layers').text();
-            var release = $xml.find('release').text();
 			var scale = Number($xml.find('scale').text()) || 100.0;
 			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
 			var opponent = createNewOpponent(id, enabled, status, first, last,
                                              label, pic, gender, height, from,
                                              artist, writer, description,
-                                             ending, layers, release, scale, tags);
+                                             ending, layers, releaseNumber, scale, tags);
 
 			/* add the opponent to the list */
             onComplete(opponent);
