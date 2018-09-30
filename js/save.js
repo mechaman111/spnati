@@ -80,7 +80,7 @@ function Save(){
 	};
 	this.loadOptions = function(){
 		USAGE_TRACKING = this.data['usageTracking'];
-		players[HUMAN_PLAYER].timer = this.data['masturbationTimer'];
+		players[HUMAN_PLAYER].timer = this.data['masturbationTimer'] || 20;
 		players[HUMAN_PLAYER].gender = this.data['gender'];
 		setBackground(this.data['background']);
 
@@ -93,7 +93,7 @@ function Save(){
 
 	this.saveOptions = function(){
 		this.data['usageTracking'] = USAGE_TRACKING;
-		this.data['masturbationTimer'] = parseInt($masturbationTimerBox.val());
+		this.data['masturbationTimer'] = parseInt($masturbationTimerBox.val()) || 20;
 		var back = $("body").css('background-image');
 		var ind = back.indexOf('background')+10;
 		back = back.substr(ind);
