@@ -10,10 +10,9 @@
 /**************************************************
  * Stores meta information about groups.
  **************************************************/
-function createNewGroup (title, opponents, status) {
+function createNewGroup (title) {
 	var newGroupObject = {title:title,
-						  opponents:opponents,
-                          status:status};
+						  opponents:Array(4)};
 
 	return newGroupObject;
 }
@@ -204,7 +203,19 @@ function loadSelectScreen () {
 function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
-	var onComplete = function() {
+	var opponentGroupMap = {};
+	var opponentMap = {};
+	var onComplete = function(opp, index) {
+		if (opp) {
+			if (opp.id in opponentMap) {
+				loadedOpponents[opponentMap[opp.id]] = opp;
+			}
+			if (opp.id in opponentGroupMap) {
+				opponentGroupMap[opp.id].forEach(function(groupPos) {
+					groupPos.group.opponents[groupPos.idx] = opp;
+				});
+			}
+		}
 		if (--outstandingLoads % 16 == 0) {
 			updateSelectableOpponents();
 			updateIndividualSelectScreen();
@@ -221,63 +232,57 @@ function loadListingFile () {
 		dataType: "text",
 		success: function(xml) {
             var $xml = $(xml);
-            
-			/* start by parsing and loading the individual listings */
-            var oppDefaultIndex = 0; // keep track of an opponent's default placement
-            var opponentStatuses = {}; // keep track of an opponent's offline/testing status for loading group listings
 
-			$individualListings = $xml.find('individuals');
-			$individualListings.find('opponent').each(function () {
-                var oppStatus = $(this).attr('status');
-                var id = $(this).text();
-                
-                opponentStatuses[id] = oppStatus;
-                if (oppStatus === undefined || includedOpponentStatuses[oppStatus]) {
-                    console.log("Reading \""+id+"\" from listing file");
-                    outstandingLoads++;
-                    loadOpponentMeta(id, loadedOpponents, oppDefaultIndex++, oppStatus, onComplete);
-                }
-			});
-
-			/* end by parsing and loading the group listings */
-			$groupListings = $xml.find('groups');
-			$groupListings.find('group').each(function () {
+			/* start by parsing the group descriptions to know which
+			 * characters to load in addition to the main roster and any included statuses */
+			$xml.find('groups>group').each(function () {
 				var title = $(this).attr('title');
 				var opp1 = $(this).attr('opp1');
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
-                
-                var ids = [opp1, opp2, opp3, opp4];
-                var status = ids.map(function (id) {
-                    return opponentStatuses[id];
-                });
 
-				var newGroup = createNewGroup(title, Array(4), status);
-				outstandingLoads += 4;
-				loadGroupMeta($(this).attr('testing') ? 1 : 0, newGroup, ids, onComplete);
+                var ids = [opp1, opp2, opp3, opp4];
+
+				var newGroup = createNewGroup(title);
+				ids.forEach(function(id, idx) {
+					if (!(id in opponentGroupMap)) {
+						opponentGroupMap[id] = [];
+					}
+					opponentGroupMap[id].push({ group: newGroup, idx: idx });
+				});
+				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
 			});
+
+            /* now actually load the characters */
+            var oppDefaultIndex = 0; // keep track of an opponent's default placement
+
+            $individualListings = $xml.find('individuals');
+            $individualListings.find('opponent').each(function () {
+                var oppStatus = $(this).attr('status');
+                var id = $(this).text();
+                var releaseNumber = $(this).attr('release');
+                var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
+
+                if (doInclude || id in opponentGroupMap) {
+                    outstandingLoads++;
+					if (doInclude) {
+						opponentMap[id] = oppDefaultIndex++;
+					}
+                    loadOpponentMeta(id, oppStatus, releaseNumber, onComplete);
+                }
+            });
+
 		}
 	});
 }
 
 /************************************************************
-* Loads the meta information for an entire group.
-************************************************************/
-function loadGroupMeta (groupSelectScreen, group, opponents, onComplete) {
-    /* parse the individual information of each group member */
-    loadedGroups[groupSelectScreen].push(group);
-
-    for (var i = 0; i < 4; i++) {
-        loadOpponentMeta(opponents[i], group.opponents, i, group.status[i], onComplete);
-    }
-}
-
-/************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, targetArray, index, status, onComplete) {
+function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 	/* grab and parse the opponent meta file */
+    console.log("Loading metadata for \""+id+"\"");
 	$.ajax({
         type: "GET",
 		url: 'opponents/' + id + '/' + metaFile,
@@ -285,18 +290,10 @@ function loadOpponentMeta (id, targetArray, index, status, onComplete) {
 		success: function(xml) {
             var $xml = $(xml);
 
-			var opponent = new Opponent(id, $xml, status);
+			var opponent = new Opponent(id, $xml, status, releaseNumber);
 
 			/* add the opponent to the list */
-            if (index !== undefined) {
-                // enforces opponent default order according to listing file
-                // (instead of order being determined by when the AJAX call completes)
-                targetArray[index] = opponent;
-            }
-            else {
-                targetArray.push(opponent);
-            }
-            onComplete();
+            onComplete(opponent);
 		},
 		error: function(err) {
 			console.log("Failed reading \""+id+"\"");

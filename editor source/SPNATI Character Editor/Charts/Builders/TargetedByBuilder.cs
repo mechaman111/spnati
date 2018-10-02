@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					{
 						if (!string.IsNullOrEmpty(stageCase.Target))
 						{
-							if (!targets.Contains(stageCase.Target))
+							if (!targets.Contains(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
 							{
 								Tuple<int, int> current;
 								if (!targetMap.TryGetValue(stageCase.Target, out current))
@@ -71,7 +71,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 								}
 							}
 						}
-						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						if (!string.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
 						{
 							if (!targets.Contains(stageCase.AlsoPlaying))
 							{
@@ -130,7 +130,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					break;
 			}
 
-			for (int i = 0; i < 30 && i < _data.Count; i++)
+			for (int i = 0; i < _data.Count; i++)
 			{
 				var item = _data[i];
 				switch (view)
@@ -153,7 +153,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public string GetTitle()
 		{
-			return "Unique Players Targeting this Character (Top 30 Characters)";
+			return "Unique Players Targeting this Character";
 		}
 
 		public string[] GetViews()

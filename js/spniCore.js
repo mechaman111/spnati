@@ -307,13 +307,13 @@ Player.prototype.resetState = function () {
     	/* find and create all of their clothing */
         var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
-    		var properName = $(this).attr('proper-name');
-    		var lowercase = $(this).attr('lowercase');
+    		var formalName = $(this).attr('formalName');
+    		var genericName = $(this).attr('genericName') || $(this).attr('lowercase');
     		var type = $(this).attr('type');
     		var position = $(this).attr('position');
     		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
     
-    		var newClothing = createNewClothing(properName, lowercase, type, position, null, plural, 0);
+    		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
     
     		clothingArr.push(newClothing);
     	});
@@ -364,7 +364,7 @@ Player.prototype.updateLabel = function () {
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
  ****************************************************************************/
-function Opponent (id, $metaXml, status) {    
+function Opponent (id, $metaXml, status, releaseNumber) {    
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
@@ -385,7 +385,7 @@ function Opponent (id, $metaXml, status) {
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
-    this.release = parseInt($metaXml.find('release').text(), 10) || Number.POSITIVE_INFINITY;
+    this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -654,10 +654,14 @@ function sendBugReport() {
         contentType: 'application/json',
         error: function (jqXHR, status, err) {
             console.error("Could not send bug report - error "+status+": "+err);
+            $('#bug-report-status').text("Failed to send bug report (error "+status+")");
         },
+        success: function () {
+            $('#bug-report-status').text("Bug report sent!");
+        }
     });
     
-    closeBugReportModal();
+    
 }
 
 $('#bug-report-type').change(updateBugReportOutput);

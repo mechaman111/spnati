@@ -124,35 +124,48 @@ function parseDialogue (caseObject, self, target) {
  ************************************************************/
 function expandDialogue (dialogue, self, target) {
     function substitute(match, variable, fn, args) {
-		//var initCap = variable[0] == variable[0].toUpperCase();
+        // If substitution fails, return match unchanged.
+        var substitution = match;
+        if (fn) fn = fn.toLowerCase();
         try {
-            switch (variable) {
-            case 'player': return players[HUMAN_PLAYER].label;
-            case 'name': return target.label;
-            case 'Name': return target.label.initCap();
-            case 'Clothing': return (target||self).removedClothing.proper;
+            switch (variable.toLowerCase()) {
+            case 'player':
+                substitution = players[HUMAN_PLAYER].label;
+                break;
+            case 'name':
+                substitution = target.label;
+                break;
             case 'clothing':
-                if (fn == 'ifPlural') {
-                    return expandDialogue(args.split('|')[(target||self).removedClothing.plural ? 0 : 1], self, target);
+                var clothing = (target||self).removedClothing;
+                if (fn == 'ifplural' && args) {
+                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+                } else if (fn == 'formal' && args === undefined) {
+                    substitution = clothing.formal || clothing.generic;
                 } else if (fn === undefined) {
-                    return (target||self).removedClothing.lower;
+                    substitution = clothing.generic;
                 }
+                break;
             case 'cards': /* determine how many cards are being swapped */
-				var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
-                if (fn == 'ifPlural') {
-                    return expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
+                var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+                if (fn == 'ifplural') {
+                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
                 } else if (fn === undefined) {
-                    return n;
+                    substitution = String(n);
                 }
+                break;
+            }
+            if (variable[0] == variable[0].toUpperCase()) {
+                substitution = substitution.initCap();
             }
         } catch (ex) {
             console.log("Invalid substitution caused exception " + ex);
         }
-        // Substitution failed - return match unchanged.
-        return match;
+        return substitution;
     }
-	
-    return dialogue.replace(/~(\w+)(?:\.(\w+)\(([^)]*)\))?~/g, substitute);
+    // variable or
+    // variable.attribute or
+    // variable.function(arguments)
+    return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 /************************************************************
