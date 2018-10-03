@@ -788,19 +788,25 @@ function updateSelectableGroups(screen) {
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
 
-    for (var i = 1; i < players.length; i++) {
-        players[i] = null;
-    }
+  for (var i = 1; i < players.length; i++) {
+    players[i] = null;
+  }
 
 	/* get a random number for the group listings */
   var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
-    console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
+  var chosenGroup = loadedGroups[0][randomGroupNumber];
+	console.log(chosenGroup.title);
 
-	/* load the corresponding group */
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[0], playerLoadedCallback, 1);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[1], playerLoadedCallback, 2);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[2], playerLoadedCallback, 3);
-	loadBehaviour(loadedGroups[0][randomGroupNumber].opponents[3], playerLoadedCallback, 4);
+	for (var i = 0; i < chosenGroup.opponents.length; i++) {
+		/* Don't try to load empty character slots */
+		if (!chosenGroup.opponents[i] || typeof chosenGroup.opponents[i] !== 'object') {
+			continue;
+		}
+
+		/* character exists? Okay, load it */
+		loadBehaviour(chosenGroup.opponents[i], playerLoadedCallback, i+1);
+	}
+
 	updateSelectionVisuals();
 }
 
@@ -811,7 +817,7 @@ function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out already selected characters
-        return (!players.some(function(p) { return p.id == opp.id; })
+        return (!players.some(function(p) { return p && p.id == opp.id; })
                 && (!predicate || predicate(opp)));
     });
 
