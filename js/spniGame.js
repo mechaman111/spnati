@@ -297,7 +297,7 @@ function makeAIDecision () {
 	}
 
 	/* update a few hardcoded visuals */
-	updateBehaviour(currentTurn, SWAP_CARDS);
+	players[currentTurn].updateBehaviour(SWAP_CARDS);
 	updateGameVisual(currentTurn);
 
 	/* wait and implement AI action */
@@ -316,11 +316,11 @@ function implementAIAction () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
-		updateBehaviour(currentTurn, BAD_HAND);
+		players[currentTurn].updateBehaviour(BAD_HAND);
 	} else if (players[currentTurn].hand.strength == PAIR) {
-		updateBehaviour(currentTurn, OKAY_HAND);
+		players[currentTurn].updateBehaviour(OKAY_HAND);
 	} else {
-		updateBehaviour(currentTurn, GOOD_HAND);
+		players[currentTurn].updateBehaviour(GOOD_HAND);
 	}
 	updateGameVisual(currentTurn);
 
@@ -350,7 +350,7 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            updateBehaviour(currentTurn, players[currentTurn].forfeit[0]);
+            players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -712,7 +712,7 @@ function handleGameOver() {
 		}
 		for (var i = 1; i < players.length; i++){
 			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			updateBehaviour(i, tag, players[winner]);
+			players[i].updateBehaviour(tag, players[winner]);
 		}
 
         updateAllGameVisuals();
