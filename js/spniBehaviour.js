@@ -225,7 +225,7 @@ function checkMarker(predicate, target) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-Player.prototype.updateBehaviour = function(tag, opp) {
+Opponent.prototype.updateBehaviour = function(tag, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
