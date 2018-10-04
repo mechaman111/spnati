@@ -280,6 +280,10 @@ function Player (id) {
     this.resetState();
 }
 
+Player.prototype.isLoaded = function() {
+	return this.xml != undefined;
+}
+
 /*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
@@ -398,7 +402,8 @@ Opponent.prototype.constructor = Opponent;
  * The onLoadFinished parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-Opponent.prototype.loadBehaviour = function (onLoadFinished, slot) {
+Opponent.prototype.loadBehaviour = function (slot) {
+	this.slot = slot;
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
@@ -443,13 +448,14 @@ Opponent.prototype.loadBehaviour = function (onLoadFinished, slot) {
             this.targetedLines = targetedLines;
             
             this.resetState();
-            
-            onLoadFinished(this, slot);
+			console.log(this.slot+": "+this);
+			this.updateBehaviour(SELECTED);
+			updateSelectionVisuals();
 		}.bind(this),
 		/* Error callback. */
         function(err) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
-            delete players[slot];
+            delete players[this.slot];
         }.bind(this)
 	);
 }
