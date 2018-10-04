@@ -635,9 +635,22 @@ function getBugReportJSON() {
     return JSON.stringify(report);
 }
 
+function updateBugReportSendButton() {
+    if($('#bug-report-desc').val().trim().length > 0) {
+        $("#bug-report-modal-send-button").removeAttr('disabled');
+    } else {
+        $("#bug-report-modal-send-button").attr('disabled', 'true');
+    }
+}
+
+$('#bug-report-desc').keyup(updateBugReportSendButton);
+
 /* Update the bug report text dump. */
-function updateBugReportOutput() {
+function updateBugReportOutput() {    
     $('#bug-report-output').val(getBugReportJSON());
+    $('#bug-report-status').text("");
+    
+    updateBugReportSendButton();
 }
 
 function copyBugReportOutput() {
@@ -647,6 +660,11 @@ function copyBugReportOutput() {
 }
 
 function sendBugReport() {
+    if($('#bug-report-desc').val().trim().length == 0) {
+        $('#bug-report-status').text("Please enter a description first!");
+        return false;
+    }
+    
     $.ajax({
         url: BUG_REPORTING_ENDPOINT,
         method: 'POST',
@@ -658,6 +676,8 @@ function sendBugReport() {
         },
         success: function () {
             $('#bug-report-status').text("Bug report sent!");
+            $('#bug-report-desc').val("");
+            closeBugReportModal();
         }
     });
     

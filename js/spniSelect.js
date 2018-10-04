@@ -741,19 +741,25 @@ function updateSelectableGroups(screen) {
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
 
-    for (var i = 1; i < players.length; i++) {
-        players[i] = null;
-    }
+  for (var i = 1; i < players.length; i++) {
+    players[i] = null;
+  }
 
 	/* get a random number for the group listings */
-    var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
-    console.log(loadedGroups[0][randomGroupNumber].opponents[0]);
+  var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
+  var chosenGroup = loadedGroups[0][randomGroupNumber];
+	console.log(chosenGroup.title);
 
-	/* load the corresponding group */
-	loadedGroups[0][randomGroupNumber].opponents[0].loadBehaviour(playerLoadedCallback, 1);
-	loadedGroups[0][randomGroupNumber].opponents[1].loadBehaviour(playerLoadedCallback, 2);
-	loadedGroups[0][randomGroupNumber].opponents[2].loadBehaviour(playerLoadedCallback, 3);
-	loadedGroups[0][randomGroupNumber].opponents[3].loadBehaviour(playerLoadedCallback, 4);
+	for (var i = 0; i < chosenGroup.opponents.length; i++) {
+		/* Don't try to load empty character slots */
+		if (!chosenGroup.opponents[i] || typeof chosenGroup.opponents[i] !== 'object') {
+			continue;
+		}
+
+		/* character exists? Okay, load it */
+		chosenGroup.opponents[i].loadBehaviour(playerLoadedCallback, i+1);
+	}
+
 	updateSelectionVisuals();
 }
 
@@ -764,7 +770,7 @@ function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out already selected characters
-        return (!players.some(function(p) { return p.id == opp.id; })
+        return (!players.some(function(p) { return p && p.id == opp.id; })
                 && (!predicate || predicate(opp)));
     });
 
