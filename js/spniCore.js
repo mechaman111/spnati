@@ -395,6 +395,13 @@ function Opponent (id, $metaXml, status, releaseNumber) {
 Opponent.prototype = Object.create(Player.prototype);
 Opponent.prototype.constructor = Opponent;
 
+Opponent.prototype.onSelected = function() {
+    this.resetState();
+	console.log(this.slot+": "+this);
+	this.updateBehaviour(SELECTED);
+	updateSelectionVisuals();
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the 
  * given opponent.
@@ -404,6 +411,10 @@ Opponent.prototype.constructor = Opponent;
  ************************************************************/
 Opponent.prototype.loadBehaviour = function (slot) {
 	this.slot = slot;
+	if (this.isLoaded()) {
+		this.onSelected();
+		return;
+	}
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
@@ -446,11 +457,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
-            
-            this.resetState();
-			console.log(this.slot+": "+this);
-			this.updateBehaviour(SELECTED);
-			updateSelectionVisuals();
+			this.onSelected();
 		}.bind(this),
 		/* Error callback. */
         function(err) {
