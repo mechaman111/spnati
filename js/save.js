@@ -93,7 +93,7 @@ function Save(){
 
 	this.saveOptions = function(){
 		this.data['usageTracking'] = USAGE_TRACKING;
-		this.data['masturbationTimer'] = parseInt($masturbationTimerBox.val()) || 20;
+		this.data['masturbationTimer'] = players[HUMAN_PLAYER].timer;
 		var back = $("body").css('background-image');
 		var ind = back.indexOf('background')+10;
 		back = back.substr(ind);

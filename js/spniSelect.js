@@ -735,6 +735,10 @@ function updateSelectableGroups(screen) {
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
 
+    for (var i = 1; i < players.length; i++) {
+        $selectImages[i-1].off('load');
+    }
+
 	/* get a random number for the group listings */
 	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
 	var chosenGroup = loadedGroups[0][randomGroupNumber];
@@ -791,6 +795,7 @@ function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
         delete players[i];
+        $selectImages[i-1].off('load');
     }
     updateSelectionVisuals();
 }
