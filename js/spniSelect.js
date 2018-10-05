@@ -6,36 +6,7 @@
 /**********************************************************************
  *****               Opponent & Group Specification               *****
  **********************************************************************/
-
-/**************************************************
- * Stores meta information about opponents.
- **************************************************/
-function createNewOpponent (id, enabled, status, first, last, label, image, gender,
-                            height, source, artist, writer, description,
-                            ending, layers, release, scale, tags) {
-	var newOpponentObject = {id:id,
-							 folder:'opponents/'+id+'/',
-							 enabled:enabled,
-                             status: status,
-                             first:first,
-							 last:last,
-							 label:label,
-							 image:image,
-                             gender:gender,
-							 height:height,
-							 source:source,
-                             artist:artist,
-                             writer:writer,
-							 description:description,
-                             ending:ending,
-                             layers:layers,
-							 scale:scale,
-							 tags:tags,
-                             release:parseInt(release, 10) || Number.POSITIVE_INFINITY};
-
-	return newOpponentObject;
-}
-
+ 
 /**************************************************
  * Stores meta information about groups.
  **************************************************/
@@ -318,28 +289,8 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 		dataType: "text",
 		success: function(xml) {
             var $xml = $(xml);
-            
-			/* grab all the info for this listing */
-			var enabled = $xml.find('enabled').text();
-			var first = $xml.find('first').text();
-			var last = $xml.find('last').text();
-			var label = $xml.find('label').text();
-			var pic = $xml.find('pic').text();
-			var gender = $xml.find('gender').text();
-			var height = $xml.find('height').text();
-			var from = $xml.find('from').text();
-			var artist = $xml.find('artist').text();
-			var writer = $xml.find('writer').text();
-			var description = $xml.find('description').text();
-            var ending = $xml.find('has_ending').text() === "true";
-            var layers = $xml.find('layers').text();
-			var scale = Number($xml.find('scale').text()) || 100.0;
-			var tags = $xml.find('tags').children().map(function() { return $(this).text(); }).get();
 
-			var opponent = createNewOpponent(id, enabled, status, first, last,
-                                             label, pic, gender, height, from,
-                                             artist, writer, description,
-                                             ending, layers, releaseNumber, scale, tags);
+			var opponent = new Opponent(id, $xml, status, releaseNumber);
 
 			/* add the opponent to the list */
             onComplete(opponent);
@@ -668,7 +619,9 @@ function suggestionSelected(slot, quad) {
             loadingOpponents[slot-1] = selectedID;
             
         	updateSelectionVisuals();
-            loadBehaviour(loadedOpponents[i], playerLoadedCallback, slot);
+            
+            loadedOpponents[i].loadBehaviour(playerLoadedCallback, slot);
+            
             return;
         }
     }
@@ -804,7 +757,7 @@ function clickedRandomGroupButton () {
 		}
 
 		/* character exists? Okay, load it */
-		loadBehaviour(chosenGroup.opponents[i], playerLoadedCallback, i+1);
+		chosenGroup.opponents[i].loadBehaviour(playerLoadedCallback, i+1);
 	}
 
 	updateSelectionVisuals();
@@ -831,7 +784,7 @@ function clickedRandomFillButton (predicate) {
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-            loadBehaviour(loadedOpponentsCopy[randomOpponent], playerLoadedCallback, i);
+            loadedOpponentsCopy[randomOpponent].loadBehaviour(playerLoadedCallback, i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -881,7 +834,7 @@ function selectIndividualOpponent (slot) {
     loadingOpponents[selectedSlot-1] = shownIndividuals[slot-1].id;
     
 	updateSelectionVisuals();
-	loadBehaviour(shownIndividuals[slot-1], playerLoadedCallback, selectedSlot);
+	shownIndividuals[slot-1].loadBehaviour(playerLoadedCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 }
@@ -954,8 +907,9 @@ function selectGroup () {
 
 	/* load the group members */
 	for (var i = 0; i < 4; i++) {
-        if (selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i]) {
-            loadBehaviour(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i], playerLoadedCallback, i+1);
+        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i];
+        if (member) {
+            member.loadBehaviour(playerLoadedCallback, i+1);
 		}
 	}
     /* switch screens */
