@@ -349,7 +349,7 @@ function clothing_keyUp(e)
         if (e.keyCode == 32 && !$stripButton.prop('disabled')) { // Space
             closeStrippingModal();
         }
-        else if (e.keyCode >= 49 && e.keyCode <= 57) { // A number key
+        else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
             selectClothingToStrip(e.keyCode - 49);
         }
     }
