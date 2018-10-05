@@ -267,7 +267,7 @@ function Player (id) {
     this.folder = 'opponents/'+id+'/';
     this.first = '';
     this.last = '';
-    this.labels = [];
+    this.labels = undefined;
     this.size = eSize.MEDIUM;
     this.intelligence = eIntelligence.AVERAGE;
     this.gender = eGender.MALE;
