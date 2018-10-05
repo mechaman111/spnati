@@ -234,9 +234,14 @@ function galleryPrevPage(){
 	}
 }
 
-function selectEnding(i){
+function selectEnding(i) {
 	selectedEnding = epp*galleryPage+i;
 	var ending = galleryEndings[selectedEnding];
+	
+	if (!ending) {
+		return;
+	}
+	
 	if(ending.unlocked){
 		$galleryStartButton.attr('disabled', false);
 		chosenEpilogue = ending;
