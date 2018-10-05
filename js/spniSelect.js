@@ -761,7 +761,7 @@ function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out already selected characters
-        return (!players.some(function(p) { return p && p.id == opp.id; })
+        return (!players.some(function(p) { return p && p.id == opp .id; })
                 && (!predicate || predicate(opp)));
     });
 
@@ -774,7 +774,7 @@ function clickedRandomFillButton (predicate) {
 
 			/* load opponent */
 			players[i] = loadedOpponentsCopy[randomOpponent];
-            players[i].loadBehaviour(i);
+			players[i].loadBehaviour(i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -823,7 +823,7 @@ function selectIndividualOpponent (slot) {
 	players[selectedSlot] = shownIndividuals[slot-1];
 	updateSelectionVisuals();
 	players[selectedSlot].loadBehaviour(selectedSlot);
-    
+
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
 }
@@ -880,7 +880,7 @@ function selectGroup () {
 	for (var i = 0; i < 4; i++) {
         var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i];
         if (member) {
-			players[i + 1] = member;
+            players[i + 1] = member;
             member.loadBehaviour(i + 1);
 		}
 	}
@@ -982,7 +982,7 @@ function backSelectScreen () {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] && players[i].isLoaded()) {            
+        if (players[i] && players[i].isLoaded()) {
             /* update dialogue */
             $selectDialogues[i-1].html(players[i].chosenState.dialogue);
 

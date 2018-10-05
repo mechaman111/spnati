@@ -410,11 +410,11 @@ Opponent.prototype.onSelected = function() {
  * receiving a new player object and a slot number.
  ************************************************************/
 Opponent.prototype.loadBehaviour = function (slot) {
-	this.slot = slot;
-	if (this.isLoaded()) {
-		this.onSelected();
-		return;
-	}
+    this.slot = slot;
+    if (this.isLoaded()) {
+        this.onSelected();
+        return;
+    }
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
@@ -457,7 +457,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
-			this.onSelected();
+            this.onSelected();
 		}.bind(this),
 		/* Error callback. */
         function(err) {
