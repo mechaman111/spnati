@@ -347,7 +347,7 @@ function updateIndividualSelectScreen () {
 	for (var i = individualPage*4; i < (individualPage+1)*4; i++) {
 		var index = i - individualPage*4;
 
-		if (i < selectableOpponents.length) {
+		if (i in selectableOpponents) {
 			shownIndividuals[index] = selectableOpponents[i];
 
 			$individualNameLabels[index].html(selectableOpponents[i].first + " " + selectableOpponents[i].last);
