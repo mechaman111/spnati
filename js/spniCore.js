@@ -357,7 +357,7 @@ Player.prototype.getIntelligence = function () {
 };
 
 Player.prototype.updateLabel = function () {
-    if (this.labels && this.labels.length > 0) this.label = this.getByStage(this.labels);
+    if (this.labels) this.label = this.getByStage(this.labels);
 }
 
 
