@@ -173,13 +173,13 @@ function tickForfeitTimers () {
 	// Show a player masturbating while dealing or after the game, if there is one available
 	if (masturbatingPlayers.length > 0
 		&& ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
-		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
-		for (var i = 1; i < players.length; i++) {
-			players[i].updateBehaviour(
-				(i == playerToShow) ? players[i].forfeit[0]
-					: (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
-				players[playerToShow]);
-		}
+		var playerToShow = players[masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]];
+		players.forEach(function(p) {
+			p.updateBehaviour(
+				(p == playerToShow) ? p.forfeit[0]
+					: (playerToShow.gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
+				playerToShow);
+		});
 		updateAllGameVisuals();
 	}
 	

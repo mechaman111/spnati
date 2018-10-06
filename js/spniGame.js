@@ -690,30 +690,18 @@ function endRound () {
  * players to finish their forfeits.
  ************************************************************/
 function handleGameOver() {
-	/* determine how many timers are left */
-	var left = 0;
-	for (var i = 0; i < timers.length; i++) {
-		if (players[i] && timers[i] > 0) {
-			left++;
-		}
-	}
+	var winner;
 
-	/* determine true end */
-	if (left == 0) {
+	/* determine true end and identify winner (even though endRound() did that too) */
+	if (!players.some(function(p, i) {
+		if (!p.out) winner = p;
+		return timers[i] > 0;
+	})) {
 		/* true end */
-
-		//identify winner
-		var winner = -1;
-		for (var i = 0; i < players.length; i++){
-			if (players[i] && !players[i].out){
-				winner = i;
-				break;
-			}
-		}
-		for (var i = 1; i < players.length; i++){
-			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			players[i].updateBehaviour(tag, players[winner]);
-		}
+		players.forEach(function(p) {
+			var tag = (p == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
+			p.updateBehaviour(tag, winner);
+		});
 
         updateAllGameVisuals();
 
