@@ -280,10 +280,6 @@ function Player (id) {
     this.resetState();
 }
 
-Player.prototype.isLoaded = function() {
-	return this.xml != undefined;
-}
-
 /*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
@@ -328,42 +324,11 @@ Player.prototype.resetState = function () {
 	this.updateLabel();
 }
 
-Player.prototype.getImagesForStage = function (stage) {
-    if(!this.xml) return [];
-    
-    var imageSet = {};
-    var folder = this.folder;
-    this.xml.find('stage[id="'+stage+'"] state').each(function () {
-        imageSet[folder+$(this).attr('img')] = true;
-    });
-    return Object.keys(imageSet);
-};
 
-Player.prototype.getByStage = function (arr) {
-    if (typeof(arr) === "string") {
-        return arr;
-    }
-    var bestFitStage = -1;
-    var bestFit = null;
-    for (var i = 0; i < arr.length; i++) {
-        var startStage = arr[i].getAttribute('stage');
-        startStage = parseInt(startStage, 10) || 0;
-        if (startStage > bestFitStage && startStage <= this.stage) {
-            bestFit = $(arr[i]).text();
-            bestFitStage = startStage;
-        }
-    }
-    return bestFit;
-};
-
-Player.prototype.getIntelligence = function () {
-    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
-};
-
-Player.prototype.updateLabel = function () {
-    if (this.labels) this.label = this.getByStage(this.labels);
-}
-
+/* These shouldn't do anything for the human player, but exist as empty functions
+   to make it easier to iterate over the entire players[] array. */
+Player.prototype.updateLabel = function () { }
+Player.prototype.updateBehaviour = function() { }
 
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
@@ -395,12 +360,52 @@ function Opponent (id, $metaXml, status, releaseNumber) {
 Opponent.prototype = Object.create(Player.prototype);
 Opponent.prototype.constructor = Opponent;
 
+Opponent.prototype.isLoaded = function() {
+	return this.xml != undefined;
+}
+
 Opponent.prototype.onSelected = function() {
     this.resetState();
 	console.log(this.slot+": "+this);
 	this.updateBehaviour(SELECTED);
 	updateSelectionVisuals();
 }
+
+Opponent.prototype.updateLabel = function () {
+    if (this.labels) this.label = this.getByStage(this.labels);
+}
+
+Opponent.prototype.getImagesForStage = function (stage) {
+    if(!this.xml) return [];
+    
+    var imageSet = {};
+    var folder = this.folder;
+    this.xml.find('stage[id="'+stage+'"] state').each(function () {
+        imageSet[folder+$(this).attr('img')] = true;
+    });
+    return Object.keys(imageSet);
+};
+
+Opponent.prototype.getByStage = function (arr) {
+    if (typeof(arr) === "string") {
+        return arr;
+    }
+    var bestFitStage = -1;
+    var bestFit = null;
+    for (var i = 0; i < arr.length; i++) {
+        var startStage = arr[i].getAttribute('stage');
+        startStage = parseInt(startStage, 10) || 0;
+        if (startStage > bestFitStage && startStage <= this.stage) {
+            bestFit = $(arr[i]).text();
+            bestFitStage = startStage;
+        }
+    }
+    return bestFit;
+};
+
+Opponent.prototype.getIntelligence = function () {
+    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
+};
 
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the 
