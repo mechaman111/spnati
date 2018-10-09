@@ -360,6 +360,19 @@ function Opponent (id, $metaXml, status, releaseNumber) {
 Opponent.prototype = Object.create(Player.prototype);
 Opponent.prototype.constructor = Opponent;
 
+Opponent.prototype.clone = function() {
+	var clone = Object.create(Opponent.prototype);
+	/* This should be deep enough for our purposes. */
+	for (var prop in this) {
+		if (this[prop] instanceof Array) {
+			clone[prop] = this[prop].slice();
+		} else {
+			clone[prop] = this[prop];
+		}
+	}
+	return clone;
+}
+
 Opponent.prototype.isLoaded = function() {
 	return this.xml != undefined;
 }

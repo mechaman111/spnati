@@ -881,13 +881,17 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-	/* load the group members */
-	for (var i = 0; i < 4; i++) {
-        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i];
+    clickedRemoveAllButton();
+    /* load the group members */
+    for (var i = 1; i < 5; i++) {
+        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i-1];
         if (member) {
-            players[i + 1] = member;
-            member.loadBehaviour(i + 1);
-		}
+            if (players.some(function(p, j) { return i != j && p == member; })) {
+                member = member.clone();
+            }
+            member.loadBehaviour(i);
+            players[i] = member;
+        }
 	}
     /* clear the selection screen */
 	updateSelectionVisuals();
