@@ -6,7 +6,7 @@
 /**********************************************************************
  *****               Opponent & Group Specification               *****
  **********************************************************************/
- 
+
 /**************************************************
  * Stores meta information about groups.
  **************************************************/
@@ -121,6 +121,7 @@ $groupCreditsButton = $('#group-credits-button');
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
+$tagList = $("#tagList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
@@ -150,6 +151,7 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var tagList = [];
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -208,6 +210,11 @@ function loadListingFile () {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
+        opp.tags.forEach(function(tag) {
+          if (!~tagList.indexOf(tag)) {
+            tagList.push(tag);
+          }
+        })
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -304,12 +311,12 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 function updateStatusIcon(elem, status) {
     var icon_img = 'img/testing-badge.png';
     var tooltip = TESTING_STATUS_TOOLTIP;
-    
+
     if(!status) {
         elem.removeAttr('title').removeAttr('data-original-title').hide();
         return;
     }
-    
+
     if (status === 'offline') {
         icon_img = 'img/offline-badge.png';
         tooltip = OFFLINE_STATUS_TOOLTIP;
@@ -317,7 +324,7 @@ function updateStatusIcon(elem, status) {
         icon_img = 'img/incomplete-badge.png';
         tooltip = INCOMPLETE_STATUS_TOOLTIP;
     }
-    
+
     elem.attr({
         'src': icon_img,
         'title': tooltip,
@@ -346,7 +353,7 @@ function updateIndividualSelectScreen () {
 	for (var i = individualPage*4; i < (individualPage+1)*4; i++) {
 		var index = i - individualPage*4;
 
-		if (i < selectableOpponents.length) {
+		if (i in selectableOpponents) {
 			shownIndividuals[index] = selectableOpponents[i];
 
 			$individualNameLabels[index].html(selectableOpponents[i].first + " " + selectableOpponents[i].last);
@@ -363,9 +370,9 @@ function updateIndividualSelectScreen () {
             else {
                 $individualBadges[index].hide();
             }
-            
+
             updateStatusIcon($individualStatuses[index], selectableOpponents[i].status);
-            
+
             $individualLayers[index].show();
             $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
 
@@ -448,9 +455,9 @@ function updateGroupSelectScreen () {
             else {
                 $groupBadges[i].hide();
             }
-            
+
             updateStatusIcon($groupStatuses[i], opponent.status);
-            
+
             $groupLayers[i].show();
             $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
 
@@ -491,7 +498,7 @@ function updateSuggestionQuad(slot, quad, opponent) {
     var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
     var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
     var tooltip = null;
-    
+
     if (opponent.status === 'testing') {
         tooltip = TESTING_STATUS_TOOLTIP;
     } else if (opponent.status === 'offline') {
@@ -499,15 +506,15 @@ function updateSuggestionQuad(slot, quad, opponent) {
     } else if (opponent.status === 'incomplete') {
         tooltip = INCOMPLETE_STATUS_TOOLTIP;
     }
-    
+
     shownSuggestions[slot][quad] = opponent.id;
-    
+
     img_elem.attr({
         'title': tooltip,
         'data-original-title': tooltip,
         'src': opponent.folder+opponent.image
     }).tooltip();
-    
+
     label_elem.text(opponent.label);
 }
 
@@ -557,7 +564,7 @@ function updateSelectableOpponents(autoclear) {
         // filter by tag
         if (tag) {
             if (!opp.tags || !opp.tags.some(function(t) {
-                return t.toLowerCase().indexOf(tag) >= 0;
+                return t.toLowerCase() == tag;
             })) {
                 return false;
             }
@@ -600,26 +607,26 @@ function updateSelectableOpponents(autoclear) {
  ************************************************************/
 function suggestionSelected(slot, quad) {
     var selectedID = shownSuggestions[slot-1][quad-1];
-    
+
     if(!selectedID) {
         /* This shouldn't happen. */
         console.error("Could not find suggested opponent ID for slot " + slot + " and quad " + quad);
         return;
     }
-    
+
     /* Find the character they selected. */
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].id === selectedID) {
             players[slot] = loadedOpponents[i];
             
         	updateSelectionVisuals();
-            
+
             players[slot].loadBehaviour(slot);
-            
+
             return;
         }
     }
-    
+
     /* This shouldn't happen, either. */
     console.error("Could not find opponent with ID " + selectedID);
 }
@@ -636,7 +643,7 @@ function selectOpponentSlot (slot) {
          * the amount of loaded opponents drops to 0. */
         if (sortingMode === "Targeted most by selected") {
             var player_count = countLoadedOpponents();
-            if (player_count <= 1) { 
+            if (player_count <= 1) {
                 setSortingMode("Featured");
             }
         }
@@ -654,7 +661,7 @@ function selectOpponentSlot (slot) {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
         delete players[slot];
-        
+
         updateSelectionVisuals();
     }
 }
@@ -670,7 +677,7 @@ function clickedSelectGroupButton (screen) {
 }
 
 /************************************************************
- * The player clicked on the Preset Tables or Testing Tables 
+ * The player clicked on the Preset Tables or Testing Tables
  * button from within the table select screen.
  ************************************************************/
 function switchSelectGroupScreen (screen) {
@@ -951,13 +958,13 @@ function advanceSelectScreen () {
             'origin': getReportedOrigin(),
             'table': {}
         };
-        
+
         for (let i=1;i<5;i++) {
             if (players[i]) {
                 usage_tracking_report.table[i] = players[i].id;
             }
         }
-        
+
         $.ajax({
             url: USAGE_TRACKING_ENDPOINT,
             method: 'POST',
@@ -1058,23 +1065,23 @@ function updateSelectionVisuals () {
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled);
     $groupButton.attr('disabled', loaded < filled);
-    
+
     /* Update suggestions images. */
     var current_player_count = countLoadedOpponents();
-    
+
     if (current_player_count >= 3) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
                 return false;
             }
-            
+
             return true;
         });
-    
+
         /* sort opponents */
         suggested_opponents.sort(sortOpponentsByMostTargeted());
-        
+
         var suggestion_idx = 0;
         for (var i=1;i<players.length;i++) {
             if (players[i] === undefined) {
@@ -1152,7 +1159,14 @@ function hideGroupSelectionTable() {
 }
 
 function openSearchModal() {
-    $searchModal.modal('show');
+  /* build the list of tags for the filter (once) */
+  if (!$tagList.children('option').length) {
+    tagList.forEach(function(tag) {
+      $tagList.append('<option value="' + tag + '"/>');
+    });
+  }
+
+  $searchModal.modal('show');
 }
 
 
@@ -1335,14 +1349,14 @@ function updateOpponentCountStats(opponentArr, uiElements) {
             if (DEBUG) {
                 console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx);
             }
-            
+
             var countsPromise = new Promise(function (resolve, reject) {
                 fetchCompressedURL(
                     opp.folder + 'behaviour.xml',
                     resolve, reject
                 );
             });
-            
+
             countsPromise.then(countLinesImages).then(function(response) {
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
