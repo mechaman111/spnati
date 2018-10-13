@@ -1,0 +1,554 @@
+#required for behaviour.xml
+first=Haru
+last=Okumura
+label=Haru
+gender=female
+size=large
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=haru
+tag=persona_5
+tag=brunette
+tag=phantom_thieves
+tag=cute
+tag=fair-skinned
+tag=creepy
+tag=video_game
+tag=large_breasts
+tag=kind
+tag=flirty
+tag=japanese
+tag=bisexual
+
+#required for meta.xml
+#select screen image
+pic=0-calm
+height=5'2
+from=Persona 5
+writer=Thursdays
+artist=Thursdays, LastGallant
+description=Haru Okumura is a sweet young lady who is also the former heiress of Okumura Foods. Despite being kind and gentle, she has a rather sadistic side to her.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+start=0-calm,You're all playing poker? In that case, I'd be happy to join!
+start=0-calm,Hello there. I'm Haru Okumura, and I'd be happy to be your opponent.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Shoes,shoes,extra,lower
+clothes=Tights,tights,minor,lower
+clothes=Sweater,sweater,minor,upper
+clothes=Skirt,skirt,major,lower
+clothes=Shirt,shirt,major,upper
+clothes=Panties,panties,important,lower
+clothes=Bra,bra,important,upper
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-game_start=joyful,Hello everyone!
+0-game_start,alsoPlaying:ann=joyful,Ann-chan! Are you going to join us?
+0-game_start,alsoPlaying:futaba=joyful,Futaba-chan! How good to see you!
+0-game_start,alsoPlaying:ryuji=joyful,Ryuji-kun! I'm so glad you decided to join us!
+0-game_start,count-phantom_thieves:3=joyful,I didn't expect my friends to be here! Hello everyone, I hope you don't mind if I join!
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=,I'll exchange ~cards~ cards.
+okay_hand=calm,I've got an okay hand.
+bad_hand=sad,I've got a bad hand.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-swap_cards=calm,I'll exchange ~cards~ cards, please.
+0-swap_cards=calm,I'll take ~cards~ cards.
+0-swap_cards=calm,May I have ~cards~ cards, dealer?
+0-swap_cards=pleasant,I'll take ~cards~ cards. Thank you.
+0-swap_cards=,Hmmm, I'll exchange ~cards~ of my cards.
+0-good_hand=,I've got a good hand.
+0-good_hand=pleasant,(<i>humming</i>)
+0-good_hand=pleasant,What hand do you think I have, ~player~?
+0-good_hand=joyful,Ah, what luck!
+0-good_hand=joyful,Surely I won't lose with this hand!
+0-good_hand=creepy,I wonder what happens. We'll have to see, ~player~.
+0-good_hand=creepy,I certainly won't lose here.
+0-good_hand=joyful,Wonderful!
+0-good_hand=joyful,This is a good hand!
+0-okay_hand=calm,Hmmm, who will strip this round?
+0-okay_hand=calm,I wonder who will strip next.
+0-okay_hand=joyful,The suspense makes this so exciting!
+0-okay_hand=calm,...
+0-okay_hand=pleasant,What hand do you think I have, ~player~?
+0-okay_hand=pleasant,(<i>humming</i>)
+0-okay_hand=calm,I wonder if this hand will bring me to victory. We shall see, won't we?
+0-bad_hand=sad,Oh dear.
+0-bad_hand=calm,Lovely weather we're having, ~player~.
+0-bad_hand=sad,Alas, I can't always have good cards.
+0-bad_hand=sad,...
+0-bad_hand=sad,What a miserable hand. I can't win with this.
+0-bad_hand=annoyed,This will not do.
+
+
+#lost shoes
+1-good_hand=happy,I've got a good hand.
+1-good_hand=,I've got a good hand.
+
+
+#lost tights
+2-good_hand=,I've got a good hand.
+2-good_hand=happy,I've got a good hand.
+
+
+#lost sweater
+3-good_hand=happy,I've got a good hand.
+3-good_hand=,I've got a good hand.
+
+
+#lost skirt
+4-good_hand=happy,I've got a good hand.
+4-good_hand=,I've got a good hand.
+
+
+#lost shirt
+5-good_hand=happy,I've got a good hand.
+5-good_hand=,I've got a good hand.
+5-bad_hand=annoyed,<i>I could be training in Mementos with the rest of my team!</i>
+5-bad_hand=annoyed,Is this a joke, dealer? Because I don't find it very funny.
+
+
+#lost panties
+6-good_hand=happy,I've got a good hand.
+6-good_hand=,I've got a good hand.
+6-bad_hand=annoyed,<i>I could be training in Mementos with the rest of my team!</i>
+6-bad_hand=annoyed,Is this a joke, dealer? Because I don't find it very funny.
+
+-3-swap_cards=calm,I'll exchange ~cards~ cards.
+-3-good_hand=happy,I've got a good hand.
+-3-good_hand=,I've got a good hand.
+-3-bad_hand=annoyed,<i>I could be training in Mementos with the rest of my team!</i>
+-3-bad_hand=annoyed,Is this a joke, dealer? Because I don't find it very funny.
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip_winning=loss,They say this when they're winning - they have more clothing items left than other players.
+must_strip_normal=loss,What the character says when they're in the middle of the group in terms of clothes left.
+must_strip_losing=loss,The character has lost a round, and also has the fewest pieces of clothing left.
+stripped=sad,What the character says just after they take their clothes off. Note that this is the start of a new stage.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing shoes
+0-must_strip_winning=calm,It's alright, I have more clothing than everyone else.
+0-must_strip_winning=joyful,It's about time I catch up with everyone, yes?
+0-must_strip_winning=calm,Alright then.
+0-must_strip_normal=sad,Oh...
+0-must_strip_normal=annoyed,I prefer you don't ogle, thank you very much!
+0-must_strip_normal=shoot,Oh dang it!
+0-must_strip_normal=shoot,Shoot!
+0-must_strip_normal=shoot,I need to play better than this!
+0-must_strip_normal=sad,Ah... M-My turn?
+0-must_strip_losing=shock,But I lost so much clothing already!
+0-must_strip_losing=sad,Oh no...
+0-must_strip_losing,marker:apologies=sad,I'm sorry for playing so poorly, everyone.
+0-must_strip_losing,marker:apologies=sad,I'm sorry for being so easy to beat, everyone. I know you were looking forward to a challenge.
+0-stripping=strip,Let me just...
+0-stripping=strip,Of course, the logical choice would be my shoes.
+0-stripping=strip,I hope you don't mind if I sit while I strip this round. I'm not very flexible.
+0-stripping,alsoPlaying:ryuji=strip,I hope you don't mind if I sit while I strip this round. I'm not very flexible, unlike Ryuji-kun.
+
+
+#losing tights
+1-stripping=strip,Let me just...
+
+
+#losing sweater
+2-stripping=strip,Let me just...
+
+
+#losing skirt
+3-stripping=strip,Let me just...
+
+
+#losing shirt
+4-stripping=strip,Let me just...
+
+
+#losing panties
+5-stripping=strip,Let me just...
+
+
+#losing bra
+6-stripping=strip,Let me just...
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_human_must_strip=interested,What they say to a male player who has lost a round
+male_must_strip=interested,What they say to a male NPC who has lost a round
+female_human_must_strip=interested,What they say to a female player who has lost a round
+female_must_strip=interested,What they say to a female NPC who has lost a round
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_human_must_strip=creepy,Well ~player~?
+0-male_human_must_strip=creepy,Don't keep a lady waiting.
+0-male_human_must_strip=creepy,You did agree to join us, ~player~.
+0-male_human_must_strip=creepy,Don't be shy, dear.
+0-male_human_must_strip,totalRounds:0-0,priority:999=joyful,So you put your dignity at stake whenever you lose? How exciting! I'm glad I joined.
+0-male_must_strip=pleasant,How unfortunate.
+0-male_must_strip=calm,I'll wait.
+0-male_must_strip=joyful,Oh! What are you taking off next?
+0-male_must_strip=creepy,You did agree to join us, ~name~.
+0-male_must_strip=joyful,I'm sorry you lost, but I want to see what's next!
+0-male_must_strip=pleasant,I win.
+0-male_must_strip=joyful,Good job, everyone else!
+0-male_must_strip,totalRounds:0-0,priority:999=joyful,So you put your dignity at stake whenever you lose? How exciting! I'm glad I joined.
+0-female_human_must_strip=creepy,Well ~player~?
+0-female_human_must_strip=creepy,Don't keep a lady waiting.
+0-female_human_must_strip=creepy,You did agree to join us, ~player~.
+0-female_human_must_strip=creepy,Don't be shy, dear.
+0-female_human_must_strip,totalRounds:0-0,priority:999=joyful,So you put your dignity at stake whenever you lose? How exciting! I'm glad I joined.
+0-female_must_strip=pleasant,How unfortunate.
+0-female_must_strip=calm,I'll wait.
+0-female_must_strip=joyful,Oh! What are you taking off next?
+0-female_must_strip=creepy,You did agree to join us, ~name~.
+0-female_must_strip=joyful,I'm sorry you lost, but I want to see what's next!
+0-female_must_strip=pleasant,I win.
+0-female_must_strip=joyful,Good job, everyone else!
+0-female_must_strip,target:futaba=calm,If you don't mind, Futaba? You know I won't judge you, right?
+0-female_must_strip,totalRounds:0-0,priority:999=joyful,So you put your dignity at stake whenever you lose? How exciting! I'm glad I joined.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=sad,A male character is about to remove a small item, with the type "extra".
+male_removed_accessory=calm,A male character has just removed that small item.
+female_removing_accessory=sad,A female character is about to remove a small item, with the type "extra".
+female_removed_accessory=calm,A female character has just removed that small item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_accessory=calm,That's alright, ~name~.
+0-male_removing_accessory=calm,I'm guessing these games take a while.
+0-male_removing_accessory=pleasant,Quite a smart move.
+0-male_removing_accessory=shoot,<i>Shoot! I was hoping he'd take off more.</i>
+0-male_removing_accessory=calm,So you chose the ~clothing~?
+0-male_removing_accessory=calm,While I'm disappointed, I won't hold it against you.
+0-male_removed_accessory=pleasant,Shall we progress to the next round?
+0-male_removed_accessory=calm,I hope things will pick up soon.
+0-male_removed_accessory=pleasant,Any progress is better than no progress at all.
+0-female_removing_accessory=calm,That's alright, ~name~.
+0-female_removing_accessory=calm,I'm guessing these games take a while.
+0-female_removing_accessory=pleasant,Quite a smart move.
+0-female_removing_accessory=calm,So you chose the ~clothing~?
+0-female_removing_accessory=calm,While I'm disappointed, I won't hold it against you.
+0-female_removing_accessory=shoot,<i>Shoot! I was hoping he'd take off more.</i>
+0-female_removed_accessory=pleasant,Shall we progress to the next round?
+0-female_removed_accessory=calm,I hope things will pick up soon.
+0-female_removed_accessory=pleasant,Any progress is better than no progress at all.
+
+-3-male_removing_accessory=murderous,You shouldn't annoy a girl who fights with an AXE!
+-3-male_removing_accessory=murderous,I could kill you with my bare hands!
+-3-male_removing_accessory=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-3-male_removed_accessory=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-3-male_removed_accessory=annoyed,...Next round. NOW.
+-3-female_removing_accessory=murderous,You shouldn't annoy a girl who fights with an AXE!
+-3-female_removing_accessory=murderous,I could kill you with my bare hands!
+-3-female_removing_accessory=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-3-female_removed_accessory=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-3-female_removed_accessory=annoyed,...Next round. NOW.
+
+-2-male_removing_accessory=murderous,Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.
+-2-male_removing_accessory=murderous,Consider yourself lucky you're not a shadow.
+-2-male_removing_accessory=murderous,I'm barely concealing my rage.
+-2-male_removed_accessory=annoyed,Please progress.
+-2-female_removing_accessory=,Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.
+-2-female_removing_accessory=,Consider yourself lucky you're not a shadow.
+-2-female_removing_accessory=,I'm barely concealing my rage.
+-2-female_removed_accessory=annoyed,Please progress.
+
+-1-male_removing_accessory=murderous,You shouldn't annoy a girl who fights with an AXE!
+-1-male_removing_accessory=murderous,I could kill you with my bare hands!
+-1-male_removing_accessory=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-1-male_removed_accessory=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-1-male_removed_accessory=annoyed,...Next round. NOW.
+-1-female_removing_accessory=,Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.
+-1-female_removing_accessory=,Consider yourself lucky you're not a shadow.
+-1-female_removing_accessory=,I'm barely concealing my rage.
+-1-female_removed_accessory=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-1-female_removed_accessory=annoyed,...Next round. NOW.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=calm,A male character is about to remove a clothing item with the type "minor".
+male_removed_minor=happy,The male character has just removed that minor item.
+female_removing_minor=calm,A female character is about to remove a clothing item with the type "minor".
+female_removed_minor=happy,The female character has just removed that minor item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=pleasant,Any article of clothing is better than none.
+0-male_removing_minor=pleasant,I like this game!
+0-male_removing_minor=pleasant,(<i>humming</i>)
+0-male_removing_minor=pleasant,Don't be shy, dear.
+0-male_removing_minor=sad,<i>I was hoping he'd take off more... Does that make me a bad person?</i>
+0-male_removed_minor=,The male character has just removed that minor item.
+0-female_removing_minor=pleasant,Any article of clothing is better than none.
+0-female_removing_minor=pleasant,I like this game!
+0-female_removing_minor=pleasant,(<i>humming</i>)
+0-female_removing_minor=pleasant,Don't be shy, dear.
+0-female_removing_minor=sad,<i>I was hoping she'd take off more... Does that make me a bad person?</i>
+
+-3-male_removing_minor=murderous,You shouldn't annoy a girl who fights with an AXE!
+-3-male_removing_minor=murderous,I could kill you with my bare hands!
+-3-male_removing_minor=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-3-male_removed_minor=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-3-male_removed_minor=annoyed,...Next round. NOW.
+-3-female_removing_minor=murderous,You shouldn't annoy a girl who fights with an AXE!
+-3-female_removing_minor=murderous,I could kill you with my bare hands!
+-3-female_removing_minor=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-3-female_removed_minor=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-3-female_removed_minor=annoyed,...Next round. NOW.
+
+-2-male_removing_minor=annoyed,Really now?
+-2-male_removing_minor=annoyed,Grrrr...
+-2-male_removing_minor=annoyed,Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.
+-2-male_removed_minor=annoyed,Please progress.
+-2-female_removing_minor=annoyed,Really now?
+-2-female_removing_minor=annoyed,Grrrr...
+-2-female_removing_minor=annoyed,Poor show, ~name~. Taking off your ~clothing~ while I'm masturbating.
+-2-female_removed_minor=annoyed,Please progress.
+
+-1-male_removing_minor=murderous,You shouldn't annoy a girl who fights with an AXE!
+-1-male_removing_minor=murderous,I could kill you with my bare hands!
+-1-male_removing_minor=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-1-male_removed_minor=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-1-male_removed_minor=annoyed,...Next round. NOW.
+-1-female_removing_minor=murderous,You shouldn't annoy a girl who fights with an AXE!
+-1-female_removing_minor=murderous,I could kill you with my bare hands!
+-1-female_removing_minor=murderous,Do you REALLY want to annoy me, ~name~? Huh!?
+-1-female_removed_minor=murderous,...You better pick your next choice of clothing carefully, ~name~.
+-1-female_removed_minor=annoyed,...Next round. NOW.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=interested,What the character says before a male loses an item with the "major" type.
+male_removed_major=interested,What the character says after the major item has been taken off.
+female_removing_major=interested,What the character says before a female loses an item with the "major" type.
+female_removed_major=interested,What the character says after the major item has been taken off.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=shock,Oh my!
+0-male_removing_major=joyful,I'm excited! What are you going to reveal?
+
+-2-male_removed_major=pleasant,Good boy.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=interested,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=interested,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=horny,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=calm,What the character says after the male character's crotch is visible, and has a size value of "small".
+male_medium_crotch_is_visible=awkward,What the character says after the male character's crotch is visible, and has a size value of "medium".
+male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+female_small_chest_is_visible=interested,What the character says after the female character's chest is visible, and has a size value of "small".
+female_medium_chest_is_visible=horny,What the character says after the female character's chest is visible, and has a size value of "medium".
+female_large_chest_is_visible=shocked,What the character says after the female character's chest is visible, and has a size value of "large".
+female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_chest_will_be_visible,target:ann,alsoPlaying:futaba,alsoPlayingSaidMarker:harufetish=shock,Eh!? I-I-I never--!
+0-female_chest_will_be_visible,target:ann,alsoPlaying:futaba,alsoPlayingSaidMarker:harufetish=shock,Futaba-chan! W-We shouldn't be discussing this right now!
+0-female_chest_will_be_visible,target:ann,alsoPlaying:futaba,alsoPlayingSaidMarker:harufetish=shock,Eek! D-Don't tell them that!
+0-female_large_chest_is_visible=annoyed,B-B-Be quiet, Futaba!
+0-female_large_chest_is_visible=shoot,<i>Nobody's supposed to know that!</i>
+0-female_large_chest_is_visible,target:ann,alsoPlaying:futaba=joyful,Your breasts are perfect, Ann-chan! The ideal shape and size for any woman!
+0-female_large_chest_is_visible,target:ann,alsoPlaying:futaba=joyful,When we're finished with the game, i-is there a way I can borrow your Phantom Thief attire? And whip?
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=interested,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=,What the character says when a male character has started masturbating.
+male_masturbating=horny,What the character says while a male character is masturbating.
+male_finished_masturbating=shocked,What the character says when a male character "finishes" masturbating.
+female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=horny,What the character says when a female character has started masturbating.
+female_masturbating=horny,What the character says while a female character is masturbating.
+female_finished_masturbating=shocked,What the character says when a female character "finishes" masturbating.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_masturbating=pleasant,(<i>giggle</i>) You're so cute whimpering like that! If only I could tie you up...
+0-male_masturbating=pleasant,Just so you know, I happen to be very much into kinbaku.
+0-male_masturbating=creepy,Good boy.
+0-male_masturbating=creepy,If only I could restrain you... tease you mercilessly until you beg...
+0-male_masturbating=pleasant,Would it help if I sat on your face? Just kidding, I'm not allowed to do that.
+0-male_masturbating=joyful,Yes, just like that! Keep going, ~name~.
+0-male_masturbating=calm,You don't happen to enjoy being dominated, do you, ~name~?
+0-male_masturbating=creepy,You're such a naughty boy, ~name~!
+0-male_masturbating=pleasant,Would it help if I tied you up? I could also find a whip for us...
+0-male_masturbating=creepy,I wonder...
+0-male_masturbating=creepy,What a good boy you are.
+0-male_masturbating=pleasant,My legs are getting tired from standing. Perhaps I should use your face as a seat...
+0-male_finished_masturbating=joyful,Beautiful!
+0-male_finished_masturbating=pleasant,Sit up, dear.
+0-male_finished_masturbating=pleasant,What a good boy you are!~
+0-male_finished_masturbating=creepy,You made quite a mess, you dirty little boy~
+0-female_masturbating=creepy,Good girl.
+0-female_masturbating=pleasant,Would it help if I sat on your face? Just kidding, I'm not allowed to do that.
+0-female_masturbating=pleasant,(<i>giggle</i>) You're so cute whimpering like that! If only I could tie you up...
+0-female_masturbating=creepy,You're such a naughty girl, ~name~!
+0-female_masturbating=pleasant,If only I could restrain you... tease you mercilessly until you beg...
+0-female_masturbating=joyful,Yes, just like that! Keep going, ~name~.
+0-female_masturbating=calm,You don't happen to enjoy being dominated, do you, ~name~?
+0-female_masturbating=pleasant,Just so you know, I happen to be very much into kinbaku.
+
+-3-male_masturbating=,Good boy.
+-3-male_masturbating=poststrip,Would it help if I sat on your face? Just kidding, I'm not allowed to do that.
+-3-male_masturbating=,You're such a naughty boy, ~name~!
+-3-male_masturbating=,If only I could restrain you... tease you mercilessly until you beg...
+-3-male_masturbating=,Yes, just like that! Keep going, ~name~.
+-3-male_masturbating=,You don't happen to enjoy being dominated, do you, ~name~?
+-3-male_masturbating=poststrip,~name~, are you into... what's it called...? Face-sitting?
+-3-male_masturbating=pleasant,(<i>giggle</i>) You're so cute whimpering like that! If only I could tie you up...
+-3-male_masturbating=pleasant,Just so you know, I happen to be very much into kinbaku.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+-3-must_masturbate_first=loss,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+-3-must_masturbate=loss,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+-3-start_masturbating=starting,What the character says as they start masturbating.
+
+-2-masturbating=calm,What the character says while they're masturbating.
+-2-heavy_masturbating=,What the character says while they're masturbating, and closer to "finishing".
+-2-finishing_masturbating=,What the masturbating character says as they "finish".
+
+-1-finished_masturbating=finished,What the character says after they've finished masturbating.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=happy,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#stage-specific lines that override the stage-generic ones
+game_over_defeat=calm,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
+
+#EPILOGUE/ENDING
