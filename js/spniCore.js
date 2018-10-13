@@ -87,6 +87,8 @@ $usageTrackingModal = $('#usage-reporting-modal');
 /* Screen State */
 $previousScreen = null;
 
+/* CSS rules for arrow offsets */
+var bubbleArrowOffsetRules;
 
 /********************************************************************************
  * Game Wide Utility Functions
@@ -519,6 +521,25 @@ function initialSetup () {
     
     /* Generate a random session ID. */
     sessionID = generateRandomID();
+
+    /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
+    bubbleArrowOffsetRules = [];
+    for (var i = 1; i <= 4; i++) {
+        var pair = [];
+        [["up", "down"], ["left", "right"]].forEach(function(p) {
+            var index = document.styleSheets[2].cssRules.length;
+            var rule = p.map(function(d) {
+                return ["select", "game"].map(function(s) {
+                    return ["before", "after"].map(function(r) {
+                        return '#'+s+'-bubble-'+i+'>.dialogue-bubble.arrow-'+d+'::'+r;
+                    }).join(', ');
+                }).join(', ');
+            }).join(', ') + ' {}';
+            document.styleSheets[2].insertRule(rule, index);
+            pair.push(document.styleSheets[2].cssRules[index]);
+        });
+        bubbleArrowOffsetRules.push(pair);
+    }
 }
 
 
