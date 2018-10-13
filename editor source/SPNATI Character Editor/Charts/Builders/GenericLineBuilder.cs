@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public override string GetTitle()
 		{
-			return "Generic Line Count (Top 30 Characters)";
+			return "Generic Line Count";
 		}
 
 		protected override List<Tuple<Character, int>> GetData()

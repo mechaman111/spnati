@@ -27,15 +27,15 @@ var STAGE_FINISHED = -1;
 /************************************************************
  * Stores information on an article of clothing.
  ************************************************************/
-function createNewClothing (proper, lower, type, position, image, layer, id) {
-	var newClothingObject = {proper:proper, 
-						     lower:lower, 
-						     type:type, 
+function createNewClothing (formal, generic, type, position, image, plural, id) {
+	var newClothingObject = {formal:formal,
+						     generic:generic,
+						     type:type,
 						     position:position,
                              image:image,
-							 layer:layer,
+							 plural:plural||false,
 							 id:id};
-						  
+
 	return newClothingObject;
 }
 
@@ -234,9 +234,9 @@ function playerMustStrip (player) {
 				players[HUMAN_PLAYER].removedClothing = clothing[0];
 			} else {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					trigger = MALE_HUMAN_MUST_STRIP;
+					trigger = [MALE_HUMAN_MUST_STRIP, MALE_MUST_STRIP];
 				} else {
-					trigger = FEMALE_HUMAN_MUST_STRIP;
+					trigger = [FEMALE_HUMAN_MUST_STRIP, FEMALE_MUST_STRIP];
 				}
 			}
 			updateAllBehaviours(player, trigger, players[player]);
@@ -349,7 +349,7 @@ function clothing_keyUp(e)
         if (e.keyCode == 32 && !$stripButton.prop('disabled')) { // Space
             closeStrippingModal();
         }
-        else if (e.keyCode >= 49 && e.keyCode <= 57) { // A number key
+        else if (e.keyCode >= 49 && e.keyCode < 49 + players[HUMAN_PLAYER].clothing.length) { // A number key
             selectClothingToStrip(e.keyCode - 49);
         }
     }

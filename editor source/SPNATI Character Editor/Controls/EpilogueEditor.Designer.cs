@@ -320,7 +320,6 @@
 			// 
 			// cmdAdvancedConditions
 			// 
-			this.cmdAdvancedConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdAdvancedConditions.Location = new System.Drawing.Point(509, 2);
 			this.cmdAdvancedConditions.Name = "cmdAdvancedConditions";
 			this.cmdAdvancedConditions.Size = new System.Drawing.Size(90, 23);

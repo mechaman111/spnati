@@ -96,7 +96,7 @@ function loadEpilogueData(player) {
         var all_marker_attr = $(this).attr('markers');
         if (all_marker_attr
             && !all_marker_attr.trim().split(/\s+/).every(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // not every marker set
             return false;
@@ -106,7 +106,7 @@ function loadEpilogueData(player) {
         var no_marker_attr = $(this).attr('not-markers');
         if (no_marker_attr
             && no_marker_attr.trim().split(/\s+/).some(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // some disallowed marker set
             return false;
@@ -116,7 +116,7 @@ function loadEpilogueData(player) {
         var any_marker_attr = $(this).attr('any-markers');
         if (any_marker_attr
             && !any_marker_attr.trim().split(/\s+/).some(function(marker) {
-                return marker in player.markers;
+                return checkMarker(marker, player);
             })) {
             // none of the markers set
             return false;
@@ -127,7 +127,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_marker_attr
             && !alsoplaying_marker_attr.trim().split(/\s+/).every(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // not every marker set by some other character
@@ -139,7 +139,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_not_marker_attr
             && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // some disallowed marker set by some other character
@@ -151,7 +151,7 @@ function loadEpilogueData(player) {
         if (alsoplaying_any_marker_attr
             && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function(marker) {
                 return players.some(function(p) {
-                    return p !== player && marker in p.markers;
+                    return p !== player && checkMarker(marker, p);
                 });
             })) {
             // none of the markers set by any other player
@@ -230,12 +230,16 @@ function drawEpilogueBox(num){
 	var boxDivName = textBoxDivName+num;
 	var screenData = chosenEpilogue.screens[epilogueScreen];
 	var boxData = screenData.textBoxes[num];
+	
+	if (!boxData) {
+		/* Don't draw nonexistent boxes (in case the current epilogue screen is empty, for example) */
+		return;
+	}
 
 	//make new div element
 	var newEpilogueDiv = $(document.createElement('div')).attr('id', boxDivName);
 
-	//allow the writer to use ~name~ or ~player~ to refer to the player
-	var content = boxData.text.replace(/~name~|~player~/g, players[HUMAN_PLAYER].label);
+	var content = expandDialogue(boxData.text, epilogueCharacter, players[HUMAN_PLAYER]);
 
 	//add the contents of the text box
 	var dialogueID = 'epilogue-dialogue-'+num;
@@ -393,6 +397,38 @@ function doEpilogueModal(){
  ************************************************************/
 function doEpilogue(){
 	save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
+	
+	if (USAGE_TRACKING) {
+		var usage_tracking_report = {
+			'date': (new Date()).toISOString(),
+			'type': 'epilogue',
+			'session': sessionID,
+			'game': gameID,
+			'userAgent': navigator.userAgent,
+			'origin': getReportedOrigin(),
+			'table': {},
+			'chosen': {
+				'id': chosenEpilogue.player.id,
+				'title': chosenEpilogue.title
+			}
+		};
+		
+		for (let i=1;i<5;i++) {
+			if (players[i]) {
+				usage_tracking_report.table[i] = players[i].id;
+			}
+		}
+		
+		$.ajax({
+			url: USAGE_TRACKING_ENDPOINT,
+			method: 'POST',
+			data: JSON.stringify(usage_tracking_report),
+			contentType: 'application/json',
+			error: function (jqXHR, status, err) {
+				console.error("Could not send usage tracking report - error "+status+": "+err);
+			},
+		});
+	}
     
 	//just in case, clear any open text boxes
 	clearEpilogueBoxes();

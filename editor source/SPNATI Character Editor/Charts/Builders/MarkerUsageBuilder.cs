@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public override string GetTitle()
 		{
-			return "Markers Referenced by Other Characters (Top 30 Characters)";
+			return "Markers Referenced by Other Characters";
 		}
 
 		protected override List<Tuple<Character, int>> GetData()
@@ -27,10 +27,16 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				{
 					foreach (var stageCase in stage.Cases)
 					{
-						TrackMarker(markers, stageCase.Target, stageCase.TargetSaidMarker);
-						TrackMarker(markers, stageCase.Target, stageCase.TargetNotSaidMarker);
-						TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingNotSaidMarker);
-						TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSaidMarker);
+						if (!String.IsNullOrEmpty(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
+						{
+							TrackMarker(markers, stageCase.Target, stageCase.TargetSaidMarker);
+							TrackMarker(markers, stageCase.Target, stageCase.TargetNotSaidMarker);
+						}
+						if (!String.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
+						{
+							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingNotSaidMarker);
+							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSaidMarker);
+						}
 					}
 				}
 			}
@@ -43,8 +49,6 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		private static void TrackMarker(Dictionary<string, HashSet<string>> markers, string target, string marker)
 		{
-			if (string.IsNullOrEmpty(target) || string.IsNullOrEmpty(marker))
-				return;
 			HashSet<string> set;
 			if (!markers.TryGetValue(target, out set))
 			{

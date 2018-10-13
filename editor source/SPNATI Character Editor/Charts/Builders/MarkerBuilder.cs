@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public override string GetTitle()
 		{
-			return "Markers Available for Other Characters (Top 30 Characters)";
+			return "Markers Available for Other Characters";
 		}
 
 		protected override List<Tuple<Character, int>> GetData()

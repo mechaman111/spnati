@@ -11,9 +11,6 @@ timer=25
 
 
 
-#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
-tag=nugi-chan
-
 #Source material tags
 tag=website
 tag=hentai
@@ -50,21 +47,25 @@ artist=Original model and posing: josephkantel & Zombiqaz<br>Revised model and p
 description=Hamada Gin is the popular maid mascot of Sutorippu! She can clean house at poker like she cleans houses as a maid.
 release=9
 
-marker=nugi-chan_amalia_flower,public,Nugi-chan borrows flower lines to address Amalia.
 marker=nugi-chan_blames_ai,public,Because Nugi-chan is a web site mascot, she knows that she is digital and has AI.
+marker=nugi-chan_former_glory,public,Nugi-chan was once 12.5% of the game!
+marker=nugi-chan_privacy_policy,private,When an embarrassed girl removes her first major item, Nugi-chan says "we've updated your privacy policy".
+marker=nugi-chan_sph,public,Nugi-chan makes "SPH" remarks when a male player reveals a small crotch. She has the same comments for male NPCs but does not set a marker to remember this.
+marker=nugi-chan_sph_lifetime,public,Nugi-chan's bad hand doesn't compare to a lifetime of disappointment.
+marker=nugi-chan_sph_lipstick,public,Nugi-chan compares the player's small size to her lipstick.
+
+marker=nugi-chan_amalia_flower,public,Nugi-chan borrows flower lines to address Amalia.
 marker=nugi-chan_corrin_f_panties,public,Nugi-chan comments that she can see female Corrin's panties.
 marker=nugi-chan_elizabeth_will_lose,public,Nugi-chan expects that Elizabeth will lose first.
 marker=nugi-chan_elizabeth_false_innocence,public,If Nugi-chan's first hand is bad in a game with Elizabeth, she'll pretend to be pure and innocent (for a line).
 marker=nugi-chan_elizabeth_first_blood,private,Nugi-chan transports Elizabeth's "first blood" remark to a new context.
-marker=nugi-chan_former_glory,public,Nugi-chan was once 12.5% of the game!
 marker=nugi-chan_kim_babysitting,public,Nugi-chan inappropriately suggests that she's interested in some babysitting from Kim Possible.
 marker=nugi-chan_kyu_casual_friday,public,Kyu's outfit makes for good material. Not MUCH material, though.
 marker=nugi-chan_marinette_french_maid,public,Nugi-chan + Marinette = Frennch maid.
-marker=nugi-chan_privacy_policy,private,When an embarrassed girl removes her first major item, Nugi-chan says "we've updated your privacy policy".
-marker=nugi-chan_tweeting_raven,public,Nugi-chan says she'll live-tweet Raven's stripping.
-marker=nugi-chan_sph,public,Nugi-chan makes "SPH" remarks when a male player reveals a small crotch. She has the same comments for male NPCs but does not set a marker to remember this.
-marker=nugi-chan_sph_lifetime,public,Nugi-chan's bad hand doesn't compare to a lifetime of disappointment.
-marker=nugi-chan_sph_lipstick,public,Nugi-chan compares the player's small size to her lipstick.
+marker=nugi-chan_mia_ace-high_attorney,public,Nugi-chan calls Mia an "Ace-high Attorney".
+marker=nugi-chan_raven_tweeting,public,Nugi-chan says she'll live-tweet Raven's stripping.
+marker=nugi-chan_shimakaze_belfast,public,Nugi-chan could cosplay Belfast.
+marker=nugi-chan_shimakaze_half_nelson,public,Nugi-chan meets the "Nelson" comparison halfway with a pun.
 
 
 
@@ -90,16 +91,13 @@ game_start,alsoPlaying:lara,count-lilith:1=sad,Wait, Lilith? Lara? Where did my 
 
 
 #CLOTHING
-#these must be in order of removal
-#how much they cover = important (covering nudity), major (a lot of skin), minor (small amount of skin), extra (accessories, boots, etc)
-#what they cover = upper (upper body), lower (lower body), other (neither).
-clothes=Shoes,shoes,extra,other
-clothes=Gloves,gloves,minor,other
-clothes=Stockings,stockings,minor,lower
+clothes=Shoes,shoes,extra,other,plural
+clothes=Gloves,gloves,minor,other,plural
+clothes=Stockings,stockings,minor,lower,plural
 clothes=Top,top,major,upper
 clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
 
 
 
@@ -259,6 +257,7 @@ bad_hand,alsoPlaying:amalia,alsoPlayingStage:5,notSaidMarker:nugi-chan_amalia_fl
 0-stripping=strip,My ribbons stay on unless the Webmaster says otherwise, so I guess I'll take off my shoes.
 1-stripped=stripped,Hrrmm.
 1-stripped,totalMasturbating:1-3=stripped,I hope I don't stand in anything sticky.
+1-stripped,alsoPlaying:shimakaze,alsoPlayingStage:0-8,marker:nugi-chan_shimakaze_belfast=stripped,I normally only offer breakfast-in-bed, not Belfast-in-bed. But I can cosplay.
 
 #losing gloves (minor)
 1-must_strip_winning=loss,I guess it would hardly be strip poker if I only took my shoes off.
@@ -266,6 +265,7 @@ bad_hand,alsoPlaying:amalia,alsoPlayingStage:5,notSaidMarker:nugi-chan_amalia_fl
 1-must_strip_losing=shocked,What?! Not again...
 1-stripping=strip,Ugh... fine, I'll take off my gloves.
 2-stripped=stripped,Hope you're happy.
+2-stripped,alsoPlaying:shimakaze,alsoPlayingStage:0-8,marker:nugi-chan_shimakaze_half_nelson=stripped,If it helps, you can think of me as <i>half</i> Nelson.
 
 #losing stockings (minor)
 2-must_strip_winning=loss,Aww... I was doing so well!
@@ -322,9 +322,15 @@ female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 0-male_human_must_strip=calm,If you wouldn't mind, ~name~-sama.
 0-male_must_strip=mean,Lost the hand? Lose the clothes!
 0-female_human_must_strip=,
+0-female_must_strip,totalRounds:0=calm,Lucky! You get to strip for me first, ~name~-sama!
+0-female_must_strip,totalRounds:1=interested,What is everyone hoping to see today? How about a little of ~name~-sama and a lot of ~player~-sama?
+0-female_must_strip,totalRounds:2=happy,Three for three!
+0-female_must_strip,totalRounds:3=calm,I hope you weren't expecting me to strip at all.
+0-female_must_strip,totalRounds:4=calm,So far, so good!
+0-female_must_strip,totalRounds:5=sad,I wonder what the odds are of me playing a perfect game...
+0-female_must_strip,totalRounds:6=devious,This is what victory looks like.
 0-female_must_strip=calm,Please remove one article of clothing, ~name~-sama. The bigger, the better!
 0-female_must_strip=loss,It's time to take something off, ~name~-sama. ~player~-sama and I will watch closely to make sure you're doing it right.
-0-female_must_strip,totalRounds:5=sad,I wonder what the odds are of me playing a perfect game...
 
 #lost shoes
 1-male_human_must_strip=,
@@ -479,10 +485,11 @@ female_must_strip,target:alice,consecutiveLosses:2=interested,Happy unbirthday!
 5-female_must_strip,target:d.va,targetStage:3,alsoPlaying:mercy=interested,Okay, let's raise the stakes! Everybody from your franchise has to strip if you lose. Deal?
 6-female_must_strip,target:d.va,targetStage:3,alsoPlaying:mercy=interested,Okay, let's raise the stakes! Everybody from your franchise has to strip if you lose. Deal?
 -3-female_must_strip,target:d.va,targetStage:3,alsoPlaying:mercy=interested,Okay, let's raise the stakes! Everybody from your franchise has to strip if you lose. Deal?
+female_must_strip,target:elizabeth,targetStage:2=mean,Set a course for that corset!
 0-female_must_strip,target:lux,targetStage:0=calm,Hey, Lux-sama. Good to see you. Let's see more of you. And invite Sona-chan next time!
 1-female_must_strip,target:lux,targetStage:0=calm,Hey, Lux-sama. Good to see you. Let's see more of you. And invite Sona-chan next time!
 -3-female_must_strip,target:mercy=devious,Time to show, Mercy-sama!
-3-female_must_strip,target:mia,oppHand:High Card=loss,Mia-sama, you're not so much a Ace Attorney as you are an Ace-high Attorney.
+female_must_strip,target:mia,oppHand:High Card,notSaidMarker:nugi-chan_mia_ace-high_attorney,marker:nugi-chan_mia_ace-high_attorney=loss,Mia-sama, you're not so much a Ace Attorney as you are an Ace-high Attorney.
 0-female_must_strip,target:mia,targetStage:3=interested,That dress is a goner! Here's hoping that you don't have any Phoenix Down for it.
 1-female_must_strip,target:mia,targetStage:3=interested,That dress is a goner! Here's hoping that you don't have any Phoenix Down for it.
 2-female_must_strip,target:mia,targetStage:3=interested,That dress is a goner! Here's hoping that you don't have any Phoenix Down for it.

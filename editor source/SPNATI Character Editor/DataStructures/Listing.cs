@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -11,15 +12,69 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlArray("individuals")]
 		[XmlArrayItem("opponent")]
-		public List<string> Characters = new List<string>();
+		public List<Opponent> Characters = new List<Opponent>();
 
 		[XmlArray("groups")]
 		[XmlArrayItem("group")]
 		public List<Group> Groups = new List<Group>();
+
+		public OpponentStatus GetCharacterStatus(string name)
+		{
+			var opponent = Characters.Find(opp => opp.Name == name);
+			if (opponent != null)
+			{
+				return opponent.Status;
+			}
+			else
+			{
+				return OpponentStatus.Unlisted;
+			}
+		}
+	}
+
+	public enum OpponentStatus
+	{
+		[XmlEnum()]
+		Main,
+		[XmlEnum("testing")]
+		Testing,
+		[XmlEnum("offline")]
+		Offline,
+		[XmlEnum("incomplete")]
+		Incomplete,
+		[XmlEnum()]
+		Unlisted
+	}
+
+	public class Opponent
+	{
+		[XmlAttribute("release")]
+		public string ReleaseNumber;
+
+		[XmlAttribute("status")]
+		[DefaultValue(OpponentStatus.Main)]
+		public OpponentStatus Status;
+
+		[XmlText]
+		public string Name;
+
+		public Opponent()
+		{
+
+		}
+
+		public Opponent(string name, OpponentStatus status)
+		{
+			Name = name;
+			Status = status;
+		}
 	}
 
 	public class Group
 	{
+		[XmlAttribute("testing")]
+		[DefaultValue(false)]
+		public bool Test;
 		[XmlAttribute("title")]
 		public string Name;
 		[XmlAttribute("opp1")]

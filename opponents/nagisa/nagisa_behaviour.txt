@@ -4,9 +4,11 @@ last=Furukawa
 label=Nagisa
 gender=female
 size=medium
+
 #Number of phases to "finish"
 timer=18
-pic=0-dango
+
+pic=0-embarrassed
 height=5'1"
 from=Clannad
 writer=Arndress
@@ -14,9 +16,6 @@ artist=Arndress
 description=Nagisa from Clannad knows that even with fun and happy things, change is inevitable. In this game, change itself is the fun thing.
 
 
-
-#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
-tag=nagisa
 
 #Source material tags
 tag=clannad
@@ -84,6 +83,7 @@ marker=nagisa_playing_with_boys,public,In the first round, Nagisa can announce t
 marker=nagisa_rear,public,Nagisa has several opportunities to turn around and reveal her backside during the game. This marker allows her opponents to request that she do it again.
 marker=nagisa_revy_mean_gun_lady,public,Nagisa dares to call Revy the "mean gun lady" while the latter is masturbating.
 marker=nagisa_saki_read_manga,public,Did Nagisa read Emergence? Surely not.
+marker=nagisa_sanako_present,public,Nagisa recongizes Sanako's uniform as being from the same school.
 marker=nagisa_skirt_in_danger,private,Nagisa doesn't know how she got into this mess.
 marker=nagisa_student_council_president,public,In an episode of Clannad, Nagisa's friends win school sporting games to advertise their friend for Student Council President.
 marker=nagisa_swimsuit,public,Nagisa modestly claims not to look good in a swimsuit.
@@ -115,18 +115,19 @@ selected=dango,My name is Nagisa Furukawa. It's nice to meet you all!
 game_start=shy,Is... is this where the game is being played?
 game_start,alsoPlaying:jura,marker:nagisa_jura_underdressed=veryembarrassed,Lady in black, it's okay if you want to put more on before we start.
 game_start,alsoPlaying:kyu,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
+game_start,alsoPlaying:sanako,marker:nagisa_sanako_present=worried,I didn't think anyone would recognize me here. That's the summer uniform from Hikarizaka Private High School, right?
 
 
 
 #CLOTHING
 #Nagisa wears her winter school uniform. Underneath, she has a dango-colored bra and cherry blossom panties.
-clothes=Shoes,shoes,extra,other
-clothes=Socks,socks,minor,other
+clothes=Shoes,shoes,extra,other,plural
+clothes=Socks,socks,minor,other,plural
 clothes=Jacket,jacket,extra,upper
 clothes=Shirt,shirt,major,upper
 clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
 
 
 
@@ -206,6 +207,9 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
 0-okay_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
 0-bad_hand,alsoPlaying:marinette,totalRounds:0,marker:nagisa_kanji=calm,Hello. I'm Nagisa. My name can be written in one Chinese character.
+0-good_hand,alsoPlaying:sanako,totalRounds:0=shy,I don't think I've seen you around school, Sanako. But you do seem familiar somehow...
+0-okay_hand,alsoPlaying:sanako,totalRounds:0=shy,I don't think I've seen you around school, Sanako. But you do seem familiar somehow...
+0-bad_hand,alsoPlaying:sanako,totalRounds:0=shy,I don't think I've seen you around school, Sanako. But you do seem familiar somehow...
 0-good_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
 0-okay_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
 0-bad_hand,alsoPlaying:terezi,totalRounds:0=shy,I was supposed to meet someone here named Terezi. Does anyone know where she is?
@@ -229,6 +233,9 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
 0-okay_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
 0-bad_hand,alsoPlaying:angie,totalRounds:1=happy,I really like your outfit, Angie. Is that your uniform? You're so lucky.
+0-good_hand,alsoPlaying:blake,count-kali:1,totalRounds:1=supportive,You're so brave to be playing with your mom, Blake. I could <i>never</i> do that.
+0-okay_hand,alsoPlaying:blake,count-kali:1,totalRounds:1=supportive,You're so brave to be playing with your mom, Blake. I could <i>never</i> do that.
+0-bad_hand,alsoPlaying:blake,count-kali:1,totalRounds:1=supportive,You're so brave to be playing with your mom, Blake. I could <i>never</i> do that.
 0-good_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
 0-okay_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
 0-bad_hand,alsoPlaying:elaine,totalRounds:1=thinking,By the way, Elaine, what's Insult Beer Pong? Do you think I'd be good at it?
@@ -238,6 +245,9 @@ clothes=Panties,panties,important,lower
 0-good_hand,alsoPlaying:saki,totalRounds:1,marker:nagisa_saki_read_manga=thinking,Have we met before, Saki? Or do you just remind me of a girl from a manga I read?
 0-okay_hand,alsoPlaying:saki,totalRounds:1,marker:nagisa_saki_read_manga=thinking,Have we met before, Saki? Or do you just remind me of a girl from a manga I read?
 0-bad_hand,alsoPlaying:saki,totalRounds:1,marker:nagisa_saki_read_manga=thinking,Have we met before, Saki? Or do you just remind me of a girl from a manga I read?
+0-good_hand,alsoPlaying:sanako,totalRounds:1=thinking,Maybe we have met before, Sanako. Are you in my Music Appreciation class?
+0-okay_hand,alsoPlaying:sanako,totalRounds:1=thinking,Maybe we have met before, Sanako. Are you in my Music Appreciation class?
+0-bad_hand,alsoPlaying:sanako,totalRounds:1=thinking,Maybe we have met before, Sanako. Are you in my Music Appreciation class?
 0-good_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola! Is that your school's uniform?
 0-okay_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola! Is that your school's uniform?
 0-bad_hand,alsoPlaying:sola,alsoPlayingStage:0,totalRounds:1=embarrassed,Your sailor hat is so cute, Sola. I had one like that in kindergarten.
@@ -254,6 +264,13 @@ clothes=Panties,panties,important,lower
 0-okay_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=supportive,We're going to make this a memorable Valentine's Day, I promise!
 0-bad_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=supportive,We're going to make this a memorable Valentine's Day, I promise!
 
+0-good_hand,alsoPlaying:sanako,totalRounds:2=happy,I think I worked it out! You're really pretty, Sanako, so you remind me of my mom.
+0-okay_hand,alsoPlaying:sanako,totalRounds:2=happy,I think I worked it out! You're really pretty, Sanako, so you remind me of my mom.
+0-bad_hand,alsoPlaying:sanako,totalRounds:2=happy,I think I worked it out! You're really pretty, Sanako, so you remind me of my mom.
+
+0-good_hand,alsoPlaying:sanako,totalRounds:3=supportive,I didn't tell my mom I was coming here because she'd want to come too to make sure I was safe. And that would just be weird.
+0-okay_hand,alsoPlaying:sanako,totalRounds:3=supportive,I didn't tell my mom I was coming here because she'd want to come too to make sure I was safe. And that would just be weird.
+0-bad_hand,alsoPlaying:sanako,totalRounds:3=supportive,I didn't tell my mom I was coming here because she'd want to come too to make sure I was safe. And that would just be weird.
 
 0-okay_hand,alsoPlaying:marinette,alsoPlayingStage:0,alsoPlayingSaidMarker:nagisa_new_outfit,priority:0=winkthumbsup,I like your ribbons, Marinette. Are those new?
 
@@ -274,9 +291,25 @@ clothes=Panties,panties,important,lower
 1-okay_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose more than just my shoes, I want you to know how much to mean to me, ~player~...
 1-bad_hand,count-nagisa_valentine:1,totalRounds:1,priority:1000=veryembarrassed,I'm nervous, and I'll probably lose more than just my shoes, I want you to know how much to mean to me, ~player~...
 
+1-good_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
+1-okay_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
+1-bad_hand,alsoPlaying:kyu,totalRounds:1=sad,Maybe you're better than me at poker, Kyu. I need all the help I can get.
+
+1-good_hand,alsoPlaying:sanako,totalRounds:1=sad,I've missed a few classes, so I haven't been able to make it to Music Appreciation much this year.
+1-okay_hand,alsoPlaying:sanako,totalRounds:1=sad,I've missed a few classes, so I haven't been able to make it to Music Appreciation much this year.
+1-bad_hand,alsoPlaying:sanako,totalRounds:1=sad,I've missed a few classes, so I haven't been able to make it to Music Appreciation much this year.
+
 1-good_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
 1-okay_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
 1-bad_hand,count-nagisa_valentine:1,totalRounds:2,priority:1000=sad,~player~, I know you've done so much for me, so I hope I can make today special for you.
+
+1-good_hand,alsoPlaying:sanako,totalRounds:2=strip,Would you mind if I sang the Big Dango Family song, Sanako? I wanted to share it with the whole class.
+1-okay_hand,alsoPlaying:sanako,totalRounds:2=strip,Would you mind if I sang the Big Dango Family song, Sanako? I wanted to share it with the whole class.
+1-bad_hand,alsoPlaying:sanako,totalRounds:2=strip,Would you mind if I sang the Big Dango Family song, Sanako? I wanted to share it with the whole class.
+
+1-good_hand,alsoPlaying:sanako,totalRounds:3,marker:nagisa_student_council_president,notSaidMarker:nagisa_student_council_president=idea,Sanako, may I ask if you know Tomoyo? She wants to be Student Council President. If we go to the same school, maybe we know some of the same people.
+1-okay_hand,alsoPlaying:sanako,totalRounds:3,marker:nagisa_student_council_president,notSaidMarker:nagisa_student_council_president=idea,Sanako, may I ask if you know Tomoyo? She wants to be Student Council President. If we go to the same school, maybe we know some of the same people.
+1-bad_hand,alsoPlaying:sanako,totalRounds:3,marker:nagisa_student_council_president,notSaidMarker:nagisa_student_council_president=idea,Sanako, may I ask if you know Tomoyo? She wants to be Student Council President. If we go to the same school, maybe we know some of the same people.
 
 1-good_hand,alsoPlaying:hermione,priority:0=happy,Do you believe in magic and wishes, Hermione? I do. I once heard a true story about a boy who turned into a cat!
 1-good_hand,alsoPlaying:meia,alsoPlayingSaidMarker:riches_to_rags,count-nugi-chan:1,notSaidMarker:nagisa_maid,marker:nagisa_maid,priority:0=idea,We don't need a maid at my house. I always try to help my mom with the chores.
@@ -286,9 +319,7 @@ clothes=Panties,panties,important,lower
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=happy,Your twintails are really pretty, Marinette.
 1-bad_hand,alsoPlaying:marinette,alsoPlayingStage:2-4=idea,Marinette, you remind me of my friend Mei, but all grown up!
 
-1-good_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
-1-okay_hand,alsoPlaying:kyu,totalRounds:1=sad,I'd feel bad if I won with a big advantage, but I'm going to do my best.
-1-bad_hand,alsoPlaying:kyu,totalRounds:1=sad,Maybe you're better than me at poker, Kyu. I need all the help I can get.
+
 
 #lost socks and shoes
 2-good_hand=interested,This is better than my last hand!
@@ -1561,6 +1592,10 @@ clothes=Panties,panties,important,lower
 -3-female_chest_will_be_visible,target:aimee=happy,Did she miss this time?
 -1-female_chest_will_be_visible,target:aimee=closedeyes,Did she miss this time?
 5-female_chest_will_be_visible,target:asuna,totalFemales:5=embarrassed,I guess the game can't end until there are eight boobies out...
+0-female_chest_will_be_visible,target:chell=embarrassed,Oh no, Chell! This was so out of the blue!
+1-female_chest_will_be_visible,target:chell=crossedarms,Oh no, Chell! This was so out of the blue!
+2-female_chest_will_be_visible,target:chell=veryembarrassed,Oh no, Chell! This was so out of the blue!
+3-female_chest_will_be_visible,target:chell=veryembarrassed,Oh no, Chell! This was so out of the blue!
 
 6-female_small_chest_is_visible,filter:kind=peaceful,This game might be the hardest thing I've ever had to do, but I'm happy to be playing with people like you, ~name~.
 
@@ -1855,19 +1890,19 @@ clothes=Panties,panties,important,lower
 -3-female_start_masturbating,target:kurumu=mustmasturbate,You have wings?! This is turning into the weirdest day ever...
 -1-female_start_masturbating,target:kurumu=finished,You have wings?! This is turning into the weirdest day ever...
 
--1-female_masturbating,target:hermione=embarrassed,You have control over those hands, right? None of them will accidentally poke us, will they?
-0-female_masturbating,target:moon=embarrassed,You should be ashamed of yourself!
-1-female_masturbating,target:moon=maximumembarrassed,You should be ashamed of yourself!
-2-female_masturbating,target:moon=veryembarrassed,You should be ashamed of yourself!
-3-female_masturbating,target:moon=veryembarrassed,You should be ashamed of yourself!
-0-female_masturbating,target:scarlet_witch=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-1-female_masturbating,target:scarlet_witch=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-2-female_masturbating,target:scarlet_witch=veryembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-3-female_masturbating,target:scarlet_witch=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-4-female_masturbating,target:scarlet_witch=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-5-female_masturbating,target:scarlet_witch=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
-6-female_masturbating,target:scarlet_witch=coveringeyes,That won't happen to me if <i>I</i> lose, will it?!
--3-female_masturbating,target:scarlet_witch=shocked,That won't happen to me if <i>I</i> lose, will it?!
+-1-female_masturbating,target:hermione,priority:0=embarrassed,You have control over those hands, right? None of them will accidentally poke us, will they?
+0-female_masturbating,target:moon,priority:0=embarrassed,You should be ashamed of yourself!
+1-female_masturbating,target:moon,priority:0=maximumembarrassed,You should be ashamed of yourself!
+2-female_masturbating,target:moon,priority:0=veryembarrassed,You should be ashamed of yourself!
+3-female_masturbating,target:moon,priority:0=veryembarrassed,You should be ashamed of yourself!
+0-female_masturbating,target:scarlet_witch,priority:0=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+1-female_masturbating,target:scarlet_witch,priority:0=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+2-female_masturbating,target:scarlet_witch,priority:0=veryembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+3-female_masturbating,target:scarlet_witch,priority:0=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+4-female_masturbating,target:scarlet_witch,priority:0=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+5-female_masturbating,target:scarlet_witch,priority:0=maximumembarrassed,That won't happen to me if <i>I</i> lose, will it?!
+6-female_masturbating,target:scarlet_witch,priority:0=coveringeyes,That won't happen to me if <i>I</i> lose, will it?!
+-3-female_masturbating,target:scarlet_witch,priority:0=shocked,That won't happen to me if <i>I</i> lose, will it?!
 
 0-female_finished_masturbating,target:chara=embarrassed,I'm not sure if I should say this, but that was kinda scary...
 1-female_finished_masturbating,target:chara=crossedarms,I'm not sure if I should say this, but that was kinda scary...
@@ -1990,6 +2025,16 @@ finished_masturbating,saidMarker:nagisa_finished_2,totalNaked:5,priority:0=close
 6-game_over_victory,alsoPlaying:alice=stripping,I'm so sorry for winning, Alice. Here! You don't have to use your knife after all.
 -3-game_over_victory,alsoPlaying:alice=nervous,Sorry for winning everyone, but at least it was close, right? And I didn't even cheat by bringing cutlery.
 
+
+0-game_over_victory,alsoPlaying:sanako=maximumembarrassed,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+1-game_over_victory,alsoPlaying:sanako=maximumembarrassed,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+2-game_over_victory,alsoPlaying:sanako=worried,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+3-game_over_victory,alsoPlaying:sanako=shy,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+4-game_over_victory,alsoPlaying:sanako=sorry,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+5-game_over_victory,alsoPlaying:sanako=veryembarrassed,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+6-game_over_victory,alsoPlaying:sanako=emphatic,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+-3-game_over_victory,alsoPlaying:sanako=nervous,I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.
+
 game_over_defeat=victorystanding,Congratulations! I hope I'll be the winner next time... if I ever play again.
 game_over_defeat,marker:nagisa_rear=7-rear,Congratulations, ~name~. Um, if the game's over, I can face this way, right?
 game_over_defeat,filter:princess=victorystanding,Congratulations, your highness! Um, would you be able to command everyone to close their eyes while I get dressed?
@@ -2002,6 +2047,7 @@ game_over_defeat,target:kyu=embarrassed,How did Kyu win? She... she didn't even 
 game_over_defeat,target:meia=embarrassed,Congratulations on winning, Meia. Just so you know, this planet has lot of less embarrassing games to play too...
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
 game_over_defeat,target:nugi-chan=embarrassed,Does anyone see my panties anywhere? I don't want to have to ride the train home without them...
+game_over_defeat,target:sanako=embarrassed,Congratulations, Sanako. Um, please don't tell my mom and dad that you saw me here.
 game_over_defeat,target:tifa,saidMarker:nagisa_tifa_win=closedeyes,See? I told you you'd win, Tifa!
 game_over_defeat,target:tina=embarrassed,I'm sorry, Tina. You were very encouraging, but I don't like girls in that way...
 game_over_defeat,target:uravity=victorystanding,If I had to lose to somebody, I'm glad it was you, Miss Ochako. You were shy too, but you were so brave!
@@ -2009,8 +2055,6 @@ game_over_defeat,target:revy=embarrassed,Congratulations, Revy. This means you'r
 game_over_defeat,target:zoey=embarrassed,Can you teach me to play cards like you, Zoey?
 game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding=embarrassed,Miss Zone-tan... Please don't put me in any videos...
 game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:mei=embarrassed,Miss Zone-tan, I'm sorry to bother you, but I agree with Mei. I don't think I'm ready to be in a video.
-
-0-stripped=winkthumbsup,I'm just so happy that no one was hurt in a terrible bus accident.
 
 
 
@@ -2021,7 +2065,6 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 
 3-female_removed_minor,filter:cheerful=wink,I'm sure you'll do great next time, ~name~!
 3-female_removed_major,filter:confident=stripped,You did that so confidently! And there I was worried to take off my jacket.
-3-female_chest_will_be_visible,target:chell=veryembarrassed,Oh no, Chell! This was so out of the blue!
 
 4-male_must_strip,filter:straight=stripped,~Name~, you're the one that's meant to be undressing, so please stop making me feel like you're undressing me with your eyes!
 4-female_removed_major,target:kim=happy,I know that this is embarrassing, but your pink underwear... so pretty.

@@ -143,17 +143,18 @@ function fetchLoadedEndings(){
 			}
 		}
 	}
+	
 	setTimeout(fetchLoadedEndings, 200);
 }
 
-function loadEndingXml(index){
-	fetchCompressedURL(
-		loadedOpponents[index].folder + 'behaviour.xml',
-		function(xml){
-			var endings = $(xml).find('epilogue');
-			isEndingLoaded[index] = endings;
-		}
-	);
+function loadEndingXml (index) {
+	if (!loadedOpponents[index].xml) {
+		loadedOpponents[index].loadBehaviour(function (opponent) {
+			isEndingLoaded[index] = opponent.xml.find('epilogue');
+		});
+	} else {
+		isEndingLoaded[index] = loadedOpponents[index].xml.find('epilogue');
+	}
 }
 
 function loadEndingThunbnail(element, ending){
@@ -233,9 +234,14 @@ function galleryPrevPage(){
 	}
 }
 
-function selectEnding(i){
+function selectEnding(i) {
 	selectedEnding = epp*galleryPage+i;
 	var ending = galleryEndings[selectedEnding];
+	
+	if (!ending) {
+		return;
+	}
+	
 	if(ending.unlocked){
 		$galleryStartButton.attr('disabled', false);
 		chosenEpilogue = ending;
@@ -276,6 +282,30 @@ function doEpilogueFromGallery(){
 			case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
 			default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
 		}
+	}
+	
+	if (USAGE_TRACKING) {
+		var usage_tracking_report = {
+			'date': (new Date()).toISOString(),
+			'type': 'gallery',
+			'session': sessionID,
+			'userAgent': navigator.userAgent,
+			'origin': getReportedOrigin(),
+			'chosen': {
+				'id': chosenEpilogue.player.id,
+				'title': chosenEpilogue.title
+			}
+		};
+		
+		$.ajax({
+			url: USAGE_TRACKING_ENDPOINT,
+			method: 'POST',
+			data: JSON.stringify(usage_tracking_report),
+			contentType: 'application/json',
+			error: function (jqXHR, status, err) {
+				console.error("Could not send usage tracking report - error "+status+": "+err);
+			},
+		});
 	}
 	
 	clearEpilogueBoxes();

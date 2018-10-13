@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 
 		public override string GetTitle()
 		{
-			return "Unique Players Targeted By This Character (Top 30 Characters)";
+			return "Unique Players Targeted By This Character";
 		}
 
 		protected override List<Tuple<Character, int>> GetData()

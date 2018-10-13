@@ -37,6 +37,7 @@ namespace SPNATI_Character_Editor.Charts
 					points.AddXY(point.X, point.Y);
 				}
 			}
+			chart.ChartAreas[0].Axes[0].ScaleView.Zoom(0, 29.5);
 		}
 	}
 }

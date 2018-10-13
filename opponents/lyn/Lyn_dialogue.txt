@@ -10,10 +10,27 @@ intelligence=average
 timer=17
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=lyn
+tag=fire_emblem
+tag=nintendo
 tag=video_game
+tag=fantasy
+tag=exotic_hair
+tag=green_hair
+tag=very_long_hair
+tag=long_hair
+tag=green_eyes
+tag=fair-skinned
 tag=athletic
-tag=brave
-tag=japanese
+tag=medium_breasts
+tag=weapon
+tag=blade
+tag=bisexual
+tag=fighter
+tag=fancy
+tag=kind
+tag=hero
+
 
 #required for meta.xml
 #select screen image
@@ -23,6 +40,7 @@ from=Fire Emblem
 writer=yu_ser & Patrickisdom
 artist=yu_ser & UnderscorM3
 description=Lyndis, or Lyn, is the last survivor of one of the Sacaen tribes. She is Stouthearted and kind.
+release=51
 
 #You can have more than one start line, but make_xml won't pick them up automatically and they must be added manually after the xml is generated.
 #When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
@@ -43,13 +61,13 @@ start=0-stripped,I am from the noble house of Caelin, yet I truly belong to the 
 #What they cover = upper (upper body), lower (lower body), other (neither).
 #The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
 clothes=Sword,sword,extra,other
-clothes=Gloves,gloves,extra,other
+clothes=Gloves,gloves,extra,other,plural
 clothes=Belt,belt,extra,other
-clothes=Boots,boots,extra,other
+clothes=Boots,boots,extra,other,plural
 clothes=Headband,headband,extra,other
 clothes=Dress,dress,major,upper
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
 
 
 
@@ -403,17 +421,17 @@ swap_cards=calm,I need ~cards~.
 
 #lost boots
 4-male_human_must_strip=calm,Sorry, ~name~. Your turn now.
-4-male_human_must_strip=calm,You might want to reconsider your strategy,~name~.
+4-male_human_must_strip=calm,You might want to reconsider your strategy, ~name~.
 4-male_human_must_strip=happy,Thanks to St. Elimine, you lost, ~name~, and not me.
 4-male_must_strip=happy,Thanks to St. Elimine, you lost, ~name~, and not me.
-4-male_must_strip=calm,You might want to reconsider your strategy,~name~.
+4-male_must_strip=calm,You might want to reconsider your strategy, ~name~.
 4-male_must_strip=calm,Sorry, ~name~. Your turn now.
 4-male_must_strip,target:link,targetStage:4,alsoPlaying:florina=calm,I am sure you two would have made a the cutest non-verbal couple.
 4-female_human_must_strip=calm,Sorry, ~name~. Your turn now.
-4-female_human_must_strip=calm,You might want to reconsider your strategy,~name~.
+4-female_human_must_strip=calm,You might want to reconsider your strategy, ~name~.
 4-female_human_must_strip=happy,Thanks to St. Elimine, you lost, ~name~, and not me.
 4-female_must_strip=happy,Thanks to St. Elimine, you lost, ~name~, and not me.
-4-female_must_strip=calm,You might want to reconsider your strategy,~name~.
+4-female_must_strip=calm,You might want to reconsider your strategy, ~name~.
 4-female_must_strip=calm,Sorry, ~name~. Your turn now.
 4-female_must_strip,hasHand:Four of a Kind=calm,I had a four of a kind! I wish my luck were always that great.
 4-female_must_strip,target:florina,consecutiveLosses:3=calm,Pull yourself together, Florina. Your nerves are clouding your judgment.
@@ -829,13 +847,13 @@ female_removed_minor=calm,I guess you can call that progress.
 
 #lost dress
 6-male_removing_minor=sad,Is that it?
-6-male_removing_minor=calm,~name~...
+6-male_removing_minor=calm,~Name~...
 6-male_removing_minor,target:human=concerned,Oh! ~player~, will you go with me to the Sacaen Plains if I ask you?
 6-male_removed_minor=happy,I still have a fighting chance.
 6-male_removed_minor=happy,I still have a fighting chance.
 6-male_removed_minor=sad,I guess I need a winning streak.
 6-female_removing_minor=sad,Is that it?
-6-female_removing_minor=calm,~name~...
+6-female_removing_minor=calm,~Name~...
 6-female_removing_minor,target:human=concerned,Oh! ~player~, will you go with me to the Sacaen Plains if I ask you?
 6-female_removing_minor,target:kyoko,targetStage:5=sad,That’s sad. I hope nothing too terrible happened, Kyoko.
 6-female_removing_minor,target:nagisa,targetStage:1=interested,You remind me of a dear friend of mine, Nino. She is so pious and kind.
@@ -1006,12 +1024,12 @@ female_removed_minor=calm,I guess you can call that progress.
 
 #lost headband
 5-male_removing_major=calm,I'm glad it's you and not me, ~name~.
-5-male_removing_major=interested,I guess this will make us even,~name~.
+5-male_removing_major=interested,I guess this will make us even, ~name~.
 5-male_removing_major,target:link=interested,Say, Link. Would you mind if we spar together after the game?
 5-male_removed_major=calm,That seems fair, i suppose.
 5-male_removed_major=excited,I'm counting this one as a victory for women.
 5-female_removing_major=calm,I'm glad it's you and not me, ~name~.
-5-female_removing_major=interested,I guess this will make us even,~name~.
+5-female_removing_major=interested,I guess this will make us even, ~name~.
 5-female_removed_major=calm,You look better without your ~clothing~, ~name~.
 5-female_removed_major=calm,That seems fair, I suppose.
 5-female_removed_major,filter:athletic=interested,Wow! You take good care of your body, ~name~!
@@ -1151,7 +1169,7 @@ female_removed_minor=calm,I guess you can call that progress.
 1-female_small_chest_is_visible=shocked,They're just like Florina's!
 1-female_small_chest_is_visible=interested,That's a lovely chest, ~name~.
 1-female_medium_chest_is_visible=concerned,I wonder if mine are the same size.
-1-female_medium_chest_is_visible=calm,Now I know why men are attracted to you,~name~.
+1-female_medium_chest_is_visible=calm,Now I know why men are attracted to you, ~name~.
 1-female_large_chest_is_visible=concerned,Aren't those harmful for your health?
 1-female_large_chest_is_visible=excited,Those were worth the wait.
 1-female_large_chest_is_visible=shocked,~silent~
@@ -1542,7 +1560,7 @@ female_removed_minor=calm,I guess you can call that progress.
 0-male_must_masturbate=interested,This should be fun to watch.
 0-male_must_masturbate=concerned,Lost already?
 0-male_start_masturbating=calm,Right now looking at me won't work for you; I still have all my clothes.
-0-male_start_masturbating=calm,Take your time,~name~
+0-male_start_masturbating=calm,Take your time,~Name~
 0-male_start_masturbating=happy,Are you looking at me for "inspiration"? That's quite the compliment.
 0-male_masturbating=concerned,Is that what you boys do? That's disturbing.
 0-male_masturbating=concerned,I think I've heard that noise coming from Sain's room.
@@ -1623,7 +1641,7 @@ female_removed_minor=calm,I guess you can call that progress.
 #lost belt
 3-male_must_masturbate=calm,Tough luck, ~name~.
 3-male_must_masturbate=happy,Great! Tell me again; what is that you have to do now?
-3-male_must_masturbate=calm,Your valiant effort, I commend. But you've been defeated,~name~.
+3-male_must_masturbate=calm,Your valiant effort, I commend. But you've been defeated, ~name~.
 3-male_start_masturbating=excited,Go slowly, boy.
 3-male_start_masturbating=interested,This should be interesting to watch.
 3-male_start_masturbating=excited,That's mesmerizing.
@@ -1635,7 +1653,7 @@ female_removed_minor=calm,I guess you can call that progress.
 3-male_finished_masturbating,alsoPlaying:florina=calm,Trust me on this one Florina. You’ll be fine...
 3-female_must_masturbate=happy,Great! Tell me again; what is that you have to do now?
 3-female_must_masturbate=calm,Tough luck, ~name~.
-3-female_must_masturbate=calm,Your valiant effort, I commend. But you've been defeated,~name~.
+3-female_must_masturbate=calm,Your valiant effort, I commend. But you've been defeated, ~name~.
 3-female_must_masturbate,alsoPlaying:florina,alsoPlayingStage:0-8,totalMasturbating:0,totalFinished:0=calm,If I had told you, would you have come, Florina?
 3-female_start_masturbating=interested,This should be interesting to watch.
 3-female_start_masturbating=excited,Go slowly, girl.
@@ -1973,6 +1991,7 @@ game_over_defeat,target:videl=interested,Your father's skills are legendary. I g
 
 ending=Birthday Present
 	ending_gender=female
+	gallery_image=ending2_5.jpg
 
 		screen=ending_forest.png
 				
@@ -2194,6 +2213,7 @@ ending=Birthday Present
 				
 ending=A new beginning
         ending_gender=male
+        gallery_image=lynendc.jpg
 
                 screen=greenforest.jpg
                                 

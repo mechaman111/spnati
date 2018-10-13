@@ -126,72 +126,64 @@ namespace SPNATI_Character_Editor.Controls
 			if (character == null || state == null)
 				return;
 
-			Trigger trigger = State.GetTrigger(state);
-
 			int stageId = state.Phase == GamePhase.AfterLoss && State == state.TargetState ? State.Stage + 1 : State.Stage;
 
 			List<DialogueLine> availableLines = new List<DialogueLine>();
-			if (trigger == null)
+			picPortrait.Visible = true;
+			lblText.Visible = true;
+			if (state.Phase == GamePhase.AfterLoss)
 			{
-				picPortrait.Visible = false;
-				lblText.Visible = false;
-				return;
+				state.TargetState.Stage++;
 			}
-			else
+			List<Case> availableCases = State.GetPossibleCases(state);
+			if (availableCases.Count == 0)
 			{
-				picPortrait.Visible = true;
-				lblText.Visible = true;
+				availableCases = State.GetPossibleCases(state, true);
 			}
-			if (trigger.Tag == Trigger.StartTrigger)
+			if (state.Phase == GamePhase.AfterLoss)
 			{
-				stageId = 0;
-				availableLines.AddRange(character.StartingLines);
+				state.TargetState.Stage--;
 			}
-			else
-			{
-				if (state.Phase == GamePhase.AfterLoss)
-				{
-					state.TargetState.Stage++;
-				}
-				List<Case> availableCases = State.GetPossibleCases(state);
-				if (state.Phase == GamePhase.AfterLoss)
-				{
-					state.TargetState.Stage--;
-				}
 
-				if (availableCases.Count > 0)
+			if (availableCases.Count > 0)
+			{
+				availableCases.Sort();
+				int topPriority = availableCases[0].GetPriority();
+				availableLines.AddRange(availableCases[0].Lines);
+				for (int i = 1; i < availableCases.Count; i++)
 				{
-					availableCases.Sort();
-					int topPriority = availableCases[0].GetPriority();
-					availableLines.AddRange(availableCases[0].Lines);
-					for (int i = 1; i < availableCases.Count; i++)
+					Case c = availableCases[i];
+					if (c.GetPriority() == topPriority)
 					{
-						Case c = availableCases[i];
-						if (c.GetPriority() == topPriority)
-						{
-							availableLines.AddRange(c.Lines);
-						}
-						else break;
+						availableLines.AddRange(c.Lines);
 					}
+					else break;
 				}
-				if (availableLines.Count == 0)
+			}
+			bool usingLegacyStart = false;
+			if (availableLines.Count == 0)
+			{
+				if (state.Phase == GamePhase.Selected || state.Phase == GamePhase.Start)
+				{
+					stageId = 0;
+					availableLines.AddRange(character.StartingLines);
+					usingLegacyStart = true;
+				}
+				else
 				{
 					lblText.Text = "I have no lines that meet the current criteria!";
 					return;
 				}
 			}
-
 			int index = _random.Next(availableLines.Count);
 			DialogueLine line = availableLines[index];
-			if (trigger.Tag == Trigger.StartTrigger)
-			{
+			if (usingLegacyStart) {
 				SetImage(line.Image);
 			}
 			else
 			{
 				SetImage(Behaviour.CreateStageSpecificLine(line, stageId, character).Image);
 			}
-
 			string text = line.Text;
 			//Fill in variables
 			Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);

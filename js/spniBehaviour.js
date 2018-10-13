@@ -22,17 +22,6 @@ function createNewState (dialogue, image, direction, silent, marker) {
 }
 
 /**********************************************************************
- *****                      All Dialogue Tags                     *****
- **********************************************************************/
-
-var NAME = "~name~";
-var CAPITALIZED_NAME = "~Name~";
-var PROPER_CLOTHING = "~Clothing~";
-var LOWERCASE_CLOTHING = "~clothing~";
-var CARDS = "~cards~";
-var PLAYER_NAME = "~player~";
-
-/**********************************************************************
  *****                    All Dialogue Triggers                   *****
  **********************************************************************/
 
@@ -112,129 +101,71 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
  **********************************************************************/
 
 /************************************************************
- * Loads and parses the start of the behaviour XML file of the 
- * given opponent id.
- *
- * The callFunction parameter must be a function capable of
- * receiving a new player object and a slot number.
- ************************************************************/
-function loadBehaviour (opponent, callFunction, slot) {
-	fetchCompressedURL(
-		'opponents/' + opponent.id + "/behaviour.xml",
-		/* Success callback. */
-		function(xml) {            
-            var $xml = $(xml);
-            
-            var first = $xml.find('first').text();
-            var last = $xml.find('last').text();
-            var labels = $xml.find('label');
-            var gender = $xml.find('gender').text().trim().toLowerCase(); //convert everything to lowercase, for comparison to the strings "male" and "female"
-            var size = $xml.find('size').text();
-            var timer = $xml.find('timer').text();
-            var intelligence = $xml.find('intelligence');
-            
-            var tags = $xml.find('tags');
-            var tagsArray = [opponent.id];
-            if (typeof tags !== typeof undefined && tags !== false) {
-                $(tags).find('tag').each(function () {
-                    tagsArray.push($(this).text());
-                });
-            }
-            var targetedLines = {};
-            $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
-                var $case = $(this.parentNode);
-                ['target', 'alsoPlaying'].forEach(function(attr) {
-                    var id = $case.attr(attr);
-                    if (id) {
-                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: {} }; }
-                        if (!(this.textContent in targetedLines[id].seen)) {
-                            targetedLines[id].seen[this.textContent] = true;
-                            targetedLines[id].count++;
-                        }
-                    }
-                }, this);
-            });
-            var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
-            newPlayer.targetedLines = targetedLines;
-            
-			callFunction(newPlayer, slot);
-		},
-		/* Error callback. */
-        function(err) {
-            console.log("Failed reading \""+opponent.id+"\" behaviour.xml");
-            delete players[slot];
-        }
-	);
-}
-
-/************************************************************
- * Parses and loads the wardrobe section of an opponent's XML
- * file.
- ************************************************************/
-function loadOpponentWardrobe (player) {
-	/* grab the relevant XML file, assuming its already been loaded */
-	var xml = player.xml;
-	player.clothing = [];
-
-	/* find and grab the wardrobe tag */
-	$wardrobe = xml.find('wardrobe');
-	
-	/* find and create all of their clothing */
-	$wardrobe.find('clothing').each(function () {
-		var properName = $(this).attr('proper-name');
-		var lowercase = $(this).attr('lowercase');
-		var type = $(this).attr('type');
-		var position = $(this).attr('position');
-
-		var newClothing = createNewClothing(properName, lowercase, type, position, null, 0, 0);
-
-		player.clothing.push(newClothing);
-	});
-}
-
-/************************************************************
  * Parses the dialogue states of a player, given the case object.
  ************************************************************/
 function parseDialogue (caseObject, self, target) {
-    var states = [];
+	var states = [];
+	caseObject.find('state').each(function () {
+		var image = $(this).attr('img');
+		var dialogue = $(this).html();
+		var direction = $(this).attr('direction');
+		var silent = $(this).attr('silent');
+		var marker = $(this).attr('marker');
+		silent = (silent !== null && typeof silent !== typeof undefined);
 
-    function substitute(placeholder) {
+		states.push(createNewState(expandDialogue(dialogue, self, target),
+								   image, direction, silent, marker));
+	});
+	return states;
+}
+
+/************************************************************
+ * Expands variables etc. in a line of dialogue.
+ ************************************************************/
+function expandDialogue (dialogue, self, target) {
+    function substitute(match, variable, fn, args) {
+        // If substitution fails, return match unchanged.
+        var substitution = match;
+        if (fn) fn = fn.toLowerCase();
         try {
-            switch (placeholder) {
-            case PLAYER_NAME: return players[HUMAN_PLAYER].label;
-            case NAME: return target.label;
-            case CAPITALIZED_NAME: return target.label.initCap();
-            case PROPER_CLOTHING: return (target||self).removedClothing.proper;
-            case LOWERCASE_CLOTHING: return (target||self).removedClothing.lower;
-            case CARDS: /* determine how many cards are being swapped */
-                return self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+            switch (variable.toLowerCase()) {
+            case 'player':
+                substitution = players[HUMAN_PLAYER].label;
+                break;
+            case 'name':
+                substitution = target.label;
+                break;
+            case 'clothing':
+                var clothing = (target||self).removedClothing;
+                if (fn == 'ifplural' && args) {
+                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+                } else if (fn == 'formal' && args === undefined) {
+                    substitution = clothing.formal || clothing.generic;
+                } else if (fn === undefined) {
+                    substitution = clothing.generic;
+                }
+                break;
+            case 'cards': /* determine how many cards are being swapped */
+                var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+                if (fn == 'ifplural') {
+                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
+                } else if (fn === undefined) {
+                    substitution = String(n);
+                }
+                break;
+            }
+            if (variable[0] == variable[0].toUpperCase()) {
+                substitution = substitution.initCap();
             }
         } catch (ex) {
             console.log("Invalid substitution caused exception " + ex);
         }
-        return placeholder;
+        return substitution;
     }
-	
-	caseObject.find('state').each(function () {
-        var image = $(this).attr('img');
-        var dialogue = $(this).html();
-        var direction = $(this).attr('direction');
-        var silent = $(this).attr('silent');
-        var marker = $(this).attr('marker');
-
-        dialogue = dialogue.replace(/~\w+~/g, substitute);
-        
-        if (silent !== null && typeof silent !== typeof undefined) {
-            silent = true;
-        }
-        else {
-            silent = false;
-        }
-
-        states.push(createNewState(dialogue, image, direction, silent, marker));
-	});
-
-	return states;
+    // variable or
+    // variable.attribute or
+    // variable.function(arguments)
+    return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 /************************************************************
@@ -245,14 +176,49 @@ function parseDialogue (caseObject, self, target) {
 function parseInterval (str) {
 	if (!str) return undefined;
 	var pieces = str.split("-");
-	var min = parseInt(pieces[0], 10);
-	var max = pieces.length > 1 ? parseInt(pieces[1], 10) : min;
+	var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
+	var max = pieces.length == 1 ? min
+		: pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
 	return { min : min,
 			 max : max };
 }
 
 function inInterval (value, interval) {
-	return interval.min <= value && value <= interval.max;
+	return (interval.min === null || interval.min <= value)
+		&& (interval.max === null || value <= interval.max);
+}
+
+
+/************************************************************
+ * Check to see if a given marker predicate string is fulfilled
+ * w.r.t. a given character.
+ ************************************************************/
+function checkMarker(predicate, target) {
+	var match = predicate.match(/([\w\-]+)\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\d+)/);
+	
+	if (!match) {
+		if (target.markers[predicate]) return true;
+		return false;
+	}
+	
+	var val = target.markers[match[1]];
+	if (!val) {
+		val = 0;
+	}
+	
+	var cmpVal = parseInt(match[3], 10);
+	
+	switch (match[2]) {
+		case '>': return val > cmpVal;
+		case '>=': return val >= cmpVal;
+		case '<': return val < cmpVal;
+		case '<=': return val <= cmpVal;
+		case '!=': return val != cmpVal;
+		default:
+		case '=':
+		case '==':
+			return val == cmpVal;
+	}
 }
 
 /************************************************************
@@ -385,7 +351,7 @@ function updateBehaviour (player, tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (opp && targetSaidMarker) {
-				if (targetSaidMarker in opp.markers) {
+				if (checkMarker(targetSaidMarker, opp)) {
 					totalPriority += 1;
 				}
 				else {
@@ -393,7 +359,7 @@ function updateBehaviour (player, tag, opp) {
 				}
 			}
 			if (opp && targetNotSaidMarker) {
-				if (!(targetNotSaidMarker in opp.markers)) {
+				if (!opp.markers[targetNotSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -493,7 +459,7 @@ function updateBehaviour (player, tag, opp) {
 					}
 					// marker checks have very low priority as they're mainly intended to be used with other target types
 					if (alsoPlayingSaidMarker) {
-						if (alsoPlayingSaidMarker in ap.markers) {
+						if (checkMarker(alsoPlayingSaidMarker, ap)) {
 							totalPriority += 1;
 						}
 						else {
@@ -501,7 +467,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (alsoPlayingNotSaidMarker) {
-						if (!(alsoPlayingNotSaidMarker in ap.markers)) {
+						if (!ap.markers[alsoPlayingNotSaidMarker]) {
 							totalPriority += 1;
 						}
 						else {
@@ -632,7 +598,7 @@ function updateBehaviour (player, tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (saidMarker) {
-				if (saidMarker in players[player].markers) {
+				if (checkMarker(saidMarker, players[player])) {
 					totalPriority += 1;
 				}
 				else {
@@ -640,7 +606,7 @@ function updateBehaviour (player, tag, opp) {
 				}
 			}
 			if (notSaidMarker) {
-				if (!(notSaidMarker in players[player].markers)) {
+				if (!players[player].markers[notSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -668,19 +634,42 @@ function updateBehaviour (player, tag, opp) {
 			
 		}
         
-        if (bestMatch.length > 0) {
-			bestMatch = bestMatch[Math.floor(Math.random() * bestMatch.length)]
-            players[player].current = 0;
-			
-			var states = parseDialogue(bestMatch, players[player], opp);
-			var chosenState = states[getRandomNumber(0, states.length)];
+        states = bestMatch.reduce(function(list, caseObject) {
+            return list.concat(parseDialogue(caseObject, players[player], opp));
+        }, []);
+
+        if (states.length > 0) {
+            var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
-				players[player].markers[chosenState.marker] = true;
+				var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
+				if (match) {
+					if (match[1] === '+') {
+						// increment marker value
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 1;
+						} else {
+							players[player].markers[match[2]] += 1;
+						}
+						
+					} else if (match[1] === '-') {
+						// decrement marker value
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 0;
+						} else {
+							players[player].markers[match[2]] -= 1;
+						}
+					} else {
+						// set marker value
+						players[player].markers[match[3]] = parseInt(match[4], 10);
+					}
+				} else if (!players[player].markers[chosenState.marker]) {
+					players[player].markers[chosenState.marker] = 1;
+				}
 			}
 			
             players[player].allStates = states;
-			players[player].chosenState = chosenState;
+            players[player].chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");
@@ -693,9 +682,15 @@ function updateBehaviour (player, tag, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (player, tag, opp) {
-	for (i = 1; i < players.length; i++) {
+	for (var i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
-			updateBehaviour(i, tag, opp);
+			if (typeof tag === 'object') {
+				tag.some(function(t) {
+					return updateBehaviour(i, t, opp);
+				});
+			} else {
+				updateBehaviour(i, tag, opp);
+			}
 		}
 	}
 }
