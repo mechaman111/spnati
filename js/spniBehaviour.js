@@ -231,7 +231,7 @@ function checkMarker(predicate, target) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(tag, opp) {
+function updateBehaviour (player, tag, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
@@ -239,12 +239,16 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 		//tag = players[player].forfeit[0];
 	//}
 
+    if (!players[player]) {
+        return;
+    }
+
     /* get the AI stage */
-    var stageNum = this.stage;
+    var stageNum = players[player].stage;
 
     /* try to find the stage */
     var stage = null;
-    this.xml.find('behaviour').find('stage').each(function () {
+    players[player].xml.find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
        }
@@ -252,7 +256,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
     /* quick check to see if the stage exists */
     if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
+        console.log("Error: couldn't find stage for player "+player+" on stage number "+stageNum+" for tag "+tag);
         return;
     }
 
@@ -266,7 +270,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
     /* quick check to see if the tag exists */
 	if (states.length <= 0) {
-		console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
+		console.log("Warning: couldn't find "+tag+" dialogue for player "+player+" at stage "+stageNum);
 		return false;
 	}
     else {
@@ -380,7 +384,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 					}
 				}
 				else { // else look at your own losses
-					if (inInterval(this.consecutiveLosses, lossesInRow)) {
+					if (inInterval(players[player].consecutiveLosses, lossesInRow)) {
 						totalPriority += 60;
 					}
 					else {
@@ -411,7 +415,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(this.hand.strength) === hasHand) {
+				if (handStrengthToString(players[player].hand.strength) === hasHand) {
 					totalPriority += 20;		// priority
 				}
 				else {
@@ -511,8 +515,8 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// timeInStage (priority = 8)
 			if (typeof timeInStage !== typeof undefined) {
-				if (inInterval(this.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-							   : this.timeInStage, timeInStage)) {
+				if (inInterval(players[player].timeInStage == -1 ? 0 //allow post-strip time to count as 0
+							   : players[player].timeInStage, timeInStage)) {
 					totalPriority += 8;
 				}
 				else {
@@ -600,7 +604,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (saidMarker) {
-				if (checkMarker(saidMarker, this)) {
+				if (checkMarker(saidMarker, players[player])) {
 					totalPriority += 1;
 				}
 				else {
@@ -608,7 +612,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 				}
 			}
 			if (notSaidMarker) {
-				if (!this.markers[notSaidMarker]) {
+				if (!players[player].markers[notSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -637,8 +641,8 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 		}
         
         states = bestMatch.reduce(function(list, caseObject) {
-            return list.concat(parseDialogue(caseObject, this, opp));
-        }.bind(this), []);
+            return list.concat(parseDialogue(caseObject, players[player], opp));
+        }, []);
 
         if (states.length > 0) {
             var chosenState = states[getRandomNumber(0, states.length)];
@@ -648,30 +652,30 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 				if (match) {
 					if (match[1] === '+') {
 						// increment marker value
-						if(!this.markers[match[2]]) {
-							this.markers[match[2]] = 1;
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 1;
 						} else {
-							this.markers[match[2]] += 1;
+							players[player].markers[match[2]] += 1;
 						}
 						
 					} else if (match[1] === '-') {
 						// decrement marker value
-						if(!this.markers[match[2]]) {
-							this.markers[match[2]] = 0;
+						if(!players[player].markers[match[2]]) {
+							players[player].markers[match[2]] = 0;
 						} else {
-							this.markers[match[2]] -= 1;
+							players[player].markers[match[2]] -= 1;
 						}
 					} else {
 						// set marker value
-						this.markers[match[3]] = parseInt(match[4], 10);
+						players[player].markers[match[3]] = parseInt(match[4], 10);
 					}
-				} else if (!this.markers[chosenState.marker]) {
-					this.markers[chosenState.marker] = 1;
+				} else if (!players[player].markers[chosenState.marker]) {
+					players[player].markers[chosenState.marker] = 1;
 				}
 			}
 			
-            this.allStates = states;
-            this.chosenState = chosenState;
+            players[player].allStates = states;
+            players[player].chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");
@@ -683,15 +687,15 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
  * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
-function updateAllBehaviours (player, tag) {
+function updateAllBehaviours (player, tag, opp) {
 	for (var i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
 			if (typeof tag === 'object') {
 				tag.some(function(t) {
-					return players[i].updateBehaviour(t, players[player]);
+					return updateBehaviour(i, t, opp);
 				});
 			} else {
-				players[i].updateBehaviour(tag, players[player]);
+				updateBehaviour(i, tag, opp);
 			}
 		}
 	}
