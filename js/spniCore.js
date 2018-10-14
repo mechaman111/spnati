@@ -324,6 +324,9 @@ Player.prototype.resetState = function () {
 	this.updateLabel();
 }
 
+Player.prototype.getIntelligence = function () {
+    return this.intelligence; // Opponent uses getByStage()
+};
 
 /* These shouldn't do anything for the human player, but exist as empty functions
    to make it easier to iterate over the entire players[] array. */
