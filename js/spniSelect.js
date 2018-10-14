@@ -151,6 +151,7 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var loadingOpponents = Array(4);
 var tagList = [];
 
 /* page variables */
@@ -580,7 +581,11 @@ function updateSelectableOpponents(autoclear) {
         if (players.some(function(p) { return p && p.id == opp.id; })) {
             return false;
         }
-        
+
+        if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
+            return false;
+        }
+
         return true;
     });
 
@@ -617,11 +622,12 @@ function suggestionSelected(slot, quad) {
     /* Find the character they selected. */
     for (var i=0; i<loadedOpponents.length; i++) {
         if (loadedOpponents[i].id === selectedID) {
-            players[slot] = loadedOpponents[i];
-            
+            players[slot] = null;
+            loadingOpponents[slot-1] = selectedID;
+
         	updateSelectionVisuals();
 
-            players[slot].loadBehaviour(slot);
+            loadedOpponents[i].loadBehaviour(playerLoadedCallback, slot);
 
             return;
         }
@@ -743,12 +749,13 @@ function clickedRandomGroupButton () {
 	selectedSlot = 1;
 
     for (var i = 1; i < players.length; i++) {
+        players[i] = null;
         $selectImages[i-1].off('load');
     }
 
 	/* get a random number for the group listings */
-	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
-	var chosenGroup = loadedGroups[0][randomGroupNumber];
+  var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
+  var chosenGroup = loadedGroups[0][randomGroupNumber];
 	console.log(chosenGroup.title);
 
 	for (var i = 0; i < chosenGroup.opponents.length; i++) {
@@ -758,8 +765,7 @@ function clickedRandomGroupButton () {
 		}
 
 		/* character exists? Okay, load it */
-		players[i + 1] = chosenGroup.opponents[i];
-		players[i + 1].loadBehaviour(i+1);
+		chosenGroup.opponents[i].loadBehaviour(playerLoadedCallback, i+1);
 	}
 
 	updateSelectionVisuals();
@@ -772,7 +778,7 @@ function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out already selected characters
-        return (!players.some(function(p) { return p && p.id == opp .id; })
+        return (!players.some(function(p) { return p && p.id == opp.id; })
                 && (!predicate || predicate(opp)));
     });
 
@@ -780,12 +786,13 @@ function clickedRandomFillButton (predicate) {
 	for (var i = 1; i < players.length; i++) {
 		/* if slot is empty */
 		if (!(i in players)) {
+			players[i] = null;
+
 			/* select random opponent */
 			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
 			/* load opponent */
-			players[i] = loadedOpponentsCopy[randomOpponent];
-			players[i].loadBehaviour(i);
+            loadedOpponentsCopy[randomOpponent].loadBehaviour(playerLoadedCallback, i);
 
 			/* remove random opponent from copy list */
 			loadedOpponentsCopy.splice(randomOpponent, 1);
@@ -832,12 +839,25 @@ function changeIndividualStats (target) {
  ************************************************************/
 function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
-	players[selectedSlot] = shownIndividuals[slot-1];
-	updateSelectionVisuals();
-	players[selectedSlot].loadBehaviour(selectedSlot);
+	players[selectedSlot] = null;
+    loadingOpponents[selectedSlot-1] = shownIndividuals[slot-1].id;
 
+	updateSelectionVisuals();
+	shownIndividuals[slot-1].loadBehaviour(playerLoadedCallback, selectedSlot);
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
+}
+
+/************************************************************
+ * This callback is called after an opponent's behaviour file is loaded,
+ * in all selection cases: indiv. select, group select, random selection, etc.
+ ************************************************************/
+function playerLoadedCallback (playerObject, slot) {
+    console.log(slot+": "+playerObject);
+    players[slot] = playerObject;
+    delete loadingOpponents[slot-1];
+	updateBehaviour(slot, SELECTED);
+	updateSelectionVisuals();
 }
 
 /************************************************************
@@ -888,21 +908,19 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-    clickedRemoveAllButton();
-    /* load the group members */
-    for (var i = 1; i < 5; i++) {
-        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i-1];
-        if (member) {
-            if (players.some(function(p, j) { return i != j && p == member; })) {
-                member = member.clone();
-            }
-            member.loadBehaviour(i);
-            players[i] = member;
-        }
-	}
     /* clear the selection screen */
+	for (var i = 1; i < 5; i++) {
+		players[i] = null;
+	}
 	updateSelectionVisuals();
 
+	/* load the group members */
+	for (var i = 0; i < 4; i++) {
+        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i];
+        if (member) {
+            member.loadBehaviour(playerLoadedCallback, i+1);
+		}
+	}
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
 }
@@ -998,7 +1016,7 @@ function backSelectScreen () {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] && players[i].isLoaded()) {
+        if (players[i]) {
             /* update dialogue */
             $selectDialogues[i-1].html(players[i].chosenState.dialogue);
 
@@ -1042,17 +1060,18 @@ function updateSelectionVisuals () {
         }
     }
 
-    /* Check to see if all opponents are loaded. */
+    /* Check to see if all opponents are loaded.
+       Note: Slots with null in them are waiting for a character to be loaded */
     var filled = 0, loaded = 0;
     players.forEach(function(p, idx) {
         if (idx > 0) {
             filled++;
-            if (!p.isLoaded()) {
+            if (p === null) {
                 $selectButtons[idx-1].html('Loading...');
             } else {
                 loaded++;
             }
-            $selectButtons[idx-1].attr('disabled', !p.isLoaded());
+            $selectButtons[idx-1].attr('disabled', p === null);
         }
     });
 
@@ -1076,6 +1095,10 @@ function updateSelectionVisuals () {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
+                return false;
+            }
+
+            if (loadingOpponents.some(function(p) { return p && p === opp.id; })) {
                 return false;
             }
 

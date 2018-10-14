@@ -60,20 +60,20 @@ function startMasturbation (player) {
 	/* update behaviour */
 	if (player == HUMAN_PLAYER) {
 		if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING);
+			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING, players[HUMAN_PLAYER]);
 		} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
-			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING);
+			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING, players[HUMAN_PLAYER]);
 		}
 		$gameClothingLabel.html("You're Masturbating...");
         $gamePlayerCountdown.show();
 		setForfeitTimer(player);
 	} else {
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_START_MASTURBATING);
+			updateAllBehaviours(player, MALE_START_MASTURBATING, players[player]);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_START_MASTURBATING);
+			updateAllBehaviours(player, FEMALE_START_MASTURBATING, players[player]);
 		}
-		players[player].updateBehaviour(PLAYER_START_MASTURBATING);
+		updateBehaviour(player, PLAYER_START_MASTURBATING);
 		setForfeitTimer(player);
 	}
 	updateAllGameVisuals();
@@ -130,7 +130,7 @@ function tickForfeitTimers () {
                 players[i].forfeit = [PLAYER_FINISHING_MASTURBATING, CAN_SPEAK];
 
                 /* show them cumming */
-                players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
+                updateBehaviour(i, PLAYER_FINISHING_MASTURBATING);
                 updateGameVisual(i);
 
                 /* trigger the callback */
@@ -162,7 +162,7 @@ function tickForfeitTimers () {
 				if (randomChance > timers[i]-1) {
 					/* this player is now heavily masturbating */
 					players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-					players[i].updateBehaviour(PLAYER_HEAVY_MASTURBATING);
+					updateBehaviour(i, PLAYER_HEAVY_MASTURBATING);
 					updateGameVisual(i);
 				}
 			}
@@ -173,13 +173,13 @@ function tickForfeitTimers () {
 	// Show a player masturbating while dealing or after the game, if there is one available
 	if (masturbatingPlayers.length > 0
 		&& ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
-		var playerToShow = players[masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]];
-		players.forEach(function(p) {
-			p.updateBehaviour(
-				(p == playerToShow) ? p.forfeit[0]
-					: (playerToShow.gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
-				playerToShow);
-		});
+		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)];//index of player chosen to show masturbating//players[]
+		for (var i = 1; i < players.length; i++) {
+			updateBehaviour(i,
+							(i == playerToShow) ? players[i].forfeit[0]
+							: (players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
+							players[playerToShow]);
+		}
 		updateAllGameVisuals();
 	}
 	
@@ -199,14 +199,14 @@ function finishMasturbation (player) {
 
 	/* update other player dialogue */
 	if (players[player].gender == eGender.MALE) {
-		updateAllBehaviours(player, MALE_FINISHED_MASTURBATING);
+		updateAllBehaviours(player, MALE_FINISHED_MASTURBATING, players[player]);
 	} else if (players[player].gender == eGender.FEMALE) {
-		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING);
+		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING, players[player]);
 	}
 	
 	/* update their dialogue */
 	if (player != HUMAN_PLAYER) {
-		players[player].updateBehaviour(PLAYER_FINISHED_MASTURBATING);
+		updateBehaviour(player, PLAYER_FINISHED_MASTURBATING);
 		
 	}
 	updateAllGameVisuals();
