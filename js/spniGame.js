@@ -209,7 +209,7 @@ function updateGameVisual (player) {
             $gameLabels[player].html(players[player].label.initCap());
 
             /* check silence */
-            if (chosenState.silent) {
+            if (!chosenState.dialogue) {
                 $gameBubbles[player-1].hide();
             }
             else {

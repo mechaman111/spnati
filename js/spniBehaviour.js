@@ -11,11 +11,10 @@
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
-function createNewState (dialogue, image, direction, silent, marker) {
+function createNewState (dialogue, image, direction, marker) {
 	var newStateObject = {dialogue:dialogue,
                           image:image,
                           direction:direction,
-                          silent:silent,
                           marker:marker};
 
 	return newStateObject;
@@ -109,12 +108,10 @@ function parseDialogue (caseObject, self, target) {
 		var image = $(this).attr('img');
 		var dialogue = $(this).html();
 		var direction = $(this).attr('direction');
-		var silent = $(this).attr('silent');
 		var marker = $(this).attr('marker');
-		silent = (silent !== null && typeof silent !== typeof undefined);
 
 		states.push(createNewState(expandDialogue(dialogue, self, target),
-								   image, direction, silent, marker));
+								   image, direction, marker));
 	});
 	return states;
 }
