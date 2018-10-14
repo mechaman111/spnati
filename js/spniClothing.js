@@ -239,27 +239,27 @@ function playerMustStrip (player) {
 					trigger = [FEMALE_HUMAN_MUST_STRIP, FEMALE_MUST_STRIP];
 				}
 			}
-			updateAllBehaviours(player, trigger, players[player]);
+			updateAllBehaviours(player, trigger);
 		} else { 
 			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_MUST_STRIP, players[player]);
+				updateAllBehaviours(player, MALE_MUST_STRIP);
 			} else {
-				updateAllBehaviours(player, FEMALE_MUST_STRIP, players[player]);
+				updateAllBehaviours(player, FEMALE_MUST_STRIP);
 			}
 																		
 			var trigger = determineStrippingSituation(players[player]);
-			updateBehaviour(player, trigger);
+			players[player].updateBehaviour(trigger);
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_MUST_MASTURBATE, players[player]);
+			updateAllBehaviours(player, MALE_MUST_MASTURBATE);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE, players[player]);
+			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE);
 		}
 		if (player != HUMAN_PLAYER) {
 			var trigger = determineForfeitSituation(player);
-			updateBehaviour(player, trigger);
+			players[player].updateBehaviour(trigger);
 		}
 	}
 	
@@ -272,17 +272,17 @@ function playerMustStrip (player) {
 function prepareToStripPlayer (player) {
     if (player == HUMAN_PLAYER) { // Never happens (currently)
         if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-            updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP, players[player]);
+            updateAllBehaviours(player, MALE_HUMAN_MUST_STRIP);
         } else {
-            updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP, players[player]);
+            updateAllBehaviours(player, FEMALE_HUMAN_MUST_STRIP);
         }
     } else {
         var toBeRemovedClothing = players[player].clothing[players[player].clothing.length - 1];
         players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
 
-        updateAllBehaviours(player, dialogueTrigger, players[player]);
-        updateBehaviour(player, PLAYER_STRIPPING, null);
+        updateAllBehaviours(player, dialogueTrigger);
+        players[player].updateBehaviour(PLAYER_STRIPPING);
     }
 }
 
@@ -415,7 +415,7 @@ function closeStrippingModal () {
         }
             
         /* update behaviour */
-        updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, players[HUMAN_PLAYER]);
+        updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger);
         updateAllGameVisuals();
 		
 		/* allow progression */
@@ -448,8 +448,8 @@ function stripAIPlayer (player) {
 	players[player].updateLabel();
 	
 	/* update behaviour */
-	updateAllBehaviours(player, dialogueTrigger, players[player]);
-	updateBehaviour(player, PLAYER_STRIPPED);
+	updateAllBehaviours(player, dialogueTrigger);
+	players[player].updateBehaviour(PLAYER_STRIPPED);
     updateAllGameVisuals();
 	
 }
