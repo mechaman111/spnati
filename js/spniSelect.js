@@ -1032,9 +1032,6 @@ function updateSelectionVisuals () {
                 });
             } else {
                 $selectBubbles[i-1].show();
-                $selectBubbles[i-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+(players[i].chosenState.direction));
-                bubbleArrowOffsetRules[i-1][0].style.left = players[i].chosenState.location;
-                bubbleArrowOffsetRules[i-1][1].style.top = players[i].chosenState.location;
                 $selectImages[i-1].show();
             }
 
