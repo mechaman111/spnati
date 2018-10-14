@@ -389,7 +389,7 @@ function updateBehaviour (player, tag, opp) {
 
 			// oppHand (priority = 30)
 			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
-				if (handStrengthToString(opp.hand.strength) === oppHand) {
+				if (handStrengthToString(opp.hand.strength).toLowerCase() === oppHand.toLowerCase()) {
 					totalPriority += 30;	// priority
 				} else {
 					continue;
@@ -409,7 +409,7 @@ function updateBehaviour (player, tag, opp) {
 
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(players[player].hand.strength) === hasHand) {
+				if (handStrengthToString(players[player].hand.strength).toLowerCase() === hasHand.toLowerCase()) {
 					totalPriority += 20;		// priority
 				}
 				else {
@@ -449,7 +449,7 @@ function updateBehaviour (player, tag, opp) {
 						}
 					}
 					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
-						if (handStrengthToString(ap.hand.strength) === alsoPlayingHand)
+						if (handStrengthToString(ap.hand.strength).toLowerCase() === alsoPlayingHand.toLowerCase())
 						{
 							totalPriority += 5;		// priority
 						}
