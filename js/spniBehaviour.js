@@ -11,12 +11,17 @@
 /************************************************************
  * Stores information on AI state.
  ************************************************************/
-function createNewState (dialogue, image, direction, marker) {
+function createNewState (dialogue, image, direction, location, marker) {
 	var newStateObject = {dialogue:dialogue,
                           image:image,
-                          direction:direction,
+                          direction:direction||'down',
+                          location:location||'',
                           marker:marker};
 
+	if (location && Number(location) == location) {
+		// It seems that location was specified as a number without "%"
+		newStateObject.location = location + "%";
+	}
 	return newStateObject;
 }
 
@@ -108,10 +113,11 @@ function parseDialogue (caseObject, self, target) {
 		var image = $(this).attr('img');
 		var dialogue = $(this).html();
 		var direction = $(this).attr('direction');
+		var location = $(this).attr('location');
 		var marker = $(this).attr('marker');
 
 		states.push(createNewState(expandDialogue(dialogue, self, target),
-								   image, direction, marker));
+								   image, direction, location, marker));
 	});
 	return states;
 }
@@ -222,7 +228,7 @@ function checkMarker(predicate, target) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-function updateBehaviour (player, tag, opp) {
+Opponent.prototype.updateBehaviour = function(tag, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
@@ -230,16 +236,12 @@ function updateBehaviour (player, tag, opp) {
 		//tag = players[player].forfeit[0];
 	//}
 
-    if (!players[player]) {
-        return;
-    }
-
     /* get the AI stage */
-    var stageNum = players[player].stage;
+    var stageNum = this.stage;
 
     /* try to find the stage */
     var stage = null;
-    players[player].xml.find('behaviour').find('stage').each(function () {
+    this.xml.find('behaviour').find('stage').each(function () {
        if (Number($(this).attr('id')) == stageNum) {
            stage = $(this);
        }
@@ -247,7 +249,7 @@ function updateBehaviour (player, tag, opp) {
 
     /* quick check to see if the stage exists */
     if (!stage) {
-        console.log("Error: couldn't find stage for player "+player+" on stage number "+stageNum+" for tag "+tag);
+        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
         return;
     }
 
@@ -261,7 +263,7 @@ function updateBehaviour (player, tag, opp) {
 
     /* quick check to see if the tag exists */
 	if (states.length <= 0) {
-		console.log("Warning: couldn't find "+tag+" dialogue for player "+player+" at stage "+stageNum);
+		console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
 		return false;
 	}
     else {
@@ -375,7 +377,7 @@ function updateBehaviour (player, tag, opp) {
 					}
 				}
 				else { // else look at your own losses
-					if (inInterval(players[player].consecutiveLosses, lossesInRow)) {
+					if (inInterval(this.consecutiveLosses, lossesInRow)) {
 						totalPriority += 60;
 					}
 					else {
@@ -406,7 +408,7 @@ function updateBehaviour (player, tag, opp) {
 
 			// hasHand (priority = 20)
 			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(players[player].hand.strength) === hasHand) {
+				if (handStrengthToString(this.hand.strength) === hasHand) {
 					totalPriority += 20;		// priority
 				}
 				else {
@@ -506,8 +508,8 @@ function updateBehaviour (player, tag, opp) {
 
 			// timeInStage (priority = 8)
 			if (typeof timeInStage !== typeof undefined) {
-				if (inInterval(players[player].timeInStage == -1 ? 0 //allow post-strip time to count as 0
-							   : players[player].timeInStage, timeInStage)) {
+				if (inInterval(this.timeInStage == -1 ? 0 //allow post-strip time to count as 0
+							   : this.timeInStage, timeInStage)) {
 					totalPriority += 8;
 				}
 				else {
@@ -595,7 +597,7 @@ function updateBehaviour (player, tag, opp) {
 			// markers (priority = 1)
 			// marker checks have very low priority as they're mainly intended to be used with other target types
 			if (saidMarker) {
-				if (checkMarker(saidMarker, players[player])) {
+				if (checkMarker(saidMarker, this)) {
 					totalPriority += 1;
 				}
 				else {
@@ -603,7 +605,7 @@ function updateBehaviour (player, tag, opp) {
 				}
 			}
 			if (notSaidMarker) {
-				if (!players[player].markers[notSaidMarker]) {
+				if (!this.markers[notSaidMarker]) {
 					totalPriority += 1;
 				}
 				else {
@@ -632,8 +634,8 @@ function updateBehaviour (player, tag, opp) {
 		}
         
         states = bestMatch.reduce(function(list, caseObject) {
-            return list.concat(parseDialogue(caseObject, players[player], opp));
-        }, []);
+            return list.concat(parseDialogue(caseObject, this, opp));
+        }.bind(this), []);
 
         if (states.length > 0) {
             var chosenState = states[getRandomNumber(0, states.length)];
@@ -643,30 +645,30 @@ function updateBehaviour (player, tag, opp) {
 				if (match) {
 					if (match[1] === '+') {
 						// increment marker value
-						if(!players[player].markers[match[2]]) {
-							players[player].markers[match[2]] = 1;
+						if(!this.markers[match[2]]) {
+							this.markers[match[2]] = 1;
 						} else {
-							players[player].markers[match[2]] += 1;
+							this.markers[match[2]] += 1;
 						}
 						
 					} else if (match[1] === '-') {
 						// decrement marker value
-						if(!players[player].markers[match[2]]) {
-							players[player].markers[match[2]] = 0;
+						if(!this.markers[match[2]]) {
+							this.markers[match[2]] = 0;
 						} else {
-							players[player].markers[match[2]] -= 1;
+							this.markers[match[2]] -= 1;
 						}
 					} else {
 						// set marker value
-						players[player].markers[match[3]] = parseInt(match[4], 10);
+						this.markers[match[3]] = parseInt(match[4], 10);
 					}
-				} else if (!players[player].markers[chosenState.marker]) {
-					players[player].markers[chosenState.marker] = 1;
+				} else if (!this.markers[chosenState.marker]) {
+					this.markers[chosenState.marker] = 1;
 				}
 			}
 			
-            players[player].allStates = states;
-            players[player].chosenState = chosenState;
+            this.allStates = states;
+            this.chosenState = chosenState;
             return true;
         }
         console.log("-------------------------------------");
@@ -678,15 +680,15 @@ function updateBehaviour (player, tag, opp) {
  * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
-function updateAllBehaviours (player, tag, opp) {
+function updateAllBehaviours (player, tag) {
 	for (var i = 1; i < players.length; i++) {
 		if (players[i] && (player === null || i != player)) {
 			if (typeof tag === 'object') {
 				tag.some(function(t) {
-					return updateBehaviour(i, t, opp);
+					return players[i].updateBehaviour(t, players[player]);
 				});
 			} else {
-				updateBehaviour(i, tag, opp);
+				players[i].updateBehaviour(tag, players[player]);
 			}
 		}
 	}
