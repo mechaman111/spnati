@@ -22,7 +22,7 @@ arrow_tag = "arrow"
 ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
 
 #sets of possible targets for lines
-one_word_targets = ["target", "filter", "silent"]
+one_word_targets = ["target", "filter"]
 multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
@@ -740,12 +740,15 @@ def read_player_file(filename):
 			if ',' not in text:
 				#img, desc = "", text
 				line_data["image"] = ""
-				line_data["text"] = text
+				line_data["text"] = text.strip()
 			else:
 				img,desc = text.split(",", 1) #split into (image, text) pairs
 				line_data["image"] = img
-				line_data["text"] = desc
-				
+				line_data["text"] = desc.strip()
+
+                        if line_data["text"].find('~silent~') == 0:
+                                line_data["text"] = ""
+
 			#print "adding line", line	
 			
 			if key in d:
@@ -915,8 +918,7 @@ if __name__ == "__main__":
 
 #make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
 #This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
-#Also converted here are the hand quality words, which make_xml converts to lower case
-replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&lt;I&gt;':'<i>', '&lt;/I&gt;':'</i>', '&amp;':'&', '>~silent~':' silent="">', 'png"> ':'png">', '…':'...', '“':'"', '”':'"', '">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
+replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&lt;I&gt;':'<i>', '&lt;/I&gt;':'</i>', '&amp;':'&', '…':'...', '“':'"', '”':'"', '">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
 
 lines = []
 with open(behaviour_name) as infile:
