@@ -322,6 +322,10 @@ Player.prototype.resetState = function () {
             Array.push.apply(this.tags, added_tags);
         }
         
+        if (appearance.id) {
+            this.tags.push(appearance.id);
+        }
+        
 		/* Load the player's wardrobe. */
             
     	/* Find and grab the wardrobe tag */
@@ -454,6 +458,7 @@ Opponent.prototype.loadAlternateCostume = function () {
             var $xml = $(xml);
             
             this.alt_costume = {
+                id: this.selected_costume,
                 labels: $xml.find('label'),
                 tags: $xml.find('tag'),
                 folders: $xml.find('folder'),
@@ -469,11 +474,17 @@ Opponent.prototype.loadAlternateCostume = function () {
 }
 
 Opponent.prototype.unloadAlternateCostume = function () {
+    if (!this.alt_costume) {
+        return;
+    }
+    
     if (this.alt_costume.tags) {
         this.alt_costume.tags.children().each(function (idx, elem) {
             this.tags.splice(this.tags.indexOf(elem.text()), 1);
         }.bind(this));
     }
+    
+    this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
     
     this.alt_costume = null;
     this.resetState();
@@ -506,6 +517,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             this.intelligence = $xml.find('intelligence');
             
             this.default_costume = {
+                id: null,
                 labels: $xml.find('label'),
                 tags: null,
                 folders: this.folder,
