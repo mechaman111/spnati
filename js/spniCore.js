@@ -270,6 +270,7 @@ function Player (id) {
     this.first = '';
     this.last = '';
     this.labels = undefined;
+    this.folders = undefined;
     this.size = eSize.MEDIUM;
     this.intelligence = eIntelligence.AVERAGE;
     this.gender = eGender.MALE;
@@ -278,6 +279,10 @@ function Player (id) {
     this.tags = [];
     this.xml = null;
     this.metaXml = null;
+    
+    this.selected_costume = null;
+    this.alt_costume = null;
+    this.default_costume = null;
     
     this.resetState();
 }
@@ -301,10 +306,26 @@ Player.prototype.resetState = function () {
 		this.allStates = parseDialogue(this.xml.find('start'), this);
 		this.chosenState = this.allStates[0];
         
+        var appearance = this.default_costume;
+        if (this.alt_costume) {
+            appearance = this.alt_costume;
+        }
+        
+        this.labels = appearance.labels;
+        this.folders = appearance.folders;
+        
+        if (appearance.tags) {
+            var added_tags = appearance.tags.find('tag').map(function () {
+                return $(this).text();
+            }).get();
+            
+            Array.push.apply(this.tags, added_tags);
+        }
+        
 		/* Load the player's wardrobe. */
             
     	/* Find and grab the wardrobe tag */
-    	$wardrobe = this.xml.find('wardrobe');
+    	$wardrobe = appearance.wardrobe;
     	
     	/* find and create all of their clothing */
         var clothingArr = [];
@@ -324,6 +345,7 @@ Player.prototype.resetState = function () {
 	}
     
 	this.updateLabel();
+	this.updateFolder();
 }
 
 Player.prototype.getIntelligence = function () {
@@ -333,6 +355,7 @@ Player.prototype.getIntelligence = function () {
 /* These shouldn't do anything for the human player, but exist as empty functions
    to make it easier to iterate over the entire players[] array. */
 Player.prototype.updateLabel = function () { }
+Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
 
 /*****************************************************************************
@@ -393,16 +416,9 @@ Opponent.prototype.updateLabel = function () {
     if (this.labels) this.label = this.getByStage(this.labels);
 }
 
-Opponent.prototype.getImagesForStage = function (stage) {
-    if(!this.xml) return [];
-    
-    var imageSet = {};
-    var folder = this.folder;
-    this.xml.find('stage[id="'+stage+'"] state').each(function () {
-        imageSet[folder+$(this).attr('img')] = true;
-    });
-    return Object.keys(imageSet);
-};
+Opponent.prototype.updateFolder = function () {
+    if (this.folders) this.folder = this.getByStage(this.folders);
+}
 
 Opponent.prototype.getByStage = function (arr) {
     if (typeof(arr) === "string") {
@@ -421,9 +437,47 @@ Opponent.prototype.getByStage = function (arr) {
     return bestFit;
 };
 
+Opponent.prototype.selectAlternateCostume = function (id) {
+    this.selected_costume = id;
+};
+
 Opponent.prototype.getIntelligence = function () {
     return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
+
+Opponent.prototype.loadAlternateCostume = function () {
+    $.ajax({
+        type: "GET",
+        url: 'opponents/'+this.selected_costume+'/costume.xml',
+        dataType: "text",
+        success: function (xml) {
+            var $xml = $(xml);
+            
+            this.alt_costume = {
+                labels: $xml.find('label'),
+                tags: $xml.find('tag'),
+                folders: $xml.find('folder'),
+                wardrobe: $xml.find('wardrobe')
+            };
+            
+            this.onSelected();
+        }.bind(this),
+        error: function () {
+            console.error("Failed to load alternate costume: "+id);
+        },
+    })
+}
+
+Opponent.prototype.unloadAlternateCostume = function () {
+    if (this.alt_costume.tags) {
+        this.alt_costume.tags.children().each(function (idx, elem) {
+            this.tags.splice(this.tags.indexOf(elem.text()), 1);
+        }.bind(this));
+    }
+    
+    this.alt_costume = null;
+    this.resetState();
+}
 
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the 
@@ -447,10 +501,16 @@ Opponent.prototype.loadBehaviour = function (slot) {
             var $xml = $(xml);
             
             this.xml = $xml;
-            this.labels = $xml.find('label');
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+            
+            this.default_costume = {
+                labels: $xml.find('label'),
+                tags: null,
+                folders: this.folder,
+                wardrobe: $xml.find('wardrobe')
+            };
             
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
@@ -480,7 +540,12 @@ Opponent.prototype.loadBehaviour = function (slot) {
             
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
-            this.onSelected();
+            
+            if (this.selected_costume) {
+                this.loadAlternateCostume();
+            } else {
+                this.onSelected();
+            }
 		}.bind(this),
 		/* Error callback. */
         function(err) {
