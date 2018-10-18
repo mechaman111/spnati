@@ -660,6 +660,9 @@ function selectOpponentSlot (slot) {
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
+		
+		players[slot].unloadAlternateCostume();
+		
         delete players[slot];
 
         updateSelectionVisuals();
