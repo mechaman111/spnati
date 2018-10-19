@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v2.1.1 at 7:11:42 PM on October 11, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v2.1.1 at 2:36:57 PM on October 18, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Nayru</first>
     <last />
@@ -57,10 +57,10 @@
 
     <behaviour>
         <stage id="0">
-            <case tag="game_start">
-                <state img="0-calm.png">I'm glad you thought of me, ~player~. I'm sure we'll all have a grand time!</state>
-                <state img="0-calm.png">The Inventory is a lovely place, ~player~. It's so nice to cut loose now and again.</state>
-                <state img="0-knowing.png">Well, won't this be pleasant. I'm excited to get to know you all.</state>
+            <case tag="selected">
+                <state img="0-happy.png">Oh, you have need of me?</state>
+                <state img="0-calm.png">I sensed your approach. Say no more.</state>
+                <state img="0-interested.png">A game? Very well, I can play a few rounds.</state>
             </case>
             <case tag="female_must_strip">
                 <state img="0-confident.png">It was ~name~ this time, right? Just as foretold.</state>
@@ -72,6 +72,11 @@
                 <state img="0-horny.png">How unfortunate. It seems ~name~ lost.</state>
                 <state img="0-confident.png">I won this round!</state>
             </case>
+            <case tag="game_start">
+                <state img="0-calm.png">I'm glad you thought of me, ~player~. I'm sure we'll all have a grand time!</state>
+                <state img="0-calm.png">The Inventory is a lovely place, ~player~. It's so nice to cut loose now and again.</state>
+                <state img="0-knowing.png">Well, won't this be pleasant. I'm excited to get to know you all.</state>
+            </case>
             <case tag="female_must_strip" priority="0" consecutiveLosses="2">
                 <state img="0-awkward.png">Wait a moment... <i>two</i> losses? I <i>erm</i>... P-perhaps I should check something...</state>
                 <state img="0-sad.png">You lost twice? A-are you... are you sure? <i>Hmm</i>...</state>
@@ -81,12 +86,12 @@
                 <state img="0-calm.png" marker="armorlose">It doesn't look like that armor of yours helps in poker. It might be a good item to remove.</state>
             </case>
             <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
-                <condition count="2-3" filter="blue_hair" />
-                <state img="0-confident.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
-            </case>
-            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
                 <condition count="4" filter="blue_hair" />
                 <state img="0-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
+            </case>
+            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
+                <condition count="2-3" filter="blue_hair" />
+                <state img="0-confident.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
             </case>
             <case filter="princess" tag="female_must_strip" targetStage="0">
                 <state img="0-awkward.png">I suppose it's not my place to say, but... should someone of your stature be here?</state>
@@ -115,6 +120,10 @@
             <case tag="female_must_strip" target="mahiru" targetStage="0">
                 <state img="0-happy.png">You said your name is Mahiru? I'm Nayru; pleasure to meet you.</state>
                 <state img="0-knowing.png">Mahiru, was it? I won't forget! Nice to meet you; I'm Nayru.</state>
+            </case>
+            <case tag="female_must_strip" target="marinette" targetStage="0">
+                <state img="0-interested.png">It's strange... I can sense another. Who's your friend, Ladybug?</state>
+                <state img="0-calm.png">So, Ladybug, who is it that stands with you? They have nothing to fear...</state>
             </case>
             <case tag="female_must_strip" target="shimakaze" targetStage="0">
                 <state img="0-sad.png">Something's coming... Shimakaze, do you know...?</state>
@@ -867,6 +876,10 @@
                 <state img="0-interested.png" marker="mahiru_intro"><i>Ooh!</i> Is that... a pictobox? I've heard of those, but I never got around to looking for one myself.</state>
                 <state img="0-confident.png" marker="mahiru_intro">Oh! I think I've seen one of those before! You can use it to record a sight, right? A... pictobox?</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="good_hand" notSaidMarker="marin_intro">
+                <state img="0-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="0-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="good_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -874,6 +887,20 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="good_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="good_hand" notSaidMarker="meia_intro">
+                <condition count="0" filter="jura" />
+                <state img="0-knowing.png" marker="meia_intro">Hello... Meia, was it? Your outfit is very... interesting! I'm Nayru, Oracle of... <i>erm</i>... that is, I'm Nayru.</state>
+                <state img="0-confident.png" marker="meia_intro">Pleased to meet you, Meia. I'm Nayru, Oracle of - <i>erm</i>... p-perhaps the title isn't necessary.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="good_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="0-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="0-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="good_hand" notSaidMarker="meia_doubt">
+                <state img="0-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="0-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="navi" tag="good_hand" notSaidMarker="navi_intro">
                 <state img="0-happy.png" marker="navi_intro">Oh, hello little fairy! What are you doing here? Are you lost?</state>
@@ -895,6 +922,10 @@
             <case alsoPlaying="shimakaze" alsoPlayingStage="0" tag="good_hand" notSaidMarker="shima_intro">
                 <state img="0-confident.png" marker="shima_intro">I'm delighted to meet you, Shimakaze. Who was your little friend?</state>
                 <state img="0-calm.png" marker="shima_intro">I'm glad to formally meet you, Shimakaze. So, who was that? Ren-sou...?</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-1" tag="good_hand" notSaidMarker="urav_intro">
+                <state img="0-interested.png" marker="urav_intro">It's nice to meet you, Uravity! I'm Nayru.</state>
+                <state img="0-happy.png" marker="urav_intro">Pleasure to meet you, Uravity! Call me Nayru; if you <i>ever</i> need a song, just ask.</state>
             </case>
             <case tag="good_hand" timeInStage="5-6">
                 <state img="0-confident.png">If you couldn't beat me before, you don't have a chance now.</state>
@@ -926,6 +957,10 @@
                 <state img="0-interested.png" marker="mahiru_intro"><i>Ooh!</i> Is that... a pictobox? I've heard of those, but I never got around to looking for one myself.</state>
                 <state img="0-confident.png" marker="mahiru_intro">Oh! I think I've seen one of those before! You can use it to record a sight, right? A... pictobox?</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="okay_hand" notSaidMarker="marin_intro">
+                <state img="0-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="0-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -933,6 +968,20 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="okay_hand" notSaidMarker="meia_intro">
+                <condition count="0" filter="jura" />
+                <state img="0-knowing.png" marker="meia_intro">Hello... Meia, was it? Your outfit is very... interesting! I'm Nayru, Oracle of... <i>erm</i>... that is, I'm Nayru.</state>
+                <state img="0-confident.png" marker="meia_intro">Pleased to meet you, Meia. I'm Nayru, Oracle of - <i>erm</i>... p-perhaps the title isn't necessary.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="okay_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="0-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="0-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="okay_hand" notSaidMarker="meia_doubt">
+                <state img="0-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="0-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="monika" tag="okay_hand" notSaidMarker="dire">
                 <state img="0-dire.png" marker="dire">There's something here. Something...</state>
@@ -964,12 +1013,9 @@
                 <state img="0-confident.png" marker="shima_intro">I'm delighted to meet you, Shimakaze. Who was your little friend?</state>
                 <state img="0-calm.png" marker="shima_intro">I'm glad to formally meet you, Shimakaze. So, who was that? Ren-sou...?</state>
             </case>
-            <case tag="okay_hand" notSaidMarker="assessment">
-                <condition count="1-4" filter="villain" />
-                <condition count="0" filter="hero" />
-                <state img="0-dire.png" marker="assessment">~player~... why have you brought me here?</state>
-                <state img="0-dire.png" marker="assessment">Beware, ~player~. There is great evil here.</state>
-                <state img="0-grumpy.png" marker="assessment">Guard yourself well, ~player~. We are among great evil.</state>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-1" tag="okay_hand" notSaidMarker="urav_intro">
+                <state img="0-interested.png" marker="urav_intro">It's nice to meet you, Uravity! I'm Nayru.</state>
+                <state img="0-happy.png" marker="urav_intro">Pleasure to meet you, Uravity! Call me Nayru; if you <i>ever</i> need a song, just ask.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-3" filter="hero" />
@@ -981,19 +1027,15 @@
             <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-4" filter="hero" />
                 <condition count="0" filter="villain" />
-                <state img="0-calm.png" marker="assessment">I can sense great good here. You've chosen well, ~player~.</state>
-                <state img="0-confident.png" marker="assessment">We're in the presence of great good. There's nothing to fear here.</state>
+                <state img="0-calm.png" marker="assessment">I can sense no evil here. You've chosen well, ~player~.</state>
+                <state img="0-confident.png" marker="assessment">We're in the presence of a great light. There's nothing to fear here.</state>
             </case>
-            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="1-3" filter="shy" />
-                <state img="0-contemplative.png" marker="assessment">I can sense great concern. Please, be at ease; just tell me if you need a moment.</state>
-                <state img="0-knowing.png" marker="assessment">Deep breaths, everyone. There's nothing to be afraid of here.</state>
-                <state img="0-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="3-4" filter="magic" />
-                <state img="0-embarrassed.png" marker="assessment">I sense a power here, though I can't place it...</state>
-                <state img="0-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
+            <case tag="okay_hand" notSaidMarker="assessment">
+                <condition count="1-4" filter="villain" />
+                <condition count="0" filter="hero" />
+                <state img="0-dire.png" marker="assessment">~player~... why have you brought me here?</state>
+                <state img="0-dire.png" marker="assessment">Beware, ~player~. There is great evil here.</state>
+                <state img="0-grumpy.png" marker="assessment">Guard yourself well, ~player~. We are among great evil.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="1-3" filter="shy" />
@@ -1003,9 +1045,20 @@
                 <state img="0-knowing.png" marker="assessment">It'll be okay; if anyone needs a moment, just let me know. I'll give you all the time in the world.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
+                <condition count="1-3" filter="shy" />
+                <state img="0-contemplative.png" marker="assessment">I can sense great concern. Please, be at ease; just tell me if you need a moment.</state>
+                <state img="0-knowing.png" marker="assessment">Deep breaths, everyone. There's nothing to be afraid of here.</state>
+                <state img="0-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="2-3" filter="ddlc" />
                 <state img="0-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
                 <state img="0-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment" priority="21">
+                <condition count="3-4" filter="magic" />
+                <state img="0-embarrassed.png" marker="assessment">I sense a power here, though I can't place it...</state>
+                <state img="0-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
             </case>
             <case tag="okay_hand" priority="300" totalRounds="0">
                 <state img="0-awkward.png">I know what you've asked of me, ~player~. Even so, I may need to depart before long.</state>
@@ -1094,6 +1147,10 @@
                 <state img="0-interested.png" marker="mahiru_intro"><i>Ooh!</i> Is that... a pictobox? I've heard of those, but I never got around to looking for one myself.</state>
                 <state img="0-confident.png" marker="mahiru_intro">Oh! I think I've seen one of those before! You can use it to record a sight, right? A... pictobox?</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="bad_hand" notSaidMarker="marin_intro">
+                <state img="0-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="0-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="bad_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -1101,6 +1158,20 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="bad_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="0-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="0-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="bad_hand" notSaidMarker="meia_intro">
+                <condition count="0" filter="jura" />
+                <state img="0-knowing.png" marker="meia_intro">Hello... Meia, was it? Your outfit is very... interesting! I'm Nayru, Oracle of... <i>erm</i>... that is, I'm Nayru.</state>
+                <state img="0-confident.png" marker="meia_intro">Pleased to meet you, Meia. I'm Nayru, Oracle of - <i>erm</i>... p-perhaps the title isn't necessary.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="bad_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="0-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="0-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="bad_hand" notSaidMarker="meia_doubt">
+                <state img="0-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="0-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="monika" tag="bad_hand" notSaidMarker="dire">
                 <state img="0-dire.png" marker="dire">There's something here. Something...</state>
@@ -1132,6 +1203,10 @@
                 <state img="0-confident.png" marker="shima_intro">I'm delighted to meet you, Shimakaze. Who was your little friend?</state>
                 <state img="0-calm.png" marker="shima_intro">I'm glad to formally meet you, Shimakaze. So, who was that? Ren-sou...?</state>
             </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-1" tag="bad_hand" notSaidMarker="urav_intro">
+                <state img="0-interested.png" marker="urav_intro">It's nice to meet you, Uravity! I'm Nayru.</state>
+                <state img="0-happy.png" marker="urav_intro">Pleasure to meet you, Uravity! Call me Nayru; if you <i>ever</i> need a song, just ask.</state>
+            </case>
             <case tag="bad_hand" notSaidMarker="assessment" priority="21">
                 <condition count="2-3" filter="ddlc" />
                 <state img="0-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
@@ -1157,19 +1232,27 @@
                 <state img="0-dismissive.png">Is it my turn? Oh, if I must.</state>
                 <state img="0-embarrassed.png">So you've overcome my hand. I know what's next.</state>
             </case>
-            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_normal">
+            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_normal" priority="140">
+                <condition count="0" filter="meia" />
                 <state img="0-confident.png">Do you really like it? I'd say it took ages to grow out, but... I suppose that's not a problem for me.</state>
                 <state img="0-singing.png" marker="jura_strumming">My harp? Of course! I used to play a <i>wonderful</i> lullabye for my friends in the forest. It's never failed to shut every eye.</state>
                 <state img="0-awkward.png">My harp? W-well... Din always asks me to play a romantic song after each Winter. But... that might be a bad idea <i>here</i>...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_normal" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_normal" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="0-calm.png" marker="mahiru_cam_call">It seems I still have much to learn.</state>
                 <state img="0-dismissive.png" marker="mahiru_cam_call">Is it my turn? Oh, if I must.</state>
                 <state img="0-embarrassed.png" marker="mahiru_cam_call">So you've overcome my hand. I know what's next.</state>
             </case>
-            <case alsoPlaying="marinette" tag="must_strip_normal">
+            <case alsoPlaying="marinette" tag="must_strip_normal" priority="140">
                 <state img="0-knowing.png">Well, Tikki is right! It means the Goddess of Time is with me; I can glimpse the future, and change how time flows around me...</state>
                 <state img="0-embarrassed.png">Being an oracle means I've been tasked with maintaining the flow of time. But… it's not as though I can run out of time to do that!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_normal" priority="140">
+                <condition count="0" filter="navi" />
+                <condition count="0" filter="jura" />
+                <state img="0-embarrassed.png" marker="meia_strip1">W-what I see in your future, Meia? <i>Erm</i>... okay, then...</state>
+                <state img="0-awkward.png" marker="meia_strip1">Are you... certain, Meia? Foresight is not something to be trifled with...</state>
+                <state img="0-confident.png" marker="meia_strip1">Of course, Meia; I'd be more worried if you <i>didn't</i> doubt me, if I'm honest.</state>
             </case>
             <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal">
                 <state img="0-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
@@ -1177,11 +1260,20 @@
                 <state img="0-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
                 <state img="0-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
             </case>
-            <case alsoPlaying="palutena" tag="must_strip_normal">
+            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal" priority="141">
+                <condition count="1" filter="meia" />
+                <state img="0-awkward.png">Navi, please, I... N-no, Meia, it's not... <i>Erm...</i> I'm not <i>that</i> Nayru.</state>
+                <state img="0-dismissive.png">N-no, <i>erm</i>... I'm just an oracle, Navi. You'll give everyone the wrong idea.</state>
+            </case>
+            <case alsoPlaying="palutena" tag="must_strip_normal" priority="140">
                 <state img="0-embarrassed.png">The goddess...? Oh, no! No, I'm but an oracle in her service.</state>
             </case>
-            <case alsoPlaying="pit" tag="must_strip_normal">
+            <case alsoPlaying="pit" tag="must_strip_normal" priority="140">
                 <state img="0-awkward.png">Zelda's... move? I... I'm sorry, I'm not aware... I know of magic which bears the goddess's name, if that's what you mean.</state>
+            </case>
+            <case alsoPlaying="uravity" tag="must_strip_normal" priority="140">
+                <state img="0-embarrassed.png" marker="urav_strip1">I'm glad you like it, Uravity! And... n-no, I don't think my hearing's very remarkable at all. Why do you ask?</state>
+                <state img="0-embarrassed.png" marker="urav_strip1">Thank you, Uravity! But... if you're talking about my ears, I'm just Hylian. I'm not sure if we have better hearing than humans...</state>
             </case>
             <case hasHand="High Card" tag="must_strip_normal" notSaidMarker="badhand" priority="0">
                 <state img="0-embarrassed.png" marker="badhand">I suppose I didn't manage a very good hand, did I?</state>
@@ -1224,25 +1316,48 @@
                 <state img="0-awkward.png">Don't look at me like that, ~player~. I'm still new to this game.</state>
                 <state img="0-awkward.png">I wish Ralph were here.</state>
             </case>
-            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_losing">
+            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_losing" priority="140">
+                <condition count="0" filter="meia" />
                 <state img="0-confident.png">Do you really like it? I'd say it took ages to grow out, but... I suppose that's not a problem for me.</state>
                 <state img="0-singing.png" marker="jura_strumming">My harp? Of course! I used to play a <i>wonderful</i> lullabye for my friends in the forest. It's never failed to shut every eye.</state>
                 <state img="0-awkward.png">My harp? W-well... Din always asks me to play a romantic song after each Winter. But... that might be a bad idea <i>here</i>...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_losing" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_losing" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="0-sad.png" marker="mahiru_cam_call">I lost? Okay. Even I can't win every round.</state>
                 <state img="0-awkward.png" marker="mahiru_cam_call">Don't look at me like that, ~player~. I'm still new to this game.</state>
                 <state img="0-awkward.png" marker="mahiru_cam_call">I wish Ralph were here.</state>
             </case>
-            <case alsoPlaying="marinette" tag="must_strip_losing">
+            <case alsoPlaying="marinette" tag="must_strip_losing" priority="140">
                 <state img="0-knowing.png">Well, Tikki is right! It means the Goddess of Time is with me; I can glimpse the future, and change how time flows around me...</state>
                 <state img="0-embarrassed.png">Being an oracle means I've been tasked with maintaining the flow of time. But… it's not as though I can run out of time to do that!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_losing" priority="140">
+                <condition count="0" filter="navi" />
+                <condition count="0" filter="jura" />
+                <state img="0-embarrassed.png" marker="meia_strip1">W-what I see in your future, Meia? <i>Erm</i>... okay, then...</state>
+                <state img="0-awkward.png" marker="meia_strip1">Are you... certain, Meia? Foresight is not something to be trifled with...</state>
+                <state img="0-confident.png" marker="meia_strip1">Of course, Meia; I'd be more worried if you <i>didn't</i> doubt me, if I'm honest.</state>
             </case>
             <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing">
                 <state img="0-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
                 <state img="0-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
                 <state img="0-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
                 <state img="0-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            </case>
+            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing" priority="141">
+                <condition count="1" filter="meia" />
+                <state img="0-awkward.png">Navi, please, I... N-no, Meia, it's not... <i>Erm...</i> I'm not <i>that</i> Nayru.</state>
+                <state img="0-dismissive.png">N-no, <i>erm</i>... I'm just an oracle, Navi. You'll give everyone the wrong idea.</state>
+            </case>
+            <case alsoPlaying="palutena" tag="must_strip_losing" priority="140">
+                <state img="0-embarrassed.png">The goddess...? Oh, no! No, I'm but an oracle in her service.</state>
+            </case>
+            <case alsoPlaying="pit" tag="must_strip_losing" priority="140">
+                <state img="0-awkward.png">Zelda's... move? I... I'm sorry, I'm not aware... I know of magic which bears the goddess's name, if that's what you mean.</state>
+            </case>
+            <case alsoPlaying="uravity" tag="must_strip_losing" priority="140">
+                <state img="0-embarrassed.png" marker="urav_strip1">I'm glad you like it, Uravity! And... n-no, I don't think my hearing's very remarkable at all. Why do you ask?</state>
+                <state img="0-embarrassed.png" marker="urav_strip1">Thank you, Uravity! But... if you're talking about my ears, I'm just Hylian. I'm not sure if we have better hearing than humans...</state>
             </case>
             <case tag="must_strip_losing" totalRounds="0">
                 <state img="0-sad.png">And I already started at a disadvantage...</state>
@@ -1266,8 +1381,12 @@
             <case alsoPlaying="marinette" tag="stripping">
                 <state img="0-stripping.png">France? Is that the land you come from? I'm a Hylian, but I've lived in Labrynna for so long, that's where home really is.</state>
                 <state img="0-stripping.png">France? Never heard of it. I hail from Labrynna, but I'm of Hylian blood.</state>
-                <state img="0-stripping.png" marker="harped">I won't pretend to give up the Harp of Ages. I'm never really separated from it.</state>
                 <state img="0-stripping.png" marker="harped">My harp... it's not as much <i>where</i> it exists, but <i>when</i> it does. It's hard to get it out of my reach.</state>
+            </case>
+            <case alsoPlaying="meia" tag="stripping" priority="140" saidMarker="meia_strip1">
+                <state img="0-stripping.png" marker="meia_funny1">Let me see what I can see...</state>
+                <state img="0-stripping.png" marker="meia_friend1">Just a moment...</state>
+                <state img="0-stripping.png" marker="meia_scary1">Now, let's see about this...</state>
             </case>
             <case alsoPlaying="navi" tag="stripping">
                 <state img="0-stripping.png">If you say so, Navi.</state>
@@ -1281,28 +1400,55 @@
                 <state img="0-stripping.png">Yes, Rinkah? Is something wrong?</state>
                 <state img="0-stripping.png">Hmm? What is it, Rinkah?</state>
             </case>
+            <case alsoPlaying="uravity" tag="stripping" saidMarker="urav_strip1">
+                <state img="0-stripping.png" marker="harped">The Harp of Ages, Uravity? That's... hard to describe. I suppose it's always with me, even when it's far away.</state>
+                <state img="0-stripping.png" marker="harpedtoo">That's a magic harp, Uravity. A friend of mine once used it to save Labrynna... and Ralph and I, too.</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-confident.png">Is it my turn now? Don't be upset at my choice; you all had a first loss, too.</state>
                 <state img="0-confident.png">I've had an excellent start; I'm not afraid to continue.</state>
             </case>
-            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_winning">
+            <case alsoPlaying="jura" alsoPlayingStage="0-5" tag="must_strip_winning" priority="140">
+                <condition count="0" filter="meia" />
                 <state img="0-confident.png">Do you really like it? I'd say it took ages to grow out, but... I suppose that's not a problem for me.</state>
                 <state img="0-singing.png" marker="jura_strumming">My harp? Of course! I used to play a <i>wonderful</i> lullabye for my friends in the forest. It's never failed to shut every eye.</state>
                 <state img="0-awkward.png">My harp? W-well... Din always asks me to play a romantic song after each Winter. But... that might be a bad idea <i>here</i>...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_winning" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_winning" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="0-confident.png" marker="mahiru_cam_call">Is it my turn now? Don't be upset at my choice; you all had a first loss, too.</state>
                 <state img="0-confident.png" marker="mahiru_cam_call">I've had an excellent start; I'm not afraid to continue.</state>
             </case>
-            <case alsoPlaying="marinette" tag="must_strip_winning">
+            <case alsoPlaying="marinette" tag="must_strip_winning" priority="140">
                 <state img="0-knowing.png">Well, Tikki is right! It means the Goddess of Time is with me; I can glimpse the future, and change how time flows around me...</state>
                 <state img="0-embarrassed.png">Being an oracle means I've been tasked with maintaining the flow of time. But… it's not as though I can run out of time to do that!</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning">
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_winning" priority="140">
+                <condition count="0" filter="navi" />
+                <condition count="0" filter="jura" />
+                <state img="0-embarrassed.png" marker="meia_strip1">W-what I see in your future, Meia? <i>Erm</i>... okay, then...</state>
+                <state img="0-awkward.png" marker="meia_strip1">Are you... certain, Meia? Foresight is not something to be trifled with...</state>
+                <state img="0-confident.png" marker="meia_strip1">Of course, Meia; I'd be more worried if you <i>didn't</i> doubt me, if I'm honest.</state>
+            </case>
+            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning" priority="140">
                 <state img="0-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
                 <state img="0-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
                 <state img="0-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
                 <state img="0-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            </case>
+            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning" priority="141">
+                <condition count="1" filter="meia" />
+                <state img="0-awkward.png">Navi, please, I... N-no, Meia, it's not... <i>Erm...</i> I'm not <i>that</i> Nayru.</state>
+                <state img="0-dismissive.png">N-no, <i>erm</i>... I'm just an oracle, Navi. You'll give everyone the wrong idea.</state>
+            </case>
+            <case alsoPlaying="palutena" tag="must_strip_winning" priority="140">
+                <state img="0-embarrassed.png">The goddess...? Oh, no! No, I'm but an oracle in her service.</state>
+            </case>
+            <case alsoPlaying="pit" tag="must_strip_winning" priority="140">
+                <state img="0-awkward.png">Zelda's... move? I... I'm sorry, I'm not aware... I know of magic which bears the goddess's name, if that's what you mean.</state>
+            </case>
+            <case alsoPlaying="uravity" tag="must_strip_winning" priority="140">
+                <state img="0-embarrassed.png" marker="urav_strip1">I'm glad you like it, Uravity! And... n-no, I don't think my hearing's very remarkable at all. Why do you ask?</state>
+                <state img="0-embarrassed.png" marker="urav_strip1">Thank you, Uravity! But... if you're talking about my ears, I'm just Hylian. I'm not sure if we have better hearing than humans...</state>
             </case>
             <case tag="must_strip_winning" totalRounds="0">
                 <state img="0-dismissive.png">I suppose it's only fair, if I'm wearing more than anyone else.</state>
@@ -1334,12 +1480,12 @@
                 <state img="1-calm.png" marker="armorlose">It doesn't look like that armor of yours helps in poker. It might be a good item to remove.</state>
             </case>
             <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
-                <condition count="4" filter="blue_hair" />
-                <state img="1-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
-            </case>
-            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
                 <condition count="2-3" filter="blue_hair" />
                 <state img="1-confident.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
+            </case>
+            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
+                <condition count="4" filter="blue_hair" />
+                <state img="1-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
             </case>
             <case filter="princess" tag="female_must_strip" targetStage="0">
                 <state img="1-awkward.png">I suppose it's not my place to say, but... should someone of your stature be here?</state>
@@ -1368,6 +1514,10 @@
             <case tag="female_must_strip" target="mahiru" targetStage="0">
                 <state img="1-happy.png">You said your name is Mahiru? I'm Nayru; pleasure to meet you.</state>
                 <state img="1-knowing.png">Mahiru, was it? I won't forget! Nice to meet you; I'm Nayru.</state>
+            </case>
+            <case tag="female_must_strip" target="marinette" targetStage="0">
+                <state img="1-confident.png">So... this presence I can sense... is that Tikki? Why, hello!</state>
+                <state img="1-calm.png">Does this Tikki stand with you, even now? I... I think I can sense her.</state>
             </case>
             <case tag="female_must_strip" target="shimakaze" targetStage="0">
                 <state img="1-sad.png">Something's coming... Shimakaze, do you know...?</state>
@@ -1772,12 +1922,12 @@
                 <state img="1-calm.png" marker="armorlose">It doesn't look like that armor of yours helps in poker. It might be a good item to remove.</state>
             </case>
             <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
-                <condition count="2-3" filter="blue_hair" />
-                <state img="1-interested.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
-            </case>
-            <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
                 <condition count="4" filter="blue_hair" />
                 <state img="1-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
+            </case>
+            <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
+                <condition count="2-3" filter="blue_hair" />
+                <state img="1-interested.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
             </case>
             <case filter="weapon" tag="male_must_strip" targetStage="0">
                 <state img="1-shocked.png">~name~, please... I do wish you'd have chosen against bringing a weapon here.</state>
@@ -2115,6 +2265,10 @@
                 <state img="1-confident.png" marker="mahiru_keep"><i>Hee hee!</i> Be sure to keep it safe!</state>
                 <state img="1-calm.png" marker="mahiru_keep"><i>Haha!</i> I can't wait to see how it turned out!</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="good_hand" notSaidMarker="marin_intro">
+                <state img="1-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="1-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="good_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -2123,9 +2277,23 @@
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="good_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="1-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="1-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="good_hand" notSaidMarker="meia_doubt">
+                <state img="1-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="1-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
             <case alsoPlaying="navi" tag="good_hand" notSaidMarker="navi_intro">
                 <state img="1-happy.png" marker="navi_intro">Oh, hello little fairy! What are you doing here? Are you lost?</state>
                 <state img="1-confident.png" marker="navi_intro">Hello, little fairy! Are you going to play with us? Do... you need any help with your cards?</state>
+            </case>
+            <case alsoPlaying="navi" tag="good_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="1-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="1-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
             </case>
             <case alsoPlaying="palutena" alsoPlayingStage="0" tag="good_hand" notSaidMarker="palutena_intro" priority="101">
                 <condition count="0" filter="pit" />
@@ -2185,6 +2353,10 @@
                 <state img="1-confident.png" marker="mahiru_keep"><i>Hee hee!</i> Be sure to keep it safe!</state>
                 <state img="1-calm.png" marker="mahiru_keep"><i>Haha!</i> I can't wait to see how it turned out!</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="okay_hand" notSaidMarker="marin_intro">
+                <state img="1-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="1-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -2192,6 +2364,15 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="okay_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="1-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="1-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="okay_hand" notSaidMarker="meia_doubt">
+                <state img="1-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="1-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="monika" tag="okay_hand" notSaidMarker="dire">
                 <state img="1-dire.png" marker="dire">There's something here. Something...</state>
@@ -2205,6 +2386,11 @@
             <case alsoPlaying="navi" tag="okay_hand" notSaidMarker="navi_intro">
                 <state img="1-happy.png" marker="navi_intro">Oh, hello little fairy! What are you doing here? Are you lost?</state>
                 <state img="1-confident.png" marker="navi_intro">Hello, little fairy! Are you going to play with us? Do... you need any help with your cards?</state>
+            </case>
+            <case alsoPlaying="navi" tag="okay_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="1-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="1-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
             </case>
             <case alsoPlaying="palutena" alsoPlayingStage="0" tag="okay_hand" notSaidMarker="palutena_intro" priority="101">
                 <condition count="0" filter="pit" />
@@ -2224,17 +2410,17 @@
                 <state img="1-calm.png" marker="shima_intro">I'm glad to formally meet you, Shimakaze. So, who was that? Ren-sou...?</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
-                <condition count="1-4" filter="hero" />
-                <condition count="0" filter="villain" />
-                <state img="1-calm.png" marker="assessment">I can sense great good here. You've chosen well, ~player~.</state>
-                <state img="1-confident.png" marker="assessment">We're in the presence of great good. There's nothing to fear here.</state>
-            </case>
-            <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-3" filter="hero" />
                 <condition count="1-3" filter="villain" />
                 <state img="1-dire.png" marker="assessment">Light and darkness have come at the same time...</state>
                 <state img="1-awkward.png" marker="assessment">~player~... I trust you know who you've selected for this game.</state>
                 <state img="1-dire.png" marker="assessment">~player~, this may not be a good idea. We don't want to start a fight.</state>
+            </case>
+            <case tag="okay_hand" notSaidMarker="assessment">
+                <condition count="1-4" filter="hero" />
+                <condition count="0" filter="villain" />
+                <state img="1-calm.png" marker="assessment">I can sense no evil here. You've chosen well, ~player~.</state>
+                <state img="1-confident.png" marker="assessment">We're in the presence of a great light. There's nothing to fear here.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment">
                 <condition count="1-4" filter="villain" />
@@ -2250,9 +2436,11 @@
                 <state img="1-happy.png" marker="assessment">Don't worry; I'm sure we can take our time this evening. Right, ~player~?</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="2-3" filter="ddlc" />
-                <state img="1-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
-                <state img="1-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
+                <condition count="1-3" filter="shy" />
+                <condition count="0" filter="villain" />
+                <condition count="0" filter="mean" />
+                <state img="1-knowing.png" marker="assessment">Don't worry; we're all friends here. There's nothing to be afraid of.</state>
+                <state img="1-knowing.png" marker="assessment">It'll be okay; if anyone needs a moment, just let me know. I'll give you all the time in the world.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
                 <condition count="3-4" filter="magic" />
@@ -2260,11 +2448,9 @@
                 <state img="1-interested.png" marker="assessment">I can feel a great power among us. Perhaps we can learn from each other while we play.</state>
             </case>
             <case tag="okay_hand" notSaidMarker="assessment" priority="21">
-                <condition count="1-3" filter="shy" />
-                <condition count="0" filter="villain" />
-                <condition count="0" filter="mean" />
-                <state img="1-knowing.png" marker="assessment">Don't worry; we're all friends here. There's nothing to be afraid of.</state>
-                <state img="1-knowing.png" marker="assessment">It'll be okay; if anyone needs a moment, just let me know. I'll give you all the time in the world.</state>
+                <condition count="2-3" filter="ddlc" />
+                <state img="1-interested.png" marker="assessment">Oh! So you go to school together? A... are you aware of the nature of this game...?</state>
+                <state img="1-calm.png" marker="assessment">Are you taking a break from your studies? Well... I suppose if you're here, you must be of age...</state>
             </case>
             <case tag="swap_cards" priority="0" consecutiveLosses="1">
                 <state img="1-awkward.png">I don't want to lose twice in a row... maybe ~cards~ will help.</state>
@@ -2346,6 +2532,10 @@
                 <state img="1-confident.png" marker="mahiru_keep"><i>Hee hee!</i> Be sure to keep it safe!</state>
                 <state img="1-calm.png" marker="mahiru_keep"><i>Haha!</i> I can't wait to see how it turned out!</state>
             </case>
+            <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="bad_hand" notSaidMarker="marin_intro">
+                <state img="1-happy.png" marker="marin_intro">It's nice to meet you... Ladybug? How curious. You're a hero of sorts, aren't you?</state>
+                <state img="1-confident.png" marker="marin_intro">What a pleasant surprise; hello, Ladybug! <i>Erm...</i> I mean, it's nice to meet you. You... you're a hero, right?</state>
+            </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="bad_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Ladybug... I do feel better. Especially with a hand like this!</state>
@@ -2353,6 +2543,15 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="bad_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="1-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="1-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0" tag="bad_hand" notSaidMarker="mj_intro">
+                <condition count="1" filter="jura" />
+                <state img="1-calm.png" marker="mj_intro">It's nice to meet you both. For what it's worth, I agree with Jura; we've all come to relax and unwind.</state>
+                <state img="1-happy.png" marker="mj_intro">Oh, you two already know each other? Well... that should make it much easier to relax, right?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="bad_hand" notSaidMarker="meia_doubt">
+                <state img="1-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="1-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="monika" tag="bad_hand" notSaidMarker="dire">
                 <state img="1-dire.png" marker="dire">There's something here. Something...</state>
@@ -2366,6 +2565,11 @@
             <case alsoPlaying="navi" tag="bad_hand" notSaidMarker="navi_intro">
                 <state img="1-happy.png" marker="navi_intro">Oh, hello little fairy! What are you doing here? Are you lost?</state>
                 <state img="1-confident.png" marker="navi_intro">Hello, little fairy! Are you going to play with us? Do... you need any help with your cards?</state>
+            </case>
+            <case alsoPlaying="navi" tag="bad_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="1-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="1-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
             </case>
             <case alsoPlaying="palutena" alsoPlayingStage="0" tag="bad_hand" priority="101">
                 <condition count="0" filter="pit" />
@@ -2415,9 +2619,25 @@
                 <state img="1-shocked.png"><i>A</i> miraculous? What does that mean? And... what in Hylia's name is a Kwami?</state>
                 <state img="1-awkward.png">I don't understand, Marinette. What exactly is a Kwami?</state>
             </case>
+            <case alsoPlaying="meia" tag="stripped" saidMarker="meia_friend1">
+                <state img="1-awkward.png"><i>E-erm...</i> (<i>What?</i>) Meia, this... this "Jura" is a <i>friend</i> of yours, correct?</state>
+                <state img="1-awkward.png">I <i>ah...</i> I see your friend has a... <i>surprise</i> for you. (<i>In her words, at least.</i>) Perhaps... I shouldn't say more...</state>
+            </case>
+            <case alsoPlaying="meia" tag="stripped" saidMarker="meia_funny1">
+                <state img="1-knowing.png">(<i>Snicker...</i>) W-well... I suppose nothing I can say will <i>surprise</i> you. But I don't think your friend's plans for you are done yet.</state>
+                <state img="1-embarrassed.png">Hmhmm... Don't worry, Meia; I'm sure you're used to your friend's antics by now. And that's good, because she... has plans for you.</state>
+            </case>
+            <case alsoPlaying="meia" tag="stripped" saidMarker="meia_scary1">
+                <state img="1-angry.png">I never <i>did</i> like warfare. I see a hard-won victory, but... perhaps we should keep playing.</state>
+                <state img="1-dire.png">I... I see a triumph... of sorts... P-perhaps we should continue the game...</state>
+            </case>
             <case alsoPlaying="rinkah" tag="stripped">
                 <state img="1-stripped.png">"Azura"? I... can't say I've heard the name before. What's she like? Does she ever come here?</state>
                 <state img="1-stripped.png">I've never heard the name. Is she a singer, too? Oh, I'd <i>love</i> to meet her! Does she come here often?</state>
+            </case>
+            <case alsoPlaying="uravity" tag="stripped" saidMarker="urav_strip1">
+                <state img="1-confident.png">Are you quite alright, Uravity? Really, we can take a moment. We shouldn't continue if you're uncomfortable.</state>
+                <state img="1-embarrassed.png">Is anything wrong, Uravity? Do... you need to excuse yourself? We can take a moment!</state>
             </case>
             <case tag="must_strip_normal">
                 <state img="1-calm.png">It seems I still have much to learn.</state>
@@ -2436,7 +2656,7 @@
                 <state img="1-awkward.png" marker="jura_future_fail">I... I can <i>try</i>, but I seem to be having... difficulty.</state>
                 <state img="1-awkward.png" marker="jura_future_fail">What's...? I... I'm sorry, I'm having some trouble...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_normal" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_normal" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="1-calm.png" marker="mahiru_cam_call">It seems I still have much to learn.</state>
                 <state img="1-dismissive.png" marker="mahiru_cam_call">Is it my turn? Oh, if I must.</state>
                 <state img="1-embarrassed.png" marker="mahiru_cam_call">So you've overcome my hand. I know what's next.</state>
@@ -2448,6 +2668,10 @@
             <case alsoPlaying="marinette" alsoPlayingStage="7-10" tag="must_strip_normal">
                 <state img="1-confident.png">You can rewind time too? Well... at least we know you haven't been using that ability thus far…</state>
                 <state img="1-knowing.png">Really? I've never met anyone else with control over time! I... suppose you decided against using it today, haven't you?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_normal">
+                <state img="1-singing.png">I'd be delighted to play you a song, Meia. All of you, in fact. Just know that my music is quite... potent.</state>
+                <state img="1-awkward.png">I would, really, Meia, but... you see, my music commands much more than hearts.</state>
             </case>
             <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal">
                 <state img="1-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
@@ -2508,7 +2732,7 @@
                 <state img="1-awkward.png" marker="jura_future_fail">I... I can <i>try</i>, but I seem to be having... difficulty.</state>
                 <state img="1-awkward.png" marker="jura_future_fail">What's...? I... I'm sorry, I'm having some trouble...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_losing" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_losing" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="1-sad.png" marker="mahiru_cam_call">I lost? Okay. Even I can't win every round.</state>
                 <state img="1-awkward.png" marker="mahiru_cam_call">Don't look at me like that, ~player~. I'm still new to this game.</state>
                 <state img="1-awkward.png" marker="mahiru_cam_call">I wish Ralph were here.</state>
@@ -2520,6 +2744,10 @@
             <case alsoPlaying="marinette" alsoPlayingStage="7-10" tag="must_strip_losing">
                 <state img="1-confident.png">You can rewind time too? Well... at least we know you haven't been using that ability thus far…</state>
                 <state img="1-knowing.png">Really? I've never met anyone else with control over time! I... suppose you decided against using it today, haven't you?</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_losing">
+                <state img="1-singing.png">I'd be delighted to play you a song, Meia. All of you, in fact. Just know that my music is quite... potent.</state>
+                <state img="1-awkward.png">I would, really, Meia, but... you see, my music commands much more than hearts.</state>
             </case>
             <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing">
                 <state img="1-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
@@ -2567,6 +2795,10 @@
                 <state img="1-stripping.png">E-erm... N-navi, really, I'm not <i>that</i> Nayru. But I'm flattered, truly.</state>
                 <state img="1-stripping.png">Navi, you have me mistaken for another. N-not that I'm upset, really...</state>
             </case>
+            <case alsoPlaying="navi" tag="stripping" saidMarker="navi_hero">
+                <state img="1-stripping.png">For your willingness to assist Link, Navi, I consider myself in <i>your</i> debt.</state>
+                <state img="1-stripping.png">Please, Navi, there's no need to be so formal. I'm sure even Farore would applaud your courage.</state>
+            </case>
             <case alsoPlaying="rinkah" tag="stripping">
                 <condition count="1" filter="corrin_f" />
                 <state img="1-stripping.png">Really? I... I guess you're right! You wouldn't happen to be Hylian, would you Corrin?</state>
@@ -2594,7 +2826,7 @@
                 <state img="1-awkward.png" marker="jura_future_fail">I... I can <i>try</i>, but I seem to be having... difficulty.</state>
                 <state img="1-awkward.png" marker="jura_future_fail">What's...? I... I'm sorry, I'm having some trouble...</state>
             </case>
-            <case alsoPlaying="mahiru" tag="must_strip_winning" notSaidMarker="mahiru_cam_call" saidMarker="mahiru_intro">
+            <case alsoPlaying="mahiru" tag="must_strip_winning" notSaidMarker="mahiru_cam_call" priority="140" saidMarker="mahiru_intro">
                 <state img="1-confident.png" marker="mahiru_cam_call">Is it my turn now? Don't be upset at my choice; you all had a first loss, too.</state>
                 <state img="1-confident.png" marker="mahiru_cam_call">I've had an excellent start; I'm not afraid to continue.</state>
             </case>
@@ -2606,7 +2838,11 @@
                 <state img="1-confident.png">You can rewind time too? Well... at least we know you haven't been using that ability thus far…</state>
                 <state img="1-knowing.png">Really? I've never met anyone else with control over time! I... suppose you decided against using it today, haven't you?</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning">
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="must_strip_winning">
+                <state img="1-singing.png">I'd be delighted to play you a song, Meia. All of you, in fact. Just know that my music is quite... potent.</state>
+                <state img="1-awkward.png">I would, really, Meia, but... you see, my music commands much more than hearts.</state>
+            </case>
+            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning" priority="140">
                 <state img="1-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
                 <state img="1-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
                 <state img="1-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
@@ -2673,6 +2909,10 @@
             </case>
             <case tag="female_must_strip" target="mahiru" targetStage="0" notSaidMarker="mahiru_intro">
                 <state img="2-interested.png" marker="mahiru_intro">It was Mahiru, right? Sorry I didn't introduce myself sooner. I'm Nayru, but... I think you already know that...</state>
+            </case>
+            <case tag="female_must_strip" target="marinette" targetStage="0">
+                <state img="2-confident.png">So... this presence I can sense... is that Tikki? Why, hello!</state>
+                <state img="2-calm.png">Does this Tikki stand with you, even now? I... I think I can sense her.</state>
             </case>
             <case tag="female_must_strip" target="shimakaze" targetStage="0">
                 <state img="2-sad.png">Something's coming... Shimakaze, do you know...?</state>
@@ -3050,12 +3290,12 @@
                 <state img="2-calm.png" marker="armorlose">It doesn't look like that armor of yours helps in poker. It might be a good item to remove.</state>
             </case>
             <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
-                <condition count="2-3" filter="blue_hair" />
-                <state img="2-interested.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
-            </case>
-            <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
                 <condition count="4" filter="blue_hair" />
                 <state img="2-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
+            </case>
+            <case filter="blue_hair" tag="male_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
+                <condition count="2-3" filter="blue_hair" />
+                <state img="2-interested.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
             </case>
             <case filter="weapon" tag="male_must_strip" targetStage="0">
                 <state img="2-shocked.png">~name~, please... I do wish you'd have chosen against bringing a weapon here.</state>
@@ -3374,6 +3614,15 @@
                 <state img="2-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="2-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="good_hand" notSaidMarker="meia_doubt">
+                <state img="2-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="2-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="good_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="2-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="2-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
+            </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="2-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
@@ -3418,6 +3667,15 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="2-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="2-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="okay_hand" notSaidMarker="meia_doubt">
+                <state img="2-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="2-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="okay_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="2-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="2-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
             </case>
             <case alsoPlaying="sei" tag="okay_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="2-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
@@ -3513,6 +3771,15 @@
                 <state img="2-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="2-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="bad_hand" notSaidMarker="meia_doubt">
+                <state img="2-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="2-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="bad_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="2-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="2-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
+            </case>
             <case alsoPlaying="sei" tag="bad_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="2-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
@@ -3551,11 +3818,10 @@
                 <state img="2-confident.png"><i>Haha!</i> It's okay, Marinette; I appreciate the compliment.</state>
                 <state img="2-happy.png"><i>Haha!</i> Deep breath, Marinette. Do you need a moment? I... might have a few to spare.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal">
-                <state img="2-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="2-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="2-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="2-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_normal" saidMarker="navi_hero">
+                <state img="2-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="2-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="2-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="must_strip_normal" consecutiveLosses="2">
                 <state img="2-sad.png">O-oh. And when I'd just... well, I guess my circlet joins my sandals next!</state>
@@ -3599,11 +3865,10 @@
                 <state img="2-confident.png"><i>Haha!</i> It's okay, Marinette; I appreciate the compliment.</state>
                 <state img="2-happy.png"><i>Haha!</i> Deep breath, Marinette. Do you need a moment? I... might have a few to spare.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing">
-                <state img="2-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="2-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="2-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="2-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_losing" saidMarker="navi_hero">
+                <state img="2-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="2-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="2-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="must_strip_losing" consecutiveLosses="2">
                 <state img="2-awkward.png">Me again? Well... rules are rules. I just... wish I knew them better...</state>
@@ -3624,10 +3889,6 @@
                 <state img="2-stripping.png">Oh, you mean my necklace? I was going to discard that, as well. Is that such a bad idea?</state>
                 <state img="2-stripping.png">Are you... counting my accessories? You're... quite intent on winning, aren't you?</state>
             </case>
-            <case alsoPlaying="navi" tag="stripping">
-                <state img="2-stripping.png">E-erm... N-navi, really, I'm not <i>that</i> Nayru. But I'm flattered, truly.</state>
-                <state img="2-stripping.png">Navi, you have me mistaken for another. N-not that I'm upset, really...</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="2-calm.png">One step closer to the rest of you, right?</state>
                 <state img="2-sad.png">I'm not very fond of games of chance.</state>
@@ -3641,11 +3902,10 @@
                 <state img="2-confident.png"><i>Haha!</i> It's okay, Marinette; I appreciate the compliment.</state>
                 <state img="2-happy.png"><i>Haha!</i> Deep breath, Marinette. Do you need a moment? I... might have a few to spare.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning">
-                <state img="2-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="2-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="2-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="2-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_winning" saidMarker="navi_hero">
+                <state img="2-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="2-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="2-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="must_strip_winning" totalRounds="4-20">
                 <state img="2-happy.png">I must follow all of you? I suppose that's reasonable.</state>
@@ -3675,12 +3935,12 @@
                 <state img="3-calm.png" marker="armorlose">It doesn't look like that armor of yours helps in poker. It might be a good item to remove.</state>
             </case>
             <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
-                <condition count="4" filter="blue_hair" />
-                <state img="3-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
-            </case>
-            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
                 <condition count="2-3" filter="blue_hair" />
                 <state img="3-confident.png" marker="filter_bluehair">Oh! Is it very common to have blue hair around here? I've never met anyone else like me.</state>
+            </case>
+            <case filter="blue_hair" tag="female_must_strip" targetStage="0" notSaidMarker="filter_bluehair">
+                <condition count="4" filter="blue_hair" />
+                <state img="3-interested.png" marker="filter_bluehair">Oh, I'd hardly realized; our hair! We all match! How interesting.</state>
             </case>
             <case filter="princess" tag="female_must_strip" targetStage="0">
                 <state img="3-awkward.png">I suppose it's not my place to say, but... should someone of your stature be here?</state>
@@ -3708,6 +3968,10 @@
             </case>
             <case tag="female_must_strip" target="mahiru" targetStage="0" notSaidMarker="mahiru_intro">
                 <state img="3-interested.png" marker="mahiru_intro">It was Mahiru, right? Sorry I didn't introduce myself sooner. I'm Nayru, but... I think you already know that...</state>
+            </case>
+            <case tag="female_must_strip" target="marinette" targetStage="0">
+                <state img="3-confident.png">So... this presence I can sense... is that Tikki? Why, hello!</state>
+                <state img="3-calm.png">Does this Tikki stand with you, even now? I... I think I can sense her.</state>
             </case>
             <case tag="female_must_strip" target="shimakaze" targetStage="0">
                 <state img="3-sad.png">Something's coming... Shimakaze, do you know...?</state>
@@ -4400,6 +4664,15 @@
                 <state img="3-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="3-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="good_hand" notSaidMarker="meia_doubt">
+                <state img="3-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="3-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="good_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="3-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="3-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
+            </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="3-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
@@ -4440,6 +4713,15 @@
             <case alsoPlaying="marinette" alsoPlayingStage="2-8" tag="okay_hand" notSaidMarker="marin_weight" saidMarker="null_possess">
                 <state img="3-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="3-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="okay_hand" notSaidMarker="meia_doubt">
+                <state img="3-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="3-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="okay_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="3-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="3-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
             </case>
             <case alsoPlaying="sei" tag="okay_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="3-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
@@ -4531,6 +4813,15 @@
                 <state img="3-happy.png" marker="marin_weight">Tension? I'm not sure what you could mean... but I am feeling better now.</state>
                 <state img="3-confident.png" marker="marin_weight">Now that you mention it, Marinette... I do feel better. Especially with a hand like this!</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="bad_hand" notSaidMarker="meia_doubt">
+                <state img="3-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="3-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
+            <case alsoPlaying="navi" tag="bad_hand" notSaidMarker="navi_hero" saidMarker="navi_intro">
+                <condition count="0" filter="link" />
+                <state img="3-interested.png" marker="navi_hero">Wait a moment... I can sense... Navi! You've met him, haven't you? The spirit of the hero?</state>
+                <state img="3-confident.png" marker="navi_hero">Navi? What's that I sense? Could it be... you've met him too? Link?</state>
+            </case>
             <case alsoPlaying="sei" tag="bad_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="3-awkward.png" marker="drinks_response">I erm... I would rather not partake, Sei. But thank you for the offer!</state>
             </case>
@@ -4556,11 +4847,10 @@
                 <state img="3-awkward.png">I see. It can't be helped.</state>
                 <state img="3-calm.png">This is nothing I didn't plan for.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal">
-                <state img="3-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="3-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="3-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="3-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_normal" saidMarker="navi_hero">
+                <state img="3-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="3-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="3-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case hasHand="One Pair" tag="must_strip_normal">
                 <state img="3-awkward.png">W-what? Me? Are you sure? I had a pair and everything...</state>
@@ -4582,15 +4872,22 @@
                 <state img="3-shocked.png">Me again? I suppose I'll have to step my game up.</state>
                 <state img="3-sad.png">I should really consider withdrawing...</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing">
-                <state img="3-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="3-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="3-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="3-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_losing" saidMarker="navi_hero">
+                <state img="3-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="3-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="3-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="stripping">
                 <state img="3-stripping.png">I can still win this; don't underestimate me now!</state>
                 <state img="3-stripping.png">Don't take me for granted; I still have a trick up my sleeve!</state>
+            </case>
+            <case alsoPlaying="uravity" tag="stripping">
+                <state img="3-stripping.png">A... quirk? I suppose that's one way to say it. But... have you met another like me?</state>
+                <state img="3-stripping.png">That's one way to say it, Ochako. Do you know of others who the goddess has blessed?</state>
+            </case>
+            <case alsoPlaying="uravity" tag="stripping" saidMarker="null_possess">
+                <state img="3-stripping.png">It's been fun meeting you, too, Ochako!</state>
+                <state img="3-stripping.png">Likewise, Ochako. I... trust you'll be sticking around, too?</state>
             </case>
             <case tag="stripping" saidMarker="null_possess">
                 <state img="3-stripping.png">Hold on a moment, I'll be ready in no time.</state>
@@ -4600,11 +4897,14 @@
                 <state img="3-calm.png">Oh, is it finally time for my tunic?</state>
                 <state img="3-horny.png">Has my time finally come?</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning">
-                <state img="3-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="3-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="3-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="3-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_winning" saidMarker="navi_hero">
+                <state img="3-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="3-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="3-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
+            </case>
+            <case alsoPlaying="uravity" tag="must_strip_winning">
+                <state img="3-calm.png">Yes, Ochako. A blessing of the Goddess; with some focus, I can even <i>step</i> through time.</state>
+                <state img="3-singing.png">That's right, Ochako! But <i>seeing</i> the future is not the extent of my power.</state>
             </case>
             <case tag="must_strip_winning" totalRounds="4-20">
                 <state img="3-happy.png">I must follow all of you? I suppose that's reasonable.</state>
@@ -4657,6 +4957,10 @@
             </case>
             <case tag="female_must_strip" target="mahiru" targetStage="0" notSaidMarker="mahiru_intro">
                 <state img="4-interested.png" marker="mahiru_intro">It was Mahiru, right? Sorry I didn't introduce myself sooner. I'm Nayru, but... I think you already know that...</state>
+            </case>
+            <case tag="female_must_strip" target="marinette" targetStage="0">
+                <state img="4-confident.png">So... this presence I can sense... is that Tikki? Why, hello!</state>
+                <state img="4-calm.png">Does this Tikki stand with you, even now? I... I think I can sense her.</state>
             </case>
             <case tag="female_must_strip" target="shimakaze" targetStage="0">
                 <state img="4-sad.png">Something's coming... Shimakaze, do you know...?</state>
@@ -5289,6 +5593,10 @@
                 <state img="4-happy.png">It's everything I could've hoped for!</state>
                 <state img="4-interested.png">This <i>has</i> to be good enough. Unless we've all gotten so lucky.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="good_hand" notSaidMarker="meia_doubt">
+                <state img="4-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="4-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="4-awkward.png" marker="drinks_response">Hmm... I... I really shouldn't...</state>
             </case>
@@ -5317,6 +5625,10 @@
                 <state img="4-unwell.png">I hope these cards... I... I'm sorry, everyone. I'm feeling a bit dizzy.</state>
                 <state img="4-grumpy.png">This should be safe. Still, I can't shake a... foreboding...</state>
                 <state img="4-calm.png">I hope these keep me in the game for another round.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="okay_hand" notSaidMarker="meia_doubt">
+                <state img="4-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="4-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
             </case>
             <case alsoPlaying="sei" tag="okay_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="4-awkward.png" marker="drinks_response">Hmm... I... I really shouldn't...</state>
@@ -5377,6 +5689,10 @@
                 <state img="4-unwell.png">These are... ngh... I'm sorry, I need a moment...</state>
                 <state img="4-unwell.png">Perhaps I should lie down for a spell.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="1" tag="bad_hand" notSaidMarker="meia_doubt">
+                <state img="4-calm.png" marker="meia_doubt">It's not such a big deal, Meia. I... let's simply say that it's never too late for me to retrieve something.</state>
+                <state img="4-calm.png" marker="meia_doubt">I can't hold your doubts against you, Meia. Just... let me know if any harm befalls it? Nothing... is <i>truly</i> permanent.</state>
+            </case>
             <case alsoPlaying="sei" tag="bad_hand" notSaidMarker="drinks_response" priority="105" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="4-awkward.png" marker="drinks_response">Hmm... I... I really shouldn't...</state>
             </case>
@@ -5403,6 +5719,10 @@
                 <state img="4-stripped2.png">I've decided... to see this through to the end. For better or worse.</state>
                 <state img="4-stripped2.png">I've made up my mind. I'm... going to stick around. Even to the end.</state>
             </case>
+            <case alsoPlaying="uravity" tag="stripped" notSaidMarker="null_possess">
+                <state img="4-stripped1.png">(<i>Deep breath...</i>) N-no, Uravity... I can stay a bit longer. B-but don't feel like you have to, too!</state>
+                <state img="4-stripped1.png">N-no, Uravity... I <i>am</i> still having fun. Perhaps a song would calm us both down...</state>
+            </case>
             <case tag="stripped" saidMarker="null_possess">
                 <state img="4-stripped2.png">I feel so different now! Alright! I won't hold back!</state>
                 <state img="4-stripped2.png">Well, ~player~? Everyone? Shall we continue?</state>
@@ -5421,11 +5741,10 @@
                 <state img="4-calm.png">Thank you, Marinette. You always know what to say.</state>
                 <state img="4-happy.png">Gracious even in victory. I'm glad we've gotten the chance to play together, Marinette.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_normal">
-                <state img="4-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="4-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="4-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="4-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_normal" saidMarker="navi_hero">
+                <state img="4-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="4-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="4-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case hasHand="One Pair" tag="must_strip_normal">
                 <state img="4-awkward.png">W-what? Me? Are you sure? I had a pair and everything...</state>
@@ -5458,11 +5777,10 @@
                 <state img="4-calm.png">Thank you, Marinette. You always know what to say.</state>
                 <state img="4-happy.png">Gracious even in victory. I'm glad we've gotten the chance to play together, Marinette.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_losing">
-                <state img="4-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="4-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="4-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="4-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_losing" saidMarker="navi_hero">
+                <state img="4-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="4-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="4-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="must_strip_losing" saidMarker="null_possess">
                 <state img="4-grumpy.png">(<i>Deep breaths.</i>) I... I'll do it.</state>
@@ -5494,11 +5812,10 @@
                 <state img="4-calm.png">Thank you, Marinette. You always know what to say.</state>
                 <state img="4-happy.png">Gracious even in victory. I'm glad we've gotten the chance to play together, Marinette.</state>
             </case>
-            <case alsoPlaying="navi" alsoPlayingStage="1-2" tag="must_strip_winning">
-                <state img="4-awkward.png">Oh, dear. E-erm... Navi, was it? Little fairy? I... I think you're mistaken...</state>
-                <state img="4-calm.png">Very well. Hmm? Navi, what...? That's... Well, you aren't <i>completely</i> wrong...</state>
-                <state img="4-confident.png">You really must have me mistaken, Navi. But that's okay.</state>
-                <state img="4-awkward.png">I never knew what went through the minds of fairies. Do you suppose they're all like her, ~player~?</state>
+            <case alsoPlaying="navi" alsoPlayingStage="0-1" tag="must_strip_winning" saidMarker="navi_hero">
+                <state img="4-awkward.png">I'd be joyed to help Link in any way; any Link. For what he's done for me, I'll ever be in his debt.</state>
+                <state img="4-calm.png">For the chance to help Link again, I would lay down my very life. He's done the same, after all.</state>
+                <state img="4-happy.png">Your ordeal sounds arduous. But... it's not too late for me to lend my aid, you know. It's <i>never</i> too late for me.</state>
             </case>
             <case tag="must_strip_winning" notSaidMarker="null_possess" priority="40">
                 <state img="4-losthand.png">I've felt this... no! I-I can...!</state>
@@ -5700,10 +6017,6 @@
                 <state img="5-awkward.png">O-oh! I... I hadn't realized you were wearing... <i>erm</i>...</state>
                 <state img="5-awkward.png">Mahiru? Is that... comfortable? I... R-right. Next round?</state>
                 <state img="5-shocked.png">O-oh, you... were you planning on...?</state>
-            </case>
-            <case tag="female_removed_major" target="marinette" targetStage="2">
-                <state img="5-calm.png">Oh! This is who... Well, hello, <i>Marinette</i>! Nice to formally meet you.</state>
-                <state img="5-confident.png">Oh, so this is what you look like under that costume! It's nice to properly meet you, <i>Marinette</i>.</state>
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2" notSaidMarker="null_possess">
                 <state img="5-p_interested.png">Oh, I see… So, this is the girl behind the mask, is it?</state>
@@ -6456,6 +6769,10 @@
                 <state img="5-p_sinister.png" marker="marin_darkness">"Hurt" the Oracle of Ages? If she comes to any harm, my dream of eternal darkness will forever elude my grasp! I wouldn't <i>dream</i> of it.</state>
                 <state img="5-p_happy.png" marker="marin_magic">Oh, you won't <i>let</i> me? I see. And... what manner of magic do you possess?</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="good_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="5-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="5-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
             <case alsoPlaying="navi" tag="good_hand" timeInStage="0" notSaidMarker="null_possess">
                 <state img="5-p_interested.png">Oh, <i>right</i>. The hapless little fairy. Poor thing must be so confused. <i>Go on back to your master, why don't you?</i></state>
                 <state img="5-p_grumpy.png">Ah, yes, I'd nearly forgotten; who let a <i>fairy</i> in here, anyway?</state>
@@ -6469,6 +6786,12 @@
             <case alsoPlaying="shimakaze" alsoPlayingStage="0-8" tag="good_hand" timeInStage="0" notSaidMarker="null_possess">
                 <state img="5-p_happy.png">An "abyssal", hmm? I do <i>quite</i> like the sound of that. The Abyssal Queen... what do <i>you</i> think, Nayru?</state>
                 <state img="5-p_happy.png">An "abyssal"? Finally, the respect I deserve! Perhaps I've misread you, girl.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="good_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="5-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="5-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="5-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="5-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="good_hand" saidMarker="null_possess">
                 <state img="5-confident.png">No one can escape time.</state>
@@ -6511,9 +6834,23 @@
                 <state img="5-p_sinister.png" marker="marin_darkness">"Hurt" the Oracle of Ages? If she comes to any harm, my dream of eternal darkness will forever elude my grasp! I wouldn't <i>dream</i> of it.</state>
                 <state img="5-p_happy.png" marker="marin_magic">Oh, you won't <i>let</i> me? I see. And... what manner of magic do you possess?</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="okay_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="5-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="5-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="navi" tag="okay_hand" timeInStage="0" notSaidMarker="null_possess">
+                <state img="5-p_interested.png">Oh, <i>right</i>. The hapless little fairy. Poor thing must be so confused. <i>Go on back to your master, why don't you?</i></state>
+                <state img="5-p_grumpy.png">Ah, yes, I'd nearly forgotten; who let a <i>fairy</i> in here, anyway?</state>
+            </case>
             <case alsoPlaying="shimakaze" alsoPlayingStage="0-8" tag="okay_hand" timeInStage="0" notSaidMarker="null_possess">
                 <state img="5-p_happy.png">An "abyssal", hmm? I do <i>quite</i> like the sound of that. The Abyssal Queen... what do <i>you</i> think, Nayru?</state>
                 <state img="5-p_happy.png">An "abyssal"? Finally, the respect I deserve! Perhaps I've misread you, girl.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="okay_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="5-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="5-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="5-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="5-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="okay_hand" saidMarker="null_possess">
                 <state img="5-calm.png">How are you doing, ~player~?</state>
@@ -6577,9 +6914,23 @@
                 <state img="5-p_sinister.png" marker="marin_darkness">"Hurt" the Oracle of Ages? If she comes to any harm, my dream of eternal darkness will forever elude my grasp! I wouldn't <i>dream</i> of it.</state>
                 <state img="5-p_happy.png" marker="marin_magic">Oh, you won't <i>let</i> me? I see. And... what manner of magic do you possess?</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="bad_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="5-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="5-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="navi" tag="bad_hand" timeInStage="0" notSaidMarker="null_possess">
+                <state img="5-p_interested.png">Oh, <i>right</i>. The hapless little fairy. Poor thing must be so confused. <i>Go on back to your master, why don't you?</i></state>
+                <state img="5-p_grumpy.png">Ah, yes, I'd nearly forgotten; who let a <i>fairy</i> in here, anyway?</state>
+            </case>
             <case alsoPlaying="shimakaze" alsoPlayingStage="0-8" tag="bad_hand" timeInStage="0" notSaidMarker="null_possess">
                 <state img="5-p_happy.png">An "abyssal", hmm? I do <i>quite</i> like the sound of that. The Abyssal Queen... what do <i>you</i> think, Nayru?</state>
                 <state img="5-p_happy.png">An "abyssal"? Finally, the respect I deserve! Perhaps I've misread you, girl.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="bad_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="5-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="5-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="5-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="5-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="bad_hand" saidMarker="null_possess">
                 <state img="5-grumpy.png">I'd hoped to do better in this state of dress...</state>
@@ -6594,8 +6945,8 @@
                 <state img="5-p_confident.png" marker="poss_hand">If you think I'm going to just roll over, you're mistaken! Even <i>this</i> hand cannot overcome me!</state>
             </case>
             <case tag="stripped">
-                <state img="5-possessed.png" silent=""></state>
-                <state img="5-possessed.png">...</state>
+                <state img="5-possessed.png" marker="possess" silent=""></state>
+                <state img="5-possessed.png" marker="possess">...</state>
             </case>
             <case alsoPlaying="marinette" alsoPlayingStage="0-1" tag="stripped" saidMarker="null_possess">
                 <state img="5-stripped.png">Are you quite alright, Ladybug? Goodness, you're more flustered than <i>me</i>.</state>
@@ -6929,10 +7280,6 @@
                 <state img="6-awkward.png">O-oh! I... I hadn't realized you were wearing... <i>erm</i>...</state>
                 <state img="6-awkward.png">Mahiru? Is that... comfortable? I... R-right. Next round?</state>
                 <state img="6-shocked.png">O-oh, you... were you planning on...?</state>
-            </case>
-            <case tag="female_removed_major" target="marinette" targetStage="2">
-                <state img="6-calm.png">Oh! This is who... Well, hello, <i>Marinette</i>! Nice to formally meet you.</state>
-                <state img="6-confident.png">Oh, so this is what you look like under that costume! It's nice to properly meet you, <i>Marinette</i>.</state>
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2" notSaidMarker="null_possess">
                 <state img="6-p_interested.png">Oh, I see… So, this is the girl behind the mask, is it?</state>
@@ -7675,11 +8022,21 @@
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="good_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="6-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="good_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="6-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="6-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="104" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="6-p_sinister.png" marker="drinks_response">That sounds like just the thing we need! What sort of drinks can you offer?</state>
             </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" saidMarker="null_possess" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="6-interested.png" marker="drinks_response">What sort of drinks are you...? I-I mean... it wouldn't be a good idea to...</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="good_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="6-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="6-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="6-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="6-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="good_hand" saidMarker="null_possess">
                 <state img="6-confident.png">No one can escape time.</state>
@@ -7712,6 +8069,16 @@
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="okay_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="6-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="okay_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="6-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="6-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="okay_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="6-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="6-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="6-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="6-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="okay_hand" saidMarker="null_possess">
                 <state img="6-calm.png">How are you doing, ~player~?</state>
@@ -7759,6 +8126,16 @@
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="bad_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="6-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="bad_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="6-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="6-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="bad_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="6-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="6-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="6-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="6-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
+            </case>
             <case tag="bad_hand" saidMarker="null_possess">
                 <state img="6-grumpy.png">I'd hoped to do better in this state of dress...</state>
                 <state img="6-angry.png">Are you... reshuffling the cards more than usual? Stop that!</state>
@@ -7790,6 +8167,10 @@
             </case>
             <case alsoPlaying="pit" tag="stripped" notSaidMarker="null_possess">
                 <state img="6-p_happy.png">"<i>Betrayal</i>" is such a harsh term, little angel. She simply needed help with poker, unlike you.</state>
+            </case>
+            <case alsoPlaying="uravity" tag="stripped" notSaidMarker="null_possess">
+                <state img="6-p_arguing.png"><i>Ugh</i>, you too? Gracious, it's just a scrap of cloth! Get ahold of yourselves.</state>
+                <state img="6-p_sinister.png">"Destroying"? <i>Hardly.</i> Or have you forgotten our dear Nayru's... Quirk?</state>
             </case>
             <case tag="stripped" saidMarker="null_possess">
                 <state img="6-stripped.png">This is quite the disgraceful situation for an oracle.</state>
@@ -8101,10 +8482,6 @@
                 <state img="7-awkward.png">O-oh! I... I hadn't realized you were wearing... <i>erm</i>...</state>
                 <state img="7-awkward.png">Mahiru? Is that... comfortable? I... R-right. Next round?</state>
                 <state img="7-shocked.png">O-oh, you... were you planning on...?</state>
-            </case>
-            <case tag="female_removed_major" target="marinette" targetStage="2">
-                <state img="7-calm.png">Oh! This is who... Well, hello, <i>Marinette</i>! Nice to formally meet you.</state>
-                <state img="7-confident.png">Oh, so this is what you look like under that costume! It's nice to properly meet you, <i>Marinette</i>.</state>
             </case>
             <case tag="female_removed_major" target="marinette" targetStage="2" notSaidMarker="null_possess">
                 <state img="7-p_interested.png">Oh, I see… So, this is the girl behind the mask, is it?</state>
@@ -8837,11 +9214,21 @@
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="good_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="7-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="good_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="7-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="7-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="104" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="7-p_sinister.png" marker="drinks_response">That sounds like just the thing we need! What sort of drinks can you offer?</state>
             </case>
             <case alsoPlaying="sei" tag="good_hand" notSaidMarker="drinks_response" priority="105" saidMarker="null_possess" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="7-interested.png" marker="drinks_response">What sort of drinks are you...? I-I mean... it wouldn't be a good idea to...</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="good_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="7-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="7-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="7-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="7-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="good_hand" saidMarker="null_possess">
                 <state img="7-confident.png">No one can escape time.</state>
@@ -8868,6 +9255,16 @@
             </case>
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="okay_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="7-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
+            </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="okay_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="7-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="7-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="okay_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="7-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="7-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="7-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="7-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
             </case>
             <case tag="okay_hand" saidMarker="null_possess">
                 <state img="7-calm.png">How are you doing, ~player~?</state>
@@ -8974,6 +9371,16 @@
             <case alsoPlaying="jura" alsoPlayingStage="0-6" tag="bad_hand" timeInStage="0" notSaidMarker="null_possess" saidMarker="jura_future_good">
                 <state img="7-p_interested.png">Oh, yes. The spacegirl? Quite exquisite; and I'm sure you're <i>delighted</i> with what Nayru predicted. <i>Poor thing</i>.</state>
             </case>
+            <case alsoPlaying="meia" alsoPlayingStage="0-5" tag="bad_hand" notSaidMarker="meia_veranhand" saidMarker="possess">
+                <state img="7-p_sinister.png" marker="meia_veranhand">A pirate, calling <i>me</i> unpleasant? Why, <i>I'm flattered.</i></state>
+                <state img="7-p_happy.png" marker="meia_veranhand">You should know, little sky-pirate; flattery will carry you <i>far</i>.</state>
+            </case>
+            <case alsoPlaying="uravity" alsoPlayingStage="0-7" tag="bad_hand" timeInStage="4" notSaidMarker="null_possess" alsoPlayingNotSaidMarker="nayru_possessed">
+                <state img="7-p_calm.png">Oh, <i>really</i>? You won't <i>let</i> me? And what will you do, make me weightless?</state>
+                <state img="7-p_calm.png">You won't <i>let</i> me, will you, miss gravity? Dare strike at me, and you'll only hurt Nayru.</state>
+                <state img="7-p_calm.png">You intend to stop me? Well... unless you can conjure mystical seeds out of thin air, <i>good luck</i>.</state>
+                <state img="7-p_arguing.png">There's no need to <i>stop</i> me, fool; Nayru could take control at any time. (<i>A hundred hexes upon this place...</i>)</state>
+            </case>
             <case tag="bad_hand" saidMarker="null_possess">
                 <state img="7-grumpy.png">I'd hoped to do better in this state of dress...</state>
                 <state img="7-angry.png">Are you... reshuffling the cards more than usual? Stop that!</state>
@@ -8985,10 +9392,10 @@
                 <state img="7-mast_begin.png">I've done this little, even in private. With company... this is new.</state>
             </case>
             <case alsoPlaying="9s" tag="start_masturbating" saidMarker="n_forfeit">
-                <state img="7-mast_begin.png" marker="Veran1" silent="False">What's the matter, Amalia? Oh, right... I should explain.</state>
+                <state img="7-mast_begin.png" marker="Veran1">U-upgrade? Oh, you must mean Veran. Well... I suppose you're not <i>completely</i> wrong. Allow me to explain...</state>
             </case>
             <case alsoPlaying="amalia" tag="start_masturbating" saidMarker="n_forfeit">
-                <state img="7-mast_begin.png" marker="Veran1" silent="False">U-upgrade? Oh, you must mean Veran. Well... I suppose you're not <i>completely</i> wrong. Allow me to explain...</state>
+                <state img="7-mast_begin.png" marker="Veran1">What's the matter, Amalia? Oh, right... I should explain.</state>
             </case>
             <case alsoPlaying="marinette" tag="start_masturbating" saidMarker="null_possess">
                 <state img="7-mast_begin.png">O-of all the moments I would <i>not</i> want to live again... this is chief.</state>
