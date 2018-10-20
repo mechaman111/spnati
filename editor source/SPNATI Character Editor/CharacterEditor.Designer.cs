@@ -120,6 +120,7 @@
 			this.wardrobeEditor = new SPNATI_Character_Editor.Controls.WardrobeEditor();
 			this.label9 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ckbClothesPlural = new System.Windows.Forms.CheckBox();
 			this.lblPositionHelp = new System.Windows.Forms.Label();
 			this.lblTypeHelp = new System.Windows.Forms.Label();
 			this.txtClothesProperName = new System.Windows.Forms.TextBox();
@@ -287,7 +288,8 @@
 			this.lblIncomplete = new System.Windows.Forms.Label();
 			this.lblTesting = new System.Windows.Forms.Label();
 			this.lblUnlisted = new System.Windows.Forms.Label();
-			this.ckbClothesPlural = new System.Windows.Forms.CheckBox();
+			this.lblScale = new System.Windows.Forms.Label();
+			this.valScale = new System.Windows.Forms.NumericUpDown();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -333,6 +335,7 @@
 			this.tabMarkers.SuspendLayout();
 			this.tabAdvanced.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.valScale)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -1155,6 +1158,16 @@
 			this.groupBox1.TabIndex = 13;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Edit Clothing";
+			// 
+			// ckbClothesPlural
+			// 
+			this.ckbClothesPlural.AutoSize = true;
+			this.ckbClothesPlural.Location = new System.Drawing.Point(240, 21);
+			this.ckbClothesPlural.Name = "ckbClothesPlural";
+			this.ckbClothesPlural.Size = new System.Drawing.Size(75, 17);
+			this.ckbClothesPlural.TabIndex = 15;
+			this.ckbClothesPlural.Text = "Plural form";
+			this.ckbClothesPlural.UseVisualStyleBackColor = true;
 			// 
 			// lblPositionHelp
 			// 
@@ -2924,6 +2937,8 @@
 			// 
 			// tabAdvanced
 			// 
+			this.tabAdvanced.Controls.Add(this.valScale);
+			this.tabAdvanced.Controls.Add(this.lblScale);
 			this.tabAdvanced.Controls.Add(this.gridLabels);
 			this.tabAdvanced.Controls.Add(this.lblStageLabels);
 			this.tabAdvanced.Location = new System.Drawing.Point(4, 22);
@@ -3086,15 +3101,42 @@
 			this.lblUnlisted.TabIndex = 18;
 			this.lblUnlisted.Text = "UNLISTED CHARACTER";
 			// 
-			// ckbClothesPlural
+			// lblScale
 			// 
-			this.ckbClothesPlural.AutoSize = true;
-			this.ckbClothesPlural.Location = new System.Drawing.Point(240, 21);
-			this.ckbClothesPlural.Name = "ckbClothesPlural";
-			this.ckbClothesPlural.Size = new System.Drawing.Size(75, 17);
-			this.ckbClothesPlural.TabIndex = 15;
-			this.ckbClothesPlural.Text = "Plural form";
-			this.ckbClothesPlural.UseVisualStyleBackColor = true;
+			this.lblScale.AutoSize = true;
+			this.lblScale.Location = new System.Drawing.Point(8, 130);
+			this.lblScale.Name = "lblScale";
+			this.lblScale.Size = new System.Drawing.Size(67, 13);
+			this.lblScale.TabIndex = 84;
+			this.lblScale.Text = "Scale factor (%):";
+			// 
+			// valScale
+			// 
+			this.valScale.DecimalPlaces = 1;
+			this.valScale.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+			this.valScale.Location = new System.Drawing.Point(119, 127);
+			this.valScale.Maximum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+			this.valScale.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.valScale.Name = "valScale";
+			this.valScale.Size = new System.Drawing.Size(66, 20);
+			this.valScale.TabIndex = 85;
+			this.valScale.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
 			// 
 			// CharacterEditor
 			// 
@@ -3179,6 +3221,7 @@
 			this.tabAdvanced.ResumeLayout(false);
 			this.tabAdvanced.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridLabels)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.valScale)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3432,6 +3475,8 @@
 		private System.Windows.Forms.Label lblUnlisted;
 		private System.Windows.Forms.CheckBox ckbClothesPlural;
 		private System.Windows.Forms.CheckBox ckbShowBubbleColumns;
+		private System.Windows.Forms.NumericUpDown valScale;
+		private System.Windows.Forms.Label lblScale;
 	}
 }
 

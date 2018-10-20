@@ -413,6 +413,15 @@ namespace SPNATI_Character_Editor
 			txtSource.Text = _selectedCharacter.Metadata.Source;
 			txtWriter.Text = _selectedCharacter.Metadata.Writer;
 			txtArtist.Text = _selectedCharacter.Metadata.Artist;
+			if ((decimal)_selectedCharacter.Metadata.Scale >= valScale.Minimum 
+				&& (decimal)_selectedCharacter.Metadata.Scale <= valScale.Maximum)
+			{
+				valScale.Value = (decimal)_selectedCharacter.Metadata.Scale;
+			}
+			else
+			{
+				valScale.Value = 100.0m;
+			}
 			cboDefaultPic.SelectedItem = _imageLibrary.Find(Path.GetFileNameWithoutExtension(_selectedCharacter.Metadata.Portrait));
 			LoadTags();
 			LoadIntelligence();
@@ -504,6 +513,7 @@ namespace SPNATI_Character_Editor
 			_selectedCharacter.Metadata.Source = txtSource.Text;
 			_selectedCharacter.Metadata.Writer = txtWriter.Text;
 			_selectedCharacter.Metadata.Artist = txtArtist.Text;
+			_selectedCharacter.Metadata.Scale = (float)valScale.Value;
 			SaveLayer();
 			SaveTags();
 			SaveLabels();
