@@ -85,6 +85,9 @@ namespace SPNATI_Character_Editor.Controls
 			string text = row.Cells["ColText"].Value?.ToString();
 			string silent = row.Cells["ColSilent"].Value?.ToString();
 			string marker = row.Cells["ColMarker"].Value?.ToString();
+			string direction = row.Cells["ColDirection"].Value?.ToString();
+			string location = row.Cells["ColLocation"].Value?.ToString();
+
 			if (silent == "")
 				text = "";
 			if (text == "~silent~")
@@ -99,6 +102,9 @@ namespace SPNATI_Character_Editor.Controls
 			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
 			line.IsSilent = silent;
 			line.Marker = string.IsNullOrEmpty(marker) ? null : marker;
+			line.Direction = direction;
+			line.Location = location;
+
 			return line;
 		}
 
@@ -270,6 +276,14 @@ namespace SPNATI_Character_Editor.Controls
 				gridDialogue.EditingControl.Select();
 		}
 
+		public bool ShowSpeechBubbleColumns
+		{
+			set
+			{
+				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
+			}
+		}
+
 		/// <summary>
 		/// Gets the image at a row
 		/// </summary>
@@ -336,6 +350,12 @@ namespace SPNATI_Character_Editor.Controls
 
 			DataGridViewCell markerCell = row.Cells["ColMarker"];
 			markerCell.Value = line.Marker;
+
+			DataGridViewCell directionCell = row.Cells["ColDirection"];
+			directionCell.Value = line.Direction;
+
+			DataGridViewCell locationCell = row.Cells["ColLocation"];
+			locationCell.Value = line.Location;
 		}
 
 		/// <summary>

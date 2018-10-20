@@ -2668,5 +2668,10 @@ namespace SPNATI_Character_Editor
 		{
 			this.Close();
 		}
+
+		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
+		{
+			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
+		}
 	}
 }

@@ -159,6 +159,7 @@
 			this.label33 = new System.Windows.Forms.Label();
 			this.label35 = new System.Windows.Forms.Label();
 			this.grpCase = new System.Windows.Forms.GroupBox();
+			this.ckbShowBubbleColumns = new System.Windows.Forms.CheckBox();
 			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.lblHelpText = new System.Windows.Forms.Label();
 			this.cmdPasteAll = new System.Windows.Forms.Button();
@@ -1554,6 +1555,7 @@
 			this.grpCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpCase.Controls.Add(this.ckbShowBubbleColumns);
 			this.grpCase.Controls.Add(this.gridDialogue);
 			this.grpCase.Controls.Add(this.lblHelpText);
 			this.grpCase.Controls.Add(this.cmdPasteAll);
@@ -1570,6 +1572,18 @@
 			this.grpCase.TabIndex = 28;
 			this.grpCase.TabStop = false;
 			this.grpCase.Text = "Edit Case";
+			// 
+			// ckbShowBubbleColumns
+			// 
+			this.ckbShowBubbleColumns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ckbShowBubbleColumns.AutoSize = true;
+			this.ckbShowBubbleColumns.Location = new System.Drawing.Point(330, 389);
+			this.ckbShowBubbleColumns.Name = "ckbShowBubbleColumns";
+			this.ckbShowBubbleColumns.Size = new System.Drawing.Size(168, 17);
+			this.ckbShowBubbleColumns.TabIndex = 43;
+			this.ckbShowBubbleColumns.Text = "Show speech bubble columns";
+			this.ckbShowBubbleColumns.UseVisualStyleBackColor = true;
+			this.ckbShowBubbleColumns.CheckedChanged += new System.EventHandler(this.ckbShowSpeechBubbleColumns_CheckedChanged);
 			// 
 			// gridDialogue
 			// 
@@ -3417,6 +3431,7 @@
 		private System.Windows.Forms.Label lblTesting;
 		private System.Windows.Forms.Label lblUnlisted;
 		private System.Windows.Forms.CheckBox ckbClothesPlural;
+		private System.Windows.Forms.CheckBox ckbShowBubbleColumns;
 	}
 }
 

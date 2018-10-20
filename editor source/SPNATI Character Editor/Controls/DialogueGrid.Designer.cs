@@ -34,6 +34,8 @@
 			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColSilent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
@@ -53,6 +55,8 @@
             this.ColImage,
             this.ColText,
             this.ColMarker,
+            this.ColDirection,
+            this.ColLocation,
             this.ColSilent});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -82,7 +86,7 @@
 			this.ColImage.HeaderText = "Image";
 			this.ColImage.MaxDropDownItems = 20;
 			this.ColImage.Name = "ColImage";
-			this.ColImage.Width = 150;
+			this.ColImage.Width = 120;
 			// 
 			// ColText
 			// 
@@ -94,13 +98,32 @@
 			// 
 			this.ColMarker.HeaderText = "Marker";
 			this.ColMarker.Name = "ColMarker";
-			this.ColMarker.Width = 70;
+			// 
+			// ColDirection
+			// 
+			this.ColDirection.HeaderText = "Arrow direction";
+			this.ColDirection.Items.AddRange(new object[] {
+            "down",
+            "left",
+            "right",
+            "up"});
+			this.ColDirection.Name = "ColDirection";
+			this.ColDirection.Visible = false;
+			this.ColDirection.Width = 60;
+			// 
+			// ColLocation
+			// 
+			this.ColLocation.FillWeight = 20F;
+			this.ColLocation.HeaderText = "Arrow location";
+			this.ColLocation.Name = "ColLocation";
+			this.ColLocation.Visible = false;
+			this.ColLocation.Width = 60;
 			// 
 			// ColSilent
 			// 
 			this.ColSilent.HeaderText = "Silent";
 			this.ColSilent.Name = "ColSilent";
-			this.ColSilent.Width = 50;
+			this.ColSilent.Width = 40;
 			// 
 			// DialogueGrid
 			// 
@@ -120,6 +143,8 @@
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColSilent;
 	}
 }
