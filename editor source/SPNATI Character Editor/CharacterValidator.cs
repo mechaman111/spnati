@@ -301,21 +301,10 @@ namespace SPNATI_Character_Editor
 					#region Filters
 					foreach (var condition in stageCase.Conditions)
 					{
-						int count;
-						if (int.TryParse(condition.Count, out count))
-						{
-							if (count > 5 || count < 0)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering tag {1} for {2} characters, but must be between 0-5. {0}", caseLabel, condition.Filter, condition.Count)));
-							}
-						}
-						if (condition.Count.Contains("-"))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Filtering by tag count \"{1}\" does not support ranges. {0}", caseLabel, condition.Filter)));
-						}
+						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5));
 						if (!TagDatabase.TagExists(condition.Filter))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag {1} which is not used by any characters. {0}", caseLabel, condition.Filter)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter)));
 						}
 					}
 					#endregion
@@ -381,41 +370,44 @@ namespace SPNATI_Character_Editor
 
 		private static IEnumerable<ValidationError> ValidateRangeField(string value, string fieldName, string caseLabel, int min, int max)
 		{
-			int total;
+			int lower = 0, upper;
 			if (!string.IsNullOrEmpty(value))
 			{
 				string[] pieces = value.Split('-');
-				if (pieces.Length > 3)
+				if (pieces.Length > 2)
 				{
 					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be numeric or a range. {0}", caseLabel, value, fieldName));
 					yield break;
 				}
 				string minStr = pieces[0];
-				if (!int.TryParse(minStr, out total))
-				{
-					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Min value in {2} \"{1}\" must be numeric. {0}", caseLabel, value, fieldName));
-				}
-				else
-				{
-					if (min >= 0 && total < min && max >= 0 && total > max)
+				if (minStr != "") {
+					if (!int.TryParse(minStr, out lower))
 					{
-						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName));
+					}
+					else if ((min >= 0 && lower < min) || (max >= 0 && lower > max))
+					{
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
 					}
 				}
 
 				if (pieces.Length > 1)
 				{
 					string maxStr = pieces[1];
-					if (!int.TryParse(maxStr, out total))
-					{
-						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Max value in {2} \"{1}\" must be numeric. {0}", caseLabel, value, fieldName));
-					}
-					else
-					{
-						if (min >= 0 && total < min && max >= 0 && total > max)
+					if (maxStr != "") {
+						if (!int.TryParse(maxStr, out upper))
 						{
-							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName));
 						}
+						else if (lower > upper)
+						{
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must not be greater than upper bound. {0}", caseLabel, value, fieldName, min, max));
+						}
+						else if ((min >= 0 && upper < min) || (max >= 0 && upper > max))
+						{
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+						}
+						
 					}
 				}
 			}
