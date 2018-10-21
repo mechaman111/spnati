@@ -6,7 +6,7 @@ namespace SPNATI_Character_Editor
 {
 	public static class Config
 	{
-		public const string Version = "v2.2";
+		public const string Version = "v2.3";
 
 		/// <summary>
 		/// Gets the SPNATI directory
