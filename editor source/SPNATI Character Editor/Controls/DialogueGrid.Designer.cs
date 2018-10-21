@@ -36,7 +36,6 @@
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColSilent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -56,8 +55,7 @@
             this.ColText,
             this.ColMarker,
             this.ColDirection,
-            this.ColLocation,
-            this.ColSilent});
+            this.ColLocation});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -71,7 +69,6 @@
 			this.gridDialogue.Location = new System.Drawing.Point(0, 0);
 			this.gridDialogue.MultiSelect = false;
 			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.gridDialogue.Size = new System.Drawing.Size(572, 380);
 			this.gridDialogue.TabIndex = 42;
 			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
@@ -119,12 +116,6 @@
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
 			// 
-			// ColSilent
-			// 
-			this.ColSilent.HeaderText = "Silent";
-			this.ColSilent.Name = "ColSilent";
-			this.ColSilent.Width = 40;
-			// 
 			// DialogueGrid
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -145,6 +136,5 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColSilent;
 	}
 }
