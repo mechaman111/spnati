@@ -54,11 +54,19 @@ release=
 marker=sanako_bad_start,public,Sanako is off to a bad start.
 marker=sanako_drama_club_costumes,private,Sanako thinks a princess is just in costume.
 marker=sanako_baked,public,Sanako has some baked goodies for everyone after the game.
+marker=sanako_explains_pairs,private,Sanako explains basic pairs gameplay.
 marker=sanako_hot,private,Sanako blames the heat for her skirt removal.
+marker=sanako_introductions,public,Sanako invites everybody to introduce themselves.
+marker=sanako_name_request,private,Sanako asks permission to refer to an opponent by her name.
 marker=sanako_press_buttons,private,Sanako observes that we're pressing a sarcastic girl's buttons.
 marker=sanako_younger_guy,public,If any males are playing, Sanako might remark that she sometimes enjoys going out with younger guys.
 
+marker=sanako_age_uncertainty,public,If Nagisa is not playing, Sanako can almost introduce herself as her real age.
 marker=sanako_human_male_taking_the_lead,public,Sanako is happy to let the human male player "take the lead".
+marker=sanako_kyu_drama_club,public,Sanako asks if Kyu is from the drama club.
+marker=sanako_natsuki_club,public,Sanako reacts to Natsuki claiming to be in the same club as the player.
+marker=sanako_navi_orb_of_light,public,Sanako calls Navi an orb of light and suggests that she can grant wishes.
+marker=sanako_remilia_wings,public,Sanako mistakes Remilia's wings as being part of a costume.
 marker=sanako_shimakaze_flying_robot,public,Sanako notices Shimakaze's flying robot.
 marker=sanako_zone-tan_strapless,public,Sanako mistakes Zone-tan's bare shoulders for a strapless bra.
 
@@ -66,17 +74,20 @@ marker=sanako_zone-tan_strapless,public,Sanako mistakes Zone-tan's bare shoulder
 start=0-wave,I'm Sanako Isogai, eighteen years old.
 
 selected=wave,I'm Sanako Isogai, eighteen years old.
+selected,count-nagisa:0,marker:sanako_age_uncertainty=headtilt,I'm Sanako Isogai, thirt&mdash; eighteen years old.
 
 game_start=headtilt,It's so very nice to make your acquaintance!
 game_start=headtilt,Let's all get along, okay?
 
+game_start,alsoPlaying:natsuki,marker:sanako_natsuki_club=wondering,Are you and ~player~ in a club together, Natsuki? That sounds exciting.
+game_start,alsoPlaying:remilia,marker:sanako_remilia_wings=surprised,What scary wings. You all put a lot of effort into your costumes, didn't you?
 game_start,alsoPlaying:shimakaze,marker:sanako_shimakaze_flying_robot=wondering,Is that a flying robot?
 
 
 #CLOTHING
 clothes=Shoes and socks,shoes and socks,minor,other,plural
 clothes=Shirt,shirt,major,upper
-clothes=Skirt,Skirt,major,lower
+clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower,plural
 
@@ -121,16 +132,20 @@ clothes=Panties,panties,important,lower,plural
 0-good_hand=bodytilt,Well, my! This is a good hand, isn't it?
 0-okay_hand=wave,It's a match.
 0-okay_hand=lookingtoside,Let's go around the table and show each other what we have.
+0-okay_hand,notSaidMarker:sanako_explains_pairs,marker:sanako_explains_pairs=calm,If I remember right, I just have to match two or more of the same numbers together.
 0-okay_hand,hasHand:Two Pair,priority:0=headtilt,I can't complain with two pairs.
 0-bad_hand=bodytilt,It's about to be my turn, isn't it?
 
-0-good_hand,totalRounds:0=happy,This is the first round, so let's introduce ourselves!
-0-okay_hand,totalRounds:0=happy,This is the first round, so let's introduce ourselves!
-0-bad_hand,totalRounds:0=happy,This is the first round, so let's introduce ourselves!
+0-good_hand,totalRounds:0,marker:sanako_introductions=happy,This is the first round, so let's introduce ourselves!
+0-okay_hand,totalRounds:0,marker:sanako_introductions=happy,This is the first round, so let's introduce ourselves!
+0-bad_hand,totalRounds:0,marker:sanako_introductions=happy,This is the first round, so let's introduce ourselves!
 
-0-good_hand,alsoPlaying:kyu,totalRounds:0=bodytilt,Oh my! A fairy? Are you from the drama club?
-0-okay_hand,alsoPlaying:kyu,totalRounds:0=bodytilt,Oh my! A fairy? Are you from the drama club?
-0-bad_hand,alsoPlaying:kyu,totalRounds:0=bodytilt,Oh my! A fairy? Are you from the drama club?
+0-good_hand,alsoPlaying:kyu,totalRounds:0,marker:sanako_kyu_drama_club=bodytilt,Oh my! A fairy? Are you from the drama club?
+0-okay_hand,alsoPlaying:kyu,totalRounds:0,marker:sanako_kyu_drama_club=bodytilt,Oh my! A fairy? Are you from the drama club?
+0-bad_hand,alsoPlaying:kyu,totalRounds:0,marker:sanako_kyu_drama_club=bodytilt,Oh my! A fairy? Are you from the drama club?
+0-good_hand,alsoPlaying:navi,totalRounds:0,marker:sanako_navi_orb_of_light=wondering,Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.
+0-okay_hand,alsoPlaying:navi,totalRounds:0,marker:sanako_navi_orb_of_light=wondering,Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes. 
+0-bad_hand,alsoPlaying:navi,totalRounds:0,marker:sanako_navi_orb_of_light=wondering,Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.
 
 0-good_hand,totalAlive:3,totalRounds:1=headtilt,I have a feeling the three of us will have a great time!
 0-okay_hand,totalAlive:3,totalRounds:1=headtilt,I have a feeling the three of us will have a great time!
@@ -156,12 +171,14 @@ clothes=Panties,panties,important,lower,plural
 0-bad_hand,totalRounds:2=headtilt,Everybody is so cute. I hope we can have fun together.
 
 #lost shoes and socks
-1-good_hand=happy,Wow! This is actually a really good hand!
+1-good_hand,notSaidMarker:sanako_baked,marker:sanako_baked=bodytilt,As a little surprise for you all, I made some baked goodies to eat after the game.
+1-good_hand=happy,Wow!
+1-good_hand,timeInStage:4=happy,I'm on a roll!
 1-okay_hand=calm,I'll be fine.
 1-okay_hand=calm,I think a pair should be enough.
-1-bad_hand=waiting,I know I shouldn't be disappointed, but I wanted to hold on a little longer.
-
-1-good_hand,notSaidMarker:sanako_baked,marker:sanako_baked=bodytilt,As a little surprise for you all, I made some baked goodies to eat after the game.
+1-bad_hand,timeInStage:0-1=waiting,I know I shouldn't be disappointed, but I wanted to hold on a little longer.
+1-bad_hand=headtilt,I don't have anything special.
+1-bad_hand=interested,It's almost time I show you what's under this shirt.
 
 #lost shirt
 2-good_hand=handonheart,Yay!
@@ -174,6 +191,8 @@ clothes=Panties,panties,important,lower,plural
 #lost skirt
 3-good_hand=calm,Good.
 3-okay_hand=laugh,Don't count me out too quickly.
+3-okay_hand=calm,I'm ready.
+3-okay_hand,totalExposed:1-4,priority:0=puffedcheeks,Who keeps giving me these good cards?
 3-okay_hand,totalExposed:3-5,priority:0=headtilt,Sorry to keep you all waiting, but I keep getting pairs.
 3-okay_hand,totalMales:1-4,marker:sanako_younger_guy,notSaidMarker:sanako_younger_guy,priority:0=headtilt,Every once in a while, I feel like going out with a younger guy.
 3-bad_hand=disappointed,I see.
@@ -189,6 +208,7 @@ clothes=Panties,panties,important,lower,plural
 4-good_hand=bodytilt,I don't need to win, but it's nice to get a great hand from time to time!
 4-okay_hand=cleavage,Does anyone else have their eyes on a nice pair?
 4-okay_hand=happy,I hope we all have something to show.
+4-okay_hand=happy,It's not times for me to show you everything, but I'm sure your patience will be rewarded.
 4-bad_hand=calm,Ah...
 4-bad_hand=embarrassed,Um...
 4-bad_hand,totalNaked:4=hellothere,Sorry, everyone! I'll be out of these panties in just a moment.
@@ -212,10 +232,12 @@ clothes=Panties,panties,important,lower,plural
 0-must_strip_normal,totalRounds:0=wave,My name is Sanako Isogai. Please call me Sanako.
 0-must_strip_normal=happy,It's my first loss, but hopefully not my last.
 0-must_strip_normal=bodytilt,No problem. Leave it to me.
-0-must_strip_losing,marker:sanako_bad_start=concerned,Oh, you're targeting me now? Even though I have the least to lose?
-0-stripping=zzzstripping1,I want help in any way that I can. How about I take off my socks too?
+0-must_strip_losing,marker:sanako_bad_start,totalRounds:0=concerned,Oh, you're targeting me first? Even though I have the least to lose?
+0-must_strip_losing,marker:sanako_bad_start,totalRounds:1-3=concerned,Oh, you're targeting me now? Even though I have the least to lose?
+0-must_strip_losing,marker:sanako_bad_start=wave,No problem. I'll take a turn now.
+0-stripping=zzzstripping1,I want to help in any way that I can. How about I take off my socks too?
 0-stripping=zzzstripping1,I thought I might take off my socks too if that's all right.
-0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes and socks be enough?
+0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes be enough? Do you need my socks too?
 0-stripping,totalExposed:1-4=zzzstripping2,It's only fair that I take my socks off too.
 1-stripped=aaastripped1,There! I'm ready for the next round.
 
@@ -244,6 +266,7 @@ clothes=Panties,panties,important,lower,plural
 3-must_strip_losing,totalRounds:3=kneelingsad,So that's it? So that's how it is?!
 3-stripping=zzzstripping1,I won't blame you if you confess your love to me.
 4-stripped=happy,So tell me, what do you think of my womanly ways?
+4-stripped=breasthold,These can be quite a handful sometimes.
 
 #losing panties
 4-must_strip_winning=interested,Could it be you've taken an interest in little ol' me?
@@ -263,6 +286,7 @@ clothes=Panties,panties,important,lower,plural
 0-male_human_must_strip,notSaidMarker:sanako_human_male_taking_the_lead,marker:sanako_human_male_taking_the_lead=lookingtoside,I'm sure we'd all be happy if you wanted to start taking the lead.
 0-male_human_must_strip=headtilt,This game keeps getting better and better.
 0-male_must_strip=wondering,So, uh...
+0-female_human_must_strip,totalRounds:0-2=headtilt,Sorry, but these are the rules.
 0-female_human_must_strip=headtilt,We get to see more of ~name~? I'm happy to hear it.
 0-female_must_strip,totalRounds:0=headtilt,This going to be fun, isn't it?
 0-female_must_strip,hasHand:High Card=wondering,Was it me?
@@ -275,17 +299,23 @@ clothes=Panties,panties,important,lower,plural
 1-male_human_must_strip=headtilt,Would you mind taking a turn?
 1-male_human_must_strip=bodytilt,I'm glad everything worked out!
 1-male_human_must_strip,target:human,targetStage:4=concerned,What's wrong, honey? You look upset.
+1-male_must_strip,totalRounds:0-2=yeah,All right!
 1-male_must_strip=yeah,All right, ~name~!
+1-female_human_must_strip,totalRounds:0-2=headtilt,You are very pretty. You must be quite popular.
 1-female_human_must_strip=headtilt,~Name~ is very pretty. She must be quite popular.
+1-female_must_strip,totalRounds:1=headtilt,I went first. Now it's your turn.
+1-female_must_strip,totalRounds:2=thinking,It's more fun if we take turns.
 1-female_must_strip=calm,Oh, don't worry. It'll be fine.
 1-female_must_strip=calm,All eyes are on ~name~.
 
 #lost shirt
-2-male_human_must_strip=readytopounce,We got him! Good work, everyone.
+2-male_human_must_strip,totalRounds:0-2=readytopounce,We got him! Good work, everyone.
 2-male_human_must_strip=coy,What a surprise, ~name~.
+2-male_must_strip,totalRounds:0-2=interested,Oh! Hi!
 2-male_must_strip=interested,Oh! Hi, ~name~!
 2-female_human_must_strip=unsure,Time to take of another piece of your disguise. Your outfit, I mean, Of course you're not wearing a disguise.
-2-female_must_strip=handonheart,What time is it? It's ~name~ Time!
+2-female_must_strip,totalRounds:0-2=coy,Why, look who it is this time.
+2-female_must_strip=handonheart,What time is it? It's ~Name~ Time!
 2-female_must_strip=handonheart,You're up, ~name~.
 2-female_must_strip,targetTimeInStage:1=unsure,Again? We're sorry, ~name~.
 
@@ -300,7 +330,7 @@ clothes=Panties,panties,important,lower,plural
 
 #lost bra
 4-male_human_must_strip=bodytilt,I'm so excited!
-4-male_human_must_strip=interested,What are your plans right now? Does your plans involve all of your clothing?
+4-male_human_must_strip=interested,What are your plans right now? Do your plans involve all of your clothing?
 4-male_human_must_strip,targetStage:0,totalMales:1=bodytilt,Oh, so this young man is playing too? I was starting to think he was just here to deal cards and peep on girls.
 4-male_must_strip=silly,Come on, boy! Show us a good time!
 4-female_human_must_strip=happy,Go, ~name~!
@@ -313,6 +343,8 @@ clothes=Panties,panties,important,lower,plural
 -3-male_must_strip=tasty,It's ~name~'s turn. Hold him down if you have to!
 -3-female_human_must_strip=peacesign,Care to join me, ~name~?
 -3-female_must_strip=zzzstarting1,It's hard to say what's the right choice and what's the wrong choice in this situation.
+-3-female_must_strip=hopeful,Thanks for saving me.
+-3-female_must_strip,hasHand:High Card,priority:0=peacesign,That was a close call for me.
 
 #masturbating
 -2-male_human_must_strip=masturbating_g,~Name~!
@@ -334,6 +366,23 @@ clothes=Panties,panties,important,lower,plural
 -1-female_must_strip=covering,Even ~name~ beat me...
 
 #targeted
+0-female_must_strip,filter:armor,targetStage:0=wondering,You have such pretty armor. Are you in a group that does historical re-enactments?
+1-female_must_strip,filter:armor,targetStage:0=calm,You have such pretty armor. Are you in a group that does historical re-enactments?
+2-female_must_strip,filter:armor,targetStage:0=calm,You have such pretty armor. Are you in a group that does historical re-enactments?
+0-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=pointingatself,I'm going to be keeping my glasses on today. How about you?
+1-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=headtilt,I'm going to be keeping my glasses on today. How about you?
+2-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=calm,I'm going to be keeping my glasses on today. How about you?
+3-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=handonheart,I'm going to be keeping my glasses on today. How about you, ~name~?
+4-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=embarrassed,Even though it's probably going to cost me, I'm going to be keeping my glasses on today. How about you, ~name~?
+-3-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=pleading,All I have left is my glasses, but I have to keep them. You could take off your if you like, though.
+-1-female_must_strip,filter:glasses,targetStage:0,marker:sanako_keeping_glasses,notSaidMarker:sanako_keeping_glasses=cold,You could take off your glasses if you like, ~name~. I couldn't, but you could.
+0-female_must_strip,filter:magical_girl,targetStage:0=wave,It's a pleasure to meet you. Are you dressed up as a magical girl today to help you feel braver?
+1-female_must_strip,filter:magical_girl,targetStage:0=thinking,It's a pleasure to meet you. Are you dressed up as a magical girl today to help you feel braver?
+2-female_must_strip,filter:magical_girl,targetStage:0=calm,It's a pleasure to meet you. Are you dressed up as a magical girl today to help you feel braver?
+3-female_must_strip,filter:magical_girl,targetStage:0=headtilt,Oh, you were doing so well, ~name~! But now it's finally time to take off the first part of that magical girl costume.
+4-female_must_strip,filter:magical_girl,targetStage:0=bodytilt,Oh, you were doing so well, ~name~! But now it's finally time to take off the first part of that magical girl costume.
+-3-female_must_strip,filter:magical_girl,targetStage:0=peacesign,Oh, you were doing so well, ~name~! But now it's finally time to take off the first part of that magical girl costume.
+-1-female_must_strip,filter:magical_girl,targetStage:0=confident,Oh, you were doing so well, ~name~! But now it's finally time to take off the first part of that magical girl costume.
 0-female_must_strip,filter:princess,notSaidMarker:sanako_drama_club_costumes,marker:sanako_drama_club_costumes=wondering,Goodness, the drama club sure has a lot of different costumes, doesn't it?
 1-female_must_strip,filter:princess,notSaidMarker:sanako_drama_club_costumes,marker:sanako_drama_club_costumes=thinking,Goodness, the drama club sure has a lot of different costumes, doesn't it?
 2-female_must_strip,filter:princess,notSaidMarker:sanako_drama_club_costumes,marker:sanako_drama_club_costumes=handonheart,Goodness, the drama club sure has a lot of different costumes, doesn't it?
@@ -352,6 +401,9 @@ clothes=Panties,panties,important,lower,plural
 3-female_must_strip,target:mei,targetStage:0=headtilt,I'm sure you want to keep those glasses on, Mei. How else will you see the rest of the game?
 4-female_must_strip,target:mei,targetStage:0=happy,I'm sure you want to keep those glasses on, Mei. How else will you see what's left of the game?
 -3-female_must_strip,target:mei,targetStage:0=tasty,I'm sure you want to keep those glasses on, Mei. How else will you see what's left of the game?
+0-female_must_strip,target:miko,targetStage:0=headtilt,Aren't we the lucky ones today. We get to play with a prince!
+1-female_must_strip,target:miko,targetStage:0=bodytilt,Aren't we the lucky ones today. We get to play with a prince!
+2-female_must_strip,target:miko,targetStage:0=handonheart,Aren't we the lucky ones today. We get to play with a prince!
 0-female_must_strip,target:zizou,targetStage:0=interested,My, what a handsome prince!
 1-female_must_strip,target:zizou,targetStage:0=headtilt,My, what a handsome prince!
 2-female_must_strip,target:zizou,targetStage:0=interested,My, what a handsome prince!
@@ -360,18 +412,25 @@ clothes=Panties,panties,important,lower,plural
 
 #OPPONENT REMOVING ACCESSORY
 #fully clothed
+0-male_removing_accessory,totalRounds:0-2=bodytilt,Ready?
 0-male_removing_accessory=bodytilt,Ready, ~name~?
-0-male_removed_accessory,totalRounds:0=pointingatself,I'll take care of your clothing~, ~name~. You can start with your ~clothing~.
+0-male_removed_accessory,totalRounds:0=pointingatself,I'll take care of your clothing. You can start with your ~clothing~.
 0-male_removed_accessory=happy,That's the way to do it.
-#Test to see if the following line works:
-0-male_removed_accessory,target:human,targetStage:1=headtilt,Thanks, ~name~. You don't mind me using your first name, do you?
-0-female_removing_accessory=happy,You can think of this as like a practise round if you like, ~name~.
+0-male_removed_accessory,target:human,totalRounds:0-2=headtilt,Thanks, ~name~. You don't mind me using your first name, do you?
+0-female_removing_accessory,totalRounds:0=happy,You can think of this as like a practice round if you like.
+0-female_removing_accessory,totalRounds:1=wave,No hard feelings, okay? We're all just here for a fun game.
+0-female_removing_accessory,totalRounds:2=headtilt,I expected as much.
+0-female_removing_accessory=pointingatself,Don't let that get to you, ~name~. You're still doing great.
+0-female_removing_accessory=headtilt,Beautiful girl, equally beautiful ~clothing~.
+0-female_removing_accessory=concerned,~clothing.ifPlural(Those ~clothing~ suit you so well.|Oh, I hope your ~clothing~ wasn't something very precious to you.)~
 0-female_removing_accessory=lookingtoside,Take your time. No need to rush.
+0-female_removed_accessory,totalRounds:0-2,priority:0,notSaidMarker:sanako_name_request,marker:sanako_name_request=wondering,Would you mind if I call you "~name~"?
 0-female_removed_accessory=pointingatself,Oh, I was wanting to see one of those!
-0-female_removed_accessory=wondering,Would you mind if I call you ~name~?
+0-female_removed_accessory=headtilt,Lovely.
 
 #lost shoes and socks
 1-male_removing_accessory=headtilt,And what do we have here?
+1-male_removed_accessory,totalRounds:0-2=calm,I look forward to working with you further.
 1-male_removed_accessory=calm,I look forward to working with you further, ~name~.
 1-male_removed_accessory=calm,Let's keep moving forward.
 1-female_removing_accessory=calm,It might take us a few rounds to get started.
@@ -391,6 +450,7 @@ clothes=Panties,panties,important,lower,plural
 3-female_removed_accessory=laugh,We can get along, can't we?
 3-female_removed_accessory=laugh,You're welcome to catch up all at once if you want to.
 3-female_removed_accessory=calm,Thanks for taking care of that.
+3-female_removed_accessory,targetStage:1,totalExposed:1-3=puffedcheeks,Nobody likes a selfish player. We're all here to have fun, you know?
 
 #lost bra
 4-male_removing_accessory=angry,For a game of give and take, you're doing an awful lot more taking.
@@ -420,14 +480,14 @@ clothes=Panties,panties,important,lower,plural
 -1-female_removed_accessory,totalFinished:2-4,priority:0=cold,How can you keep playing at a time like this? Did our penalties mean nothing to you?
 
 #targeted
-0-female_removing_accessory,target:shimakaze=tiptoe,Excuse me, Miss, but your clothes are on fire!
-1-female_removing_accessory,target:shimakaze=concerned,Excuse me, Miss, but your clothes are on fire!
-2-female_removing_accessory,target:shimakaze=shocked,Sh-Shimakaze! Your clothes are on fire!
-3-female_removing_accessory,target:shimakaze=jumpscare,Sh-Shimakaze! Your clothes are on fire!
-4-female_removing_accessory,target:shimakaze=surprised,Sh-Shimakaze! Your clothes are on fire!
--3-female_removing_accessory,target:shimakaze=covering,Sh-Shimakaze! Your clothes are on fire!
--2-female_removing_accessory,target:shimakaze=masturbating_e,N-Noooooo!
--1-female_removing_accessory,target:shimakaze=ahhhhhh,Help! What do we do? She's on fire!
+0-female_removing_accessory,target:shimakaze,targetStage:0=tiptoe,Excuse me, Miss, but your clothes are on fire!
+1-female_removing_accessory,target:shimakaze,targetStage:0=concerned,Excuse me, Miss, but your clothes are on fire!
+2-female_removing_accessory,target:shimakaze,targetStage:0=shocked,Sh-Shimakaze! Your clothes are on fire!
+3-female_removing_accessory,target:shimakaze,targetStage:0=jumpscare,Sh-Shimakaze! Your clothes are on fire!
+4-female_removing_accessory,target:shimakaze,targetStage:0=surprised,Sh-Shimakaze! Your clothes are on fire!
+-3-female_removing_accessory,target:shimakaze,targetStage:0=covering,Sh-Shimakaze! Your clothes are on fire!
+-2-female_removing_accessory,target:shimakaze,targetStage:0=masturbating_e,N-Noooooo!
+-1-female_removing_accessory,target:shimakaze,targetStage:0=ahhhhhh,Help! What do we do? She's on fire!
 
 
 
@@ -436,24 +496,28 @@ clothes=Panties,panties,important,lower,plural
 0-male_removing_minor=lookingtoside,Please be a darling and take off your ~clothing~, name.
 0-male_removed_minor=interested,Good boy!
 0-male_removed_minor,totalRounds:1-3,totalExposed:0,priority:0=headtilt,It's okay if we start slow.
+0-female_removing_minor,totalRounds:0=bodytilt,That was just the first of many.
 0-female_removing_minor=wave,Don't worry about it.
 0-female_removed_minor=warning,Put your ~clothing~ to the side. We don't want anything getting stepped on.
 0-female_removed_minor=happy,I hope this is okay with you.
-0-female_removed_minor,totalExposed:0,priority:0=calm,If you're okay with it, we're okay it with it too.
+0-female_removed_minor=pointingatself,~clothing.ifPlural(Those are lovely ~clothing~. Did your mother buy them for you?|A ~clothing~ like that is worth taking care of.)~
+0-female_removed_minor,totalExposed:0,priority:0=calm,Nobody has taken off anything exciting yet.
 
 #lost shoes and socks
 1-male_removing_minor=calm,It's more fun if we strip at the same speed, don't you think?
+1-male_removed_minor,totalRounds:0-2=waiting,Don't be so grouchy. It's fine.
 1-male_removed_minor=waiting,Don't be so grouchy, ~name~. It's fine.
 1-male_removed_minor,target:human=happy,Perfect!
 1-female_removing_minor=happy,If you want to give us a little present, who am I to say no?
 1-female_removed_minor=calm,There's nothing wrong with that.
 1-female_removed_minor=headtilt,Thanks. We appreciate it.
-1-female_removed_minor=bodytilt,I'm sure any girl would react same when taking off her ~clothing~.
+1-female_removed_minor=bodytilt,I'm sure any girl would react the same when taking off her ~clothing~.
 
 #lost shirt
 2-male_removing_minor=calm,You got it, dear.
 2-male_removed_minor=interested,I hope your ~clothing~ comes with a promise we'll see more.
 2-female_removing_minor=calm,You're doing great.
+2-female_removed_minor,totalRounds:0-2=handonheart,Come on! Give 'em a good fight!
 2-female_removed_minor=handonheart,Come on, ~name~! Give 'em a good fight!
 
 #lost skirt
@@ -495,18 +559,21 @@ clothes=Panties,panties,important,lower,plural
 #OPPONENT REMOVING MAJOR CLOTHING
 #fully clothed
 0-male_removing_major=wave,Home run!
+0-male_removed_major,totalRounds:0-2=concerned,We didn't make you mad, did we,?
 0-male_removed_major=concerned,We didn't make you mad, did we, ~name~?
+0-male_removed_major,target:human,totalRounds:0-2=concerned,Didn't you want to wait for the rest of us?
 0-male_removed_major,target:human=headtilt,If you're determined to keep fighting, then I won't stop you.
-0-male_removed_major,target:human=concerned,Didn't you want to wait for the rest of us, ~name~?
 0-female_removing_major,totalRounds:0-4=concerned,Oh, already?
 0-female_removing_major=wondering,I must be better at this than I thought.
+0-female_removing_major=wondering,Would you like me to take something off instead?
+0-female_removing_major,totalExposed:0,priority:0=concerned,~clothing.ifPlural(~Clothing~ are something you hold dear, aren't they?|You must be a brave girl if you're willing to remove a ~clothing~ in front of all of us.)~
 0-female_removed_major=happy,Maybe some tea will cheer you up.
 
 #lost shoes and socks
 1-male_removing_major=yeah,What a winning idea!
 1-male_removed_major=happy,I know what will cheer you up. I'll take off something big next.
 1-female_removing_major=bodytilt,You sure are keeping the game moving along!
-1-female_removed_major=yeah,You're the best.
+1-female_removed_major,totalRounds:0-2=yeah,You're the best.
 1-female_removed_major=concerned,Are you okay, ~name~?
 1-female_removed_major,filter:sarcastic,notSaidMarker:sanako_press_buttons,marker:sanako_press_buttons=thinking,You all sure know the right buttons to press with her, don't you?
 
@@ -521,8 +588,9 @@ clothes=Panties,panties,important,lower,plural
 3-male_removing_major=headtilt,It would just thrill me if you'd take off your ~clothing~!
 3-male_removed_major=hopeful,You're making my heart race.
 3-female_removing_major=laugh,Way to go, ~name~!
-3-female_removed_major=hopeful,No need to be shy. You're beautiful.
+3-female_removing_major=blushing,Oh?
 3-female_removed_major=calm,Don't mind me. I'm just going to watch quietly.
+3-female_removed_major,filter:shy=hopeful,No need to be shy. You're beautiful.
 
 #lost bra
 4-male_removing_major=interested,Are you getting excited yet?
@@ -544,7 +612,7 @@ clothes=Panties,panties,important,lower,plural
 -2-female_removed_major=masturbating_l,Dear ~name~...
 
 #finished
--1-male_removing_major=confident,The price of admitance to your show sure was steep, Mr. ~Name~.
+-1-male_removing_major=confident,The price of admittance to your show sure was steep, Mr. ~Name~.
 -1-male_removed_major=happy,What a fine, muscular body you have. You'll make a fine husband someday.
 -1-female_removing_major=concerned,Is it finally time... for <i>that</i>?
 -1-female_removed_major=confident,Thank you for sharing. You did well!
@@ -563,13 +631,16 @@ clothes=Panties,panties,important,lower,plural
 #OPPONENT REVEALING CHEST OR CROTCH
 #fully clothed
 0-male_chest_will_be_visible=interested,This is an unexpected but happy turn of events.
+0-male_chest_is_visible,totalRounds:0-2=lookingtoside,How lovely. If I can share a secret, seeing him take his shirt off was my motivation for being here.
 0-male_chest_is_visible=lookingtoside,How lovely. If I can share a secret, seeing ~name~ take his shirt off was my motivation for being here.
 0-male_crotch_will_be_visible=tasty,So early! Someone's a go-getter.
+0-male_small_crotch_is_visible,totalRounds:0-2=concerned,Oh, I'm sorry. I thought you were old enough to play with us. I can walk you home right now if you like.
 0-male_small_crotch_is_visible=concerned,Oh, I'm sorry. I thought you were old enough to play with us, ~name~. I can walk you home right now if you like.
 0-male_medium_crotch_is_visible=interested,Maybe we don't need to play strip poker after all. I can think of some other fun things to do.
 0-male_large_crotch_is_visible=interested,No wonder you wanted to get him free! That's a big one! If you like, I could adjust your clothes later to help them fit better.
 
 0-female_chest_will_be_visible=headtilt,This is your chance to show everybody how beautiful you are.
+0-female_chest_will_be_visible,totalExposed:0,totalRounds:0-2=shocked,Be brave. You can do it!
 0-female_chest_will_be_visible,totalExposed:0=shocked,Be brave, ~name~. You can do it!
 0-female_small_chest_is_visible=headtilt,How precious.
 0-female_medium_chest_is_visible=tasty,Looks like someone has buttons to press.
@@ -579,6 +650,7 @@ clothes=Panties,panties,important,lower,plural
 
 #lost shoes and socks
 1-male_chest_will_be_visible=interested,What woman could say no to such a hunky young man offering to go shirtless.
+1-male_chest_is_visible,totalRounds:0-2=horny,Say, I might have some chores that need doing around the house if you wanted to visit next weekend.
 1-male_chest_is_visible=horny,Say, ~name~. I might have some chores that need doing around the house if you wanted to visit next weekend.
 1-male_crotch_will_be_visible=headtilt,I'd be happy to provide a female perspective on things.
 1-male_crotch_will_be_visible,totalFemales:2-4=happy,It's the moment the girls have been waiting for!
@@ -587,6 +659,7 @@ clothes=Panties,panties,important,lower,plural
 1-male_large_crotch_is_visible=interested,How bold of you! You might just inspire me to do something bold too...
 
 1-female_chest_will_be_visible=zzzstripping1,Should I join you as a sign of solidarity?
+1-female_small_chest_is_visible,totalRounds:0-2=concerned,I'm sorry if that was hard for you. We should all give her a hug.
 1-female_small_chest_is_visible=concerned,I'm sorry if that was hard for you. We should all give ~name~ a hug.
 1-female_medium_chest_is_visible=bodytilt,Just a moment and I'll join you!
 1-female_large_chest_is_visible=happy,Please don't feel embarrassed. I'm sure that all of us are impressed!
@@ -597,11 +670,14 @@ clothes=Panties,panties,important,lower,plural
 2-male_chest_will_be_visible=coy,It's okay if you want to lose your ~clothing~. I'm sure none of us would mind.
 2-male_chest_is_visible=interested,Such a strapping young man.
 2-male_crotch_will_be_visible=interested,It's time to find out whether you're a boy or a man.
+2-male_small_crotch_is_visible,totalRounds:0-2=sad,I wish you had warned us. I was getting excited for no reason...
 2-male_small_crotch_is_visible=sad,I wish you had warned us, ~name~. I was getting excited for no reason...
 2-male_medium_crotch_is_visible=coy,What an <i>upstanding</i> gentleman ~name~ has turned out to be.
+2-male_large_crotch_is_visible,totalRounds:0-2=coy,Oh my...
 2-male_large_crotch_is_visible=coy,Oh my, ~name~...
 
 2-female_chest_will_be_visible=calm,Whenever you're ready.
+2-female_small_chest_is_visible,totalRounds:0-2=shy,There. That's done. We wouldn't mind if she covered up now, would we?
 2-female_small_chest_is_visible=shy,There. That's done. We wouldn't mind if ~name~ covered up now, would we?
 2-female_medium_chest_is_visible=coy,Oho, you must be quite popular with the boys!
 2-female_large_chest_is_visible=covering,Some of the neighborhood ladies were bragging that larger breasts are better for nursing. But I think they just liked the attention.
@@ -636,7 +712,7 @@ clothes=Panties,panties,important,lower,plural
 4-female_small_chest_is_visible=bodytilt,Aw, they're so adorable. You're so precious, ~name~.
 4-female_medium_chest_is_visible=cleavage,Welcome to the party, ~name~.
 4-female_large_chest_is_visible=covering,Wow! I've been outdone.
-4-female_crotch_will_be_visible=happy,If you're okay with it, we sure are.
+4-female_crotch_will_be_visible=happy,If you're okay with it, we're okay it with it too.
 4-female_crotch_is_visible=bodytilt,Thanks for going through with it. This game is so much more fun when everybody plays along.
 
 #nude
@@ -674,6 +750,7 @@ clothes=Panties,panties,important,lower,plural
 -1-male_chest_will_be_visible=delighted,Yay! You're too kind, ~name~.
 -1-male_chest_is_visible=footcaress,Want me to run a finger up and down that strong chest of yours?
 -1-male_crotch_will_be_visible=confident,I wouldn't miss this for the world!
+-1-male_crotch_will_be_visible=footcaress,Time to get it out.
 -1-male_small_crotch_is_visible=cold,Oh... It looks very unique.
 -1-male_small_crotch_is_visible=confident,That's okay, ~name~. I got to imagine that it was a lot bigger a few minutes ago when it really counted.
 -1-male_small_crotch_is_visible,totalMales:2-4=facepalm,Boys, this is why you should always eat your vegetables.
@@ -689,7 +766,6 @@ clothes=Panties,panties,important,lower,plural
 -1-female_crotch_is_visible=cross,Stand up and keep fighting. You have to win for your own sake!
 
 #targeted
-
 -3-female_medium_chest_is_visible,target:valerie=disappointed,Are those default nipples?
 
 0-female_crotch_is_visible,totalNaked:1,target:mia=headtilt,I've been trying to lose a few rounds to catch up, but you've beaten us all.
@@ -718,24 +794,31 @@ clothes=Panties,panties,important,lower,plural
 1-male_must_masturbate,totalMasturbating:0,totalFinished:0=horny,So... we decided that it's come to this...
 1-male_must_masturbate=yeah,Wow! I'm really doing great today!
 1-male_start_masturbating=interested,Ehe, don't mind us if we watch closely.
+1-male_masturbating,totalRounds:0-2=horny,He's still going strong. Keep up the fight.
 1-male_masturbating=horny,~Name~ is still going strong. Keep up the fight.
 1-male_finished_masturbating=moe,Oh! What a sudden end.
 
+1-female_must_masturbate,totalRounds:0-2=worried,I'm sorry. This game must feel so unfair right now.
 1-female_must_masturbate=worried,I'm sorry, ~name~. This game must feel so unfair right now.
 1-female_start_masturbating=concerned,If this is too much for you, maybe the others would let me take your place.
+1-female_masturbating,totalRounds:0-2=headtilt,She must be a natural performer.
 1-female_masturbating=headtilt,~Name~ must be a natural performer.
 1-female_finished_masturbating=concerned,I'm so sorry about your loss. This must be hard on you.
 
 #lost shirt
+2-male_must_masturbate,totalRounds:0-2=readytopounce,Don't mind me if I pounce on you. I might not be able to control myself.
 2-male_must_masturbate=readytopounce,Don't mind me if I pounce on you, ~name~. I might not be able to control myself.
 2-male_start_masturbating=interested,Go slow. We don't want this to be over too quickly.
 2-male_masturbating=unsure,You're moving so violently!
+2-male_finished_masturbating,totalRounds:0-2=coy,He really makes a splash, doesn't he?
 2-male_finished_masturbating=coy,~Name~ really makes a splash, doesn't he?
 
+2-female_must_masturbate,totalMasturbating:0,totalFinished:0,totalRounds:0-2=handonheart,She's a real go-getter! She's getting an early start on all of us.
 2-female_must_masturbate,totalMasturbating:0,totalFinished:0=handonheart,~Name~ is a real go-getter! She's getting an early start on all of us.
 2-female_must_masturbate=handonheart,It's so thoughtful of you to join in, ~name~. I know it will be appreciated.
 2-female_start_masturbating=hey,If you'd like to borrow my skirt to cover yourself while you do that, just let me know.
 2-female_start_masturbating,filter:shy=interested,It's okay if you don't want us to see. We'll still know if you're enjoying yourself.
+2-female_masturbating,totalRounds:0-2=coy,She seems to be enjoying herself, at least.
 2-female_masturbating=coy,~Name~ seems to be enjoying herself, at least.
 2-female_masturbating=coy,Now, now, let's not stare at poor ~name~.
 2-female_masturbating,totalMasturbating:1,totalFinished:0,priority:0=interested,If you'd like to slow down a little, ~name~, maybe all of us could do this together.
@@ -800,14 +883,20 @@ clothes=Panties,panties,important,lower,plural
 -1-male_start_masturbating=happy,Don't be shy. We all want to see.
 -1-male_masturbating=delighted,Oh my... Is he gonna confess his love to me?
 -1-male_masturbating=footcaress,You can come a little closer. We're in this together, after all.
+-1-male_masturbating=footcaress,Come to mama...
 -1-male_finished_masturbating=footcaress,I hope you have more where that came from, mister.
 
 -1-female_must_masturbate=happy,It's your turn now, ~name~.
 -1-female_start_masturbating=confident,You can do it!
 -1-female_start_masturbating=footcaress,If you're feeling too embarrassed, maybe we could ask ~player~ to help.
 -1-female_masturbating=confident,Should we hold hands? Here, don't be shy.
+-1-female_masturbating=covering,Let's not get too loud.
+-1-female_masturbating=concerned,Was I good enough when it was my turn? What do you think, ~player~?
+-1-female_masturbating=happy,Everyone gets a turn to show off.
+-1-female_masturbating,totalAlive:2,priority:0=happy,The game is quickly drawing to a close.
 -1-female_masturbating,totalMasturbating:2,priority:0=covering,Keep it down, you two!
 -1-female_masturbating,totalMasturbating:3,priority:0=covering,Something a lot like this happened to me when I went to the public bathhouse one afternoon.
+-1-female_masturbating,filter:confident,priority:0=covering,Maybe you should be a little more ladylike about this, ~name~.
 -1-female_finished_masturbating=happy,That should take a little stress off of you, right?
 -1-female_finished_masturbating=confident,All done! Did you have fun today?
 
@@ -838,7 +927,7 @@ finishing_masturbating=masturbating_h,Oh.. ohmi.. oh... Oh! OH! OH!
 finished_masturbating,totalExposed:0,priority:0=covering,I'm sorry that I showed you all such shameful conduct...
 finished_masturbating,totalAlive:2,priority:0=delighted,Give it your best out there, you two!
 finished_masturbating=happy,Although I'm a little embarrassed, if I hadn't given it a shot, I never would have experienced so much happiness.
-finished_masturbating=covering,I didn't reveal too much during my penalty, did I? Sometimes I say too much without even knowing it.
+finished_masturbating=covering,I didn't share too much during my penalty, did I? Sometimes I say things without even knowing it.
 finished_masturbating,saidMarker:sanako_baked,priority:0=happy,Don't forget that I have some baked goodies for you all. I can't wait for you to taste my buns.
 
 
@@ -857,3 +946,16 @@ finished_masturbating,saidMarker:sanako_baked,priority:0=happy,Don't forget that
 #GAME OVER DEFEAT
 game_over_defeat=delighted,~Name~, let me be the first to get your autograph.
 game_over_defeat=footcaress,If you don't mind, I'd like to do this again sometime.
+
+
+#FEEDBACK-SEEKING FAKE EPILOGUE
+
+ending=Sanako feedback form (not an epilogue)
+	ending_gender=any
+	screen=0-advanced_graphics.png
+
+		text=Thank you very much for testing Sanako! If you would like to give feedback, please comment on her channel on the game's Discord server and/or via the following survey form: https://goo.gl/forms/WyFo3wJ3p03nCz3Z2
+		x=centered
+		y=80%
+		width=80%
+		arrow=none

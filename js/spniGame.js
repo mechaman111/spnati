@@ -209,11 +209,14 @@ function updateGameVisual (player) {
             $gameLabels[player].html(players[player].label.initCap());
 
             /* check silence */
-            if (chosenState.silent) {
+            if (!chosenState.dialogue) {
                 $gameBubbles[player-1].hide();
             }
             else {
                 $gameBubbles[player-1].show();
+                $gameBubbles[player-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+chosenState.direction);
+                bubbleArrowOffsetRules[player-1][0].style.left = chosenState.location;
+                bubbleArrowOffsetRules[player-1][1].style.top = chosenState.location;
             }
         } else {
             /* hide their dialogue bubble */
@@ -297,7 +300,7 @@ function makeAIDecision () {
 	}
 
 	/* update a few hardcoded visuals */
-	updateBehaviour(currentTurn, SWAP_CARDS);
+	players[currentTurn].updateBehaviour(SWAP_CARDS);
 	updateGameVisual(currentTurn);
 
 	/* wait and implement AI action */
@@ -316,11 +319,11 @@ function implementAIAction () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
-		updateBehaviour(currentTurn, BAD_HAND);
+		players[currentTurn].updateBehaviour(BAD_HAND);
 	} else if (players[currentTurn].hand.strength == PAIR) {
-		updateBehaviour(currentTurn, OKAY_HAND);
+		players[currentTurn].updateBehaviour(OKAY_HAND);
 	} else {
-		updateBehaviour(currentTurn, GOOD_HAND);
+		players[currentTurn].updateBehaviour(GOOD_HAND);
 	}
 	updateGameVisual(currentTurn);
 
@@ -350,7 +353,7 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            updateBehaviour(currentTurn, players[currentTurn].forfeit[0]);
+            players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -636,6 +639,35 @@ function endRound () {
 
     /* if there is only one player left, end the game */
     if (inGame <= 1) {
+        if (USAGE_TRACKING) {
+            var usage_tracking_report = {
+                'date': (new Date()).toISOString(),
+                'type': 'end_game',
+                'session': sessionID,
+                'game': gameID,
+                'userAgent': navigator.userAgent,
+                'origin': getReportedOrigin(),
+                'table': {},
+                'winner': players[lastPlayer].id
+            };
+            
+            for (let i=1;i<5;i++) {
+                if (players[i]) {
+                    usage_tracking_report.table[i] = players[i].id;
+                }
+            }
+            
+            $.ajax({
+                url: USAGE_TRACKING_ENDPOINT,
+                method: 'POST',
+                data: JSON.stringify(usage_tracking_report),
+                contentType: 'application/json',
+                error: function (jqXHR, status, err) {
+                    console.error("Could not send usage tracking report - error "+status+": "+err);
+                },
+            });
+        }
+        
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
@@ -661,30 +693,18 @@ function endRound () {
  * players to finish their forfeits.
  ************************************************************/
 function handleGameOver() {
-	/* determine how many timers are left */
-	var left = 0;
-	for (var i = 0; i < timers.length; i++) {
-		if (players[i] && timers[i] > 0) {
-			left++;
-		}
-	}
+	var winner;
 
-	/* determine true end */
-	if (left == 0) {
+	/* determine true end and identify winner (even though endRound() did that too) */
+	if (!players.some(function(p, i) {
+		if (!p.out) winner = p;
+		return timers[i] > 0;
+	})) {
 		/* true end */
-
-		//identify winner
-		var winner = -1;
-		for (var i = 0; i < players.length; i++){
-			if (players[i] && !players[i].out){
-				winner = i;
-				break;
-			}
-		}
-		for (var i = 1; i < players.length; i++){
-			var tag = (i == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			updateBehaviour(i, tag, players[winner]);
-		}
+		players.forEach(function(p) {
+			var tag = (p == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
+			p.updateBehaviour(tag, winner);
+		});
 
         updateAllGameVisuals();
 

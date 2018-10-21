@@ -362,6 +362,10 @@ function validateTitleScreen () {
 	console.log(players[0]);
 
     screenTransition($titleScreen, $selectScreen);
+    
+    if (!save.data.askedUsageTracking) {
+        showUsageTrackingModal();
+    }
 }
 
 /**********************************************************************

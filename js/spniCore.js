@@ -11,8 +11,12 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUE_BADGES_ENABLED = true;
+var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
+
+var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
+var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -51,6 +55,9 @@ var timeoutID;
  **********************************************************************/
 
 var table = new Table();
+var jsErrors = [];
+var sessionID = '';
+var gameID = '';
 
 /**********************************************************************
  * Screens & Modals
@@ -66,20 +73,126 @@ $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
 $galleryScreen = $('#gallery-screen');
 
+var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
+
 /* Modals */
 $searchModal = $('#search-modal');
 $groupSearchModal = $('#group-search-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
+$bugReportModal = $('#bug-report-modal');
+$usageTrackingModal = $('#usage-reporting-modal');
 
 /* Screen State */
 $previousScreen = null;
 
+/* CSS rules for arrow offsets */
+var bubbleArrowOffsetRules;
 
 /********************************************************************************
  * Game Wide Utility Functions
  ********************************************************************************/
+
+function getReportedOrigin () {
+    var origin = window.location.origin;
+    
+    if (origin.toLowerCase().startsWith('file:')) {
+        return '<local filesystem origin>';
+    } else {
+        return origin;
+    }
+}
+
+/* Gathers most of the generic information for an error report. */
+function compileBaseErrorReport(userDesc, bugType) {
+    var tableReports = [];
+    for (let i=1;i<players.length;i++) {
+        if (players[i]) {
+            playerData = {
+                'id': players[i].id,
+                'slot': i,
+                'stage': players[i].stage,
+                'timeInStage': players[i].timeInStage,
+                'markers': players[i].markers
+            }
+            
+            if (players[i].chosenState) {
+                playerData.currentLine    = players[i].chosenState.dialogue;
+                playerData.currentImage   = players[i].chosenState.image;
+            }
+            
+            tableReports[i-1] = playerData;
+        } else {
+            tableReports[i-1] = null;
+        }
+    }
+    
+    var circumstances = {
+        'userAgent': navigator.userAgent,
+        'origin': getReportedOrigin(),
+        'currentRound': currentRound,
+        'currentTurn': currentTurn,
+        'visibleScreens': []
+    }
+    
+    if (gamePhase) {
+        circumstances.gamePhase = gamePhase[0];
+    }
+    
+    for (let i=0;i<allScreens.length;i++) {
+        if (allScreens[i].css('display') !== 'none') {
+            circumstances.visibleScreens.push(allScreens[i].attr('id'));
+        }
+    }
+    
+    var bugCharacter = null;
+    if (bugType.startsWith('character')) {
+        bugCharacter = bugType.split('-', 2)[1];
+        bugType = 'character';
+    }
+    
+    return {
+        'date': (new Date()).toISOString(),
+        'session': sessionID,
+        'game': gameID,
+        'type': bugType,
+        'character': bugCharacter,
+        'description': userDesc, 
+        'circumstances': circumstances,
+        'table': tableReports,
+        'player': {
+            'gender': players[HUMAN_PLAYER].gender,
+            'size': players[HUMAN_PLAYER].size,
+        },
+        'jsErrors': jsErrors,
+    };
+}
+
+window.addEventListener('error', function (ev) {
+    jsErrors.push({
+        'date': (new Date()).toISOString(),
+        'type': ev.error.name,
+        'message': ev.message,
+        'filename': ev.filename,
+        'lineno': ev.lineno,
+        'stack': ev.error.stack
+    });
+    
+    if (USAGE_TRACKING) {
+        var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
+        
+        $.ajax({
+            url: BUG_REPORTING_ENDPOINT,
+            method: 'POST',
+            data: JSON.stringify(report),
+            contentType: 'application/json',
+            error: function (jqXHR, status, err) {
+                console.error("Could not send bug report - error "+status+": "+err);
+            },
+        });
+    }
+});
 
 /* Fetch a possibly compressed file.
  * Attempts to fetch a compressed version of the file first,
@@ -130,100 +243,253 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/
-
-/************************************************************
- * Creates and returns a new player object based on the
- * supplied information.
- *
- * folder (string), the path to their folder
- * first (string), their first name.
- * last (string), their last name.
- * labels (string or XML element), what's shown on screen and what other players refer to them as.
- *   Can vary by stage.
- * size (string): Their level of endowment
- * intelligence (string or XML element), the name of their AI algorithm.
- *   Can vary by stage.
- * gender (constant), their gender.
- * clothing (array of Clothing objects), their clothing.
- * timer (integer), time until forfeit is finished.
- * state (array of PlayerState objects), their sequential states.
- * xml (jQuery object), the player's loaded XML file.
- ************************************************************/
-function createNewPlayer (id, first, last, labels, gender, size, intelligence, timer, scale, tags, xml) {
-    var newPlayerObject = {id:id,
-                           folder:'opponents/'+id+'/',
-						   first:first,
-                           last:last,
-                           labels:labels,
-						   size:size,
-						   intelligence:intelligence,
-                           gender:gender,
-                           timer:timer,
-						   scale:scale,
-                           tags:tags,
-                           xml:xml,
-                           
-                           getImagesForStage: function(stage) {
-                               if(!this.xml) return [];
-                               
-                               var imageSet = {};
-                               var folder = this.folder;
-                               this.xml.find('stage[id="'+stage+'"] state').each(function () {
-                                   imageSet[folder+$(this).attr('img')] = true;
-                               });
-                               return Object.keys(imageSet);
-                           },
-                           getByStage: function (arr) {
-                               if (typeof(arr) === "string") {
-                                   return arr;
-                               }
-                               var bestFitStage = -1;
-                               var bestFit = null;
-                               for (var i = 0; i < arr.length; i++) {
-                                   var startStage = arr[i].getAttribute('stage');
-                                   startStage = parseInt(startStage, 10) || 0;
-                                   if (startStage > bestFitStage && startStage <= this.stage) {
-                                       bestFit = $(arr[i]).text();
-                                       bestFitStage = startStage;
-                                   }
-                               }
-                               return bestFit;
-                           },
-                           getIntelligence: function () {
-                               return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
-                           },
-                           updateLabel: function () {
-                               if (this.labels) this.label = this.getByStage(this.labels);
-                           }
-                       };
-
-	initPlayerState(newPlayerObject);
+ 
+ /************************************************************
+  * Creates and returns a new player object based on the
+  * supplied information.
+  *
+  * folder (string), the path to their folder
+  * first (string), their first name.
+  * last (string), their last name.
+  * labels (string or XML element), what's shown on screen and what other players refer to them as.
+  *   Can vary by stage.
+  * size (string): Their level of endowment
+  * intelligence (string or XML element), the name of their AI algorithm.
+  *   Can vary by stage.
+  * gender (constant), their gender.
+  * clothing (array of Clothing objects), their clothing.
+  * timer (integer), time until forfeit is finished.
+  * state (array of PlayerState objects), their sequential states.
+  * xml (jQuery object), the player's loaded behaviour.xml file.
+  * metaXml (jQuery object), the player's loaded meta.xml file.
+  ************************************************************/
+ 
+function Player (id) {
+    this.id = id;
+    this.folder = 'opponents/'+id+'/';
+    this.first = '';
+    this.last = '';
+    this.labels = undefined;
+    this.size = eSize.MEDIUM;
+    this.intelligence = eIntelligence.AVERAGE;
+    this.gender = eGender.MALE;
+    this.timer = 20;
+    this.scale = undefined;
+    this.tags = [];
+    this.xml = null;
+    this.metaXml = null;
     
-    return newPlayerObject;
+    this.resetState();
 }
 
 /*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
-function initPlayerState(player) {
-	player.out = player.finished = player.exposed = false;
-	player.forfeit = "";
-	player.stage = player.current = player.consecutiveLosses = 0;
-	player.timeInStage = -1;
-	player.markers = {};
-	if (player.xml !== null) {
+Player.prototype.resetState = function () {
+    this.out = this.finished = this.exposed = false;
+	this.forfeit = "";
+	this.stage = this.current = this.consecutiveLosses = 0;
+	this.timeInStage = -1;
+	this.markers = {};
+    
+	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
          * initialize player.chosenState to the first listed line.
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		player.allStates = parseDialogue(player.xml.find('start'), player);
-		player.chosenState = player.allStates[0];
+		this.allStates = parseDialogue(this.xml.find('start'), this);
+		this.chosenState = this.allStates[0];
         
-		loadOpponentWardrobe(player);
+		/* Load the player's wardrobe. */
+            
+    	/* Find and grab the wardrobe tag */
+    	$wardrobe = this.xml.find('wardrobe');
+    	
+    	/* find and create all of their clothing */
+        var clothingArr = [];
+    	$wardrobe.find('clothing').each(function () {
+    		var formalName = $(this).attr('formalName');
+    		var genericName = $(this).attr('genericName') || $(this).attr('lowercase');
+    		var type = $(this).attr('type');
+    		var position = $(this).attr('position');
+    		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
+    
+    		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
+    
+    		clothingArr.push(newClothing);
+    	});
+        
+        this.clothing = clothingArr;
 	}
-	player.updateLabel();
+    
+	this.updateLabel();
 }
+
+Player.prototype.getIntelligence = function () {
+    return this.intelligence; // Opponent uses getByStage()
+};
+
+/* These shouldn't do anything for the human player, but exist as empty functions
+   to make it easier to iterate over the entire players[] array. */
+Player.prototype.updateLabel = function () { }
+Player.prototype.updateBehaviour = function() { }
+
+/*****************************************************************************
+ * Subclass of Player for AI-controlled players.
+ ****************************************************************************/
+function Opponent (id, $metaXml, status, releaseNumber) {    
+    this.id = id;
+    this.folder = 'opponents/'+id+'/';
+    this.metaXml = $metaXml;
+    
+    this.enabled = $metaXml.find('enabled').text();
+    this.status = status;
+    this.first = $metaXml.find('first').text();
+    this.last = $metaXml.find('last').text();
+    this.label = $metaXml.find('label').text();
+    this.image = $metaXml.find('pic').text();
+    this.gender = $metaXml.find('gender').text();
+    this.height = $metaXml.find('height').text();
+    this.source = $metaXml.find('from').text();
+    this.artist = $metaXml.find('artist').text();
+    this.writer = $metaXml.find('writer').text();
+    this.description = $metaXml.find('description').text();
+    this.ending = $metaXml.find('has_ending').text() === "true";
+    this.layers = parseInt($metaXml.find('layers').text(), 10);
+    this.scale = Number($metaXml.find('scale').text()) || 100.0;
+    this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
+    this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+}
+
+Opponent.prototype = Object.create(Player.prototype);
+Opponent.prototype.constructor = Opponent;
+
+Opponent.prototype.clone = function() {
+	var clone = Object.create(Opponent.prototype);
+	/* This should be deep enough for our purposes. */
+	for (var prop in this) {
+		if (this[prop] instanceof Array) {
+			clone[prop] = this[prop].slice();
+		} else {
+			clone[prop] = this[prop];
+		}
+	}
+	return clone;
+}
+
+Opponent.prototype.isLoaded = function() {
+	return this.xml != undefined;
+}
+
+Opponent.prototype.onSelected = function() {
+    this.resetState();
+	console.log(this.slot+": "+this);
+	this.updateBehaviour(SELECTED);
+	updateSelectionVisuals();
+}
+
+Opponent.prototype.updateLabel = function () {
+    if (this.labels) this.label = this.getByStage(this.labels);
+}
+
+Opponent.prototype.getImagesForStage = function (stage) {
+    if(!this.xml) return [];
+    
+    var imageSet = {};
+    var folder = this.folder;
+    this.xml.find('stage[id="'+stage+'"] state').each(function () {
+        imageSet[folder+$(this).attr('img')] = true;
+    });
+    return Object.keys(imageSet);
+};
+
+Opponent.prototype.getByStage = function (arr) {
+    if (typeof(arr) === "string") {
+        return arr;
+    }
+    var bestFitStage = -1;
+    var bestFit = null;
+    for (var i = 0; i < arr.length; i++) {
+        var startStage = arr[i].getAttribute('stage');
+        startStage = parseInt(startStage, 10) || 0;
+        if (startStage > bestFitStage && startStage <= this.stage) {
+            bestFit = $(arr[i]).text();
+            bestFitStage = startStage;
+        }
+    }
+    return bestFit;
+};
+
+Opponent.prototype.getIntelligence = function () {
+    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
+};
+
+/************************************************************
+ * Loads and parses the start of the behaviour XML file of the 
+ * given opponent.
+ *
+ * The onLoadFinished parameter must be a function capable of
+ * receiving a new player object and a slot number.
+ ************************************************************/
+Opponent.prototype.loadBehaviour = function (slot) {
+    this.slot = slot;
+    if (this.isLoaded()) {
+        this.onSelected();
+        return;
+    }
+    fetchCompressedURL(
+		'opponents/' + this.id + "/behaviour.xml",
+		/* Success callback.
+         * 'this' is bound to the Opponent object.
+         */
+		function(xml) {
+            var $xml = $(xml);
+            
+            this.xml = $xml;
+            this.labels = $xml.find('label');
+            this.size = $xml.find('size').text();
+            this.timer = Number($xml.find('timer').text());
+            this.intelligence = $xml.find('intelligence');
+            
+            var tags = $xml.find('tags');
+            var tagsArray = [this.id];
+            if (typeof tags !== typeof undefined && tags !== false) {
+                $(tags).find('tag').each(function () {
+                    tagsArray.push($(this).text());
+                });
+            }
+            
+            this.tags = tagsArray;
+            
+            var targetedLines = {};
+            
+            $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
+                var $case = $(this.parentNode);
+                ['target', 'alsoPlaying'].forEach(function(attr) {
+                    var id = $case.attr(attr);
+                    if (id) {
+                        if (!(id in targetedLines)) { targetedLines[id] = { count: 0, seen: {} }; }
+                        if (!(this.textContent in targetedLines[id].seen)) {
+                            targetedLines[id].seen[this.textContent] = true;
+                            targetedLines[id].count++;
+                        }
+                    }
+                }, this);
+            });
+            
+            //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
+            this.targetedLines = targetedLines;
+            this.onSelected();
+		}.bind(this),
+		/* Error callback. */
+        function(err) {
+            console.log("Failed reading \""+this.id+"\" behaviour.xml");
+            delete players[this.slot];
+        }.bind(this)
+	);
+}
+
 
 /**********************************************************************
  *****              Overarching Game Flow Functions               *****
@@ -234,7 +500,7 @@ function initPlayerState(player) {
  ************************************************************/
 function initialSetup () {
     /* start by creating the human player object */
-    var humanPlayer = createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
+    var humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
 
 	/* enable table opacity */
@@ -252,6 +518,28 @@ function initialSetup () {
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
+    
+    /* Generate a random session ID. */
+    sessionID = generateRandomID();
+
+    /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
+    bubbleArrowOffsetRules = [];
+    for (var i = 1; i <= 4; i++) {
+        var pair = [];
+        [["up", "down"], ["left", "right"]].forEach(function(p) {
+            var index = document.styleSheets[2].cssRules.length;
+            var rule = p.map(function(d) {
+                return ["select", "game"].map(function(s) {
+                    return ["before", "after"].map(function(r) {
+                        return '#'+s+'-bubble-'+i+'>.dialogue-bubble.arrow-'+d+'::'+r;
+                    }).join(', ');
+                }).join(', ');
+            }).join(', ') + ' {}';
+            document.styleSheets[2].insertRule(rule, index);
+            pair.push(document.styleSheets[2].cssRules[index]);
+        });
+        bubbleArrowOffsetRules.push(pair);
+    }
 }
 
 
@@ -346,7 +634,7 @@ function returnToPreviousScreen (screen) {
 function resetPlayers () {
 	for (var i = 0; i < players.length; i++) {
 		if (players[i] != null) {
-			initPlayerState(players[i]);
+            players[i].resetState();
 		}
 		timers[i] = 0;
 	}
@@ -388,6 +676,129 @@ function restartGame () {
 /**********************************************************************
  *****                    Interaction Functions                   *****
  **********************************************************************/
+
+/*
+ * Bug Report Modal functions
+ */
+
+function getBugReportJSON() {
+    var desc = $('#bug-report-desc').val();
+    var type = $('#bug-report-type').val();
+    var character = undefined;
+
+    var report = compileBaseErrorReport(desc, type);
+    return JSON.stringify(report);
+}
+
+function updateBugReportSendButton() {
+    if($('#bug-report-desc').val().trim().length > 0) {
+        $("#bug-report-modal-send-button").removeAttr('disabled');
+    } else {
+        $("#bug-report-modal-send-button").attr('disabled', 'true');
+    }
+}
+
+$('#bug-report-desc').keyup(updateBugReportSendButton);
+
+/* Update the bug report text dump. */
+function updateBugReportOutput() {    
+    $('#bug-report-output').val(getBugReportJSON());
+    $('#bug-report-status').text("");
+    
+    updateBugReportSendButton();
+}
+
+function copyBugReportOutput() {
+    var elem = $('#bug-report-output')[0];
+    elem.select();
+    document.execCommand("copy");
+}
+
+function sendBugReport() {
+    if($('#bug-report-desc').val().trim().length == 0) {
+        $('#bug-report-status').text("Please enter a description first!");
+        return false;
+    }
+    
+    $.ajax({
+        url: BUG_REPORTING_ENDPOINT,
+        method: 'POST',
+        data: getBugReportJSON(),
+        contentType: 'application/json',
+        error: function (jqXHR, status, err) {
+            console.error("Could not send bug report - error "+status+": "+err);
+            $('#bug-report-status').text("Failed to send bug report (error "+status+")");
+        },
+        success: function () {
+            $('#bug-report-status').text("Bug report sent!");
+            $('#bug-report-desc').val("");
+            closeBugReportModal();
+        }
+    });
+    
+    
+}
+
+$('#bug-report-type').change(updateBugReportOutput);
+$('#bug-report-desc').change(updateBugReportOutput);
+$('#bug-report-copy-btn').click(copyBugReportOutput);
+
+ /************************************************************
+  * The player clicked a bug-report button. Shows the bug reports modal.
+  ************************************************************/
+function showBugReportModal () {
+    /* Set up possible bug report types. */    
+    var bugReportTypes = [
+        ['freeze', 'Game Freeze or Crash'],
+        ['display', 'Game Graphical Problem'],
+        ['other', 'Other Game Issue'],
+    ]
+    
+    for (var i=1;i<5;i++) {
+        if (players[i]) {
+            var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
+            bugReportTypes.push(['character-'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
+        }
+    }
+    
+    $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
+        return $('<option value="'+t[0]+'">'+t[1]+'</option>');
+    }));
+    
+    $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
+    updateBugReportOutput();
+    
+    KEYBINDINGS_ENABLED = false;
+    
+    $bugReportModal.modal('show');
+}
+
+function closeBugReportModal() {
+    KEYBINDINGS_ENABLED = true;
+    $bugReportModal.modal('hide');
+}
+
+/*
+ * Show the usage tracking consent modal.
+ */
+ 
+function showUsageTrackingModal() {
+    $usageTrackingModal.modal('show');
+}
+
+function enableUsageTracking() {
+    save.data.askedUsageTracking = true;
+    USAGE_TRACKING = true;
+    
+    save.saveOptions();
+}
+
+function disableUsageTracking() {
+    save.data.askedUsageTracking = true;
+    USAGE_TRACKING = false;
+    
+    save.saveOptions();
+}
 
 /************************************************************
  * The player clicked the credits button. Shows the credits modal.
@@ -442,6 +853,18 @@ function getRandomNumber (min, max) {
  ************************************************************/
 String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
+}
+
+/************************************************************
+ * Generate a random alphanumeric ID.
+ ************************************************************/
+function generateRandomID() {
+    var ret = ''
+    for (let i=0;i<10;i++) {
+        ret += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
+    }
+    
+    return ret;
 }
 
 /**********************************************************************
