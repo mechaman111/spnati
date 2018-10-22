@@ -111,7 +111,7 @@ function parseDialogue (caseObject, self, target) {
 	var states = [];
 	caseObject.find('state').each(function () {
 		var image = $(this).attr('img');
-		var dialogue = $(this).html();
+		var dialogue = $(this).html().replace(/&lt;(\/?)i&gt;/gi, '<$1i>');
 		var direction = $(this).attr('direction');
 		var location = $(this).attr('location');
 		var marker = $(this).attr('marker');
