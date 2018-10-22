@@ -57,9 +57,11 @@ marker=sanako_baked,public,Sanako has some baked goodies for everyone after the 
 marker=sanako_explains_pairs,private,Sanako explains basic pairs gameplay.
 marker=sanako_hot,private,Sanako blames the heat for her skirt removal.
 marker=sanako_introductions,public,Sanako invites everybody to introduce themselves.
+marker=sanako_keeping_glasses,public,Sanako isn't taking off her glasses because it would break her disguise. But you can take off yours.
 marker=sanako_name_request,private,Sanako asks permission to refer to an opponent by her name.
 marker=sanako_press_buttons,private,Sanako observes that we're pressing a sarcastic girl's buttons.
 marker=sanako_younger_guy,public,If any males are playing, Sanako might remark that she sometimes enjoys going out with younger guys.
+marker=sanako_womanly_ways,public,Sanako shows off her "womanly ways". (i.e. her breasts)
 
 marker=sanako_age_uncertainty,public,If Nagisa is not playing, Sanako can almost introduce herself as her real age.
 marker=sanako_human_male_taking_the_lead,public,Sanako is happy to let the human male player "take the lead".
@@ -170,6 +172,9 @@ clothes=Panties,panties,important,lower,plural
 0-okay_hand,totalRounds:2=headtilt,Everybody is so cute. I hope we can have fun together.
 0-bad_hand,totalRounds:2=headtilt,Everybody is so cute. I hope we can have fun together.
 
+0-good_hand,totalRounds:8=pointingatself,You have to get up pretty early in the morning to outsmart a baker!
+0-okay_hand,totalRounds:8=pointingatself,You have to get up pretty early in the morning to outsmart a baker!
+
 #lost shoes and socks
 1-good_hand,notSaidMarker:sanako_baked,marker:sanako_baked=bodytilt,As a little surprise for you all, I made some baked goodies to eat after the game.
 1-good_hand=happy,Wow!
@@ -208,7 +213,7 @@ clothes=Panties,panties,important,lower,plural
 4-good_hand=bodytilt,I don't need to win, but it's nice to get a great hand from time to time!
 4-okay_hand=cleavage,Does anyone else have their eyes on a nice pair?
 4-okay_hand=happy,I hope we all have something to show.
-4-okay_hand=happy,It's not times for me to show you everything, but I'm sure your patience will be rewarded.
+4-okay_hand=happy,It's not time for me to show you everything, but I'm sure your patience will be rewarded.
 4-bad_hand=calm,Ah...
 4-bad_hand=embarrassed,Um...
 4-bad_hand,totalNaked:4=hellothere,Sorry, everyone! I'll be out of these panties in just a moment.
@@ -265,7 +270,7 @@ clothes=Panties,panties,important,lower,plural
 3-must_strip_losing=wink,I spent years developing these pastries. I can't wait for you to try them.
 3-must_strip_losing,totalRounds:3=kneelingsad,So that's it? So that's how it is?!
 3-stripping=zzzstripping1,I won't blame you if you confess your love to me.
-4-stripped=happy,So tell me, what do you think of my womanly ways?
+4-stripped,marker:sanako_womanly_ways=happy,So tell me, what do you think of my womanly ways?
 4-stripped=breasthold,These can be quite a handful sometimes.
 
 #losing panties
@@ -500,7 +505,7 @@ clothes=Panties,panties,important,lower,plural
 0-female_removing_minor=wave,Don't worry about it.
 0-female_removed_minor=warning,Put your ~clothing~ to the side. We don't want anything getting stepped on.
 0-female_removed_minor=happy,I hope this is okay with you.
-0-female_removed_minor=pointingatself,~clothing.ifPlural(Those are lovely ~clothing~. Did your mother buy them for you?|A ~clothing~ like that is worth taking care of.)~
+0-female_removed_minor=pointingatself,~clothing.ifPlural(Those are lovely ~clothing~. Did your mother buy them for you?|A nice ~clothing~ like that is worth taking care of.)~
 0-female_removed_minor,totalExposed:0,priority:0=calm,Nobody has taken off anything exciting yet.
 
 #lost shoes and socks
@@ -566,8 +571,10 @@ clothes=Panties,panties,important,lower,plural
 0-female_removing_major,totalRounds:0-4=concerned,Oh, already?
 0-female_removing_major=wondering,I must be better at this than I thought.
 0-female_removing_major=wondering,Would you like me to take something off instead?
-0-female_removing_major,totalExposed:0,priority:0=concerned,~clothing.ifPlural(~Clothing~ are something you hold dear, aren't they?|You must be a brave girl if you're willing to remove a ~clothing~ in front of all of us.)~
+0-female_removing_major,totalExposed:0,priority:0=concerned,~clothing.ifPlural(~Clothing~ are something you hold dear, aren't they?|You must be a brave girl if you're willing to remove that ~clothing~ in front of all of us.)~
 0-female_removed_major=happy,Maybe some tea will cheer you up.
+0-female_removed_major=headtilt,Doing that couldn't have been easy. I'm proud of you.
+0-female_removed_major,totalExposed:0,priority:0=wave,I'm here for you any time you need a hug.
 
 #lost shoes and socks
 1-male_removing_major=yeah,What a winning idea!
@@ -596,6 +603,7 @@ clothes=Panties,panties,important,lower,plural
 4-male_removing_major=interested,Are you getting excited yet?
 4-male_removed_major=bodytilt,That's perfect! Thank you!
 4-female_removing_major=cleavage,What secrets are you keeping from us?
+4-female_removing_major,filter:shy=happy,I know you feel shy right now, but we all think you're just the cutest thing, and we'd be happy to see anything you'd be willing to show us.
 4-female_removed_major=calm,We're getting to see a side of ~name~ that I'm sure she doesn't show often.
 4-female_removed_major,filter:shy=calm,You look upset. Is something troubling you?
 
@@ -766,6 +774,15 @@ clothes=Panties,panties,important,lower,plural
 -1-female_crotch_is_visible=cross,Stand up and keep fighting. You have to win for your own sake!
 
 #targeted
+0-female_small_chest_is_visible,target:marinette=headtilt,Well aren't you as sweet as a bowl of Lucky Charms?
+1-female_small_chest_is_visible,target:marinette=bodytilt,Well aren't you as sweet as a bowl of Lucky Charms?
+2-female_small_chest_is_visible,target:marinette=handonheart,Well aren't you as sweet as a bowl of Lucky Charms?
+3-female_small_chest_is_visible,target:marinette=headtilt,Well aren't you as sweet as a bowl of Lucky Charms?
+4-female_small_chest_is_visible,target:marinette=bodytilt,Well aren't you as sweet as a bowl of Lucky Charms?
+-3-female_small_chest_is_visible,target:marinette=hopeful,Well aren't you as sweet as a bowl of Lucky Charms?
+-1-female_small_chest_is_visible,target:marinette=confident,Well aren't you as sweet as a bowl of Lucky Charms?
+
+
 -3-female_medium_chest_is_visible,target:valerie=disappointed,Are those default nipples?
 
 0-female_crotch_is_visible,totalNaked:1,target:mia=headtilt,I've been trying to lose a few rounds to catch up, but you've beaten us all.
