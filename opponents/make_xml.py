@@ -8,6 +8,7 @@ if sys.version_info[0] == 2:
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import datetime
+import re
 
 #tags that relate to ending sequences
 ending_tag = "ending" #name for the ending
@@ -26,6 +27,10 @@ one_word_targets = ["target", "filter"]
 multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
+
+def capitalizeDialogue(s):
+        # Convert the first character of the string, or of a variable that starts the string, to uppercase
+        return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
 
 #default images and text for most cases
 def get_cases_dictionary():
@@ -444,7 +449,7 @@ def write_xml(data, filename):
 						ET.SubElement(text_box_xml, width_tag).text = text_box[width_tag]
 					if arrow_tag in text_box:
 						ET.SubElement(text_box_xml, arrow_tag).text = text_box[arrow_tag]
-					ET.SubElement(text_box_xml, "content").text = text_box[text_tag]
+					ET.SubElement(text_box_xml, "content").text = capitalizeDialogue(text_box[text_tag])
 	
 	#done
 	
@@ -748,6 +753,8 @@ def read_player_file(filename):
 
                         if line_data["text"].find('~silent~') == 0:
                                 line_data["text"] = ""
+                        else:
+                                line_data["text"] = capitalizeDialogue(line_data["text"])
 
 			#print "adding line", line	
 			
@@ -808,9 +815,9 @@ def read_player_file(filename):
 		#write start lines last to first
 		elif key == "start":
 			if key in d:
-				d[key].append(text)
+				d[key].append(capitalizeDialogue(text))
 			else:
-				d[key] = [text]
+				d[key] = [capitalizeDialogue(text)]
 
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
@@ -916,16 +923,3 @@ if __name__ == "__main__":
 	make_xml(sys.argv[1], behaviour_name, meta_name, marker_name)
 
 
-#make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
-#This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
-replacements = {'">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
-
-lines = []
-with open(behaviour_name) as infile:
-    for line in infile:
-        for src, target in replacements.iteritems():
-            line = line.replace(src, target)
-        lines.append(line)
-with open(behaviour_name, 'w') as outfile:
-    for line in lines:
-        outfile.write(line)
