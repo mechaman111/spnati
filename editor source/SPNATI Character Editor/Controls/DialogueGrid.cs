@@ -83,22 +83,23 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			string image = row.Cells["ColImage"].Value?.ToString();
 			string text = row.Cells["ColText"].Value?.ToString();
-			string silent = row.Cells["ColSilent"].Value?.ToString();
 			string marker = row.Cells["ColMarker"].Value?.ToString();
-			if (silent == "")
-				text = "";
+			string direction = row.Cells["ColDirection"].Value?.ToString();
+			string location = row.Cells["ColLocation"].Value?.ToString();
+
 			if (text == "~silent~")
 			{
 				text = "";
-				silent = "";
 			}
-			if (text == null)
+			if (text == null && image == null)
 				return null;
 			CharacterImage img = _imageLibrary.Find(image);
 			string extension = img != null ? img.FileExtension : ".png";
 			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
-			line.IsSilent = silent;
 			line.Marker = string.IsNullOrEmpty(marker) ? null : marker;
+			line.Direction = direction;
+			line.Location = location;
+
 			return line;
 		}
 
@@ -191,7 +192,14 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_KeyDown(object sender, KeyEventArgs e)
 		{
-			KeyDown?.Invoke(this, e);
+			if (gridDialogue.SelectedRows.Count == 1 && !gridDialogue.SelectedRows[0].IsNewRow && e.KeyCode == Keys.Delete)
+			{
+				gridDialogue.Rows.RemoveAt(gridDialogue.SelectedRows[0].Index);
+				e.Handled = true;
+			} else
+			{
+				KeyDown?.Invoke(this, e);
+			}
 		}
 
 		private void gridDialogue_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -270,6 +278,14 @@ namespace SPNATI_Character_Editor.Controls
 				gridDialogue.EditingControl.Select();
 		}
 
+		public bool ShowSpeechBubbleColumns
+		{
+			set
+			{
+				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
+			}
+		}
+
 		/// <summary>
 		/// Gets the image at a row
 		/// </summary>
@@ -329,13 +345,15 @@ namespace SPNATI_Character_Editor.Controls
 			SetImage(imageCell, imageKey);
 			DataGridViewCell textCell = row.Cells["ColText"];
 			textCell.Value = line.Text;
-			DataGridViewCheckBoxCell silentCell = row.Cells["ColSilent"] as DataGridViewCheckBoxCell;
-			silentCell.FalseValue = null;
-			silentCell.TrueValue = "";
-			silentCell.Value = line.IsSilent;
 
 			DataGridViewCell markerCell = row.Cells["ColMarker"];
 			markerCell.Value = line.Marker;
+
+			DataGridViewCell directionCell = row.Cells["ColDirection"];
+			directionCell.Value = line.Direction;
+
+			DataGridViewCell locationCell = row.Cells["ColLocation"];
+			locationCell.Value = line.Location;
 		}
 
 		/// <summary>
