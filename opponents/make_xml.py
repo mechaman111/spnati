@@ -861,7 +861,7 @@ def make_meta_xml(data, filename):
 
                 if value == "character_tags":
                         tags_elem = ET.SubElement(o, "tags")
-                        character_tags = set(data["character_tags"])
+                        character_tags = data["character_tags"]
 	                for tag in character_tags:
 		                ET.SubElement(tags_elem, "tag").text = tag
 		else:
