@@ -17,6 +17,14 @@ class OrderedXMLElement(object):
             self.attributes = OrderedDict(init_attrs)
         else:
             self.attributes = OrderedDict()
+
+    def append(self, el):
+        self.children.append(el)
+
+    def subElement(self, type, init_text=None, init_attrs=None):
+        newEl = OrderedXMLElement(type, init_text, init_attrs)
+        self.append(newEl)
+        return newEl
         
     def find(self, tag):
         for child in self.children:
@@ -25,6 +33,9 @@ class OrderedXMLElement(object):
                 
     def get(self, attr):
         return self.attributes[attr]
+
+    def set(self, attr, value):
+        self.attributes[attr] = value
         
     def iter(self, find_tag):
         for child in self.children:
