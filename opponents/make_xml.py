@@ -654,7 +654,7 @@ def read_player_file(filename):
 		
 		key = key.strip().lower()
 		
-		stripped = text.strip()
+		text = text.strip()
 		
 		
 		#now deal with any possible targets and filters
@@ -671,7 +671,7 @@ def read_player_file(filename):
 					#make sure the target has a format we can understand
 					print("Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = "skip"
-					stripped = ""
+					text = ""
 					target_value = "N/A"
 				
 				target_type = target_type.strip()
@@ -681,7 +681,7 @@ def read_player_file(filename):
 				if len(target_value) <= 0:
 					print("No target value specified for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = skip
-					stripped = ""
+					text = ""
 				
 				#now actually process valid targets
 				#valid targets
@@ -705,7 +705,7 @@ def read_player_file(filename):
 				else:
 					#unknown target type
 					print("Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line))
-					stripped = "" #make the script skip this line
+					text = "" #make the script skip this line
 					
 				if target_type == "targetstage":
 					#print a warning if they used a targetStage without a target
@@ -738,14 +738,14 @@ def read_player_file(filename):
 		
 			line_data["key"] = part_key
 		
-			if stripped == "" or stripped == ",":
+			if text == "" or text == ",":
 				#if there's no entry, skip it.
 				continue
 				
 			if ',' not in text:
 				#img, desc = "", text
 				line_data["image"] = ""
-				line_data["text"] = text.strip()
+				line_data["text"] = text
 			else:
 				img,desc = text.split(",", 1) #split into (image, text) pairs
 				line_data["image"] = img
@@ -767,9 +767,9 @@ def read_player_file(filename):
 		elif key == "clothes":
 			stage += 1
 			if "clothes" in d:
-				d["clothes"].append(stripped)
+				d["clothes"].append(text)
 			else:
-				d["clothes"] = [stripped]
+				d["clothes"] = [text]
 
         #intelligence is written as
         #   intelligence=bad
@@ -777,7 +777,7 @@ def read_player_file(filename):
         #this means to start at bad intelligence and switch to good starting at stage 3
         #   The label can be changed in the same manner
 		elif key in ("intelligence", "label"):
-                        parts = stripped.split(",", 1)
+                        parts = text.split(",", 1)
 			(from_stage, value) = (0 if len(parts) == 1 else parts[1], parts[0])
 			if key in d:
 				d[key][from_stage] = value
@@ -792,15 +792,15 @@ def read_player_file(filename):
 		#	tags=blond, athletic
 		elif key == "tag":
 			if "character_tags" in d:
-				if not stripped in d["character_tags"]:
-					d["character_tags"].append(stripped)
+				if not text in d["character_tags"]:
+					d["character_tags"].append(text)
 				else:
-					print("Warning - duplicated tag: '%s'" % stripped)
+					print("Warning - duplicated tag: '%s'" % text)
 			else:
-				d["character_tags"] = [stripped]
+				d["character_tags"] = [text]
 
 		elif key == "tags":
-			character_tags = [tag.strip() for tag in stripped.split(',')]
+			character_tags = [tag.strip() for tag in text.split(',')]
 			if "character_tags" in d:
 				d["character_tags"] = d["character_tags"] + character_tags
 			else:
@@ -808,9 +808,9 @@ def read_player_file(filename):
 
 		elif key == "marker":
 			if "markers" in d:
-				d["markers"].append(stripped)
+				d["markers"].append(text)
 			else:
-				d["markers"] = [stripped]
+				d["markers"] = [text]
 
 		#write start lines last to first
 		elif key == "start":
@@ -822,7 +822,7 @@ def read_player_file(filename):
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
-			handle_ending_string(key, stripped, ending, d)
+			handle_ending_string(key, text, ending, d)
 		
 		#other values are single lines. These need to be in the data, even if the value is empty
 		else:
