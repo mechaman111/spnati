@@ -37,8 +37,8 @@ lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
 
 def capitalizeDialogue(s):
-        # Convert the first character of the string, or of a variable that starts the string, to uppercase
-        return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
+	# Convert the first character of the string, or of a variable that starts the string, to uppercase
+	return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
 
 #default images and text for most cases
 def get_cases_dictionary():
@@ -160,17 +160,17 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	
 	result_list = list()
 
-        def is_generic_line(line_data):
-	        for target_type in all_targets:
+	def is_generic_line(line_data):
+		for target_type in all_targets:
 			if target_type in line_data:
 				return False
-                return True
+		return True
 	
 	def have_generic_line(lines):
 		for line_data in lines:
-                        if is_generic_line(line_data):
-                                return True
-                return False
+			if is_generic_line(line_data):
+				return True
+		return False
 	
 	using_player = False
 	have_generic_entry = False
@@ -186,14 +186,14 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 			using_player = True
 		
 	if key in player_dictionary:
-                for line_data in player_dictionary[key]:
-                        # Don't add completely generic lines to a given stage when a
-                        # stage-specific generic case exist for that stage,
-                        # but do add targeted lines (because it's too complicated to
-                        # look for matching targeted cases and it shouldn't cause any
-                        # conflicts with workarounds for incorrectly added defaults).
-                        if not is_generic_line(line_data) or not have_generic_entry:
-		                result_list.append(line_data)
+		for line_data in player_dictionary[key]:
+			# Don't add completely generic lines to a given stage when a
+			# stage-specific generic case exist for that stage,
+			# but do add targeted lines (because it's too complicated to
+			# look for matching targeted cases and it shouldn't cause any
+			# conflicts with workarounds for incorrectly added defaults).
+			if not is_generic_line(line_data) or not have_generic_entry:
+				result_list.append(line_data)
 
 		if have_generic_line(result_list):
 			have_generic_entry = True
@@ -300,10 +300,10 @@ def create_case_xml(base_element, lines):
 		attrib = {"img": line_data["image"]}
 		if "marker" in line_data:
 			attrib["marker"] = line_data["marker"]
-                if "direction" in line_data:
-                        attrib["direction"] = line_data["direction"]
-                if "location" in line_data:
-                        attrib["location"] = line_data["location"]
+		if "direction" in line_data:
+			attrib["direction"] = line_data["direction"]
+		if "location" in line_data:
+			attrib["location"] = line_data["location"]
 		ET.SubElement(case_xml_element, "state", attrib).text = line_data["text"] #add the image and text
 
 #add several values to the XML tree
@@ -397,17 +397,17 @@ def write_xml(data, filename):
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-                clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
-                if num=="plural":
-                        clothesattr["plural"] = "true"
+		clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
+		if num=="plural":
+			clothesattr["plural"] = "true"
 		ET.SubElement(clth, "clothing", clothesattr)
 	
 	#behaviour
 	bh = ET.SubElement(o, "behaviour")
 	for stage in range(0, clothes_count):
 		s = ET.SubElement(bh, "stage", id=str(stage))
-                if stage == 0:
-		        add_values(s, data, [strt_dict], stage)
+		if stage == 0:
+			add_values(s, data, [strt_dict], stage)
 		add_values(s, data, [main_dict, plyr_dict, strp_dict], stage)
 		if stage == 0:
 			for el in s.findall("./case[@tag='stripped']"):
@@ -759,10 +759,10 @@ def read_player_file(filename):
 				line_data["image"] = img
 				line_data["text"] = desc.strip()
 
-                        if line_data["text"].find('~silent~') == 0:
-                                line_data["text"] = ""
-                        else:
-                                line_data["text"] = capitalizeDialogue(line_data["text"])
+			if line_data["text"].find('~silent~') == 0:
+				line_data["text"] = ""
+			else:
+				line_data["text"] = capitalizeDialogue(line_data["text"])
 
 			#print "adding line", line	
 			
@@ -779,13 +779,13 @@ def read_player_file(filename):
 			else:
 				d["clothes"] = [text]
 
-        #intelligence is written as
-        #   intelligence=bad
-        #   intelligence=good,3
-        #this means to start at bad intelligence and switch to good starting at stage 3
-        #   The label can be changed in the same manner
+	#intelligence is written as
+	#   intelligence=bad
+	#   intelligence=good,3
+	#this means to start at bad intelligence and switch to good starting at stage 3
+	#   The label can be changed in the same manner
 		elif key in ("intelligence", "label"):
-                        parts = text.split(",", 1)
+			parts = text.split(",", 1)
 			(from_stage, value) = (0 if len(parts) == 1 else parts[1], parts[0])
 			if key in d:
 				d[key][from_stage] = value
@@ -867,20 +867,20 @@ def make_meta_xml(data, filename):
 			#the number of layers of clothing is taken directly from the clothing data
 			content = str(len(data["clothes"]))
 
-                if value == "label":
-                        content = data["label"][0]
+		if value == "label":
+			content = data["label"][0]
 			
 		if value == "has_ending":
 			#say whether or not they have an ending based on whether they have any ending data or not
 			content = "true" if "endings" in data else "false"
 
-                if value == "character_tags":
-                        tags_elem = ET.SubElement(o, "tags")
-                        character_tags = set(data["character_tags"])
-	                for tag in character_tags:
-		                ET.SubElement(tags_elem, "tag").text = tag
+		if value == "character_tags":
+			tags_elem = ET.SubElement(o, "tags")
+			character_tags = set(data["character_tags"])
+			for tag in character_tags:
+				ET.SubElement(tags_elem, "tag").text = tag
 		else:
-		        ET.SubElement(o, value).text = content
+			ET.SubElement(o, value).text = content
 		
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
 	
