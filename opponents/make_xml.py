@@ -9,6 +9,14 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import datetime
 import re
+try:
+     # Python 2.6-2.7
+     from HTMLParser import HTMLParser
+except ImportError:
+     # Python 3
+     from html.parser import HTMLParser
+
+unescapeHTML = HTMLParser().unescape
 
 #tags that relate to ending sequences
 ending_tag = "ending" #name for the ending
@@ -654,7 +662,7 @@ def read_player_file(filename):
 		
 		key = key.strip().lower()
 		
-		text = text.strip()
+		text = unescapeHTML(text.strip())
 		
 		
 		#now deal with any possible targets and filters
