@@ -354,7 +354,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.source = $metaXml.find('from').text();
     this.artist = $metaXml.find('artist').text();
     this.writer = $metaXml.find('writer').text();
-    this.description = $metaXml.find('description').text();
+    this.description = $metaXml.find('description').text().replace(/&lt;(\/?)i&gt;/gi, '<$1i>');
     this.ending = $metaXml.find('has_ending').text() === "true";
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
