@@ -40,6 +40,21 @@ def capitalizeDialogue(s):
 	# Convert the first character of the string, or of a variable that starts the string, to uppercase
 	return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
 
+def typographicalize(s):
+        substitutions = [u'\N{LEFT DOUBLE QUOTATION MARK}',
+                         u'\N{LEFT SINGLE QUOTATION MARK}',
+                         u'\N{RIGHT DOUBLE QUOTATION MARK}',
+                         u'\N{RIGHT SINGLE QUOTATION MARK}',
+                         u'\N{HORIZONTAL ELLIPSIS}']
+        return re.sub("(``)|(`)|('')|(')|(\.\.\.)",
+                      # Find the substitution corresponding to the matching group
+                      lambda m: next(iter([r for g, r in zip(m.groups(), substitutions) if g])),
+                      # First pass to substitute pairs of double quotes
+                      re.sub('"([^"]*)"', u'\N{LEFT DOUBLE QUOTATION MARK}\\1\N{RIGHT DOUBLE QUOTATION MARK}', s))
+
+def fixupDialogue(s):
+        return capitalizeDialogue(typographicalize(s))
+
 #default images and text for most cases
 def get_cases_dictionary():
 	d = {}#male pre-strip scenes
@@ -457,7 +472,7 @@ def write_xml(data, filename):
 						ET.SubElement(text_box_xml, width_tag).text = text_box[width_tag]
 					if arrow_tag in text_box:
 						ET.SubElement(text_box_xml, arrow_tag).text = text_box[arrow_tag]
-					ET.SubElement(text_box_xml, "content").text = capitalizeDialogue(text_box[text_tag])
+					ET.SubElement(text_box_xml, "content").text = fixupDialogue(text_box[text_tag])
 	
 	#done
 	
@@ -762,7 +777,7 @@ def read_player_file(filename):
 			if line_data["text"].find('~silent~') == 0:
 				line_data["text"] = ""
 			else:
-				line_data["text"] = capitalizeDialogue(line_data["text"])
+				line_data["text"] = fixupDialogue(line_data["text"])
 
 			#print "adding line", line	
 			
@@ -823,9 +838,9 @@ def read_player_file(filename):
 		#write start lines last to first
 		elif key == "start":
 			if key in d:
-				d[key].append(capitalizeDialogue(text))
+				d[key].append(fixupDialogue(text))
 			else:
-				d[key] = [capitalizeDialogue(text)]
+				d[key] = [fixupDialogue(text)]
 
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
@@ -862,6 +877,8 @@ def make_meta_xml(data, filename):
 			if content == "":
 				content = "0-calm"
 			content += ".png"
+                if value == "description":
+                        content = typographicalize(content)
 		
 		if value == "layers":
 			#the number of layers of clothing is taken directly from the clothing data
