@@ -836,7 +836,10 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-		players[i].unloadAlternateCostume();
+		if (players[i]) {
+			players[i].unloadAlternateCostume();
+		}
+		
         delete players[i];
         $selectImages[i-1].off('load');
     }
