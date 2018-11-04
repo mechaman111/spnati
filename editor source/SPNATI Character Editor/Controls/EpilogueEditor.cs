@@ -395,7 +395,7 @@ namespace SPNATI_Character_Editor.Controls
 			var element = _doc.CreateElement("link");
 			element.SetAttribute("rel", "stylesheet");
 			element.SetAttribute("type", "text/css");
-			element.SetAttribute("href", Path.Combine(Config.GameDirectory, "css", "spni.css"));
+			element.SetAttribute("href", "file:///" + Path.Combine(Config.GameDirectory, "css", "spni.css"));
 			_doc.GetElementsByTagName("head")[0].AppendChild(element);
 
 			if (_character != null)

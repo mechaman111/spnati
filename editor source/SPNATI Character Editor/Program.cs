@@ -16,7 +16,13 @@ namespace SPNATI_Character_Editor
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandledException);
 			Application.Run(new CharacterEditor());
+		}
+
+		static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			ErrorLog.LogError((e.ExceptionObject as Exception).StackTrace);
 		}
 	}
 }

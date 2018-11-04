@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -19,11 +20,13 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("marker")]
 		public string Marker;
 
-		/// <summary>
-		/// Whether the dialogue should be suppressed entirely. Should be null or ""
-		/// </summary>
-		[XmlAttribute("silent")]
-		public string IsSilent;
+		[DefaultValue("down")]
+		[XmlAttribute("direction")]
+		public string Direction;
+
+		[DefaultValue("")]
+		[XmlAttribute("location")]
+		public string Location;
 
 		[XmlIgnore]
 		public string ImageExtension;
@@ -32,6 +35,7 @@ namespace SPNATI_Character_Editor
 		{
 			Image = "";
 			Text = "";
+			Direction = "down";
 			Marker = null;
 		}
 
@@ -53,8 +57,9 @@ namespace SPNATI_Character_Editor
 		{
 			int hash = (Image ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Text ?? string.Empty).GetHashCode();
-			hash = (hash * 397) ^ (!string.IsNullOrEmpty(IsSilent) ? 1.GetHashCode() : 0.GetHashCode());
 			hash = (hash * 397) ^ (Marker ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Direction ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Location ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
