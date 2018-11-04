@@ -341,7 +341,7 @@ function updateStatusIcon(elem, status) {
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume) {
-	return $('<option>', {val: alt_costume.id, text: alt_costume.label})
+	return $('<option>', {val: alt_costume.id, text: 'Alternate Skin: '+alt_costume.label})
 }
 
 /************************************************************
@@ -398,7 +398,7 @@ function updateIndividualSelectScreen () {
 			}
 			
 			if (selectableOpponents[i].alternate_costumes.length > 0) {
-				$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default'}));
+				$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 				selectableOpponents[i].alternate_costumes.forEach(function (alt) {
 					$individualCostumeSelectors[index].append(getCostumeOption(alt));
 				});
@@ -479,7 +479,7 @@ function updateGroupSelectScreen () {
             }
 			
 			if (opponent.alternate_costumes.length > 0) {
-				$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default'}));
+				$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 				opponent.alternate_costumes.forEach(function (alt) {
 					$groupCostumeSelectors[i].append(getCostumeOption(alt));
 				});
