@@ -306,6 +306,15 @@ Player.prototype.resetState = function () {
 		this.allStates = parseDialogue(this.xml.find('start'), this);
 		this.chosenState = this.allStates[0];
         
+        if (!this.chosenState) {
+            /* If the opponent does not have legacy start lines then select
+             * a new-style selected line immediately.
+             * Prevents a crash triggered by selected, unselecting, and re-selecting
+             * an opponent with no legacy starting lines.
+             */
+            this.updateBehaviour(SELECTED);
+        }
+        
         var appearance = this.default_costume;
         if (this.alt_costume) {
             appearance = this.alt_costume;
@@ -319,7 +328,7 @@ Player.prototype.resetState = function () {
                 return $(this).text();
             }).get();
             
-            Array.push.apply(this.tags, added_tags);
+            Array.prototype.push.apply(this.tags, added_tags);
         }
         
         if (appearance.id) {
@@ -387,6 +396,14 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    
+    this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
+        return {
+            'id': $(this).attr('id'),
+            'label': $(this).text(),
+            'image': $(this).attr('img') 
+        };
+    }).get();
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -479,14 +496,15 @@ Opponent.prototype.unloadAlternateCostume = function () {
     }
     
     if (this.alt_costume.tags) {
-        this.alt_costume.tags.children().each(function (idx, elem) {
-            this.tags.splice(this.tags.indexOf(elem.text()), 1);
+        this.alt_costume.tags.find('tag').each(function (idx, elem) {
+            this.tags.splice(this.tags.indexOf($(elem).text()), 1);
         }.bind(this));
     }
     
     this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
     
     this.alt_costume = null;
+    this.selectAlternateCostume(null);
     this.resetState();
 }
 
@@ -500,9 +518,14 @@ Opponent.prototype.unloadAlternateCostume = function () {
 Opponent.prototype.loadBehaviour = function (slot) {
     this.slot = slot;
     if (this.isLoaded()) {
-        this.onSelected();
+        if (this.selected_costume) {
+            this.loadAlternateCostume();
+        } else {
+            this.onSelected();
+        }
         return;
     }
+    
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
