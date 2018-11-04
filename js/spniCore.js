@@ -460,7 +460,7 @@ Opponent.prototype.loadAlternateCostume = function () {
             this.alt_costume = {
                 id: this.selected_costume,
                 labels: $xml.find('label'),
-                tags: $xml.find('tag'),
+                tags: $xml.find('tags'),
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
             };
