@@ -169,7 +169,7 @@ function loadEpilogueData(player) {
 		var screens = []; //the list of screens for the epilogue
 
 		$(this).find("screen").each(function() {
-			var image = player.folder + $(this).attr("img").trim(); //get the full path for the screen's image
+			var image = player.base_folder + $(this).attr("img").trim(); //get the full path for the screen's image
 			//use an attribute rather than a tag because IE doesn't like parsing XML
 
 			//get the information for all the text boxes

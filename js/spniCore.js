@@ -267,6 +267,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
 function Player (id) {
     this.id = id;
     this.folder = 'opponents/'+id+'/';
+    this.base_folder = 'opponents/'+id+'/';
     this.first = '';
     this.last = '';
     this.labels = undefined;
@@ -384,6 +385,7 @@ Player.prototype.updateBehaviour = function() { }
 function Opponent (id, $metaXml, status, releaseNumber) {    
     this.id = id;
     this.folder = 'opponents/'+id+'/';
+    this.base_folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
     
     this.enabled = $metaXml.find('enabled').text();

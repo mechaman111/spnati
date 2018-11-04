@@ -15,14 +15,14 @@ function GEnding(player, ending){
 		previewImage = $(ending).find('screen').eq(0).attr('img');
 	}
 	
-	this.image = player.folder + previewImage;
+	this.image = player.base_folder + previewImage;
 	this.title = $(ending).find('title').html();
 	this.unlocked = save.hasEnding(player.id, this.title);
 	//Same as in spniEpilogue.js
 	this.screens = [];
 	var $end = this;
 	$(ending).find('screen').each(function(){
-		var image = player.folder + $(this).attr("img").trim();
+		var image = player.base_folder + $(this).attr("img").trim();
 		var textBoxes = [];
 		$(this).find('text').each(function(){
 			var x = $(this).find("x").html().trim();
