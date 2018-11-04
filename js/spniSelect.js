@@ -341,7 +341,7 @@ function updateStatusIcon(elem, status) {
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume) {
-	return $('<option>', {val: alt_costume.id, text: 'Alternate Skin: '+alt_costume.label})
+	return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label})
 }
 
 /************************************************************
@@ -1040,7 +1040,7 @@ function altCostumeSelected(slot, inGroup) {
 	var costumeDesc = undefined;
 	if (selectedCostume.length > 0) {
 		for (let i=0;i<opponent.alternate_costumes.length;i++) {
-			if (opponent.alternate_costumes[i].id === selectedCostume) {
+			if (opponent.alternate_costumes[i].folder === selectedCostume) {
 				costumeDesc = opponent.alternate_costumes[i];
 				break;
 			}
@@ -1049,7 +1049,7 @@ function altCostumeSelected(slot, inGroup) {
 	
 	if (costumeDesc) {
 		opponent.selectAlternateCostume(selectedCostume);
-		selectImage.attr('src', 'opponents/'+selectedCostume+'/'+costumeDesc.image);
+		selectImage.attr('src', selectedCostume+costumeDesc.image);
 	} else {
 		opponent.selectAlternateCostume(null);
 		selectImage.attr('src', opponent.folder + opponent.image);

@@ -406,7 +406,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     
     this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
         return {
-            'id': $(this).attr('id'),
+            'folder': $(this).attr('folder'),
             'label': $(this).text(),
             'image': $(this).attr('img') 
         };
@@ -465,8 +465,8 @@ Opponent.prototype.getByStage = function (arr) {
     return bestFit;
 };
 
-Opponent.prototype.selectAlternateCostume = function (id) {
-    this.selected_costume = id;
+Opponent.prototype.selectAlternateCostume = function (folder) {
+    this.selected_costume = folder;
 };
 
 Opponent.prototype.getIntelligence = function () {
@@ -476,13 +476,13 @@ Opponent.prototype.getIntelligence = function () {
 Opponent.prototype.loadAlternateCostume = function () {
     $.ajax({
         type: "GET",
-        url: 'opponents/'+this.selected_costume+'/costume.xml',
+        url: this.selected_costume+'costume.xml',
         dataType: "text",
         success: function (xml) {
             var $xml = $(xml);
             
             this.alt_costume = {
-                id: this.selected_costume,
+                id: $xml.find('id').text(),
                 labels: $xml.find('label'),
                 tags: $xml.find('tags'),
                 folders: $xml.find('folder'),
