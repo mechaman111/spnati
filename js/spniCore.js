@@ -324,11 +324,18 @@ Player.prototype.resetState = function () {
         this.folders = appearance.folders;
         
         if (appearance.tags) {
-            var added_tags = appearance.tags.find('tag').map(function () {
-                return $(this).text();
-            }).get();
-            
-            Array.prototype.push.apply(this.tags, added_tags);
+            var alt_tags = appearance.tags.find('tag').each(function (idx, elem) {
+                var $elem = $(elem);
+                var tag = $elem.text();
+                var removed = $elem.attr('remove') || '';
+                if (removed.toLowerCase() === 'true') {
+                    if (this.tags.indexOf(tag) > 0) {
+                        this.tags.splice(this.tags.indexOf(tag), 1);
+                    }
+                } else {
+                    this.tags.push(tag);
+                }
+            }.bind(this));
         }
         
         if (appearance.id) {
@@ -497,7 +504,17 @@ Opponent.prototype.unloadAlternateCostume = function () {
     
     if (this.alt_costume.tags) {
         this.alt_costume.tags.find('tag').each(function (idx, elem) {
-            this.tags.splice(this.tags.indexOf($(elem).text()), 1);
+            var $elem = $(elem);
+            var tag = $elem.text();
+            var removed = $elem.attr('remove') || '';
+            if (removed.toLowerCase() === 'true') {
+                this.tags.push(tag);    // tag was previously removed, readd it
+            } else {
+                if (this.tags.indexOf(tag) > 0) {
+                    // remove added tag
+                    this.tags.splice(this.tags.indexOf(tag), 1);
+                }
+            }
         }.bind(this));
     }
     
