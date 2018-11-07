@@ -149,7 +149,7 @@ function expandDialogue (dialogue, self, target) {
                 }
                 break;
             case 'cards': /* determine how many cards are being swapped */
-                var n = self.hand.tradeIns.reduce(function(acc, x) { return acc + (x ? 1 : 0); }, 0);
+                var n = self.hand.tradeIns.countTrue();
                 if (fn == 'ifplural') {
                     substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
                 } else if (fn === undefined) {
@@ -276,6 +276,9 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
             var target =           states[i].attr("target");
             var filter =           states[i].attr("filter");
 			var targetStage =      parseInterval(states[i].attr("targetStage"));
+			var targetLayers = parseInterval(states[i].attr("targetLayers"));
+			var targetStartingLayers = parseInterval(states[i].attr("targetStartingLayers"));
+			var targetStatus =      states[i].attr("targetStatus");
 			var targetTimeInStage = parseInterval(states[i].attr("targetTimeInStage"));
 			var targetSaidMarker =        states[i].attr("targetSaidMarker");
 			var targetNotSaidMarker =     states[i].attr("targetNotSaidMarker");
@@ -302,10 +305,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 			var customPriority =    states[i].attr("priority");
 			var counters = [];
 			states[i].find("condition").each(function () {
-				var counter = $(this);
-				if (counter.attr('filter')) {
-					counters.push(counter);
-				}
+				counters.push($(this));
 			});
 
 			var totalPriority = 0; // this is used to determine which of the states that
@@ -344,6 +344,33 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 				}
 				else {
 					continue;				// failed "targetStage" requirement
+				}
+			}
+
+			// targetLayers (priority = 40)
+			if (opp && targetLayers !== undefined && targetLayers !== false) {
+				if (inInterval(opp.clothing.length, targetLayers)) {
+					totalPriority += 40;
+				} else {
+					continue;
+				}
+			}
+
+			// targetStartingLayers (priority = 40)
+			if (opp && targetStartingLayers !== undefined && targetStartingLayers !== false) {
+				if (inInterval(opp.startingLayers, targetStartingLayers)) {
+					totalPriority += 40;
+				} else {
+					continue;
+				}
+			}
+
+			// targetStatus (priority = 70)
+			if (opp && targetStatus !== undefined && targetStatus !== false) {
+				if (checkPlayerStatus(opp, targetStatus)) {
+					totalPriority += 70;
+				} else {
+					continue;
 				}
 			}
 
@@ -481,11 +508,15 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 			for (var j = 0; j < counters.length; j++) {
 				var desiredCount = parseInterval(counters[j].attr('count'));
 				var filterTag = counters[j].attr('filter');
-				var count = players.filter(function(p) {
-					return p && p.tags && p.tags.indexOf(filterTag) >= 0;
-				}).length;
+				var filterGender = counters[j].attr('gender');
+				var filterStatus = counters[j].attr('status');
+				var count = players.countTrue(function(p) {
+					return p && (filterTag == undefined || (p.tags && p.tags.indexOf(filterTag) >= 0))
+						&& (filterGender == undefined || (p.gender == filterGender))
+						&& (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
+				});
 				if (inInterval(count, desiredCount)) {
-					totalPriority += 10;
+					totalPriority += (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
 				}
 				else {
 					matchCounter = false;
@@ -519,9 +550,9 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalMales (priority = 5)
 			if (typeof totalMales !== typeof undefined && totalMales !== false) {
-				var count = players.filter(function(p) {
+				var count = players.countTrue(function(p) {
 					return p && p.gender === eGender.MALE;
-				}).length;
+				});
 				if (inInterval(count, totalMales)) {
 					totalPriority += 5;		// priority
 				}
@@ -532,9 +563,9 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalFemales (priority = 5)
 			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
-				var count = players.filter(function(p) {
+				var count = players.countTrue(function(p) {
 					return p && p.gender === eGender.FEMALE;
-				}).length;
+				});
 				if (inInterval(count, totalFemales)) {
 					totalPriority += 5;		// priority
 				}
@@ -545,7 +576,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalAlive (priority = 3)
 			if (typeof totalAlive !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STAGE_ALIVE), totalAlive)) {
+				if (inInterval(getNumPlayersInStage(STATUS_ALIVE), totalAlive)) {
 					totalPriority += 2 + totalAlive.max; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
@@ -556,7 +587,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 			// totalExposed (priority = 4)
 			if (typeof totalExposed !== typeof undefined) {
 				var count = 0;
-				if (inInterval(getNumPlayersInStage(STAGE_EXPOSED), totalExposed)) {
+				if (inInterval(getNumPlayersInStage(STATUS_EXPOSED), totalExposed)) {
 					totalPriority += 4 + totalExposed.max; //priority is weighted by max, so that higher totals take priority
 				}
 				else {
@@ -566,7 +597,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalNaked (priority = 5)
 			if (typeof totalNaked !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STAGE_NAKED), totalNaked)) {
+				if (inInterval(getNumPlayersInStage(STATUS_NAKED), totalNaked)) {
 					totalPriority += 5 + totalNaked.max; //priority is weighted by max, so that higher totals take priority;
 				}
 				else {
@@ -576,7 +607,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalMasturbating (priority = 5)
 			if (typeof totalMasturbating !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STAGE_MASTURBATING), totalMasturbating)) {
+				if (inInterval(getNumPlayersInStage(STATUS_MASTURBATING), totalMasturbating)) {
 					totalPriority += 5 + totalMasturbating.max; //priority is weighted by max, so that higher totals take priority;
 				}
 				else {
@@ -586,7 +617,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
 			// totalFinished (priority = 5)
 			if (typeof totalFinished !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STAGE_FINISHED), totalFinished)) {
+				if (inInterval(getNumPlayersInStage(STATUS_FINISHED), totalFinished)) {
 					totalPriority += 5 + totalFinished.max; //priority is weighted by max, so that higher totals take priority
 				}
 				else {

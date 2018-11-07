@@ -275,7 +275,7 @@ function Player (id) {
     this.gender = eGender.MALE;
     this.timer = 20;
     this.scale = undefined;
-    this.tags = [];
+    this.tags = [id];
     this.xml = null;
     this.metaXml = null;
     
@@ -291,6 +291,7 @@ Player.prototype.resetState = function () {
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
+	this.exposed = { upper: false, lower: false };
     
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
@@ -321,6 +322,8 @@ Player.prototype.resetState = function () {
     	});
         
         this.clothing = clothingArr;
+		this.startingLayers = clothingArr.length;
+		this.mostlyClothed = checkPlayerStatus(this, STATUS_DECENT);
 	}
     
 	this.updateLabel();
@@ -853,6 +856,21 @@ function getRandomNumber (min, max) {
  ************************************************************/
 String.prototype.initCap = function() {
 	return this.substr(0, 1).toUpperCase() + this.substr(1);
+}
+
+/************************************************************
+ * Counts the number of elements that evaluate as true, or, 
+ * if a function is provided, passes the test implemented by it.
+ ************************************************************/
+Array.prototype.countTrue = function(func) {
+    var count = 0;
+    for (var i = 0; i < this.length; i++) {
+        if (i in this
+            && (func ? func(this[i], i, this) : this[i])) {
+            count++;
+        }
+    }
+    return count;
 }
 
 /************************************************************

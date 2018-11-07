@@ -16,13 +16,22 @@ var EXTRA_ARTICLE = "extra";
 /* clothing positions */
 var UPPER_ARTICLE = "upper";
 var LOWER_ARTICLE = "lower";
+var FULL_ARTICLE = "both";
 var OTHER_ARTICLE = "other";
 
-var STAGE_EXPOSED = 1;
-var STAGE_ALIVE = 0;
-var STAGE_NAKED = -3;
-var STAGE_MASTURBATING = -2;
-var STAGE_FINISHED = -1;
+var STATUS_LOST_SOME = "lost_some"
+var STATUS_MOSTLY_CLOTHED = "mostly_clothed"
+var STATUS_DECENT = "decent";
+var STATUS_EXPOSED = "exposed";
+var STATUS_EXPOSED_TOP = "chest_visible";
+var STATUS_EXPOSED_BOTTOM = "crotch_visible";
+var STATUS_EXPOSED_TOP_ONLY = "topless";
+var STATUS_EXPOSED_BOTTOM_ONLY = "bottomless";
+var STATUS_NAKED = "naked";
+var STATUS_LOST_ALL = "lost_all";
+var STATUS_ALIVE = "alive";
+var STATUS_MASTURBATING = "masturbating";
+var STATUS_FINISHED = "finished";
 
 /************************************************************
  * Stores information on an article of clothing.
@@ -60,12 +69,41 @@ $stripButton = $("#stripping-modal-button");
 function getClothingTrigger (player, clothing, removed) {
 	var type = clothing.type;
 	var pos = clothing.position;
-	var gender = players[player].gender;
-	var size = players[player].size;
+	var gender = player.gender;
+	var size = player.size;
 
 	/* starting with important articles */
-	if (type == IMPORTANT_ARTICLE) {
-		if (pos == UPPER_ARTICLE) {
+	if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
+		if (pos == FULL_ARTICLE && type == MAJOR_ARTICLE) {
+			if (!player.clothing.some(function(c) {
+				return c.position == UPPER_ARTICLE && c !== clothing;
+			})) {
+				// If removing this article exposes the chest, pretend that it's an upper body article
+				pos = UPPER_ARTICLE;
+			} else {
+				// Otherwise treat it as a lower body article, whether
+				// it exposes the crotch or not (it doesn't matter)
+				pos = LOWER_ARTICLE;
+			}
+		}
+		if (type == MAJOR_ARTICLE && player.clothing.some(function(c) {
+			return (c.position == pos || c.position == FULL_ARTICLE)
+				&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
+		})) { // There is another article left covering this part of the body
+			if (gender == eGender.MALE) {
+				if (removed) {
+					return MALE_REMOVED_MAJOR;
+				} else {
+					return MALE_REMOVING_MAJOR;
+				}
+			} else if (gender == eGender.FEMALE) {
+				if (removed) {
+					return FEMALE_REMOVED_MAJOR;
+				} else {
+					return FEMALE_REMOVING_MAJOR;
+				}
+			}
+		} else if (pos == UPPER_ARTICLE) {
 			if (gender == eGender.MALE) {
 				if (removed) {
 					return MALE_CHEST_IS_VISIBLE;
@@ -104,37 +142,6 @@ function getClothingTrigger (player, clothing, removed) {
 				} else {
 					return FEMALE_CROTCH_WILL_BE_VISIBLE;
 				}
-			}
-		} else {
-			/* this shouldn't happen, but if it does then just pretend it's a major article */
-			if (gender == eGender.MALE) {
-				if (removed) {
-					return MALE_REMOVED_MAJOR;
-				} else {
-					return MALE_REMOVING_MAJOR;
-				}
-			} else if (gender == eGender.FEMALE) {
-				if (removed) {
-					return FEMALE_REMOVED_MAJOR;
-				} else {
-					return FEMALE_REMOVING_MAJOR;
-				}
-			}
-		}
-	}
-	/* next major articles */
-	else if (type == MAJOR_ARTICLE) {
-		if (gender == eGender.MALE) {
-			if (removed) {
-				return MALE_REMOVED_MAJOR;
-			} else {
-				return MALE_REMOVING_MAJOR;
-			}
-		} else if (gender == eGender.FEMALE) {
-			if (removed) {
-				return FEMALE_REMOVED_MAJOR;
-			} else {
-				return FEMALE_REMOVING_MAJOR;
 			}
 		}
 	}
@@ -276,7 +283,7 @@ function prepareToStripPlayer (player) {
     } else {
         var toBeRemovedClothing = players[player].clothing[players[player].clothing.length - 1];
         players[player].removedClothing = toBeRemovedClothing;
-        var dialogueTrigger = getClothingTrigger(player, toBeRemovedClothing, false);
+        var dialogueTrigger = getClothingTrigger(players[player], toBeRemovedClothing, false);
 
         updateAllBehaviours(player, dialogueTrigger);
         players[player].updateBehaviour(PLAYER_STRIPPING);
@@ -353,71 +360,76 @@ function clothing_keyUp(e) {
  ************************************************************/
 
 function closeStrippingModal (id) {
-  if (id >= 0) {
-    /* return keybindings */
-    KEYBINDINGS_ENABLED = true;
-    document.removeEventListener('keyup', clothing_keyUp, false);
-    document.addEventListener('keyup', game_keyUp, false);
+    if (id >= 0) {
+        /* return keybindings */
+        KEYBINDINGS_ENABLED = true;
+        document.removeEventListener('keyup', clothing_keyUp, false);
+        document.addEventListener('keyup', game_keyUp, false);
 
-    /* grab the removed article of clothing */
-    var removedClothing = players[HUMAN_PLAYER].clothing[id];
+        /* grab the removed article of clothing */
+        var removedClothing = players[HUMAN_PLAYER].clothing[id];
 
-    players[HUMAN_PLAYER].clothing.splice(id, 1);
-    players[HUMAN_PLAYER].timeInStage = -1;
-    players[HUMAN_PLAYER].removedClothing = removedClothing;
+        players[HUMAN_PLAYER].clothing.splice(id, 1);
+        players[HUMAN_PLAYER].timeInStage = -1;
+        players[HUMAN_PLAYER].removedClothing = removedClothing;
 
-    /* figure out if it should be important */
-    if (removedClothing.position != OTHER_ARTICLE) {
-			var otherClothing;
-      for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
-        if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
-					&& players[HUMAN_PLAYER].clothing[i].type != MINOR_ARTICLE) {
-          console.log(players[HUMAN_PLAYER].clothing[i]);
-					otherClothing = players[HUMAN_PLAYER].clothing[i];
-          break;
+        /* figure out if it should be important */
+        if (removedClothing.position != OTHER_ARTICLE) {
+            var otherClothing;
+            for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
+                if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
+                    && players[HUMAN_PLAYER].clothing[i].type != MINOR_ARTICLE) {
+                    console.log(players[HUMAN_PLAYER].clothing[i]);
+                    otherClothing = players[HUMAN_PLAYER].clothing[i];
+                    break;
+                }
+            }
+            console.log(otherClothing);
+            if (!otherClothing) {
+                removedClothing.type = IMPORTANT_ARTICLE;
+            } else if (removedClothing.type == IMPORTANT_ARTICLE) {
+                removedClothing.type = MAJOR_ARTICLE;
+                /* Just make any other remaining article important instead,
+                   so that, if it is the last one, it's considered as such by
+                   playerMustStrip() */
+                otherClothing.type = IMPORTANT_ARTICLE;
+            }
         }
-      }
-      console.log(otherClothing);
-      if (!otherClothing) {
-        removedClothing.type = IMPORTANT_ARTICLE;
-        players[HUMAN_PLAYER].exposed = true;
-      } else if (removedClothing.type == IMPORTANT_ARTICLE) {
-        removedClothing.type = MAJOR_ARTICLE;
-				/* Just make any other remaining article important instead,
-				   so that, if it is the last one, it's considered as such by
-				   playerMustStrip() */
-				otherClothing.type = IMPORTANT_ARTICLE;
-      }
-    }
-
-    /* determine its dialogue trigger */
-    var dialogueTrigger = getClothingTrigger(HUMAN_PLAYER, removedClothing, true);
-    console.log(removedClothing);
-    /* display the remaining clothing */
-    displayHumanPlayerClothing();
-
-    /* count the clothing the player has remaining */
-    players[HUMAN_PLAYER].stage++
-
-    /* update label */
-    if (players[HUMAN_PLAYER].clothing.length > 0) {
-      $gameClothingLabel.html("Your Remaining Clothing");
+        if (removedClothing.type !== EXTRA_ARTICLE) {
+            players[HUMAN_PLAYER].mostlyClothed = false;
+        }
+        if (removedClothing.type == IMPORTANT_ARTICLE) {
+            players[HUMAN_PLAYER].exposed[removedClothing.position] = true;
+        }
+        
+        /* determine its dialogue trigger */
+        var dialogueTrigger = getClothingTrigger(players[HUMAN_PLAYER], removedClothing, true);
+        console.log(removedClothing);
+        /* display the remaining clothing */
+        displayHumanPlayerClothing();
+        
+        /* count the clothing the player has remaining */
+        players[HUMAN_PLAYER].stage++
+        
+        /* update label */
+        if (players[HUMAN_PLAYER].clothing.length > 0) {
+            $gameClothingLabel.html("Your Remaining Clothing");
+        } else {
+            $gameClothingLabel.html("You're Naked");
+        }
+            
+        /* update behaviour */
+        updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, players[HUMAN_PLAYER]);
+        updateAllGameVisuals();
+        
+        /* allow progression */
+        $('#stripping-modal').modal('hide');
+        endRound();
     } else {
-      $gameClothingLabel.html("You're Naked");
+        /* how the hell did this happen? */
+        console.log("Error: there was no selected article.");
+        showStrippingModal();
     }
-
-    /* update behaviour */
-    updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger);
-    updateAllGameVisuals();
-
-		/* allow progression */
-    $('#stripping-modal').modal('hide');
-		endRound();
-  } else {
-    /* how the hell did this happen? */
-    console.log("Error: there was no selected article.");
-    showStrippingModal();
-  }
 }
 
 /************************************************************
@@ -430,10 +442,21 @@ function stripAIPlayer (player) {
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
 	players[player].removedClothing = removedClothing;
-	if (removedClothing.type === IMPORTANT_ARTICLE) {
-		players[player].exposed = true;
+	if (removedClothing.type !== EXTRA_ARTICLE) {
+		players[player].mostlyClothed = false;
 	}
-	var dialogueTrigger = getClothingTrigger(player, removedClothing, true);
+	if (removedClothing.type === IMPORTANT_ARTICLE) {
+		players[player].exposed[removedClothing.position] = true;
+	} else if (removedClothing.type === MAJOR_ARTICLE) {
+		for (position in players[player].exposed) {
+			if (!players[player].clothing.some(function(c) {
+				return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE) && (c.position == position || c.position == FULL_ARTICLE);
+			})) {
+				players[player].exposed[position] = true;
+			}
+		}
+	}
+	var dialogueTrigger = getClothingTrigger(players[player], removedClothing, true);
 
 	players[player].stage++;
 	players[player].timeInStage = -1;
@@ -480,26 +503,46 @@ function stripPlayer (player) {
  * Counts the number of players in a certain stage
  ************************************************************/
 function getNumPlayersInStage(stage) {
-	var count = 0;
-	for (var i = 0; i < players.length; i++) {
-		if (!players[i]) { continue; }
-		switch (stage) {
-			case STAGE_EXPOSED:
-				if (players[i].exposed) { count++; }
-				break;
-			case STAGE_ALIVE:
-				if (!players[i].out) { count++; }
-				break;
-			case STAGE_NAKED:
-				if (players[i].clothing.length == 0) { count++; }
-				break;
-			case STAGE_MASTURBATING:
-				if (players[i].out && !players[i].finished) { count++; }
-				break;
-			case STAGE_FINISHED:
-				if (players[i].finished) { count++; }
-				break;
-		}
+	return players.countTrue(function(player) {
+		return checkPlayerStatus(player, stage)
+	});
+}
+
+function checkPlayerStatus(player, status) {
+	if (status.substr(0, 4) == "not_") {
+		return !checkPlayerStatus(player, status.substr(4));
 	}
-	return count;
+	switch (status.trim()) {
+	case STATUS_LOST_SOME:
+		return player.stage > 0;
+	case STATUS_MOSTLY_CLOTHED:
+		return player.mostlyClothed;
+	case STATUS_DECENT:
+		return !(player.exposed.upper || player.exposed.lower)
+		&& player.clothing.some(function(c) {
+			return (c.position == UPPER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
+		}) && player.clothing.some(function(c) {
+			return (c.position == LOWER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
+		});
+	case STATUS_EXPOSED_TOP:
+		return player.exposed.upper;
+	case STATUS_EXPOSED_BOTTOM:
+		return player.exposed.lower;
+	case STATUS_EXPOSED:
+		return player.exposed.upper || player.exposed.lower;
+	case STATUS_EXPOSED_TOP_ONLY:
+		return player.exposed.upper && !player.exposed.lower;
+	case STATUS_EXPOSED_BOTTOM_ONLY:
+		return !player.exposed.upper && player.exposed.lower;
+	case STATUS_NAKED:
+		return player.exposed.upper && player.exposed.lower;
+	case STATUS_ALIVE:
+		return !player.out;
+	case STATUS_LOST_ALL:
+		return player.clothing.length == 0;
+	case STATUS_MASTURBATING:
+		return player.out && !player.finished;
+	case STATUS_FINISHED:
+		return player.finished;
+	}
 }
