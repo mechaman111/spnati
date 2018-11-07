@@ -53,7 +53,8 @@ marker=nugi-chan_privacy_policy,private,When an embarrassed girl removes her fir
 marker=nugi-chan_sph,public,Nugi-chan makes "SPH" remarks when a male player reveals a small crotch. She has the same comments for male NPCs but does not set a marker to remember this.
 marker=nugi-chan_sph_lifetime,public,Nugi-chan's bad hand doesn't compare to a lifetime of disappointment.
 marker=nugi-chan_sph_lipstick,public,Nugi-chan compares the player's small size to her lipstick.
-marker=nugi-chan_finished,private,Nugi-chan has one real "finished" lines and a few more that are just banter.
+marker=nugi-chan_submit_query,private,Like the player, Nugi-chan sometimes suffers from the "Submit Query" image loading placeholder.
+marker=nugi-chan_finished,private,Nugi-chan has one real "finished" line and a few more that are just banter.
 
 marker=nugi-chan_amalia_flower,public,Nugi-chan borrows flower lines to address Amalia.
 marker=nugi-chan_corrin_f_panties,public,Nugi-chan comments that she can see female Corrin's panties.
@@ -61,6 +62,9 @@ marker=nugi-chan_elizabeth_will_lose,public,Nugi-chan expects that Elizabeth wil
 marker=nugi-chan_elizabeth_false_innocence,public,If Nugi-chan's first hand is bad in a game with Elizabeth, she'll pretend to be pure and innocent (for a line).
 marker=nugi-chan_elizabeth_first_blood,private,Nugi-chan transports Elizabeth's "first blood" remark to a new context.
 marker=nugi-chan_kim_babysitting,public,Nugi-chan inappropriately suggests that she's interested in some babysitting from Kim Possible.
+marker=nugi-chan_kizuna_bra_next,public,Nugi-chan wants Kizuna to take her bra off next, which she will.
+marker=nugi-chan_kizuna_sexy_is_better,public,Nugi-chan incorrectly claims that sexy bras are better than cute ones.
+marker=nugi-chan_kizuna_small,public,Busty Nugi-chan makes fun of petite Kizuna. Probably because Kizuna is cuter.
 marker=nugi-chan_kyu_casual_friday,public,Kyu's outfit makes for good material. Not MUCH material, though.
 marker=nugi-chan_marinette_french_maid,public,Nugi-chan + Marinette = Frennch maid.
 marker=nugi-chan_mia_ace-high_attorney,public,Nugi-chan calls Mia an "Ace-high Attorney".
@@ -157,6 +161,9 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 0-okay_hand,alsoPlaying:zone-tan,totalRounds:0=calm,Hey, Zone-tan! Long time, no see!
 0-bad_hand,alsoPlaying:zone-tan,totalRounds:0=calm,Hey, Zone-tan! Long time, no see!
 
+0-good_hand,count-assisted_strip:1-4,totalAlive:5,totalRounds:4=interested,I hope our guests are ready to strip too. I'm in the mood to see a lot of sticky losers today!
+0-okay_hand,count-assisted_strip:1-4,totalAlive:5,totalRounds:4=interested,I hope our guests are ready to strip too. I'm in the mood to see a lot of sticky losers today!
+
 0-good_hand,alsoPlaying:elizabeth,targetSaidMarker:first_blood,notSaidMarker:nugi-chan_elizabeth_first_blood,marker:nugi-chan_elizabeth_first_blood=devious,If you get lucky, that might not be the only "first blood" we draw tonight.
 0-good_hand,alsoPlaying:jasmine,alsoPlayingStage:0,priority:0=devious,Those are some sexy ankles you have there, Jasmine-sama.
 0-good_hand,alsoPlaying:nagisa,alsoPlayingStage:5,alsoPlayingHand:High Card=mean,Who else is ready to be the first ever to see Nagisa-sama's titties? <3
@@ -175,7 +182,10 @@ bad_hand=sad,I... I don't know about this hand, dealer-sama!
 #lost gloves
 2-good_hand=,
 2-okay_hand=,
-2-bad_hand=,
+2-bad_hand,notSaidMarker:nugi-chan_submit_query,marker:nugi-chan_submit_query,priority:0=annoyed,What the fuck is a "Submit Query" card?
+2-bad_hand=awkward,Aww, this hand is awful.
+2-bad_hand=sad,I... I don't know about this hand, dealer-sama!
+#A self-reminder for Arndress: replace the two stage-generic lines above with real alternatives.
 
 2-good_hand,alsoPlaying:chell,priority:0=calm,Chell-sama, I played a strip game with the K-On! girls last week. They call it "Cake-on!", and I think you might like it!
 2-good_hand,alsoPlaying:kyoko,priority:0=happy,Kyoko-sama, have you ever tried using strip mahjong on potential suspects? It lays the facts bare!
@@ -322,7 +332,7 @@ female_human_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 female_must_strip=interested,Teeheehee! Strip, ~name~-sama! <3
 
 #fully clothed
-0-male_human_must_strip,totalRounds:0=interested,First up is ~name~-sama. Let's find out why there's eighty people lined up to play against him.
+0-male_human_must_strip,totalRounds:0=interested,First up is ~name~-sama. Let's find out why there's a hundred people lined up to play against him.
 0-male_human_must_strip=calm,If you wouldn't mind, ~name~-sama.
 0-male_must_strip=mean,Lost the hand? Lose the clothes!
 0-female_human_must_strip=,
@@ -572,7 +582,7 @@ female_removed_accessory=awkward,Don't worry, ~name~-sama. I barely noticed that
 0-male_removing_accessory=,
 0-male_removed_accessory=,
 0-female_removing_accessory=loss,Don't worry. Everyone can remove their ~clothing~ without me getting mad. Right now, preferrably.
-0-female_removing_accessory=awkward,I'm sure <i>somebody</i> out there has a ~clothing~ fetish...
+0-female_removing_accessory=awkward,~clothing.ifPlural(Those are the ugliest ~clothing~ I've ever seen...|I'm sure <i>somebody</i> out there has a ~clothing~ fetish...)~
 0-female_removing_accessory=calm,If you need help at any time, please don't hesitate to ask.
 0-female_removing_accessory=interested,Good things come to those who wait.
 0-female_removed_accessory=loss,But was it too much to hope for more?
@@ -1046,6 +1056,16 @@ female_removed_major,target:elena,targetStage:4=happy,One skirt down, one to go!
 -3-female_removed_major,target:kim,targetStage:4,marker:nugi-chan_kim_babysitting=awkward,How much do you charge for babysitting, Kimberly-sama? Is there an upper age limit on who you'll sit for?
 -2-female_removed_major,target:kim,targetStage:4,marker:nugi-chan_kim_babysitting=awkward,I'm interested in your babysitting rates, but I'm guessing you don't provide a full wet nurse service...
 -1-female_removed_major,target:kim,targetStage:4,marker:nugi-chan_kim_babysitting=embarrassed,See me after the game, Kimberly-sama. I want to talk about how much you charge for your services.
+0-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_small=loss,What an adorable bra, Kizuna-chan. It's just such a shame that your Webmaster barely gave you anything to go in it.
+1-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_small=loss,What an adorable bra, Kizuna-chan. It's just such a shame that your Webmaster barely gave you anything to go in it.
+2-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_small=loss,What an adorable bra, Kizuna-chan. It's just such a shame that your Webmaster barely gave you anything to go in it.
+3-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_small=loss,What an adorable bra, Kizuna-chan. It's just such a shame that your Webmaster barely gave you anything to go in it.
+4-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_sexy_is_better=loss,That bra is so cute, Kizuna-chan. But everyone knows that sexy bras like mine are better.
+5-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_sexy_is_better=annoyed,That bra is so cute, Kizuna-chan. But everyone knows that sexy bras like mine are better.
+6-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_sexy_is_better=annoyed,That bra is so cute, Kizuna-chan. But everyone knows that sexy bras like mine are better.
+-3-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_bra_next=happy,That's a nice first step, Kizuna-chan, but if you don't take off that cute little bra next, you're dead to me.
+-2-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_bra_next=happy,That's a nice first step, Kizuna-chan, but if you don't take off that cute little bra next, you're dead to me.
+-1-female_removed_major,target:kizuna,targetStage:1,marker:nugi-chan_kizuna_bra_next=happy,That's a nice first step, Kizuna-chan, but if you don't take off that cute little bra next, you're dead to me.
 0-female_removed_major,target:marinette,targetStage:2=sad,There goes my dream of you being naked under that bodysuit...
 1-female_removed_major,target:marinette,targetStage:2=sad,There goes my dream of you being naked under that bodysuit...
 2-female_removed_major,target:marinette,targetStage:2=sad,There goes my dream of you being naked under that bodysuit...
