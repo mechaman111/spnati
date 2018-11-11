@@ -876,7 +876,7 @@ function showPlayerTagsModal () {
         } catch(e) {
             selectionType = null;
         }
-        if (selectionType === 'number') {
+        if (true || selectionType === 'number') {
             var hairColors = ['black_hair', 'white_hair', 'brunette', 'ginger', 'blonde',
                 'green_hair exotic_hair', 'blue_hair exotic_hair', 'purple_hair exotic_hair', 'pink_hair exotic_hair'];
             var eyeColors = ['dark_eyes', 'pale_eyes', 'red_eyes', 'amber_eyes', 'green_eyes', 'blue_eyes', 'violet_eyes'];
@@ -993,13 +993,13 @@ function showPlayerTagsModal () {
 
         $('input[name=skin_color_picker]').on('input', function() {
             if (this.value < 25) {
-                tag = 'pale_skin';
+                tag = 'pale-skinned';
             } else if (this.value < 50) {
-                tag = 'fair_skin';
+                tag = 'fair-skinned';
             } else if (this.value < 75) {
-                tag = 'olive_skin';
+                tag = 'olive-skinned';
             } else {
-                tag = 'dark_skin';
+                tag = 'dark-skinned';
             }
 
             this.previousElementSibling.value = tag || '';
