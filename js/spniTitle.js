@@ -294,7 +294,7 @@ function validateTitleScreen () {
 	}
 	$gameLabels[HUMAN_PLAYER].html(players[HUMAN_PLAYER].label);
 
-    var playerTagList = ['human_' + players[HUMAN_PLAYER].gender];
+    var playerTagList = ['human', 'human_' + players[HUMAN_PLAYER].gender];
     var sizeTag = document.getElementsByClassName('title-size-block')[0].dataset.size + (players[HUMAN_PLAYER].gender === 'male' ? '_penis' : '_breasts');
     playerTagList.push(sizeTag);
     /* checks the player tag modal */
