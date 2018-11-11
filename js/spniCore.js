@@ -10,6 +10,7 @@
 /* General Constants */
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
+var EPILOGUES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
@@ -96,7 +97,7 @@ var bubbleArrowOffsetRules;
 
 function getReportedOrigin () {
     var origin = window.location.origin;
-    
+
     if (origin.toLowerCase().startsWith('file:')) {
         return '<local filesystem origin>';
     } else {
@@ -116,18 +117,18 @@ function compileBaseErrorReport(userDesc, bugType) {
                 'timeInStage': players[i].timeInStage,
                 'markers': players[i].markers
             }
-            
+
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.dialogue;
                 playerData.currentImage   = players[i].chosenState.image;
             }
-            
+
             tableReports[i-1] = playerData;
         } else {
             tableReports[i-1] = null;
         }
     }
-    
+
     var circumstances = {
         'userAgent': navigator.userAgent,
         'origin': getReportedOrigin(),
@@ -135,30 +136,30 @@ function compileBaseErrorReport(userDesc, bugType) {
         'currentTurn': currentTurn,
         'visibleScreens': []
     }
-    
+
     if (gamePhase) {
         circumstances.gamePhase = gamePhase[0];
     }
-    
+
     for (let i=0;i<allScreens.length;i++) {
         if (allScreens[i].css('display') !== 'none') {
             circumstances.visibleScreens.push(allScreens[i].attr('id'));
         }
     }
-    
+
     var bugCharacter = null;
     if (bugType.startsWith('character')) {
         bugCharacter = bugType.split('-', 2)[1];
         bugType = 'character';
     }
-    
+
     return {
         'date': (new Date()).toISOString(),
         'session': sessionID,
         'game': gameID,
         'type': bugType,
         'character': bugCharacter,
-        'description': userDesc, 
+        'description': userDesc,
         'circumstances': circumstances,
         'table': tableReports,
         'player': {
@@ -178,10 +179,10 @@ window.addEventListener('error', function (ev) {
         'lineno': ev.lineno,
         'stack': ev.error.stack
     });
-    
+
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
-        
+
         $.ajax({
             url: BUG_REPORTING_ENDPOINT,
             method: 'POST',
@@ -207,7 +208,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
     var req = new XMLHttpRequest();
     req.open('GET', baseUrl+'.gz', true);
     req.responseType = 'arraybuffer';
-    
+
     req.onload = function(ev) {
         if (req.status < 400 && req.response) {
             var data = new Uint8Array(req.response);
@@ -225,7 +226,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
             errorCb();
         }
     }
-    
+
     req.onerror = function(err) {
         $.ajax({
             type: "GET",
@@ -235,7 +236,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
             error: errorCb,
         });
     }
-    
+
     req.send(null);
 }
 
@@ -243,7 +244,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/
- 
+
  /************************************************************
   * Creates and returns a new player object based on the
   * supplied information.
@@ -263,7 +264,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
   * xml (jQuery object), the player's loaded behaviour.xml file.
   * metaXml (jQuery object), the player's loaded meta.xml file.
   ************************************************************/
- 
+
 function Player (id) {
     this.id = id;
     this.folder = 'opponents/'+id+'/';
@@ -278,7 +279,7 @@ function Player (id) {
     this.tags = [id];
     this.xml = null;
     this.metaXml = null;
-    
+
     this.resetState();
 }
 
@@ -292,7 +293,7 @@ Player.prototype.resetState = function () {
 	this.timeInStage = -1;
 	this.markers = {};
 	this.exposed = { upper: false, lower: false };
-    
+
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
          * initialize player.chosenState to the first listed line.
@@ -301,12 +302,12 @@ Player.prototype.resetState = function () {
          */
 		this.allStates = parseDialogue(this.xml.find('start'), this);
 		this.chosenState = this.allStates[0];
-        
+
 		/* Load the player's wardrobe. */
-            
+
     	/* Find and grab the wardrobe tag */
     	$wardrobe = this.xml.find('wardrobe');
-    	
+
     	/* find and create all of their clothing */
         var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
@@ -315,17 +316,17 @@ Player.prototype.resetState = function () {
     		var type = $(this).attr('type');
     		var position = $(this).attr('position');
     		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
-    
+
     		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
-    
+
     		clothingArr.push(newClothing);
     	});
-        
+
         this.clothing = clothingArr;
 		this.startingLayers = clothingArr.length;
 		this.mostlyClothed = checkPlayerStatus(this, STATUS_DECENT);
 	}
-    
+
 	this.updateLabel();
 }
 
@@ -341,11 +342,11 @@ Player.prototype.updateBehaviour = function() { }
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
  ****************************************************************************/
-function Opponent (id, $metaXml, status, releaseNumber) {    
+function Opponent (id, $metaXml, status, releaseNumber) {
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
-    
+
     this.enabled = $metaXml.find('enabled').text();
     this.status = status;
     this.first = $metaXml.find('first').text();
@@ -398,7 +399,7 @@ Opponent.prototype.updateLabel = function () {
 
 Opponent.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
-    
+
     var imageSet = {};
     var folder = this.folder;
     this.xml.find('stage[id="'+stage+'"] state').each(function () {
@@ -429,7 +430,7 @@ Opponent.prototype.getIntelligence = function () {
 };
 
 /************************************************************
- * Loads and parses the start of the behaviour XML file of the 
+ * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
  * The onLoadFinished parameter must be a function capable of
@@ -448,13 +449,13 @@ Opponent.prototype.loadBehaviour = function (slot) {
          */
 		function(xml) {
             var $xml = $(xml);
-            
+
             this.xml = $xml;
             this.labels = $xml.find('label');
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
-            
+
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
             if (typeof tags !== typeof undefined && tags !== false) {
@@ -462,11 +463,11 @@ Opponent.prototype.loadBehaviour = function (slot) {
                     tagsArray.push($(this).text());
                 });
             }
-            
+
             this.tags = tagsArray;
-            
+
             var targetedLines = {};
-            
+
             $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
                 var $case = $(this.parentNode);
                 ['target', 'alsoPlaying'].forEach(function(attr) {
@@ -480,7 +481,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
                     }
                 }, this);
             });
-            
+
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
             this.onSelected();
@@ -521,7 +522,7 @@ function initialSetup () {
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
-    
+
     /* Generate a random session ID. */
     sessionID = generateRandomID();
 
@@ -551,7 +552,7 @@ function loadConfigFile () {
         type: "GET",
 		url: "config.xml",
 		dataType: "text",
-		success: function(xml) {           
+		success: function(xml) {
 			var _epilogues = $(xml).find('epilogues').text();
             if(_epilogues.toLowerCase() === 'false') {
                 EPILOGUES_ENABLED = false;
@@ -561,7 +562,15 @@ function loadConfigFile () {
                 console.log("Epilogues are enabled.");
                 EPILOGUES_ENABLED = true;
             }
-            
+
+            var _epilogues_unlocked = $(xml).find('epilogues-unlocked').text().trim();
+            if (_epilogues_unlocked.toLowerCase() === 'false') {
+                EPILOGUES_UNLOCKED = false;
+            } else {
+                EPILOGUES_UNLOCKED = true;
+                console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
+            }
+
             var _epilogue_badges = $(xml).find('epilogue_badges').text();
             if(_epilogue_badges.toLowerCase() === 'false') {
                 EPILOGUE_BADGES_ENABLED = false;
@@ -570,7 +579,7 @@ function loadConfigFile () {
                 console.log("Epilogue badges are enabled.");
                 EPILOGUE_BADGES_ENABLED = true;
             }
-            
+
 			var _debug = $(xml).find('debug').text();
 
             if (_debug === "true") {
@@ -704,10 +713,10 @@ function updateBugReportSendButton() {
 $('#bug-report-desc').keyup(updateBugReportSendButton);
 
 /* Update the bug report text dump. */
-function updateBugReportOutput() {    
+function updateBugReportOutput() {
     $('#bug-report-output').val(getBugReportJSON());
     $('#bug-report-status').text("");
-    
+
     updateBugReportSendButton();
 }
 
@@ -722,7 +731,7 @@ function sendBugReport() {
         $('#bug-report-status').text("Please enter a description first!");
         return false;
     }
-    
+
     $.ajax({
         url: BUG_REPORTING_ENDPOINT,
         method: 'POST',
@@ -738,8 +747,8 @@ function sendBugReport() {
             closeBugReportModal();
         }
     });
-    
-    
+
+
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
@@ -750,29 +759,29 @@ $('#bug-report-copy-btn').click(copyBugReportOutput);
   * The player clicked a bug-report button. Shows the bug reports modal.
   ************************************************************/
 function showBugReportModal () {
-    /* Set up possible bug report types. */    
+    /* Set up possible bug report types. */
     var bugReportTypes = [
         ['freeze', 'Game Freeze or Crash'],
         ['display', 'Game Graphical Problem'],
         ['other', 'Other Game Issue'],
     ]
-    
+
     for (var i=1;i<5;i++) {
         if (players[i]) {
             var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
             bugReportTypes.push(['character-'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
         }
     }
-    
+
     $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
         return $('<option value="'+t[0]+'">'+t[1]+'</option>');
     }));
-    
+
     $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
-    
+
     KEYBINDINGS_ENABLED = false;
-    
+
     $bugReportModal.modal('show');
 }
 
@@ -784,7 +793,7 @@ function closeBugReportModal() {
 /*
  * Show the usage tracking consent modal.
  */
- 
+
 function showUsageTrackingModal() {
     $usageTrackingModal.modal('show');
 }
@@ -792,14 +801,14 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     save.data.askedUsageTracking = true;
     USAGE_TRACKING = true;
-    
+
     save.saveOptions();
 }
 
 function disableUsageTracking() {
     save.data.askedUsageTracking = true;
     USAGE_TRACKING = false;
-    
+
     save.saveOptions();
 }
 
@@ -859,7 +868,7 @@ String.prototype.initCap = function() {
 }
 
 /************************************************************
- * Counts the number of elements that evaluate as true, or, 
+ * Counts the number of elements that evaluate as true, or,
  * if a function is provided, passes the test implemented by it.
  ************************************************************/
 Array.prototype.countTrue = function(func) {
@@ -881,7 +890,7 @@ function generateRandomID() {
     for (let i=0;i<10;i++) {
         ret += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
     }
-    
+
     return ret;
 }
 
