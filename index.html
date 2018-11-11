@@ -109,7 +109,7 @@
     <img id="right-title-candy" class="title-candy" src=""/>
 
     <!-- Content -->
-    <div class="main-title-container">
+    <div class="main-title-container male">
 
       <!-- Player Name -->
       <div id="title-name-block">
@@ -120,21 +120,21 @@
       <!-- Player Gender -->
       <div id='title-gender-block'>
         <input type='image' value='' id='male-gender-button' class='bordered title-content-button' src='img/male.png' onclick='changePlayerGender("male")'>
-        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")' style="opacity:0.4;">
+        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")'>
       </div>
 
       <!-- Player Male Size -->
-      <div id='male-size-container' class='title-size-block'>
-        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")' style='opacity:0.4;'>
+      <div id='male-size-container' class='title-size-block medium'>
+        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
         <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")' style='opacity:0.4;'>
+        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
       </div>
 
       <!-- Player Female Size -->
-      <div id='female-size-container' class='title-size-block' hidden>
-        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")' style='opacity:0.4;'>
+      <div id='female-size-container' class='title-size-block medium'>
+        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
         <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")' style='opacity:0.4;'>
+        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
       </div>
 
       <!-- Player Wardrobe -->
@@ -200,6 +200,11 @@
 	<div id='title-gallery-edge' class='bordered'>
 		<button id='title-gallery-button' class='bordered smooth-button smooth-button-red' onclick="loadGalleryScreen()">
           <img class='title-gallery-image' src='img/gallery.svg'/>
+        </button>
+    </div>
+	<div id='title-tags-edge' class='bordered'>
+		<button id='title-tags-button' class='bordered smooth-button smooth-button-red' onclick="showPlayerTagsModal()">
+          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
         </button>
     </div>
 
@@ -1682,6 +1687,53 @@
 	</div>
 </div>
 <!-- End of Version Modal -->
+
+
+<!-- Start of Player Tags Modal -->
+<div id="player-tags-modal" class="modal table-modal fade">
+  <div class="bordered modal-dialog wide-modal-dialog">
+    <div class="bordered modal-dialog-surface">
+      <!-- Start of Modal Content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-center">Add Descriptive Tags to Your Character for a More Customized Experience!</h4>
+          <h5 class='text-center'>*There is still no graphical representation of your character, this just allows characters who have dialogue written towards these traits to know more about you when commenting. Not all characters will comment.</h5>
+        </div>
+        <div class="modal-body">
+          <form id='player-tags'>
+            <label class='player-tag-select'>
+              Choose a hair color:
+              <div class='colorAndLabel'>
+                <input type='text' name='hair_color' disabled/>
+                <input type='color' id='hair_color_picker' value='#502d26'>
+              </div>
+            </label>
+            <label class='player-tag-select'>
+              Choose an eye color:
+              <div class='colorAndLabel'>
+                <input type='text' name='eye_color' disabled/>
+                <input type='color' id='eye_color_picker' value='#0b0d6c'>
+              </div>
+            </label>
+            <label class='player-tag-select'>
+              Choose a skin tone:
+              <div class='colorAndLabel range'>
+                <input type='text' name='skin_color' disabled/>
+                <input type='range' name='skin_color_picker' value='50'>
+              </div>
+            </label>
+          </form>
+          <div class="modal-body-container" style="padding-top:4%;">
+            <button class="bordered smooth-button modal-button" data-dismiss="modal">Confirm</button>
+            <button class="bordered smooth-button modal-button clearSelections smooth-button-red">Clear Selections</button>
+          </div>
+        </div>
+      </div>
+      <!-- End of Modal Content -->
+    </div>
+  </div>
+</div> <!-- End of Player Tags Modal -->
+
 
 
 <!-- Game Screen -->
