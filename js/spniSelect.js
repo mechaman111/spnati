@@ -397,7 +397,7 @@ function updateIndividualSelectScreen () {
 				$individualButtons[index].attr('disabled', true);
 			}
 			
-			if (selectableOpponents[i].alternate_costumes.length > 0) {
+			if (ALT_COSTUMES_ENABLED && selectableOpponents[i].alternate_costumes.length > 0) {
 				$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 				selectableOpponents[i].alternate_costumes.forEach(function (alt) {
 					$individualCostumeSelectors[index].append(getCostumeOption(alt));
@@ -478,7 +478,7 @@ function updateGroupSelectScreen () {
                 $groupBadges[i].hide();
             }
 			
-			if (opponent.alternate_costumes.length > 0) {
+			if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
 				$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 				opponent.alternate_costumes.forEach(function (alt) {
 					$groupCostumeSelectors[i].append(getCostumeOption(alt));

@@ -11,6 +11,7 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUE_BADGES_ENABLED = true;
+var ALT_COSTUMES_ENABLED = false;
 var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
@@ -319,7 +320,7 @@ Player.prototype.resetState = function () {
         }
         
         var appearance = this.default_costume;
-        if (this.alt_costume) {
+        if (ALT_COSTUMES_ENABLED && this.alt_costume) {
             appearance = this.alt_costume;
         }
         
@@ -509,7 +510,7 @@ Opponent.prototype.loadAlternateCostume = function () {
             this.onSelected();
         }.bind(this),
         error: function () {
-            console.error("Failed to load alternate costume: "+id);
+            console.error("Failed to load alternate costume: "+this.selected_costume);
         },
     })
 }
@@ -610,7 +611,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
             
-            if (this.selected_costume) {
+            if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
             } else {
                 this.onSelected();
@@ -712,6 +713,17 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
+            
+            var _alts = $(xml).find('alternate-costumes').text();
+            
+            if(_alts === "true") {
+                ALT_COSTUMES_ENABLED = true;
+                console.log("Alternate costumes enabled");
+            } else {
+                ALT_COSTUMES_ENABLED = false;
+                console.log("Alternate costumes disabled");
+            }
+            
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
