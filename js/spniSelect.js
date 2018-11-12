@@ -82,6 +82,7 @@ $individualDescriptionLabels = [$("#individual-description-label-1"), $("#indivi
 $individualBadges = [$("#individual-badge-1"), $("#individual-badge-2"), $("#individual-badge-3"), $("#individual-badge-4")];
 $individualStatuses = [$("#individual-status-1"), $("#individual-status-2"), $("#individual-status-3"), $("#individual-status-4")];
 $individualLayers = [$("#individual-layer-1"), $("#individual-layer-2"), $("#individual-layer-3"), $("#individual-layer-4")];
+$individualCostumeSelectors = [$("#individual-costume-select-1"), $("#individual-costume-select-2"), $("#individual-costume-select-3"), $("#individual-costume-select-4")];
 
 $individualImages = [$("#individual-image-1"), $("#individual-image-2"), $("#individual-image-3"), $("#individual-image-4")];
 $individualButtons = [$("#individual-button-1"), $("#individual-button-2"), $("#individual-button-3"), $("#individual-button-4")];
@@ -108,6 +109,7 @@ $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-descriptio
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
+$groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select-2"), $("#group-costume-select-3"), $("#group-costume-select-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
 $groupNameLabel = $("#group-name-label");
@@ -334,6 +336,14 @@ function updateStatusIcon(elem, status) {
     });
 }
 
+
+/* Creates an <option> element in a jQuery object for an alternate costume.
+ * `alt_costume` in this case has only `id` and `label` attributes.
+ */
+function getCostumeOption(alt_costume) {
+	return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label})
+}
+
 /************************************************************
  * Loads opponents onto the individual select screen based
  * on the currently selected page.
@@ -386,6 +396,16 @@ function updateIndividualSelectScreen () {
 				$individualButtons[index].html('Coming Soon');
 				$individualButtons[index].attr('disabled', true);
 			}
+			
+			if (selectableOpponents[i].alternate_costumes.length > 0) {
+				$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
+				selectableOpponents[i].alternate_costumes.forEach(function (alt) {
+					$individualCostumeSelectors[index].append(getCostumeOption(alt));
+				});
+				$individualCostumeSelectors[index].show();
+			} else {
+				$individualCostumeSelectors[index].hide();
+			}
 		} else {
 			delete shownIndividuals[index];
 
@@ -403,6 +423,8 @@ function updateIndividualSelectScreen () {
 
 			$individualImages[index].hide();
 			$individualButtons[index].attr('disabled', true);
+
+			$individualCostumeSelectors[index].hide();
 
 			empty++;
 		}
@@ -455,6 +477,16 @@ function updateGroupSelectScreen () {
             else {
                 $groupBadges[i].hide();
             }
+			
+			if (opponent.alternate_costumes.length > 0) {
+				$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
+				opponent.alternate_costumes.forEach(function (alt) {
+					$groupCostumeSelectors[i].append(getCostumeOption(alt));
+				});
+				$groupCostumeSelectors[i].show();
+			} else {
+				$groupCostumeSelectors[i].hide();
+			}
 
             updateStatusIcon($groupStatuses[i], opponent.status);
 
@@ -478,6 +510,7 @@ function updateGroupSelectScreen () {
             $groupStatuses[i].hide();
             $groupLayers[i].hide();
 			$groupImages[i].hide();
+			$groupCostumeSelectors[i].hide();
 			$groupButton.attr('disabled', true);
 		}
     }
@@ -660,6 +693,8 @@ function selectOpponentSlot (slot) {
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
+		
+		players[slot].unloadAlternateCostume();
         delete players[slot];
 
         updateSelectionVisuals();
@@ -801,6 +836,10 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
+		if (players[i]) {
+			players[i].unloadAlternateCostume();
+		}
+		
         delete players[i];
         $selectImages[i-1].off('load');
     }
@@ -986,6 +1025,37 @@ function advanceSelectScreen () {
 function backSelectScreen () {
 	screenTransition($selectScreen, $titleScreen);
 }
+
+/* The player selected an alternate costume for an opponent.
+ * `slot` is the 1-based opponent slot affected.
+ * `inGroup` is true if the affected opponent is on the group selection screen.
+ */
+function altCostumeSelected(slot, inGroup) {
+	var costumeSelector = (inGroup ? $groupCostumeSelectors[slot-1] : $individualCostumeSelectors[slot-1]);
+	var selectImage = (inGroup ? $groupImages[slot-1] : $individualImages[slot-1]);
+	var opponent = (inGroup ? selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1] : shownIndividuals[slot-1]);
+	
+	var selectedCostume = costumeSelector.val();
+	
+	var costumeDesc = undefined;
+	if (selectedCostume.length > 0) {
+		for (let i=0;i<opponent.alternate_costumes.length;i++) {
+			if (opponent.alternate_costumes[i].folder === selectedCostume) {
+				costumeDesc = opponent.alternate_costumes[i];
+				break;
+			}
+		}
+	}
+	
+	if (costumeDesc) {
+		opponent.selectAlternateCostume(selectedCostume);
+		selectImage.attr('src', selectedCostume+costumeDesc.image);
+	} else {
+		opponent.selectAlternateCostume(null);
+		selectImage.attr('src', opponent.folder + opponent.image);
+	}
+}
+
 
 /**********************************************************************
  *****                     Display Functions                      *****
