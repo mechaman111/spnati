@@ -572,7 +572,6 @@ Opponent.prototype.loadBehaviour = function (slot) {
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
-<<<<<<< HEAD
             
             this.default_costume = {
                 id: null,
@@ -582,11 +581,6 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 wardrobe: $xml.find('wardrobe')
             };
             
-||||||| merged common ancestors
-            
-=======
-
->>>>>>> origin/master
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
             if (typeof tags !== typeof undefined && tags !== false) {
