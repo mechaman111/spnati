@@ -74,16 +74,19 @@ function getClothingTrigger (player, clothing, removed) {
 
 	/* starting with important articles */
 	if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
-		if (pos == FULL_ARTICLE && type == MAJOR_ARTICLE) {
+		if (pos == FULL_ARTICLE) {
 			if (!player.clothing.some(function(c) {
-				return c.position == UPPER_ARTICLE && c !== clothing;
+				return c.position == LOWER_ARTICLE && c !== clothing;
 			})) {
-				// If removing this article exposes the chest, pretend that it's an upper body article
-				pos = UPPER_ARTICLE;
-			} else {
-				// Otherwise treat it as a lower body article, whether
-				// it exposes the crotch or not (it doesn't matter)
+				// If removing this article exposes the crotch,
+				// pretend that it's an lower body article, even if it
+				// also exposes the chest (which is not a good idea).
 				pos = LOWER_ARTICLE;
+			} else {
+				// Otherwise treat it as a upper body article, whether
+				// it exposes the chest or not (it doesn't matter,
+				// except for with an important article).
+				pos = UPPER_ARTICLE;
 			}
 		}
 		if (type == MAJOR_ARTICLE && player.clothing.some(function(c) {
