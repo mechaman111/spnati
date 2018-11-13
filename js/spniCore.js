@@ -405,7 +405,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.artist = $metaXml.find('artist').text();
     this.writer = $metaXml.find('writer').text();
     this.description = $metaXml.find('description').text();
-    this.ending = $metaXml.find('has_ending').text() === "true";
+    this.endings = $metaXml.find('epilogue');
+    this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
