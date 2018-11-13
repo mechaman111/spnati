@@ -296,6 +296,10 @@ function prepareToStripPlayer (player) {
  ************************************************************/
 function showStrippingModal () {
   console.log("The stripping modal is being set up.");
+  
+  /* Prevent double-clicks from calling up the modal twice */
+  $mainButton.attr('disabled', true);
+  actualMainButtonState = true;
 
   /* clear the area */
   $stripClothing.html("");
@@ -328,8 +332,8 @@ function showStrippingModal () {
 function selectClothingToStrip (id) {
   console.log(id);
   if (players[HUMAN_PLAYER].clothing.length <= id) {
-    console.log('Error: Attempted to select clothing out of bounds', id, players[HUMAN_PLAYER].clothing);
-    return showStrippingModal();
+    console.error('Error: Attempted to select clothing out of bounds', id, players[HUMAN_PLAYER].clothing);
+    return;
   }
 
   /* designate the selected article */
@@ -361,6 +365,10 @@ function clothing_keyUp(e) {
 
 function closeStrippingModal (id) {
     if (id >= 0) {
+		/* prevent double-clicking the stripping modal buttons. */
+		$stripButton.attr('disabled', true).removeAttr('onclick');
+		$stripClothing.html("");
+				
         /* return keybindings */
         KEYBINDINGS_ENABLED = true;
         document.removeEventListener('keyup', clothing_keyUp, false);
@@ -461,6 +469,7 @@ function stripAIPlayer (player) {
 	players[player].stage++;
 	players[player].timeInStage = -1;
 	players[player].updateLabel();
+	players[player].updateFolder();
 
 	/* update behaviour */
 	updateAllBehaviours(player, dialogueTrigger);

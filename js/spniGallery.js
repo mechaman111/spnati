@@ -14,7 +14,7 @@ function GEnding(player, ending){
 		 */
 		previewImage = $(ending).find('screen').eq(0).attr('img');
 	}
-  previewImage = previewImage.charAt(0) === '/' ? previewImage : player.folder + previewImage;
+  previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
 
 	this.image = previewImage;
 	this.title = $(ending).find('title').html();

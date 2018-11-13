@@ -1,9 +1,12 @@
 monika.glitchElement = function (jquery_elem, start_y, affected_height) {
     cv = monika.get_canvas(jquery_elem);
-    monika.channel_split_filter(cv, start_y, affected_height);
-    monika.waver_filter(cv, start_y, affected_height);
-    monika.set_image_from_canvas(jquery_elem, cv);
-
+    
+    if (cv.canvas.width > 0 && cv.canvas.height > 0) {
+        monika.channel_split_filter(cv, start_y, affected_height);
+        monika.waver_filter(cv, start_y, affected_height);
+        monika.set_image_from_canvas(jquery_elem, cv);
+    }
+    
     return cv;
 };
 
@@ -22,7 +25,7 @@ monika.when_loaded = function(jquery_elem, callback) {
 monika.schedule_when_loaded = function(jquery_elem, timeout_callback, delay) {
     return monika.when_loaded(jquery_elem, function () {
         setTimeout(timeout_callback, delay);
-    })
+    });
 }
 
 monika.when_character_loaded = function(slot, callback) {
@@ -59,18 +62,6 @@ monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, st
         monika.when_loaded(jquery_elem, function () {
             current_timer_id = setTimeout(toggleGlitchState, delay);
         });
-        
-        /*
-        if(jquery_elem[0].complete) {
-            // the image has loaded, schedule the next transition immediately
-            current_timer_id = setTimeout(toggleGlitchState, normalTime);
-        } else {
-            // wait for the image to load completely before transitioning
-            jquery_elem.one("load", function () {
-                current_timer_id = setTimeout(toggleGlitchState, normalTime);
-            });
-        }
-        */
     }
     
     // current_timer_id = setTimeout(toggleGlitchState, normalTime/2);

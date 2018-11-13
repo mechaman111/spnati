@@ -199,7 +199,7 @@ function parseEpilogue(player, rawEpilogue) {
 
   // Leaving this for backwards compatibility, screens are hereby depreciated
   $(rawEpilogue).find("screen").each(function() {
-    var image = player.folder + $(this).attr("img").trim(); //get the full path for the screen's image
+    var image = player.base_folder + $(this).attr("img").trim(); //get the full path for the screen's image
     //use an attribute rather than a tag because IE doesn't like parsing XML
 
     var textBoxes = parseSceneContent(player, $(this)).textBoxes;
@@ -249,7 +249,7 @@ function parseSceneContent(player, scene) {
     var width = $(this).find("width").html().trim();
     var src = $(this).find('src').html().trim();
 
-    src = src.charAt(0) === '/' ? src : player.folder + src;
+    src = src.charAt(0) === '/' ? src : player.base_folder + src;
 
     images.push({x, y, width, src});
   });
