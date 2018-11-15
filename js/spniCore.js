@@ -11,6 +11,7 @@
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
 var EPILOGUE_BADGES_ENABLED = true;
+var ALT_COSTUMES_ENABLED = false;
 var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
@@ -83,6 +84,7 @@ $versionModal = $('#version-modal');
 $gameSettingsModal = $('#game-settings-modal');
 $bugReportModal = $('#bug-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
+$playerTagsModal = $('#player-tags-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -96,7 +98,7 @@ var bubbleArrowOffsetRules;
 
 function getReportedOrigin () {
     var origin = window.location.origin;
-    
+
     if (origin.toLowerCase().startsWith('file:')) {
         return '<local filesystem origin>';
     } else {
@@ -116,18 +118,18 @@ function compileBaseErrorReport(userDesc, bugType) {
                 'timeInStage': players[i].timeInStage,
                 'markers': players[i].markers
             }
-            
+
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.dialogue;
                 playerData.currentImage   = players[i].chosenState.image;
             }
-            
+
             tableReports[i-1] = playerData;
         } else {
             tableReports[i-1] = null;
         }
     }
-    
+
     var circumstances = {
         'userAgent': navigator.userAgent,
         'origin': getReportedOrigin(),
@@ -135,30 +137,30 @@ function compileBaseErrorReport(userDesc, bugType) {
         'currentTurn': currentTurn,
         'visibleScreens': []
     }
-    
+
     if (gamePhase) {
         circumstances.gamePhase = gamePhase[0];
     }
-    
+
     for (let i=0;i<allScreens.length;i++) {
         if (allScreens[i].css('display') !== 'none') {
             circumstances.visibleScreens.push(allScreens[i].attr('id'));
         }
     }
-    
+
     var bugCharacter = null;
     if (bugType.startsWith('character')) {
         bugCharacter = bugType.split('-', 2)[1];
         bugType = 'character';
     }
-    
+
     return {
         'date': (new Date()).toISOString(),
         'session': sessionID,
         'game': gameID,
         'type': bugType,
         'character': bugCharacter,
-        'description': userDesc, 
+        'description': userDesc,
         'circumstances': circumstances,
         'table': tableReports,
         'player': {
@@ -178,10 +180,10 @@ window.addEventListener('error', function (ev) {
         'lineno': ev.lineno,
         'stack': ev.error.stack
     });
-    
+
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
-        
+
         $.ajax({
             url: BUG_REPORTING_ENDPOINT,
             method: 'POST',
@@ -207,7 +209,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
     var req = new XMLHttpRequest();
     req.open('GET', baseUrl+'.gz', true);
     req.responseType = 'arraybuffer';
-    
+
     req.onload = function(ev) {
         if (req.status < 400 && req.response) {
             var data = new Uint8Array(req.response);
@@ -225,7 +227,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
             errorCb();
         }
     }
-    
+
     req.onerror = function(err) {
         $.ajax({
             type: "GET",
@@ -235,7 +237,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
             error: errorCb,
         });
     }
-    
+
     req.send(null);
 }
 
@@ -243,7 +245,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
 /**********************************************************************
  *****                Player Object Specification                 *****
  **********************************************************************/
- 
+
  /************************************************************
   * Creates and returns a new player object based on the
   * supplied information.
@@ -263,21 +265,27 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
   * xml (jQuery object), the player's loaded behaviour.xml file.
   * metaXml (jQuery object), the player's loaded meta.xml file.
   ************************************************************/
- 
+
 function Player (id) {
     this.id = id;
     this.folder = 'opponents/'+id+'/';
+    this.base_folder = 'opponents/'+id+'/';
     this.first = '';
     this.last = '';
     this.labels = undefined;
+    this.folders = undefined;
     this.size = eSize.MEDIUM;
     this.intelligence = eIntelligence.AVERAGE;
     this.gender = eGender.MALE;
     this.timer = 20;
     this.scale = undefined;
-    this.tags = [];
+    this.tags = [id];
     this.xml = null;
     this.metaXml = null;
+    
+    this.selected_costume = null;
+    this.alt_costume = null;
+    this.default_costume = null;
     
     this.resetState();
 }
@@ -291,7 +299,8 @@ Player.prototype.resetState = function () {
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
-    
+	this.exposed = { upper: false, lower: false };
+
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
          * initialize player.chosenState to the first listed line.
@@ -301,10 +310,46 @@ Player.prototype.resetState = function () {
 		this.allStates = parseDialogue(this.xml.find('start'), this);
 		this.chosenState = this.allStates[0];
         
+        if (!this.chosenState) {
+            /* If the opponent does not have legacy start lines then select
+             * a new-style selected line immediately.
+             * Prevents a crash triggered by selected, unselecting, and re-selecting
+             * an opponent with no legacy starting lines.
+             */
+            this.updateBehaviour(SELECTED);
+        }
+        
+        var appearance = this.default_costume;
+        if (ALT_COSTUMES_ENABLED && this.alt_costume) {
+            appearance = this.alt_costume;
+        }
+        
+        this.labels = appearance.labels;
+        this.folders = appearance.folders;
+        
+        if (appearance.tags) {
+            var alt_tags = appearance.tags.find('tag').each(function (idx, elem) {
+                var $elem = $(elem);
+                var tag = $elem.text();
+                var removed = $elem.attr('remove') || '';
+                if (removed.toLowerCase() === 'true') {
+                    if (this.tags.indexOf(tag) > 0) {
+                        this.tags.splice(this.tags.indexOf(tag), 1);
+                    }
+                } else {
+                    this.tags.push(tag);
+                }
+            }.bind(this));
+        }
+        
+        if (appearance.id) {
+            this.tags.push(appearance.id);
+        }
+        
 		/* Load the player's wardrobe. */
-            
+
     	/* Find and grab the wardrobe tag */
-    	$wardrobe = this.xml.find('wardrobe');
+    	$wardrobe = appearance.wardrobe;
     	
     	/* find and create all of their clothing */
         var clothingArr = [];
@@ -314,16 +359,19 @@ Player.prototype.resetState = function () {
     		var type = $(this).attr('type');
     		var position = $(this).attr('position');
     		var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
-    
+
     		var newClothing = createNewClothing(formalName, genericName, type, position, null, plural, 0);
-    
+
     		clothingArr.push(newClothing);
     	});
-        
+
         this.clothing = clothingArr;
+		this.startingLayers = clothingArr.length;
+		this.mostlyClothed = checkPlayerStatus(this, STATUS_DECENT);
 	}
-    
+
 	this.updateLabel();
+	this.updateFolder();
 }
 
 Player.prototype.getIntelligence = function () {
@@ -333,16 +381,18 @@ Player.prototype.getIntelligence = function () {
 /* These shouldn't do anything for the human player, but exist as empty functions
    to make it easier to iterate over the entire players[] array. */
 Player.prototype.updateLabel = function () { }
+Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
 
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
  ****************************************************************************/
-function Opponent (id, $metaXml, status, releaseNumber) {    
+function Opponent (id, $metaXml, status, releaseNumber) {
     this.id = id;
     this.folder = 'opponents/'+id+'/';
+    this.base_folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
-    
+
     this.enabled = $metaXml.find('enabled').text();
     this.status = status;
     this.first = $metaXml.find('first').text();
@@ -360,6 +410,14 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    
+    this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
+        return {
+            'folder': $(this).attr('folder'),
+            'label': $(this).text(),
+            'image': $(this).attr('img') 
+        };
+    }).get();
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -393,9 +451,13 @@ Opponent.prototype.updateLabel = function () {
     if (this.labels) this.label = this.getByStage(this.labels);
 }
 
+Opponent.prototype.updateFolder = function () {
+    if (this.folders) this.folder = this.getByStage(this.folders);
+}
+
 Opponent.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
-    
+
     var imageSet = {};
     var folder = this.folder;
     this.xml.find('stage[id="'+stage+'"] state').each(function () {
@@ -421,12 +483,68 @@ Opponent.prototype.getByStage = function (arr) {
     return bestFit;
 };
 
+Opponent.prototype.selectAlternateCostume = function (folder) {
+    this.selected_costume = folder;
+};
+
 Opponent.prototype.getIntelligence = function () {
     return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
 
+Opponent.prototype.loadAlternateCostume = function () {
+    $.ajax({
+        type: "GET",
+        url: this.selected_costume+'costume.xml',
+        dataType: "text",
+        success: function (xml) {
+            var $xml = $(xml);
+            
+            this.alt_costume = {
+                id: $xml.find('id').text(),
+                labels: $xml.find('label'),
+                tags: $xml.find('tags'),
+                folders: $xml.find('folder'),
+                wardrobe: $xml.find('wardrobe')
+            };
+            
+            this.onSelected();
+        }.bind(this),
+        error: function () {
+            console.error("Failed to load alternate costume: "+this.selected_costume);
+        },
+    })
+}
+
+Opponent.prototype.unloadAlternateCostume = function () {
+    if (!this.alt_costume) {
+        return;
+    }
+    
+    if (this.alt_costume.tags) {
+        this.alt_costume.tags.find('tag').each(function (idx, elem) {
+            var $elem = $(elem);
+            var tag = $elem.text();
+            var removed = $elem.attr('remove') || '';
+            if (removed.toLowerCase() === 'true') {
+                this.tags.push(tag);    // tag was previously removed, readd it
+            } else {
+                if (this.tags.indexOf(tag) > 0) {
+                    // remove added tag
+                    this.tags.splice(this.tags.indexOf(tag), 1);
+                }
+            }
+        }.bind(this));
+    }
+    
+    this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
+    
+    this.alt_costume = null;
+    this.selectAlternateCostume(null);
+    this.resetState();
+}
+
 /************************************************************
- * Loads and parses the start of the behaviour XML file of the 
+ * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
  * The onLoadFinished parameter must be a function capable of
@@ -435,9 +553,14 @@ Opponent.prototype.getIntelligence = function () {
 Opponent.prototype.loadBehaviour = function (slot) {
     this.slot = slot;
     if (this.isLoaded()) {
-        this.onSelected();
+        if (this.selected_costume) {
+            this.loadAlternateCostume();
+        } else {
+            this.onSelected();
+        }
         return;
     }
+    
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
@@ -445,12 +568,19 @@ Opponent.prototype.loadBehaviour = function (slot) {
          */
 		function(xml) {
             var $xml = $(xml);
-            
+
             this.xml = $xml;
-            this.labels = $xml.find('label');
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
+            
+            this.default_costume = {
+                id: null,
+                labels: $xml.find('label'),
+                tags: null,
+                folders: this.folder,
+                wardrobe: $xml.find('wardrobe')
+            };
             
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
@@ -459,11 +589,11 @@ Opponent.prototype.loadBehaviour = function (slot) {
                     tagsArray.push($(this).text());
                 });
             }
-            
+
             this.tags = tagsArray;
-            
+
             var targetedLines = {};
-            
+
             $xml.find('case[target]>state, case[alsoPlaying]>state').each(function() {
                 var $case = $(this.parentNode);
                 ['target', 'alsoPlaying'].forEach(function(attr) {
@@ -477,10 +607,15 @@ Opponent.prototype.loadBehaviour = function (slot) {
                     }
                 }, this);
             });
-            
+
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
-            this.onSelected();
+            
+            if (ALT_COSTUMES_ENABLED && this.selected_costume) {
+                this.loadAlternateCostume();
+            } else {
+                this.onSelected();
+            }
 		}.bind(this),
 		/* Error callback. */
         function(err) {
@@ -518,7 +653,7 @@ function initialSetup () {
 	/* show the title screen */
 	$warningScreen.show();
     autoResizeFont();
-    
+
     /* Generate a random session ID. */
     sessionID = generateRandomID();
 
@@ -548,7 +683,7 @@ function loadConfigFile () {
         type: "GET",
 		url: "config.xml",
 		dataType: "text",
-		success: function(xml) {           
+		success: function(xml) {
 			var _epilogues = $(xml).find('epilogues').text();
             if(_epilogues.toLowerCase() === 'false') {
                 EPILOGUES_ENABLED = false;
@@ -558,7 +693,7 @@ function loadConfigFile () {
                 console.log("Epilogues are enabled.");
                 EPILOGUES_ENABLED = true;
             }
-            
+
             var _epilogue_badges = $(xml).find('epilogue_badges').text();
             if(_epilogue_badges.toLowerCase() === 'false') {
                 EPILOGUE_BADGES_ENABLED = false;
@@ -567,7 +702,7 @@ function loadConfigFile () {
                 console.log("Epilogue badges are enabled.");
                 EPILOGUE_BADGES_ENABLED = true;
             }
-            
+
 			var _debug = $(xml).find('debug').text();
 
             if (_debug === "true") {
@@ -578,6 +713,17 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
+            
+            var _alts = $(xml).find('alternate-costumes').text();
+            
+            if(_alts === "true") {
+                ALT_COSTUMES_ENABLED = true;
+                console.log("Alternate costumes enabled");
+            } else {
+                ALT_COSTUMES_ENABLED = false;
+                console.log("Alternate costumes disabled");
+            }
+            
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
@@ -701,10 +847,10 @@ function updateBugReportSendButton() {
 $('#bug-report-desc').keyup(updateBugReportSendButton);
 
 /* Update the bug report text dump. */
-function updateBugReportOutput() {    
+function updateBugReportOutput() {
     $('#bug-report-output').val(getBugReportJSON());
     $('#bug-report-status').text("");
-    
+
     updateBugReportSendButton();
 }
 
@@ -719,7 +865,7 @@ function sendBugReport() {
         $('#bug-report-status').text("Please enter a description first!");
         return false;
     }
-    
+
     $.ajax({
         url: BUG_REPORTING_ENDPOINT,
         method: 'POST',
@@ -735,8 +881,8 @@ function sendBugReport() {
             closeBugReportModal();
         }
     });
-    
-    
+
+
 }
 
 $('#bug-report-type').change(updateBugReportOutput);
@@ -747,29 +893,29 @@ $('#bug-report-copy-btn').click(copyBugReportOutput);
   * The player clicked a bug-report button. Shows the bug reports modal.
   ************************************************************/
 function showBugReportModal () {
-    /* Set up possible bug report types. */    
+    /* Set up possible bug report types. */
     var bugReportTypes = [
         ['freeze', 'Game Freeze or Crash'],
         ['display', 'Game Graphical Problem'],
         ['other', 'Other Game Issue'],
     ]
-    
+
     for (var i=1;i<5;i++) {
         if (players[i]) {
             var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
             bugReportTypes.push(['character-'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
         }
     }
-    
+
     $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
         return $('<option value="'+t[0]+'">'+t[1]+'</option>');
     }));
-    
+
     $('#bug-report-modal span[data-toggle="tooltip"]').tooltip();
     updateBugReportOutput();
-    
+
     KEYBINDINGS_ENABLED = false;
-    
+
     $bugReportModal.modal('show');
 }
 
@@ -781,7 +927,7 @@ function closeBugReportModal() {
 /*
  * Show the usage tracking consent modal.
  */
- 
+
 function showUsageTrackingModal() {
     $usageTrackingModal.modal('show');
 }
@@ -789,14 +935,14 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     save.data.askedUsageTracking = true;
     USAGE_TRACKING = true;
-    
+
     save.saveOptions();
 }
 
 function disableUsageTracking() {
     save.data.askedUsageTracking = true;
     USAGE_TRACKING = false;
-    
+
     save.saveOptions();
 }
 
@@ -812,6 +958,206 @@ function showCreditModal () {
  ************************************************************/
 function showVersionModal () {
     $versionModal.modal('show');
+}
+
+/************************************************************
+ * The player clicked the player tags button. Shows the player tags modal.
+ ************************************************************/
+function showPlayerTagsModal () {
+    if (document.forms['player-tags'].elements.length <= 6) {
+        /* maybe move this data to an external file if the hardcoded stuff changes often enough */
+        var playerOptions = {
+            'hair_length' : [
+                {value: 'bald', text: 'Bald - No Hair'},
+                {value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
+                {value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
+                {value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
+                {value: 'very_long_hair long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'}
+            ],
+            'physical_build' : [
+                {value: 'chubby'},
+                {value: 'athletic'},
+                {value: 'muscular athletic'}
+            ],
+            'height' : [
+                {value: 'tall'},
+                {value: 'average'},
+                {value: 'short'}
+            ],
+            'pubic_hair_style' : [
+                {value: 'shaved'},
+                {value: 'trimmed'},
+                {value: 'hairy'}
+            ],
+            'maleOnly_circumcision' : [
+                {value: 'circumcised'},
+                {value: 'uncircumcised'}
+            ]
+        }
+
+        for (var choiceName in playerOptions) {
+            var parsedName = choiceName.match(/^([^_]+)Only_(.*$)/) || [,'',choiceName];
+            var choiceElem = '<label class="player-tag-select ' + parsedName[1] + '">Choose a' + ('aeiou'.includes(parsedName[2].charAt(0)) ? 'n ' : ' ');
+            choiceElem += parsedName[2].replace(/_/g, ' ') + ':';
+            choiceElem += '<select name="' + parsedName[2] + '"' + (parsedName[1] ? ' class="' + parsedName[1] + '"' : '') + '><option value=""></option>';
+            playerOptions[choiceName].forEach(function(choice) {
+                var choiceText = choice.text || choice.value.charAt(0).toUpperCase() + choice.value.split(' ')[0].slice(1);
+                choiceElem += '<option value="' + choice.value + '">' + choiceText + '</option>';
+            });
+
+            choiceElem += '</select></label>';
+            choiceElem = document.createRange().createContextualFragment(choiceElem);
+            document.forms['player-tags'].appendChild(choiceElem);
+        }
+
+        // Safari doesn't support color inputs properly!
+        var hairColorPicker = document.getElementById('hair_color_picker');
+        var selectionType;
+        try {
+            selectionType = typeof hairColorPicker.selectionStart;
+        } catch(e) {
+            selectionType = null;
+        }
+        if (true || selectionType === 'number') {
+            var hairColors = ['black_hair', 'white_hair', 'brunette', 'ginger', 'blonde',
+                'green_hair exotic_hair', 'blue_hair exotic_hair', 'purple_hair exotic_hair', 'pink_hair exotic_hair'];
+            var eyeColors = ['dark_eyes', 'pale_eyes', 'red_eyes', 'amber_eyes', 'green_eyes', 'blue_eyes', 'violet_eyes'];
+            var hairColorOptions = '';
+            var eyeColorOptions = '';
+            hairColors.forEach(function(tag) {
+                hairColorOptions += '<option value="' + tag + '">' + tag.split(' ')[0] + '</option>';
+            });
+            eyeColors.forEach(function(tag) {
+                eyeColorOptions += '<option value="' + tag + '">' + tag + '</option>';
+            });
+            $(hairColorPicker.parentNode).replaceWith('<select name="hair_color"><option value=""></option>' + hairColorOptions + '</select>');
+            $(document.getElementById('eye_color_picker').parentNode).replaceWith('<select name="eye_color"><option value=""></option>' + eyeColorOptions + '</select>');
+        }
+
+        var rgb2hsv = function(rgb) {
+          var r = parseInt(rgb.slice(1,3), 16)/255;
+          var g = parseInt(rgb.slice(3,5), 16)/255;
+          var b = parseInt(rgb.slice(5), 16)/255;
+
+          var min = Math.min(r, Math.min(g,b));
+          var max = Math.max(r, Math.max(g,b));
+
+          if (max === 0) {
+            return [0,0,0];
+          }
+
+          var maxOffset = max === r ? 0 : (max === g ? 2 : 4);
+          var delta = max === r ? g-b : (max === g ? b-r : r-g);
+
+          var h = 60 * (maxOffset + delta / (max - min));
+          if (h < 0) {
+            h += 360;
+          }
+
+          return [h, (max - min) / max * 100, max * 100];
+        }
+
+        /* convert the raw colors to corresponding tags and display next to selector */
+        $('input[type=color]').on('input', function() {
+            var h, s, v;
+            [h,s,v] = rgb2hsv(this.value);
+
+            var tag;
+            color2tag:
+            if (this.id === 'hair_color_picker') {
+              delete this.previousElementSibling.dataset.exotic;
+              if (v < 10) {
+                tag = 'black_hair';
+                break color2tag;
+              }
+
+              if (s < 25) {
+                if (v < 30) {
+                  tag = 'black_hair';
+                } else {
+                  tag = 'white_hair';
+                }
+                break color2tag;
+              }
+
+              if (s < 50 && h > 20 && h < 50) {
+                tag = 'brunette';
+                break color2tag;
+              }
+
+              if (h < 50) {
+                tag = 'ginger';
+              } else if (h < 65) {
+                tag = 'blonde';
+              } else if (h < 325) {
+                this.previousElementSibling.dataset.exotic = 'exotic_hair';
+                if (h < 145) {
+                  tag = 'green_hair';
+                } else if (h < 255) {
+                  tag = 'blue_hair';
+                } else if (h < 290) {
+                  tag = 'purple_hair';
+                } else {
+                  tag = 'pink_hair';
+                }
+              } else {
+                tag = 'ginger';
+              }
+            } else if (this.id === 'eye_color_picker') {
+
+              if (v < 25) {
+                tag = 'dark_eyes';
+                break color2tag;
+              }
+
+              if (s < 20) {
+                tag = 'pale_eyes';
+                break color2tag;
+              }
+
+              if (h < 15) {
+                tag = 'red_eyes';
+              } else if (h < 65) {
+                tag = 'amber_eyes';
+              } else if (h < 145) {
+                tag = 'green_eyes';
+              } else if (h < 255) {
+                tag = 'blue_eyes';
+              } else if (h < 325) {
+                tag = 'violet_eyes';
+              } else {
+                tag = 'red_eyes';
+              }
+            }
+
+            this.previousElementSibling.value = tag || '';
+        });
+
+        $('input[name=skin_color_picker]').on('input', function() {
+            if (this.value < 25) {
+                tag = 'pale-skinned';
+            } else if (this.value < 50) {
+                tag = 'fair-skinned';
+            } else if (this.value < 75) {
+                tag = 'olive-skinned';
+            } else {
+                tag = 'dark-skinned';
+            }
+
+            this.previousElementSibling.value = tag || '';
+        });
+
+        $('.modal-button.clearSelections').click(function() {
+            var formElements = document.forms['player-tags'].elements;
+            for (var i = 0; i < formElements.length; i++) {
+                if (formElements[i].type !== 'color') {
+                    formElements[i].value = '';
+                }
+            }
+        });
+    }
+
+    $playerTagsModal.modal('show');
 }
 
 /************************************************************
@@ -856,6 +1202,21 @@ String.prototype.initCap = function() {
 }
 
 /************************************************************
+ * Counts the number of elements that evaluate as true, or,
+ * if a function is provided, passes the test implemented by it.
+ ************************************************************/
+Array.prototype.countTrue = function(func) {
+    var count = 0;
+    for (var i = 0; i < this.length; i++) {
+        if (i in this
+            && (func ? func(this[i], i, this) : this[i])) {
+            count++;
+        }
+    }
+    return count;
+}
+
+/************************************************************
  * Generate a random alphanumeric ID.
  ************************************************************/
 function generateRandomID() {
@@ -863,7 +1224,7 @@ function generateRandomID() {
     for (let i=0;i<10;i++) {
         ret += 'abcdefghijklmnopqrstuvwxyz1234567890'[getRandomNumber(0,36)]
     }
-    
+
     return ret;
 }
 

@@ -34,7 +34,7 @@ ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, te
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter"]
-multi_word_targets = ["targetStage", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
+multi_word_targets = ["targetStage", "targetLayers", "targetStatus", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
 
@@ -276,17 +276,24 @@ def create_case_xml(base_element, lines):
 		if "conditions" in line_data:
 			for condition in line_data["conditions"]:
 				sort_key += "," + "count-" + condition[0]
+		if "tests" in line_data:
+			for test in line_data["tests"]:
+				sort_key += "," + "test:" + test[0]
 		for target_type in all_targets:
 			if target_type in line_data:
 				sort_key += "," + target_type + ":" +line_data[target_type]
 		line_data["sort_key"] = sort_key
-		
+
 	#now do the sorting
 	lines.sort(key=lambda l: l["sort_key"])
 	
 	#step 2: iterate through the list of lines
 	current_sort = "" #which case combination we're currently looking at. initially nothing
 	case_xml_element = None #current XML element, add states to this
+
+        possible_statuses = [ 'alive', 'lost_some', 'mostly_clothed', 'decent', 'exposed',
+                              'chest_visible', 'crotch_visible', 'topless', 'bottomless',
+                              'naked', 'lost_all', 'masturbating', 'finished' ]
 	
 	for line_data in lines:
 		if line_data["sort_key"] != current_sort:
@@ -310,7 +317,22 @@ def create_case_xml(base_element, lines):
 
 			if "conditions" in line_data:
 				for condition in line_data["conditions"]:
-					case_xml_element.subElement("condition", None, [("filter", condition[0]), ("count", condition[1])])
+                                        conddict = OrderedDict(count=condition[1])
+                                        condparts = condition[0].split('&') if condition[0] != '' else []
+                                        for cond in condparts:
+                                                if cond in [ 'male', 'female' ]:
+                                                        conddict['gender'] = cond
+                                                elif cond in possible_statuses or (cond[0:4] == 'not_' and cond[4:] in possible_statuses):
+                                                        conddict['status'] = cond
+                                                else:
+                                                        conddict['filter'] = cond
+
+                                        case_xml_element.subElement("condition", None, conddict)
+
+                        if "tests" in line_data:
+                                for test in line_data["tests"]:
+                                        case_xml_element.subElement("test", [('expr', test[0]), ('value', test[1])])
+
 
 		#now add the individual line
 		#remember that this happens regardless of if the <case> is new
@@ -657,7 +679,7 @@ def read_player_file(filename):
 			for t in targets:
 			
 				try:
-					target_type, target_value = t.split(":")
+					target_type, target_value = t.rsplit(":", 1)
 				except ValueError:
 					#make sure the target has a format we can understand
 					print("Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line))
@@ -687,12 +709,18 @@ def read_player_file(filename):
 					line_data[target_type] = target_value
 					pass
 
-				elif target_type.startswith("count-"):
+				elif target_type.startswith("count-") or target_type == "count":
 					condition_filter = target_type[6::]
 					if "conditions" not in line_data:
 						line_data["conditions"] = [[condition_filter, target_value]]
 					else: line_data["conditions"].append([condition_filter, target_value])
 					
+				elif target_type.startswith("test:"):
+					test_expr = target_type[5::]
+					if "tests" not in line_data:
+						line_data["tests"] = [[test_expr, target_value]]
+					else: line_data["tests"].append([test_expr, target_value])
+
 				else:
 					#unknown target type
 					print("Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line))
