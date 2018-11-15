@@ -500,6 +500,99 @@ body.modal-open {
     color: white;
 }
 
+#player-tags-modal.male .player-tag-select.female {
+    display: none;
+}
+
+#player-tags-modal.female .player-tag-select.male {
+    display: none;
+}
+
+.player-tag-select {
+  display: flex;
+  width: 75%;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 0 auto;
+  padding: 10px 0;
+  border-bottom: 1px solid #666;
+}
+
+.player-tag-select:last-child {
+  border: none;
+}
+
+.player-tag-select input, .player-tag-select select {
+  max-width: 50%;
+  outline: none;
+}
+
+.player-tag-select > .colorAndLabel {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 50%;
+}
+
+.player-tag-select > .colorAndLabel.range {
+  max-width: 80%;
+}
+
+.player-tag-select input[disabled] {
+  background: none;
+  border: none;
+}
+
+.player-tag-select > .colorAndLabel.range input[disabled] {
+  width: 25%;
+  min-width: 75px;
+}
+
+.player-tag-select input[type=range] {
+  -webkit-appearance: none;
+  margin: 5px 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+.player-tag-select input[type=range]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, white, #f1c6a3, #c08e66, #230800);
+  width: 100%;
+  height: 100%;
+}
+
+.player-tag-select input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: calc(100% + 10px);
+  margin: -5px 0;
+  box-shadow: 0 0 0 2px black;
+}
+
+.player-tag-select input[type=range]::-ms-track {
+  background: linear-gradient(90deg, white, #f1c6a3, #c08e66, #230800);
+}
+
+.player-tag-select input[type=range]::-ms-thumb {
+  margin: 0;
+  padding: 60% 0;
+  border: 2px solid black;
+  box-shadow: none;
+}
+
+.player-tag-select input[type=range]::-moz-range-track {
+  background: linear-gradient(90deg, white, #f1c6a3, #c08e66, #230800);
+  height: 50%;
+}
+
+.player-tag-select input[type=range]::-moz-range-thumb {
+  border: 2px solid black;
+  border-radius: 0;
+  width: 8px;
+  height: 100%;
+  background: transparent;
+}
+
 /* Prevents the long bug report output from overflowing the modal width. */
 #bug-report-output {
 	min-width: 100%;
@@ -789,6 +882,7 @@ body.modal-open {
 
 .title-content-button {
     background: #F0F0F0;
+    opacity: 0.4;
 }
 
 .title-content-button :hover {
@@ -830,11 +924,19 @@ body.modal-open {
     right: 0;
 }
 
+.main-title-container.male #male-gender-button {
+    opacity: 1;
+}
+
 #female-gender-button {
     position: relative;
     width: 45%;
     top: 0;
     right: 0;
+}
+
+.main-title-container.female #female-gender-button {
+    opacity: 1;
 }
 
 .title-gender-image {
@@ -845,12 +947,32 @@ body.modal-open {
 	background-color: white;
 }
 
+.main-title-container.male #female-size-container {
+    display: none;
+}
+
+.main-title-container.female #male-size-container {
+    display: none;
+}
+
 .title-size-block {
     position: absolute;
     width: 45%;
     top: 16.5%;
     right: 0;
     margin-right: 7.25%;
+}
+
+.small > .title-small-button {
+    opacity: 1;
+}
+
+.medium > .title-medium-button {
+    opacity: 1;
+}
+
+.large > .title-large-button {
+    opacity: 1;
 }
 
 .title-small-button {
@@ -958,6 +1080,26 @@ body.modal-open {
 	margin-left: 4%;
     margin-top: 4%;
     width: 80%;
+}
+
+#title-tags-edge {
+    position: absolute;
+	width: 11%;
+	height: 8.5%;
+	bottom: 6%;
+	right: 0%;
+	font-size: 200%;
+	padding: 0.2%;
+    background: linear-gradient(#222222, #111111);
+}
+
+#title-tags-button {
+	position: absolute;
+    width: 97%;
+    height: 95%;
+    padding-left: 3%;
+    padding-right: 2%;
+    font-size: 100%;
 }
 
 .version-label {
@@ -1212,7 +1354,7 @@ body.modal-open {
 	width: auto;
 	height: 100%;
 	opacity: 0.6;
-	
+
 }
 
 .opponent-suggestion-label {
@@ -1348,6 +1490,15 @@ body.modal-open {
     table-layout: fixed;
     width: 100%;
     word-wrap: break-word;
+}
+
+.selection-image-area .alt-costume-dropdown {
+	position: absolute;
+	left: 50%;
+	top: 60%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
 }
 
 /************************************************************
