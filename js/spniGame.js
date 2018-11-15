@@ -199,7 +199,7 @@ function updateGameVisual (player) {
             var chosenState = players[player].chosenState;
 
             /* update dialogue */
-            $gameDialogues[player-1].html(chosenState.dialogue);
+            $gameDialogues[player-1].html(fixupDialogue(chosenState.dialogue));
             
             /* update image */
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
