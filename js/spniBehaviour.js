@@ -111,7 +111,7 @@ function parseDialogue (caseObject, self, target) {
 	var states = [];
 	caseObject.find('state').each(function () {
 		var image = $(this).attr('img');
-		var dialogue = $(this).html().replace(/&lt;(\/?)i&gt;/gi, '<$1i>');
+		var dialogue = $(this).html();
 		var direction = $(this).attr('direction');
 		var location = $(this).attr('location');
 		var marker = $(this).attr('marker');
@@ -169,6 +169,29 @@ function expandDialogue (dialogue, self, target) {
     // variable.attribute or
     // variable.function(arguments)
     return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[\[\].*+?^${}()|\\]/g, '\\$&'); // $& means the whole matched string
+}
+var fixupDialogueSubstitutions = { // Order matters
+	'...': '\u2026', // ellipsis
+	'---': '\u2015', // em dash
+	'--':  '\u2014', // en dash
+	'``':  '\u201c', // left double quotation mark
+	'`':   '\u2018', // left single quotation mark
+	"''":  '\u201d', // right double quotation mark
+	"'":   '\u2019', // right single quotation mark
+	'&lt;i&gt;': '<i>',
+	'&lt;/i&gt;': '</i>'
+};
+var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
+
+function fixupDialogue (str) {
+	return str.replace(/"([^"]*)"/g, "\u201c$1\u201d")
+		.replace(fixupDialogueRE, function(match) {
+			return fixupDialogueSubstitutions[match]
+		});
 }
 
 /************************************************************

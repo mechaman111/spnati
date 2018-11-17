@@ -1070,7 +1070,7 @@ function updateSelectionVisuals () {
     for (var i = 1; i < players.length; i++) {
         if (players[i] && players[i].isLoaded()) {
             /* update dialogue */
-            $selectDialogues[i-1].html(players[i].chosenState.dialogue);
+            $selectDialogues[i-1].html(fixupDialogue(players[i].chosenState.dialogue));
 
             /* update image */
             if (players[i].folder + players[i].chosenState.image
