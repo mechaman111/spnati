@@ -211,7 +211,7 @@ function parseEpilogue(player, rawEpilogue) {
   var backgrounds = [];
   $(rawEpilogue).find('background').each(function() {
     var image = $(this).attr('img').trim();
-    image = image.charAt(0) === '/' ? image : player.folder + image;
+    image = image.charAt(0) === '/' ? image : player.base_folder + image;
 
     var scenes = [];
     $(this).find('scene').each(function() {
@@ -431,6 +431,7 @@ function doEpilogue(){
 	//just in case, clear any leftover epilogue elements
   $(epilogueContent).children(':not(.epilogue-background)').remove();
   epilogueContainer.dataset.background = -1;
+  epilogueContainer.dataset.scene = -1;
 
 	progressEpilogue(1); //initialise buttons and text boxes
 	screenTransition($titleScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
