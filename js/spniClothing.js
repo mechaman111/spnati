@@ -166,7 +166,7 @@ function getClothingTrigger (player, clothing, removed) {
 		}
 	}
 	/* next accessories */
-	else if (type == EXTRA_ARTICLE) {
+	else {
 		if (gender == eGender.MALE) {
 			if (removed) {
 				return MALE_REMOVED_ACCESSORY;
@@ -407,7 +407,7 @@ function closeStrippingModal (id) {
                 otherClothing.type = IMPORTANT_ARTICLE;
             }
         }
-        if (removedClothing.type !== EXTRA_ARTICLE) {
+        if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
             players[HUMAN_PLAYER].mostlyClothed = false;
         }
         if (removedClothing.type == IMPORTANT_ARTICLE) {
@@ -454,7 +454,7 @@ function stripAIPlayer (player) {
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
 	players[player].removedClothing = removedClothing;
-	if (removedClothing.type !== EXTRA_ARTICLE) {
+	if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
 		players[player].mostlyClothed = false;
 	}
 	if (removedClothing.type === IMPORTANT_ARTICLE) {
