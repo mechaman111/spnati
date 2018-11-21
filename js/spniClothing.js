@@ -89,10 +89,11 @@ function getClothingTrigger (player, clothing, removed) {
 				pos = UPPER_ARTICLE;
 			}
 		}
-		if (type == MAJOR_ARTICLE && player.clothing.some(function(c) {
-			return (c.position == pos || c.position == FULL_ARTICLE)
-				&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
-		})) { // There is another article left covering this part of the body
+		if (type == MAJOR_ARTICLE
+			&& (pos == OTHER_ARTICLE || player.clothing.some(function(c) {
+				return (c.position == pos || c.position == FULL_ARTICLE)
+					&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
+			}))) { // There is another article left covering this part of the body
 			if (gender == eGender.MALE) {
 				if (removed) {
 					return MALE_REMOVED_MAJOR;
