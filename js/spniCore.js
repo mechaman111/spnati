@@ -458,16 +458,17 @@ Opponent.prototype.updateFolder = function () {
     if (this.folders) this.folder = this.getByStage(this.folders);
 }
 
-Opponent.prototype.getByStage = function (arr) {
+Opponent.prototype.getByStage = function (arr, stage) {
     if (typeof(arr) === "string") {
         return arr;
     }
+    if (stage === undefined) stage = this.stage;
     var bestFitStage = -1;
     var bestFit = null;
     for (var i = 0; i < arr.length; i++) {
         var startStage = arr[i].getAttribute('stage');
         startStage = parseInt(startStage, 10) || 0;
-        if (startStage > bestFitStage && startStage <= this.stage) {
+        if (startStage > bestFitStage && startStage <= stage) {
             bestFit = $(arr[i]).text();
             bestFitStage = startStage;
         }
@@ -621,7 +622,7 @@ Player.prototype.getImagesForStage = function (stage) {
     if(!this.xml) return [];
 
     var imageSet = {};
-    var folder = this.folder;
+    var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
                     : 'stage[id='+stage+'] case');
     this.xml.find(selector).each(function () {
