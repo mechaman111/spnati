@@ -41,7 +41,7 @@ tag=taken
 
 #required for meta.xml
 #select screen image
-pic=0-advanced_graphics
+pic=0-happy
 height=5'2"
 from=Clannad: After Story
 writer=Arndress
@@ -57,10 +57,13 @@ marker=sanako_baked,public,Sanako has some baked goodies for everyone after the 
 marker=sanako_explains_pairs,private,Sanako explains basic pairs gameplay.
 marker=sanako_hot,private,Sanako blames the heat for her skirt removal.
 marker=sanako_introductions,public,Sanako invites everybody to introduce themselves.
+marker=sanako_keeping_glasses,public,Sanako isn't taking off her glasses because it would break her disguise. But you can take off yours.
 marker=sanako_name_request,private,Sanako asks permission to refer to an opponent by her name.
 marker=sanako_press_buttons,private,Sanako observes that we're pressing a sarcastic girl's buttons.
 marker=sanako_younger_guy,public,If any males are playing, Sanako might remark that she sometimes enjoys going out with younger guys.
+marker=sanako_womanly_ways,public,Sanako shows off her "womanly ways". (i.e. her breasts)
 
+marker=sanako_age_uncertainty,public,If Nagisa is not playing, Sanako can almost introduce herself as her real age.
 marker=sanako_human_male_taking_the_lead,public,Sanako is happy to let the human male player "take the lead".
 marker=sanako_kyu_drama_club,public,Sanako asks if Kyu is from the drama club.
 marker=sanako_natsuki_club,public,Sanako reacts to Natsuki claiming to be in the same club as the player.
@@ -73,6 +76,7 @@ marker=sanako_zone-tan_strapless,public,Sanako mistakes Zone-tan's bare shoulder
 start=0-wave,I'm Sanako Isogai, eighteen years old.
 
 selected=wave,I'm Sanako Isogai, eighteen years old.
+selected,count-nagisa:0,marker:sanako_age_uncertainty=headtilt,I'm Sanako Isogai, thirt&mdash; eighteen years old.
 
 game_start=headtilt,It's so very nice to make your acquaintance!
 game_start=headtilt,Let's all get along, okay?
@@ -168,9 +172,13 @@ clothes=Panties,panties,important,lower,plural
 0-okay_hand,totalRounds:2=headtilt,Everybody is so cute. I hope we can have fun together.
 0-bad_hand,totalRounds:2=headtilt,Everybody is so cute. I hope we can have fun together.
 
+0-good_hand,totalRounds:8=pointingatself,You have to get up pretty early in the morning to outsmart a baker!
+0-okay_hand,totalRounds:8=pointingatself,You have to get up pretty early in the morning to outsmart a baker!
+
 #lost shoes and socks
 1-good_hand,notSaidMarker:sanako_baked,marker:sanako_baked=bodytilt,As a little surprise for you all, I made some baked goodies to eat after the game.
-1-good_hand=happy,Wow! This is actually a really good hand!
+1-good_hand=happy,Wow!
+1-good_hand,timeInStage:4=happy,I'm on a roll!
 1-okay_hand=calm,I'll be fine.
 1-okay_hand=calm,I think a pair should be enough.
 1-bad_hand,timeInStage:0-1=waiting,I know I shouldn't be disappointed, but I wanted to hold on a little longer.
@@ -188,6 +196,8 @@ clothes=Panties,panties,important,lower,plural
 #lost skirt
 3-good_hand=calm,Good.
 3-okay_hand=laugh,Don't count me out too quickly.
+3-okay_hand=calm,I'm ready.
+3-okay_hand,totalExposed:1-4,priority:0=puffedcheeks,Who keeps giving me these good cards?
 3-okay_hand,totalExposed:3-5,priority:0=headtilt,Sorry to keep you all waiting, but I keep getting pairs.
 3-okay_hand,totalMales:1-4,marker:sanako_younger_guy,notSaidMarker:sanako_younger_guy,priority:0=headtilt,Every once in a while, I feel like going out with a younger guy.
 3-bad_hand=disappointed,I see.
@@ -203,6 +213,7 @@ clothes=Panties,panties,important,lower,plural
 4-good_hand=bodytilt,I don't need to win, but it's nice to get a great hand from time to time!
 4-okay_hand=cleavage,Does anyone else have their eyes on a nice pair?
 4-okay_hand=happy,I hope we all have something to show.
+4-okay_hand=happy,It's not time for me to show you everything, but I'm sure your patience will be rewarded.
 4-bad_hand=calm,Ah...
 4-bad_hand=embarrassed,Um...
 4-bad_hand,totalNaked:4=hellothere,Sorry, everyone! I'll be out of these panties in just a moment.
@@ -231,7 +242,7 @@ clothes=Panties,panties,important,lower,plural
 0-must_strip_losing,marker:sanako_bad_start=wave,No problem. I'll take a turn now.
 0-stripping=zzzstripping1,I want to help in any way that I can. How about I take off my socks too?
 0-stripping=zzzstripping1,I thought I might take off my socks too if that's all right.
-0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes and socks be enough?
+0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes be enough? Do you need my socks too?
 0-stripping,totalExposed:1-4=zzzstripping2,It's only fair that I take my socks off too.
 1-stripped=aaastripped1,There! I'm ready for the next round.
 
@@ -259,7 +270,7 @@ clothes=Panties,panties,important,lower,plural
 3-must_strip_losing=wink,I spent years developing these pastries. I can't wait for you to try them.
 3-must_strip_losing,totalRounds:3=kneelingsad,So that's it? So that's how it is?!
 3-stripping=zzzstripping1,I won't blame you if you confess your love to me.
-4-stripped=happy,So tell me, what do you think of my womanly ways?
+4-stripped,marker:sanako_womanly_ways=happy,So tell me, what do you think of my womanly ways?
 4-stripped=breasthold,These can be quite a handful sometimes.
 
 #losing panties
@@ -411,7 +422,8 @@ clothes=Panties,panties,important,lower,plural
 0-male_removed_accessory,totalRounds:0=pointingatself,I'll take care of your clothing. You can start with your ~clothing~.
 0-male_removed_accessory=happy,That's the way to do it.
 0-male_removed_accessory,target:human,totalRounds:0-2=headtilt,Thanks, ~name~. You don't mind me using your first name, do you?
-0-female_removing_accessory,totalRounds:0=happy,You can think of this as like a practise round if you like.
+0-female_removing_accessory,totalRounds:0=happy,You can think of this as like a practice round if you like.
+0-female_removing_accessory,totalRounds:0=happy,It's a start.
 0-female_removing_accessory,totalRounds:1=wave,No hard feelings, okay? We're all just here for a fun game.
 0-female_removing_accessory,totalRounds:2=headtilt,I expected as much.
 0-female_removing_accessory=pointingatself,Don't let that get to you, ~name~. You're still doing great.
@@ -474,6 +486,8 @@ clothes=Panties,panties,important,lower,plural
 -1-female_removed_accessory,totalFinished:2-4,priority:0=cold,How can you keep playing at a time like this? Did our penalties mean nothing to you?
 
 #targeted
+4-female_removed_accessory,filter:shy,targetStage:0=bodytilt,No need to be so reserved. It's a new millennium! Let's discover a new you.
+
 0-female_removing_accessory,target:shimakaze,targetStage:0=tiptoe,Excuse me, Miss, but your clothes are on fire!
 1-female_removing_accessory,target:shimakaze,targetStage:0=concerned,Excuse me, Miss, but your clothes are on fire!
 2-female_removing_accessory,target:shimakaze,targetStage:0=shocked,Sh-Shimakaze! Your clothes are on fire!
@@ -494,7 +508,8 @@ clothes=Panties,panties,important,lower,plural
 0-female_removing_minor=wave,Don't worry about it.
 0-female_removed_minor=warning,Put your ~clothing~ to the side. We don't want anything getting stepped on.
 0-female_removed_minor=happy,I hope this is okay with you.
-0-female_removed_minor,totalExposed:0,priority:0=calm,If you're okay with it, we're okay it with it too.
+0-female_removed_minor=pointingatself,~clothing.ifPlural(Those are lovely ~clothing~. Did your mother buy them for you?|A nice ~clothing~ like that is worth taking care of.)~
+0-female_removed_minor,totalExposed:0,priority:0=calm,Nobody has taken off anything exciting yet.
 
 #lost shoes and socks
 1-male_removing_minor=calm,It's more fun if we strip at the same speed, don't you think?
@@ -558,7 +573,11 @@ clothes=Panties,panties,important,lower,plural
 0-male_removed_major,target:human=headtilt,If you're determined to keep fighting, then I won't stop you.
 0-female_removing_major,totalRounds:0-4=concerned,Oh, already?
 0-female_removing_major=wondering,I must be better at this than I thought.
+0-female_removing_major=wondering,Would you like me to take something off instead?
+0-female_removing_major,totalExposed:0,priority:0=concerned,~clothing.ifPlural(~Clothing~ are something you hold dear, aren't they?|You must be a brave girl if you're willing to remove that ~clothing~ in front of all of us.)~
 0-female_removed_major=happy,Maybe some tea will cheer you up.
+0-female_removed_major=headtilt,Doing that couldn't have been easy. I'm proud of you.
+0-female_removed_major,totalExposed:0,priority:0=wave,I'm here for you any time you need a hug.
 
 #lost shoes and socks
 1-male_removing_major=yeah,What a winning idea!
@@ -587,6 +606,7 @@ clothes=Panties,panties,important,lower,plural
 4-male_removing_major=interested,Are you getting excited yet?
 4-male_removed_major=bodytilt,That's perfect! Thank you!
 4-female_removing_major=cleavage,What secrets are you keeping from us?
+4-female_removing_major,filter:shy=happy,I know you feel shy right now, but we all think you're just the cutest thing, and we'd be happy to see anything you'd be willing to show us.
 4-female_removed_major=calm,We're getting to see a side of ~name~ that I'm sure she doesn't show often.
 4-female_removed_major,filter:shy=calm,You look upset. Is something troubling you?
 
@@ -703,7 +723,7 @@ clothes=Panties,panties,important,lower,plural
 4-female_small_chest_is_visible=bodytilt,Aw, they're so adorable. You're so precious, ~name~.
 4-female_medium_chest_is_visible=cleavage,Welcome to the party, ~name~.
 4-female_large_chest_is_visible=covering,Wow! I've been outdone.
-4-female_crotch_will_be_visible=happy,If you're okay with it, we sure are.
+4-female_crotch_will_be_visible=happy,If you're okay with it, we're okay it with it too.
 4-female_crotch_is_visible=bodytilt,Thanks for going through with it. This game is so much more fun when everybody plays along.
 
 #nude
@@ -757,6 +777,16 @@ clothes=Panties,panties,important,lower,plural
 -1-female_crotch_is_visible=cross,Stand up and keep fighting. You have to win for your own sake!
 
 #targeted
+2-male_chest_is_visible,filter:athletic=coy,Oh my. Is ~name~ going to pin someone down with those powerful arms of his?
+
+0-female_small_chest_is_visible,target:marinette=headtilt,Well aren't you as sweet as a bowl of Lucky Charms?
+1-female_small_chest_is_visible,target:marinette=bodytilt,Well aren't you as sweet as a bowl of Lucky Charms?
+2-female_small_chest_is_visible,target:marinette=handonheart,Well aren't you as sweet as a bowl of Lucky Charms?
+3-female_small_chest_is_visible,target:marinette=headtilt,Well aren't you as sweet as a bowl of Lucky Charms?
+4-female_small_chest_is_visible,target:marinette=bodytilt,Well aren't you as sweet as a bowl of Lucky Charms?
+-3-female_small_chest_is_visible,target:marinette=hopeful,Well aren't you as sweet as a bowl of Lucky Charms?
+-1-female_small_chest_is_visible,target:marinette=confident,Well aren't you as sweet as a bowl of Lucky Charms?
+
 -3-female_medium_chest_is_visible,target:valerie=disappointed,Are those default nipples?
 
 0-female_crotch_is_visible,totalNaked:1,target:mia=headtilt,I've been trying to lose a few rounds to catch up, but you've beaten us all.
@@ -874,6 +904,8 @@ clothes=Panties,panties,important,lower,plural
 -1-male_start_masturbating=happy,Don't be shy. We all want to see.
 -1-male_masturbating=delighted,Oh my... Is he gonna confess his love to me?
 -1-male_masturbating=footcaress,You can come a little closer. We're in this together, after all.
+-1-male_masturbating=footcaress,Come to mama...
+-1-male_masturbating,target:human,priority:0=footcaress,Could it be that ~name~ wants to make me his woman?
 -1-male_finished_masturbating=footcaress,I hope you have more where that came from, mister.
 
 -1-female_must_masturbate=happy,It's your turn now, ~name~.
@@ -892,6 +924,7 @@ clothes=Panties,panties,important,lower,plural
 
 #targeted
 0-female_must_masturbate,target:nagisa=sad,My poor, innocent angel...
+1-female_must_masturbate,target:nagisa=concerned,I'm so sorry, my darling Nagisa...
 0-female_masturbating,target:samus=concerned,My, Samus! How scandalous!
 1-female_masturbating,target:samus=interested,My, Samus! How scandalous!
 -1-female_finished_masturbating,target:weiss=happy,That was beautiful, Weiss. Thank you for sharing it with us. Was it your first time doing it in front of others?
@@ -915,6 +948,7 @@ heavy_masturbating=masturbating_j,<i>~player~</i>...
 heavy_masturbating=masturbating_m,M-m.. mme... mmmm...
 finishing_masturbating=masturbating_h,Oh.. ohmi.. oh... Oh! OH! OH!
 finished_masturbating,totalExposed:0,priority:0=covering,I'm sorry that I showed you all such shameful conduct...
+finished_masturbating,totalAlive:3,priority:0=happy,I don't want to play favorites, so good luck to all three of you.
 finished_masturbating,totalAlive:2,priority:0=delighted,Give it your best out there, you two!
 finished_masturbating=happy,Although I'm a little embarrassed, if I hadn't given it a shot, I never would have experienced so much happiness.
 finished_masturbating=covering,I didn't share too much during my penalty, did I? Sometimes I say things without even knowing it.
@@ -942,9 +976,9 @@ game_over_defeat=footcaress,If you don't mind, I'd like to do this again sometim
 
 ending=Sanako feedback form (not an epilogue)
 	ending_gender=any
-	screen=0-advanced_graphics.png
+	screen=0-happy.png
 
-		text=Thank you very much for testing Sanako! If you would like to give feedback, please comment on her channel on the game's Discord server and/or via the following survey form: https://goo.gl/forms/WyFo3wJ3p03nCz3Z2
+		text=Thank you very much for testing Sanako! If you would like to give feedback, please comment on her channel on the game's Discord server and/or via the following survey form: https://goo.gl/forms/1xZHLPDQu5now5B52
 		x=centered
 		y=80%
 		width=80%

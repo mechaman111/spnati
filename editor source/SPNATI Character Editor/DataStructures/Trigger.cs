@@ -240,13 +240,13 @@ namespace SPNATI_Character_Editor
 		public static bool IsVariableAvailable(string tag, string variable)
 		{
 			Trigger trigger;
-			if (variable == "player")
+			if (variable.ToLower() == "player")
 				return true;
-			if (variable == "clothes")
+			if (variable.ToLower() == "clothes")
 				variable = "clothing";
 			if (_triggers.TryGetValue(tag, out trigger))
 			{
-				return trigger.AvailableVariables.Contains(variable);
+				return trigger.AvailableVariables.Contains(variable.ToLower());
 			}
 			return false;
 		}

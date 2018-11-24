@@ -94,7 +94,7 @@ namespace SPNATI_Character_Editor
 			}
 			copy.Image += extension;
 			copy.ImageExtension = extension;
-			copy.Text = line.Text.Trim();
+			copy.Text = line.Text?.Trim();
 			return copy;
 		}
 

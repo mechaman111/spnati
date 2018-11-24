@@ -209,11 +209,14 @@ function updateGameVisual (player) {
             $gameLabels[player].html(players[player].label.initCap());
 
             /* check silence */
-            if (chosenState.silent) {
+            if (!chosenState.dialogue) {
                 $gameBubbles[player-1].hide();
             }
             else {
                 $gameBubbles[player-1].show();
+                $gameBubbles[player-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+chosenState.direction);
+                bubbleArrowOffsetRules[player-1][0].style.left = chosenState.location;
+                bubbleArrowOffsetRules[player-1][1].style.top = chosenState.location;
             }
         } else {
             /* hide their dialogue bubble */
@@ -440,7 +443,7 @@ function checkDealLock () {
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
-        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STAGE_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
             allowProgression();
         } else {
             continueDealPhase();

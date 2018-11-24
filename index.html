@@ -21,7 +21,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.68
+      v11.69
     </button>
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -84,7 +84,7 @@
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
     </button>
     <button id="title-version-button" class="bordered smooth-button smooth-button-red banner-flair" onclick="showVersionModal()">
-      v11.68
+      v11.69
     </button>
     <button class="bordered smooth-button smooth-button-red bug-report-button title-bug-report-button" onclick="showBugReportModal()">
       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -109,7 +109,7 @@
     <img id="right-title-candy" class="title-candy" src=""/>
 
     <!-- Content -->
-    <div class="main-title-container">
+    <div class="main-title-container male">
 
       <!-- Player Name -->
       <div id="title-name-block">
@@ -120,21 +120,21 @@
       <!-- Player Gender -->
       <div id='title-gender-block'>
         <input type='image' value='' id='male-gender-button' class='bordered title-content-button' src='img/male.png' onclick='changePlayerGender("male")'>
-        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")' style="opacity:0.4;">
+        <input type='image' value='' id='female-gender-button' class='bordered title-content-button' src='img/female.png' onclick='changePlayerGender("female")'>
       </div>
 
       <!-- Player Male Size -->
-      <div id='male-size-container' class='title-size-block'>
-        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")' style='opacity:0.4;'>
+      <div id='male-size-container' class='title-size-block medium'>
+        <input type='image' value='' id="small-junk-button" class='bordered title-small-button title-content-button' src='img/male_small.png' onclick='changePlayerSize("small")'>
         <input type='image' value='' id="medium-junk-button" class='bordered title-medium-button title-content-button' src='img/male_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")' style='opacity:0.4;'>
+        <input type='image' value='' id="large-junk-button" class='bordered title-large-button title-content-button' src='img/male_large.png' onclick='changePlayerSize("large")'>
       </div>
 
       <!-- Player Female Size -->
-      <div id='female-size-container' class='title-size-block' hidden>
-        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")' style='opacity:0.4;'>
+      <div id='female-size-container' class='title-size-block medium'>
+        <input type='image' value='' id="small-boobs-button" class='bordered title-small-button title-content-button' src='img/female_small.png' onclick='changePlayerSize("small")'>
         <input type='image' value='' id="medium-boobs-button" class='bordered title-medium-button title-content-button' src='img/female_medium.png' onclick='changePlayerSize("medium")'>
-        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")' style='opacity:0.4;'>
+        <input type='image' value='' id="large-boobs-button" class='bordered title-large-button title-content-button' src='img/female_large.png' onclick='changePlayerSize("large")'>
       </div>
 
       <!-- Player Wardrobe -->
@@ -202,6 +202,11 @@
           <img class='title-gallery-image' src='img/gallery.svg'/>
         </button>
     </div>
+	<div id='title-tags-edge' class='bordered'>
+		<button id='title-tags-button' class='bordered smooth-button smooth-button-red' onclick="showPlayerTagsModal()">
+          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+        </button>
+    </div>
 
     </div>
 
@@ -218,22 +223,22 @@
     <!-- Opponent Dialogues -->
     <div class="dialogue-bubble-row">
       <div id="select-bubble-1" class="bordered left dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="select-dialogue-1" class="dialogue"></span>
         </div>
       </div>
       <div id="select-bubble-2" class="bordered halfLeft dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="select-dialogue-2" class="dialogue"></span>
         </div>
       </div>
       <div id="select-bubble-3" class="bordered center dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="select-dialogue-3" class="dialogue"></span>
         </div>
       </div>
       <div id="select-bubble-4" class="bordered farHalfLeft dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="select-dialogue-4" class="dialogue"></span>
         </div>
       </div>
@@ -592,24 +597,28 @@
         <img id="individual-badge-1" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="individual-status-1" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="individual-layer-1" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="individual-costume-select-1" class="alt-costume-dropdown" onchange="altCostumeSelected(1, false)"></select>
       </div>
       <div class="almostLeft selection-image-area">
         <img id="individual-image-2" class="opponent-image" hidden>
         <img id="individual-badge-2" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="individual-status-2" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="individual-layer-2" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="individual-costume-select-2" class="alt-costume-dropdown" onchange="altCostumeSelected(2, false)"></select>
       </div>
       <div class="almostRight selection-image-area">
         <img id="individual-image-3" class="opponent-image" hidden>
         <img id="individual-badge-3" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="individual-status-3" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="individual-layer-3" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="individual-costume-select-3" class="alt-costume-dropdown" onchange="altCostumeSelected(3, false)"></select>
       </div>
       <div class="farRight selection-image-area">
         <img id="individual-image-4" class="opponent-image" hidden>
         <img id="individual-badge-4" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="individual-status-4" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="individual-layer-4" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="individual-costume-select-4" class="alt-costume-dropdown" onchange="altCostumeSelected(4, false)"></select>
       </div>
     </div>
 
@@ -868,24 +877,28 @@
         <img id="group-badge-1" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="group-status-1" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="group-layer-1" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="group-costume-select-1" class="alt-costume-dropdown" onchange="altCostumeSelected(1, true)"></select>
       </div>
       <div class="almostLeft selection-image-area">
         <img id="group-image-2" class="opponent-image" hidden>
         <img id="group-badge-2" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="group-status-2" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="group-layer-2" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="group-costume-select-2" class="alt-costume-dropdown" onchange="altCostumeSelected(2, true)"></select>
       </div>
       <div class="almostRight selection-image-area">
         <img id="group-image-3" class="opponent-image" hidden>
         <img id="group-badge-3" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="group-status-3" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="group-layer-3" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="group-costume-select-3" class="alt-costume-dropdown" onchange="altCostumeSelected(3, true)"></select>
       </div>
       <div class="farRight selection-image-area">
         <img id="group-image-4" class="opponent-image" hidden>
         <img id="group-badge-4" class="badge-icon" src="img/epilogue_icon.png" hidden/>
         <img id="group-status-4" class="status-icon" src="img/testing-badge.png" hidden/>
         <img id="group-layer-4" class="layer-icon" src="img/layers1.png" hidden/>
+        <select id="group-costume-select-4" class="alt-costume-dropdown" onchange="altCostumeSelected(4, true)"></select>
       </div>
     </div>
 
@@ -1582,6 +1595,14 @@
 			<div class="modal-body">
 				<table class="modal-body-stretch-container" style="margin: 0 auto;">
                     <tr><td style="width:10%; padding-bottom: 1.5%">
+					    v11.69
+                    </td>
+                    <td style="width:5%"></td>
+                    <td style="width:85%; padding-bottom: 1.5%">
+                        Natsuki, Catria, Mulan, Remilia and Navi have joined the game! Also adds the alternate costume selector to the offline version of the game.
+                    </td></tr>
+
+                    <tr><td style="width:10%; padding-bottom: 1.5%">
                         v11.68
                     </td>
                     <td style="width:5%"></td>
@@ -1661,14 +1682,6 @@
                         The roster has been resorted and new group tables have been added. Rainbow Mika has joined the game!
                     </td></tr>
 
-                    <tr><td style="width:10%; padding-bottom: 1.5%">
-                        v11.58
-                    </td>
-                    <td style="width:5%"></td>
-                    <td style="width:85%; padding-bottom: 1.5%">
-                        Saki and Misato have joined the game! Elizabeth has returned to the game!
-                    </td></tr>
-
 				</table>
 			</div>
 			<div class="modal-footer">
@@ -1684,6 +1697,53 @@
 <!-- End of Version Modal -->
 
 
+<!-- Start of Player Tags Modal -->
+<div id="player-tags-modal" class="modal table-modal fade">
+  <div class="bordered modal-dialog wide-modal-dialog">
+    <div class="bordered modal-dialog-surface">
+      <!-- Start of Modal Content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-center">Add Descriptive Tags to Your Character for a More Customized Experience!</h4>
+          <h5 class='text-center'>*There is still no graphical representation of your character, this just allows characters who have dialogue written towards these traits to know more about you when commenting. Not all characters will comment.</h5>
+        </div>
+        <div class="modal-body">
+          <form id='player-tags'>
+            <label class='player-tag-select'>
+              Choose a hair color:
+              <div class='colorAndLabel'>
+                <input type='text' name='hair_color' disabled/>
+                <input type='color' id='hair_color_picker' value='#502d26'>
+              </div>
+            </label>
+            <label class='player-tag-select'>
+              Choose an eye color:
+              <div class='colorAndLabel'>
+                <input type='text' name='eye_color' disabled/>
+                <input type='color' id='eye_color_picker' value='#0b0d6c'>
+              </div>
+            </label>
+            <label class='player-tag-select'>
+              Choose a skin tone:
+              <div class='colorAndLabel range'>
+                <input type='text' name='skin_color' disabled/>
+                <input type='range' name='skin_color_picker' value='50'>
+              </div>
+            </label>
+          </form>
+          <div class="modal-body-container" style="padding-top:4%;">
+            <button class="bordered smooth-button modal-button" data-dismiss="modal">Confirm</button>
+            <button class="bordered smooth-button modal-button clearSelections smooth-button-red">Clear Selections</button>
+          </div>
+        </div>
+      </div>
+      <!-- End of Modal Content -->
+    </div>
+  </div>
+</div> <!-- End of Player Tags Modal -->
+
+
+
 <!-- Game Screen -->
 <div id="game-screen" class="screen-container" hidden>
   <div class="screen">
@@ -1691,22 +1751,22 @@
     <!-- Dialogue Bubbles -->
     <div class="dialogue-bubble-row">
       <div id="game-bubble-1" class="bordered left dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="game-dialogue-1" class="dialogue"></span>
         </div>
       </div>
       <div id="game-bubble-2" class="bordered halfLeft dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="game-dialogue-2" class="dialogue"></span>
         </div>
       </div>
       <div id="game-bubble-3" class="bordered center dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="game-dialogue-3" class="dialogue"></span>
         </div>
       </div>
       <div id="game-bubble-4" class="bordered farHalfLeft dialogue-bubble-area">
-        <div class="dialogue-bubble dialogue-centre arrow-down">
+        <div class="dialogue-bubble arrow-down">
           <span id="game-dialogue-4" class="dialogue"></span>
         </div>
       </div>

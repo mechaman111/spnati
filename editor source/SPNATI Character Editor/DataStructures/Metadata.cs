@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -47,6 +48,10 @@ namespace SPNATI_Character_Editor
 
 		[XmlElement("description")]
 		public string Description;
+
+		[XmlElement("scale")]
+		[DefaultValue(100.0f)]
+		public float Scale = 100.0f;
 
 		[XmlElement("has_ending")]
 		public bool HasEnding;

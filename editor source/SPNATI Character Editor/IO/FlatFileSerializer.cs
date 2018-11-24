@@ -293,7 +293,7 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
 					}
-					string text = defaultLine.IsSilent != null ? "~silent~" : defaultLine.Text;
+					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
 				}
 			}
@@ -757,7 +757,6 @@ namespace SPNATI_Character_Editor
 			if (text == "~silent~")
 			{
 				text = "";
-				line.IsSilent = "";
 			}
 
 			line.Image = img;

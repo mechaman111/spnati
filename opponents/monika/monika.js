@@ -58,39 +58,7 @@ if(!monika) {
             break;
         }
     }
-
-    monika.incognito = false;
-
-    /* Check for incognito / private browsing mode. */
-    /* Should work for Chrome and Firefox. */
-    var fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-    if (!fs) {
-        var db = indexedDB.open("test");
-        db.onerror = function () { monika.incognito = true; console.log("[Monika] Detected Firefox Private Browsing mode."); }
-        db.onsuccess = function () {
-            using_incognito_mode = false;
-
-            /* Test for Safari private mode */
-            var storage = window.sessionStorage;
-            try {
-                storage.setItem("test_key", "test");
-                storage.removeItem("test_key");
-            } catch (e) {
-                if (e.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0) {
-                    console.log("[Monika] Detected Safari Private Browsing mode.");
-                    monika.incognito = true;
-                }
-            }
-        }
-    } else {
-        fs(window.TEMPORARY, 100, function(fs) {
-            monika.incognito = false;
-        }, function(err) {
-            console.log("[Monika] Detected Chrome Incognito mode.");
-            monika.incognito = true;
-        });
-    }
-
+    
     monika.loadScript = function (scriptName) {
         console.log("[Monika] Loading module: "+scriptName);
         return $.getScript(scriptName).fail(function( jqxhr, settings, exception ) {
