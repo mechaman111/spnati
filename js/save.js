@@ -28,6 +28,7 @@ function Save(){
 		'gameDelay' : 3,
 		'dealAnimation' : 3,
 		'autoForfeit' : 4,
+		'autoEnding' : 4,
 		'male' : {
 			'name' : '',
 			'clothing' : [false, false, true, false, true, false,
@@ -90,6 +91,7 @@ function Save(){
 		setAITurnTime(this.data['gameDelay']);
 		setDealSpeed(this.data['dealAnimation']);
 		setAutoForfeit(this.data['autoForfeit']);
+		setAutoEnding(this.data['autoEnding']);
 	};
 
 	this.saveOptions = function(){
