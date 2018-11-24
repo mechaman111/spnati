@@ -57,19 +57,6 @@ function Save(){
 		if(cookie !== undefined){
 			this.data = mergeObjects(this.data, JSON.parse(cookie));
 		}
-		// Copy data from older cookie to the gender-specific substructure.
-		if (this.data['name'] !== undefined) {
-			this.data[this.data['gender']]['name'] = this.data['name'];
-			delete this.data['name'];
-		}
-		if (this.data['clothing'] !== undefined) {
-			this.data[this.data['gender']]['clothing'] = this.data['clothing'];
-			delete this.data['clothing'];
-		}
-		if (this.data['size'] !== undefined) {
-			this.data[this.data['gender']]['size'] = this.data['size'];
-			delete this.data['size'];
-		}
 		this.loadOptions();
 		this.loadPlayer();
 	};
