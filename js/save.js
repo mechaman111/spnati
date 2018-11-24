@@ -34,16 +34,17 @@ function Save(){
 			'clothing' : [false, false, true, false, true, false,
 				      false, true, true, false, false, true,
 				      false, false, true, true, false, true],
-			'size' : 'medium'
+			'size' : 'medium',
+			'tags' : {},
 		},
 		'female' : {
 			'name' : '',
 			'clothing' : [false, false, true, false, true, true,
 				      false, true, true, false, false, true,
 				      false, false, false, true, false, true],
-			'size' : 'medium'
+			'size' : 'medium',
+			'tags' : {},
 		},
-		'tags' : {},
 		'endings' : {},
 		'askedUsageTracking': false,
 		'usageTracking': false,
@@ -65,6 +66,7 @@ function Save(){
 		$nameField.val(this.data[players[HUMAN_PLAYER].gender]['name']);
 		changePlayerSize(this.data[players[HUMAN_PLAYER].gender]['size']);
 		selectedChoices = this.data[players[HUMAN_PLAYER].gender]['clothing'];
+		playerTagSelections = this.data[players[HUMAN_PLAYER].gender]['tags'];
 		updateTitleGender();
 	};
 	this.loadOptions = function(){
@@ -141,15 +143,14 @@ function Save(){
 		this.data[this.data['gender']]['name'] = $nameField.val();
 		this.data[this.data['gender']]['size'] = players[HUMAN_PLAYER].size;
 		this.data[this.data['gender']]['clothing'] = selectedChoices.slice();
-		this.data[this.data['gender']]['tags'] = players[HUMAN_PLAYER].tags.slice();
+		var tags = {};
+		for (var key in playerTagSelections) {
+			tags[key] = playerTagSelections[key];
+		}
+		this.data[this.data['gender']]['tags'] = tags;
 		this.saveCookie();
 	};
 
-	this.saveTags = function(){
-		this.data['tags'] = players[HUMAN_PLAYER].tags.slice();
-		this.saveCookie();
-	};
-	
 	this.hasEnding = function(character, title){
 		if(this.data.endings[character] !== undefined){
 			if(this.data.endings[character][title] !== undefined){
