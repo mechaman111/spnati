@@ -622,10 +622,20 @@ Player.prototype.getImagesForStage = function (stage) {
 
     var imageSet = {};
     var folder = this.folder;
-	var selector = (stage == -1 ? 'start>state, stage[id=1] case[tag=game_start] state'
-					: 'stage[id="'+stage+'"] state');
+    var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
+                    : 'stage[id='+stage+'] case');
     this.xml.find(selector).each(function () {
-        imageSet[folder+$(this).attr('img')] = true;
+        var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
+            filter = $(this).attr('filter');
+        // Skip cases requiring a character that isn't present
+        if ((target === undefined || players.some(function(p) { return p.id === target; }))
+            && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
+            && (filter === undefined || players.some(function(p) { return p.tags.indexOf(filter) >= 0; })))
+        {
+            $(this).children('state').each(function () {
+                imageSet[folder+$(this).attr('img')] = true;
+            })
+        }
     });
     return Object.keys(imageSet);
 };
