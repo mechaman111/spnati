@@ -171,6 +171,7 @@ function loadGameScreen () {
 
     /* set up the poker library */
     setupPoker();
+    preloadCardImages();
 
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
@@ -685,6 +686,7 @@ function endRound () {
 		handleGameOver();
 	} else {
 		allowProgression(eGamePhase.DEAL);
+		preloadCardImages();
 	}
 }
 
