@@ -153,6 +153,7 @@ var playerTagOptions = {
         values: [ 'dark_eyes', 'pale_eyes', 'red_eyes', 'amber_eyes', 'green_eyes', 'blue_eyes', 'violet_eyes'],
     },
     'skin_color': {
+        type: 'range',
         values: [
             { value: 'pale-skinned', from: 0, to: 25 },
             { value: 'fair-skinned', from: 25, to: 50 },
@@ -346,13 +347,21 @@ function setPlayerTags () {
                          players[HUMAN_PLAYER].size + (players[HUMAN_PLAYER].gender == 'male' ? '_penis' : '_breasts')];
 
     for (category in playerTagSelections) {
+        var sel = playerTagSelections[category];
         if (!(category in playerTagOptions)) continue;
-        playerTagList.push(playerTagSelections[category]);
         var extraTags = [];
         playerTagOptions[category].values.some(function (choice) {
-            if (typeof choice == 'object' && choice.value == playerTagSelections[category] && choice.extraTags) {
+            if (typeof choice == 'string') choice = { value: choice };
+            if (playerTagOptions[category].type == 'range') {
+                if (sel > choice.to) return false;
+            } else {
+                if (sel != choice.value) return false;
+            }
+            playerTagList.push(choice.value);
+            if (choice.extraTags) {
                 extraTags = (typeof choice.extraTags == 'string') ? [ choice.extraTags ] : choice.extraTags;
             }
+            return true;
         });
         extraTags.forEach(function(t) { playerTagList.push(t); });
     }

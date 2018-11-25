@@ -1094,7 +1094,7 @@ function showPlayerTagsModal () {
             this.previousElementSibling.value = tag || '';
         });
 
-        $('input[name=skin_color_picker]').on('input', function() {
+        $('input[name=skin_color]').on('input', function() {
             for (var i = 0; i < playerTagOptions['skin_color'].values.length; i++) {
                 if (this.value <= playerTagOptions['skin_color'].values[i].to) {
                     tag = playerTagOptions['skin_color'].values[i].value;
@@ -1116,14 +1116,7 @@ function showPlayerTagsModal () {
     }
 
     for (var choiceName in playerTagOptions) {
-        $('form#player-tags [name="'+choiceName+'"]').val(playerTagSelections[choiceName]);
-        if (choiceName == 'skin_color') {
-            playerTagOptions[choiceName].values.some(function (choice) {
-                if (typeof choice == 'object' && choice.value == playerTagSelections[choiceName]) {
-                    $('input[name=skin_color_picker]').val((choice.from + choice.to) / 2);
-                }
-            });
-        }
+        $('form#player-tags [name="'+choiceName+'"]').val(playerTagSelections[choiceName]).trigger('input');
     }
     $('#player-tags-confirm').one('click', function() {
         playerTagSelections = {};
