@@ -142,15 +142,21 @@ var selectedChoices = [false, false, false, false, false, false, false, false, f
 var playerTagOptions = {
     'hair_color': {
         values: [
-            'black_hair', 'white_hair', 'brunette', 'ginger', 'blonde',
-            { value: 'green_hair', extraTags: 'exotic_hair' },
-            { value: 'blue_hair', extraTags: 'exotic_hair' },
-            { value: 'purple_hair', extraTags: 'exotic_hair' },
-            { value: 'pink_hair', extraTags: ' exotic_hair' },
+            { value: 'black_hair' }, { value: 'white_hair' },
+            { value: 'brunette' }, { value: 'ginger' }, { value: 'blonde' },
+            { value: 'green_hair', extraTags: ['exotic_hair'] },
+            { value: 'blue_hair', extraTags: ['exotic_hair'] },
+            { value: 'purple_hair', extraTags: ['exotic_hair'] },
+            { value: 'pink_hair', extraTags: ['exotic_hair'] },
         ],
     },
     'eye_color': {
-        values: [ 'dark_eyes', 'pale_eyes', 'red_eyes', 'amber_eyes', 'green_eyes', 'blue_eyes', 'violet_eyes'],
+        values: [
+            { value: 'dark_eyes' }, { value: 'pale_eyes' },
+            { value: 'red_eyes' }, { value: 'amber_eyes' },
+            { value: 'green_eyes' }, { value: 'blue_eyes' },
+            { value: 'violet_eyes' },
+        ],
     },
     'skin_color': {
         type: 'range',
@@ -174,7 +180,7 @@ var playerTagOptions = {
         values: [
             { value: 'chubby' },
             { value: 'athletic' },
-            { value: 'muscular', extraTags: 'athletic' },
+            { value: 'muscular', extraTags: ['athletic'] },
         ],
     },
     'height': {
@@ -351,7 +357,6 @@ function setPlayerTags () {
         if (!(category in playerTagOptions)) continue;
         var extraTags = [];
         playerTagOptions[category].values.some(function (choice) {
-            if (typeof choice == 'string') choice = { value: choice };
             if (playerTagOptions[category].type == 'range') {
                 if (sel > choice.to) return false;
             } else {
@@ -359,7 +364,7 @@ function setPlayerTags () {
             }
             playerTagList.push(choice.value);
             if (choice.extraTags) {
-                extraTags = (typeof choice.extraTags == 'string') ? [ choice.extraTags ] : choice.extraTags;
+                extraTags = choice.extraTags;
             }
             return true;
         });

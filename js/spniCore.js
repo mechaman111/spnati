@@ -979,9 +979,6 @@ function showPlayerTagsModal () {
             if (!replace && $existing.length) continue;
             var $select = $('<select>', { name: choiceName });
             $select.append(new Option(), playerTagOptions[choiceName].values.map(function(opt) {
-                if (typeof opt === "string") {
-                    opt = { value: opt };
-                }
                 return new Option(opt.text || opt.value.replace(/_/g, ' ').initCap(), opt.value);
             }));
             if ($existing.length) {
