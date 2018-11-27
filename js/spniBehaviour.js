@@ -216,7 +216,7 @@ function inInterval (value, interval) {
  * w.r.t. a given character.
  ************************************************************/
 function checkMarker(predicate, self, target) {
-	var match = predicate.match(/([\w\-]+)(\*?)\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~)/);
+	var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
 	
 	if (!match) {
 	    if (self.markers[predicate]) return true;
@@ -235,10 +235,14 @@ function checkMarker(predicate, self, target) {
 	if (!val) {
 		val = 0;
 	}
+
+	if (!match[3]) {
+		return !!val;
+	}
 	
-	var cmpVal = parseInt(match[4], 10);
+	var cmpVal = parseInt(match[5], 10);
 	
-	switch (match[3]) {
+	switch (match[4]) {
 		case '>': return val > cmpVal;
 		case '>=': return val >= cmpVal;
 		case '<': return val < cmpVal;
