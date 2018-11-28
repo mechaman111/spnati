@@ -13,13 +13,17 @@ import datetime
 ending_tag = "ending" #name for the ending
 ending_gender_tag = "ending_gender" #player gender the ending is shown to
 ending_preview_tag = "gallery_image" # image to use for the preview in the gallery
+ending_conditions_tag = "ending_conditions" # All other conditions
 screen_tag = "screen"
 text_tag = "text"
 x_tag = "x"
 y_tag = "y"
 width_tag = "width"
 arrow_tag = "arrow"
-ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
+ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag, ending_conditions_tag]
+ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
+                          'markers', 'not-markers', 'any-markers',
+                          'alsoplaying-markers', 'alsoplaying-not-markers', 'alsoplaying-any-markers']
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter"]
@@ -449,6 +453,9 @@ def write_xml(data, filename):
 			
 			if 'img' in ending:
 				ending_xml.set('img', ending['img'])
+                        for cond_type in ending_condition_types:
+                                if cond_type in ending:
+                                        ending_xml.set(cond_type, ending[cond_type])
 			
 			ET.SubElement(ending_xml, "title").text = ending["title"]
 			
@@ -535,6 +542,24 @@ def handle_ending_string(key, content, ending, d):
 		if len(content) > 0:
 			ending['img'] = content
 		return
+        elif key == ending_conditions_tag:
+                condition_parts = content.split(',')
+                for c in condition_parts:
+                        try:
+                                cond_type, cond_value = c.rsplit(':', 1)
+                                cond_type = cond_type.strip()
+                                cond_value = cond_value.strip()
+                                if cond_type in ending_condition_types:
+                                        if cond_value != '':
+                                                ending[cond_type] = cond_value
+                                        else:
+                                                print("Epilogue condition without value for \"%s\": \"%s\". Skipping." % (ending['title'], cond_type))
+                                else:
+                                        print("Unknown epilogue condition %s" % cond_type)
+
+                        except ValueError:
+                                print("Epilogue condition with empty value for \"%s\": \"%s\" Skipping." % (ending['title'], c))
+                return
 		
 	#get the screens variable
 	screens = None
@@ -865,34 +890,51 @@ def make_meta_xml(data, filename):
 	enabled = "true" if "enabled" not in data or data["enabled"] == "true" else "false"
 	ET.SubElement(o, "enabled").text = enabled
 	
-	values = ["first","last","label","pic","gender","height","from","writer","artist","description","has_ending","layers","character_tags"]
+	values = ["first","last","label","pic","gender","height","from","writer","artist","description","endings","layers","character_tags"]
 	
-	for value in values:
-		content = ""
-		if value in data:
-			content = data[value]
-		if value == "pic":
-			if content == "":
-				content = "0-calm"
-			content += ".png"
-		
-		if value == "layers":
-			#the number of layers of clothing is taken directly from the clothing data
-			content = str(len(data["clothes"]))
+        for value in values:
+                content = ""
+                if value == "pic":
+                        if content == "":
+                                content = "0-calm"
+                        content += ".png"
 
-                if value == "label":
+                elif value == "layers":
+                        #the number of layers of clothing is taken directly from the clothing data
+                        content = str(len(data["clothes"]))
+
+                elif value == "label":
                         content = data["label"][0]
-			
-		if value == "has_ending":
-			#say whether or not they have an ending based on whether they have any ending data or not
-			content = "true" if "endings" in data else "false"
 
-                if value == "character_tags":
+                elif value == "character_tags":
                         tags_elem = ET.SubElement(o, "tags")
                         character_tags = data["character_tags"]
-	                for tag in character_tags:
-		                ET.SubElement(tags_elem, "tag").text = tag
-		else:
+                        for tag in character_tags:
+                                ET.SubElement(tags_elem, "tag").text = tag
+
+                elif value == "endings":
+                        if "endings" in data:
+                                #for each ending
+                                for ending in data["endings"]:
+                                        ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
+                                        ending_xml.text = ending["title"];
+
+                                        if 'img' in ending:
+                                                ending_xml.set('img', ending['img'])
+                                        else:
+                                                ending_xml.set('img', ending["screens"][0]["image"])
+
+                                        for cond_type in ending_condition_types:
+                                                if cond_type in ending:
+                                                        if 'markers' in cond_type:
+                                                                ending_xml.set('markers', 'true')
+                                                        else:
+                                                                ending_xml.set(cond_type, ending[cond_type])
+
+                elif value in data:
+                        content = data[value]
+
+                if content != "":
 		        ET.SubElement(o, value).text = content
 		
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
