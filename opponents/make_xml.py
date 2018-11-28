@@ -277,13 +277,13 @@ def write_xml(data, filename):
 			o.subElement("intelligence", data["intelligence"][stage], {'stage': stage})
 
 	#tags
-	tags_elem = o.subElement("tags")
+	tags_elem = o.subElement("tags", blank_before=True, blank_after=True)
 	character_tags = data["character_tags"]
 	for tag in character_tags:
 		tags_elem.subElement("tag", tag)
 
 	#start image
-	start = o.subElement("start")
+	start = o.subElement("start", blank_before=True, blank_after=True)
 	start_data = data["start"] if "start" in data else ["0-calm,So we'll be playing strip poker... I hope we have fun."]
 	start_count = len(start_data)
 	for i in range(0, start_count):
@@ -291,7 +291,7 @@ def write_xml(data, filename):
 		start.subElement("state", start_text, {'img': start_image+".png"})
 	
 	#wardrobe
-	clth = o.subElement("wardrobe")
+	clth = o.subElement("wardrobe", blank_after=True)
 	clothes = data["clothes"]
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
@@ -302,16 +302,16 @@ def write_xml(data, filename):
 		clth.subElement("clothing", None, clothesattr)
 	
 	#behaviour
-	bh = o.subElement("behaviour")
+	bh = o.subElement("behaviour", blank_after=True)
 	for stage in range(0, clothes_count+3):
-		s = bh.subElement("stage", None, {'id': str(stage)})
+		s = bh.subElement("stage", None, {'id': str(stage)}, blank_after=True)
 		add_values(s, data, stage)
 	
 	#endings
 	if "endings" in data:
 		#for each ending
 		for ending in data["endings"]:
-			ending_xml = o.subElement("epilogue", None, {'gender': ending["gender"]})
+			ending_xml = o.subElement("epilogue", None, {'gender': ending["gender"]}, blank_after=True)
 			
 			if 'img' in ending:
 				ending_xml.set('img', ending['img'])
@@ -323,11 +323,11 @@ def write_xml(data, filename):
 			
 			#for each screen in an ending
 			for screen in ending["screens"]:
-				screen_xml = ending_xml.subElement("screen", None, {'img': screen["image"]})
+				screen_xml = ending_xml.subElement("screen", None, {'img': screen["image"]}, blank_after=True)
 				
 				#for each text box on a screen
 				for text_box in screen["text_boxes"]:
-					text_box_xml = screen_xml.subElement("text")
+					text_box_xml = screen_xml.subElement("text", blank_after=True)
 					text_box_xml.subElement(x_tag, text_box[x_tag])
 					text_box_xml.subElement(y_tag, text_box[y_tag])
 					#width and arrow are optional
