@@ -307,7 +307,14 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		this.allStates = parseDialogue(this.xml.find('start'), this);
+		var allStates = [];
+        
+        this.xml.find('start').each(function () {
+            allStates.push(new State($(this)));
+        });
+        
+        this.allStates = allStates;
+        
 		this.chosenState = this.allStates[0];
         
         if (!this.chosenState) {
