@@ -737,19 +737,18 @@ def make_meta_xml(data, filename):
 	values = ["first","last","label","pic","gender","height","from","writer","artist","description","endings","layers","character_tags"]
 	
 	for value in values:
-		content = ""
 		if value == "pic":
-			content = data["pic"]
-			if content == "":
-				content = "0-calm"
-			content += ".png"
+			pic = data["pic"]
+			if pic == "":
+				pic = "0-calm"
+                        o.subElement("pic", pic + ".png")
 
 		elif value == "layers":
 			#the number of layers of clothing is taken directly from the clothing data
-			content = str(len(data["clothes"]))
+			o.subElement("layers", str(len(data["clothes"])))
 
 		elif value == "label":
-			content = data["label"][0]
+			o.subElement("label", data["label"][0])
 
 		elif value == "character_tags":
 			tags_elem = o.subElement("tags")
@@ -776,10 +775,7 @@ def make_meta_xml(data, filename):
 								ending_xml.set(cond_type, ending[cond_type])
 
 		elif value in data:
-			content = data[value]
-
-		if content != "":
-			o.subElement(value, content)
+			o.subElement(value, data[value])
 
 	open(filename, 'w').write(o.serialize())
 
