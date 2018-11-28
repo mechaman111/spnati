@@ -739,6 +739,7 @@ def make_meta_xml(data, filename):
 	for value in values:
 		content = ""
 		if value == "pic":
+			content = data["pic"]
 			if content == "":
 				content = "0-calm"
 			content += ".png"
