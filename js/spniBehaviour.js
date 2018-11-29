@@ -97,8 +97,8 @@ function State($xml) {
 	}
 }
 
-State.prototype.expandedDialogue = function(self, target) {
-	return expandDialogue(this.rawDialogue, self, target)
+State.prototype.expandDialogue = function(self, target) {
+	this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
 
 /************************************************************
@@ -683,6 +683,8 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 		
         this.allStates = states;
         this.chosenState = chosenState;
+        this.chosenState.expandDialogue(this, opp);
+        
         return true;
     } else {
         console.log("Warning: matched "+tag+" dialogue for player "+this.slot+" has no states");

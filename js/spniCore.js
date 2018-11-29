@@ -120,7 +120,7 @@ function compileBaseErrorReport(userDesc, bugType) {
             }
 
             if (players[i].chosenState) {
-                playerData.currentLine    = players[i].chosenState.dialogue;
+                playerData.currentLine    = players[i].chosenState.rawDialogue;
                 playerData.currentImage   = players[i].chosenState.image;
             }
 
@@ -316,6 +316,7 @@ Player.prototype.resetState = function () {
         this.allStates = allStates;
         
 		this.chosenState = this.allStates[0];
+        this.chosenState.expandDialogue(this, null);
         
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
