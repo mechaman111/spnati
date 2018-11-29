@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import imp
 if sys.version_info[0] == 2:
 	imp.reload(sys)
@@ -9,6 +10,8 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import datetime
 import re
+from collections import OrderedDict
+from ordered_xml import OrderedXMLElement as Element, Comment
 try:
      # Python 2.6-2.7
      from HTMLParser import HTMLParser
@@ -33,6 +36,7 @@ ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, te
 ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
 			  'markers', 'not-markers', 'any-markers',
 			  'alsoplaying-markers', 'alsoplaying-not-markers', 'alsoplaying-any-markers']
+situations = []
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter"]
@@ -44,141 +48,46 @@ def capitalizeDialogue(s):
 	# Convert the first character of the string, or of a variable that starts the string, to uppercase
 	return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
 
-#default images and text for most cases
-def get_cases_dictionary():
-	d = {}#male pre-strip scenes
-	d["male_human_must_strip"] = [] # Optional
-	d["male_must_strip"] = [{"key":"male_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
-	d["male_removing_accessory"] = [{"key":"male_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
-	d["male_removing_minor"] = [{"key":"male_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
-	d["male_removing_major"] = [{"key":"male_removing_major", "image":"interested", "text":"Finally getting ~name~ out of his ~clothing~!"}]
-	d["male_chest_will_be_visible"] = [{"key":"male_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see that chest of yours, ~name~!"}]
-	d["male_crotch_will_be_visible"] = [{"key":"male_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
-	
-	#male stripping
-	d["male_removed_accessory"] = [{"key":"male_removed_accessory", "image":"calm", "text":"At least you have less small stuff to take off now."}]
-	d["male_removed_minor"] = [{"key":"male_removed_minor", "image":"happy", "text":"Maybe we can get you out of some large stuff now, ~name~."}]
-	d["male_removed_major"] = [{"key":"male_removed_major", "image":"interested", "text":"You look better without your ~clothing~, ~name~."}]
-	d["male_chest_is_visible"] = [{"key":"male_chest_is_visible", "image":"interested", "text":"Nice chest, ~name~."}]
-	d["male_small_crotch_is_visible"] = [{"key":"male_small_crotch_is_visible", "image":"calm", "text":"That's... smaller than I was expecting... not that anything is wrong with that, ~name~."}]
-	d["male_medium_crotch_is_visible"] = [{"key":"male_medium_crotch_is_visible", "image":"awkward", "text":"Well then... shall we continue the game?"}]
-	d["male_large_crotch_is_visible"] = [{"key":"male_large_crotch_is_visible", "image":"shocked", "text":"That is massive! How do you even manage with that thing, ~name~?"}]
-	
-	#male masturbating
-	d["male_must_masturbate"] = [{"key":"male_must_masturbate", "image":"interested", "text":"Time to show your skills, ~name~..."}]
-	d["male_start_masturbating"] = [{"key":"male_start_masturbating", "image":"horny", "text":"You're going to have to go until you're done, ~name~..."}]
-	d["male_masturbating"] = [{"key":"male_masturbating", "image":"horny", "text":"Keep going, ~name~..."}]
-	d["male_finished_masturbating"] = [{"key":"male_finished_masturbating", "image":"shocked", "text":"Wow... uh... I guess you're done then..."}]
-	
-	#female pre-strip
-	d["female_human_must_strip"] = [] # Optional
-	d["female_must_strip"] = [{"key":"female_must_strip", "image":"interested", "text":"What are you going to take off, ~name~?"}]
-	d["female_removing_accessory"] = [{"key":"female_removing_accessory", "image":"sad", "text":"You're only taking off your ~clothing~, ~name~? That doesn't seem fair."}]
-	d["female_removing_minor"] = [{"key":"female_removing_minor", "image":"calm", "text":"I guess your ~clothing~ is something, at least."}]
-	d["female_removing_major"] = [{"key":"female_removing_major", "image":"interested", "text":"Finally getting ~name~ out of her ~clothing~!"}]
-	d["female_chest_will_be_visible"] = [{"key":"female_chest_will_be_visible", "image":"interested", "text":"I guess it's time to see those tits of yours, ~name~!"}]
-	d["female_crotch_will_be_visible"] = [{"key":"female_crotch_will_be_visible", "image":"horny", "text":"I guess you have to show 'that' to me now, ~name~..."}]
-	
-	#female stripping
-	d["female_removed_accessory"] = [{"key":"female_removed_accessory", "image":"calm", "text":"At least you have less small stuff to take off now."}]
-	d["female_removed_minor"] = [{"key":"female_removed_minor", "image":"happy", "text":"Maybe we can get you out of some large stuff now, ~name~."}]
-	d["female_removed_major"] = [{"key":"female_removed_major", "image":"interested", "text":"You look better without your ~clothing~, ~name~."}]
-	d["female_small_chest_is_visible"] = [{"key":"female_small_chest_is_visible", "image":"interested", "text":"Those are nice, ~name~."}]
-	d["female_medium_chest_is_visible"] = [{"key":"female_medium_chest_is_visible", "image":"horny", "text":"Nice tits, ~name~."}]
-	d["female_large_chest_is_visible"] = [{"key":"female_large_chest_is_visible", "image":"shocked", "text":"How do you even manage with those things, ~name~. Is your back okay?"}]
-	d["female_crotch_is_visible"] = [{"key":"female_crotch_is_visible", "image":"shocked", "text":"It's so pretty, ~name~..."}]
-	
-	#female masturbating
-	d["female_must_masturbate"] = [{"key":"female_must_masturbate", "image":"interested", "text":"Time to show your skills, ~name~..."}]
-	d["female_start_masturbating"] = [{"key":"female_start_masturbating", "image":"horny", "text":"You're going to have to go until you're done, ~name~..."}]
-	d["female_masturbating"] = [{"key":"female_masturbating", "image":"horny", "text":"Keep going, ~name~..."}]
-	d["female_finished_masturbating"] = [{"key":"female_finished_masturbating", "image":"shocked", "text":"Wow... uh... I guess you're done then..."}]
-	
-	#victory
-	d["game_over_victory"] = [{"key":"game_over_victory", "image":"happy", "text":"I WON!"}]
-	
-	return d
-
-#get the cases for when the character is still in the game (all clothed stages, and nude)
-def get_playing_cases_dictionary():
-	d = {}
-	#quality of hand
-	d["swap_cards"] = [{"key":"swap_cards", "image":"calm", "text":"I'll exchange ~cards~ cards."}]
-	d["good_hand"] = [{"key":"good_hand", "image":"happy", "text":"I've got a good hand."}]
-	d["okay_hand"] = [{"key":"okay_hand", "image":"calm", "text":"I've got an okay hand."}]
-	d["bad_hand"] = [{"key":"bad_hand", "image":"sad", "text":"I've got a bad hand."}]
-	
-	return d
-
-#cases where the player can strip (all stages until nude)
-def get_stripping_cases_dictionary():
-	d = {}
-	
-	#stripping
-	d["stripped"] = [{"key":"stripped", "image":"sad", "text":"I miss my ~clothing~ already..."}]
-	d["must_strip_winning"] = [{"key":"must_strip_winning", "image":"loss", "text":"Well, I guess it had to be my turn eventually..."}]
-	d["must_strip_normal"] = [{"key":"must_strip_normal", "image":"loss", "text":"I guess I lost, huh?"}]
-	d["must_strip_losing"] = [{"key":"must_strip_losing", "image":"loss", "text":"I lost again? But... I have less clothes than everyone else!"}]
-	d["stripping"] = [{"key":"stripping", "image":"strip", "text":"I guess I'll just take off my ~clothing~..."}]
-	return d
-	
-#default images and text for being nude
-def get_nude_cases_dictionary():
-	d = {}
-	d["stripped"] = [{"key":"stripped", "image":"sad", "text":"I miss my ~clothing~ already..."}] #there's still a stripped case when they're nude
-	d["must_masturbate"] = [{"key":"must_masturbate", "image":"loss", "text":"I guess I lost..."}]
-	d["must_masturbate_first"] = [{"key":"must_masturbate_first", "image":"loss", "text":"Y-You want me to do what?!"}]
-	d["start_masturbating"] = [{"key":"start_masturbating", "image":"starting", "text":"I guess I have to do 'that' now, huh?"}]
-	
-	return d
-
-#default images and text for masturbating
-def get_masturbating_cases_dictionary():
-	d = {}
-	d["masturbating"] = [{"key":"masturbating", "image":"calm", "text":"How long do I have to keep going for?"}]
-	d["heavy_masturbating"] = [{"key":"heavy_masturbating", "image":"heavy", "text":"Mmmmmmmm...."}]
-	d["finishing_masturbating"] = [{"key":"finishing_masturbating", "image":"finishing", "text":"I'm cumming!"}]
-	return d
-
-#default images and text for being finished
-def get_finished_Cases_dictionary():
-	d = {}
-	d["finished_masturbating"] = [{"key":"finished_masturbating", "image":"finished", "text":"I'm done..."}]
-	d["game_over_defeat"] = [{"key":"game_over_defeat", "image":"calm", "text":"Congrats, ~name~... I can't believe I lost..."}]
-	return d
-
-#default images for being selected at the start of the game and the game starting.
-# These have no default text since they're new and we don't want to force everyone to use them
-def get_start_cases_dictionary():
-	d = {}
-	d["selected"] = []
-	d["game_start"] = []
-	return d
-
+def get_situations_from_xml():
+	filename = os.path.join(os.path.dirname(sys.argv[0]), 'dialogue_tags.xml')
+	dialogue_tags = ET.parse(filename)
+	for el in dialogue_tags.iterfind('./triggers/trigger'):
+		if el.attrib['tag'] == '-':
+			continue
+		situations.append({
+			'key': el.get('tag'),
+			'start': int(el.get('start', '0')),
+			'end': int(el.get('end', '10')),
+			'group': int(el.get('group', '0')),
+			'order': int(el.get('order', '0')),
+			'image': el.findtext('defaultImage'),
+			'text': el.findtext('defaultText'),
+			'optional': el.get('optional') == 'true',
+		})
+	situations.sort(key=lambda x: (x['group'], x['order']))
 
 #get a set of cases from the dictionaries. First try stage-specific from the character's data, then general entries from the character's data, then stage-specific from the default data, then general cases from the default data.
-def get_cases(player_dictionary, default_dictionary, key, stage):
+def get_cases(player_dictionary, situation, stage):
 	image_formats = ["png", "jpg", "jpeg", "gif", "gifv"] #image file format extensions
 	out_list = []
+	key = situation['key']
 	full_key = "%d-%s" % (stage, key)
-	
-	result_list = list()
 
+	result_list = list()
 	def is_generic_line(line_data):
 		for target_type in all_targets:
 			if target_type in line_data:
 				return False
 		return True
-	
+
 	def have_generic_line(lines):
 		for line_data in lines:
 			if is_generic_line(line_data):
 				return True
 		return False
 	
-	using_player = False
 	have_generic_entry = False
-	
+
 	#check character's data
 	if full_key in player_dictionary:
 		result_list += player_dictionary[full_key]
@@ -187,7 +96,6 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 		#because we need at least one line that doesn't have one
 		if have_generic_line(result_list):
 			have_generic_entry = True
-			using_player = True
 		
 	if key in player_dictionary:
 		for line_data in player_dictionary[key]:
@@ -201,24 +109,17 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 
 		if have_generic_line(result_list):
 			have_generic_entry = True
-			using_player = True
-	
-	backup_list = None
 	
 	#use the default data if there are no player-specific lines available
-	if key in default_dictionary:
-		backup_list = default_dictionary[key]
-		if not have_generic_entry:
-			result_list += backup_list
+	if not have_generic_entry and not situation['optional']:
+		result_list.append({'key': situation['key'], 'text': situation['text'], 'image': situation['image']})
+		print("Warning: Using default line for key %s, stage %d" % (key, stage))
 	
 	#debug
-	#if not using_player:
-		#print "not using player line for key %s, stage %d" % (key, stage)
-	
 	#convert image formats
 	#print "result list", result_list #for debug purposes
 	for i, line_data in enumerate(result_list):
-		line_data = dict(line_data) #use a copy of the line_data entry
+		line_data = line_data.copy() #use a copy of the line_data entry
 		#because if we copy it then changing the stage number for images (below) for lines that don't have stage numbers
 		#will use the first stage number that doesn't have a stage-specific version for all the stages where the generic line is used
 	
@@ -226,7 +127,7 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 		text = line_data["text"]
 		if len(image) <= 0:
 			#if the character entry doesn't include an image, use default image
-			image = backup_list[i % len(backup_list)]["image"] #use i'th image in default dictionary, if possible. wrap around if backup list isn't long enough
+			image = situation["image"]
 		
 		#if the image name doesn't include a stage, prepend the current stage
 		if not image[0].isdigit():
@@ -288,7 +189,7 @@ def create_case_xml(base_element, lines):
 			current_sort = line_data["sort_key"]
 			
 			#make a new <case> element in the xml
-			tag_list = {"tag":line_data["key"]} #every case needs a "tag" value that denotes the situation
+			tag_list = OrderedDict(tag=line_data["key"]) #every case needs a "tag" value that denotes the situation
 			
 			for target_type in one_word_targets:
 				if target_type in line_data:
@@ -300,11 +201,11 @@ def create_case_xml(base_element, lines):
 					capital_word = multi_word_targets[ind]
 					tag_list[capital_word] = line_data[lower_case_target]
 	
-			case_xml_element = ET.SubElement(base_element, "case", tag_list) #create the <case> element in the xml
+			case_xml_element = base_element.subElement("case", None, tag_list) #create the <case> element in the xml
 
 			if "conditions" in line_data:
 				for condition in line_data["conditions"]:
-					conddict = { 'count': condition[1] }
+					conddict = OrderedDict(count=condition[1])
 					condparts = condition[0].split('&') if condition[0] != '' else []
 					for cond in condparts:
 						if cond in [ 'male', 'female' ]:
@@ -314,155 +215,103 @@ def create_case_xml(base_element, lines):
 						else:
 							conddict['filter'] = cond
 
-					ET.SubElement(case_xml_element, "condition", conddict)
+					case_xml_element.subElement("condition", None, conddict)
 
 			if "tests" in line_data:
 				for test in line_data["tests"]:
-					ET.SubElement(case_xml_element, "test", { 'expr': test[0], 'value': test[1]})
+					case_xml_element.subElement("test", [('expr', test[0]), ('value', test[1])])
 
 
 		#now add the individual line
 		#remember that this happens regardless of if the <case> is new
-		attrib = {"img": line_data["image"]}
+		attrib = OrderedDict(img=line_data["image"])
 		if "marker" in line_data:
 			attrib["marker"] = line_data["marker"]
 		if "direction" in line_data:
 			attrib["direction"] = line_data["direction"]
 		if "location" in line_data:
 			attrib["location"] = line_data["location"]
-		ET.SubElement(case_xml_element, "state", attrib).text = line_data["text"] #add the image and text
+		case_xml_element.subElement("state", line_data["text"], attrib) #add the image and text
 
 #add several values to the XML tree
 #specifically, adds the <case> and <state> elements to a <stage> base_element
-def add_values(base_element, player_dictionary, default_dictionary, stage):
-	if type(default_dictionary) != list:
-		default_dictionary = [default_dictionary]
-	for d in default_dictionary:
-		for key in list(d.keys()):
-			contents = get_cases(player_dictionary, d, key, stage)
-			#add the target values, if any
-			target_tags = []
-			case = create_case_xml(base_element, contents) #add the case element to the XML tree
-			#for img, text in contents: #no longer used
-			#	ET.SubElement(case, "state", img=img).text = text #add the states to the case
+def add_values(base_element, player_dictionary, stage):
+	clothes_count = len(player_dictionary["clothes"])
+	def adjust_stage(stage):
+		if stage > 4:
+			return stage - 8 + clothes_count
+		else:
+			return stage
 
-#manually prettify xml code (because the standard method doesn't seem to work on windows)
-def manual_prettify_xml(elem, level=0, isLast=False):
-	indent = "    "
-	if elem.text is None and len(elem) > 0:
-		elem.text = "\n" + (level + 1) * indent
-	if isLast:
-		elem.tail = "\n" + (level - 1) * indent
-	else:
-		elem.tail = "\n" + (level) * indent
-		
-	if elem.tag in ["stage", "wardrobe", "timer", "start", "behaviour", "epilogue", "screen", "text", "tags"]:
-		elem.tail = "\n" + elem.tail
-		
-	if elem.tag == "opponent":
-		elem.text = "\n" + elem.text
-	
-	for ind, subelem in enumerate(elem):
-		is_last = ind == len(elem) - 1
-		manual_prettify_xml(subelem, level + 1, is_last)
-	return elem
-			
+	for situation in situations:
+		if stage < adjust_stage(situation['start']) or stage > adjust_stage(situation['end']):
+			continue
+		contents = get_cases(player_dictionary, situation, stage)
+		#add the target values, if any
+		create_case_xml(base_element, contents) #add the case element to the XML tree
+
 #write the xml file to the specified filename
 def write_xml(data, filename):
-	main_dict = get_cases_dictionary()
-	plyr_dict = get_playing_cases_dictionary()
-	strp_dict = get_stripping_cases_dictionary()
-	nude_dict = get_nude_cases_dictionary()
-	mstb_dict = get_masturbating_cases_dictionary()
-	fnsh_dict = get_finished_Cases_dictionary()
-	strt_dict = get_start_cases_dictionary()
-	
-
 	#f = open(filename)
-	o = ET.Element("opponent")
+	o = Element("opponent")
 	mydate = datetime.datetime.now()
-	o.insert(0, ET.Comment("This file was machine generated by make_xml.py version 1.60 in " + mydate.strftime("%B") + " " + mydate.strftime("%Y") +". Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated."))
-	ET.SubElement(o, "first").text = data["first"]
-	ET.SubElement(o, "last").text = data["last"]
+	o.append(Comment("This file was machine generated by make_xml.py version 2.0 in " + mydate.strftime("%B") + " " + mydate.strftime("%Y") +". Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated."))
+	o.subElement("first", data["first"])
+	o.subElement("last", data["last"])
 
 	#label
 	for stage in data["label"]:
 		if stage == 0:
-			ET.SubElement(o, "label").text = data["label"][stage]
+			o.subElement("label", data["label"][stage])
 		else:
-			ET.SubElement(o, "label", stage=stage).text = data["label"][stage]
+			o.subElement("label", data["label"][stage], {stage: stage})
 
-	ET.SubElement(o, "gender").text = data["gender"]
-	ET.SubElement(o, "size").text = data["size"]
-	ET.SubElement(o, "timer").text = data["timer"]
+	for tag in ("gender", "size", "timer"):
+		o.subElement(tag, data[tag])
 
 	#intelligence
 	for stage in data["intelligence"]:
 		if stage == 0:
-			ET.SubElement(o, "intelligence").text = data["intelligence"][stage]
+			o.subElement("intelligence", data["intelligence"][stage])
 		else:
-			ET.SubElement(o, "intelligence", stage=stage).text = data["intelligence"][stage]
+			o.subElement("intelligence", data["intelligence"][stage], {'stage': stage})
 
 	#tags
-	tags_elem = ET.SubElement(o, "tags")
+	tags_elem = o.subElement("tags", blank_before=True, blank_after=True)
 	character_tags = data["character_tags"]
 	for tag in character_tags:
-		ET.SubElement(tags_elem, "tag").text = tag
-		
+		tags_elem.subElement("tag", tag)
+
 	#start image
-	start = ET.SubElement(o, "start")
+	start = o.subElement("start", blank_before=True, blank_after=True)
 	start_data = data["start"] if "start" in data else ["0-calm,So we'll be playing strip poker... I hope we have fun."]
 	start_count = len(start_data)
 	for i in range(0, start_count):
 		start_image, start_text = start_data[i].split(",", 1)
-		ET.SubElement(start, "state", img=start_image+".png").text = start_text
+		start.subElement("state", start_text, {'img': start_image+".png"})
 	
 	#wardrobe
-	clth = ET.SubElement(o, "wardrobe")
+	clth = o.subElement("wardrobe", blank_after=True)
 	clothes = data["clothes"]
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-		clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
+		clothesattr = OrderedDict([("lowercase", lname), ("position", pos), ("proper-name", pname), ("type", tp)])
 		if num=="plural":
 			clothesattr["plural"] = "true"
-		ET.SubElement(clth, "clothing", clothesattr)
+		clth.subElement("clothing", None, clothesattr)
 	
 	#behaviour
-	bh = ET.SubElement(o, "behaviour")
-	for stage in range(0, clothes_count):
-		s = ET.SubElement(bh, "stage", id=str(stage))
-		if stage == 0:
-			add_values(s, data, [strt_dict], stage)
-		add_values(s, data, [main_dict, plyr_dict, strp_dict], stage)
-		if stage == 0:
-			for el in s.findall("./case[@tag='stripped']"):
-				s.remove(el)
-
-	#nude stage
-	stage += 1
-	s = ET.SubElement(bh, "stage", id=str(stage))
-	add_values(s, data, [main_dict, plyr_dict, nude_dict], stage)
-	
-	#masturbating stage
-	stage += 1
-	s = ET.SubElement(bh, "stage", id=str(stage))
-	add_values(s, data, [main_dict, mstb_dict], stage)
-	for el in s.findall("./case[@tag='game_over_victory']"):
-		s.remove(el)
-			
-	#finished stage
-	stage += 1
-	s = ET.SubElement(bh, "stage", id=str(stage))
-	add_values(s, data, [main_dict, fnsh_dict], stage)
-	for el in s.findall("./case[@tag='game_over_victory']"):
-		s.remove(el)
+	bh = o.subElement("behaviour", blank_after=True)
+	for stage in range(0, clothes_count+3):
+		s = bh.subElement("stage", None, {'id': str(stage)}, blank_after=True)
+		add_values(s, data, stage)
 	
 	#endings
 	if "endings" in data:
 		#for each ending
 		for ending in data["endings"]:
-			ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
+			ending_xml = o.subElement("epilogue", None, {'gender': ending["gender"]}, blank_after=True)
 			
 			if 'img' in ending:
 				ending_xml.set('img', ending['img'])
@@ -470,40 +319,28 @@ def write_xml(data, filename):
 				if cond_type in ending:
 					ending_xml.set(cond_type, ending[cond_type])
 			
-			ET.SubElement(ending_xml, "title").text = ending["title"]
+			ending_xml.subElement("title", ending["title"])
 			
 			#for each screen in an ending
 			for screen in ending["screens"]:
-				screen_xml = ET.SubElement(ending_xml, "screen", img=screen["image"])
+				screen_xml = ending_xml.subElement("screen", None, {'img': screen["image"]}, blank_after=True)
 				
 				#for each text box on a screen
 				for text_box in screen["text_boxes"]:
-					text_box_xml = ET.SubElement(screen_xml, "text")
-					ET.SubElement(text_box_xml, x_tag).text = text_box[x_tag]
-					ET.SubElement(text_box_xml, y_tag).text = text_box[y_tag]
+					text_box_xml = screen_xml.subElement("text", blank_after=True)
+					text_box_xml.subElement(x_tag, text_box[x_tag])
+					text_box_xml.subElement(y_tag, text_box[y_tag])
 					#width and arrow are optional
 					if width_tag in text_box:
-						ET.SubElement(text_box_xml, width_tag).text = text_box[width_tag]
+						text_box_xml.subElement(width_tag, text_box[width_tag])
 					if arrow_tag in text_box:
-						ET.SubElement(text_box_xml, arrow_tag).text = text_box[arrow_tag]
-					ET.SubElement(text_box_xml, "content").text = capitalizeDialogue(text_box[text_tag])
+						text_box_xml.subElement(arrow_tag, text_box[arrow_tag])
+					text_box_xml.subElement("content", capitalizeDialogue(text_box[text_tag]))
 	
 	#done
 	
-	
-	
-	#this outputs compact/non-pretty xml
-	#tree = ET.ElementTree(o)
-	#tree.write(filename, xml_declaration=True)
-	
-	#this is supposed to prettify
-	#xml_prettystr = minidom.parseString(ET.tostring(o)).toprettyxml(indent="    ")
-	#with open(filename, "w") as f:
-	#	f.write(pretty_xml)
-	
-	#manual prettify
-	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, encoding='UTF-8', xml_declaration=True)
+	open(filename, 'w').write(o.serialize())
+
 
 #add an ending to the 
 def add_ending(ending, d):
@@ -641,15 +478,7 @@ def handle_ending_string(key, content, ending, d):
 	
 #read in a character's data
 def read_player_file(filename):
-	main_dict = get_cases_dictionary()
-	plyr_dict = get_playing_cases_dictionary()
-	strp_dict = get_stripping_cases_dictionary()
-	nude_dict = get_nude_cases_dictionary()
-	mstb_dict = get_masturbating_cases_dictionary()
-	fnsh_dict = get_finished_Cases_dictionary()
-	strt_dict = get_start_cases_dictionary()
-	
-	case_names = list(main_dict.keys()) + list(plyr_dict.keys()) + list(strp_dict.keys()) + list(nude_dict.keys()) + list(mstb_dict.keys()) + list(fnsh_dict.keys()) + list(strt_dict.keys())
+	case_names = [s['key'] for s in situations]
 	
 	d = {}
 	
@@ -900,39 +729,38 @@ def read_player_file(filename):
 
 #make the meta.xml file
 def make_meta_xml(data, filename):
-	o = ET.Element("opponent")
+	o = Element("opponent")
 	
 	enabled = "true" if "enabled" not in data or data["enabled"] == "true" else "false"
-	ET.SubElement(o, "enabled").text = enabled
+	o.subElement("enabled", enabled)
 	
 	values = ["first","last","label","pic","gender","height","from","writer","artist","description","endings","layers","character_tags"]
 	
 	for value in values:
-		content = ""
 		if value == "pic":
-			if content == "":
-				content = "0-calm"
-			content += ".png"
+			pic = data["pic"]
+			if pic == "":
+				pic = "0-calm"
+                        o.subElement("pic", pic + ".png")
 
 		elif value == "layers":
 			#the number of layers of clothing is taken directly from the clothing data
-			content = str(len(data["clothes"]))
+			o.subElement("layers", str(len(data["clothes"])))
 
 		elif value == "label":
-			content = data["label"][0]
+			o.subElement("label", data["label"][0])
 
 		elif value == "character_tags":
-			tags_elem = ET.SubElement(o, "tags")
+			tags_elem = o.subElement("tags")
 			character_tags = data["character_tags"]
 			for tag in character_tags:
-				ET.SubElement(tags_elem, "tag").text = tag
+			       tags_elem.subElement("tag", tag)
 
 		elif value == "endings":
 			if "endings" in data:
 				#for each ending
 				for ending in data["endings"]:
-					ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
-					ending_xml.text = ending["title"];
+					ending_xml = o.subElement("epilogue", ending["title"], {'gender': ending["gender"]})
 
 					if 'img' in ending:
 						ending_xml.set('img', ending['img'])
@@ -947,20 +775,14 @@ def make_meta_xml(data, filename):
 								ending_xml.set(cond_type, ending[cond_type])
 
 		elif value in data:
-			content = data[value]
+			o.subElement(value, data[value])
 
-		if content != "":
-			ET.SubElement(o, value).text = content
-		
-	#ET.ElementTree(o).write(filename, xml_declaration=True)
-	
-	pretty_xml = manual_prettify_xml(o)
-	ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
+	open(filename, 'w').write(o.serialize())
 
 #make the marker.xml file
 def make_markers_xml(data, filename):
 	if "markers" in data:
-		o = ET.Element("markers")
+		o = Element("markers")
 		markers = data["markers"]
 		for marker_data in markers:
 			name, scope, desc = marker_data.split(",", 2)
@@ -968,13 +790,13 @@ def make_markers_xml(data, filename):
 				scope = "Public"
 			elif scope == "private":
 				scope = "Private"
-			ET.SubElement(o, "marker", **{"name":name, "scope":scope}).text = desc
+			o.subElement("marker", desc, [("name", name), ("scope",scope)])
 		
-		pretty_xml = manual_prettify_xml(o)
-		ET.ElementTree(pretty_xml).write(filename, encoding="UTF-8", xml_declaration=True)
+		open(filename, 'w').write(o.serialize())
 
 #read the input data, the write the xml files
 def make_xml(player_filename, out_filename, meta_filename=None, marker_filename=None):
+	get_situations_from_xml()
 	player_dictionary = read_player_file(player_filename)
 	write_xml(player_dictionary, out_filename)
 	if meta_filename is not None:
