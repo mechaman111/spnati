@@ -576,7 +576,11 @@ Opponent.prototype.loadBehaviour = function (slot) {
          * 'this' is bound to the Opponent object.
          */
 		function(xml) {
+            console.log("Finished loading opponents/"+this.id+"/behaviour.xml");
+            
             var $xml = $(xml);
+            
+            console.log("Finished parsing opponents/"+this.id+"/behaviour.xml");
 
             this.xml = $xml;
             this.size = $xml.find('size').text();
@@ -638,7 +642,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 });
             });
             
-            this.xml.find('behaviour').find('case').each(function () {
+            this.xml.find('behaviour').children('case').each(function () {
                 var curCase = new Case($(this), null);
                 
                 if(!allCases[curCase.tag]) {
@@ -649,6 +653,8 @@ Opponent.prototype.loadBehaviour = function (slot) {
             })
             
             this.allCases = allCases;
+            
+            console.log("Finished indexing cases.");
             
             
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {

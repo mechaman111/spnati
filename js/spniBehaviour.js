@@ -258,13 +258,13 @@ function Case($xml, stage) {
 	this.states = states;
 	
 	var counters = [];
-	states[i].find("condition").each(function () {
+	$xml.find("condition").each(function () {
 		counters.push($(this));
 	});
 	this.counters = counters;
 	
 	var tests = [];
-	states[i].find("test").each(function () {
+	$xml.find("test").each(function () {
 		tests.push($(this));
 	});
 	this.tests = tests;
@@ -319,7 +319,7 @@ function Case($xml, stage) {
     }
 }
 
-Case.prototype.getAlsoPlaying = function () {
+Case.prototype.getAlsoPlaying = function (opp) {
     if (!this.alsoPlaying) return null;
     
     var ap = null;
@@ -369,15 +369,15 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     }
 
     // targetStage
-    if (opp && this.targetStage {
-        if(!inInterval(opp.stage, this.targetStage))) {
+    if (opp && this.targetStage) {
+        if(!inInterval(opp.stage, this.targetStage)) {
             return false; // failed "targetStage" requirement
         }
     }
     
     // targetLayers
     if (opp && this.targetLayers) {
-        if (!inInterval(opp.clothing.length, this.targetLayers))) {
+        if (!inInterval(opp.clothing.length, this.targetLayers)) {
             return false; 
         }
     }
@@ -448,7 +448,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
 
     // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand
     if (this.alsoPlaying) {
-        var ap = this.getAlsoPlaying();
+        var ap = this.getAlsoPlaying(opp);
         
         if (!ap) {
             return false; // failed "alsoPlaying" requirement
