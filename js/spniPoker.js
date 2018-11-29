@@ -113,6 +113,19 @@ function composeDeck () {
 	}
 }
 
+/************************************************************
+ * Prefetches all card images
+ ************************************************************/
+function preloadCardImages () {
+	[SPADES, HEARTS, CLUBS, DIAMONDS].forEach(function(suit) {
+		for (var r = 1; r < 14; r++) {
+			new Image().src = IMG + suit + r + '.jpg';
+		}
+	});
+	new Image().src = BLANK_CARD_IMAGE;
+	new Image().src = UNKNOWN_CARD_IMAGE;
+}
+
 /**********************************************************************
  *****                      Card Functions                        *****
  **********************************************************************/

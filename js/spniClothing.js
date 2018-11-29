@@ -269,6 +269,7 @@ function playerMustStrip (player) {
 			var trigger = determineForfeitSituation(player);
 			players[player].updateBehaviour(trigger);
 		}
+        players[player].preloadStageImages(players[player].stage + 1);
 	}
 
 	return clothing.length;
@@ -291,6 +292,7 @@ function prepareToStripPlayer (player) {
 
         updateAllBehaviours(player, dialogueTrigger);
         players[player].updateBehaviour(PLAYER_STRIPPING);
+        players[player].preloadStageImages(players[player].stage + 1);
     }
 }
 

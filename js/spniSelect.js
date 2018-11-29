@@ -1014,6 +1014,9 @@ function advanceSelectScreen () {
             },
         });
     }
+    players.forEach(function(player) {
+        player.preloadStageImages(0);
+    });
 
     advanceToNextScreen($selectScreen);
 }

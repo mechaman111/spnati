@@ -411,6 +411,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    /* Attempt to preload this opponent's picture for selection. */
+    new Image().src = 'opponents/'+id+'/'+this.image;
     
     this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
         return {
@@ -444,6 +446,7 @@ Opponent.prototype.isLoaded = function() {
 Opponent.prototype.onSelected = function() {
     this.resetState();
 	console.log(this.slot+": "+this);
+    this.preloadStageImages(-1);
 	this.updateBehaviour(SELECTED);
 	updateSelectionVisuals();
 }
@@ -456,27 +459,17 @@ Opponent.prototype.updateFolder = function () {
     if (this.folders) this.folder = this.getByStage(this.folders);
 }
 
-Opponent.prototype.getImagesForStage = function (stage) {
-    if(!this.xml) return [];
-
-    var imageSet = {};
-    var folder = this.folder;
-    this.xml.find('stage[id="'+stage+'"] state').each(function () {
-        imageSet[folder+$(this).attr('img')] = true;
-    });
-    return Object.keys(imageSet);
-};
-
-Opponent.prototype.getByStage = function (arr) {
+Opponent.prototype.getByStage = function (arr, stage) {
     if (typeof(arr) === "string") {
         return arr;
     }
+    if (stage === undefined) stage = this.stage;
     var bestFitStage = -1;
     var bestFit = null;
     for (var i = 0; i < arr.length; i++) {
         var startStage = arr[i].getAttribute('stage');
         startStage = parseInt(startStage, 10) || 0;
-        if (startStage > bestFitStage && startStage <= this.stage) {
+        if (startStage > bestFitStage && startStage <= stage) {
             bestFit = $(arr[i]).text();
             bestFitStage = startStage;
         }
@@ -626,6 +619,33 @@ Opponent.prototype.loadBehaviour = function (slot) {
 	);
 }
 
+Player.prototype.getImagesForStage = function (stage) {
+    if(!this.xml) return [];
+
+    var imageSet = {};
+    var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
+    var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
+                    : 'stage[id='+stage+'] case');
+    this.xml.find(selector).each(function () {
+        var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
+            filter = $(this).attr('filter');
+        // Skip cases requiring a character that isn't present
+        if ((target === undefined || players.some(function(p) { return p.id === target; }))
+            && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
+            && (filter === undefined || players.some(function(p) { return p.tags.indexOf(filter) >= 0; })))
+        {
+            $(this).children('state').each(function () {
+                imageSet[folder+$(this).attr('img')] = true;
+            })
+        }
+    });
+    return Object.keys(imageSet);
+};
+
+Player.prototype.preloadStageImages = function (stage) {
+    this.getImagesForStage(stage)
+        .forEach(function(fn) { new Image().src = fn; }, this );
+};
 
 /**********************************************************************
  *****              Overarching Game Flow Functions               *****
