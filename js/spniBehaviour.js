@@ -720,9 +720,9 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 			
 			if (chosenState.marker) {
 			    var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
+			    var name;
 			    if (match) {
 			        var perTarget = !!(match[3] || match[5]);
-			        var name;
 					if (match[1] === '+') {
 					    // increment marker value
 					    name = match[2];
@@ -754,8 +754,14 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 					    }
 						this.markers[name] = expandDialogue(match[6], this, opp);
 					}
-				} else if (!this.markers[chosenState.marker]) {
-					this.markers[chosenState.marker] = 1;
+			    } else {
+			        name = chosenState.marker;
+			        if (name.substring(name.length - 1, name.length) === "*") {
+			            name = getTargetMarker(name.substring(0, name.length - 1), opp);
+			        }
+			        if (!this.markers[name]) {
+			            this.markers[name] = 1;
+			        }
 				}
 			}
 			
