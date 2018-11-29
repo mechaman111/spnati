@@ -211,8 +211,10 @@ function checkMarker(predicate, target) {
 function Case($xml, stage) {
 	if (typeof stage === "number") {
         this.stage = {min: stage, max: stage};
-    } else {
+    } else if (stage) {
         this.stage = parseInterval(stage);
+    } else {
+        this.stage = parseInterval($xml.attr('stage'));
     }
     
 	this.tag =                      $xml.attr('tag');
@@ -617,491 +619,77 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 		/* their is restricted to this only */
 		//tag = players[player].forfeit[0];
 	//}
-
-    /* get the AI stage */
-    var stageNum = this.stage;
-
-    /* try to find the stage */
-    var stage = null;
-    this.xml.find('behaviour').find('stage').each(function () {
-       if (Number($(this).attr('id')) == stageNum) {
-           stage = $(this);
-       }
-    });
-
-    /* quick check to see if the stage exists */
-    if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
-        return;
+    
+    if (!this.allCases[tag]) {
+        console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot);
+        return false;
     }
-
-    /* try to find the tag */
-	var states = [];
-	$(stage).find('case').each(function () {
-		if ($(this).attr('tag') == tag) {
-            states.push($(this));
-		}
-	});
-
-    /* quick check to see if the tag exists */
-	if (states.length <= 0) {
-		console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
-		return false;
-	}
-    else {
-        // look for the best match
-        var bestMatch = [];
-		var bestMatchPriority = -1;
-
-        for (var i = 0; i < states.length; i++) {
-
-            var target =           states[i].attr("target");
-            var filter =           states[i].attr("filter");
-			var targetStage =      parseInterval(states[i].attr("targetStage"));
-			var targetLayers = parseInterval(states[i].attr("targetLayers"));
-			var targetStartingLayers = parseInterval(states[i].attr("targetStartingLayers"));
-			var targetStatus =      states[i].attr("targetStatus");
-			var targetTimeInStage = parseInterval(states[i].attr("targetTimeInStage"));
-			var targetSaidMarker =        states[i].attr("targetSaidMarker");
-			var targetNotSaidMarker =     states[i].attr("targetNotSaidMarker");
-			var oppHand =          states[i].attr("oppHand");
-			var hasHand =          states[i].attr("hasHand");
-			var alsoPlaying =      states[i].attr("alsoPlaying");
-			var alsoPlayingStage = parseInterval(states[i].attr("alsoPlayingStage"));
-			var alsoPlayingHand =  states[i].attr("alsoPlayingHand");
-			var alsoPlayingTimeInStage = parseInterval(states[i].attr("alsoPlayingTimeInStage"));
-			var alsoPlayingSaidMarker =   states[i].attr("alsoPlayingSaidMarker");
-			var alsoPlayingNotSaidMarker = states[i].attr("alsoPlayingNotSaidMarker");
-			var totalMales =	   parseInterval(states[i].attr("totalMales"));
-			var totalFemales =	   parseInterval(states[i].attr("totalFemales"));
-			var timeInStage =      parseInterval(states[i].attr("timeInStage"));
-			var lossesInRow =      parseInterval(states[i].attr("consecutiveLosses"));
-			var totalAlive =         parseInterval(states[i].attr("totalAlive"));
-			var totalExposed =       parseInterval(states[i].attr("totalExposed"));
-			var totalNaked =         parseInterval(states[i].attr("totalNaked"));
-			var totalMasturbating =     parseInterval(states[i].attr("totalMasturbating"));
-			var totalFinished =      parseInterval(states[i].attr("totalFinished"));
-			var totalRounds = 	parseInterval(states[i].attr("totalRounds"));
-			var saidMarker =        states[i].attr("saidMarker");
-			var notSaidMarker =     states[i].attr("notSaidMarker");
-			var customPriority =    states[i].attr("priority");
-			var counters = [];
-			states[i].find("condition").each(function () {
-				counters.push($(this));
-			});
-			var tests = [];
-			states[i].find("test").each(function () {
-				tests.push($(this));
-			});
-
-			var totalPriority = 0; // this is used to determine which of the states that
-									// doesn't fail any conditions should be used
-
-
-			///////////////////////////////////////////////////////////////////////
-			// go through different conditions required until one of them fails
-			// if none of them fail, then this state is considered for use with a certain priority
-
-			// target (priority = 300)
-			if (opp && typeof target !== typeof undefined && target !== false) {
-            target = target;
-				if (target === opp.id) {
-					totalPriority += 300; 	// priority
-				}
-				else {
-					continue;				// failed "target" requirement
-				}
-			}
-
-			if (this.filter) this.basePriority += 150;
-			if (opp && typeof filter !== typeof undefined && filter !== false) {
-				// check against tags
-				if (opp.tags.indexOf(filter) >= 0) {
-					totalPriority += 150;	// priority
-				} else {
-					continue;				// failed "filter" requirement
-				}
-			}
-
-			if (this.targetStage) this.basePriority += 80;
-			if (opp && typeof targetStage !== typeof undefined && targetStage !== false) {
-				if (inInterval(opp.stage, targetStage)) {
-					totalPriority += 80;		// priority
-				}
-				else {
-					continue;				// failed "targetStage" requirement
-				}
-			}
-
-			if (this.targetLayers) this.basePriority += 40;
-			if (opp && targetLayers !== undefined && targetLayers !== false) {
-				if (inInterval(opp.clothing.length, targetLayers)) {
-					totalPriority += 40;
-				} else {
-					continue;
-				}
-			}
-
-			if (this.targetStartingLayers) this.basePriority += 40;
-			if (opp && targetStartingLayers !== undefined && targetStartingLayers !== false) {
-				if (inInterval(opp.startingLayers, targetStartingLayers)) {
-					totalPriority += 40;
-				} else {
-					continue;
-				}
-			}
-
-			if (this.targetStatus) this.basePriority += 70;
-			if (opp && targetStatus !== undefined && targetStatus !== false) {
-				if (checkPlayerStatus(opp, targetStatus)) {
-					totalPriority += 70;
-				} else {
-					continue;
-				}
-			}
-
-			if (this.markers) this.basePriority += 1;
-			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (opp && targetSaidMarker) {
-				if (checkMarker(targetSaidMarker, opp)) {
-					totalPriority += 1;
-				}
-				else {
-					continue;
-				}
-			}
-			if (opp && targetNotSaidMarker) {
-				if (!opp.markers[targetNotSaidMarker]) {
-					totalPriority += 1;
-				}
-				else {
-					continue;
-				}
-			}
-
-			if (this.consecutiveLosses) this.basePriority += 60;
-			if (typeof lossesInRow !== typeof undefined && lossesInRow !== false) {
-				if (opp) { // if there's a target, look at their losses
-					if (inInterval(opp.consecutiveLosses, lossesInRow)) {
-						totalPriority += 60;
-					}
-					else {
-						continue;				// failed "consecutiveLosses" requirement
-					}
-				}
-				else { // else look at your own losses
-					if (inInterval(this.consecutiveLosses, lossesInRow)) {
-						totalPriority += 60;
-					}
-					else {
-						continue;
-					}
-				}
-			}
-
-			if (this.oppHand) this.basePriority += 30;
-			if (opp && typeof oppHand !== typeof undefined && oppHand !== false) {
-				if (handStrengthToString(opp.hand.strength).toLowerCase() === oppHand.toLowerCase()) {
-					totalPriority += 30;	// priority
-				} else {
-					continue;
-				}
-			}
-
-			if (this.targetTimeInStage) this.basePriority += 25;
-			if (opp && typeof targetTimeInStage !== typeof undefined) {
-				if (inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-							   : opp.timeInStage, targetTimeInStage)) {
-					totalPriority += 25;
-				}
-				else {
-					continue;				// failed "targetTimeInStage" requirement
-				}
-			}
-
-			if (this.hasHand) this.basePriority += 20;
-			if (typeof hasHand !== typeof undefined && hasHand !== false) {
-				if (handStrengthToString(this.hand.strength).toLowerCase() === hasHand.toLowerCase()) {
-					totalPriority += 20;		// priority
-				}
-				else {
-					continue;				// failed "hasHand" requirement
-				}
-			}
-
-            // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
-			if (typeof alsoPlaying !== typeof undefined && alsoPlaying !== false) {
-                var ap = null;
-                for(var j=0;j<players.length;j++) {
-                    if (players[j] && players[j] !== opp && players[j].id === alsoPlaying) {
-                        ap = players[j];
-                        break;
-                    }
-                }
-                
-				if (!ap) {
-					continue; // failed "alsoPlaying" requirement
-				} else {
-					totalPriority += 100; 	// priority
-
-					if (typeof alsoPlayingStage !== typeof undefined && alsoPlayingStage !== false) {
-						if (inInterval(ap.stage, alsoPlayingStage)) {
-							totalPriority += 40;	// priority
-						}
-						else {
-							continue;		// failed "alsoPlayingStage" requirement
-						}
-					}
-					if (typeof alsoPlayingTimeInStage !== typeof undefined) {
-						if (inInterval(ap.timeInStage, alsoPlayingTimeInStage)) {
-							totalPriority += 15;
-						}
-						else {
-							continue;		// failed "alsoPlayingTimeInStage" requirement
-						}
-					}
-					if (typeof alsoPlayingHand !== typeof undefined && alsoPlayingHand !== false) {
-						if (handStrengthToString(ap.hand.strength).toLowerCase() === alsoPlayingHand.toLowerCase())
-						{
-							totalPriority += 5;		// priority
-						}
-						else {
-							continue;		// failed "alsoPlayingHand" requirement
-						}
-					}
-					// marker checks have very low priority as they're mainly intended to be used with other target types
-					if (alsoPlayingSaidMarker) {
-						if (checkMarker(alsoPlayingSaidMarker, ap)) {
-							totalPriority += 1;
-						}
-						else {
-							continue;
-						}
-					}
-					if (alsoPlayingNotSaidMarker) {
-						if (!ap.markers[alsoPlayingNotSaidMarker]) {
-							totalPriority += 1;
-						}
-						else {
-							continue;
-						}
-					}
-				}
-			}
-
-			// filter counter targets (priority = 10)
-			var matchCounter = true;
-			for (var j = 0; j < counters.length; j++) {
-				var desiredCount = parseInterval(counters[j].attr('count'));
-				var filterTag = counters[j].attr('filter');
-				var filterGender = counters[j].attr('gender');
-				var filterStatus = counters[j].attr('status');
-				var count = players.countTrue(function(p) {
-					return p && (filterTag == undefined || (p.tags && p.tags.indexOf(filterTag) >= 0))
-						&& (filterGender == undefined || (p.gender == filterGender))
-						&& (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
-				});
-				if (inInterval(count, desiredCount)) {
-					totalPriority += (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
-				}
-				else {
-					matchCounter = false;
-					break;
-				}
-			}
-			if (!matchCounter) {
-				continue; // failed filter count
-			}
-
-			if (!tests.every(function(test) {
-				var expr = expandDialogue(test.attr('expr'), players[player], opp);
-				var value = test.attr('value')
-				var interval = parseInterval(value);
-				if (interval ? inInterval(Number(expr), interval) : expr == value) {
-					totalPriority += 50;
-					return true;
-				} else return false;
-			})) {
-				continue;
-			} 
-
-			if (this.totalRounds) this.basePriority += 10;
-			if (typeof totalRounds !== typeof undefined) {
-				if (inInterval(currentRound, totalRounds)) {
-					totalPriority += 10;
-				}
-				else {
-					continue;		// failed "totalRounds" requirement
-				}
-			}
-
-			if (this.timeInStage) this.basePriority += 8;
-			if (typeof timeInStage !== typeof undefined) {
-				if (inInterval(this.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-							   : this.timeInStage, timeInStage)) {
-					totalPriority += 8;
-				}
-				else {
-					continue;		// failed "timeInStage" requirement
-				}
-			}
-
-			if (this.totalMales) this.basePriority += 5;
-			if (typeof totalMales !== typeof undefined && totalMales !== false) {
-				var count = players.countTrue(function(p) {
-					return p && p.gender === eGender.MALE;
-				});
-				if (inInterval(count, totalMales)) {
-					totalPriority += 5;		// priority
-				}
-				else {
-					continue;		// failed "totalMales" requirement
-				}
-			}
-
-			if (this.totalFemales) this.basePriority += 5;
-			if (typeof totalFemales !== typeof undefined && totalFemales !== false) {
-				var count = players.countTrue(function(p) {
-					return p && p.gender === eGender.FEMALE;
-				});
-				if (inInterval(count, totalFemales)) {
-					totalPriority += 5;		// priority
-				}
-				else {
-					continue;		// failed "totalFemales" requirement
-				}
-			}
-
-			if (this.totalAlive) this.basePriority += 3;
-			if (typeof totalAlive !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STATUS_ALIVE), totalAlive)) {
-					totalPriority += 2 + totalAlive.max; //priority is weighted by max, so that higher totals take priority
-				}
-				else {
-					continue;		// failed "totalAlive" requirement
-				}
-			}
-
-			if (this.totalExposed) this.basePriority += 4;
-			if (typeof totalExposed !== typeof undefined) {
-				var count = 0;
-				if (inInterval(getNumPlayersInStage(STATUS_EXPOSED), totalExposed)) {
-					totalPriority += 4 + totalExposed.max; //priority is weighted by max, so that higher totals take priority
-				}
-				else {
-					continue;		// failed "totalExposed" requirement
-				}
-			}
-
-			if (this.totalNaked) this.basePriority += 5;
-			if (typeof totalNaked !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STATUS_NAKED), totalNaked)) {
-					totalPriority += 5 + totalNaked.max; //priority is weighted by max, so that higher totals take priority;
-				}
-				else {
-					continue;		// failed "totalNaked" requirement
-				}
-			}
-
-			if (this.totalMasturbating) this.basePriority += 5;
-			if (typeof totalMasturbating !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STATUS_MASTURBATING), totalMasturbating)) {
-					totalPriority += 5 + totalMasturbating.max; //priority is weighted by max, so that higher totals take priority;
-				}
-				else {
-					continue;		// failed "totalMasturbating" requirement
-				}
-			}
-
-			if (this.totalFinished) this.basePriority += 5;
-			if (typeof totalFinished !== typeof undefined) {
-				if (inInterval(getNumPlayersInStage(STATUS_FINISHED), totalFinished)) {
-					totalPriority += 5 + totalFinished.max; //priority is weighted by max, so that higher totals take priority
-				}
-				else {
-					continue;		// failed "totalFinished" requirement
-				}
-			}
-
-			if (this.markers) this.basePriority += 1;
-			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (saidMarker) {
-				if (checkMarker(saidMarker, this)) {
-					totalPriority += 1;
-				}
-				else {
-					continue;
-				}
-			}
-			if (notSaidMarker) {
-				if (!this.markers[notSaidMarker]) {
-					totalPriority += 1;
-				}
-				else {
-					continue;
-				}
-			}
-
-			if (typeof customPriority !== typeof undefined) {
-				totalPriority = parseInt(customPriority, 10); //priority override
-			}
-
-			// Finished going through - if a state has still survived up to this point,
-			// it's then determined if it's the highest priority so far
-
-			if (totalPriority > bestMatchPriority)
-			{
-				console.log("New best match with " + totalPriority + " priority.");
-				bestMatch = [states[i]];
-				bestMatchPriority = totalPriority;
-			}
-			else if (totalPriority === bestMatchPriority)
-			{
-				bestMatch.push(states[i]);
-			}
-			
-		}
+    
+    /* Find the best match. */
+    var bestMatch = [];
+    var bestMatchPriority = -1;
+    for (var i = 0; i < this.allCases[tag].length; i++) {
+        var case = this.allCases[tag][i];
         
-        states = bestMatch.reduce(function(list, caseObject) {
-            return list.concat(parseDialogue(caseObject, this, opp));
-        }.bind(this), []);
-
-        if (states.length > 0) {
-            var chosenState = states[getRandomNumber(0, states.length)];
-			
-			if (chosenState.marker) {
-				var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
-				if (match) {
-					if (match[1] === '+') {
-						// increment marker value
-						if(!this.markers[match[2]]) {
-							this.markers[match[2]] = 1;
-						} else {
-							this.markers[match[2]] += 1;
-						}
-						
-					} else if (match[1] === '-') {
-						// decrement marker value
-						if(!this.markers[match[2]]) {
-							this.markers[match[2]] = 0;
-						} else {
-							this.markers[match[2]] -= 1;
-						}
-					} else {
-						// set marker value
-						this.markers[match[3]] = parseInt(match[4], 10);
-					}
-				} else if (!this.markers[chosenState.marker]) {
-					this.markers[chosenState.marker] = 1;
-				}
-			}
-			
-            this.allStates = states;
-            this.chosenState = chosenState;
-            return true;
+        if (case.priority >= bestMatchPriority && case.basicRequirementsMet(this, opp)) {
+            if (case.priority > bestMatchPriority) {
+                console.log("New best match with " + totalPriority + " priority.");
+                bestMatch = [case];
+                bestMatchPriority = case.priority;
+            } else {
+                bestMatch.push(case);
+            }
         }
-        console.log("-------------------------------------");
     }
+    
+    if (bestMatch.length == 0) {
+        console.log("Warning: couldn't find any "+tag+" dialogue for player "+this.slot+" that meets conditions");
+        return false;
+    }
+    
+    states = bestMatch.reduce(function(list, caseObject) {
+        return list.concat(caseObject.states);
+    }, []);
+
+    if (states.length > 0) {
+        var chosenState = states[getRandomNumber(0, states.length)];
+		
+		if (chosenState.marker) {
+			var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
+			if (match) {
+				if (match[1] === '+') {
+					// increment marker value
+					if(!this.markers[match[2]]) {
+						this.markers[match[2]] = 1;
+					} else {
+						this.markers[match[2]] += 1;
+					}
+					
+				} else if (match[1] === '-') {
+					// decrement marker value
+					if(!this.markers[match[2]]) {
+						this.markers[match[2]] = 0;
+					} else {
+						this.markers[match[2]] -= 1;
+					}
+				} else {
+					// set marker value
+					this.markers[match[3]] = parseInt(match[4], 10);
+				}
+			} else if (!this.markers[chosenState.marker]) {
+				this.markers[chosenState.marker] = 1;
+			}
+		}
+		
+        this.allStates = states;
+        this.chosenState = chosenState;
+        return true;
+    } else {
+        console.log("Warning: matched "+tag+" dialogue for player "+this.slot+" has no states");
+        return false;
+    }
+    
+    console.log("-------------------------------------");
     return false;
 }
 

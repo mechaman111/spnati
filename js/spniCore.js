@@ -616,8 +616,39 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 }, this);
             });
 
-            //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
+            
+            // Create Case objects for all cases, and store them indexed
+            // by case tag.
+            var allCases = {};
+            
+            this.xml.find('behaviour').find('stage').each(function () {
+                var $stage = $(this);
+                var stage = $stage.attr('id');
+                
+                $stage.find('case').each(function () {
+                    var case = new Case($(this), stage);
+                    
+                    if(!allCases[case.tag]) {
+                        allCases[case.tag] = [];
+                    }
+                    
+                    allCases[case.tag].push(case);
+                });
+            });
+            
+            this.xml.find('behaviour').find('case').each(function () {
+                var case = new Case($(this), null);
+                
+                if(!allCases[case.tag]) {
+                    allCases[case.tag] = [];
+                }
+                
+                allCases[case.tag].push(case);
+            })
+            
+            this.allCases = allCases;
+            
             
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
