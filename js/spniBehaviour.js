@@ -590,13 +590,13 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
 
     // self marker checks
     if (this.saidMarker) {
-        if (!checkMarker(saidMarker, self)) {
+        if (!checkMarker(this.saidMarker, self)) {
             return false;
         }
     }
     
     if (this.notSaidMarker) {
-        if (self.markers[notSaidMarker]) {
+        if (self.markers[this.notSaidMarker]) {
             return false;
         }
     }

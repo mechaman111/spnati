@@ -309,7 +309,7 @@ Player.prototype.resetState = function () {
          */
 		var allStates = [];
         
-        this.xml.find('start').each(function () {
+        this.xml.children('start').children('state').each(function () {
             allStates.push(new State($(this)));
         });
         
@@ -451,7 +451,7 @@ Opponent.prototype.isLoaded = function() {
 
 Opponent.prototype.onSelected = function() {
     this.resetState();
-	console.log(this.slot+": "+this);
+	console.log(this.slot+": "+this.id);
 	this.updateBehaviour(SELECTED);
 	updateSelectionVisuals();
 }
@@ -576,12 +576,13 @@ Opponent.prototype.loadBehaviour = function (slot) {
          * 'this' is bound to the Opponent object.
          */
 		function(xml) {
-            console.log("Finished loading opponents/"+this.id+"/behaviour.xml");
+            console.time("Behaviour Load");
+            console.time("XML Parsing");
             
             var $xml = $(xml);
             
-            console.log("Finished parsing opponents/"+this.id+"/behaviour.xml");
-
+            console.timeEnd("XML Parsing");
+            
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
@@ -625,6 +626,8 @@ Opponent.prototype.loadBehaviour = function (slot) {
             
             // Create Case objects for all cases, and store them indexed
             // by case tag.
+            console.time("Case Indexing");
+            
             var allCases = {};
             
             this.xml.find('behaviour').find('stage').each(function () {
@@ -654,14 +657,18 @@ Opponent.prototype.loadBehaviour = function (slot) {
             
             this.allCases = allCases;
             
-            console.log("Finished indexing cases.");
+            console.timeEnd("Case Indexing");
             
+            console.time("onSelected");
             
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
             } else {
                 this.onSelected();
             }
+            
+            console.timeEnd("onSelected");
+            console.timeEnd("Behaviour Load");
 		}.bind(this),
 		/* Error callback. */
         function(err) {

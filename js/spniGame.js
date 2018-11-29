@@ -161,8 +161,9 @@ function loadGameScreen () {
     players.forEach(function (p) {
         if (p.allStates) {
             p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+            p.chosenState.expandDialogue(this, null);
         }
-    });
+    }.bind(this));
 
     updateAllBehaviours(null, GAME_START);
     
