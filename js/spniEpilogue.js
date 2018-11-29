@@ -205,7 +205,7 @@ function loadEpilogueData(player) {
 					x = getCenteredPosition(w);
 				}
 
-				var text = $(this).find("content").html().trim(); //the actual content of the text box
+				var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
 
 				textBoxes.push({x:x, y:y, width:w, arrow:a, text:text}); //add a textBox object to the list of textBoxes
 			});

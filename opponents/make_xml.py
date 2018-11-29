@@ -8,6 +8,15 @@ if sys.version_info[0] == 2:
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import datetime
+import re
+try:
+     # Python 2.6-2.7
+     from HTMLParser import HTMLParser
+except ImportError:
+     # Python 3
+     from html.parser import HTMLParser
+
+unescapeHTML = HTMLParser().unescape
 
 #tags that relate to ending sequences
 ending_tag = "ending" #name for the ending
@@ -22,14 +31,18 @@ width_tag = "width"
 arrow_tag = "arrow"
 ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag, ending_conditions_tag]
 ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
-                          'markers', 'not-markers', 'any-markers',
-                          'alsoplaying-markers', 'alsoplaying-not-markers', 'alsoplaying-any-markers']
+			  'markers', 'not-markers', 'any-markers',
+			  'alsoplaying-markers', 'alsoplaying-not-markers', 'alsoplaying-any-markers']
 
 #sets of possible targets for lines
 one_word_targets = ["target", "filter"]
 multi_word_targets = ["targetStage", "targetLayers", "targetStatus", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "targetSaidMarker", "targetNotSaidMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets
+
+def capitalizeDialogue(s):
+	# Convert the first character of the string, or of a variable that starts the string, to uppercase
+	return re.sub('(?<=^~)[a-z](?=\w+~)|^\w', lambda m: m.group(0).upper(), s)
 
 #default images and text for most cases
 def get_cases_dictionary():
@@ -151,17 +164,17 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 	
 	result_list = list()
 
-        def is_generic_line(line_data):
-	        for target_type in all_targets:
+	def is_generic_line(line_data):
+		for target_type in all_targets:
 			if target_type in line_data:
 				return False
-                return True
+		return True
 	
 	def have_generic_line(lines):
 		for line_data in lines:
-                        if is_generic_line(line_data):
-                                return True
-                return False
+			if is_generic_line(line_data):
+				return True
+		return False
 	
 	using_player = False
 	have_generic_entry = False
@@ -177,14 +190,14 @@ def get_cases(player_dictionary, default_dictionary, key, stage):
 			using_player = True
 		
 	if key in player_dictionary:
-                for line_data in player_dictionary[key]:
-                        # Don't add completely generic lines to a given stage when a
-                        # stage-specific generic case exist for that stage,
-                        # but do add targeted lines (because it's too complicated to
-                        # look for matching targeted cases and it shouldn't cause any
-                        # conflicts with workarounds for incorrectly added defaults).
-                        if not is_generic_line(line_data) or not have_generic_entry:
-		                result_list.append(line_data)
+		for line_data in player_dictionary[key]:
+			# Don't add completely generic lines to a given stage when a
+			# stage-specific generic case exist for that stage,
+			# but do add targeted lines (because it's too complicated to
+			# look for matching targeted cases and it shouldn't cause any
+			# conflicts with workarounds for incorrectly added defaults).
+			if not is_generic_line(line_data) or not have_generic_entry:
+				result_list.append(line_data)
 
 		if have_generic_line(result_list):
 			have_generic_entry = True
@@ -265,9 +278,9 @@ def create_case_xml(base_element, lines):
 	current_sort = "" #which case combination we're currently looking at. initially nothing
 	case_xml_element = None #current XML element, add states to this
 
-        possible_statuses = [ 'alive', 'lost_some', 'mostly_clothed', 'decent', 'exposed',
-                              'chest_visible', 'crotch_visible', 'topless', 'bottomless',
-                              'naked', 'lost_all', 'masturbating', 'finished' ]
+	possible_statuses = [ 'alive', 'lost_some', 'mostly_clothed', 'decent', 'exposed',
+			      'chest_visible', 'crotch_visible', 'topless', 'bottomless',
+			      'naked', 'lost_all', 'masturbating', 'finished' ]
 	
 	for line_data in lines:
 		if line_data["sort_key"] != current_sort:
@@ -291,21 +304,21 @@ def create_case_xml(base_element, lines):
 
 			if "conditions" in line_data:
 				for condition in line_data["conditions"]:
-                                        conddict = { 'count': condition[1] }
-                                        condparts = condition[0].split('&') if condition[0] != '' else []
-                                        for cond in condparts:
-                                                if cond in [ 'male', 'female' ]:
-                                                        conddict['gender'] = cond
-                                                elif cond in possible_statuses or (cond[0:4] == 'not_' and cond[4:] in possible_statuses):
-                                                        conddict['status'] = cond
-                                                else:
-                                                        conddict['filter'] = cond
+					conddict = { 'count': condition[1] }
+					condparts = condition[0].split('&') if condition[0] != '' else []
+					for cond in condparts:
+						if cond in [ 'male', 'female' ]:
+							conddict['gender'] = cond
+						elif cond in possible_statuses or (cond[0:4] == 'not_' and cond[4:] in possible_statuses):
+							conddict['status'] = cond
+						else:
+							conddict['filter'] = cond
 
-                                        ET.SubElement(case_xml_element, "condition", conddict)
+					ET.SubElement(case_xml_element, "condition", conddict)
 
-                        if "tests" in line_data:
-                                for test in line_data["tests"]:
-                                        ET.SubElement(case_xml_element, "test", { 'expr': test[0], 'value': test[1]})
+			if "tests" in line_data:
+				for test in line_data["tests"]:
+					ET.SubElement(case_xml_element, "test", { 'expr': test[0], 'value': test[1]})
 
 
 		#now add the individual line
@@ -313,10 +326,10 @@ def create_case_xml(base_element, lines):
 		attrib = {"img": line_data["image"]}
 		if "marker" in line_data:
 			attrib["marker"] = line_data["marker"]
-                if "direction" in line_data:
-                        attrib["direction"] = line_data["direction"]
-                if "location" in line_data:
-                        attrib["location"] = line_data["location"]
+		if "direction" in line_data:
+			attrib["direction"] = line_data["direction"]
+		if "location" in line_data:
+			attrib["location"] = line_data["location"]
 		ET.SubElement(case_xml_element, "state", attrib).text = line_data["text"] #add the image and text
 
 #add several values to the XML tree
@@ -410,17 +423,17 @@ def write_xml(data, filename):
 	clothes_count = len(clothes)
 	for i in range(clothes_count - 1, -1, -1):
 		pname, lname, tp, pos, num = (clothes[i] + ",").split(",")[:5]
-                clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
-                if num=="plural":
-                        clothesattr["plural"] = "true"
+		clothesattr = {"proper-name":pname, "lowercase":lname, "type":tp, "position":pos}
+		if num=="plural":
+			clothesattr["plural"] = "true"
 		ET.SubElement(clth, "clothing", clothesattr)
 	
 	#behaviour
 	bh = ET.SubElement(o, "behaviour")
 	for stage in range(0, clothes_count):
 		s = ET.SubElement(bh, "stage", id=str(stage))
-                if stage == 0:
-		        add_values(s, data, [strt_dict], stage)
+		if stage == 0:
+			add_values(s, data, [strt_dict], stage)
 		add_values(s, data, [main_dict, plyr_dict, strp_dict], stage)
 		if stage == 0:
 			for el in s.findall("./case[@tag='stripped']"):
@@ -453,9 +466,9 @@ def write_xml(data, filename):
 			
 			if 'img' in ending:
 				ending_xml.set('img', ending['img'])
-                        for cond_type in ending_condition_types:
-                                if cond_type in ending:
-                                        ending_xml.set(cond_type, ending[cond_type])
+			for cond_type in ending_condition_types:
+				if cond_type in ending:
+					ending_xml.set(cond_type, ending[cond_type])
 			
 			ET.SubElement(ending_xml, "title").text = ending["title"]
 			
@@ -473,7 +486,7 @@ def write_xml(data, filename):
 						ET.SubElement(text_box_xml, width_tag).text = text_box[width_tag]
 					if arrow_tag in text_box:
 						ET.SubElement(text_box_xml, arrow_tag).text = text_box[arrow_tag]
-					ET.SubElement(text_box_xml, "content").text = text_box[text_tag]
+					ET.SubElement(text_box_xml, "content").text = capitalizeDialogue(text_box[text_tag])
 	
 	#done
 	
@@ -542,24 +555,24 @@ def handle_ending_string(key, content, ending, d):
 		if len(content) > 0:
 			ending['img'] = content
 		return
-        elif key == ending_conditions_tag:
-                condition_parts = content.split(',')
-                for c in condition_parts:
-                        try:
-                                cond_type, cond_value = c.rsplit(':', 1)
-                                cond_type = cond_type.strip()
-                                cond_value = cond_value.strip()
-                                if cond_type in ending_condition_types:
-                                        if cond_value != '':
-                                                ending[cond_type] = cond_value
-                                        else:
-                                                print("Epilogue condition without value for \"%s\": \"%s\". Skipping." % (ending['title'], cond_type))
-                                else:
-                                        print("Unknown epilogue condition %s" % cond_type)
+	elif key == ending_conditions_tag:
+		condition_parts = content.split(',')
+		for c in condition_parts:
+			try:
+				cond_type, cond_value = c.rsplit(':', 1)
+				cond_type = cond_type.strip()
+				cond_value = cond_value.strip()
+				if cond_type in ending_condition_types:
+					if cond_value != '':
+						ending[cond_type] = cond_value
+					else:
+						print("Epilogue condition without value for \"%s\": \"%s\". Skipping." % (ending['title'], cond_type))
+				else:
+					print("Unknown epilogue condition %s" % cond_type)
 
-                        except ValueError:
-                                print("Epilogue condition with empty value for \"%s\": \"%s\" Skipping." % (ending['title'], c))
-                return
+			except ValueError:
+				print("Epilogue condition with empty value for \"%s\": \"%s\" Skipping." % (ending['title'], c))
+		return
 		
 	#get the screens variable
 	screens = None
@@ -696,7 +709,7 @@ def read_player_file(filename):
 		
 		key = key.strip().lower()
 		
-		stripped = text.strip()
+		text = unescapeHTML(text.strip())
 		
 		
 		#now deal with any possible targets and filters
@@ -713,7 +726,7 @@ def read_player_file(filename):
 					#make sure the target has a format we can understand
 					print("Invalid targeting for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = "skip"
-					stripped = ""
+					text = ""
 					target_value = "N/A"
 				
 				target_type = target_type.strip()
@@ -723,7 +736,7 @@ def read_player_file(filename):
 				if len(target_value) <= 0:
 					print("No target value specified for line %d - \"%s\". Skipping line." % (line_number, line))
 					target_type = skip
-					stripped = ""
+					text = ""
 				
 				#now actually process valid targets
 				#valid targets
@@ -753,7 +766,7 @@ def read_player_file(filename):
 				else:
 					#unknown target type
 					print("Error - unknown target type \"%s\" for line %d - \"%s\". Skipping line." % (target_type, line_number, line))
-					stripped = "" #make the script skip this line
+					text = "" #make the script skip this line
 					
 				if target_type == "targetstage":
 					#print a warning if they used a targetStage without a target
@@ -786,21 +799,23 @@ def read_player_file(filename):
 		
 			line_data["key"] = part_key
 		
-			if stripped == "" or stripped == ",":
+			if text == "" or text == ",":
 				#if there's no entry, skip it.
 				continue
 				
 			if ',' not in text:
 				#img, desc = "", text
 				line_data["image"] = ""
-				line_data["text"] = text.strip()
+				line_data["text"] = text
 			else:
 				img,desc = text.split(",", 1) #split into (image, text) pairs
 				line_data["image"] = img
 				line_data["text"] = desc.strip()
 
-                        if line_data["text"].find('~silent~') == 0:
-                                line_data["text"] = ""
+			if line_data["text"].find('~silent~') == 0:
+				line_data["text"] = ""
+			else:
+				line_data["text"] = capitalizeDialogue(line_data["text"])
 
 			#print "adding line", line	
 			
@@ -813,17 +828,17 @@ def read_player_file(filename):
 		elif key == "clothes":
 			stage += 1
 			if "clothes" in d:
-				d["clothes"].append(stripped)
+				d["clothes"].append(text)
 			else:
-				d["clothes"] = [stripped]
+				d["clothes"] = [text]
 
-        #intelligence is written as
-        #   intelligence=bad
-        #   intelligence=good,3
-        #this means to start at bad intelligence and switch to good starting at stage 3
-        #   The label can be changed in the same manner
+	#intelligence is written as
+	#   intelligence=bad
+	#   intelligence=good,3
+	#this means to start at bad intelligence and switch to good starting at stage 3
+	#   The label can be changed in the same manner
 		elif key in ("intelligence", "label"):
-                        parts = stripped.split(",", 1)
+			parts = text.split(",", 1)
 			(from_stage, value) = (0 if len(parts) == 1 else parts[1], parts[0])
 			if key in d:
 				d[key][from_stage] = value
@@ -838,15 +853,15 @@ def read_player_file(filename):
 		#	tags=blond, athletic
 		elif key == "tag":
 			if "character_tags" in d:
-				if not stripped in d["character_tags"]:
-					d["character_tags"].append(stripped)
+				if not text in d["character_tags"]:
+					d["character_tags"].append(text)
 				else:
-					print("Warning - duplicated tag: '%s'" % stripped)
+					print("Warning - duplicated tag: '%s'" % text)
 			else:
-				d["character_tags"] = [stripped]
+				d["character_tags"] = [text]
 
 		elif key == "tags":
-			character_tags = [tag.strip() for tag in stripped.split(',')]
+			character_tags = [tag.strip() for tag in text.split(',')]
 			if "character_tags" in d:
 				d["character_tags"] = d["character_tags"] + character_tags
 			else:
@@ -854,21 +869,21 @@ def read_player_file(filename):
 
 		elif key == "marker":
 			if "markers" in d:
-				d["markers"].append(stripped)
+				d["markers"].append(text)
 			else:
-				d["markers"] = [stripped]
+				d["markers"] = [text]
 
 		#write start lines last to first
 		elif key == "start":
 			if key in d:
-				d[key].append(text)
+				d[key].append(capitalizeDialogue(text))
 			else:
-				d[key] = [text]
+				d[key] = [capitalizeDialogue(text)]
 
 		#this tag relates to an ending squence
 		#use a different function, because it's quite complicated
 		elif key in ending_tags:
-			handle_ending_string(key, stripped, ending, d)
+			handle_ending_string(key, text, ending, d)
 		
 		#other values are single lines. These need to be in the data, even if the value is empty
 		else:
@@ -892,50 +907,50 @@ def make_meta_xml(data, filename):
 	
 	values = ["first","last","label","pic","gender","height","from","writer","artist","description","endings","layers","character_tags"]
 	
-        for value in values:
-                content = ""
-                if value == "pic":
-                        if content == "":
-                                content = "0-calm"
-                        content += ".png"
+	for value in values:
+		content = ""
+		if value == "pic":
+			if content == "":
+				content = "0-calm"
+			content += ".png"
 
-                elif value == "layers":
-                        #the number of layers of clothing is taken directly from the clothing data
-                        content = str(len(data["clothes"]))
+		elif value == "layers":
+			#the number of layers of clothing is taken directly from the clothing data
+			content = str(len(data["clothes"]))
 
-                elif value == "label":
-                        content = data["label"][0]
+		elif value == "label":
+			content = data["label"][0]
 
-                elif value == "character_tags":
-                        tags_elem = ET.SubElement(o, "tags")
-                        character_tags = data["character_tags"]
-                        for tag in character_tags:
-                                ET.SubElement(tags_elem, "tag").text = tag
+		elif value == "character_tags":
+			tags_elem = ET.SubElement(o, "tags")
+			character_tags = data["character_tags"]
+			for tag in character_tags:
+				ET.SubElement(tags_elem, "tag").text = tag
 
-                elif value == "endings":
-                        if "endings" in data:
-                                #for each ending
-                                for ending in data["endings"]:
-                                        ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
-                                        ending_xml.text = ending["title"];
+		elif value == "endings":
+			if "endings" in data:
+				#for each ending
+				for ending in data["endings"]:
+					ending_xml = ET.SubElement(o, "epilogue", gender=ending["gender"])
+					ending_xml.text = ending["title"];
 
-                                        if 'img' in ending:
-                                                ending_xml.set('img', ending['img'])
-                                        else:
-                                                ending_xml.set('img', ending["screens"][0]["image"])
+					if 'img' in ending:
+						ending_xml.set('img', ending['img'])
+					else:
+						ending_xml.set('img', ending["screens"][0]["image"])
 
-                                        for cond_type in ending_condition_types:
-                                                if cond_type in ending:
-                                                        if 'markers' in cond_type:
-                                                                ending_xml.set('markers', 'true')
-                                                        else:
-                                                                ending_xml.set(cond_type, ending[cond_type])
+					for cond_type in ending_condition_types:
+						if cond_type in ending:
+							if 'markers' in cond_type:
+								ending_xml.set('markers', 'true')
+							else:
+								ending_xml.set(cond_type, ending[cond_type])
 
-                elif value in data:
-                        content = data[value]
+		elif value in data:
+			content = data[value]
 
-                if content != "":
-		        ET.SubElement(o, value).text = content
+		if content != "":
+			ET.SubElement(o, value).text = content
 		
 	#ET.ElementTree(o).write(filename, xml_declaration=True)
 	
@@ -986,16 +1001,3 @@ if __name__ == "__main__":
 	make_xml(sys.argv[1], behaviour_name, meta_name, marker_name)
 
 
-#make_xml.py converts angled brackets and ampersands into their html symbol equivalents.
-#This is probably a clumsy way of converting some of them back for italics and symbols for behaviour.xml, but it works.
-replacements = {'&lt;i&gt;':'<i>', '&lt;/i&gt;':'</i>', '&lt;I&gt;':'<i>', '&lt;/I&gt;':'</i>', '&amp;':'&', '…':'...', '“':'"', '”':'"', '">~name~':'">~Name~'} #By only converting angled brackets when they're part of italics, characters like Nugi-chan can still use them as displayed characters without creating invalid xmls.
-
-lines = []
-with open(behaviour_name) as infile:
-    for line in infile:
-        for src, target in replacements.iteritems():
-            line = line.replace(src, target)
-        lines.append(line)
-with open(behaviour_name, 'w') as outfile:
-    for line in lines:
-        outfile.write(line)

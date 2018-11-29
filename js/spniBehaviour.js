@@ -190,6 +190,29 @@ function expandDialogue (dialogue, self, target) {
     return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
+function escapeRegExp(string) {
+  return string.replace(/[\[\].*+?^${}()|\\]/g, '\\$&'); // $& means the whole matched string
+}
+var fixupDialogueSubstitutions = { // Order matters
+	'...': '\u2026', // ellipsis
+	'---': '\u2015', // em dash
+	'--':  '\u2014', // en dash
+	'``':  '\u201c', // left double quotation mark
+	'`':   '\u2018', // left single quotation mark
+	"''":  '\u201d', // right double quotation mark
+	"'":   '\u2019', // right single quotation mark
+	'&lt;i&gt;': '<i>',
+	'&lt;/i&gt;': '</i>'
+};
+var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
+
+function fixupDialogue (str) {
+	return str.replace(/"([^"]*)"/g, "\u201c$1\u201d")
+		.replace(fixupDialogueRE, function(match) {
+			return fixupDialogueSubstitutions[match]
+		});
+}
+
 /************************************************************
  * Given a string containing a number or two numbers 
  * separated by a dash, returns an array with the same number 

@@ -404,7 +404,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.source = $metaXml.find('from').text();
     this.artist = $metaXml.find('artist').text();
     this.writer = $metaXml.find('writer').text();
-    this.description = $metaXml.find('description').text();
+    this.description = fixupDialogue($metaXml.find('description').html());
     this.endings = $metaXml.find('epilogue');
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
     this.layers = parseInt($metaXml.find('layers').text(), 10);
