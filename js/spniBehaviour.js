@@ -101,6 +101,11 @@ State.prototype.expandDialogue = function(self, target) {
 	this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
 
+function getTargetMarker(marker, target) {
+    if (!target) { return marker; }
+    return "__" + target.id + "_" + marker;
+}
+
 /************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
@@ -135,6 +140,20 @@ function expandDialogue (dialogue, self, target) {
                     substitution = String(n);
                 }
                 break;
+            case 'marker':
+                if (fn) {
+                    var marker;
+                    if (target) {
+                        marker = self.markers[getTargetMarker(fn, target)];
+                    }
+                    if (!marker) {
+                        marker = self.markers[fn] || ("<UNDEFINED MARKER: " + fn + ">");
+                    }
+                    substitution = marker;
+                } else {
+                    substitution = "marker"; //didn't supply a marker name
+                }
+                break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
@@ -150,6 +169,28 @@ function expandDialogue (dialogue, self, target) {
     return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
+function escapeRegExp(string) {
+  return string.replace(/[\[\].*+?^${}()|\\]/g, '\\$&'); // $& means the whole matched string
+}
+var fixupDialogueSubstitutions = { // Order matters
+	'...': '\u2026', // ellipsis
+	'---': '\u2015', // em dash
+	'--':  '\u2014', // en dash
+	'``':  '\u201c', // left double quotation mark
+	'`':   '\u2018', // left single quotation mark
+	"''":  '\u201d', // right double quotation mark
+	//"'":   '\u2019', // right single quotation mark
+	'&lt;i&gt;': '<i>',
+	'&lt;/i&gt;': '</i>'
+};
+var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
+
+function fixupDialogue (str) {
+	return str//.replace(/"([^"]*)"/g, "\u201c$1\u201d")
+		     .replace(fixupDialogueRE, function(match) {
+			return fixupDialogueSubstitutions[match]
+		});
+}
 
 /************************************************************
  * Given a string containing a number or two numbers 
@@ -176,22 +217,34 @@ function inInterval (value, interval) {
  * Check to see if a given marker predicate string is fulfilled
  * w.r.t. a given character.
  ************************************************************/
-function checkMarker(predicate, target) {
-	var match = predicate.match(/([\w\-]+)\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\d+)/);
+function checkMarker(predicate, self, target) {
+	var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
 	
 	if (!match) {
-		if (target.markers[predicate]) return true;
+	    if (self.markers[predicate]) return true;
 		return false;
 	}
 	
-	var val = target.markers[match[1]];
+	var name = match[1];
+	var perTarget = match[2];
+	var val;
+	if (perTarget && target) {
+	    val = self.markers[getTargetMarker(name, target)];
+	}
+	if (!val) {
+	    val = self.markers[name];
+	}
 	if (!val) {
 		val = 0;
 	}
+
+	if (!match[3]) {
+		return !!val;
+	}
 	
-	var cmpVal = parseInt(match[3], 10);
+	var cmpVal = parseInt(match[5], 10);
 	
-	switch (match[2]) {
+	switch (match[4]) {
 		case '>': return val > cmpVal;
 		case '>=': return val >= cmpVal;
 		case '<': return val < cmpVal;
@@ -389,12 +442,18 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
         }
     }
 
-    // targetStatus
-    if (opp && this.targetStatus) {
-        if (!checkPlayerStatus(opp, this.targetStatus)) {
-            return false;
-        }
-    }
+	// markers (priority = 1)
+	// marker checks have very low priority as they're mainly intended to be used with other target types
+	if (opp && targetSaidMarker) {
+		if (!checkMarker(targetSaidMarker, opp, null)) {
+			return false;
+		}
+	}
+	if (opp && targetNotSaidMarker) {
+		if (opp.markers[targetNotSaidMarker]) {
+			return false;
+		}
+	}
 
     // targetSaidMarker
     if (opp && this.targetSaidMarker) {
@@ -446,46 +505,46 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
         }
     }
 
-    // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand
-    if (this.alsoPlaying) {
+    // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
+	if (this.alsoPlaying) {
         var ap = this.getAlsoPlaying(opp);
         
-        if (!ap) {
-            return false; // failed "alsoPlaying" requirement
-        }
-        
-        if (this.alsoPlayingStage) {
-            if (!inInterval(ap.stage, this.alsoPlayingStage)) {
-                return false; // failed "alsoPlayingStage" requirement
-            }
-        }
-        
-        if (this.alsoPlayingTimeInStage) {
-            if(!inInterval(ap.timeInStage, alsoPlayingTimeInStage)) {
-                return false; // failed "alsoPlayingTimeInStage" requirement
-            }
-        }
-        
-        if (this.alsoPlayingHand) {
-            if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
-            {
-                return false;
-            }
-        }
-        
-        // marker checks have very low priority as they're mainly intended to be used with other target types
-        if (this.alsoPlayingSaidMarker) {
-            if (!checkMarker(this.alsoPlayingSaidMarker, ap)) {
-                return false
-            }
-        }
-        
-        if (this.alsoPlayingNotSaidMarker) {
-            if (ap.markers[this.alsoPlayingNotSaidMarker]) {
-                return false;
-            }
-        }
-    }
+		if (!ap) {
+			return false; // failed "alsoPlaying" requirement
+		} else {
+			if (this.alsoPlayingStage) {
+				if (!inInterval(ap.stage, this.alsoPlayingStage)) {
+                    return false;		// failed "alsoPlayingStage" requirement
+				}
+			}
+            
+			if (this.alsoPlayingTimeInStage) {
+				if (!inInterval(ap.timeInStage, this.alsoPlayingTimeInStage)) {
+                    return false;		// failed "alsoPlayingTimeInStage" requirement
+				}
+			}
+            
+			if (this.alsoPlayingHand) {
+				if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
+				{
+                    return false;		// failed "alsoPlayingHand" requirement
+				}
+			}
+            
+			// marker checks have very low priority as they're mainly intended to be used with other target types
+			if (this.alsoPlayingSaidMarker) {
+				if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                    return false;
+				}
+			}
+            
+			if (this.alsoPlayingNotSaidMarker) {
+				if (ap.markers[this.alsoPlayingNotSaidMarker]) {
+                    return false;
+				}
+			}
+		}
+	}
 
     // filter counter targets
     if(!this.counters.every(function (ctr) {
@@ -590,7 +649,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
 
     // self marker checks
     if (this.saidMarker) {
-        if (!checkMarker(this.saidMarker, self)) {
+        if (!checkMarker(this.saidMarker, self, opp)) {
             return false;
         }
     }
@@ -631,50 +690,57 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     for (var i = 0; i < this.allCases[tag].length; i++) {
         var curCase = this.allCases[tag][i];
         
-        if (curCase.priority >= bestMatchPriority && curCase.basicRequirementsMet(this, opp)) {
-            if (curCase.priority > bestMatchPriority) {
-                console.log("New best match with " + curCase.priority + " priority.");
-                bestMatch = [curCase];
-                bestMatchPriority = curCase.priority;
-            } else {
-                bestMatch.push(curCase);
-            }
-        }
-    }
-    
-    if (bestMatch.length == 0) {
-        console.log("Warning: couldn't find any "+tag+" dialogue for player "+this.slot+" that meets conditions");
-        return false;
-    }
-    
-    states = bestMatch.reduce(function(list, caseObject) {
-        return list.concat(caseObject.states);
-    }, []);
+        states = bestMatch.reduce(function(list, caseObject) {
+            return list.concat(parseDialogue(caseObject, this, opp));
+        }.bind(this), []);
 
-    if (states.length > 0) {
-        var chosenState = states[getRandomNumber(0, states.length)];
-		
-		if (chosenState.marker) {
-			var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)|([\w\-]+)\s*\=\s*(\-?\d+))$/);
-			if (match) {
-				if (match[1] === '+') {
-					// increment marker value
-					if(!this.markers[match[2]]) {
-						this.markers[match[2]] = 1;
+        if (states.length > 0) {
+            var chosenState = states[getRandomNumber(0, states.length)];
+			
+			if (chosenState.marker) {
+			    var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
+			    var name;
+			    if (match) {
+			        var perTarget = !!(match[3] || match[5]);
+					if (match[1] === '+') {
+					    // increment marker value
+					    name = match[2];
+					    if (perTarget && opp) {
+					        name = getTargetMarker(name, opp);
+					    }
+						if(!this.markers[name]) {
+							this.markers[name] = 1;
+						} else {
+							this.markers[name] = parseInt(this.markers[name], 10) + 1;
+						}
+						
+					} else if (match[1] === '-') {
+					    // decrement marker value
+					    name = match[2];
+					    if (perTarget && opp) {
+					        name = getTargetMarker(name, opp);
+					    }
+						if(!this.markers[name]) {
+							this.markers[name] = 0;
+						} else {
+							this.markers[name] = parseInt(this.markers[name], 10) - 1;
+						}
 					} else {
-						this.markers[match[2]] += 1;
+					    // set marker value
+					    name = match[4];
+					    if (perTarget && opp) {
+					        name = getTargetMarker(name, opp);
+					    }
+						this.markers[name] = expandDialogue(match[6], this, opp);
 					}
-					
-				} else if (match[1] === '-') {
-					// decrement marker value
-					if(!this.markers[match[2]]) {
-						this.markers[match[2]] = 0;
-					} else {
-						this.markers[match[2]] -= 1;
-					}
-				} else {
-					// set marker value
-					this.markers[match[3]] = parseInt(match[4], 10);
+			    } else {
+			        name = chosenState.marker;
+			        if (name.substring(name.length - 1, name.length) === "*") {
+			            name = getTargetMarker(name.substring(0, name.length - 1), opp);
+			        }
+			        if (!this.markers[name]) {
+			            this.markers[name] = 1;
+			        }
 				}
 			} else if (!this.markers[chosenState.marker]) {
 				this.markers[chosenState.marker] = 1;
