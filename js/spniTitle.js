@@ -138,6 +138,74 @@ var CANDY_LIST = [
 
 var clothingChoices = [];
 var selectedChoices = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+/* maybe move this data to an external file if the hardcoded stuff changes often enough */
+var playerTagOptions = {
+    'hair_color': {
+        values: [
+            { value: 'black_hair' }, { value: 'white_hair' },
+            { value: 'brunette' }, { value: 'ginger' }, { value: 'blonde' },
+            { value: 'green_hair', extraTags: ['exotic_hair'] },
+            { value: 'blue_hair', extraTags: ['exotic_hair'] },
+            { value: 'purple_hair', extraTags: ['exotic_hair'] },
+            { value: 'pink_hair', extraTags: ['exotic_hair'] },
+        ],
+    },
+    'eye_color': {
+        values: [
+            { value: 'dark_eyes' }, { value: 'pale_eyes' },
+            { value: 'red_eyes' }, { value: 'amber_eyes' },
+            { value: 'green_eyes' }, { value: 'blue_eyes' },
+            { value: 'violet_eyes' },
+        ],
+    },
+    'skin_color': {
+        type: 'range',
+        values: [
+            { value: 'pale-skinned', from: 0, to: 25 },
+            { value: 'fair-skinned', from: 25, to: 50 },
+            { value: 'olive-skinned', from: 50, to: 75 },
+            { value: 'dark-skinned', from: 75, to: 100 },
+        ],
+    },
+    'hair_length': {
+        values: [
+            { value: 'bald', text: 'Bald - No Hair'},
+            { value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
+            { value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
+            { value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
+            { value: 'very_long_hair long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
+        ],
+    },
+    'physical_build': {
+        values: [
+            { value: 'chubby' },
+            { value: 'athletic' },
+            { value: 'muscular', extraTags: ['athletic'] },
+        ],
+    },
+    'height': {
+        values: [
+            { value: 'tall' },
+            { value: 'average' },
+            { value: 'short' },
+        ],
+    },
+    'pubic_hair_style': {
+        values: [
+            { value: 'shaved' },
+            { value: 'trimmed' },
+            { value: 'hairy' },
+        ],
+    },
+    'circumcision': {
+        gender: 'male',
+        values: [
+            { value: 'circumcised' },
+            { value: 'uncircumcised' }
+        ],
+    },
+};
+var playerTagSelections = {};
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -276,6 +344,37 @@ function selectClothing (id) {
 	updateTitleClothing();
 }
 
+/**************************************************************
+ * Add tags to the human player based on the selections in the tag
+ * dialog and the size.
+ **************************************************************/
+function setPlayerTags () {
+    var playerTagList = ['human', 'human_' + players[HUMAN_PLAYER].gender,
+                         players[HUMAN_PLAYER].size + (players[HUMAN_PLAYER].gender == 'male' ? '_penis' : '_breasts')];
+
+    for (category in playerTagSelections) {
+        var sel = playerTagSelections[category];
+        if (!(category in playerTagOptions)) continue;
+        var extraTags = [];
+        playerTagOptions[category].values.some(function (choice) {
+            if (playerTagOptions[category].type == 'range') {
+                if (sel > choice.to) return false;
+            } else {
+                if (sel != choice.value) return false;
+            }
+            playerTagList.push(choice.value);
+            if (choice.extraTags) {
+                extraTags = choice.extraTags;
+            }
+            return true;
+        });
+        extraTags.forEach(function(t) { playerTagList.push(t); });
+    }
+    /* applies tags to the player*/
+    console.log(playerTagList);
+    players[HUMAN_PLAYER].tags = playerTagList;
+}
+
 /************************************************************
  * The player clicked on the advance button on the title
  * screen.
@@ -293,32 +392,6 @@ function validateTitleScreen () {
 		players[HUMAN_PLAYER].label = "Missy";
 	}
 	$gameLabels[HUMAN_PLAYER].html(players[HUMAN_PLAYER].label);
-
-    var playerTagList = ['human', 'human_' + players[HUMAN_PLAYER].gender];
-    var sizeTag = document.getElementsByClassName('title-size-block')[0].dataset.size + (players[HUMAN_PLAYER].gender === 'male' ? '_penis' : '_breasts');
-    playerTagList.push(sizeTag);
-    /* checks the player tag modal */
-    var tagInputs = document.forms['player-tags'].elements;
-    for (var i = 0; i < tagInputs.length; i++) {
-        var tag = tagInputs[i].value.split(' ');
-        if (!tag[0] || (tagInputs[i].className && tagInputs[i].className !== players[HUMAN_PLAYER].gender)) {
-          continue;
-        }
-
-        if (tagInputs[i].name === 'skin_color_picker' || tag[0].charAt(0) === '#') {
-          continue;
-        }
-
-        if (tagInputs[i].name === 'hair_color' && tagInputs[i].dataset.exotic) {
-          playerTagList.push(tagInputs[i].dataset.exotic);
-        }
-
-        playerTagList = playerTagList.concat(tag);
-    };
-
-	/* applies tags to the player*/
-    console.log(playerTagList);
-	players[HUMAN_PLAYER].tags = playerTagList;
 
 	/* count clothing */
 	var clothingCount = [0, 0, 0, 0];
@@ -344,6 +417,7 @@ function validateTitleScreen () {
 
     /* dress the player */
     wearClothing();
+    setPlayerTags();
 
     save.savePlayer();
     console.log(players[0]);
