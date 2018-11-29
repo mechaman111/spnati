@@ -628,24 +628,24 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 var stage = $stage.attr('id');
                 
                 $stage.find('case').each(function () {
-                    var case = new Case($(this), stage);
+                    var curCase = new Case($(this), stage);
                     
-                    if(!allCases[case.tag]) {
-                        allCases[case.tag] = [];
+                    if(!allCases[curCase.tag]) {
+                        allCases[curCase.tag] = [];
                     }
                     
-                    allCases[case.tag].push(case);
+                    allCases[curCase.tag].push(curCase);
                 });
             });
             
             this.xml.find('behaviour').find('case').each(function () {
-                var case = new Case($(this), null);
+                var curCase = new Case($(this), null);
                 
-                if(!allCases[case.tag]) {
-                    allCases[case.tag] = [];
+                if(!allCases[curCase.tag]) {
+                    allCases[curCase.tag] = [];
                 }
                 
-                allCases[case.tag].push(case);
+                allCases[curCase.tag].push(curCase);
             })
             
             this.allCases = allCases;

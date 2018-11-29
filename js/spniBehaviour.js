@@ -629,15 +629,15 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     var bestMatch = [];
     var bestMatchPriority = -1;
     for (var i = 0; i < this.allCases[tag].length; i++) {
-        var case = this.allCases[tag][i];
+        var curCase = this.allCases[tag][i];
         
-        if (case.priority >= bestMatchPriority && case.basicRequirementsMet(this, opp)) {
-            if (case.priority > bestMatchPriority) {
-                console.log("New best match with " + totalPriority + " priority.");
-                bestMatch = [case];
-                bestMatchPriority = case.priority;
+        if (curCase.priority >= bestMatchPriority && curCase.basicRequirementsMet(this, opp)) {
+            if (curCase.priority > bestMatchPriority) {
+                console.log("New best match with " + curCase.priority + " priority.");
+                bestMatch = [curCase];
+                bestMatchPriority = curCase.priority;
             } else {
-                bestMatch.push(case);
+                bestMatch.push(curCase);
             }
         }
     }
