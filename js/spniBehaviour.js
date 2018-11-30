@@ -976,6 +976,8 @@ Opponent.prototype.updateVolatileBehaviour = function () {
  * expanding state dialogue and updating player markers. 
  ************************************************************/
 Opponent.prototype.commitBehaviourUpdate = function () {
+    if(!this.chosenState) return;
+    
     this.chosenState.expandDialogue(this, this.currentTarget);
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);

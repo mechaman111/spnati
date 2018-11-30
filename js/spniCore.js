@@ -310,12 +310,18 @@ Player.prototype.resetState = function () {
          */
 		var allStates = [];
         
+        /* Initialize reaction handling state. */
+        this.volatileMatches = [];
+        this.bestVolatileMatch = null;
+        this.currentTarget = null;
+        this.currentPriority = -1;
+        this.stateLockCount = 0;
+        
         this.xml.children('start').children('state').each(function () {
             allStates.push(new State($(this)));
         });
         
         this.allStates = allStates;
-        
 		this.chosenState = this.allStates[0];
         this.chosenState.expandDialogue(this, null);
         
@@ -326,6 +332,7 @@ Player.prototype.resetState = function () {
              * an opponent with no legacy starting lines.
              */
             this.updateBehaviour(SELECTED);
+            updateAllVolatileBehaviours();
         }
 
         var appearance = this.default_costume;

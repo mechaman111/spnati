@@ -167,6 +167,9 @@ function loadGameScreen () {
 
     updateAllBehaviours(null, GAME_START);
     
+    // NOTE: characters without GAME_START lines will not have initialized volatile state.
+	commitAllBehaviourUpdates();
+    
     /* set up the visuals */
     updateAllGameVisuals();
 
@@ -303,6 +306,7 @@ function makeAIDecision () {
 
 	/* update a few hardcoded visuals */
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
+    players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
 
 	/* wait and implement AI action */
@@ -327,6 +331,8 @@ function implementAIAction () {
 	} else {
 		players[currentTurn].updateBehaviour(GOOD_HAND);
 	}
+    
+    players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
 
 	/* wait and then advance the turn */
@@ -356,6 +362,7 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
+            players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -569,6 +576,10 @@ function completeRevealPhase () {
 
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);
+    
+    /* playerMustStrip() calls updateBehaviour and updateAllBehaviours. */
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
     updateAllGameVisuals();
 
     /* highlight the loser */
@@ -599,6 +610,8 @@ function completeRevealPhase () {
 function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
     updateAllGameVisuals();
     allowProgression(eGamePhase.STRIP);
 }
@@ -621,6 +634,7 @@ function completeStripPhase () {
 function completeMasturbatePhase () {
     /* strip the player with the lowest hand */
     startMasturbation(recentLoser);
+    // all behaviour phases handled already
     updateAllGameVisuals();
 }
 
@@ -709,6 +723,8 @@ function handleGameOver() {
 			p.updateBehaviour(tag, winner);
 		});
 
+        updateAllVolatileBehaviours();
+    	commitAllBehaviourUpdates();
         updateAllGameVisuals();
 
 		allowProgression(eGamePhase.GAME_OVER);
