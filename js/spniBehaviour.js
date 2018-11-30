@@ -165,6 +165,17 @@ State.prototype.evaluateMarker = function (self, opp) {
     }
 }
 
+State.prototype.applyMarker = function (self, opp) {
+    if (!this.marker) return;
+    
+    var name = this.marker.name;
+    if (this.marker.perTarget && opp) {
+        name = getTargetMarker(name, opp);
+    }
+    
+    self.markers[name] = this.evaluateMarker(self, opp);
+}
+
 State.prototype.expandDialogue = function(self, target) {
 	this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
@@ -495,7 +506,7 @@ Case.prototype.isVolatile = function () {
 }
 
 Case.prototype.volatileRequirementsMet = function (self, opp) {
-    if (this.target && this.targetSayingMarker) {
+    if (opp && this.target && this.targetSayingMarker) {
         if (!checkMarker(this.targetSayingMarker, self, opp, true)) {
             return false;
         }
@@ -511,6 +522,21 @@ Case.prototype.volatileRequirementsMet = function (self, opp) {
     }
     
     return true;
+}
+
+/* Get all players that this case targets with saying-marker conditions. */
+Case.prototype.getVolatileDependencies = function (self, opp) {
+    var deps = [];
+    
+    if (opp && this.target && this.targetSayingMarker) {
+        deps.push(opp);
+    }
+    
+    if (this.alsoPlaying && this.alsoPlayingSayingMarker) {
+        deps.push(this.getAlsoPlaying(opp));
+    }
+    
+    return deps;
 }
 
 Case.prototype.basicRequirementsMet = function (self, opp) {
@@ -859,12 +885,15 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     if (states.length > 0) {
         var chosenState = states[getRandomNumber(0, states.length)];
         
+        /* Reaction handling state... */
         this.volatileMatches = volatileMatches;
+        this.bestVolatileMatch = null;
+        this.currentTarget = opp;
+        this.currentPriority = bestMatchPriority;
+        this.stateLockCount = 0;
         
         this.allStates = states;
         this.chosenState = chosenState;
-        this.chosenState.expandDialogue(this, opp);
-        this.lockedState = false;
         
         return true;
     }
@@ -872,6 +901,87 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     console.log("-------------------------------------");
     return false;
 }
+
+/************************************************************
+ * Attempt to find a higher-priority volatile match case if
+ * one exists.
+ * If a higher-priority volatile case is found, its volatile
+ * dependencies will be locked, unlocking prior volatile state locks if necessary.
+ ************************************************************/
+Opponent.prototype.updateVolatileBehaviour = function () {
+    if (this.stateLockCount > 0) {
+        console.log("Player "+this.slot+" state is locked.");
+        return;
+    }
+    
+    var bestMatches = [];
+    var bestPriority = this.currentPriority;
+    
+    /* Find best-matching volatile case if any. */
+    this.volatileMatches.forEach(function (c) {
+        if (c.states.length > 0 &&
+            c.priority >= bestPriority &&
+            c.volatileRequirementsMet(this, this.currentTarget)) 
+        {
+            if (c.priority > bestPriority) {
+                bestMatches = [c];
+                bestPriority = c.priority;
+            } else {
+                bestMatches.push(c);
+            }
+        }
+    });
+    
+    if (bestMatches.length > 0) {
+        console.log("Found new volatile matches for player "+this.slot+" with priority "+bestPriority);
+        
+        /* Remove lock from previous best-match if necessary. */
+        if (this.bestVolatileMatch) {
+            var oldDeps = this.bestVolatileMatch.getVolatileDependencies(this, this.currentTarget);
+            oldDeps.forEach(function (p) { p.stateLockCount -= 1; });
+        }
+        
+        var bestMatch = bestMatches[getRandomNumber(0, bestMatches.length)];
+        var prevPriority = this.currentPriority;
+        
+        /* Assign new best-match case and state. */
+        this.bestVolatileMatch = bestMatch;
+        this.currentPriority = bestPriority;
+        this.allStates = bestMatch.states;
+        this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
+        
+        /* Add locks for dependencies. */
+        var deps = bestMatch.getVolatileDependencies(this, this.currentTarget);
+        deps.forEach(function (p) { p.stateLockCount += 1; });
+        
+        /* Filter out lower-priority volatile cases. */
+        this.volatileMatches = this.volatileMatches.filter(function (c) {
+            c.priority >= bestPriority;
+        });
+        
+        /* Only indicate an update if we have found a strictly higher-priority
+         * volatile case.
+         * This keeps the overall reaction phase logic from repeatedly switching
+         * between two equal-priority cases.
+         */
+        return bestPriority > prevPriority;
+    } else {
+        console.log("Found no volatile matches for player "+this.slot);
+        return false;
+    }
+}
+
+/************************************************************
+ * Finalizes a behaviour update,
+ * expanding state dialogue and updating player markers. 
+ ************************************************************/
+Opponent.prototype.commitBehaviourUpdate = function () {
+    this.chosenState.expandDialogue(this, this.currentTarget);
+    if (this.chosenState.marker) {
+        this.chosenState.applyMarker(this, this.currentTarget);
+    }
+}
+
 
 /************************************************************
  * Updates the behaviour of all players except the given player
@@ -889,4 +999,35 @@ function updateAllBehaviours (player, tag) {
 			}
 		}
 	}
+}
+
+/************************************************************
+ * Handles volatile cases for dialogue processing.
+ * 'Promotes' players who have available volatile cases to using those cases.
+ ************************************************************/
+function updateAllVolatileBehaviours () {
+    for (var pass=0;pass<3;pass++) {
+        console.log("Reaction pass "+(pass+1));
+        var anyUpdated = false;
+        
+        for (var i=1; i<players.length; i++) {
+            if (players[i]) {
+                anyUpdated = players[i].updateVolatileBehaviour() || anyUpdated;
+            }
+        }
+        
+        console.log("-------------------------------------");
+        
+        // If nothing's changed, assume we've reached a stable state.
+        if (!anyUpdated) break;
+    }
+}
+
+/************************************************************
+ * Commits all player behaviour updates.
+ ************************************************************/
+function commitAllBehaviourUpdates () {
+    for (var i=1;i<players.length;i++) {
+        players[i].commitBehaviourUpdate();
+    }
 }
