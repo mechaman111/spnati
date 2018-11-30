@@ -174,7 +174,7 @@ function loadEpilogueData(player) {
 
       // if we made it this far the epilogue must be selectable
       return true;
-  }).each(parseEpilogue.bind(null, player)).toArray();
+  }).map(function (i, e) { return parseEpilogue(player, e); }).get();
 
 	return epilogues;
 }
