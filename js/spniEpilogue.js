@@ -218,7 +218,9 @@ function parseEpilogue(player, rawEpilogue) {
       scenes.push(parseSceneContent(player, $(this)));
     });
 
-    backgrounds.push({image, scenes});
+    var css = $(this).attr('css');
+
+    backgrounds.push({image, scenes, css});
   });
 
   var epilogue = {player, title, ratio, screens, backgrounds}; //epilogue object
@@ -251,7 +253,9 @@ function parseSceneContent(player, scene) {
 
     src = src.charAt(0) === '/' ? src : player.base_folder + src;
 
-    images.push({x, y, width, src});
+    var css = $(this).attr('css');
+
+    images.push({x, y, width, src, css});
   });
 
   //get the information for all the text boxes
@@ -286,9 +290,11 @@ function parseSceneContent(player, scene) {
       x = getCenteredPosition(w);
     }
 
-    var text = $(this).find("content").html().trim(); //the actual content of the text box
+    var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
 
-    textBoxes.push({x, y, width:w, arrow:a, text}); //add a textBox object to the list of textBoxes
+    var css = $(this).attr('css');
+
+    textBoxes.push({x, y, width:w, arrow:a, text, css}); //add a textBox object to the list of textBoxes
   });
 
   return {images, textBoxes, backgroundTransform};
@@ -439,7 +445,7 @@ function doEpilogue(){
 }
 
 /************************************************************
- * Draw Epilogue Text Box num for the current screen
+ * Draw Epilogue element
  ************************************************************/
 function drawEpilogueBox(data) {
   if (!data) {
@@ -462,6 +468,8 @@ function drawEpilogueBox(data) {
       newEpilogueDiv.html('<span class="dialogue-bubble ' + data.arrow + '">' + content + '</span>');
       break;
   }
+
+  newEpilogueDiv.attr('style', data.css);
 
   //use css to position the box
   newEpilogueDiv.css('position', "absolute");
@@ -556,6 +564,7 @@ function progressEpilogue(direction) {
           datastore.scene = 0;
           currentScene = currentBackground.scenes[datastore.scene];
           $(epilogueContent).children('.epilogue-background').attr('src', currentBackground.image).siblings().remove();
+          $(epilogueContent).children('.epilogue-background').attr('style', currentBackground.css);
           currentScene.images.forEach(drawEpilogueBox);
           drawEpilogueBox(currentScene.textBoxes[0]);
         } else {
@@ -568,7 +577,7 @@ function progressEpilogue(direction) {
         }
         activeText = 1;
 
-        $(epilogueContent).children('.epilogue-background').attr('style', 'transform:' + currentScene.backgroundTransform);
+        $(epilogueContent).children('.epilogue-background').css('transform', currentScene.backgroundTransform);
       }
     } else if (direction < 0) {
       if (activeText > 1) { // TODO: figure out how to make this more flexible if writers want multiple texts to appear at once or some such
@@ -589,12 +598,13 @@ function progressEpilogue(direction) {
           datastore.scene = currentBackground.scenes.length - 1;
           currentScene = currentBackground.scenes[datastore.background];
           $(epilogueContent).children('.epilogue-background').attr('src', currentBackground.image).siblings().remove();
+          $(epilogueContent).children('.epilogue-background').attr('style', currentBackground.css);
           currentScene.images.forEach(drawEpilogueBox);
           currentScene.textBoxes.forEach(drawEpilogueBox);
         }
         activeText = document.getElementsByClassName('epilogue-text').length;
 
-        $(epilogueContent).children('.epilogue-background').attr('style', 'transform:' + currentScene.backgroundTransform);
+        $(epilogueContent).children('.epilogue-background').css('transform', currentScene.backgroundTransform);
       }
     }
 

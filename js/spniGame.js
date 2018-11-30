@@ -171,6 +171,7 @@ function loadGameScreen () {
 
     /* set up the poker library */
     setupPoker();
+    preloadCardImages();
 
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
@@ -199,7 +200,7 @@ function updateGameVisual (player) {
             var chosenState = players[player].chosenState;
 
             /* update dialogue */
-            $gameDialogues[player-1].html(chosenState.dialogue);
+            $gameDialogues[player-1].html(fixupDialogue(chosenState.dialogue));
             
             /* update image */
             $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
@@ -685,6 +686,7 @@ function endRound () {
 		handleGameOver();
 	} else {
 		allowProgression(eGamePhase.DEAL);
+		preloadCardImages();
 	}
 }
 
