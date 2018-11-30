@@ -174,7 +174,7 @@ function loadEpilogueData(player) {
 
       // if we made it this far the epilogue must be selectable
       return true;
-  }).each(parseEpilogue.bind(null, player));
+  }).map(function (i, e) { return parseEpilogue(player, e); }).get();
 
 	return epilogues;
 }
@@ -183,7 +183,7 @@ function parseEpilogue(player, rawEpilogue) {
   //use parseXML() so that <image> tags come through properly
   //not using parseXML() because internet explorer doesn't like it
 
-  var title = $(rawEpilogue).find("title").html().trim();
+  var title = $(rawEpilogue).find("title").html();
   var ratio = [4, 3];
   try {
     var rawRatio = $(rawEpilogue).attr('ratio');
@@ -199,7 +199,12 @@ function parseEpilogue(player, rawEpilogue) {
 
   // Leaving this for backwards compatibility, screens are hereby depreciated
   $(rawEpilogue).find("screen").each(function() {
-    var image = player.base_folder + $(this).attr("img").trim(); //get the full path for the screen's image
+    var image = $(this).attr("img").trim(); //get the full path for the screen's image
+    
+    if (image.length > 0) {
+        image = player.base_folder + image;
+    }
+    
     //use an attribute rather than a tag because IE doesn't like parsing XML
 
     var textBoxes = parseSceneContent(player, $(this)).textBoxes;
@@ -211,7 +216,11 @@ function parseEpilogue(player, rawEpilogue) {
   var backgrounds = [];
   $(rawEpilogue).find('background').each(function() {
     var image = $(this).attr('img').trim();
-    image = image.charAt(0) === '/' ? image : player.base_folder + image;
+    if (image.length == 0) {
+        image = '';
+    } else {
+        image = image.charAt(0) === '/' ? image : player.base_folder + image;
+    }
 
     var scenes = [];
     $(this).find('scene').each(function() {
