@@ -88,13 +88,81 @@ function State($xml) {
 	this.image = $xml.attr('img');
 	this.direction = $xml.attr('direction') || 'down';
 	this.location = $xml.attr('location') || '';
-	this.marker = $xml.attr('marker');
+	var markerOp = $xml.attr('marker');
 	this.rawDialogue = $xml.html();
 	
 	if (this.location && Number(this.location) == this.location) {
 		// It seems that location was specified as a number without "%"
 		this.location = this.location + "%";
 	}
+    
+    if (markerOp) {
+        var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
+        var name;
+        
+        this.marker = {name: null, perTarget: false, op: null, val: null};
+        
+        if (match) {
+            this.marker.perTarget = !!(match[3] || match[5]);
+            
+            if (match[1] === '+') {
+                // increment marker value
+                this.marker.op = '+';
+                this.marker.name = match[2];
+            } else if (match[1] === '-') {
+                // decrement marker value
+                this.marker.op = '-';
+                this.marker.name = match[2];
+            } else {
+                // set marker value
+                this.marker.op = '=';
+                this.marker.name = match[4];
+                this.marker.val = match[6];
+            }
+        } else {
+            this.marker.op = '=';
+            this.marker.name = markerOp;
+            this.marker.perTarget = (markerOp.substring(markerOp.length - 1, markerOp.length) === "*");
+            this.marker.val = 1;
+        }
+    }
+}
+
+State.prototype.evaluateMarker = function (self, opp) {
+    if (!this.marker) return;
+    
+    var name = this.marker.name;
+    if (this.marker.op === '+') {
+        if (this.marker.perTarget && opp) {
+            name = getTargetMarker(name, opp);
+        }
+        
+        if(!self.markers[name]) {
+            return 1;
+        } else {
+            return parseInt(self.markers[name], 10) + 1;
+        }
+    } else if (this.marker.op === '-') {
+        if (this.marker.perTarget && opp) {
+            name = getTargetMarker(name, opp);
+        }
+        
+        if(!self.markers[name]) {
+            return 0;
+        } else {
+            return parseInt(self.markers[name], 10) - 1;
+        }
+    } else if (this.marker.op === '=') {
+        if (typeof(this.marker.val) === 'number') return this.marker.val;
+        
+        var val = expandDialogue(this.marker.val, self, opp);
+        
+        if (!isNaN(parseInt(val, 10))) {
+            return parseInt(val, 10);
+        } else {
+            return val;
+        }
+    }
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -216,45 +284,72 @@ function inInterval (value, interval) {
 /************************************************************
  * Check to see if a given marker predicate string is fulfilled
  * w.r.t. a given character.
+ * If currentOnly = true, then the predicate will be tested against the
+ * current state marker only. This is used for volatile conditions.
  ************************************************************/
-function checkMarker(predicate, self, target) {
+function checkMarker(predicate, self, target, currentOnly) {
 	var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
-	
-	if (!match) {
-	    if (self.markers[predicate]) return true;
-		return false;
-	}
-	
-	var name = match[1];
-	var perTarget = match[2];
+    
+    var name;
+	var perTarget;
 	var val;
-	if (perTarget && target) {
-	    val = self.markers[getTargetMarker(name, target)];
-	}
-	if (!val) {
-	    val = self.markers[name];
-	}
-	if (!val) {
-		val = 0;
-	}
-
-	if (!match[3]) {
-		return !!val;
-	}
+    var cmpVal;
+    var op;
+    
+    /* Get comparison values if we can, otherwise default to 'normal' behaviour. */
+	if (!match) {
+        name = predicate;
+        perTarget = false;
+        op = '!!';
+	} else {
+        name = match[1];
+    	perTarget = match[2];
+        
+        if (match[3]) {
+            op = match[4];
+            if (!isNaN(parseInt(match[5], 10))) {
+                cmpVal = parseInt(match[5], 10);
+            } else {
+                cmpVal = expandDialogue(match[5], self, opp); 
+            }
+        } else {
+            op = '!!';
+        }
+    }
 	
-	var cmpVal = parseInt(match[5], 10);
-	
-	switch (match[4]) {
-		case '>': return val > cmpVal;
-		case '>=': return val >= cmpVal;
-		case '<': return val < cmpVal;
-		case '<=': return val <= cmpVal;
-		case '!=': return val != cmpVal;
-		default:
-		case '=':
-		case '==':
-			return val == cmpVal;
-	}
+    if (currentOnly) {
+        if (!self.chosenState.marker) return false;
+        if (self.chosenState.marker.name !== name) return false;
+        
+        if (!perTarget || !target) {
+            if (self.chosenState.marker.perTarget) return false;
+        }
+        
+        val = self.chosenState.evaluateMarker(self, target);
+    } else {
+        if (perTarget && target) {
+    	    val = self.markers[getTargetMarker(name, target)];
+    	}
+    	if (!val) {
+    	    val = self.markers[name];
+    	}
+    	if (!val) {
+    		val = 0;
+    	}
+    }
+    
+    switch (op) {
+        case '>': return val > cmpVal;
+        case '>=': return val >= cmpVal;
+        case '<': return val < cmpVal;
+        case '<=': return val <= cmpVal;
+        case '!=': return val != cmpVal;
+        case '!!': return !!val;
+        default:
+        case '=':
+        case '==':
+            return val == cmpVal;
+    }
 }
 
 /**********************************************************************
@@ -397,6 +492,25 @@ Case.prototype.isVolatile = function () {
     }
     
     return false;
+}
+
+Case.prototype.volatileRequirementsMet = function (self, opp) {
+    if (this.target && this.targetSayingMarker) {
+        if (!checkMarker(this.targetSayingMarker, self, opp, true)) {
+            return false;
+        }
+    }
+    
+    if (this.alsoPlaying && this.alsoPlayingSayingMarker) {
+        var ap = this.getAlsoPlaying(opp);
+        if (!ap) return false;
+        
+        if (!checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 Case.prototype.basicRequirementsMet = function (self, opp) {
@@ -698,52 +812,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
             var chosenState = states[getRandomNumber(0, states.length)];
 			
 			if (chosenState.marker) {
-			    var match = chosenState.marker.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
-			    var name;
-			    if (match) {
-			        var perTarget = !!(match[3] || match[5]);
-					if (match[1] === '+') {
-					    // increment marker value
-					    name = match[2];
-					    if (perTarget && opp) {
-					        name = getTargetMarker(name, opp);
-					    }
-						if(!this.markers[name]) {
-							this.markers[name] = 1;
-						} else {
-							this.markers[name] = parseInt(this.markers[name], 10) + 1;
-						}
-						
-					} else if (match[1] === '-') {
-					    // decrement marker value
-					    name = match[2];
-					    if (perTarget && opp) {
-					        name = getTargetMarker(name, opp);
-					    }
-						if(!this.markers[name]) {
-							this.markers[name] = 0;
-						} else {
-							this.markers[name] = parseInt(this.markers[name], 10) - 1;
-						}
-					} else {
-					    // set marker value
-					    name = match[4];
-					    if (perTarget && opp) {
-					        name = getTargetMarker(name, opp);
-					    }
-						this.markers[name] = expandDialogue(match[6], this, opp);
-					}
-			    } else {
-			        name = chosenState.marker;
-			        if (name.substring(name.length - 1, name.length) === "*") {
-			            name = getTargetMarker(name.substring(0, name.length - 1), opp);
-			        }
-			        if (!this.markers[name]) {
-			            this.markers[name] = 1;
-			        }
-				}
-			} else if (!this.markers[chosenState.marker]) {
-				this.markers[chosenState.marker] = 1;
+			    
 			}
 		}
 		
