@@ -793,37 +793,80 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 		//tag = players[player].forfeit[0];
 	//}
     
-    if (!this.allCases[tag]) {
-        console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot);
+    /* get the AI stage */
+    var stageNum = this.stage;
+
+    /* try to find the stage */
+    var stage = null;
+    this.xml.find('behaviour').find('stage').each(function () {
+       if (Number($(this).attr('id')) == stageNum) {
+           stage = $(this);
+       }
+    });
+
+    /* quick check to see if the stage exists */
+    if (!stage) {
+        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
+        return;
+    }
+
+    /* try to find the tag */
+    var cases = [];
+    $(stage).find('case').each(function () {
+        if ($(this).attr('tag') == tag) {
+            cases.push($(this));
+        }
+    });
+
+    /* quick check to see if the tag exists */
+    if (cases.length <= 0) {
+        console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
         return false;
     }
-    
-    /* Find the best match. */
+
+    /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
     var bestMatchPriority = -1;
-    for (var i = 0; i < this.allCases[tag].length; i++) {
-        var curCase = this.allCases[tag][i];
+    var volatileMatches = [];
+    
+    for (var i = 0; i < cases.length; i++) {
+        var curCase = new Case(cases[i]);
         
-        states = bestMatch.reduce(function(list, caseObject) {
-            return list.concat(parseDialogue(caseObject, this, opp));
-        }.bind(this), []);
-
-        if (states.length > 0) {
-            var chosenState = states[getRandomNumber(0, states.length)];
-			
-			if (chosenState.marker) {
-			    
-			}
-		}
-		
+        if (curCase.priority >= bestMatchPriority &&
+            curCase.basicRequirementsMet(this, opp)) 
+        {
+            if (curCase.isVolatile()) {
+                volatileMatches.push(curCase); 
+            } else {
+                if (curCase.priority > bestMatchPriority) {
+                    bestMatch = [curCase];
+                    bestMatchPriority = curCase.priority;
+                } else {
+                    bestMatch.push(curCase);
+                }
+            }
+        }
+    }
+    
+    /* Re-filter volatileMatches to ensure that all matched cases have
+     * priority >= bestMatchPriority. */
+    volatileMatches = volatileMatches.filter(function (c) { c.priority >= bestMatchPriority; });
+    
+    var states = bestMatch.reduce(function(list, caseObject) {
+        return list.concat(parseDialogue(caseObject, this, opp));
+    }.bind(this), []);
+    
+    if (states.length > 0) {
+        var chosenState = states[getRandomNumber(0, states.length)];
+        
+        this.volatileMatches = volatileMatches;
+        
         this.allStates = states;
         this.chosenState = chosenState;
         this.chosenState.expandDialogue(this, opp);
+        this.lockedState = false;
         
         return true;
-    } else {
-        console.log("Warning: matched "+tag+" dialogue for player "+this.slot+" has no states");
-        return false;
     }
     
     console.log("-------------------------------------");
