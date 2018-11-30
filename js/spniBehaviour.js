@@ -200,17 +200,22 @@ var fixupDialogueSubstitutions = { // Order matters
 	'``':  '\u201c', // left double quotation mark
 	'`':   '\u2018', // left single quotation mark
 	"''":  '\u201d', // right double quotation mark
-	//"'":   '\u2019', // right single quotation mark
+	"'":   '\u2019', // right single quotation mark
 	'&lt;i&gt;': '<i>',
 	'&lt;/i&gt;': '</i>'
 };
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
 function fixupDialogue (str) {
-	return str//.replace(/"([^"]*)"/g, "\u201c$1\u201d")
-		     .replace(fixupDialogueRE, function(match) {
-			return fixupDialogueSubstitutions[match]
-		});
+    return str.split(/(<script>.*?<\/script>)/i).map(function(part, idx) {
+        // Odd parts will be script tags; leave them alone and do
+        // substitutions on the rest
+        return (idx % 2) ? part :
+            part.replace(/"([^"]*)"/g, "\u201c$1\u201d")
+            .replace(fixupDialogueRE, function(match) {
+                return fixupDialogueSubstitutions[match]
+            });
+    }).join('');
 }
 
 /************************************************************
