@@ -245,6 +245,8 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
     epilogue.ratio = ratio;
   } else {
 
+    epilogue.ratio = [4,3]; // default ratio to use while image loads
+
     var firstImage = new Image();
     for (var i = 0; i < screens.length; i++) {
       if (screens[i].image.length) {
@@ -266,11 +268,13 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
       // dummy image as first slide, remove that to get proper aspect ratio
       if (firstImage.naturalWidth < 10 || firstImage.naturalHeight < 10) {
-        (galleryEnding || epilogue).ratio = [4,3];
+        epilogue.ratio = [4,3];
       } else {
-        (galleryEnding || epilogue).ratio = [firstImage.naturalWidth, firstImage.naturalHeight];
+        var w = firstImage.naturalWidth;
+        var h = firstImage.naturalHeight;
+        epilogue.ratio = [w, h];
+        epilogueContainer.setAttribute('style', 'max-width:' + w / h * 100 + 'vh; height:' + h / w * 100 + 'vw;');
       }
-      epilogueContent.removeChild(firstImage);
     }
   }
 
