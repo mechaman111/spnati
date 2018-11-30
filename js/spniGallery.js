@@ -6,7 +6,7 @@
 function GEnding(player, ending){
 	this.player = player;
 	this.gender = $(ending).attr('gender');
-	
+
 	var previewImage = $(ending).attr('img');
 	if (!previewImage) {
 		/* Default to using the first screen 'img' attribute if there is none
@@ -14,44 +14,17 @@ function GEnding(player, ending){
 		 */
 		previewImage = $(ending).find('screen').eq(0).attr('img');
 	}
-	
-	this.image = player.base_folder + previewImage;
-	this.title = $(ending).find('title').html();
-	this.unlocked = save.hasEnding(player.id, this.title);
-	//Same as in spniEpilogue.js
-	this.screens = [];
-	var $end = this;
-	$(ending).find('screen').each(function(){
-		var image = player.base_folder + $(this).attr("img").trim();
-		var textBoxes = [];
-		$(this).find('text').each(function(){
-			var x = $(this).find("x").html().trim();
-			var y = $(this).find("y").html().trim();
-			var w = $(this).find("width").html();
-			var a = $(this).find("arrow").html();
+  previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
 
-			if (w) {
-				w = w.trim();
-			}
-			if (!w || (w.length <= 0)) {
-				w = "20%"; //default to text boxes having a width of 20%
-			}
-			if (a) {
-				a = a.trim().toLowerCase();
-				if (a.length >= 1) {
-					a = "arrow-" + a; //class name for the different arrows. Only use if the writer specified something.
-				}
-			} else {
-				a = "";
-			}
-			if (x.toLowerCase() == "centered") {
-				x = getCenteredPosition(w);
-			}
-			var text = $(this).find("content").html().trim();
-			textBoxes.push({x:x, y:y, width:w, arrow:a, text:text});
-		});
-		$end.screens.push({image:image, textBoxes:textBoxes});
-	});
+	this.image = previewImage;
+	this.title = $(ending).find('title').html();
+	this.unlocked = EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title);
+
+	// function definition in spniEpilogue.js
+	var parsedEpilogue = parseEpilogue(player, ending);
+	this.ratio = parsedEpilogue.ratio;
+	this.screens = parsedEpilogue.screens;
+	this.backgrounds = parsedEpilogue.backgrounds;
 }
 
  /**********************************************************************
@@ -95,8 +68,6 @@ function loadGalleryEndings(){
 	}
 	for(var i=0; i<loadedOpponents.length; i++){
 		isEndingLoaded.push(false);
-	}
-	for(var i=0; i<loadedOpponents.length; i++){
 		if(loadedOpponents[i].ending){
 			loadEndingXml(i);
 		}
@@ -143,7 +114,7 @@ function fetchLoadedEndings(){
 			}
 		}
 	}
-	
+
 	setTimeout(fetchLoadedEndings, 200);
 }
 
@@ -237,11 +208,11 @@ function galleryPrevPage(){
 function selectEnding(i) {
 	selectedEnding = epp*galleryPage+i;
 	var ending = galleryEndings[selectedEnding];
-	
+
 	if (!ending) {
 		return;
 	}
-	
+
 	if(ending.unlocked){
 		$galleryStartButton.attr('disabled', false);
 		chosenEpilogue = ending;
@@ -283,7 +254,7 @@ function doEpilogueFromGallery(){
 			default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
 		}
 	}
-	
+
 	if (USAGE_TRACKING) {
 		var usage_tracking_report = {
 			'date': (new Date()).toISOString(),
@@ -296,7 +267,7 @@ function doEpilogueFromGallery(){
 				'title': chosenEpilogue.title
 			}
 		};
-		
+
 		$.ajax({
 			url: USAGE_TRACKING_ENDPOINT,
 			method: 'POST',
@@ -307,11 +278,13 @@ function doEpilogueFromGallery(){
 			},
 		});
 	}
-	
-	clearEpilogueBoxes();
-	epilogueScreen = 0; //reset epilogue position in case a previous epilogue played before this one
-	epilogueText = 0;
-	progressEpilogue(0); //initialise buttons and text boxes
+
+	//just in case, clear any leftover epilogue elements
+  $(epilogueContent).children(':not(.epilogue-background)').remove();
+  epilogueContainer.dataset.background = -1;
+  epilogueContainer.dataset.scene = -1;
+
+	progressEpilogue(1); //initialise buttons and text boxes
 	screenTransition($galleryScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
 	$epilogueSelectionModal.modal("hide");
 }

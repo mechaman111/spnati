@@ -10,6 +10,7 @@
 /* General Constants */
 var DEBUG = false;
 var EPILOGUES_ENABLED = true;
+var EPILOGUES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var USAGE_TRACKING = false;
@@ -282,11 +283,11 @@ function Player (id) {
     this.tags = [id];
     this.xml = null;
     this.metaXml = null;
-    
+
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;
-    
+
     this.resetState();
 }
 
@@ -309,7 +310,7 @@ Player.prototype.resetState = function () {
          */
 		this.allStates = parseDialogue(this.xml.find('start'), this);
 		this.chosenState = this.allStates[0];
-        
+
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
              * a new-style selected line immediately.
@@ -318,15 +319,15 @@ Player.prototype.resetState = function () {
              */
             this.updateBehaviour(SELECTED);
         }
-        
+
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
             appearance = this.alt_costume;
         }
-        
+
         this.labels = appearance.labels;
         this.folders = appearance.folders;
-        
+
         if (appearance.tags) {
             var alt_tags = appearance.tags.find('tag').each(function (idx, elem) {
                 var $elem = $(elem);
@@ -341,16 +342,16 @@ Player.prototype.resetState = function () {
                 }
             }.bind(this));
         }
-        
+
         if (appearance.id) {
             this.tags.push(appearance.id);
         }
-        
+
 		/* Load the player's wardrobe. */
 
     	/* Find and grab the wardrobe tag */
     	$wardrobe = appearance.wardrobe;
-    	
+
     	/* find and create all of their clothing */
         var clothingArr = [];
     	$wardrobe.find('clothing').each(function () {
@@ -411,14 +412,15 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
-    
+
     this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
         return {
             'folder': $(this).attr('folder'),
             'label': $(this).text(),
-            'image': $(this).attr('img') 
+            'image': $(this).attr('img')
         };
     }).get();
 }
@@ -492,7 +494,7 @@ Opponent.prototype.loadAlternateCostume = function () {
         dataType: "text",
         success: function (xml) {
             var $xml = $(xml);
-            
+
             this.alt_costume = {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
@@ -500,7 +502,7 @@ Opponent.prototype.loadAlternateCostume = function () {
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
             };
-            
+
             this.onSelected();
         }.bind(this),
         error: function () {
@@ -513,7 +515,7 @@ Opponent.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
     }
-    
+
     if (this.alt_costume.tags) {
         this.alt_costume.tags.find('tag').each(function (idx, elem) {
             var $elem = $(elem);
@@ -529,9 +531,9 @@ Opponent.prototype.unloadAlternateCostume = function () {
             }
         }.bind(this));
     }
-    
+
     this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
-    
+
     this.alt_costume = null;
     this.selectAlternateCostume(null);
     this.resetState();
@@ -554,7 +556,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
         }
         return;
     }
-    
+
     fetchCompressedURL(
 		'opponents/' + this.id + "/behaviour.xml",
 		/* Success callback.
@@ -567,7 +569,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
-            
+
             this.default_costume = {
                 id: null,
                 labels: $xml.find('label'),
@@ -575,7 +577,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 folders: this.folder,
                 wardrobe: $xml.find('wardrobe')
             };
-            
+
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
             if (typeof tags !== typeof undefined && tags !== false) {
@@ -604,7 +606,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
 
             //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
-            
+
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
             } else {
@@ -715,6 +717,14 @@ function loadConfigFile () {
                 EPILOGUES_ENABLED = true;
             }
 
+            var _epilogues_unlocked = $(xml).find('epilogues-unlocked').text().trim();
+            if (_epilogues_unlocked.toLowerCase() === 'false') {
+                EPILOGUES_UNLOCKED = false;
+            } else {
+                EPILOGUES_UNLOCKED = true;
+                console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
+            }
+
             var _epilogue_badges = $(xml).find('epilogue_badges').text();
             if(_epilogue_badges.toLowerCase() === 'false') {
                 EPILOGUE_BADGES_ENABLED = false;
@@ -734,9 +744,9 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
-            
+
             var _alts = $(xml).find('alternate-costumes').text();
-            
+
             if(_alts === "true") {
                 ALT_COSTUMES_ENABLED = true;
                 console.log("Alternate costumes enabled");
@@ -744,7 +754,7 @@ function loadConfigFile () {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
             }
-            
+
 			$(xml).find('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
