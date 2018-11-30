@@ -332,7 +332,6 @@ Player.prototype.resetState = function () {
              * an opponent with no legacy starting lines.
              */
             this.updateBehaviour(SELECTED);
-            updateAllVolatileBehaviours();
         }
 
         var appearance = this.default_costume;
@@ -580,12 +579,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
          * 'this' is bound to the Opponent object.
          */
 		function(xml) {
-            console.time("Behaviour Load");
-            console.time("XML Parsing");
-            
             var $xml = $(xml);
-            
-            console.timeEnd("XML Parsing");
             
             this.xml = $xml;
             this.size = $xml.find('size').text();
@@ -633,8 +627,6 @@ Opponent.prototype.loadBehaviour = function (slot) {
             } else {
                 this.onSelected();
             }
-            
-            console.timeEnd("Behaviour Load");
 		}.bind(this),
 		/* Error callback. */
         function(err) {

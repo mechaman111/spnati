@@ -157,8 +157,14 @@ function loadGameScreen () {
     /* randomize start lines for characters using legacy start lines.
      * The updateAllBehaviours() call below will override this for any
      * characters using new-style start lines.
+     *
+     * Also go ahead and commit any marker updates from selected lines.
      */
     players.forEach(function (p) {
+        if(p.chosenState) {
+            p.commitBehaviourUpdate();
+        }
+        
         if (p.allStates) {
             p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
         }
