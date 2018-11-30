@@ -465,6 +465,8 @@ Opponent.prototype.onSelected = function() {
 	console.log(this.slot+": "+this);
     this.preloadStageImages(-1);
 	this.updateBehaviour(SELECTED);
+    this.commitBehaviourUpdate();
+    
 	updateSelectionVisuals();
 }
 
@@ -632,7 +634,6 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 this.onSelected();
             }
             
-            console.timeEnd("onSelected");
             console.timeEnd("Behaviour Load");
 		}.bind(this),
 		/* Error callback. */

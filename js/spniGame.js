@@ -161,13 +161,12 @@ function loadGameScreen () {
     players.forEach(function (p) {
         if (p.allStates) {
             p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
-            p.chosenState.expandDialogue(this, null);
         }
     }.bind(this));
 
     updateAllBehaviours(null, GAME_START);
     
-    // NOTE: characters without GAME_START lines will not have initialized volatile state.
+    updateAllVolatileBehaviours();
 	commitAllBehaviourUpdates();
     
     /* set up the visuals */

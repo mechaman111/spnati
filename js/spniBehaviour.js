@@ -408,7 +408,7 @@ function Case($xml, stage) {
 	this.totalRounds =              parseInterval($xml.attr("totalRounds"));
 	this.saidMarker =               $xml.attr("saidMarker");
 	this.notSaidMarker =            $xml.attr("notSaidMarker");
-	this.customPriority =           $xml.attr("priority");
+	this.customPriority =           parseInt($xml.attr("priority"), 10);
 	
 	var states = [];
 	$xml.find('state').each(function () {
@@ -429,7 +429,7 @@ function Case($xml, stage) {
 	this.tests = tests;
 	
 	// Calculate case priority ahead of time.
-    if (this.customPriority) {
+    if (!isNaN(this.customPriority)) {
         this.priority = this.customPriority;
     } else {
     	this.priority = 0;
@@ -494,7 +494,7 @@ Case.prototype.getAlsoPlaying = function (opp) {
 
 /* Is this case dependent on marker values in the same phase? */
 Case.prototype.isVolatile = function () {
-    if (this.target && this.targetSayingMarker) {
+    if (this.targetSayingMarker) {
         return true;
     }
     
@@ -506,8 +506,9 @@ Case.prototype.isVolatile = function () {
 }
 
 Case.prototype.volatileRequirementsMet = function (self, opp) {
-    if (opp && this.target && this.targetSayingMarker) {
-        if (!checkMarker(this.targetSayingMarker, self, opp, true)) {
+    if (this.targetSayingMarker) {
+        if (!opp) return false;
+        if (!checkMarker(this.targetSayingMarker, opp, null, true)) {
             return false;
         }
     }
@@ -582,22 +583,9 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
         }
     }
 
-	// markers (priority = 1)
-	// marker checks have very low priority as they're mainly intended to be used with other target types
-	if (opp && targetSaidMarker) {
-		if (!checkMarker(targetSaidMarker, opp, null)) {
-			return false;
-		}
-	}
-	if (opp && targetNotSaidMarker) {
-		if (opp.markers[targetNotSaidMarker]) {
-			return false;
-		}
-	}
-
     // targetSaidMarker
     if (opp && this.targetSaidMarker) {
-        if (!checkMarker(this.targetSaidMarker, opp)) {
+        if (!checkMarker(this.targetSaidMarker, opp, null)) {
             return false;
         }
     }
@@ -876,13 +864,15 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     
     /* Re-filter volatileMatches to ensure that all matched cases have
      * priority >= bestMatchPriority. */
-    volatileMatches = volatileMatches.filter(function (c) { c.priority >= bestMatchPriority; });
+    volatileMatches = volatileMatches.filter(function (c) { return c.priority >= bestMatchPriority; });
     
     var states = bestMatch.reduce(function(list, caseObject) {
-        return list.concat(parseDialogue(caseObject, this, opp));
+        return list.concat(caseObject.states);
     }.bind(this), []);
     
     if (states.length > 0) {
+        console.log("Current NV case priority for player "+this.slot+": "+bestMatchPriority);
+        
         var chosenState = states[getRandomNumber(0, states.length)];
         
         /* Reaction handling state... */
@@ -914,14 +904,17 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         return;
     }
     
+    console.log("Player "+this.slot+": Current priority "+this.currentPriority+" with "+this.volatileMatches.length+" possible volatile cases");
+    
     var bestMatches = [];
     var bestPriority = this.currentPriority;
     
     /* Find best-matching volatile case if any. */
     this.volatileMatches.forEach(function (c) {
-        if (c.states.length > 0 &&
+        if (c !== this.bestVolatileMatch &&
+            c.states.length > 0 &&
             c.priority >= bestPriority &&
-            c.volatileRequirementsMet(this, this.currentTarget)) 
+            c.volatileRequirementsMet(this, this.currentTarget))
         {
             if (c.priority > bestPriority) {
                 bestMatches = [c];
@@ -930,7 +923,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
                 bestMatches.push(c);
             }
         }
-    });
+    }.bind(this));
     
     if (bestMatches.length > 0) {
         console.log("Found new volatile matches for player "+this.slot+" with priority "+bestPriority);
@@ -956,7 +949,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         
         /* Filter out lower-priority volatile cases. */
         this.volatileMatches = this.volatileMatches.filter(function (c) {
-            c.priority >= bestPriority;
+            return c.priority >= bestPriority;
         });
         
         /* Only indicate an update if we have found a strictly higher-priority
@@ -1012,11 +1005,11 @@ function updateAllVolatileBehaviours () {
         console.log("Reaction pass "+(pass+1));
         var anyUpdated = false;
         
-        for (var i=1; i<players.length; i++) {
-            if (players[i]) {
-                anyUpdated = players[i].updateVolatileBehaviour() || anyUpdated;
+        players.forEach(function (p) {
+            if (p !== players[HUMAN_PLAYER]) {
+                anyUpdated = p.updateVolatileBehaviour() || anyUpdated;
             }
-        }
+        });
         
         console.log("-------------------------------------");
         
@@ -1029,7 +1022,9 @@ function updateAllVolatileBehaviours () {
  * Commits all player behaviour updates.
  ************************************************************/
 function commitAllBehaviourUpdates () {
-    for (var i=1;i<players.length;i++) {
-        players[i].commitBehaviourUpdate();
-    }
+    players.forEach(function (p) {
+        if (p !== players[HUMAN_PLAYER]) {
+            p.commitBehaviourUpdate();
+        }
+    });
 }
