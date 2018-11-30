@@ -21,7 +21,7 @@ function GEnding(player, ending){
 	this.unlocked = EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title);
 
 	// function definition in spniEpilogue.js
-	var parsedEpilogue = parseEpilogue(player, ending);
+	var parsedEpilogue = parseEpilogue(player, ending, this);
 	this.ratio = parsedEpilogue.ratio;
 	this.screens = parsedEpilogue.screens;
 	this.backgrounds = parsedEpilogue.backgrounds;
