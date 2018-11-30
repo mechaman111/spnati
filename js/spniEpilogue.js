@@ -179,29 +179,15 @@ function loadEpilogueData(player) {
 	return epilogues;
 }
 
-function parseEpilogue(player, rawEpilogue) {
+function parseEpilogue(player, rawEpilogue, galleryEnding) {
   //use parseXML() so that <image> tags come through properly
   //not using parseXML() because internet explorer doesn't like it
-
-  if (arguments[2]) {
-    rawEpilogue = arguments[2];
-  }
 
   if (!rawEpilogue) {
     return;
   }
 
   var title = $(rawEpilogue).find("title").html().trim();
-  var ratio = [4, 3];
-  try {
-    var rawRatio = $(rawEpilogue).attr('ratio');
-    if (rawRatio) {
-      rawRatio = rawRatio.split(':');
-      ratio = [parseFloat(rawRatio[0]), parseFloat(rawRatio[1])];
-    }
-  } catch(e) {
-    console.error('Failed reading epilogue ratio: ', $(rawEpilogue).attr('ratio'))
-  }
 
   var screens = []; //the list of screens for the epilogue
 
@@ -219,7 +205,6 @@ function parseEpilogue(player, rawEpilogue) {
 
     screens.push({image, textBoxes}); //add a screen object to the list of screens
   });
-
 
   var backgrounds = [];
   $(rawEpilogue).find('background').each(function() {
@@ -240,10 +225,57 @@ function parseEpilogue(player, rawEpilogue) {
     backgrounds.push({image, scenes, css});
   });
 
-  var epilogue = {player, title, ratio, screens, backgrounds}; //epilogue object
+  var epilogue = {player, title, screens, backgrounds}; //epilogue object
 
   if (!epilogue.backgrounds.length && !epilogue.screens.length) {
     return;
+  }
+
+  try {
+    var rawRatio = $(rawEpilogue).attr('ratio');
+    if (rawRatio) {
+      rawRatio = rawRatio.split(':');
+      var ratio = [parseFloat(rawRatio[0]), parseFloat(rawRatio[1])];
+    }
+  } catch(e) {
+    console.error('Failed reading epilogue ratio: ', $(rawEpilogue).attr('ratio'))
+  }
+
+  if (ratio) {
+    epilogue.ratio = ratio;
+  } else {
+
+    epilogue.ratio = [4,3]; // default ratio to use while image loads
+
+    var firstImage = new Image();
+    for (var i = 0; i < screens.length; i++) {
+      if (screens[i].image.length) {
+        firstImage.src = screens[i].image;
+        break;
+      }
+    }
+    for (var i = 0; i < backgrounds.length; i++) {
+      if (backgrounds[i].image.length) {
+        firstImage.src = backgrounds[i].image;
+        break;
+      }
+    }
+
+    firstImage.style.opacity = 0;
+
+    epilogueContent.appendChild(firstImage);
+    firstImage.onload = function() {
+
+      // dummy image as first slide, remove that to get proper aspect ratio
+      if (firstImage.naturalWidth < 10 || firstImage.naturalHeight < 10) {
+        epilogue.ratio = [4,3];
+      } else {
+        var w = firstImage.naturalWidth;
+        var h = firstImage.naturalHeight;
+        epilogue.ratio = [w, h];
+        epilogueContainer.setAttribute('style', 'max-width:' + w / h * 100 + 'vh; height:' + h / w * 100 + 'vw;');
+      }
+    }
   }
 
   return epilogue;
