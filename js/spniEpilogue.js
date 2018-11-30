@@ -192,7 +192,7 @@ function parseEpilogue(player, rawEpilogue) {
   }
 
   var title = $(rawEpilogue).find("title").html().trim();
-  var ratio = undefined;
+  var ratio = [4, 3];
   try {
     var rawRatio = $(rawEpilogue).attr('ratio');
     if (rawRatio) {
@@ -506,6 +506,11 @@ function progressEpilogue(direction) {
   var activeText = document.getElementsByClassName('epilogue-text').length;
   var datastore = epilogueContainer.dataset;
 
+  if (!epilogueContainer.getAttribute('style')) {
+    var ratio = chosenEpilogue.ratio;
+    epilogueContainer.setAttribute('style', 'max-width:' + ratio[0] / ratio[1] * 100 + 'vh; height:' + ratio[1] / ratio[0] * 100 + 'vw;');
+  }
+
   // default all buttons and disable/enable conditionally later
   var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
   var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
@@ -630,41 +635,4 @@ function progressEpilogue(direction) {
       $epilogueRestartButton.prop('disabled', false);
     }
   }
-  
-   var currentBG = $(epilogueContent).children('.epilogue-background').attr('src');
-   
-  if (chosenEpilogue.ratio) {
-      if (!epilogueContainer.getAttribute('style')) {
-        var ratio = chosenEpilogue.ratio;
-        epilogueContainer.setAttribute('style', 'max-width:' + ratio[0] / ratio[1] * 100 + 'vh; height:' + ratio[1] / ratio[0] * 100 + 'vw;');
-      }
-  } else {
-      /* attempt to auto-find aspect ratio for current BG image
-       * use 4;3 as aspect ratio in case anything breaks and we don't have a previous AR
-       */
-      if (!epilogueContainer.getAttribute('style')) {
-          epilogueContainer.setAttribute('style', 'max-width:' + 4 / 3 * 100 + 'vh; height:' + 3 / 4 * 100 + 'vw;');
-      }
-  
-      if (currentBG) {
-          var tmpImg = new Image();
-          tmpImg.onload = function() {
-              var w = tmpImg.naturalWidth;
-              var h = tmpImg.naturalHeight;
-              
-              epilogueContainer.setAttribute('style', 'max-width:' + w / h * 100 + 'vh; height:' + h / w * 100 + 'vw;');
-          }
-          
-          tmpImg.src = currentBG;
-      }
-  }
-  
-  // Hide the BG if the creator specfies no image (== a blank screen)
-  // (for example, Meia's epilogue uses this as an intro)
-  if (!currentBG) {
-      $(epilogueContent).children('.epilogue-background').hide();
-  } else {
-      $(epilogueContent).children('.epilogue-background').show();
-  }
-  
 }
