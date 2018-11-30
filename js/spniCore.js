@@ -718,11 +718,11 @@ function loadConfigFile () {
             }
 
             var _epilogues_unlocked = $(xml).find('epilogues-unlocked').text().trim();
-            if (_epilogues_unlocked.toLowerCase() === 'false') {
-                EPILOGUES_UNLOCKED = false;
-            } else {
+            if (_epilogues_unlocked.toLowerCase() === 'true') {
                 EPILOGUES_UNLOCKED = true;
                 console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
+            } else {
+                EPILOGUES_UNLOCKED = false;
             }
 
             var _epilogue_badges = $(xml).find('epilogue_badges').text();
