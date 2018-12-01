@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.01 at 1:32:16 AM on November 30, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.01 at 12:47:52 AM on December 01, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Florina</first>
     <last />
@@ -50,7 +50,8 @@
                 <state img="0-calm.png">My name is—! Sorry, let me start again. Come on, deep breath, Florina... My name is Florina! Hi there!</state>
             </case>
             <case tag="game_start">
-                <state img="0-shocked.png">Huh? Nobody told me there'd be a m-m-man here!</state>
+                <state img="0-awkward.png">I'm a little shy... well, actually a lot... and I was told this game could help me overcome that.</state>
+                <state img="0-awkward.png">Just a little warning, but I'm pretty shy... and by pretty shy I mean a lot...</state>
             </case>
             <case tag="female_must_strip">
                 <state img="0-nervous.png">Er...</state>
@@ -111,10 +112,12 @@
                 <state img="0-awkward.png">Whew, I wasn't sure ~name~ would ever lose a hand.</state>
                 <state img="0-interested.png">So you aren't invincible after all!</state>
             </case>
-            <case tag="game_start" totalMales="1-4">
-                <state img="0-awkward.png">I'm a little shy... well, actually a lot... and I was told this game could help me overcome that.</state>
-                <state img="0-awkward.png">Just a little warning, but I'm pretty shy... and by pretty shy I mean a lot...</state>
+            <case tag="game_start" totalMales="1-2">
                 <state img="0-shocked.png">Huh? Nobody told me there'd be a m-m-man here!</state>
+                <state img="0-awkward.png">Um... there's a m-man here. I'm, er, <i>really</i> not good with them...</state>
+            </case>
+            <case tag="game_start" totalMales="3-4">
+                <state img="0-shocked.png">Wh-what is this? Why are there so many m-m-m-men here?!</state>
             </case>
             <case tag="female_must_strip" totalRounds="0">
                 <state img="0-happy.png">W-well... I didn't lose... on the first hand, at least. I hope that's a good sign.</state>
@@ -826,6 +829,7 @@
             <case tag="swap_cards" totalRounds="0">
                 <state img="0-embarrassed.png">Okay... Here goes nothing.</state>
                 <state img="0-calm.png">Alright, I can do this.</state>
+                <state img="0-calm.png">So I just pick some cards to keep?</state>
             </case>
             <case tag="bad_hand">
                 <state img="0-sad.png">I think I messed up.</state>
@@ -870,15 +874,36 @@
                 <state img="0-sad.png">I thought I could win at least once...</state>
             </case>
             <case tag="must_strip_normal">
+                <condition count="1" filter="human" gender="male" />
+                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case tag="must_strip_normal">
                 <state img="0-loss.png">Oh no... I... lost?</state>
                 <state img="0-loss.png">Y-you mean I have to st...str..... well, um... <i>you know</i>?</state>
                 <state img="0-loss.png">Ah, I lost? But that means...</state>
                 <state img="0-loss.png">Oh no... Wh-what should I take off?</state>
             </case>
+            <case alsoPlaying="bi" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Bi is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Bi is w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case alsoPlaying="captain_america" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! That superhero man is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Mr. America's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
             <case alsoPlaying="captain_falcon" tag="must_strip_normal">
                 <state img="0-shocked.png" marker="fled">Eep! Falcon is looking at me... This is too much...I h-have to run!</state>
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Captain Falcon's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case alsoPlaying="corrin_m" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Corrin is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Corrin's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
             <case alsoPlaying="fred" tag="must_strip_normal">
                 <state img="0-shocked.png" marker="fled">Eep! Fred is looking at me... This is too much...I h-have to run!</state>
@@ -890,20 +915,45 @@
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... That scary chef's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
+            <case alsoPlaying="jotaro" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Jotaru is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Jotaru's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
             <case alsoPlaying="kira" tag="must_strip_normal">
                 <state img="0-shocked.png" marker="fled">Eep! Kira is looking at me... This is too much...I h-have to run!</state>
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Kira's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case alsoPlaying="link" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Link is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no...Link is w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
             <case alsoPlaying="mettaton" tag="must_strip_normal">
                 <state img="0-shocked.png" marker="fled">Eep! Mettaton is looking at me... This is too much...I h-have to run!</state>
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Mettaton's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
+            <case alsoPlaying="pit" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Pit is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Pit is w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
             <case alsoPlaying="ryu" tag="must_strip_normal">
                 <state img="0-shocked.png" marker="fled">Eep! Ryu is looking at me... This is too much...I h-have to run!</state>
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Ryu's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case alsoPlaying="ryuji" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Ryuji is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Ryuji's w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
+            <case alsoPlaying="shaggy" tag="must_strip_normal">
+                <state img="0-shocked.png" marker="fled">Eep! Shaggy is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... Shaggy's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
             <case alsoPlaying="twilight" alsoPlayingStage="3" tag="must_strip_normal" notSaidMarker="react_must_strip_twilight">
                 <state img="0-happy.png" marker="react_must_strip_twilight">Well, th-thanks, Twilight. That helps me feel better.</state>
@@ -913,11 +963,6 @@
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Xander's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
-            <case tag="must_strip_normal" totalMales="1-5">
-                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
-                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
-                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
-            </case>
             <case tag="must_strip_losing">
                 <state img="0-shocked.png">O-oh no... I l-lost already?</state>
                 <state img="0-nervous.png">R...really?</state>
@@ -925,6 +970,12 @@
                 <state img="0-embarrassed.png">I'm the first to have to... well, um... I can't say it!</state>
                 <state img="0-loss.png">So I really have to st...str...oh, it's too scary to say.</state>
                 <state img="0-nervous.png">C-could we...maybe treat that as a practice hand?</state>
+            </case>
+            <case tag="must_strip_losing">
+                <condition count="1" filter="human" gender="male" />
+                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
             <case alsoPlaying="captain_falcon" tag="must_strip_losing">
                 <state img="0-shocked.png" marker="fled">Eep! Falcon is looking at me... This is too much...I h-have to run!</state>
@@ -960,11 +1011,6 @@
                 <state img="0-shocked.png" marker="fled">Eep! Xander is looking at me... This is too much...I h-have to run!</state>
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Xander's w-watching... I-I'm sorry about this! B-bye!</state>
-            </case>
-            <case tag="must_strip_losing" totalMales="1-5">
-                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
-                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
-                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
             <case tag="stripping">
                 <state img="0-strip.png">S...sorry... I'm really shy... about this... And... everything else...</state>
@@ -1015,18 +1061,18 @@
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... Xander's w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
+            <case tag="must_strip_winning" priority="98">
+                <condition count="1" filter="human" gender="male" />
+                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
+                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
+                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
+            </case>
             <case tag="must_strip_winning" timeInStage="7-99">
                 <state img="0-awkward.png">I was sort of hoping, well, you know, that I'd never l-lose...</state>
                 <state img="0-loss.png">Oh, you didn't all f-forget I was here yet?</state>
                 <state img="0-awkward.png">*sigh* I suppose it's only fair...</state>
             </case>
-            <case tag="must_strip_winning" priority="98" totalMales="1-5">
-                <state img="0-shocked.png" marker="fled">Eep! ~player~ is looking at me... This is too much...I h-have to run!</state>
-                <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
-                <state img="0-shocked.png" marker="fled">Oh no... ~player~'s w-watching... I-I'm sorry about this! B-bye!</state>
-            </case>
             <case tag="must_strip_winning" priority="99" totalMales="1-5">
-                <condition count="1" filter="human" gender="male" />
                 <state img="0-shocked.png" marker="fled">B-but there's a m-man! I can't... Um... bye!</state>
                 <state img="0-shocked.png" marker="fled">Oh no... A m-man is w-watching... I-I'm sorry about this! B-bye!</state>
             </case>
