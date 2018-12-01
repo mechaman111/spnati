@@ -337,6 +337,7 @@ function implementAIAction () {
 		players[currentTurn].updateBehaviour(GOOD_HAND);
 	}
     
+    players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
 
@@ -377,6 +378,17 @@ function advanceTurn () {
 
 	/* allow them to take their turn */
 	if (currentTurn == 0) {
+        /* Reprocess reactions. */
+        updateAllVolatileBehaviours();
+        
+        /* Commit updated states only. */
+        players.forEach(function (p) {
+            if (p.chosenState && !p.stateCommitted) {
+                p.commitBehaviourUpdate();
+                updateGameVisual(p.slot);
+            }
+        });
+        
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
 			allowProgression(eGamePhase.REVEAL);
@@ -499,6 +511,18 @@ function continueDealPhase () {
 			}
 		}
 	}
+
+    /* Clear all player's chosenStates to allow for limited (in-order-only)
+     * reaction processing during the AI turns.
+     * (Handling of out-of-order reactions happens at the beginning of the
+     *  player turn.)
+     */
+    players.forEach(function (p) {
+        if (p.chosenState) {
+            p.chosenState = null;
+            p.stateCommitted = false;
+        }
+    });
 
     /* allow each of the AIs to take their turns */
     currentTurn = 0;

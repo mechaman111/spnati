@@ -316,6 +316,7 @@ Player.prototype.resetState = function () {
         this.currentTarget = null;
         this.currentPriority = -1;
         this.stateLockCount = 0;
+        this.stateCommitted = false;
         
         this.xml.children('start').children('state').each(function () {
             allStates.push(new State($(this)));

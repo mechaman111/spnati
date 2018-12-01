@@ -334,6 +334,7 @@ function checkMarker(predicate, self, target, currentOnly) {
     }
 	
     if (currentOnly) {
+        if (!self.chosenState) return false;
         if (!self.chosenState.marker) return false;
         if (self.chosenState.marker.name !== name) return false;
         
@@ -886,6 +887,7 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
         this.currentTarget = opp;
         this.currentPriority = bestMatchPriority;
         this.stateLockCount = 0;
+        this.stateCommitted = false;
         
         this.allStates = states;
         this.chosenState = chosenState;
@@ -947,6 +949,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         this.currentPriority = bestPriority;
         this.allStates = bestMatch.states;
         this.chosenState = bestMatch.states[getRandomNumber(0, bestMatch.states.length)];
+        this.stateCommitted = false;
         
         /* Add locks for dependencies. */
         var deps = bestMatch.getVolatileDependencies(this, this.currentTarget);
@@ -974,12 +977,15 @@ Opponent.prototype.updateVolatileBehaviour = function () {
  * expanding state dialogue and updating player markers. 
  ************************************************************/
 Opponent.prototype.commitBehaviourUpdate = function () {
-    if(!this.chosenState) return;
+    if (!this.chosenState) return;
+    if (this.stateCommitted) return;
     
     this.chosenState.expandDialogue(this, this.currentTarget);
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }
+    
+    this.stateCommitted = true;
 }
 
 
