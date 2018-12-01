@@ -242,17 +242,17 @@ function playerMustStrip (player) {
 				players[HUMAN_PLAYER].removedClothing = clothing[0];
 			} else {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					trigger = [MALE_HUMAN_MUST_STRIP, MALE_MUST_STRIP];
+				    trigger = [[MALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [MALE_MUST_STRIP, OPPONENT_LOST]];
 				} else {
-					trigger = [FEMALE_HUMAN_MUST_STRIP, FEMALE_MUST_STRIP];
+				    trigger = [[FEMALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [FEMALE_MUST_STRIP, OPPONENT_LOST]];
 				}
 			}
 			updateAllBehaviours(player, trigger);
 		} else {
 			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_MUST_STRIP);
+			    updateAllBehaviours(player, [[MALE_MUST_STRIP, OPPONENT_LOST]]);
 			} else {
-				updateAllBehaviours(player, FEMALE_MUST_STRIP);
+			    updateAllBehaviours(player, [[FEMALE_MUST_STRIP, OPPONENT_LOST]]);
 			}
 
 			var trigger = determineStrippingSituation(players[player]);
@@ -261,9 +261,9 @@ function playerMustStrip (player) {
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_MUST_MASTURBATE);
+			updateAllBehaviours(player, [[MALE_MUST_MASTURBATE, OPPONENT_LOST]]);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE);
+		    updateAllBehaviours(player, [[FEMALE_MUST_MASTURBATE, OPPONENT_LOST]]);
 		}
 		if (player != HUMAN_PLAYER) {
 			var trigger = determineForfeitSituation(player);
