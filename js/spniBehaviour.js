@@ -37,6 +37,7 @@ var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
 var GOOD_HAND = "good_hand";
 
+var PLAYER_MUST_STRIP = "must_strip";
 var PLAYER_MUST_STRIP_WINNING = "must_strip_winning";
 var PLAYER_MUST_STRIP_NORMAL = "must_strip_normal";
 var PLAYER_MUST_STRIP_LOSING = "must_strip_losing";
@@ -99,6 +100,8 @@ var FEMALE_FINISHED_MASTURBATING = "female_finished_masturbating";
 
 var GAME_OVER_VICTORY = "game_over_victory";
 var GAME_OVER_DEFEAT = "game_over_defeat";
+
+var GLOBAL_CASE = "global";
 
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
@@ -282,13 +285,18 @@ function checkMarker(predicate, self, target) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(tag, opp) {
+Opponent.prototype.updateBehaviour = function(tags, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
 		/* their is restricted to this only */
 		//tag = players[player].forfeit[0];
-	//}
+    //}
+
+    if (!Array.isArray(tags)) {
+        tags = [tags];
+    }
+    tags.push(GLOBAL_CASE);
 
     /* get the AI stage */
     var stageNum = this.stage;
@@ -303,21 +311,21 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
 
     /* quick check to see if the stage exists */
     if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
+        console.log("Error: couldn't find stage for player " + this.slot + " on stage number " + stageNum + " for tag " + tags.join());
         return;
     }
 
     /* try to find the tag */
 	var states = [];
 	$(stage).find('case').each(function () {
-		if ($(this).attr('tag') == tag) {
+	    if (tags.indexOf($(this).attr('tag')) >= 0) {
             states.push($(this));
 		}
 	});
 
     /* quick check to see if the tag exists */
 	if (states.length <= 0) {
-		console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
+	    console.log("Warning: couldn't find " + tags.join() + " dialogue for player " + this.slot + " at stage " + stageNum);
 		return false;
 	}
     else {

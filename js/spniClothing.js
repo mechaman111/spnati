@@ -256,7 +256,7 @@ function playerMustStrip (player) {
 			}
 
 			var trigger = determineStrippingSituation(players[player]);
-			players[player].updateBehaviour(trigger);
+			players[player].updateBehaviour([trigger, PLAYER_MUST_STRIP]);
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */

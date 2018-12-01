@@ -42,22 +42,27 @@
     <defaultImage>sad</defaultImage>
     <defaultText>I've got a bad hand.</defaultText>
   </trigger>
-  <trigger tag="must_strip_winning" start="0" end="7" label="Must Strip (Self, Winning)" description="The character has lost the hand, but currently has the most clothes among everybody" group="2" order="0" xmlGroup="3" xmlOrder="3">
+  <trigger tag="must_strip" optional="true" start="0" end="7" label="Must Strip" description="The character has lost the hand" group="2" order="0" xmlGroup="3" xmlOrder="3">
+    <vars />
+    <defaultImage>loss</defaultImage>
+    <defaultText>These lines are considered in addition to the (winning, normal, losing) must strip states.</defaultText>
+  </trigger>
+  <trigger tag="must_strip_winning" start="0" end="7" label="Must Strip (Self, Winning)" description="The character has lost the hand, but currently has the most clothes among everybody" group="2" order="1" xmlGroup="3" xmlOrder="3">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>They say this when they're winning - they have more clothing items left than other players.</defaultText>
   </trigger>
-  <trigger tag="must_strip_normal" start="0" end="7" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" group="2" order="1" xmlGroup="3" xmlOrder="0">
+  <trigger tag="must_strip_normal" start="0" end="7" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" group="2" order="2" xmlGroup="3" xmlOrder="0">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>What the character says when they're in the middle of the group in terms of clothes left.</defaultText>
   </trigger>
-  <trigger tag="must_strip_losing" start="0" end="7" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" group="2" order="2" xmlGroup="3" xmlOrder="1">
+  <trigger tag="must_strip_losing" start="0" end="7" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" group="2" order="3" xmlGroup="3" xmlOrder="1">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>The character has lost a round, and also has the fewest pieces of clothing left.</defaultText>
   </trigger>
-  <trigger tag="stripping" start="0" end="7" label="Stripping" description="The character is stripping after losing a round" group="2" order="3" xmlGroup="3" xmlOrder="2">
+  <trigger tag="stripping" start="0" end="7" label="Stripping" description="The character is stripping after losing a round" group="2" order="4" xmlGroup="3" xmlOrder="2">
     <vars>
       <string>clothing</string>
     </vars>
@@ -440,6 +445,14 @@
     <defaultImage>calm</defaultImage>
     <defaultText>What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.</defaultText>
   </trigger>
+  <trigger tag="global" optional="true" start="0" end="10" label="Global" hasTarget="true" description="Used at all points in the game" group="11" order="0">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+    </vars>
+    <defaultImage>calm</defaultImage>
+    <defaultText>This can appear at any point in the game if its priority is higher or equal to the highest of the more specific case.</defaultText>
+  </trigger>
 </triggers>
 <groups>
   <textGroup id="0" name="Intro">
@@ -520,6 +533,14 @@
 #GAME OVER
 #Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
 ]]></description>
+  </textGroup>
+  <textGroup id="11" name="Global">
+    <description>
+      <![CDATA[
+#GAME OVER
+#If your character is saying a set of lines in sequence where it doesn't matter what phase of the game it's at, you can use this area to avoid duplicating lines across cases. These lines are considered for every case in the game.
+]]>
+    </description>
   </textGroup>
 </groups>
 </tags>
