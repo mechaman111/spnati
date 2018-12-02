@@ -33,6 +33,7 @@ var SELECTED = "selected";
 var GAME_START = "game_start";
 
 var SWAP_CARDS = "swap_cards";
+var ANY_HAND = "hand";
 var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
 var GOOD_HAND = "good_hand";

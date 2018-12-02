@@ -320,11 +320,11 @@ function implementAIAction () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
-		players[currentTurn].updateBehaviour(BAD_HAND);
+		players[currentTurn].updateBehaviour([BAD_HAND, ANY_HAND]);
 	} else if (players[currentTurn].hand.strength == PAIR) {
-		players[currentTurn].updateBehaviour(OKAY_HAND);
+		players[currentTurn].updateBehaviour([OKAY_HAND, ANY_HAND]);
 	} else {
-		players[currentTurn].updateBehaviour(GOOD_HAND);
+		players[currentTurn].updateBehaviour([GOOD_HAND, ANY_HAND]);
 	}
 	updateGameVisual(currentTurn);
 
