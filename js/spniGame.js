@@ -167,6 +167,7 @@ function loadGameScreen () {
         
         if (p.allStates) {
             p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+            p.stateCommitted = false;
         }
     }.bind(this));
 
