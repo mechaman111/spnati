@@ -324,7 +324,6 @@ Player.prototype.resetState = function () {
         
         this.allStates = allStates;
 		this.chosenState = this.allStates[0];
-        this.chosenState.expandDialogue(this, null);
         
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
@@ -334,6 +333,8 @@ Player.prototype.resetState = function () {
              */
             this.updateBehaviour(SELECTED);
         }
+        
+        this.commitBehaviourUpdate();
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
@@ -832,6 +833,7 @@ function resetPlayers () {
 		timers[i] = 0;
 	}
 	updateAllBehaviours(null, SELECTED);
+    commitAllBehaviourUpdates();
 }
 
 /************************************************************
