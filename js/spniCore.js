@@ -121,7 +121,7 @@ function compileBaseErrorReport(userDesc, bugType) {
             }
 
             if (players[i].chosenState) {
-                playerData.currentLine    = players[i].chosenState.dialogue;
+                playerData.currentLine    = players[i].chosenState.rawDialogue;
                 playerData.currentImage   = players[i].chosenState.image;
             }
 
@@ -308,9 +308,23 @@ Player.prototype.resetState = function () {
          * This may be overridden by later updateBehaviour calls if
          * the player has (new-style) selected or game start case lines.
          */
-		this.allStates = parseDialogue(this.xml.find('start'), this);
+		var allStates = [];
+        
+        /* Initialize reaction handling state. */
+        this.volatileMatches = [];
+        this.bestVolatileMatch = null;
+        this.currentTarget = null;
+        this.currentPriority = -1;
+        this.stateLockCount = 0;
+        this.stateCommitted = false;
+        
+        this.xml.children('start').children('state').each(function () {
+            allStates.push(new State($(this)));
+        });
+        
+        this.allStates = allStates;
 		this.chosenState = this.allStates[0];
-
+        
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
              * a new-style selected line immediately.
@@ -319,6 +333,8 @@ Player.prototype.resetState = function () {
              */
             this.updateBehaviour(SELECTED);
         }
+        
+        this.commitBehaviourUpdate();
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
@@ -450,6 +466,8 @@ Opponent.prototype.onSelected = function() {
 	console.log(this.slot+": "+this);
     this.preloadStageImages(-1);
 	this.updateBehaviour(SELECTED);
+    this.commitBehaviourUpdate();
+    
 	updateSelectionVisuals();
 }
 
@@ -564,7 +582,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
          */
 		function(xml) {
             var $xml = $(xml);
-
+            
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
@@ -604,7 +622,6 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 }, this);
             });
 
-            //var newPlayer = createNewPlayer(opponent.id, first, last, labels, gender, size, intelligence, Number(timer), opponent.scale, tagsArray, $xml);
             this.targetedLines = targetedLines;
 
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
@@ -816,6 +833,7 @@ function resetPlayers () {
 		timers[i] = 0;
 	}
 	updateAllBehaviours(null, SELECTED);
+    commitAllBehaviourUpdates();
 }
 
 /************************************************************

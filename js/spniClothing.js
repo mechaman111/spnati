@@ -434,6 +434,8 @@ function closeStrippingModal (id) {
             
         /* update behaviour */
         updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, players[HUMAN_PLAYER]);
+		updateAllVolatileBehaviours();
+		commitAllBehaviourUpdates();
         updateAllGameVisuals();
         
         /* allow progression */
@@ -480,7 +482,9 @@ function stripAIPlayer (player) {
 	/* update behaviour */
 	updateAllBehaviours(player, dialogueTrigger);
 	players[player].updateBehaviour(PLAYER_STRIPPED);
-  updateAllGameVisuals();
+	updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
+    updateAllGameVisuals();
 }
 
 /************************************************************

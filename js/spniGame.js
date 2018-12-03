@@ -157,14 +157,24 @@ function loadGameScreen () {
     /* randomize start lines for characters using legacy start lines.
      * The updateAllBehaviours() call below will override this for any
      * characters using new-style start lines.
+     *
+     * Also go ahead and commit any marker updates from selected lines.
      */
     players.forEach(function (p) {
+        if(p.chosenState) {
+            p.commitBehaviourUpdate();
+        }
+        
         if (p.allStates) {
             p.chosenState = p.allStates[getRandomNumber(0, p.allStates.length)];
+            p.stateCommitted = false;
         }
-    });
+    }.bind(this));
 
     updateAllBehaviours(null, GAME_START);
+    
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
     
     /* set up the visuals */
     updateAllGameVisuals();
@@ -302,6 +312,7 @@ function makeAIDecision () {
 
 	/* update a few hardcoded visuals */
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
+    players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
 
 	/* wait and implement AI action */
@@ -326,6 +337,9 @@ function implementAIAction () {
 	} else {
 		players[currentTurn].updateBehaviour(GOOD_HAND);
 	}
+    
+    players[currentTurn].updateVolatileBehaviour();
+    players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
 
 	/* wait and then advance the turn */
@@ -355,6 +369,7 @@ function advanceTurn () {
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
+            players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -364,6 +379,17 @@ function advanceTurn () {
 
 	/* allow them to take their turn */
 	if (currentTurn == 0) {
+        /* Reprocess reactions. */
+        updateAllVolatileBehaviours();
+        
+        /* Commit updated states only. */
+        players.forEach(function (p) {
+            if (p.chosenState && !p.stateCommitted) {
+                p.commitBehaviourUpdate();
+                updateGameVisual(p.slot);
+            }
+        });
+        
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
 			allowProgression(eGamePhase.REVEAL);
@@ -487,6 +513,18 @@ function continueDealPhase () {
 		}
 	}
 
+    /* Clear all player's chosenStates to allow for limited (in-order-only)
+     * reaction processing during the AI turns.
+     * (Handling of out-of-order reactions happens at the beginning of the
+     *  player turn.)
+     */
+    players.forEach(function (p) {
+        if (p.chosenState) {
+            p.chosenState = null;
+            p.stateCommitted = false;
+        }
+    });
+
     /* allow each of the AIs to take their turns */
     currentTurn = 0;
     advanceTurn();
@@ -568,6 +606,10 @@ function completeRevealPhase () {
 
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);
+    
+    /* playerMustStrip() calls updateBehaviour and updateAllBehaviours. */
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
     updateAllGameVisuals();
 
     /* highlight the loser */
@@ -598,6 +640,8 @@ function completeRevealPhase () {
 function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
     updateAllGameVisuals();
     allowProgression(eGamePhase.STRIP);
 }
@@ -620,6 +664,7 @@ function completeStripPhase () {
 function completeMasturbatePhase () {
     /* strip the player with the lowest hand */
     startMasturbation(recentLoser);
+    // all behaviour phases handled already
     updateAllGameVisuals();
 }
 
@@ -708,6 +753,8 @@ function handleGameOver() {
 			p.updateBehaviour(tag, winner);
 		});
 
+        updateAllVolatileBehaviours();
+    	commitAllBehaviourUpdates();
         updateAllGameVisuals();
 
 		allowProgression(eGamePhase.GAME_OVER);

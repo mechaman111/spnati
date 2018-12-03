@@ -77,6 +77,9 @@ function startMasturbation (player) {
 		players[player].updateBehaviour(PLAYER_START_MASTURBATING);
 		setForfeitTimer(player);
 	}
+    
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
 	updateAllGameVisuals();
 
 	/* allow progression */
@@ -132,6 +135,7 @@ function tickForfeitTimers () {
 
                 /* show them cumming */
                 players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
+                players[i].commitBehaviourUpdate();
                 updateGameVisual(i);
 
                 /* trigger the callback */
@@ -165,6 +169,7 @@ function tickForfeitTimers () {
 					/* this player is now heavily masturbating */
 					players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
 					players[i].updateBehaviour(PLAYER_HEAVY_MASTURBATING);
+                    players[i].commitBehaviourUpdate();
 					updateGameVisual(i);
 				}
 			}
@@ -182,6 +187,9 @@ function tickForfeitTimers () {
 					: (playerToShow.gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
 				playerToShow);
 		});
+        
+        updateAllVolatileBehaviours();
+    	commitAllBehaviourUpdates();
 		updateAllGameVisuals();
 	}
 	
@@ -212,6 +220,9 @@ function finishMasturbation (player) {
 		players[player].updateBehaviour(PLAYER_FINISHED_MASTURBATING);
 		
 	}
+    
+    updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
 	updateAllGameVisuals();
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
