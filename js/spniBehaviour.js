@@ -12,10 +12,12 @@ var SELECTED = "selected";
 var GAME_START = "game_start";
 
 var SWAP_CARDS = "swap_cards";
+var ANY_HAND = "hand";
 var BAD_HAND = "bad_hand";
 var OKAY_HAND = "okay_hand";
 var GOOD_HAND = "good_hand";
 
+var PLAYER_MUST_STRIP = "must_strip";
 var PLAYER_MUST_STRIP_WINNING = "must_strip_winning";
 var PLAYER_MUST_STRIP_NORMAL = "must_strip_normal";
 var PLAYER_MUST_STRIP_LOSING = "must_strip_losing";
@@ -29,6 +31,8 @@ var PLAYER_MASTURBATING = "masturbating";
 var PLAYER_HEAVY_MASTURBATING = "heavy_masturbating";
 var PLAYER_FINISHING_MASTURBATING = "finishing_masturbating";
 var PLAYER_FINISHED_MASTURBATING = "finished_masturbating";
+
+var OPPONENT_LOST = "opponent_lost";
 
 var MALE_HUMAN_MUST_STRIP = "male_human_must_strip";
 var MALE_MUST_STRIP = "male_must_strip";
@@ -79,6 +83,7 @@ var FEMALE_FINISHED_MASTURBATING = "female_finished_masturbating";
 var GAME_OVER_VICTORY = "game_over_victory";
 var GAME_OVER_DEFEAT = "game_over_defeat";
 
+var GLOBAL_CASE = "global";
 
 /**********************************************************************
  *****                  State Object Specification                *****
@@ -805,13 +810,18 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
  * Updates the behaviour of the given player based on the 
  * provided tag.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(tag, opp) {
+Opponent.prototype.updateBehaviour = function(tags, opp) {
 	/* determine if the AI is dialogue locked */
 	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
 	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
 		/* their is restricted to this only */
 		//tag = players[player].forfeit[0];
 	//}
+    
+    if (!Array.isArray(tags)) {
+        tags = [tags];
+    }
+    tags.push(GLOBAL_CASE);
     
     /* get the AI stage */
     var stageNum = this.stage;
@@ -833,17 +843,17 @@ Opponent.prototype.updateBehaviour = function(tag, opp) {
     /* try to find the tag */
     var cases = [];
     $(stage).find('case').each(function () {
-        if ($(this).attr('tag') == tag) {
+        if (tags.indexOf($(this).attr('tag')) >= 0) {
             cases.push($(this));
         }
     });
 
     /* quick check to see if the tag exists */
     if (cases.length <= 0) {
-        console.log("Warning: couldn't find "+tag+" dialogue for player "+this.slot+" at stage "+stageNum);
+        console.log("Warning: couldn't find " + tags.join() + " dialogue for player " + this.slot + " at stage " + stageNum);
         return false;
     }
-
+    
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
     var bestMatchPriority = -1;
