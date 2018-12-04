@@ -863,7 +863,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     for (var i = 0; i < cases.length; i++) {
         var curCase = new Case(cases[i]);
         
-        if (curCase.priority >= bestMatchPriority &&
+        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
         {
             if (curCase.isVolatile()) {
