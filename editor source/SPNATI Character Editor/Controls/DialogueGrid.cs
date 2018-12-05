@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor.Controls
 	{
 		private Case _selectedCase;
 		private Stage _selectedStage;
-		private Character _selectedCharacter;
+		private Character _character;
 		private ImageLibrary _imageLibrary;
 		private bool _populatingCase;
 		private int _selectedRow;
@@ -20,14 +20,49 @@ namespace SPNATI_Character_Editor.Controls
 		public event EventHandler<int> HighlightRow;
 		#endregion
 
+		private TextBox _editBox;
+		private IntellisenseControl _intellisense;
+
+		private bool _readOnly;
+		public bool ReadOnly
+		{
+			get { return _readOnly; }
+			set
+			{
+				_readOnly = value;
+				if (_readOnly)
+				{
+					gridDialogue.AllowUserToAddRows = false;
+					gridDialogue.AllowUserToDeleteRows = false;
+					gridDialogue.RowHeadersVisible = false;
+					gridDialogue.EditMode = DataGridViewEditMode.EditProgrammatically;
+					gridDialogue.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+				}
+				else
+				{
+					gridDialogue.AllowUserToAddRows = true;
+					gridDialogue.AllowUserToDeleteRows = true;
+					gridDialogue.RowHeadersVisible = true;
+					gridDialogue.EditMode = DataGridViewEditMode.EditOnEnter;
+					gridDialogue.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+				}
+			}
+		}
+
 		public DialogueGrid()
 		{
 			InitializeComponent();
+
+			ColPerTarget.FalseValue = false;
+
+			_intellisense = new IntellisenseControl();
+			_intellisense.InsertSnippet += _intellisense_InsertSnippet;
+			Controls.Add(_intellisense);
 		}
 
 		public void SetData(Character character, Stage stage, Case c, HashSet<int> selectedStages, ImageLibrary imageLibrary)
 		{
-			_selectedCharacter = character;
+			_character = character;
 			_selectedStage = stage;
 			_selectedCase = c;
 			_imageLibrary = imageLibrary;
@@ -42,7 +77,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Populate lines
 			gridDialogue.Rows.Clear();
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _selectedCharacter.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _character.StartingLines : _selectedCase.Lines);
 			foreach (DialogueLine line in lines)
 			{
 				AddLineToDialogueGrid(line);
@@ -54,7 +89,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void Save()
 		{
-			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _selectedCharacter.StartingLines : _selectedCase.Lines);
+			List<DialogueLine> lines = (_selectedCase.Tag == Trigger.StartTrigger ? _character.StartingLines : _selectedCase.Lines);
+			foreach (DialogueLine line in lines)
+			{
+				_character.RemoveMarkerReference(line.Marker);
+			}
 			lines.Clear();
 			for (int i = 0; i < gridDialogue.Rows.Count; i++)
 			{
@@ -62,7 +101,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (line != null)
 				{
 					lines.Add(line);
-					_selectedCharacter.CacheMarker(line.Marker);
+					_character.CacheMarker(line.Marker);
 				}
 			}
 		}
@@ -84,6 +123,12 @@ namespace SPNATI_Character_Editor.Controls
 			string image = row.Cells["ColImage"].Value?.ToString();
 			string text = row.Cells["ColText"].Value?.ToString();
 			string marker = row.Cells["ColMarker"].Value?.ToString();
+			if (string.IsNullOrEmpty(marker))
+			{
+				marker = null;
+			}
+			string markerValue = row.Cells["ColMarkerValue"].Value?.ToString();
+			bool perTarget = (bool)(row.Cells["ColPerTarget"].Value ?? false);
 			string direction = row.Cells["ColDirection"].Value?.ToString();
 			string location = row.Cells["ColLocation"].Value?.ToString();
 
@@ -96,7 +141,25 @@ namespace SPNATI_Character_Editor.Controls
 			CharacterImage img = _imageLibrary.Find(image);
 			string extension = img != null ? img.FileExtension : ".png";
 			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
-			line.Marker = string.IsNullOrEmpty(marker) ? null : marker;
+
+			if (perTarget)
+			{
+				marker += "*";
+			}
+
+			if (string.IsNullOrEmpty(markerValue))
+			{
+				line.Marker = marker;
+			}
+			else if (markerValue == "+" || markerValue == "-")
+			{
+				line.Marker = $"{markerValue}{marker}";
+			}
+			else
+			{
+				line.Marker = $"{marker}={markerValue}";
+			}
+
 			line.Direction = direction;
 			line.Location = location;
 
@@ -196,7 +259,8 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				gridDialogue.Rows.RemoveAt(gridDialogue.SelectedRows[0].Index);
 				e.Handled = true;
-			} else
+			}
+			else
 			{
 				KeyDown?.Invoke(this, e);
 			}
@@ -218,7 +282,6 @@ namespace SPNATI_Character_Editor.Controls
 				if (string.IsNullOrEmpty(text))
 					return;
 				Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
-				List<string> invalidVars = new List<string>();
 				e.Value = varRegex.Replace(text, (match) =>
 				{
 					string var = match.Value;
@@ -237,7 +300,6 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase == null || e.FormattedValue == null || _populatingCase)
 				return;
 
-			Regex varRegex = new Regex(@"~\w*~", RegexOptions.IgnoreCase);
 			List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase.Tag, e.FormattedValue.ToString());
 			if (invalidVars.Count > 0)
 			{
@@ -341,13 +403,21 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			DataGridViewRow row = gridDialogue.Rows[gridDialogue.Rows.Add()];
+			row.Tag = line;
 			DataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as DataGridViewComboBoxCell;
 			SetImage(imageCell, imageKey);
 			DataGridViewCell textCell = row.Cells["ColText"];
 			textCell.Value = line.Text;
 
 			DataGridViewCell markerCell = row.Cells["ColMarker"];
-			markerCell.Value = line.Marker;
+			DataGridViewCell markerValueCell = row.Cells["ColMarkerValue"];
+			DataGridViewCheckBoxCell perTargetCell = row.Cells["ColPerTarget"] as DataGridViewCheckBoxCell;
+			string marker, markerValue;
+			bool perTarget;
+			marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
+			markerCell.Value = marker;
+			markerValueCell.Value = markerValue;
+			perTargetCell.Value = perTarget;
 
 			DataGridViewCell directionCell = row.Cells["ColDirection"];
 			directionCell.Value = line.Direction;
@@ -370,6 +440,23 @@ namespace SPNATI_Character_Editor.Controls
 				if (image != null && image.DefaultName == defaultKey)
 				{
 					cell.Value = item;
+					return;
+				}
+			}
+		}
+
+		public void SelectLine(DialogueLine line)
+		{
+			foreach (DataGridViewRow row in gridDialogue.Rows)
+			{
+				DialogueLine loadedLine = row.Tag as DialogueLine;
+				if (loadedLine == null)
+				{
+					continue;
+				}
+				if (loadedLine.Text == line.Text && loadedLine.Marker == line.Marker)
+				{
+					row.Cells[1].Selected = true;
 					return;
 				}
 			}
@@ -470,7 +557,6 @@ namespace SPNATI_Character_Editor.Controls
 				//Back up a space when replacing so the highlighted word gets replaced
 				startIndex--;
 			}
-			bool firstIteration = (startIndex == -1);
 			for (int l = startLine; l < gridDialogue.Rows.Count; l++)
 			{
 				DataGridViewRow row = gridDialogue.Rows[l];
@@ -505,13 +591,48 @@ namespace SPNATI_Character_Editor.Controls
 							if (!args.ReplaceAll)
 								return true;
 						}
-						firstIteration = true;
 					}
 					while (index >= 0);
 				}
 				startIndex = -1;
 			}
 			return false;
+		}
+		#endregion
+
+		#region Intellisense
+		private void gridDialogue_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+		{
+			if (_editBox != null)
+			{
+				_editBox = null;
+			}
+
+			if (gridDialogue.SelectedCells.Count == 0) { return; }
+
+			DataGridViewColumn column = gridDialogue.SelectedCells[0].OwningColumn;
+			if (column == ColText || column == ColMarkerValue)
+			{
+				_editBox = e.Control as TextBox;
+				_intellisense.SetContext(_editBox, _character, _selectedCase);
+			}
+		}
+
+		private void _intellisense_InsertSnippet(object sender, InsertEventArgs e)
+		{
+			if (gridDialogue.EditingControl == null)
+			{
+				gridDialogue.BeginEdit(false);
+			}
+
+			_editBox.SelectionStart = e.InsertionStart;
+			_editBox.SelectionLength = e.InsertionLength;
+			_editBox.SelectedText = e.Text;
+		}
+
+		private void DialogueGrid_Leave(object sender, EventArgs e)
+		{
+			_intellisense.Reset();
 		}
 		#endregion
 	}

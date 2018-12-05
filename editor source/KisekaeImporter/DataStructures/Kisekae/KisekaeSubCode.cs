@@ -31,6 +31,11 @@ namespace KisekaeImporter
 			}
 		}
 
+		public void Reset()
+		{
+			_pieces.Clear();
+		}
+
 		public bool IsEmpty
 		{
 			get { return _pieces.Count == 0 || _pieces.Count == 1 && _pieces[0] == ""; }
@@ -40,7 +45,19 @@ namespace KisekaeImporter
 		{
 			string id = Id;
 			if (Index >= 0)
-				id += Index.ToString("00");
+			{
+				if (id == "u")
+				{
+					//generalize this if more than u ever gets a single digit
+					id += Index.ToString();
+				}
+				else
+				{
+					id += Index.ToString("00");
+				}
+			}
+			if (_pieces.Count > 0 && _pieces[0] == "")
+				return id;
 			return id + string.Join(".", _pieces);
 		}
 
@@ -70,6 +87,20 @@ namespace KisekaeImporter
 			return _pieces[index];
 		}
 
+		/// <summary>
+		/// Gets a bool representation of a piece
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public bool GetBool(int index)
+		{
+			if (index < 0 || index >= _pieces.Count)
+				return false;
+			int value;
+			int.TryParse(_pieces[index], out value);
+			return value > 0;
+		}
+
 		public void Set(int index, string value)
 		{
 			while (_pieces.Count <= index)
@@ -77,6 +108,16 @@ namespace KisekaeImporter
 				_pieces.Add("0");
 			}
 			_pieces[index] = value;
+		}
+
+		public void Set(int index, int value)
+		{
+			Set(index, value.ToString());
+		}
+
+		public void Set(int index, bool value)
+		{
+			Set(index, value ? "1" : "0");
 		}
 
 		public string[] GetData()

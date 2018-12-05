@@ -37,13 +37,13 @@
 			// 
 			// gridMarkers
 			// 
+			this.gridMarkers.AllowUserToResizeRows = false;
 			this.gridMarkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridMarkers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
             this.ColScope,
             this.ColDescription});
 			this.gridMarkers.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridMarkers.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridMarkers.Location = new System.Drawing.Point(0, 0);
 			this.gridMarkers.MultiSelect = false;
 			this.gridMarkers.Name = "gridMarkers";

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SPNATI_Character_Editor.Activities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -46,6 +47,12 @@ namespace SPNATI_Character_Editor
 		public bool HasTarget;
 
 		/// <summary>
+		/// This trigger occurs a maximum of one time per stage for a character
+		/// </summary>
+		[XmlAttribute("oncePerStage")]
+		public bool OncePerStage;
+
+		/// <summary>
 		/// What character gender this trigger is associated with
 		/// </summary>
 		[XmlAttribute("gender")]
@@ -74,6 +81,12 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public int XmlOrder;
 		#endregion
+
+		/// <summary>
+		/// Used by the editor to group tags that correspond to the same phase (ex. must_strip_normal and must_strip_winning)
+		/// </summary>
+		[XmlAttribute("relatedGroup")]
+		public int RelatedGroup;
 
 		#region Formatting help for txt export
 		[XmlAttribute("group")]
@@ -240,10 +253,12 @@ namespace SPNATI_Character_Editor
 		public static bool IsVariableAvailable(string tag, string variable)
 		{
 			Trigger trigger;
-			if (variable.ToLower() == "player")
+			string varName = variable.ToLower();
+			if (varName.ToLower() == "clothes")
+				varName = "clothing";
+			Variable v = VariableDatabase.Get(varName);
+			if (v != null && v.IsGlobal)
 				return true;
-			if (variable.ToLower() == "clothes")
-				variable = "clothing";
 			if (_triggers.TryGetValue(tag, out trigger))
 			{
 				return trigger.AvailableVariables.Contains(variable.ToLower());
@@ -376,7 +391,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string GetOppositeTag(string tag, Character character, int stage)
 		{
-			//TODO: Move this into dialogue_tags.xml instead of hardcoding
+			//TODO: Move this into dialogue_tags.xml instead of hardcoding?
 			if (tag == "must_strip_winning" || tag == "must_strip_normal" || tag == "must_strip_losing")
 			{
 				return character.Gender + "_must_strip";
@@ -490,44 +505,17 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets the game phase corresponding to a tag
+		/// Gets whether two tags are referring to the same phase, just under different conditions (ex. must_strip_winning vs must_strip_losing)
 		/// </summary>
-		/// <param name="tag"></param>
+		/// <param name="tag1"></param>
+		/// <param name="tag2"></param>
 		/// <returns></returns>
-		public static GamePhase GetPhase(string tag)
+		public static bool AreRelated(string tag1, string tag2)
 		{
-			if (tag == "swap_cards")
-				return GamePhase.ExchangingCards;
-			else if (tag == "must_strip_winning" || tag == "must_strip_normal" || tag == "must_strip_losing")
-				return GamePhase.BeforeLoss;
-			else if (tag.EndsWith("must_strip"))
-				return GamePhase.BeforeLoss;
-			else if (tag.Contains("_removing_") || tag.Contains("_will_be_visible") || tag == "stripping")
-				return GamePhase.DuringLoss;
-			else if (tag.Contains("_removed_") || tag.Contains("_is_visible") || tag == "stripped")
-				return GamePhase.AfterLoss;
-			else if (tag.Contains("must_masturbate"))
-				return GamePhase.BeforeLoss;
-			else if (tag.Contains("start_masturbating"))
-				return GamePhase.DuringLoss;
-			else if (tag == "heavy_masturbating")
-				return GamePhase.HeavyMasturbating;
-			else if (tag.Contains("finishing"))
-				return GamePhase.Finishing;
-			else if (tag.Contains("finished"))
-				return GamePhase.Finished;
-			else if (tag == "good_hand")
-				return GamePhase.GoodHand;
-			else if (tag == "bad_hand")
-				return GamePhase.BadHand;
-			else if (tag == "okay_hand")
-				return GamePhase.OkayHand;
-			else if (tag == "masturbating" || tag == "male_masturbating" || tag == "female_masturbating")
-				return GamePhase.Masturbating;
-			else if (tag.Contains("game_over"))
-				return GamePhase.GameOver;
-
-			return GamePhase.Start;
+			if (tag1 == tag2) { return true; }
+			Trigger t1 = GetTrigger(tag1);
+			Trigger t2 = GetTrigger(tag2);
+			return t1.RelatedGroup == t2.RelatedGroup && t2.RelatedGroup > 0;
 		}
 	}
 }

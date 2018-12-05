@@ -10,6 +10,21 @@ namespace SPNATI_Character_Editor
 	[XmlRoot("catalog")]
 	public class Listing
 	{
+		[XmlIgnore]
+		private static Listing _instance;
+		
+		public static Listing Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					_instance = Serialization.ImportListing();
+				}
+				return _instance;
+			}
+		}
+
 		[XmlArray("individuals")]
 		[XmlArrayItem("opponent")]
 		public List<Opponent> Characters = new List<Opponent>();

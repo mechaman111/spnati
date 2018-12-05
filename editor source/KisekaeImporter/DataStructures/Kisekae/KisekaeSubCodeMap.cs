@@ -16,6 +16,8 @@ namespace KisekaeImporter
 				case "aa":
 				case "ab":
 				case "ac":
+				case "ad":
+				case "ae":
 				case "ba":
 				case "bc":
 				case "bb":
@@ -89,6 +91,7 @@ namespace KisekaeImporter
 				case "kd":
 				case "ke":
 				case "kf":
+				case "kg":
 				case "la":
 				case "lb":
 				case "lc":
@@ -115,6 +118,31 @@ namespace KisekaeImporter
 				case "om":
 				case "on":
 					return typeof(KisekaeClothing);
+				case "bf":
+				case "bg":
+				case "bh":
+					return typeof(KisekaeShader);
+				case "f":
+					return typeof(KisekaeExternalParts);
+				case "a":
+				case "b":
+				case "c":
+				case "d":
+				case "w":
+				case "x":
+				case "e":
+				case "y":
+				case "z":
+					return typeof(KisekaeGlobalParts);
+				case "ua":
+				case "uf":
+				case "ue":
+				case "ub":
+				case "u":
+				case "v":
+				case "ud":
+				case "uc":
+					return typeof(KisekaeScene);
 				default:
 					return null;
 			}

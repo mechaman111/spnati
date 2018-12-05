@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeClothes : KisekaeSubCode
+	public class KisekaeClothes : KisekaeSubCode, IColorable
 	{
 		public KisekaeClothes() : base("") { }
 
@@ -8,6 +8,13 @@
 		{
 			get { return GetInt(0); }
 			set { Set(0, value.ToString()); }
+		}
+
+		public virtual void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)
+		{
+			Color1 = color1;
+			Color2 = color2;
+			Color3 = color3;
 		}
 
 		public KisekaeColor Color1

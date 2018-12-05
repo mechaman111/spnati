@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor
 			Image = image;
 			string extension = Path.GetExtension(image);
 			ImageExtension = extension;
-			Text = text;
+			Text = text ?? "";
 		}
 
 		public DialogueLine Copy()

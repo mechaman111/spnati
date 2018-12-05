@@ -4,23 +4,51 @@ using System.Drawing;
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
-	/// Loads images as necessary to avoid holding a bajillion in memory
+	/// Loads images as necessary to avoid holding a bajillion in memory.
+	/// Also manages unloading images to prevent running out of GDI resources which cause Kisekae imports to fail.
 	/// </summary>
 	public static class ImageCache
 	{
-		private static Dictionary<string, Image> _cache = new Dictionary<string, Image>();
+		private static Dictionary<string, ImageReference> _cache = new Dictionary<string, ImageReference>();
+
+		private class ImageReference
+		{
+			public Image Image;
+			public int Count;
+
+			public ImageReference(Image image)
+			{
+				Image = image;
+				Count = 1;
+			}
+		}
 
 		public static void Clear()
 		{
 			_cache.Clear();
 		}
 
+		public static int GetReferenceCount(string filename)
+		{
+			ImageReference reference = _cache.Get(filename);
+			if (reference != null)
+			{
+				return reference.Count;
+			}
+			return 0;
+		}
+
+		/// <summary>
+		/// Obtains a reference to an image. The image will remain in memory for as long as it has at least one reference
+		/// </summary>
+		/// <param name="filename"></param>
+		/// <returns></returns>
 		public static Image Get(string filename)
 		{
 			if (string.IsNullOrEmpty(filename))
 				return null;
-			Image img = null;
-			if (!_cache.TryGetValue(filename, out img))
+			ImageReference reference = null;
+			if (!_cache.TryGetValue(filename, out reference))
 			{
 				try
 				{
@@ -28,28 +56,77 @@ namespace SPNATI_Character_Editor
 					{
 						//Load an image and then create a new one from it so that we can dispose the original image and unlock the file, which
 						//will allow us to replace the file with a new one when importing new images
-						img = new Bitmap(temp);
+						Image image = new Bitmap(temp);
+						reference = new ImageReference(image);
+						_cache[filename] = reference;
 					}
 				}
 				catch { }
 			}
-			return img;
+			else
+			{
+				reference.Count++;
+			}
+			return reference?.Image;
 		}
 
+		/// <summary>
+		/// Releases an image reference. When all references are lost, the image is unloaded
+		/// </summary>
+		/// <param name="filename"></param>
 		public static void Release(string filename)
 		{
-			Image img = null;
-			if (_cache.TryGetValue(filename, out img))
+			ImageReference reference = null;
+			if (_cache.TryGetValue(filename, out reference))
 			{
-				_cache.Remove(filename);
-				img.Dispose();
-				img = null;
+				reference.Count--;
+				if (reference.Count <= 0)
+				{
+					_cache.Remove(filename);
+					reference.Image.Dispose();
+					reference.Image = null;
+				}
 			}
 		}
 
-		public static void Set(string filename, Image image)
+		/// <summary>
+		/// Adds an image that didn't come from disk to the cache and sets its reference count to 0
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="image"></param>
+		public static void Add(string key, Image image)
 		{
-			_cache[filename] = image;
+			ImageReference reference = null;
+			if (!_cache.TryGetValue(key, out reference))
+			{
+				reference = new ImageReference(image);
+				_cache[key] = reference;
+				reference.Count = 0;
+			}
+			else
+			{
+				reference.Count++;
+			}
+		}
+
+		/// <summary>
+		/// Replaces a cached image THAT CAME FROM DISK. Current references need to act on the ReplaceImage desktop message to actually use it, however
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="newImage"></param>
+		public static void Replace(string key, Image newImage)
+		{
+			ImageReference reference = _cache.Get(key);
+			if (reference != null)
+			{
+				//dispose the old image since nobody should still be holding onto a reference. If they are, naughty naughty
+				reference.Image.Dispose();
+				reference.Image = newImage;
+			}
+			else
+			{
+				newImage.Dispose(); //nobody needs the new image right away, so don't keep it around
+			}
 		}
 	}
 }

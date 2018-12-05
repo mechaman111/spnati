@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeJacket : KisekaeClothes
+	public class KisekaeJacket : KisekaeClothes, IOpenable
 	{
 		public int OpenState
 		{
@@ -42,6 +42,11 @@
 		{
 			get { return new KisekaeColor(GetString(10)); }
 			set { Set(10, value.ToString()); }
+		}
+
+		public void SetOpenState(int state)
+		{
+			OpenState = state;
 		}
 	}
 }

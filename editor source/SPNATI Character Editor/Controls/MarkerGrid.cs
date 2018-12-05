@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -19,10 +20,12 @@ namespace SPNATI_Character_Editor.Controls
 				if (value)
 				{
 					gridMarkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+					gridMarkers.AllowUserToDeleteRows = false;
 				}
 				else
 				{
-					gridMarkers.SelectionMode = DataGridViewSelectionMode.CellSelect;
+					gridMarkers.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+					gridMarkers.AllowUserToDeleteRows = true;
 				}
 				gridMarkers.ReadOnly = value;
 			}
@@ -65,6 +68,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_character == null)
 				return;
+			List<Marker> oldMarkers = _character.Markers.Values.ToList();
 			_character.Markers.Clear();
 			foreach (DataGridViewRow row in gridMarkers.Rows)
 			{
@@ -73,7 +77,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(scopeStr))
 					continue;
 				string desc = row.Cells["ColDescription"].Value?.ToString();
-				Marker marker = new Marker(name);
+				Marker marker = oldMarkers.Find(m => m.Name == name) ?? new Marker(name);
 				marker.Description = desc;
 				MarkerScope scope;
 				Enum.TryParse(scopeStr, out scope);

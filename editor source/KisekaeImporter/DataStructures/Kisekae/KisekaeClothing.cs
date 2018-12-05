@@ -64,15 +64,15 @@ namespace KisekaeImporter
 			set { SetSubCode("jb", value); }
 		}
 		[KisekaeSubCode("jd")]
-		public KisekaeClothes RightShoe
+		public KisekaeShoe RightShoe
 		{
-			get { return GetSubCode<KisekaeClothes>("jd"); }
+			get { return GetSubCode<KisekaeShoe>("jd"); }
 			set { SetSubCode("jd", value); }
 		}
 		[KisekaeSubCode("je")]
-		public KisekaeClothes LeftShoe
+		public KisekaeShoe LeftShoe
 		{
-			get { return GetSubCode<KisekaeClothes>("je"); }
+			get { return GetSubCode<KisekaeShoe>("je"); }
 			set { SetSubCode("je", value); }
 		}
 		[KisekaeSubCode("jf")]
@@ -127,6 +127,12 @@ namespace KisekaeImporter
 		{
 			get { return GetSubCode<KisekaeClothes>("kf"); }
 			set { SetSubCode("kf", value); }
+		}
+		[KisekaeSubCode("kg")]
+		public KisekaeToy Toy
+		{
+			get { return GetSubCode<KisekaeToy>("kg"); }
+			set { SetSubCode("kg", value); }
 		}
 		[KisekaeSubCode("la")]
 		public KisekaeHat Hat
@@ -274,6 +280,24 @@ namespace KisekaeImporter
 		public KisekaeBelt GetBelt(int index)
 		{
 			return GetSubCode<KisekaeBelt>("s" + index.ToString("00"));
+		}
+
+		public void SetColors(params KisekaeColor[] colors)
+		{
+			if (colors.Length == 0)
+				return;
+			foreach (var subcode in _subcodes.Values)
+			{
+				if (subcode is IColorable)
+				{
+					IColorable colorable = subcode as IColorable;
+					colorable.Color1 = colors[0];
+					if (colors.Length > 1)
+						colorable.Color2 = colors[1];
+					if (colors.Length > 2)
+						colorable.Color3 = colors[2];
+				}
+			}
 		}
 	}
 }

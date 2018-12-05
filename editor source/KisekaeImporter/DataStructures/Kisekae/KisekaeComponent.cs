@@ -13,6 +13,14 @@ namespace KisekaeImporter
 
 		protected Dictionary<string, KisekaeSubCode> _subcodes = new Dictionary<string, KisekaeSubCode>();
 
+		public ComponentGroup Group = ComponentGroup.Character;
+
+		public enum ComponentGroup
+		{
+			Character,
+			Scene
+		}
+
 		public KisekaeComponent()
 		{
 			Type type = GetType();
@@ -44,16 +52,6 @@ namespace KisekaeImporter
 			}
 		}
 
-		public KisekaeComponent Copy()
-		{
-			KisekaeComponent copy = Activator.CreateInstance(this.GetType()) as KisekaeComponent;
-			foreach (var code in _subcodes.Values)
-			{
-				copy.ReplaceSubCode(code);
-			}
-			return copy;
-		}
-
 		private KisekaeSubCode GetSubCode(string id)
 		{
 			string name;
@@ -71,10 +69,10 @@ namespace KisekaeImporter
 			else
 			{
 				//must be part of an array, or not part of the component at all
-				if (id.Length > 2 && char.IsDigit(id[2]))
+				if (id.Length > 2 && char.IsDigit(id[2]) || id.Length > 1 && char.IsDigit(id[1]))
 				{
 					string prefix = id.Substring(0, 1);
-					int index = int.Parse(id.Substring(1, 2));
+					int index = int.Parse(id.Substring(1, id.Length > 2 ? 2 : 1));
 					Type subcodeType;
 					if (_arrayMap[GetType()].TryGetValue(prefix, out subcodeType))
 					{
@@ -87,6 +85,16 @@ namespace KisekaeImporter
 				}
 				throw new ArgumentException("No subcode with the prefix " + id + " was found.");
 			}
+		}
+
+		public KisekaeSubCode GetSubCode(string id, int index)
+		{
+			KisekaeSubCode code;
+			string prefix = id;
+			if (index >= 0)
+				prefix += index.ToString("00");
+			_subcodes.TryGetValue(prefix, out code);
+			return code;
 		}
 
 		protected T GetSubCode<T>(string prefix) where T : KisekaeSubCode
@@ -124,25 +132,28 @@ namespace KisekaeImporter
 			}
 		}
 
+		public IEnumerable<KisekaeSubCode> GetPoseableSubCodes()
+		{
+			foreach (var subcode in _subcodes.Values)
+			{
+				yield return subcode;
+			}
+		}
+
 		public void ApplySubCode(string id, string[] data)
 		{
 			KisekaeSubCode code = GetSubCode(id);
 			code.Deserialize(data);
 		}
 
-		public void ReplaceSubCode(KisekaeSubCode code)
+		public void ReplaceSubCode(KisekaeSubCode code, bool applyEmpties)
 		{
-			if (code.IsEmpty)
-				return;
 			string prefix = code.Id;
 			if (code.Index >= 0)
 				prefix += code.Index.ToString("00");
-			KisekaeSubCode existing;
-			if (_subcodes.TryGetValue(prefix, out existing))
-			{
-				existing.Deserialize(code.GetData());
-			}
-			else
+
+			KisekaeSubCode existingCode = GetSubCode(prefix);
+			if (existingCode == null || !code.IsEmpty || applyEmpties)
 			{
 				SetSubCode(prefix, code);
 			}
@@ -157,12 +168,28 @@ namespace KisekaeImporter
 			return !subcode.IsEmpty;
 		}
 
-		public IEnumerable<T> GetSubCodeArrayItem<T>() where T : KisekaeSubCode
+		public IEnumerable<KisekaeSubCode> GetSubCodesOfType<T>()
 		{
 			foreach (var kvp in _subcodes)
 			{
 				if (kvp.Value is T)
-					yield return kvp.Value as T;
+					yield return kvp.Value;
+			}
+		}
+
+		/// <summary>
+		/// Runs a function over every subcode of a particular interface
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		public void ApplyToSubCodes<T>(Action<T> action) where T : class
+		{
+			foreach (var kvp in _subcodes)
+			{
+				T item = kvp.Value as T;
+				if (item != null)
+				{
+					action(item);
+				}
 			}
 		}
 	}

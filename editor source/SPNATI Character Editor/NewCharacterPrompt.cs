@@ -20,7 +20,7 @@ namespace SPNATI_Character_Editor
 
 		private void PopulateBox()
 		{
-			string dir = Path.Combine(Config.GameDirectory, "opponents");
+			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
 			List<string> folders = new List<string>();
 			foreach (var folder in Directory.EnumerateDirectories(dir))
 			{

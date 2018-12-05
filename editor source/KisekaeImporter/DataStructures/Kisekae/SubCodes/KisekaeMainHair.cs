@@ -1,7 +1,7 @@
 ﻿
 namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeMainHair : KisekaeSubCode, IHair
+	public class KisekaeMainHair : KisekaeSubCode, IColorable, IPoseable
 	{
 		public KisekaeMainHair() : base("ea") { }
 
@@ -9,6 +9,13 @@ namespace KisekaeImporter.SubCodes
 		{
 			get { return GetInt(0); }
 			set { Set(0, value.ToString()); }
+		}
+
+		public void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)
+		{
+			Color1 = color1;
+			Color2 = color2;
+			Color3 = color3;
 		}
 
 		public KisekaeColor Color1

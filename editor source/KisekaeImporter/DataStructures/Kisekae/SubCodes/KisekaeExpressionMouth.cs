@@ -27,5 +27,29 @@
 			get { return GetInt(3); }
 			set { Set(3, value.ToString()); }
 		}
+
+		public int Outline
+		{
+			get { return GetInt(4); }
+			set { Set(4, value.ToString()); }
+		}
+
+		public int OffsetX
+		{
+			get { return GetInt(5); }
+			set { Set(5, value.ToString()); }
+		}
+
+		public int OffsetY
+		{
+			get { return GetInt(6); }
+			set { Set(6, value.ToString()); }
+		}
+
+		public int Rotation
+		{
+			get { return GetInt(7); }
+			set { Set(7, value.ToString()); }
+		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeHairpiece : KisekaeClothes
+	public class KisekaeHairpiece : KisekaeClothes, IPoseable
 	{
 		public int Side
 		{
@@ -14,7 +14,7 @@
 			set { Set(5, value.ToString()); }
 		}
 
-		public int Scale
+		public int ScaleX
 		{
 			get { return GetInt(6); }
 			set { Set(6, value.ToString()); }
@@ -48,6 +48,18 @@
 		{
 			get { return new KisekaeColor(GetString(11)); }
 			set { Set(11, value.ToString()); }
+		}
+
+		public int ScaleZ
+		{
+			get { return GetInt(12); }
+			set { Set(12, value.ToString()); }
+		}
+
+		public int RotationZ
+		{
+			get { return GetInt(13); }
+			set { Set(13, value.ToString()); }
 		}
 	}
 }
