@@ -55,5 +55,19 @@ namespace KisekaeImporter
 			get { return GetSubCode<KisekaePlacement>("bc"); }
 			set { SetSubCode("bc", value); }
 		}
+
+		[KisekaeSubCode("ad")]
+		public KisekaeMassage Massage
+		{
+			get { return GetSubCode<KisekaeMassage>("ad"); }
+			set { SetSubCode("ad", value); }
+		}
+
+		[KisekaeSubCode("ae")]
+		public KisekaeBreastPosition BreastPosition
+		{
+			get { return GetSubCode<KisekaeBreastPosition>("ae"); }
+			set { SetSubCode("ae", value); }
+		}
 	}
 }

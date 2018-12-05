@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeBelt : KisekaeClothes
+	public class KisekaeBelt : KisekaeClothes, IPoseable
 	{
 		public void CopyPositionFrom(KisekaeBelt belt)
 		{
@@ -55,16 +55,28 @@
 			set { Set(11, value.ToString()); }
 		}
 
-		public int Outline
+		public int ScaleY
 		{
 			get { return GetInt(12); }
 			set { Set(12, value.ToString()); }
 		}
 
+		public int Outline
+		{
+			get { return GetInt(13); }
+			set { Set(13, value.ToString()); }
+		}
+
 		public KisekaeColor OutlineColor
 		{
-			get { return new KisekaeColor(GetString(13)); }
-			set { Set(13, value.ToString()); }
+			get { return new KisekaeColor(GetString(14)); }
+			set { Set(14, value.ToString()); }
+		}
+
+		public int RotationZ
+		{
+			get { return GetInt(15); }
+			set { Set(15, value.ToString()); }
 		}
 	}
 }

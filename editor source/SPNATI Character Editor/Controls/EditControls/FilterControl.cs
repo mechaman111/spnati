@@ -1,0 +1,159 @@
+﻿using System;
+using Desktop;
+using Desktop.CommonControls;
+
+namespace SPNATI_Character_Editor
+{
+	public partial class FilterControl : PropertyEditControl
+	{
+		private TargetCondition _filter;
+
+		public FilterControl()
+		{
+			InitializeComponent();
+
+			recTag.RecordType = typeof(Tag);
+			cboStatus.DataSource = TargetCondition.StatusTypes;
+			cboStatus.ValueMember = "Key";
+			cboStatus.DisplayMember = "Value";
+		}
+
+		protected override void OnBoundData()
+		{
+			_filter = GetValue() as TargetCondition;
+
+			SetCount();
+			chkNot.Checked = _filter.NegateStatus;
+			cboGender.SelectedItem = _filter.Gender;
+			if (cboGender.SelectedItem == null)
+			{
+				cboGender.SelectedIndex = 0;
+			}
+			recTag.RecordKey = _filter.Filter;
+			chkNot.Checked = _filter.NegateStatus;
+			cboStatus.SelectedValue = _filter.StatusType ?? "";
+
+			AddHandlers();
+		}
+
+		private void SetCount()
+		{
+			string range = _filter.Count;
+			if (range == null)
+			{
+				valFrom.Value = 0;
+				valTo.Text = "";
+				return;
+			}
+			string[] pieces = range.Split('-');
+			int from;
+			int to;
+			if (int.TryParse(pieces[0], out from))
+			{
+				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, from));
+			}
+			if (pieces.Length > 1)
+			{
+				if (int.TryParse(pieces[1], out to))
+				{
+					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, to));
+				}
+			}
+			else
+			{
+				valTo.Text = "";
+			}
+		}
+
+		private void RemoveHandlers()
+		{
+			valFrom.ValueChanged -= ValueChanged;
+			valTo.ValueChanged -= ValueChanged;
+			cboStatus.SelectedIndexChanged -= ValueChanged;
+			cboGender.SelectedIndexChanged -= ValueChanged;
+			recTag.RecordChanged -= RecordChanged;
+			chkNot.CheckedChanged -= ValueChanged;
+		}
+
+		private void AddHandlers()
+		{
+			valFrom.ValueChanged += ValueChanged;
+			valTo.ValueChanged += ValueChanged;
+			cboStatus.SelectedIndexChanged += ValueChanged;
+			cboGender.SelectedIndexChanged += ValueChanged;
+			recTag.RecordChanged += RecordChanged;
+			chkNot.CheckedChanged += ValueChanged;
+		}
+
+		private void RecordChanged(object sender, IRecord record)
+		{
+			Save();
+		}
+
+		private void ValueChanged(object sender, EventArgs e)
+		{
+			Save();
+		}
+
+		private string GetCount()
+		{
+			int from = (int)valFrom.Value;
+			int to = (int)valTo.Value;
+			if (valFrom.Text == "")
+			{
+				from = -1;
+			}
+			if (valTo.Text == "")
+			{
+				to = -1;
+			}
+			if (from == -1)
+			{
+				return null;
+			}
+			else if (to <= from)
+			{
+				return from.ToString();
+			}
+			else
+			{
+				return $"{from}-{to}";
+			}
+		}
+
+		public override void Clear()
+		{
+			RemoveHandlers();
+			valFrom.Text = "";
+			valTo.Text = "";
+			cboStatus.SelectedIndex = 0;
+			cboGender.SelectedIndex = 0;
+			recTag.RecordKey = null;
+			chkNot.Checked = false;
+			Save();
+			AddHandlers();
+		}
+
+		public override void Save()
+		{
+			string count = GetCount() ?? "0";
+			string tag = recTag.RecordKey;
+			string gender = cboGender.SelectedItem?.ToString();
+			bool inverted = chkNot.Checked;
+			string status = (string)cboStatus.SelectedValue;
+			_filter.Count = count;
+			_filter.Gender = gender;
+			_filter.NegateStatus = inverted;
+			_filter.StatusType = status;
+			_filter.Filter = tag;
+		}
+	}
+
+	public class FilterAttribute : EditControlAttribute
+	{
+		public override Type EditControlType
+		{
+			get { return typeof(FilterControl); }
+		}
+	}
+}

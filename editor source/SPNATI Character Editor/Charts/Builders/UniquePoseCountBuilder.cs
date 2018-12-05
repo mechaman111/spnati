@@ -10,23 +10,10 @@ namespace SPNATI_Character_Editor.Charts.Builders
 	public class UniquePoseCountBuilder : IChartDataBuilder
 	{
 		private List<Tuple<Character, int>> _data;
-		private Regex _regex = new Regex(@"^[0-9]*-");
 
 		public string GetLabel()
 		{
 			return "Unique Poses";
-		}
-
-		private bool Filter(string filename)
-		{
-			string ext = Path.GetExtension(filename);
-			if (ext != ".png" && ext != ".gif")
-				return false;
-			//exclude epilogue images. Note these might not actually be epilogue images, but it's a best guess
-			string name = Path.GetFileNameWithoutExtension(filename);
-			if (!_regex.IsMatch(name))
-				return false;
-			return true;
 		}
 
 		public void GenerateData()

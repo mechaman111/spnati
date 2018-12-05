@@ -2,6 +2,17 @@
 {
 	public class KisekaePants : KisekaeClothes
 	{
+		public override void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)
+		{
+			base.SetColors(color1, color2, color3);
+			RightLegColor1 = color1;
+			RightLegColor2 = color2;
+			RightLegColor3 = color3;
+			LeftLegColor1 = color1;
+			LeftLegColor2 = color2;
+			LeftLegColor3 = color3;
+		}
+
 		public int RightLegLength
 		{
 			get { return GetInt(4); }

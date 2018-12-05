@@ -1,5 +1,4 @@
-﻿using KisekaeImporter.ImageImport;
-using KisekaeImporter.SubCodes;
+﻿using KisekaeImporter.DataStructures.Kisekae;
 using System.Collections.Generic;
 using System.IO;
 
@@ -32,80 +31,25 @@ namespace KisekaeImporter.ImageImport
 		/// <param name="stage"></param>
 		/// <param name="emotion"></param>
 		/// <returns></returns>
-		public static KisekaeCode CreatePose(KisekaeCode baseCode, StageTemplate stage, KisekaeCode poseCode)
+		public static KisekaeCode CreatePose(KisekaeCode baseCode, StageTemplate stage, Emotion emotion)
 		{
-			KisekaeCode baseCopy = new KisekaeCode(baseCode);
-			KisekaeCode poseCopy = new KisekaeCode(poseCode);
+			KisekaeCode stageCode = new KisekaeCode(stage.Code);
+			KisekaeCode poseCode = new KisekaeCode(emotion.Code);
 
 			KisekaeCode output = new KisekaeCode("", true);
-			KisekaeHair resultHair = output.GetOrAddComponent<KisekaeHair>();
+			output.MergeIn(baseCode, false);
+			output.MergeIn(new KisekaeCode(stage.Code), false);
 
-			KisekaeCode clothingCode = new KisekaeCode(stage.Code);
-
-			//Only apply appearance components to the output
-			output.ReplaceComponent(baseCopy.GetComponent<KisekaeAppearance>());
-			output.ReplaceComponent(baseCopy.GetComponent<KisekaeFace>());
-			output.ReplaceComponent(baseCopy.GetComponent<KisekaeHair>());
-
-			//Bake the clothing into the result
-			output.ReplaceComponent(clothingCode.GetComponent<KisekaeClothing>());
-
-			//Manually apply any ahoge that doesn't appear in the base
-			KisekaeHair clothingHair = clothingCode.GetComponent<KisekaeHair>();
-			if (clothingHair != null)
+			//Remove any belts and such that appear in the pose but not in the clothing or base
+			foreach (KisekaeSubCode subcode in poseCode.GetSubCodesOfType<IPoseable>())
 			{
-				foreach (KisekaeAhoge ahoge in clothingHair.GetSubCodeArrayItem<KisekaeAhoge>())
+				if (!baseCode.HasSubCode(subcode.Id, subcode.Index) && !stageCode.HasSubCode(subcode.Id, subcode.Index))
 				{
-					if (!resultHair.HasSubCode(ahoge.Id, ahoge.Index))
-					{
-						resultHair.ReplaceSubCode(ahoge);
-					}
+					subcode.Reset();
 				}
 			}
 
-			//Apply the pose information
-			output.ReplaceComponent(poseCopy.GetComponent<KisekaePose>());
-			output.ReplaceComponent(poseCopy.GetComponent<KisekaeExpression>());
-
-			//Manually set positions of belts and ahoge that appear in the pose
-			KisekaeHair poseHair = poseCopy.GetComponent<KisekaeHair>();
-			if (poseHair != null)
-			{
-				foreach (KisekaeAhoge ahoge in poseHair.GetSubCodeArrayItem<KisekaeAhoge>())
-				{
-					if (resultHair.HasSubCode(ahoge.Id, ahoge.Index))
-					{
-						KisekaeAhoge final = resultHair.GetAhoge(ahoge.Index);
-						final.CopyPositioningFrom(ahoge);
-					}
-				}
-			}
-			KisekaeClothing resultClothing = output.GetOrAddComponent<KisekaeClothing>();
-			KisekaeClothing poseClothing = poseCopy.GetComponent<KisekaeClothing>();
-			if (poseClothing != null)
-			{
-				foreach (KisekaeBelt belt in poseClothing.GetSubCodeArrayItem<KisekaeBelt>())
-				{
-					if (resultClothing.HasSubCode(belt.Id, belt.Index))
-					{
-						KisekaeBelt final = resultClothing.GetBelt(belt.Index);
-						final.CopyPositionFrom(belt);
-					}
-				}
-			}
-			KisekaeFace resultFace = output.GetOrAddComponent<KisekaeFace>();
-			KisekaeFace poseFace = poseCopy.GetComponent<KisekaeFace>();
-			if (poseFace != null)
-			{
-				foreach (KisekaeFacePaint paint in poseFace.GetSubCodeArrayItem<KisekaeFacePaint>())
-				{
-					if (resultFace.HasSubCode(paint.Id, paint.Index))
-					{
-						KisekaeFacePaint final = resultFace.GetFacePaint(paint.Index);
-						final.CopyPositionFrom(paint);
-					}
-				}
-			}
+			output.MergeIn(poseCode, false);
 
 			//Add in stage blush, etc.
 			KisekaeExpression expression = output.GetOrAddComponent<KisekaeExpression>();
@@ -128,7 +72,7 @@ namespace KisekaeImporter.ImageImport
 			for (int i = 0; i < Emotions.Count; i++)
 			{
 				var emotion = Emotions[i];
-				lines.Add(string.Format("emotion={0},{1}", emotion.Key, emotion.Code.Serialize()));
+				lines.Add(string.Format("emotion={0},{1}", emotion.Key, emotion.Code));
 			}
 
 			File.WriteAllLines(filename, lines);
@@ -157,7 +101,7 @@ namespace KisekaeImporter.ImageImport
 						string[] pieces = value.Split(',');
 						if (pieces.Length == 1)
 							continue;
-						Emotion emotion = new Emotion(pieces[0], new KisekaeCode(pieces[1]));
+						Emotion emotion = new Emotion(pieces[0], pieces[1]);
 						template.Emotions.Add(emotion);
 						break;
 				}
@@ -177,7 +121,7 @@ namespace KisekaeImporter.ImageImport
 				StageTemplate stageTemplate = Stages[stage];
 				foreach (Emotion emotion in Emotions)
 				{
-					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion.Code);
+					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion);
 					poses.Poses.Add(new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize()));
 				}
 			}
@@ -205,7 +149,7 @@ namespace KisekaeImporter.ImageImport
 		/// <summary>
 		/// Clothing code for this stage
 		/// </summary>
-		public KisekaeCode Code;
+		public string Code;
 
 		public StageTemplate()
 		{
@@ -217,7 +161,7 @@ namespace KisekaeImporter.ImageImport
 
 		public string Serialize()
 		{
-			return string.Format("blush:{0},anger:{1},juice:{2},{3}", ExtraBlush, ExtraAnger, ExtraJuice, Code.Serialize());
+			return string.Format("blush:{0},anger:{1},juice:{2},{3}", ExtraBlush, ExtraAnger, ExtraJuice, Code);
 		}
 
 		public void Deserialize(string data)
@@ -228,7 +172,7 @@ namespace KisekaeImporter.ImageImport
 				string[] kvp = piece.Split(':');
 				if (kvp.Length == 1)
 				{
-					Code = new KisekaeCode(piece);
+					Code = piece;
 				}
 				else
 				{
@@ -263,13 +207,13 @@ namespace KisekaeImporter.ImageImport
 		/// <summary>
 		/// Pose code
 		/// </summary>
-		public KisekaeCode Code;
+		public string Code;
 
 		public Emotion()
 		{
 		}
 
-		public Emotion(string key, KisekaeCode code)
+		public Emotion(string key, string code)
 		{
 			Key = key;
 			Code = code;

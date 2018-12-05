@@ -1,4 +1,5 @@
-﻿using SPNATI_Character_Editor.IO;
+﻿using Desktop;
+using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,14 +16,20 @@ namespace SPNATI_Character_Editor
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
-	public class Character : IHookSerialization
+	public class Character : IHookSerialization, IRecord
 	{
+		[XmlIgnore]
+		public string Group { get; }
+
 		/// <summary>
 		/// Where did this character come from?
 		/// </summary>
 		[XmlIgnore]
 		public Metadata Metadata;
 
+		/// <summary>
+		/// Cached information about what markers are set in this character's dialog
+		/// </summary>
 		[XmlIgnore]
 		public MarkerData Markers;
 
@@ -97,6 +104,29 @@ namespace SPNATI_Character_Editor
 		public List<System.Xml.XmlElement> ExtraXml;
 
 		private bool _built;
+
+		[XmlIgnore]
+		public string Name
+		{
+			get { return FirstName; }
+		}
+
+		[XmlIgnore]
+		public string Key
+		{
+			get { return FolderName; }
+			set { FolderName = value; }
+		}
+
+		public string ToLookupString()
+		{
+			return $"{Name} [{Key}]";
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return Label.CompareTo((other as Character).Label);
+		}
 
 		public Character()
 		{
@@ -176,7 +206,7 @@ namespace SPNATI_Character_Editor
 				if (layer < Wardrobe.Count)
 				{
 					Clothing clothes = Wardrobe[Layers - 1 - layer];
-					label = "losing " + clothes.Name;
+					label = "Losing " + clothes.Name;
 				}
 			}
 			else
@@ -320,6 +350,16 @@ namespace SPNATI_Character_Editor
 		#endregion
 
 		#region Serialization
+		/// <summary>
+		/// Gets the full path to this character's attachments
+		/// </summary>
+		/// <returns></returns>
+		public string GetAttachmentsDirectory()
+		{
+			string root = Config.GetString(Settings.GameDirectory);
+			return Path.Combine(root, "attachments", FolderName);
+		}
+
 		public void OnBeforeSerialize()
 		{
 			Gender = Gender.ToLower();
@@ -511,7 +551,6 @@ namespace SPNATI_Character_Editor
 			tagCount = 0;
 			int count = 0;
 			HashSet<string> lines = new HashSet<string>();
-			List<Stage> stages = Behavior.Stages;
 			foreach (var stageCase in GetCasesTargetedAtCharacter(character, TargetType.All))
 			{
 				foreach (var line in stageCase.Lines)
@@ -561,6 +600,11 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return count;
+		}
+
+		public void RemoveMarkerReference(string marker)
+		{
+			Markers.RemoveReference(marker);
 		}
 
 		public void CacheMarker(string marker)

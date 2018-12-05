@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Desktop;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -8,7 +11,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// Contains descriptive information about a marker. This doesn't actually control anything in game; it's just for documentation
 	/// </summary>
-	public class Marker : IComparable<Marker>
+	public class Marker : IComparable<Marker>, IRecord
 	{
 		[XmlAttribute("scope")]
 		/// <summary>
@@ -27,6 +30,12 @@ namespace SPNATI_Character_Editor
 		/// Description about what this marker controls
 		/// </summary>
 		public string Description;
+
+		[XmlIgnore]
+		/// <summary>
+		/// Values that get set into this marker
+		/// </summary>
+		private CountedSet<string> _values = new CountedSet<string>();
 
 		public Marker()
 		{
@@ -47,6 +56,209 @@ namespace SPNATI_Character_Editor
 		{
 			return Name.CompareTo(other.Name);
 		}
+
+		public IEnumerable<string> Values
+		{
+			get { return _values.Values; }
+		}
+
+		public int ValueCount
+		{
+			get { return _values.Count; }
+		}
+
+		string IRecord.Name
+		{
+			get
+			{
+				return Name;
+			}
+		}
+
+		public string Key
+		{
+			get
+			{
+				return Name;
+			}
+
+			set
+			{
+				Name = value;
+			}
+		}
+
+		public string Group { get; }
+
+		public void AddValue(string value)
+		{
+			if (string.IsNullOrEmpty(value)) { return; }
+			_values.Add(value);
+		}
+
+		public void RemoveValue(string value)
+		{
+			if (string.IsNullOrEmpty(value)) { return; }
+			_values.Remove(value);
+		}
+
+		/// <summary>
+		/// Extracts the string from a marker equation
+		/// </summary>
+		/// <param name="marker"></param>
+		/// <returns></returns>
+		public static string ExtractConditionPieces(string marker, out MarkerOperator op, out string value, out bool perTarget)
+		{
+			Match match = Regex.Match(marker, @"([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
+			op = ToOperator(match.Groups[4].ToString());
+			value = match.Groups[5]?.ToString();
+			if (value == "")
+			{
+				value = null;
+			}
+			perTarget = !string.IsNullOrEmpty(match.Groups[2]?.ToString());
+			return match.Groups[1].ToString();
+		}
+
+		/// <summary>
+		/// Extracts the string and value from a marker of the form "marker[*]", "[+|-]marker[*]", or "marker[*]=value"
+		/// </summary>
+		/// <param name="marker"></param>
+		/// <returns></returns>
+		public static string ExtractPieces(string marker, out string value, out bool perTarget)
+		{
+			perTarget = false;
+			if (marker == null)
+			{
+				value = null;
+				return null;
+			}
+			else if (marker.Contains("="))
+			{
+				string[] pieces = marker.Split('=');
+				value = pieces[1];
+				marker = pieces[0];
+				if (marker.EndsWith("*"))
+				{
+					perTarget = true;
+					marker = marker.Substring(0, marker.Length - 1);
+				}
+				return marker;
+			}
+			else if (marker.StartsWith("+") || marker.StartsWith("-"))
+			{
+				value = marker[0].ToString();
+				marker = marker.Substring(1);
+				if (marker.EndsWith("*"))
+				{
+					perTarget = true;
+					marker = marker.Substring(0, marker.Length - 1);
+				}
+				return marker;
+			}
+			else
+			{
+				value = null;
+				if (marker.EndsWith("*"))
+				{
+					perTarget = true;
+					marker = marker.Substring(0, marker.Length - 1);
+				}
+				return marker;
+			}
+		}
+
+		/// <summary>
+		/// Splits a marker of the form marker=5 into the pieces marker, = , and 5
+		/// </summary>
+		/// <param name="marker">Marker condition to split</param>
+		/// <param name="op">Conditional operator</param>
+		/// <param name="rhs">Right hand side of equation</param>
+		/// <returns>Left side of equation</returns>
+		public static string SplitConditional(string marker, out MarkerOperator op, out string rhs)
+		{
+			///Note: I originally converted *SaidMarker strings into a class instead of repeatedly piecing and unpiecing the parts, 
+			///but it complicated a number of things with serialization, primarily performance and maintaining member order
+
+
+			marker = Regex.Replace(marker, @"\s+", ""); //throw away any whitespace
+			Match match = Regex.Match(marker, @"(\w+)((==|<|<=|>=|>|!=)(\w+))*");
+			if (match.Groups.Count > 4)
+			{
+				op = ToOperator(match.Groups[3].ToString());
+				rhs = match.Groups[4].ToString();
+				return match.Groups[1].ToString();
+			}
+			else
+			{
+				op = MarkerOperator.Equals;
+				rhs = null;
+				return marker;
+			}
+		}
+
+		private static MarkerOperator ToOperator(string value)
+		{
+			switch (value)
+			{
+				case "==":
+					return MarkerOperator.Equals;
+				case "!=":
+					return MarkerOperator.NotEqual;
+				case "<":
+					return MarkerOperator.LessThan;
+				case "<=":
+					return MarkerOperator.LessThanOrEqual;
+				case ">":
+					return MarkerOperator.GreaterThan;
+				case ">=":
+					return MarkerOperator.GreaterThanOrEqual;
+			}
+			return MarkerOperator.Equals;
+		}
+
+		public string ToLookupString()
+		{
+			return Name;
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return Name.CompareTo(other.Name);
+		}
+	}
+
+	public static class MarkerOperatorExtensions
+	{
+		public static string Serialize(this MarkerOperator op)
+		{
+			switch (op)
+			{
+				case MarkerOperator.Equals:
+					return "==";
+				case MarkerOperator.LessThan:
+					return "<";
+				case MarkerOperator.GreaterThan:
+					return ">";
+				case MarkerOperator.LessThanOrEqual:
+					return "<=";
+				case MarkerOperator.GreaterThanOrEqual:
+					return ">=";
+				case MarkerOperator.NotEqual:
+					return "!=";
+			}
+			return "";
+		}
+	}
+
+	public enum MarkerOperator
+	{
+		Equals,
+		LessThan,
+		LessThanOrEqual,
+		GreaterThan,
+		GreaterThanOrEqual,
+		NotEqual
 	}
 
 	public enum MarkerScope

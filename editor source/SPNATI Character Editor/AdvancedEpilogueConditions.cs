@@ -25,7 +25,7 @@ namespace SPNATI_Character_Editor
 
 		private void AdvancedEpilogueConditions_Load(object sender, EventArgs e)
 		{
-			CharacterEditor.SetRange(valPlayerStartingLayers, valMaxPlayerStartingLayers, _epilogue.PlayerStartingLayers);
+			GUIHelper.SetRange(valPlayerStartingLayers, valMaxPlayerStartingLayers, _epilogue.PlayerStartingLayers);
 
 			selAllMarkers.SelectableItems
 				= selNotMarkers.SelectableItems
@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor
 		private void cmdOK_Click(object sender, EventArgs e)
 		{
 			_epilogue.AlsoPlaying = (string)cboAlsoPlaying.SelectedItem;
-			_epilogue.PlayerStartingLayers = CharacterEditor.ReadRange(valPlayerStartingLayers, valMaxPlayerStartingLayers);
+			_epilogue.PlayerStartingLayers = GUIHelper.ReadRange(valPlayerStartingLayers, valMaxPlayerStartingLayers);
 			_epilogue.AllMarkers = selAllMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAllMarkers.SelectedItems) : null;
 			_epilogue.NotMarkers = selNotMarkers.SelectedItems.Length > 0 ? String.Join(" ", selNotMarkers.SelectedItems) : null;
 			_epilogue.AnyMarkers = selAnyMarkers.SelectedItems.Length > 0 ? String.Join(" ", selAnyMarkers.SelectedItems) : null;

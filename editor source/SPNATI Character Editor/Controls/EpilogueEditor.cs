@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -6,21 +7,20 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class EpilogueEditor : UserControl
+	[Activity(typeof(Character), 40)]
+	public partial class EpilogueEditor : Activity
 	{
 		private Character _character;
 		private Epilogue _ending;
 		private int _screenIndex;
 		private Screen _screen;
 		private int _textIndex;
-		private Font _font;
 		private HtmlDocument _doc;
 		private bool _populatingEnding;
 
 		public EpilogueEditor()
 		{
 			InitializeComponent();
-			_font = new Font("Trebuchet MS", 0.875f);
 
 			//Arrow combo boxes
 			DataGridViewComboBoxColumn col = gridText.Columns["ColArrow"] as DataGridViewComboBoxColumn;
@@ -35,12 +35,26 @@ namespace SPNATI_Character_Editor.Controls
 			EnableFields(false);
 		}
 
+		public override string Caption
+		{
+			get
+			{
+				return "Epilogues";
+			}
+		}
+
 		private void EnableFields(bool enabled)
 		{
 			groupScreen.Enabled = enabled;
 			txtTitle.Enabled = enabled;
 			cboGender.Enabled = enabled;
 			cmdDeleteEnding.Enabled = enabled;
+			cmdAdvancedConditions.Enabled = enabled;
+		}
+
+		protected override void OnInitialize()
+		{
+			SetCharacter(Record as Character);
 		}
 
 		public void SetCharacter(Character character)
@@ -130,7 +144,7 @@ namespace SPNATI_Character_Editor.Controls
 			LoadScreen(0);
 		}
 
-		public void Save()
+		public override void Save()
 		{
 			SaveEnding();
 		}
@@ -395,7 +409,7 @@ namespace SPNATI_Character_Editor.Controls
 			var element = _doc.CreateElement("link");
 			element.SetAttribute("rel", "stylesheet");
 			element.SetAttribute("type", "text/css");
-			element.SetAttribute("href", "file:///" + Path.Combine(Config.GameDirectory, "css", "spni.css"));
+			element.SetAttribute("href", "file:///" + Path.Combine(Config.GetString(Settings.GameDirectory), "css", "spni.css"));
 			_doc.GetElementsByTagName("head")[0].AppendChild(element);
 
 			if (_character != null)

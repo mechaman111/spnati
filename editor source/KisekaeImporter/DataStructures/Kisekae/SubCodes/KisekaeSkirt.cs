@@ -1,9 +1,7 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeSkirt : KisekaeSubCode
+	public class KisekaeSkirt : KisekaeClothes
 	{
-		public KisekaeSkirt() : base("ic") { }
-
 		public int Layer
 		{
 			get { return GetInt(4); }

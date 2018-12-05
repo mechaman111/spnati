@@ -10,7 +10,7 @@
 			set { Set(0, value.ToString()); }
 		}
 
-		public int Stomatch
+		public int Stomach
 		{
 			get { return GetInt(1); }
 			set { Set(1, value.ToString()); }

@@ -172,8 +172,6 @@ namespace SPNATI_Character_Editor
 					{
 						Case stageCase = c.CopyConditions();
 						stageCase.Stages.Add(stage);
-						Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
-
 						foreach (var line in c.Lines)
 						{
 							stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
@@ -341,6 +339,18 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetStage:" + stageCase.TargetStage);
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetStatus))
+			{
+				filters.Add("targetStatus:" + stageCase.TargetStatus);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TargetLayers))
+			{
+				filters.Add("targetLayers:" + stageCase.TargetLayers);
+			}
+			if (!string.IsNullOrEmpty(stageCase.TargetStartingLayers))
+			{
+				filters.Add("targetStartingLayers:" + stageCase.TargetStartingLayers);
+			}
 			if (!string.IsNullOrEmpty(stageCase.TargetTimeInStage))
 			{
 				filters.Add("targetTimeInStage:" + stageCase.TargetTimeInStage);
@@ -365,6 +375,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetNotSaidMarker:" + stageCase.TargetNotSaidMarker);
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetSayingMarker))
+			{
+				filters.Add("targetSayingMarker:" + stageCase.TargetSayingMarker);
+			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
 				filters.Add("alsoPlaying:" + stageCase.AlsoPlaying);
@@ -388,6 +402,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
 			{
 				filters.Add("alsoPlayingNotSaidMarker:" + stageCase.AlsoPlayingNotSaidMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSayingMarker))
+			{
+				filters.Add("alsoPlayingSayingMarker:" + stageCase.AlsoPlayingSayingMarker);
 			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
@@ -421,9 +439,9 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("totalNaked:" + stageCase.TotalNaked);
 			}
-			if (!string.IsNullOrEmpty(stageCase.TotalFinishing))
+			if (!string.IsNullOrEmpty(stageCase.TotalMasturbating))
 			{
-				filters.Add("totalMasturbating:" + stageCase.TotalFinishing);
+				filters.Add("totalMasturbating:" + stageCase.TotalMasturbating);
 			}
 			if (!string.IsNullOrEmpty(stageCase.TotalFinished))
 			{
@@ -445,7 +463,8 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var condition in stageCase.Conditions)
 				{
-					filters.Add(string.Format("count-{0}:{1}", condition.Filter, condition.Count));
+					string[] parts = Array.FindAll(new string[]{ condition.Status, condition.Gender, condition.Filter }, e => e != null);
+					filters.Add(string.Format("count-{1}:{0}", condition.Count, string.Join("&", parts)));
 				}
 			}
 			return filters;
@@ -537,9 +556,6 @@ namespace SPNATI_Character_Editor
 						break;
 					case "description":
 						character.Metadata.Description = value;
-						break;
-					case "release":
-						character.Metadata.ReleaseNumber = value;
 						break;
 					case "start":
 						Case temp = MakeLine(key, value, character, true);
@@ -798,6 +814,15 @@ namespace SPNATI_Character_Editor
 						case "targetstage":
 							lineCase.TargetStage = value;
 							break;
+						case "targetstatus":
+							lineCase.TargetStatus = value;
+							break;
+						case "targetlayers":
+							lineCase.TargetLayers = value;
+							break;
+						case "targetstartinglayers":
+							lineCase.TargetStartingLayers = value;
+							break;
 						case "targettimeinstage":
 							lineCase.TargetTimeInStage = value;
 							break;
@@ -806,6 +831,9 @@ namespace SPNATI_Character_Editor
 							break;
 						case "targetnotsaidmarker":
 							lineCase.TargetNotSaidMarker = value;
+							break;
+						case "targetsayingmarker":
+							lineCase.TargetSayingMarker = value;
 							break;
 					}
 				}
@@ -827,6 +855,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "alsoplayingsaidmarker":
 						lineCase.AlsoPlayingSaidMarker = value;
+						break;
+					case "alsoplayingsayingmarker":
+						lineCase.AlsoPlayingSayingMarker = value;
 						break;
 					case "alsoplayingnotsaidmarker":
 						lineCase.AlsoPlayingNotSaidMarker = value;
@@ -853,7 +884,7 @@ namespace SPNATI_Character_Editor
 						lineCase.TotalNaked = value;
 						break;
 					case "totalmasturbating":
-						lineCase.TotalFinishing = value;
+						lineCase.TotalMasturbating = value;
 						break;
 					case "totalfinished":
 						lineCase.TotalFinished = value;
@@ -879,8 +910,24 @@ namespace SPNATI_Character_Editor
 					default:
 						if (key.StartsWith("count-"))
 						{
+							string tag = null, gender = null, status = null;
 							string filter = key.Substring(6);
-							lineCase.Conditions.Add(new TargetCondition(filter, value));
+							string[] parts = filter.Split('&');
+							foreach (string part in parts) {
+								if (part == "male" || part == "female")
+								{
+									gender = part;
+								}
+								else if (part != "" && Array.Exists(TargetCondition.StatusTypes, t => t.Key == part || "not_" + t.Key == part))
+								{
+									status = part;
+								}
+								else
+								{
+									tag = part;
+								}
+							}
+							lineCase.Conditions.Add(new TargetCondition(tag, gender, status, value));
 						}
 						break;
 				}

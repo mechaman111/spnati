@@ -1,9 +1,18 @@
 ﻿namespace KisekaeImporter
 {
-	public interface IHair
+	public interface IColorable
 	{
 		KisekaeColor Color1 { get; set; }
 		KisekaeColor Color2 { get; set; }
 		KisekaeColor Color3 { get; set; }
+	}
+
+	public interface IOpenable
+	{
+		void SetOpenState(int state);
+	}
+
+	public interface IPoseable
+	{
 	}
 }

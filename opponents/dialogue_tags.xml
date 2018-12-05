@@ -27,79 +27,79 @@
     <defaultImage>calm</defaultImage>
     <defaultText>I'll exchange ~cards~ cards.</defaultText>
   </trigger>
-  <trigger tag="good_hand" start="0" end="8" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="1" xmlGroup="1" xmlOrder="0">
+  <trigger tag="good_hand" start="0" end="8" relatedGroup="1" label="Hand=Good" description="After exchanging, the character has a good hand" group="1" order="1" xmlGroup="1" xmlOrder="0">
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>I've got a good hand.</defaultText>
   </trigger>
-  <trigger tag="okay_hand" start="0" end="8" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2" xmlGroup="1" xmlOrder="1">
+  <trigger tag="okay_hand" start="0" end="8" relatedGroup="1" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2" xmlGroup="1" xmlOrder="1">
     <vars />
     <defaultImage>calm</defaultImage>
     <defaultText>I've got an okay hand.</defaultText>
   </trigger>
-  <trigger tag="bad_hand" start="0" end="8" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3" xmlGroup="1" xmlOrder="3">
+  <trigger tag="bad_hand" start="0" end="8" relatedGroup="1" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3" xmlGroup="1" xmlOrder="3">
     <vars />
     <defaultImage>sad</defaultImage>
     <defaultText>I've got a bad hand.</defaultText>
   </trigger>
-  <trigger tag="hand" optional="true" start="0" end="8" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="4" xmlGroup="1" xmlOrder="4">
+  <trigger tag="hand" optional="true" start="0" end="8" relatedGroup="1" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="4" xmlGroup="1" xmlOrder="4">
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>This line can cover any of the Good/Okay/Bad hand cases if it has a higher priority</defaultText>
   </trigger>
-  <trigger tag="must_strip" optional="true" start="0" end="7" label="Must Strip" description="The character has lost the hand" group="2" order="0" xmlGroup="3" xmlOrder="3">
+  <trigger tag="must_strip" optional="true" start="0" end="7" relatedGroup="2" label="Must Strip" description="The character has lost the hand" group="2" order="0" xmlGroup="3" xmlOrder="3">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>These lines are considered in addition to the (winning, normal, losing) must strip states.</defaultText>
   </trigger>
-  <trigger tag="must_strip_winning" start="0" end="7" label="Must Strip (Self, Winning)" description="The character has lost the hand, but currently has the most clothes among everybody" group="2" order="1" xmlGroup="3" xmlOrder="3">
+  <trigger tag="must_strip_winning" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Winning)" description="The character has lost the hand, but currently has the most clothes among everybody" oncePerStage="true" group="2" order="1" xmlGroup="3" xmlOrder="3">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>They say this when they're winning - they have more clothing items left than other players.</defaultText>
   </trigger>
-  <trigger tag="must_strip_normal" start="0" end="7" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" group="2" order="2" xmlGroup="3" xmlOrder="0">
+  <trigger tag="must_strip_normal" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" oncePerStage="true" group="2" order="2" xmlGroup="3" xmlOrder="0">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>What the character says when they're in the middle of the group in terms of clothes left.</defaultText>
   </trigger>
-  <trigger tag="must_strip_losing" start="0" end="7" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" group="2" order="3" xmlGroup="3" xmlOrder="1">
+  <trigger tag="must_strip_losing" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" oncePerStage="true" group="2" order="3" xmlGroup="3" xmlOrder="1">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>The character has lost a round, and also has the fewest pieces of clothing left.</defaultText>
   </trigger>
-  <trigger tag="stripping" start="0" end="7" label="Stripping" description="The character is stripping after losing a round" group="2" order="4" xmlGroup="3" xmlOrder="2">
+  <trigger tag="stripping" start="0" end="7" relatedGroup="2" label="Stripping" description="The character is stripping after losing a round" oncePerStage="true" group="2" order="4" xmlGroup="3" xmlOrder="2">
     <vars>
       <string>clothing</string>
     </vars>
     <defaultImage>strip</defaultImage>
     <defaultText>What the character says as they take their clothes off. The picture and text should be unique to what they're taking off.</defaultText>
   </trigger>
-  <trigger tag="must_masturbate_first" start="8" end="8" label="Must Masturbate (Self, first to do so)" description="The character is the first to lose the game and must start masturbating" group="9" order="0" xmlGroup="4" xmlOrder="0">
+  <trigger tag="must_masturbate_first" start="8" end="8" relatedGroup="2" label="Must Masturbate (Self, first to do so)" oncePerStage="true" description="The character is the first to lose the game and must start masturbating" group="9" order="0" xmlGroup="4" xmlOrder="0">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.</defaultText>
   </trigger>
-  <trigger tag="must_masturbate" start="8" end="8" label="Must Masturbate (Self)" description="The character has lost the game must start masturbating" group="9" order="1" xmlGroup="4" xmlOrder="1">
+  <trigger tag="must_masturbate" start="8" end="8" relatedGroup="2" label="Must Masturbate (Self)" oncePerStage="true" description="The character has lost the game must start masturbating" group="9" order="1" xmlGroup="4" xmlOrder="1">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.</defaultText>
   </trigger>
-  <trigger tag="start_masturbating" start="8" end="8" label="Start Masturbating (Self)" description="Used one time when the character first begins masturbating" group="9" order="2" xmlGroup="2" xmlOrder="0">
+  <trigger tag="start_masturbating" start="8" end="8" label="Start Masturbating (Self)" oncePerStage="true" description="Used one time when the character first begins masturbating" group="9" order="2" xmlGroup="2" xmlOrder="0">
     <vars />
     <defaultImage>starting</defaultImage>
     <defaultText>What the character says as they start masturbating.</defaultText>
   </trigger>
-  <trigger tag="masturbating" start="9" end="9" label="Masturbating (Self)" description="Used while masturbating" group="9" order="3" xmlGroup="5" xmlOrder="0">
+  <trigger tag="masturbating" start="9" end="9" relatedGroup="3" label="Masturbating (Self)" description="Used while masturbating" group="9" order="3" xmlGroup="5" xmlOrder="0">
     <vars />
     <defaultImage>calm</defaultImage>
     <defaultText>What the character says while they're masturbating.</defaultText>
   </trigger>
-  <trigger tag="heavy_masturbating" start="9" end="9" label="Heavy Masturbating (Self)" description="Used while masturbating when the character is close to finishing" group="9" order="4" xmlGroup="5" xmlOrder="2">
+  <trigger tag="heavy_masturbating" start="9" end="9" relatedGroup="3" label="Heavy Masturbating (Self)" description="Used while masturbating when the character is close to finishing" group="9" order="4" xmlGroup="5" xmlOrder="2">
     <vars />
     <defaultImage>heavy</defaultImage>
     <defaultText>What the character says while they're masturbating, and closer to "finishing".</defaultText>
   </trigger>
-  <trigger tag="finishing_masturbating" start="9" end="9" label="Finishing (Self)" description="Line used once immediately upon finishing masturbation" group="9" order="5" xmlGroup="5" xmlOrder="1">
+  <trigger tag="finishing_masturbating" start="9" end="9" label="Finishing (Self)" oncePerStage="true" description="Line used once immediately upon finishing masturbation" group="9" order="5" xmlGroup="5" xmlOrder="1">
     <vars />
     <defaultImage>finishing</defaultImage>
     <defaultText>What the masturbating character says as they "finish".</defaultText>
@@ -445,12 +445,12 @@
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says when a female character "finishes" masturbating.</defaultText>
   </trigger>
-  <trigger tag="game_over_victory" start="0" end="8" label="Game Over (Victory)" description="The game is over and this character won" group="10" order="0" xmlGroup="0" xmlOrder="30">
+  <trigger tag="game_over_victory" start="0" end="8" label="Game Over (Victory)" oncePerStage="true" description="The game is over and this character won" group="10" order="0" xmlGroup="0" xmlOrder="30">
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</defaultText>
   </trigger>
-  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" hasTarget="true" description="The game is over and this character lost" group="10" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
+  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" oncePerStage="true" hasTarget="true" description="The game is over and this character lost" group="10" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
     <vars>
       <string>name</string>
     </vars>

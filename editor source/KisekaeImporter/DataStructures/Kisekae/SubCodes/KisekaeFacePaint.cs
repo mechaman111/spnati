@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeFacePaint : KisekaeSubCode
+	public class KisekaeFacePaint : KisekaeSubCode, IPoseable
 	{
 		public KisekaeFacePaint() : base("t") { }
 
@@ -72,6 +72,12 @@
 		{
 			get { return GetInt(9); }
 			set { Set(9, value.ToString()); }
+		}
+
+		public int RotationZ
+		{
+			get { return GetInt(10); }
+			set { Set(10, value.ToString()); }
 		}
 	}
 }

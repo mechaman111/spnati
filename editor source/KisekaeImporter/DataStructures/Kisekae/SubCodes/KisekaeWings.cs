@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeWings : KisekaeSubCode 
+	public class KisekaeWings : KisekaeSubCode, IPoseable
 	{
 		public KisekaeWings() : base("pd") { }
 

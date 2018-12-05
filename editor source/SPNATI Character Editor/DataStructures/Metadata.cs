@@ -56,15 +56,15 @@ namespace SPNATI_Character_Editor
 		[XmlElement("has_ending")]
 		public bool HasEnding;
 
+		[XmlElement("epilogue")]
+		public List<EpilogueMeta> Endings;
+
 		[XmlElement("layers")]
 		public int Layers;
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
 		public List<string> Tags;
-
-		[XmlElement("release")]
-		public string ReleaseNumber;
 
 		public Metadata()
 		{
@@ -87,12 +87,26 @@ namespace SPNATI_Character_Editor
 			Gender = c.Gender;
 			Layers = c.Layers;
 			HasEnding = c.Endings.Count > 0;
+			Endings = c.Endings.ConvertAll(e => new EpilogueMeta
+			{
+				Title = e.Title,
+				Gender = e.Gender,
+				GalleryImage = e.GalleryImage,
+				AlsoPlaying = e.AlsoPlaying,
+				PlayerStartingLayers = e.PlayerStartingLayers,
+				HasMarkerConditions = !string.IsNullOrWhiteSpace(e.AllMarkers)
+					|| !string.IsNullOrWhiteSpace(e.AnyMarkers)
+					|| !string.IsNullOrWhiteSpace(e.NotMarkers)
+					|| !string.IsNullOrWhiteSpace(e.AlsoPlayingAllMarkers)
+					|| !string.IsNullOrWhiteSpace(e.AlsoPlayingAnyMarkers)
+					|| !string.IsNullOrWhiteSpace(e.AlsoPlayingNotMarkers)
+			});
 			Tags = c.Tags;
 		}
 
 		public void OnBeforeSerialize()
 		{
-			
+
 		}
 
 		public void OnAfterDeserialize()
@@ -100,5 +114,26 @@ namespace SPNATI_Character_Editor
 			//Encoding these doesn't need to be done in OnBeforeSerialize because the serializer does it automatically
 			Description = XMLHelper.DecodeEntityReferences(Description);
 		}
+	}
+
+	public class EpilogueMeta
+	{
+		[XmlAttribute("gender")]
+		public string Gender;
+
+		[XmlAttribute("playerStartingLayers")]
+		public string PlayerStartingLayers;
+
+		[XmlAttribute("markers")]
+		public bool HasMarkerConditions;
+
+		[XmlAttribute("img")]
+		public string GalleryImage;
+
+		[XmlAttribute("alsoPlaying")]
+		public string AlsoPlaying;
+
+		[XmlText]
+		public string Title;
 	}
 }

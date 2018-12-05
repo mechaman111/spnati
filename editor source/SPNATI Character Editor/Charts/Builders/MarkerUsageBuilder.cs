@@ -31,11 +31,13 @@ namespace SPNATI_Character_Editor.Charts.Builders
 						{
 							TrackMarker(markers, stageCase.Target, stageCase.TargetSaidMarker);
 							TrackMarker(markers, stageCase.Target, stageCase.TargetNotSaidMarker);
+							TrackMarker(markers, stageCase.Target, stageCase.TargetSayingMarker);
 						}
 						if (!String.IsNullOrEmpty(stageCase.AlsoPlaying) && CharacterDatabase.Exists(stageCase.AlsoPlaying))
 						{
 							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingNotSaidMarker);
 							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSaidMarker);
+							TrackMarker(markers, stageCase.AlsoPlaying, stageCase.AlsoPlayingSayingMarker);
 						}
 					}
 				}
@@ -50,6 +52,10 @@ namespace SPNATI_Character_Editor.Charts.Builders
 		private static void TrackMarker(Dictionary<string, HashSet<string>> markers, string target, string marker)
 		{
 			HashSet<string> set;
+			MarkerOperator op;
+			string value;
+			bool perTarget;
+			marker = Marker.ExtractConditionPieces(marker, out op, out value, out perTarget);
 			if (!markers.TryGetValue(target, out set))
 			{
 				set = new HashSet<string>();
