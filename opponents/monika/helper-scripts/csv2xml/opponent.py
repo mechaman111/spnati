@@ -25,6 +25,7 @@ class Opponent(object):
         self.timer = 0
         self.wardrobe = []
         self.tags = []
+        self.endings = []
 
         self.description = ''
         self.selection_pic = ''
@@ -71,7 +72,12 @@ class Opponent(object):
         opp.writer = meta_elem.find('writer').text
         opp.artist = meta_elem.find('artist').text
         opp.description = meta_elem.find('description').text
-        opp.has_ending = (meta_elem.find('has_ending').text.strip().lower() == 'true')
+        
+        opp.has_ending = (meta_elem.find('has_ending') is not None) and (meta_elem.find('has_ending').text.strip().lower() == 'true')
+        for ending in opponent_elem.iter('epilogue'):
+            opp.has_ending = True
+            opp.endings.append(ending)
+            
         opp.tags = [tag.text for tag in opponent_elem.find('tags').iter('tag')]
         
         return opp
@@ -112,7 +118,11 @@ class Opponent(object):
             opp.writer = meta_elem.find('writer').text
             opp.artist = meta_elem.find('artist').text
             opp.description = meta_elem.find('description').text
-            opp.has_ending = (meta_elem.find('has_ending').text.strip().lower() == 'true')
+            
+            opp.has_ending = (meta_elem.find('has_ending') is not None) and (meta_elem.find('has_ending').text.strip().lower() == 'true')
+            for ending in opponent_elem.iter('epilogue'):
+                opp.has_ending = True
+                opp.endings.append(ending)
 
         return opp
 
