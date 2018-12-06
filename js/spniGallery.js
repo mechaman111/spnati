@@ -8,7 +8,11 @@ function GEnding(player, ending){
 	this.gender = $(ending).attr('gender');
 
 	var previewImage = $(ending).attr('img');
-  	previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+	if (previewImage) {
+		previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+	} else {
+		console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
+	}
 
 	this.image = previewImage;
 	this.title = $(ending).html();
