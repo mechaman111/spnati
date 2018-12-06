@@ -254,8 +254,8 @@ monika.startJointMasturbation = function () {
             monika.saved_sayori_slot = sayori_slot;
             delete players[sayori_slot];
             
-            updateAllBehaviours(monika_slot, FEMALE_MASTURBATING, players[monika_slot]);
-            updateBehaviour(monika_slot, PLAYER_START_MASTURBATING);
+            updateAllBehaviours(players[monika_slot], FEMALE_MASTURBATING);
+            players[monika_slot].updateBehaviour(PLAYER_START_MASTURBATING);
             
             updateAllVolatileBehaviours();
         	commitAllBehaviourUpdates();
