@@ -209,7 +209,7 @@ function doEpilogueFromGallery(){
 			var endingElem = null;
 			
 			$xml.find('epilogue').each(function () {
-				if ($(this).find('title').html() === chosenEpilogue.title) {
+				if ($(this).find('title').html() === chosenEpilogue.title && $(this).attr('gender') === chosenEpilogue.gender) {
 					endingElem = this;
 				}
 			});
