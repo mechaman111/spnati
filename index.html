@@ -1726,13 +1726,13 @@
             <label class='player-tag-select'>
               Choose a skin tone:
               <div class='colorAndLabel range'>
-                <input type='text' name='skin_color' disabled/>
-                <input type='range' name='skin_color_picker' value='50'>
+                <input type='text' name='skin_color_tag' disabled/>
+                <input type='range' name='skin_color' value='50'>
               </div>
             </label>
           </form>
           <div class="modal-body-container" style="padding-top:4%;">
-            <button class="bordered smooth-button modal-button" data-dismiss="modal">Confirm</button>
+            <button id="player-tags-confirm" class="bordered smooth-button modal-button" data-dismiss="modal">Confirm</button>
             <button class="bordered smooth-button modal-button clearSelections smooth-button-red">Clear Selections</button>
           </div>
         </div>
@@ -1905,18 +1905,23 @@
 </div>
 
 <!-- Start of Epilogue Screen -->
-<div id="epilogue-screen" class="epilogue-area" role="dialog" hidden>
-	<button type="button" id="epilogue-next-button" class="bordered smooth-button" onclick="progressEpilogue( 1)">
-		Next
-	</button>
-	<button type="button" id="epilogue-prev-button" class="bordered smooth-button" onclick="progressEpilogue(-1)">
-		Previous
-	</button>
-	<button type="button" id="epilogue-restart-button" class="bordered smooth-button" onclick="showRestartModal()">
-		Restart?
-	</button>
-    <button type="button" id="epilogue-next-on-image" style="background:transparent; border:none; color:transparent;" onclick="progressEpilogue( 1)"></button>
-    <button type="button" id="epilogue-prev-on-image" style="background:transparent; border:none; color:transparent;" onclick="progressEpilogue(-1)"></button>
+<div id="epilogue-screen" role="dialog" hidden>
+  <div id='epilogue-container' data-background='-1' data-scene='-1'>
+    <div id='epilogue-content'>
+      <img class='epilogue-background' src=''>
+    </div>
+    <div id='epilogue-buttons'>
+    	<button type="button" id='epilogue-next' class="bordered smooth-button">
+    		Next
+    	</button>
+    	<button type="button" id='epilogue-previous' class="bordered smooth-button">
+    		Previous
+    	</button>
+    	<button type="button" id='epilogue-restart' class="bordered smooth-button">
+    		Restart?
+    	</button>
+    </div>
+  </div>
 </div>
 <!-- End of Epilogue Screen -->
 

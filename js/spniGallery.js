@@ -6,52 +6,13 @@
 function GEnding(player, ending){
 	this.player = player;
 	this.gender = $(ending).attr('gender');
-	
-	var previewImage = $(ending).attr('img');
-	if (!previewImage) {
-		/* Default to using the first screen 'img' attribute if there is none
-		 * on the epilogue itself.
-		 */
-		previewImage = $(ending).find('screen').eq(0).attr('img');
-	}
-	
-	this.image = player.base_folder + previewImage;
-	this.title = $(ending).find('title').html();
-	this.unlocked = save.hasEnding(player.id, this.title);
-	//Same as in spniEpilogue.js
-	this.screens = [];
-	var $end = this;
-	$(ending).find('screen').each(function(){
-		var image = player.base_folder + $(this).attr("img").trim();
-		var textBoxes = [];
-		$(this).find('text').each(function(){
-			var x = $(this).find("x").html().trim();
-			var y = $(this).find("y").html().trim();
-			var w = $(this).find("width").html();
-			var a = $(this).find("arrow").html();
 
-			if (w) {
-				w = w.trim();
-			}
-			if (!w || (w.length <= 0)) {
-				w = "20%"; //default to text boxes having a width of 20%
-			}
-			if (a) {
-				a = a.trim().toLowerCase();
-				if (a.length >= 1) {
-					a = "arrow-" + a; //class name for the different arrows. Only use if the writer specified something.
-				}
-			} else {
-				a = "";
-			}
-			if (x.toLowerCase() == "centered") {
-				x = getCenteredPosition(w);
-			}
-			var text = $(this).find("content").html().trim();
-			textBoxes.push({x:x, y:y, width:w, arrow:a, text:text});
-		});
-		$end.screens.push({image:image, textBoxes:textBoxes});
-	});
+	var previewImage = $(ending).attr('img');
+  	previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+
+	this.image = previewImage;
+	this.title = $(ending).html();
+	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
  /**********************************************************************
@@ -69,6 +30,7 @@ $selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-charac
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
 	loadGalleryEndings();
+	galleryGender(GALLERY_GENDER);
 }
 
 function backGalleryScreen(){
@@ -81,89 +43,42 @@ var allEndings = [];
 var anyEndings = [];
 var maleEndings = [];
 var femaleEndings = [];
-var isEndingLoaded = [];
 var galleryPage = 0;
 var galleryPages = -1;
 var epp = 20;
 var selectedEnding = -1;
 var GALLERY_GENDER = 'all';
-var loadIndex = 0;
 
 function loadGalleryEndings(){
-	if(allEndings.length>0){
+	if(allEndings.length > 0){
 		return;
-	}
-	for(var i=0; i<loadedOpponents.length; i++){
-		isEndingLoaded.push(false);
-	}
-	for(var i=0; i<loadedOpponents.length; i++){
-		if(loadedOpponents[i].ending){
-			loadEndingXml(i);
-		}
-		else{
-			isEndingLoaded[i] = true;
-		}
-	}
-
-	//I'm not using setInterval on purpose, although it shouldn't be necessary
-	setTimeout(fetchLoadedEndings,1);
-
-	//I don't know why but sometimes start button enables itself at start.
-	//Strangely it only happens when I refresh browser (firefox) after anabling it by picking valid epilouge
-	$galleryStartButton.attr('disabled', true);
-}
-
-function fetchLoadedEndings(){
-	if(loadIndex >= isEndingLoaded.length){
-		return;
-	}
-	//If it's false go straight to setting new timeout
-	if(isEndingLoaded[loadIndex]!=false){
-		while(loadIndex<isEndingLoaded.length && isEndingLoaded[loadIndex]!=false){
-			if(isEndingLoaded[loadIndex]==true){
-				loadIndex++;
-			}
-			else{
-				var endings = isEndingLoaded[loadIndex];
-				endings.each(function(){
-					var gending = new GEnding(loadedOpponents[loadIndex], this)
-					allEndings.push( gending );
-					switch(gending.gender){
-						case 'male': maleEndings.push(gending);
-						break;
-						case 'female': femaleEndings.push(gending);
-						break;
-						default: anyEndings.push(gending);
-						break;
-					}
-				});
-
-				loadIndex++;
-				galleryGender(GALLERY_GENDER);
-			}
-		}
 	}
 	
-	setTimeout(fetchLoadedEndings, 200);
-}
-
-function loadEndingXml (index) {
-	if (!loadedOpponents[index].xml) {
-		loadedOpponents[index].loadBehaviour(function (opponent) {
-			isEndingLoaded[index] = opponent.xml.find('epilogue');
-		});
-	} else {
-		isEndingLoaded[index] = loadedOpponents[index].xml.find('epilogue');
+	for(var i=0; i<loadedOpponents.length; i++){
+		if (loadedOpponents[i].ending) {
+			loadedOpponents[i].endings.each(function () {
+				var gending = new GEnding(loadedOpponents[i], this);
+				
+				allEndings.push( gending );
+				switch(gending.gender){
+					case 'male': maleEndings.push(gending);
+					break;
+					case 'female': femaleEndings.push(gending);
+					break;
+					default: anyEndings.push(gending);
+					break;
+				}
+			});
+		}
 	}
 }
 
 function loadEndingThunbnail(element, ending){
 	element.removeClass('empty-thumbnail');
-	if(ending.unlocked){
+	if (ending.unlocked()) {
 		element.removeClass('unlocked-thumbnail');
 		element.css('background-image','url(\''+ending.image+'\')');
-	}
-	else{
+	} else {
 		element.css('background-image', '');
 		element.addClass('unlocked-thumbnail');
 	}
@@ -237,21 +152,21 @@ function galleryPrevPage(){
 function selectEnding(i) {
 	selectedEnding = epp*galleryPage+i;
 	var ending = galleryEndings[selectedEnding];
-	
+
 	if (!ending) {
 		return;
 	}
-	
-	if(ending.unlocked){
+
+	if (ending.unlocked()) {
 		$galleryStartButton.attr('disabled', false);
 		chosenEpilogue = ending;
 		$selectedEndingLabels[0].html(ending.title);
-	}
-	else{
+	} else {
 		$galleryStartButton.attr('disabled', true);
 		chosenEpilogue = -1;
 		$selectedEndingLabels[0].html('');
 	}
+	
 	$galleryEndings.css('opacity', '');
 	$galleryEndings.eq(i).css('opacity', 1);
 	loadEndingThunbnail($selectedEndingPreview, ending);
@@ -273,45 +188,73 @@ function selectEnding(i) {
 }
 
 function doEpilogueFromGallery(){
-	if($nameField.val()){
-		players[HUMAN_PLAYER].label = $nameField.val();
-	}
-	else{
-		switch(chosenEpilogue.gender){
-			case "male": players[HUMAN_PLAYER].label = "Mister"; break;
-			case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
-			default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
-		}
+	if (!chosenEpilogue) {
+		return;
 	}
 	
-	if (USAGE_TRACKING) {
-		var usage_tracking_report = {
-			'date': (new Date()).toISOString(),
-			'type': 'gallery',
-			'session': sessionID,
-			'userAgent': navigator.userAgent,
-			'origin': getReportedOrigin(),
-			'chosen': {
-				'id': chosenEpilogue.player.id,
-				'title': chosenEpilogue.title
+	var player = chosenEpilogue.player;
+	
+	fetchCompressedURL(
+		'opponents/' + player.id + "/behaviour.xml",
+		/* Success callback.
+		 * 'this' is bound to the Opponent object.
+		 */
+		function(xml) {
+			var $xml = $(xml);
+			
+			var endingElem = null;
+			
+			$xml.find('epilogue').each(function () {
+				if ($(this).find('title').html() === chosenEpilogue.title) {
+					endingElem = this;
+				}
+			});
+			
+			if($nameField.val()){
+				players[HUMAN_PLAYER].label = $nameField.val();
+			} else {
+				switch(chosenEpilogue.gender){
+					case "male": players[HUMAN_PLAYER].label = "Mister"; break;
+					case "female" : players[HUMAN_PLAYER].label = "Missy"; break;
+					default: players[HUMAN_PLAYER].label = (players[HUMAN_PLAYER].gender=="male")?"Mister":"Missy";
+				}
 			}
-		};
+			
+			// function definition in spniEpilogue.js
+			chosenEpilogue = parseEpilogue(player, endingElem);
 		
-		$.ajax({
-			url: USAGE_TRACKING_ENDPOINT,
-			method: 'POST',
-			data: JSON.stringify(usage_tracking_report),
-			contentType: 'application/json',
-			error: function (jqXHR, status, err) {
-				console.error("Could not send usage tracking report - error "+status+": "+err);
-			},
-		});
-	}
-	
-	clearEpilogueBoxes();
-	epilogueScreen = 0; //reset epilogue position in case a previous epilogue played before this one
-	epilogueText = 0;
-	progressEpilogue(0); //initialise buttons and text boxes
-	screenTransition($galleryScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
-	$epilogueSelectionModal.modal("hide");
+			if (USAGE_TRACKING) {
+				var usage_tracking_report = {
+					'date': (new Date()).toISOString(),
+					'type': 'gallery',
+					'session': sessionID,
+					'userAgent': navigator.userAgent,
+					'origin': getReportedOrigin(),
+					'chosen': {
+						'id': chosenEpilogue.player.id,
+						'title': chosenEpilogue.title
+					}
+				};
+		
+				$.ajax({
+					url: USAGE_TRACKING_ENDPOINT,
+					method: 'POST',
+					data: JSON.stringify(usage_tracking_report),
+					contentType: 'application/json',
+					error: function (jqXHR, status, err) {
+						console.error("Could not send usage tracking report - error "+status+": "+err);
+					},
+				});
+			}
+		
+			//just in case, clear any leftover epilogue elements
+			$(epilogueContent).children(':not(.epilogue-background)').remove();
+			epilogueContainer.dataset.background = -1;
+			epilogueContainer.dataset.scene = -1;
+		
+			progressEpilogue(1); //initialise buttons and text boxes
+			screenTransition($galleryScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
+			$epilogueSelectionModal.modal("hide");
+		}
+	);
 }

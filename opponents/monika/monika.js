@@ -485,6 +485,7 @@ if(!monika) {
      * - fixing dialogue box glitches for characters that are changing dialogue
      * - deletion glitch effects (character image manipulation, dialogue fuckery)
      */
+    var original_fixupDialogue = fixupDialogue;
     var original_updateGameVisual = updateGameVisual;
     updateGameVisual = function(player) {
         if(!monika.present()) { return original_updateGameVisual.apply(null, arguments); }
@@ -510,11 +511,17 @@ if(!monika) {
             
             if (players[player]) {
                 monika.setGlitchingMarker(player, monika.GLITCH_REPEAT, null);
+                
+                if (players[player].id === 'monika') {
+                    // Temporarily disable dialogue fixups for this call.
+                    fixupDialogue = function (str) { return str; };
+                }
             }
         } catch (e) {
             console.error("[Monika] Error in pre-updateGameVisual prep: "+e.toString());
         } finally {
             original_updateGameVisual(player);
+            fixupDialogue = original_fixupDialogue;
         }
         
         if(monika.active_effects.round_delete_glitching) {

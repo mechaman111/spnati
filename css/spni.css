@@ -1871,65 +1871,65 @@ body.modal-open {
  * Classes for the Epilogue screens.
  ************************************************************/
 
-.epilogue-area {
+ #epilogue-screen {
 	width: 100%;
 	height: 100%;
 	position: fixed;
-	/*font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 24px;*/
-    color: #050505;
-	text-align: center;
-	background-color: #050505;
-    background-image: url("../img/background.png");
-	background-size: contain;
-    background-repeat: no-repeat;
-	background-position: center;
+    background: #000;
+    text-align: center;
 }
 
-/* hacky solution with the top:px; getting the boxes lined up properly, but it seems to work */
-
-#epilogue-next-button {
-	float: left;
-	clear: left;
-	position: relative;
-	top: 10px;
-	left:10px;
-    z-index: 4
-}
-
-#epilogue-prev-button {
-	float: left;
-	clear: left;
-	position: relative;
-	top: 15px;
-	left:10px;
-    z-index: 4
-}
-
-#epilogue-restart-button {
-	float: left;
-	clear: left;
-	position: relative;
-	top: 20px;
-	left:10px;
-    z-index: 4
-}
-
-#epilogue-next-on-image {
+#epilogue-container {
     position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 80%;
-    height: 100%;
-    margin-left: 20%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    max-height: 100vh;
+    display: inline-block;
+    font-size: 1.05em;
 }
 
-#epilogue-prev-on-image {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 20%;
+#epilogue-content {
+    width: 100%;
     height: 100%;
+    position: relative;
+}
+
+#epilogue-content > .epilogue-background {
+    height: 100%;
+}
+
+#epilogue-content .dialogue-bubble {
+    background: #fff;
+    border: 2px solid #171717;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#epilogue-content > .epilogue-image > img {
+    width: 100%;
+}
+
+#epilogue-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    text-align: center;
+}
+
+#epilogue-buttons > button {
+    display: inline-block;
+    margin: 10px;
+}
+
+#epilogue-buttons > button:disabled {
+    opacity: 0.4;
+}
+
+#epilogue-buttons > #epilogue-restart:disabled {
+    visibility: hidden;
 }
 
 #epilogue-modal-accept-button {

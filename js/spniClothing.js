@@ -74,22 +74,26 @@ function getClothingTrigger (player, clothing, removed) {
 
 	/* starting with important articles */
 	if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
-		if (pos == FULL_ARTICLE && type == MAJOR_ARTICLE) {
+		if (pos == FULL_ARTICLE) {
 			if (!player.clothing.some(function(c) {
-				return c.position == UPPER_ARTICLE && c !== clothing;
+				return c.position == LOWER_ARTICLE && c !== clothing;
 			})) {
-				// If removing this article exposes the chest, pretend that it's an upper body article
-				pos = UPPER_ARTICLE;
-			} else {
-				// Otherwise treat it as a lower body article, whether
-				// it exposes the crotch or not (it doesn't matter)
+				// If removing this article exposes the crotch,
+				// pretend that it's an lower body article, even if it
+				// also exposes the chest (which is not a good idea).
 				pos = LOWER_ARTICLE;
+			} else {
+				// Otherwise treat it as a upper body article, whether
+				// it exposes the chest or not (it doesn't matter,
+				// except for with an important article).
+				pos = UPPER_ARTICLE;
 			}
 		}
-		if (type == MAJOR_ARTICLE && player.clothing.some(function(c) {
-			return (c.position == pos || c.position == FULL_ARTICLE)
-				&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
-		})) { // There is another article left covering this part of the body
+		if (type == MAJOR_ARTICLE
+			&& (pos == OTHER_ARTICLE || player.clothing.some(function(c) {
+				return (c.position == pos || c.position == FULL_ARTICLE)
+					&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
+			}))) { // There is another article left covering this part of the body
 			if (gender == eGender.MALE) {
 				if (removed) {
 					return MALE_REMOVED_MAJOR;
@@ -162,7 +166,7 @@ function getClothingTrigger (player, clothing, removed) {
 		}
 	}
 	/* next accessories */
-	else if (type == EXTRA_ARTICLE) {
+	else {
 		if (gender == eGender.MALE) {
 			if (removed) {
 				return MALE_REMOVED_ACCESSORY;
@@ -238,33 +242,34 @@ function playerMustStrip (player) {
 				players[HUMAN_PLAYER].removedClothing = clothing[0];
 			} else {
 				if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-					trigger = [MALE_HUMAN_MUST_STRIP, MALE_MUST_STRIP];
+				    trigger = [[MALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [MALE_MUST_STRIP, OPPONENT_LOST]];
 				} else {
-					trigger = [FEMALE_HUMAN_MUST_STRIP, FEMALE_MUST_STRIP];
+				    trigger = [[FEMALE_HUMAN_MUST_STRIP, OPPONENT_LOST], [FEMALE_MUST_STRIP, OPPONENT_LOST]];
 				}
 			}
 			updateAllBehaviours(player, trigger);
 		} else {
 			if (players[player].gender == eGender.MALE) {
-				updateAllBehaviours(player, MALE_MUST_STRIP);
+			    updateAllBehaviours(player, [[MALE_MUST_STRIP, OPPONENT_LOST]]);
 			} else {
-				updateAllBehaviours(player, FEMALE_MUST_STRIP);
+			    updateAllBehaviours(player, [[FEMALE_MUST_STRIP, OPPONENT_LOST]]);
 			}
 
 			var trigger = determineStrippingSituation(players[player]);
-			players[player].updateBehaviour(trigger);
+			players[player].updateBehaviour([trigger, PLAYER_MUST_STRIP]);
 		}
 	} else {
 		/* the player has no clothes and will have to accept a forfeit */
 		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_MUST_MASTURBATE);
+			updateAllBehaviours(player, [[MALE_MUST_MASTURBATE, OPPONENT_LOST]]);
 		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_MUST_MASTURBATE);
+		    updateAllBehaviours(player, [[FEMALE_MUST_MASTURBATE, OPPONENT_LOST]]);
 		}
 		if (player != HUMAN_PLAYER) {
 			var trigger = determineForfeitSituation(player);
 			players[player].updateBehaviour(trigger);
 		}
+        players[player].preloadStageImages(players[player].stage + 1);
 	}
 
 	return clothing.length;
@@ -287,6 +292,7 @@ function prepareToStripPlayer (player) {
 
         updateAllBehaviours(player, dialogueTrigger);
         players[player].updateBehaviour(PLAYER_STRIPPING);
+        players[player].preloadStageImages(players[player].stage + 1);
     }
 }
 
@@ -403,7 +409,7 @@ function closeStrippingModal (id) {
                 otherClothing.type = IMPORTANT_ARTICLE;
             }
         }
-        if (removedClothing.type !== EXTRA_ARTICLE) {
+        if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
             players[HUMAN_PLAYER].mostlyClothed = false;
         }
         if (removedClothing.type == IMPORTANT_ARTICLE) {
@@ -428,6 +434,8 @@ function closeStrippingModal (id) {
             
         /* update behaviour */
         updateAllBehaviours(HUMAN_PLAYER, dialogueTrigger, players[HUMAN_PLAYER]);
+		updateAllVolatileBehaviours();
+		commitAllBehaviourUpdates();
         updateAllGameVisuals();
         
         /* allow progression */
@@ -450,7 +458,7 @@ function stripAIPlayer (player) {
 	/* grab the removed article of clothing and determine its dialogue trigger */
 	var removedClothing = players[player].clothing.pop();
 	players[player].removedClothing = removedClothing;
-	if (removedClothing.type !== EXTRA_ARTICLE) {
+	if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
 		players[player].mostlyClothed = false;
 	}
 	if (removedClothing.type === IMPORTANT_ARTICLE) {
@@ -474,7 +482,9 @@ function stripAIPlayer (player) {
 	/* update behaviour */
 	updateAllBehaviours(player, dialogueTrigger);
 	players[player].updateBehaviour(PLAYER_STRIPPED);
-  updateAllGameVisuals();
+	updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
+    updateAllGameVisuals();
 }
 
 /************************************************************
