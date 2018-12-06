@@ -54,8 +54,9 @@ lower_preexposed_tags = [
 def search_opponent(opponent_id, target_id, cur_meta, upper_exposed_stage, lower_exposed_stage):
     try:
         lineset, _ = c2x.load_character(opponent_id)
-    except bp.ParseError:
+    except bp.ParseError as e:
         print("Warning: could not parse behaviour.xml file for "+opponent_id)
+        print(str(e))
         return []
     
     targeted_cases = []

@@ -39,6 +39,23 @@ base_tag_spec = {
         },
         'epilogue': {
             'title': None,
+            'background': {
+                'scene': {
+                    'sprite': {
+                        'x': None,
+                        'y': None,
+                        'width': None,
+                        'src': None
+                    },
+                    'text': {
+                        'x': None,
+                        'y': None,
+                        'width': None,
+                        'arrow': None,
+                        'content': None,
+                    }
+                }
+            },
             'screen': {
                 'start': None,
                 'text': {
@@ -69,7 +86,10 @@ meta_tag_spec = {
         'has_ending': None,
         'layers': None,
         'release': None,
-        'tags': { 'tag': None }
+        'tags': { 'tag': None },
+        'epilogue': None,
+        'alternates': { 'costume': None },
+        'scale': None,
     }
 }
 
