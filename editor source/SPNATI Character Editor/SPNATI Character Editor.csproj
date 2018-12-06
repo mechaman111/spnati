@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\UnusedCodeRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,18 +66,106 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BanterWizard.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Activities\AdvancedMetadataEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BanterWizard.Designer.cs">
+    <Compile Include="Activities\AdvancedMetadataEditor.Designer.cs">
+      <DependentUpon>AdvancedMetadataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\BanterWizard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\BanterWizard.Designer.cs">
       <DependentUpon>BanterWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChartHost.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Activities\CharacterPreview.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ChartHost.Designer.cs">
+    <Compile Include="Activities\CharacterPreview.Designer.cs">
+      <DependentUpon>CharacterPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\ChartHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\ChartHost.Designer.cs">
       <DependentUpon>ChartHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\DialogueEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\DialogueEditor.Designer.cs">
+      <DependentUpon>DialogueEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\DialogueWrapper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\MarkerEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\MarkerEditor.Designer.cs">
+      <DependentUpon>MarkerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\MarkerReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\MarkerReport.Designer.cs">
+      <DependentUpon>MarkerReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\MetadataEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\MetadataEditor.Designer.cs">
+      <DependentUpon>MetadataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\Loader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\Loader.Designer.cs">
+      <DependentUpon>Loader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\SituationEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\SituationEditor.Designer.cs">
+      <DependentUpon>SituationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\PoseListEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\PoseListEditor.Designer.cs">
+      <DependentUpon>PoseListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\TagEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\TagEditor.Designer.cs">
+      <DependentUpon>TagEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\TemplateEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\TemplateEditor.Designer.cs">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\ValidateActivity.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\ValidateActivity.Designer.cs">
+      <DependentUpon>ValidateActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\ValidateAllActivity.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\ValidateAllActivity.Designer.cs">
+      <DependentUpon>ValidateAllActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\WritingAid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\WritingAid.Designer.cs">
+      <DependentUpon>WritingAid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharacterGenerator.cs" />
     <Compile Include="Charts\Builders\MarkerUsageBuilder.cs" />
     <Compile Include="Charts\Builders\MarkerBuilder.cs" />
     <Compile Include="Charts\Builders\IChartDataBuilder.cs" />
@@ -95,11 +199,59 @@
     <Compile Include="Charts\BarChart.Designer.cs">
       <DependentUpon>BarChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CharacterImageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CharacterImageBox.Designer.cs">
+      <DependentUpon>CharacterImageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DialogueGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\DialogueGrid.Designer.cs">
       <DependentUpon>DialogueGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\FilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\FilterControl.Designer.cs">
+      <DependentUpon>FilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\MarkerConditionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\MarkerConditionControl.Designer.cs">
+      <DependentUpon>MarkerConditionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\MarkerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\MarkerControl.Designer.cs">
+      <DependentUpon>MarkerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\NumericRangeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\NumericRangeControl.Designer.cs">
+      <DependentUpon>NumericRangeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\PlayerRangeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\PlayerRangeControl.Designer.cs">
+      <DependentUpon>PlayerRangeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\StageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\StageControl.Designer.cs">
+      <DependentUpon>StageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\StatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\StatusControl.Designer.cs">
+      <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\FindReplace.cs">
       <SubType>Form</SubType>
@@ -107,8 +259,20 @@
     <Compile Include="Controls\FindReplace.Designer.cs">
       <DependentUpon>FindReplace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IntellisenseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\IntellisenseControl.Designer.cs">
+      <DependentUpon>IntellisenseControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\KeyboardDataGridView.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerConditionField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerConditionField.Designer.cs">
+      <DependentUpon>MarkerConditionField.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MarkerGrid.cs">
       <SubType>UserControl</SubType>
@@ -122,11 +286,23 @@
     <Compile Include="Controls\SelectBox.Designer.cs">
       <DependentUpon>SelectBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WardrobeEditor.cs">
+    <Compile Include="Controls\TagControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WardrobeEditor.Designer.cs">
+    <Compile Include="Controls\TagControl.Designer.cs">
+      <DependentUpon>TagControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\WardrobeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\WardrobeEditor.Designer.cs">
       <DependentUpon>WardrobeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ValidationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ValidationControl.Designer.cs">
+      <DependentUpon>ValidationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\Behaviour.cs" />
     <Compile Include="BulkReplaceTool.cs">
@@ -138,12 +314,6 @@
     <Compile Include="DataStructures\Case.cs" />
     <Compile Include="DataStructures\Character.cs" />
     <Compile Include="CharacterDatabase.cs" />
-    <Compile Include="CharacterEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CharacterEditor.Designer.cs">
-      <DependentUpon>CharacterEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataStructures\Clothing.cs" />
     <Compile Include="Controls\DBPanel.cs">
       <SubType>Component</SubType>
@@ -154,25 +324,21 @@
     <Compile Include="Controls\EpilogueEditor.Designer.cs">
       <DependentUpon>EpilogueEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ImageManager.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ImageManager.Designer.cs">
-      <DependentUpon>ImageManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TestCharacter.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TestCharacter.Designer.cs">
-      <DependentUpon>TestCharacter.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DataStructures\CountedSet.cs" />
     <Compile Include="DataStructures\Epilogue.cs" />
     <Compile Include="DataStructures\Marker.cs" />
     <Compile Include="DataStructures\MarkerData.cs" />
+    <Compile Include="DataStructures\CharacterEditorData.cs" />
     <Compile Include="DataStructures\Screen.cs" />
+    <Compile Include="DataStructures\Tag.cs" />
+    <Compile Include="DataStructures\TagDictionary.cs" />
+    <Compile Include="DataStructures\Variable.cs" />
+    <Compile Include="DataStructures\VariableDatabase.cs" />
+    <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
     <Compile Include="ErrorLog.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileNameSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,11 +351,11 @@
     <Compile Include="AdvancedEpilogueConditions.Designer.cs">
       <DependentUpon>AdvancedEpilogueConditions.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSimulator.cs">
+    <Compile Include="Forms\ImageCropper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameSimulator.Designer.cs">
-      <DependentUpon>GameSimulator.cs</DependentUpon>
+    <Compile Include="Forms\ImageCropper.Designer.cs">
+      <DependentUpon>ImageCropper.cs</DependentUpon>
     </Compile>
     <Compile Include="About.cs">
       <SubType>Form</SubType>
@@ -197,6 +363,19 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ResponseSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ResponseSetupForm.Designer.cs">
+      <DependentUpon>ResponseSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WhatsNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WhatsNew.Designer.cs">
+      <DependentUpon>WhatsNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIHelper.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,26 +384,26 @@
     </Compile>
     <Compile Include="ImageCache.cs" />
     <Compile Include="ImageLibrary.cs" />
+    <Compile Include="Intellisense.cs" />
     <Compile Include="IO\FlatFileSerializer.cs" />
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
-    <Compile Include="MarkerReport.cs">
+    <Compile Include="KisekaeConverter.cs" />
+    <Compile Include="Multithreading\BackgroundQueue.cs" />
+    <Compile Include="Forms\PropImporter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MarkerReport.Designer.cs">
-      <DependentUpon>MarkerReport.cs</DependentUpon>
+    <Compile Include="Forms\PropImporter.Designer.cs">
+      <DependentUpon>PropImporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Providers\MarkerProvider.cs" />
+    <Compile Include="Providers\TagProvider.cs" />
+    <Compile Include="WorkspaceMessages.cs" />
     <Compile Include="NewCharacterPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NewCharacterPrompt.Designer.cs">
       <DependentUpon>NewCharacterPrompt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LoadCharacterPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoadCharacterPrompt.Designer.cs">
-      <DependentUpon>LoadCharacterPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\Metadata.cs" />
     <Compile Include="Program.cs" />
@@ -237,6 +416,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="IO\Serialization.cs" />
+    <Compile Include="Providers\CharacterProvider.cs" />
     <Compile Include="SettingsSetup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -245,27 +425,61 @@
     </Compile>
     <Compile Include="DataStructures\Stage.cs" />
     <Compile Include="DataStructures\StageName.cs" />
+    <Compile Include="ShellLogic.cs" />
     <Compile Include="TagDatabase.cs" />
     <Compile Include="DataStructures\Trigger.cs" />
     <Compile Include="CharacterValidator.cs" />
-    <Compile Include="ValidationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ValidationForm.Designer.cs">
-      <DependentUpon>ValidationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="XMLHelper.cs" />
-    <EmbeddedResource Include="BanterWizard.resx">
+    <EmbeddedResource Include="Activities\AdvancedMetadataEditor.resx">
+      <DependentUpon>AdvancedMetadataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\BanterWizard.resx">
       <DependentUpon>BanterWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CharacterPreview.resx">
+      <DependentUpon>CharacterPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\ChartHost.resx">
+      <DependentUpon>ChartHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\DialogueEditor.resx">
+      <DependentUpon>DialogueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\MarkerEditor.resx">
+      <DependentUpon>MarkerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\MarkerReport.resx">
+      <DependentUpon>MarkerReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\MetadataEditor.resx">
+      <DependentUpon>MetadataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\Loader.resx">
+      <DependentUpon>Loader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\SituationEditor.resx">
+      <DependentUpon>SituationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\PoseListEditor.resx">
+      <DependentUpon>PoseListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\TagEditor.resx">
+      <DependentUpon>TagEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\TemplateEditor.resx">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\ValidateActivity.resx">
+      <DependentUpon>ValidateActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\ValidateAllActivity.resx">
+      <DependentUpon>ValidateAllActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\WritingAid.resx">
+      <DependentUpon>WritingAid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BulkReplaceTool.resx">
       <DependentUpon>BulkReplaceTool.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharacterEditor.resx">
-      <DependentUpon>CharacterEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ChartHost.resx">
-      <DependentUpon>ChartHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Charts\StackedBarChart.resx">
       <DependentUpon>StackedBarChart.cs</DependentUpon>
@@ -273,8 +487,32 @@
     <EmbeddedResource Include="Charts\BarChart.resx">
       <DependentUpon>BarChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CharacterImageBox.resx">
+      <DependentUpon>CharacterImageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DialogueGrid.resx">
       <DependentUpon>DialogueGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\FilterControl.resx">
+      <DependentUpon>FilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\MarkerConditionControl.resx">
+      <DependentUpon>MarkerConditionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\MarkerControl.resx">
+      <DependentUpon>MarkerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\NumericRangeControl.resx">
+      <DependentUpon>NumericRangeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\PlayerRangeControl.resx">
+      <DependentUpon>PlayerRangeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\StageControl.resx">
+      <DependentUpon>StageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\StatusControl.resx">
+      <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EpilogueEditor.resx">
       <DependentUpon>EpilogueEditor.cs</DependentUpon>
@@ -282,20 +520,29 @@
     <EmbeddedResource Include="Controls\FindReplace.resx">
       <DependentUpon>FindReplace.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ImageManager.resx">
-      <DependentUpon>ImageManager.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\IntellisenseControl.resx">
+      <DependentUpon>IntellisenseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\KeyboardDataGridView.resx">
+      <DependentUpon>KeyboardDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MarkerConditionField.resx">
+      <DependentUpon>MarkerConditionField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MarkerGrid.resx">
       <DependentUpon>MarkerGrid.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TestCharacter.resx">
-      <DependentUpon>TestCharacter.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\TagControl.resx">
+      <DependentUpon>TagControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SelectBox.resx">
       <DependentUpon>SelectBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WardrobeEditor.resx">
+    <EmbeddedResource Include="Activities\WardrobeEditor.resx">
       <DependentUpon>WardrobeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ValidationControl.resx">
+      <DependentUpon>ValidationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileNameSelect.resx">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
@@ -303,23 +550,23 @@
     <EmbeddedResource Include="AdvancedEpilogueConditions.resx">
       <DependentUpon>AdvancedEpilogueConditions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GameSimulator.resx">
-      <DependentUpon>GameSimulator.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ImageCropper.resx">
+      <DependentUpon>ImageCropper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ResponseSetupForm.resx">
+      <DependentUpon>ResponseSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WhatsNew.resx">
+      <DependentUpon>WhatsNew.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MarkerReport.resx">
-      <DependentUpon>MarkerReport.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NewCharacterPrompt.resx">
       <DependentUpon>NewCharacterPrompt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LoadCharacterPrompt.resx">
-      <DependentUpon>LoadCharacterPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
@@ -332,12 +579,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Forms\PropImporter.resx">
+      <DependentUpon>PropImporter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsSetup.resx">
       <DependentUpon>SettingsSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ValidationForm.resx">
-      <DependentUpon>ValidationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -353,7 +601,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dialogue_tags.xml">
+    <Content Include="Help\tags.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tag_dictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="editor.ico" />
@@ -474,15 +725,46 @@
     <Content Include="Help\wardrobe.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="variables.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\whatsnew.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v3.0.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v3.0.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\whatsnew.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xml_encoding.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Desktop\Desktop.csproj">
+      <Project>{ecdf4b17-c3a6-4915-a24d-00f63c52fe14}</Project>
+      <Name>Desktop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KisekaeImporter\KisekaeImporter.csproj">
       <Project>{854f0d78-23db-4aaa-bc52-3061ebd1a95c}</Project>
       <Name>KisekaeImporter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

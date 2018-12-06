@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor.Charts
 		{
 			InitializeComponent();
 		}
-		
+
 		public void SetTitle(string title)
 		{
 			chart.Titles[0].Text = title;
@@ -24,7 +24,7 @@ namespace SPNATI_Character_Editor.Charts
 		public void SetData(IChartDataBuilder builder, string view)
 		{
 			List<List<ChartData>> series = builder.GetSeries(view);
-			for(int i = 0; i < chart.Series.Count && i < series.Count; i++)
+			for (int i = 0; i < chart.Series.Count && i < series.Count; i++)
 			{
 				var points = chart.Series[i].Points;
 				var dataPoints = series[i];

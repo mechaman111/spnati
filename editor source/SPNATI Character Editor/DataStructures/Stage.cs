@@ -104,8 +104,8 @@ namespace SPNATI_Character_Editor
 				filters.Add("totalexposed:" + c1.TotalExposed);
 			if (!string.IsNullOrEmpty(c1.TotalNaked))
 				filters.Add("totalnaked:" + c1.TotalNaked);
-			if (!string.IsNullOrEmpty(c1.TotalFinishing))
-				filters.Add("totalmasturbating:" + c1.TotalFinishing);
+			if (!string.IsNullOrEmpty(c1.TotalMasturbating))
+				filters.Add("totalmasturbating:" + c1.TotalMasturbating);
 			if (!string.IsNullOrEmpty(c1.TotalFinished))
 				filters.Add("totalfinished:" + c1.TotalFinished);
 			if (!string.IsNullOrEmpty(c1.TotalRounds))
@@ -118,25 +118,18 @@ namespace SPNATI_Character_Editor
 				filters.Add("alsoplayingsaidmarker:" + c1.AlsoPlayingSaidMarker);
 			if (!string.IsNullOrEmpty(c1.AlsoPlayingNotSaidMarker))
 				filters.Add("alsoplayingnotsaidmarker:" + c1.AlsoPlayingNotSaidMarker);
+			if (!string.IsNullOrEmpty(c1.AlsoPlayingSayingMarker))
+				filters.Add("alsoplayingsayingmarker:" + c1.AlsoPlayingSayingMarker);
 			if (!string.IsNullOrEmpty(c1.TargetSaidMarker))
 				filters.Add("targetsaidmarker:" + c1.TargetSaidMarker);
 			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
 				filters.Add("targetnotsaidmarker:" + c1.TargetNotSaidMarker);
+			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
+				filters.Add("targetsayingmarker:" + c1.TargetSayingMarker);
 			if (!string.IsNullOrEmpty(c1.CustomPriority))
 				filters.Add("priority:" + c1.CustomPriority);
 
 			return string.Join(",", filters);
-		}
-
-		private int CompareString(string s1, string s2)
-		{
-			if (s1 == null && s2 == null)
-				return 0;
-			if (s1 == null)
-				return 1;
-			if (s2 == null)
-				return -1;
-			return s1.CompareTo(s2);
 		}
 	}
 }

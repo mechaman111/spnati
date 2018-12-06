@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeAhoge : KisekaeSubCode, IHair
+	public class KisekaeAhoge : KisekaeSubCode, IColorable, IPoseable
 	{
 		public KisekaeAhoge() : base("r") { }
 
@@ -18,6 +18,14 @@
 			Width = ahoge.Width;
 			Height = ahoge.Height;
 			Gravity = ahoge.Gravity;
+			RotationZ = ahoge.RotationZ;
+		}
+
+		public void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)
+		{
+			Color1 = color1;
+			Color2 = color2;
+			Color3 = color3;
 		}
 
 		public int Shape
@@ -88,8 +96,16 @@
 
 		public bool Gravity
 		{
-			get { return GetInt(11) == 1; }
-			set { Set(11, value ? "1" : "0"); }
+			get { return GetBool(11); }
+			set { Set(11, value); }
+		}
+
+		//Unknown what piece 12 is
+
+		public int RotationZ
+		{
+			get { return GetInt(13); }
+			set { Set(13, value); }
 		}
 	}
 }

@@ -10,14 +10,17 @@ namespace KisekaeImporter.ImageImport
 	/// </summary>
 	public class ImageImporter
 	{
-		private PoseList _poseList = new PoseList();
-
 		public const int ImageXOffset = 700;
 
 		private const string VersionSetup33 = "33***bc410.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]ua1.0.0.0_ub_uc7.0.30_ud7.0";
 		private const string VersionSetup36 = "36***bc410.500.0.0.1_ga0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0_ub_u0_v0_uc7.0.30_ud7.0";
 		private const string VersionSetup40 = "40***bc410.500.0.0.1*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v0_uc7.2.24_ud7.8";
-		//47**ba54_bb7.1_bc496.500.0.0.1_bd17_be180
+		private const string VersionSetup54 = "54***bc410.500.0.0.1.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_uf0.3.0.0_ue_ub_u0_v0_uc7.2.24_ud7.8";
+		private const string VersionSetup68 = "68***bc410.500.0.0.1.0*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_e00_uf0.3.0.0_ue_ub_u0_v00_uc7.2.30_ud7.8";
+		private const string VersionSetup83 = "83***bc410.500.0.0.1.0_f00*0*0*0*0*0*0*0*0#/]a00_b00_c00_d00_w00_x00_y00_z00_ua1.0.0.0.100_e00_uf0.3.0.0_ue_ub_u0_v00_uc7.2.30_ud7.8";
+
+		private const string DefaultVersionSetup = VersionSetup68;
+
 		/// <summary>
 		/// Number of seconds to wait for an image
 		/// </summary>
@@ -53,47 +56,50 @@ namespace KisekaeImporter.ImageImport
 			get { return Path.Combine(KklAppData, "scene_setup_file..png"); }
 		}
 
-		public void AddPose(string key, string rawData)
-		{
-			_poseList.Poses.Add(new ImageMetadata(key, rawData));
-		}
-
-		private string GetSetupString()
-		{
-			//Parse out the version from the first image
-			if (_poseList.Poses.Count == 0)
-				return VersionSetup33; //Default version
-
-			return GetSetupString(_poseList.Poses[0].Data);
-		}
-
 		private string GetSetupString(string rawData)
 		{
 			if (rawData.Length < 2)
-				return VersionSetup33;
+				return DefaultVersionSetup;
 			string version = rawData.Substring(0, 2);
 			switch (version)
 			{
+				case "33":
+					return VersionSetup33;
 				case "36":
 					return VersionSetup36;
 				case "40":
 					return VersionSetup40;
+				case "54":
+					return VersionSetup54;
+				case "68":
+					return VersionSetup68;
+				case "83":
+					return VersionSetup83;
 				default:
-					return VersionSetup33;
+					return DefaultVersionSetup;
 			}
 		}
 
 		public Image ImportSingleImage(ImageMetadata image)
 		{
-			SetupForImport();
+			//SetupForImport();
 			return Import(image);
+		}
+
+		/// <summary>
+		/// Reimports the last code
+		/// </summary>
+		/// <returns></returns>
+		public Image Reimport()
+		{
+			return ImportCode("54**"); //import an empty scene so that nothing changes but we get a file outputted
 		}
 
 		private void SetupForImport()
 		{
 			try
 			{
-				File.WriteAllText(SetupFileName, GetSetupString());
+				File.WriteAllText(SetupFileName, GetSetupString(""));
 			}
 			catch
 			{
@@ -103,20 +109,36 @@ namespace KisekaeImporter.ImageImport
 
 		private Image Import(ImageMetadata image)
 		{
-			const string DefaultVersion = "33**";
+			const string DefaultVersion = "68**";
 
 			string baseFile = Path.Combine(KklAppData, image.ImageKey);
-			string dataFileName = baseFile + ".txt";
-			string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
 
 			string data = image.Data;
+			if (!string.IsNullOrEmpty(data))
+			{
+				KisekaeCode importCode = new KisekaeCode(image.Data);
+				string sceneSetup = GetSetupString(data);
+				KisekaeCode code = new KisekaeCode(sceneSetup, true);
+				code.MergeIn(importCode, false);
+				data = code.ToString();
+			}
+
 			if (!image.StartsWithVersion())
 			{
 				data = DefaultVersion + image.Data;
 			}
 
+			return ImportCode(data);
+		}
+
+		private Image ImportCode(string data)
+		{
 			try
 			{
+				string baseFile = Path.Combine(KklAppData, "zzReimport");
+				string dataFileName = baseFile + ".txt";
+				string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
+
 				//Conversion can fail if the image already exists
 				foreach (string file in imageFileNames)
 				{
@@ -127,14 +149,19 @@ namespace KisekaeImporter.ImageImport
 				File.WriteAllText(dataFileName, data);
 
 				//Wait for KKL to pick it up and create an image
-				Image result = WaitForImage(imageFileNames);
+				Image result = null;
+				Image tmp = WaitForImage(imageFileNames);
+				if (tmp != null)
+				{
+					result = new Bitmap(tmp); //free up the file so it can be deleted later
+					tmp.Dispose();
+				}
 				return result;
 			}
 			catch
 			{
-				
-			}
 
+			}
 			return null;
 		}
 
@@ -145,6 +172,7 @@ namespace KisekaeImporter.ImageImport
 		/// <returns></returns>
 		private Image WaitForImage(string[] possibleFileNames)
 		{
+			bool found = false;
 			int triesLeft = RetryLimit;
 			while (triesLeft > 0)
 			{
@@ -155,12 +183,21 @@ namespace KisekaeImporter.ImageImport
 					{
 						try
 						{
-							return new Bitmap(filename);
+							using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+							{
+								using (Image src = Image.FromStream(fs))
+								{
+									return new Bitmap(src);
+								}
+							}
 						}
 						catch
 						{
-							Thread.Sleep(RetryInterval); //Sometimes bad timing can cause Out of Memory exceptions, so give it a little more time to settle
-							return new Bitmap(filename);
+							if (!found)
+							{
+								triesLeft = RetryLimit;
+								found = true;
+							}
 						}
 					}
 				}
@@ -189,6 +226,7 @@ namespace KisekaeImporter.ImageImport
 			Graphics g = Graphics.FromImage(img);
 
 			g.DrawImage(srcImage, new Rectangle(0, 0, img.Width, img.Height), cropRegion, GraphicsUnit.Pixel);
+			g.Dispose();
 			return img;
 		}
 	}

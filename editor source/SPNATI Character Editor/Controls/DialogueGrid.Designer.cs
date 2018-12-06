@@ -34,6 +34,8 @@
 			this.ColImage = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColMarkerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPerTarget = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
@@ -54,6 +56,8 @@
             this.ColImage,
             this.ColText,
             this.ColMarker,
+            this.ColMarkerValue,
+            this.ColPerTarget,
             this.ColDirection,
             this.ColLocation});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -76,6 +80,7 @@
 			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
 			this.gridDialogue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellValueChanged);
 			this.gridDialogue.CurrentCellDirtyStateChanged += new System.EventHandler(this.gridDialogue_CurrentCellDirtyStateChanged);
+			this.gridDialogue.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridDialogue_EditingControlShowing);
 			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
 			// 
 			// ColImage
@@ -90,11 +95,26 @@
 			this.ColText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
 			this.ColText.HeaderText = "Text";
 			this.ColText.Name = "ColText";
+			this.ColText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// ColMarker
 			// 
 			this.ColMarker.HeaderText = "Marker";
 			this.ColMarker.Name = "ColMarker";
+			this.ColMarker.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColMarkerValue
+			// 
+			this.ColMarkerValue.HeaderText = "Value";
+			this.ColMarkerValue.Name = "ColMarkerValue";
+			this.ColMarkerValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.ColMarkerValue.Width = 80;
+			// 
+			// ColPerTarget
+			// 
+			this.ColPerTarget.HeaderText = "Per Target";
+			this.ColPerTarget.Name = "ColPerTarget";
+			this.ColPerTarget.Width = 70;
 			// 
 			// ColDirection
 			// 
@@ -113,6 +133,7 @@
 			this.ColLocation.FillWeight = 20F;
 			this.ColLocation.HeaderText = "Arrow location";
 			this.ColLocation.Name = "ColLocation";
+			this.ColLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
 			// 
@@ -123,6 +144,7 @@
 			this.Controls.Add(this.gridDialogue);
 			this.Name = "DialogueGrid";
 			this.Size = new System.Drawing.Size(572, 380);
+			this.Leave += new System.EventHandler(this.DialogueGrid_Leave);
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
 			this.ResumeLayout(false);
 
@@ -134,6 +156,8 @@
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColImage;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarkerValue;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPerTarget;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
 	}

@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeHairSide : KisekaeSubCode, IHair
+	public class KisekaeHairSide : KisekaeSubCode, IColorable, IPoseable
 	{
 		public KisekaeHairSide() : base("ef") { }
 
@@ -8,6 +8,13 @@
 		{
 			get { return GetInt(0); }
 			set { Set(0, value.ToString()); }
+		}
+
+		public void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)
+		{
+			Color1 = color1;
+			Color2 = color2;
+			Color3 = color3;
 		}
 
 		public int Layer
@@ -44,6 +51,12 @@
 		{
 			get { return GetInt(6); }
 			set { Set(6, value.ToString()); }
+		}
+
+		public int Gravity
+		{
+			get { return GetInt(7); }
+			set { Set(7, value.ToString()); }
 		}
 	}
 }

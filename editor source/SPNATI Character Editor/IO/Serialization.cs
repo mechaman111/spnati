@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor
 	{
 		public static bool ExportListing(Listing listing)
 		{
-			string dir = Path.Combine(Config.GameDirectory, "opponents");
+			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
 			string filename = Path.Combine(dir, "listing.xml");
 			XmlSerializer serializer = new XmlSerializer(typeof(Listing), "");
 			XmlWriter writer = null;
@@ -57,24 +57,21 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
-			if (BackupAndExportXml(character, character, "behaviour"))
-			{
-				if (BackupAndExportXml(character, character.Metadata, "meta"))
-				{
-					return BackupAndExportXml(character, character.Markers, "markers");
-				}
-			}
-			return false;
-
+			bool success = BackupAndExportXml(character, character, "behaviour") &&
+				BackupAndExportXml(character, character.Metadata, "meta") &&
+				BackupAndExportXml(character, character.Markers, "markers") &&
+				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor");
+			return success;
 		}
 
 		private static bool BackupAndExportXml(Character character, object data, string name)
 		{
+			if (data == null) { return false; }
 			string dir = Config.GetRootDirectory(character);
 			string filename = Path.Combine(dir, name + ".xml");
 			string backup = Path.Combine(dir, name + ".edit.bak");
 
-			//Backup the existing file every 12 houra
+			//Backup the existing file every 12 hours
 			if (File.Exists(filename) && (!File.Exists(backup) || (DateTime.Now - File.GetLastWriteTime(backup)).TotalHours >= 12))
 			{
 				File.Delete(backup);
@@ -86,7 +83,7 @@ namespace SPNATI_Character_Editor
 
 		public static Listing ImportListing()
 		{
-			string dir = Path.Combine(Config.GameDirectory, "opponents");
+			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
 			string filename = Path.Combine(dir, "listing.xml");
 			TextReader reader = null;
 			try
@@ -127,11 +124,14 @@ namespace SPNATI_Character_Editor
 				character.Metadata = new Metadata(character);
 			else character.Metadata = metadata;
 
-			MarkerData markers = ImportMarkerData(folderName);
+			MarkerData markers = ImportMarkerData(folderName); //should move this to the editor data at some point, but it would render markers.xml obsolete
 			if (markers != null)
 			{
 				character.Markers.Merge(markers);
 			}
+
+			CharacterEditorData editorData = ImportEditorData(folderName);
+			CharacterDatabase.AddEditorData(character, editorData);
 
 			return character;			
 		}
@@ -189,7 +189,6 @@ namespace SPNATI_Character_Editor
 		/// <returns>True if successful</returns>
 		private static bool ExportXml<T>(T data, string filename)
 		{
-			XmlSerializer serializer = new XmlSerializer(typeof(T), "");
 			TextWriter writer = null;
 			try
 			{
@@ -228,7 +227,13 @@ namespace SPNATI_Character_Editor
 
 		public static TagList ImportTriggers()
 		{
-			string filename = "dialogue_tags.xml";
+			string path = Path.Combine(Config.SpnatiDirectory, "opponents");
+			string filename = Path.Combine(path, "dialogue_tags.xml");
+			if (!File.Exists(filename))
+			{
+				//use the old location for backwards compatibility, though no one should ever need it except for me jumping across branches
+				filename = "dialogue_tags.xml";
+			}
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;
@@ -261,6 +266,44 @@ namespace SPNATI_Character_Editor
 			}
 
 			return ImportXml<MarkerData>(filename);
+		}
+
+		private static CharacterEditorData ImportEditorData(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "editor.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+
+			return ImportXml<CharacterEditorData>(filename);
+		}
+
+		public static TagDictionary ImportTags()
+		{
+			string filename = "tag_dictionary.xml";
+			if (File.Exists(filename))
+			{
+				TextReader reader = null;
+				try
+				{
+					XmlSerializer serializer = new XmlSerializer(typeof(TagDictionary), "");
+					reader = new StreamReader(filename);
+					TagDictionary tagList = serializer.Deserialize(reader) as TagDictionary;
+					tagList.CacheData();
+					return tagList;
+				}
+				finally
+				{
+					if (reader != null)
+						reader.Close();
+				}
+			}
+			return null;
 		}
 	}
 

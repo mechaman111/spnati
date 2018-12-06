@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using Desktop;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -8,63 +8,76 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class CharacterDatabase
 	{
-		public static List<Character> Characters = new List<Character>();
-
-		/// <summary>
-		/// Loads characters from a listing
-		/// </summary>
-		/// <param name="listing"></param>
-		public static void Load()
+		public static IEnumerable<Character> Characters
 		{
-			string[] dirs = new string[] { Path.Combine(Config.GameDirectory, "opponents") };
-			for (int d = 0; d < dirs.Length; d++)
-			{
-				string dir = dirs[d];
-				foreach (string key in Directory.EnumerateDirectories(dir))
-				{
-					Character character = Serialization.ImportCharacter(key);
-					if (character != null)
-					{
-						Characters.Add(character);
-						for (int i = 0; i < character.Tags.Count; i++)
-						{
-							string tag = character.Tags[i].ToLowerInvariant();
-							character.Tags[i] = tag;
-							if (!string.IsNullOrEmpty(tag))
-								TagDatabase.AddTag(tag);
-						}
-						if (!character.Tags.Contains(key))
-						{
-							TagDatabase.AddTag(character.DisplayName);
-						}
-					}
-				}
-			}
-			Characters.Sort((c1, c2) => { return c1.FolderName.CompareTo(c2.FolderName); });
+			get { return _characters; }
+		}
+
+		private static List<Character> _characters = new List<Character>();
+		private static Dictionary<string, Character> _characterMap = new Dictionary<string, Character>();
+		private static Dictionary<Character, CharacterEditorData> _editorData = new Dictionary<Character, CharacterEditorData>();
+
+		public static int Count
+		{
+			get { return _characters.Count; }
+		}
+
+		public static void Add(Character character)
+		{
+			_characters.Add(character);
+			_characterMap[character.FolderName] = character;
+		}
+
+		public static Character GetRandom()
+		{
+			return _characters.GetRandom();
 		}
 
 		public static Character Get(string folderName)
 		{
-			return Characters.Find(ch => ch.FolderName == folderName);
+			return _characterMap.Get(folderName);
 		}
 
 		public static bool Exists(string folderName)
 		{
-			return Characters.Exists(ch => ch.FolderName == folderName);
+			return _characterMap.ContainsKey(folderName);
 		}
 
 		public static void Set(string folderName, Character character)
 		{
-			for (int i = 0; i < Characters.Count; i++)
+			_characterMap[folderName] = character;
+			for (int i = 0; i < _characters.Count; i++)
 			{
-				if (Characters[i].FolderName == folderName)
+				if (_characters[i].FolderName == folderName)
 				{
-					Characters.RemoveAt(i);
-					Characters.Insert(i, character);
+					_characters.RemoveAt(i);
+					_characters.Insert(i, character);
 					return;
 				}
 			}
-			Characters.Add(character);
+			_characters.Add(character);
+		}
+
+		public static void AddEditorData(Character character, CharacterEditorData data)
+		{
+			data = data ?? new CharacterEditorData();
+			data.Owner = character.FolderName;
+			_editorData[character] = data;
+		}
+
+		public static CharacterEditorData GetEditorData(Character character)
+		{
+			return _editorData.Get(character);
+		}
+
+		/// <summary>
+		/// Record select filter for keeping out humans
+		/// </summary>
+		/// <param name="record"></param>
+		/// <returns></returns>
+		public static bool FilterHuman(IRecord record)
+		{
+			return record.Key != "human";
 		}
 	}
 }

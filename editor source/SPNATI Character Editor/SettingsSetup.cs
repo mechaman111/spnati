@@ -9,9 +9,9 @@ namespace SPNATI_Character_Editor
 		public SettingsSetup()
 		{
 			InitializeComponent();
-			txtApplicationDirectory.Text = Config.GameDirectory;
-			txtKisekae.Text = Config.KisekaeDirectory;
-			folderBrowserDialog1.SelectedPath = Config.GameDirectory;
+			string gameDir = Config.GetString(Settings.GameDirectory);
+			txtApplicationDirectory.Text = gameDir;
+			folderBrowserDialog1.SelectedPath = gameDir;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -45,13 +45,13 @@ namespace SPNATI_Character_Editor
 
 		private void cmdOk_Click(object sender, EventArgs e)
 		{
-			string dir = folderBrowserDialog1.SelectedPath;
+			string dir = txtApplicationDirectory.Text;
 			if (!VerifyApplicationDirectory(dir))
 			{
 				MessageBox.Show("The provided directory does not appear to contain SPNATI! This application cannot start without a valid directory.");
 				return;
 			}
-			Config.GameDirectory = dir;
+			Config.Set(Settings.GameDirectory, dir);
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Close();

@@ -1,28 +1,31 @@
-﻿using System;
+﻿using KisekaeImporter.DataStructures.Kisekae;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace KisekaeImporter
 {
 	/// <summary>
-	/// Data representation of a kisekae character
+	/// Data representation of a kisekae scene, which contains 1 or more characters + scene data
+	/// For a single character without scene data, the format is VersionNumber**Code1_Code2_..._CodeN/#]Asset1/#]Asset2/#].../#]AssetN, where an Asset is a URL or font
+	/// For a scene, the format is VersionNumber***Character1*Character2*...*Character9#/]SceneCode1_SceneCode2_..._SceneCodeN/#]SceneAsset1/#]SceneAsset2/#].../#]SceneAssetN, where Character is the format for a single character (minus VersionNumber**)
 	/// </summary>
 	public class KisekaeCode
 	{
-		private const string DefaultVersion = "47";
+		private const string DefaultVersion = "68";
 
 		/// <summary>
 		/// Kisekae version this code was generated for
 		/// </summary>
-		public string Version { get; private set; }
+		public string Version { get; set; }
 
-		/// <summary>
-		/// Sub-code components containing one or more groups of subcodes
-		/// </summary>
-		private Dictionary<Type, KisekaeComponent> _components = new Dictionary<Type, KisekaeComponent>();
+		public KisekaeModel[] Models = new KisekaeModel[9];
+
+		public KisekaeChunk Scene = null;
 
 		public KisekaeCode()
 		{
+			Version = DefaultVersion;
 		}
 		public KisekaeCode(KisekaeCode original)
 		{
@@ -33,7 +36,7 @@ namespace KisekaeImporter
 		{
 			if (resetAll)
 			{
-				Reset();
+				Reset(original.Version);
 			}
 			Deserialize(original.Serialize());
 		}
@@ -44,28 +47,63 @@ namespace KisekaeImporter
 		{
 			if (resetAll)
 			{
-				Reset();
+				Reset(data);
 			}
 			Deserialize(data);
 		}
 
-		private static string DefaultCode;
+		private static string DefaultCode54;
+		private static string DefaultCode68;
 		static KisekaeCode()
 		{
-			DefaultCode = "54**ia_if_ib_id_ic_jc_ie_ja_jb_jd_je_jf_jg_ka_kb_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_r000_s000_m000_n000_t000";
+			DefaultCode54 = "54**ia_if_ib_id_ic_jc_ie_ja_jb_jd_je_jf_jg_ka_kb_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_r00_s00_m00_n00_t00";
+			DefaultCode68 = "68**ia_if_ib_id_ic_jc_ie_ja_jb_jd_je_jf_jg_ka_kb_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_r00_s00_m00_n00_t00_f00";
 		}
 
-		public void Reset()
+		public override int GetHashCode()
+		{
+			return Serialize().GetHashCode();
+		}
+
+		public void Reset(string data)
 		{
 			//Fill in empty subcodes to get a blank slate
-			Deserialize(DefaultCode);
+			Deserialize(data.StartsWith("54") ? DefaultCode54 : DefaultCode68);
 		}
-		
-		public void ReplaceComponent(KisekaeComponent component)
+
+		/// <summary>
+		/// Merges another code into this one. Any existing subcodes will be replaced
+		/// </summary>
+		/// <param name="code">Code to merge into this one</param>
+		public void MergeIn(KisekaeCode code, bool applyEmpties)
 		{
-			if (component == null)
-				return;
-			_components[component.GetType()] = component;
+			int mergingVersion;
+			int version;
+			if (int.TryParse(code.Version, out mergingVersion) && int.TryParse(Version, out version) && mergingVersion > version)
+			{
+				Version = code.Version;
+			}
+
+			if (code.Scene != null)
+			{
+				if (Scene == null)
+				{
+					Scene = new KisekaeChunk("");
+				}
+				Scene.MergeIn(code.Scene, applyEmpties);
+			}
+
+			for (int i = 0; i < Models.Length; i++)
+			{
+				if (code.Models[i] != null)
+				{
+					if (Models[i] == null)
+					{
+						Models[i] = new KisekaeModel("");
+					}
+					Models[i].MergeIn(code.Models[i], applyEmpties);
+				}
+			}
 		}
 
 		public override string ToString()
@@ -80,70 +118,120 @@ namespace KisekaeImporter
 		public string Serialize()
 		{
 			if (string.IsNullOrEmpty(Version))
+			{
 				return "";
+			}
 			StringBuilder sb = new StringBuilder();
 			sb.Append(Version);
 			sb.Append("**");
-			bool first = true;
-
-			foreach (var component in _components.Values)
+			if (Scene != null)
 			{
-				if (!first)
+				for (int i = 0; i < Models.Length; i++)
 				{
-					sb.Append("_");
+					sb.Append("*");
+					KisekaeModel model = Models[i];
+					if (model != null)
+					{
+						sb.Append(model.Serialize());
+					}
+					else
+					{
+						sb.Append("0");
+					}
 				}
-				string data = component.Serialize();
-				if (!string.IsNullOrEmpty(data))
+
+				if (Scene != null)
 				{
-					first = false;
+					sb.Append("#/]");
 				}
-				sb.Append(data);
+				sb.Append(Scene.Serialize());
+			}
+			else
+			{
+				if (Models[0] != null)
+				{
+					sb.Append(Models[0].Serialize());
+				}
 			}
 
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Gets whether a subcode with the given prefix exists in either the scene or any model
+		/// </summary>
+		/// <param name="prefix"></param>
+		/// <returns></returns>
+		public bool HasSubCode(string id, int index)
+		{
+			Type componentType = KisekaeSubCodeMap.GetComponentType(id);
+
+			for (int i = 0; i < Models.Length; i++)
+			{
+				KisekaeModel model = Models[i];
+				if (model != null)
+				{
+					KisekaeComponent component = model.GetComponent(componentType);
+					if (component != null && component.HasSubCode(id, index))
+					{
+						return true;
+					}
+				}
+			}
+			if (Scene != null)
+			{
+				KisekaeComponent component = Scene.GetComponent(componentType);
+				if (component != null && component.HasSubCode(id, index))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Gets all existing subcodes of the given type across all models
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<KisekaeSubCode> GetSubCodesOfType<T>()
+		{
+			for (int i = 0; i < Models.Length; i++)
+			{
+				KisekaeChunk model = Models[i];
+				if (model != null)
+				{
+					foreach (KisekaeSubCode code in model.GetSubCodesOfType<T>())
+					{
+						yield return code;
+					}
+				}
+			}
+
+			if (Scene != null)
+			{
+				foreach (KisekaeSubCode code in Scene.GetSubCodesOfType<T>())
+				{
+					yield return code;
+				}
+			}
+		}
+
 		public T GetComponent<T>() where T : KisekaeComponent
 		{
-			return GetComponent(typeof(T)) as T;
-		}
-		public KisekaeComponent GetComponent(Type componentType)
-		{
-			KisekaeComponent component;
-			_components.TryGetValue(componentType, out component);
-			return component;
+			if (Models[0] != null)
+			{
+				return Models[0].GetComponent(typeof(T)) as T;
+			}
+			return null;
 		}
 
 		public T GetOrAddComponent<T>() where T : KisekaeComponent
 		{
-			return GetOrAddComponent(typeof(T)) as T;
-		}
-
-		/// <summary>
-		/// Gets a component, or creates one if it doesn't exist yet
-		/// </summary>
-		/// <param name="componentType"></param>
-		/// <returns></returns>
-		public KisekaeComponent GetOrAddComponent(Type componentType)
-		{
-			KisekaeComponent component;
-			if (!_components.TryGetValue(componentType, out component))
+			if (Models[0] == null)
 			{
-				component = Activator.CreateInstance(componentType) as KisekaeComponent;
-				if (component == null)
-					return null;
-				_components[componentType] = component;
+				Models[0] = new KisekaeModel("");
 			}
-			return component;
-		}
-
-		/// <summary>
-		/// Removes a component completely
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public void RemoveComponent<T>()
-		{
-			_components.Remove(typeof(T));
+			return Models[0].GetOrAddComponent<T>();
 		}
 
 		/// <summary>
@@ -154,6 +242,8 @@ namespace KisekaeImporter
 		{
 			if (string.IsNullOrEmpty(data))
 				return;
+
+			//Extract the version and whether this is a scene or not
 			string[] versionSplit = data.Split(new string[] { "**" }, StringSplitOptions.None);
 			string subdata = "";
 			if (versionSplit.Length == 1)
@@ -166,37 +256,56 @@ namespace KisekaeImporter
 				Version = versionSplit[0];
 				subdata = versionSplit[1];
 			}
-			string[] subcodes = subdata.Split('_');
-			foreach (string sub in subcodes)
+			if (subdata.StartsWith("*"))
 			{
-				string codeData = "";
-				string prefix = sub.Substring(0, 1);
-				string id = "";
-				if (sub.Length > 1)
-				{
-					//Current assumption is that a subcode ID is either two alphas or one alpha+2 digits
-					if (char.IsDigit(sub[1]))
-					{
-						id = sub.Substring(0, 1);
-						prefix = sub.Substring(0, 3);
-						codeData = sub.Substring(3);
-					}
-					else
-					{
-						prefix = sub.Substring(0, 2);
-						id = prefix;
-						codeData = sub.Substring(2);
-					}
-				}
-				else continue;
+				subdata = subdata.Substring(1);
+				Scene = new KisekaeChunk("");
+			}
 
-				Type componentType = KisekaeSubCodeMap.GetComponentType(id);
-				if (componentType != null)
+			//split out the scene data
+			string[] modelSceneSplit = subdata.Split(new string[] { "#/]" }, StringSplitOptions.None);
+
+			//process models
+			string[] models = modelSceneSplit[0].Split('*');
+			for (int i = 0; i < models.Length; i++)
+			{
+				if (i >= Models.Length)
 				{
-					string[] subcodePieces = codeData.Split('.');
-					KisekaeComponent component = GetOrAddComponent(componentType);
-					component.ApplySubCode(prefix, subcodePieces);
+					continue; //too many characters. This can't be valid.
 				}
+				string modelData = models[i];
+				if (modelData == "0")
+				{
+					continue;
+				}
+				
+				Models[i] = new KisekaeModel(models[i]);
+			}
+
+			//process scene
+			if (modelSceneSplit.Length > 1)
+			{
+				Scene.Deserialize(modelSceneSplit[1]);
+			}
+		}
+
+		public int TotalAssets
+		{
+			get
+			{
+				int count = 0;
+				for (int i = 0; i < Models.Length; i++)
+				{
+					if (Models[i] != null)
+					{
+						count += Models[i].Assets.Count;
+					}
+				}
+				if (Scene != null)
+				{
+					count += Scene.Assets.Count;
+				}
+				return count;
 			}
 		}
 	}

@@ -67,10 +67,12 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (Case stageCase in stage.Cases)
 				{
+					ValidationContext context = new ValidationContext(stage, stageCase, null);
+
 					Trigger trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
 					if (trigger == null || trigger.Unrecognized)
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is an unknown case. (stage {1})", stageCase.Tag, stage.Id)));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is an unknown case. (stage {1})", stageCase.Tag, stage.Id), context));
 						continue;
 					}
 
@@ -84,10 +86,9 @@ namespace SPNATI_Character_Editor
 						}
 						#endregion
 
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}", stageCase.Tag, stage.Id)));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}", stageCase.Tag, stage.Id), context));
 						continue;
 					}
-					bool hasTarget = trigger.HasTarget;
 					string caseLabel = string.Format("(Stage {0}, {1})", stage.Id, stageCase.Tag);
 
 					#region Target
@@ -95,14 +96,14 @@ namespace SPNATI_Character_Editor
 					{
 						if (!trigger.HasTarget)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"target\" is not allowed for case {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"target\" is not allowed for case {0}", caseLabel), context));
 						}
 						Character target = CharacterDatabase.Get(stageCase.Target);
 						if (target == null)
 						{
 							if (stageCase.Target != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target), context));
 							}
 						}
 						else
@@ -110,20 +111,20 @@ namespace SPNATI_Character_Editor
 							OpponentStatus status = listing.GetCharacterStatus(target.FolderName);
 							if (status == OpponentStatus.Incomplete)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.Target)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.Target), context));
 							}
 							else if (status == OpponentStatus.Offline)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target), context));
 							}
 
 							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
 							}
 							if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
 							}
 							if (!string.IsNullOrEmpty(stageCase.TargetStage))
 							{
@@ -132,52 +133,53 @@ namespace SPNATI_Character_Editor
 								{
 									if (target.Layers + Clothing.ExtraStages <= targetStage)
 									{
-										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage)));
+										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
 									}
 									Clothing clothing;
 									if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
 									{
 										if (clothing == null)
-											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel)));
-										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Lowercase, clothing.Type)));
+											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
+										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Lowercase, clothing.Type), context));
 									}
 								}
 							}
-							ValidateMarker(warnings, target, caseLabel, "targetSeenMarker", stageCase.TargetSaidMarker, stageCase.TargetStage);
-							ValidateMarker(warnings, target, caseLabel, "targetNotSeenMarker", stageCase.TargetNotSaidMarker);
+							ValidateMarker(warnings, target, caseLabel, stageCase.TargetSaidMarker, stageCase.TargetStage, context);
+							ValidateMarker(warnings, target, caseLabel, stageCase.TargetSayingMarker, stageCase.TargetStage, context);
+							ValidateMarker(warnings, target, caseLabel, stageCase.TargetNotSaidMarker, context);
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.TargetStage))
 					{
 						if (!trigger.HasTarget)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"targetStage\" is not allowed for case {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"targetStage\" is not allowed for case {0}", caseLabel), context));
 						}
 						if (!targetRange.IsMatch(stageCase.TargetStage))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targetStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.TargetStage)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targetStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.TargetStage), context));
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.TargetHand))
 					{
 						if (!trigger.HasTarget)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"oppHand\" is not allowed for case {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"oppHand\" is not allowed for case {0}", caseLabel), context));
 						}
 						if (!validHands.Contains(stageCase.TargetHand.ToLowerInvariant()))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("oppHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.TargetHand)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("oppHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.TargetHand), context));
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.Filter))
 					{
 						if (!trigger.HasTarget)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"filter\" is not allowed for case {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"filter\" is not allowed for case {0}", caseLabel), context));
 						}
 						if (!TagDatabase.TagExists(stageCase.Filter))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("No character has the tag \"{1}\". {0}", caseLabel, stageCase.Filter)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("No character has the tag \"{1}\". {0}", caseLabel, stageCase.Filter), context));
 						}
 					}
 					#endregion
@@ -190,7 +192,7 @@ namespace SPNATI_Character_Editor
 						{
 							if (stageCase.AlsoPlaying != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying), context));
 							}
 						}
 						else
@@ -198,11 +200,11 @@ namespace SPNATI_Character_Editor
 							OpponentStatus status = listing.GetCharacterStatus(other.FolderName);
 							if (status == OpponentStatus.Incomplete)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.AlsoPlaying)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is flagged as incomplete. {0}", caseLabel, stageCase.AlsoPlaying), context));
 							}
 							else if (status == OpponentStatus.Offline)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is offline only. {0}", caseLabel, stageCase.AlsoPlaying)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("alsoPlaying target \"{1}\" is offline only. {0}", caseLabel, stageCase.AlsoPlaying), context));
 							}
 						}
 					}
@@ -210,25 +212,25 @@ namespace SPNATI_Character_Editor
 					{
 						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel), context));
 						}
 						if (!validHands.Contains(stageCase.AlsoPlayingHand.ToLowerInvariant()))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.AlsoPlayingHand)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.AlsoPlayingHand), context));
 						}
 					}
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingStage))
 					{
 						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage must be accompanied with alsoPlaying. {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage must be accompanied with alsoPlaying. {0}", caseLabel), context));
 						}
 						int alsoPlayingStage;
 						if (!int.TryParse(stageCase.AlsoPlayingStage, out alsoPlayingStage))
 						{
 							if (!targetRange.IsMatch(stageCase.AlsoPlayingStage))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.AlsoPlayingStage)));
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.AlsoPlayingStage), context));
 							}
 						}
 						else
@@ -237,7 +239,7 @@ namespace SPNATI_Character_Editor
 							{
 								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage)
 								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.AlsoPlaying, stageCase.AlsoPlayingStage)));
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.AlsoPlaying, stageCase.AlsoPlayingStage), context));
 								}
 							}
 						}
@@ -246,25 +248,33 @@ namespace SPNATI_Character_Editor
 					{
 						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingTimeInStage must be accompanied with alsoPlaying. {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingTimeInStage must be accompanied with alsoPlaying. {0}", caseLabel), context));
 						}
-						warnings.AddRange(ValidateRangeField(stageCase.AlsoPlayingTimeInStage, "alsoPlayingTimeInStage", caseLabel, -1, -1));
+						warnings.AddRange(ValidateRangeField(stageCase.AlsoPlayingTimeInStage, "alsoPlayingTimeInStage", caseLabel, -1, -1, context));
 					}
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaidMarker))
 					{
 						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingSaidMarker must be accompanied with alsoPlaying. {0}", caseLabel), context));
 						}
-						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingSeenMarker", stageCase.AlsoPlayingSaidMarker, stageCase.AlsoPlayingStage);
+						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingSaidMarker, stageCase.AlsoPlayingStage, context);
+					}
+					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSayingMarker))
+					{
+						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingSayingMarker must be accompanied with alsoPlaying. {0}", caseLabel), context));
+						}
+						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingSayingMarker, stageCase.AlsoPlayingStage, context);
 					}
 					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
 					{
 						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel), context));
 						}
-						else ValidateMarker(warnings, other, caseLabel, "alsoPlayingNotSeenMarker", stageCase.AlsoPlayingNotSaidMarker);
+						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingNotSaidMarker, context);
 					}
 					#endregion
 
@@ -274,17 +284,17 @@ namespace SPNATI_Character_Editor
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
 					}
 
-					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalPlaying, "totalAlive", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalExposed, "totalExposed", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalNaked, "totalNaked", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalFinishing, "totalMasturbating", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalFinished, "totalFinished", caseLabel, 0, 5));
-					warnings.AddRange(ValidateRangeField(stageCase.ConsecutiveLosses, "consecutiveLosses", caseLabel, -1, -1));
-					warnings.AddRange(ValidateRangeField(stageCase.TargetTimeInStage, "targetTimeInStage", caseLabel, -1, -1));
-					warnings.AddRange(ValidateRangeField(stageCase.TimeInStage, "timeInStage", caseLabel, -1, -1));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalPlaying, "totalAlive", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalExposed, "totalExposed", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalNaked, "totalNaked", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalMasturbating, "totalMasturbating", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TotalFinished, "totalFinished", caseLabel, 0, 5, context));
+					warnings.AddRange(ValidateRangeField(stageCase.ConsecutiveLosses, "consecutiveLosses", caseLabel, -1, -1, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TargetTimeInStage, "targetTimeInStage", caseLabel, -1, -1, context));
+					warnings.AddRange(ValidateRangeField(stageCase.TimeInStage, "timeInStage", caseLabel, -1, -1, context));
 					if (!string.IsNullOrEmpty(stageCase.CustomPriority))
 					{
 						int priority;
@@ -293,18 +303,18 @@ namespace SPNATI_Character_Editor
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("customPriority {1} must be numeric. {0}", caseLabel, stageCase.CustomPriority)));
 						}
 					}
-					ValidateMarker(warnings, character, caseLabel, "seenMarker", stageCase.SaidMarker);
-					ValidateMarker(warnings, character, caseLabel, "notSeenMarker", stageCase.NotSaidMarker);
+					ValidateMarker(warnings, character, caseLabel, stageCase.SaidMarker, context);
+					ValidateMarker(warnings, character, caseLabel, stageCase.NotSaidMarker, context);
 
 					#endregion
 
 					#region Filters
 					foreach (var condition in stageCase.Conditions)
 					{
-						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5));
+						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5, context));
 						if (!TagDatabase.TagExists(condition.Filter))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter), context));
 						}
 					}
 					#endregion
@@ -313,25 +323,27 @@ namespace SPNATI_Character_Editor
 					string defaultLine = template.Item2;
 					foreach (DialogueLine line in stageCase.Lines)
 					{
+						context = new ValidationContext(stage, stageCase, line);
+
 						//Validate image
 						string img = line.Image;
 						unusedImages.Remove(img);
 						if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
 						}
 
 						//Validate variables
 						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase.Tag, line.Text);
 						if (invalidVars.Count > 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars))));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
 						}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel), context));
 						}
 					}
 				}
@@ -368,7 +380,7 @@ namespace SPNATI_Character_Editor
 			return (filters & level) > 0;
 		}
 
-		private static IEnumerable<ValidationError> ValidateRangeField(string value, string fieldName, string caseLabel, int min, int max)
+		private static IEnumerable<ValidationError> ValidateRangeField(string value, string fieldName, string caseLabel, int min, int max, ValidationContext context)
 		{
 			int lower = 0, upper;
 			if (!string.IsNullOrEmpty(value))
@@ -376,18 +388,18 @@ namespace SPNATI_Character_Editor
 				string[] pieces = value.Split('-');
 				if (pieces.Length > 2)
 				{
-					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be numeric or a range. {0}", caseLabel, value, fieldName));
+					yield return new ValidationError(ValidationFilterLevel.Case, string.Format("{2} \"{1}\" must be numeric or a range. {0}", caseLabel, value, fieldName), context);
 					yield break;
 				}
 				string minStr = pieces[0];
 				if (minStr != "") {
 					if (!int.TryParse(minStr, out lower))
 					{
-						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName));
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName), context);
 					}
 					else if ((min >= 0 && lower < min) || (max >= 0 && lower > max))
 					{
-						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+						yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max), context);
 					}
 				}
 
@@ -397,15 +409,15 @@ namespace SPNATI_Character_Editor
 					if (maxStr != "") {
 						if (!int.TryParse(maxStr, out upper))
 						{
-							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName));
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" must be numeric or empty. {0}", caseLabel, value, fieldName), context);
 						}
 						else if (lower > upper)
 						{
-							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must not be greater than upper bound. {0}", caseLabel, value, fieldName, min, max));
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Lower bound of {2} \"{1}\" must not be greater than upper bound. {0}", caseLabel, value, fieldName, min, max), context);
 						}
 						else if ((min >= 0 && upper < min) || (max >= 0 && upper > max))
 						{
-							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max));
+							yield return new ValidationError(ValidationFilterLevel.Case, string.Format("Upper bound of {2} \"{1}\" should be between {3} and {4}. {0}", caseLabel, value, fieldName, min, max), context);
 						}
 						
 					}
@@ -413,28 +425,33 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string label, string value)
+		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string value, ValidationContext context)
 		{
-			ValidateMarker(warnings, character, caseLabel, label, value, "");
+			ValidateMarker(warnings, character, caseLabel, value, "", context);
 		}
 
-		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string label, string value, string stageRange)
+		private static void ValidateMarker(List<ValidationError> warnings, Character character, string caseLabel, string name, string stageRange, ValidationContext context)
 		{
-			if (string.IsNullOrEmpty(value))
+			if (string.IsNullOrEmpty(name))
 				return;
 
 			if (character == null)
 			{
-				warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Missing character for {1}. {0}", caseLabel, value)));
+				warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Missing character for {1}. {0}", caseLabel, name), context));
 			}
 			else
 			{
-				if (!character.Markers.Contains(value))
+				if (!character.Markers.Contains(name))
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, value)));
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
 				}
 				else
 				{
+					string value;
+					MarkerOperator op;
+					bool perTarget;
+					name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
+
 					if (!string.IsNullOrEmpty(stageRange))
 					{
 						//verify that a marker can even be set prior to this point
@@ -448,14 +465,14 @@ namespace SPNATI_Character_Editor
 							{
 								foreach (var line in c.Lines)
 								{
-									if (line.Marker == value)
+									if (line.Marker == name)
 									{
 										return;
 									}
 								}
 							}
 						}
-						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, value)));
+						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
 					}
 				}
 			}
@@ -505,6 +522,7 @@ namespace SPNATI_Character_Editor
 	{
 		public ValidationFilterLevel Level;
 		public string Text;
+		public ValidationContext Context;
 
 		public ValidationError(ValidationFilterLevel level, string text)
 		{
@@ -512,9 +530,31 @@ namespace SPNATI_Character_Editor
 			Text = text;
 		}
 
+		public ValidationError(ValidationFilterLevel level, string text, ValidationContext context)
+		{
+			Level = level;
+			Text = text;
+			Context = context;
+		}
+
 		public override string ToString()
 		{
 			return Text;
+		}
+	}
+
+	public class ValidationContext
+	{
+		public Stage Stage;
+		public Case Case;
+		public DialogueLine Line;
+
+		public ValidationContext() { }
+		public ValidationContext(Stage stage, Case stageCase, DialogueLine line)
+		{
+			Stage = stage;
+			Case = stageCase;
+			Line = line;
 		}
 	}
 

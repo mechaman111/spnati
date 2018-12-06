@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaePenis : KisekaeSubCode
+	public class KisekaePenis : KisekaeSubCode, IPoseable
 	{
 		public KisekaePenis() : base("qa") { }
 

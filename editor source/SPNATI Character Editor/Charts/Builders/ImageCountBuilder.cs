@@ -29,6 +29,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			return true;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "filename")]
 		public void GenerateData()
 		{
 			List<Tuple<Character, int>> counts = new List<Tuple<Character, int>>();

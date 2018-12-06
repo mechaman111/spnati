@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -40,6 +39,13 @@ namespace SPNATI_Character_Editor
 			_markers.Clear();
 		}
 
+		public Marker Get(string marker)
+		{
+			Marker m;
+			_markers.TryGetValue(marker, out m);
+			return m;
+		}
+
 		public bool Contains(string marker)
 		{
 			return _markers.ContainsKey(marker);
@@ -54,9 +60,25 @@ namespace SPNATI_Character_Editor
 		{
 			if (string.IsNullOrEmpty(marker))
 				return;
-			if (_markers.ContainsKey(marker))
+			string value;
+			bool perTarget;
+			marker = Marker.ExtractPieces(marker, out value, out perTarget);
+			Marker m = _markers.GetOrAddDefault(marker, () => new Marker(marker));
+			m.AddValue(value);
+		}
+
+		public void RemoveReference(string marker)
+		{
+			if (string.IsNullOrEmpty(marker))
 				return;
-			_markers[marker] = new Marker(marker);
+			string value;
+			bool perTarget;
+			marker = Marker.ExtractPieces(marker, out value, out perTarget);
+			Marker m = _markers.Get(marker);
+			if (m != null)
+			{
+				m.RemoveValue(value);
+			}
 		}
 
 		public IEnumerable<Marker> Values

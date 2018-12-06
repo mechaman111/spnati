@@ -23,7 +23,7 @@ namespace KisekaeImporter
 		public KisekaeBangs Bangs
 		{
 			get { return GetSubCode<KisekaeBangs>("ed"); }
-			set	{ SetSubCode("ed", value); }
+			set { SetSubCode("ed", value); }
 		}
 		[KisekaeSubCode("ef")]
 		public KisekaeHairSide RightSide
@@ -47,19 +47,24 @@ namespace KisekaeImporter
 			{
 				if (subcode.IsEmpty)
 					continue;
-				if (subcode is IHair)
+				if (subcode is IColorable)
 				{
-					IHair hair = subcode as IHair;
+					IColorable hair = subcode as IColorable;
 					hair.Color1 = color1;
 					hair.Color2 = color2;
 					hair.Color3 = color3;
 				}
-			}			
+			}
 		}
 
 		public KisekaeAhoge GetAhoge(int index)
 		{
 			return GetSubCode<KisekaeAhoge>("r" + index.ToString("00"));
+		}
+
+		public void SetAhoge(int index, KisekaeAhoge ahoge)
+		{
+			SetSubCode("r" + index.ToString("00"), ahoge);
 		}
 	}
 }

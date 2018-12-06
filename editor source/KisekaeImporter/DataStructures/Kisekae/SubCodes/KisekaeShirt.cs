@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeShirt : KisekaeClothes
+	public class KisekaeShirt : KisekaeClothes, IOpenable
 	{
 		public int BottomState
 		{
@@ -12,6 +12,37 @@
 		{
 			get { return GetInt(5); }
 			set { Set(5, value.ToString()); }
+		}
+
+		public void SetOpenState(int state)
+		{
+			switch (state)
+			{
+				case 0:
+					TopState = 0;
+					BottomState = 0;
+					break;
+				case 1:
+					TopState = 1;
+					BottomState = 0;
+					break;
+				case 2:
+					TopState = 2;
+					BottomState = 0;
+					break;
+				case 3:
+					TopState = 2;
+					BottomState = 1;
+					break;
+				case 4:
+					TopState = 2;
+					BottomState = 2;
+					break;
+				case 5:
+					TopState = 3;
+					BottomState = 3;
+					break;
+			}
 		}
 
 		public int Chest
