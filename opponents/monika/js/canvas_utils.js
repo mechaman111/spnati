@@ -1,4 +1,4 @@
-monika.get_canvas_async = function (jquery_elem, callback) {
+monika.get_canvas_async = function (jquery_elem, callback, keep_empty) {
     var img = new Image();
     var src = jquery_elem.attr('src');
     
@@ -9,7 +9,10 @@ monika.get_canvas_async = function (jquery_elem, callback) {
         canvas.height = img.naturalHeight;
         
         var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
+        
+        if (!keep_empty) {
+            ctx.drawImage(img, 0, 0);
+        }
         
         var cv = {canvas, ctx, 'original': src, 'elem': jquery_elem};
         cv.undo = function() { monika.restore_image(cv); }

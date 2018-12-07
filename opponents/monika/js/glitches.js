@@ -6,7 +6,9 @@ monika.glitchElementAsync = function(jquery_elem, start_y, affected_height, cb) 
             monika.set_image_from_canvas(jquery_elem, cv);
         }
         
-        return cb(cv);
+        if (cb) {
+            return cb(cv);
+        }
     });
 }
 
@@ -42,7 +44,7 @@ monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, st
         });
     }
     
-    glitchOn();
+    glitch_on();
     
     return function () { // for stopping glitching
         glitchCanceled = true;
@@ -57,7 +59,7 @@ monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, st
 monika.glitchCharacter = function(slot, start_y, affected_height, cb) {
     monika.glitchElementAsync($gameImages[slot-1], start_y, affected_height, function (cv) {
         monika.active_effects.character_glitch[slot-1] = cv;
-        cb(cv);
+        if (cb) { return cb(cv); }
     });
 }
 

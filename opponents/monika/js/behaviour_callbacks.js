@@ -103,7 +103,7 @@ monika.react_9s_hack = function () {
 monika.setRealizationMarkers = function(id) {
     var m = monika.find_monika_player();
     if(m) {
-        m.markers['realization_'+id] = true;
+        m.markers['realization_'+id] = 1;
     }
 }
 
@@ -159,8 +159,8 @@ monika.sayonikaYes = function () {
         
         monika.active_effects['affections_glitch'] = true;
         
-        players[sayori_slot].markers['affections-glitch'] = true;
-        players[slot].markers['affections-glitch'] = true;
+        players[sayori_slot].markers['affections-glitch'] = 1;
+        players[slot].markers['affections-glitch'] = 1;
         
         $gameDialogues[slot-1].html("W-Wait, really? I wasn't expecting you to answer-- whoops!");
         $gameImages[slot-1].attr('src', 'opponents/monika/2-shocked.png');
@@ -200,8 +200,8 @@ monika.startJointMasturbation = function () {
         
         monika.active_effects['joint_masturbation'] = true;
         
-        players[monika_slot].markers['joint-masturbation'] = true;
-        players[sayori_slot].markers['joint-masturbation'] = true;
+        players[monika_slot].markers['joint-masturbation'] = 1;
+        players[sayori_slot].markers['joint-masturbation'] = 1;
         
         players[monika_slot].tags.push('tandem');
         
@@ -220,6 +220,10 @@ monika.startJointMasturbation = function () {
             monika.saved_sayori_player = players[sayori_slot];
             monika.saved_sayori_slot = sayori_slot;
             delete players[sayori_slot];
+            
+            if (previousLoser === sayori_slot) {
+                previousLoser = -1;
+            }
             
             updateAllBehaviours(players[monika_slot], FEMALE_MASTURBATING);
             players[monika_slot].updateBehaviour(PLAYER_START_MASTURBATING);
@@ -250,6 +254,8 @@ monika.endJointMasturbation = function () {
         setTimeout(function () {
             /* Put Sayori back in her slot. */
             players[sayori_slot] = monika.saved_sayori_player;
+            players[sayori_slot].markers['joint-masturbation'] = 1;
+            //players[sayori_slot].markers['joint-masturbation-finished'] = 1;
             
             /* Hard reset stage, forfeit status, and other data for Sayori. */
             players[sayori_slot].stage = 9;

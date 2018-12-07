@@ -185,23 +185,23 @@ if(!monika) {
         var specific_glitch_marker = base_glitch_marker+'-'+glitch_type;
         
         if(value) {
-            monika_player.markers[base_glitch_marker] = value;
-            monika_player.markers[specific_glitch_marker] = value;
-            monika_player.markers[type_glitch_marker] = value;
-            monika_player.markers['glitched'] = true;
+            monika_player.markers[base_glitch_marker] = 1;
+            monika_player.markers[specific_glitch_marker] = 1;
+            monika_player.markers[type_glitch_marker] = 1;
+            monika_player.markers['glitched'] = 1;
         } else {
-            delete monika_player.markers[base_glitch_marker];
-            delete monika_player.markers[specific_glitch_marker];
-            delete monika_player.markers[type_glitch_marker];
+            monika_player.markers[base_glitch_marker] = 0;
+            monika_player.markers[specific_glitch_marker] = 0;
+            monika_player.markers[type_glitch_marker] = 0;
         }
     }
     
     monika.setRoundGlitchMarker = function(value) {
         var monika_player = monika.find_monika_player();
         if(value) {
-            monika_player.markers['round-glitched'] = true;
+            monika_player.markers['round-glitched'] = 1;
         } else {
-            delete monika_player.markers['round-glitched'];
+            monika_player.markers['round-glitched'] = 0;
         }
     }
     
@@ -245,17 +245,18 @@ if(!monika) {
             var original_label = players[targetedSlot].label;
             monika.corruptCharacterLabel(targetedSlot);
             
-            var cv = monika.get_empty_canvas($gameImages[targetedSlot-1]);
-            monika.tile_filter(cv, $gameImages);
-            
-            monika.active_effects.round_delete_glitching = {
-                'slot': targetedSlot,
-                'cv': cv,
-                'original_label': original_label
-            };
-            
-            monika.setGlitchingMarker(targetedSlot, monika.GLITCH_DELETE, true);
-            monika.setRoundGlitchMarker(true);
+            monika.get_canvas_async($gameImages[targetedSlot-1], function (cv) {
+                monika.tile_filter(cv, $gameImages);
+                
+                monika.active_effects.round_delete_glitching = {
+                    'slot': targetedSlot,
+                    'cv': cv,
+                    'original_label': original_label
+                };
+                
+                monika.setGlitchingMarker(targetedSlot, monika.GLITCH_DELETE, true);
+                monika.setRoundGlitchMarker(true);
+            }, true);
         }
         
         if(monika.force_dialogue_glitch || monika.modifiedChance(monika.DIALOGUE_GLITCH_CHANCE, glitch_chance_mult)) {
@@ -336,7 +337,8 @@ if(!monika) {
                 glitchOptionsContainer.hide();
             }
         } catch (e) {
-            console.error("[Monika] Error in pre-showOptionsModal prep: "+e.toString());
+            console.log("[Monika] Error in pre-showOptionsModal prep: ");
+            console.error(e);
             glitchOptionsContainer.hide();
         } finally {
             return original_showOptionsModal.apply(null, arguments);
@@ -352,6 +354,11 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
+            /* Fixes a bug with joint masturbation... */
+            if (previousLoser >= 0 && !players[previousLoser]) {
+                previousLoser = -1;
+            } 
+            
             if(gamePhase !== monika.extendedDialoguePhase) {
                 return original_advanceGame.apply(null, arguments); 
             } else {
@@ -366,7 +373,8 @@ if(!monika) {
                 monika.extended_dialogue_continue();
             }
         } catch(e) {
-            console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
+            console.log("[Monika] Error in pre-advanceGame prep:");
+            console.error(e);
         }
     }
 
@@ -422,7 +430,8 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeContinuePhase prep: "+e.toString());
+            console.log("[Monika] Error in pre-completeContinuePhase prep: ");
+            console.error(e);
         } finally {
             return original_completeContinuePhase.apply(null, arguments); 
         }
@@ -435,7 +444,8 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeMasturbatePhase prep: "+e.toString());
+            console.log("[Monika] Error in pre-completeMasturbatePhase prep: ");
+            console.error(e);
         } finally {
             return original_completeMasturbatePhase.apply(null, arguments); 
         }
@@ -449,7 +459,8 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeStripPhase prep: "+e.toString());
+            console.log("[Monika] Error in pre-completeStripPhase prep: ");
+            console.error(e);
         } finally {
             return original_completeStripPhase.apply(null, arguments);
         }
@@ -482,7 +493,8 @@ if(!monika) {
             monika.active_effects.round_dialogue_glitching = null;
             monika.active_effects.round_edit_glitching = null;
         } catch (e) {
-            console.error("[Monika] Error in pre-completeRevealPhase prep: "+e.toString());
+            console.log("[Monika] Error in pre-completeRevealPhase prep: ");
+            console.error(e);
         } finally {
             return original_completeRevealPhase.apply(null, arguments); 
         }
@@ -526,7 +538,8 @@ if(!monika) {
                 }
             }
         } catch (e) {
-            console.error("[Monika] Error in pre-updateGameVisual prep: "+e.toString());
+            console.log("[Monika] Error in pre-updateGameVisual prep: ");
+            console.error(e);
         } finally {
             original_updateGameVisual(player);
             fixupDialogue = original_fixupDialogue;
