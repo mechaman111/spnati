@@ -107,11 +107,6 @@ monika.glitch_pose_transition = function(slot, next_img, delay, glitchTime, star
     }
 }
 
-// For the blazer stripping animation
-monika.glitch_strip_upper = function(slot, next_img) {
-    return monika.glitch_pose_transition(slot, next_img, 500, 1000, 400, 776-400);
-}
-
 monika.generate_mast_images = function() {
     // generate a shuffled set of images to use
     // masturbation images go from 9-mast-1[-alt].png to 9-mast-9[-alt].png.
