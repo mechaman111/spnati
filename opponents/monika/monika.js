@@ -352,13 +352,21 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            if(monika.current_ext_dialogue) {
+            if(gamePhase !== monika.extendedDialoguePhase) {
+                return original_advanceGame.apply(null, arguments); 
+            } else {
+                $mainButton.attr('disabled', true);
+                actualMainButtonState = true;
+                autoForfeitTimeoutID = undefined;
+                
+                if (AUTO_FADE) {
+                    forceTableVisibility(false);
+                }
+                
                 monika.extended_dialogue_continue();
             }
         } catch(e) {
             console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-        } finally {
-            return original_advanceGame.apply(null, arguments);
         }
     }
 
@@ -570,26 +578,18 @@ if(!monika) {
                 $gameLabels[player].html("Monika & Sayori");
             } else {
                 /* 'Regular' glitch masturbation */
-                var current_img = $gameImages[player-1].attr('src').substr(17);
-                monika.when_loaded($gameImages[player-1], function () {
-                    console.log("[Monika] image loaded, glitching to new pose...");
+                var el = $gameImages[player-1]
+                var current_img = el.attr('src').substr(17);
+                
+                if (el[0].complete) {
                     monika.glitch_pose_transition(player, current_img, 0, 200);
-                });
+                } else {
+                    el.one('load', function () {
+                        console.log("[Monika] image loaded, glitching to new pose...");
+                        monika.glitch_pose_transition(player, current_img, 0, 200);
+                    });
+                }
             }
-            
-            /*
-            if(!$gameImages[player-1][0].complete) {
-                // Wait for image to load before glitching
-                $gameImages[player-1].one("load", function () {
-                    console.log("[Monika] image loaded, glitching to new pose...");
-                    monika.glitch_pose_transition(player, current_img, 0, 500);
-                });
-            } else {
-                // Image already loaded, glitch now
-                console.log("[Monika] Immediately glitching to new pose...");
-                monika.glitch_pose_transition(player, current_img, 0, 500);
-            }
-            */
         }
     }
 }

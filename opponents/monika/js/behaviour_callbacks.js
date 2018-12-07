@@ -1,14 +1,6 @@
 monika.delete_blazer = function() {
-    try {
-        var slot = monika.find_slot();
-        monika.glitch_pose_transition(slot, '2-removed-blazer.png', 750, 500, 400, 776-400);
-        setTimeout(monika.disable_progression, 0);
-    } catch (e) {
-        allowProgression();
-        console.error(e);
-    } finally {
-        setTimeout(allowProgression, 1750);
-    }
+    var slot = monika.find_slot();
+    monika.glitch_pose_transition(slot, '2-removed-blazer.png', 750, 250, 400, 776-400);
 }
 
 monika.start_masturbating = function() {
@@ -79,54 +71,29 @@ monika.react_9s_hack = function () {
         var next_img = monika.assemble_pose_filename(pose);
 
         var do_glitch_1 = function () {
-            try {
-                monika.glitchCharacter(nines_slot);
-                monika.disable_progression();
-            } catch (e) {
-                allowProgression();
-                console.error(e);
-            } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_transition, 500);
-            }
+            monika.glitchCharacter(nines_slot, null, null, function () {
+                setTimeout(do_transition, 500);
+            });
         }
 
         var do_transition = function () {
-            try {
-                monika.active_effects.character_glitch[nines_slot-1] = null;
-                $gameImages[nines_slot-1].attr('src', next_img);
-            } catch (e) {
-                allowProgression();
-                console.error(e);
-            } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_glitch_2, 1500);
-            }
+            monika.active_effects.character_glitch[nines_slot-1] = null;
+            $gameImages[nines_slot-1].attr('src', next_img);
+            setTimeout(do_glitch_2, 1500);
         }
 
         var do_glitch_2 = function() {
-            try {
-                monika.glitchCharacter(nines_slot);
-            } catch (e) {
-                allowProgression();
-                console.error(e);
-            } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_revert, 500);
-            }
+            monika.glitchCharacter(nines_slot, null, null, function () {
+                setTimeout(do_revert, 500);
+            });
         }
 
         var do_revert = function () {
-            try {
-                monika.active_effects.character_glitch[nines_slot-1] = null;
-                $gameImages[nines_slot-1].attr('src', current_img);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                allowProgression();
-            }
+            monika.active_effects.character_glitch[nines_slot-1] = null;
+            $gameImages[nines_slot-1].attr('src', current_img);
         }
 
-        setTimeout(allowProgression, 4500); // juuust in case
-        setTimeout(monika.disable_progression, 0);
-        monika.schedule_when_loaded($gameImages[nines_slot-1], do_glitch_1, 1500);
+        setTimeout(do_glitch_1, 750);
     } else {
         /* Simply glitch 9S a bit... */
         monika.glitchCharacter(nines_slot);

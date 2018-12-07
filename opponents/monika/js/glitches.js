@@ -1,85 +1,63 @@
-monika.glitchElement = function (jquery_elem, start_y, affected_height) {
-    cv = monika.get_canvas(jquery_elem);
-    
-    if (cv.canvas.width > 0 && cv.canvas.height > 0) {
-        monika.channel_split_filter(cv, start_y, affected_height);
-        monika.waver_filter(cv, start_y, affected_height);
-        monika.set_image_from_canvas(jquery_elem, cv);
-    }
-    
-    return cv;
-};
-
-monika.undoElementGlitch = function (cv) {
-    return monika.restore_image(cv);
-}
-
-monika.when_loaded = function(jquery_elem, callback) {
-    if(jquery_elem[0].complete) {
-        return callback();
-    } else {
-        jquery_elem.one("load", callback);
-    }
-}
-
-monika.schedule_when_loaded = function(jquery_elem, timeout_callback, delay) {
-    return monika.when_loaded(jquery_elem, function () {
-        setTimeout(timeout_callback, delay);
+monika.glitchElementAsync = function(jquery_elem, start_y, affected_height, cb) {
+    return monika.get_canvas_async(jquery_elem, function (cv) {
+        if (cv.canvas.width > 0 && cv.canvas.height > 0) {
+            monika.channel_split_filter(cv, start_y, affected_height);
+            monika.waver_filter(cv, start_y, affected_height);
+            monika.set_image_from_canvas(jquery_elem, cv);
+        }
+        
+        return cb(cv);
     });
-}
-
-monika.when_character_loaded = function(slot, callback) {
-    return monika.when_loaded($gameImages[slot-1], callback);
-}
-
-monika.schedule_when_character_loaded = function(slot, callback, delay) {
-    return monika.schedule_when_loaded($gameImages[slot-1], callback, delay);
 }
 
 monika.startElementGlitching = function (jquery_elem, glitchTime, normalTime, start_y, affected_height) {
     if(!glitchTime) glitchTime = 500;
     if(!normalTime) normalTime = 500;
 
-    var glitchState = false;
     var glitchCanceled = false;
     var cv = null;
     var current_timer_id = undefined;
-
-    var toggleGlitchState = function () {
-        if(glitchCanceled) {
+    
+    var glitch_off = function () {
+        if (glitchCanceled) {
             return;
         }
         
-        if(glitchState) {
-            monika.undoElementGlitch(cv);
-            var delay = normalTime;
-        } else {
-            cv = monika.glitchElement(jquery_elem, start_y, affected_height);
-            var delay = glitchTime;
+        cv = null;
+        current_timer_id = setTimeout(glitchTime, glitch_on);
+    }
+    
+    var glitch_on = function () {        
+        if (glitchCanceled) {
+            return;
         }
         
-        glitchState = !glitchState;
-        monika.when_loaded(jquery_elem, function () {
-            current_timer_id = setTimeout(toggleGlitchState, delay);
+        monika.glitchElementAsync(jquery_elem, start_y, affected_height, function (cur_cv) {
+            if (glitchCanceled) {
+                return cv.undo();
+            }
+            
+            cv = cur_cv;
+            current_timer_id = setTimeout(glitchTime, glitch_off);
         });
     }
     
-    // current_timer_id = setTimeout(toggleGlitchState, normalTime/2);
-    monika.when_loaded(jquery_elem, function () {
-        current_timer_id = setTimeout(toggleGlitchState, normalTime/2);
-    });
+    glitchOn();
     
     return function () { // for stopping glitching
         glitchCanceled = true;
         clearInterval(current_timer_id);
-        monika.undoElementGlitch(cv);
+        if (cv) {
+            cv.undo();
+        }
     }
 }
 
 /* Cause visual glitching in a given player's image. Will be reset as soon as they change poses.  */
-monika.glitchCharacter = function(slot, start_y, affected_height) {
-    monika.when_character_loaded(slot, function () {
-        monika.active_effects.character_glitch[slot-1] = monika.glitchElement($gameImages[slot-1], start_y, affected_height);
+monika.glitchCharacter = function(slot, start_y, affected_height, cb) {
+    monika.glitchElementAsync($gameImages[slot-1], start_y, affected_height, function (cv) {
+        monika.active_effects.character_glitch[slot-1] = cv;
+        cb(cv);
     });
 }
 
@@ -87,7 +65,7 @@ monika.undoCharacterGlitch = function(slot) {
     var cv = monika.active_effects.character_glitch[slot-1];
     if(cv) {
         monika.active_effects.character_glitch[slot-1] = null;
-        return monika.restore_image(cv);
+        return cv.undo();
     }
 }
 
@@ -104,52 +82,26 @@ monika.stopCharacterGlitching = function (slot) {
 }
 
 monika.temporaryCharacterGlitch = function(slot, delay, glitchTime, start_y, affected_height) {
-    monika.schedule_when_loaded($gameImages[slot-1], function () {
-        try {
-            monika.glitchCharacter(slot, start_y, affected_height);
-        } catch (e) {
-            console.error(e);
-        }
-        
-        monika.schedule_when_loaded(
-            $gameImages[slot-1],
-            monika.undoCharacterGlitch.bind(null, slot),
-            glitchTime
-        );
+    setTimeout(function () {
+        monika.glitchCharacter(slot, start_y, affected_height, function (cv) {
+            setTimeout(monika.undoCharacterGlitch.bind(null, slot), glitchTime);
+        });
     }, delay);
 }
 
-monika.glitch_pose_transition_internal = function(slot, next_img, glitchTime, start_y, affected_height) {
-    var do_normal = function () {
-        try {
-            monika.undoCharacterGlitch(slot);
-        } catch (e) {
-            console.error(e);
-        }
-        
-        $gameImages[slot-1].attr('src', players[slot].folder+next_img);
-    }
-    
-    var do_glitch = function() {
-        try {
-            monika.glitchCharacter(slot, start_y, affected_height);
-        } catch (e) {
-            console.error(e);
-        }
-        
-        monika.schedule_when_loaded($gameImages[slot-1], do_normal, glitchTime);
-    }
-    
-    monika.when_loaded($gameImages[slot-1], do_glitch);
-}
-
 monika.glitch_pose_transition = function(slot, next_img, delay, glitchTime, start_y, affected_height) {
+    var do_glitch = function () {
+        monika.glitchCharacter(slot, start_y, affected_height, function (cv) {
+            setTimeout(function () {
+                $gameImages[slot-1].attr('src', players[slot].folder+next_img);
+            }, glitchTime);
+        });
+    }
+    
     if(!delay || delay <= 0) {
-        monika.glitch_pose_transition_internal(slot, next_img, glitchTime, start_y, affected_height);
+        do_glitch();
     } else {
-        setTimeout(function () {
-            monika.glitch_pose_transition_internal(slot, next_img, glitchTime, start_y, affected_height);
-        }, delay);
+        setTimeout(do_glitch, delay);
     }
 }
 
@@ -229,21 +181,14 @@ monika.glitch_masturbation = function(slot) {
         if(!monika.active_effects.glitch_masturbation) return;
 
         glitch_count += 1;
-
-        try {
-            monika.glitchCharacter(slot);
-        } catch(e) {
-            console.error(e);
-        }
-
-        monika.when_loaded($gameImages[slot-1], function () {
+        
+        monika.glitchCharacter(slot, null, null, function (cv) {
             monika.active_effects.glitch_masturbation = setTimeout(set_next_image, glitchTime);
         });
     }
 
     var set_next_image = function () {
         if(!monika.active_effects.glitch_masturbation) return;
-        
         monika.active_effects.character_glitch[slot-1] = null;
 
         if(yuri_original_dialogue) {
@@ -255,30 +200,22 @@ monika.glitch_masturbation = function(slot) {
             yuri_original_dialogue = $gameDialogues[slot-1].html();
 
             $gameImages[slot-1].attr('src', 'opponents/monika/9-yuri-surprised.png');
-
             $gameDialogues[slot-1].html([
                 "W-what? W-w-where am I? What is this? Are you--",
                 "Wait, w-where am I? What just happened? Wait... are you--",
                 "W-w-what just happened? Who are you people? W-where am I?",
             ][getRandomNumber(0, 3)]);
             
-            monika.when_loaded($gameImages[slot-1], function () {
-                monika.active_effects.glitch_masturbation = setTimeout(do_glitch, yuriTime);
-            });
+            monika.active_effects.glitch_masturbation = setTimeout(do_glitch, yuriTime);
         } else {
             var next_img = monika.get_masturbation_image();
-
             $gameImages[slot-1].attr('src', next_img);
             
-            monika.when_loaded($gameImages[slot-1], function () {
-                monika.active_effects.glitch_masturbation = setTimeout(do_glitch, normalTime);
-            });
+            monika.active_effects.glitch_masturbation = setTimeout(do_glitch, normalTime);
         }
     }
     
-    monika.when_loaded($gameImages[slot-1], function () {
-        monika.active_effects.glitch_masturbation = setTimeout(do_glitch, normalTime / 2);
-    });
+    monika.active_effects.glitch_masturbation = setTimeout(do_glitch, normalTime / 2);
 }
 
 monika.stop_glitch_masturbation = function() {
