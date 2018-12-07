@@ -1,5 +1,5 @@
 monika.get_canvas_async = function (jquery_elem, callback) {
-    var img = Image();
+    var img = new Image();
     var src = jquery_elem.attr('src');
     
     img.onload = function () {
