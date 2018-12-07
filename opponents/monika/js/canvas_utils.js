@@ -1,26 +1,26 @@
-monika.get_canvas = function(jquery_elem) {
-    var canvas = document.createElement('canvas');
-    var dom_elem = jquery_elem[0];
-
-    canvas.width = dom_elem.naturalWidth;
-    canvas.height = dom_elem.naturalHeight;
-
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(dom_elem, 0, 0);
-
-    return {canvas, ctx, 'original': jquery_elem.attr('src'), 'elem': jquery_elem};
-}
-
-monika.get_empty_canvas = function(jquery_elem) {
-    var canvas = document.createElement('canvas');
-    var dom_elem = jquery_elem[0];
-
-    canvas.width = dom_elem.naturalWidth;
-    canvas.height = dom_elem.naturalHeight;
-
-    var ctx = canvas.getContext('2d');
-
-    return {canvas, ctx, 'original': jquery_elem.attr('src'), 'elem': jquery_elem};
+monika.get_canvas_async = function (jquery_elem, callback, keep_empty) {
+    var img = new Image();
+    var src = jquery_elem.attr('src');
+    
+    img.onload = function () {
+        var canvas = document.createElement('canvas');
+        
+        canvas.width  = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        
+        var ctx = canvas.getContext('2d');
+        
+        if (!keep_empty) {
+            ctx.drawImage(img, 0, 0);
+        }
+        
+        var cv = {canvas, ctx, 'original': src, 'elem': jquery_elem};
+        cv.undo = function() { monika.restore_image(cv); }
+        
+        callback(cv);
+    }
+    
+    img.src = src;
 }
 
 monika.set_image_from_canvas = function(jquery_elem, cv) {
