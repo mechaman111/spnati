@@ -18,7 +18,7 @@ class ParseError(Exception):
 _opening_tag_start = re.compile(r'.*?\<([a-zA-Z0-9\-\_]+)\s*?', re.DOTALL)
 _opening_tag_end = re.compile(r'(\/?)\>', re.DOTALL)
 
-_attribute = re.compile(r"([a-zA-Z0-9\-\_]+)(?:\s*\=\s*(\"(.*?)\"))?")
+_attribute = re.compile(r"([a-zA-Z0-9\-\_\:]+)(?:\s*\=\s*(\"(.*?)\"))?")
 _comment = re.compile(r'\s*(?:\<\!\-\-(.*?)\-\-\>)?', re.DOTALL)
 _decl_tag = re.compile(r'\<\?(.*?)\?\>', re.DOTALL)  # ignored for now
 
