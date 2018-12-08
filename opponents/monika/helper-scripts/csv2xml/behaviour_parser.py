@@ -15,7 +15,9 @@ class ParseError(Exception):
     def __str__(self):
         return self.args[0]
         
-_tag_start = re.compile(r'.*?\<([a-zA-Z0-9\-\_]+)\s*?(.*?)\s*?(\/?)\>', re.DOTALL)
+_opening_tag_start = re.compile(r'.*?\<([a-zA-Z0-9\-\_]+)\s*?', re.DOTALL)
+_opening_tag_end = re.compile(r'(\/?)\>', re.DOTALL)
+
 _attribute = re.compile(r"([a-zA-Z0-9\-\_]+)(?:\s*\=\s*(\"(.*?)\"))?")
 _comment = re.compile(r'\s*(?:\<\!\-\-(.*?)\-\-\>)?', re.DOTALL)
 _decl_tag = re.compile(r'\<\?(.*?)\?\>', re.DOTALL)  # ignored for now
@@ -139,16 +141,17 @@ def _consume_re(seq, regex, index, suppress_eof_error=False):
     
     return match, index
 
-def parse_attribute_list(seq, elem):
-    attr_match, index = _consume_re(seq, _attribute, 0, True)
+def parse_attribute_list(seq, elem, index):
+    attr_match, index = _consume_re(seq, _attribute, index)
     
     while attr_match is not None:
+        attr_name = attr_match.group(1).strip()
         try:
-            elem.attributes[attr_match.group(1)] = attr_match.group(3)
+            elem.attributes[attr_name] = attr_match.group(3)
         except IndexError:
-            elem.attributes[attr_match.group(1)] = True
+            elem.attributes[attr_name] = True
             
-        attr_match, index = _consume_re(seq, _attribute, index, True)
+        attr_match, index = _consume_re(seq, _attribute, index)
         
     return index
 
@@ -156,7 +159,7 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
     if progress_cb is not None:
         progress_cb(index)
     
-    match, index = _consume_re(seq, _tag_start, index)
+    match, index = _consume_re(seq, _opening_tag_start, index)
     if match is None:
         raise ParseError("Expected opening tag", index)
     
@@ -167,9 +170,13 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
         raise ParseError("Unexpected tag type '{}'".format(tag_type), index)
     
     elem = OrderedXMLElement(tag_type)
-    if len(match.group(2)) > 0:
-        parse_attribute_list(match.group(2), elem)
-    simple_tag_match = (len(match.group(3)) > 0)
+    index = parse_attribute_list(seq, elem, index)
+    
+    match, index = _consume_re(seq, _opening_tag_end, index)
+    if match is None:
+        raise ParseError("Expected close for opening tag", index)
+    
+    simple_tag_match = (len(match.group(1)) > 0)
     
     try:
         # For simple tags (for example: <br />) just return the empty element
