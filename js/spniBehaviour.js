@@ -212,6 +212,8 @@ function expandDialogue (dialogue, self, target) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
+                } else if ((fn == 'type' || fn == 'position') && args === undefined) {
+                    substitution = clothing[fn];
                 } else if (fn === undefined) {
                     substitution = clothing.generic;
                 }
