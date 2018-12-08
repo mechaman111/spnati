@@ -91,6 +91,35 @@ if(!monika) {
     monika.reportException = function(prefix, e) {
         console.log("[Monika] Exception swallowed "+prefix+": ");
         console.error(e);
+        
+        try {
+            if (e) {
+                jsErrors.push({
+                    'date': (new Date()).toISOString(),
+                    'type': e.name,
+                    'message': e.message,
+                    'filename': e.filename,
+                    'lineno': e.lineNumber,
+                    'stack': e.stack
+                });
+            }
+        } catch (e2) {
+            console.error(e2);
+        }
+    
+        if (USAGE_TRACKING) {
+            var report = compileBaseErrorReport('Exception caught from Monika code.', 'auto');
+    
+            $.ajax({
+                url: BUG_REPORTING_ENDPOINT,
+                method: 'POST',
+                data: JSON.stringify(report),
+                contentType: 'application/json',
+                error: function (jqXHR, status, err) {
+                    console.error("Could not send bug report - error "+status+": "+err);
+                },
+            });
+        }
     }
 
     monika.find_slot_by_id = function(id) {
