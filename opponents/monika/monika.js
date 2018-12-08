@@ -387,11 +387,6 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            /* Fixes a bug with joint masturbation... */
-            if (previousLoser >= 0 && !players[previousLoser]) {
-                previousLoser = -1;
-            } 
-            
             if(gamePhase !== monika.extendedDialoguePhase) {
                 return original_advanceGame.apply(null, arguments); 
             } else {
@@ -501,6 +496,11 @@ if(!monika) {
         if(!monika.present()) { return original_completeRevealPhase.apply(null, arguments); }
         
         try {
+            /* Fixes a bug with joint masturbation... */
+            if (!players[recentLoser]) {
+                recentLoser = -1;
+            } 
+            
             var targetedSlot = monika.active_effects.round_targeted_glitching;
             if(targetedSlot) {
                 monika.setGlitchingMarker(targetedSlot, monika.GLITCH_VISUAL, null);
