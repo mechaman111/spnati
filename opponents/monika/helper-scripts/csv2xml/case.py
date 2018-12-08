@@ -20,6 +20,9 @@ class Case(object):
         ("good_hand", slice(None, -2)),
         ("okay_hand", slice(None, -2)),
         ("bad_hand", slice(None, -2)),
+        ("hand", slice(None, -2)),
+        ("global", slice(None, None)),
+        ("opponent_lost", slice(None, None)),
         ("male_human_must_strip", slice(None, None)),
         ("male_must_strip", slice(None, None)),
         ("male_removing_accessory", slice(None, None)),
@@ -58,6 +61,7 @@ class Case(object):
         ("female_masturbating", slice(None, None)),
         ("female_heavy_masturbating", slice(None, None)),
         ("female_finished_masturbating", slice(None, None)),
+        ("must_strip", slice(None, -3)),
         ("must_strip_winning", slice(None, -3)),
         ("must_strip_normal", slice(None, -3)),
         ("must_strip_losing", slice(None, -3)),
@@ -168,7 +172,7 @@ class Case(object):
         counters = OrderedDict()
 
         if isinstance(conditions, str) and len(conditions) > 0:
-            conditions = [cond.split('=') for cond in conditions.split(',')]
+            conditions = [cond.split('=', 1) for cond in conditions.split(',')]
 
         if len(conditions) > 0:
             for cond_tuple in conditions:
