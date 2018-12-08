@@ -238,6 +238,9 @@ function expandDialogue (dialogue, self, target) {
                     substitution = "marker"; //didn't supply a marker name
                 }
                 break;
+            case 'weekday':
+                substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+                break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
