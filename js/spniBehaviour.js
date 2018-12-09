@@ -9,6 +9,7 @@
  **********************************************************************/
 
 var SELECTED = "selected";
+var OPPONENT_SELECTED = "opponent_selected";
 var GAME_START = "game_start";
 
 var SWAP_CARDS = "swap_cards";
