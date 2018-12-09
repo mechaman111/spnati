@@ -16,6 +16,7 @@ function GEnding(player, ending){
 
 	this.image = previewImage;
 	this.title = $(ending).html();
+	this.unlockHint = $(ending).attr('hint');
 	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
@@ -30,6 +31,7 @@ $galleryNextButton = $('#gallery-next-page-button');
 $galleryStartButton = $('#gallery-start-ending-button');
 $selectedEndingPreview = $('#selected-ending-previev');
 $selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
+$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
 
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
@@ -159,6 +161,13 @@ function selectEnding(i) {
 
 	if (!ending) {
 		return;
+	}
+	
+	if (ending.unlockHint) {
+		$selectedEndingHint[0].show();
+		$selectedEndingHint[1].html(ending.unlockHint);
+	} else {
+		$selectedEndingHint[0].hide();
 	}
 
 	if (ending.unlocked()) {
