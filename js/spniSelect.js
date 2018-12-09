@@ -990,6 +990,7 @@ function advanceSelectScreen () {
     if (USAGE_TRACKING) {
         var usage_tracking_report = {
             'date': (new Date()).toISOString(),
+			'commit': VERSION_COMMIT,
             'type': 'start_game',
             'session': sessionID,
             'game': gameID,

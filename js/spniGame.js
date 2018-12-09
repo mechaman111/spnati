@@ -688,6 +688,7 @@ function endRound () {
         if (USAGE_TRACKING) {
             var usage_tracking_report = {
                 'date': (new Date()).toISOString(),
+                'commit': VERSION_COMMIT,
                 'type': 'end_game',
                 'session': sessionID,
                 'game': gameID,

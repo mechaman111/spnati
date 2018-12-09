@@ -230,6 +230,7 @@ function doEpilogueFromGallery(){
 			if (USAGE_TRACKING) {
 				var usage_tracking_report = {
 					'date': (new Date()).toISOString(),
+					'commit': VERSION_COMMIT,
 					'type': 'gallery',
 					'session': sessionID,
 					'userAgent': navigator.userAgent,
