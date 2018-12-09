@@ -238,6 +238,13 @@ function expandDialogue (dialogue, self, target) {
                     substitution = "marker"; //didn't supply a marker name
                 }
                 break;
+            case 'background':
+                if (fn == undefined) {
+                    substitution = backgrounds[selectedBackground].name;
+                } else if (fn in backgrounds[selectedBackground] && args === undefined) {
+                    substitution = backgrounds[selectedBackground][fn];
+                }
+                break;
             case 'weekday':
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
