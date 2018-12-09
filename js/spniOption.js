@@ -19,6 +19,36 @@ $masturbationTimerBox = $("#player-masturbation-timer-box");
 $masturbationWarningLabel = $("#masturbation-warning-label");
 
 /**********************************************************************
+ *****                    Background metadata                     *****
+ **********************************************************************/
+var backgrounds = [
+	{ name: 'default', location: 'indoors' },
+	{ name: 'beach', location: 'outdoors' },
+	{ name: 'classroom', location: 'indoors' },
+	{ name: 'brick', location: 'indoors' },
+	{ name: 'night', location: 'outdoors' },
+	{ name: 'roof', location: 'outdoors' },
+	{ name: 'seasonal', location: 'indoors' },
+	{ name: 'library', location: 'indoors' },
+	{ name: 'bathhouse', location: 'indoors' },
+	{ name: 'poolside', location: 'outdoors' },
+	{ name: 'hot spring', location: 'outdoors' },
+	{ name: 'mansion', location: 'indoors' },
+	{ name: 'purple room', location: 'indoors' },
+	{ name: 'showers', location: 'indoors' },
+	{ name: 'street', location: 'outdoors' },
+	{ name: 'green screen', location: 'indoors' },
+	{ name: 'arcade', location: 'indoors' },
+	{ name: 'club', location: 'indoors' },
+	{ name: 'bedroom', location: 'indoors' },
+	{ name: 'hall', location: 'indoors' },
+	{ name: 'locker room', location: 'indoors' },
+	{ name: 'haunted forest', location: 'outdoors' },
+	{ name: 'romantic', location: 'indoors' },
+];
+var selectedBackground = 0;
+
+/**********************************************************************
  *****                      Option Functions                      *****
  **********************************************************************/
 
@@ -238,6 +268,7 @@ function setBackground (choice) {
 	backgroundImage.onload = autoResizeFont;
     $("body").css("background-image", "url(img/background"+choice+".png)");
 	setActiveOption($backgroundSettings, choice);
+	selectedBackground = choice - 1;
 }
 
 /************************************************************
