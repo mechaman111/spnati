@@ -59,29 +59,20 @@ function startMasturbation (player) {
     }
 
 	/* update behaviour */
+    updateAllBehaviours(
+        player, 
+        player != HUMAN_PLAYER ? PLAYER_START_MASTURBATING : null,
+        players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
+    );
+    
 	if (player == HUMAN_PLAYER) {
-		if (players[HUMAN_PLAYER].gender == eGender.MALE) {
-			updateAllBehaviours(HUMAN_PLAYER, MALE_START_MASTURBATING);
-		} else if (players[HUMAN_PLAYER].gender == eGender.FEMALE) {
-			updateAllBehaviours(HUMAN_PLAYER, FEMALE_START_MASTURBATING);
-		}
 		$gameClothingLabel.html("You're Masturbating...");
         $gamePlayerCountdown.show();
 		setForfeitTimer(player);
-	} else {
-		if (players[player].gender == eGender.MALE) {
-			updateAllBehaviours(player, MALE_START_MASTURBATING);
-		} else if (players[player].gender == eGender.FEMALE) {
-			updateAllBehaviours(player, FEMALE_START_MASTURBATING);
-		}
-		players[player].updateBehaviour(PLAYER_START_MASTURBATING);
-		setForfeitTimer(player);
 	}
     
-    updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-	updateAllGameVisuals();
-
+    setForfeitTimer(player);
+    
 	/* allow progression */
 	endRound();
 }
@@ -180,17 +171,13 @@ function tickForfeitTimers () {
 	// Show a player masturbating while dealing or after the game, if there is one available
 	if (masturbatingPlayers.length > 0
 		&& ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
-		var playerToShow = players[masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]];
-		players.forEach(function(p) {
-			p.updateBehaviour(
-				(p == playerToShow) ? p.forfeit[0]
-					: (playerToShow.gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING),
-				playerToShow);
-		});
+		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
         
-        updateAllVolatileBehaviours();
-    	commitAllBehaviourUpdates();
-		updateAllGameVisuals();
+        updateAllBehaviours(
+            playerToShow,
+            players[playerToShow].forfeit[0],
+            players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING
+        );
 	}
 	
 	return false;
@@ -207,23 +194,14 @@ function finishMasturbation (player) {
     players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
 	players[player].updateLabel();
 	players[player].updateFolder();
-
-	/* update other player dialogue */
-	if (players[player].gender == eGender.MALE) {
-		updateAllBehaviours(player, MALE_FINISHED_MASTURBATING);
-	} else if (players[player].gender == eGender.FEMALE) {
-		updateAllBehaviours(player, FEMALE_FINISHED_MASTURBATING);
-	}
-	
-	/* update their dialogue */
-	if (player != HUMAN_PLAYER) {
-		players[player].updateBehaviour(PLAYER_FINISHED_MASTURBATING);
-		
-	}
     
-    updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-	updateAllGameVisuals();
+	/* update player dialogue */
+    updateAllBehaviours(
+        player, 
+        player != HUMAN_PLAYER ? PLAYER_FINISHED_MASTURBATING : null,
+        players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
+    );
+    
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
 		globalSavedTableVisibility = undefined;

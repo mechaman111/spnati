@@ -171,13 +171,7 @@ function loadGameScreen () {
         }
     }.bind(this));
 
-    updateAllBehaviours(null, GAME_START);
-    
-    updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-    
-    /* set up the visuals */
-    updateAllGameVisuals();
+    updateAllBehaviours(null, null, GAME_START);
 
     /* set up the poker library */
     setupPoker();
@@ -607,10 +601,7 @@ function completeRevealPhase () {
     /* update behaviour */
 	var clothes = playerMustStrip (recentLoser);
     
-    /* playerMustStrip() calls updateBehaviour and updateAllBehaviours. */
-    updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-    updateAllGameVisuals();
+    /* playerMustStrip() calls updateAllBehaviours. */
 
     /* highlight the loser */
     for (var i = 0; i < players.length; i++) {
@@ -640,9 +631,6 @@ function completeRevealPhase () {
 function completeContinuePhase () {
 	/* show the player removing an article of clothing */
 	prepareToStripPlayer(recentLoser);
-    updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-    updateAllGameVisuals();
     allowProgression(eGamePhase.STRIP);
 }
 
@@ -664,8 +652,6 @@ function completeStripPhase () {
 function completeMasturbatePhase () {
     /* strip the player with the lowest hand */
     startMasturbation(recentLoser);
-    // all behaviour phases handled already
-    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -748,14 +734,7 @@ function handleGameOver() {
 		return timers[i] > 0;
 	})) {
 		/* true end */
-		players.forEach(function(p) {
-			var tag = (p == winner) ? GAME_OVER_VICTORY : GAME_OVER_DEFEAT;
-			p.updateBehaviour(tag, winner);
-		});
-
-        updateAllVolatileBehaviours();
-    	commitAllBehaviourUpdates();
-        updateAllGameVisuals();
+        updateAllBehaviours(winner.slot, GAME_OVER_VICTORY, GAME_OVER_DEFEAT);
 
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
