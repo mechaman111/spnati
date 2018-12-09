@@ -61,7 +61,7 @@ function startMasturbation (player) {
 	/* update behaviour */
     updateAllBehaviours(
         player, 
-        player != HUMAN_PLAYER ? PLAYER_START_MASTURBATING : null,
+        PLAYER_START_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
     );
     
@@ -198,7 +198,7 @@ function finishMasturbation (player) {
 	/* update player dialogue */
     updateAllBehaviours(
         player, 
-        player != HUMAN_PLAYER ? PLAYER_FINISHED_MASTURBATING : null,
+        PLAYER_FINISHED_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
     );
     
