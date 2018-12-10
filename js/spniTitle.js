@@ -23,7 +23,7 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
 
 var CANDY_LIST = [
     "meia/0-disappointed.png",
-    "meia/1-smug.png",
+    "meia/1-busy.png",
     "meia/2-pleased.png",
     "meia/2-addressing.png",
     "elizabeth/0-calm.png",
