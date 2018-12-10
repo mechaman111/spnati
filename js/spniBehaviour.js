@@ -433,6 +433,7 @@ function Case($xml, stage) {
 	this.saidMarker =               $xml.attr("saidMarker");
 	this.notSaidMarker =            $xml.attr("notSaidMarker");
 	this.customPriority =           parseInt($xml.attr("priority"), 10);
+    this.hidden =                   $xml.attr("hidden");
 	
 	var states = [];
 	$xml.find('state').each(function () {
@@ -875,12 +876,18 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     for (var i = 0; i < cases.length; i++) {
         var curCase = new Case(cases[i]);
         
-        if (curCase.priority >= bestMatchPriority &&
+        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
         {
             if (curCase.isVolatile()) {
                 volatileMatches.push(curCase); 
             } else {
+                if (curCase.hidden) {
+                    //if it's hidden, set markers but don't actually count as a match
+                    this.applyMarkers(curCase, opp);
+                    continue;
+                }
+
                 if (curCase.priority > bestMatchPriority) {
                     bestMatch = [curCase];
                     bestMatchPriority = curCase.priority;
@@ -1011,6 +1018,13 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     this.stateCommitted = true;
 }
 
+/************************************************************
+ * Applies markers from all lines in a case
+ ************************************************************/
+Opponent.prototype.applyMarkers = function (chosenCase, opp) {
+    var self = this;
+    chosenCase.states.forEach(function (c) { c.applyMarker(self, opp); });
+}
 
 /************************************************************
  * Updates the behaviour of all players except the given player
