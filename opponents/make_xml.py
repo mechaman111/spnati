@@ -39,7 +39,7 @@ ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
 situations = []
 
 #sets of possible targets for lines
-one_word_targets = ["target", "filter"]
+one_word_targets = ["target", "filter", "hidden"]
 multi_word_targets = ["targetStage", "targetLayers", "targetStatus", "alsoPlaying", "alsoPlayingStage", "alsoPlayingHand", "oppHand", "hasHand", "totalMales", "totalFemales", "targetTimeInStage", "alsoPlayingTimeInStage", "timeInStage", "consecutiveLosses", "totalAlive", "totalExposed", "totalNaked", "totalMasturbating", "totalFinished", "totalRounds", "saidMarker", "notSaidMarker", "alsoPlayingSaidMarker", "alsoPlayingNotSaidMarker", "alsoPlayingSayingMarker", "targetSaidMarker", "targetNotSaidMarker", "targetSayingMarker", "priority"] #these will need to be re-capitalised when writing the xml
 lower_multi_targets = [t.lower() for t in multi_word_targets]
 all_targets = one_word_targets + lower_multi_targets

@@ -20,6 +20,8 @@ var BASE_SCREEN_WIDTH = 100;
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
 
+var VERSION_COMMIT = undefined;
+
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
 
@@ -157,6 +159,7 @@ function compileBaseErrorReport(userDesc, bugType) {
 
     return {
         'date': (new Date()).toISOString(),
+        'commit': VERSION_COMMIT,
         'session': sessionID,
         'game': gameID,
         'type': bugType,
@@ -760,6 +763,14 @@ function loadConfigFile () {
             else {
                 DEBUG = false;
                 console.log("Debugging is disabled");
+            }
+            
+            var _game_commit = $(xml).find('commit').text();
+            if (_game_commit) {
+                VERSION_COMMIT = _game_commit;
+                console.log("Running SPNATI commit "+VERSION_COMMIT+'.');
+            } else {
+                console.log("Could not find currently deployed Git commit!");
             }
 
             var _alts = $(xml).find('alternate-costumes').text();

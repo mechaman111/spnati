@@ -18,7 +18,10 @@ monika.ext_dialogues = {
     ]
 }
 
-monika.display_dialogue = function(pose, html) {
+monika.extendedDialoguePhase = [ "Talking...", function() { monika.extended_dialogue_continue(); }, false ];
+monika.previousGamePhase = null;
+
+monika.display_dialogue = function(pose, dialogue) {
     var slot = monika.find_slot();
     
     var current_img = monika.assemble_pose_filename({
@@ -28,103 +31,73 @@ monika.display_dialogue = function(pose, html) {
         'ext': 'png'
     });
     
-    var modified_html = html.replace("~player~", players[HUMAN_PLAYER].label)
+    var expanded = expandDialogue(dialogue, players[slot], null);
     
     $gameImages[slot-1].attr('src', current_img);
-    $gameDialogues[slot-1].html(modified_html);
+    $gameDialogues[slot-1].html(expanded);
 }
 
 monika.extended_dialogue_continue = function () {
-    if(!monika.current_ext_dialogue) {
-        /* Try to bail as much as we can */
-        try {
-            monika.display_dialogue("exasperated", "Oh, jeez... something must have broken really, really badly. I'm not actually sure what I'm supposed to be saying right now. Sorry!");
-        } catch (e) {
-            console.error(e);
-        } finally {
-            $mainButton.html("Continue");
-            allowProgression();
+    var curr_info = monika.current_ext_dialogue;
+    
+    try {        
+        var next_line = monika.ext_dialogues[curr_info.id][curr_info.line];
+        monika.display_dialogue(next_line[0], next_line[1]);
+        curr_info.line++;
+    } catch (e) {
+        console.error(e);
+    } finally {
+        if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
+            monika.extended_dialogue_end();
+        } else {
+            allowProgression(monika.extendedDialoguePhase);
         }
-    } else {
-        try {
-            /* prevent double clicking on main button */
-            $mainButton.attr('disabled', true);
-            actualMainButtonState = true;
-            
-            var curr_info = monika.current_ext_dialogue;
-            var next_line = monika.ext_dialogues[curr_info.id][curr_info.line];
-            
-            monika.display_dialogue(next_line[0], next_line[1]);
-            curr_info.line++;
-            
-            if(curr_info.line >= monika.ext_dialogues[curr_info.id].length) {
-                monika.extended_dialogue_end();
-            } else {
-                $mainButton.html("Talking...");
+    }
+}
+
+monika.extended_dialogue_end = function() {
+    allowProgression(monika.previousGamePhase);
+    monika.current_ext_dialogue = null;
+    
+    for(var i=1;i<players.length;i++) {
+        if(players[i]) {
+            try {
+                $gameBubbles[i-1].show();
+                monika.undoCharacterGlitch(i);
+            } catch (e) {
+                console.error(e);
             }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            allowProgression();
         }
     }
 }
 
 monika.extended_dialogue_start = function (id) {
+    var monika_slot = monika.find_slot();
+    
     try {
         console.log("[Monika] Beginning extended dialogue with ID "+id);
         
         monika.current_ext_dialogue = {
             'id': id,
             'line': 0,
-            'prev_context': $mainButton.html(),
         }
-        
-        if(AUTO_FADE) forceTableVisibility(false);
-        
-        var monika_slot = monika.find_slot();
-        
+
         for(var i=1;i<players.length;i++) {
-            if(i !== monika_slot) {
-                $gameBubbles[i-1].hide();
-                monika.glitchCharacter(i);
+            if(players[i] && i !== monika_slot) {
+                try {
+                    $gameBubbles[i-1].hide();
+                    monika.glitchCharacter(i);
+                } catch (e) {
+                    console.error(e);
+                }
             }
         }
-        
-        $gameBubbles[monika_slot-1].show();
     } catch(e) {
         console.error(e);
     } finally {
-        $mainButton.html("Talking...");
-        monika.extended_dialogue_continue();
-    }
-}
-
-monika.extended_dialogue_end = function() {
-    var prev_context = undefined;
-    
-    try {
-        prev_context = monika.current_ext_dialogue.prev_context;
-            
-        if(AUTO_FADE) forceTableVisibility(true);
-
-        monika.current_ext_dialogue = null; 
-
-        for(var i=1;i<players.length;i++) {
-            if(players[i]) {
-                $gameBubbles[i-1].show();
-                monika.undoCharacterGlitch(i);
-            }
-        }
-    } catch (e) {
-        console.error(e);
-    } finally {
-        if(prev_context) {
-            $mainButton.html(prev_context);
-        } else {
-            $mainButton.html("Continue");
-        }
+        monika.previousGamePhase = gamePhase;
+        $gameBubbles[monika_slot-1].show();
         
-        allowProgression();
+        monika.extended_dialogue_continue();
     }
 }

@@ -88,6 +88,40 @@ if(!monika) {
 
     monika.configureGlitchChance(1);
 
+    monika.reportException = function(prefix, e) {
+        console.log("[Monika] Exception swallowed "+prefix+": ");
+        console.error(e);
+        
+        try {
+            if (e) {
+                jsErrors.push({
+                    'date': (new Date()).toISOString(),
+                    'type': e.name,
+                    'message': e.message,
+                    'filename': e.filename,
+                    'lineno': e.lineNumber,
+                    'stack': e.stack
+                });
+            }
+        } catch (e2) {
+            console.error(e2);
+        }
+    
+        if (USAGE_TRACKING) {
+            var report = compileBaseErrorReport('Exception caught from Monika code.', 'auto');
+    
+            $.ajax({
+                url: BUG_REPORTING_ENDPOINT,
+                method: 'POST',
+                data: JSON.stringify(report),
+                contentType: 'application/json',
+                error: function (jqXHR, status, err) {
+                    console.error("Could not send bug report - error "+status+": "+err);
+                },
+            });
+        }
+    }
+
     monika.find_slot_by_id = function(id) {
         var lowercase_id = id.toLowerCase();
         
@@ -185,23 +219,23 @@ if(!monika) {
         var specific_glitch_marker = base_glitch_marker+'-'+glitch_type;
         
         if(value) {
-            monika_player.markers[base_glitch_marker] = value;
-            monika_player.markers[specific_glitch_marker] = value;
-            monika_player.markers[type_glitch_marker] = value;
-            monika_player.markers['glitched'] = true;
+            monika_player.markers[base_glitch_marker] = 1;
+            monika_player.markers[specific_glitch_marker] = 1;
+            monika_player.markers[type_glitch_marker] = 1;
+            monika_player.markers['glitched'] = 1;
         } else {
-            delete monika_player.markers[base_glitch_marker];
-            delete monika_player.markers[specific_glitch_marker];
-            delete monika_player.markers[type_glitch_marker];
+            monika_player.markers[base_glitch_marker] = 0;
+            monika_player.markers[specific_glitch_marker] = 0;
+            monika_player.markers[type_glitch_marker] = 0;
         }
     }
     
     monika.setRoundGlitchMarker = function(value) {
         var monika_player = monika.find_monika_player();
         if(value) {
-            monika_player.markers['round-glitched'] = true;
+            monika_player.markers['round-glitched'] = 1;
         } else {
-            delete monika_player.markers['round-glitched'];
+            monika_player.markers['round-glitched'] = 0;
         }
     }
     
@@ -245,17 +279,18 @@ if(!monika) {
             var original_label = players[targetedSlot].label;
             monika.corruptCharacterLabel(targetedSlot);
             
-            var cv = monika.get_empty_canvas($gameImages[targetedSlot-1]);
-            monika.tile_filter(cv, $gameImages);
-            
-            monika.active_effects.round_delete_glitching = {
-                'slot': targetedSlot,
-                'cv': cv,
-                'original_label': original_label
-            };
-            
-            monika.setGlitchingMarker(targetedSlot, monika.GLITCH_DELETE, true);
-            monika.setRoundGlitchMarker(true);
+            monika.get_canvas_async($gameImages[targetedSlot-1], function (cv) {
+                monika.tile_filter(cv, $gameImages);
+                
+                monika.active_effects.round_delete_glitching = {
+                    'slot': targetedSlot,
+                    'cv': cv,
+                    'original_label': original_label
+                };
+                
+                monika.setGlitchingMarker(targetedSlot, monika.GLITCH_DELETE, true);
+                monika.setRoundGlitchMarker(true);
+            }, true);
         }
         
         if(monika.force_dialogue_glitch || monika.modifiedChance(monika.DIALOGUE_GLITCH_CHANCE, glitch_chance_mult)) {
@@ -336,7 +371,7 @@ if(!monika) {
                 glitchOptionsContainer.hide();
             }
         } catch (e) {
-            console.error("[Monika] Error in pre-showOptionsModal prep: "+e.toString());
+            monika.reportException("in pre-showOptionsModal prep", e);
             glitchOptionsContainer.hide();
         } finally {
             return original_showOptionsModal.apply(null, arguments);
@@ -352,13 +387,21 @@ if(!monika) {
          * context then we don't want the original function to be called.
          */
         try {
-            if(monika.current_ext_dialogue) {
+            if(gamePhase !== monika.extendedDialoguePhase) {
+                return original_advanceGame.apply(null, arguments); 
+            } else {
+                $mainButton.attr('disabled', true);
+                actualMainButtonState = true;
+                autoForfeitTimeoutID = undefined;
+                
+                if (AUTO_FADE) {
+                    forceTableVisibility(false);
+                }
+                
                 monika.extended_dialogue_continue();
             }
         } catch(e) {
-            console.error("[Monika] Error in pre-advanceGame prep: "+e.toString());
-        } finally {
-            return original_advanceGame.apply(null, arguments);
+            monika.reportException("in pre-advanceGame prep", e);
         }
     }
 
@@ -380,7 +423,7 @@ if(!monika) {
                 monika.onRoundStart();
             }
         } catch (e) {
-            console.error("[Monika] Error in pre-advanceTurn prep: "+e.toString());
+            monika.reportException("in pre-advanceTurn prep", e);
         } finally {
             original_advanceTurn();
         }
@@ -414,7 +457,7 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeContinuePhase prep: "+e.toString());
+            monika.reportException("in pre-completeContinuePhase prep", e);
         } finally {
             return original_completeContinuePhase.apply(null, arguments); 
         }
@@ -427,7 +470,7 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeMasturbatePhase prep: "+e.toString());
+            monika.reportException("in pre-completeMasturbatePhase prep", e);
         } finally {
             return original_completeMasturbatePhase.apply(null, arguments); 
         }
@@ -441,7 +484,7 @@ if(!monika) {
         try {
             monika.undoDeleteGlitchEffect();
         } catch (e) {
-            console.error("[Monika] Error in pre-completeStripPhase prep: "+e.toString());
+            monika.reportException("in pre-completeStripPhase prep", e);
         } finally {
             return original_completeStripPhase.apply(null, arguments);
         }
@@ -453,6 +496,11 @@ if(!monika) {
         if(!monika.present()) { return original_completeRevealPhase.apply(null, arguments); }
         
         try {
+            /* Fixes a bug with joint masturbation... */
+            if (!players[recentLoser]) {
+                recentLoser = -1;
+            } 
+            
             var targetedSlot = monika.active_effects.round_targeted_glitching;
             if(targetedSlot) {
                 monika.setGlitchingMarker(targetedSlot, monika.GLITCH_VISUAL, null);
@@ -474,7 +522,7 @@ if(!monika) {
             monika.active_effects.round_dialogue_glitching = null;
             monika.active_effects.round_edit_glitching = null;
         } catch (e) {
-            console.error("[Monika] Error in pre-completeRevealPhase prep: "+e.toString());
+            monika.reportException("in pre-completeRevealPhase prep", e);
         } finally {
             return original_completeRevealPhase.apply(null, arguments); 
         }
@@ -518,7 +566,7 @@ if(!monika) {
                 }
             }
         } catch (e) {
-            console.error("[Monika] Error in pre-updateGameVisual prep: "+e.toString());
+            monika.reportException("in pre-updateGameVisual prep", e);
         } finally {
             original_updateGameVisual(player);
             fixupDialogue = original_fixupDialogue;
@@ -570,26 +618,18 @@ if(!monika) {
                 $gameLabels[player].html("Monika & Sayori");
             } else {
                 /* 'Regular' glitch masturbation */
-                var current_img = $gameImages[player-1].attr('src').substr(17);
-                monika.when_loaded($gameImages[player-1], function () {
-                    console.log("[Monika] image loaded, glitching to new pose...");
+                var el = $gameImages[player-1]
+                var current_img = el.attr('src').substr(17);
+                
+                if (el[0].complete) {
                     monika.glitch_pose_transition(player, current_img, 0, 200);
-                });
+                } else {
+                    el.one('load', function () {
+                        console.log("[Monika] image loaded, glitching to new pose...");
+                        monika.glitch_pose_transition(player, current_img, 0, 200);
+                    });
+                }
             }
-            
-            /*
-            if(!$gameImages[player-1][0].complete) {
-                // Wait for image to load before glitching
-                $gameImages[player-1].one("load", function () {
-                    console.log("[Monika] image loaded, glitching to new pose...");
-                    monika.glitch_pose_transition(player, current_img, 0, 500);
-                });
-            } else {
-                // Image already loaded, glitch now
-                console.log("[Monika] Immediately glitching to new pose...");
-                monika.glitch_pose_transition(player, current_img, 0, 500);
-            }
-            */
         }
     }
 }

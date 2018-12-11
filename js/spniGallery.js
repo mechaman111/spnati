@@ -8,10 +8,15 @@ function GEnding(player, ending){
 	this.gender = $(ending).attr('gender');
 
 	var previewImage = $(ending).attr('img');
-  	previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+	if (previewImage) {
+		previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+	} else {
+		console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
+	}
 
 	this.image = previewImage;
 	this.title = $(ending).html();
+	this.unlockHint = $(ending).attr('hint');
 	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
@@ -26,6 +31,7 @@ $galleryNextButton = $('#gallery-next-page-button');
 $galleryStartButton = $('#gallery-start-ending-button');
 $selectedEndingPreview = $('#selected-ending-previev');
 $selectedEndingLabels = [$('#selected-ending-title'), $('#selected-ending-character'), $('#selected-ending-gender')];
+$selectedEndingHint = [$('#selected-ending-hint-container'), $('#selected-ending-hint')];
 
 function loadGalleryScreen(){
 	screenTransition($titleScreen, $galleryScreen);
@@ -156,6 +162,13 @@ function selectEnding(i) {
 	if (!ending) {
 		return;
 	}
+	
+	if (ending.unlockHint) {
+		$selectedEndingHint[0].show();
+		$selectedEndingHint[1].html(ending.unlockHint);
+	} else {
+		$selectedEndingHint[0].hide();
+	}
 
 	if (ending.unlocked()) {
 		$galleryStartButton.attr('disabled', false);
@@ -205,7 +218,7 @@ function doEpilogueFromGallery(){
 			var endingElem = null;
 			
 			$xml.find('epilogue').each(function () {
-				if ($(this).find('title').html() === chosenEpilogue.title) {
+				if ($(this).find('title').html() === chosenEpilogue.title && $(this).attr('gender') === chosenEpilogue.gender) {
 					endingElem = this;
 				}
 			});
@@ -226,6 +239,7 @@ function doEpilogueFromGallery(){
 			if (USAGE_TRACKING) {
 				var usage_tracking_report = {
 					'date': (new Date()).toISOString(),
+					'commit': VERSION_COMMIT,
 					'type': 'gallery',
 					'session': sessionID,
 					'userAgent': navigator.userAgent,

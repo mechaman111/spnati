@@ -212,6 +212,8 @@ function expandDialogue (dialogue, self, target) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
+                } else if ((fn == 'type' || fn == 'position') && args === undefined) {
+                    substitution = clothing[fn];
                 } else if (fn === undefined) {
                     substitution = clothing.generic;
                 }
@@ -237,6 +239,16 @@ function expandDialogue (dialogue, self, target) {
                 } else {
                     substitution = "marker"; //didn't supply a marker name
                 }
+                break;
+            case 'background':
+                if (fn == undefined) {
+                    substitution = backgrounds[selectedBackground].name;
+                } else if (fn in backgrounds[selectedBackground] && args === undefined) {
+                    substitution = backgrounds[selectedBackground][fn];
+                }
+                break;
+            case 'weekday':
+                substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
@@ -290,6 +302,7 @@ function parseInterval (str) {
 	if (!str) return undefined;
 	var pieces = str.split("-");
 	var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
+	if (pieces.length == 1 && isNaN(min)) return null;
 	var max = pieces.length == 1 ? min
 		: pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
 	return { min : min,
@@ -420,6 +433,7 @@ function Case($xml, stage) {
 	this.saidMarker =               $xml.attr("saidMarker");
 	this.notSaidMarker =            $xml.attr("notSaidMarker");
 	this.customPriority =           parseInt($xml.attr("priority"), 10);
+    this.hidden =                   $xml.attr("hidden");
 	
 	var states = [];
 	$xml.find('state').each(function () {
@@ -862,12 +876,18 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     for (var i = 0; i < cases.length; i++) {
         var curCase = new Case(cases[i]);
         
-        if (curCase.priority >= bestMatchPriority &&
+        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             curCase.basicRequirementsMet(this, opp)) 
         {
             if (curCase.isVolatile()) {
                 volatileMatches.push(curCase); 
             } else {
+                if (curCase.hidden) {
+                    //if it's hidden, set markers but don't actually count as a match
+                    this.applyMarkers(curCase, opp);
+                    continue;
+                }
+
                 if (curCase.priority > bestMatchPriority) {
                     bestMatch = [curCase];
                     bestMatchPriority = curCase.priority;
@@ -998,6 +1018,13 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     this.stateCommitted = true;
 }
 
+/************************************************************
+ * Applies markers from all lines in a case
+ ************************************************************/
+Opponent.prototype.applyMarkers = function (chosenCase, opp) {
+    var self = this;
+    chosenCase.states.forEach(function (c) { c.applyMarker(self, opp); });
+}
 
 /************************************************************
  * Updates the behaviour of all players except the given player

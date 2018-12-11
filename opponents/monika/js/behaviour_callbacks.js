@@ -1,21 +1,21 @@
 monika.delete_blazer = function() {
     try {
         var slot = monika.find_slot();
-        monika.glitch_pose_transition(slot, '2-removed-blazer.png', 750, 500, 400, 776-400);
-        setTimeout(monika.disable_progression, 0);
+        monika.glitch_pose_transition(slot, '2-removed-blazer.png', 750, 250, 400, 776-400);
     } catch (e) {
-        allowProgression();
-        console.error(e);
-    } finally {
-        setTimeout(allowProgression, 1750);
+        monika.reportException("in blazer strip effect", e);
     }
 }
 
 monika.start_masturbating = function() {
-    if(!monika.active_effects.glitch_masturbation && !monika.active_effects.affections_glitch) {
-        var slot = monika.find_slot();
-        monika.glitch_mast_heavy(false);
-        monika.glitch_masturbation(slot);
+    try {
+        if(!monika.active_effects.glitch_masturbation && !monika.active_effects.affections_glitch) {
+            var slot = monika.find_slot();
+            monika.glitch_mast_heavy(false);
+            monika.glitch_masturbation(slot);
+        }
+    } catch (e) {
+        monika.reportException("when starting glitch masturbation effect", e);
     }
 }
 
@@ -51,14 +51,18 @@ monika.start_heavy_masturbation = function () {
 }
 
 monika.react_aimee_strip = function() {
-    // Aimee's slot is in the `recentLoser` variable
-    // Move Monika as far away from that slot as possible.
-    if(recentLoser <= 2) {
-        /* Move to far right */
-        monika.moveCharacterOverUI(monika.find_slot(), 5);
-    } else {
-        /* Move to far left */
-        monika.moveCharacterOverUI(monika.find_slot(), 0);
+    try {
+        // Aimee's slot is in the `recentLoser` variable
+        // Move Monika as far away from that slot as possible.
+        if(recentLoser <= 2) {
+            /* Move to far right */
+            monika.moveCharacterOverUI(monika.find_slot(), 5);
+        } else {
+            /* Move to far left */
+            monika.moveCharacterOverUI(monika.find_slot(), 0);
+        }
+    } catch (e) {
+        monika.reportException("in Aimee strip reaction", e);
     }
 }
 
@@ -80,13 +84,12 @@ monika.react_9s_hack = function () {
 
         var do_glitch_1 = function () {
             try {
-                monika.glitchCharacter(nines_slot);
-                monika.disable_progression();
+                monika.glitchCharacter(nines_slot, null, null, function () {
+                    setTimeout(do_transition, 500);
+                });
             } catch (e) {
-                allowProgression();
-                console.error(e);
-            } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_transition, 500);
+                monika.reportException("in 9S hack reaction - glitch part 1", e);
+                setTimeout(do_transition, 500);
             }
         }
 
@@ -95,38 +98,29 @@ monika.react_9s_hack = function () {
                 monika.active_effects.character_glitch[nines_slot-1] = null;
                 $gameImages[nines_slot-1].attr('src', next_img);
             } catch (e) {
-                allowProgression();
-                console.error(e);
+                monika.reportException("in 9S hack reaction - transition phase", e);
             } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_glitch_2, 1500);
+                setTimeout(do_glitch_2, 1500);
             }
         }
 
         var do_glitch_2 = function() {
             try {
-                monika.glitchCharacter(nines_slot);
+                monika.glitchCharacter(nines_slot, null, null, function () {
+                    setTimeout(do_revert, 500);
+                });
             } catch (e) {
-                allowProgression();
-                console.error(e);
-            } finally {
-                monika.schedule_when_loaded($gameImages[nines_slot-1], do_revert, 500);
+                monika.reportException("in 9S hack reaction - glitch part 2", e);
+                setTimeout(do_revert, 500);
             }
         }
 
         var do_revert = function () {
-            try {
-                monika.active_effects.character_glitch[nines_slot-1] = null;
-                $gameImages[nines_slot-1].attr('src', current_img);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                allowProgression();
-            }
+            $gameImages[nines_slot-1].attr('src', current_img);
+            monika.active_effects.character_glitch[nines_slot-1] = null;
         }
 
-        setTimeout(allowProgression, 4500); // juuust in case
-        setTimeout(monika.disable_progression, 0);
-        monika.schedule_when_loaded($gameImages[nines_slot-1], do_glitch_1, 1500);
+        setTimeout(do_glitch_1, 750);
     } else {
         /* Simply glitch 9S a bit... */
         monika.glitchCharacter(nines_slot);
@@ -136,7 +130,7 @@ monika.react_9s_hack = function () {
 monika.setRealizationMarkers = function(id) {
     var m = monika.find_monika_player();
     if(m) {
-        m.markers['realization_'+id] = true;
+        m.markers['realization_'+id] = 1;
     }
 }
 
@@ -164,7 +158,7 @@ monika.jealousGlitch = function() {
             }
         }
     } catch (e) {
-        console.error(e);
+        monika.reportException("when handling minor jealousy-glitch effect", e);
     }
 }
 
@@ -179,7 +173,7 @@ monika.majorJealousGlitch = function() {
             }
         }
     } catch (e) {
-        console.error(e);
+        monika.reportException("when handling major jealousy-glitch effect", e);
     }
 }
 
@@ -192,8 +186,8 @@ monika.sayonikaYes = function () {
         
         monika.active_effects['affections_glitch'] = true;
         
-        players[sayori_slot].markers['affections-glitch'] = true;
-        players[slot].markers['affections-glitch'] = true;
+        players[sayori_slot].markers['affections-glitch'] = 1;
+        players[slot].markers['affections-glitch'] = 1;
         
         $gameDialogues[slot-1].html("W-Wait, really? I wasn't expecting you to answer-- whoops!");
         $gameImages[slot-1].attr('src', 'opponents/monika/2-shocked.png');
@@ -205,7 +199,7 @@ monika.sayonikaYes = function () {
             $gameImages[slot-1].attr('src', 'opponents/monika/2-awkward-question.png');
         }, 1500);
     } catch (e) {
-        console.error(e);
+        monika.reportException("when handling Sayonika accept dialogue", e);
     }
 }
 
@@ -217,7 +211,7 @@ monika.sayonikaNo = function () {
         $gameDialogues[slot-1].html("Oh, I was just teasing you a bit! I didn't expect you to actually answer that, ehehe~!");
         $gameImages[slot-1].attr('src', 'opponents/monika/2-happy.png');
     } catch (e) {
-        console.error(e);
+        monika.reportException("when handling Sayonika disable dialogue", e);
     }
 }
 
@@ -233,8 +227,8 @@ monika.startJointMasturbation = function () {
         
         monika.active_effects['joint_masturbation'] = true;
         
-        players[monika_slot].markers['joint-masturbation'] = true;
-        players[sayori_slot].markers['joint-masturbation'] = true;
+        players[monika_slot].markers['joint-masturbation'] = 1;
+        players[sayori_slot].markers['joint-masturbation'] = 1;
         
         players[monika_slot].tags.push('tandem');
         
@@ -254,8 +248,12 @@ monika.startJointMasturbation = function () {
             monika.saved_sayori_slot = sayori_slot;
             delete players[sayori_slot];
             
-            updateAllBehaviours(monika_slot, FEMALE_MASTURBATING, players[monika_slot]);
-            updateBehaviour(monika_slot, PLAYER_START_MASTURBATING);
+            if (previousLoser === sayori_slot) {
+                previousLoser = -1;
+            }
+            
+            updateAllBehaviours(players[monika_slot], FEMALE_MASTURBATING);
+            players[monika_slot].updateBehaviour(PLAYER_START_MASTURBATING);
             
             updateAllVolatileBehaviours();
         	commitAllBehaviourUpdates();
@@ -264,7 +262,7 @@ monika.startJointMasturbation = function () {
         	players[monika_slot].stage = 9;
         }, 0);
     } catch (e) {
-        console.error("Error in monika.startJointMasturbation(): "+e.toString());
+        monika.reportException("in monika.startJointMasturbation()", e);
     }
 }
 
@@ -283,6 +281,8 @@ monika.endJointMasturbation = function () {
         setTimeout(function () {
             /* Put Sayori back in her slot. */
             players[sayori_slot] = monika.saved_sayori_player;
+            players[sayori_slot].markers['joint-masturbation'] = 1;
+            //players[sayori_slot].markers['joint-masturbation-finished'] = 1;
             
             /* Hard reset stage, forfeit status, and other data for Sayori. */
             players[sayori_slot].stage = 9;
@@ -292,6 +292,6 @@ monika.endJointMasturbation = function () {
             timers[sayori_slot] = 0;
         }, 0);
     } catch (e) {
-        console.error("Error in monika.endJointMasturbation(): "+e.toString());
+        monika.reportException("in monika.endJointMasturbation()", e);
     }
 }
