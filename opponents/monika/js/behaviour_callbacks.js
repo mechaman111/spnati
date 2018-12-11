@@ -252,12 +252,7 @@ monika.startJointMasturbation = function () {
                 previousLoser = -1;
             }
             
-            updateAllBehaviours(players[monika_slot], FEMALE_MASTURBATING);
-            players[monika_slot].updateBehaviour(PLAYER_START_MASTURBATING);
-            
-            updateAllVolatileBehaviours();
-        	commitAllBehaviourUpdates();
-            updateAllGameVisuals();
+            updateAllBehaviours(monika_slot, PLAYER_START_MASTURBATING, FEMALE_MASTURBATING);
             
         	players[monika_slot].stage = 9;
         }, 0);

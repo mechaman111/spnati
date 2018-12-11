@@ -680,6 +680,7 @@ function initialSetup () {
     /* start by creating the human player object */
     var humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     players[HUMAN_PLAYER] = humanPlayer;
+    players[HUMAN_PLAYER].slot = HUMAN_PLAYER;
 
 	/* enable table opacity */
 	tableOpacity = 1;
@@ -843,8 +844,7 @@ function resetPlayers () {
 		}
 		timers[i] = 0;
 	}
-	updateAllBehaviours(null, SELECTED);
-    commitAllBehaviourUpdates();
+	updateAllBehaviours(null, null, SELECTED);
 }
 
 /************************************************************
