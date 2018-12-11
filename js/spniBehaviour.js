@@ -600,6 +600,13 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
             return false; 
         }
     }
+	
+	// targetStatus
+    if (opp && this.targetStatus) {
+        if (!checkPlayerStatus(opp, this.targetStatus)) {
+            return false;
+        }
+    }
 
     // targetStartingLayers
     if (opp && this.targetStartingLayers) {
