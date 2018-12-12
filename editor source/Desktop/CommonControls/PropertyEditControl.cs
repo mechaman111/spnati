@@ -98,6 +98,11 @@ namespace Desktop.CommonControls
 		{
 		}
 
+		protected Type PropertyType
+		{
+			get	{ return _propertyInfo.GetDataType(); }
+		}
+
 		/// <summary>
 		/// Sets the current data
 		/// </summary>

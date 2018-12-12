@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalSpeech : KisekaeSubCode, IPoseable
+	public class KisekaeGlobalSpeech : KisekaeSubCode, IPoseable, IMoveable
 	{
 		public int Type
 		{
@@ -150,6 +150,11 @@
 		{
 			get { return GetInt(25); }
 			set { Set(25, value); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			X += offset;
 		}
 	}
 }

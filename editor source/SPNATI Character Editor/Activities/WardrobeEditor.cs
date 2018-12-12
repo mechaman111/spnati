@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 				Clothing c = _character.Wardrobe[i];
 				try
 				{
-					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.Name, c.Lowercase, c.Plural, c.Type, c.Position)];
+					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.FormalName, c.GenericName, c.Plural, c.Type, c.Position)];
 					row.Tag = c;
 				}
 				catch { }
@@ -82,8 +82,8 @@ namespace SPNATI_Character_Editor.Controls
 			Clothing layer = row.Tag as Clothing;
 			if (layer != null)
 			{
-				layer.Name = name;
-				layer.Lowercase = lowercase;
+				layer.FormalName = name;
+				layer.GenericName = lowercase;
 				layer.Plural = plural;
 				layer.Type = type;
 				layer.Position = position;

@@ -91,7 +91,7 @@ namespace SPNATI_Character_Editor
 			{
 				Title = e.Title,
 				Gender = e.Gender,
-				GalleryImage = e.GalleryImage,
+				GalleryImage = e.GalleryImage ?? (e.Screens.Count > 0 ? e.Screens[0].Image : null),
 				AlsoPlaying = e.AlsoPlaying,
 				PlayerStartingLayers = e.PlayerStartingLayers,
 				HasMarkerConditions = !string.IsNullOrWhiteSpace(e.AllMarkers)
@@ -124,6 +124,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("playerStartingLayers")]
 		public string PlayerStartingLayers;
 
+		[DefaultValue(false)]
 		[XmlAttribute("markers")]
 		public bool HasMarkerConditions;
 

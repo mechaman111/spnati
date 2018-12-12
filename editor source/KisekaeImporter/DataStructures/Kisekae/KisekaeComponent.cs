@@ -132,14 +132,6 @@ namespace KisekaeImporter
 			}
 		}
 
-		public IEnumerable<KisekaeSubCode> GetPoseableSubCodes()
-		{
-			foreach (var subcode in _subcodes.Values)
-			{
-				yield return subcode;
-			}
-		}
-
 		public void ApplySubCode(string id, string[] data)
 		{
 			KisekaeSubCode code = GetSubCode(id);
@@ -190,6 +182,19 @@ namespace KisekaeImporter
 				{
 					action(item);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Shifts all movable pieces by the given offset.
+		/// </summary>
+		/// <param name="offset"></param>
+		public void ShiftX(int offset)
+		{
+			foreach (IMoveable subcode in GetSubCodesOfType<IMoveable>())
+			{
+				if ((subcode as KisekaeSubCode).IsEmpty) { continue; }
+				subcode.ShiftX(offset);
 			}
 		}
 	}

@@ -1,13 +1,11 @@
 ﻿using KisekaeImporter;
+using KisekaeImporter.DataStructures.Kisekae;
 using KisekaeImporter.ImageImport;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
-using System.Linq;
-using KisekaeImporter.DataStructures.Kisekae;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -34,8 +32,19 @@ namespace SPNATI_Character_Editor
 			var poseComponent = code.GetComponent<KisekaePose>();
 			if (poseComponent != null)
 			{
-				//TODO: get model 1's offset from the center and then shift all models + global objects relative to that offset in order to center the entire scene
+				int offset = 410 - poseComponent.Placement.X;
+
 				poseComponent.Placement.X = 410;
+
+				for (int i = 1; i < code.Models.Length; i++)
+				{
+					KisekaePose modelPose = code.Models[i]?.GetComponent<KisekaePose>();
+					if (modelPose != null)
+					{
+						modelPose.Placement.X += offset;
+					}
+				}
+				code.Scene?.ShiftX(offset);
 			}
 
 			List<string> unknownUrls = new List<string>();

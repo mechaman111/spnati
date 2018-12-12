@@ -62,7 +62,7 @@ namespace Desktop
 			{
 				provider.SetContext(recordContext);
 
-				if (!forceOpen && (!allowCreate || !provider.AllowsNew))
+				if (!forceOpen/* && (!allowCreate || !provider.AllowsNew)*/)
 				{
 					//No point in bringing up the form if there's only one record
 					List<IRecord> records = provider.GetRecords(text);
@@ -290,6 +290,11 @@ namespace Desktop
 				else
 				{
 					lstItems.SelectedIndices.Clear();
+					if (!string.IsNullOrEmpty(txtName.Text))
+					{
+						cmdNew.Enabled = true;
+						AcceptButton = cmdNew;
+					}
 				}
 			}
 		}

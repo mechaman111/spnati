@@ -14,5 +14,11 @@
 
 	public interface IPoseable
 	{
+
+	}
+
+	public interface IMoveable
+	{
+		void ShiftX(int offset);
 	}
 }

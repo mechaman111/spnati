@@ -51,18 +51,6 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-
-			foreach (var line in character.StartingLines)
-			{
-				string img = line.Image;
-				unusedImages.Remove(img);
-				//TODO: This isn't working correctly at the moment
-				//if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
-				//{
-				//	warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", "start", img)));
-				//}
-			}
-
 			foreach (Stage stage in character.Behavior.Stages)
 			{
 				foreach (Case stageCase in stage.Cases)
@@ -118,7 +106,7 @@ namespace SPNATI_Character_Editor
 								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target), context));
 							}
 
-							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && target.FolderName != "human")
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
 							}
@@ -140,7 +128,7 @@ namespace SPNATI_Character_Editor
 									{
 										if (clothing == null)
 											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
-										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Lowercase, clothing.Type), context));
+										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
 									}
 								}
 							}
@@ -441,17 +429,16 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
+				string value;
+				MarkerOperator op;
+				bool perTarget;
+				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
 				if (!character.Markers.Contains(name))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
 				}
 				else
 				{
-					string value;
-					MarkerOperator op;
-					bool perTarget;
-					name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
-
 					if (!string.IsNullOrEmpty(stageRange))
 					{
 						//verify that a marker can even be set prior to this point

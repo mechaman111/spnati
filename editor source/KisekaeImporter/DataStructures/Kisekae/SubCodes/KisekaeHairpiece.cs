@@ -50,16 +50,34 @@
 			set { Set(11, value.ToString()); }
 		}
 
-		public int ScaleZ
+		public int ScaleY
 		{
 			get { return GetInt(12); }
 			set { Set(12, value.ToString()); }
 		}
 
-		public int RotationZ
+		public int Skew
 		{
 			get { return GetInt(13); }
 			set { Set(13, value.ToString()); }
+		}
+
+		public bool Flipped
+		{
+			get { return GetBool(14); }
+			set { Set(14, value); }
+		}
+
+		public int DockPoint
+		{
+			get { return GetInt(15); }
+			set { Set(15, value); }
+		}
+
+		public bool Shaded
+		{
+			get { return GetBool(16); }
+			set { Set(16, value); }
 		}
 	}
 }

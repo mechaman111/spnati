@@ -161,6 +161,7 @@ namespace SPNATI_Character_Editor
 		{
 			cboFrom.Text = "";
 			cboTo.Text = "";
+			Save();
 		}
 
 		public override void Save()

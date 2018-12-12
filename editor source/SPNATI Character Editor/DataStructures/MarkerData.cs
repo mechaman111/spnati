@@ -53,7 +53,15 @@ namespace SPNATI_Character_Editor
 
 		public void Add(Marker marker)
 		{
+			Marker existing = _markers.Get(marker.Name);
 			_markers[marker.Name] = marker;
+			if (existing != null)
+			{
+				foreach (string value in existing.Values)
+				{
+					marker.AddValue(value);
+				}
+			}
 		}
 
 		public void Cache(string marker)

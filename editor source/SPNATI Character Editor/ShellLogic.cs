@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Activities;
+using SPNATI_Character_Editor.Forms;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -89,6 +90,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarSeparator();
 			menu = shell.AddToolbarSubmenu("Help");
 			shell.AddToolbarItem("View Help", OpenHelp, menu, Keys.F1);
+			shell.AddToolbarItem("Change Log", OpenChangeLog, menu, Keys.None);
 			shell.AddToolbarItem("About Character Editor...", OpenAbout, menu, Keys.None);
 		}
 
@@ -128,6 +130,11 @@ namespace SPNATI_Character_Editor
 		{
 			HelpForm form = new HelpForm();
 			form.Show();
+		}
+
+		private static void OpenChangeLog()
+		{
+			new ChangeLogReview().ShowDialog();
 		}
 
 		private static void OpenAbout()

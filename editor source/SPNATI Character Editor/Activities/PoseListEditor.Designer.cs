@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdImportAll = new System.Windows.Forms.Button();
 			this.cmdImportNew = new System.Windows.Forms.Button();
@@ -44,11 +45,18 @@
 			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
 			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label5 = new System.Windows.Forms.Label();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.lblCurrentPoseFile = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).BeginInit();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmdImportAll
@@ -119,6 +127,7 @@
             this.ColData,
             this.ColImage,
             this.ColImport});
+			this.gridPoses.ContextMenuStrip = this.contextMenu;
 			this.gridPoses.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridPoses.Location = new System.Drawing.Point(3, 32);
 			this.gridPoses.MultiSelect = false;
@@ -132,6 +141,7 @@
 			this.gridPoses.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.gridPoses_RowPrePaint);
 			this.gridPoses.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridPoses_RowsAdded);
 			this.gridPoses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.gridPoses_Scroll);
+			this.gridPoses.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gridPoses_MouseDown);
 			// 
 			// ColStage
 			// 
@@ -189,6 +199,55 @@
 			this.ColImport.Name = "ColImport";
 			this.ColImport.Width = 70;
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.duplicateToolStripMenuItem});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(167, 98);
+			// 
+			// cutToolStripMenuItem
+			// 
+			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.cutToolStripMenuItem.Text = "Cut";
+			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.copyToolStripMenuItem.Text = "Copy";
+			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this.pasteToolStripMenuItem.Enabled = false;
+			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.pasteToolStripMenuItem.Text = "Paste";
+			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(163, 6);
+			// 
+			// duplicateToolStripMenuItem
+			// 
+			this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
+			this.duplicateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+			this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.duplicateToolStripMenuItem.Text = "Duplicate";
+			this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
+			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -230,6 +289,7 @@
 			this.Name = "PoseListEditor";
 			this.Size = new System.Drawing.Size(941, 626);
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).EndInit();
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -255,5 +315,11 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Label lblCurrentPoseFile;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
 	}
 }
