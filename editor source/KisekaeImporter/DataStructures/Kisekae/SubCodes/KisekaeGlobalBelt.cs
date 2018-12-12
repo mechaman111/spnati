@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalBelt : KisekaeSubCode, IPoseable
+	public class KisekaeGlobalBelt : KisekaeSubCode, IPoseable, IMoveable
 	{
 		public int Type
 		{
@@ -96,6 +96,13 @@
 		{
 			get { return GetInt(15); }
 			set { Set(15, value.ToString()); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			//for some inexplicable reason these operate on a different unit of measurement than everything else, so try to account for that empirically
+			offset = (int)(offset * 0.827f);
+			X += offset;
 		}
 	}
 }

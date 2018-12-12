@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalHairpiece : KisekaeSubCode, IPoseable
+	public class KisekaeGlobalHairpiece : KisekaeSubCode, IPoseable, IMoveable
 	{
 		public int Type
 		{
@@ -90,6 +90,14 @@
 		{
 			get { return GetBool(14); }
 			set { Set(14, value); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			//for some inexplicable reason these operate on a different unit of measurement than everything else, so try to account for that empirically
+			offset = (int)(offset * 0.907f);
+
+			X += offset;
 		}
 	}
 }

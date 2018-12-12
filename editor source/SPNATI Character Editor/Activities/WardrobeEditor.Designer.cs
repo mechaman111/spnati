@@ -29,11 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.gridWardrobe = new System.Windows.Forms.DataGridView();
-			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPlural = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ColType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.ColPosition = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.cmdClothesDown = new System.Windows.Forms.Button();
 			this.cmdClothesUp = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
@@ -47,6 +42,11 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
+			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPlural = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ColType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColPosition = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridWardrobe)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -73,46 +73,6 @@
 			this.gridWardrobe.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridWardrobe_CellValidating);
 			this.gridWardrobe.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridWardrobe_RowsAdded);
 			this.gridWardrobe.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.gridWardrobe_RowsRemoved);
-			// 
-			// ColName
-			// 
-			this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColName.HeaderText = "Name";
-			this.ColName.Name = "ColName";
-			this.ColName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// ColLower
-			// 
-			this.ColLower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColLower.HeaderText = "Lowercase Name";
-			this.ColLower.Name = "ColLower";
-			this.ColLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// ColPlural
-			// 
-			this.ColPlural.HeaderText = "Is Plural?";
-			this.ColPlural.Name = "ColPlural";
-			this.ColPlural.Width = 50;
-			// 
-			// ColType
-			// 
-			this.ColType.HeaderText = "Type";
-			this.ColType.Items.AddRange(new object[] {
-            "extra",
-            "minor",
-            "major",
-            "important"});
-			this.ColType.Name = "ColType";
-			// 
-			// ColPosition
-			// 
-			this.ColPosition.HeaderText = "Position";
-			this.ColPosition.Items.AddRange(new object[] {
-            "upper",
-            "lower",
-            "both",
-            "other"});
-			this.ColPosition.Name = "ColPosition";
 			// 
 			// cmdClothesDown
 			// 
@@ -244,6 +204,47 @@
 			this.label8.TabIndex = 0;
 			this.label8.Text = "Upper: covers the chest area";
 			// 
+			// ColName
+			// 
+			this.ColName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColName.HeaderText = "Proper Name";
+			this.ColName.Name = "ColName";
+			this.ColName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.ColName.Visible = false;
+			// 
+			// ColLower
+			// 
+			this.ColLower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColLower.HeaderText = "Name (lowercase)";
+			this.ColLower.Name = "ColLower";
+			this.ColLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// ColPlural
+			// 
+			this.ColPlural.HeaderText = "Is Plural?";
+			this.ColPlural.Name = "ColPlural";
+			this.ColPlural.Width = 50;
+			// 
+			// ColType
+			// 
+			this.ColType.HeaderText = "Type";
+			this.ColType.Items.AddRange(new object[] {
+            "extra",
+            "minor",
+            "major",
+            "important"});
+			this.ColType.Name = "ColType";
+			// 
+			// ColPosition
+			// 
+			this.ColPosition.HeaderText = "Position";
+			this.ColPosition.Items.AddRange(new object[] {
+            "upper",
+            "lower",
+            "both",
+            "other"});
+			this.ColPosition.Name = "ColPosition";
+			// 
 			// WardrobeEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,11 +282,11 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLower;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPlural;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColType;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColPosition;
-		private System.Windows.Forms.Label label5;
 	}
 }

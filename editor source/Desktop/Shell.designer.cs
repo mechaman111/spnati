@@ -54,11 +54,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabWorkspaces.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.tabWorkspaces.Location = new System.Drawing.Point(0, 24);
+			this.tabWorkspaces.Location = new System.Drawing.Point(0, 27);
 			this.tabWorkspaces.Name = "tabWorkspaces";
 			this.tabWorkspaces.Padding = new System.Drawing.Point(21, 3);
 			this.tabWorkspaces.SelectedIndex = 0;
-			this.tabWorkspaces.Size = new System.Drawing.Size(1304, 735);
+			this.tabWorkspaces.Size = new System.Drawing.Size(1304, 732);
 			this.tabWorkspaces.TabIndex = 2;
 			this.tabWorkspaces.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabWorkspaces_DrawItem);
 			this.tabWorkspaces.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabWorkspaces_Selecting);

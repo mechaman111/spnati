@@ -13,18 +13,44 @@ namespace SPNATI_Character_Editor
 	public class Behaviour
 	{
 		/// <summary>
-		/// Only used when serializing or deserializings XML. Cases that share text across stages are split into separate cases per stage here
+		/// Raised when a new case is added to the working cases
+		/// </summary>
+		public event EventHandler<Case> CaseAdded;
+
+		/// <summary>
+		/// Raised when a case is removed from the working cases collection
+		/// </summary>
+		public event EventHandler<Case> CaseRemoved;
+
+		/// <summary>
+		/// Raised when the list stages that a working case appears in has been modified
+		/// </summary>
+		public event EventHandler<Case> CaseModified;
+
+		/// <summary>
+		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
 		/// </summary>
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("stage")]
 		public List<Stage> Stages = new List<Stage>();
 
+		//TODO: Make this private
 		/// <summary>
 		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages. When serializing, Stages is reconstructed using this info.
 		/// </summary>
 		/// <remarks>Unlike the Stages property, Case instances here can be shared across stages, ensuring that editing in one will update all applicable stages</remarks>
 		[XmlIgnore]
-		public List<Case> WorkingCases = new List<Case>();
+		private List<Case> _workingCases = new List<Case>();
+
+		/// <summary>
+		/// Whether the working cases list has been built yet
+		/// </summary>
+		private bool _builtWorkingCases = false;
+
+		/// <summary>
+		/// Character to which this behavior belongs
+		/// </summary>
+		private Character _character;
 
 		/// <summary>
 		/// Called prior to serializing to XML
@@ -36,11 +62,12 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Called after deserialization in order to build the WorkingCases structure
+		/// Called after deserialization
 		/// </summary>
 		/// <param name="character"></param>
 		public void OnAfterDeserialize(Character character)
 		{
+			_character = character;
 			foreach (var stage in Stages)
 			{
 				foreach (var stageCase in stage.Cases)
@@ -62,9 +89,10 @@ namespace SPNATI_Character_Editor
 		/// <param name="character"></param>
 		public void PrepareForEdit(Character character)
 		{
-			WorkingCases = new List<Case>();
+			_character = character;
+			_workingCases = new List<Case>();
 
-			BuildWorkingCases(character);
+			BuildWorkingCases();
 
 			EnsureDefaults(character); //If the input file had any missing dialogue, add it in now
 		}
@@ -99,53 +127,16 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Trashes all dialogue and replaces it with the default template
-		/// NB: This method is not in use. If used, should be checked if it needs
-		/// modification to support optional tags.
-		/// </summary>
-		/// <param name="character"></param>
-		public void RestoreToDefaults(Character character)
-		{
-			WorkingCases.Clear();
-			int layerCount = character.Layers + Clothing.ExtraStages;
-
-			character.StartingLines.Clear();
-			Tuple<string, string> start = DialogueDatabase.GetTemplate(Trigger.StartTrigger);
-			character.StartingLines.Add(new DialogueLine(start.Item1, start.Item2));
-
-			foreach (var tag in TriggerDatabase.GetTags())
-			{
-				if (tag == Trigger.StartTrigger)
-					continue;
-				Case workingCase = new Case(tag);
-				Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
-				DialogueLine line = new DialogueLine(template.Item1, template.Item2);
-				for (int i = 0; i < layerCount; i++)
-				{
-					if (TriggerDatabase.UsedInStage(tag, character, i))
-						workingCase.Stages.Add(i);
-				}
-				workingCase.Lines.Add(line);
-				WorkingCases.Add(workingCase);
-			}
-		}
-
-		/// <summary>
 		/// Looks through the working cases to locate any Stage+Trigger combos that don't exist, and creates default cases for any missing combinations.
 		/// Triggers apply to one or more stages, and a case with no targeted dialogue must exist for each applicable stage
 		/// </summary>
 		/// <param name="character">Character this behavior belongs to</param>
 		public bool EnsureDefaults(Character character)
 		{
+			_character = character;
 			bool modified = false;
-			if (character.StartingLines.Count == 0)
-			{
-				Tuple<string, string> start = DialogueDatabase.GetTemplate(Trigger.StartTrigger);
-				character.StartingLines.Add(new DialogueLine(start.Item1, start.Item2));
-				modified = true;
-			}
 
-			//Generate an index of expecte stage+tag combos
+			//Generate an index of expected stage+tag combos
 			int layers = character.Layers + Clothing.ExtraStages;
 			Dictionary<string, HashSet<int>> requiredLineIndex = new Dictionary<string, HashSet<int>>();
 			foreach (Trigger t in TriggerDatabase.Triggers)
@@ -164,7 +155,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Loop through the cases and remove any satisfied tags from the index
-			foreach (var workingCase in character.Behavior.WorkingCases)
+			foreach (var workingCase in character.Behavior._workingCases)
 			{
 				if (workingCase.HasFilters)
 					continue; //A filtered case can't possibly be a default
@@ -192,7 +183,7 @@ namespace SPNATI_Character_Editor
 				{
 					genericCase.Stages.Add(stage);
 				}
-				WorkingCases.Add(genericCase);
+				AddWorkingCase(genericCase);
 				modified = true;
 			}
 
@@ -204,17 +195,19 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public void SortWorking()
 		{
-			WorkingCases.Sort((c1, c2) =>
+			_workingCases.Sort(CompareTags);
+		}
+
+		public static int CompareTags(Case c1, Case c2)
+		{
+			string tag1 = c1.Tag;
+			string tag2 = c2.Tag;
+			int comparison = TriggerDatabase.Compare(tag1, tag2);
+			if (comparison == 0)
 			{
-				string tag1 = c1.Tag;
-				string tag2 = c2.Tag;
-				int comparison = TriggerDatabase.Compare(tag1, tag2);
-				if (comparison == 0)
-				{
-					comparison = c1.CompareTo(c2);
-				}
-				return comparison;
-			});
+				comparison = c1.CompareTo(c2);
+			}
+			return comparison;
 		}
 
 		/// <summary>
@@ -241,7 +234,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				HashSet<string> knownLines = new HashSet<string>();
-				foreach (Case c in WorkingCases)
+				foreach (Case c in _workingCases)
 				{
 					foreach (var line in c.Lines)
 					{
@@ -259,7 +252,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public void BuildStageTree(Character character)
 		{
-			foreach (var stageCase in WorkingCases)
+			foreach (var stageCase in _workingCases)
 			{
 				stageCase.ClearEmptyValues();
 			}
@@ -272,7 +265,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Put each case into the appropriate stage(s)
-			foreach (var workingCase in WorkingCases)
+			foreach (var workingCase in _workingCases)
 			{
 				foreach (int s in workingCase.Stages)
 				{
@@ -297,6 +290,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Sort cases to try to match make_xml's output
+			//TODO: Is this even necessary anymore? [XmlSortMethod] should be taking care of this
 			foreach (var stage in Stages)
 			{
 				stage.Cases.Sort(stage.SortCases);
@@ -306,9 +300,10 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Builds the working cases list out of the Stages tree
 		/// </summary>
-		public void BuildWorkingCases(Character character)
+		public void BuildWorkingCases()
 		{
-			WorkingCases.Clear();
+			_builtWorkingCases = true;
+			_workingCases.Clear();
 			Dictionary<int, Case> map = new Dictionary<int, Case>();
 
 			List<Case> buckets = new List<Case>();
@@ -317,7 +312,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (Case stageCase in stage.Cases)
 				{
-					if (!TriggerDatabase.UsedInStage(stageCase.Tag, character, stage.Id))
+					if (!TriggerDatabase.UsedInStage(stageCase.Tag, _character, stage.Id))
 						continue;
 					int code = stageCase.GetCode();
 					foreach (DialogueLine line in stageCase.Lines)
@@ -334,7 +329,10 @@ namespace SPNATI_Character_Editor
 							existing.Lines.Add(defaultLine);
 							buckets.Add(existing);
 						}
-						existing.Stages.Add(stage.Id);
+						if (!existing.Stages.Contains(stage.Id))
+						{
+							existing.Stages.Add(stage.Id);
+						}
 					}
 				}
 			}
@@ -372,15 +370,100 @@ namespace SPNATI_Character_Editor
 			//Done grouping. Put the cases into the WorkingCase list
 			foreach (List<Case> list in cases.Values)
 			{
-				WorkingCases.AddRange(list);
+				_workingCases.AddRange(list);
 			}
+
+			//Move the legacy Start lines into Selected/Game start cases
+			if (_character.StartingLines.Count > 0)
+			{
+				Case selected = new Case("selected");
+				selected.Stages.Add(0);
+				selected.Lines.Add(_character.StartingLines[0]);
+				AddWorkingCase(selected);
+
+				Case start = new Case("game_start");
+				start.Stages.Add(0);
+				if (_character.StartingLines.Count > 1)
+				{
+					for (int i = 1; i < _character.StartingLines.Count; i++)
+					{
+						start.Lines.Add(_character.StartingLines[i]);
+					}
+				}
+				else
+				{
+					start.Lines.Add(_character.StartingLines[0]);
+				}
+				AddWorkingCase(start);
+
+				_character.StartingLines.Clear();
+			}
+
+			SortWorking();
+		}
+
+		/// <summary>
+		/// Ensures the working cases list has been built before trying to manipulate it
+		/// </summary>
+		private void EnsureWorkingCases()
+		{
+			if (_builtWorkingCases) { return; }
+			BuildWorkingCases();
+		}
+
+		public IEnumerable<Case> GetWorkingCases()
+		{
+			EnsureWorkingCases();
+			foreach (Case c in _workingCases)
+			{
+				yield return c;
+			}
+		}
+
+		/// <summary>
+		/// Adds a new case to the working cases
+		/// </summary>
+		/// <param name="theCase">Case to add</param>
+		public void AddWorkingCase(Case theCase)
+		{
+			EnsureWorkingCases();
+			_workingCases.Add(theCase);
+			CaseAdded?.Invoke(this, theCase);
+		}
+
+		/// <summary>
+		/// Removes a case from the working cases
+		/// </summary>
+		/// <param name="theCase"></param>
+		public void RemoveWorkingCase(Case theCase)
+		{
+			EnsureWorkingCases();
+			_workingCases.Remove(theCase);
+			CaseRemoved?.Invoke(this, theCase);
+		}
+
+		private void RemoveWorkingCaseAt(int index)
+		{
+			EnsureWorkingCases();
+			Case theCase = _workingCases[index];
+			_workingCases.RemoveAt(index);
+			CaseRemoved?.Invoke(this, theCase);
+		}
+
+		/// <summary>
+		/// Finalizes changes to a case's Stages list
+		/// </summary>
+		/// <param name="theCase"></param>
+		public void ApplyChanges(Case theCase)
+		{
+			CaseModified?.Invoke(this, theCase);
 		}
 
 		/// <summary>
 		/// Takes a case that spans multiple stages and splits it into multiple cases that apply to one stage each, one for each stage
 		/// </summary>
-		/// <param name="original"></param>
-		/// <param name="retainStage"></param>
+		/// <param name="original">The case being split</param>
+		/// <param name="retainStage">Which stage to keep in the original case object</param>
 		public void DivideCaseIntoSeparateStages(Case original, int retainStage)
 		{
 			foreach (int stage in original.Stages)
@@ -389,11 +472,12 @@ namespace SPNATI_Character_Editor
 				{
 					Case stageCase = original.Copy();
 					stageCase.Stages.Add(stage);
-					WorkingCases.Add(stageCase);
+					AddWorkingCase(stageCase);
 				}
 			}
 			original.Stages.Clear();
 			original.Stages.Add(retainStage);
+			ApplyChanges(original);
 		}
 
 		/// <summary>
@@ -412,7 +496,9 @@ namespace SPNATI_Character_Editor
 					original.Stages.RemoveAt(s);
 				}
 			}
-			WorkingCases.Add(beforeSplitCase);
+			ApplyChanges(original);
+			beforeSplitCase.Stages.Sort();
+			AddWorkingCase(beforeSplitCase);
 		}
 
 		/// <summary>
@@ -431,7 +517,9 @@ namespace SPNATI_Character_Editor
 					original.Stages.RemoveAt(s);
 				}
 			}
-			WorkingCases.Add(beforeSplitCase);
+			ApplyChanges(original);
+			beforeSplitCase.Stages.Sort();
+			AddWorkingCase(beforeSplitCase);
 		}
 
 		/// <summary>
@@ -443,7 +531,7 @@ namespace SPNATI_Character_Editor
 		{
 			Case copy = original.Copy();
 			copy.Stages.AddRange(original.Stages);
-			WorkingCases.Add(copy);
+			AddWorkingCase(copy);
 			return copy;
 		}
 
@@ -455,20 +543,20 @@ namespace SPNATI_Character_Editor
 		public void BulkReplace(string sourceTag, HashSet<string> destinationTags)
 		{
 			//Step 1: Throw away all non-targeted cases from the destinations
-			for (int i = WorkingCases.Count - 1; i >= 0; i--)
+			for (int i = _workingCases.Count - 1; i >= 0; i--)
 			{
-				Case workingCase = WorkingCases[i];
-				if (!workingCase.HasFilters && destinationTags.Contains(WorkingCases[i].Tag))
+				Case workingCase = _workingCases[i];
+				if (!workingCase.HasFilters && destinationTags.Contains(_workingCases[i].Tag))
 				{
-					WorkingCases.RemoveAt(i);
+					RemoveWorkingCaseAt(i);
 				}
 			}
 
 			//Step 2: Go through the source cases and duplicate them for each destination
-			int end = WorkingCases.Count; //caching this off since we'll be adding to this list whie iterating, but don't need to process the new cases
+			int end = _workingCases.Count; //caching this off since we'll be adding to this list whie iterating, but don't need to process the new cases
 			for (int i = 0; i < end; i++)
 			{
-				Case sourceCase = WorkingCases[i];
+				Case sourceCase = _workingCases[i];
 				if (!sourceCase.HasFilters && sourceCase.Tag == sourceTag)
 				{
 					foreach (string tag in destinationTags)
@@ -476,7 +564,7 @@ namespace SPNATI_Character_Editor
 						Case newCase = sourceCase.Copy();
 						newCase.Stages.AddRange(sourceCase.Stages);
 						newCase.Tag = tag;
-						WorkingCases.Add(newCase);
+						AddWorkingCase(newCase);
 					}
 				}
 			}
@@ -517,7 +605,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="index"></param>
 		private void InsertStage(int index)
 		{
-			foreach (Case workingCase in WorkingCases)
+			foreach (Case workingCase in _workingCases)
 			{
 				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)
@@ -535,7 +623,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="index"></param>
 		private void RemoveStage(int index)
 		{
-			foreach (Case workingCase in WorkingCases)
+			foreach (Case workingCase in _workingCases)
 			{
 				List<int> stages = workingCase.Stages;
 				for (int i = stages.Count - 1; i >= 0; i--)
@@ -556,7 +644,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="index2"></param>
 		private void SwapStages(int index1, int index2)
 		{
-			foreach (Case workingCase in WorkingCases)
+			foreach (Case workingCase in _workingCases)
 			{
 				List<int> stages = workingCase.Stages;
 				for (int i = 0; i < stages.Count; i++)

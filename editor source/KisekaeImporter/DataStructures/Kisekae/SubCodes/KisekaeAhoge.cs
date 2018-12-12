@@ -107,5 +107,11 @@
 			get { return GetInt(13); }
 			set { Set(13, value); }
 		}
+
+		public bool Shaded
+		{
+			get { return GetBool(14); }
+			set { Set(14, value); }
+		}
 	}
 }

@@ -76,6 +76,15 @@ namespace Desktop
 		}
 
 		/// <summary>
+		/// Removes all items under the primary key
+		/// </summary>
+		/// <param name="key1"></param>
+		public void Remove(TKey1 key1)
+		{
+			_innerDictionary.Remove(key1);
+		}
+
+		/// <summary>
 		/// Removes an item.
 		/// </summary>
 		/// <param name="key1"></param>

@@ -23,6 +23,8 @@ namespace SPNATI_Character_Editor.Activities
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
 
+		private ImageMetadata _clipboard;
+
 		private readonly Image EmptyImage = new Bitmap(1, 1);
 
 		public override string Caption
@@ -161,30 +163,39 @@ namespace SPNATI_Character_Editor.Activities
 			_poseList = new PoseList();
 			foreach (DataGridViewRow row in gridPoses.Rows)
 			{
-				string stage = row.Cells["ColStage"].Value?.ToString();
-				string pose = row.Cells["ColPose"].Value?.ToString();
-				if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
-					continue;
-				int l = 0;
-				int r = 0;
-				int t = 0;
-				int b = 0;
-				int.TryParse(row.Cells["ColL"].Value?.ToString(), out l);
-				if (!int.TryParse(row.Cells["ColR"].Value?.ToString(), out r))
-					r = 600;
-				int.TryParse(row.Cells["ColT"].Value?.ToString(), out t);
-				if (!int.TryParse(row.Cells["ColB"].Value?.ToString(), out b))
-					b = 1400;
-
-				string data = row.Cells["ColData"].Value?.ToString();
-				if (data == null)
-					data = string.Empty;
-
-				string key = GetKey(stage, pose);
-				ImageMetadata metadata = new ImageMetadata(key, data);
-				metadata.CropInfo = new Rect(l, t, r, b);
-				_poseList.Poses.Add(metadata);
+				ImageMetadata metadata = ReadRow(row);
+				if (metadata != null)
+				{
+					_poseList.Poses.Add(metadata);
+				}
 			}
+		}
+
+		private ImageMetadata ReadRow(DataGridViewRow row)
+		{
+			string stage = row.Cells["ColStage"].Value?.ToString();
+			string pose = row.Cells["ColPose"].Value?.ToString();
+			if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
+				return null;
+			int l = 0;
+			int r = 0;
+			int t = 0;
+			int b = 0;
+			int.TryParse(row.Cells["ColL"].Value?.ToString(), out l);
+			if (!int.TryParse(row.Cells["ColR"].Value?.ToString(), out r))
+				r = 600;
+			int.TryParse(row.Cells["ColT"].Value?.ToString(), out t);
+			if (!int.TryParse(row.Cells["ColB"].Value?.ToString(), out b))
+				b = 1400;
+
+			string data = row.Cells["ColData"].Value?.ToString();
+			if (data == null)
+				data = string.Empty;
+
+			string key = GetKey(stage, pose);
+			ImageMetadata metadata = new ImageMetadata(key, data);
+			metadata.CropInfo = new Rect(l, t, r, b);
+			return metadata;
 		}
 
 		/// <summary>
@@ -228,24 +239,7 @@ namespace SPNATI_Character_Editor.Activities
 				foreach (ImageMetadata pose in _poseList.Poses)
 				{
 					DataGridViewRow row = gridPoses.Rows[gridPoses.Rows.Add()];
-					string[] piecedKey = pose.ImageKey.Split(new char[] { '-' }, 2);
-					if (piecedKey.Length == 0)
-					{
-						row.Cells["ColStage"].Value = "0";
-						row.Cells["ColPose"].Value = pose.ImageKey;
-					}
-					else
-					{
-						row.Cells["ColStage"].Value = piecedKey[0];
-						row.Cells["ColPose"].Value = piecedKey[1];
-					}
-
-					row.Cells["ColL"].Value = pose.CropInfo.Left;
-					row.Cells["ColR"].Value = pose.CropInfo.Right;
-					row.Cells["ColT"].Value = pose.CropInfo.Top;
-					row.Cells["ColB"].Value = pose.CropInfo.Bottom;
-
-					row.Cells["ColData"].Value = pose.Data;
+					WriteRow(pose, row);
 					if (imageIndex < InitialImageThreshold)
 					{
 						imageIndex++;
@@ -258,6 +252,28 @@ namespace SPNATI_Character_Editor.Activities
 				MessageBox.Show("Error importing pose list. Is this actually a poses file?", "Import Pose List", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				gridPoses.Rows.Clear();
 			}
+		}
+
+		private static void WriteRow(ImageMetadata pose, DataGridViewRow row)
+		{
+			string[] piecedKey = pose.ImageKey.Split(new char[] { '-' }, 2);
+			if (piecedKey.Length == 0)
+			{
+				row.Cells["ColStage"].Value = "0";
+				row.Cells["ColPose"].Value = pose.ImageKey;
+			}
+			else
+			{
+				row.Cells["ColStage"].Value = piecedKey[0];
+				row.Cells["ColPose"].Value = piecedKey[1];
+			}
+
+			row.Cells["ColL"].Value = pose.CropInfo.Left;
+			row.Cells["ColR"].Value = pose.CropInfo.Right;
+			row.Cells["ColT"].Value = pose.CropInfo.Top;
+			row.Cells["ColB"].Value = pose.CropInfo.Bottom;
+
+			row.Cells["ColData"].Value = pose.Data;
 		}
 
 		private void UpdateImageCell(string key, DataGridViewRow row)
@@ -664,5 +680,71 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 		}
+
+		private void CopySelectedLine()
+		{
+			if (gridPoses.SelectedRows.Count == 0) { return; }
+			DataGridViewRow row = gridPoses.SelectedRows[0];
+			_clipboard = ReadRow(row);
+			pasteToolStripMenuItem.Enabled = true;
+			Shell.Instance.SetStatus("Pose copied to clipboard.");
+		}
+
+		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (gridPoses.SelectedRows.Count == 0) { return; }
+			CopySelectedLine();
+			//remove the line
+			int index = gridPoses.SelectedRows[0].Index;
+			gridPoses.Rows.RemoveAt(index);
+		}
+
+		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CopySelectedLine();
+		}
+
+		private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_clipboard == null) { return; }
+			if (gridPoses.SelectedRows.Count == 0) { return; }
+
+			DataGridViewRow row = gridPoses.SelectedRows[0];
+			if (row.Index == gridPoses.Rows.Count - 1)
+			{
+				gridPoses.Rows.Add();
+				row = gridPoses.Rows[gridPoses.Rows.Count - 2];
+			}
+
+			WriteRow(_clipboard, row);
+			UpdateImageCell(_clipboard.ImageKey, row);
+		}
+
+		private void duplicateToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (gridPoses.SelectedRows.Count == 0) { return; }
+
+			DataGridViewRow row = gridPoses.SelectedRows[0];
+			ImageMetadata data = ReadRow(row);
+			DataGridViewRow newRow = gridPoses.Rows[gridPoses.Rows.Add()];
+			WriteRow(data, newRow);
+			gridPoses.Rows.Remove(newRow);
+			gridPoses.Rows.Insert(gridPoses.SelectedRows[0].Index + 1, newRow);
+			UpdateImageCell(data.ImageKey, newRow);
+		}
+
+		private void gridPoses_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var hit = gridPoses.HitTest(e.X, e.Y);
+				gridPoses.ClearSelection();
+				if (hit.RowIndex >= 0 && hit.RowIndex < gridPoses.Rows.Count)
+				{
+					gridPoses.Rows[hit.RowIndex].Selected = true;
+				}
+			}
+		}
 	}
+	
 }

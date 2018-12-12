@@ -56,8 +56,6 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			_selectedCharacter = character;
 			_imageLibrary = ImageLibrary.Get(character);
-			//Make sure WorkingCases are built for easy lookup of lines
-			_selectedCharacter.Behavior.BuildWorkingCases(_selectedCharacter);
 			PopulateMarkers();
 		}
 
@@ -92,7 +90,7 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 
 			//Find all the lines that set the marker
-			foreach (Case workingCase in _selectedCharacter.Behavior.WorkingCases)
+			foreach (Case workingCase in _selectedCharacter.Behavior.GetWorkingCases())
 			{
 				foreach (var line in workingCase.Lines)
 				{

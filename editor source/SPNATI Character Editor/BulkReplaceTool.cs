@@ -76,6 +76,8 @@ namespace SPNATI_Character_Editor
 					Trigger trigger = TriggerDatabase.Triggers.Find(t => t.Label == label);
 					if (trigger == null)
 						continue;
+					if (trigger.Tag == _sourceTag)
+						continue;
 					DestinationTags.Add(trigger.Tag);
 				}
 

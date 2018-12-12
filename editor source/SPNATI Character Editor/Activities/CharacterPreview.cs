@@ -21,8 +21,15 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_character = Record as Character;
 			_character.PrepareForEdit();
-			SubscribeWorkspace(WorkspaceMessages.DialogueUpdated, UpdateLineCount);
+			_character.Behavior.CaseAdded += WorkingCasesChanged;
+			_character.Behavior.CaseRemoved += WorkingCasesChanged;
+			_character.Behavior.CaseModified += WorkingCasesChanged;
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
+			UpdateLineCount();
+		}
+
+		private void WorkingCasesChanged(object sender, Case e)
+		{
 			UpdateLineCount();
 		}
 

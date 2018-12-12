@@ -70,6 +70,7 @@ namespace SPNATI_Character_Editor.Activities
 				Label = "Human",
 				FirstName = "Human",
 			};
+			human.Behavior.OnAfterDeserialize(human);
 			CharacterDatabase.Add(human);
 			CharacterDatabase.AddEditorData(human, new CharacterEditorData() { Owner = "human" });
 

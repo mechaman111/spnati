@@ -9,7 +9,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
-		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1" };
+		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1" };
 
 		/// <summary>
 		/// Current Version

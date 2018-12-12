@@ -2,7 +2,7 @@
 
 namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalImage : KisekaeSubCode, IPoseable
+	public class KisekaeGlobalImage : KisekaeSubCode, IPoseable, IMoveable
 	{
 		public int ScaleX
 		{
@@ -72,6 +72,11 @@ namespace KisekaeImporter.SubCodes
 			{
 				Set(12, value);
 			}
+		}
+
+		public void ShiftX(int offset)
+		{
+			OffsetX += offset;
 		}
 	}
 }

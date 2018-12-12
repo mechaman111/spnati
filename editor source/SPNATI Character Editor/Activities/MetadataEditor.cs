@@ -112,7 +112,7 @@ namespace SPNATI_Character_Editor.Activities
 				string stageString = row.Cells["ColAIStage"].Value?.ToString();
 				if (string.IsNullOrEmpty(level))
 					continue;
-				stageString = stageString ?? string.Empty;
+				stageString = stageString ?? (i == 0 ? "0" : string.Empty);
 				int stage;
 				if (int.TryParse(stageString, out stage))
 				{

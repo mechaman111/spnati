@@ -119,7 +119,23 @@ namespace KisekaeImporter.ImageImport
 				KisekaeCode importCode = new KisekaeCode(image.Data);
 				string sceneSetup = GetSetupString(data);
 				KisekaeCode code = new KisekaeCode(sceneSetup, true);
+				KisekaeScene scene = code.Scene?.GetComponent<KisekaeScene>();
+				int x = 0;
+				int y = 0;
+				int zoom = 0;
+				if (scene != null)
+				{
+					x = scene.Camera.X;
+					y = scene.Camera.Y;
+					zoom = scene.Camera.Zoom;
+				}
 				code.MergeIn(importCode, false);
+				if (scene != null)
+				{
+					scene.Camera.X = x;
+					scene.Camera.Y = y;
+					scene.Camera.Zoom = zoom;
+				}
 				data = code.ToString();
 			}
 

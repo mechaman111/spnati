@@ -55,6 +55,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			MarkerOperator op;
 			string value;
 			bool perTarget;
+			if (marker == null) { return; }
 			marker = Marker.ExtractConditionPieces(marker, out op, out value, out perTarget);
 			if (!markers.TryGetValue(target, out set))
 			{
