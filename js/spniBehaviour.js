@@ -600,6 +600,13 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
             return false; 
         }
     }
+	
+	// targetStatus
+    if (opp && this.targetStatus) {
+        if (!checkPlayerStatus(opp, this.targetStatus)) {
+            return false;
+        }
+    }
 
     // targetStartingLayers
     if (opp && this.targetStartingLayers) {
@@ -1030,18 +1037,26 @@ Opponent.prototype.applyMarkers = function (chosenCase, opp) {
  * Updates the behaviour of all players except the given player
  * based on the provided tag.
  ************************************************************/
-function updateAllBehaviours (player, tag) {
+function updateAllBehaviours (target, target_tags, other_tags) {
 	for (var i = 1; i < players.length; i++) {
-		if (players[i] && (player === null || i != player)) {
-			if (typeof tag === 'object') {
-				tag.some(function(t) {
-					return players[i].updateBehaviour(t, players[player]);
+		if (players[i] && (target === null || i != target)) {
+			if (typeof other_tags === 'object') {
+				other_tags.some(function(t) {
+					return players[i].updateBehaviour(t, players[target]);
 				});
 			} else {
-				players[i].updateBehaviour(tag, players[player]);
+				players[i].updateBehaviour(other_tags, players[target]);
 			}
 		}
 	}
+	
+	if (target !== null && target_tags !== null) {
+		players[target].updateBehaviour(target_tags, null);
+	}
+	
+	updateAllVolatileBehaviours();
+	commitAllBehaviourUpdates();
+	updateAllGameVisuals();
 }
 
 /************************************************************

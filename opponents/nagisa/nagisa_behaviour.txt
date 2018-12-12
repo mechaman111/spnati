@@ -94,6 +94,7 @@ marker=nagisa_underwear_party,public,Zoey and Nagisa entertain the idea of havin
 marker=nagisa_uravity_helmet,public,Nagisa observes that it would be difficult to play cards while wearing a helmet.
 marker=nagisa_uravity_space,public,Nagisa has never been to space.
 marker=nagisa_uravity_theater,public,Nagisa mistakes Uravity for an actress.
+marker=nagisa_where_is_kyou,public,Will Nagisa's friend Kyou arrive to play too? Answer: no.
 marker=nagisa_zizou_amulet,public,Nagisa recommends to Zizou that she remove her amulet next. Zizou does not remove her amulet.
 
 
@@ -113,6 +114,7 @@ start=0-dango,My name is Nagisa Furukawa. It's nice to meet you all!
 selected=dango,My name is Nagisa Furukawa. It's nice to meet you all!
 
 game_start=shy,Is... is this where the game is being played?
+game_start,marker:nagisa_where_is_kyou=worried,Where is Kyou? I hope she isn't late. We're about to start!
 game_start,alsoPlaying:jura,marker:nagisa_jura_underdressed=veryembarrassed,Lady in black, it's okay if you want to put more on before we start.
 game_start,alsoPlaying:kyu,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
 game_start,alsoPlaying:sanako,marker:nagisa_sanako_present=worried,I didn't think anyone would recognize me here. That's the summer uniform from Hikarizaka Private High School, right?
@@ -375,7 +377,7 @@ clothes=Panties,panties,important,lower,plural
 4-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your Webmaster would understand if you took your ribbons off next, Nugi-chan...
 4-good_hand,alsoPlaying:xander,alsoPlayingStage:6,totalMales:1=sorry,I'm not ready to see a boy's private part! Please win this hand, Xander...
 4-okay_hand,alsoPlaying:blake,alsoPlayingStage:0-5,priority:0=shy,Blake, did your bow just... wiggle?
-4-bad_hand,alsoPlaying:mei,targetSaidMarker:mei_will_freeze_you,priority:0=shy,Please don't freeze me, Mei. I don't want to catch a cold.
+4-bad_hand,alsoPlaying:mei,alsoPlayingSaidMarker:mei_will_freeze_you,priority:0=shy,Please don't freeze me, Mei. I don't want to catch a cold.
 
 #lost 5 items: underwear only
 5-good_hand=peaceful,I'm not worried anymore.
@@ -433,8 +435,8 @@ clothes=Panties,panties,important,lower,plural
 0-must_strip_normal,totalRounds:0=embarrassed,It's... it's me first?
 0-must_strip_normal,marker:nagisa_first_time_playing=worried,I lost, so it's my turn, right? What do I take off? Sorry, this is my first time.
 0-must_strip_normal=worried,Sorry, this is a new experience for me.
+0-must_strip_losing,totalRounds:0=embarrassed,Ah! No fair! Who said that I had to go first?
 0-must_strip_losing=worried,Wait, you mean I have to play too?
-0-must_strip_losing=embarrassed,Ah! No fair! Who said that I had to go first?
 0-stripping,totalRounds:0=strip,I was hoping I could copy somebody else. Is it okay if I take my shoes off first?
 0-stripping=strip,I'm going to take my shoes off.
 0-stripping=strip,It's okay if I start with my shoes, right?
@@ -447,6 +449,7 @@ clothes=Panties,panties,important,lower,plural
 1-must_strip_normal=shy,No, it's okay. I don't mind taking my socks off.
 1-must_strip_losing=sad,I'm a complete amateur.
 1-stripping=strip,This is kinda fun!
+1-stripping,totalExposed:1-4=strip,It wouldn't be fair if I didn't join in too.
 2-stripped=calm,That wasn't hard at all.
 2-stripped,alsoPlaying:hermione,alsoPlayingStage:0=calm,I'm fine, Hermione. Thank you for asking!
 
@@ -575,6 +578,7 @@ clothes=Panties,panties,important,lower,plural
 5-male_human_must_strip=veryembarrassed,It's fine. Actually, please don't change! I like you just the way you are.
 5-male_must_strip=covering,I'm saved!
 5-female_human_must_strip=embarrassed,This is actually a big relief for me, since I haven't had a lot of luck this game.
+5-female_must_strip,totalRounds:5=veryembarrassed,Please play too. I don't want to be alone.
 5-female_must_strip=embarrassed,This game is getting serious.
 5-female_must_strip,targetStage:2-8,priority:0=embarrassed,Us girls are just taking off clothes all over the place.
 
@@ -1218,6 +1222,7 @@ clothes=Panties,panties,important,lower,plural
 6-male_removing_major=appreciating,~Name~, you're trying to avoid following through, aren't you?
 6-male_removed_major=peaceful,This game is so hard, isn't it?
 6-female_removing_major=emphatic,Please don't pick your ~clothing~, ~name~. If you can think of anything else, pick that!
+6-female_removing_major,totalExposed:1=shy,You seem to be having bad luck like me, ~name~.
 6-female_removed_major=calm,Maybe that was your best option...
 6-female_removed_major=peaceful,Um, but what you're wearing underneath is very cute...
 
@@ -1793,9 +1798,9 @@ clothes=Panties,panties,important,lower,plural
 4-male_masturbating=maximumembarrassed,I didn't expect it to sound like this!
 4-male_finished_masturbating=relieved,Is... is it over?
 
-4-female_must_masturbate=relieved,You're not going to really do it, are you ~name~?
+4-female_must_masturbate=relieved,You're not going to really do it, are you, ~name~?
 4-female_start_masturbating=maximumembarrassed,I didn't think you were going to do it!
-4-female_masturbating=veryembarrassed,You're still doing it, even though everybody can see you!
+4-female_masturbating=veryembarrassed,You're still doing it... even though everybody can see you!
 4-female_finished_masturbating=stripped,I can't lose another round!
 
 #lost skirt (underwear only)
@@ -2043,6 +2048,7 @@ game_over_defeat,target:alice=closedeyes,Even though this was embarrassing, than
 game_over_defeat,target:buffy,alsoPlaying:xander=determined,I can't believe I let a boy see me like this. No offence to your friend, Buffy, but I caught him looking at me at least three times...
 game_over_defeat,target:dawn,totalMales:0=closedeyes,No hard feelings, Dawn. Good luck with your poke-monsters game!
 game_over_defeat,target:elaine=embarrassed,I know you're a pirate, Elaine, but please don't plunder my booty!
+game_over_defeat,target:kira=determined,Th-this doesn't mean you can have my hand in marriage! Does it?
 game_over_defeat,target:kyu=embarrassed,How did Kyu win? She... she didn't even start with all of her clothes on.
 game_over_defeat,target:meia=embarrassed,Congratulations on winning, Meia. Just so you know, this planet has lot of less embarrassing games to play too...
 game_over_defeat,target:mercy=victorystanding,I wish my doctor was as nice as you, Doctor Ziegler.
