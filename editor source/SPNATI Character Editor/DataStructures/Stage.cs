@@ -67,15 +67,38 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		private string GetSortKey(Case c1)
 		{
+			//TODO: Would it be worth pre-computing this whenever a case gets saved?
+			//Not really. 1100 lines spent 1000ms on serialization and only 10ms sorting.
+
 			List<string> filters = new List<string>();
+			foreach (TargetCondition condition in c1.Conditions)
+			{
+				//this is following make_xml's create_case_xml(), but 
+				//this isn't really comprehensive to sort filters
+				filters.Add("count-" + condition.Filter);
+			}
+			foreach (ExpressionTest test in c1.Expressions)
+			{
+				filters.Add("test:" + test.ToString());
+			}
+
+			//the order of the following mess comes from all_targets in make_xml.py
+
+			//one_word_targets
 			if (!string.IsNullOrEmpty(c1.Target))
 				filters.Add("target:" + c1.Target);
 			if (!string.IsNullOrEmpty(c1.Filter))
 				filters.Add("filter:" + c1.Filter);
+			if (!string.IsNullOrEmpty(c1.Hidden))
+				filters.Add("hidden:" + c1.Hidden);
+
+			//multi_word_targets
 			if (!string.IsNullOrEmpty(c1.TargetStage))
 				filters.Add("targetstage:" + c1.TargetStage);
-			if (!string.IsNullOrEmpty(c1.TargetTimeInStage))
-				filters.Add("targettimeinstage:" + c1.TargetTimeInStage);
+			if (!string.IsNullOrEmpty(c1.TargetLayers))
+				filters.Add("targetlayers:" + c1.TargetLayers);
+			if (!string.IsNullOrEmpty(c1.TargetStatus))
+				filters.Add("targetstatus:" + c1.TargetStatus);
 			if (!string.IsNullOrEmpty(c1.AlsoPlaying))
 				filters.Add("alsoplaying:" + c1.AlsoPlaying);
 			if (!string.IsNullOrEmpty(c1.AlsoPlayingStage))
@@ -124,10 +147,11 @@ namespace SPNATI_Character_Editor
 				filters.Add("targetsaidmarker:" + c1.TargetSaidMarker);
 			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
 				filters.Add("targetnotsaidmarker:" + c1.TargetNotSaidMarker);
-			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
+			if (!string.IsNullOrEmpty(c1.TargetSayingMarker))
 				filters.Add("targetsayingmarker:" + c1.TargetSayingMarker);
 			if (!string.IsNullOrEmpty(c1.CustomPriority))
 				filters.Add("priority:" + c1.CustomPriority);
+
 
 			return string.Join(",", filters);
 		}

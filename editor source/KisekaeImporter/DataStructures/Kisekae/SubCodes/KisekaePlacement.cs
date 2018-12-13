@@ -1,6 +1,8 @@
-﻿namespace KisekaeImporter.SubCodes
+﻿using System;
+
+namespace KisekaeImporter.SubCodes
 {
-	public class KisekaePlacement : KisekaeSubCode
+	public class KisekaePlacement : KisekaeSubCode, IMoveable
 	{
 		public KisekaePlacement() : base("bc") { }
 
@@ -32,6 +34,11 @@
 		{
 			get { return GetInt(4); }
 			set { Set(4, value.ToString()); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			X += offset;
 		}
 	}
 }

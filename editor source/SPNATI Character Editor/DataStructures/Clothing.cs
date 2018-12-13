@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor
 {
@@ -13,13 +14,19 @@ namespace SPNATI_Character_Editor
 		public const int ExtraStages = 3;
 
 		[XmlAttribute("lowercase")]
-		public string Lowercase;
+		public string GenericName;
 
 		[XmlAttribute("position")]
 		public string Position;
 
+		[XmlAttribute("formalName")]
+		public string FormalName;
+
+		/// <summary>
+		/// Deprecated
+		/// </summary>
 		[XmlAttribute("proper-name")]
-		public string Name;
+		public string ProperName;
 
 		[XmlAttribute("type")]
 		public string Type;
@@ -32,14 +39,23 @@ namespace SPNATI_Character_Editor
 		{
 			Position = "upper";
 			Type = "major";
-			Name = "New item";
-			Lowercase = "new item";
+			FormalName = "New item";
+			GenericName = "new item";
 			Plural = false;
+		}
+
+		public void OnAfterDeserialize()
+		{
+			if (FormalName == null || FormalName == "New item")
+			{
+				FormalName = ProperName;
+				ProperName = null;
+			}
 		}
 
 		public override string ToString()
 		{
-			return Name;
+			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(GenericName);
 		}
 	}
 }

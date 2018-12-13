@@ -34,6 +34,12 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_imageLibrary = ImageLibrary.Get(_character);
 			PopulateLines();
+
+			if (gridCases.RowCount == 0)
+			{
+				MessageBox.Show("Looks like you haven't declared any noteworthy situations yet! To get started, use the Call Out button when editing a line on the Dialogue screen.", "Situation Editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Shell.Instance.Launch<Character, DialogueEditor>(_character);
+			}
 		}
 
 		protected override void OnParametersUpdated(params object[] parameters)

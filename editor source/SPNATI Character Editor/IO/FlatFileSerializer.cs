@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor
 			for (int i = character.Wardrobe.Count - 1; i >= 0; i--)
 			{
 				Clothing clothes = character.Wardrobe[i];
-				lines.Add(string.Format("clothes={0},{1},{2},{3}{4}", clothes.Name, clothes.Lowercase, clothes.Type, clothes.Position, clothes.Plural ? ",plural" : ""));
+				lines.Add(string.Format("clothes={0},{1},{2},{3}{4}", clothes.FormalName, clothes.GenericName, clothes.Type, clothes.Position, clothes.Plural ? ",plural" : ""));
 			}
 
 			#region Lines commentary
@@ -103,7 +103,7 @@ namespace SPNATI_Character_Editor
 
 			//Pass 1 - build a mapping of how many non-targeted cases belong to each stage
 			Dictionary<Tuple<string, int>, HashSet<Case>> _stageMap = new Dictionary<Tuple<string, int>, HashSet<Case>>();
-			foreach (Case c in character.Behavior.WorkingCases)
+			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
 				if (c.HasFilters)
 					continue;
@@ -122,7 +122,7 @@ namespace SPNATI_Character_Editor
 
 			//Pass 2 - Mark default cases - those that are the only case for the pertinent key in the map 
 			Dictionary<string, Case> defaultCases = new Dictionary<string, Case>();
-			foreach (Case c in character.Behavior.WorkingCases)
+			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
 				if (c.Stages.Count <= 1 || c.HasFilters)
 					continue;
@@ -157,7 +157,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Pass 3 - Separate non-default cases into individual cases per stage, and actually mark the default cases as defaults
-			foreach (Case c in character.Behavior.WorkingCases)
+			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
 				if (c.Stages.Count == 0)
 					continue;
@@ -455,6 +455,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("notSaidMarker:" + stageCase.NotSaidMarker);
 			}
+			if (!string.IsNullOrEmpty(stageCase.Hidden))
+			{
+				filters.Add("hidden:1");
+			}
 			if (!string.IsNullOrEmpty(stageCase.CustomPriority))
 			{
 				filters.Add("priority:" + stageCase.CustomPriority);
@@ -465,6 +469,13 @@ namespace SPNATI_Character_Editor
 				{
 					string[] parts = Array.FindAll(new string[]{ condition.Status, condition.Gender, condition.Filter }, e => e != null);
 					filters.Add(string.Format("count-{1}:{0}", condition.Count, string.Join("&", parts)));
+				}
+			}
+			if (stageCase.Expressions != null)
+			{
+				foreach (ExpressionTest test in stageCase.Expressions)
+				{
+					filters.Add($"test:{test.Expression}:{test.Value}");
 				}
 			}
 			return filters;
@@ -694,8 +705,7 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-			character.Behavior.EnsureDefaults(character);
-			character.Behavior.BuildWorkingCases(character);
+			character.Behavior.PrepareForEdit(character);
 		}
 
 		private static Clothing MakeClothing(string value)
@@ -704,8 +714,8 @@ namespace SPNATI_Character_Editor
 			if (pieces.Length == 4)
 			{
 				Clothing c = new Clothing();
-				c.Name = pieces[0];
-				c.Lowercase = pieces[1];
+				c.FormalName = pieces[0];
+				c.GenericName = pieces[1];
 				c.Type = pieces[2];
 				c.Position = pieces[3];
 				return c;
@@ -791,7 +801,7 @@ namespace SPNATI_Character_Editor
 
 		private static void AddTarget(string data, Case lineCase, DialogueLine line)
 		{
-			string[] kvp = data.Split(':');
+			string[] kvp = data.Split(new char[] { ':' }, 2);
 			if (kvp.Length == 2)
 			{
 				Trigger trigger = TriggerDatabase.GetTrigger(lineCase.Tag);
@@ -904,16 +914,28 @@ namespace SPNATI_Character_Editor
 					case "marker":
 						line.Marker = value;
 						break;
+					case "hidden":
+						lineCase.Hidden = (value == "1" ? "1" : null);
+						break;
 					case "priority":
 						lineCase.CustomPriority = value;
+						break;
+					case "test":
+						string[] parts = value.Split(new char[] { ':' }, 2);
+						if (parts.Length == 2)
+						{
+							ExpressionTest test = new ExpressionTest() { Expression = parts[0], Value = parts[1] };
+							lineCase.Expressions.Add(test);
+						}
 						break;
 					default:
 						if (key.StartsWith("count-"))
 						{
 							string tag = null, gender = null, status = null;
 							string filter = key.Substring(6);
-							string[] parts = filter.Split('&');
-							foreach (string part in parts) {
+							parts = filter.Split('&');
+							foreach (string part in parts)
+							{
 								if (part == "male" || part == "female")
 								{
 									gender = part;

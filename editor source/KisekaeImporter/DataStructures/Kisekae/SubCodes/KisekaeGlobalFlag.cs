@@ -1,6 +1,6 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalFlag : KisekaeSubCode, IPoseable
+	public class KisekaeGlobalFlag : KisekaeSubCode, IPoseable, IMoveable
 	{
 		public int Type
 		{
@@ -56,6 +56,11 @@
 		{
 			get { return GetInt(9); }
 			set { Set(9, value); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			X += offset;
 		}
 	}
 }

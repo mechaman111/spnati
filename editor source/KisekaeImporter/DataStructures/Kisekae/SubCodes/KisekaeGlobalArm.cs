@@ -1,6 +1,8 @@
-﻿namespace KisekaeImporter.SubCodes
+﻿using System;
+
+namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalArm : KisekaeSubCode
+	public class KisekaeGlobalArm : KisekaeSubCode, IMoveable
 	{
 		public int Type
 		{
@@ -78,6 +80,11 @@
 		{
 			get { return GetInt(12); }
 			set { Set(12, value); }
+		}
+
+		public void ShiftX(int offset)
+		{
+			X += offset;
 		}
 	}
 }

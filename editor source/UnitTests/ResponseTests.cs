@@ -818,6 +818,106 @@ namespace UnitTests
 			Assert.AreEqual("finished_masturbating", c.GetResponseTag(_male, _female));
 		}
 
+		[TestMethod]
+		public void StageLimit_RemovingExtra()
+		{
+			Case c = new Case("female_removing_accessory");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(0, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_RemovedExtra()
+		{
+			Case c = new Case("female_removed_accessory");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(1, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_RemovingMinor()
+		{
+			Case c = new Case("female_removing_minor");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(1, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_RemovedMinor()
+		{
+			Case c = new Case("female_removed_minor");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(2, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_RemovingMajor()
+		{
+			Case c = new Case("female_removing_major");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(2, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_RemovedMajor()
+		{
+			Case c = new Case("female_removed_major");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(3, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_ChestWillBeVisible()
+		{
+			Case c = new Case("female_chest_will_be_visible");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(3, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_ChestIsVisible()
+		{
+			Case c = new Case("female_large_chest_is_visible");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(4, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_CrotchWillBeVisible()
+		{
+			Case c = new Case("female_crotch_will_be_visible");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(4, response.Stages[0]);
+		}
+
+		[TestMethod]
+		public void StageLimit_CrotchIsVisible()
+		{
+			Case c = new Case("female_crotch_is_visible");
+			c.Target = _female.FolderName;
+			Case response = c.CreateResponse(_male, _female);
+			Assert.AreEqual(1, response.Stages.Count);
+			Assert.AreEqual(5, response.Stages[0]);
+		}
+
 		#region Testing the various response transfers. Too lazy to make individual property tests, so doing everything in bulk for all major combinations
 		[TestMethod]
 		public void NotTargetable_NoTarget_WithAlsoPlaying()

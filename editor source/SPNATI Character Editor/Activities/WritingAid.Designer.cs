@@ -30,6 +30,7 @@
 		{
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitSituations = new System.Windows.Forms.SplitContainer();
+			this.chkFilter = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.valSuggestions = new System.Windows.Forms.NumericUpDown();
@@ -46,11 +47,11 @@
 			this.cboFilter = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.gridActiveSituation = new SPNATI_Character_Editor.Controls.DialogueGrid();
+			this.cmdJumpToDialogue = new System.Windows.Forms.Button();
 			this.cmdAccept = new System.Windows.Forms.Button();
 			this.cmdCancel = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
 			this.gridLines = new SPNATI_Character_Editor.Controls.DialogueGrid();
-			this.cmdJumpToDialogue = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -95,6 +96,7 @@
 			// 
 			// splitSituations.Panel1
 			// 
+			this.splitSituations.Panel1.Controls.Add(this.chkFilter);
 			this.splitSituations.Panel1.Controls.Add(this.label6);
 			this.splitSituations.Panel1.Controls.Add(this.label5);
 			this.splitSituations.Panel1.Controls.Add(this.valSuggestions);
@@ -113,6 +115,18 @@
 			this.splitSituations.Size = new System.Drawing.Size(943, 326);
 			this.splitSituations.SplitterDistance = 178;
 			this.splitSituations.TabIndex = 6;
+			// 
+			// chkFilter
+			// 
+			this.chkFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkFilter.AutoSize = true;
+			this.chkFilter.Location = new System.Drawing.Point(531, 9);
+			this.chkFilter.Name = "chkFilter";
+			this.chkFilter.Size = new System.Drawing.Size(193, 17);
+			this.chkFilter.TabIndex = 10;
+			this.chkFilter.Text = "Include situations I\'ve responded to";
+			this.chkFilter.UseVisualStyleBackColor = true;
+			this.chkFilter.CheckedChanged += new System.EventHandler(this.chkFilter_CheckedChanged);
 			// 
 			// label6
 			// 
@@ -287,6 +301,17 @@
 			this.gridActiveSituation.TabIndex = 3;
 			this.gridActiveSituation.HighlightRow += new System.EventHandler<int>(this.gridActiveSituation_HighlightRow);
 			// 
+			// cmdJumpToDialogue
+			// 
+			this.cmdJumpToDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdJumpToDialogue.Location = new System.Drawing.Point(544, 267);
+			this.cmdJumpToDialogue.Name = "cmdJumpToDialogue";
+			this.cmdJumpToDialogue.Size = new System.Drawing.Size(128, 23);
+			this.cmdJumpToDialogue.TabIndex = 9;
+			this.cmdJumpToDialogue.Text = "Edit in Dialogue Editor";
+			this.cmdJumpToDialogue.UseVisualStyleBackColor = true;
+			this.cmdJumpToDialogue.Click += new System.EventHandler(this.cmdJumpToDialogue_Click);
+			// 
 			// cmdAccept
 			// 
 			this.cmdAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -329,17 +354,6 @@
 			this.gridLines.Size = new System.Drawing.Size(937, 245);
 			this.gridLines.TabIndex = 0;
 			this.gridLines.HighlightRow += new System.EventHandler<int>(this.gridLines_HighlightRow);
-			// 
-			// cmdJumpToDialogue
-			// 
-			this.cmdJumpToDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdJumpToDialogue.Location = new System.Drawing.Point(544, 267);
-			this.cmdJumpToDialogue.Name = "cmdJumpToDialogue";
-			this.cmdJumpToDialogue.Size = new System.Drawing.Size(128, 23);
-			this.cmdJumpToDialogue.TabIndex = 9;
-			this.cmdJumpToDialogue.Text = "Edit in Dialogue Editor";
-			this.cmdJumpToDialogue.UseVisualStyleBackColor = true;
-			this.cmdJumpToDialogue.Click += new System.EventHandler(this.cmdJumpToDialogue_Click);
 			// 
 			// WritingAid
 			// 
@@ -390,5 +404,6 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.NumericUpDown valSuggestions;
 		private System.Windows.Forms.Button cmdJumpToDialogue;
+		private System.Windows.Forms.CheckBox chkFilter;
 	}
 }

@@ -205,5 +205,17 @@ namespace KisekaeImporter.DataStructures.Kisekae
 				Assets[i] = fullpath;
 			}
 		}
+
+		/// <summary>
+		/// Shifts all movable pieces by the given offset
+		/// </summary>
+		/// <param name="offset"></param>
+		public void ShiftX(int offset)
+		{
+			foreach (KisekaeComponent component in _components.Values)
+			{
+				component.ShiftX(offset);
+			}
+		}
 	}
 }

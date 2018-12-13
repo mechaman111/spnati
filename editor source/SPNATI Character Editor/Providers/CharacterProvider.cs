@@ -25,8 +25,8 @@ namespace SPNATI_Character_Editor.Providers
 			c.FolderName = key;
 
 			//Add in some barebones data to be at the minimal functional level
-			c.Wardrobe.Add(new Clothing() { Name = "Final Layer", Lowercase = "final layer", Position = "lower", Type = "important" });
-			c.Wardrobe.Add(new Clothing() { Name = "First Layer", Lowercase = "first layer", Position = "upper", Type = "important" });
+			c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });
+			c.Wardrobe.Add(new Clothing() { FormalName = "First Layer", GenericName = "first layer", Position = "upper", Type = "important" });
 			c.Behavior.EnsureDefaults(c);
 
 			Serialization.ExportCharacter(c);

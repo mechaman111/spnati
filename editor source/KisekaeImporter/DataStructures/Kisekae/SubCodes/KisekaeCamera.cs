@@ -2,7 +2,7 @@
 {
 	public class KisekaeCamera : KisekaeSubCode
 	{
-		public int Amount
+		public int Zoom
 		{
 			get { return GetInt(0); }
 			set { Set(0, value); }

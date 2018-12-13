@@ -211,7 +211,7 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					cmdCreateResponse.Enabled = true;
 					bool hasResponses = false;
-					foreach (Case workingCase in _character.Behavior.WorkingCases)
+					foreach (Case workingCase in _character.Behavior.GetWorkingCases())
 					{
 						if (workingCase.MatchesConditions(sampleResponse))
 						{
@@ -293,10 +293,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_workingResponse == null)
 				return;
 			Modified = true;
-			_character.Behavior.WorkingCases.Remove(_workingResponse);
-			Workspace.SendMessage(WorkspaceMessages.CaseRemoved, _workingResponse);
-			_character.Behavior.BuildStageTree(_character);
-			_character.Behavior.BuildWorkingCases(_character);
+			_character.Behavior.RemoveWorkingCase(_workingResponse);
 			HideResponses();
 			SelectLine(_currentLine);
 		}
@@ -309,8 +306,7 @@ namespace SPNATI_Character_Editor.Activities
 			Case response = _selectedData.Case.CreateResponse(_selectedData.Character, _character);
 			if (response == null)
 				return;
-			_character.Behavior.WorkingCases.Add(response);
-			Workspace.SendMessage(WorkspaceMessages.CaseAdded, _workingResponse);
+			_character.Behavior.AddWorkingCase(response);
 			ShowResponse(response);
 		}
 

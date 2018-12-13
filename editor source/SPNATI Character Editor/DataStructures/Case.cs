@@ -93,7 +93,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				if (!String.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"))
+				if (!string.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"))
 				{
 					return TargetStatus.Substring(4);
 				}
@@ -104,7 +104,7 @@ namespace SPNATI_Character_Editor
 			}
 			set
 			{
-				if (!String.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"))
+				if (!string.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"))
 				{
 					TargetStatus = "not_" + value;
 				}
@@ -120,7 +120,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return (!String.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"));
+				return (!string.IsNullOrEmpty(TargetStatus) && TargetStatus.StartsWith("not_"));
 			}
 			set
 			{
@@ -136,8 +136,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("targetNotSaidMarker")]
 		public string TargetNotSaidMarker;
 
-		//hiding this from the editor until it's officially out
-		//[MarkerCondition(DisplayName = "Target Saying Marker", GroupName = "Target", Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[MarkerCondition(DisplayName = "Target Saying Marker", GroupName = "Target", Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
 		[XmlAttribute("targetSayingMarker")]
 		public string TargetSayingMarker;
 
@@ -185,14 +184,21 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoPlayingNotSaidMarker")]
 		public string AlsoPlayingNotSaidMarker;
 
-		//hiding this from the editor until it's officially out
-		//[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupName = "Also Playing", Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupName = "Also Playing", Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
 		[XmlAttribute("alsoPlayingSayingMarker")]
 		public string AlsoPlayingSayingMarker;
 
-		[Filter(DisplayName = "Filter", GroupName = "Table", Description = "Filter based on table conditions. Multiple can be added")]
+		[Boolean(DisplayName = "Hidden", GroupName = "Self", Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen")]
+		[XmlAttribute("hidden")]
+		public string Hidden;
+
+		[Filter(DisplayName = "Filter (+)", GroupName = "Table", Description = "Filter based on table conditions. Multiple can be added")]
 		[XmlElement("condition")]
 		public List<TargetCondition> Conditions;
+
+		[Expression(DisplayName = "Variable Test (+)", GroupName = "Game", Description = "Tests the value of a variable. Multiple can be added")]
+		[XmlElement("test")]
+		public List<ExpressionTest> Expressions;
 
 		[XmlElement("state")]
 		public List<DialogueLine> Lines;
@@ -219,13 +225,11 @@ namespace SPNATI_Character_Editor
 			_globalId = s_globalId++;
 			Lines = new List<DialogueLine>();
 			Conditions = new List<TargetCondition>();
+			Expressions = new List<ExpressionTest>();
 		}
 
-		public Case(string tag)
+		public Case(string tag) : this()
 		{
-			_globalId = s_globalId++;
-			Lines = new List<DialogueLine>();
-			Conditions = new List<TargetCondition>();
 			Tag = tag;
 		}
 
@@ -281,6 +285,10 @@ namespace SPNATI_Character_Editor
 				if (Conditions.Count > 0)
 				{
 					result += string.Format(" ({0})", string.Join(",", Conditions));
+				}
+				if (Expressions.Count > 0)
+				{
+					result += $" ({string.Join(",", Expressions)})";
 				}
 				if (!string.IsNullOrEmpty(TotalFemales))
 				{
@@ -383,6 +391,12 @@ namespace SPNATI_Character_Editor
 			foreach (TargetCondition condition in Conditions)
 			{
 				copy.Conditions.Add(condition.Copy());
+			}
+
+			copy.Expressions = new List<ExpressionTest>();
+			foreach (ExpressionTest test in Expressions)
+			{
+				copy.Expressions.Add(test.Copy());
 			}
 			return copy;
 		}
@@ -498,6 +512,7 @@ namespace SPNATI_Character_Editor
 				totalPriority += 1;
 
 			totalPriority += Conditions.Sum(c => (c.Filter != null ? 10 : 0) + (c.Gender != null ? 5 : 0) + (c.Status != null ? 5 : 0));
+			totalPriority += Expressions.Count * 50;
 
 			if (!string.IsNullOrEmpty(TotalMales))
 				totalPriority += 5;
@@ -595,7 +610,8 @@ namespace SPNATI_Character_Editor
 				AlsoPlayingSaidMarker == other.AlsoPlayingSaidMarker &&
 				AlsoPlayingNotSaidMarker == other.AlsoPlayingNotSaidMarker &&
 				AlsoPlayingSayingMarker == other.AlsoPlayingSayingMarker &&
-				ConsecutiveLosses == other.ConsecutiveLosses;
+				ConsecutiveLosses == other.ConsecutiveLosses &&
+				Hidden == other.Hidden;
 			if (!sameFilters)
 				return false;
 
@@ -605,36 +621,19 @@ namespace SPNATI_Character_Editor
 			{
 				TargetCondition c1 = Conditions[i];
 				TargetCondition c2 = other.Conditions[i];
-				if (c1.Filter != c2.Filter || c1.Count != c2.Count)
+				if (c1.Filter != c2.Filter || c1.Count != c2.Count || c1.Status != c2.Status || c1.Gender != c2.Gender)
 					return false;
 			}
-
-			return true;
-		}
-
-		/// <summary>
-		/// Gets whether this case looks like another even if they aren't the same instance
-		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
-		public bool LooksLike(Case other)
-		{
-			if (!MatchesConditions(other))
+			if (other.Expressions.Count != Expressions.Count)
 				return false;
-
-			if (Lines.Count != other.Lines.Count)
-				return false;
-
-			//Compare lines
-			for (int i = 0; i < Lines.Count; i++)
+			for(int i = 0;i < Expressions.Count; i++)
 			{
-				DialogueLine line1 = Lines[i];
-				DialogueLine line2 = other.Lines[i];
-				string image1 = DialogueLine.GetDefaultImage(line1.Image);
-				string image2 = DialogueLine.GetDefaultImage(line2.Image);
-				if (image1 != image2 || line1.Text != line2.Text)
+				if (!Expressions[i].Equals(other.Expressions[i]))
+				{
 					return false;
+				}
 			}
+
 			return true;
 		}
 
@@ -673,7 +672,9 @@ namespace SPNATI_Character_Editor
 				  !string.IsNullOrEmpty(SaidMarker) ||
 				  !string.IsNullOrEmpty(NotSaidMarker) ||
 				  !string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
-				  Conditions.Count > 0;
+				  !string.IsNullOrEmpty(Hidden) ||
+				  Conditions.Count > 0 ||
+				  Expressions.Count > 0;
 			}
 		}
 
@@ -726,7 +727,8 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(TotalRounds) ||
 					!string.IsNullOrEmpty(TotalFemales) ||
 					!string.IsNullOrEmpty(TotalMales) ||
-					Conditions.Count > 0;
+					Conditions.Count > 0 ||
+					Expressions.Count > 0;
 			}
 		}
 
@@ -769,12 +771,17 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingNotSaidMarker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (AlsoPlayingSayingMarker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Hidden ?? string.Empty).GetHashCode();
 			foreach (var condition in Conditions)
 			{
 				hash = (hash * 397) ^ (condition.Filter ?? string.Empty).GetHashCode();
 				hash = (hash * 397) ^ (condition.Gender ?? string.Empty).GetHashCode();
 				hash = (hash * 397) ^ (condition.Status ?? string.Empty).GetHashCode();
 				hash = (hash * 397) ^ condition.Count.GetHashCode();
+			}
+			foreach (ExpressionTest expr in Expressions)
+			{
+				hash = (hash * 397) ^ expr.GetHashCode();
 			}
 			return hash;
 		}
@@ -888,6 +895,9 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public Case CreateResponse(Character speaker, Character responder)
 		{
+			//no way to respond to hidden cases, since they never display
+			if (Hidden == "1") { return null; }
+
 			Case response = new Case();
 
 			response.Tag = GetResponseTag(speaker, responder);
@@ -970,6 +980,7 @@ namespace SPNATI_Character_Editor
 
 			//misc conditions are always the same
 			response.Conditions.AddRange(Conditions);
+			response.Expressions.AddRange(Expressions);
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;
 			response.TotalMales = TotalMales;
@@ -1029,7 +1040,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Copie Target properties into another case's self properties
+		/// Copies Target properties into another case's self properties
 		/// </summary>
 		/// <param name="other"></param>
 		private void CopyTargetIntoSelf(Case other, Character responder)
@@ -1045,6 +1056,11 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
+				bool removing = Tag.Contains("will_be_visible") || Tag.Contains("removing_");
+				bool removed = Tag.Contains("is_visible") || Tag.Contains("removed_");
+				string type = Tag.Contains("accessory") ? "extra" : Tag.Contains("minor") ? "minor" : Tag.Contains("major") ? "major" : "important";
+				string position = Tag.Contains("chest") ? "upper" : "lower";
+
 				//all stages
 				Trigger trigger = TriggerDatabase.GetTrigger(other.Tag);
 				for (int i = 0; i < responder.Layers + Clothing.ExtraStages; i++)
@@ -1052,6 +1068,29 @@ namespace SPNATI_Character_Editor
 					int standardStage = TriggerDatabase.ToStandardStage(responder, i);
 					if (standardStage >= trigger.StartStage && standardStage <= trigger.EndStage)
 					{
+						//filter out stages that aren't possible
+						if (removing || removed)
+						{
+							if (i > responder.Layers)
+							{
+								//no finishing or finished
+								continue;
+							}
+							else
+							{
+								//make sure item matches targeted type
+								Clothing c = responder.Wardrobe[responder.Layers - i - (removed ? 0 : 1)];
+								if (c.Type != type)
+								{
+									continue;
+								}
+								if (type == "important" && position != c.Position)
+								{
+									continue;
+								}
+							}
+						}
+
 						other.Stages.Add(i);
 					}
 				}
@@ -1212,7 +1251,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets the tag needed for a responder to target this case. This is very similar to TriggerDatabase.GetOppositeTag and they should be joined at some point.
+		/// Gets the tag needed for a responder to target this case.
 		/// </summary>
 		/// <param name="speaker"></param>
 		/// <param name="responder"></param>
@@ -1436,11 +1475,11 @@ namespace SPNATI_Character_Editor
 			if (response == null)
 			{
 				//if that failed, the case is too specific to respond to exactly, so create a matching case with the bare minimum of requirements
-				response = new Case(TriggerDatabase.GetOppositeTag(sourceCase.Tag, other, 0));
+				response = new Case(sourceCase.GetResponseTag(speaker, other));
 			}
 
 			//now get a list of cases that fit the bare minimum requirements of that response (i.e. the tag and stages)
-			List<Case> possibleCases = other.Behavior.WorkingCases.Where(c => TriggerDatabase.AreRelated(c.Tag, response.Tag) && c.Stages.Min() >= response.Stages.Min() && c.Stages.Max() <= response.Stages.Max()).ToList();
+			List<Case> possibleCases = other.Behavior.GetWorkingCases().Where(c => TriggerDatabase.AreRelated(c.Tag, response.Tag) && c.Stages.Min() >= response.Stages.Min() && c.Stages.Max() <= response.Stages.Max()).ToList();
 
 			//now start eliminating cases that aren't possible (or at least very unlikely) based on the source's conditions
 			foreach (Case c in possibleCases)
@@ -1504,6 +1543,7 @@ namespace SPNATI_Character_Editor
 			return match;
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool FilterTargetByCase(IRecord record)
 		{
 			Character character = record as Character;
@@ -1671,6 +1711,47 @@ namespace SPNATI_Character_Editor
 		DirectTarget = 1,
 		Filter = 2,
 		All = 3,
+	}
+
+	public class ExpressionTest
+	{
+		[XmlAttribute("expr")]
+		public string Expression;
+
+		[XmlAttribute("value")]
+		public string Value;
+
+		public ExpressionTest() { }
+
+		public ExpressionTest(string expr, string value)
+		{
+			Expression = expr;
+			Value = value;
+		}
+
+		public ExpressionTest Copy()
+		{
+			return new ExpressionTest(Expression, Value);
+		}
+
+		public override bool Equals(object obj)
+		{
+			ExpressionTest other = obj as ExpressionTest;
+			if (other == null) { return false; }
+			return Expression.Equals(other) && Value.Equals(other);
+		}
+
+		public override int GetHashCode()
+		{
+			int hash = Expression.GetHashCode();
+			hash = (hash * 397) ^ (Value ?? "").GetHashCode();
+			return hash;
+		}
+
+		public override string ToString()
+		{
+			return $"{Expression}={Value}";
+		}
 	}
 
 	public static class Extensions

@@ -3,6 +3,7 @@ using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -206,7 +207,7 @@ namespace SPNATI_Character_Editor
 				if (layer < Wardrobe.Count)
 				{
 					Clothing clothes = Wardrobe[Layers - 1 - layer];
-					label = "Losing " + clothes.Name;
+					label = "Losing " + clothes.ToString();
 				}
 			}
 			else
@@ -217,7 +218,7 @@ namespace SPNATI_Character_Editor
 				{
 					int index = layer - 1;
 					Clothing lastClothes = Wardrobe[Layers - 1 - index];
-					label = "Lost " + lastClothes.Name;
+					label = "Lost " + lastClothes.ToString();
 				}
 			}
 			if (layer == Wardrobe.Count)
@@ -250,7 +251,7 @@ namespace SPNATI_Character_Editor
 				if (layer <= Wardrobe.Count)
 				{
 					Clothing clothes = Wardrobe[Layers - layer];
-					label = "losing " + clothes.Name;
+					label = "losing " + clothes.ToString();
 				}
 				else
 				{
@@ -265,7 +266,7 @@ namespace SPNATI_Character_Editor
 				{
 					int index = layer - 1;
 					Clothing lastClothes = Wardrobe[Layers - 1 - index];
-					label = "Lost " + lastClothes.Name;
+					label = "Lost " + lastClothes.ToString();
 				}
 				else if (layer == Wardrobe.Count)
 				{
@@ -379,6 +380,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnAfterDeserialize()
 		{
+			Wardrobe.ForEach(c => c.OnAfterDeserialize());
 			foreach (var line in StartingLines)
 			{
 				line.Text = XMLHelper.DecodeEntityReferences(line.Text);
@@ -478,8 +480,7 @@ namespace SPNATI_Character_Editor
 
 		public IEnumerable<Case> GetWorkingCasesTargetedAtCharacter(Character character, TargetType targetTypes)
 		{
-			Behavior.BuildWorkingCases(this);
-			foreach (var workingCase in Behavior.WorkingCases)
+			foreach (var workingCase in Behavior.GetWorkingCases())
 			{
 				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes))
 				{

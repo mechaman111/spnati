@@ -15,6 +15,8 @@ namespace SPNATI_Character_Editor.IO
 	/// </summary>
 	public class SpnatiXmlSerializer
 	{
+		private static Dictionary<Type, ElementInformation> _serializationInfo = new Dictionary<Type, ElementInformation>();
+
 		private const string IndentString = "    ";
 
 		public void Serialize<T>(string filename, T data)
@@ -57,35 +59,39 @@ namespace SPNATI_Character_Editor.IO
 		{
 			if (data == null)
 				return;
-			XmlHeaderAttribute header = data.GetType().GetCustomAttribute<XmlHeaderAttribute>();
-			if (header != null)
+
+			Type type = data.GetType();
+			ElementInformation elementInfo = _serializationInfo.Get(type);
+			if (elementInfo == null)
+			{
+				elementInfo = new ElementInformation(type);
+				_serializationInfo[type] = elementInfo;
+			}
+
+			if (elementInfo.Header != null)
 			{
 				writer.Flush();
 				builder.AppendLine();
-				writer.WriteComment(ReplaceTokens(header.Text));
+				writer.WriteComment(ReplaceTokens(elementInfo.Header.Text));
 			}
 
-			List<Tuple<FieldInfo, string, string>> subElements = new List<Tuple<FieldInfo, string, string>>();
+			List<Tuple<FieldInformation, string, string>> subElements = new List<Tuple<FieldInformation, string, string>>();
 
 			bool foundSomething = false;
 			writer.WriteStartElement(name);
 
-			if (data.GetType() == typeof(string) && string.IsNullOrEmpty(data.ToString()))
+			if (type == typeof(string) && string.IsNullOrEmpty(data.ToString()))
 			{
 				//Stop empty strings immediately
 				writer.WriteEndElement();
 				return;
 			}
 
-			var fields = data.GetType().GetFields();
 			string text = null;
 
-			foreach (var field in fields)
+			foreach (FieldInformation field in elementInfo.Fields)
 			{
-				if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
-					continue;
-
-				DefaultValueAttribute defaultValueAttr = field.GetCustomAttribute<DefaultValueAttribute>();
+				DefaultValueAttribute defaultValueAttr = field.DefaultValue;
 				if (defaultValueAttr != null)
 				{
 					object actualValue = field.GetValue(data);
@@ -100,28 +106,28 @@ namespace SPNATI_Character_Editor.IO
 					}
 				}
 
-				XmlElementAttribute element = field.GetCustomAttribute<XmlElementAttribute>();
+				XmlElementAttribute element = field.Element;
 				if (element != null)
 				{
 					//Save elements for later
-					subElements.Add(new Tuple<FieldInfo, string, string>(field, element.ElementName, null));
+					subElements.Add(new Tuple<FieldInformation, string, string>(field, element.ElementName, null));
 					foundSomething = true;
 					continue;
 				}
 
-				XmlArrayAttribute arrayAttr = field.GetCustomAttribute<XmlArrayAttribute>();
+				XmlArrayAttribute arrayAttr = field.Array;
 				if (arrayAttr != null)
 				{
-					XmlArrayItemAttribute arrayItemAttr = field.GetCustomAttribute<XmlArrayItemAttribute>();
+					XmlArrayItemAttribute arrayItemAttr = field.ArrayItem;
 					if (arrayItemAttr != null)
 					{
 						foundSomething = true;
-						subElements.Add(new Tuple<FieldInfo, string, string>(field, arrayAttr.ElementName, arrayItemAttr.ElementName));
+						subElements.Add(new Tuple<FieldInformation, string, string>(field, arrayAttr.ElementName, arrayItemAttr.ElementName));
 					}
 					continue;
 				}
 
-				XmlTextAttribute textAttr = field.GetCustomAttribute<XmlTextAttribute>();
+				XmlTextAttribute textAttr = field.Text;
 				if (textAttr != null)
 				{
 					text = field.GetValue(data)?.ToString();
@@ -129,14 +135,14 @@ namespace SPNATI_Character_Editor.IO
 					continue;
 				}
 
-				XmlAttributeAttribute attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
+				XmlAttributeAttribute attribute = field.Attribute;
 				if (attribute != null)
 				{
 					string value = field.GetValue(data)?.ToString();
 					foundSomething = true;
 					if (value == null)
 						continue;
-					if (field.FieldType==typeof(bool))
+					if (field.FieldType == typeof(bool))
 					{
 						value = value.ToLowerInvariant();
 					}
@@ -148,10 +154,10 @@ namespace SPNATI_Character_Editor.IO
 			// now do elements and arrays
 			foreach (var tuple in subElements)
 			{
-				FieldInfo field = tuple.Item1;
+				FieldInformation field = tuple.Item1;
 
 				//Element
-				XmlNewLineAttribute newLineAttr = field.GetCustomAttribute<XmlNewLineAttribute>();
+				XmlNewLineAttribute newLineAttr = field.NewLine;
 				XmlNewLinePosition newLine = XmlNewLinePosition.None;
 				if (newLineAttr != null)
 				{
@@ -169,24 +175,20 @@ namespace SPNATI_Character_Editor.IO
 					IList list = subdata as IList;
 					if (list != null)
 					{
-						XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
-						if (sortAttribute != null)
+						MethodInfo sortMethod = field.SortMethod;
+						if (sortMethod != null)
 						{
-							MethodInfo sortMethod = data.GetType().GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-							if (sortMethod != null)
+							List<object> sortedList = new List<object>();
+							foreach (object obj in list)
 							{
-								List<object> sortedList = new List<object>();
-								foreach (object obj in list)
-								{
-									sortedList.Add(obj);
-								}
-								sortedList.Sort((o1, o2) =>
-								{
-									return (int)sortMethod.Invoke(data, new object[] { o1, o2 });
-								}
-								);
-								list = sortedList;
+								sortedList.Add(obj);
 							}
+							sortedList.Sort((o1, o2) =>
+							{
+								return (int)sortMethod.Invoke(data, new object[] { o1, o2 });
+							}
+							);
+							list = sortedList;
 						}
 
 						foreach (object item in list)
@@ -228,9 +230,9 @@ namespace SPNATI_Character_Editor.IO
 				}
 			}
 
-			foreach (var field in fields)
+			foreach (var field in elementInfo.Fields)
 			{
-				XmlAnyElementAttribute any = field.GetCustomAttribute<XmlAnyElementAttribute>();
+				XmlAnyElementAttribute any = field.AnyElement;
 				if (any != null && field.GetValue(data) != null)
 				{
 					foreach (XmlElement el in field.GetValue(data) as List<XmlElement>)
@@ -262,6 +264,73 @@ namespace SPNATI_Character_Editor.IO
 			line = line.Replace("{Date}", DateTime.Now.ToString("MMMM dd, yyyy"));
 			line = line.Replace("{Version}", Config.Version);
 			return line;
+		}
+
+		/// <summary>
+		/// Cached attributes to limit the necessary amount of reflection during serialization
+		/// </summary>
+		private class ElementInformation
+		{
+			public XmlHeaderAttribute Header;
+
+			public List<FieldInformation> Fields = new List<FieldInformation>();
+
+			public ElementInformation(Type type)
+			{
+				Header = type.GetCustomAttribute<XmlHeaderAttribute>();
+
+				FieldInfo[] fields = type.GetFields();
+				foreach (FieldInfo field in fields)
+				{
+					if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
+						continue;
+
+					FieldInformation info = new FieldInformation(type, field);
+					Fields.Add(info);
+				}
+			}
+		}
+
+		private class FieldInformation
+		{
+			public FieldInfo Info;
+			public Type FieldType;
+			public DefaultValueAttribute DefaultValue;
+			public XmlElementAttribute Element;
+			public XmlArrayAttribute Array;
+			public XmlArrayItemAttribute ArrayItem;
+			public XmlTextAttribute Text;
+			public XmlAttributeAttribute Attribute;
+			public XmlNewLineAttribute NewLine;
+			public MethodInfo SortMethod;
+			public XmlAnyElementAttribute AnyElement;
+
+			public FieldInformation(Type parentType, FieldInfo field)
+			{
+				Info = field;
+				FieldType = Info.FieldType;
+				DefaultValue = field.GetCustomAttribute<DefaultValueAttribute>();
+				Element = field.GetCustomAttribute<XmlElementAttribute>();
+				Array = field.GetCustomAttribute<XmlArrayAttribute>();
+				ArrayItem = field.GetCustomAttribute<XmlArrayItemAttribute>();
+				Text = field.GetCustomAttribute<XmlTextAttribute>();
+				Attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
+				NewLine = field.GetCustomAttribute<XmlNewLineAttribute>();
+
+				XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
+				if (sortAttribute != null)
+				{
+					SortMethod = parentType.GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				}
+
+				AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
+
+			}
+
+			public object GetValue(object obj)
+			{
+				return Info.GetValue(obj);
+			}
 		}
 	}
 

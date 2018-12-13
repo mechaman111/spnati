@@ -1,7 +1,8 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -19,23 +20,10 @@ namespace SPNATI_Character_Editor.Activities
 		private Stage _selectedStage;
 		private Case _selectedCase;
 		private FindReplace _findForm;
-		private bool _populatingTree;
-		private bool _initialGenerationDone;
 		private bool _populatingCase;
 		private bool _pendingWardrobeChange;
 		private bool _exportOnQuit;
-		private TreeNode _startNode;
-		private TreeFilterMode _filterMode = TreeFilterMode.All;
 		private List<DialogueLine> _lineClipboard = new List<DialogueLine>();
-
-		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-		private static extern int GetScrollPos(IntPtr hWnd, int nBar);
-
-		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-		private static extern int SetScrollPos(IntPtr hWnd, int nBar, int nPos, bool bRedraw);
-
-		private const int SB_HORZ = 0x0;
-		private const int SB_VERT = 0x1;
 
 		private enum TreeFilterMode
 		{
@@ -64,22 +52,17 @@ namespace SPNATI_Character_Editor.Activities
 			_editorData = CharacterDatabase.GetEditorData(_character);
 			tableConditions.RecordFilter = FilterTargets;
 			tableConditions.Context = _character;
-			recTreeTarget.RecordType = typeof(Character);
 			SetupMessageHandlers();
 			grpCase.Enabled = false;
 
 			_usingOldEditor = Config.GetBoolean(UseOldEditorSetting);
 			EnableOldEditor(_usingOldEditor);
-
-			tsbtnRemoveDialogue.Enabled = false;
-			tsbtnSplit.Enabled = false;
 		}
 
 		private void EnableOldEditor(bool value)
 		{
 			tableConditions.Visible = !value;
 			tabControlConditions.Visible = value;
-			//cmdToggleMode.Text = (value ? "New Mode" : "Revert");
 		}
 
 		/// <summary>
@@ -87,29 +70,22 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		public override void Save()
 		{
-			SaveCase(false);
+			SaveCase();
 		}
 
 		protected override void OnFirstActivate()
 		{
 			Character c = _character;
 			ImageCache.Clear();
+			treeDialogue.SetData(c);
 			_selectedStage = null;
 			_selectedCase = null;
-
-			PopulateTriggerMenu();
-
+			
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
 
 			CreateStageCheckboxes();
-			GenerateDialogueTree(true);
-			if (treeDialogue.Nodes.Count > 0)
-			{
-				treeDialogue.SelectedNode = treeDialogue.Nodes[0];
-			}
 
-			cboTreeFilter.SelectedIndex = 0;
 			PopulateListingFields();
 			SetupFindReplace();
 		}
@@ -120,7 +96,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				_pendingWardrobeChange = false;
 				CreateStageCheckboxes();
-				GenerateDialogueTree(true);
+				treeDialogue.RegenerateTree();
 			}
 		}
 
@@ -169,7 +145,6 @@ namespace SPNATI_Character_Editor.Activities
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
-			SubscribeWorkspace<Case>(WorkspaceMessages.CaseAdded, OnCaseAdded);
 		}
 
 		private void OnSaveWorkspace()
@@ -177,7 +152,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character.Behavior.EnsureDefaults(_character))
 			{
 				Shell.Instance.SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
-				GenerateDialogueTree(false);
 			}
 			Export();
 		}
@@ -203,74 +177,6 @@ namespace SPNATI_Character_Editor.Activities
 		#endregion
 
 		#region Event handlers
-		/// <summary>
-		/// Adds a new case whose tag matches the currently selected case
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void tsbtnAddDialogue_ButtonClick(object sender, EventArgs e)
-		{
-			if (_character == null || _selectedStage == null || _selectedCase == null)
-			{
-				tsbtnAddDialogue.ShowDropDown();
-				return;
-			}
-			TreeNode node = treeDialogue.SelectedNode;
-			if (node == null)
-				return;
-			DialogueWrapper wrapper = node.Tag as DialogueWrapper;
-			if (wrapper == null)
-				return;
-
-			TreeNode stageNode = (wrapper.NodeType == NodeType.Stage ? node : node.Parent);
-			Stage stage = ((DialogueWrapper)stageNode.Tag).Stage;
-			SaveCase(true);
-			string tag = _selectedCase.Tag;
-			Case newCase = new Case(tag);
-			newCase.Stages.Add(stage.Id);
-			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
-			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
-			_character.Behavior.WorkingCases.Add(newCase);
-			newCase.Lines.Add(line);
-			_selectedCase = newCase;
-			GenerateDialogueTree(false);
-			PopulateCase();
-		}
-
-		private void triggerMenuItem_Click(object sender, System.EventArgs e)
-		{
-			if (_character == null)
-				return;
-			SaveCase(true);
-			string tag = ((ToolStripMenuItem)sender).Name;
-			Case newCase = new Case(tag);
-			for (int stage = 0; stage < flowStageChecks.Controls.Count; stage++)
-			{
-				if (TriggerDatabase.UsedInStage(tag, _character, stage))
-				{
-					newCase.Stages.Add(stage);
-				}
-			}
-			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
-			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
-			_character.Behavior.WorkingCases.Add(newCase);
-			newCase.Lines.Add(line);
-			if (_selectedStage == null || !newCase.Stages.Contains(_selectedStage.Id))
-			{
-				foreach (TreeNode n in treeDialogue.Nodes)
-				{
-					DialogueWrapper w = n.Tag as DialogueWrapper;
-					if (w.NodeType == NodeType.Stage && w.Stage.Id == newCase.Stages[0])
-					{
-						_selectedStage = w.Stage;
-					}
-				}
-			}
-			_selectedCase = newCase;
-			GenerateDialogueTree(false);
-			PopulateCase();
-		}
-
 		/// <summary>
 		/// Raised when a Stage checkbox is clicked
 		/// </summary>
@@ -309,27 +215,7 @@ namespace SPNATI_Character_Editor.Activities
 			markerAlsoPlaying.SetDataSource(c, false);
 			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c, false);
 		}
-
-		private void cboTreeFilter_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			TreeFilterMode mode = (TreeFilterMode)cboTreeFilter.SelectedIndex;
-			if (mode != _filterMode)
-			{
-				_filterMode = mode;
-				SaveCase(false);
-				if (_filterMode == TreeFilterMode.Targeted)
-					treeDialogue.ExpandAll();
-			}
-		}
-
-		private void recTreeTarget_RecordChanged(object sender, IRecord record)
-		{
-			if (_filterMode != TreeFilterMode.Targeted)
-				return; //no point in regenerating for filters that don't use the target
-			SaveCase(false);
-			treeDialogue.ExpandAll();
-		}
-
+		
 		/// <summary>
 		/// Checks or unchecks all stages besides the current stage
 		/// </summary>
@@ -397,158 +283,6 @@ namespace SPNATI_Character_Editor.Activities
 			HighlightRow(index);
 		}
 
-		/// <summary>
-		/// Raised when a new node is selected in the dialogue tree
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void treeDialogue_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			if (_populatingTree)
-				return;
-			TreeNode node = treeDialogue.SelectedNode;
-			if (node == null)
-			{
-				grpCase.Enabled = false;
-				return;
-			}
-
-			DialogueWrapper wrapper = node.Tag as DialogueWrapper;
-			if (wrapper == null)
-			{
-				tsbtnRemoveDialogue.Enabled = false;
-				tsbtnSplit.Enabled = false;
-				return;
-			}
-
-			bool changing = _selectedCase != null;
-			bool needRegeneration = SaveCase(true);
-
-			TreeNode parent;
-			DialogueWrapper parentWrapper;
-			switch (wrapper.NodeType)
-			{
-				case NodeType.Start:
-					_selectedStage = null;
-					_selectedCase = new Case(Trigger.StartTrigger);
-					tsbtnRemoveDialogue.Enabled = false;
-					tsbtnSplit.Enabled = false;
-					grpConditions.Enabled = false;
-					cmdCallOut.Enabled = false;
-					break;
-				case NodeType.Case:
-					_selectedCase = wrapper.Case;
-					parent = node.Parent;
-					parentWrapper = parent.Tag as DialogueWrapper;
-					_selectedStage = parentWrapper.Stage;
-					grpConditions.Enabled = true;
-					tsbtnRemoveDialogue.Enabled = true;
-					tsbtnSplit.Enabled = true;
-					cmdCallOut.Enabled = true;
-					break;
-				case NodeType.Stage:
-					_selectedStage = wrapper.Stage;
-					_selectedCase = null;
-					tsbtnRemoveDialogue.Enabled = false;
-					tsbtnSplit.Enabled = false;
-					cmdCallOut.Enabled = false;
-					break;
-			}
-			PopulateCase();
-			if (changing && needRegeneration)
-			{
-				GenerateDialogueTree(false);
-			}
-		}
-
-		/// <summary>
-		/// Performs a bulk replace from one case to another
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void bulkReplaceToolToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (_selectedCase == null)
-				return;
-			SaveCase(true);
-			BulkReplaceTool replacer = new BulkReplaceTool();
-			replacer.SourceTag = _selectedCase.Tag;
-			if (replacer.ShowDialog() == DialogResult.OK)
-			{
-				_character.Behavior.BulkReplace(replacer.SourceTag, replacer.DestinationTags);
-				GenerateDialogueTree(false);
-				Shell.Instance.SetStatus("Dialogue replaced.");
-			}
-		}
-
-		/// <summary>
-		/// Duplicates the selected case
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void cmdDupe_Click(object sender, EventArgs e)
-		{
-			if (_character == null || _selectedCase == null || _selectedStage == null)
-				return;
-			SaveCase(true);
-			Case copy = _character.Behavior.DuplicateCase(_selectedCase);
-			_selectedCase = copy;
-			GenerateDialogueTree(false);
-		}
-
-		/// <summary>
-		/// Split All context item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void splitAll_Click(object sender, EventArgs e)
-		{
-			SplitAllStages();
-		}
-
-		/// <summary>
-		/// Split at point context item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void splitAtPoint_Click(object sender, EventArgs e)
-		{
-			SeparateStage();
-		}
-
-		/// <summary>
-		/// Separate stage context item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void separateThisStageIntoANewCaseToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			SeparateCaseFromStage();
-		}
-
-		/// <summary>
-		/// Keyboard shortcut handling for the dialogue tree
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void treeDialogue_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Delete)
-			{
-				DeleteSelectedCase();
-			}
-		}
-
-		/// <summary>
-		/// Removes a case
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void tsbtnRemoveDialogue_Click(object sender, EventArgs e)
-		{
-			DeleteSelectedCase();
-		}
-
 		private void gridDialogue_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (_findForm.Visible && e.KeyCode == Keys.Enter)
@@ -558,19 +292,7 @@ namespace SPNATI_Character_Editor.Activities
 				e.Handled = true;
 			}
 		}
-
-		private void tsbtnSplit_DropDownOpening(object sender, EventArgs e)
-		{
-			tssepBeforeRemove.Visible = false;
-			tsmiRemove.Visible = false;
-		}
-
-		private void tsbtnSplit_DropDownClosed(object sender, EventArgs e)
-		{
-			tssepBeforeRemove.Visible = true;
-			tsmiRemove.Visible = true;
-		}
-
+		
 		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
 		{
 			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
@@ -608,7 +330,7 @@ namespace SPNATI_Character_Editor.Activities
 			Save();
 			if (Serialization.ExportCharacter(_character))
 			{
-				Shell.Instance.SetStatus(string.Format("{0} exported successfully.", _character));
+				Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
 				return true;
 			}
 			else
@@ -701,30 +423,6 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void PopulateTriggerMenu()
-		{
-			List<Trigger> triggers = TriggerDatabase.Triggers;
-			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
-			int curGroup = -1;
-			ContextMenuStrip curGroupMenu = null;
-
-			foreach (Trigger t in triggers)
-			{
-				if (t.StartStage < 0) continue;
-				if (t.Group != curGroup)
-				{
-					curGroup = t.Group;
-					ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
-					groupMenuItem.Text = TriggerDatabase.GetGroupName(curGroup);
-					curGroupMenu = new ContextMenuStrip();
-					curGroupMenu.ShowImageMargin = false;
-					groupMenuItem.DropDown = curGroupMenu;
-					triggerMenu.Items.Add(groupMenuItem);
-				}
-				curGroupMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerMenuItem_Click, t.Tag));
-			}
-		}
-
 		/// <summary>
 		/// Updates a marker dropdown to contain only markers used in the given character's dialogue
 		/// </summary>
@@ -752,177 +450,6 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void OnCaseAdded(Case newCase)
-		{
-			//TODO: Make this smarter to insert where needed instead of rebuilding everything. That applies to tree manipulation in general. It's stupid to regenerate it so frequently.
-			GenerateDialogueTree(false);
-		}
-
-		/// <summary>
-		/// Generates the dialogue tree.
-		/// </summary>
-		/// <param name="initialGeneration">If true, the tree is completely built from scratch. If false, only the Case nodes are regenerated</param>
-		public void GenerateDialogueTree(bool initialGeneration)
-		{
-			if (_character == null)
-			{
-				grpCase.Enabled = false;
-				return;
-			}
-			if (_character.Layers < 2)
-				return;
-
-			if (!_initialGenerationDone)
-			{
-				initialGeneration = true;
-			}
-
-			_populatingTree = true;
-
-			_character.Behavior.SortWorking();
-
-			Dictionary<int, TreeNode> stageMap = new Dictionary<int, TreeNode>();
-			Tuple<int, int> scrollPosition = null;
-			if (initialGeneration)
-			{
-				treeDialogue.Nodes.Clear();
-				_startNode = CreateNode(new DialogueWrapper(_character), null);
-				_startNode.Text = "Starting Lines";
-
-				//Create nodes for each stage
-				int layers = _character.Layers + Clothing.ExtraStages;
-
-				for (int i = 0; i < layers; i++)
-				{
-					TreeNode node = CreateNode(new DialogueWrapper(_character, new Stage(i)), null);
-					stageMap[i] = node;
-				}
-				_initialGenerationDone = true;
-			}
-			else
-			{
-				//Save off the scroll position since it's going to get messed up regenerating the nodes
-				scrollPosition = new Tuple<int, int>(GetScrollPos(treeDialogue.Handle, SB_HORZ), GetScrollPos(treeDialogue.Handle, SB_VERT));
-
-				for (int i = 0; i < treeDialogue.Nodes.Count; i++)
-				{
-					TreeNode stageNode = treeDialogue.Nodes[i];
-					stageNode.Nodes.Clear();
-					DialogueWrapper wrapper = stageNode.Tag as DialogueWrapper;
-					if (wrapper.NodeType == NodeType.Stage)
-					{
-						stageMap[wrapper.Stage.Id] = stageNode;
-					}
-				}
-			}
-
-			TreeNode selection = null;
-			TreeNode selectionStageNode = null;
-			string filterTarget = recTreeTarget.RecordKey;
-			foreach (Case c in _character.Behavior.WorkingCases)
-			{
-				//Exclude cases depending on filters. These are just excluded from the UI. This has no bearing on the actual underlying data
-				switch (_filterMode)
-				{
-					case TreeFilterMode.NonTargeted:
-						if (c.HasFilters)
-							continue;
-						break;
-					case TreeFilterMode.Targeted:
-						if (!c.HasFilters)
-							continue;
-						if (!string.IsNullOrEmpty(filterTarget))
-						{
-							if (c.Target != filterTarget && c.AlsoPlaying != filterTarget)
-								continue;
-						}
-						break;
-				}
-
-				//Create a case node for each stage it occupies
-				for (int i = 0; i < c.Stages.Count; i++)
-				{
-					int stage = c.Stages[i];
-					TreeNode stageNode = stageMap[stage];
-
-					if (selectionStageNode == null && _selectedStage != null && stage == _selectedStage.Id)
-						selectionStageNode = stageNode;
-
-					TreeNode caseNode = CreateNode(new DialogueWrapper(_character, c), stageNode);
-					if (_selectedStage != null && _selectedCase != null && stage == _selectedStage.Id && c == _selectedCase)
-					{
-						selection = caseNode;
-					}
-				}
-			}
-			if (selection == null && selectionStageNode != null)
-				selection = selectionStageNode;
-
-			treeDialogue.SelectedNode = selection;
-			if (scrollPosition != null)
-			{
-				SetScrollPos(treeDialogue.Handle, SB_HORZ, scrollPosition.Item1, true);
-				SetScrollPos(treeDialogue.Handle, SB_VERT, scrollPosition.Item2, true);
-			}
-			Workspace.SendMessage(WorkspaceMessages.DialogueUpdated);
-			_populatingTree = false;
-		}
-
-		/// <summary>
-		/// Creates a node in the dialogue tree
-		/// </summary>
-		/// <param name="wrapper"></param>
-		/// <param name="parent"></param>
-		/// <returns></returns>
-		private TreeNode CreateNode(DialogueWrapper wrapper, TreeNode parent)
-		{
-			TreeNode node = new TreeNode();
-			node.Text = wrapper.ToString();
-			node.Tag = wrapper;
-
-			if (wrapper.NodeType == NodeType.Case)
-			{
-				node.ContextMenuStrip = splitMenu;
-				if (wrapper.Case.HasFilters)
-				{
-					//Highlight targeted dialogue
-					node.ForeColor = System.Drawing.Color.Green;
-				}
-				else
-				{
-					//Highlight lines that are still using the default
-					Tuple<string, string> template = DialogueDatabase.GetTemplate(wrapper.Case.Tag);
-					if (template != null)
-					{
-						foreach (var line in wrapper.Case.Lines)
-						{
-							if (Path.GetFileNameWithoutExtension(line.Image) == template.Item1 && line.Text?.Trim() == template.Item2)
-							{
-								node.ForeColor = System.Drawing.Color.Blue;
-								//Color parent too
-								TreeNode ancestor = parent;
-								while (ancestor != null)
-								{
-									ancestor.ForeColor = System.Drawing.Color.Blue;
-									ancestor = ancestor.Parent;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			if (parent == null)
-			{
-				treeDialogue.Nodes.Add(node);
-			}
-			else
-			{
-				parent.Nodes.Add(node);
-			}
-			return node;
-		}
-
 		#region Find/Replace
 		/// <summary>
 		/// Hooks up event handlers for the Find/Replace form
@@ -941,7 +468,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character == null || string.IsNullOrEmpty(args.FindText))
 				return;
 
-			List<Case> cases = _character.Behavior.WorkingCases;
+			List<Case> cases = _character.Behavior.GetWorkingCases().ToList();
 			int startCaseIndex = 0;
 
 			//Look at the current screen before doing cases in the data structure
@@ -988,7 +515,7 @@ namespace SPNATI_Character_Editor.Activities
 							else
 							{
 								//Select the case
-								SelectCase(c, _selectedStage != null ? _selectedStage.Id : -1);
+								treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c);
 								//Select the line
 								gridDialogue.SelectTextInRow(l, index, args.FindText.Length);
 							}
@@ -998,47 +525,6 @@ namespace SPNATI_Character_Editor.Activities
 						}
 					}
 				}
-			}
-		}
-
-		/// <summary>
-		/// Selects a case node in the dialogue tree
-		/// </summary>
-		/// <param name="c">Working case to select</param>
-		/// <param name="stage">Preferable stage to select</param>
-		private void SelectCase(Case c, int stage)
-		{
-			//Figure out which stage to select the node under
-			TreeNode selectNode = null;
-			if (c.Tag == Trigger.StartTrigger)
-			{
-				//TODO: Start lines aren't currently searched
-			}
-			else
-			{
-				int findStage = stage;
-				while (!c.Stages.Contains(stage))
-				{
-					stage = (stage + 1) % (_character.Layers + Clothing.ExtraStages);
-					if (stage == findStage)
-						return; //Couldn't find in any stage, somehow
-				}
-
-				TreeNode stageNode = treeDialogue.Nodes[stage + 1];
-				for (int i = 0; i < stageNode.Nodes.Count; i++)
-				{
-					TreeNode caseNode = stageNode.Nodes[i];
-					Case nodeCase = ((DialogueWrapper)caseNode.Tag).Case;
-					if (nodeCase == c)
-					{
-						selectNode = caseNode; //Found it
-						break;
-					}
-				}
-			}
-			if (selectNode != null)
-			{
-				treeDialogue.SelectedNode = selectNode;
 			}
 		}
 
@@ -1258,7 +744,6 @@ namespace SPNATI_Character_Editor.Activities
 						box.SelectedIndex = -1;
 						box.Text = "";
 					}
-
 				}
 			}
 		}
@@ -1471,7 +956,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		/// <param name="switchingCases">True when saving within the context of switching selected cases</param>
 		/// <returns>True if cases were changed in such a way that the dialogue tree needs to be regenerated</returns>
-		private bool SaveCase(bool switchingCases)
+		private bool SaveCase()
 		{
 			if (_selectedCase == null)
 				return false;
@@ -1582,8 +1067,7 @@ namespace SPNATI_Character_Editor.Activities
 			//Lines
 			gridDialogue.Save();
 
-			if (!switchingCases)
-				GenerateDialogueTree(false);
+			_character.Behavior.ApplyChanges(_selectedCase);
 
 			return needRegeneration;
 		}
@@ -1662,67 +1146,11 @@ namespace SPNATI_Character_Editor.Activities
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
 		}
 
-		/// <summary>
-		/// Separates the selected case into individual copies for each applicable stage
-		/// </summary>
-		private void SplitAllStages()
-		{
-			if (_character == null || _selectedCase == null || _selectedStage == null)
-				return;
-			SaveCase(true);
-			_character.Behavior.DivideCaseIntoSeparateStages(_selectedCase, _selectedStage.Id);
-			GenerateDialogueTree(false);
-			PopulateCase();
-		}
-
-		/// <summary>
-		/// Separates the current stage into a new case with the same conditions and dialogue as the selected one
-		/// </summary>
-		private void SeparateCaseFromStage()
-		{
-			if (_character == null || _selectedCase == null || _selectedStage == null)
-				return;
-			SaveCase(true);
-			_character.Behavior.SplitCaseStage(_selectedCase, _selectedStage.Id);
-			GenerateDialogueTree(false);
-			PopulateCase();
-		}
-
-		/// <summary>
-		/// Separates the current stage and later ones from the current case, effectively splitting the case in two
-		/// </summary>
-		private void SeparateStage()
-		{
-			if (_character == null || _selectedCase == null || _selectedStage == null)
-				return;
-			SaveCase(true);
-			_character.Behavior.SplitCaseAtStage(_selectedCase, _selectedStage.Id);
-			GenerateDialogueTree(false);
-			PopulateCase();
-		}
-
-		/// <summary>
-		/// Removes a case from the tree
-		/// </summary>
-		private void DeleteSelectedCase()
-		{
-			if (_character == null || _selectedCase == null)
-				return;
-
-			if (MessageBox.Show("Are you sure you want to permanently delete this case from all applicable stages?", "Delete Case", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-			{
-				_character.Behavior.WorkingCases.Remove(_selectedCase);
-				_selectedCase = null;
-				GenerateDialogueTree(false);
-				PopulateCase();
-			}
-		}
-
 		private void cmdCallOut_Click(object sender, EventArgs e)
 		{
 			if (_selectedCase != null)
 			{
-				SaveCase(false);
+				SaveCase();
 				if (!_selectedCase.HasFilters && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
 				{
 					if (MessageBox.Show("This case's triggering conditions are very broad, making it very likely that other characters will respond to this inaccurately. Are you sure you want to call this out for targeting?",
@@ -1762,68 +1190,25 @@ namespace SPNATI_Character_Editor.Activities
 					return;
 				}
 				responder.PrepareForEdit();
-				responder.Behavior.WorkingCases.Add(response);
-				IWorkspace ws = Shell.Instance.GetWorkspace(responder);
-				if (ws != null)
-				{
-					//if the character is already open, let them know a line was dded
-					ws.SendMessage(WorkspaceMessages.CaseAdded, response);
-				}
+				responder.Behavior.AddWorkingCase(response);
 				Shell.Instance.Launch<Character, DialogueEditor>(responder, response);
 			}
 		}
 
 		private void JumpToLine(Stage stage, Case stageCase, DialogueLine line)
 		{
-			JumpToNode(null, stage, stageCase, line);
-		}
-
-		private bool JumpToNode(TreeNode rootNode, Stage stage, Case stageCase, DialogueLine line)
-		{
-			DialogueWrapper currentNode = rootNode?.Tag as DialogueWrapper;
-			Case nodeCase = currentNode?.Case;
-
-			if (nodeCase != null)
+			treeDialogue.SelectNode(stage.Id, stageCase);
+			if (line != null)
 			{
-				if (nodeCase.MatchesConditions(stageCase) && currentNode.Case.Stages.Contains(stage.Id))
-				{
-					treeDialogue.SelectedNode = rootNode;
-					if (line != null)
-					{
-						gridDialogue.SelectLine(line);
-					}
-					return true;
-				}
+				gridDialogue.SelectLine(line);
 			}
-
-			if (rootNode == null)
-			{
-				foreach (TreeNode child in treeDialogue.Nodes)
-				{
-					if (JumpToNode(child, stage, stageCase, line))
-					{
-						return true;
-					}
-				}
-			}
-			else
-			{
-				foreach (TreeNode child in rootNode.Nodes)
-				{
-					if (JumpToNode(child, stage, stageCase, line))
-					{
-						return true;
-					}
-				}
-			}
-			return false;
 		}
 
 		private void cmdToggleMode_Click(object sender, EventArgs e)
 		{
 			if (_selectedCase != null)
 			{
-				SaveCase(false);
+				SaveCase();
 			}
 			_usingOldEditor = !_usingOldEditor;
 			Config.Set(UseOldEditorSetting, _usingOldEditor);
@@ -1832,6 +1217,38 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				PopulateCase();
 			}
+		}
+
+		private void tree_SelectedNodeChanging(object sender, CaseSelectionEventArgs e)
+		{
+			SaveCase();
+		}
+
+		private void tree_SelectedCaseChanged(object sender, CaseSelectionEventArgs e)
+		{
+			_selectedStage = e.Stage;
+			_selectedCase = e.Case;
+			if (_selectedCase != null)
+			{
+				splitDialogue.Panel2.Visible = true;
+				grpConditions.Enabled = true;
+				cmdCallOut.Enabled = true;
+			}
+			else
+			{
+				splitDialogue.Panel2.Visible = false;
+			}
+			PopulateCase();
+		}
+
+		private void tree_CreatingCase(object sender, CaseCreationEventArgs e)
+		{
+			SaveCase();
+		}
+
+		private void tree_CreatedCase(object sender, CaseCreationEventArgs e)
+		{
+			
 		}
 	}
 }

@@ -14,12 +14,14 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class WritingAid : Activity
 	{
 		private const string SuggestionPreference = "WritingSuggestions";
+		private const string ShowSuggestionSetting = "ShowExisting";
 		private const int DefaultSuggestionCount = 10;
 
 		private Character _character;
 
 		private int _maxSuggestions = 0;
 
+		private bool _showExisting;
 		private Character _activeCharacter;
 		private Situation _activeSituation;
 		private Case _response;
@@ -43,6 +45,9 @@ namespace SPNATI_Character_Editor.Activities
 				suggestions = DefaultSuggestionCount;
 			}
 			valSuggestions.Value = Math.Max(valSuggestions.Minimum, Math.Min(valSuggestions.Maximum, suggestions));
+
+			chkFilter.Checked = Config.GetBoolean(ShowSuggestionSetting);
+			chkFilter.CheckedChanged += ChkFilter_CheckedChanged;
 		}
 
 		protected override void OnFirstActivate()
@@ -77,6 +82,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void GenerateSuggestions()
 		{
+			Cursor.Current = Cursors.WaitCursor;
 			gridSituations.Rows.Clear();
 			int suggestionCount = (int)valSuggestions.Value;
 			int max = Math.Min(_maxSuggestions, suggestionCount);
@@ -94,7 +100,8 @@ namespace SPNATI_Character_Editor.Activities
 			List<Situation> suggestions = new List<Situation>();
 			List<Character> noteworthyCharacters = CharacterDatabase.Characters.Where(c => c != _character && CharacterDatabase.GetEditorData(c).NoteworthySituations.Count > 0).ToList();
 
-			while (suggestions.Count < max)
+			int attempts = max + 20; //it's possible to get into an infinite loop if there is a short supply of situations, so take the dumb way out of avoiding this by just trying a maximum number of times
+			while (suggestions.Count < max && attempts-- > 0)
 			{
 				if (filter == null)
 				{
@@ -108,6 +115,26 @@ namespace SPNATI_Character_Editor.Activities
 					continue;
 				}
 
+				if (!_showExisting)
+				{
+					//see if we've already responded
+					Case response = situation.Case.CreateResponse(currentCharacter, _character);
+
+					if (response != null)
+					{
+						//See if they already have a response
+						Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, false));
+						if (match != null)
+						{
+							if (filter != null)
+							{
+								max--; //avoid an infinite loop of trying the same situation over and over
+							}
+							continue;
+						}
+					}
+				}
+
 				suggestions.Add(situation);
 				BuildSuggestionRow(currentCharacter, situation);
 				if (gridSituations.Rows.Count == 1)
@@ -115,6 +142,7 @@ namespace SPNATI_Character_Editor.Activities
 					ShowSituation(currentCharacter, situation);
 				}
 			}
+			Cursor.Current = Cursors.Default;
 		}
 
 		private void BuildSuggestionRow(Character character, Situation line)
@@ -185,6 +213,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_activeSituation == null) { return; }
 
+			//TODO: If _showExisting is true, we already created the response and checked for matches up front, so save it off and retrieve here
 			_response = _activeSituation.Case.CreateResponse(_activeCharacter, _character);
 
 			if (_response == null || _response.Tag == null)
@@ -194,7 +223,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 
 			//See if they already have a response
-			Case match = _character.Behavior.WorkingCases.Find(c => c.MatchesConditions(_response) && c.MatchesStages(_response, false));
+			Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(_response) && c.MatchesStages(_response, false));
 			if (match != null)
 			{
 				_response = match;
@@ -238,11 +267,10 @@ namespace SPNATI_Character_Editor.Activities
 			gridLines.Save();
 
 			//Add this stage
-			if (!_character.Behavior.WorkingCases.Contains(_response))
+			if (!_character.Behavior.GetWorkingCases().Contains(_response))
 			{
-				_character.Behavior.WorkingCases.Add(_response);
+				_character.Behavior.AddWorkingCase(_response);
 			}
-			Workspace.SendMessage(WorkspaceMessages.CaseAdded, _response);
 			splitContainer1.Panel2Collapsed = true;
 			splitContainer1.Panel1.Enabled = true;
 		}
@@ -261,10 +289,24 @@ namespace SPNATI_Character_Editor.Activities
 			GenerateSuggestions();
 		}
 
+
+		private void ChkFilter_CheckedChanged(object sender, EventArgs e)
+		{
+			_showExisting = chkFilter.Checked;
+			Config.Set(ShowSuggestionSetting, _showExisting);
+			GenerateSuggestions();
+		}
+
+
 		private void cmdJumpToDialogue_Click(object sender, EventArgs e)
 		{
 			AcceptResponse();
 			Shell.Instance.Launch<Character, DialogueEditor>(_character, _response);
+		}
+
+		private void chkFilter_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
