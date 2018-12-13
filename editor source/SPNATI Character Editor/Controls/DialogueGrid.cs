@@ -53,6 +53,9 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
+			ColDelete.FlatStyle = FlatStyle.Popup;
+			ColDelete.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
+
 			ColPerTarget.FalseValue = false;
 
 			_intellisense = new IntellisenseControl();
@@ -321,6 +324,25 @@ namespace SPNATI_Character_Editor.Controls
 			if (gridDialogue.IsCurrentCellDirty)
 			{
 				gridDialogue.CommitEdit(DataGridViewDataErrorContexts.Commit);
+			}
+		}
+
+		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+		{
+			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+			row.Cells["ColDelete"].ToolTipText = "Delete row";
+		}
+
+		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridDialogue.Columns.Count || e.RowIndex == gridDialogue.NewRowIndex)
+			{
+				return;
+			}
+			DataGridViewColumn col = gridDialogue.Columns[e.ColumnIndex];
+			if (col == ColDelete)
+			{
+				gridDialogue.Rows.RemoveAt(e.RowIndex);
 			}
 		}
 

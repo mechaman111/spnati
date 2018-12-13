@@ -28,7 +28,7 @@ namespace SPNATI_Character_Editor
 			string range = GetValue()?.ToString();
 			if (range == null)
 			{
-				valFrom.Value = 0;
+				valFrom.Text = "";
 				valTo.Text = "";
 				return;
 			}

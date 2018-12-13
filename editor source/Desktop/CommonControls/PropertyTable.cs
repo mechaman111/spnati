@@ -54,6 +54,8 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		private HashSet<PropertyRecord> _favoriteRecords = new HashSet<PropertyRecord>();
+
 		/// <summary>
 		/// Caption for remove buttons
 		/// </summary>
@@ -89,6 +91,45 @@ namespace Desktop.CommonControls
 				foreach (PropertyTableRow row in kvp.Value.Values)
 				{
 					row.EditControl.Save();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of keys of favorited records
+		/// </summary>
+		/// <returns></returns>
+		public List<string> GetFavorites()
+		{
+			List<string> list = new List<string>();
+			foreach (PropertyRecord rec in _favoriteRecords)
+			{
+				list.Add(rec.Key);
+			}
+			return list;
+		}
+		
+		/// <summary>
+		/// Sets the list of favorited records
+		/// </summary>
+		/// <param name="favorites"></param>
+		public void SetFavorites(List<string> favorites)
+		{
+			if (Data == null) { return; }
+			_favoriteRecords.Clear();
+
+			Dictionary<string, PropertyRecord> recs = new Dictionary<string, PropertyRecord>();
+			foreach (PropertyRecord rec in PropertyProvider.GetEditControls(Data.GetType()))
+			{
+				recs[rec.Key] = rec;
+			}
+
+			foreach (string key in favorites)
+			{
+				PropertyRecord record;
+				if (recs.TryGetValue(key, out record))
+				{
+					_favoriteRecords.Add(record);
 				}
 			}
 		}
@@ -167,10 +208,14 @@ namespace Desktop.CommonControls
 				if (memberType == typeof(int) && (int)value == 0 ||
 					value == null)
 				{
-					continue;
+					bool favorited = _favoriteRecords.Contains(editControl);
+					if (!favorited) //add if favorited, even if it has no value
+					{
+						continue;
+					}
 				}
 
-				if (typeof(IList).IsAssignableFrom(memberType))
+				if (value != null && typeof(IList).IsAssignableFrom(memberType))
 				{
 					IList list = value as IList;
 					if (list.Count == 0)
@@ -262,8 +307,10 @@ namespace Desktop.CommonControls
 				ctl.SetData(Data, result.Property, index, Context);
 
 				row = new PropertyTableRow();
+				row.Favorited = _favoriteRecords.Contains(result);
 				row.PropertyChanged += Row_PropertyChanged;
 				row.RemoveRow += Row_RemoveRow;
+				row.ToggleFavorite += Row_ToggleFavorite;
 				row.Dock = DockStyle.Top;
 				row.RemoveCaption = RemoveCaption;
 				row.Set(ctl, result);
@@ -280,6 +327,8 @@ namespace Desktop.CommonControls
 		{
 			pnlRecords.Controls.Remove(row);
 			row.PropertyChanged -= Row_PropertyChanged;
+			row.RemoveRow -= Row_RemoveRow;
+			row.ToggleFavorite -= Row_ToggleFavorite;
 			row.Destroy();
 			row.Dispose();
 		}
@@ -330,6 +379,20 @@ namespace Desktop.CommonControls
 						_rows.Set(otherCtl.Property, otherCtl.Index, otherRow);
 					}
 				}
+			}
+		}
+
+		private void Row_ToggleFavorite(object sender, EventArgs e)
+		{
+			PropertyTableRow row = sender as PropertyTableRow;
+			PropertyRecord record = row.Record;
+			if (row.Favorited)
+			{
+				_favoriteRecords.Add(record);
+			}
+			else
+			{
+				_favoriteRecords.Remove(record);
 			}
 		}
 

@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class DialogueEditor : Activity
 	{
 		private const string UseOldEditorSetting = "UseOldEditor";
+		private const string FavoriteConditionsSetting = "FavoritedConditions";
 		private bool _usingOldEditor;
 
 		private Character _character;
@@ -80,7 +81,7 @@ namespace SPNATI_Character_Editor.Activities
 			treeDialogue.SetData(c);
 			_selectedStage = null;
 			_selectedCase = null;
-			
+
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
 
@@ -125,6 +126,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override bool CanQuit(CloseArgs args)
 		{
+			//Update favorite conditions
+			List<string> favorites = tableConditions.GetFavorites();
+			Config.Set(FavoriteConditionsSetting, string.Join("|", favorites));
+
 			return PromptToSave();
 		}
 
@@ -215,7 +220,7 @@ namespace SPNATI_Character_Editor.Activities
 			markerAlsoPlaying.SetDataSource(c, false);
 			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c, false);
 		}
-		
+
 		/// <summary>
 		/// Checks or unchecks all stages besides the current stage
 		/// </summary>
@@ -292,7 +297,7 @@ namespace SPNATI_Character_Editor.Activities
 				e.Handled = true;
 			}
 		}
-		
+
 		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
 		{
 			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
@@ -611,7 +616,25 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					tableConditions.RecordFilter = FilterTargets;
 				}
+				bool firstPopulation = (tableConditions.Data == null);
 				tableConditions.Data = _selectedCase;
+
+				if (firstPopulation)
+				{
+					List<string> favorites = new List<string>();
+					string favoritesData = Config.GetString(FavoriteConditionsSetting);
+					if (!string.IsNullOrEmpty(favoritesData))
+					{
+						foreach (string key in favoritesData.Split('|'))
+						{
+							if (!string.IsNullOrEmpty(key))
+							{
+								favorites.Add(key);
+							}
+						}
+					}
+					tableConditions.SetFavorites(favorites);
+				}
 			}
 			else
 			{
@@ -1248,7 +1271,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void tree_CreatedCase(object sender, CaseCreationEventArgs e)
 		{
-			
+
 		}
 	}
 }
