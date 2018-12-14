@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.label3 = new System.Windows.Forms.Label();
 			this.lstFilters = new System.Windows.Forms.ListBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +42,8 @@
 			this.pnlProgress = new System.Windows.Forms.Panel();
 			this.lblProgress = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.cmdCopy = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.pnlValid.SuspendLayout();
 			this.pnlWarnings.SuspendLayout();
 			this.pnlProgress.SuspendLayout();
@@ -101,6 +104,7 @@
 			this.lstWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstWarnings.HorizontalScrollbar = true;
 			this.lstWarnings.Location = new System.Drawing.Point(3, 0);
 			this.lstWarnings.Name = "lstWarnings";
 			this.lstWarnings.Size = new System.Drawing.Size(843, 615);
@@ -137,6 +141,7 @@
 			this.pnlWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlWarnings.Controls.Add(this.cmdCopy);
 			this.pnlWarnings.Controls.Add(this.cmdGoTo);
 			this.pnlWarnings.Controls.Add(this.lstWarnings);
 			this.pnlWarnings.Location = new System.Drawing.Point(224, 21);
@@ -152,6 +157,7 @@
 			this.cmdGoTo.Size = new System.Drawing.Size(100, 23);
 			this.cmdGoTo.TabIndex = 10;
 			this.cmdGoTo.Text = "Go to Warning";
+			this.toolTip1.SetToolTip(this.cmdGoTo, "Jumps to the line causing the selected warning");
 			this.cmdGoTo.UseVisualStyleBackColor = true;
 			this.cmdGoTo.Click += new System.EventHandler(this.cmdGoTo_Click);
 			// 
@@ -186,6 +192,18 @@
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size(276, 23);
 			this.progressBar.TabIndex = 2;
+			// 
+			// cmdCopy
+			// 
+			this.cmdCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.cmdCopy.Location = new System.Drawing.Point(3, 623);
+			this.cmdCopy.Name = "cmdCopy";
+			this.cmdCopy.Size = new System.Drawing.Size(115, 23);
+			this.cmdCopy.TabIndex = 11;
+			this.cmdCopy.Text = "Copy to Clipboard";
+			this.toolTip1.SetToolTip(this.cmdCopy, "Copies all validation warnings for this character to the clipboard");
+			this.cmdCopy.UseVisualStyleBackColor = true;
+			this.cmdCopy.Click += new System.EventHandler(this.cmdCopy_Click);
 			// 
 			// ValidationControl
 			// 
@@ -224,5 +242,7 @@
 		private System.Windows.Forms.Label lblProgress;
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.Button cmdGoTo;
+		private System.Windows.Forms.Button cmdCopy;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

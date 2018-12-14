@@ -2,6 +2,7 @@
 using SPNATI_Character_Editor.Activities;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -235,6 +236,20 @@ namespace SPNATI_Character_Editor.Controls
 			if (error == null || error.Context == null) { return; }
 
 			Shell.Instance.Launch<Character, DialogueEditor>(_character, error.Context);
+		}
+
+		private void cmdCopy_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (ValidationError error in lstWarnings.Items)
+			{
+				sb.Append(error.ToString());
+				sb.Append("\r\n");
+			}
+
+			Clipboard.Clear();
+			Clipboard.SetText(sb.ToString());
+			Shell.Instance.SetStatus("Validation errors copied to the clipboard.");
 		}
 	}
 }

@@ -269,6 +269,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (int s in workingCase.Stages)
 				{
+					if (s >= Stages.Count) { continue; }
 					Stage stage = Stages[s];
 
 					//Find a case to merge into
@@ -290,7 +291,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Sort cases to try to match make_xml's output
-			//TODO: Is this even necessary anymore? [XmlSortMethod] should be taking care of this
+			//TODO: Is this even necessary anymore? [XmlSortMethod] should already be taking care of this
 			foreach (var stage in Stages)
 			{
 				stage.Cases.Sort(stage.SortCases);

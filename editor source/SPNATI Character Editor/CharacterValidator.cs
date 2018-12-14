@@ -106,29 +106,32 @@ namespace SPNATI_Character_Editor
 								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target), context));
 							}
 
-							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && target.FolderName != "human")
+							if (target.FolderName != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
-							}
-							if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
-							}
-							if (!string.IsNullOrEmpty(stageCase.TargetStage))
-							{
-								int targetStage;
-								if (int.TryParse(stageCase.TargetStage, out targetStage))
+								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
 								{
-									if (target.Layers + Clothing.ExtraStages <= targetStage)
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
+								}
+								if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
+								}
+								if (!string.IsNullOrEmpty(stageCase.TargetStage))
+								{
+									int targetStage;
+									if (int.TryParse(stageCase.TargetStage, out targetStage))
 									{
-										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
-									}
-									Clothing clothing;
-									if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
-									{
-										if (clothing == null)
-											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
-										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
+										if (target.Layers + Clothing.ExtraStages <= targetStage)
+										{
+											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
+										}
+										Clothing clothing;
+										if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
+										{
+											if (clothing == null)
+												warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
+											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
+										}
 									}
 								}
 							}
@@ -225,7 +228,7 @@ namespace SPNATI_Character_Editor
 						{
 							if (other != null)
 							{
-								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage)
+								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage && other.FolderName != "human")
 								{
 									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.AlsoPlaying, stageCase.AlsoPlayingStage), context));
 								}
