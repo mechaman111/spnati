@@ -42,9 +42,6 @@ nextButton.addEventListener('click', function(e) {
 document.getElementById('epilogue-restart').addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
-  if (epiloguePlayer) {
-    epiloguePlayer.destroy();
-  }
   showRestartModal();
 });
 document.getElementById('epilogue-buttons').addEventListener('click', function() {
@@ -479,6 +476,7 @@ function parseNotQuiteLegacyEpilogue(player, epilogue, $xml, sceneWidth, sceneHe
 function parseSceneContent(player, scene, $scene) {
   var directive;
   var backgroundTransform = [$scene.attr('background-position-x'), $scene.attr('background-position-y'), $scene.attr('background-zoom') || 100];
+  var addedPause = false;
   try {
     scene.x = toSceneX(backgroundTransform[0], scene);
     scene.y = toSceneY(backgroundTransform[1], scene);
@@ -557,7 +555,11 @@ function parseSceneContent(player, scene, $scene) {
     }
     scene.directives.push(directive);
     scene.directives.push({ type: "pause" });
+    addedPause = true;
   });
+  if (!addedPause) {
+      scene.directives.push({ type: "pause" });
+  }
 }
 
  /************************************************************
@@ -660,6 +662,16 @@ function clearEpilogueList(){
 	$epilogueList.html('');
 	epilogues = [];
 	epilogueSelections = [];
+}
+
+/************************************************************
+ * Cleans up epilogue data
+ ************************************************************/
+function clearEpilogue() {
+  if (epiloguePlayer) {
+    epiloguePlayer.destroy();
+    epiloguePlayer = null;
+  }
 }
 
 /************************************************************
@@ -864,6 +876,7 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
   if (this.loadingImages > 0) { return; }
 
   if (this.readyToLoad) {
+    this.$overlay.show();
     this.advanceScene();
     window.requestAnimationFrame(createClosure(this, this.loop));
   }
@@ -894,6 +907,8 @@ EpiloguePlayer.prototype.destroy = function () {
     $(this.sceneObjects[obj].element).remove();
   }
   this.sceneObjects = {};
+
+  this.$overlay.hide();
 }
 
 EpiloguePlayer.prototype.hasMoreDirectives = function () {
