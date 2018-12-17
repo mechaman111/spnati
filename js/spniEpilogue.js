@@ -23,6 +23,8 @@ var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
 
 var epilogues = []; //list of epilogue data objects
 var chosenEpilogue = null;
+var epiloguePlayer = null;
+var epilogueSuffix = 0;
 
 // Attach some event listeners
 var previousButton = document.getElementById('epilogue-previous');
@@ -30,28 +32,189 @@ var nextButton = document.getElementById('epilogue-next');
 previousButton.addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
-  progressEpilogue(-1);
+  moveEpilogueBack();
 });
 nextButton.addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
-  progressEpilogue(1);
+  moveEpilogueForward();
 });
 document.getElementById('epilogue-restart').addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
+  if (epiloguePlayer) {
+    epiloguePlayer.destroy();
+  }
   showRestartModal();
 });
 document.getElementById('epilogue-buttons').addEventListener('click', function() {
   if (!previousButton.disabled) {
-    progressEpilogue(-1);
+    moveEpilogueBack();
   }
 });
 epilogueContent.addEventListener('click', function() {
   if (!nextButton.disabled) {
-    progressEpilogue(1);
+    moveEpilogueForward();
   }
 });
+
+/************************************************************
+ * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
+ ************************************************************/
+function Animation(id, frames, updateFunc, loop) {
+  this.id = id;
+  this.looped = loop === "1" || loop === "true";
+  this.keyframes = frames;
+  for (var i = 0; i < frames.length; i++) {
+    frames[i].index = i;
+    frames[i].keyframes = frames;
+  }
+  this.duration = frames[frames.length - 1].end;
+  this.elapsed = 0;
+  this.updateFunc = updateFunc;
+  this.easingFunction = "smooth";
+}
+Animation.prototype.easingFunctions = {
+  "linear": function (t) { return t; },
+  "smooth": function (t) { return 3 * t * t - 2 * t * t * t; },
+  "ease": function (t) { return curve(t, 0, 1); },
+  "ease-in": function (t) { return curve(t, 0, 0.5); },
+  "ease-out": function (t) { return curve(t, 0.5, 0); },
+};
+Animation.prototype.update = function (elapsedMs) {
+  this.elapsed += elapsedMs;
+
+  if (!this.updateFunc) { return; }
+
+  //determine what keyframes we're between
+  var last;
+  if (this.looped) {
+    this.elapsed = this.elapsed % this.duration;
+  }
+  var t = this.elapsed;
+  for (var i = this.keyframes.length - 1; i >= 0; i--) {
+    var frame = this.keyframes[i];
+    if (isNaN(frame.start)) { frame.start = 0; frame.end = 0; }
+    if (t >= frame.start) {
+      last = (i > 0 ? this.keyframes[i - 1] : frame);
+      //normalize the time between frames
+      var time = t === 0 ? 0 : Math.min(1, Math.max(0, (t - frame.start) / (frame.end - frame.start)));
+      var easingFunction = frame.ease || "linear";
+      time = this.easingFunctions[easingFunction](time);
+      this.updateFunc(this.id, last, frame, time);
+      return;
+    }
+  }
+}
+Animation.prototype.halt = function () {
+  var frame = this.keyframes[this.keyframes.length - 1];
+  this.updateFunc && this.updateFunc(this.id, frame, frame, 1);
+}
+
+/************************************************************
+ * Creates a closure in order to maintain a function's "this"
+ ************************************************************/
+function createClosure(instance, func)
+{
+	var $this = instance;
+	return function ()
+	{
+		func.apply($this, arguments);
+	};
+}
+
+/************************************************************
+ * Linear interpolation
+ ************************************************************/
+function lerp(a, b, t)
+{
+	t = Math.min(1, Math.max(t));
+	return (b - a) * t + a;
+}
+
+/************************************************************
+ * Interpolation functions for animation movement interpolation
+ ************************************************************/
+var interpolationModes = {
+	"linear": function linear(prop, start, end, t, frames, index)
+	{
+		return lerp(start, end, t);
+	},
+	"spline": function catmullrom(prop, start, end, t, frames, index)
+	{
+		var p0 = index > 0 ? frames[index - 1][prop] : start;
+		var p1 = start;
+		var p2 = end;
+		var p3 = index < frames.length - 2 ? frames[index + 1][prop] : end;
+
+		if (typeof p0 === "undefined" || isNaN(p0))
+		{
+			p0 = start;
+		}
+		if (typeof p3 === "undefined" || isNaN(p3))
+		{
+			p3 = end;
+		}
+
+		var a = 2 * p1;
+		var b = p2 - p0;
+		var c = 2 * p0 - 5 * p1 + 4 * p2 - p3;
+		var d = -p0 + 3 * p1 - 3 * p2 + p3;
+
+		var p = 0.5 * (a + (b * t) + (c * t * t) + (d * t * t * t));
+		return p;
+	},
+};
+
+/************************************************************
+ * Converts a px or % value to the equivalent scene value
+ ************************************************************/
+function toSceneX(x, scene)
+{
+	if (typeof x === "undefined") { return; }
+	if ($.isNumeric(x)) { return parseInt(x, 10); }
+	if (x.endsWith("%"))
+	{
+		return parseInt(x, 10) / 100 * scene.width;
+	}
+	else
+	{
+		return parseInt(x, 10);
+	}
+}
+
+/************************************************************
+ * Converts a px or % value to the equivalent scene value
+ ************************************************************/
+function toSceneY(y, scene)
+{
+	if (typeof y === "undefined") { return; }
+	if ($.isNumeric(y)) { return parseInt(y, 10); }
+	if (y.endsWith("%"))
+	{
+		return parseInt(y, 10) / 100 * scene.height;
+	}
+	else
+	{
+		return parseInt(y, 10);
+	}
+}
+
+/************************************************************
+ * Linear smoothing
+ ************************************************************/
+function linearInterpolation(t)
+{
+	return t;
+}
+
+/************************************************************
+ * Catmull-Rom curve smoothing
+ ************************************************************/
+function curve(t, a, b)
+{
+	return 3 * a * Math.pow(1 - t, 2) * t + 3 * b * (1 - t) * (t * t) + (t * t * t);
+}
 
 /************************************************************
  * Return the numerical part of a string s. E.g. "20%" -> 20
@@ -187,114 +350,143 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
     return;
   }
 
-  var title = $(rawEpilogue).find("title").html().trim();
+  var $epilogue = $(rawEpilogue);
+  var title = $epilogue.find("title").html().trim();
 
-  var screens = []; //the list of screens for the epilogue
+  var epilogue = {
+    title: title,
+    player: player,
+    scenes: [],
+  };
+  var scenes = epilogue.scenes;
 
-  // Leaving this for backwards compatibility, screens are hereby depreciated
-  $(rawEpilogue).find("screen").each(function() {
-    var image = $(this).attr("img").trim(); //get the full path for the screen's image
-
-    if (image.length > 0) {
-        image = player.base_folder + image;
-    }
-
-    //use an attribute rather than a tag because IE doesn't like parsing XML
-
-    var textBoxes = parseSceneContent(player, $(this)).textBoxes;
-
-    screens.push({image, textBoxes}); //add a screen object to the list of screens
-  });
-
-  var backgrounds = [];
-  $(rawEpilogue).find('background').each(function() {
-    var image = $(this).attr('img').trim();
-    if (image.length == 0) {
-        image = '';
-    } else {
-        image = image.charAt(0) === '/' ? image : player.base_folder + image;
-    }
-
-    var scenes = [];
-    $(this).find('scene').each(function() {
-      scenes.push(parseSceneContent(player, $(this)));
-    });
-
-    var css = $(this).attr('css');
-
-    backgrounds.push({image, scenes, css});
-  });
-
-  var epilogue = {player, title, screens, backgrounds}; //epilogue object
-
-  if (!epilogue.backgrounds.length && !epilogue.screens.length) {
-    return;
+  //determine what type of epilogue this is and parse accordingly
+  var isLegacy = $epilogue.children("screen").length > 0;
+  if (isLegacy) {
+    parseLegacyEpilogue(player, epilogue, $epilogue);
   }
-
-  try {
-    var rawRatio = $(rawEpilogue).attr('ratio');
+  else if ($epilogue.children("background").length > 0) {
+    var sceneWidth, sceneHeight;
+    var rawRatio = $epilogue.attr('ratio');
     if (rawRatio) {
       rawRatio = rawRatio.split(':');
-      var ratio = [parseFloat(rawRatio[0]), parseFloat(rawRatio[1])];
+      sceneWidth = parseFloat(rawRatio[0]);
+      sceneHeight = parseFloat(rawRatio[1]);
     }
-  } catch(e) {
-    console.error('Failed reading epilogue ratio: ', $(rawEpilogue).attr('ratio'))
+    parseNotQuiteLegacyEpilogue(player, epilogue, $epilogue, sceneWidth, sceneHeight);
   }
-
-  if (ratio) {
-    epilogue.ratio = ratio;
-  } else {
-
-    epilogue.ratio = [4,3]; // default ratio to use while image loads
-
-    var firstImage = new Image();
-    for (var i = 0; i < screens.length; i++) {
-      if (screens[i].image.length) {
-        firstImage.src = screens[i].image;
-        break;
+  else {
+    $epilogue.children("scene").each(function (index, rawScene) {
+      var $scene = $(rawScene);
+      var width = parseInt($scene.attr("width"), 10);
+      var height = parseInt($scene.attr("height"), 10);
+      var scene = {
+        background: $scene.attr("background"),
+        width: width,
+        height: height,
+        aspectRatio: width / height,
+        zoom: parseFloat($scene.attr("zoom"), 10),
+        directives: [],
       }
-    }
-    for (var i = 0; i < backgrounds.length; i++) {
-      if (backgrounds[i].image.length) {
-        firstImage.src = backgrounds[i].image;
-        break;
-      }
-    }
+      scenes.push(scene);
+      scene.x = toSceneX($scene.attr("x"), scene);
+      scene.y = toSceneY($scene.attr("y"), scene);
 
-    firstImage.style.opacity = 0;
+      var directives = scene.directives;
 
-    epilogueContent.appendChild(firstImage);
-    firstImage.onload = function() {
+      $scene.find("directive").each(function (i, item) {
+        var totalTime = 0;
+        var directive = readProperties(item, scene);
+        directive.keyframes = [];
+        $(item).find("keyframe").each(function (i2, frame) {
+          var keyframe = readProperties(frame, scene);
+          keyframe.ease = keyframe.ease || directive.ease;
+          keyframe.start = totalTime;
+          totalTime = Math.max(totalTime, keyframe.time);
+          keyframe.end = totalTime;
+          keyframe.interpolation = directive.interpolation || "linear";
+          directive.keyframes.push(keyframe);
+        });
+        if (directive.keyframes.length === 0) {
+          //if no explicity keyframes were provided, use the directive itself as a keyframe
+          directive.start = 0;
+          directive.end = directive.time;
+          directive.keyframes.push(directive);
+        }
+        else {
+          directive.time = totalTime;
+        }
 
-      // dummy image as first slide, remove that to get proper aspect ratio
-      if (firstImage.naturalWidth < 10 || firstImage.naturalHeight < 10) {
-        epilogue.ratio = [4,3];
-      } else {
-        var w = firstImage.naturalWidth;
-        var h = firstImage.naturalHeight;
-        epilogue.ratio = [w, h];
-        epilogueContainer.setAttribute('style', 'max-width:' + w / h * 100 + 'vh; height:' + h / w * 100 + 'vw;');
-      }
-    }
+        directives.push(directive);
+      });
+    });
   }
-
   return epilogue;
 }
 
-function parseSceneContent(player, scene) {
+/**
+ * Parses an old screen-based epilogue and converts it into directive format
+ */
+function parseLegacyEpilogue(player, epilogue, $xml) {
+  var scenes = epilogue.scenes;
+  $xml.find("screen").each(function () {
+    var $this = $(this);
 
-  var images = [];
-  var textBoxes = [];
+    var image = $this.attr("img").trim();
+    if (image.length > 0) {
+      image = player.base_folder + image;
+    }
 
-  var backgroundTransform = [scene.attr('background-position-x') || 0, scene.attr('background-position-y') || 0, scene.attr('background-zoom') || 0];
+    //create a scene for each screen
+    var scene = {
+      directives: [],
+      background: image,
+    };
+    scenes.push(scene);
+    parseSceneContent(player, scene, $this);
+  });
+}
+
+/**
+ * Parses an epilogue that came in the format background > scene > sprite/text and converts it into directive format
+ */
+function parseNotQuiteLegacyEpilogue(player, epilogue, $xml, sceneWidth, sceneHeight) {
+  var scenes = epilogue.scenes;
+  $xml.find('background').each(function () {
+    var $this = $(this);
+    var image = $this.attr('img').trim();
+    if (image.length == 0) {
+      image = '';
+    } else {
+      image = image.charAt(0) === '/' ? image : player.base_folder + image;
+    }
+
+    //create a directive-based scene for each scene in the background
+    $this.find('scene').each(function () {
+      var scene = {
+        directives: [],
+        background: image,
+        width: sceneWidth,
+        height: sceneHeight,
+        aspectRatio: sceneWidth / sceneHeight,
+      };
+      scenes.push(scene);
+      parseSceneContent(player, scene, $(this)); //this is intentionally $(this) instead of $this like in parseLegacyEpilogue
+    });
+  });
+}
+
+function parseSceneContent(player, scene, $scene) {
+  var directive;
+  var backgroundTransform = [$scene.attr('background-position-x'), $scene.attr('background-position-y'), $scene.attr('background-zoom') || 100];
   try {
-    backgroundTransform[0] = parseFloat(backgroundTransform[0]) * -1;
-    backgroundTransform[1] = parseFloat(backgroundTransform[1]) * -1;
-    backgroundTransform[2] = parseFloat(backgroundTransform[2]) / 100 + 1;
-  } catch(e) {}
-  backgroundTransform = 'translate(' + backgroundTransform[0] + '%,' + backgroundTransform[1] + '%) scale(' + backgroundTransform[2] + ');';
+    scene.x = toSceneX(backgroundTransform[0], scene);
+    scene.y = toSceneY(backgroundTransform[1], scene);
+    scene.zoom = parseFloat(backgroundTransform[2]) / 100;
+  } catch (e) { }
+
   // Find the image data for this shot
-  scene.find('sprite').each(function() {
+  $scene.find('sprite').each(function () {
     var x = $(this).find("x").html().trim();
     var y = $(this).find("y").html().trim();
     var width = $(this).find("width").html().trim();
@@ -304,11 +496,21 @@ function parseSceneContent(player, scene) {
 
     var css = $(this).attr('css');
 
-    images.push({x, y, width, src, css});
+    directive = {
+      type: "sprite",
+      id: "obj" + (epilogueSuffix++),
+      x: toSceneX(x, scene),
+      y: toSceneY(y, scene),
+      width: width,
+      src: src,
+      css: css,
+    }
+    scene.directives.push(directive);
+
   });
 
   //get the information for all the text boxes
-  scene.find("text").each(function() {
+  $scene.find("text").each(function () {
 
     //the text box's position and width
     var x = $(this).find("x").html().trim();
@@ -343,10 +545,85 @@ function parseSceneContent(player, scene) {
 
     var css = $(this).attr('css');
 
-    textBoxes.push({x, y, width:w, arrow:a, text, css}); //add a textBox object to the list of textBoxes
+    directive = {
+      type: "text",
+      id: "obj" + (epilogueSuffix++),
+      x: x,
+      y: y,
+      arrow: a,
+      width: w,
+      text: text,
+      css: css,
+    }
+    scene.directives.push(directive);
+    scene.directives.push({ type: "pause" });
+  });
+}
+
+ /************************************************************
+ * Read attributes from a source XML object and put them into properties of a JS object
+ ************************************************************/
+function readProperties(sourceObj, scene) {
+  var targetObj = {};
+  var $obj = $(sourceObj);
+  $.each(sourceObj.attributes, function (i, attr) {
+    var name = attr.name.toLowerCase();
+    var value = attr.value;
+    targetObj[name] = value;
   });
 
-  return {images, textBoxes, backgroundTransform};
+  //properties needing special handling
+
+  if (targetObj.type !== "text") {
+    // scene directives
+    targetObj.time = parseFloat(targetObj.time, 10) * 1000;
+    targetObj.alpha = parseFloat(targetObj.alpha, 10);
+    targetObj.zoom = parseFloat(targetObj.zoom, 10);
+    targetObj.rotation = parseFloat(targetObj.rotation, 10);
+    targetObj.scale = parseFloat(targetObj.scale, 10);
+    if (targetObj.x) { targetObj.x = toSceneX(targetObj.x, scene); }
+    if (targetObj.y) { targetObj.y = toSceneY(targetObj.y, scene); }
+  }
+  else {
+    // textboxes
+
+    // ensure an ID
+    var id = targetObj.id;
+    if (!id) {
+      targetObj.id = "obj" + (epilogueSuffix++);
+    }
+
+    // text (not from an attribute, so not populated automatically)
+    targetObj.text = fixupDialogue($obj.html().trim());
+
+    var w = targetObj.width;
+    //the width component is optional. Use a default of 20%.
+    if (w) {
+      w = w.trim();
+    }
+    if (!w || (w.length <= 0)) {
+      w = "20%"; //default to text boxes having a width of 20%
+    }
+    targetObj.width = w;
+
+    //dialogue bubble arrow
+    var a = targetObj.arrow; if (a) {
+      a = a.trim().toLowerCase();
+      if (a.length >= 1) {
+        a = "arrow-" + a; //class name for the different arrows. Only use if the writer specified something.
+      }
+    } else {
+      a = "";
+    }
+    targetObj.arrow = a;
+
+    //automatically centre the text box, if the writer wants that.
+    var x = targetObj.x;
+    if (x.toLowerCase() == "centered") {
+      targetObj.x = getCenteredPosition(w);
+    }
+  }
+  return targetObj;
 }
 
 /************************************************************
@@ -489,183 +766,742 @@ function doEpilogue(){
   epilogueContainer.dataset.background = -1;
   epilogueContainer.dataset.scene = -1;
 
-	progressEpilogue(1); //initialise buttons and text boxes
+  loadEpilogue(chosenEpilogue);
+
 	screenTransition($titleScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
 	$epilogueSelectionModal.modal("hide");
 }
 
-/************************************************************
- * Draw Epilogue element
+ /************************************************************
+ * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
  ************************************************************/
-function drawEpilogueBox(data) {
-  if (!data) {
-    return;
+function loadEpilogue(epilogue) {
+  epiloguePlayer = new EpiloguePlayer(epilogue);
+  epiloguePlayer.load();
+  updateEpilogueButtons();
+}
+
+function moveEpilogueForward() {
+  if (epiloguePlayer) {
+    epiloguePlayer.advanceDirective();
+    updateEpilogueButtons();
   }
+}
 
-  var imgOrTxt = data.src ? 'image' : 'text';
-  var idNum = document.getElementsByClassName('epilogue-' + imgOrTxt).length;
-
-  //make new div element
-  var newEpilogueDiv = $(document.createElement('div')).attr('id', 'epilogue-' + imgOrTxt + '-' + idNum).addClass('epilogue-' + imgOrTxt);
-
-  switch (imgOrTxt) {
-    case 'image':
-      newEpilogueDiv.html('<img src="' + data.src + '">')
-      break;
-    case 'text':
-      var content = expandDialogue(data.text, null, players[HUMAN_PLAYER]);
-
-      newEpilogueDiv.html('<span class="dialogue-bubble ' + data.arrow + '">' + content + '</span>');
-      break;
+function moveEpilogueBack() {
+  if (epiloguePlayer) {
+    epiloguePlayer.revertDirective();
+    updateEpilogueButtons();
   }
-
-  newEpilogueDiv.attr('style', data.css);
-
-  //use css to position the box
-  newEpilogueDiv.css('position', "absolute");
-  newEpilogueDiv.css('left', data.x);
-  newEpilogueDiv.css('top', data.y);
-  newEpilogueDiv.css('width', data.width);
-
-  //attach new div element to the content div
-  epilogueContent.appendChild(newEpilogueDiv[0]);
 }
 
 /************************************************************
- * Move the Epilogue forwards and backwards.
+ * Updates enabled state of buttons
  ************************************************************/
 
-function progressEpilogue(direction) {
-  var activeText = document.getElementsByClassName('epilogue-text').length;
-  var datastore = epilogueContainer.dataset;
-
-  if (!epilogueContainer.getAttribute('style')) {
-    var ratio = chosenEpilogue.ratio;
-    epilogueContainer.setAttribute('style', 'max-width:' + ratio[0] / ratio[1] * 100 + 'vh; height:' + ratio[1] / ratio[0] * 100 + 'vw;');
+function updateEpilogueButtons() {
+  if (!epiloguePlayer) {
+    return;
   }
 
-  // default all buttons and disable/enable conditionally later
   var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
   var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
   var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
-  $epiloguePrevButton.prop("disabled", false);
-  $epilogueNextButton.prop("disabled",  false);
-  $epilogueRestartButton.prop("disabled", true);
+  $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
+  $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
+  $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
+}
 
-  /////////////////////////////////////////
-  // This bit is only for backwards compatibility, please remove it once we're rid of all the old epilogues
-  /////////////////////////////////////////
-  if (chosenEpilogue.screens.length) {
-    var currentScreen = chosenEpilogue.screens[datastore.scene];
-    if (direction > 0) {
-      if (currentScreen && currentScreen.textBoxes.length > activeText) {
-        // Forward same screen
-        drawEpilogueBox(currentScreen.textBoxes[activeText++]);
-      } else {
-        // Forward and changing screens
-        $(epilogueContent).children('.epilogue-text').remove();
-        datastore.scene++;
-        currentScreen = chosenEpilogue.screens[datastore.scene];
-        $(epilogueContent).children('.epilogue-background').attr('src', currentScreen.image)
-        drawEpilogueBox(currentScreen.textBoxes && currentScreen.textBoxes[0]);
-        activeText = 1;
+ /************************************************************
+ * Class for playing through an epilogue
+ ************************************************************/
+function EpiloguePlayer(epilogue) {
+  $(window).resize(createClosure(this, this.resizeViewport));
+  this.anims = [];
+  this.epilogue = epilogue;
+  this.lastUpdate = 0;
+  this.sceneIndex = -1;
+  this.directiveIndex = -1;
+  this.sceneObjects = {};
+  this.assetMap = {};
+  this.camera = null;
+  this.viewportWidth = 0;
+  this.viewportHeight = 0;
+  this.loadingImages = 0;
+  this.waitingForAnims = false;
+  this.overlay = { rgb: [0, 0, 0], a: 0 };
+  this.epilogueContent = document.getElementById('epilogue-content');
+  this.$viewport = $("#epilogue-viewport");
+  this.$canvas = $("#epilogue-canvas");
+  this.$overlay = $("#epilogue-overlay");
+  this.$overlay.css("background-color", "#000000");
+  this.$overlay.css("opacity", "0");
+  this.sceneIndex = -1;
+}
+
+EpiloguePlayer.prototype.load = function () {
+  for (var i = 0; i < this.epilogue.scenes.length; i++) {
+    var scene = this.epilogue.scenes[i];
+    if (scene.background) {
+      this.fetchImage(scene.background);
+    }
+    for (var j = 0; j < scene.directives.length; j++) {
+      var directive = scene.directives[j];
+      if (directive.src) {
+        this.fetchImage(directive.src);
       }
-    } else if (direction < 0) {
-      if (activeText > 1) {
-        // Backwards same screen
-        epilogueContent.removeChild(document.getElementById('epilogue-text-' + (--activeText)));
-      } else {
-        // Backwards and changing screens
-        $(epilogueContent).children('.epilogue-text').remove();
-        datastore.scene--;
-        currentScreen = chosenEpilogue.screens[datastore.scene];
-        $(epilogueContent).children('.epilogue-background').attr('src', currentScreen.image);
-        currentScreen.textBoxes.forEach(drawEpilogueBox);
-        activeText = document.getElementsByClassName('epilogue-text').length
+    }
+  }
+  this.readyToLoad = true;
+  this.onLoadComplete();
+}
+
+/**
+ * Called whenever all images being pre-fetched have been returned (which isn't necessarily when the total number of images that will be pre-fetched have been requested)
+ * This is a workaround for IE11 not supporting promises
+ */
+EpiloguePlayer.prototype.onLoadComplete = function () {
+  if (this.loadingImages > 0) { return; }
+
+  if (this.readyToLoad) {
+    this.advanceScene();
+    window.requestAnimationFrame(createClosure(this, this.loop));
+  }
+}
+
+/**
+ * Fetches an image asset ahead of time so it's ready before we need it
+ * @param {string} path URL for image
+ */
+EpiloguePlayer.prototype.fetchImage = function (path) {
+  var img = new Image();
+  this.loadingImages++;
+  var $this = this;
+  img.onload = img.onerror = function () {
+    $this.assetMap[path] = img;
+    $this.loadingImages--;
+    $this.onLoadComplete();
+  };
+  img.src = path;
+}
+
+EpiloguePlayer.prototype.destroy = function () {
+  //clear old textboxes
+  $(this.epilogueContent).empty();
+
+  //clear old images
+  for (var obj in this.sceneObjects) {
+    $(this.sceneObjects[obj].element).remove();
+  }
+  this.sceneObjects = {};
+}
+
+EpiloguePlayer.prototype.hasMoreDirectives = function () {
+  return this.sceneIndex < this.epilogue.scenes.length - 1 || this.directiveIndex < this.activeScene.directives.length - 1;
+}
+
+EpiloguePlayer.prototype.hasPreviousDirectives = function () {
+  return this.sceneIndex > 0|| this.directiveIndex > 0;
+}
+
+EpiloguePlayer.prototype.loop = function (timestamp) {
+  var elapsed = timestamp - this.lastUpdate;
+
+  if (this.anims.length > 0) {
+    this.update(elapsed);
+    this.draw();
+  }
+
+  this.lastUpdate = timestamp;
+  window.requestAnimationFrame(createClosure(this, this.loop));
+}
+
+EpiloguePlayer.prototype.update = function (elapsed) {
+  var nonLoopingCount = 0;
+  for (var i = this.anims.length - 1; i >= 0; i--) {
+    var anim = this.anims[i];
+    anim.update(elapsed);
+    if (!anim.looped) {
+      if (anim.elapsed >= anim.duration) {
+        this.anims.splice(i, 1);
+      }
+      else {
+        nonLoopingCount++;
       }
     }
+  }
+  if (nonLoopingCount === 0 && this.waitingForAnims) {
+    this.advanceDirective();
+  }
+}
 
-    // disable buttons
-    if (datastore.scene <= 0 && activeText <= 1) {
-      $epiloguePrevButton.prop('disabled', true);
-    }
-    if (datastore.scene >= chosenEpilogue.screens.length - 1 && activeText >= currentScreen.textBoxes.length) {
-      $epilogueNextButton.prop('disabled', true);
-      $epilogueRestartButton.prop('disabled', false);
-    }
-  } else {
-    /////////////////////////////////////////
-    // End backwards compatibility
-    /////////////////////////////////////////
+EpiloguePlayer.prototype.draw = function () {
+  for (var obj in this.sceneObjects) {
+    this.drawObject(this.sceneObjects[obj]);
+  }
+}
 
-    var currentBackground = chosenEpilogue.backgrounds[datastore.background];
-    var currentScene = currentBackground && currentBackground.scenes[datastore.scene];
-    if (direction > 0) {
-      if (currentScene && currentScene.textBoxes.length > activeText) {
-        // Forward same scene
-        drawEpilogueBox(currentScene.textBoxes[activeText++]);
-      } else {
-        // Forward new scene
-        datastore.scene++;
-        if (!currentBackground || datastore.scene >= currentBackground.scenes.length) {
-          // New background!
-          datastore.background++;
-          currentBackground = chosenEpilogue.backgrounds[datastore.background];
-          datastore.scene = 0;
-          currentScene = currentBackground.scenes[datastore.scene];
-          $(epilogueContent).children('.epilogue-background').attr('src', currentBackground.image).siblings().remove();
-          $(epilogueContent).children('.epilogue-background').attr('style', currentBackground.css);
-          currentScene.images.forEach(drawEpilogueBox);
-          drawEpilogueBox(currentScene.textBoxes[0]);
-        } else {
-          // New scene, same background
-          datastore.scene++;
-          currentScene = currentBackground.scenes[datastore.scene];
-          $(epilogueContent).children('.epilogue-background').siblings().remove();
-          currentScene.images.forEach(drawEpilogueBox);
-          drawEpilogueBox(currentScene.textBoxes[0]);
+EpiloguePlayer.prototype.drawObject = function (sprite) {
+  var properties = [
+    "scale(" + this.viewportWidth / this.activeScene.width * this.camera.zoom + ")",
+    "translate(" + this.toViewX(sprite.x) + ", " + this.toViewY(sprite.y) + ")"
+  ];
+  var transform = properties.join(" ");
+
+  $(sprite.element).css({
+    "transform": transform,
+    "transform-origin": "top left",
+    "opacity": sprite.alpha / 100,
+  });
+  $(sprite.rotElement).css({
+    "transform": "rotate(" + sprite.rotation + "deg) scale(" + sprite.scale + ")",
+  });
+}
+
+EpiloguePlayer.prototype.toViewX = function (x) {
+  var sceneWidth = this.camera.width;
+  var offset = sceneWidth / this.camera.zoom / 2 - sceneWidth / 2 + x - this.camera.x;
+  return offset + "px";
+}
+
+EpiloguePlayer.prototype.toViewY = function (y) {
+  var sceneHeight = this.camera.height;
+  var offset = sceneHeight / this.camera.zoom / 2 - sceneHeight / 2 + y - this.camera.y;
+  return offset + "px";
+}
+
+
+/** Advances to the next scene if there is one */
+EpiloguePlayer.prototype.advanceScene = function () {
+  this.sceneIndex++;
+  if (this.sceneIndex < this.epilogue.scenes.length) {
+    this.setupScene(this.sceneIndex);
+  }
+}
+
+EpiloguePlayer.prototype.setupScene = function (index) {
+  var context = {};
+
+  //clear old textboxes
+  this.clearAllText(context);
+
+  //clear old images
+  for (var obj in this.sceneObjects) {
+    $(this.sceneObjects[obj].element).remove();
+  }
+  this.sceneObjects = {};
+
+  this.activeScene = this.epilogue.scenes[index];
+  this.directiveIndex = -1;
+
+  if (!this.activeScene.width) {
+    //if no scene dimensions were provided, use the background image's dimensions
+    var backgroundImg = this.assetMap[this.activeScene.background];
+    if (backgroundImg) {
+      this.activeScene.width = backgroundImg.naturalWidth;
+      this.activeScene.height = backgroundImg.naturalHeight;
+      this.activeScene.aspectRatio = backgroundImg.naturalWidth / backgroundImg.naturalHeight;
+
+      //backwards compatibility: if the new aspect ratio is flipped, we probably don't want to use it. Use the previous scene size instead
+      if (this.sceneIndex > 0) {
+        var previousScene = this.epilogue.scenes[this.sceneIndex - 1];
+        if (previousScene.aspectRatio >= 1 && this.activeScene.aspectRatio < 1 || previousScene.aspectRatio < 1 && this.activeScene.aspectRatio >= 1) {
+          this.activeScene.width = previousScene.width;
+          this.activeScene.height = previousScene.height;
+          this.activeScene.aspectRatio = previousScene.aspectRatio;
         }
-        activeText = 1;
+      }      
+    }
+  }
 
-        $(epilogueContent).children('.epilogue-background').css('transform', currentScene.backgroundTransform);
+  this.camera = {
+    x: isNaN(this.activeScene.x) ? 0 : toSceneX(this.activeScene.x, this.activeScene),
+    y: isNaN(this.activeScene.y) ? 0 : toSceneY(this.activeScene.y, this.activeScene),
+    width: this.activeScene.width,
+    height: this.activeScene.height,
+    zoom: this.activeScene.zoom || 1,
+  }
+
+  //fit the viewport based on the scene's aspect ratio and the window size
+  this.resizeViewport();
+
+  if (this.activeScene.background) {
+
+    this.addBackground(this.activeScene.background);
+  }
+
+  this.performDirective();
+}
+
+EpiloguePlayer.prototype.resizeViewport = function () {
+  if (!this.activeScene) {
+    return;
+  }
+
+  var windowHeight = $(window).height();
+  var windowWidth = $(window).width();
+
+  var viewWidth = this.activeScene.aspectRatio * windowHeight;
+  if (viewWidth > windowWidth) {
+    //take full width of window
+    this.viewportWidth = windowWidth;
+    this.viewportHeight = windowWidth / this.activeScene.aspectRatio;
+    this.$viewport.width(windowWidth);
+    this.$viewport.height(this.viewportHeight);
+  }
+  else {
+    //take full height of window
+    this.viewportWidth = viewWidth;
+    this.viewportHeight = windowHeight;
+    this.$viewport.width(this.viewportWidth);
+    this.$viewport.height(this.viewportHeight);
+  }
+
+  this.draw();
+}
+
+EpiloguePlayer.prototype.haltAnimations = function (haltLooping) {
+  this.waitingForAnims = false;
+  var animloop = this.anims.slice();
+  var j = 0;
+  for (var i = 0; i < animloop.length; i++) {
+    if (haltLooping || !animloop[i].looped) {
+      animloop[i].halt();
+      this.anims.splice(j, 1);
+    }
+    else {
+      j++;
+    }
+  }
+  this.draw();
+}
+
+EpiloguePlayer.prototype.advanceDirective = function () {
+  this.haltAnimations(false);
+  this.performDirective();
+}
+
+EpiloguePlayer.prototype.performDirective = function () {
+  this.directiveIndex++;
+  if (this.directiveIndex < this.activeScene.directives.length) {
+    var directive = this.activeScene.directives[this.directiveIndex];
+    switch (directive.type) {
+      case "sprite":
+        this.addAction(directive, this.addSprite, this.removeSprite);
+        break;
+      case "text":
+        this.addAction(directive, this.addText, this.removeText);
+        break;
+      case "clear":
+        this.addAction(directive, this.clearText, this.restoreText);
+        break;
+      case "move":
+        this.addAction(directive, this.moveSprite, this.returnSprite);
+        break;
+      case "camera":
+        this.addAction(directive, this.moveCamera, this.returnCamera);
+        break;
+      case "fade":
+        this.addAction(directive, this.fade, this.restoreOverlay);
+        break;
+      case "stop":
+        this.addAction(directive, this.stopAnimation, this.restoreAnimation);
+        break;
+      case "wait":
+        this.addAction(directive, this.awaitAnims, function () { });
+        return;
+      case "pause":
+        return;
+    }
+
+    this.performDirective();
+  }
+  else {
+    this.advanceScene();
+  }
+}
+
+/**
+ * Adds an undoable action to the history
+ * @param {any} context Context to pass to do and undo functions
+ * @param {Function} doFunc Function to perform the directive
+ * @param {Function} undoFunc Function to undo the directive
+ */
+EpiloguePlayer.prototype.addAction = function (directive, doFunc, undoFunc) {
+  var context = {}; //contextual information for the do action to store off that the revert action can refer to
+  var action = { directive: directive, context: context, perform: createClosure(this, doFunc), revert: createClosure(this, undoFunc) };
+  directive.action = action;
+  action.perform(directive, context);
+}
+
+/**
+ * Reverts all changes up until the last "pause" directive
+ */
+EpiloguePlayer.prototype.revertDirective = function () {
+  this.haltAnimations(true);
+
+  var canRevert = (this.sceneIndex > 0);
+  if (!canRevert) {
+    //on the initial scene, make sure there is a pause directive to revert to. Otherwise we can't rewind any further
+    for (var i = this.directiveIndex - 1; i >= 0; i--) {
+      if (this.activeScene.directives[i].type === "pause") {
+        canRevert = true;
+        break;
       }
-    } else if (direction < 0) {
-      if (activeText > 1) { // TODO: figure out how to make this more flexible if writers want multiple texts to appear at once or some such
-        // Backwards same scene
-        epilogueContent.removeChild(document.getElementById('epilogue-text-' + (--activeText)));
-      } else {
-        if (datastore.scene) {
-          // Backwards new scene same background
-          datastore.scene--;
-          currentScene = currentBackground.scenes[datastore.scene];
-          $(epilogueContent).children('.epilogue-background').siblings().remove();
-          currentScene.images.forEach(drawEpilogueBox);
-          currentScene.textBoxes.forEach(drawEpilogueBox);
-        } else {
-          // Backwards new background! (old background?)
-          datastore.background--;
-          currentBackground = chosenEpilogue.backgrounds[datastore.background];
-          datastore.scene = currentBackground.scenes.length - 1;
-          currentScene = currentBackground.scenes[datastore.background];
-          $(epilogueContent).children('.epilogue-background').attr('src', currentBackground.image).siblings().remove();
-          $(epilogueContent).children('.epilogue-background').attr('style', currentBackground.css);
-          currentScene.images.forEach(drawEpilogueBox);
-          currentScene.textBoxes.forEach(drawEpilogueBox);
-        }
-        activeText = document.getElementsByClassName('epilogue-text').length;
+    }
+  }
 
-        $(epilogueContent).children('.epilogue-background').css('transform', currentScene.backgroundTransform);
-      }
-    }
+  if (!canRevert) { return; }
 
-    if (datastore.background <= 0 && datastore.scene <= 0 && activeText <= 1) {
-      $epiloguePrevButton.prop('disabled', true);
+  for (var i = this.directiveIndex - 1; i >= 0; i--) {
+    this.directiveIndex = i;
+    var directive = this.activeScene.directives[i];
+    if (directive.action) {
+      directive.action.revert(directive, directive.action.context);
     }
-    if (datastore.background >= chosenEpilogue.backgrounds.length - 1 &&
-      datastore.scene >= currentBackground.scenes.length - 1 &&
-      activeText >= currentScene.textBoxes.length) {
-      $epilogueNextButton.prop('disabled', true);
-      $epilogueRestartButton.prop('disabled', false);
+    if (directive.type === "pause") {
+      return;
     }
+  }
+
+  //reached the start of the scene, so time to back up an entire scene
+
+  //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
+  this.sceneIndex--;
+  this.setupScene(this.sceneIndex);
+  while (this.directiveIndex < this.activeScene.directives.length - 1) {
+    this.advanceDirective();
+  }
+}
+
+EpiloguePlayer.prototype.addBackground = function (background) {
+  var img = this.assetMap[background];
+  this.addImage("background", background, 0, 0, img.naturalWidth + "px", img.naturalHeight + "px");
+}
+
+EpiloguePlayer.prototype.addImage = function (id, src, x, y, width, height, scale, rotation, alpha) {
+  var vehicle = document.createElement("div");
+  vehicle.id = id;
+  var img = document.createElement("img");
+  img.src = this.assetMap[src].src;
+  vehicle.appendChild(img);
+
+  var obj = {
+    element: vehicle,
+    rotElement: img,
+    x: x,
+    y: y,
+    scale: scale || 1,
+    rotation: rotation || 0,
+    alpha: alpha || 100,
+  };
+  if (width) {
+    if (width.endsWith("%")) {
+      obj.widthPct = parseInt(width, 10) / 100;
+    }
+    else {
+      obj.widthPct = parseInt(width, 10) / this.activeScene.width;
+    }
+    if (!height) {
+      obj.heightPct = img.naturalHeight / img.naturalWidth * obj.widthPct * this.activeScene.aspectRatio;
+    }
+  }
+  else {
+    obj.widthPct = img.naturalWidth / this.activeScene.width;
+  }
+  if (height) {
+    if (height.endsWith("%")) {
+      obj.heightPct = parseInt(height, 10) / 100;
+    }
+    else {
+      obj.heightPct = parseInt(height, 10) / this.activeScene.height;
+    }
+    if (!width) {
+      obj.widthPct = img.naturalWidth / img.naturalHeight * obj.heightPct / this.activeScene.aspectRatio;
+    }
+  }
+  else if (!obj.heightPct) {
+    obj.heightPct = img.naturalHeight / this.activeScene.height;
+  }
+
+  $(vehicle).css(
+    {
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: obj.widthPct * this.activeScene.width,
+      height: obj.heightPct * this.activeScene.height,
+    });
+  this.$canvas.append(vehicle);
+
+  this.sceneObjects[id] = obj;
+  this.draw();
+  return obj;
+}
+
+EpiloguePlayer.prototype.addSprite = function (directive) {
+  this.addImage(directive.id, directive.src, directive.x, directive.y, directive.width, directive.height, directive.scale, directive.rotation, directive.alpha);
+}
+
+EpiloguePlayer.prototype.removeSprite = function (directive) {
+  $(this.sceneObjects[directive.id].element).remove();
+  delete this.sceneObjects[directive.id];
+}
+
+EpiloguePlayer.prototype.addText = function (directive, context) {
+  var id = directive.id;
+  context.id = id;
+  this.lastTextId = id;
+
+  var box = document.getElementById(id);
+  if (box) {
+    //resuse the box and just replace the text
+    context.oldContent = $(box.firstChild).html();
+    if (box.style.display === "none") {
+      box.style.display = "";
+      context.wasHidden = true;
+    }
+    $(box.firstChild).html(directive.text);
+    return;
+  }
+
+  var newEpilogueDiv = $(document.createElement('div')).attr('id', id).addClass('epilogue-text');
+  var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
+
+  newEpilogueDiv.html('<span class="dialogue-bubble ' + directive.arrow + '">' + content + '</span>');
+  newEpilogueDiv.attr('style', directive.css);
+
+  //use css to position the box
+  newEpilogueDiv.css('position', "absolute");
+  newEpilogueDiv.css('left', directive.x);
+  newEpilogueDiv.css('top', directive.y);
+  newEpilogueDiv.css('width', directive.width);
+
+  newEpilogueDiv.data("directive", directive);
+
+  //attach new div element to the content div
+  this.epilogueContent.appendChild(newEpilogueDiv[0]);
+}
+
+EpiloguePlayer.prototype.removeText = function (directive, context) {
+  this.lastTextId = context.id;
+  var box = document.getElementById(this.lastTextId);
+  if (context.oldContent) {
+    $(box.firstChild).html(context.oldContent);
+    if (context.wasHidden) {
+      box.style.display = "none";
+    }
+  }
+  else {
+    this.epilogueContent.removeChild(document.getElementById(this.lastTextId));
+  }
+}
+
+EpiloguePlayer.prototype.clearAllText = function (context) {
+  context = context || {};
+  var textBoxes = context.textBoxes = [];
+  var $this = this;
+  $(this.epilogueContent).children().each(function () {
+    var boxContext = {};
+    textBoxes.push(boxContext);
+    $this.clearText({ id: this.id }, boxContext);
+  });
+}
+
+EpiloguePlayer.prototype.clearText = function (directive, context) {
+  var id = directive.id || this.lastTextId;
+  context.id = lastTextId = id;
+
+  //hide the box rather than remove it completely so that it can easily be restored when rewinding
+  var box = document.getElementById(id);
+  if (box) {
+    box.style.display = "none";
+  }
+}
+
+EpiloguePlayer.prototype.restoreText = function (directive, context) {
+  var id = this.lastTextId = context.id;
+  var box = document.getElementById(context.id);
+  if (box) {
+    box.style.display = "";
+  }
+}
+
+EpiloguePlayer.prototype.interpolate = function (obj, prop, last, next, t) {
+  var current = obj[prop];
+  var start = last[prop];
+  var end = next[prop];
+  if (typeof start === "undefined" || isNaN(start) || typeof end === "undefined" || isNaN(end)) {
+    return;
+  }
+  var mode = next.interpolation || "linear";
+  obj[prop] = interpolationModes[mode](prop, start, end, t, last.keyframes, last.index)
+}
+
+EpiloguePlayer.prototype.updateSprite = function (id, last, next, t) {
+  var sprite = this.sceneObjects[id];
+  this.interpolate(sprite, "x", last, next, t);
+  this.interpolate(sprite, "y", last, next, t);
+  this.interpolate(sprite, "rotation", last, next, t);
+  this.interpolate(sprite, "scale", last, next, t);
+  this.interpolate(sprite, "alpha", last, next, t);
+}
+
+EpiloguePlayer.prototype.moveSprite = function (directive, context) {
+  var sprite = this.sceneObjects[directive.id];
+  if (sprite) {
+    var frames = directive.keyframes.slice();
+    context.x = sprite.x;
+    context.y = sprite.y;
+    context.rotation = sprite.rotation;
+    context.scale = sprite.scale;
+    context.alpha = sprite.alpha;
+    frames.unshift(context);
+    this.anims.push(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop));
+  }
+}
+
+EpiloguePlayer.prototype.returnSprite = function (directive, context) {
+  var sprite = this.sceneObjects[directive.id];
+  if (sprite) {
+    if (typeof context.x !== "undefined") {
+      sprite.x = context.x;
+    }
+    if (typeof context.y !== "undefined") {
+      sprite.y = context.y;
+    }
+    if (typeof context.rotation !== "undefined") {
+      sprite.rotation = context.rotation;
+    }
+    if (typeof context.scale !== "undefined") {
+      sprite.scale = context.scale;
+    }
+    if (typeof context.alpha !== "undefined") {
+      sprite.alpha = context.alpha;
+    }
+    this.draw();
+  }
+}
+
+EpiloguePlayer.prototype.updateCamera = function (id, last, next, t) {
+  this.interpolate(this.camera, "x", last, next, t);
+  this.interpolate(this.camera, "y", last, next, t);
+  if (last.zoom && next.zoom) {
+    this.camera.zoom = lerp(last.zoom, next.zoom, t);
+  }
+}
+
+EpiloguePlayer.prototype.moveCamera = function (directive, context) {
+  var frames = directive.keyframes.slice();
+  context.x = this.camera.x;
+  context.y = this.camera.y;
+  context.zoom = this.camera.zoom;
+  frames.unshift(context);
+  this.anims.push(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop));
+}
+
+EpiloguePlayer.prototype.returnCamera = function (directive, context) {
+  if (typeof context.x !== "undefined") {
+    this.camera.x = context.x;
+  }
+  if (typeof context.y !== "undefined") {
+    this.camera.y = context.y;
+  }
+  if (context.zoom) {
+    this.camera.zoom = context.zoom;
+  }
+  this.draw();
+}
+
+EpiloguePlayer.prototype.fromHex = function (hex) {
+  var value = parseInt(hex.substring(1), 16);
+  var r = (value & 0xff0000) >> 16;
+  var g = (value & 0x00ff00) >> 8;
+  var b = (value & 0x0000ff);
+  return [r, g, b];
+}
+
+EpiloguePlayer.prototype.toHexPiece = function (v) {
+  var hex = Math.round(v).toString(16);
+  if (hex.length < 2) {
+    hex = "0" + hex;
+  }
+  return hex;
+}
+
+EpiloguePlayer.prototype.toHex = function (rgb) {
+  return "#" + this.toHexPiece(rgb[0]) + this.toHexPiece(rgb[1]) + this.toHexPiece(rgb[2]);
+}
+
+EpiloguePlayer.prototype.updateOverlay = function (id, last, next, t) {
+  if (typeof next.color !== "undefined") {
+    var rgb1 = fromHex(last.color);
+    var rgb2 = fromHex(next.color);
+
+    var rgb = [0, 0, 0];
+    for (var i = 0; i < rgb.length; i++) {
+      rgb[i] = lerp(rgb1[i], rgb2[i], t);
+    }
+  }
+  var alpha = lerp(last.alpha, next.alpha, t);
+
+  this.setOverlay(rgb, alpha);
+}
+
+EpiloguePlayer.prototype.fade = function (directive, context) {
+  var color = this.toHex(this.overlay.rgb);
+  var frames = directive.keyframes.slice();
+  context.color = color;
+  context.alpha = this.overlay.a;
+  frames.unshift(context);
+  this.anims.push(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop));
+}
+
+EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
+  if (typeof color !== "undefined") {
+    this.overlay.rgb = color;
+  }
+  this.overlay.a = alpha;
+  this.$overlay.css({
+    "opacity": alpha,
+    "background-color": this.toHex(this.overlay.rgb)
+  });
+}
+
+EpiloguePlayer.prototype.restoreOverlay = function (directive, context) {
+  this.setOverlay(context.color, context.alpha);
+}
+
+EpiloguePlayer.prototype.awaitAnims = function (directive, context) {
+  for (var i = 0; i < this.anims.length; i++) {
+    if (!this.anims[i].looped) {
+      this.waitingForAnims = true;
+      return;
+    }
+  }
+  this.advanceDirective();
+}
+
+EpiloguePlayer.prototype.stopAnimation = function (directive, context) {
+  var anim;
+  var id = directive.id;
+  context.haltedAnims = [];
+  for (var i = this.anims.length - 1; i >= 0; i--) {
+    anim = this.anims[i];
+    if (anim.id === id) {
+      anim.halt();
+      this.anims.splice(i, 1);
+      context.haltedAnims.push(anim);
+      this.draw();
+    }
+  }
+}
+
+EpiloguePlayer.prototype.restoreAnimation = function (directive, context) {
+  var haltedAnims = context.haltedAnims;
+  for (var i = 0; i < haltedAnims.length; i++) {
+    var anim = haltedAnims[i];
+    anim.elapsed = 0;
+    this.anims.push(anim);
   }
 }
