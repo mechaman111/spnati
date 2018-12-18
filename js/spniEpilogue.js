@@ -383,6 +383,9 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
         height: height,
         aspectRatio: width / height,
         zoom: parseFloat($scene.attr("zoom"), 10),
+        color: $scene.attr("color"),
+        overlayColor: $scene.attr("overlay"),
+        overlayAlpha: $scene.attr("overlay-alpha"),
         directives: [],
       }
       scenes.push(scene);
@@ -535,7 +538,7 @@ function parseSceneContent(player, scene, $scene) {
     }
 
     //automatically centre the text box, if the writer wants that.
-    if (x.toLowerCase() == "centered") {
+    if (x && x.toLowerCase() == "centered") {
       x = getCenteredPosition(w);
     }
 
@@ -621,7 +624,7 @@ function readProperties(sourceObj, scene) {
 
     //automatically centre the text box, if the writer wants that.
     var x = targetObj.x;
-    if (x.toLowerCase() == "centered") {
+    if (x && x.toLowerCase() == "centered") {
       targetObj.x = getCenteredPosition(w);
     }
   }
@@ -855,11 +858,13 @@ EpiloguePlayer.prototype.load = function () {
   for (var i = 0; i < this.epilogue.scenes.length; i++) {
     var scene = this.epilogue.scenes[i];
     if (scene.background) {
+      scene.background = scene.background.charAt(0) === '/' ? scene.background : this.epilogue.player.base_folder + scene.background;
       this.fetchImage(scene.background);
     }
     for (var j = 0; j < scene.directives.length; j++) {
       var directive = scene.directives[j];
       if (directive.src) {
+        directive.src = directive.src.charAt(0) === '/' ? directive.src : this.epilogue.player.base_folder + directive.src;
         this.fetchImage(directive.src);
       }
     }
@@ -899,6 +904,8 @@ EpiloguePlayer.prototype.fetchImage = function (path) {
 }
 
 EpiloguePlayer.prototype.destroy = function () {
+  this.haltAnimations(true);
+
   //clear old textboxes
   $(this.epilogueContent).empty();
 
@@ -997,6 +1004,8 @@ EpiloguePlayer.prototype.advanceScene = function () {
 EpiloguePlayer.prototype.setupScene = function (index) {
   var context = {};
 
+  this.haltAnimations(true);
+
   //clear old textboxes
   this.clearAllText(context);
 
@@ -1037,13 +1046,22 @@ EpiloguePlayer.prototype.setupScene = function (index) {
     zoom: this.activeScene.zoom || 1,
   }
 
+  var overlayColor;
+  var overlayAlpha = 0;
+  if (this.activeScene.overlayAlpha) {
+    overlayAlpha = parseInt(this.activeScene.overlayAlpha, 10);
+  }
+  if (this.activeScene.overlayColor) {
+    this.setOverlay(this.fromHex(this.activeScene.overlayColor), overlayAlpha);
+  }
+
   //fit the viewport based on the scene's aspect ratio and the window size
   this.resizeViewport();
 
   if (this.activeScene.background) {
-
     this.addBackground(this.activeScene.background);
   }
+  this.$viewport.css("background-color", this.activeScene.color);
 
   this.performDirective();
 }
@@ -1191,15 +1209,23 @@ EpiloguePlayer.prototype.revertDirective = function () {
 
 EpiloguePlayer.prototype.addBackground = function (background) {
   var img = this.assetMap[background];
-  this.addImage("background", background, 0, 0, img.naturalWidth + "px", img.naturalHeight + "px");
+  this.addImage("background", background, { x: 0, y: 0, width: img.naturalWidth + "px", height: img.naturalHeight + "px" });
 }
 
-EpiloguePlayer.prototype.addImage = function (id, src, x, y, width, height, scale, rotation, alpha) {
+EpiloguePlayer.prototype.addImage = function (id, src, args) {
   var vehicle = document.createElement("div");
   vehicle.id = id;
   var img = document.createElement("img");
   img.src = this.assetMap[src].src;
   vehicle.appendChild(img);
+
+  var x = args.x;
+  var y = args.y;
+  var width = args.width;
+  var height = args.height;
+  var scale = args.scale;
+  var rotation = args.rotation;
+  var alpha = args.alpha;
 
   var obj = {
     element: vehicle,
@@ -1255,7 +1281,15 @@ EpiloguePlayer.prototype.addImage = function (id, src, x, y, width, height, scal
 }
 
 EpiloguePlayer.prototype.addSprite = function (directive) {
-  this.addImage(directive.id, directive.src, directive.x, directive.y, directive.width, directive.height, directive.scale, directive.rotation, directive.alpha);
+  this.addImage(directive.id, directive.src, {
+    x: directive.x,
+    y: directive.y,
+    width: directive.width,
+    height: directive.height,
+    scale: directive.scale,
+    rotation: directive.rotation,
+    alpha: directive.alpha,
+  });
 }
 
 EpiloguePlayer.prototype.removeSprite = function (directive) {
@@ -1450,8 +1484,8 @@ EpiloguePlayer.prototype.toHex = function (rgb) {
 
 EpiloguePlayer.prototype.updateOverlay = function (id, last, next, t) {
   if (typeof next.color !== "undefined") {
-    var rgb1 = fromHex(last.color);
-    var rgb2 = fromHex(next.color);
+    var rgb1 = this.fromHex(last.color);
+    var rgb2 = this.fromHex(next.color);
 
     var rgb = [0, 0, 0];
     for (var i = 0; i < rgb.length; i++) {
@@ -1478,7 +1512,7 @@ EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
   }
   this.overlay.a = alpha;
   this.$overlay.css({
-    "opacity": alpha,
+    "opacity": alpha / 100,
     "background-color": this.toHex(this.overlay.rgb)
   });
 }
