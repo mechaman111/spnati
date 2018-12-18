@@ -75,7 +75,7 @@ namespace SPNATI_Character_Editor
 			{
 				SetValue(null);
 			}
-			else if (to <= from)
+			else if (to < from)
 			{
 				SetValue(from.ToString());
 			}

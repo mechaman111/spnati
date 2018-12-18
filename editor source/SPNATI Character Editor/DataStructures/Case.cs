@@ -1690,7 +1690,7 @@ namespace SPNATI_Character_Editor
 				{
 					str += " " + Status.Replace("_", " ");
 				}
-				if (Gender != null)
+				if (!string.IsNullOrEmpty(Gender))
 				{
 					str += " " + Gender + (Filter != null ? "" : "s");
 				}

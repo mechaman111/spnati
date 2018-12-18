@@ -66,6 +66,11 @@ namespace Desktop
 				{
 					//No point in bringing up the form if there's only one record
 					List<IRecord> records = provider.GetRecords(text);
+					IRecord exactMatch = records.Find(r => r.Key == text);
+					if (exactMatch != null)
+					{
+						return exactMatch;
+					}
 					if (records.Count == 1 && (filter == null || filter(records[0])))
 					{
 						return records[0];
