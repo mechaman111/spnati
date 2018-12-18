@@ -1002,12 +1002,10 @@ EpiloguePlayer.prototype.advanceScene = function () {
 }
 
 EpiloguePlayer.prototype.setupScene = function (index) {
-  var context = {};
-
   this.haltAnimations(true);
 
   //clear old textboxes
-  this.clearAllText(context);
+  this.clearAllText();
 
   //clear old images
   for (var obj in this.sceneObjects) {
@@ -1127,6 +1125,9 @@ EpiloguePlayer.prototype.performDirective = function () {
         break;
       case "clear":
         this.addAction(directive, this.clearText, this.restoreText);
+        break;
+      case "clear-all":
+        this.addAction(directive, this.clearAllText, this.restoreText);
         break;
       case "move":
         this.addAction(directive, this.moveSprite, this.returnSprite);
@@ -1302,77 +1303,77 @@ EpiloguePlayer.prototype.addText = function (directive, context) {
   context.id = id;
   this.lastTextId = id;
 
-  var box = document.getElementById(id);
-  if (box) {
-    //resuse the box and just replace the text
-    context.oldContent = $(box.firstChild).html();
-    if (box.style.display === "none") {
-      box.style.display = "";
-      context.wasHidden = true;
-    }
-    $(box.firstChild).html(directive.text);
-    return;
+  var box = $(document.getElementById(id));
+  if (box.length > 0) {
+    //reuse the DOM element if one of the same ID already exists
+    context.oldDirective = box.data("directive");
   }
-
-  var newEpilogueDiv = $(document.createElement('div')).attr('id', id).addClass('epilogue-text');
-  var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
-
-  newEpilogueDiv.html('<span class="dialogue-bubble ' + directive.arrow + '">' + content + '</span>');
-  newEpilogueDiv.attr('style', directive.css);
-
-  //use css to position the box
-  newEpilogueDiv.css('position', "absolute");
-  newEpilogueDiv.css('left', directive.x);
-  newEpilogueDiv.css('top', directive.y);
-  newEpilogueDiv.css('width', directive.width);
-
-  newEpilogueDiv.data("directive", directive);
-
-  //attach new div element to the content div
-  this.epilogueContent.appendChild(newEpilogueDiv[0]);
+  else {
+    box = $(document.createElement('div')).attr('id', id).addClass('epilogue-text');
+    //attach new div element to the content div
+    this.epilogueContent.appendChild(box[0]);
+  }
+  this.applyTextDirective(directive, box);
 }
 
 EpiloguePlayer.prototype.removeText = function (directive, context) {
   this.lastTextId = context.id;
   var box = document.getElementById(this.lastTextId);
-  if (context.oldContent) {
-    $(box.firstChild).html(context.oldContent);
-    if (context.wasHidden) {
-      box.style.display = "none";
-    }
+  if (context.oldDirective) {
+    this.applyTextDirective(context.oldDirective, $(box));
   }
   else {
     this.epilogueContent.removeChild(document.getElementById(this.lastTextId));
   }
 }
 
-EpiloguePlayer.prototype.clearAllText = function (context) {
-  context = context || {};
-  var textBoxes = context.textBoxes = [];
+EpiloguePlayer.prototype.applyTextDirective = function (directive, box) {
+  var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
+
+  box.html('<span class="dialogue-bubble ' + directive.arrow + '">' + content + '</span>');
+  box.attr('style', directive.css);
+
+  //use css to position the box
+  box.css('position', "absolute");
+  box.css('left', directive.x);
+  box.css('top', directive.y);
+  box.css('width', directive.width);
+
+  box.data("directive", directive);
+}
+
+EpiloguePlayer.prototype.clearAllText = function (directive, context) {
   var $this = this;
+  context = context || {};
   $(this.epilogueContent).children().each(function () {
-    var boxContext = {};
-    textBoxes.push(boxContext);
-    $this.clearText({ id: this.id }, boxContext);
+    $this.clearText({ id: this.id }, context);
   });
 }
 
 EpiloguePlayer.prototype.clearText = function (directive, context) {
-  var id = directive.id || this.lastTextId;
-  context.id = lastTextId = id;
+  context.boxes = context.boxes || [];
+  var boxContext = {};
+  context.boxes.push(boxContext);
 
-  //hide the box rather than remove it completely so that it can easily be restored when rewinding
-  var box = document.getElementById(id);
-  if (box) {
-    box.style.display = "none";
+  var id = directive.id || this.lastTextId;
+  boxContext.id = lastTextId = id;
+  var box = $(document.getElementById(id));
+
+  if (box.length === 0) {
+    return;
   }
+
+  boxContext.directive = box.data("directive");
+  this.epilogueContent.removeChild(box[0]);
 }
 
 EpiloguePlayer.prototype.restoreText = function (directive, context) {
-  var id = this.lastTextId = context.id;
-  var box = document.getElementById(context.id);
-  if (box) {
-    box.style.display = "";
+  for (var i = 0; i < context.boxes.length; i++) {
+    var boxContext = context.boxes[i];
+    var id = this.lastTextId = boxContext.id;
+    var directive = boxContext.directive;
+    directive.id = id;
+    this.addText(directive, {});
   }
 }
 
