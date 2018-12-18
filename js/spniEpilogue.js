@@ -433,9 +433,6 @@ function parseLegacyEpilogue(player, epilogue, $xml) {
     var $this = $(this);
 
     var image = $this.attr("img").trim();
-    if (image.length > 0) {
-      image = player.base_folder + image;
-    }
 
     //create a scene for each screen
     var scene = {
@@ -457,8 +454,6 @@ function parseNotQuiteLegacyEpilogue(player, epilogue, $xml, sceneWidth, sceneHe
     var image = $this.attr('img').trim();
     if (image.length == 0) {
       image = '';
-    } else {
-      image = image.charAt(0) === '/' ? image : player.base_folder + image;
     }
 
     //create a directive-based scene for each scene in the background
@@ -492,8 +487,6 @@ function parseSceneContent(player, scene, $scene) {
     var y = $(this).find("y").html().trim();
     var width = $(this).find("width").html().trim();
     var src = $(this).find('src').html().trim();
-
-    src = src.charAt(0) === '/' ? src : player.base_folder + src;
 
     var css = $(this).attr('css');
 
