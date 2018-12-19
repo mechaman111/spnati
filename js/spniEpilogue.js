@@ -58,10 +58,11 @@ epilogueContent.addEventListener('click', function() {
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
-function Animation(id, frames, updateFunc, loop) {
+function Animation(id, frames, updateFunc, loop, easingFunction) {
   this.id = id;
   this.looped = loop === "1" || loop === "true";
   this.keyframes = frames;
+  this.easingFunction = easingFunction || "smooth";
   for (var i = 0; i < frames.length; i++) {
     frames[i].index = i;
     frames[i].keyframes = frames;
@@ -69,7 +70,6 @@ function Animation(id, frames, updateFunc, loop) {
   this.duration = frames[frames.length - 1].end;
   this.elapsed = 0;
   this.updateFunc = updateFunc;
-  this.easingFunction = "smooth";
 }
 Animation.prototype.easingFunctions = {
   "linear": function (t) { return t; },
@@ -89,6 +89,13 @@ Animation.prototype.update = function (elapsedMs) {
     this.elapsed = this.elapsed % this.duration;
   }
   var t = this.elapsed;
+  var easingFunction = this.easingFunction;
+  if (this.duration === 0) {
+    t = 1;
+  }
+  else {
+    t = this.easingFunctions[easingFunction](t / this.duration) * this.duration;
+  }
   for (var i = this.keyframes.length - 1; i >= 0; i--) {
     var frame = this.keyframes[i];
     if (isNaN(frame.start)) { frame.start = 0; frame.end = 0; }
@@ -96,8 +103,6 @@ Animation.prototype.update = function (elapsedMs) {
       last = (i > 0 ? this.keyframes[i - 1] : frame);
       //normalize the time between frames
       var time = t === 0 ? 0 : Math.min(1, Math.max(0, (t - frame.start) / (frame.end - frame.start)));
-      var easingFunction = frame.ease || "linear";
-      time = this.easingFunctions[easingFunction](time);
       this.updateFunc(this.id, last, frame, time);
       return;
     }
@@ -574,7 +579,7 @@ function readProperties(sourceObj, scene) {
 
   if (targetObj.type !== "text") {
     // scene directives
-    targetObj.time = parseFloat(targetObj.time, 10) * 1000;
+    targetObj.time = parseFloat(targetObj.time, 10) * 1000 || 0;
     targetObj.alpha = parseFloat(targetObj.alpha, 10);
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
@@ -1400,7 +1405,7 @@ EpiloguePlayer.prototype.moveSprite = function (directive, context) {
     context.scale = sprite.scale;
     context.alpha = sprite.alpha;
     frames.unshift(context);
-    this.anims.push(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop));
+    this.anims.push(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease));
   }
 }
 
@@ -1440,7 +1445,7 @@ EpiloguePlayer.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  this.anims.push(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop));
+  this.anims.push(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease));
 }
 
 EpiloguePlayer.prototype.returnCamera = function (directive, context) {
@@ -1497,7 +1502,7 @@ EpiloguePlayer.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.overlay.a;
   frames.unshift(context);
-  this.anims.push(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop));
+  this.anims.push(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease));
 }
 
 EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
