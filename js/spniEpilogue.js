@@ -74,9 +74,8 @@ function Animation(id, frames, updateFunc, loop, easingFunction) {
 Animation.prototype.easingFunctions = {
   "linear": function (t) { return t; },
   "smooth": function (t) { return 3 * t * t - 2 * t * t * t; },
-  "ease": function (t) { return curve(t, 0, 1); },
-  "ease-in": function (t) { return curve(t, 0, 0.5); },
-  "ease-out": function (t) { return curve(t, 0.5, 0); },
+  "ease-in": function (t) { return t * t; },
+  "ease-out": function (t) { return t * (2 - t); },
 };
 Animation.prototype.update = function (elapsedMs) {
   this.elapsed += elapsedMs;
@@ -208,14 +207,6 @@ function toSceneY(y, scene)
 function linearInterpolation(t)
 {
 	return t;
-}
-
-/************************************************************
- * Catmull-Rom curve smoothing
- ************************************************************/
-function curve(t, a, b)
-{
-	return 3 * a * Math.pow(1 - t, 2) * t + 3 * b * (1 - t) * (t * t) + (t * t * t);
 }
 
 /************************************************************
