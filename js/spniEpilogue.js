@@ -1013,10 +1013,10 @@ EpiloguePlayer.prototype.setupScene = function (index) {
       this.activeScene.height = backgroundImg.naturalHeight;
       this.activeScene.aspectRatio = backgroundImg.naturalWidth / backgroundImg.naturalHeight;
 
-      //backwards compatibility: if the new aspect ratio is flipped, we probably don't want to use it. Use the previous scene size instead
+      //backwards compatibility: for really skinny ratios, we probably don't want to use it since it'll make textboxes really squished. Use the first scene's instead
       if (this.sceneIndex > 0) {
-        var previousScene = this.epilogue.scenes[this.sceneIndex - 1];
-        if (previousScene.aspectRatio >= 1 && this.activeScene.aspectRatio < 1 || previousScene.aspectRatio < 1 && this.activeScene.aspectRatio >= 1) {
+        var previousScene = this.epilogue.scenes[0];
+        if (this.activeScene.aspectRatio < 0.5) {
           this.activeScene.width = previousScene.width;
           this.activeScene.height = previousScene.height;
           this.activeScene.aspectRatio = previousScene.aspectRatio;
