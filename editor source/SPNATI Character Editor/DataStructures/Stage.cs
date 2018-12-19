@@ -44,11 +44,11 @@ namespace SPNATI_Character_Editor
 			int compare = c1.Stages[0].CompareTo(c2.Stages[0]);
 			if (compare == 0)
 			{
-				compare = t1.XmlGroup.CompareTo(t2.XmlGroup);
+				compare = t1.Group.CompareTo(t2.Group);
 			}
 			if (compare == 0)
 			{
-				compare = t1.XmlOrder.CompareTo(t2.XmlOrder);
+				compare = t1.GroupOrder.CompareTo(t2.GroupOrder);
 			}
 			if (compare == 0)
 			{

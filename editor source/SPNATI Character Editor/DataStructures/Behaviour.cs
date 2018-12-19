@@ -289,13 +289,6 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-
-			//Sort cases to try to match make_xml's output
-			//TODO: Is this even necessary anymore? [XmlSortMethod] should already be taking care of this
-			foreach (var stage in Stages)
-			{
-				stage.Cases.Sort(stage.SortCases);
-			}
 		}
 
 		/// <summary>

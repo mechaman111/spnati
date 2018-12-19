@@ -15,62 +15,20 @@ namespace SPNATI_Character_Editor
 	{
 		private static long s_globalId;
 
-		[RecordSelect(DisplayName = "Also Playing", GroupName = "Also Playing", Description = "Character that is playing but not performing the current action", RecordType = typeof(Character))]
-		[XmlAttribute("alsoPlaying")]
-		public string AlsoPlaying;
+		[XmlAttribute("tag")]
+		public string Tag;
 
-		[ComboBox(DisplayName = "Also Playing Hand", GroupName = "Also Playing", Description = "Character in Also Playing has a particular poker hand",
-			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
-		[XmlAttribute("alsoPlayingHand")]
-		public string AlsoPlayingHand;
-
-		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false)]
-		[XmlAttribute("alsoPlayingStage")]
-		public string AlsoPlayingStage;
-
-		[ComboBox(DisplayName = "Has Hand", GroupName = "Self", Description = "Character has a particular poker hand",
-			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
-		[XmlAttribute("hasHand")]
-		public string HasHand;
+		[RecordSelect(DisplayName = "Target", GroupName = "Target", Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase")]
+		[XmlAttribute("target")]
+		public string Target;
 
 		[RecordSelect(DisplayName = "Target Tag", GroupName = "Target", Description = "Target has a certain tag", RecordType = typeof(Tag), AllowCreate = true)]
 		[XmlAttribute("filter")]
 		public string Filter;
 
-		[XmlAttribute("tag")]
-		public string Tag;
-
-		[PlayerRange(DisplayName = "Total Naked", GroupName = "Table", Description = "Number of players who have lost all their clothing, but might still be playing")]
-		[XmlAttribute("totalNaked")]
-		public string TotalNaked;
-
-		[PlayerRange(DisplayName = "Total Masturbating", GroupName = "Table", Description = "Number of players who are currently masturbating")]
-		[XmlAttribute("totalMasturbating")]
-		public string TotalMasturbating;
-
-		[PlayerRange(DisplayName = "Total Finished", GroupName = "Table", Description = "Number of players who finished masturbating and completely out of the game")]
-		[XmlAttribute("totalFinished")]
-		public string TotalFinished;
-
-		[PlayerRange(DisplayName = "Total Exposed", GroupName = "Table", Description = "Number of players who have exposed either their chest or crotch")]
-		[XmlAttribute("totalExposed")]
-		public string TotalExposed;
-
-		[PlayerRange(DisplayName = "Total Playing", GroupName = "Table", Description = "Number of players still in the game")]
-		[XmlAttribute("totalAlive")]
-		public string TotalPlaying;
-
-		[NumericRange(DisplayName = "Time in Stage", GroupName = "Self", Description = "Number of rounds since the last time this player lost a hand")]
-		[XmlAttribute("timeInStage")]
-		public string TimeInStage;
-
-		[NumericRange(DisplayName = "Target Time in Stage", GroupName = "Target", Description = "Number of rounds since the last time the target lost a hand")]
-		[XmlAttribute("targetTimeInStage")]
-		public string TargetTimeInStage;
-
-		[RecordSelect(DisplayName = "Target", GroupName = "Target", Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase")]
-		[XmlAttribute("target")]
-		public string Target;
+		[Boolean(DisplayName = "Hidden", GroupName = "Self", Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen")]
+		[XmlAttribute("hidden")]
+		public string Hidden;
 
 		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true)]
 		[XmlAttribute("targetStage")]
@@ -87,6 +45,112 @@ namespace SPNATI_Character_Editor
 		[Status(DisplayName = "Target Status", GroupName = "Target", Description = "Target's current clothing status")]
 		[XmlAttribute("targetStatus")]
 		public string TargetStatus;
+
+		[RecordSelect(DisplayName = "Also Playing", GroupName = "Also Playing", Description = "Character that is playing but not performing the current action", RecordType = typeof(Character))]
+		[XmlAttribute("alsoPlaying")]
+		public string AlsoPlaying;
+
+		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false)]
+		[XmlAttribute("alsoPlayingStage")]
+		public string AlsoPlayingStage;
+
+		[ComboBox(DisplayName = "Also Playing Hand", GroupName = "Also Playing", Description = "Character in Also Playing has a particular poker hand",
+			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
+		[XmlAttribute("alsoPlayingHand")]
+		public string AlsoPlayingHand;
+
+		[ComboBox(DisplayName = "Target Hand", GroupName = "Target", Description = "Target has a particular poker hand",
+			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
+		[XmlAttribute("oppHand")]
+		public string TargetHand;
+
+		[ComboBox(DisplayName = "Has Hand", GroupName = "Self", Description = "Character has a particular poker hand",
+			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
+		[XmlAttribute("hasHand")]
+		public string HasHand;
+
+		[PlayerRange(DisplayName = "Total Males", GroupName = "Table", Description = "Number of males playing (including this character and the player)")]
+		[XmlAttribute("totalMales")]
+		public string TotalMales;
+
+		[PlayerRange(DisplayName = "Total Females", GroupName = "Table", Description = "Number of females playing (including this character and the player)")]
+		[XmlAttribute("totalFemales")]
+		public string TotalFemales;
+
+		[NumericRange(DisplayName = "Target Time in Stage", GroupName = "Target", Description = "Number of rounds since the last time the target lost a hand")]
+		[XmlAttribute("targetTimeInStage")]
+		public string TargetTimeInStage;
+
+		[NumericRange(DisplayName = "Also Playing Time in Stage", GroupName = "Also Playing", Description = "Number of rounds since the last time the Also Playing player lost a hand")]
+		[XmlAttribute("alsoPlayingTimeInStage")]
+		public string AlsoPlayingTimeInStage;
+
+		[NumericRange(DisplayName = "Time in Stage", GroupName = "Self", Description = "Number of rounds since the last time this player lost a hand")]
+		[XmlAttribute("timeInStage")]
+		public string TimeInStage;
+
+		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Game", Description = "Number of hands the target player (or this player) has lost in a row")]
+		[XmlAttribute("consecutiveLosses")]
+		public string ConsecutiveLosses;
+
+		[PlayerRange(DisplayName = "Total Playing", GroupName = "Table", Description = "Number of players still in the game")]
+		[XmlAttribute("totalAlive")]
+		public string TotalPlaying;
+
+		[PlayerRange(DisplayName = "Total Exposed", GroupName = "Table", Description = "Number of players who have exposed either their chest or crotch")]
+		[XmlAttribute("totalExposed")]
+		public string TotalExposed;
+
+		[PlayerRange(DisplayName = "Total Naked", GroupName = "Table", Description = "Number of players who have lost all their clothing, but might still be playing")]
+		[XmlAttribute("totalNaked")]
+		public string TotalNaked;
+
+		[PlayerRange(DisplayName = "Total Masturbating", GroupName = "Table", Description = "Number of players who are currently masturbating")]
+		[XmlAttribute("totalMasturbating")]
+		public string TotalMasturbating;
+
+		[PlayerRange(DisplayName = "Total Finished", GroupName = "Table", Description = "Number of players who finished masturbating and completely out of the game")]
+		[XmlAttribute("totalFinished")]
+		public string TotalFinished;
+
+		[NumericRange(DisplayName = "Total Rounds", GroupName = "Game", Description = "Number of rounds since the game began")]
+		[XmlAttribute("totalRounds")]
+		public string TotalRounds;
+
+		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Self", Description = "Character has said a marker", ShowPrivate = true)]
+		[XmlAttribute("saidMarker")]
+		public string SaidMarker;
+
+		[Marker(DisplayName = "Not Said Marker", GroupName = "Self", Description = "Character has not said a marker", ShowPrivate = true)]
+		[XmlAttribute("notSaidMarker")]
+		public string NotSaidMarker;
+
+		[MarkerCondition(DisplayName = "Also Playing Said Marker", GroupName = "Also Playing", Description = "Another player has said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[XmlAttribute("alsoPlayingSaidMarker")]
+		public string AlsoPlayingSaidMarker;
+
+		[Marker(DisplayName = "Also Playing Not Said Marker", GroupName = "Also Playing", Description = "Another player has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[XmlAttribute("alsoPlayingNotSaidMarker")]
+		public string AlsoPlayingNotSaidMarker;
+
+		[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupName = "Also Playing", Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
+		[XmlAttribute("alsoPlayingSayingMarker")]
+		public string AlsoPlayingSayingMarker;
+
+		[MarkerCondition(DisplayName = "Target Said Marker", GroupName = "Target", Description = "Target has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[XmlAttribute("targetSaidMarker")]
+		public string TargetSaidMarker;
+
+		[Marker(DisplayName = "Target Not Said Marker", GroupName = "Target", Description = "Target has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[XmlAttribute("targetNotSaidMarker")]
+		public string TargetNotSaidMarker;
+
+		[MarkerCondition(DisplayName = "Target Saying Marker", GroupName = "Target", Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
+		[XmlAttribute("targetSayingMarker")]
+		public string TargetSayingMarker;
+
+		[XmlAttribute("priority")]
+		public string CustomPriority;
 
 		[XmlIgnore]
 		public string TargetStatusType
@@ -127,70 +191,6 @@ namespace SPNATI_Character_Editor
 				TargetStatus = TargetStatusType != null ? (value ? "not_" : "") + TargetStatusType : null;
 			}
 		}
-
-		[MarkerCondition(DisplayName = "Target Said Marker", GroupName = "Target", Description = "Target has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
-		[XmlAttribute("targetSaidMarker")]
-		public string TargetSaidMarker;
-
-		[Marker(DisplayName = "Target Not Said Marker", GroupName = "Target", Description = "Target has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
-		[XmlAttribute("targetNotSaidMarker")]
-		public string TargetNotSaidMarker;
-
-		[MarkerCondition(DisplayName = "Target Saying Marker", GroupName = "Target", Description = "Target is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
-		[XmlAttribute("targetSayingMarker")]
-		public string TargetSayingMarker;
-
-		[Marker(DisplayName = "Not Said Marker", GroupName = "Self", Description = "Character has not said a marker", ShowPrivate = true)]
-		[XmlAttribute("notSaidMarker")]
-		public string NotSaidMarker;
-
-		[XmlAttribute("priority")]
-		public string CustomPriority;
-
-		[MarkerCondition(DisplayName = "Said Marker", GroupName = "Self", Description = "Character has said a marker", ShowPrivate = true)]
-		[XmlAttribute("saidMarker")]
-		public string SaidMarker;
-
-		[ComboBox(DisplayName = "Target Hand", GroupName = "Target", Description = "Target has a particular poker hand",
-			Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
-		[XmlAttribute("oppHand")]
-		public string TargetHand;
-
-		[PlayerRange(DisplayName = "Total Females", GroupName = "Table", Description = "Number of females playing (including this character and the player)")]
-		[XmlAttribute("totalFemales")]
-		public string TotalFemales;
-
-		[PlayerRange(DisplayName = "Total Males", GroupName = "Table", Description = "Number of males playing (including this character and the player)")]
-		[XmlAttribute("totalMales")]
-		public string TotalMales;
-
-		[NumericRange(DisplayName = "Total Rounds", GroupName = "Game", Description = "Number of rounds since the game began")]
-		[XmlAttribute("totalRounds")]
-		public string TotalRounds;
-
-		[NumericRange(DisplayName = "Consecutive Losses", GroupName = "Game", Description = "Number of hands the target player (or this player) has lost in a row")]
-		[XmlAttribute("consecutiveLosses")]
-		public string ConsecutiveLosses;
-
-		[NumericRange(DisplayName = "Also Playing Time in Stage", GroupName = "Also Playing", Description = "Number of rounds since the last time the Also Playing player lost a hand")]
-		[XmlAttribute("alsoPlayingTimeInStage")]
-		public string AlsoPlayingTimeInStage;
-
-		[MarkerCondition(DisplayName = "Also Playing Said Marker", GroupName = "Also Playing", Description = "Another player has said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
-		[XmlAttribute("alsoPlayingSaidMarker")]
-		public string AlsoPlayingSaidMarker;
-
-		[Marker(DisplayName = "Also Playing Not Said Marker", GroupName = "Also Playing", Description = "Another player has not said a marker", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
-		[XmlAttribute("alsoPlayingNotSaidMarker")]
-		public string AlsoPlayingNotSaidMarker;
-
-		[MarkerCondition(DisplayName = "Also Playing Saying Marker", GroupName = "Also Playing", Description = "Another player is saying a marker at this very moment", ShowPrivate = false, BoundProperties = new string[] { "AlsoPlaying" })]
-		[XmlAttribute("alsoPlayingSayingMarker")]
-		public string AlsoPlayingSayingMarker;
-
-		[Boolean(DisplayName = "Hidden", GroupName = "Self", Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen")]
-		[XmlAttribute("hidden")]
-		public string Hidden;
 
 		[Filter(DisplayName = "Filter (+)", GroupName = "Table", Description = "Filter based on table conditions. Multiple can be added")]
 		[XmlElement("condition")]

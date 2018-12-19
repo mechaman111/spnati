@@ -3,7 +3,6 @@ using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -75,7 +74,7 @@ namespace SPNATI_Character_Editor
 		[XmlElement("timer")]
 		public int Stamina;
 
-		[XmlNewLine]
+		[XmlNewLine(Position = XmlNewLinePosition.After)]
 		[XmlElement("intelligence")]
 		public List<StageSpecificValue> Intelligence;
 
@@ -387,7 +386,6 @@ namespace SPNATI_Character_Editor
 				CacheMarker(line.Marker);
 			}
 			Behavior.OnAfterDeserialize(this);
-			Metadata.HasEnding = Endings.Count > 0;
 		}
 		#endregion
 
