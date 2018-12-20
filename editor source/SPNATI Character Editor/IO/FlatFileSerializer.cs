@@ -711,13 +711,17 @@ namespace SPNATI_Character_Editor
 		private static Clothing MakeClothing(string value)
 		{
 			string[] pieces = value.Split(',');
-			if (pieces.Length == 4)
+			if (pieces.Length >= 4)
 			{
 				Clothing c = new Clothing();
 				c.FormalName = pieces[0];
 				c.GenericName = pieces[1];
 				c.Type = pieces[2];
 				c.Position = pieces[3];
+				if (pieces.Length >= 5)
+				{
+					c.Plural = pieces[4] == "plural";
+				}
 				return c;
 			}
 			else

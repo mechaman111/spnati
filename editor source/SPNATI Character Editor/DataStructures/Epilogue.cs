@@ -6,6 +6,9 @@ namespace SPNATI_Character_Editor
 {
 	public class Epilogue
 	{
+		[XmlAttribute("hint")]
+		public string Hint;
+
 		[XmlAttribute("gender")]
 		public string Gender = "any";
 

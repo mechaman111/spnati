@@ -6,11 +6,12 @@ namespace Desktop
 	/// <summary>
 	/// Links a class member to an edit control
 	/// </summary>
-	public class PropertyRecord : IRecord
+	public class PropertyRecord : IRecord, IComparable<PropertyRecord>
 	{
 		public string Key { get; set; }
 		public string Name { get; set; }
 		public string Group { get; set; }
+		public int GroupOrder { get; set; }
 		public string Description { get; set; }
 		public string Property { get; set; }
 
@@ -29,6 +30,7 @@ namespace Desktop
 			Member = member;
 			Name = Key = attr.DisplayName;
 			Group = attr.GroupName;
+			GroupOrder = attr.GroupOrder;
 			Description = attr.Description;
 			Property = member.Name;
 		}
@@ -40,6 +42,16 @@ namespace Desktop
 		public int CompareTo(IRecord other)
 		{
 			return Name.CompareTo(other.Name);
+		}
+
+		public int CompareTo(PropertyRecord other)
+		{
+			int compare = GroupOrder.CompareTo(other.GroupOrder);
+			if (compare == 0)
+			{
+				compare = Name.CompareTo(other.Name);
+			}
+			return compare;
 		}
 	}
 
@@ -65,6 +77,11 @@ namespace Desktop
 		/// Group this should appear under in record lookup
 		/// </summary>
 		public string GroupName;
+
+		/// <summary>
+		/// Order this record appears in the group menu
+		/// </summary>
+		public int GroupOrder;
 
 		/// <summary>
 		/// Description of what this edits
