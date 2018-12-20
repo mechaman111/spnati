@@ -909,15 +909,20 @@ namespace SPNATI_Character_Editor
 			bool hasAlsoPlaying = HasAlsoPlaying();
 			bool alsoPlayingIsResponder = (AlsoPlaying == responder.FolderName);
 
-			//return immediately for cases where we have no ability to accurately target a response
-			//TODO: This is actually possible by using a filter condition with AlsoPlaying as a tag.
-			if ((caseIsTargetable && hasAlsoPlaying && !alsoPlayingIsResponder) || (!responseIsTargetable && !hasTarget && hasAlsoPlaying && !alsoPlayingIsResponder))
-			{
-				return null;
-			}
 			if (response.Tag == "-") //this is deprecated anyway
 			{
 				return null;
+			}
+			if ((caseIsTargetable && hasAlsoPlaying && !alsoPlayingIsResponder) || (!responseIsTargetable && !hasTarget && hasAlsoPlaying && !alsoPlayingIsResponder))
+			{
+				//for cases where AlsoPlaying is already in use, shift that character into a filter target condition
+				TargetCondition condition = new TargetCondition()
+				{
+					Count = "1",
+					Filter = AlsoPlaying
+				};
+				response.Conditions.Add(condition);
+				hasAlsoPlaying = false; //free this up for the responder to go into
 			}
 
 			if (!caseIsTargetable && responseIsTargetable && !hasTarget && !hasAlsoPlaying)
