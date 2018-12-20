@@ -388,5 +388,15 @@ namespace SPNATI_Character_Editor.Controls
 				Shell.Instance.SetStatus("Dialogue replaced.");
 			}
 		}
+
+		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		{
+			Stage stage = selectedNode?.Stage;
+			if (stage == null)
+			{
+				return true;
+			}
+			return TriggerDatabase.UsedInStage(trigger.Tag, _character, stage.Id);
+		}
 	}
 }

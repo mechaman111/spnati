@@ -84,7 +84,8 @@
 			this.triggerMenu.Name = "triggerMenu";
 			this.triggerMenu.OwnerItem = this.tsbtnAddDialogue;
 			this.triggerMenu.ShowImageMargin = false;
-			this.triggerMenu.Size = new System.Drawing.Size(36, 4);
+			this.triggerMenu.Size = new System.Drawing.Size(128, 26);
+			this.triggerMenu.Opening += new System.ComponentModel.CancelEventHandler(this.triggerMenu_Opening);
 			// 
 			// tsbtnSplit
 			// 

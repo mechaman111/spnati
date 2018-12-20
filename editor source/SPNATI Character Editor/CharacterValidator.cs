@@ -303,7 +303,7 @@ namespace SPNATI_Character_Editor
 					foreach (var condition in stageCase.Conditions)
 					{
 						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5, context));
-						if (!TagDatabase.TagExists(condition.Filter))
+						if (!string.IsNullOrEmpty(condition.Filter) && !TagDatabase.TagExists(condition.Filter))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter), context));
 						}
@@ -312,6 +312,8 @@ namespace SPNATI_Character_Editor
 
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
+					Regex regex = new Regex(@"\<\/i\>");
+
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						context = new ValidationContext(stage, stageCase, line);
@@ -328,13 +330,29 @@ namespace SPNATI_Character_Editor
 						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase.Tag, line.Text);
 						if (invalidVars.Count > 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
 						}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel), context));
+						}
+
+						//check for mismatched italics
+						string[] pieces = line.Text.ToLower().Split(new string[] { "<i>" }, StringSplitOptions.None);
+						int count = 0;
+						for (int i = 0; i < pieces.Length; i++)
+						{
+							if (i > 0)
+							{
+								count++;
+							}
+							count -= regex.Matches(pieces[i]).Count;
+						}
+						if (count != 0)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: {line.Text}", context));
 						}
 					}
 				}
@@ -555,7 +573,7 @@ namespace SPNATI_Character_Editor
 		Minor = 1,
 		MissingImages = 2,
 		Metadata = 4,
-		Variables = 8,
+		Lines = 8,
 		TargetedDialogue = 16,
 		Case = 32,
 		Stage = 64

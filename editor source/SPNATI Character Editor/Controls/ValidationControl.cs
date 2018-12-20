@@ -243,8 +243,35 @@ namespace SPNATI_Character_Editor.Controls
 			StringBuilder sb = new StringBuilder();
 			foreach (ValidationError error in lstWarnings.Items)
 			{
-				sb.Append(error.ToString());
-				sb.Append("\r\n");
+				sb.AppendLine(error.ToString());
+			}
+
+			Clipboard.Clear();
+			Clipboard.SetText(sb.ToString());
+			Shell.Instance.SetStatus("Validation errors copied to the clipboard.");
+		}
+
+		private void cmdCopyAll_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			ValidationFilterLevel filterLevel = GetFilterLevel();
+			foreach (KeyValuePair<Character, List<ValidationError>> kvp in _warnings)
+			{
+				Character c = kvp.Key;
+				sb.AppendLine("***************************************************");
+				sb.AppendLine("Warnings for: " + c);
+				sb.AppendLine("***************************************************");
+				foreach (ValidationError error in kvp.Value)
+				{
+					if (CharacterValidator.IsInFilter(filterLevel, error.Level))
+					{
+						sb.AppendLine(error.ToString());
+					}
+				}
+				sb.AppendLine();
+				sb.AppendLine();
+				sb.AppendLine();
+				sb.AppendLine();
 			}
 
 			Clipboard.Clear();

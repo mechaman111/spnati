@@ -85,7 +85,9 @@ namespace SPNATI_Character_Editor.Controls
 					groupMenuItem.DropDown = curGroupMenu;
 					triggerMenu.Items.Add(groupMenuItem);
 				}
-				curGroupMenu.Items.Add(new ToolStripMenuItem(t.Label, null, triggerAddItem_Click, t.Tag));
+				ToolStripMenuItem item = new ToolStripMenuItem(t.Label, null, triggerAddItem_Click, t.Tag);
+				item.Tag = t;
+				curGroupMenu.Items.Add(item);
 			}
 		}
 
@@ -380,6 +382,31 @@ namespace SPNATI_Character_Editor.Controls
 			_changingViews = false;
 		}
 		#endregion
+
+		private void triggerMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			TreeNode selected = treeDialogue.SelectedNode;
+			DialogueNode node = selected?.Tag as DialogueNode;
+
+			foreach (ToolStripMenuItem group in triggerMenu.Items)
+			{
+				int visibleCount = 0;
+				foreach (ToolStripMenuItem item in group.DropDownItems)
+				{
+					Trigger t = item.Tag as Trigger;
+					if (_view.IsTriggerValid(node, t))
+					{
+						visibleCount++;
+						item.Visible = true;
+					}
+					else
+					{
+						item.Visible = false;
+					}
+				}
+				group.Visible = (visibleCount > 0);
+			}			
+		}
 	}
 
 	public class CaseSelectionEventArgs : EventArgs

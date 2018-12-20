@@ -71,6 +71,11 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="removedCase"></param>
 		void RemoveCase(Case removedCase);
+
+		/// <summary>
+		/// Gets whether a trigger in the Add menu can be used based on the currently selected node
+		/// </summary>
+		bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger);
 	}
 
 	public enum TreeFilterMode

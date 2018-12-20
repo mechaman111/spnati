@@ -38,12 +38,13 @@
 			this.pnlValid = new System.Windows.Forms.Panel();
 			this.label4 = new System.Windows.Forms.Label();
 			this.pnlWarnings = new System.Windows.Forms.Panel();
+			this.cmdCopy = new System.Windows.Forms.Button();
 			this.cmdGoTo = new System.Windows.Forms.Button();
 			this.pnlProgress = new System.Windows.Forms.Panel();
 			this.lblProgress = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.cmdCopy = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.cmdCopyAll = new System.Windows.Forms.Button();
 			this.pnlValid.SuspendLayout();
 			this.pnlWarnings.SuspendLayout();
 			this.pnlProgress.SuspendLayout();
@@ -141,6 +142,7 @@
 			this.pnlWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlWarnings.Controls.Add(this.cmdCopyAll);
 			this.pnlWarnings.Controls.Add(this.cmdCopy);
 			this.pnlWarnings.Controls.Add(this.cmdGoTo);
 			this.pnlWarnings.Controls.Add(this.lstWarnings);
@@ -149,10 +151,22 @@
 			this.pnlWarnings.Size = new System.Drawing.Size(849, 649);
 			this.pnlWarnings.TabIndex = 14;
 			// 
+			// cmdCopy
+			// 
+			this.cmdCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.cmdCopy.Location = new System.Drawing.Point(3, 621);
+			this.cmdCopy.Name = "cmdCopy";
+			this.cmdCopy.Size = new System.Drawing.Size(115, 23);
+			this.cmdCopy.TabIndex = 11;
+			this.cmdCopy.Text = "Copy to Clipboard";
+			this.toolTip1.SetToolTip(this.cmdCopy, "Copies all validation warnings for this character to the clipboard");
+			this.cmdCopy.UseVisualStyleBackColor = true;
+			this.cmdCopy.Click += new System.EventHandler(this.cmdCopy_Click);
+			// 
 			// cmdGoTo
 			// 
 			this.cmdGoTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdGoTo.Location = new System.Drawing.Point(746, 623);
+			this.cmdGoTo.Location = new System.Drawing.Point(746, 621);
 			this.cmdGoTo.Name = "cmdGoTo";
 			this.cmdGoTo.Size = new System.Drawing.Size(100, 23);
 			this.cmdGoTo.TabIndex = 10;
@@ -193,17 +207,17 @@
 			this.progressBar.Size = new System.Drawing.Size(276, 23);
 			this.progressBar.TabIndex = 2;
 			// 
-			// cmdCopy
+			// cmdCopyAll
 			// 
-			this.cmdCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.cmdCopy.Location = new System.Drawing.Point(3, 623);
-			this.cmdCopy.Name = "cmdCopy";
-			this.cmdCopy.Size = new System.Drawing.Size(115, 23);
-			this.cmdCopy.TabIndex = 11;
-			this.cmdCopy.Text = "Copy to Clipboard";
-			this.toolTip1.SetToolTip(this.cmdCopy, "Copies all validation warnings for this character to the clipboard");
-			this.cmdCopy.UseVisualStyleBackColor = true;
-			this.cmdCopy.Click += new System.EventHandler(this.cmdCopy_Click);
+			this.cmdCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.cmdCopyAll.Location = new System.Drawing.Point(124, 621);
+			this.cmdCopyAll.Name = "cmdCopyAll";
+			this.cmdCopyAll.Size = new System.Drawing.Size(115, 23);
+			this.cmdCopyAll.TabIndex = 12;
+			this.cmdCopyAll.Text = "Copy All to Clipboard";
+			this.toolTip1.SetToolTip(this.cmdCopyAll, "Copies all validation warnings for every character to the clipboard");
+			this.cmdCopyAll.UseVisualStyleBackColor = true;
+			this.cmdCopyAll.Click += new System.EventHandler(this.cmdCopyAll_Click);
 			// 
 			// ValidationControl
 			// 
@@ -244,5 +258,6 @@
 		private System.Windows.Forms.Button cmdGoTo;
 		private System.Windows.Forms.Button cmdCopy;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Button cmdCopyAll;
 	}
 }

@@ -391,5 +391,10 @@ namespace SPNATI_Character_Editor.Controls
 				_character.Behavior.RemoveWorkingCase(selectedCase);
 			}
 		}
+
+		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		{
+			return true;
+		}
 	}
 }
