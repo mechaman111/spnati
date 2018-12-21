@@ -1155,6 +1155,37 @@ namespace SPNATI_Character_Editor
 			other.AlsoPlayingHand = HasHand;
 			other.AlsoPlayingNotSaidMarker = NotSaidMarker;
 			other.AlsoPlayingSaidMarker = SaidMarker;
+
+			//If all lines set the same marker, use that marker in targetSayingMarker
+			string marker = null;
+			foreach (DialogueLine line in Lines)
+			{
+				if (line.Marker != null)
+				{
+					if (marker == null)
+					{
+						marker = line.Marker;
+					}
+					else if (marker != line.Marker)
+					{
+						marker = null;
+						break;
+					}
+				}
+				else if (marker != null)
+				{
+					marker = null;
+					break;
+				}
+			}
+			if (!string.IsNullOrEmpty(marker))
+			{
+				if (marker.StartsWith("+") || marker.StartsWith("-"))
+				{
+					marker = marker.Substring(1);
+				}
+				other.AlsoPlayingSayingMarker = marker;
+			}
 		}
 
 		/// <summary>
@@ -1225,6 +1256,33 @@ namespace SPNATI_Character_Editor
 			other.TargetHand = HasHand;
 			other.TargetNotSaidMarker = NotSaidMarker;
 			other.TargetSaidMarker = SaidMarker;
+
+			//If all lines set the same marker, use that marker in targetSayingMarker
+			string marker = null;
+			foreach (DialogueLine line in Lines)
+			{
+				if (line.Marker != null)
+				{
+					if (marker == null)
+					{
+						marker = line.Marker;
+					}
+					else if (marker != line.Marker)
+					{
+						marker = null;
+						break;
+					}
+				}
+				else if (marker != null)
+				{
+					marker = null;
+					break;
+				}
+			}
+			if (!string.IsNullOrEmpty(marker))
+			{
+				other.TargetSayingMarker = marker;
+			}
 		}
 
 		/// <summary>

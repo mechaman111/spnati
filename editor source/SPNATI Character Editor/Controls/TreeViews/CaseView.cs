@@ -180,38 +180,44 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Prefix the case with the stage range			
 			Case c = wrapper.Case;
-			int last = c.Stages[0];
-			int startRange = last;
 			StringBuilder sb = new StringBuilder();
-			for (int i = 1; i < c.Stages.Count; i++)
+			if (c.Stages.Count == 0)
 			{
-				int stage = c.Stages[i];
-				if (stage - 1 > last)
-				{
-					if (startRange == last)
-					{
-						sb.Append(startRange.ToString() + ",");
-					}
-					else
-					{
-						sb.Append($"{startRange}-{last},");
-					}
-					startRange = stage;
-				}
-				last = stage;
-			}
-			if (startRange == last)
-			{
-				sb.Append(startRange.ToString());
+				sb.Append("???");
 			}
 			else
 			{
-				sb.Append($"{startRange}-{last}");
+				int last = c.Stages[0];
+				int startRange = last;
+				for (int i = 1; i < c.Stages.Count; i++)
+				{
+					int stage = c.Stages[i];
+					if (stage - 1 > last)
+					{
+						if (startRange == last)
+						{
+							sb.Append(startRange.ToString() + ",");
+						}
+						else
+						{
+							sb.Append($"{startRange}-{last},");
+						}
+						startRange = stage;
+					}
+					last = stage;
+				}
+				if (startRange == last)
+				{
+					sb.Append(startRange.ToString());
+				}
+				else
+				{
+					sb.Append($"{startRange}-{last}");
+				}
+				wrapper.Stage = new Stage(c.Stages[0]);
 			}
 
 			node.Text = $"{sb.ToString()} - {wrapper.ToString()}";
-
-			wrapper.Stage = new Stage(c.Stages[0]);
 		}
 
 		public void SetFilter(TreeFilterMode mode, string filterKey)
@@ -288,8 +294,8 @@ namespace SPNATI_Character_Editor.Controls
 				if (caseNode1 != null)
 				{
 					//case nodes
-					int stage1 = caseNode1.Case.Stages[0];
-					int stage2 = caseNode2.Case.Stages[0];
+					int stage1 = caseNode1.Case.Stages.Count > 0 ? caseNode1.Case.Stages[0] : -1;
+					int stage2 = caseNode2.Case.Stages.Count > 0 ? caseNode2.Case.Stages[0] : -1;
 					int diff = stage1.CompareTo(stage2);
 					if (diff == 0)
 					{

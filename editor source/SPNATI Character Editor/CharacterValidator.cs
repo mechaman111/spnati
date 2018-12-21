@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace SPNATI_Character_Editor
 {
@@ -481,6 +482,29 @@ namespace SPNATI_Character_Editor
 							}
 						}
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
+					}
+
+					if (!string.IsNullOrEmpty(value))
+					{
+						bool used = false;
+						Marker m = character.Markers.Values.FirstOrDefault(marker => marker.Name == name);
+						if (m != null)
+						{
+							used = m.Values.Contains(value);
+							if (!used)
+							{
+								int test;
+								//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+								if (int.TryParse(value, out test))
+								{
+									used = (m.Values.Contains("+") || m.Values.Contains("-"));
+								}
+							}
+						}
+						if (!used)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+						}
 					}
 				}
 			}

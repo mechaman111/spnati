@@ -241,43 +241,63 @@ namespace SPNATI_Character_Editor
 		/// <param name="layer"></param>
 		public StageName LayerToFlatFileName(int layer, bool advancingStage)
 		{
-			if (layer < 0 || layer >= Wardrobe.Count + Clothing.ExtraStages)
-				return null;
 			string label = layer.ToString();
-			if (advancingStage)
+			if (layer < 0 || layer >= Wardrobe.Count + Clothing.ExtraStages)
 			{
-				layer++;
-				if (layer <= Wardrobe.Count)
+				if (layer == -3)
 				{
-					Clothing clothes = Wardrobe[Layers - layer];
-					label = "losing " + clothes.ToString();
+					label = "naked";
+				}
+				else if (layer == -2)
+				{
+					label = "masturbating";
+				}
+				else if (layer == -1)
+				{
+					label = "finished";
 				}
 				else
 				{
-					label = "lost all clothing";
+					return null;
 				}
 			}
 			else
 			{
-				if (layer == 0)
-					label = "Fully Clothed";
-				else if (layer < Wardrobe.Count)
+				if (advancingStage)
 				{
-					int index = layer - 1;
-					Clothing lastClothes = Wardrobe[Layers - 1 - index];
-					label = "Lost " + lastClothes.ToString();
+					layer++;
+					if (layer <= Wardrobe.Count)
+					{
+						Clothing clothes = Wardrobe[Layers - layer];
+						label = "losing " + clothes.ToString();
+					}
+					else
+					{
+						label = "lost all clothing";
+					}
 				}
-				else if (layer == Wardrobe.Count)
+				else
 				{
-					label = "Naked";
-				}
-				else if (layer == Wardrobe.Count + 1)
-				{
-					label = "Masturbating";
-				}
-				else if (layer == Wardrobe.Count + 2)
-				{
-					label = "Finished";
+					if (layer == 0)
+						label = "Fully Clothed";
+					else if (layer < Wardrobe.Count)
+					{
+						int index = layer - 1;
+						Clothing lastClothes = Wardrobe[Layers - 1 - index];
+						label = "Lost " + lastClothes.ToString();
+					}
+					else if (layer == Wardrobe.Count)
+					{
+						label = "Naked";
+					}
+					else if (layer == Wardrobe.Count + 1)
+					{
+						label = "Masturbating";
+					}
+					else if (layer == Wardrobe.Count + 2)
+					{
+						label = "Finished";
+					}
 				}
 			}
 			return new StageName(layer.ToString(), label);

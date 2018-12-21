@@ -624,7 +624,7 @@ namespace SPNATI_Character_Editor
 						break;
 					default:
 						//Dialogue
-						Case newCase = MakeLine(key, value, character, false);
+						Case newCase = MakeLine(kvp[0], value, character, false);
 						if (newCase != null && newCase.Lines.Count > 0 && !string.IsNullOrEmpty(newCase.Lines[0].Text))
 						{
 							int stage = newCase.Stages[0];
