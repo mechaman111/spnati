@@ -42,7 +42,7 @@ namespace Desktop
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, object recordContext)
 		{
-			return DoLookup(type, text, allowCreate, null, false, null);
+			return DoLookup(type, text, allowCreate, null, false, recordContext);
 		}
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, Func<IRecord, bool> filter, object recordContext)

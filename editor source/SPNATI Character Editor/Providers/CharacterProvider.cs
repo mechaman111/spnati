@@ -7,8 +7,14 @@ namespace SPNATI_Character_Editor.Providers
 {
 	public class CharacterProvider : IRecordProvider<Character>
 	{
+		private Costume _skinContext;
+
 		public string GetLookupCaption()
 		{
+			if (_skinContext != null)
+			{
+				return "Choose a character for which the reskin belongs";
+			}
 			return "Character Select";
 		}
 
@@ -77,6 +83,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
+			_skinContext = context as Costume;
 		}
 	}
 }

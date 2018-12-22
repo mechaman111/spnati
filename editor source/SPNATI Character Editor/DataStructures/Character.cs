@@ -16,7 +16,7 @@ namespace SPNATI_Character_Editor
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
-	public class Character : IHookSerialization, IRecord
+	public class Character : IHookSerialization, IRecord, IWardrobe
 	{
 		[XmlIgnore]
 		public string Group { get; }
@@ -188,7 +188,21 @@ namespace SPNATI_Character_Editor
 		/// <param name="layer"></param>
 		public StageName LayerToStageName(int layer)
 		{
-			return LayerToStageName(layer, false);
+			return LayerToStageName(layer, false, this);
+		}
+
+		public StageName LayerToStageName(int layer, bool advancingStage)
+		{
+			return LayerToStageName(layer, advancingStage, this);
+		}
+
+		/// <summary>
+		/// Converts a layer to a user friendly name based on the wardrobe
+		/// </summary>
+		/// <param name="layer"></param>
+		public StageName LayerToStageName(int layer, IWardrobe list)
+		{
+			return LayerToStageName(layer, false, list);
 		}
 
 		/// <summary>
@@ -196,16 +210,17 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="layer">Layer to name</param>
 		/// <param name="advancingStage">True if the name should be in relation to advancing to the next stage, rather than what happened in the previous stage</param>
-		public StageName LayerToStageName(int layer, bool advancingStage)
+		public StageName LayerToStageName(int layer, bool advancingStage, IWardrobe list)
 		{
-			if (layer < 0 || layer >= Wardrobe.Count + Clothing.ExtraStages)
+			int count = list.Layers;
+			if (layer < 0 || layer >= count + Clothing.ExtraStages)
 				return null;
 			string label = layer.ToString();
 			if (advancingStage)
 			{
-				if (layer < Wardrobe.Count)
+				if (layer < count)
 				{
-					Clothing clothes = Wardrobe[Layers - 1 - layer];
+					Clothing clothes = list.GetClothing(Layers - 1 - layer);
 					label = "Losing " + clothes.ToString();
 				}
 			}
@@ -213,22 +228,22 @@ namespace SPNATI_Character_Editor
 			{
 				if (layer == 0)
 					label = "Fully Clothed";
-				else if (layer < Wardrobe.Count)
+				else if (layer < count)
 				{
 					int index = layer - 1;
-					Clothing lastClothes = Wardrobe[Layers - 1 - index];
+					Clothing lastClothes = list.GetClothing(Layers - 1 - index);
 					label = "Lost " + lastClothes.ToString();
 				}
 			}
-			if (layer == Wardrobe.Count)
+			if (layer == count)
 			{
 				label = "Naked";
 			}
-			else if (layer == Wardrobe.Count + 1)
+			else if (layer == count + 1)
 			{
 				label = "Masturbating";
 			}
-			else if (layer == Wardrobe.Count + 2)
+			else if (layer == count + 2)
 			{
 				label = "Finished";
 			}
@@ -629,6 +644,22 @@ namespace SPNATI_Character_Editor
 		public void CacheMarker(string marker)
 		{
 			Markers.Cache(marker);
+		}
+
+		public WardrobeRestrictions GetWardrobeRestrictions()
+		{
+			//For established characters, lock down changing the layer amount and order since it's hugely disruptive
+			OpponentStatus status = Listing.Instance.GetCharacterStatus(FolderName);
+			if (status != OpponentStatus.Testing && status != OpponentStatus.Unlisted)
+			{
+				return WardrobeRestrictions.LayerCount;
+			}
+			return WardrobeRestrictions.None;
+		}
+
+		public Clothing GetClothing(int index)
+		{
+			return Wardrobe[index];
 		}
 	}
 

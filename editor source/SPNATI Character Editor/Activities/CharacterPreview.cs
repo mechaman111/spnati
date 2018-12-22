@@ -3,6 +3,7 @@
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), -1, Width = 251, Pane = WorkspacePane.Sidebar)]
+	[Activity(typeof(Costume), -1, Width = 251, Pane = WorkspacePane.Sidebar)]
 	public partial class CharacterPreview : Activity
 	{
 		private Character _character;
@@ -20,10 +21,13 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
-			_character.PrepareForEdit();
-			_character.Behavior.CaseAdded += WorkingCasesChanged;
-			_character.Behavior.CaseRemoved += WorkingCasesChanged;
-			_character.Behavior.CaseModified += WorkingCasesChanged;
+			if (_character != null)
+			{
+				_character.PrepareForEdit();
+				_character.Behavior.CaseAdded += WorkingCasesChanged;
+				_character.Behavior.CaseRemoved += WorkingCasesChanged;
+				_character.Behavior.CaseModified += WorkingCasesChanged;
+			}
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			UpdateLineCount();
 		}
@@ -47,7 +51,15 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void UpdateLineCount()
 		{
-			lblLinesOfDialogue.Text = _character.Behavior.UniqueLines.ToString();
+			if (_character != null)
+			{
+				lblLinesOfDialogue.Text = _character.Behavior.UniqueLines.ToString();
+			}
+			else
+			{
+				label4.Visible = false;
+				lblLinesOfDialogue.Visible = false;
+			}
 		}
 	}
 }

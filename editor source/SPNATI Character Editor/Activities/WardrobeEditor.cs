@@ -6,11 +6,13 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Controls
 {
 	[Activity(typeof(Character), 5)]
+	[Activity(typeof(Costume), 5)]
 	public partial class WardrobeEditor : Activity
 	{
-		private Character _character;
+		private IWardrobe _wardrobe;
 		private bool _populatingWardrobe;
 		private Queue<WardrobeChange> _wardrobeChanges = new Queue<WardrobeChange>();
+		private WardrobeRestrictions _restrictions;
 
 		public WardrobeEditor()
 		{
@@ -25,11 +27,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(_character.FolderName);
-			if (status != OpponentStatus.Testing && status != OpponentStatus.Unlisted)
+			_wardrobe = Record as IWardrobe;
+
+			_restrictions = _wardrobe.GetWardrobeRestrictions();
+			
+			if (_restrictions.HasFlag(WardrobeRestrictions.LayerCount))
 			{
-				//For established characters, lock down changing the layer amount and order since it's hugely disruptive
 				_populatingWardrobe = true;
 				gridWardrobe.AllowUserToAddRows = false;
 				gridWardrobe.AllowUserToDeleteRows = false;
@@ -48,13 +51,18 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_populatingWardrobe = true;
 			gridWardrobe.Rows.Clear();
-			for (int i = _character.Layers - 1; i >= 0; i--)
+			for (int i = _wardrobe.Layers - 1; i >= 0; i--)
 			{
-				Clothing c = _character.Wardrobe[i];
+				Clothing c = _wardrobe.GetClothing(i);
 				try
 				{
 					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.FormalName, c.GenericName, c.Plural, c.Type, c.Position)];
 					row.Tag = c;
+					if (_restrictions.HasFlag(WardrobeRestrictions.LayerTypes))
+					{
+						row.Cells["ColPosition"].ReadOnly = true;
+						row.Cells["ColType"].ReadOnly = true;
+					}
 				}
 				catch { }
 			}
@@ -94,7 +102,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_wardrobeChanges.Count > 0)
 			{
-				_character.ApplyWardrobeChanges(_wardrobeChanges);
+				_wardrobe.ApplyWardrobeChanges(_wardrobeChanges);
 				_wardrobeChanges.Clear();
 				Workspace.SendMessage(WorkspaceMessages.WardrobeUpdated);
 			}
@@ -111,7 +119,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (row.IsNewRow) { return; }
 
 			Clothing layer = row.Tag as Clothing;
-			int index = _character.MoveUp(layer);
+			int index = _wardrobe.MoveUp(layer);
 			_wardrobeChanges.Enqueue(new WardrobeChange(WardrobeChangeType.MoveUp, index));
 
 			_populatingWardrobe = true;
@@ -133,7 +141,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (row.IsNewRow) { return; }
 
 			Clothing layer = row.Tag as Clothing;
-			int index = _character.MoveDown(layer);
+			int index = _wardrobe.MoveDown(layer);
 			_wardrobeChanges.Enqueue(new WardrobeChange(WardrobeChangeType.MoveDown, index));
 
 			_populatingWardrobe = true;
@@ -147,10 +155,10 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridWardrobe_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
 		{
 			if (_populatingWardrobe) { return; }
-			Clothing layer = _character.Wardrobe[_character.Layers -  e.RowIndex - 1];
+			Clothing layer = _wardrobe.GetClothing(_wardrobe.Layers - e.RowCount - 1);
 			if (layer != null)
 			{
-				int index = _character.RemoveLayer(layer);
+				int index = _wardrobe.RemoveLayer(layer);
 				_wardrobeChanges.Enqueue(new WardrobeChange(WardrobeChangeType.Remove, index));
 			}
 		}
@@ -162,7 +170,7 @@ namespace SPNATI_Character_Editor.Controls
 			Clothing layer = new Clothing();
 			DataGridViewRow row = gridWardrobe.Rows[e.RowIndex];
 			row.Tag = layer;
-			int index = _character.AddLayer(layer);
+			int index = _wardrobe.AddLayer(layer);
 			_wardrobeChanges.Enqueue(new WardrobeChange(WardrobeChangeType.Add, index));
 		}
 
