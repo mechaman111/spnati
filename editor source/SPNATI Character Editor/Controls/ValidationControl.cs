@@ -116,6 +116,7 @@ namespace SPNATI_Character_Editor.Controls
 					Dictionary<Character, List<ValidationError>> allWarnings = new Dictionary<Character, List<ValidationError>>();
 					foreach (Character c in CharacterDatabase.Characters)
 					{
+						if (c.FolderName == "human") { continue; }
 						OpponentStatus status = Listing.Instance.GetCharacterStatus(c.FolderName);
 						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline)
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on

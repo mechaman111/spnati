@@ -52,6 +52,33 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			//wardrobe
+			bool foundUpper = false;
+			bool foundLower = false;
+			bool foundBoth = false;
+			for (int i = 0; i < character.Layers; i++)
+			{
+				Clothing c = character.GetClothing(i);
+				if (c.Position == "upper" && c.Type == "major")
+					foundUpper = true;
+				if (c.Position == "lower" && c.Type == "major")
+					foundLower = true;
+				if (c.Position == "lower" && c.Type == "major")
+					foundBoth = true;
+			}
+			if (!foundBoth)
+			{
+				if (!foundUpper)
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch, it should be given a position: \"both\"")));
+				}
+				if (!foundLower)
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("Character has no clothing of type: major, position: lower. If an item covers underwear over both the chest and crotch, it should be given a position: \"both\"")));
+				}
+			}
+
+			//dialogue
 			foreach (Stage stage in character.Behavior.Stages)
 			{
 				foreach (Case stageCase in stage.Cases)
