@@ -27,6 +27,7 @@ namespace SPNATI_Character_Editor
 			});
 		}
 
+		private Character _character;
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
@@ -37,6 +38,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="folder"></param>
 		private void Load(Character character)
 		{
+			_character = character;
 			_stages.Clear();
 			_allImages.Clear();
 			string dir = Config.GetRootDirectory(character);
@@ -59,6 +61,22 @@ namespace SPNATI_Character_Editor
 		{
 			CharacterImage image = new CharacterImage(name, file);
 			_allImages.Add(image);
+
+			//Add in skin alternatives
+			string[] extensions = { ".png", ".gif" };
+			foreach (Alternate alt in _character.Metadata.AlternateSkins)
+			{
+				foreach (SkinLink link in alt.Skins)
+				{
+					string folder = Path.Combine(Config.SpnatiDirectory, link.Folder);
+					foreach(string altFile in Directory.EnumerateFiles(folder, "*.*")
+						.Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
+					{
+						string altName = Path.GetFileNameWithoutExtension(file);
+						//image.SetAlt(link.Folder, altName);
+					}
+				}
+			}
 
 			if (file != PreviewImage)
 			{

@@ -100,7 +100,7 @@ namespace SPNATI_Character_Editor.Activities
 			//link up skins
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				c.Metadata.Skins.ForEach(set =>
+				c.Metadata.AlternateSkins.ForEach(set =>
 				{
 					foreach (SkinLink link in set.Skins)
 					{

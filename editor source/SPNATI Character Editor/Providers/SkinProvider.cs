@@ -38,7 +38,7 @@ namespace SPNATI_Character_Editor.Providers
 			//Link up basic information with the source character
 			Character owner = record as Character;
 			SkinLink link = null;
-			Alternate existing = owner.Metadata.Skins.Find(s =>
+			Alternate existing = owner.Metadata.AlternateSkins.Find(s =>
 			{
 				return s.Skins.Find(l =>
 				{
@@ -52,16 +52,16 @@ namespace SPNATI_Character_Editor.Providers
 			});
 			if (link == null)
 			{
-				if (owner.Metadata.Skins.Count == 0)
+				if (owner.Metadata.AlternateSkins.Count == 0)
 				{
-					owner.Metadata.Skins.Add(new Alternate());
+					owner.Metadata.AlternateSkins.Add(new Alternate());
 				}
 				link = new SkinLink()
 				{
 					Folder = folder,
 					Name = key, //can be renamed later
 				};
-				owner.Metadata.Skins[0].Skins.Add(link);
+				owner.Metadata.AlternateSkins[0].Skins.Add(link);
 			}
 
 			skin.Character = owner;

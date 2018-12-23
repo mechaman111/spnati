@@ -118,6 +118,12 @@ namespace SPNATI_Character_Editor
 			set { FolderName = value; }
 		}
 
+		/// <summary>
+		/// Current skin in play
+		/// </summary>
+		[XmlIgnore]
+		public Costume CurrentSkin { get; set; }
+
 		public string ToLookupString()
 		{
 			return $"{Name} [{Key}]";

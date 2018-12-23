@@ -61,7 +61,7 @@ namespace SPNATI_Character_Editor
 		public List<string> Tags;
 
 		[XmlElement("alternates")]
-		public List<Alternate> Skins = new List<Alternate>();
+		public List<Alternate> AlternateSkins = new List<Alternate>();
 
 		public Metadata()
 		{
