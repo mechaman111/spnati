@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.2 at 12:47:34 AM on December 22, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.2 at 11:56:50 PM on December 22, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Florina</first>
     <last />
@@ -35,7 +35,7 @@
     <wardrobe>
         <clothing lowercase="panties" position="lower" formalName="Panties" type="important" plural="true" />
         <clothing lowercase="bra" position="upper" formalName="Bra" type="important" />
-        <clothing lowercase="dress" position="upper" formalName="Dress" type="major" />
+        <clothing lowercase="dress" position="both" formalName="Dress" type="major" />
         <clothing lowercase="tunic" position="upper" formalName="Tunic" type="minor" />
         <clothing lowercase="boots" position="lower" formalName="Boots" type="minor" plural="true" />
         <clothing lowercase="gloves" position="other" formalName="Gloves" type="minor" plural="true" />
@@ -792,8 +792,8 @@
                 <state img="0-nervous.png">&lt;i&gt;Phew&lt;/i&gt;. I was worried you m-might have to go bigger.</state>
                 <state img="0-nervous.png">What are you going to - oh, that's fine.</state>
             </case>
-            <case tag="female_removing_accessory" filter="school_uniform" targetStage="0-1">
-                <state img="0-calm.png">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
+            <case tag="female_removing_accessory" filter="school_uniform" targetStage="1" notSaidMarker="uniform">
+                <state img="0-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
             <case tag="female_removing_accessory" notSaidMarker="started">
                 <state img="0-interested.png">That's right. You can take it slowly.</state>
@@ -1003,6 +1003,7 @@
                 <state img="0-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="0-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="0-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="0-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="0-jump.png">Ah! You surprised me again!</state>
@@ -1017,7 +1018,7 @@
                 <state img="0-interested.png" marker="greet_catria2">I've always wished I could be like you. I never thought I'd actually meet you!</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="0-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="0-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="0-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -1034,6 +1035,12 @@
                 <state img="0-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="0-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
+                <state img="0-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
+                <state img="0-nervous.png">I thought we were sticking to accessories?</state>
+                <state img="0-nervous.png">O-oh...</state>
+                <state img="0-shocked.png">Huh? Your ~clothing~?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="0-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="0-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -1043,9 +1050,12 @@
                 <state img="0-victory.png">Heeheehee! That's not so bad!</state>
                 <state img="0-happy.png">What next?</state>
             </case>
-            <case tag="female_removed_minor" notSaidMarker="remark_started">
+            <case tag="female_removed_minor" totalRounds="1-99" notSaidMarker="remark_started">
                 <condition count="1" status="not_mostly_clothed" />
-                <state img="0-embarrassed.png" marker="remark_started">Um, it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="0-embarrassed.png" marker="remark_started">I know it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="0-embarrassed.png" marker="remark_started">I was getting ahead of myself. We're... really stripping, aren't we?</state>
+                <state img="0-embarrassed.png" marker="remark_started">What was I thinking? Of course we'd need to get to our c-c-clothes...</state>
+                <state img="0-embarrassed.png" marker="remark_started">I guess it's really starting now? The, er, s-s-stripping...</state>
             </case>
             <case tag="female_removed_minor" notSaidMarker="rwby">
                 <condition count="3" filter="rwby" />
@@ -1087,7 +1097,7 @@
                 <state img="0-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="0-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="0-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="jasmine" targetStage="1">
                 <state img="0-happy.png">P-pleased to meet you!</state>
@@ -1098,6 +1108,15 @@
             <case tag="female_removed_minor" target="nagisa">
                 <state img="0-victory.png">Nagisa... you're so...so adorable!</state>
                 <state img="0-happy.png">I know you had to strip and all, but you're just so... so cute!</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="0-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="0-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="0-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="0-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="0-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="0-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="0-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-cover.png">Someone tell me when this is over.</state>
@@ -2515,8 +2534,8 @@
                 <state img="1-nervous.png">&lt;i&gt;Phew&lt;/i&gt;. I was worried you m-might have to go bigger.</state>
                 <state img="1-nervous.png">What are you going to - oh, that's fine.</state>
             </case>
-            <case tag="female_removing_accessory" filter="school_uniform" targetStage="0-1">
-                <state img="1-calm.png">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
+            <case tag="female_removing_accessory" filter="school_uniform" targetStage="1" notSaidMarker="uniform">
+                <state img="1-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
             <case tag="female_removing_accessory" notSaidMarker="started">
                 <state img="1-interested.png">That's right. You can take it slowly.</state>
@@ -2707,6 +2726,7 @@
                 <state img="1-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="1-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="1-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="1-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="1-jump.png">Ah! You surprised me again!</state>
@@ -2717,7 +2737,7 @@
                 <state img="1-happy.png">Prancing Boots? You mean... like dancing? My friend Ninian taught me a few moves.</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="1-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="1-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="1-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -2734,6 +2754,12 @@
                 <state img="1-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="1-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
+                <state img="1-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
+                <state img="1-nervous.png">I thought we were sticking to accessories?</state>
+                <state img="1-nervous.png">O-oh...</state>
+                <state img="1-shocked.png">Huh? Your ~clothing~?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="1-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="1-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -2743,9 +2769,12 @@
                 <state img="1-victory.png">Heeheehee! That's not so bad!</state>
                 <state img="1-happy.png">What next?</state>
             </case>
-            <case tag="female_removed_minor" notSaidMarker="remark_started">
+            <case tag="female_removed_minor" totalRounds="1-99" notSaidMarker="remark_started">
                 <condition count="1" status="not_mostly_clothed" />
-                <state img="1-embarrassed.png" marker="remark_started">Um, it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="1-embarrassed.png" marker="remark_started">I know it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="1-embarrassed.png" marker="remark_started">I was getting ahead of myself. We're... really stripping, aren't we?</state>
+                <state img="1-embarrassed.png" marker="remark_started">What was I thinking? Of course we'd need to get to our c-c-clothes...</state>
+                <state img="1-embarrassed.png" marker="remark_started">I guess it's really starting now? The, er, s-s-stripping...</state>
             </case>
             <case tag="female_removed_minor" notSaidMarker="rwby">
                 <condition count="3" filter="rwby" />
@@ -2783,7 +2812,7 @@
                 <state img="1-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="1-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="1-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="jasmine" targetStage="1">
                 <state img="1-happy.png">P-pleased to meet you!</state>
@@ -2794,6 +2823,15 @@
             <case tag="female_removed_minor" target="nagisa">
                 <state img="1-victory.png">Nagisa... you're so...so adorable!</state>
                 <state img="1-happy.png">I know you had to strip and all, but you're just so... so cute!</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="1-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="1-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="1-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="1-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="1-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="1-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="1-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-cover.png">Someone tell me when this is over.</state>
@@ -3960,17 +3998,17 @@
             <case tag="must_strip_losing" alsoPlaying="streaming-chan">
                 <state img="2-loss.png">Um... Streaming-chan, you aren't really broadcasting this to p-people, are you?</state>
             </case>
-            <case tag="stripped">
-                <state img="2-stripped.png">I know it doesn't protect much, but it would be hard to ride a pegasus with a full suit.</state>
-                <state img="2-stripped.png">It's not like I need it here anyway, r-right?</state>
-                <state img="2-stripped.png">We won't be going into battle anytime soon, r-right?</state>
-                <state img="2-stripped.png">It has to be lightweight so I don't weigh down my pegasus.</state>
-            </case>
             <case tag="stripping">
                 <state img="2-strip.png">My gloves can count, right?</state>
                 <state img="2-strip.png">I guess I'll do my gloves now.</state>
                 <state img="2-strip.png">So long, gloves. It was nice knowing you.</state>
                 <state img="2-strip.png">We've had good times together, gloves. I'll miss you.</state>
+            </case>
+            <case tag="stripped">
+                <state img="2-stripped.png">I know it doesn't protect much, but it would be hard to ride a pegasus with a full suit.</state>
+                <state img="2-stripped.png">It's not like I need it here anyway, r-right?</state>
+                <state img="2-stripped.png">We won't be going into battle anytime soon, r-right?</state>
+                <state img="2-stripped.png">It has to be lightweight so I don't weigh down my pegasus.</state>
             </case>
             <case tag="stripping" alsoPlaying="catria" alsoPlayingStage="9" priority="6">
                 <state img="2-strip.png">S-sorry, Catria!!!</state>
@@ -4215,8 +4253,8 @@
                 <state img="2-nervous.png">&lt;i&gt;Phew&lt;/i&gt;. I was worried you m-might have to go bigger.</state>
                 <state img="2-nervous.png">What are you going to - oh, that's fine.</state>
             </case>
-            <case tag="female_removing_accessory" filter="school_uniform" targetStage="0-1">
-                <state img="2-calm.png">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
+            <case tag="female_removing_accessory" filter="school_uniform" targetStage="1" notSaidMarker="uniform">
+                <state img="2-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
             <case tag="female_removing_accessory" notSaidMarker="started">
                 <state img="2-interested.png">That's right. You can take it slowly.</state>
@@ -4401,6 +4439,7 @@
                 <state img="2-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="2-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="2-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="2-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="2-jump.png">Ah! You surprised me again!</state>
@@ -4411,7 +4450,7 @@
                 <state img="2-happy.png">Prancing Boots? You mean... like dancing? My friend Ninian taught me a few moves.</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="2-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="2-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="2-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -4428,6 +4467,12 @@
                 <state img="2-awkward.png">Was there any point to keeping your ~clothing~ up to this point anyway?</state>
                 <state img="2-awkward.png">Okay. It's not like that's doing anything for you now...</state>
             </case>
+            <case tag="female_removing_minor" totalRounds="1-99" notSaidMarker="started">
+                <state img="2-shocked.png">Oh, your ~clothing~? Th-that's something...</state>
+                <state img="2-nervous.png">I thought we were sticking to accessories?</state>
+                <state img="2-nervous.png">O-oh...</state>
+                <state img="2-shocked.png">Huh? Your ~clothing~?</state>
+            </case>
             <case tag="female_removed_minor">
                 <state img="2-happy.png">Deep breath... Okay, I'm ready to go again.</state>
                 <state img="2-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
@@ -4437,9 +4482,12 @@
                 <state img="2-victory.png">Heeheehee! That's not so bad!</state>
                 <state img="2-happy.png">What next?</state>
             </case>
-            <case tag="female_removed_minor" notSaidMarker="remark_started">
+            <case tag="female_removed_minor" totalRounds="1-99" notSaidMarker="remark_started">
                 <condition count="1" status="not_mostly_clothed" />
-                <state img="2-embarrassed.png" marker="remark_started">Um, it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="2-embarrassed.png" marker="remark_started">I know it's just your ~clothing~, but it's starting to sink in now. We're... really s-stripping, aren't we?</state>
+                <state img="2-embarrassed.png" marker="remark_started">I was getting ahead of myself. We're... really stripping, aren't we?</state>
+                <state img="2-embarrassed.png" marker="remark_started">What was I thinking? Of course we'd need to get to our c-c-clothes...</state>
+                <state img="2-embarrassed.png" marker="remark_started">I guess it's really starting now? The, er, s-s-stripping...</state>
             </case>
             <case tag="female_removed_minor" notSaidMarker="rwby">
                 <condition count="3" filter="rwby" />
@@ -4477,7 +4525,7 @@
                 <state img="2-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="2-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="2-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="jasmine" targetStage="1">
                 <state img="2-happy.png">P-pleased to meet you!</state>
@@ -4488,6 +4536,15 @@
             <case tag="female_removed_minor" target="nagisa">
                 <state img="2-victory.png">Nagisa... you're so...so adorable!</state>
                 <state img="2-happy.png">I know you had to strip and all, but you're just so... so cute!</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="2-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="2-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="2-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="2-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="2-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="2-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="2-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-cover.png">Someone tell me when this is over.</state>
@@ -5577,18 +5634,18 @@
                 <state img="3-loss.png">I'm r-ready this time. I can do this!</state>
                 <state img="3-loss.png">I'm not going to cry...</state>
             </case>
-            <case tag="stripping">
-                <state img="3-strip.png">That's one off just fine!</state>
-                <state img="3-strip.png">Look, I'm really doing it!</state>
-                <state img="3-strip.png">Just one more to go. I'm so close!</state>
-                <state img="3-strip.png">See? I'm getting braver!</state>
-            </case>
             <case tag="stripped">
                 <state img="3-stripped.png">My hands might get a little chilly.</state>
                 <state img="3-stripped.png">Taking these off shouldn't be so embarrassing.</state>
                 <state img="3-stripped.png">Why is everyone watching? It's a little s-scary.</state>
                 <state img="3-stripped.png">W-what? They're just gloves...</state>
                 <state img="3-stripped.png">No big deal. Just some g-gloves, right?</state>
+            </case>
+            <case tag="stripping">
+                <state img="3-strip.png">That's one off just fine!</state>
+                <state img="3-strip.png">Look, I'm really doing it!</state>
+                <state img="3-strip.png">Just one more to go. I'm so close!</state>
+                <state img="3-strip.png">See? I'm getting braver!</state>
             </case>
             <case tag="stripping" alsoPlaying="catria" alsoPlayingStage="9" priority="6">
                 <state img="3-strip.png">S-sorry, Catria!!!</state>
@@ -5826,8 +5883,8 @@
                 <state img="3-nervous.png">&lt;i&gt;Phew&lt;/i&gt;. I was worried you m-might have to go bigger.</state>
                 <state img="3-nervous.png">What are you going to - oh, that's fine.</state>
             </case>
-            <case tag="female_removing_accessory" filter="school_uniform" targetStage="0-1">
-                <state img="3-calm.png">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
+            <case tag="female_removing_accessory" filter="school_uniform" targetStage="1" notSaidMarker="uniform">
+                <state img="3-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
             <case tag="female_removing_accessory" saidMarker="streak_major*&gt;0" priority="0">
                 <state img="3-embarrassed.png">I don't understand why you saved that for after your ~marker.last_item~.</state>
@@ -5998,6 +6055,7 @@
                 <state img="3-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="3-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="3-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="3-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="3-jump.png">Ah! You surprised me again!</state>
@@ -6008,7 +6066,7 @@
                 <state img="3-happy.png">Prancing Boots? You mean... like dancing? My friend Ninian taught me a few moves.</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="3-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="3-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="3-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -6070,7 +6128,7 @@
                 <state img="3-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="3-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="3-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="jasmine" targetStage="1">
                 <state img="3-happy.png">P-pleased to meet you!</state>
@@ -6081,6 +6139,15 @@
             <case tag="female_removed_minor" target="nagisa">
                 <state img="3-victory.png">Nagisa... you're so...so adorable!</state>
                 <state img="3-happy.png">I know you had to strip and all, but you're just so... so cute!</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="3-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="3-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="3-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="3-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="3-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="3-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="3-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-cover.png">Someone tell me when this is over.</state>
@@ -7216,19 +7283,19 @@
                 <state img="4-loss_bee.png">&lt;i&gt;Eek!&lt;/i&gt; It's on me! The b-b-b-bee!!!!</state>
                 <state img="4-loss_bee.png">&lt;i&gt;Ayaa!&lt;/i&gt; The b-b-bee's on my tunic!</state>
             </case>
-            <case tag="stripped">
-                <state img="4-stripped.png" marker="tripped">&lt;i&gt;Ahh!&lt;/i&gt; I lost my balance!</state>
-                <state img="4-stripped.png" marker="tripped">Aaaauuuahh! Sorry, I...lost my balance!</state>
-                <state img="4-stripped2.png">The floor's a bit cold.</state>
-                <state img="4-victory.png">Woohoo! I actually did it!</state>
-                <state img="4-stripped2.png">Okay... bare legs in front of everyone. My heart is racing.</state>
-            </case>
             <case tag="stripping">
                 <state img="4-strip.png">Ah, if my sisters ever find out about today, I'm going to die.</state>
                 <state img="4-strip.png">Don't tell my sisters about this. They would laugh at me for sure!</state>
                 <state img="4-strip.png">Okayyyyy, I can take off &lt;i&gt;one&lt;/i&gt; more thing.</state>
                 <state img="4-strip.png">I'm not sure I can k-keep going after this.</state>
                 <state img="4-strip.png">Th-this is the last time, okay?</state>
+            </case>
+            <case tag="stripped">
+                <state img="4-stripped.png" marker="tripped">&lt;i&gt;Ahh!&lt;/i&gt; I lost my balance!</state>
+                <state img="4-stripped.png" marker="tripped">Aaaauuuahh! Sorry, I...lost my balance!</state>
+                <state img="4-stripped2.png">The floor's a bit cold.</state>
+                <state img="4-victory.png">Woohoo! I actually did it!</state>
+                <state img="4-stripped2.png">Okay... bare legs in front of everyone. My heart is racing.</state>
             </case>
             <case tag="stripping" alsoPlaying="catria" alsoPlayingStage="9" priority="6">
                 <state img="4-strip.png">S-sorry, Catria!!!</state>
@@ -7511,8 +7578,8 @@
                 <state img="4-interested.png">W-we're in this together, ~name~!</state>
                 <state img="4-happy.png">T-take off whatever you want. The smaller, the better.</state>
             </case>
-            <case tag="female_removing_accessory" filter="school_uniform" targetStage="0-1">
-                <state img="4-calm.png">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
+            <case tag="female_removing_accessory" filter="school_uniform" targetStage="1" notSaidMarker="uniform">
+                <state img="4-calm.png" marker="uniform">So, is that a school uniform? I'm wearing my uniform too! Well, if you can count training to be a Pegasus Knight.</state>
             </case>
             <case tag="female_removing_accessory" saidMarker="streak_major*&gt;0" priority="0">
                 <state img="4-embarrassed.png">I don't understand why you saved that for after your ~marker.last_item~.</state>
@@ -7681,6 +7748,7 @@
                 <state img="4-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="4-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="4-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="4-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="4-jump.png">Ah! You surprised me again!</state>
@@ -7691,7 +7759,7 @@
                 <state img="4-happy.png">Prancing Boots? You mean... like dancing? My friend Ninian taught me a few moves.</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="4-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="4-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="4-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -7748,7 +7816,7 @@
                 <state img="4-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="4-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="4-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="4-shocked.png">Oh, ummm...I th-think I brought a vulnerary... But I suppose that wouldn't help. Sorry...</state>
@@ -7761,6 +7829,15 @@
                 <test expr="~clothing~" value="socks" />
                 <state img="4-awkward.png" marker="clothing_socks">Come to think of it, what happened to &lt;i&gt;my&lt;/i&gt; socks?</state>
                 <state img="4-embarrassed.png" marker="clothing_socks">Y-you know, I don't even remember taking off my own. I g-guess they slid off with the boots.</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="4-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="4-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="4-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="4-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="4-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="4-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="4-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-cover.png">Someone tell me when this is over.</state>
@@ -9280,6 +9357,7 @@
                 <state img="5-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="5-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="5-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="5-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="5-jump.png">Ah! You surprised me again!</state>
@@ -9290,7 +9368,7 @@
                 <state img="5-happy.png">Prancing Boots? You mean... like dancing? My friend Ninian taught me a few moves.</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="5-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="5-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="5-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -9347,7 +9425,7 @@
                 <state img="5-calm.png">You should feel lucky. I've heard from some more, erm, &lt;i&gt;endowed&lt;/i&gt; knights that fitted breastplates are very uncomfortable.</state>
             </case>
             <case tag="female_removed_minor" target="gwen" targetStage="3">
-                <state img="5-calm.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
+                <state img="5-interested.png">You're allowed to take only part of it off? Well, I won't complain. Don't want to rush you!</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
                 <state img="5-shocked.png">Oh, ummm...I th-think I brought a vulnerary... But I suppose that wouldn't help. Sorry...</state>
@@ -9356,6 +9434,15 @@
                 <test expr="~clothing~" value="socks" />
                 <state img="5-awkward.png" marker="clothing_socks">Come to think of it, what happened to &lt;i&gt;my&lt;/i&gt; socks?</state>
                 <state img="5-embarrassed.png" marker="clothing_socks">Y-you know, I don't even remember taking off my own. I g-guess they slid off with the boots.</state>
+            </case>
+            <case tag="female_removed_minor" totalRounds="0-0">
+                <state img="5-happy.png">Deep breath... Okay, I'm ready to go again.</state>
+                <state img="5-interested.png">You'll do fine, ~name~. I'm...I'm rooting for you!</state>
+                <state img="5-happy.png">Everyone makes mistakes sometimes. You just have to learn from them.</state>
+                <state img="5-interested.png">Let's all do our best next round for ~name~'s sake.</state>
+                <state img="5-interested.png">I still believe you can do it, ~name~!</state>
+                <state img="5-victory.png">Heeheehee! That's not so bad!</state>
+                <state img="5-happy.png">What next?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-cover.png">Someone tell me when this is over.</state>
@@ -10955,6 +11042,7 @@
                 <state img="6-awkward.png">I d-don't blame you for not wanting to say anything.</state>
                 <state img="6-embarrassed.png">Um, ~name~, I don't think you've said anything yet. Are you shy too?</state>
                 <state img="6-awkward.png">Maybe not talking would be a good strategy to make people forget me. Oh, but I keep blabbering anyway.</state>
+                <state img="6-embarrassed.png">And I'm usually the quiet one in a group. I don't blame you though.</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1-2">
                 <state img="6-jump.png">Ah! You surprised me again!</state>
@@ -10962,7 +11050,7 @@
                 <state img="6-shocked.png">Yikes!</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="6-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="6-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="6-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -12556,7 +12644,7 @@
             </case>
             <case tag="male_removing_minor">
                 <state img="7-calm.png">I don't feel like running. That's... progress, right?</state>
-                <state img="7-happy.png">I'm doing it! I'm watching a... man... strip... Oh...</state>
+                <state img="7-happy.png">I'm doing it! I'm watching a... man... strip... Oh.</state>
                 <state img="7-rear.png">Oh? Just your ~clothing~? I didn't really need to turn away for that...</state>
                 <state img="7-calm.png">One less piece until... *gulp*.</state>
                 <state img="7-awkward.png">This is awkward.</state>
@@ -12601,7 +12689,7 @@
                 <state img="7-shocked.png">Yikes!</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="7-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="7-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="7-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
@@ -13991,7 +14079,7 @@
             </case>
             <case tag="male_removing_minor">
                 <state img="8-calm.png">I don't feel like running. That's... progress, right?</state>
-                <state img="8-happy.png">I'm doing it! I'm watching a... man... strip... Oh...</state>
+                <state img="8-happy.png">I'm doing it! I'm watching a... man... strip... Oh.</state>
                 <state img="8-rear.png">Oh? Just your ~clothing~? I didn't really need to turn away for that...</state>
                 <state img="8-calm.png">One less piece until... *gulp*.</state>
                 <state img="8-awkward.png">This is awkward.</state>
@@ -14036,7 +14124,7 @@
                 <state img="8-shocked.png">Yikes!</state>
             </case>
             <case tag="female_removing_minor" target="catria" targetStage="3">
-                <state img="8-shocked.png">Ah, but Catria... Your b...butt...</state>
+                <state img="8-nervous.png">Ah, but Catria... Your b...butt...</state>
                 <state img="8-shocked.png">Uh, Catria, did you know your bu... um, never mind.</state>
             </case>
             <case tag="female_removing_minor" target="futaba" targetStage="3">
