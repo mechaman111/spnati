@@ -266,7 +266,7 @@ function doEpilogueFromGallery(){
 			epilogueContainer.dataset.background = -1;
 			epilogueContainer.dataset.scene = -1;
 		
-			progressEpilogue(1); //initialise buttons and text boxes
+			loadEpilogue(chosenEpilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
 			$epilogueSelectionModal.modal("hide");
 		}

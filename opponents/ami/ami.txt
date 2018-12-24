@@ -9,9 +9,6 @@ intelligence=average
 #Number of phases to "finish" masturbating
 timer=15
 
-#Each character gets a tag of their own name for some advanced dialogue tricks with filter counts.
-tag=ami
-
 #Source material tags
 tag=toradora
 tag=anime
@@ -45,10 +42,10 @@ tag=model
 pic=0-calm
 height=5'5"
 from=Toradora!
-writer=AzideBen
+writer=AzideBen & Arndress
 artist=Model and posing: AzideBen<br>Additional posing: SnSChase
 description=Ami Kawashima is known as a kind and generious model, and she'll do whatever she can to maintain that facade.
-#release=what number character this was in release order if it has been released. This value is not inserted into meta.xml automatically.
+release=111
 
 
 
@@ -60,25 +57,28 @@ marker=ami_taken_boyfriend_steal,private,Ami threatens to steal a taken opponent
 marker=ami_uravity_naturally_gifted,public,Ami lifts her shirt to show Ochako that she's naturally gifted.
 
 
-#You can have more than one start line
-#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
-start=0-happytoplay,Oh, I like strip poker. I'll play!
-start=0-happy,Let's go for it!
-start=0-happy,Let's go for it!
-start=0-happy,Let's go for it!
-start=0-happy,Let's go for it!
-start=0-happytostrip,Just so you know, I'm a student model. But I might not be a model student.
-
 #CLOTHING
 #Items of clothing should be listed here in order of removal.
 #The values are formal name, lower case name, how much they cover, what they cover
-clothes=Shoes,shoes,extra,other
-clothes=Socks,socks,minor,other
+clothes=Shoes,shoes,extra,other,plural
+clothes=Socks,socks,minor,other,plural
 clothes=Blazer,blazer,minor,upper
 clothes=Shirt,shirt,major,upper
 clothes=Skirt,skirt,major,lower
 clothes=Bra,bra,important,upper
-clothes=Panties,panties,important,lower
+clothes=Panties,panties,important,lower,plural
+
+
+
+#You can have more than one start line
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+selected=happytoplay,Oh, I like strip poker. I'll play!
+game_start=happy,Let's go for it!
+game_start=happytostrip,Just so you know, I'm a student model. But I might not be a model student.
+game_start=happy,Don't ask me to do werid things for you. You know how my gorgeousness attracts attention.
+game_start,count-animal_ears:1-4=interestedgeneric,Not judging yet, but who wears fluffy ears to a strip poker game?
+game_start,count-creepy:1-4=calm,Somebody here definitely has stalker potential.
+
 
 
 
@@ -126,13 +126,13 @@ swap_cards=calm,~cards~, if you please.
 1-good_hand,alsoPlaying:sonya,notSaidMarker:ami_sonya_vintage,marker:ami_sonya_vintage=laugh,Where did you get that amazing workout gear, Sonya? It's so... <i>vintage</i>.
 
 #lost socks
-2-good_hand=confident,Good this the red uniform looks good on me, because I'm keeping it this round.
+2-good_hand=confident,Good thing the red uniform looks good on me, because I'm keeping it this round.
 2-good_hand=happy,Hah, piece of cake.
 2-good_hand=sassy,Bring it on. I'm an Ami of One!
 2-okay_hand=indifferent,Eh, fair enough.
 2-bad_hand=teasing,Oh well, I can afford to drop the blazer.
 
-#lost 3 items
+#lost jacket
 3-good_hand=sassy,Looks like you won't see my boobs this round. Anyone upset?
 3-good_hand=teasing,Sorry you guys won't see any skin this time. Want a peek?
 3-okay_hand=,I should be fine.
@@ -143,13 +143,13 @@ swap_cards=calm,~cards~, if you please.
 3-good_hand,alsoPlaying:uravity,alsoPlayingSaidMarker:quirk_talk3,notSaidMarker:ami_uravity_naturally_gifted,marker:ami_uravity_naturally_gifted=supertease,I might not have a Quirk, but you can tell I'm still naturally gifted.
 3-okay_hand,alsoPlaying:uravity,alsoPlayingSaidMarker:quirk_talk3,notSaidMarker:ami_uravity_naturally_gifted,marker:ami_uravity_naturally_gifted=supertease,I might not have a Quirk, but you can tell I'm still naturally gifted.
 
-#lost 4 items
+#lost shirt
 4-good_hand=happy,My skirt's not going anywhere. Sorry!
 4-okay_hand=,Eh, I'm sure someone did worse than me.
 4-okay_hand=calm,I can work with these.
 4-bad_hand=embarrassed,Good thing I wore a matching set.
 
-#lost 5 items
+#underwear only
 5-good_hand=sassy,My boobs remain for my eyes only this round. Sorry everyone.
 5-good_hand=happy,Yes! Victory is mine.
 5-okay_hand=embarrassed,You might see some skin, or you might not. Heh.
@@ -157,7 +157,7 @@ swap_cards=calm,~cards~, if you please.
 5-bad_hand=angry,I should have worn my bracelet. Ugh.
 5-bad_hand=angry,What's with these cards!?
 
-#lost 6 items
+#topless
 6-good_hand=relief,Okay, I'm still in this. Good.
 6-good_hand=happy,Look's like I'm safe, sorry everyone!
 6-okay_hand=worried,I hope this is enough.
@@ -168,6 +168,7 @@ swap_cards=calm,~cards~, if you please.
 -3-good_hand=victory,Yes! I'm still in this!
 -3-okay_hand=worried,Come on... this better be enough.
 -3-bad_hand=sad,Oh, come on...
+-3-bad_hand,totalExposed:1=lossembarrassed,Oh, god, no.
 
 
 
@@ -191,17 +192,18 @@ swap_cards=calm,~cards~, if you please.
 #losing blazer
 2-must_strip_winning=teasing,Aw, I liked how the red complimented my hair.
 2-must_strip_normal=sassy,Me again? I'm Miss Popular today.
-2-must_strip_normal,consecutiveLosses:0=indifferent,Guess it's my turn. It'ss humid here anyway.
+2-must_strip_normal,consecutiveLosses:0=indifferent,Guess it's my turn. It's humid here anyway.
 2-must_strip_losing=teasing,Wow, it's like the deck wants me to get undressed fast!
 2-stripping=stripping,Off you go. No big deal.
 3-stripped=stripped,At least my skirt still matches.
 
 #losing shirt
 3-must_strip_winning=happytostrip,Alright, alright, just don't stare too much. 
-3-must_strip_normal=teasing,Fair enough, my bra looks cute anyway.
+3-must_strip_normal=teasing,Fair enough. My bra looks cute anyway.
 3-must_strip_losing=shocked,Me again? Oh well.
 3-stripping=stripping,Alright, here goes.
 4-stripped=stripped,See, is it cute?
+4-stripped,consecutiveLosses:2-4,totalExposed:0=embarrassed,You just caught me off guard. It won't happen again.
 
 #losing skirt
 4-must_strip_winning=happytostrip,Guess I'll join the party.
@@ -217,6 +219,7 @@ swap_cards=calm,~cards~, if you please.
 5-must_strip_losing=embarrassed,Oh boy, me next. Great.
 5-stripping=stripping,I'll just undo this here...
 6-stripped=stripped,Ta-da!
+6-stripped,consecutiveLosses:3-6,totalExposed:1=angry,Why did I agree to this? Talk about a stupid idea.
 
 #losing panties
 6-must_strip_winning=shocked,Finally my turn?
@@ -239,7 +242,7 @@ swap_cards=calm,~cards~, if you please.
 0-female_must_strip=happytoplay,Let's see where this goes.
 0-female_must_strip,totalRounds:6=happytoplay,As you can tell, I don't intend to lose.
 
-#lost 1 item
+#lost shoes
 1-male_human_must_strip,totalRounds:1=happytostrip,Following my lead, ~name~?
 1-male_human_must_strip=teasing,Soon, soon...
 1-male_human_must_strip=interestedfemalesmaller,Oh, really?
@@ -251,14 +254,14 @@ swap_cards=calm,~cards~, if you please.
 1-female_must_strip,totalRounds:1=teasing,You didn't think I was going to just let you win, did you? That's so cute.
 1-female_must_strip,totalRounds:6=happytostrip,Another one bites the dust.
 
-#lost 2 items
+#lost socks
 2-male_human_must_strip=confident,Not it!
 2-male_must_strip=confident,Yay, not me!
 2-female_human_must_strip=teasing,Way to make this slightly more interesting.
 2-female_human_must_strip=happy,Don't worry about it, ~name~!
 2-female_must_strip=confident,Excellent! Let's go, ~name~.
 
-#lost 3 items
+#lost jacket
 3-male_human_must_strip=sassy,Way to go, big boy.
 3-male_human_must_strip=happy,Sorry, ~name~!
 3-male_must_strip=sassy,Good, good.
@@ -266,7 +269,7 @@ swap_cards=calm,~cards~, if you please.
 3-female_must_strip=interestedfemalesmaller,This is getting fun, huh?
 3-female_must_strip=interestedfemalesmaller,Got something you want to share with the class?
 
-#lost 4 items
+#lost shirt
 4-male_human_must_strip=calm,I don't want to be the only one showing off.
 4-male_must_strip=calm,Is it getting hot in here?
 4-male_must_strip=happy,Woo, not me!
@@ -274,13 +277,13 @@ swap_cards=calm,~cards~, if you please.
 4-female_must_strip=calm,I can't be the only one showing off, anyway.
 4-female_must_strip=happy,Try not to feel embarrassed.
 
-#lost 5 items
+#underwear only
 5-male_human_must_strip=sassy,You should join me, though, I like to show off.
 5-male_must_strip=calm,Nice, nice.
 5-female_human_must_strip=sassy,You know the drill.
 5-female_must_strip=sassy,Don't think you're gonna look better than me.
 
-#lost 6 items
+#topless
 6-male_human_must_strip=interestedplayer,I think I'm seeing something I like...
 6-male_must_strip=relief,Oh, thank god.
 6-female_human_must_strip=interestedfemalebigger,Don't think you can one-up me.
@@ -329,13 +332,14 @@ swap_cards=calm,~cards~, if you please.
 0-female_removing_accessory,totalRounds:0=calm,This is about what I expected for the first round.
 0-female_removing_accessory,totalRounds:1=happytoplay,If you would just put everything you're wearing into a neat pile, that would be great.
 0-female_removing_accessory,totalRounds:4=happy,At this rate, I might never lose!
+0-female_removing_accessory,totalRounds:6,totalExposed:0=indifferent,Like, seriously, how many times do we have to do this?
 0-female_removing_accessory=happytostrip,Eh, just some buildup for the fun parts later.
 0-female_removing_accessory=indifferent,We'll get the easy stuff off you soon enough.
 0-female_removed_accessory=calm,Shall we continue?
 0-female_removed_accessory=calm,Next round, please.
 0-female_removed_accessory,totalRounds:6=interestedgeneric,I'm wondering if you're planning to lose this game badly or <i>really</i> badly.
 
-#lost 1 item
+#lost shoes
 1-male_removing_accessory=teasing,I hope you don't have too many accessories.
 1-male_removed_accessory=happytostrip,Woohoo.
 1-female_removing_accessory=sad,<i>Borrring</i>, hurry up.
@@ -343,19 +347,21 @@ swap_cards=calm,~cards~, if you please.
 1-female_removed_accessory=teasing,Relish the small stuff while you still have it.
 1-female_removed_accessory=calm,All right.
 
-#lost 2 items
+#lost socks
 2-male_removing_accessory=confident,About time, huh?
 2-male_removed_accessory=teasing,You better take more off soon.
 2-female_removing_accessory=indifferent,Guess it's good to knock off the small stuff.
 2-female_removed_accessory=calm,I hope your next item is more fun.
 
-#lost 3 items
+#lost jacket
 3-male_removing_accessory=sad,Only an accessory?
 3-male_removed_accessory=calm,No big deal, I guess.
 3-female_removing_accessory=sad,Still on the small stuff?
-3-female_removed_accessory=calm,We should be moving on to the better stuff soon, right?
+3-female_removed_accessory,totalExposed:0,priority:0=calm,We should be moving on to the better stuff soon, right?
+3-female_removed_accessory=calm,~clothing.ifPlural(I got to model some cute ~clothing~ on my last photoshoot. If you're lucky, maybe I'll send you the photos.|Where did you get a cheap ~clothing~ like that anyway?)~
+3-female_removed_accessory=shocked,What a shocker. You look exactly the same as you did a minute ago.
 
-#lost 4 items
+#lost shirt
 4-male_removing_accessory=embarrassed,That's all?
 4-male_removing_accessory=sad,How lame.
 4-male_removed_accessory=indifferent,Oh well.
@@ -363,15 +369,16 @@ swap_cards=calm,~cards~, if you please.
 4-female_removing_accessory=embarrassed,I'm showing so much and that's all you got?
 4-female_removed_accessory=interestedfemalesmaller,You better lose faster.
 
-#lost 5 items
+#underwear only
 5-male_removing_accessory=angry,You're doing well, aren't you?
 5-male_removed_accessory=annoyed,Ugh, I guess rules are rules.
 5-female_removing_accessory=annoyed,You're making this less interesting.
 5-female_removed_accessory=sigh,If only you'd save the small stuff for last.
 
-#lost 6 items
+#topless
 6-male_removing_accessory=angry,Is that really it?
 6-male_removed_accessory=moveon,Hurry up.
+6-male_removed_accessory=moveon, don't have the time for this. Excuse me, but I have to be going soon.
 6-female_removing_accessory=angry,Lame.
 6-female_removed_accessory=moveon,Let's just get on with it.
 
@@ -407,7 +414,7 @@ swap_cards=calm,~cards~, if you please.
 6-female_removing_accessory,target:uravity,targetStage:0=armsraised,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
 -3-female_removing_accessory,target:uravity,targetStage:0=embarrassed,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
 -2-female_removing_accessory,target:uravity,targetStage:0=base,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
--1-female_removing_accessory=,target:uravity,targetStage:0=smug,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
+-1-female_removing_accessory,target:uravity,targetStage:0=smug,We have to let you breathe, Ochako. Let's get that suit off and let your skin breathe too.
 
 
 
@@ -418,9 +425,10 @@ swap_cards=calm,~cards~, if you please.
 0-male_removing_minor=happy,Your turn again!
 0-male_removed_minor=happytostrip,You better be feeling worried.
 0-female_removing_minor=calm,Very nice.
-0-female_removed_minor=calm,If only I was in your position, right?
+0-female_removed_minor,totalRounds:0=calm,If only I was in your position, right?
+0-female_removed_minor=calm,Not a terrible way to start.
 
-#lost 1 item
+#lost shoes
 1-male_removing_minor=indifferent,At least it's not me.
 1-male_removing_minor=calm,Oh, this is fun.
 1-male_removed_minor=calm,Good, good.
@@ -428,21 +436,21 @@ swap_cards=calm,~cards~, if you please.
 1-female_removing_minor=interestedfemalesmaller,Ooh, another lifeline goes down.
 1-female_removed_minor=happy,We're close to the good stuff, aren't we?
 
-#lost 2 items
+#lost socks
 2-male_removing_minor=teasing,So, what's gonna come off?,
 2-male_removed_minor=confident,Eh, not bad.
 2-male_removed_minor=happy,We're getting somewhere, huh?
 2-female_removing_minor=teasing,So, what have you got to lose?
 2-female_removed_minor=confident,You know, you might look better without that.
 
-#lost 3 items
+#lost jacket
 3-male_removing_minor=happy,Yeah, get on my level!
 3-male_removed_minor=calm,I think we're pretty even now.
 3-female_removing_minor=calm,What's it gonna be?
 3-female_removed_minor=sassy,Hey, looking good!
 3-female_removed_minor=happy,Let's get more off!
 
-#lost 4 items
+#lost shirt
 4-male_removing_minor=interestedgeneric,You're up, ~name~.
 4-male_removed_minor=disappointed,Is that all?
 4-female_removing_minor=interestedgeneric,Your turn, ~name~.
@@ -450,13 +458,13 @@ swap_cards=calm,~cards~, if you please.
 4-female_removed_minor=confident,You'll get on my level soon enough.
 4-female_removed_minor=interestedgeneric,Let's see if you still feel that way next round.
 
-#lost 5 items
+#underwear only
 5-male_removing_minor=disappointed,That's it?
 5-male_removed_minor=sigh,Ugh, you better lose faster.
 5-female_removing_minor=disappointed,Come on, get to the good stuff.
 5-female_removed_minor=sigh,Don't you feel just a bit jealous that everyone's looking at me?
 
-#lost 6 items
+#topless
 6-male_removing_minor=veryangry,You're still on THAT?
 6-male_removed_minor=worried,Luck of the cards has definitely been on your side.
 6-female_removing_minor=defeat,Wow, aren't you lucky?
@@ -492,19 +500,19 @@ swap_cards=calm,~cards~, if you please.
 0-female_removing_major=happytostrip,Oh-ho, let's see what you got.
 0-female_removed_major=interestedgeneric,Not bad. Not as good as me, maybe, but not bad at all.
 
-#lost 1 item
+#lost shoes
 1-male_removing_major=teasing,This is what I've been waiting for.
 1-male_removed_major=calm,Hey, good stuff.
 1-female_removing_major=teasing,You know, you can put on my shoes if you don't wanna lose so badly.
 1-female_removed_major=happytostrip,Oh, I bet you wish I was in your position right now.
 
-#lost 2 items
+#lost socks
 2-male_removing_major=teasing,Go big or go home.
 2-male_removed_major=interestedplayer,Aren't you lucky to have such an amazing audience?
 2-female_removing_major=happy,Hey, now we're talking.
 2-female_removed_major=calm,You're on thin ice now, hah.
 
-#lost 3 items
+#lost jacket
 3-male_removing_major=sassy,Way to get on my level!
 3-male_removing_major=calm,Oh, things are heating up, hm?
 3-male_removed_major=calm,Hope you know you're going down.
@@ -512,7 +520,7 @@ swap_cards=calm,~cards~, if you please.
 3-female_removed_major=happy,We're both making this game a little interesting now, huh? Moreso me, maybe.
 3-female_removed_major=sassy,You look cute!
 
-#lost 4 items
+#lost shirt
 4-male_removing_major=confident,Yeah, join me!
 4-male_removed_major=happytostrip,Not bad, not bad.
 4-male_removed_major=happy,You look better without it, ~name~.
@@ -520,7 +528,7 @@ swap_cards=calm,~cards~, if you please.
 4-female_removed_major=happytostrip,Not bad, just don't try to steal my light.
 4-female_removed_major=interestedfemalesmaller,Another lifeline down. Worried, ~name~?
 
-#lost 5 items
+#underwear only
 5-male_removing_major=happytostrip,Let's see some skin.
 5-male_removed_major=calm,Not bad, boy toy.
 5-male_removed_major=interestedfemalesmaller,So you finally removed your ~clothing~. I'm glad our hints weren't too subtle for you.
@@ -529,7 +537,7 @@ swap_cards=calm,~cards~, if you please.
 5-female_removed_major=embarrassed,Doesn't seeing me undressed make you want to take some more clothes off?
 5-female_removed_major=interestedfemalesmaller,Welcome to the game.
 
-#lost 6 items
+#topless
 6-male_removing_major=happy,Oh boy, whatcha got?
 6-male_removed_major=calm,Not bad.
 6-female_removing_major=embarrassed,Let's see if you can compare.
@@ -570,20 +578,10 @@ swap_cards=calm,~cards~, if you please.
 
 
 #OPPONENT REVEALING CHEST OR CROTCH
-#Characters have different sizes, allowing your character have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
-
-#stage-generic lines that will be used for every individual stage that doesn't have a line written
-
 male_small_crotch_is_visible=calm,Ah, you weren't hiding much from us, huh?
 male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, very nice, ~name~.
 male_large_crotch_is_visible=interestedmale,Oh... oh my.
 
-female_chest_will_be_visible=interestedfemalesmaller,Woo, letting the puppies breath, are we?
-female_small_chest_is_visible=interestedfemalesmaller,How cute, ~name~.
-female_medium_chest_is_visible=interestedfemalesmaller,Not bad, ~name~. Almost as good as mine.
-female_large_chest_is_visible=interestedfemalebigger,...Show off.
-female_crotch_will_be_visible=shocked,Oh! The big reveal!
-female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 
 #stage-specific lines that override the stage-generic ones
 
@@ -600,14 +598,15 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 0-female_medium_chest_is_visible=interestedgeneric,Oh, not bad, but not as good as mine.
 0-female_large_chest_is_visible=interestedfemalebigger,O-oh.
 0-female_crotch_will_be_visible=shocked,Already?
+0-female_crotch_will_be_visible=shocked,Unbelievable. Are you trying to set the record for speed losing?
 0-female_crotch_is_visible=interestedfemalebigger,That's n-nice...
 
-#lost 1 item
+#lost shoes
 1-male_chest_will_be_visible=calm,Show your stuff, boy.
 1-male_chest_is_visible=interestedfemalesmaller,Mm...
 1-male_crotch_will_be_visible=shocked,So soon?
 1-male_crotch_will_be_visible,target:human,totalRounds:0-3=interestedplayer,I'm not surprised, ~player~. You are a man of few clothes.
-1-male_small_crotch_is_visible=laugh,Pfft.
+1-male_small_crotch_is_visible=laugh,Ew. Sorry. I didn't know.
 1-male_medium_crotch_is_visible=interestedfemalesmaller,Ooh, I like.
 1-male_large_crotch_is_visible=interestedmale,O-oh. Well now.
 
@@ -618,7 +617,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 1-female_crotch_will_be_visible=laugh,Wow, you were really unlucky this game, huh.
 1-female_crotch_is_visible=embarrassed,I feel weird for looking...
 
-#lost 2 items
+#lost socks
 2-male_chest_will_be_visible=teasing,Oooh!
 2-male_chest_is_visible=calm,Yum...
 2-male_crotch_will_be_visible=calm,Whatcha got for us?
@@ -627,13 +626,14 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 2-male_large_crotch_is_visible=interestedmale,It's so... wow...
 
 2-female_chest_will_be_visible=teasing,Show some skin, girl!
+2-female_chest_will_be_visible=interestedfemalesmaller,Woo, letting the puppies breath, are we?
 2-female_small_chest_is_visible=interestedfemalesmaller,Are you sensitive there?
 2-female_medium_chest_is_visible=interestedfemalesmaller,Aren't you lookin' good, hmm?
 2-female_large_chest_is_visible=interestedfemalebigger,N-nice chest.
 2-female_crotch_will_be_visible=shocked,Already?
 2-female_crotch_is_visible=interestedfemalebigger,Wow, o-okay...
 
-#lost 3 items
+#lost jacket
 3-male_chest_will_be_visible=calm,Have fun.
 3-male_chest_is_visible=interestedfemalesmaller,Mm, can I touch?
 3-male_crotch_will_be_visible=shocked,Oh, let's see!
@@ -648,7 +648,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 3-female_crotch_will_be_visible=calm,You're not worried about people looking, are you?
 3-female_crotch_is_visible=embarrassed,Oh... that's cute.
 
-#lost 4 items
+#lost shirt
 4-male_chest_will_be_visible=happy,You can see my chest, kinda, let's see yours!
 4-male_chest_is_visible=lick,How would you feel if I... licked it?
 4-male_crotch_will_be_visible=shocked,What kinda heat are you packing?
@@ -663,7 +663,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 4-female_crotch_will_be_visible=shocked,The big reveal?
 4-female_crotch_is_visible=calm,You don't have to feel embarrassed.
 
-#lost 5 items
+#underwear only
 5-male_chest_will_be_visible=sassy,Oops! Your turn.
 5-male_chest_is_visible=calm,That wasn't so bad, was it?
 5-male_crotch_will_be_visible=shocked,Oh, let's see now...
@@ -675,11 +675,13 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 5-female_small_chest_is_visible=interestedfemalesmaller,Cute, but don't feel bad if I steal the show next.
 5-female_small_chest_is_visible=sassy,Aw, aren't those "toradorable"!
 5-female_medium_chest_is_visible=sassy,Ooh, bouncy.
+5-female_medium_chest_is_visible=sigh,Frankly, I expected more.
 5-female_large_chest_is_visible=interestedfemalebigger,S-show off...
 5-female_crotch_will_be_visible=sassy,Your last lifeline's gone...
-5-female_crotch_is_visible=calm,Let's see what you've been hiding from us, ~name~.
+5-female_crotch_will_be_visible=calm,Let's see what you've been hiding from us, ~name~.
+5-female_crotch_is_visible=interestedgeneric,Not very photogenic, is it?
 
-#lost 6 items
+#topless
 6-male_chest_will_be_visible=happy,Hey, I did it, now you do it too!
 6-male_chest_is_visible=sassy,Twinning!
 6-male_crotch_will_be_visible=embarrassed,I bet seeing me made you hard, didn't it ~name~?
@@ -707,7 +709,9 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 -3-female_medium_chest_is_visible=interestedfemalesmaller,I think everyone would like to see us have some fun together, ~name~.
 -3-female_large_chest_is_visible=worried,P-put your bra back on...
 -3-female_crotch_will_be_visible=calm,Let's see who's got the cleaner carpet.
--3-female_crotch_is_visible=sassy,Well kept. Give any pointers?
+-3-female_crotch_will_be_visible=calm,Hand ~clothing.ifPlural(them|it)~ over.
+-3-female_crotch_is_visible=interestedfemalesmaller,That's nice, but... everyone can see mine is better.
+-3-female_crotch_is_visible,filter:trimmer=sassy,Well kept. Give any pointers?
 
 #masturbating
 -2-male_chest_will_be_visible=annoyed,Take it off already!
@@ -782,7 +786,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 0-female_masturbating=calm,That looks like fun, ~name~. Shame I might not indulge you all this game.
 0-female_finished_masturbating=,I'm almost a little jealous of you, ~name~.
 
-#lost 1 item
+#lost shoes
 1-male_must_masturbate=teasing,Wow, I must be doing great.
 1-male_start_masturbating=interestedfemalesmaller,Have fun there, big boy.
 1-male_masturbating=sassy,Looking good, ~name~!
@@ -792,10 +796,10 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 
 1-female_must_masturbate=shocked,Already, huh? I've only just started.
 1-female_start_masturbating=sassy,Have fun, ~name~.
-1-female_masturbating=calm,~name~,you're making that look really fun.
+1-female_masturbating=calm,~Name~, you're making that look really fun.
 1-female_finished_masturbating=teasing,Had a good time, ~name~?
 
-#lost 2 items
+#lost socks
 2-male_must_masturbate=interestedfemalesmaller,Well, get to it, ~name~.
 2-male_start_masturbating=teasing,If you want, you can use one of my socks.
 2-male_masturbating=calm,Want me to use my feet, ~name~?
@@ -808,7 +812,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 2-female_masturbating=teasing,Bet you would love it if I helped out, right ~name~?
 2-female_finished_masturbating=calm,Don't worry about cleaning up your mess.
 
-#lost 3 items
+#lost jacket
 3-male_must_masturbate=sassy,Welp, time for the climax. Literally.
 3-male_start_masturbating=interestedfemalesmaller,Enjoy yourself, ~name~.
 3-male_masturbating=supertease,Maybe I should help you out a little more?
@@ -821,7 +825,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 3-female_masturbating=interestedmale,Oooh...
 3-female_finished_masturbating=embarrassed,You almost of make me wanna take off more clothing, ~name~.
 
-#lost 4 items
+#lost shirt
 4-male_must_masturbate=calm,Go nuts, ~name~.
 4-male_start_masturbating=confident,Want me to undo my bra for a little peek?
 4-male_masturbating=lick,Mmm...
@@ -834,21 +838,23 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 4-female_masturbating=happy,I love your faces, ~name~.
 4-female_finished_masturbating=embarrassed,Poor me, still here with all this clothing.
 
-#lost 5 items
+#underwear only
 5-male_must_masturbate=happytostrip,Well, my full body is here to help you.
+5-male_must_masturbate=interestedgeneric,Time to show us Palmtop ~Name~. I'm sure you know where to put your palm...
 5-male_start_masturbating=sassy,Don't stare too obviously though, ~name~. I'll wink at you if I notice.
 5-male_masturbating=sassy,I like what I'm seeing, ~name~. Keep it up.
 5-male_masturbating=stripped,I'm sure I'm helping. It's not every day you get to see a model stripped down.
 5-male_masturbating=interestedfemalesmaller,That's it. Nice and slow for us.
 5-male_finished_masturbating=,Will you do it again if I lose too, ~name~?
 
-5-female_must_masturbate=happy,Yes, one before me!
+5-female_must_masturbate,totalMasturbating:0,totalFinished:0=happy,Yes, one before me!
+5-female_must_masturbate=sassy,You shouldn't underestimate me.
 5-female_start_masturbating=interestedgeneric,Would you like me to... touch you a little myself, ~name~?
 5-female_masturbating=interestedfemalesmaller,You make some cute faces, ~name~.
 5-female_masturbating=calm,You make some interesting sounds, ~name~.
 5-female_finished_masturbating=sassy,You know, I might have to join you soon.
 
-#lost 6 items
+#topless
 6-male_must_masturbate=victory,Bet you wanna do naughty things to these, don't you ~name~?
 6-male_start_masturbating=horny,It's okay if I rub these a little while I watch... right?
 6-male_masturbating=horny,That looks so nice, ~name~...
@@ -859,7 +865,7 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 6-female_must_masturbate=victory,Wanna play with these aanndd with yourself, ~name~?
 6-female_start_masturbating=interestedfemalesmaller,You look cute in that position.
 6-female_masturbating=horny,Kinda... hot... thanks, ~name~...
-6-female_masturbating=moveon,~name~, are you trying to rub in how good that feels?
+6-female_masturbating=moveon,~Name~, are you trying to rub in how good that feels?
 6-female_finished_masturbating=embarrassed,You made a cute mess, ~name~.
 
 #nude
@@ -886,7 +892,8 @@ female_crotch_is_visible=calm,Don't feel embarrassed, ~name~.
 
 -2-female_must_masturbate=horny,Oh, I always wanted to try mutual masturbation...
 -2-female_start_masturbating=base,Look me in the eyes while you rub, ~name~...
--2-female_masturbating,marker:ami_suggests_scissoring=tease,~name~, ever try scissoring...?
+-2-female_masturbating,marker:ami_suggests_scissoring=tease,~Name~, ever try scissoring...?
+-2-female_masturbating,count-human_male:1,priority:0=base,Who do you think is sexier, ~player~? Me or ~name~?
 -2-female_finished_masturbating=disappointed,Aww, you finished first...
 
 #finished
