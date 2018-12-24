@@ -53,28 +53,51 @@ namespace SPNATI_Character_Editor
 			}
 
 			//wardrobe
-			bool foundUpper = false;
-			bool foundLower = false;
+			string upper = null;
+			string lower = null;
+			string importantUpper = null;
+			string importantLower = null;
 			bool foundBoth = false;
+			string otherMajor = null;
 			for (int i = 0; i < character.Layers; i++)
 			{
 				Clothing c = character.GetClothing(i);
 				if (c.Position == "upper" && c.Type == "major")
-					foundUpper = true;
+					upper = c.GenericName;
 				if (c.Position == "lower" && c.Type == "major")
-					foundLower = true;
+					lower = c.GenericName;
 				if (c.Position == "lower" && c.Type == "major")
 					foundBoth = true;
+				if (c.Position == "upper" && c.Type == "important")
+					importantUpper = c.GenericName;
+				if (c.Position == "lower" && c.Type == "important")
+					importantLower = c.GenericName;
+				if (c.Position == "other" && c.Type == "major")
+					otherMajor = c.GenericName;
 			}
 			if (!foundBoth)
 			{
-				if (!foundUpper)
+				if (string.IsNullOrEmpty(upper))
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch, it should be given a position: \"both\"")));
+					if (!string.IsNullOrEmpty(importantUpper))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantUpper} has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}					
 				}
-				if (!foundLower)
+				if (string.IsNullOrEmpty(lower))
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, string.Format("Character has no clothing of type: major, position: lower. If an item covers underwear over both the chest and crotch, it should be given a position: \"both\"")));
+					if (!string.IsNullOrEmpty(importantLower))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantLower} has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
 				}
 			}
 

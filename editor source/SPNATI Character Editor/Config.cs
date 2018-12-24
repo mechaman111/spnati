@@ -19,6 +19,33 @@ namespace SPNATI_Character_Editor
 		private static Dictionary<string, string> _settings = new Dictionary<string, string>();
 
 		/// <summary>
+		/// Gets whether a version predates the target version
+		/// </summary>
+		/// <param name="version"></param>
+		/// <param name="targetVersion"></param>
+		/// <returns></returns>
+		public static bool VersionPredates(string version, string targetVersion)
+		{
+			if (string.IsNullOrEmpty(version))
+			{
+				return true;
+			}
+			for (int i = 0; i < VersionHistory.Length; i++)
+			{
+				string v = VersionHistory[i];
+				if (v == targetVersion)
+				{
+					return false;
+				}
+				if (v == version)
+				{
+					return true;
+				}
+			}
+			return false; //should never be hit with valid input
+		}
+
+		/// <summary>
 		/// Gets a string configuration setting
 		/// </summary>
 		/// <param name="key"></param>

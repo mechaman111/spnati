@@ -28,13 +28,18 @@ namespace SPNATI_Character_Editor
 		public event EventHandler<Case> CaseModified;
 
 		/// <summary>
+		/// Next ID for a case that needs one
+		/// </summary>
+		[XmlIgnore]
+		public int NextId { get; set; }
+
+		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
 		/// </summary>
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("stage")]
 		public List<Stage> Stages = new List<Stage>();
 
-		//TODO: Make this private
 		/// <summary>
 		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages. When serializing, Stages is reconstructed using this info.
 		/// </summary>
@@ -72,6 +77,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var stageCase in stage.Cases)
 				{
+					NextId = Math.Max(NextId, stageCase.Id);
 					foreach (var line in stageCase.Lines)
 					{
 						line.Text = XMLHelper.DecodeEntityReferences(line.Text);
@@ -91,8 +97,9 @@ namespace SPNATI_Character_Editor
 		{
 			_character = character;
 			_workingCases = new List<Case>();
+			_builtWorkingCases = false;
 
-			BuildWorkingCases();
+			EnsureWorkingCases();
 
 			EnsureDefaults(character); //If the input file had any missing dialogue, add it in now
 		}
@@ -403,6 +410,8 @@ namespace SPNATI_Character_Editor
 		{
 			if (_builtWorkingCases) { return; }
 			BuildWorkingCases();
+
+			DataConversions.ConvertVersion(_character);
 		}
 
 		public IEnumerable<Case> GetWorkingCases()

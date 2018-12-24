@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -17,6 +18,13 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("tag")]
 		public string Tag;
+
+		/// <summary>
+		/// Unique case identifier. Unused by the game, but important for the editor
+		/// </summary>
+		[DefaultValue(0)]
+		[XmlAttribute("id")]
+		public int Id;
 
 		[RecordSelect(DisplayName = "Target", GroupName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase")]
 		[XmlAttribute("target")]

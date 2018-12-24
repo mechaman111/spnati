@@ -18,6 +18,12 @@ namespace SPNATI_Character_Editor
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
 	public class Character : IHookSerialization, IRecord, IWardrobe
 	{
+		[XmlElement("version")]
+		/// <summary>
+		/// What version of the editor this was last saved under. Used for performing one-time data conversions when necessary.
+		/// </summary>
+		public string Version;
+
 		[XmlIgnore]
 		public string Group { get; }
 
