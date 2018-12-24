@@ -150,6 +150,18 @@ var CANDY_LIST = [
     "sayori/1-happy.png",
     "sayori/2-thinking.png",
     "sayori/3-embarrassed.png",
+    "joey/0-introS.png",
+    "joey/1-happy.png",
+    "joey/2-laugh.png",
+    "joey/2-wink.png",
+    "twilight/0-calm.png",
+    "twilight/0-interested.png",
+    "twilight/1-happy.png",
+    "twilight/1-horny.png",
+    "zizou/0-gloating.png",
+    "zizou/1-excited.png",
+    "zizou/2-happy.png",
+    "zizou/3-interested.png",
 ];
 
 var clothingChoices = [];
