@@ -149,7 +149,7 @@ var CANDY_LIST = [
     "sayori/0-excited.png",
     "sayori/1-happy.png",
     "sayori/2-thinking.png",
-    "sayori/3-embarrassed.png",
+    "sayori/3-embarassed.png",
     "joey/0-introS.png",
     "joey/1-happy.png",
     "joey/2-laugh.png",
