@@ -153,7 +153,7 @@ function compileBaseErrorReport(userDesc, bugType) {
 
     var bugCharacter = null;
     if (bugType.startsWith('character')) {
-        bugCharacter = bugType.split('-', 2)[1];
+        bugCharacter = bugType.split(':', 2)[1];
         bugType = 'character';
     }
 
@@ -312,7 +312,7 @@ Player.prototype.resetState = function () {
          * the player has (new-style) selected or game start case lines.
          */
 		var allStates = [];
-        
+
         /* Initialize reaction handling state. */
         this.volatileMatches = [];
         this.bestVolatileMatch = null;
@@ -320,14 +320,14 @@ Player.prototype.resetState = function () {
         this.currentPriority = -1;
         this.stateLockCount = 0;
         this.stateCommitted = false;
-        
+
         this.xml.children('start').children('state').each(function () {
             allStates.push(new State($(this)));
         });
-        
+
         this.allStates = allStates;
 		this.chosenState = this.allStates[0];
-        
+
         if (!this.chosenState) {
             /* If the opponent does not have legacy start lines then select
              * a new-style selected line immediately.
@@ -336,7 +336,7 @@ Player.prototype.resetState = function () {
              */
             this.updateBehaviour(SELECTED);
         }
-        
+
         this.commitBehaviourUpdate();
 
         var appearance = this.default_costume;
@@ -470,7 +470,7 @@ Opponent.prototype.onSelected = function() {
     this.preloadStageImages(-1);
 	this.updateBehaviour(SELECTED);
     this.commitBehaviourUpdate();
-    
+
 	updateSelectionVisuals();
 }
 
@@ -585,7 +585,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
          */
 		function(xml) {
             var $xml = $(xml);
-            
+
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.timer = Number($xml.find('timer').text());
@@ -765,7 +765,7 @@ function loadConfigFile () {
                 DEBUG = false;
                 console.log("Debugging is disabled");
             }
-            
+
             var _game_commit = $(xml).find('commit').text();
             if (_game_commit) {
                 VERSION_COMMIT = _game_commit;
@@ -964,7 +964,7 @@ function showBugReportModal () {
     for (var i=1;i<5;i++) {
         if (players[i]) {
             var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
-            bugReportTypes.push(['character-'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
+            bugReportTypes.push(['character:'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
         }
     }
 
