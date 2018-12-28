@@ -108,6 +108,24 @@
     <Compile Include="Controls\EditControls\ExpressionControl.Designer.cs">
       <DependentUpon>ExpressionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditControls\ImageFileSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\ImageFileSelectControl.Designer.cs">
+      <DependentUpon>ImageFileSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\MeasurementControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\MeasurementControl.Designer.cs">
+      <DependentUpon>MeasurementControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SceneTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SceneTree.Designer.cs">
+      <DependentUpon>SceneTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StageSpecificGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +136,8 @@
     <Compile Include="Controls\TreeViews\CaseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
     <Compile Include="DataStructures\DataConversions.cs" />
+    <Compile Include="DataStructures\Definition.cs" />
+    <Compile Include="DataStructures\Definitions.cs" />
     <Compile Include="DataStructures\DialogueNode.cs" />
     <Compile Include="Activities\MarkerEditor.cs">
       <SubType>UserControl</SubType>
@@ -355,6 +375,7 @@
     <Compile Include="DataStructures\Marker.cs" />
     <Compile Include="DataStructures\MarkerData.cs" />
     <Compile Include="DataStructures\CharacterEditorData.cs" />
+    <Compile Include="DataStructures\Scene.cs" />
     <Compile Include="DataStructures\Screen.cs" />
     <Compile Include="DataStructures\Skin.cs" />
     <Compile Include="DataStructures\Tag.cs" />
@@ -364,6 +385,15 @@
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
+    <Compile Include="EpilogueEditing\DirectiveDefinition.cs" />
+    <Compile Include="EpilogueEditing\EpilogueCanvas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\EpilogueCanvas.Designer.cs">
+      <DependentUpon>EpilogueCanvas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EpilogueEditing\SceneAnimation.cs" />
+    <Compile Include="EpilogueEditing\SceneObject.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileNameSelect.cs">
@@ -435,6 +465,7 @@
     <Compile Include="Forms\PropImporter.Designer.cs">
       <DependentUpon>PropImporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Providers\DefinitionProvider.cs" />
     <Compile Include="Providers\SkinProvider.cs" />
     <Compile Include="Providers\MarkerProvider.cs" />
     <Compile Include="Providers\TagProvider.cs" />
@@ -596,6 +627,9 @@
     <EmbeddedResource Include="Controls\ValidationControl.resx">
       <DependentUpon>ValidationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\EpilogueCanvas.resx">
+      <DependentUpon>EpilogueCanvas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileNameSelect.resx">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -662,13 +696,30 @@
     <Content Include="Help\tags.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Icons\Add.png" />
+    <None Include="Icons\AddChildNode.png" />
+    <None Include="Icons\AddKeyframe.png" />
+    <None Include="Icons\Center.png" />
+    <None Include="Icons\DownArrow.png" />
+    <None Include="Icons\FitToScreen.png" />
+    <None Include="Icons\Lock.png" />
+    <None Include="Icons\Move.png" />
+    <None Include="Icons\Pause.png" />
+    <None Include="Icons\Play.png" />
+    <None Include="Icons\Playback.png" />
+    <None Include="Icons\PlaybackPause.png" />
+    <None Include="Icons\Remove.png" />
+    <None Include="Icons\Rotate.png" />
+    <None Include="Icons\rotate_arrow.png" />
+    <None Include="Icons\Scale.png" />
+    <None Include="Icons\Select.png" />
+    <None Include="Icons\Stop.png" />
+    <None Include="Icons\UpArrow.png" />
+    <None Include="Icons\VideoCamera.png" />
     <Content Include="tag_dictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="editor.ico" />
-    <Content Include="epilogue.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Help\creation.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

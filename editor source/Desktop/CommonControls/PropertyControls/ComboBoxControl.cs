@@ -20,9 +20,26 @@ namespace Desktop.CommonControls.PropertyControls
 			cboItems.Items.AddRange(p.Options);
 		}
 
+		private void RemoveHandlers()
+		{
+			cboItems.SelectedIndexChanged -= cboItems_SelectedIndexChanged;
+		}
+
+		private void AddHandlers()
+		{
+			cboItems.SelectedIndexChanged += cboItems_SelectedIndexChanged;
+		}
+
 		protected override void OnBoundData()
 		{
 			cboItems.SelectedItem = GetValue()?.ToString() ?? "";
+			AddHandlers();
+		}
+
+		protected override void OnRebindData()
+		{
+			RemoveHandlers();
+			OnBoundData();
 		}
 
 		public override void Clear()

@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.recAdd = new Desktop.CommonControls.RecordField();
-			this.pnlRecords = new System.Windows.Forms.Panel();
+			this.pnlRecords = new Desktop.CommonControls.DBPanel();
 			this.shortcuts = new System.Windows.Forms.MenuStrip();
 			this.focusOnAdd = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSpeedButtons = new System.Windows.Forms.MenuStrip();
@@ -53,9 +53,9 @@
 			// 
 			// pnlRecords
 			// 
-			this.pnlRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlRecords.AutoScroll = true;
 			this.pnlRecords.Location = new System.Drawing.Point(3, 27);
 			this.pnlRecords.Name = "pnlRecords";
@@ -66,7 +66,7 @@
 			// 
 			this.shortcuts.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.shortcuts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.focusOnAdd});
+			this.focusOnAdd});
 			this.shortcuts.Location = new System.Drawing.Point(0, 126);
 			this.shortcuts.Name = "shortcuts";
 			this.shortcuts.Size = new System.Drawing.Size(863, 24);
@@ -111,7 +111,7 @@
 		#endregion
 
 		private RecordField recAdd;
-		private System.Windows.Forms.Panel pnlRecords;
+		private DBPanel pnlRecords;
 		private System.Windows.Forms.MenuStrip shortcuts;
 		private System.Windows.Forms.ToolStripMenuItem focusOnAdd;
 		private System.Windows.Forms.MenuStrip menuSpeedButtons;

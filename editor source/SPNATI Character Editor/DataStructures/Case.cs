@@ -34,7 +34,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("filter")]
 		public string Filter;
 
-		[Boolean(DisplayName = "Hidden", GroupName = "Self", GroupOrder = 99, Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen")]
+		[Boolean(DisplayName = "Hidden", GroupName = "Self", GroupOrder = 99, Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen", AutoCheck = true)]
 		[XmlAttribute("hidden")]
 		public string Hidden;
 

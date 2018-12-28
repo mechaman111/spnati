@@ -1,5 +1,7 @@
 ﻿using SPNATI_Character_Editor.IO;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -42,9 +44,20 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
+		[XmlElement("scene")]
+		public List<Scene> Scenes = new List<Scene>();
+
+		#region Legacy properties
+		[XmlAttribute("ratio")]
+		public string Ratio;
+
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("screen")]
 		public List<Screen> Screens = new List<Screen>();
+
+		[XmlElement("background")]
+		public List<Background> Backgrounds = new List<Background>();
+		#endregion
 
 		public override string ToString()
 		{
