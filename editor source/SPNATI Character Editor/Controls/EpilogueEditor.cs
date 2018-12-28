@@ -1,5 +1,7 @@
 ﻿using Desktop;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -15,8 +17,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			Enabled = _character != null;
-			EnableFields(false);
+			Enabled = false;
 		}
 
 		public override string Caption
@@ -27,14 +28,6 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private void EnableFields(bool enabled)
-		{
-			txtTitle.Enabled = enabled;
-			cboGender.Enabled = enabled;
-			cmdDeleteEnding.Enabled = enabled;
-			cmdAdvancedConditions.Enabled = enabled;
-		}
-
 		protected override void OnInitialize()
 		{
 			SetCharacter(Record as Character);
@@ -42,18 +35,43 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnFirstActivate()
 		{
+			tmrActivate.Enabled = true; //for lack of a good event for when controls are in place and visible, using a timer before launching the initial epilogue
+		}
+
+		protected override void OnActivate()
+		{
+			Workspace.ToggleSidebar(false);
+		}
+
+		protected override void OnDeactivate()
+		{
+			Workspace.ToggleSidebar(true);
+		}
+
+		private void tmrActivate_Tick(object sender, EventArgs e)
+		{
+			tmrActivate.Enabled = false;
 			EnableForEdit();
+		}
+
+		private void EnableForEdit()
+		{
+			Enabled = true;
+			PopulateEndingCombo();
+
+			if (_character.Endings.Count > 0)
+			{
+				cboEnding.SelectedIndex = 0;
+			}
+			else
+			{
+			}
 		}
 
 		public void SetCharacter(Character character)
 		{
 			_character = character;
 			_ending = null;
-		}
-
-		private void ClearFields()
-		{
-			txtTitle.Text = "";
 		}
 
 		private void PopulateEndingCombo()
@@ -101,20 +119,56 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			SaveEnding();
 			_ending = ending;
+			PopulateDataFields();
+			tabs.Enabled = (ending != null);
+			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
+			tableGeneral.Data = _ending;
+			canvas.SetEpilogue(_ending, _character);
+			tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
+		}
 
+		private void PopulateDataFields()
+		{
 			if (_ending == null)
 			{
-				cboGender.SelectedIndex = -1;
-				txtTitle.Text = "";
-				EnableFields(false);
+				selAllMarkers.Clear();
+				selNotMarkers.Clear();
+				selAllMarkers.Clear();
+				selAlsoPlayingAllMarkers.Clear();
+				selAlsoPlayingAnyMarkers.Clear();
+				selAlsoPlayingNotMarkers.Clear();
+				return;
 			}
-			else
+
+			selAllMarkers.SelectableItems
+				= selNotMarkers.SelectableItems
+				= selAnyMarkers.SelectableItems
+				= _character.Markers.Values.ToList().ConvertAll(m => m.Name).ToArray();
+			selAllMarkers.SelectedItems = _ending.AllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selNotMarkers.SelectedItems = _ending.NotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAnyMarkers.SelectedItems = _ending.AnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+
+			HashSet<string> otherMarkers = new HashSet<string>();
+			foreach (Character c in CharacterDatabase.Characters)
 			{
-				cboGender.Text = ending.Gender;
-				txtTitle.Text = ending.Title;
-				EnableFields(true);
+				if (c != _character)
+				{
+					foreach (Marker m in c.Markers.Values)
+					{
+						if (m.Scope == MarkerScope.Public)
+						{
+							otherMarkers.Add(m.Name);
+						}
+					}
+				}
 			}
-			canvas.SetEpilogue(_ending, _character);
+			selAlsoPlayingAllMarkers.SelectableItems
+				= selAlsoPlayingNotMarkers.SelectableItems
+				= selAlsoPlayingAnyMarkers.SelectableItems
+				= otherMarkers.ToArray();
+			selAlsoPlayingAllMarkers.SelectedItems = _ending.AlsoPlayingAllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAlsoPlayingNotMarkers.SelectedItems = _ending.AlsoPlayingNotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAlsoPlayingAnyMarkers.SelectedItems = _ending.AlsoPlayingAnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 		}
 
 		public override void Save()
@@ -126,18 +180,13 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_ending == null)
 				return;
-			_ending.Title = txtTitle.Text;
-			_ending.Gender = cboGender.Text;
 
-			//Strip out any empty screens
-			for (int i = _ending.Screens.Count - 1; i >= 0; i--)
-			{
-				Screen screen = _ending.Screens[i];
-				if (screen.IsEmpty)
-				{
-					_ending.Screens.RemoveAt(i);
-				}
-			}
+			_ending.AllMarkers = selAllMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAllMarkers.SelectedItems) : null;
+			_ending.NotMarkers = selNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selNotMarkers.SelectedItems) : null;
+			_ending.AnyMarkers = selAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAnyMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingAllMarkers = selAlsoPlayingAllMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAllMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingNotMarkers = selAlsoPlayingNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingNotMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 		}
 
 		private void RemoveEnding()
@@ -152,27 +201,6 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				cboEnding.SelectedIndex = 0;
 			}
-		}
-
-		
-		private void EnableForEdit()
-		{
-			Enabled = true;
-			PopulateEndingCombo();
-
-			if (_character.Endings.Count > 0)
-			{
-				cboEnding.SelectedIndex = 0;
-			}
-			else
-			{
-				ClearFields();
-			}
-		}
-
-		private void cmdAdvancedConditions_Click(object sender, EventArgs e)
-		{
-			new AdvancedEpilogueConditions(_character, _ending).ShowDialog();
 		}
 	}
 }

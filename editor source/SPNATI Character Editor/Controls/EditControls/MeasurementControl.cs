@@ -48,13 +48,16 @@ namespace SPNATI_Character_Editor.EditControls
 
 			bool isText = (_directive != null && _directive.DirectiveType == "text");
 			int value;
-			string text = GetValue()?.ToString() ?? "0";
+			string text = GetValue()?.ToString();
 			Regex regex = new Regex(@"^(-?\d+)(px|%)?$");
-			Match match = regex.Match(text);
-			if (match.Success)
+			if (!string.IsNullOrEmpty(text))
 			{
-				int.TryParse(match.Groups[1].Value, out value);
-				valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value));
+				Match match = regex.Match(text);
+				if (match.Success)
+				{
+					int.TryParse(match.Groups[1].Value, out value);
+					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, value));
+				}
 			}
 			else
 			{
@@ -83,7 +86,7 @@ namespace SPNATI_Character_Editor.EditControls
 			}
 			else
 			{
-				if (text.EndsWith("%"))
+				if (text != null && text.EndsWith("%"))
 				{
 					radPct.Checked = true;
 				}

@@ -88,6 +88,11 @@ namespace Desktop.CommonControls
 		/// </summary>
 		public string RemoveCaption { get; set; }
 
+		/// <summary>
+		/// Whether property rows are sorted in the table, or added first-come-first-serve
+		/// </summary>
+		public bool Sorted { get; set; }
+
 		public bool UseAutoComplete
 		{
 			get { return recAdd.UseAutoComplete; }
@@ -237,7 +242,7 @@ namespace Desktop.CommonControls
 		/// </summary>
 		private void BuildEditControls()
 		{
-			pnlRecords.SuspendDrawing();
+			this.SuspendDrawing();
 			try
 			{
 
@@ -339,7 +344,7 @@ namespace Desktop.CommonControls
 			}
 			finally
 			{
-				pnlRecords.ResumeDrawing();
+				this.ResumeDrawing();
 			}
 		}
 

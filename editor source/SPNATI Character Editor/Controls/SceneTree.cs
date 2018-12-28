@@ -569,6 +569,10 @@ namespace SPNATI_Character_Editor.Controls
 					//this is the first keyframe, so convert the directive into a keyframe if it has anything animatable set
 					if (directive.HasAnimatableProperties())
 					{
+						//force selecting an empty node to update the host so that it doesn't save after the fact and overwrite the values we're changing immediately below
+						treeScenes.SelectedNode = null;
+						AfterSelect?.Invoke(this, new SceneTreeEventArgs(null));
+
 						Keyframe kf = new Keyframe();
 						kf.TransferPropertiesFrom(directive);
 						kf.Directive = directive;

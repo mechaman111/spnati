@@ -41,8 +41,8 @@ namespace SPNATI_Character_Editor
 			{
 				string image = screen.Image;
 
-				string sceneWidth = "";
-				string sceneHeight = "";
+				string sceneWidth = null;
+				string sceneHeight = null;
 				if (!string.IsNullOrEmpty(image))
 				{
 					try

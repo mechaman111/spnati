@@ -22,7 +22,7 @@
 			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.tsbtnSplit = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsbtnRemoveDialogue = new System.Windows.Forms.ToolStripButton();
-			this.treeDialogue = new System.Windows.Forms.TreeView();
+			this.treeDialogue = new Desktop.CommonControls.DBTreeView();
 			this.cboTreeFilter = new System.Windows.Forms.ComboBox();
 			this.label33 = new System.Windows.Forms.Label();
 			this.label35 = new System.Windows.Forms.Label();
@@ -233,7 +233,7 @@
 		private System.Windows.Forms.ToolStripSplitButton tsbtnAddDialogue;
 		private System.Windows.Forms.ToolStripDropDownButton tsbtnSplit;
 		private System.Windows.Forms.ToolStripButton tsbtnRemoveDialogue;
-		private System.Windows.Forms.TreeView treeDialogue;
+		private Desktop.CommonControls.DBTreeView treeDialogue;
 		private System.Windows.Forms.ComboBox cboTreeFilter;
 		private System.Windows.Forms.Label label33;
 		private System.Windows.Forms.Label label35;

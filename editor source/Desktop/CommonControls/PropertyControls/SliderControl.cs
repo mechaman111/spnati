@@ -14,13 +14,13 @@ namespace Desktop.CommonControls.PropertyControls
 		private void RemoveHandlers()
 		{
 			slider.ValueChanged -= Slider_ValueChanged;
-			valValue.ValueChanged -= Field_ValueChanged;
+			valValue.TextChanged -= Field_ValueChanged;
 		}
 
 		private void AddHandlers()
 		{
 			slider.ValueChanged += Slider_ValueChanged;
-			valValue.ValueChanged += Field_ValueChanged;
+			valValue.TextChanged += Field_ValueChanged;
 		}
 
 		private void Slider_ValueChanged(object sender, EventArgs e)

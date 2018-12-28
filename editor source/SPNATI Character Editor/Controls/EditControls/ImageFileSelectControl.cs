@@ -38,15 +38,15 @@ namespace SPNATI_Character_Editor.Controls
 			string filename = txtValue.Text;
 			filename = filename.Replace("/", "\\");
 
-			string root = Path.GetDirectoryName(Application.ExecutablePath);
-			string localPath = Path.Combine(root, "opponents", _character.FolderName);
+			string root = Config.SpnatiDirectory;
+			string localPath = Config.GetRootDirectory(_character.FolderName);
 
 			if (!string.IsNullOrEmpty(filename))
 			{
-				if (filename.StartsWith("/"))
+				if (filename.StartsWith("\\"))
 				{
 					//absolute path
-					openFileDialog1.InitialDirectory = root;
+					openFileDialog1.InitialDirectory = Path.Combine(root, Path.GetDirectoryName(filename).Substring(1));
 				}
 				else
 				{
@@ -58,7 +58,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				openFileDialog1.InitialDirectory = localPath;
 			}
-			openFileDialog1.FileName = filename;
+			openFileDialog1.FileName = Path.GetFileName(filename);
 
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{

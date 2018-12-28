@@ -26,6 +26,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void BuildDefinitions()
 		{
+			BuildDirectiveTypes();
 		}
 
 		private static void BuildDirectiveTypes()

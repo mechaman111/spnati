@@ -62,6 +62,7 @@
 			this.cboSelectableItems.TabIndex = 1;
 			this.cboSelectableItems.SelectedIndexChanged += new System.EventHandler(this.cboSelectableItems_SelectedIndexChanged);
 			this.cboSelectableItems.TextUpdate += new System.EventHandler(this.cboSelectableItems_TextUpdate);
+			this.cboSelectableItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cboSelectableItems_KeyDown);
 			// 
 			// cmdAdd
 			// 

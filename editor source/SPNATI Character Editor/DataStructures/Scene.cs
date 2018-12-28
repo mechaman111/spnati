@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.EditControls;
+using System.ComponentModel;
 
 namespace SPNATI_Character_Editor
 {
@@ -134,7 +135,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
-		[FileSelect(DisplayName = "Source", Key = "source", Description = "Sprite source image")]
+		[FileSelect(DisplayName = "Source", Key = "src", Description = "Sprite source image")]
 		[XmlAttribute("src")]
 		public string Src;
 
@@ -155,6 +156,7 @@ namespace SPNATI_Character_Editor
 		public string Css;
 
 		[Boolean(DisplayName = "Looped", Key = "loop", GroupName = "Animation", GroupOrder = 4, Description = "If true, the animation will repeat indefinitely until stopped")]
+		[DefaultValue(false)]
 		[XmlAttribute("loop")]
 		public bool Looped;
 

@@ -100,6 +100,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			else
 			{
 				WidthPct = imgWidth / (float)scene.Width;
+				if (ObjectType == SceneObjectType.Text)
+				{
+					WidthPct = 0.2f;
+				}
 			}
 			if (!string.IsNullOrEmpty(height))
 			{

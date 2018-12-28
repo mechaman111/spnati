@@ -34,8 +34,7 @@
 			// 
 			// cmdSearch
 			// 
-			this.cmdSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdSearch.Location = new System.Drawing.Point(129, -1);
 			this.cmdSearch.Margin = new System.Windows.Forms.Padding(0);
 			this.cmdSearch.Name = "cmdSearch";

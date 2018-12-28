@@ -33,14 +33,13 @@
 			this.lblName = new System.Windows.Forms.Label();
 			this.cmdPin = new System.Windows.Forms.Button();
 			this.cmdRemove = new System.Windows.Forms.Button();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.lblHelp = new System.Windows.Forms.Label();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.table.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// table
 			// 
-			this.table.BackColor = System.Drawing.SystemColors.Control;
 			this.table.ColumnCount = 5;
 			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
@@ -98,12 +97,12 @@
 			this.cmdRemove.UseVisualStyleBackColor = true;
 			this.cmdRemove.Click += new System.EventHandler(this.cmdRemove_Click);
 			// 
-			// label1
+			// lblHelp
 			// 
 			this.lblHelp.Image = global::Desktop.Properties.Resources.Help;
 			this.lblHelp.Location = new System.Drawing.Point(3, 3);
 			this.lblHelp.Margin = new System.Windows.Forms.Padding(3);
-			this.lblHelp.Name = "label1";
+			this.lblHelp.Name = "lblHelp";
 			this.lblHelp.Size = new System.Drawing.Size(14, 22);
 			this.lblHelp.TabIndex = 4;
 			// 

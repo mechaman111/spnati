@@ -146,10 +146,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetEpilogue(Epilogue epilogue, Character character)
 		{
+			_selectedScene = null;
 			_epilogue = epilogue;
 			_character = character;
-			Enabled = true;
+			Enabled = (_epilogue != null);
+			propertyTable.Data = null;
 			treeScenes.SetData(epilogue);
+			BuildScene(false);
 			FitToScreen();
 		}
 
@@ -653,6 +656,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Canvas_MouseDown(object sender, MouseEventArgs e)
 		{
+			if (_scenePreview == null) { return; }
 			switch (_mode)
 			{
 				case EditMode.Edit:
@@ -703,9 +707,9 @@ namespace SPNATI_Character_Editor.Controls
 										obj = GetObjectAtPoint(e.X, e.Y, _sprites);
 									}
 
-									if (obj != null && obj.Id != _selectedObject?.Id)
+									if (obj != null && obj != _selectedObject && (string.IsNullOrEmpty(obj.Id) || obj.Id != _selectedObject?.Id))
 									{
-										Directive dir = _selectedScene.GetDirective(obj.Id);
+										Directive dir = string.IsNullOrEmpty(obj.Id) ? (obj.LinkedFrame as Directive) : _selectedScene.GetDirective(obj.Id);
 										if (dir != null)
 										{
 											treeScenes.SelectNode(_selectedScene, dir, null);
@@ -931,6 +935,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
 		{
+			if (_scenePreview == null) { return; }
 			Point screenPt = new Point(e.X, e.Y);
 			Point worldPt = ToWorldPoint(screenPt);
 
@@ -1220,6 +1225,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Canvas_MouseUp(object sender, MouseEventArgs e)
 		{
+			if (_scenePreview == null) { return; }
 			_moveContext = HoverContext.None;
 			canvas.Cursor = Cursors.Default;
 			switch (_state)
@@ -1292,6 +1298,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				propertyTable.RecordFilter = null;
 				propertyTable.Data = e.Scene;
+			}
+			else
+			{
+				propertyTable.RecordFilter = null;
+				propertyTable.Data = null;
 			}
 
 			BuildScene(false);
@@ -1398,24 +1409,14 @@ namespace SPNATI_Character_Editor.Controls
 			if (!previewMode)
 			{
 				//iterate up to the selected point in the timeline
-				bool stopAtPause = (_selectedDirective == null);
 				if (_selectedDirective != null)
 				{
 					foreach (Directive d in _selectedScene.Directives)
 					{
-						if (stopAtPause)
-						{
-							//if a scene is selected, stop at the first pause/wait
-							if (d.DirectiveType == "wait" || d.DirectiveType == "pause" || (_selectedDirective != null && _selectedDirective.Id == d.Id))
-							{
-								break;
-							}
-						}
 						ApplyDirective(d);
-						if (!stopAtPause && d == _selectedDirective)
+						if (d == _selectedDirective)
 						{
-							//otherwise stop at the next pause after the given directive
-							stopAtPause = true;
+							//or, after the selected directive
 							break;
 						}
 					}
@@ -1424,14 +1425,11 @@ namespace SPNATI_Character_Editor.Controls
 				if (_selectedDirective != null)
 				{
 					string id = _selectedDirective.Id;
-					if (!string.IsNullOrEmpty(id))
+					//select the object corresponding to the selected directive
+					_selectedObject = _sprites.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
+					if (_selectedObject == null)
 					{
-						//select the object corresponding to the selected directive
-						_selectedObject = _sprites.Find(obj => obj.Id == id);
-						if (_selectedObject == null)
-						{
-							_selectedObject = _textboxes.Find(obj => obj.Id == id);
-						}
+						_selectedObject = _textboxes.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
 					}
 				}
 			}
@@ -1725,6 +1723,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void FitToScreen()
 		{
+			if (_scenePreview == null) { return; }
 			_canvasOffset = new Point(0, 0);
 
 			//determine an appropriate zoom level to fit everything
