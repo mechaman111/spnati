@@ -138,6 +138,9 @@ function compileBaseErrorReport(userDesc, bugType) {
         'origin': getReportedOrigin(),
         'currentRound': currentRound,
         'currentTurn': currentTurn,
+        'previousLoser': previousLoser,
+        'recentLoser': recentLoser,
+        'gameOver': gameOver,
         'visibleScreens': []
     }
 
