@@ -270,6 +270,10 @@ namespace SPNATI_Character_Editor
 				{
 					result += string.Format(" (after {0} rounds in stage)", TargetTimeInStage);
 				}
+				if (!string.IsNullOrEmpty(TargetLayers))
+				{
+					result += $" (layers remaining={TargetLayers})";
+				}
 				if (!string.IsNullOrEmpty(Filter))
 				{
 					result += string.Format(" (filter={0})", Filter);
@@ -1619,7 +1623,18 @@ namespace SPNATI_Character_Editor
 		{
 			Character character = record as Character;
 			Trigger trigger = TriggerDatabase.GetTrigger(Tag);
-			if (trigger.Gender == null || trigger.Gender == character.Gender || character.Key == "human")
+
+			if (character.Key == "human")
+			{
+				return true;
+			}
+
+			if (trigger.Size != character.Size)
+			{
+				return false;
+			}
+
+			if (trigger.Gender == null || trigger.Gender == character.Gender)
 			{
 				return true;
 			}

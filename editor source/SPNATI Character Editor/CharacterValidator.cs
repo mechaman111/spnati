@@ -354,7 +354,7 @@ namespace SPNATI_Character_Editor
 					foreach (var condition in stageCase.Conditions)
 					{
 						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5, context));
-						if (!string.IsNullOrEmpty(condition.Filter) && !TagDatabase.TagExists(condition.Filter))
+						if (condition.Filter != "human" && condition.Filter != "human_male" && condition.Filter != "human_female" && !string.IsNullOrEmpty(condition.Filter) && !TagDatabase.TagExists(condition.Filter))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter), context));
 						}
