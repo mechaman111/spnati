@@ -1386,6 +1386,13 @@ EpiloguePlayer.prototype.updateSprite = function (id, last, next, t) {
   this.interpolate(sprite, "alpha", last, next, t);
 }
 
+EpiloguePlayer.prototype.addAnimation = function (anim) {
+  if (this.anims.length === 0) {
+    this.lastUpdate = performance.now();
+  }
+  this.anims.push(anim);
+}
+
 EpiloguePlayer.prototype.moveSprite = function (directive, context) {
   var sprite = this.sceneObjects[directive.id];
   if (sprite) {
@@ -1396,7 +1403,7 @@ EpiloguePlayer.prototype.moveSprite = function (directive, context) {
     context.scale = sprite.scale;
     context.alpha = sprite.alpha;
     frames.unshift(context);
-    this.anims.push(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease));
+    this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease));
   }
 }
 
@@ -1436,7 +1443,7 @@ EpiloguePlayer.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  this.anims.push(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease));
+  this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease));
 }
 
 EpiloguePlayer.prototype.returnCamera = function (directive, context) {
@@ -1493,7 +1500,7 @@ EpiloguePlayer.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.overlay.a;
   frames.unshift(context);
-  this.anims.push(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease));
+  this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease));
 }
 
 EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
