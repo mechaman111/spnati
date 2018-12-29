@@ -940,7 +940,6 @@ namespace SPNATI_Character_Editor.Controls
 			Point worldPt = ToWorldPoint(screenPt);
 
 			lblCoord.Text = $"{worldPt}";
-			lblCoord.Text = $"{_canvasOffset}";
 
 			switch (_mode)
 			{
@@ -1261,6 +1260,8 @@ namespace SPNATI_Character_Editor.Controls
 		private void UpdateZoomLevel()
 		{
 			lblZoom.Text = ZoomLevel.ToString("0.00") + "x";
+			int zoom = (int)(ZoomLevel * 100);
+			//sliderZoom.Value = zoom;
 			canvas.Invalidate();
 		}
 
@@ -1728,23 +1729,39 @@ namespace SPNATI_Character_Editor.Controls
 
 			//determine an appropriate zoom level to fit everything
 			float canvasWidth = canvas.Width;
-			float width = _scenePreview.Width;
 
-			float zoom = canvasWidth / width;
+			float zoom = canvasWidth / _scenePreview.Width;
 			ZoomLevel = Math.Max(MinZoom, Math.Min(MaxZoom, zoom));
 
-			float sceneWidth = _scenePreview.Width * ZoomLevel;
-			if (sceneWidth < canvasWidth)
-			{
-				_canvasOffset.X = (int)((canvasWidth - sceneWidth) / 2.0f / ZoomLevel);
-			}
+			//center on camera
+			Point desiredCenter = new Point(canvas.Width / 2, canvas.Height / 2);
+			_canvasOffset = new Point(0, 0);
 
-			float canvasHeight = canvas.Height;
-			float sceneHeight = _scenePreview.Height * ZoomLevel;
-			if (sceneHeight < canvasHeight)
-			{
-				_canvasOffset.Y = (int)((canvasHeight - sceneHeight) / 2.0f / ZoomLevel);
-			}
+			//get camera's position
+			int cx = (int)(_scenePreview.X + _scenePreview.Width / 2);
+			int cy = (int)(_scenePreview.Y + _scenePreview.Height / 2);
+
+			float width = _scenePreview.Width / _scenePreview.Scale / 2;
+			float height = _scenePreview.Height / _scenePreview.Scale / 2;
+
+			float l = cx - width;
+			float t = cy - height;
+
+			Point worldSize = ToWorldPoint(new Point(canvas.Width, canvas.Height));
+			_canvasOffset = new Point((int)(-l + worldSize.X / 2 - width), (int)(-t + worldSize.Y / 2 - height));
+
+			//float sceneWidth = _scenePreview.Width * ZoomLevel;
+			//if (sceneWidth < canvasWidth)
+			//{
+			//	_canvasOffset.X = (int)((canvasWidth - sceneWidth) / 2.0f / ZoomLevel);
+			//}
+
+			//float canvasHeight = canvas.Height;
+			//float sceneHeight = _scenePreview.Height * ZoomLevel;
+			//if (sceneHeight < canvasHeight)
+			//{
+			//	_canvasOffset.Y = (int)((canvasHeight - sceneHeight) / 2.0f / ZoomLevel);
+			//}
 
 			canvas.Invalidate();
 		}
@@ -1949,6 +1966,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void HaltAnimations(bool haltLooping)
 		{
+			_waitingForAnims = false;
 			for (int i = 0; i < _animations.Count; i++)
 			{
 				if (haltLooping || !_animations[i].Looped)

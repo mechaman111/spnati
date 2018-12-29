@@ -160,11 +160,11 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("loop")]
 		public bool Looped;
 
-		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 41, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-out" })]
+		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 40, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-out" })]
 		[XmlAttribute("ease")]
 		public string EasingMethod;
 
-		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 40, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline" })]
+		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 41, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline" })]
 		[XmlAttribute("interpolation")]
 		public string InterpolationMethod;
 

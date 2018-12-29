@@ -488,7 +488,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				_epilogue.Scenes.Add(scene);
+				_epilogue.Scenes.Add(newScene);
 				treeScenes.Nodes.Add(node);
 			}
 			treeScenes.SelectedNode = node;
