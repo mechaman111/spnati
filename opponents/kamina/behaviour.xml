@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.0.1 at 9:16:40 AM on December 26, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.1 at 11:07:17 AM on December 28, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Kamina</first>
     <last>Jiha</last>
@@ -45,27 +45,23 @@
         <tag>sunglasses</tag>
     </tags>
 
-    <start>
-        <state img="0-angry.png">Introductions? HA! You should already know... JUST WHO IN THE HELL I AM!</state>
-        <state img="0-point.png">A REAL MAN HAS NO TIME FOR INTRODUCTIONS! LET'S GET THIS GAME GOING!</state>
-        <state img="0-point.png">I AM THE MIGHTY KAMINA! With introductions out of the way, let's get this show on the road!</state>
-        <state img="0-shocked.png">Introductions!? Wait!? You seriously haven't heard of me!?</state>
-        <state img="0-point.png">Let's get this game started! A real man skips right past the introductions! Dealer! Gimme 5 new cards!</state>
-        <state img="0-point.png">TIME TO DO THE IMPOSSIBLE, BREAK THE UNBREAKABLE! Let's gooooooooo!</state>
-    </start>
+    <start />
 
     <wardrobe>
-        <clothing lowercase="cape" position="upper" proper-name="Cape" type="minor" />
-        <clothing lowercase="underwear" position="lower" proper-name="Underwear" type="important" />
-        <clothing lowercase="waist wraps" position="lower" proper-name="Waist wraps" type="minor" plural="true" />
-        <clothing lowercase="pants" position="lower" proper-name="Pants" type="major" plural="true" />
-        <clothing lowercase="belt" position="lower" proper-name="Belt" type="extra" />
-        <clothing lowercase="arm wraps" position="upper" proper-name="Arm wraps" type="minor" plural="true" />
-        <clothing lowercase="shoes" position="other" proper-name="Shoes" type="extra" plural="true" />
+        <clothing lowercase="cape" position="upper" formalName="Cape" type="minor" />
+        <clothing lowercase="underwear" position="lower" formalName="Underwear" type="important" />
+        <clothing lowercase="waist wraps" position="lower" formalName="Waist wraps" type="minor" plural="true" />
+        <clothing lowercase="pants" position="lower" formalName="Pants" type="major" plural="true" />
+        <clothing lowercase="belt" position="lower" formalName="Belt" type="extra" />
+        <clothing lowercase="arm wraps" position="upper" formalName="Arm wraps" type="minor" plural="true" />
+        <clothing lowercase="shoes" position="other" formalName="Shoes" type="extra" plural="true" />
     </wardrobe>
 
     <behaviour>
         <stage id="0">
+            <case tag="selected">
+                <state img="0-angry.png">Introductions? HA! You should already know... JUST WHO IN THE HELL I AM!</state>
+            </case>
             <case tag="female_must_strip">
                 <state img="0-point.png">Alright! This is every man's most passionate dream! Seeing a woman strip!</state>
                 <state img="0-excited.png">Hell yeah! The Mighty Kamina wins! Time for the good part!</state>
@@ -74,8 +70,21 @@
                 <state img="0-point.png">Alright, ~name~, let's see you grit those teeth!</state>
                 <state img="0-happy.png">Alright! This is the part I've been waiting for!</state>
             </case>
+            <case tag="game_start">
+                <state img="0-point.png">A REAL MAN HAS NO TIME FOR INTRODUCTIONS! LET'S GET THIS GAME GOING!</state>
+                <state img="0-point.png">I AM THE MIGHTY KAMINA! With introductions out of the way, let's get this show on the road!</state>
+                <state img="0-shocked.png">Introductions!? Wait!? You seriously haven't heard of me!?</state>
+                <state img="0-point.png">Let's get this game started! A real man skips right past the introductions! Dealer! Gimme 5 new cards!</state>
+                <state img="0-point.png">TIME TO DO THE IMPOSSIBLE, BREAK THE UNBREAKABLE! Let's gooooooooo!</state>
+            </case>
             <case alsoPlaying="meia" tag="game_start">
                 <state img="0-happy.png">So I heard there was another cute blue haired mech pilot here?</state>
+            </case>
+            <case alsoPlaying="mulan" tag="game_start">
+                <state img="0-point.png">Kamina! The Mighty Man! The leader of Team Dai Gurren! That's my name! Got it memorized?</state>
+            </case>
+            <case alsoPlaying="remilia" tag="game_start">
+                <state img="0-point.png">A man must be as loud as his soul is passionate! Let's go!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" notSaidMarker="adventure">
                 <state img="0-happy.png" marker="adventure">You know, ~name~, you look like someone who loves adventure!</state>
@@ -467,6 +476,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="0-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="0-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="0-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -479,6 +491,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="0-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="0-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="0-point.png">Perfect! You're showing some serious skin, ~name~! Better not back down!</state>
@@ -1078,6 +1093,12 @@
                 <state img="0-strip.png">MANLY KICK!</state>
                 <state img="0-strip.png">WHO-THE-HELL-DO-YOU-THINK-I-AM KICK!</state>
             </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="2-6" tag="stripping">
+                <state img="0-strip.png">Of course! The Mighty Man Kamina always goes above an beyond, Mulan!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="stripping">
+                <state img="0-strip.png">Woah, you met Yoko!?</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="0-point.png">That's it! Against the impossible odds, you were able to defeat the Mighty Man, Kamina! Great job!</state>
                 <state img="0-cross.png">So. You finally got a win on me. Impressive!</state>
@@ -1086,6 +1107,12 @@
             </case>
             <case alsoPlaying="meia" tag="must_strip_winning">
                 <state img="0-point.png">I've heard you've never seen a man, Meia? Well! Let me show you how a man strips!</state>
+            </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="0" tag="must_strip">
+                <state img="0-point.png">Don't worry! There'll be plenty more fighting coming soon!</state>
+            </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="2-6" tag="must_strip">
+                <state img="0-happy.png">Aw, come on! You're gonna make the Mighty Man blush!</state>
             </case>
         </stage>
 
@@ -1485,6 +1512,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="1-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="1-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="1-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -1497,6 +1527,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="1-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="1-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="1-point.png">We're gonna make it a-happen with our crazy rap skill!</state>
@@ -2055,6 +2088,15 @@
             <case alsoPlaying="meia" tag="stripped">
                 <state img="1-happy.png">So... what'd you think of my manly stripping?</state>
             </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="0-6" tag="stripped">
+                <state img="1-happy.png">Why, thanks, Remi! You're a lot nicer than I thought!</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="8" tag="stripped">
+                <state img="1-happy.png">Why, thanks, Remi! You're a lot nicer than I thought!</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="stripped">
+                <state img="1-aroused.png">I hope it's porn too.</state>
+            </case>
             <case tag="must_strip_normal">
                 <state img="1-point.png">I hope you're all ready for some more...MANLY STRIPPING!</state>
             </case>
@@ -2064,8 +2106,23 @@
             <case tag="stripping">
                 <state img="1-strip.png">Let's just unwind these...</state>
             </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="0-1" tag="stripping">
+                <state img="1-strip.png">Don't apologize for being manly, Ping!</state>
+            </case>
+            <case alsoPlaying="pit" tag="stripping">
+                <state img="1-strip.png">The Mighty Man Kamina doesn't have to worry about being wounded!</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="1-point.png">I bet you're all wondering what the Mighty Man Kamina is gonna strip next, right!?</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="0-5" tag="must_strip">
+                <state img="1-point.png">No need to wonder! The answer is coming up right now!</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="6" tag="must_strip">
+                <state img="1-point.png">No need to wonder! The answer is coming up right now!</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="8" tag="must_strip">
+                <state img="1-point.png">No need to wonder! The answer is coming up right now!</state>
             </case>
         </stage>
 
@@ -2465,6 +2522,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="2-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="2-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="2-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -2477,6 +2537,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="2-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="2-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="2-point.png">We're gonna make it a-happen with our crazy rap skill!</state>
@@ -3044,12 +3107,24 @@
                 <state img="2-strip.png">To think... the Mighty Man Kamina would be pushed this far...</state>
                 <state img="2-strip.png">I'm impressed. You guys are pretty good!</state>
             </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="0-6" tag="stripping">
+                <state img="2-strip.png">You know, Remi...</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="8" tag="stripping">
+                <state img="2-strip.png">You know, Remi...</state>
+            </case>
             <case tag="stripping" saidMarker="proud">
                 <state img="2-strip.png">Well... how about that?</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="2-shocked.png" marker="proud">No way!? The Mighty Man Kamina lost again!? Unbelievable!</state>
                 <state img="2-shocked.png" marker="proud">What's this!? The great and handsome Kamina lost for a third time!?</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="0-6" tag="must_strip">
+                <state img="2-angry.png">You think you're better than us just cause we're human!?</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="8" tag="must_strip">
+                <state img="2-angry.png">You think you're better than us just cause we're human!?</state>
             </case>
         </stage>
 
@@ -3426,6 +3501,12 @@
                 <state img="3-angry.png">Come on! Is that the best you've got!? Put some fire into it!</state>
                 <state img="3-angry.png">Come on! Is that all you've got? Give it some more! Slam the metaphorical gas pedal!</state>
             </case>
+            <case tag="female_masturbating" priority="0">
+                <condition count="0" filter="mahiru" />
+                <condition count="0" filter="streaming-chan" />
+                <state img="3-aroused.png">Man, I wish I had a camera or something.</state>
+                <state img="3-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
+            </case>
             <case filter="tandem" tag="female_masturbating">
                 <state img="3-angry.png">Come on! Having a partner is cheating!</state>
                 <state img="3-angry.png">Are you serious!? Are you too lazy to do it on your own!?</state>
@@ -3433,12 +3514,6 @@
                 <state img="3-angry.png">Come on, aren't you passionate enough to do it on your own!?</state>
                 <state img="3-sad.png">Man, and I was hoping to see <i>your</i> skills... this feels like a copout.</state>
                 <state img="3-sad.png">Man, I was hoping to see what <i>you</i> were gonna do, not your partner.</state>
-            </case>
-            <case tag="female_masturbating" priority="0">
-                <condition count="0" filter="mahiru" />
-                <condition count="0" filter="streaming-chan" />
-                <state img="3-aroused.png">Man, I wish I had a camera or something.</state>
-                <state img="3-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
             </case>
             <case tag="female_masturbating" target="florina" notSaidMarker="singusasongpianowoman">
                 <state img="3-thinking.png" marker="singusasongpianowoman">That's a pretty good song... Do you happen to know "Sorairo Days" by any chance?</state>
@@ -3460,6 +3535,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="3-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="3-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="3-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -3472,6 +3550,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="3-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="3-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="3-point.png">Hell yeah! That's what I'm talking about! Show some skin! Stand proud under the warm sun!</state>
@@ -4043,6 +4124,18 @@
             <case tag="stripped">
                 <state img="3-stripped.png">I guess it's time for me to get... serious.</state>
             </case>
+            <case alsoPlaying="pinkie_pie" tag="stripped" priority="150">
+                <state img="3-stripped.png">I <i>do</i> tend to have that effect on people, Pinkie.</state>
+            </case>
+            <case alsoPlaying="pit" tag="stripped">
+                <state img="3-stripped.png">Is that a challenge, Pit? Hell yeah!</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="0-6" tag="stripped">
+                <state img="3-stripped.png">I think I'm gonna teach you... why you shouldn't underestimate humans...</state>
+            </case>
+            <case alsoPlaying="remilia" alsoPlayingStage="8" tag="stripped">
+                <state img="3-stripped.png">I think I'm gonna teach you... why you shouldn't underestimate humans...</state>
+            </case>
             <case tag="stripped" saidMarker="proud">
                 <state img="3-stripped.png">You guys are doing the impossible! Way to kick logic to the curb! I'm proud!</state>
             </case>
@@ -4058,9 +4151,18 @@
                 <state img="3-strip.png">You've all done well so far... will you be able to keep it up?</state>
                 <state img="3-strip.png">I've been impressed with your skills so far... will you be able to keep them up?</state>
             </case>
+            <case alsoPlaying="pinkie_pie" alsoPlayingStage="0-6" tag="stripping">
+                <state img="3-strip.png">My manly pants!</state>
+            </case>
+            <case alsoPlaying="pinkie_pie" alsoPlayingStage="7-8" tag="stripping">
+                <state img="3-strip.png">My manly pants!</state>
+            </case>
             <case tag="must_strip_winning">
                 <state img="3-excited.png">Wow! Well played you guys! ~player~, your strategy in particular is really something!</state>
                 <state img="3-happy.png">Hey, how about that!? You got me!</state>
+            </case>
+            <case alsoPlaying="pinkie_pie" tag="must_strip">
+                <state img="3-point.png">Well, no need to wonder, Pinkie! Because the answer is...</state>
             </case>
         </stage>
 
@@ -4437,6 +4539,12 @@
                 <state img="4-angry.png">Come on! Is that the best you've got!? Put some fire into it!</state>
                 <state img="4-angry.png">Come on! Is that all you've got? Give it some more! Slam the metaphorical gas pedal!</state>
             </case>
+            <case tag="female_masturbating" priority="0">
+                <condition count="0" filter="mahiru" />
+                <condition count="0" filter="streaming-chan" />
+                <state img="4-aroused.png">Man, I wish I had a camera or something.</state>
+                <state img="4-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
+            </case>
             <case filter="tandem" tag="female_masturbating">
                 <state img="4-angry.png">Come on! Having a partner is cheating!</state>
                 <state img="4-angry.png">Are you serious!? Are you too lazy to do it on your own!?</state>
@@ -4444,12 +4552,6 @@
                 <state img="4-angry.png">Come on, aren't you passionate enough to do it on your own!?</state>
                 <state img="4-sad.png">Man, and I was hoping to see <i>your</i> skills... this feels like a copout.</state>
                 <state img="4-sad.png">Man, I was hoping to see what <i>you</i> were gonna do, not your partner.</state>
-            </case>
-            <case tag="female_masturbating" priority="0">
-                <condition count="0" filter="mahiru" />
-                <condition count="0" filter="streaming-chan" />
-                <state img="4-aroused.png">Man, I wish I had a camera or something.</state>
-                <state img="4-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
             </case>
             <case tag="female_masturbating" target="florina" notSaidMarker="singusasongpianowoman">
                 <state img="4-thinking.png" marker="singusasongpianowoman">That's a pretty good song... Do you happen to know "Sorairo Days" by any chance?</state>
@@ -4471,6 +4573,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="4-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="4-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="4-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -4483,6 +4588,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="4-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="4-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="4-point.png">Hell yeah! That's what I'm talking about! Show some skin! Stand proud under the warm sun!</state>
@@ -5055,6 +5163,9 @@
                 <state img="4-stripped.png">I hope so!</state>
                 <state img="4-stripped.png">I'd be disappointed if you guys stopped now!</state>
             </case>
+            <case alsoPlaying="pinkie_pie" tag="stripped">
+                <state img="4-stripped.png">I won't lie, Pinks, talking to you is making <i>something</i> burn down there...</state>
+            </case>
             <case tag="must_strip_normal">
                 <state img="4-happy.png">I'm not the first to get down to this much, and I won't be the last!</state>
                 <state img="4-point.png" marker="Pants1">What will be next, they wonder to themselves! His cape, his glasses, his underwear!?</state>
@@ -5451,6 +5562,12 @@
                 <state img="5-angry.png">Come on! Is that the best you've got!? Put some fire into it!</state>
                 <state img="5-angry.png">Come on! Is that all you've got? Give it some more! Slam the metaphorical gas pedal!</state>
             </case>
+            <case tag="female_masturbating" priority="0">
+                <condition count="0" filter="mahiru" />
+                <condition count="0" filter="streaming-chan" />
+                <state img="5-aroused.png">Man, I wish I had a camera or something.</state>
+                <state img="5-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
+            </case>
             <case filter="tandem" tag="female_masturbating">
                 <state img="5-angry.png">Come on! Having a partner is cheating!</state>
                 <state img="5-angry.png">Are you serious!? Are you too lazy to do it on your own!?</state>
@@ -5458,12 +5575,6 @@
                 <state img="5-angry.png">Come on, aren't you passionate enough to do it on your own!?</state>
                 <state img="5-sad.png">Man, and I was hoping to see <i>your</i> skills... this feels like a copout.</state>
                 <state img="5-sad.png">Man, I was hoping to see what <i>you</i> were gonna do, not your partner.</state>
-            </case>
-            <case tag="female_masturbating" priority="0">
-                <condition count="0" filter="mahiru" />
-                <condition count="0" filter="streaming-chan" />
-                <state img="5-aroused.png">Man, I wish I had a camera or something.</state>
-                <state img="5-aroused.png">Shame nobody has a camera, I never wanna forget this...</state>
             </case>
             <case tag="female_masturbating" target="florina" notSaidMarker="singusasongpianowoman">
                 <state img="5-thinking.png" marker="singusasongpianowoman">That's a pretty good song... Do you happen to know "Sorairo Days" by any chance?</state>
@@ -5485,6 +5596,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="5-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="5-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="5-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -5497,6 +5611,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="5-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="5-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="5-point.png">Hell yeah! That's what I'm talking about! Show some skin! Stand proud under the warm sun!</state>
@@ -6093,6 +6210,12 @@
                 <state img="5-cross.png" marker="5w">Well then... It's come down to this...</state>
                 <state img="5-cross.png" marker="5w">Here he stands... the Mighty Man Kamina with his back up against the wall...</state>
             </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="0-1" tag="must_strip">
+                <state img="5-angry.png">You think the fight is over yet, Ping? I'm still standing, ya know!?</state>
+            </case>
+            <case alsoPlaying="mulan" alsoPlayingStage="2-10" tag="must_strip">
+                <state img="5-point.png">Of course I'm gonna keep the glasses! They're way too cool to lose!</state>
+            </case>
         </stage>
 
         <stage id="6">
@@ -6480,6 +6603,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="6-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="6-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="6-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -6494,6 +6620,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="6-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="6-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="6-aroused.png">Finally! I've been trying my best to be patient! Do you know how hard that is for someone as hotblooded as me!?</state>
@@ -7422,6 +7551,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="7-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="7-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="7-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -7436,6 +7568,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="imkamina" saidMarker="highcardboast">
                 <state img="7-happy.png" marker="imkamina">It's because I'm the Mighty Man, Kamina!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="7-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="7-aroused.png">Finally! I've been trying my best to be patient! Do you know how hard that is for someone as hotblooded as me!?</state>
@@ -8418,6 +8553,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="8-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="8-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="8-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -8436,6 +8574,9 @@
             </case>
             <case tag="female_start_masturbating" notSaidMarker="part3" priority="999" saidMarker="part2">
                 <state img="8-angry.png" marker="part3">A real man isn't gonna be okay with just finishing once! I'm gonna keep going!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="8-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="female_start_masturbating" timeInStage="6" notSaidMarker="part1" priority="999">
                 <state img="8-heavyA.png" marker="part1">Here it comes! Heaven Piercing...</state>
@@ -9399,6 +9540,9 @@
             <case tag="female_crotch_is_visible" target="mulan">
                 <state img="9-point.png">There ya go, Mulan! I knew you had it in you!</state>
             </case>
+            <case tag="female_crotch_is_visible" target="mulan" targetStage="8">
+                <state img="9-thinking.png">A prince, huh? That could be interesting...</state>
+            </case>
             <case tag="female_crotch_is_visible" target="pinkie_pie">
                 <state img="9-aroused.png">You just keep making this game more and more interesting, Pinkie!</state>
             </case>
@@ -9408,6 +9552,9 @@
             <case tag="female_start_masturbating">
                 <state img="9-excited.png">Eh, whatever! No point in dwelling in the past. I'll cheer you on!</state>
                 <state img="9-excited.png">Whatever! No point in thinking about what if's! I'll just cheer for you instead!</state>
+            </case>
+            <case tag="female_start_masturbating" target="pinkie_pie">
+                <state img="9-shocked.png">Woah! Where'd you even hide that!?</state>
             </case>
             <case tag="male_removing_major">
                 <state img="9-shocked.png">Oh no! ~name~'s taken a major hit! Will his manly spirit be enough to keep him in the game?</state>
@@ -9799,9 +9946,15 @@
             <case tag="finished_masturbating">
                 <state img="9-finished.png"><i>Phew!</i> Alright! Even the Mighty Man Kamina gets tired sometimes. Well played everyone!</state>
             </case>
+            <case alsoPlaying="zone-tan" tag="finished_masturbating">
+                <state img="9-happy.png">Glad you enjoyed the show, Zone!</state>
+            </case>
             <case tag="game_over_defeat">
                 <state img="9-happy.png">Great job, ~name~! You did great! Everyone did! I had a blast!</state>
                 <state img="9-point.png">I hope you'll consider a rematch sometime! A man can't just accept defeat, ya know?</state>
+            </case>
+            <case alsoPlaying="zone-tan" tag="game_over_defeat">
+                <state img="9-happy.png">You weren't too bad yourself, Zone!</state>
             </case>
         </stage>
 
