@@ -574,7 +574,11 @@ function readProperties(sourceObj, scene) {
     targetObj.alpha = parseFloat(targetObj.alpha, 10);
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
-    targetObj.scale = parseFloat(targetObj.scale, 10);
+    if (targetObj.scale) {
+      targetObj.scalex = targetObj.scaley = targetObj.scale;
+    }
+    targetObj.scalex = parseFloat(targetObj.scalex, 10);
+    targetObj.scaley = parseFloat(targetObj.scaley, 10);
     if (targetObj.x) { targetObj.x = toSceneX(targetObj.x, scene); }
     if (targetObj.y) { targetObj.y = toSceneY(targetObj.y, scene); }
   }
@@ -965,7 +969,7 @@ EpiloguePlayer.prototype.drawObject = function (sprite) {
     "opacity": sprite.alpha / 100,
   });
   $(sprite.rotElement).css({
-    "transform": "rotate(" + sprite.rotation + "deg) scale(" + sprite.scale + ")",
+    "transform": "rotate(" + sprite.rotation + "deg) scale(" + sprite.scalex + ", " + sprite.scaley + ")",
   });
 }
 
@@ -1213,16 +1217,23 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
   var y = args.y;
   var width = args.width;
   var height = args.height;
-  var scale = args.scale;
+  var scaleX = args.scalex;
+  var scaleY = args.scaley;
   var rotation = args.rotation;
   var alpha = args.alpha;
+  var pivot = args.pivot;
+
+  if (pivot) {
+    $(img).css("transform-origin", pivot);
+  }
 
   var obj = {
     element: vehicle,
     rotElement: img,
     x: x,
     y: y,
-    scale: scale || 1,
+    scalex: scaleX || 1,
+    scaley: scaleY || 1,
     rotation: rotation || 0,
     alpha: alpha || 100,
   };
@@ -1276,7 +1287,8 @@ EpiloguePlayer.prototype.addSprite = function (directive) {
     y: directive.y,
     width: directive.width,
     height: directive.height,
-    scale: directive.scale,
+    scalex: directive.scalex,
+    scaley: directive.scaley,
     rotation: directive.rotation,
     alpha: directive.alpha,
   });
@@ -1382,7 +1394,8 @@ EpiloguePlayer.prototype.updateSprite = function (id, last, next, t) {
   this.interpolate(sprite, "x", last, next, t);
   this.interpolate(sprite, "y", last, next, t);
   this.interpolate(sprite, "rotation", last, next, t);
-  this.interpolate(sprite, "scale", last, next, t);
+  this.interpolate(sprite, "scalex", last, next, t);
+  this.interpolate(sprite, "scaley", last, next, t);
   this.interpolate(sprite, "alpha", last, next, t);
 }
 
@@ -1400,7 +1413,8 @@ EpiloguePlayer.prototype.moveSprite = function (directive, context) {
     context.x = sprite.x;
     context.y = sprite.y;
     context.rotation = sprite.rotation;
-    context.scale = sprite.scale;
+    context.scalex = sprite.scalex;
+    context.scaley = sprite.scaley;
     context.alpha = sprite.alpha;
     frames.unshift(context);
     this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease));
@@ -1419,8 +1433,11 @@ EpiloguePlayer.prototype.returnSprite = function (directive, context) {
     if (typeof context.rotation !== "undefined") {
       sprite.rotation = context.rotation;
     }
-    if (typeof context.scale !== "undefined") {
-      sprite.scale = context.scale;
+    if (typeof context.scalex !== "undefined") {
+      sprite.scalex = context.scalex;
+    }
+    if (typeof context.scaley !== "undefined") {
+      sprite.scaley = context.scaley;
     }
     if (typeof context.alpha !== "undefined") {
       sprite.alpha = context.alpha;
