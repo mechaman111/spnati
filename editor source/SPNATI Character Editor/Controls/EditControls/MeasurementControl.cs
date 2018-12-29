@@ -82,6 +82,10 @@ namespace SPNATI_Character_Editor.EditControls
 						chkCentered.Checked = true;
 						valValue.Enabled = false;
 					}
+					else
+					{
+						chkCentered.Checked = false;
+					}
 				}
 			}
 			else

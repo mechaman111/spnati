@@ -131,8 +131,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				HeightPct = imgHeight / (float)scene.Height;
 			}
 
-			Width = WidthPct * scene.Width;
-			Height = HeightPct * scene.Height;
+			if (ObjectType == SceneObjectType.Text)
+			{
+				Width = WidthPct * 100;
+				Height = HeightPct * 100;
+			}
+			else
+			{
+				Width = WidthPct * scene.Width;
+				Height = HeightPct * scene.Height;
+			}
 
 			Update(directive, scene);
 
@@ -195,8 +203,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			else
 			{
-				WidthPct = Image.Width / (float)scene.Width;
-				HeightPct = Image.Height / (float)scene.Height;
+				WidthPct = Image.Width / scene.Width;
+				HeightPct = Image.Height / scene.Height;
 			}
 
 			Width = WidthPct * scene.Width;
@@ -254,18 +262,33 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Directive directive = frame as Directive;
 			if (directive == null || directive.Keyframes.Count == 0)
 			{
-				//only update X and Y is this is either a keyframe or the directive has no keyframes
-				if (!string.IsNullOrEmpty(frame.X) || X == 0)
+				if (ObjectType != SceneObjectType.Text)
 				{
-					X = Parse(frame.X, scene.Width);
+					//only update X and Y is this is either a keyframe or the directive has no keyframes
+					if (!string.IsNullOrEmpty(frame.X) || X == 0)
+					{
+						X = Parse(frame.X, scene.Width);
+					}
+					if (!string.IsNullOrEmpty(frame.Y) || Y == 0)
+					{
+						Y = Parse(frame.Y, scene.Height);
+					}
 				}
-				if (!string.IsNullOrEmpty(frame.Y) || Y == 0)
+				else
 				{
-					Y = Parse(frame.Y, scene.Height);
-				}
-				if (frame.X == "centered")
-				{
-					X = scene.Width / 2 - Width / 2;
+					//text stores the percentage in its values rather than a world-space coordinate
+					if (!string.IsNullOrEmpty(frame.X) || X == 0)
+					{
+						X = Parse(frame.X, 100);
+					}
+					if (!string.IsNullOrEmpty(frame.Y) || Y == 0)
+					{
+						Y = Parse(frame.Y, 100);
+					}
+					if (frame.X == "centered")
+					{
+						X = 50 - Width / 2;
+					}
 				}
 			}
 			if (directive != null)
@@ -345,6 +368,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		/// <param name="sceneValue"></param>
 		protected string ApplyPosition(int value, string sourceValue, int sceneValue)
 		{
+			if (ObjectType == SceneObjectType.Text)
+			{
+				return value + "%";
+			}
 			if ((sourceValue != null && sourceValue.EndsWith("%")) || sourceValue == "centered" || ObjectType == SceneObjectType.Text)
 			{
 				float pct = value / (float)sceneValue;

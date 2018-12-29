@@ -172,7 +172,9 @@ namespace SPNATI_Character_Editor.Controls
 			Point viewportTopLeft = ToScreenPoint(new Point(0, 0));
 			Point viewportBottomRight = ToScreenPoint(new PointF(_scenePreview.Width, _scenePreview.Height));
 
-			_font = new Font("Trebuchet MS", 14 * ZoomLevel / _scenePreview.Scale);
+			//_font = new Font("Trebuchet MS", 14 * ZoomLevel / _scenePreview.Scale); //use this to scale font with viewport
+			//_font = new Font("Trebuchet MS", 14 * ZoomLevel); //use this to scale with zoom but constant relative to viewport
+			//both commented out keeps size 14 regardless of window size, which matches current game behavior
 
 			////Scene edges
 			//g.DrawLine(_borderPen, viewportTopLeft.X, 0, viewportTopLeft.X, canvas.Height);
@@ -371,7 +373,7 @@ namespace SPNATI_Character_Editor.Controls
 			RectangleF bounds = ToScreenRegion(textbox);
 			SizeF size = g.MeasureString(textbox.Text, _font, (int)(bounds.Width - Padding * 2), _textFormat);
 			bounds.Height = size.Height + Padding * 2;
-			textbox.Height = bounds.Height / ZoomLevel * _scenePreview.Scale;
+			textbox.Height = bounds.Height;
 			g.FillRectangle(Brushes.White, bounds);
 			g.DrawRectangle(Pens.Black, bounds.X, bounds.Y, bounds.Width, bounds.Height);
 			g.DrawString(textbox.Text, _font, Brushes.Black, new RectangleF(bounds.X + Padding, bounds.Y + Padding, bounds.Width - Padding * 2, bounds.Height - Padding * 2), _textFormat);
@@ -558,9 +560,8 @@ namespace SPNATI_Character_Editor.Controls
 			if (obj.ObjectType == SceneObjectType.Text)
 			{
 				//textboxes are scaled and positioned relative to the viewport size and not the scene
-				//PointF tl = obj.X * ZoomLevel;
 				Rectangle viewport = GetViewportBounds();
-				return new RectangleF(viewport.X + obj.X * ZoomLevel / _scenePreview.Scale, viewport.Y + obj.Y * ZoomLevel / _scenePreview.Scale, obj.Width * ZoomLevel / _scenePreview.Scale, obj.Height * ZoomLevel / _scenePreview.Scale);
+				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
 			}
 			else
 			{
@@ -590,6 +591,20 @@ namespace SPNATI_Character_Editor.Controls
 			int wx = (int)((pt.X - _canvasOffset.X * ZoomLevel) / ZoomLevel);
 			int wy = (int)((pt.Y - _canvasOffset.Y * ZoomLevel) / ZoomLevel);
 			return new Point(wx, wy);
+		}
+
+		/// <summary>
+		/// Converts a point from screen space to viewport space
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <returns></returns>
+		private Point ToViewportPoint(Point pt)
+		{
+			Rectangle viewport = GetViewportBounds(); //viewport in screen space
+			float x = pt.X - viewport.X;
+			float y = pt.Y - viewport.Y;
+
+			return new Point((int)(x / viewport.Width * 100), (int)(y / viewport.Height * 100));
 		}
 
 		private Rectangle GetViewportBounds()
@@ -819,7 +834,7 @@ namespace SPNATI_Character_Editor.Controls
 					{
 						float dl = Math.Abs(screenPt.X - bounds.X);
 						float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
-						if (dl > SelectionLeeway && dl <= RotationLeeway)
+						if (dl > SelectionLeeway && screenPt.X < bounds.X && dl <= RotationLeeway)
 						{
 							return HoverContext.ArrowLeft;
 						}
@@ -827,7 +842,7 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							return HoverContext.SizeLeft;
 						}
-						if (dr <= RotationLeeway && dr > SelectionLeeway)
+						if (dr <= RotationLeeway && dr > SelectionLeeway && screenPt.X > bounds.X + bounds.Width)
 						{
 							return HoverContext.ArrowRight;
 						}
@@ -840,11 +855,11 @@ namespace SPNATI_Character_Editor.Controls
 					{
 						float dt = Math.Abs(screenPt.Y - bounds.Y);
 						float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
-						if (dt <= SelectionLeeway || (screenPt.Y < bounds.Y && dt <= RotationLeeway))
+						if (dt > SelectionLeeway && (screenPt.Y < bounds.Y && dt <= RotationLeeway))
 						{
 							return HoverContext.ArrowUp;
 						}
-						else if (db <= SelectionLeeway || (screenPt.Y >= bounds.Y + bounds.Height && db <= RotationLeeway))
+						else if (db > SelectionLeeway && screenPt.Y >= bounds.Y + bounds.Height && db <= RotationLeeway)
 						{
 							return HoverContext.ArrowDown;
 						}
@@ -938,6 +953,11 @@ namespace SPNATI_Character_Editor.Controls
 			if (_scenePreview == null) { return; }
 			Point screenPt = new Point(e.X, e.Y);
 			Point worldPt = ToWorldPoint(screenPt);
+			if (_selectedObject?.ObjectType == SceneObjectType.Text)
+			{
+				//for text, use viewport coordinates instead of world
+				worldPt = ToViewportPoint(screenPt);
+			}
 
 			lblCoord.Text = $"{worldPt}";
 
