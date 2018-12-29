@@ -442,6 +442,18 @@ namespace Desktop.CommonControls
 
 				pnlRecords.Controls.Add(row);
 				pnlRecords.Controls.SetChildIndex(row, 0);
+				if (Sorted)
+				{
+					for (int i = pnlRecords.Controls.Count - 1; i >= 1; i--)
+					{
+						PropertyTableRow otherRow = pnlRecords.Controls[i] as PropertyTableRow;
+						if (row.CompareTo(otherRow) < 0)
+						{
+							pnlRecords.Controls.SetChildIndex(row, i);
+							break;
+						}
+					}
+				}				
 			}
 
 			return ctl;

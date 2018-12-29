@@ -10,39 +10,39 @@ namespace SPNATI_Character_Editor
 {
 	public class Scene
 	{
-		[FileSelect(DisplayName = "Background", Description = "Scene's background image", Default = true)]
+		[FileSelect(DisplayName = "Background", GroupOrder = 0, Description = "Scene's background image", Default = true)]
 		[XmlAttribute("background")]
 		public string Background;
 
-		[Color(DisplayName = "Back Color", Description = "Scene's background color")]
+		[Color(DisplayName = "Back Color", GroupOrder = 1, Description = "Scene's background color")]
 		[XmlAttribute("color")]
 		public string BackgroundColor;
 
-		[Measurement(DisplayName = "Camera X", Description = "Camera's initial X position")]
+		[Measurement(DisplayName = "Camera X", GroupOrder = 10, Description = "Camera's initial X position")]
 		[XmlAttribute("x")]
 		public string X;
 
-		[Measurement(DisplayName = "Camera Y", Description = "Camera's initial Y position")]
+		[Measurement(DisplayName = "Camera Y", GroupOrder = 11, Description = "Camera's initial Y position")]
 		[XmlAttribute("y")]
 		public string Y;
 
-		[Measurement(DisplayName = "Width", Description = "Scene width in pixels when at full scale", Required = true)]
+		[Measurement(DisplayName = "Width", GroupOrder = 5, Description = "Scene width in pixels when at full scale", Required = true)]
 		[XmlAttribute("width")]
 		public string Width;
 
-		[Measurement(DisplayName = "Height", Description = "Scene height in pixels when at full scale", Required = true)]
+		[Measurement(DisplayName = "Height", GroupOrder = 6, Description = "Scene height in pixels when at full scale", Required = true)]
 		[XmlAttribute("height")]
 		public string Height;
 
-		[Float(DisplayName = "Zoom", Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f, DefaultValue = "1")]
+		[Float(DisplayName = "Zoom", GroupOrder = 12, Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("zoom")]
 		public string Zoom;
 
-		[Color(DisplayName = "Fade Color", Description = "Initial fade overlay color")]
+		[Color(DisplayName = "Fade Color", GroupOrder = 15, Description = "Initial fade overlay color")]
 		[XmlAttribute("overlay")]
 		public string FadeColor;
 
-		[Slider(DisplayName = "Fade Opacity", Description = "Initial fade overlay opacity")]
+		[Slider(DisplayName = "Fade Opacity", GroupOrder = 16, Description = "Initial fade overlay opacity")]
 		[XmlAttribute("overlay-alpha")]
 		public string FadeOpacity;
 
@@ -131,23 +131,23 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string DirectiveType;
 
-		[Text(DisplayName = "Id", Key = "id", Description = "Unique identifier")]
+		[Text(DisplayName = "Id", GroupOrder = 0, Key = "id", Description = "Unique identifier")]
 		[XmlAttribute("id")]
 		public string Id;
 
-		[FileSelect(DisplayName = "Source", Key = "src", Description = "Sprite source image")]
+		[FileSelect(DisplayName = "Source", GroupOrder = 5, Key = "src", Description = "Sprite source image")]
 		[XmlAttribute("src")]
 		public string Src;
 
-		[Measurement(DisplayName = "Width", Key = "width", Description = "Custom sprite width relative to the scene width")]
+		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 15, Description = "Custom sprite width relative to the scene width")]
 		[XmlAttribute("width")]
 		public string Width;
 
-		[Measurement(DisplayName = "Height", Key = "height", Description = "Custom sprite height relative to the scene height")]
+		[Measurement(DisplayName = "Height", Key = "height", GroupOrder = 16, Description = "Custom sprite height relative to the scene height")]
 		[XmlAttribute("height")]
 		public string Height;
 
-		[ComboBox(DisplayName = "Arrow", Key = "arrow", Description = "Speech bubble arrow direction", Default = true, Options = new string[] { "down", "up", "left", "right" })]
+		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Default = true, Options = new string[] { "down", "up", "left", "right" })]
 		[XmlAttribute("arrow")]
 		public string Arrow;
 
@@ -155,20 +155,20 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("css")]
 		public string Css;
 
-		[Boolean(DisplayName = "Looped", Key = "loop", GroupName = "Animation", GroupOrder = 4, Description = "If true, the animation will repeat indefinitely until stopped")]
+		[Boolean(DisplayName = "Looped", Key = "loop", GroupOrder = 42, Description = "If true, the animation will repeat indefinitely until stopped")]
 		[DefaultValue(false)]
 		[XmlAttribute("loop")]
 		public bool Looped;
 
-		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupName = "Animation", GroupOrder = 2, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-out" })]
+		[ComboBox(DisplayName = "Easing Function", Key = "ease", GroupOrder = 41, Description = "Easing function for how fast the animation progresses over time", Options = new string[] { "linear", "smooth", "ease-in", "ease-out" })]
 		[XmlAttribute("ease")]
 		public string EasingMethod;
 
-		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupName = "Animation", GroupOrder = 3, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline" })]
+		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 40, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline" })]
 		[XmlAttribute("interpolation")]
 		public string InterpolationMethod;
 
-		[Text(DisplayName = "Text", Key = "text", Description = "Speech bubble text", RowHeight = 52, Multiline = true)]
+		[Text(DisplayName = "Text", Key = "text", GroupOrder = 5, Description = "Speech bubble text", RowHeight = 52, Multiline = true)]
 		[XmlText]
 		public string Text;
 
@@ -251,35 +251,35 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public Directive Directive { get; set; }
 
-		[Float(DisplayName = "Time (s)", Key = "time", GroupName = "Animation", GroupOrder = 0, Description = "Time in seconds since the start of the animation", Minimum = 0, Maximum = 100, Increment = 0.5f)]
+		[Float(DisplayName = "Time (s)", Key = "time", GroupOrder = 1, Description = "Time in seconds since the start of the animation", Minimum = 0, Maximum = 100, Increment = 0.5f)]
 		[XmlAttribute("time")]
 		public string Time;
 
-		[Measurement(DisplayName = "X", Key = "x", Description = "Scene X position")]
+		[Measurement(DisplayName = "X", Key = "x", GroupOrder = 10, Description = "Scene X position")]
 		[XmlAttribute("x")]
 		public string X;
 
-		[Measurement(DisplayName = "Y", Key = "y", Description = "Scene Y position")]
+		[Measurement(DisplayName = "Y", Key = "y", GroupOrder = 11, Description = "Scene Y position")]
 		[XmlAttribute("y")]
 		public string Y;
 
-		[Float(DisplayName = "Scale", Key = "scale", Description = "Sprite scaling factor", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f, DefaultValue = "1")]
+		[Float(DisplayName = "Scale", Key = "scale", GroupOrder = 17, Description = "Sprite scaling factor", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("scale")]
 		public string Scale;
 
-		[Color(DisplayName = "Color", Key = "color", Description = "Color")]
+		[Color(DisplayName = "Color", Key = "color", GroupOrder = 20, Description = "Color")]
 		[XmlAttribute("color")]
 		public string Color;
 
-		[Slider(DisplayName = "Opacity (0-100)", Key = "alpha", Description = "Opacity/transparency level")]
+		[Slider(DisplayName = "Opacity (0-100)", Key = "alpha", GroupOrder = 21, Description = "Opacity/transparency level")]
 		[XmlAttribute("alpha")]
 		public string Opacity;
 
-		[Float(DisplayName = "Rotation (deg)", Key = "rotation", Description = "Sprite rotation", DecimalPlaces = 0, Minimum = -7020, Maximum = 7020)]
+		[Float(DisplayName = "Rotation (deg)", Key = "rotation", GroupOrder = 18, Description = "Sprite rotation", DecimalPlaces = 0, Minimum = -7020, Maximum = 7020)]
 		[XmlAttribute("rotation")]
 		public string Rotation;
 
-		[Float(DisplayName = "Zoom", Key = "zoom", Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f, DefaultValue = "1")]
+		[Float(DisplayName = "Zoom", Key = "zoom", GroupOrder = 17, Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("zoom")]
 		public string Zoom;
 

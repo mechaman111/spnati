@@ -9,15 +9,15 @@ namespace SPNATI_Character_Editor
 {
 	public class Epilogue
 	{
-		[Text(DisplayName = "Unlock Hint", Description ="Hint to the player for how to unlock the ending")]
+		[Text(DisplayName = "Unlock Hint", GroupOrder = 5, Description = "Hint to the player for how to unlock the ending")]
 		[XmlAttribute("hint")]
 		public string Hint;
 
-		[ComboBox(DisplayName = "Player Gender", Description = "Player's required gender to be able to view this ending", Options = new string[] { "any", "female", "male" })]
+		[ComboBox(DisplayName = "Player Gender", GroupOrder = 2, Description = "Player's required gender to be able to view this ending", Options = new string[] { "any", "female", "male" })]
 		[XmlAttribute("gender")]
 		public string Gender = "any";
 
-		[NumericRange(DisplayName = "Player Starting Layers", Description = "Number of layers the player started with in order to unlock this ending", Minimum = 0, Maximum = 8)]
+		[NumericRange(DisplayName = "Player Starting Layers", GroupOrder = 10, Description = "Number of layers the player started with in order to unlock this ending", Minimum = 0, Maximum = 8)]
 		[XmlAttribute("playerStartingLayers")]
 		public string PlayerStartingLayers;
 
@@ -39,15 +39,15 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoplaying-any-markers")]
 		public string AlsoPlayingAnyMarkers;
 
-		[RecordSelect(DisplayName = "Also Playing", Description = "Character that must also have been playing in order to unlock this ending", RecordType = typeof(Character), RecordFilter = "FilterRecords")]
+		[RecordSelect(DisplayName = "Also Playing", GroupOrder = 8, Description = "Character that must also have been playing in order to unlock this ending", RecordType = typeof(Character), RecordFilter = "FilterRecords")]
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
-		[FileSelect(DisplayName = "Gallery Image", Description = "Thumbnail that displays in the unlocked epilogue gallery")]
+		[FileSelect(DisplayName = "Gallery Image", GroupOrder = 3, Description = "Thumbnail that displays in the unlocked epilogue gallery")]
 		[XmlAttribute("img")]
 		public string GalleryImage;
 
-		[Text(DisplayName = "Title", Description = "Name that displays when choosing an epilogue in game")]
+		[Text(DisplayName = "Title", GroupOrder = 1, Description = "Name that displays when choosing an epilogue in game")]
 		[XmlElement("title")]
 		public string Title = "New Ending";
 

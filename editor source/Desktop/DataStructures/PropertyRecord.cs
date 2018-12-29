@@ -48,6 +48,11 @@ namespace Desktop
 			}
 		}
 
+		public override string ToString()
+		{
+			return Property;
+		}
+
 		public string ToLookupString()
 		{
 			return Name;
@@ -59,7 +64,13 @@ namespace Desktop
 
 		public int CompareTo(PropertyRecord other)
 		{
-			int compare = GroupOrder.CompareTo(other.GroupOrder);
+			string g1 = Group ?? "";
+			string g2 = other.Group ?? "";
+			int compare = g1.CompareTo(g2);
+			if (compare == 0)
+			{
+				compare = GroupOrder.CompareTo(other.GroupOrder);
+			}
 			if (compare == 0)
 			{
 				compare = Name.CompareTo(other.Name);

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace Desktop.CommonControls
 {
 	[ToolboxItem(false)]
-	public partial class PropertyTableRow : UserControl, INotifyPropertyChanged
+	public partial class PropertyTableRow : UserControl, INotifyPropertyChanged, IComparable<PropertyTableRow>
 	{
 		public event EventHandler RemoveRow;
 		public event EventHandler ToggleFavorite;
@@ -144,6 +144,16 @@ namespace Desktop.CommonControls
 		{
 			Favorited = !Favorited;
 			ToggleFavorite?.Invoke(this, e);
+		}
+
+		public int CompareTo(PropertyTableRow other)
+		{
+			return Record.CompareTo(other.Record);
+		}
+
+		public override string ToString()
+		{
+			return Record.ToString();
 		}
 	}
 }

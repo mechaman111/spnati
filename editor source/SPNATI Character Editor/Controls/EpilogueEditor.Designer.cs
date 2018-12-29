@@ -40,34 +40,34 @@
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.pageGeneral = new System.Windows.Forms.TabPage();
 			this.grpConditions = new System.Windows.Forms.GroupBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.selAlsoPlayingAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.selAlsoPlayingNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.selAlsoPlayingAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
-			this.label6 = new System.Windows.Forms.Label();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.selAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.selNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.selAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label7 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
 			this.grpInfo = new System.Windows.Forms.GroupBox();
 			this.tableGeneral = new Desktop.CommonControls.PropertyTable();
 			this.pageScenes = new System.Windows.Forms.TabPage();
+			this.selAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAlsoPlayingAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAlsoPlayingNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAlsoPlayingAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.canvas = new SPNATI_Character_Editor.Controls.EpilogueCanvas();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlHeader.SuspendLayout();
 			this.tabs.SuspendLayout();
 			this.pageGeneral.SuspendLayout();
 			this.grpConditions.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.grpInfo.SuspendLayout();
 			this.pageScenes.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cboEnding
@@ -167,77 +167,20 @@
 			this.grpConditions.TabStop = false;
 			this.grpConditions.Text = "Unlock Conditions";
 			// 
-			// groupBox2
+			// tableLayoutPanel1
 			// 
-			this.groupBox2.Controls.Add(this.selAlsoPlayingAnyMarkers);
-			this.groupBox2.Controls.Add(this.label4);
-			this.groupBox2.Controls.Add(this.selAlsoPlayingNotMarkers);
-			this.groupBox2.Controls.Add(this.label5);
-			this.groupBox2.Controls.Add(this.selAlsoPlayingAllMarkers);
-			this.groupBox2.Controls.Add(this.label6);
-			this.groupBox2.Location = new System.Drawing.Point(292, 3);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(279, 360);
-			this.groupBox2.TabIndex = 45;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Other markers";
-			// 
-			// selAlsoPlayingAnyMarkers
-			// 
-			this.selAlsoPlayingAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingAnyMarkers.Location = new System.Drawing.Point(10, 262);
-			this.selAlsoPlayingAnyMarkers.Name = "selAlsoPlayingAnyMarkers";
-			this.selAlsoPlayingAnyMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingAnyMarkers.Size = new System.Drawing.Size(263, 85);
-			this.selAlsoPlayingAnyMarkers.TabIndex = 1;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(10, 245);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(225, 13);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "Require any of the following markers to be set:";
-			// 
-			// selAlsoPlayingNotMarkers
-			// 
-			this.selAlsoPlayingNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingNotMarkers.Location = new System.Drawing.Point(10, 149);
-			this.selAlsoPlayingNotMarkers.Name = "selAlsoPlayingNotMarkers";
-			this.selAlsoPlayingNotMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingNotMarkers.Size = new System.Drawing.Size(263, 85);
-			this.selAlsoPlayingNotMarkers.TabIndex = 1;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(10, 132);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(232, 13);
-			this.label5.TabIndex = 0;
-			this.label5.Text = "Require none of the following markers to be set:";
-			// 
-			// selAlsoPlayingAllMarkers
-			// 
-			this.selAlsoPlayingAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingAllMarkers.Location = new System.Drawing.Point(7, 37);
-			this.selAlsoPlayingAllMarkers.Name = "selAlsoPlayingAllMarkers";
-			this.selAlsoPlayingAllMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingAllMarkers.Size = new System.Drawing.Size(266, 85);
-			this.selAlsoPlayingAllMarkers.TabIndex = 1;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(7, 20);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(206, 13);
-			this.label6.TabIndex = 0;
-			this.label6.Text = "Require all the following markers to be set:";
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 1;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(579, 553);
+			this.tableLayoutPanel1.TabIndex = 46;
 			// 
 			// groupBox1
 			// 
@@ -254,16 +197,6 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Own markers";
 			// 
-			// selAnyMarkers
-			// 
-			this.selAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAnyMarkers.Location = new System.Drawing.Point(10, 262);
-			this.selAnyMarkers.Name = "selAnyMarkers";
-			this.selAnyMarkers.SelectedItems = new string[0];
-			this.selAnyMarkers.Size = new System.Drawing.Size(267, 85);
-			this.selAnyMarkers.TabIndex = 1;
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -272,16 +205,6 @@
 			this.label3.Size = new System.Drawing.Size(225, 13);
 			this.label3.TabIndex = 0;
 			this.label3.Text = "Require any of the following markers to be set:";
-			// 
-			// selNotMarkers
-			// 
-			this.selNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selNotMarkers.Location = new System.Drawing.Point(10, 149);
-			this.selNotMarkers.Name = "selNotMarkers";
-			this.selNotMarkers.SelectedItems = new string[0];
-			this.selNotMarkers.Size = new System.Drawing.Size(267, 85);
-			this.selNotMarkers.TabIndex = 1;
 			// 
 			// label2
 			// 
@@ -292,16 +215,6 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Require none of the following markers to be set:";
 			// 
-			// selAllMarkers
-			// 
-			this.selAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAllMarkers.Location = new System.Drawing.Point(7, 37);
-			this.selAllMarkers.Name = "selAllMarkers";
-			this.selAllMarkers.SelectedItems = new string[0];
-			this.selAllMarkers.Size = new System.Drawing.Size(270, 85);
-			this.selAllMarkers.TabIndex = 1;
-			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
@@ -310,6 +223,48 @@
 			this.label7.Size = new System.Drawing.Size(206, 13);
 			this.label7.TabIndex = 0;
 			this.label7.Text = "Require all the following markers to be set:";
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.selAlsoPlayingAnyMarkers);
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.selAlsoPlayingNotMarkers);
+			this.groupBox2.Controls.Add(this.label5);
+			this.groupBox2.Controls.Add(this.selAlsoPlayingAllMarkers);
+			this.groupBox2.Controls.Add(this.label6);
+			this.groupBox2.Location = new System.Drawing.Point(292, 3);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(279, 360);
+			this.groupBox2.TabIndex = 45;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Other markers";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(10, 245);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(225, 13);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "Require any of the following markers to be set:";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(10, 132);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(232, 13);
+			this.label5.TabIndex = 0;
+			this.label5.Text = "Require none of the following markers to be set:";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(7, 20);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(206, 13);
+			this.label6.TabIndex = 0;
+			this.label6.Text = "Require all the following markers to be set:";
 			// 
 			// grpInfo
 			// 
@@ -339,7 +294,7 @@
 			this.tableGeneral.RemoveCaption = "Remove";
 			this.tableGeneral.RowHeaderWidth = 130F;
 			this.tableGeneral.Size = new System.Drawing.Size(356, 553);
-			this.tableGeneral.Sorted = false;
+			this.tableGeneral.Sorted = true;
 			this.tableGeneral.TabIndex = 0;
 			this.tableGeneral.UseAutoComplete = false;
 			// 
@@ -354,6 +309,66 @@
 			this.pageScenes.Text = "Scenes";
 			this.pageScenes.UseVisualStyleBackColor = true;
 			// 
+			// selAnyMarkers
+			// 
+			this.selAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAnyMarkers.Location = new System.Drawing.Point(10, 262);
+			this.selAnyMarkers.Name = "selAnyMarkers";
+			this.selAnyMarkers.SelectedItems = new string[0];
+			this.selAnyMarkers.Size = new System.Drawing.Size(267, 85);
+			this.selAnyMarkers.TabIndex = 1;
+			// 
+			// selNotMarkers
+			// 
+			this.selNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selNotMarkers.Location = new System.Drawing.Point(10, 149);
+			this.selNotMarkers.Name = "selNotMarkers";
+			this.selNotMarkers.SelectedItems = new string[0];
+			this.selNotMarkers.Size = new System.Drawing.Size(267, 85);
+			this.selNotMarkers.TabIndex = 1;
+			// 
+			// selAllMarkers
+			// 
+			this.selAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAllMarkers.Location = new System.Drawing.Point(7, 37);
+			this.selAllMarkers.Name = "selAllMarkers";
+			this.selAllMarkers.SelectedItems = new string[0];
+			this.selAllMarkers.Size = new System.Drawing.Size(270, 85);
+			this.selAllMarkers.TabIndex = 1;
+			// 
+			// selAlsoPlayingAnyMarkers
+			// 
+			this.selAlsoPlayingAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAlsoPlayingAnyMarkers.Location = new System.Drawing.Point(10, 262);
+			this.selAlsoPlayingAnyMarkers.Name = "selAlsoPlayingAnyMarkers";
+			this.selAlsoPlayingAnyMarkers.SelectedItems = new string[0];
+			this.selAlsoPlayingAnyMarkers.Size = new System.Drawing.Size(263, 85);
+			this.selAlsoPlayingAnyMarkers.TabIndex = 1;
+			// 
+			// selAlsoPlayingNotMarkers
+			// 
+			this.selAlsoPlayingNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAlsoPlayingNotMarkers.Location = new System.Drawing.Point(10, 149);
+			this.selAlsoPlayingNotMarkers.Name = "selAlsoPlayingNotMarkers";
+			this.selAlsoPlayingNotMarkers.SelectedItems = new string[0];
+			this.selAlsoPlayingNotMarkers.Size = new System.Drawing.Size(263, 85);
+			this.selAlsoPlayingNotMarkers.TabIndex = 1;
+			// 
+			// selAlsoPlayingAllMarkers
+			// 
+			this.selAlsoPlayingAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAlsoPlayingAllMarkers.Location = new System.Drawing.Point(7, 37);
+			this.selAlsoPlayingAllMarkers.Name = "selAlsoPlayingAllMarkers";
+			this.selAlsoPlayingAllMarkers.SelectedItems = new string[0];
+			this.selAlsoPlayingAllMarkers.Size = new System.Drawing.Size(266, 85);
+			this.selAlsoPlayingAllMarkers.TabIndex = 1;
+			// 
 			// canvas
 			// 
 			this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -363,21 +378,6 @@
 			this.canvas.Size = new System.Drawing.Size(959, 578);
 			this.canvas.TabIndex = 23;
 			this.canvas.ZoomLevel = 1F;
-			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 1;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(579, 553);
-			this.tableLayoutPanel1.TabIndex = 46;
 			// 
 			// EpilogueEditor
 			// 
@@ -392,13 +392,13 @@
 			this.tabs.ResumeLayout(false);
 			this.pageGeneral.ResumeLayout(false);
 			this.grpConditions.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.grpInfo.ResumeLayout(false);
 			this.pageScenes.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
