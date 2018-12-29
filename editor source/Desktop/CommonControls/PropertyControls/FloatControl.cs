@@ -23,12 +23,12 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private void RemoveHandlers()
 		{
-			valValue.ValueChanged -= valValue_ValueChanged;
+			valValue.TextChanged -= valValue_ValueChanged;
 		}
 
 		private void AddHandlers()
 		{
-			valValue.ValueChanged += valValue_ValueChanged;
+			valValue.TextChanged += valValue_ValueChanged;
 		}
 
 		protected override void OnBoundData()
