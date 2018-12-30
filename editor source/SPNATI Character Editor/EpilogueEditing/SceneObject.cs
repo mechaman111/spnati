@@ -535,19 +535,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				sourcePoint.Y = Y + Height;
 			}
 
-			//switch (context)
-			//{
-			//	case HoverContext.ScaleTopRight:
-			//		sourcePoint = new PointF(X + Width, Y);
-			//		break;
-			//	case HoverContext.ScaleBottomLeft:
-			//		sourcePoint = new PointF(X, Y + Height);
-			//		break;
-			//	case HoverContext.ScaleBottomRight:
-			//		sourcePoint = new PointF(X + Width, Y + Height);
-			//		break;
-			//}
-
 			PointF pivot = new PointF(X + PivotX, Y + PivotY);
 			//shift pivot to origin
 
@@ -560,6 +547,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			//determine scalar to get reach given point
 			float mx = targetPoint.X / sourcePoint.X;
 			float my = targetPoint.Y / sourcePoint.Y;
+
+			if (float.IsInfinity(mx))
+			{
+				mx = 0.001f;
+			}
+			if (float.IsInfinity(my))
+			{
+				my = 0.001f;
+			}
+
 			bool changed = false;
 			if (ScaleX != mx && horizontal)
 			{
@@ -620,6 +617,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			catch { }
 
+			if (scene.Width == null)
+			{
+				scene.Width = "100";
+			}
+			if (scene.Height == null)
+			{
+				scene.Height = "100";
+			}
 			string w = scene.Width.Split(new string[] { "px" }, StringSplitOptions.None)[0];
 			string h = scene.Height.Split(new string[] { "px" }, StringSplitOptions.None)[0];
 			float.TryParse(w, out Width);
@@ -775,6 +780,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			//now we have the top-left scaled world-space point. Use the formula to convert from object space to world space and solve for scale (worldX = objX - (objWidth * Scale - objWidth) / 2)
 			float zoom = ((t - X) / -0.5f + Width) / Width;
+			if (float.IsInfinity(zoom))
+			{
+				zoom = 0.001f;
+			}
 
 			if (Zoom == zoom)
 			{

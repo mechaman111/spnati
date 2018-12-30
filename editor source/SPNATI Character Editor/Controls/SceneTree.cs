@@ -531,15 +531,21 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="directive"></param>
 		private void ApplyDefaults(Directive directive)
 		{
+			string id = $"{directive.DirectiveType}{++_id}";
+			while (_epilogue.Scenes.Find(s => s.Directives.Find(d => d.Id == id) != null) != null)
+			{
+				id = $"{directive.DirectiveType}{++_id}";
+			}
+
 			switch (directive.DirectiveType)
 			{
 				case "sprite":
-					directive.Id = $"sprite{++_id}";
+					directive.Id = id;
 					directive.X = "0";
 					directive.Y = "0";
 					break;
 				case "text":
-					directive.Id = $"text{++_id}";
+					directive.Id = id;
 					directive.X = "0";
 					directive.Y = "0";
 					directive.Width = "20%";

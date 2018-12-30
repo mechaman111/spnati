@@ -31,7 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
 			this.propertyTable = new Desktop.CommonControls.PropertyTable();
 			this.canvasStrip = new System.Windows.Forms.ToolStrip();
 			this.cmdLock = new System.Windows.Forms.ToolStripButton();
@@ -46,6 +45,7 @@
 			this.lblCoord = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
+			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -77,7 +77,7 @@
 			this.splitContainer1.Panel2.Controls.Add(this.lblZoom);
 			this.splitContainer1.Panel2.Controls.Add(this.sliderZoom);
 			this.splitContainer1.Size = new System.Drawing.Size(1101, 516);
-			this.splitContainer1.SplitterDistance = 256;
+			this.splitContainer1.SplitterDistance = 297;
 			this.splitContainer1.TabIndex = 10;
 			// 
 			// splitContainer2
@@ -94,19 +94,9 @@
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.propertyTable);
-			this.splitContainer2.Size = new System.Drawing.Size(252, 512);
+			this.splitContainer2.Size = new System.Drawing.Size(293, 512);
 			this.splitContainer2.SplitterDistance = 302;
 			this.splitContainer2.TabIndex = 0;
-			// 
-			// treeScenes
-			// 
-			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeScenes.Enabled = false;
-			this.treeScenes.Location = new System.Drawing.Point(0, 0);
-			this.treeScenes.Name = "treeScenes";
-			this.treeScenes.Size = new System.Drawing.Size(252, 302);
-			this.treeScenes.TabIndex = 0;
-			this.treeScenes.AfterSelect += new System.EventHandler<SPNATI_Character_Editor.Controls.SceneTreeEventArgs>(this.TreeScenes_AfterSelect);
 			// 
 			// propertyTable
 			// 
@@ -122,7 +112,7 @@
 			this.propertyTable.PlaceholderText = "Add a property";
 			this.propertyTable.RemoveCaption = "Remove";
 			this.propertyTable.RowHeaderWidth = 85F;
-			this.propertyTable.Size = new System.Drawing.Size(252, 206);
+			this.propertyTable.Size = new System.Drawing.Size(293, 206);
 			this.propertyTable.Sorted = true;
 			this.propertyTable.TabIndex = 0;
 			this.propertyTable.UseAutoComplete = false;
@@ -201,7 +191,7 @@
 			this.canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.canvas.Location = new System.Drawing.Point(-2, 28);
 			this.canvas.Name = "canvas";
-			this.canvas.Size = new System.Drawing.Size(836, 486);
+			this.canvas.Size = new System.Drawing.Size(795, 486);
 			this.canvas.TabIndex = 0;
 			this.canvas.TabStop = true;
 			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
@@ -255,6 +245,16 @@
 			// 
 			this.tmrPlay.Interval = 32;
 			this.tmrPlay.Tick += new System.EventHandler(this.tmrPlay_Tick);
+			// 
+			// treeScenes
+			// 
+			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeScenes.Enabled = false;
+			this.treeScenes.Location = new System.Drawing.Point(0, 0);
+			this.treeScenes.Name = "treeScenes";
+			this.treeScenes.Size = new System.Drawing.Size(293, 302);
+			this.treeScenes.TabIndex = 0;
+			this.treeScenes.AfterSelect += new System.EventHandler<SPNATI_Character_Editor.Controls.SceneTreeEventArgs>(this.TreeScenes_AfterSelect);
 			// 
 			// EpilogueCanvas
 			// 

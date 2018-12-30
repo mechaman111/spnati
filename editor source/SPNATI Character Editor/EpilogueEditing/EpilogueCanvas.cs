@@ -1419,8 +1419,11 @@ namespace SPNATI_Character_Editor.Controls
 		private void UpdateZoomLevel()
 		{
 			lblZoom.Text = ZoomLevel.ToString("0.00") + "x";
-			int zoom = (int)(ZoomLevel * 100);
-			//sliderZoom.Value = zoom;
+			float t = (ZoomLevel - MinZoom) / (MaxZoom - MinZoom);
+			int tick = (int)(t * sliderZoom.Maximum);
+			sliderZoom.ValueChanged -= SliderZoom_ValueChanged;
+			sliderZoom.Value = tick;
+			sliderZoom.ValueChanged += SliderZoom_ValueChanged;
 			canvas.Invalidate();
 		}
 

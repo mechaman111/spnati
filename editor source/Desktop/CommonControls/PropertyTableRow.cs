@@ -53,26 +53,8 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private float _deleteWidth;
-		private bool _allowDelete;
-		public bool AllowDelete
-		{
-			get { return _allowDelete; }
-			set
-			{
-				_deleteWidth = table.ColumnStyles[4].Width;
-				_allowDelete = value;
-				if (!_allowDelete)
-				{
-					table.ColumnStyles[4].Width = 0;
-				}
-				else
-				{
-					table.ColumnStyles[4].Width = _deleteWidth;
-				}
-			}
-		}
-
+		public bool AllowDelete { get; set; }
+		
 		private bool _favorited;
 		public bool Favorited
 		{
@@ -84,7 +66,7 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		public string RemoveCaption { set { toolTip1.SetToolTip(cmdRemove, value); } }
+		public string RemoveCaption { set { if (!_required) { toolTip1.SetToolTip(cmdRemove, value); } } }
 
 		public float HeaderWidth
 		{
@@ -92,10 +74,26 @@ namespace Desktop.CommonControls
 			set { table.ColumnStyles[1].Width = value; }
 		}
 
+		private bool _required;
 		public bool Required
 		{
-			get { return !cmdRemove.Visible; }
-			set { cmdRemove.Visible = !value; }
+			get { return _required; }
+			set
+			{
+				_required = value;
+				if (_required)
+				{
+					cmdRemove.Text = "";
+					cmdRemove.Image = Properties.Resources.Eraser;
+					toolTip1.SetToolTip(cmdRemove, "Clear");
+				}
+				else
+				{
+					cmdRemove.Text = "❌";
+					cmdRemove.Image = null;
+					toolTip1.SetToolTip(cmdRemove, "Remove");
+				}
+			}
 		}
 
 		public PropertyEditControl EditControl { get; private set; }
@@ -137,7 +135,14 @@ namespace Desktop.CommonControls
 
 		private void cmdRemove_Click(object sender, EventArgs e)
 		{
-			RemoveRow?.Invoke(this, e);
+			if (AllowDelete && !Required)
+			{
+				RemoveRow?.Invoke(this, e);
+			}
+			else
+			{
+				EditControl.Clear();
+			}
 		}
 
 		private void cmdPin_Click(object sender, EventArgs e)

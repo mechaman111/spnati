@@ -26,11 +26,11 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("y")]
 		public string Y;
 
-		[Measurement(DisplayName = "Width", GroupOrder = 5, Description = "Scene width in pixels when at full scale", Required = true)]
+		[Measurement(DisplayName = "Width", GroupOrder = 5, Description = "Scene width in pixels when at full scale")]
 		[XmlAttribute("width")]
 		public string Width;
 
-		[Measurement(DisplayName = "Height", GroupOrder = 6, Description = "Scene height in pixels when at full scale", Required = true)]
+		[Measurement(DisplayName = "Height", GroupOrder = 6, Description = "Scene height in pixels when at full scale")]
 		[XmlAttribute("height")]
 		public string Height;
 

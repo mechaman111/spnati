@@ -73,6 +73,7 @@ namespace Desktop.CommonControls.PropertyControls
 		public override void Clear()
 		{
 			_cleared = true;
+			valValue.Text = "";
 			Save();
 		}
 

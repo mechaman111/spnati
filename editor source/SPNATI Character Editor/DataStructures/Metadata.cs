@@ -87,9 +87,10 @@ namespace SPNATI_Character_Editor
 			{
 				Title = e.Title,
 				Gender = e.Gender,
-				GalleryImage = e.GalleryImage ?? (e.Screens.Count > 0 ? e.Screens[0].Image : null),
+				GalleryImage = e.GalleryImage ?? (e.Scenes.Count > 0 ? e.Scenes[0].Background : null),
 				AlsoPlaying = e.AlsoPlaying,
 				PlayerStartingLayers = e.PlayerStartingLayers,
+				Hint = e.Hint,
 				HasMarkerConditions = !string.IsNullOrWhiteSpace(e.AllMarkers)
 					|| !string.IsNullOrWhiteSpace(e.AnyMarkers)
 					|| !string.IsNullOrWhiteSpace(e.NotMarkers)
@@ -129,6 +130,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
+
+		[XmlAttribute("hint")]
+		public string Hint;
 
 		[XmlText]
 		public string Title;
