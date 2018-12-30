@@ -25,14 +25,14 @@ namespace SPNATI_Character_Editor.EditControls
 		{
 			radPct.CheckedChanged -= ValueChanged;
 			radPx.CheckedChanged -= ValueChanged;
-			valValue.ValueChanged -= ValueChanged;
+			valValue.TextChanged -= ValueChanged;
 		}
 
 		private void AddHandlers()
 		{
 			radPct.CheckedChanged += ValueChanged;
 			radPx.CheckedChanged += ValueChanged;
-			valValue.ValueChanged += ValueChanged;
+			valValue.TextChanged += ValueChanged;
 			chkCentered.CheckedChanged += ChkCentered_CheckedChanged;
 		}
 

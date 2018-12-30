@@ -120,7 +120,7 @@ namespace SPNATI_Character_Editor.Controls
 			SaveEnding();
 			_ending = ending;
 			PopulateDataFields();
-			tabs.Enabled = (ending != null);
+			cmdDeleteEnding.Enabled = tabs.Enabled = (ending != null);
 			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
 			tableGeneral.Data = _ending;
 			canvas.SetEpilogue(_ending, _character);

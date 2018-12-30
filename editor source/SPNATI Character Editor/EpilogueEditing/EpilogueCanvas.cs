@@ -42,6 +42,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Point _canvasOffset = new Point(0, 0);
 		private Point _dragOffset = new Point(0, 0);
+		private Point _downPoint = new Point(0, 0);
 		private HoverContext _dragContext;
 		private HoverContext _moveContext;
 
@@ -97,6 +98,7 @@ namespace SPNATI_Character_Editor.Controls
 			MovingCamera,
 			ResizingCamera,
 			ZoomingCamera,
+			MovingPivot,
 		}
 
 		private enum EditMode
@@ -303,8 +305,8 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			RectangleF bounds = ToScreenRegion(obj);
 
-			float offsetX = bounds.X + bounds.Width / 2;
-			float offsetY = bounds.Y + bounds.Height / 2;
+			float offsetX = bounds.X + obj.PivotX / obj.Width * bounds.Width;
+			float offsetY = bounds.Y + obj.PivotY / obj.Height * bounds.Height;
 			g.TranslateTransform(offsetX, offsetY);
 			g.RotateTransform(obj.Rotation);
 			g.TranslateTransform(-offsetX, -offsetY);
@@ -345,7 +347,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void DrawKeyframe(Graphics g, SceneObject obj, bool filled)
 		{
-			RectangleF bounds = ToScreenRegion(obj);
+			RectangleF bounds = ToAbsScreenRegion(obj);
 			if (_selectedAnimation.AssociatedObject == _scenePreview)
 			{
 				bounds = GetViewportBounds(obj);
@@ -382,9 +384,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + bounds.Height - 1;
-				PointF p1 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Scale, y);
-				PointF p2 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Scale, y);
-				PointF p3 = new PointF(center, y + ArrowSize * ZoomLevel / _scenePreview.Scale);
+				PointF p1 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
+				PointF p2 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
+				PointF p3 = new PointF(center, y + ArrowSize * ZoomLevel / _scenePreview.Zoom);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "down" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -394,9 +396,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + 1;
-				PointF p1 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Scale, y);
-				PointF p2 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Scale, y);
-				PointF p3 = new PointF(center, y - ArrowSize * ZoomLevel / _scenePreview.Scale);
+				PointF p1 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
+				PointF p2 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
+				PointF p3 = new PointF(center, y - ArrowSize * ZoomLevel / _scenePreview.Zoom);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "up" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -406,9 +408,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + 1;
-				PointF p1 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Scale);
-				PointF p2 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Scale);
-				PointF p3 = new PointF(x - ArrowSize * ZoomLevel / _scenePreview.Scale, center);
+				PointF p1 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p2 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p3 = new PointF(x - ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "left" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -418,9 +420,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + bounds.Width - 1;
-				PointF p1 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Scale);
-				PointF p2 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Scale);
-				PointF p3 = new PointF(x + ArrowSize * ZoomLevel / _scenePreview.Scale, center);
+				PointF p1 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p2 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p3 = new PointF(x + ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "right" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -431,10 +433,25 @@ namespace SPNATI_Character_Editor.Controls
 		private void DrawSelection(Graphics g, SceneObject obj)
 		{
 			if (_mode == EditMode.Playback) { return; }
-			RectangleF bounds = ToScreenRegion(obj);
+			RectangleF bounds = ToAbsScreenRegion(obj);
 			const int SelectionPadding = 0;
 			g.DrawRectangle(_penOuterSelection, bounds.X - 2 - SelectionPadding, bounds.Y - 2 - SelectionPadding, bounds.Width + 4 + SelectionPadding * 2, bounds.Height + 4 + SelectionPadding * 2);
 			g.DrawRectangle(_penInnerSelection, bounds.X - 1 - SelectionPadding, bounds.Y - 1 - SelectionPadding, bounds.Width + 2 + SelectionPadding * 2, bounds.Height + 2 + SelectionPadding * 2);
+
+			//pivot point
+			if (obj.ObjectType == SceneObjectType.Sprite)
+			{
+				bounds = ToUnscaledScreenRegion(obj);
+
+				if (_state == CanvasState.MovingPivot || _moveContext == HoverContext.Pivot)
+				{
+					g.DrawRectangle(_penKeyframe, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+				}
+
+				PointF pt = new PointF(bounds.X + obj.PivotX / obj.Width * bounds.Width, bounds.Y + obj.PivotY / obj.Height * bounds.Height);
+				g.FillEllipse(Brushes.White, pt.X - 3, pt.Y - 3, 6, 6);
+				g.FillEllipse(Brushes.Black, pt.X - 2, pt.Y - 2, 4, 4);
+			}
 		}
 
 		private void DrawCamera(Graphics g, SceneObject camera)
@@ -565,20 +582,74 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				//rotations are not computed currently when considering the bounding box
+
+
+				//get unscaled bounds in screen space
 				PointF pt = new PointF(obj.X, obj.Y);
-				Point tl = ToScreenPoint(pt);
-				Point br = ToScreenPoint(new PointF(pt.X + obj.Width, pt.Y + obj.Height));
-				RectangleF rect = new RectangleF(tl.X, tl.Y, br.X - tl.X, br.Y - tl.Y);
+				RectangleF rect = ToUnscaledScreenRegion(obj);
+				Point pivot = ToScreenPoint(new PointF(pt.X + obj.PivotX, pt.Y + obj.PivotY));
+
+				//translate pivot to origin
+				rect.X -= pivot.X;
+				rect.Y -= pivot.Y;
 
 				//apply scaling
-				float width = rect.Width;
-				float height = rect.Height;
-				rect.Width *= obj.Scale;
-				rect.Height *= obj.Scale;
-				rect.X -= (rect.Width - width) * 0.5f;
-				rect.Y -= (rect.Height - height) * 0.5f;
+				float right = rect.X + rect.Width;
+				rect.X *= obj.ScaleX;
+				right *= obj.ScaleX;
+				rect.Width = right - rect.X;
+
+				float bottom = rect.Y + rect.Height;
+				rect.Y *= obj.ScaleY;
+				bottom *= obj.ScaleY;
+				rect.Height = bottom - rect.Y;
+
+				//translate back
+				rect.X += pivot.X;
+				rect.Y += pivot.Y;
+
 				return rect;
 			}
+		}
+
+		/// <summary>
+		/// Converts an object's bounds to screen space, ensuring that the width and height are positive
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		private RectangleF ToAbsScreenRegion(SceneObject obj)
+		{
+			RectangleF region = ToScreenRegion(obj);
+			if (obj.ObjectType == SceneObjectType.Text)
+			{
+				return region;	
+			}
+			if (region.Width < 0)
+			{
+				region.X += region.Width;
+				region.Width = -region.Width;
+			}
+			if (region.Height < 0)
+			{
+				region.Y += region.Height;
+				region.Height = -region.Height;
+			}
+			return region;
+		}
+
+		/// <summary>
+		/// Converts an object's unscaled bounds to screen space
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		private RectangleF ToUnscaledScreenRegion(SceneObject obj)
+		{
+			PointF pt = new PointF(obj.X, obj.Y);
+			Point tl = ToScreenPoint(pt);
+			Point br = ToScreenPoint(new PointF(pt.X + obj.Width, pt.Y + obj.Height));
+			RectangleF rect = new RectangleF(tl.X, tl.Y, br.X - tl.X, br.Y - tl.Y);
+			return rect;
 		}
 
 		/// <summary>
@@ -616,8 +687,8 @@ namespace SPNATI_Character_Editor.Controls
 			int cx = (int)(scene.X + scene.Width / 2);
 			int cy = (int)(scene.Y + scene.Height / 2);
 
-			float width = scene.Width / scene.Scale / 2;
-			float height = scene.Height / scene.Scale / 2;
+			float width = scene.Width / scene.Zoom / 2;
+			float height = scene.Height / scene.Zoom / 2;
 
 			float l = cx - width;
 			float t = cy - height;
@@ -675,6 +746,7 @@ namespace SPNATI_Character_Editor.Controls
 			switch (_mode)
 			{
 				case EditMode.Edit:
+					_downPoint = ToWorldPoint(new Point(e.X, e.Y));
 					if (e.Button == MouseButtons.Left)
 					{
 						if (_selectedScene == null) { return; }
@@ -759,13 +831,28 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedObject != null)
 			{
-				RectangleF bounds = ToScreenRegion(_selectedObject);
+				RectangleF bounds = ToAbsScreenRegion(_selectedObject);
 				if (_selectedObject.ObjectType == SceneObjectType.Sprite)
 				{
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
 					float dt = Math.Abs(screenPt.Y - bounds.Y);
 					float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
+
+					//pivot position
+					RectangleF pivotBounds = ToUnscaledScreenRegion(_selectedObject);
+					PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX / _selectedObject.Width * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY / _selectedObject.Height * pivotBounds.Height);
+
+					//pivoting - hovering over the pivot circle
+					if (_selectedDirective?.DirectiveType == "sprite")
+					{
+						float px = Math.Abs(screenPt.X - pivot.X);
+						float py = Math.Abs(screenPt.Y - pivot.Y);
+						if (px <= SelectionLeeway && py <= SelectionLeeway)
+						{
+							return HoverContext.Pivot;
+						}
+					}
 
 					//rotating - hovering outside a corner
 					if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
@@ -780,22 +867,20 @@ namespace SPNATI_Character_Editor.Controls
 						return HoverContext.Rotate;
 					}
 
-					bool canStretch = (_selectedKeyframe == null && _selectedDirective?.DirectiveType == "sprite");
-
 					//scaling/stretching - grabbing an edge
 					if (dl <= SelectionLeeway)
 					{
 						if (dt <= SelectionLeeway)
 						{
-							return HoverContext.ScaleTopLeft;
+							return HoverContext.ScaleTop | HoverContext.ScaleLeft;
 						}
 						else if (db <= SelectionLeeway)
 						{
-							return HoverContext.ScaleBottomLeft;
+							return HoverContext.ScaleBottom | HoverContext.ScaleLeft;
 						}
-						else if (canStretch && bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 						{
-							return HoverContext.SizeLeft;
+							return HoverContext.ScaleLeft;
 						}
 					}
 
@@ -803,29 +888,26 @@ namespace SPNATI_Character_Editor.Controls
 					{
 						if (dt <= SelectionLeeway)
 						{
-							return HoverContext.ScaleTopRight;
+							return HoverContext.ScaleTop | HoverContext.ScaleRight;
 						}
 						else if (db <= SelectionLeeway)
 						{
-							return HoverContext.ScaleBottomRight;
+							return HoverContext.ScaleBottom | HoverContext.ScaleRight;
 						}
-						else if (canStretch && bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 						{
-							return HoverContext.SizeRight;
+							return HoverContext.ScaleRight;
 						}
 					}
 
-					if (canStretch)
+					if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
 					{
-						if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-						{
-							return HoverContext.SizeTop;
-						}
+						return HoverContext.ScaleTop;
+					}
 
-						if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-						{
-							return HoverContext.SizeBottom;
-						}
+					if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+					{
+						return HoverContext.ScaleBottom;
 					}
 				}
 				else if (_selectedObject.ObjectType == SceneObjectType.Text)
@@ -969,7 +1051,7 @@ namespace SPNATI_Character_Editor.Controls
 						case CanvasState.Normal:
 							HoverContext context = GetContext(screenPt);
 							if (_moveContext == HoverContext.Rotate || _moveContext == HoverContext.ArrowRight || _moveContext == HoverContext.ArrowLeft ||
-								_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp)
+								_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot)
 							{
 								canvas.Invalidate();
 							}
@@ -996,16 +1078,23 @@ namespace SPNATI_Character_Editor.Controls
 								case HoverContext.SizeRight:
 								case HoverContext.CameraSizeLeft:
 								case HoverContext.CameraSizeRight:
+								case HoverContext.ScaleLeft:
+								case HoverContext.ScaleRight:
 									canvas.Cursor = Cursors.SizeWE;
 									break;
 								case HoverContext.SizeTop:
 								case HoverContext.SizeBottom:
 								case HoverContext.CameraSizeTop:
 								case HoverContext.CameraSizeBottom:
+								case HoverContext.ScaleTop:
+								case HoverContext.ScaleBottom:
 									canvas.Cursor = Cursors.SizeNS;
 									break;
 								case HoverContext.Select:
 									canvas.Cursor = Cursors.Hand;
+									break;
+								case HoverContext.Pivot:
+									canvas.Cursor = Cursors.Cross;
 									break;
 								default:
 									canvas.Cursor = Cursors.Default;
@@ -1030,7 +1119,39 @@ namespace SPNATI_Character_Editor.Controls
 										case HoverContext.ScaleTopRight:
 										case HoverContext.ScaleBottomLeft:
 										case HoverContext.ScaleBottomRight:
+										case HoverContext.ScaleLeft:
+										case HoverContext.ScaleTop:
+										case HoverContext.ScaleRight:
+										case HoverContext.ScaleBottom:
+											//flip context according to the current scale
+											if (_selectedObject.ScaleX < 0)
+											{
+												if (context.HasFlag(HoverContext.ScaleLeft))
+												{
+													context &= ~HoverContext.ScaleLeft;
+													context |= HoverContext.ScaleRight;
+												}
+												else if (context.HasFlag(HoverContext.ScaleRight))
+												{
+													context &= ~HoverContext.ScaleRight;
+													context |= HoverContext.ScaleLeft;
+												}
+											}
+											if (_selectedObject.ScaleY < 0)
+											{
+												if (context.HasFlag(HoverContext.ScaleTop))
+												{
+													context &= ~HoverContext.ScaleTop;
+													context |= HoverContext.ScaleBottom;
+												}
+												else if (context.HasFlag(HoverContext.ScaleBottom))
+												{
+													context &= ~HoverContext.ScaleBottom;
+													context |= HoverContext.ScaleTop;
+												}
+											}
 											_dragContext = context;
+											_moveContext = context;
 											_state = CanvasState.Scaling;
 											break;
 										case HoverContext.SizeLeft:
@@ -1042,6 +1163,9 @@ namespace SPNATI_Character_Editor.Controls
 											break;
 										case HoverContext.Rotate:
 											_state = CanvasState.Rotating;
+											break;
+										case HoverContext.Pivot:
+											_state = CanvasState.MovingPivot;
 											break;
 									}
 								}
@@ -1106,6 +1230,19 @@ namespace SPNATI_Character_Editor.Controls
 								}
 							}
 							break;
+						case CanvasState.MovingPivot:
+							//figure out where new pivot position is in relation to object bounds
+							if (_selectedObject.AdjustPivot(screenPt, ToUnscaledScreenRegion(_selectedObject)))
+							{
+								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
+								if (_selectedObject.LinkedFrame == propertyTable.Data)
+								{
+									propertyTable.UpdateProperty("PivotX");
+									propertyTable.UpdateProperty("PivotY");
+								}
+								canvas.Invalidate();
+							}
+							break;
 						case CanvasState.Resizing:
 							if (_selectedObject.AdjustSize(worldPt, _dragContext, _scenePreview))
 							{
@@ -1164,19 +1301,20 @@ namespace SPNATI_Character_Editor.Controls
 							}
 							break;
 						case CanvasState.Scaling:
-							if (_selectedObject.AdjustScale(worldPt, _scenePreview))
+							if (_selectedObject.AdjustScale(worldPt, _scenePreview, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift)))
 							{
 								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
 								if (_selectedObject.LinkedFrame == propertyTable.Data)
 								{
-									propertyTable.UpdateProperty("Scale");
+									propertyTable.UpdateProperty("ScaleX");
+									propertyTable.UpdateProperty("ScaleY");
 								}
 								RebuildTextBoxes();
 								canvas.Invalidate();
 							}
 							break;
 						case CanvasState.ZoomingCamera:
-							if (_scenePreview.AdjustScale(worldPt, _scenePreview))
+							if (_scenePreview.AdjustScale(worldPt, _scenePreview, _downPoint, _moveContext, true))
 							{
 								treeScenes.UpdateNode(_selectedScene);
 								if (_selectedScene == propertyTable.Data || _scenePreview?.LinkedFrame == propertyTable.Data)
@@ -1231,7 +1369,7 @@ namespace SPNATI_Character_Editor.Controls
 					_lastMouse = screenPt;
 
 					if (_moveContext == HoverContext.Rotate || _moveContext == HoverContext.ArrowRight || _moveContext == HoverContext.ArrowLeft ||
-						_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp)
+						_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot)
 					{
 						canvas.Invalidate();
 					}
@@ -1257,6 +1395,7 @@ namespace SPNATI_Character_Editor.Controls
 				case CanvasState.MovingCamera:
 				case CanvasState.ResizingCamera:
 				case CanvasState.ZoomingCamera:
+				case CanvasState.MovingPivot:
 					_state = CanvasState.Normal;
 					canvas.Invalidate();
 					break;
@@ -1761,8 +1900,8 @@ namespace SPNATI_Character_Editor.Controls
 			int cx = (int)(_scenePreview.X + _scenePreview.Width / 2);
 			int cy = (int)(_scenePreview.Y + _scenePreview.Height / 2);
 
-			float width = _scenePreview.Width / _scenePreview.Scale / 2;
-			float height = _scenePreview.Height / _scenePreview.Scale / 2;
+			float width = _scenePreview.Width / _scenePreview.Zoom / 2;
+			float height = _scenePreview.Height / _scenePreview.Zoom / 2;
 
 			float l = cx - width;
 			float t = cy - height;
@@ -1816,7 +1955,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			//set the zoom to match the viewport height
-			float zoom = viewportHeight * _scenePreview.Scale / _scenePreview.Height;
+			float zoom = viewportHeight * _scenePreview.Zoom / _scenePreview.Height;
 			ZoomLevel = zoom;
 
 			//center on camera
@@ -1827,8 +1966,8 @@ namespace SPNATI_Character_Editor.Controls
 			int cx = (int)(_scenePreview.X + _scenePreview.Width / 2);
 			int cy = (int)(_scenePreview.Y + _scenePreview.Height / 2);
 
-			float width = _scenePreview.Width / _scenePreview.Scale / 2;
-			float height = _scenePreview.Height / _scenePreview.Scale / 2;
+			float width = _scenePreview.Width / _scenePreview.Zoom / 2;
+			float height = _scenePreview.Height / _scenePreview.Zoom / 2;
 
 			float l = cx - width;
 			float t = cy - height;
@@ -2075,10 +2214,14 @@ namespace SPNATI_Character_Editor.Controls
 		SizeRight = 1 << 2,
 		SizeTop = 1 << 3,
 		SizeBottom = 1 << 4,
-		ScaleBottomLeft = 1 << 5,
-		ScaleBottomRight = 1 << 6,
-		ScaleTopLeft = 1 << 7,
-		ScaleTopRight = 1 << 8,
+		ScaleLeft = 1 << 5,
+		ScaleRight = 1 << 6,
+		ScaleTop = 1 << 7,
+		ScaleBottom = 1 << 8,
+		ScaleBottomLeft = ScaleBottom | ScaleLeft,
+		ScaleBottomRight = ScaleBottom | ScaleRight,
+		ScaleTopLeft = ScaleTop | ScaleLeft,
+		ScaleTopRight = ScaleTop | ScaleRight,
 		Rotate = 1 << 9,
 		ArrowUp = 1 << 10,
 		ArrowLeft = 1 << 11,
@@ -2094,8 +2237,11 @@ namespace SPNATI_Character_Editor.Controls
 		CameraZoomBottomRight = 1 << 21,
 		CameraPan = 1 << 22,
 		Select = 1 << 23,
-		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | ScaleBottomLeft | ScaleBottomRight | ScaleTopLeft | ScaleTopRight | Rotate |
-			ArrowUp | ArrowDown | ArrowLeft | ArrowRight,
+		Pivot = 1 << 24,
+		ScaleVertical = ScaleTop | ScaleBottom,
+		ScaleHorizontal = ScaleLeft | ScaleRight,
+		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | Rotate |
+			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom,
 		Camera = CameraPan | CameraSizeBottom | CameraSizeLeft | CameraSizeRight | CameraSizeTop | CameraZoomBottomLeft | CameraZoomBottomRight | CameraZoomTopLeft | CameraZoomTopRight,
 	}
 }

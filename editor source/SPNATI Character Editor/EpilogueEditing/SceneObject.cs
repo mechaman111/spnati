@@ -15,7 +15,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float HeightPct;
 		public float Width;
 		public float Height;
-		public float Scale = 1;
+		public float ScaleX = 1;
+		public float ScaleY = 1;
+		public float Zoom = 1;
 		public float Rotation = 0;
 		public float Alpha = 100;
 		public SolidBrush Color = new SolidBrush(System.Drawing.Color.Black);
@@ -27,6 +29,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public string Ease;
 		public float Start;
 		public float End;
+		public float PivotX;
+		public float PivotY;
 		public int Index;
 
 		/// <summary>
@@ -146,6 +150,25 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			Arrow = directive.Arrow;
 			Text = directive.Text;
+			PivotX = ParsePivot(directive.PivotX, Width);
+			PivotY = ParsePivot(directive.PivotY, Height);
+		}
+
+		private int ParsePivot(string pivot, float size)
+		{
+			switch (pivot)
+			{
+				case "left":
+				case "top":
+					return 0;
+				case "right":
+				case "bottom":
+					return (int)size;
+				case "center":
+					return (int)(size * 0.5f);
+				default:
+					return (int)Parse(pivot, size);
+			}
 		}
 
 		public void ResyncAnimation()
@@ -162,7 +185,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Height = source.Height;
 			WidthPct = source.WidthPct;
 			HeightPct = source.HeightPct;
-			Scale = source.Scale;
+			ScaleX = source.ScaleX;
+			ScaleY = source.ScaleY;
+			PivotX = source.PivotX;
+			PivotY = source.PivotY;
 			Rotation = source.Rotation;
 			Alpha = source.Alpha;
 			Color.Color = source.Color.Color;
@@ -198,8 +224,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			if (Image == null)
 			{
-				WidthPct = scene.Width;
-				HeightPct = scene.Height;
+				WidthPct = 1;
+				HeightPct = 1;
 			}
 			else
 			{
@@ -241,9 +267,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float.TryParse(frame.Time, out Time);
 			}
-			if (!string.IsNullOrEmpty(frame.Scale))
+			if (!string.IsNullOrEmpty(frame.ScaleX))
 			{
-				float.TryParse(frame.Scale, out Scale);
+				float.TryParse(frame.ScaleX, out ScaleX);
+			}
+			if (!string.IsNullOrEmpty(frame.ScaleY))
+			{
+				float.TryParse(frame.ScaleY, out ScaleY);
 			}
 			if (!string.IsNullOrEmpty(frame.Rotation))
 			{
@@ -255,7 +285,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			if (!string.IsNullOrEmpty(frame.Zoom))
 			{
-				float.TryParse(frame.Zoom, out Scale);
+				float.TryParse(frame.Zoom, out Zoom);
 			}
 			SetColor(frame);
 
@@ -385,6 +415,23 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
+		public virtual bool AdjustPivot(Point screenPt, RectangleF worldBounds)
+		{
+			float xPct = (screenPt.X - worldBounds.X) / worldBounds.Width;
+			float yPct = (screenPt.Y - worldBounds.Y) / worldBounds.Height;
+			float pivotX = xPct * Width;
+			float pivotY = yPct * Height;
+			if (pivotX == PivotX && pivotY == PivotY)
+			{
+				return false;
+			}
+			PivotX = pivotX;
+			PivotY = pivotY;
+			LinkedFrame.PivotX = ((int)(xPct * 100)).ToString() + "%";
+			LinkedFrame.PivotY = ((int)(yPct * 100)).ToString() + "%";
+			return true;
+		}
+
 		public virtual bool AdjustSize(Point pt, HoverContext context, ScenePreview scene)
 		{
 			Directive directive = LinkedFrame as Directive;
@@ -395,7 +442,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				case HoverContext.SizeRight:
 					int rt = Math.Max((int)X + 10, pt.X);
 
-					int width = (int)((-2 * rt + 2 * X) / (-Scale - 1));
+					int width = (int)((-2 * rt + 2 * X) / (-ScaleX - 1));
 					if (Width == width)
 					{
 						return false;
@@ -413,14 +460,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					rt = (int)(X + Width + dx);
 
 					//use formula for SizeRight to get the width now
-					width = (int)((-2 * rt + 2 * X) / (-Scale - 1));
+					width = (int)((-2 * rt + 2 * X) / (-ScaleX - 1));
 					if (Width == width)
 					{
 						return false;
 					}
 
 					//now solve for X given the width, scale, and new left where l = X - (w * s) / 2
-					int x = (int)((width * Scale - width) / 2 + lt);
+					int x = (int)((width * ScaleX - width) / 2 + lt);
 					Width = width;
 					X = x;
 					directive.X = ApplyPosition((int)X, directive.X, (int)scene.Width);
@@ -430,7 +477,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				case HoverContext.SizeBottom:
 					int b = Math.Max((int)Y + 10, pt.Y);
 
-					int height = (int)((-2 * b + 2 * Y) / (-Scale - 1));
+					int height = (int)((-2 * b + 2 * Y) / (-ScaleY - 1));
 					if (Height == height)
 					{
 						return false;
@@ -446,13 +493,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					int dy = (int)(Y - t);
 					b = (int)(Y + Height + dy);
 
-					height = (int)((-2 * b + 2 * Y) / (-Scale - 1));
+					height = (int)((-2 * b + 2 * Y) / (-ScaleY - 1));
 					if (Height == height)
 					{
 						return false;
 					}
 
-					int y = (int)((height * Scale - height) / 2 + t);
+					int y = (int)((height * ScaleY - height) / 2 + t);
 					Height = height;
 					Y = y;
 					directive.Y = ApplyPosition((int)Y, directive.Y, (int)scene.Height);
@@ -463,36 +510,75 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return false;
 		}
 
-		public virtual bool AdjustScale(Point point, ScenePreview scene)
+		public virtual bool AdjustScale(Point point, ScenePreview scene, Point startPoint, HoverContext context, bool locked)
 		{
-			//get the object's center
-			int cx = (int)(X + Width / 2);
-			int cy = (int)(Y + Height / 2);
-
-			int tx = point.X;
-			int ty = point.Y;
-
-			//work with whichever of X/Y is furthest from the center
-			int dx = Math.Abs(tx - cx);
-			int dy = Math.Abs(ty - cy);
-
-			int offset = Math.Max(dx, dy);
-
-			//transform this offset to left side of the scaled box
-			int t = cx - offset;
-
-			//now we have the top-left scaled world-space point. Use the formula to convert from object space to world space and solve for scale (worldX = objX - (objWidth * Scale - objWidth) / 2)
-			float scale = ((t - X) / -0.5f + Width) / Width;
-
-			if (Scale == scale)
+			bool horizontal = (context & HoverContext.ScaleHorizontal) != 0;
+			bool vertical = (context & HoverContext.ScaleVertical) != 0;
+			if (locked && horizontal && vertical)
 			{
-				return false;
+				//if locking X-Y, adjust the target point to use the same distance for both X and Y
+				int dx = point.X - startPoint.X;
+				int dy = point.Y - startPoint.Y;
+				int dist = Math.Min(Math.Abs(dx), Math.Abs(dy));
+				point.X = startPoint.X + Math.Sign(dx) * dist;
+				point.Y = startPoint.Y + Math.Sign(dy) * dist;
 			}
-			Scale = scale;
-			LinkedFrame.Scale = scale.ToString();
-			ResyncAnimation();
 
-			return true;
+			PointF targetPoint = new PointF(point.X, point.Y);
+			PointF sourcePoint = new PointF(X, Y); //unscaled point corresponding to the point being dragged
+			if (context.HasFlag(HoverContext.ScaleRight))
+			{
+				sourcePoint.X = X + Width;
+			}
+			if (context.HasFlag(HoverContext.ScaleBottom))
+			{
+				sourcePoint.Y = Y + Height;
+			}
+
+			//switch (context)
+			//{
+			//	case HoverContext.ScaleTopRight:
+			//		sourcePoint = new PointF(X + Width, Y);
+			//		break;
+			//	case HoverContext.ScaleBottomLeft:
+			//		sourcePoint = new PointF(X, Y + Height);
+			//		break;
+			//	case HoverContext.ScaleBottomRight:
+			//		sourcePoint = new PointF(X + Width, Y + Height);
+			//		break;
+			//}
+
+			PointF pivot = new PointF(X + PivotX, Y + PivotY);
+			//shift pivot to origin
+
+			sourcePoint.X -= pivot.X;
+			sourcePoint.Y -= pivot.Y;
+
+			targetPoint.X -= pivot.X;
+			targetPoint.Y -= pivot.Y;
+
+			//determine scalar to get reach given point
+			float mx = targetPoint.X / sourcePoint.X;
+			float my = targetPoint.Y / sourcePoint.Y;
+			bool changed = false;
+			if (ScaleX != mx && horizontal)
+			{
+				changed = true;
+				ScaleX = mx;
+				LinkedFrame.ScaleX = mx.ToString();
+			}
+			if (ScaleY != my && vertical)
+			{
+				changed = true;
+				ScaleY = my;
+				LinkedFrame.ScaleY = my.ToString();
+			}
+			if (changed)
+			{
+				ResyncAnimation();
+			}
+
+			return changed;
 		}
 
 		public bool AdjustRotation(Point point, ScenePreview scene)
@@ -545,7 +631,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			if (!string.IsNullOrEmpty(scene.Zoom))
 			{
-				float.TryParse(scene.Zoom, out Scale);
+				float.TryParse(scene.Zoom, out Zoom);
 			}
 			if (!string.IsNullOrEmpty(scene.FadeColor))
 			{
@@ -599,7 +685,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public override bool AdjustSize(Point pt, HoverContext context, ScenePreview scene)
 		{
-			float zoom = 1 / Scale;
+			float zoom = Zoom;
 			switch (context)
 			{
 				case HoverContext.CameraSizeRight:
@@ -669,7 +755,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return false;
 		}
 
-		public override bool AdjustScale(Point point, ScenePreview scene)
+		public override bool AdjustScale(Point point, ScenePreview scene, Point startPoint, HoverContext context, bool locked)
 		{
 			//get the object's center
 			int cx = (int)(X + Width / 2);
@@ -688,22 +774,22 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			int t = cx - offset;
 
 			//now we have the top-left scaled world-space point. Use the formula to convert from object space to world space and solve for scale (worldX = objX - (objWidth * Scale - objWidth) / 2)
-			float scale = ((t - X) / -0.5f + Width) / Width;
+			float zoom = ((t - X) / -0.5f + Width) / Width;
 
-			if (Scale == scale)
+			if (Zoom == zoom)
 			{
 				return false;
 			}
-			scale = 1 / scale;
-			Scale = scale;
+			zoom = 1 / zoom;
+			Zoom = zoom;
 			if (LinkedFrame != null)
 			{
-				LinkedFrame.Zoom = scale.ToString();
+				LinkedFrame.Zoom = zoom.ToString();
 				ResyncAnimation();
 			}
 			else
 			{
-				LinkedScene.Zoom = scale.ToString();
+				LinkedScene.Zoom = zoom.ToString();
 			}
 
 			return true;

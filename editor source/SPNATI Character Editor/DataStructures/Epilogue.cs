@@ -66,6 +66,36 @@ namespace SPNATI_Character_Editor
 		public List<Background> Backgrounds = new List<Background>();
 		#endregion
 
+		public void OnAfterDeserialize()
+		{
+			//Convert left, top, etc. to percentages since I don't feel like making an edit control that can handle those right now
+			foreach (Scene scene in Scenes)
+			{
+				foreach (Directive directive in scene.Directives)
+				{
+					directive.PivotX = ConvertPivot(directive.PivotX);
+					directive.PivotY = ConvertPivot(directive.PivotY);
+				}
+			}
+		}
+
+		private static string ConvertPivot(string pivot)
+		{
+			switch (pivot)
+			{
+				case "top":
+				case "left":
+					return "0%";
+				case "bottom":
+				case "right":
+					return "100%";
+				case "center":
+					return "50%";
+				default:
+					return pivot;
+			}
+		}
+
 		public override string ToString()
 		{
 			string text = Title;

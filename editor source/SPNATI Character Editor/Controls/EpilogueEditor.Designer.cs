@@ -97,6 +97,7 @@
 			// cmdDeleteEnding
 			// 
 			this.cmdDeleteEnding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdDeleteEnding.Enabled = false;
 			this.cmdDeleteEnding.Location = new System.Drawing.Point(866, 7);
 			this.cmdDeleteEnding.Name = "cmdDeleteEnding";
 			this.cmdDeleteEnding.Size = new System.Drawing.Size(101, 23);
@@ -139,6 +140,7 @@
 			this.tabs.Controls.Add(this.pageGeneral);
 			this.tabs.Controls.Add(this.pageScenes);
 			this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabs.Enabled = false;
 			this.tabs.Location = new System.Drawing.Point(0, 36);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;

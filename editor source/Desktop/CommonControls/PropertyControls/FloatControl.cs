@@ -23,12 +23,14 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private void RemoveHandlers()
 		{
-			valValue.TextChanged -= valValue_ValueChanged;
+			valValue.ValueChanged -= valValue_ValueChanged;
+			valValue.TextChanged -= valValue_TextChanged;
 		}
 
 		private void AddHandlers()
 		{
-			valValue.TextChanged += valValue_ValueChanged;
+			valValue.ValueChanged += valValue_ValueChanged;
+			valValue.TextChanged += valValue_TextChanged;
 		}
 
 		protected override void OnBoundData()
@@ -47,6 +49,10 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 				else
 				{
+					if (double.IsInfinity(value))
+					{
+						value = 0;
+					}
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
 				}
 			}
@@ -94,6 +100,14 @@ namespace Desktop.CommonControls.PropertyControls
 		private void valValue_ValueChanged(object sender, EventArgs e)
 		{
 			Save();
+		}
+
+		private void valValue_TextChanged(object sender, EventArgs e)
+		{
+			if (valValue.Text == "")
+			{
+				Save();
+			}
 		}
 	}
 

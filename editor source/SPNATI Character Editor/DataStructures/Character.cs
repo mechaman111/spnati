@@ -433,6 +433,10 @@ namespace SPNATI_Character_Editor
 				CacheMarker(line.Marker);
 			}
 			Behavior.OnAfterDeserialize(this);
+			foreach (Epilogue ending in Endings)
+			{
+				ending.OnAfterDeserialize();
+			}
 		}
 		#endregion
 

@@ -140,7 +140,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			SceneObject nextNext = index < Frames.Count - 2 ? Frames[index + 1] : frame;
 			PreviewObject.X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
 			PreviewObject.Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
-			PreviewObject.Scale = Interpolate(last.Scale, frame.Scale, frame.Tween, time, lastLast.Scale, nextNext.Scale);
+			PreviewObject.ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
+			PreviewObject.ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
+			PreviewObject.Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.ScaleY, nextNext.Zoom);
 			PreviewObject.Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
 			PreviewObject.Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
 			PreviewObject.Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);

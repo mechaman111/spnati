@@ -139,11 +139,11 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("src")]
 		public string Src;
 
-		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 15, Description = "Custom sprite width relative to the scene width")]
+		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 95, Description = "Custom sprite width relative to the scene width")]
 		[XmlAttribute("width")]
 		public string Width;
 
-		[Measurement(DisplayName = "Height", Key = "height", GroupOrder = 16, Description = "Custom sprite height relative to the scene height")]
+		[Measurement(DisplayName = "Height", Key = "height", GroupOrder = 96, Description = "Custom sprite height relative to the scene height")]
 		[XmlAttribute("height")]
 		public string Height;
 
@@ -263,9 +263,24 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("y")]
 		public string Y;
 
-		[Float(DisplayName = "Scale", Key = "scale", GroupOrder = 17, Description = "Sprite scaling factor", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("scale")]
 		public string Scale;
+
+		[Float(DisplayName = "Scale X", Key = "scalex", GroupOrder = 17, Description = "Sprite scaling factor horizontally", DecimalPlaces = 2, Minimum = -100, Maximum = 100, Increment = 0.1f)]
+		[XmlAttribute("scalex")]
+		public string ScaleX;
+
+		[Float(DisplayName = "Scale Y", Key = "scaley", GroupOrder = 17, Description = "Sprite scaling factor vertically", DecimalPlaces = 2, Minimum = -100, Maximum = 100, Increment = 0.1f)]
+		[XmlAttribute("scaley")]
+		public string ScaleY;
+
+		[Measurement(DisplayName = "Pivot X", Key ="pivotx", GroupOrder = 13, Description = "X value of rotation/scale point of origin as a percentage of the sprite's physical size", Minimum = -1000, Maximum = 1000)]
+		[XmlAttribute("pivotx")]
+		public string PivotX = "left";
+
+		[Measurement(DisplayName = "Pivot Y", Key ="pivoty", GroupOrder = 14, Description = "Y value of Rotation/scale point of origin as a percentage of the sprite's physical size", Minimum = -1000, Maximum = 1000)]
+		[XmlAttribute("pivoty")]
+		public string PivotY = "left";
 
 		[Color(DisplayName = "Color", Key = "color", GroupOrder = 20, Description = "Color")]
 		[XmlAttribute("color")]
@@ -289,7 +304,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public bool HasAnimatableProperties()
 		{
-			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale)
+			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale) || !string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY)
 				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom);
 		}
 
@@ -305,6 +320,10 @@ namespace SPNATI_Character_Editor
 			X = src.X;
 			Y = src.Y;
 			Scale = src.Scale;
+			ScaleX = src.ScaleX;
+			ScaleY = src.ScaleY;
+			PivotX = src.PivotX;
+			PivotY = src.PivotY;
 			Color = src.Color;
 			Opacity = src.Opacity;
 			Rotation = src.Rotation;
@@ -318,6 +337,8 @@ namespace SPNATI_Character_Editor
 			src.Opacity = null;
 			src.Rotation = null;
 			src.Zoom = null;
+			src.ScaleX = null;
+			src.ScaleY = null;
 		}
 
 		public string GetProperties()
