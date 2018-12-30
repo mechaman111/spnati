@@ -123,6 +123,7 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case ContextType.FunctionName:
 					UpdateFunctionList(_lastContext.FunctionName);
+					DisplayTooltip();
 					break;
 				case ContextType.Parameter:
 					UpdateFunctionList(_lastContext.FunctionName);

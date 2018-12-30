@@ -622,7 +622,7 @@ namespace SPNATI_Character_Editor.Controls
 			RectangleF region = ToScreenRegion(obj);
 			if (obj.ObjectType == SceneObjectType.Text)
 			{
-				return region;	
+				return region;
 			}
 			if (region.Width < 0)
 			{
@@ -1571,16 +1571,18 @@ namespace SPNATI_Character_Editor.Controls
 			if (!previewMode)
 			{
 				//iterate up to the selected point in the timeline
-				if (_selectedDirective != null)
+				bool readyToStop = _selectedAnimation == null;
+				foreach (Directive d in _selectedScene.Directives)
 				{
-					foreach (Directive d in _selectedScene.Directives)
+					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text")
 					{
-						ApplyDirective(d);
-						if (d == _selectedDirective)
-						{
-							//or, after the selected directive
-							break;
-						}
+						break;
+					}
+					ApplyDirective(d);
+					if (d == _selectedDirective)
+					{
+						//found the directive; keep going until the next non-sprite or text directive
+						readyToStop = true;
 					}
 				}
 

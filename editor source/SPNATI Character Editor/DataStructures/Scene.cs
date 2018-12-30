@@ -187,7 +187,7 @@ namespace SPNATI_Character_Editor
 			switch (DirectiveType)
 			{
 				case "sprite":
-					return $"Add sprite ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")}";
+					return $"Add sprite ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
 				case "move":
 					string time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 					string loop = Looped ? " (loop)" : "";

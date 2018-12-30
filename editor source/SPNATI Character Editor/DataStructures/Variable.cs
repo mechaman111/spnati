@@ -85,7 +85,7 @@ namespace SPNATI_Character_Editor
 		[XmlElement("param")]
 		public List<VariableParameter> Parameters = new List<VariableParameter>();
 
-		[XmlElement("description")]
+		[XmlAttribute("description")]
 		public string Description;
 
 		public override string ToString()
