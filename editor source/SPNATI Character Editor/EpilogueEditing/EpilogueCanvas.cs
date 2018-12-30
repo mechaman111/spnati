@@ -188,17 +188,16 @@ namespace SPNATI_Character_Editor.Controls
 			foreach (SceneObject obj in _sprites)
 			{
 				//keyframes
-				if (_selectedAnimation?.AssociatedObject == obj)
+				if (_selectedAnimation?.AssociatedObject == obj && _mode == EditMode.Edit)
 				{
 					//draw keyframes
 					DrawAnimation(g, obj, true);
-
-					if (tmrPlay.Enabled)
-					{
-						DrawSprite(g, _selectedAnimation.PreviewObject);
-					}
 				}
 				DrawSprite(g, obj);
+				if (_selectedAnimation?.AssociatedObject == obj && tmrPlay.Enabled && _mode == EditMode.Edit)
+				{
+					DrawSprite(g, _selectedAnimation.PreviewObject);
+				}
 			}
 
 			//overlay
@@ -313,7 +312,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (obj.Image == null)
 			{
-				g.FillRectangle(obj.Color, bounds);
+				g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
 			}
 			else
 			{
@@ -2166,7 +2165,7 @@ namespace SPNATI_Character_Editor.Controls
 				return null;
 			}
 			string sourceType = null;
-			if (dir.DirectiveType == "move")
+			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop")
 			{
 				sourceType = "sprite";
 			}

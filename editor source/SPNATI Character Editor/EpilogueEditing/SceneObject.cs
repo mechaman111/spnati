@@ -198,6 +198,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Tween = source.Tween;
 			Ease = source.Ease;
 			Image = source.Image;
+			Zoom = source.Zoom;
 		}
 
 		public SceneObject(ScenePreview scene, Character character, string id, string imagePath, string color)

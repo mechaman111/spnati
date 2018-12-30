@@ -383,6 +383,8 @@ namespace SPNATI_Character_Editor.Controls
 			//remove the node from its old position
 			RemoveNode(sceneNode);
 
+			_nodes[sceneNode.Tag] = sceneNode;
+
 			Scene scene = sceneNode.Tag as Scene;
 			_epilogue.Scenes.Insert(index, scene);
 			treeScenes.Nodes.Insert(index, sceneNode);
@@ -408,6 +410,8 @@ namespace SPNATI_Character_Editor.Controls
 			//get rid of the directive
 			RemoveNode(directiveNode);
 
+			_nodes[directiveNode.Tag] = directiveNode;
+
 			//add it to the appropriate location both within the tree and the data model
 			Scene targetScene = sceneNode.Tag as Scene;
 			targetScene.Directives.Insert(index, directiveNode.Tag as Directive);
@@ -431,6 +435,8 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			RemoveNode(node);
+
+			_nodes[node.Tag] = node;
 
 			Directive directive = dirNode.Tag as Directive;
 			directive.Keyframes.Insert(index, node.Tag as Keyframe);
@@ -484,7 +490,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				int index = _epilogue.Scenes.IndexOf(scene);
 				treeScenes.Nodes.Insert(index + 1, node);
-				_epilogue.Scenes.Insert(index + 1, scene);
+				_epilogue.Scenes.Insert(index + 1, newScene);
 			}
 			else
 			{
@@ -543,6 +549,8 @@ namespace SPNATI_Character_Editor.Controls
 					directive.Id = id;
 					directive.X = "0";
 					directive.Y = "0";
+					directive.PivotX = "50%";
+					directive.PivotY = "50%";
 					break;
 				case "text":
 					directive.Id = id;
