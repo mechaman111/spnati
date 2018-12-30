@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.0.1 at 8:38:12 PM on December 23, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.1 at 9:06:00 PM on December 29, 2018. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <first>Mulan</first>
     <last>Fa</last>
@@ -35,19 +35,17 @@
         <tag>androgynous</tag>
     </tags>
 
-    <start>
-        <state img="0-.png">This is what the character says after they've been selected if the new triggers aren't used</state>
-    </start>
+    <start />
 
     <wardrobe>
-        <clothing lowercase="panties" position="lower" proper-name="Underwear" type="important" />
-        <clothing lowercase="covering" position="upper" proper-name="Wraps" type="important" />
-        <clothing lowercase="robe" position="upper" proper-name="Dress" type="major" />
-        <clothing lowercase="sword and vest" position="upper" proper-name="Vest and sword" type="minor" />
-        <clothing lowercase="sash" position="other" proper-name="Sash" type="minor" />
-        <clothing lowercase="shoes" position="lower" proper-name="Shoes" type="extra" plural="true" />
-        <clothing lowercase="armor" position="upper" proper-name="Armor" type="major" />
-        <clothing lowercase="bracers" position="upper" proper-name="Bracers" type="extra" plural="true" />
+        <clothing lowercase="panties" position="lower" formalName="Underwear" type="important" />
+        <clothing lowercase="covering" position="upper" formalName="Wraps" type="important" />
+        <clothing lowercase="robe" position="upper" formalName="Dress" type="major" />
+        <clothing lowercase="sword and vest" position="upper" formalName="Vest and sword" type="minor" />
+        <clothing lowercase="sash" position="other" formalName="Sash" type="minor" />
+        <clothing lowercase="shoes" position="lower" formalName="Shoes" type="extra" plural="true" />
+        <clothing lowercase="armor" position="upper" formalName="Armor" type="major" />
+        <clothing lowercase="bracers" position="upper" formalName="Bracers" type="extra" plural="true" />
     </wardrobe>
 
     <behaviour>
@@ -55,10 +53,12 @@
             <case tag="selected">
                 <state img="0-challenge.png">Hi there! I’m Ping. This is where the game’s being played, right?</state>
                 <state img="0-challenge.png">Hi. I'm... Ping! Let's uh... let's get down to business, shall we?</state>
+                <state img="0-.png">This is what the character says after they've been selected if the new triggers aren't used</state>
             </case>
             <case tag="game_start">
                 <state img="0-joy.png">I’ve played a lot of cards when we were snowed in near the Tung Shao Pass. This’ll be easier than dumplings.</state>
                 <state img="0-smirk.png">Nothing manlier than getting naked and gambling…</state>
+                <state img="0-.png">This is what the character says after they've been selected if the new triggers aren't used</state>
             </case>
             <case tag="female_must_strip">
                 <state img="0-smirk.png">Oh yeah, this is what we came here for, right, boys?</state>
@@ -84,6 +84,10 @@
             </case>
             <case alsoPlaying="sheena" tag="game_start">
                 <state img="0-pinged.png">Hm... that's quite the outfit, Sheena. Befitting of xia, even.</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="0-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="0-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -131,10 +135,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="0-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="0-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="0-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -390,6 +390,10 @@
                 <state img="0-joy.png">Not too big, not too small, without your ~clothing~, you'll bring honor to us all, ~name~. Aw, it's from a song.</state>
                 <state img="0-smirk.png">Not bad, ~name~, but I'm going to want to see more before I take off my armor. Uh, that's reasonable, right?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="0-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="0-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -428,10 +432,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="0-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="0-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="0-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -1035,6 +1035,10 @@
                 <state img="0-joy.png">Just like taking off armor after a long day of training.</state>
                 <state img="0-chuckle.png">Can’t win if you aren’t willing to lose, ~name~! No need to get whiny about it.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="0-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="0-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -1081,10 +1085,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="0-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="0-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="0-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -1245,7 +1245,6 @@
                 <state img="0-chuckle.png">You have beautiful breasts, Elizabeth! I suppose they'd look even better in candlelight... alone... with just us...</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="ini" targetStage="5">
-                <state img="0-chuckle.png">After all, I, Ping, have no need of such deceptions.</state>
                 <state img="0-chuckle.png">After all, I, Ping, have no need of such deceptions.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="juri" targetStage="3">
@@ -1794,10 +1793,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="0-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="0-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sheena" alsoPlayingStage="6" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="0-smirk.png">Though, I'm sure I could make some fireworks fly if you and I got together after the game, Sheena.</state>
             </case>
@@ -1812,6 +1807,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="0-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="0-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" priority="299" totalRounds="9">
                 <state img="0-pinged.png" marker="fa_pp_ing">What's... Fapping? I think it's a joke at my expense. You know, Fa Ping.</state>
@@ -1863,9 +1862,6 @@
             <case alsoPlaying="sheena" tag="stripping">
                 <state img="0-stripping.png">You might want to get that vision checked, Sheena. I'm clearly a man.</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="0-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="0-denial.png"><i>Spits.</i> Calling me a woman because I lost one hand? Aren’t you a forward-minded bunch. Clearly, I’m a big strong man with my sword and my armor.</state>
             </case>
@@ -1896,6 +1892,10 @@
                 <state img="1-peace.png"><i>Someone’s</i> hiding something. Probably ~name~ and her embarrassment. Don’t be such a crybaby, am I right, guys?</state>
                 <state img="1-challenge.png">There’s no shame in accepting loss with dignity, ~name~. The more fragile you look, the easier it is for other people to dishonor you.</state>
                 <state img="1-yikes.png">Wow, ~name~ looks beauti-- <i>hot</i>, right? Like a raging fire. Uh, unless she’s going for something dainty, like a flickering lantern. Yeah, <i>yeah</i>!</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="1-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="1-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -1943,10 +1943,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="1-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="1-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="1-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -2202,6 +2198,10 @@
                 <state img="1-joy.png">Not too big, not too small, without your ~clothing~, you'll bring honor to us all, ~name~. Aw, it's from a song.</state>
                 <state img="1-smirk.png">Not bad, ~name~, but I'm going to want to see more before I take off my armor. Uh, that's reasonable, right?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="1-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="1-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -2243,10 +2243,6 @@
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="1-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="1-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayori" targetStage="0">
                 <state img="1-chuckle.png">You are <i>such</i> a sweet one, Sayori.</state>
@@ -2847,6 +2843,10 @@
                 <state img="1-joy.png">Just like taking off armor after a long day of training.</state>
                 <state img="1-chuckle.png">Can’t win if you aren’t willing to lose, ~name~! No need to get whiny about it.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="1-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="1-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -2893,10 +2893,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="1-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="1-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="1-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -3057,7 +3053,6 @@
                 <state img="1-chuckle.png">You have beautiful breasts, Elizabeth! I suppose they'd look even better in candlelight... alone... with just us...</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="ini" targetStage="5">
-                <state img="1-chuckle.png">After all, I, Ping, have no need of such deceptions.</state>
                 <state img="1-chuckle.png">After all, I, Ping, have no need of such deceptions.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="juri" targetStage="3">
@@ -3592,10 +3587,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="1-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="1-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sheena" alsoPlayingStage="6" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="1-smirk.png">Though, I'm sure I could make some fireworks fly if you and I got together after the game, Sheena.</state>
             </case>
@@ -3610,6 +3601,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="1-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="1-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" timeInStage="0" priority="999">
                 <state img="1-peace.png" marker="honorable_others">Folks, what things do <i>you</i> look for in a match? For me: a person who speaks their mind, and is brave, clever, and most importantly: honorable.</state>
@@ -3673,9 +3668,6 @@
             <case alsoPlaying="revy" tag="stripping">
                 <state img="1-stripping.png">I’ve fought bigger villains than you, and routed armies.</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="1-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="1-must_strip.png">I’m shocked you all figured it out so fast. That costume’s fooled… well, probably a lot more people than it ought to.</state>
             </case>
@@ -3697,6 +3689,10 @@
                 <state img="2-denial.png">Hey! ~name~, stand up at attention. <i>Sorry, sorry</i>, just used to commands. Take your time, but take it quickly.</state>
                 <state img="2-interested.png">This’s all in good fun, right, ~name~?</state>
                 <state img="2-chuckle.png">Find a path of your own, ~name~. Well, the path forward’s mostly full of peril and nudity. But I guess even <i>you</i> can be brave, can’t you?</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="2-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="2-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -3747,10 +3743,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="2-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="2-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="2-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -3997,6 +3989,10 @@
                 <state img="2-interested.png">Your ~clothing~?</state>
                 <state img="2-peace.png">~Clothing~, huh?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="2-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="2-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -4035,10 +4031,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="2-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="2-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="2-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -5216,6 +5208,10 @@
                 <state img="2-joy.png">What's next, ~name~?</state>
                 <state img="2-peace.png">Hm... it's always good to study other forms... of combat...</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="2-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="2-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -5265,10 +5261,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="2-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="2-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="2-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -6131,6 +6123,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="2-interested.png">I… won’t look if you don’t like… Actually, you signed up for this. Strip!</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="2-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="2-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="2-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -6140,10 +6136,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="2-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="2-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="2-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -6767,10 +6759,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="2-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="2-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="2-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -6791,6 +6779,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="2-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="2-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="2-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -6856,9 +6848,6 @@
             <case alsoPlaying="ryuji" alsoPlayingStage="0-7" tag="stripping" totalRounds="0-7" alsoPlayingNotSaidMarker="weaponryyy">
                 <state img="2-stripping.png">If it helps, Ryuji, I will be keeping my sword for quite some time. I bet you'll have a grip on yours soon.</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="2-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="2-interested.png">I’m no Captain Shang. I’m not going to be whipping you into shape, but I hope you realize that I’m winning, and that motivates you to assess yourselves.</state>
             </case>
@@ -6877,6 +6866,10 @@
                 <state img="3-denial.png">Hey! ~name~, stand up at attention. <i>Sorry, sorry</i>, just used to commands. Take your time, but take it quickly.</state>
                 <state img="3-interested.png">This’s all in good fun, right, ~name~?</state>
                 <state img="3-chuckle.png">Find a path of your own, ~name~. Well, the path forward’s mostly full of peril and nudity. But I guess even <i>you</i> can be brave, can’t you?</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="3-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="3-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -6927,10 +6920,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="3-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="3-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="3-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -7177,6 +7166,10 @@
                 <state img="3-interested.png">Your ~clothing~?</state>
                 <state img="3-peace.png">~Clothing~, huh?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="3-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="3-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -7215,10 +7208,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="3-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="3-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="3-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -8396,6 +8385,10 @@
                 <state img="3-joy.png">What's next, ~name~?</state>
                 <state img="3-peace.png">Hm... it's always good to study other forms... of combat...</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="3-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="3-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -8445,10 +8438,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="3-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="3-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="3-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -9311,6 +9300,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="3-interested.png">I… won’t look if you don’t like… Actually, you signed up for this. Strip!</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="3-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="3-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="3-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -9320,10 +9313,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="3-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="3-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="3-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -9935,10 +9924,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="3-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="3-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="3-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -9959,6 +9944,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="3-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="3-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="3-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -9994,9 +9983,6 @@
             <case alsoPlaying="sheena" tag="stripping">
                 <state img="3-stripping.png">Yes, I can see a small resemblance between us, Sheena. Is your world near mine?</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="3-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="3-joy.png">I really liked how I was playing. Didn’t you? Time for something small that ends up showing quite a bit...</state>
             </case>
@@ -10012,6 +9998,10 @@
                 <state img="4-denial.png">Hey! ~name~, stand up at attention. <i>Sorry, sorry</i>, just used to commands. Take your time, but take it quickly.</state>
                 <state img="4-interested.png">This’s all in good fun, right, ~name~?</state>
                 <state img="4-chuckle.png">Find a path of your own, ~name~. Well, the path forward’s mostly full of peril and nudity. But I guess even <i>you</i> can be brave, can’t you?</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="4-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="4-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -10062,10 +10052,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="4-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="4-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="4-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -10312,6 +10298,10 @@
                 <state img="4-interested.png">Your ~clothing~?</state>
                 <state img="4-peace.png">~Clothing~, huh?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="4-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="4-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -10350,10 +10340,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="4-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="4-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="4-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -11531,6 +11517,10 @@
                 <state img="4-joy.png">What's next, ~name~?</state>
                 <state img="4-peace.png">Hm... it's always good to study other forms... of combat...</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="4-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="4-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -11580,10 +11570,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="4-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="4-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="4-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -12446,6 +12432,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="4-interested.png">I… won’t look if you don’t like… Actually, you signed up for this. Strip!</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="4-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="4-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="4-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -12458,10 +12448,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="4-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="4-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case alsoPlaying="coco" alsoPlayingStage="7-10" tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="4-challenge.png">It would be... a new challenge for me to appreciate. I enjoyed Coco's version, but I think I'd like yours even more, Kamina.</state>
@@ -13070,10 +13056,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="4-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="4-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="4-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -13094,6 +13076,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="4-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="4-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="4-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -13121,9 +13107,6 @@
             <case alsoPlaying="kamina" tag="stripping">
                 <state img="4-stripping.png">I can think of two options to that question, Kamina...</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="4-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="4-peace.png">Not to brag, but if this is your best… maybe you should train a little harder.</state>
             </case>
@@ -13142,6 +13125,10 @@
                 <state img="5-denial.png">Hey! ~name~, stand up at attention. <i>Sorry, sorry</i>, just used to commands. Take your time, but take it quickly.</state>
                 <state img="5-interested.png">This’s all in good fun, right, ~name~?</state>
                 <state img="5-chuckle.png">Find a path of your own, ~name~. Well, the path forward’s mostly full of peril and nudity. But I guess even <i>you</i> can be brave, can’t you?</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="5-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="5-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -13192,10 +13179,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="5-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="5-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="5-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -13442,6 +13425,10 @@
                 <state img="5-interested.png">Your ~clothing~?</state>
                 <state img="5-peace.png">~Clothing~, huh?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="5-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="5-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -13483,10 +13470,6 @@
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="5-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="5-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayori" targetStage="0">
                 <state img="5-chuckle.png">You are <i>such</i> a sweet one, Sayori.</state>
@@ -14661,6 +14644,10 @@
                 <state img="5-joy.png">What's next, ~name~?</state>
                 <state img="5-peace.png">Hm... it's always good to study other forms... of combat...</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="5-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="5-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -14710,10 +14697,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="5-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="5-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="5-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -15576,6 +15559,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="5-interested.png">I… won’t look if you don’t like… Actually, you signed up for this. Strip!</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="5-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="5-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="5-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -15585,10 +15572,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="5-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="5-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="5-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -16191,10 +16174,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="5-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="5-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="5-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -16215,6 +16194,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="5-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="5-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="5-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -16263,6 +16246,10 @@
                 <state img="6-denial.png">I spent a long time in the Army, surrounded by sweaty, muscled men. No complaints here, but I think seeing someone smooth and nice-smelling like ~name~ is a good change of pace.</state>
                 <state img="6-challenge.png">Be sensible, ~name~, but also be bold. It doesn’t do any good to just be a wilting violet. Make your own story!</state>
                 <state img="6-interested.png">I know there’s a <i>lot</i> of unobservant people out there. But from one imposter to another, the embarrassed act doesn’t really work. Just embrace the attention, ~name~!</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="6-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="6-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -16313,10 +16300,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="6-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="6-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="6-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -16566,6 +16549,10 @@
                 <state img="6-peace.png">It’s been nice seeing you in your ~clothing~, ~name~. But… let’s see what you look like out of it, too.</state>
                 <state img="6-surprise.png">See, you still have lots to go.</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="6-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="6-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -16607,10 +16594,6 @@
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="6-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="6-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayori" targetStage="0">
                 <state img="6-chuckle.png">You are <i>such</i> a sweet one, Sayori.</state>
@@ -17768,6 +17751,10 @@
                 <state img="6-joy.png">Keep playing like this, ~name~, I think everyone’s a bit hungry. You know, for cream of <i>som yung gai.</i> I’m barely even annoyed I made that joke.</state>
                 <state img="6-peace.png">You’re <i>so</i> close to the best part of the game, ~name~. If you want to see the show, you should make the honorable decision.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="6-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="6-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -17817,10 +17804,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="6-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="6-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="6-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -18675,6 +18658,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="6-peace.png">I wonder if you have a weapon that matches your wits, ~name~.</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="6-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="6-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="6-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -18684,10 +18671,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="6-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="6-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="6-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -19283,10 +19266,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="6-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="6-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="6-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -19307,6 +19286,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="6-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="6-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="6-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -19337,9 +19320,6 @@
                 <state img="6-stripping.png">I have a warrior’s chest. If that weren’t the case, why be a warrior? There’s plenty of honor and a great amount of dignity in accepting your station, but I aspire to be more than that.</state>
                 <state img="6-stripping.png">I’m proud of what I have, though I’m greater than their… sum....</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="6-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="6-joy.png">I hope it’s obvious that only a few people have actually seen me naked, but forgive me if I don’t act like a bashful girl on her wedding night. If I didn’t plan for this, why would I have shown up in full armor?</state>
             </case>
@@ -19354,6 +19334,10 @@
                 <state img="7-denial.png">I spent a long time in the Army, surrounded by sweaty, muscled men. No complaints here, but I think seeing someone smooth and nice-smelling like ~name~ is a good change of pace.</state>
                 <state img="7-challenge.png">Be sensible, ~name~, but also be bold. It doesn’t do any good to just be a wilting violet. Make your own story!</state>
                 <state img="7-interested.png">I know there’s a <i>lot</i> of unobservant people out there. But from one imposter to another, the embarrassed act doesn’t really work. Just embrace the attention, ~name~!</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="7-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="7-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -19404,10 +19388,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="7-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="7-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="7-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -19657,6 +19637,10 @@
                 <state img="7-peace.png">It’s been nice seeing you in your ~clothing~, ~name~. But… let’s see what you look like out of it, too.</state>
                 <state img="7-surprise.png">See, you still have lots to go.</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="7-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="7-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -19695,10 +19679,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="7-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="7-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="7-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -20850,6 +20830,10 @@
                 <state img="7-joy.png">Keep playing like this, ~name~, I think everyone’s a bit hungry. You know, for cream of <i>som yung gai.</i> I’m barely even annoyed I made that joke.</state>
                 <state img="7-peace.png">You’re <i>so</i> close to the best part of the game, ~name~. If you want to see the show, you should make the honorable decision.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="7-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="7-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -20899,10 +20883,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="7-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="7-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="7-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -21754,6 +21734,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="7-peace.png">I wonder if you have a weapon that matches your wits, ~name~.</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="7-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="7-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="7-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -21763,10 +21747,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="7-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="7-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="7-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -22362,10 +22342,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="7-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="7-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="challenge_answer" priority="990" saidMarker="sayaka_duel">
                 <state img="7-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
@@ -22386,6 +22362,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="7-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="7-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="7-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -22419,9 +22399,6 @@
             <case alsoPlaying="kamina" tag="stripping" saidMarker="kamina_comeback">
                 <state img="7-stripping.png">Here, you can enjoy me, Kamina.</state>
             </case>
-            <case alsoPlaying="wiifitfemale" alsoPlayingStage="1-6" tag="stripping" priority="10">
-                <state img="7-stripping.png">As you can see, Ms. Trainer, I don't have quite the support you did with my top.</state>
-            </case>
             <case tag="must_strip_winning">
                 <state img="7-peace.png">I know I’ve done quite a few bluffs and deceptions, and I apologize. But I’m being honest when I say at this stage, I’m looking forward to joining the rest of you.</state>
             </case>
@@ -22439,6 +22416,10 @@
                 <state img="8-denial.png">I spent a long time in the Army, surrounded by sweaty, muscled men. No complaints here, but I think seeing someone smooth and nice-smelling like ~name~ is a good change of pace.</state>
                 <state img="8-challenge.png">Be sensible, ~name~, but also be bold. It doesn’t do any good to just be a wilting violet. Make your own story!</state>
                 <state img="8-interested.png">I know there’s a <i>lot</i> of unobservant people out there. But from one imposter to another, the embarrassed act doesn’t really work. Just embrace the attention, ~name~!</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="8-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="8-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -22489,10 +22470,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="8-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="8-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="8-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -22742,6 +22719,10 @@
                 <state img="8-peace.png">It’s been nice seeing you in your ~clothing~, ~name~. But… let’s see what you look like out of it, too.</state>
                 <state img="8-surprise.png">See, you still have lots to go.</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="8-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="8-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -22780,10 +22761,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="8-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="8-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="8-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -23368,6 +23345,10 @@
                 <state img="8-joy.png">Keep playing like this, ~name~, I think everyone’s a bit hungry. You know, for cream of <i>som yung gai.</i> I’m barely even annoyed I made that joke.</state>
                 <state img="8-peace.png">You’re <i>so</i> close to the best part of the game, ~name~. If you want to see the show, you should make the honorable decision.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="8-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="8-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -23417,10 +23398,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="8-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="8-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="8-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -23963,6 +23940,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="8-peace.png">I wonder if you have a weapon that matches your wits, ~name~.</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="8-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="8-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="8-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -23972,10 +23953,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="8-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="8-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="8-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -24361,10 +24338,6 @@
             <case alsoPlaying="meia" tag="hand" notSaidMarker="planet_china_lush" saidMarker="blue_hair_bare">
                 <state img="8-surprise.png" marker="planet_china_lush">Women from the Land of Dragons don't usually groom there. Some do elsewhere, but... what's wrong with what's natural?</state>
             </case>
-            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
-                <condition count="1" filter="kyu" />
-                <state img="8-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
-            </case>
             <case alsoPlaying="sayaka" tag="hand" notSaidMarker="duel_sayaka_lost" saidMarker="duel_lost">
                 <state img="8-interested.png" marker="duel_sayaka_lost">My master's weakspot... Hmm... Well, the man who taught me has a really soft neck... and earlobes...</state>
             </case>
@@ -24388,6 +24361,10 @@
             </case>
             <case alsoPlaying="zizou" alsoPlayingStage="7" tag="hand" alsoPlayingTimeInStage="0">
                 <state img="8-chuckle.png">Your bush is two-toned! How exotic!</state>
+            </case>
+            <case alsoPlaying="pit" tag="hand" notSaidMarker="mulan_favfood" alsoPlayingSaidMarker="pit_favfood">
+                <condition count="1" filter="kyu" />
+                <state img="8-smirk.png" marker="mulan_favfood">Szechuan beef sounds great, heavy on the sauce, please.</state>
             </case>
             <case tag="hand" notSaidMarker="challenge_answer" saidMarker="ini_duel">
                 <state img="8-smirk.png" marker="challenge_answer">Feel free to answer, <i>Ini.</i></state>
@@ -24432,6 +24409,10 @@
                 <state img="9-joy.png">Nnf… ~name~?</state>
                 <state img="9-peace.png">You played… quite well… ~name~...</state>
                 <state img="9-challenge.png">Is this forward enough for you, ~name~, or do you prefer to be more delicate…?</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="9-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="9-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -24482,10 +24463,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="9-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="9-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="9-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -24730,6 +24707,10 @@
                 <state img="9-interested.png">A little bigger than your ~clothing~ would’ve been nice...</state>
                 <state img="9-peace.png">Just ~clothing~?</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="9-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="9-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -24768,10 +24749,6 @@
             </case>
             <case tag="female_removing_minor" target="remilia" targetStage="1">
                 <state img="9-interested.png">Most of the Princesses I know who use magic don't use it to show off...</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="9-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="9-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
@@ -25339,6 +25316,10 @@
                 <state img="9-challenge.png">Is this delicate enough for you, ~name~, or would you prefer I be a bit more rough…?</state>
                 <state img="9-interested.png">Please?</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="9-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="9-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -25388,10 +25369,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="9-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="9-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="9-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -25925,6 +25902,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="9-interested.png">Enough foreplay, let’s see it!</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="9-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="9-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="9-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -25937,10 +25918,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="9-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="9-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case alsoPlaying="coco" alsoPlayingStage="7-10" tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="9-challenge.png">It would be... a new challenge for me to appreciate. I enjoyed Coco's version, but I think I'd like yours even more, Kamina.</state>
@@ -25979,12 +25956,6 @@
             </case>
             <case alsoPlaying="test2" tag="masturbating" notSaidMarker="duel_x_lost" saidMarker="duel_lost">
                 <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
-                <state img="9-challenge.png" marker="duel_x_lost">PH lss</state>
             </case>
             <case alsoPlaying="uravity" tag="masturbating" notSaidMarker="duel_uravity_lost" saidMarker="duel_lost">
                 <state img="9-joy.png" marker="duel_uravity_lost">If I could have any power...? Honestly, I've often prayed to my ancestors to led me lead my allies from within their spirits. Something to inspire morale and issue commands at a thought would be very useful!</state>
@@ -26004,6 +25975,10 @@
                 <state img="10-interested.png">Hm… you still had so many clothes! Impressive.</state>
                 <state img="10-challenge.png">Leave it to the lady to fight to the very end...</state>
                 <state img="10-peace.png">I bet if I dressed like you, I’d still be in this as well.</state>
+            </case>
+            <case filter="overwatch" tag="female_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="10-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="adventurer" tag="female_must_strip" targetStage="1">
                 <state img="10-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
@@ -26054,10 +26029,6 @@
             </case>
             <case filter="monster" tag="female_must_strip" targetStage="0">
                 <state img="10-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="female_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="10-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="female_must_strip" targetStage="2">
                 <state img="10-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -26302,6 +26273,10 @@
                 <state img="10-interested.png">A bit late, don’t you think?</state>
                 <state img="10-interested.png">Well…</state>
             </case>
+            <case tag="female_removing_minor" target="sayaka" targetStage="1">
+                <condition count="1" filter="jasmine" />
+                <state img="10-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
+            </case>
             <case tag="female_removing_minor" target="aella" targetStage="2">
                 <state img="10-interested.png">I’ve got a lot of respect for a woman who’s willing to go out into the world and fight for a cause she respects and people she loves.</state>
             </case>
@@ -26343,10 +26318,6 @@
             </case>
             <case tag="female_removing_minor" target="sayaka" targetStage="1">
                 <state img="10-joy.png">I <i>was</i> curious about what that gem was. It reminds me of... attire a woman I knew wore.</state>
-            </case>
-            <case tag="female_removing_minor" target="sayaka" targetStage="1">
-                <condition count="1" filter="jasmine" />
-                <state img="10-joy.png">I <i>was</i> curious about what that gem was. It reminds me of Princess Jasmine's, in some of her outfits.</state>
             </case>
             <case tag="female_removing_minor" target="sayori" targetStage="0">
                 <state img="10-chuckle.png">You are <i>such</i> a sweet one, Sayori.</state>
@@ -26912,6 +26883,10 @@
                 <state img="10-interested.png">Well, I may have lost, but I guess I can enjoy this part.</state>
                 <state img="10-denial.png">Good for you. I can appreciate a well-earned loss.</state>
             </case>
+            <case filter="overwatch" tag="male_must_strip" targetStage="0">
+                <condition count="0" filter="tracer" />
+                <state img="10-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
+            </case>
             <case filter="adventurer" tag="male_must_strip" targetStage="1">
                 <state img="10-peace.png">An explorer? Must be nice to go where you please, do as you’d like…</state>
             </case>
@@ -26961,10 +26936,6 @@
             </case>
             <case filter="monster" tag="male_must_strip" targetStage="0">
                 <state img="10-dishonor.png">~Name~’s a bit unnatural… but the only monsters I’ve ever met are human. I’ll give you a chance to prove yourself, ~name~. You deserve that much.</state>
-            </case>
-            <case filter="overwatch" tag="male_must_strip" targetStage="0">
-                <condition count="0" filter="tracer" />
-                <state img="10-joy.png">I feel like Overwatch is the Disney of shooters. Your Tracer would make quite the Disney Princess, I think!</state>
             </case>
             <case filter="phantom_thieves" tag="male_must_strip" targetStage="2">
                 <state img="10-chuckle.png">I see video games have caught up to the catchy tunes of Disney movies.</state>
@@ -27497,6 +27468,10 @@
             <case tag="male_crotch_will_be_visible">
                 <state img="10-interested.png">Usually I’m… much quieter, alone in my bunk…</state>
             </case>
+            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
+                <condition count="0" filter="coco" />
+                <state img="10-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
+            </case>
             <case filter="thong" tag="male_crotch_will_be_visible">
                 <state img="10-surprise.png" marker="thong_mulan">Oh my, how exotic. That… thong, is something a courtesan would wear… but a high class one.</state>
                 <state img="10-chuckle.png" marker="thong_mulan">Huh! I haven’t seen underwear like that before. It just shows off everything so <i>well</i>! I might have to invest in a pair of those before I head home.</state>
@@ -27506,10 +27481,6 @@
             </case>
             <case tag="male_crotch_will_be_visible" target="jotaro" targetStage="6">
                 <state img="10-interested.png">No using your sorcery, this time?</state>
-            </case>
-            <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
-                <condition count="0" filter="coco" />
-                <state img="10-smirk.png">It would be... a new challenge for me to appreciate. I think.</state>
             </case>
             <case tag="male_crotch_will_be_visible" target="kamina" targetStage="5">
                 <state img="10-surprise.png">Well, I guess I'm still plenty manly, at least.</state>
@@ -27560,14 +27531,6 @@
                 <state img="10-chuckle.png" marker="duel_sei_lost">Well, from behind, yes, Sei, it has. Or at a brothel, you'd be surprised. I've had many pleasant encounters.</state>
             </case>
             <case alsoPlaying="test2" tag="finished_masturbating" notSaidMarker="duel_x_lost" saidMarker="duel_lost">
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
-                <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
                 <state img="10-challenge.png" marker="duel_x_lost">Famous... samurai? Hm... No. The heroic warriors of my land are called "xia," which is something like a travelling knight.</state>
             </case>
             <case alsoPlaying="uravity" tag="finished_masturbating" notSaidMarker="duel_uravity_lost" saidMarker="duel_lost">
