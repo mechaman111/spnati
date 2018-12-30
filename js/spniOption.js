@@ -26,7 +26,7 @@ var backgrounds = [
 	{ name: 'beach', location: 'outdoors' },
 	{ name: 'classroom', location: 'indoors' },
 	{ name: 'brick', location: 'indoors' },
-	{ name: 'night', location: 'outdoors' },
+	{ name: 'night', location: 'outdoors', filter: 'brightness(0.8)' },
 	{ name: 'roof', location: 'outdoors' },
 	{ name: 'seasonal', location: 'indoors' },
 	{ name: 'library', location: 'indoors' },
@@ -43,7 +43,7 @@ var backgrounds = [
 	{ name: 'bedroom', location: 'indoors' },
 	{ name: 'hall', location: 'indoors' },
 	{ name: 'locker room', location: 'indoors' },
-	{ name: 'haunted forest', location: 'outdoors' },
+	{ name: 'haunted forest', location: 'outdoors', filter: 'brightness(0.7) saturate(0.9)'},
 	{ name: 'romantic', location: 'indoors' },
 ];
 var selectedBackground = 0;
@@ -269,6 +269,7 @@ function setBackground (choice) {
     $("body").css("background-image", "url(img/background"+choice+".png)");
 	setActiveOption($backgroundSettings, choice);
 	selectedBackground = choice - 1;
+	$('.screen').css('filter', backgrounds[selectedBackground].filter || '');
 }
 
 /************************************************************
