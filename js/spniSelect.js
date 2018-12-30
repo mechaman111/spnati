@@ -770,34 +770,39 @@ function updateSelectableGroups(screen) {
     })
 }
 
+/************************************************************
+ * Common function to selectGroup and clickedRandomGroupButton
+ * to load the members of a group (preset table)
+ ************************************************************/
+function loadGroup (chosenGroup) {
+	clickedRemoveAllButton();
+	console.log(chosenGroup.title);
+
+    /* load the group members */
+	for (var i = 1; i < 5; i++) {
+        var member = chosenGroup.opponents[i-1];
+        if (member) {
+            if (players.some(function(p, j) { return i != j && p == member; })) {
+                member = member.clone();
+            }
+            member.loadBehaviour(i);
+            players[i] = member;
+        }
+	}
+
+	updateSelectionVisuals();
+}
 
 /************************************************************
  * The player clicked on the select random group slot.
  ************************************************************/
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
-
-    for (var i = 1; i < players.length; i++) {
-        $selectImages[i-1].off('load');
-    }
-
 	/* get a random number for the group listings */
 	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
 	var chosenGroup = loadedGroups[0][randomGroupNumber];
-	console.log(chosenGroup.title);
 
-	for (var i = 0; i < chosenGroup.opponents.length; i++) {
-		/* Don't try to load empty character slots */
-		if (!chosenGroup.opponents[i] || typeof chosenGroup.opponents[i] !== 'object') {
-			continue;
-		}
-
-		/* character exists? Okay, load it */
-		players[i + 1] = chosenGroup.opponents[i];
-		players[i + 1].loadBehaviour(i+1);
-	}
-
-	updateSelectionVisuals();
+	loadGroup(chosenGroup);
 }
 
 /************************************************************
@@ -927,20 +932,7 @@ function changeGroupStats (target) {
  * group select screen.
  ************************************************************/
 function selectGroup () {
-    clickedRemoveAllButton();
-    /* load the group members */
-    for (var i = 1; i < 5; i++) {
-        var member = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[i-1];
-        if (member) {
-            if (players.some(function(p, j) { return i != j && p == member; })) {
-                member = member.clone();
-            }
-            member.loadBehaviour(i);
-            players[i] = member;
-        }
-	}
-    /* clear the selection screen */
-	updateSelectionVisuals();
+	loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
 
     /* switch screens */
 	screenTransition($groupSelectScreen, $selectScreen);
