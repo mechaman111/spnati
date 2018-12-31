@@ -2,6 +2,9 @@
 using System.Text.RegularExpressions;
 using Desktop;
 using Desktop.CommonControls;
+using System.Drawing;
+using System.IO;
+using SPNATI_Character_Editor.Controls;
 
 namespace SPNATI_Character_Editor.EditControls
 {
@@ -101,6 +104,44 @@ namespace SPNATI_Character_Editor.EditControls
 			}
 
 			AddHandlers();
+		}
+
+		protected override void OnBindingUpdated(string property)
+		{
+			if (property == "Background")
+			{
+				EpilogueContext context = Context as EpilogueContext;
+				Character character = context?.Character;
+				string file = GetBindingValue(property)?.ToString();
+				if (!string.IsNullOrEmpty(file) && character != null)
+				{
+					file = Path.Combine(Config.GetRootDirectory(character), file);
+					if (File.Exists(file))
+					{
+						using (Bitmap bmp = new Bitmap(file))
+						{
+							if (Property == "Width")
+							{
+								RemoveHandlers();
+								valValue.Value = bmp.Width;
+								radPx.Checked = true;
+								chkCentered.Checked = false;
+								AddHandlers();
+								Save();
+							}
+							else if (Property == "Height")
+							{
+								RemoveHandlers();
+								valValue.Value = bmp.Height;
+								radPx.Checked = true;
+								chkCentered.Checked = false;
+								AddHandlers();
+								Save();
+							}
+						}
+					}
+				}
+			}
 		}
 
 		protected override void OnRebindData()
