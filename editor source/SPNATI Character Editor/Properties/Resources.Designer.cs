@@ -103,9 +103,39 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Copy {
+            get {
+                object obj = ResourceManager.GetObject("Copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Cut {
+            get {
+                object obj = ResourceManager.GetObject("Cut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DownArrow {
             get {
                 object obj = ResourceManager.GetObject("DownArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Duplicate {
+            get {
+                object obj = ResourceManager.GetObject("Duplicate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +176,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap Move {
             get {
                 object obj = ResourceManager.GetObject("Move", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Paste {
+            get {
+                object obj = ResourceManager.GetObject("Paste", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

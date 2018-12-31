@@ -13,6 +13,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private Dictionary<object, TreeNode> _nodes = new Dictionary<object, TreeNode>();
 		private int _id;
+		private object _clipboard;
 
 		public event EventHandler<SceneTreeEventArgs> AfterSelect;
 
@@ -47,25 +48,7 @@ namespace SPNATI_Character_Editor.Controls
 			AddSelectionHandler();
 			foreach (Scene scene in _epilogue.Scenes)
 			{
-				TreeNode sceneNode = new TreeNode(scene.ToString());
-				_nodes[scene] = sceneNode;
-				sceneNode.Tag = scene;
-				treeScenes.Nodes.Add(sceneNode);
-				foreach (Directive directive in scene.Directives)
-				{
-					TreeNode dirNode = new TreeNode(directive.ToString());
-					_nodes[directive] = dirNode;
-					dirNode.Tag = directive;
-					sceneNode.Nodes.Add(dirNode);
-
-					foreach (Keyframe kf in directive.Keyframes)
-					{
-						TreeNode keyNode = new TreeNode(kf.ToString());
-						_nodes[kf] = keyNode;
-						keyNode.Tag = kf;
-						dirNode.Nodes.Add(keyNode);
-					}
-				}
+				BuildSceneNode(scene);
 			}
 
 			treeScenes.ExpandAll();
@@ -75,6 +58,42 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				treeScenes.SelectedNode = treeScenes.Nodes[0];
 			}
+		}
+
+		private TreeNode BuildSceneNode(Scene scene)
+		{
+			TreeNode sceneNode = new TreeNode(scene.ToString());
+			_nodes[scene] = sceneNode;
+			sceneNode.Tag = scene;
+			treeScenes.Nodes.Add(sceneNode);
+			foreach (Directive directive in scene.Directives)
+			{
+				BuildDirectiveNode(sceneNode, directive);
+			}
+			return sceneNode;
+		}
+
+		private TreeNode BuildDirectiveNode(TreeNode sceneNode, Directive directive)
+		{
+			TreeNode dirNode = new TreeNode(directive.ToString());
+			_nodes[directive] = dirNode;
+			dirNode.Tag = directive;
+			sceneNode.Nodes.Add(dirNode);
+
+			foreach (Keyframe kf in directive.Keyframes)
+			{
+				BuildKeyframeNode(dirNode, kf);
+			}
+			return dirNode;
+		}
+
+		private TreeNode BuildKeyframeNode(TreeNode dirNode, Keyframe kf)
+		{
+			TreeNode keyNode = new TreeNode(kf.ToString());
+			_nodes[kf] = keyNode;
+			keyNode.Tag = kf;
+			dirNode.Nodes.Add(keyNode);
+			return keyNode;
 		}
 
 		/// <summary>
@@ -134,6 +153,22 @@ namespace SPNATI_Character_Editor.Controls
 			if (e.KeyCode == Keys.Delete)
 			{
 				DeleteSelectedNode();
+			}
+			else if (e.KeyCode == Keys.X && e.Modifiers.HasFlag(Keys.Control))
+			{
+				tsCut_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyCode == Keys.C && e.Modifiers.HasFlag(Keys.Control))
+			{
+				tsCopy_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyCode == Keys.D && e.Modifiers.HasFlag(Keys.Control))
+			{
+				tsDuplicate_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyCode == Keys.V && e.Modifiers.HasFlag(Keys.Control))
+			{
+				tsPaste_Click(this, EventArgs.Empty);
 			}
 		}
 
@@ -380,11 +415,15 @@ namespace SPNATI_Character_Editor.Controls
 				index--;
 			}
 
-			//remove the node from its old position
+			InsertScene(sceneNode, index);
+		}
+
+		private void InsertScene(TreeNode sceneNode, int index)
+		{
+			//remove the node from its old position (which might be nowhere)
 			RemoveNode(sceneNode);
 
 			_nodes[sceneNode.Tag] = sceneNode;
-
 			Scene scene = sceneNode.Tag as Scene;
 			_epilogue.Scenes.Insert(index, scene);
 			treeScenes.Nodes.Insert(index, sceneNode);
@@ -407,9 +446,13 @@ namespace SPNATI_Character_Editor.Controls
 				index--;
 			}
 
-			//get rid of the directive
-			RemoveNode(directiveNode);
+			InsertDirective(sceneNode, directiveNode, index);
+		}
 
+		private void InsertDirective(TreeNode sceneNode, TreeNode directiveNode, int index)
+		{
+			//remove the node from its old position (which might be nowhere)
+			RemoveNode(directiveNode);
 			_nodes[directiveNode.Tag] = directiveNode;
 
 			//add it to the appropriate location both within the tree and the data model
@@ -434,12 +477,19 @@ namespace SPNATI_Character_Editor.Controls
 				index--;
 			}
 
-			RemoveNode(node);
+			InsertKeyframe(node, index, dirNode);
+		}
 
+		private void InsertKeyframe(TreeNode node, int index, TreeNode dirNode)
+		{
+			//remove the node from its old position (which might be nowhere)
+			RemoveNode(node);
 			_nodes[node.Tag] = node;
 
 			Directive directive = dirNode.Tag as Directive;
-			directive.Keyframes.Insert(index, node.Tag as Keyframe);
+			Keyframe frame = node.Tag as Keyframe;
+			frame.Directive = directive;
+			directive.Keyframes.Insert(index, frame);
 			dirNode.Nodes.Insert(index, node);
 
 			//auto-selectit
@@ -734,6 +784,120 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				node.Text = data.ToString();
 			}
+		}
+
+		private void tsCut_Click(object sender, EventArgs e)
+		{
+			TreeNode node = treeScenes.SelectedNode as TreeNode;
+			if (node != null)
+			{
+				_clipboard = node.Tag;
+				RemoveNode(node);
+			}
+		}
+
+		private void tsCopy_Click(object sender, EventArgs e)
+		{
+			TreeNode node = treeScenes.SelectedNode as TreeNode;
+			if (node != null)
+			{
+				ICloneable cloner = node.Tag as ICloneable;
+				_clipboard = cloner?.Clone();
+			}
+		}
+
+		private void tsPaste_Click(object sender, EventArgs e)
+		{
+			TreeNode node = treeScenes.SelectedNode as TreeNode;
+			if (_clipboard == null || node == null) { return; }
+			ICloneable cloner = _clipboard as ICloneable;
+			object obj = cloner.Clone();
+			Scene pastedScene = obj as Scene;
+			Directive pastedDirective = obj as Directive;
+			Keyframe pastedFrame = obj as Keyframe;
+
+			Scene selectedScene = node.Tag as Scene;
+			Directive selectedDirective = node.Tag as Directive;
+			Keyframe selectedFrame = node.Tag as Keyframe;
+
+			TreeNode sceneNode = null;
+			TreeNode dirNode = null;
+			TreeNode frameNode = null;
+
+			if (selectedDirective != null)
+			{
+				selectedScene = node.Parent.Tag as Scene;
+				sceneNode = node.Parent;
+				dirNode = node;
+			}
+			else if (selectedFrame != null)
+			{
+				selectedDirective = node.Parent.Tag as Directive;
+				selectedScene = node.Parent.Parent.Tag as Scene;
+				sceneNode = node.Parent.Parent;
+				dirNode = node.Parent;
+				frameNode = node;
+			}
+			else
+			{
+				sceneNode = node;
+			}
+
+			//create the node hierachy
+			TreeNode newNode = null;
+			if (pastedScene != null)
+			{
+				newNode = BuildSceneNode(pastedScene);
+			}
+			else if (pastedDirective != null)
+			{
+				newNode = BuildDirectiveNode(sceneNode, pastedDirective);
+			}
+			else if (pastedFrame != null && dirNode != null)
+			{
+				newNode = BuildKeyframeNode(dirNode, pastedFrame);
+			}
+
+			//insert the node into the correct location
+			if (pastedScene != null)
+			{
+				InsertScene(newNode, sceneNode.Index + 1);
+			}
+			else if (pastedDirective != null)
+			{
+				if (dirNode == null)
+				{
+					//add to the end of the selected scene
+					InsertDirective(sceneNode, newNode, sceneNode.Nodes.Count - 1);
+				}
+				else
+				{
+					//add after the selected directive
+					InsertDirective(sceneNode, newNode, dirNode.Index + 1);
+				}
+			}
+			else if (pastedFrame != null)
+			{
+				if (dirNode != null)
+				{
+					if (frameNode != null)
+					{
+						InsertKeyframe(newNode, frameNode.Index + 1, dirNode);
+					}
+					else
+					{
+						InsertKeyframe(newNode, dirNode.Nodes.Count - 1, dirNode);
+					}
+				}
+			}
+		}
+
+		private void tsDuplicate_Click(object sender, EventArgs e)
+		{
+			object clipboard = _clipboard;
+			tsCopy_Click(sender, e);
+			tsPaste_Click(sender, e);
+			_clipboard = clipboard;
 		}
 	}
 

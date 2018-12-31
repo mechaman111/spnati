@@ -5,10 +5,11 @@ using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.EditControls;
 using System.ComponentModel;
+using System;
 
 namespace SPNATI_Character_Editor
 {
-	public class Scene
+	public class Scene : ICloneable
 	{
 		[FileSelect(DisplayName = "Background", GroupOrder = 0, Description = "Scene's background image", Default = true)]
 		[XmlAttribute("background")]
@@ -124,6 +125,19 @@ namespace SPNATI_Character_Editor
 			}
 			return start;
 		}
+
+		public object Clone()
+		{
+			Scene clone = MemberwiseClone() as Scene;
+			clone.Directives = new List<Directive>();
+			foreach (Directive dir in Directives)
+			{
+				Directive copy = dir.Clone() as Directive;
+				copy.Directive = null;
+				clone.Directives.Add(copy);
+			}
+			return clone;
+		}
 	}
 
 	public class Directive : Keyframe
@@ -238,12 +252,25 @@ namespace SPNATI_Character_Editor
 				return Time;
 			}
 		}
+
+		public override object Clone()
+		{
+			Directive clone = MemberwiseClone() as Directive;
+			clone.Keyframes = new List<Keyframe>();
+			foreach (Keyframe kf in Keyframes)
+			{
+				Keyframe clonedFrame = kf.Clone() as Keyframe;
+				clonedFrame.Directive = clone;
+				clone.Keyframes.Add(clonedFrame);
+			}
+			return clone;
+		}
 	}
 
 	/// <summary>
 	/// Animatable properties
 	/// </summary>
-	public class Keyframe
+	public class Keyframe : ICloneable
 	{
 		/// <summary>
 		/// Parent directive
@@ -352,9 +379,9 @@ namespace SPNATI_Character_Editor
 			{
 				sb.Append($" Y:{Y}");
 			}
-			if (!string.IsNullOrEmpty(Scale))
+			if (!string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY))
 			{
-				sb.Append($" Scale:{Scale}");
+				sb.Append($" Scale:{ScaleX},{ScaleY}");
 			}
 			if (!string.IsNullOrEmpty(Color))
 			{
@@ -383,6 +410,11 @@ namespace SPNATI_Character_Editor
 				props = " new frame";
 			}
 			return $"@{Time}s -{props}";
+		}
+
+		public virtual object Clone()
+		{
+			return MemberwiseClone();
 		}
 	}
 }

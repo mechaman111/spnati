@@ -1571,7 +1571,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (!previewMode)
 			{
 				//iterate up to the selected point in the timeline
-				bool readyToStop = _selectedAnimation == null;
+				bool readyToStop = _selectedDirective == null;
 				foreach (Directive d in _selectedScene.Directives)
 				{
 					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text")
