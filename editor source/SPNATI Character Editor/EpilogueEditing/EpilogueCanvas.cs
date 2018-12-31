@@ -312,7 +312,10 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (obj.Image == null)
 			{
-				g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+				if (obj.ObjectType != SceneObjectType.Sprite)
+				{
+					g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+				}
 			}
 			else
 			{
@@ -1566,6 +1569,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_overlay.Color.Color = _scenePreview.OverlayColor;
 			}
+			_overlay.Alpha = _scenePreview.Alpha;
 			_sprites.Add(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
 
 			if (!previewMode)

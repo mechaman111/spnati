@@ -651,6 +651,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float alpha;
 				float.TryParse(scene.FadeOpacity, out alpha);
+				Alpha = alpha;
 				int a = (int)(alpha / 100 * 255);
 				OverlayColor = System.Drawing.Color.FromArgb(a, OverlayColor);
 			}
