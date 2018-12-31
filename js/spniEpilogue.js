@@ -1221,10 +1221,13 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
   var scaleY = args.scaley;
   var rotation = args.rotation;
   var alpha = args.alpha;
-  var pivot = args.pivot;
+  var pivotX = args.pivotx;
+  var pivotY = args.pivoty;
 
-  if (pivot) {
-    $(img).css("transform-origin", pivot);
+  if (pivotX || pivotY) {
+    pivotX = pivotX || "center";
+    pivotY = pivotY || "center";
+    $(img).css("transform-origin", pivotX + " " + pivotY);
   }
 
   var obj = {
@@ -1291,6 +1294,8 @@ EpiloguePlayer.prototype.addSprite = function (directive) {
     scaley: directive.scaley,
     rotation: directive.rotation,
     alpha: directive.alpha,
+    pivotx: directive.pivotx,
+    pivoty: directive.pivoty,
   });
 }
 
