@@ -240,9 +240,17 @@ function loadListingFile () {
 		dataType: "text",
 		success: function(xml) {
             var $xml = $(xml);
+			var available = {};
 
-			/* start by parsing the group descriptions to know which
-			 * characters to load in addition to the main roster and any included statuses */
+            /* start by checking which characters will be loaded and available */
+            $xml.find('individuals>opponent').each(function () {
+                var oppStatus = $(this).attr('status');
+                var id = $(this).text();
+                if (oppStatus === undefined || oppStatus === 'testing' || includedOpponentStatuses[oppStatus]) {
+                    available[id] = true;
+                }
+            });
+
 			$xml.find('groups>group').each(function () {
 				var title = $(this).attr('title');
 				var opp1 = $(this).attr('opp1');
@@ -251,6 +259,7 @@ function loadListingFile () {
 				var opp4 = $(this).attr('opp4');
 
                 var ids = [opp1, opp2, opp3, opp4];
+                if (!ids.every(function(id) { return available[id]; })) return;
 
 				var newGroup = createNewGroup(title);
 				ids.forEach(function(id, idx) {
@@ -265,14 +274,13 @@ function loadListingFile () {
             /* now actually load the characters */
             var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-            $individualListings = $xml.find('individuals');
-            $individualListings.find('opponent').each(function () {
+            $xml.find('individuals>opponent').each(function () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
                 var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
-                if (doInclude || id in opponentGroupMap) {
+                if (available[id]) {
                     outstandingLoads++;
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
