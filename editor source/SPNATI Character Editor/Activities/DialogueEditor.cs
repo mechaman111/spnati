@@ -137,7 +137,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_exportOnQuit)
 			{
-				Export();
+				Export(false);
 			}
 		}
 
@@ -146,19 +146,19 @@ namespace SPNATI_Character_Editor.Activities
 		#region Messaging
 		private void SetupMessageHandlers()
 		{
-			SubscribeWorkspace(WorkspaceMessages.Save, OnSaveWorkspace);
+			SubscribeWorkspace<bool>(WorkspaceMessages.Save, OnSaveWorkspace);
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 		}
 
-		private void OnSaveWorkspace()
+		private void OnSaveWorkspace(bool auto)
 		{
-			if (_character.Behavior.EnsureDefaults(_character))
+			if (!auto && _character.Behavior.EnsureDefaults(_character))
 			{
 				Shell.Instance.SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
 			}
-			Export();
+			Export(auto);
 		}
 
 		private void OnFind()
@@ -328,19 +328,33 @@ namespace SPNATI_Character_Editor.Activities
 		/// <summary>
 		/// Exports the current character to disk (i.e. updates the meta.xml and behaviour.xml files)
 		/// </summary>
-		private bool Export()
+		private bool Export(bool auto)
 		{
 			if (_character == null)
 				return true;
 			Save();
 			if (Serialization.ExportCharacter(_character))
 			{
-				Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				if (auto)
+				{
+					Shell.Instance.SetStatus(string.Format("{0} autosaved at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				}
+				else
+				{
+					Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				}
 				return true;
 			}
 			else
 			{
-				Shell.Instance.SetStatus(string.Format("{0} failed to export.", _character));
+				if (auto)
+				{
+					Shell.Instance.SetStatus(string.Format("{0} failed to autosave.", _character));
+				}
+				else
+				{
+					Shell.Instance.SetStatus(string.Format("{0} failed to export.", _character));
+				}
 				return false;
 			}
 		}

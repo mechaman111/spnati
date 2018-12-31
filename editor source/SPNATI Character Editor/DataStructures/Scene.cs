@@ -303,11 +303,11 @@ namespace SPNATI_Character_Editor
 
 		[Measurement(DisplayName = "Pivot X", Key ="pivotx", GroupOrder = 13, Description = "X value of rotation/scale point of origin as a percentage of the sprite's physical size", Minimum = -1000, Maximum = 1000)]
 		[XmlAttribute("pivotx")]
-		public string PivotX = "left";
+		public string PivotX;
 
 		[Measurement(DisplayName = "Pivot Y", Key ="pivoty", GroupOrder = 14, Description = "Y value of Rotation/scale point of origin as a percentage of the sprite's physical size", Minimum = -1000, Maximum = 1000)]
 		[XmlAttribute("pivoty")]
-		public string PivotY = "left";
+		public string PivotY;
 
 		[Color(DisplayName = "Color", Key = "color", GroupOrder = 20, Description = "Color")]
 		[XmlAttribute("color")]

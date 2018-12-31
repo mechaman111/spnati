@@ -29,6 +29,7 @@ namespace SPNATI_Character_Editor.Providers
 			c.FirstName = key;
 			c.Label = key;
 			c.FolderName = key;
+			c.Metadata.Writer = Config.UserName;
 
 			//Add in some barebones data to be at the minimal functional level
 			c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });

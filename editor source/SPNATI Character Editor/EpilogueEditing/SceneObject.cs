@@ -19,7 +19,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float ScaleY = 1;
 		public float Zoom = 1;
 		public float Rotation = 0;
-		public float Alpha = 100;
+		private float _alpha;
+		public float Alpha
+		{
+			get	{ return _alpha; }
+			set
+			{
+				_alpha = value;
+				Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), Color.Color);
+			}
+		}
 		public SolidBrush Color = new SolidBrush(System.Drawing.Color.Black);
 		public string Id;
 		public string Text;
@@ -282,7 +291,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			if (!string.IsNullOrEmpty(frame.Opacity))
 			{
-				float.TryParse(frame.Opacity, out Alpha);
+				float a;
+				if (float.TryParse(frame.Opacity, out a))
+				{
+					Alpha = a;
+				}
 			}
 			if (!string.IsNullOrEmpty(frame.Zoom))
 			{
@@ -349,7 +362,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			if (!string.IsNullOrEmpty(frame.Opacity))
 			{
-				float.TryParse(frame.Opacity, out Alpha);
+				float a;
+				if (float.TryParse(frame.Opacity, out a))
+				{
+					Alpha = a;
+				}
 			}
 			if (!string.IsNullOrEmpty(frame.Color))
 			{
@@ -361,6 +378,131 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
+		}
+
+		/// <summary>
+		/// Sets the color and alpha values based on either settings in the provided scene, or whatever was most recently set in an earlier scene
+		/// </summary>
+		/// <param name="epilogue"></param>
+		/// <param name="currentScene"></param>
+		public void SetColor(Epilogue epilogue, Scene currentScene)
+		{
+			Alpha = 0;
+
+			bool foundAlpha = false;
+			bool foundColor = false;
+			if (!string.IsNullOrEmpty(currentScene.FadeOpacity))
+			{
+				foundAlpha = true;
+				float a;
+				if (float.TryParse(currentScene.FadeOpacity, out a))
+				{
+					Alpha = a;
+				}
+			}
+			if (!string.IsNullOrEmpty(currentScene.FadeColor))
+			{
+				foundColor = true;
+				try
+				{
+					Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), ColorTranslator.FromHtml(currentScene.FadeColor));
+				}
+				catch { }
+			}
+			if (!foundColor || !foundAlpha)
+			{
+				int index = epilogue.Scenes.IndexOf(currentScene);
+				//work backwards through scenes until both settings are found
+				for (int i = index - 1; i >= 0; i--)
+				{
+					Scene scene = epilogue.Scenes[i];
+					for (int j = scene.Directives.Count - 1; j >= 0; j--)
+					{
+						Directive directive = scene.Directives[j];
+						if (directive.DirectiveType == "fade")
+						{
+							if (directive.Keyframes.Count > 0)
+							{
+								for (int f = directive.Keyframes.Count - 1; f >= 0; f--)
+								{
+									Keyframe frame = directive.Keyframes[f];
+									if (!foundAlpha && !string.IsNullOrEmpty(frame.Opacity))
+									{
+										foundAlpha = true;
+										float a;
+										if (float.TryParse(frame.Opacity, out a))
+										{
+											Alpha = a;
+										}
+									}
+									if (!foundColor && !string.IsNullOrEmpty(frame.Color))
+									{
+										foundColor = true;
+										try
+										{
+											Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), ColorTranslator.FromHtml(frame.Color));
+										}
+										catch { }
+									}
+									if (foundAlpha && foundColor)
+									{
+										return;
+									}
+								}
+							}
+							else
+							{
+								if (!foundAlpha && !string.IsNullOrEmpty(directive.Opacity))
+								{
+									foundAlpha = true;
+									float a;
+									if (float.TryParse(directive.Opacity, out a))
+									{
+										Alpha = a;
+									}
+								}
+								if (!foundColor && !string.IsNullOrEmpty(directive.Color))
+								{
+									foundColor = true;
+									try
+									{
+										Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), ColorTranslator.FromHtml(directive.Color));
+									}
+									catch { }
+								}
+								if (foundAlpha && foundColor)
+								{
+									return;
+								}
+							}
+						}
+					}
+
+					//use the scene settings if a directive didn't set it
+					if (!string.IsNullOrEmpty(scene.FadeOpacity))
+					{
+						foundAlpha = true;
+						float a;
+						if (float.TryParse(scene.FadeOpacity, out a))
+						{
+							Alpha = a;
+						}
+					}
+					if (!string.IsNullOrEmpty(scene.FadeColor))
+					{
+						foundColor = true;
+						try
+						{
+							Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), ColorTranslator.FromHtml(scene.FadeColor));
+						}
+						catch { }
+					}
+					if (foundAlpha && foundColor)
+					{
+						return;
+					}
+				}
+			}
 		}
 
 		public virtual void Dispose()

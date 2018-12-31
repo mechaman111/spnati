@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
+using SPNATI_Character_Editor.Controls;
 
 namespace SPNATI_Character_Editor
 {
@@ -412,10 +413,7 @@ namespace SPNATI_Character_Editor
 			//endings
 			foreach (Epilogue ending in character.Endings)
 			{
-				foreach (Screen screen in ending.Screens)
-				{
-					unusedImages.Remove(screen.Image);
-				}
+				ValidateEpilogue(ending, warnings, unusedImages);
 			}
 
 			if (unusedImages.Count > 0)
@@ -427,6 +425,69 @@ namespace SPNATI_Character_Editor
 				return true;
 
 			return false;
+		}
+
+		private static void ValidateEpilogue(Epilogue ending, List<ValidationError> warnings, HashSet<string> unusedImages)
+		{
+			if (string.IsNullOrEmpty(ending.Hint) && ending.HasSpecialConditions)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has special unlock conditions. Consider adding a hint to help the player know how to unlock it.", new ValidationContext(ending, null, null)));
+			}
+
+			if (string.IsNullOrEmpty(ending.GalleryImage))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has no gallery image and will appear blank in the epilogue gallery.", new ValidationContext(ending, null, null)));
+			}
+			else
+			{
+				unusedImages.Remove(ending.GalleryImage);
+			}
+
+			foreach (Scene scene in ending.Scenes)
+			{
+				HashSet<string> usedSpriteIds = new HashSet<string>();
+				if (!string.IsNullOrEmpty(scene.Background))
+				{
+					unusedImages.Remove(scene.Background);
+				}
+
+				foreach (Directive directive in scene.Directives)
+				{
+					if (directive.DirectiveType == "sprite")
+					{
+						string id = directive.Id;
+						if (string.IsNullOrEmpty(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a sprite directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+						}
+						else if (usedSpriteIds.Contains(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} uses the ID \"{id}\" for more than one sprite in the same scene.", new ValidationContext(ending, scene, directive)));
+						}
+						else
+						{
+							usedSpriteIds.Add(id);
+						}
+
+						if (!string.IsNullOrEmpty(directive.Src))
+						{
+							unusedImages.Remove(directive.Src);
+						}
+					}
+					else if (directive.DirectiveType == "move")
+					{
+						string id = directive.Id;
+						if (string.IsNullOrEmpty(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+						}
+						else if (!usedSpriteIds.Contains(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive with ID \"{id}\" which does not correspond to any sprite in that scene.", new ValidationContext(ending, scene, directive)));
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -627,16 +688,35 @@ namespace SPNATI_Character_Editor
 
 	public class ValidationContext
 	{
+		public Area ContextArea;
 		public Stage Stage;
 		public Case Case;
 		public DialogueLine Line;
+		public Epilogue Epilogue;
+		public Scene Scene;
+		public Directive Directive;
 
 		public ValidationContext() { }
 		public ValidationContext(Stage stage, Case stageCase, DialogueLine line)
 		{
+			ContextArea = Area.Dialogue;
 			Stage = stage;
 			Case = stageCase;
 			Line = line;
+		}
+
+		public ValidationContext(Epilogue epilogue, Scene scene, Directive directive)
+		{
+			ContextArea = Area.Epilogue;
+			Epilogue = epilogue;
+			Scene = scene;
+			Directive = directive;
+		}
+
+		public enum Area
+		{
+			Dialogue,
+			Epilogue,
 		}
 	}
 
@@ -650,6 +730,7 @@ namespace SPNATI_Character_Editor
 		Lines = 8,
 		TargetedDialogue = 16,
 		Case = 32,
-		Stage = 64
+		Stage = 64,
+		Epilogue = 128,
 	}
 }

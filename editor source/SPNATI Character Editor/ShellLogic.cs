@@ -19,6 +19,22 @@ namespace SPNATI_Character_Editor
 
 			Shell.Instance.LaunchWorkspace(new LoaderRecord());
 			Shell.Instance.Maximize(true);
+
+			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
+			Shell.Instance.AutoTick += Instance_AutoTick;
+		}
+
+		private static void Instance_AutoTick(object sender, System.EventArgs e)
+		{
+			//loop through all open characters and save only those whose author is the current user
+			foreach (IWorkspace ws in Shell.Instance.Workspaces)
+			{
+				Character c = ws.Record as Character;
+				if (c != null && !string.IsNullOrEmpty(c.Metadata?.Writer) && c.Metadata.Writer.Contains(Config.UserName))
+				{
+					Save(true);
+				}
+			}
 		}
 
 		/// <summary>
@@ -222,9 +238,14 @@ namespace SPNATI_Character_Editor
 
 		private static void Save()
 		{
+			Save(false);
+		}
+
+		private static void Save(bool auto)
+		{
 			Cursor.Current = Cursors.WaitCursor;
 			Shell.Instance.ActiveActivity?.Save();
-			Shell.Instance.ActiveWorkspace?.SendMessage(WorkspaceMessages.Save);
+			Shell.Instance.ActiveWorkspace?.SendMessage(WorkspaceMessages.Save, auto);
 			Cursor.Current = Cursors.Default;
 		}
 

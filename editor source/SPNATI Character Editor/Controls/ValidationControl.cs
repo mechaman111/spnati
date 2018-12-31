@@ -236,7 +236,15 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (error == null || error.Context == null) { return; }
 
-			Shell.Instance.Launch<Character, DialogueEditor>(_character, error.Context);
+			switch (error.Context.ContextArea)
+			{
+				case ValidationContext.Area.Dialogue:
+					Shell.Instance.Launch<Character, DialogueEditor>(_character, error.Context);
+					break;
+				case ValidationContext.Area.Epilogue:
+					Shell.Instance.Launch<Character, EpilogueEditor>(_character, error.Context);
+					break;
+			}			
 		}
 
 		private void cmdCopy_Click(object sender, EventArgs e)

@@ -66,6 +66,18 @@ namespace SPNATI_Character_Editor
 		public List<Background> Backgrounds = new List<Background>();
 		#endregion
 
+		/// <summary>
+		/// Gets whether this epilogue has any specialized conditions (excluding gender) that need to be met in order to unlock it
+		/// </summary>
+		public bool HasSpecialConditions
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(AllMarkers) || !string.IsNullOrEmpty(PlayerStartingLayers) || !string.IsNullOrEmpty(NotMarkers) || !string.IsNullOrEmpty(AnyMarkers) ||
+					!string.IsNullOrEmpty(AlsoPlaying) || !string.IsNullOrEmpty(AlsoPlayingAllMarkers) || !string.IsNullOrEmpty(AlsoPlayingAnyMarkers) || !string.IsNullOrEmpty(AlsoPlayingNotMarkers);
+			}
+		}
+
 		public void OnAfterDeserialize()
 		{
 			//Convert left, top, etc. to percentages since I don't feel like making an edit control that can handle those right now

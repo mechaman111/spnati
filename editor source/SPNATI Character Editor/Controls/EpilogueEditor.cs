@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Character _character;
 		private Epilogue _ending;
 		private bool _populatingEnding;
+		private ValidationContext _context;
 
 		public EpilogueEditor()
 		{
@@ -36,6 +37,22 @@ namespace SPNATI_Character_Editor.Controls
 		protected override void OnFirstActivate()
 		{
 			tmrActivate.Enabled = true; //for lack of a good event for when controls are in place and visible, using a timer before launching the initial epilogue
+		}
+
+		protected override void OnParametersUpdated(params object[] parameters)
+		{
+			if (parameters.Length == 1)
+			{
+				ValidationContext context = parameters[0] as ValidationContext;
+				if (Enabled)
+				{
+					JumpToContext(context);
+				}
+				else
+				{
+					_context = context;
+				}
+			}
 		}
 
 		protected override void OnActivate()
@@ -63,8 +80,25 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				cboEnding.SelectedIndex = 0;
 			}
+			if (_context != null)
+			{
+				JumpToContext(_context);
+			}
+		}
+
+		private void JumpToContext(ValidationContext context)
+		{
+			_context = null;
+			//open the associated ending
+			cboEnding.SelectedItem = context.Epilogue;
+			if (context.Scene != null)
+			{
+				tabs.SelectedTab = pageScenes;
+				canvas.JumpToNode(context.Scene, context.Directive, null);
+			}
 			else
 			{
+				tabs.SelectedTab = pageGeneral;
 			}
 		}
 

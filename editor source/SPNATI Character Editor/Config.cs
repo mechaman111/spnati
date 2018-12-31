@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -208,6 +209,28 @@ namespace SPNATI_Character_Editor
 				return "";
 			return Path.Combine(GetString(Settings.GameDirectory), "opponents", folder);
 		}
+
+		/// <summary>
+		/// Gets the current user
+		/// </summary>
+		public static string UserName
+		{
+			get { return GetString(Settings.UserName); }
+			set { Set(Settings.UserName, value); }
+		}
+
+		/// <summary>
+		/// How many minutes to auto-save
+		/// </summary>
+		public static int AutoSaveInterval
+		{
+			get { return GetInt(Settings.AutoSaveInterval); }
+			set
+			{
+				Set(Settings.AutoSaveInterval, value);
+				Shell.Instance.AutoTickFrequency = value * 60000;
+			}
+		}
 	}
 
 	public static class Settings
@@ -215,6 +238,8 @@ namespace SPNATI_Character_Editor
 		public static readonly string GameDirectory = "game";
 		public static readonly string LastCharacter = "last";
 		public static readonly string LastVersionRun = "version";
+		public static readonly string UserName = "username";
+		public static readonly string AutoSaveInterval = "autosave";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";

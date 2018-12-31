@@ -12,6 +12,8 @@ namespace SPNATI_Character_Editor
 			string gameDir = Config.GetString(Settings.GameDirectory);
 			txtApplicationDirectory.Text = gameDir;
 			folderBrowserDialog1.SelectedPath = gameDir;
+			txtUserName.Text = Config.UserName;
+			valAutoSave.Value = Config.AutoSaveInterval;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -52,6 +54,8 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			Config.Set(Settings.GameDirectory, dir);
+			Config.AutoSaveInterval = (int)valAutoSave.Value;
+			Config.UserName = txtUserName.Text;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Close();

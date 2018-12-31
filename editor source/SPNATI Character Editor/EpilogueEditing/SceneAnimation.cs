@@ -190,14 +190,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			switch (EasingMethod)
 			{
-				case "smooth":
-					return 3 * t * t - 2 * t * t * t;
+				case "linear":
+					return t;
 				case "ease-in":
 					return t * t;
 				case "ease-out":
 					return t * (2 - t);
 			}
-			return t;
+			return 3 * t * t - 2 * t * t * t;
 		}
 	}
 }

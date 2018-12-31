@@ -34,6 +34,29 @@ namespace Desktop
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
 
+		/// <summary>
+		/// Iterates through all open workspaces. Do not try launching or closing workspaces while iterating over this
+		/// </summary>
+		public IEnumerable<IWorkspace> Workspaces
+		{
+			get { return _workspaces.Keys; }
+		}
+
+		/// <summary>
+		/// Frequency to raise the AutoTick event in milliseconds
+		/// </summary>
+		public int AutoTickFrequency
+		{
+			get { return tmrAutoTick.Interval; }
+			set
+			{
+				tmrAutoTick.Enabled = (value > 0);
+				value = Math.Max(1, value);
+				tmrAutoTick.Interval = value;
+			}
+		}
+		public event EventHandler AutoTick;
+
 		private List<IActivity> _activationOrder = new List<IActivity>();
 
 		public Shell(string caption, Icon icon)
@@ -740,6 +763,11 @@ namespace Desktop
 		public void SetStatus(string message)
 		{
 			lblStatus.Text = message;
+		}
+
+		private void tmrAutoTick_Tick(object sender, EventArgs e)
+		{
+			AutoTick?.Invoke(this, EventArgs.Empty);
 		}
 	}
 

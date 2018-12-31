@@ -158,6 +158,11 @@ namespace SPNATI_Character_Editor.Controls
 			FitToScreen();
 		}
 
+		public void JumpToNode(Scene scene, Directive directive, Keyframe keyframe)
+		{
+			treeScenes.SelectNode(scene, directive, keyframe);
+		}
+
 		/// <summary>
 		/// Resizes the canvas to equal zoom * viewport size
 		/// </summary>
@@ -1565,11 +1570,7 @@ namespace SPNATI_Character_Editor.Controls
 			_scenePreview = new ScenePreview(_selectedScene);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
-			if (_scenePreview.OverlayColor != null)
-			{
-				_overlay.Color.Color = _scenePreview.OverlayColor;
-			}
-			_overlay.Alpha = _scenePreview.Alpha;
+			_overlay.SetColor(_epilogue, _selectedScene);
 			_sprites.Add(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
 
 			if (!previewMode)
@@ -1579,6 +1580,10 @@ namespace SPNATI_Character_Editor.Controls
 				foreach (Directive d in _selectedScene.Directives)
 				{
 					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text")
+					{
+						break;
+					}
+					if (readyToStop && d.DirectiveType == "text" && d.Id == _selectedDirective?.Id)
 					{
 						break;
 					}
@@ -1675,6 +1680,12 @@ namespace SPNATI_Character_Editor.Controls
 					canvas.Invalidate();
 					break;
 				case "text":
+					//kill any old textbox with the ID
+					SceneObject old = _textboxes.Find(b => b.Id == directive.Id);
+					if (old != null)
+					{
+						_textboxes.Remove(old);
+					}
 					_textboxes.Add(new SceneObject(_scenePreview, _character, directive));
 					canvas.Invalidate();
 					break;
