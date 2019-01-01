@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor
 
 			//Add in skin alternatives
 			string[] extensions = { ".png", ".gif" };
-			foreach (Alternate alt in _character.Metadata.AlternateSkins)
+			foreach (AlternateSkin alt in _character.Metadata.AlternateSkins)
 			{
 				foreach (SkinLink link in alt.Skins)
 				{

@@ -744,6 +744,11 @@ namespace SPNATI_Character_Editor
 			Stage = stage;
 			Value = value;
 		}
+
+		public override string ToString()
+		{
+			return $"{Stage} - {Value}";
+		}
 	}
 
 	public enum CharacterSource

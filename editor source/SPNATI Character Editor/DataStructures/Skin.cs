@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
-using System;
 
 namespace SPNATI_Character_Editor
 {
-	/// <summary>
-	/// I don't know why there is this wrapper layer around costume
-	/// </summary>
-	public class Alternate
+	public class AlternateSkin
 	{
 		[XmlElement("costume")]
 		public List<SkinLink> Skins = new List<SkinLink>();
