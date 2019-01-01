@@ -1,5 +1,6 @@
 ﻿using SPNATI_Character_Editor.IO;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -71,11 +72,29 @@ namespace SPNATI_Character_Editor
 			//Not really. 1100 lines spent 1000ms on serialization and only 10ms sorting.
 
 			List<string> filters = new List<string>();
+			StringBuilder sb = new StringBuilder();
 			foreach (TargetCondition condition in c1.Conditions)
 			{
-				//this is following make_xml's create_case_xml(), but 
-				//this isn't really comprehensive to sort filters
-				filters.Add("count-" + condition.Filter);
+				sb.Clear();
+				sb.Append("count-");
+				//note: make_xml's create_case_xml() only addds the filter part, so it's still ambiguous for other conditions.
+				if (!string.IsNullOrEmpty(condition.Filter))
+				{
+					sb.Append(condition.Filter);
+				}
+				if (!string.IsNullOrEmpty(condition.Gender))
+				{
+					sb.Append(condition.Gender);
+				}
+				if (!string.IsNullOrEmpty(condition.Count))
+				{
+					sb.Append(condition.Count);
+				}
+				if (!string.IsNullOrEmpty(condition.Status))
+				{
+					sb.Append(condition.Status);
+				}
+				filters.Add(sb.ToString());
 			}
 			foreach (ExpressionTest test in c1.Expressions)
 			{
