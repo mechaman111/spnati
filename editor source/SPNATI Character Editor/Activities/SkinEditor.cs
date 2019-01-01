@@ -1,11 +1,17 @@
 ﻿using Desktop;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Costume), 0)]
 	public partial class SkinEditor : Activity
 	{
+		private bool _linkDataChanged = false;
 		private Costume _costume;
+		private ImageLibrary _imageLibrary;
+		private bool _populatingImages;
 
 		public SkinEditor()
 		{
@@ -20,6 +26,25 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_costume = Record as Costume;
+			SubscribeWorkspace<bool>(WorkspaceMessages.Save, OnSaveWorkspace);
+			_imageLibrary = ImageLibrary.Get(_costume);
+		}
+
+		private void OnSaveWorkspace(bool auto)
+		{
+			if (!auto)
+			{
+				Save();
+				Serialization.ExportSkin(_costume);
+				if (Serialization.ExportSkin(_costume))
+				{
+					Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _costume, DateTime.Now.ToShortTimeString()));
+				}
+				else
+				{
+					Shell.Instance.SetStatus(string.Format("{0} failed to export.", _costume));
+				}
+			}
 		}
 
 		protected override void OnFirstActivate()
@@ -47,15 +72,44 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				cboBaseStage.SelectedIndex = -1;
 			}
+
+			gridLabels.Set(_costume.Labels);
+
+			PopulatePortraitDropdown();
+			cboDefaultPic.SelectedItem = _imageLibrary.Find(Path.GetFileNameWithoutExtension(_costume.Link?.PreviewImage));
+		}
+
+		/// <summary>
+		/// Populates the default portrait dropdown menu
+		/// </summary>
+		private void PopulatePortraitDropdown()
+		{
+			_populatingImages = true;
+			List<CharacterImage> images = new List<CharacterImage>();
+			images.Add(new CharacterImage(" ", null));
+			images.AddRange(_imageLibrary.GetImages(0));
+			images.AddRange(_imageLibrary.GetImages(-1));
+			cboDefaultPic.DataSource = images;
+			_populatingImages = false;
 		}
 
 		public override void Save()
 		{
 			if (_costume.Link != null)
 			{
-				_costume.Link.Name = txtName.Text;
-				Serialization.ExportCharacter(_costume.Character);
+				if (txtName.Text != _costume.Link.Name)
+				{
+					_linkDataChanged = true;
+				}
+				if (_linkDataChanged)
+				{
+					_linkDataChanged = false;
+					_costume.Link.Name = txtName.Text;
+					Serialization.ExportCharacter(_costume.Character);
+				}
 			}
+
+			_costume.Labels = gridLabels.Values;
 
 			//Here's where any unexpected folders are thrown out
 			string folder = _costume.Folder;
@@ -65,6 +119,21 @@ namespace SPNATI_Character_Editor.Activities
 			if (baseIndex >= 0)
 			{
 				_costume.Folders.Add(new StageSpecificValue(baseIndex, $"opponents/{_costume.Character.FolderName}/"));
+			}
+		}
+
+		private void cboDefaultPic_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			if (_populatingImages)
+				return;
+			CharacterImage image = cboDefaultPic.SelectedItem as CharacterImage;
+			if (image == null)
+				return;
+			if (_costume.Link != null)
+			{
+				_costume.Link.PreviewImage = image.Name + image.FileExtension; ;
+				_linkDataChanged = true;
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, _imageLibrary.Find(_costume.Link.PreviewImage));
 			}
 		}
 	}

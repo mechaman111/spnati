@@ -16,7 +16,7 @@ namespace SPNATI_Character_Editor
 	/// </remarks>
 	[XmlRoot("opponent", Namespace = "")]
 	[XmlHeader("This file was machine generated using the Character Editor {Version} at {Time} on {Date}. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.")]
-	public class Character : IHookSerialization, IRecord, IWardrobe
+	public class Character : IHookSerialization, IRecord, IWardrobe, ISkin
 	{
 		[XmlElement("version")]
 		/// <summary>
@@ -192,6 +192,14 @@ namespace SPNATI_Character_Editor
 		public int Layers
 		{
 			get { return Wardrobe.Count; }
+		}
+
+		string ISkin.FolderName
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
 		}
 
 		/// <summary>
@@ -676,6 +684,16 @@ namespace SPNATI_Character_Editor
 		public Clothing GetClothing(int index)
 		{
 			return Wardrobe[index];
+		}
+
+		public string GetDirectory()
+		{
+			return Config.GetRootDirectory(this);
+		}
+
+		public HashSet<string> GetRequiredPoses()
+		{
+			return null;
 		}
 	}
 

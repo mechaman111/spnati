@@ -21,7 +21,6 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			Costume skin = new Costume();
 			skin.Id = key;
-			skin.Labels.Add(new StageSpecificValue(0, key));
 
 			IRecord record = RecordLookup.DoLookup(typeof(Character), "", false, CharacterDatabase.FilterHuman, skin);
 			if (record == null)
@@ -64,6 +63,7 @@ namespace SPNATI_Character_Editor.Providers
 				owner.Metadata.AlternateSkins[0].Skins.Add(link);
 			}
 
+			skin.Labels.Add(new StageSpecificValue(0, owner.Label));
 			skin.Character = owner;
 			link.Costume = skin;
 			skin.Link = link;

@@ -28,8 +28,47 @@ namespace SPNATI_Character_Editor.Activities
 				_character.Behavior.CaseRemoved += WorkingCasesChanged;
 				_character.Behavior.CaseModified += WorkingCasesChanged;
 			}
+			else
+			{
+				lblSkin.Visible = false;
+				cboSkin.Visible = false;
+			}
 			SubscribeWorkspace<CharacterImage>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
 			UpdateLineCount();
+		}
+
+		protected override void OnActivate()
+		{
+			PopulateSkinCombo();
+		}
+
+		private void PopulateSkinCombo()
+		{
+			if (_character == null) { return; }
+
+			SkinLink previous = cboSkin.SelectedItem as SkinLink;
+
+			cboSkin.Items.Clear();
+			cboSkin.Items.Add("- Default - ");
+			foreach (AlternateSkin alt in _character.Metadata.AlternateSkins)
+			{
+				foreach (SkinLink link in alt.Skins)
+				{
+					cboSkin.Items.Add(link);
+				}
+			}
+			cboSkin.Sorted = true;
+			cboSkin.Visible = cboSkin.Items.Count > 1;
+			lblSkin.Visible = cboSkin.Visible;
+
+			if (previous == null)
+			{
+				cboSkin.SelectedIndex = 0;
+			}
+			else
+			{
+				cboSkin.SelectedItem = previous;
+			}
 		}
 
 		private void WorkingCasesChanged(object sender, Case e)
@@ -60,6 +99,17 @@ namespace SPNATI_Character_Editor.Activities
 				label4.Visible = false;
 				lblLinesOfDialogue.Visible = false;
 			}
+		}
+
+		private void cboSkin_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			if (_character == null) { return; } 
+			SkinLink current = cboSkin.SelectedItem as SkinLink;
+			_character.CurrentSkin = current?.Costume;
+
+			//update images in use to use new skin
+			ImageLibrary library = ImageLibrary.Get(_character);
+			library.UpdateSkin(_character.CurrentSkin);
 		}
 	}
 }

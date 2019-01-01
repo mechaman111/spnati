@@ -1,6 +1,9 @@
 ﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -15,7 +18,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// Alternate skin data stored in costume.xml
 	/// </summary>
-	public class Costume : IRecord, IWardrobe
+	public class Costume : IRecord, IWardrobe, ISkin, IHookSerialization
 	{
 		[XmlElement("id")]
 		public string Id;
@@ -88,6 +91,8 @@ namespace SPNATI_Character_Editor
 			return Id;
 		}
 
+		public void OnBeforeSerialize() { }
+
 		public void OnAfterDeserialize()
 		{
 			Wardrobe.ForEach(c => c.OnAfterDeserialize());
@@ -152,12 +157,56 @@ namespace SPNATI_Character_Editor
 		{
 			return 0;
 		}
+
+		public string FolderName
+		{
+			get	{ return Folder; }
+		}
+
+		public string GetDirectory()
+		{
+			return Path.Combine(Config.SpnatiDirectory, Folder);
+		}
+
+		public string GetAttachmentsDirectory()
+		{
+			return Path.Combine(Config.SpnatiDirectory, "attachments", "reskins", FolderName);
+		}
+
+		public HashSet<string> GetRequiredPoses()
+		{
+			if (Character == null)
+			{
+				return null;
+			}
+			HashSet<string> images = new HashSet<string>();
+			int endStage = Layers + Clothing.ExtraStages;
+			if (Folders.Count > 0)
+			{
+				endStage = Folders[1].Stage;
+			}
+			foreach (Case c in Character.Behavior.GetWorkingCases())
+			{
+				foreach (DialogueLine line in c.Lines)
+				{
+					foreach (int stage in c.Stages)
+					{
+						if (stage < endStage)
+						{
+							DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stage, Character);
+							images.Add(Path.GetFileNameWithoutExtension(stageLine.Image));
+						}
+					}
+				}
+			}
+			return images;
+		}
 	}
 
 	/// <summary>
 	/// For added realism on character models?
 	/// </summary>
-	public class SkinTag
+	public class SkinTag : IComparable<SkinTag>
 	{
 		[XmlText]
 		public string Name;
@@ -169,6 +218,11 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			return $"{Name}{(Remove ? "(-)" : "")}";
+		}
+
+		public int CompareTo(SkinTag other)
+		{
+			return Name.CompareTo(other.Name);
 		}
 
 		public SkinTag() { }

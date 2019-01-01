@@ -77,7 +77,6 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnFirstActivate()
 		{
 			Character c = _character;
-			ImageCache.Clear();
 			treeDialogue.SetData(c);
 			_selectedStage = null;
 			_selectedCase = null;
