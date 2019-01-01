@@ -208,7 +208,7 @@ namespace SPNATI_Character_Editor
 
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
-			shell.AddToolbarItem("Skins...", typeof(Costume));
+			//shell.AddToolbarItem("Skins...", typeof(Costume));
 
 			//Validate
 			menu = shell.AddToolbarSubmenu("Validate");
