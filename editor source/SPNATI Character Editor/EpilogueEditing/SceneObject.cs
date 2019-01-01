@@ -19,7 +19,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float ScaleY = 1;
 		public float Zoom = 1;
 		public float Rotation = 0;
-		private float _alpha;
+		private float _alpha = 100;
 		public float Alpha
 		{
 			get	{ return _alpha; }
@@ -227,7 +227,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				string path = GetImagePath(imagePath);
 				try
 				{
-					Image = new Bitmap(path);
+					using (var temp = new Bitmap(path))
+					{
+						Image = new Bitmap(temp);
+					}
 				}
 				catch { }
 			}
