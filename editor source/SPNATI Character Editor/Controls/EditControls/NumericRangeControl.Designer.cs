@@ -62,7 +62,6 @@
 			this.valFrom.Name = "valFrom";
 			this.valFrom.Size = new System.Drawing.Size(43, 20);
 			this.valFrom.TabIndex = 7;
-			this.valFrom.ValueChanged += new System.EventHandler(this.ValueChanged);
 			// 
 			// valTo
 			// 
@@ -70,7 +69,6 @@
 			this.valTo.Name = "valTo";
 			this.valTo.Size = new System.Drawing.Size(41, 20);
 			this.valTo.TabIndex = 8;
-			this.valTo.ValueChanged += new System.EventHandler(this.ValueChanged);
 			// 
 			// NumericRangeControl
 			// 

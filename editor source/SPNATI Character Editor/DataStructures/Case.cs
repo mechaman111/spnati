@@ -268,7 +268,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(TargetTimeInStage))
 				{
-					result += string.Format(" (after {0} rounds in stage)", TargetTimeInStage);
+					result += string.Format(" (after {0} rounds in stage)", GUIHelper.RangeToString(TargetTimeInStage));
 				}
 				if (!string.IsNullOrEmpty(TargetLayers))
 				{
@@ -288,7 +288,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(AlsoPlayingTimeInStage))
 				{
-					result += string.Format(" (after {0} rounds in stage)", AlsoPlayingTimeInStage);
+					result += string.Format(" (after {0} rounds in stage)", GUIHelper.RangeToString(AlsoPlayingTimeInStage));
 				}
 				if (!string.IsNullOrEmpty(HasHand))
 				{
@@ -304,43 +304,43 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(TotalFemales))
 				{
-					result += string.Format(" ({0} females)", TotalFemales);
+					result += string.Format(" ({0} females)", GUIHelper.RangeToString(TotalFemales));
 				}
 				if (!string.IsNullOrEmpty(TotalMales))
 				{
-					result += string.Format(" ({0} males)", TotalMales);
+					result += string.Format(" ({0} males)", GUIHelper.RangeToString(TotalMales));
 				}
 				if (!string.IsNullOrEmpty(TotalRounds))
 				{
-					result += string.Format(" ({0} overall rounds)", TotalRounds);
+					result += string.Format(" ({0} overall rounds)", GUIHelper.RangeToString(TotalRounds));
 				}
 				if (!string.IsNullOrEmpty(TimeInStage))
 				{
-					result += string.Format(" (after {0} rounds in own stage)", TimeInStage);
+					result += string.Format(" (after {0} rounds in own stage)", GUIHelper.RangeToString(TimeInStage));
 				}
 				if (!string.IsNullOrEmpty(ConsecutiveLosses))
 				{
-					result += string.Format(" ({0} losses in a row)", ConsecutiveLosses);
+					result += string.Format(" ({0} losses in a row)", GUIHelper.RangeToString(ConsecutiveLosses));
 				}
 				if (!string.IsNullOrEmpty(TotalPlaying))
 				{
-					result += string.Format(" ({0} playing)", TotalPlaying);
+					result += string.Format(" ({0} playing)", GUIHelper.RangeToString(TotalPlaying));
 				}
 				if (!string.IsNullOrEmpty(TotalExposed))
 				{
-					result += string.Format(" ({0} exposed)", TotalExposed);
+					result += string.Format(" ({0} exposed)", GUIHelper.RangeToString(TotalExposed));
 				}
 				if (!string.IsNullOrEmpty(TotalNaked))
 				{
-					result += string.Format(" ({0} naked)", TotalNaked);
+					result += string.Format(" ({0} naked)", GUIHelper.RangeToString(TotalNaked));
 				}
 				if (!string.IsNullOrEmpty(TotalMasturbating))
 				{
-					result += string.Format(" ({0} finishing)", TotalMasturbating);
+					result += string.Format(" ({0} finishing)", GUIHelper.RangeToString(TotalMasturbating));
 				}
 				if (!string.IsNullOrEmpty(TotalFinished))
 				{
-					result += string.Format(" ({0} finished)", TotalFinished);
+					result += string.Format(" ({0} finished)", GUIHelper.RangeToString(TotalFinished));
 				}
 				if (!string.IsNullOrEmpty(SaidMarker))
 				{
@@ -1765,7 +1765,7 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
-			string str = Count;
+			string str = GUIHelper.RangeToString(Count);
 			if (Filter == null && Status == null && Gender == null)
 			{
 				str += " players";
