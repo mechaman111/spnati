@@ -73,7 +73,7 @@ namespace SPNATI_Character_Editor
 
 		public static CharacterEditorData GetEditorData(Character character)
 		{
-			return _editorData.Get(character);
+			return _editorData.GetOrAddDefault(character, () => new CharacterEditorData() { Owner = character.FolderName });
 		}
 
 		/// <summary>
