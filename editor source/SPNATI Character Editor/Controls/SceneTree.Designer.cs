@@ -219,7 +219,7 @@
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(274, 6);
 			// 
 			// moveSpriteToolStripMenuItem
 			// 
@@ -252,12 +252,12 @@
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(246, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(274, 6);
 			// 
 			// fadeEffectToolStripMenuItem
 			// 
 			this.fadeEffectToolStripMenuItem.Name = "fadeEffectToolStripMenuItem";
-			this.fadeEffectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+			this.fadeEffectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
 			this.fadeEffectToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.fadeEffectToolStripMenuItem.Tag = "fade";
 			this.fadeEffectToolStripMenuItem.Text = "Fade Effect";
@@ -266,7 +266,7 @@
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(246, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(274, 6);
 			// 
 			// waitForAnimationsToolStripMenuItem
 			// 

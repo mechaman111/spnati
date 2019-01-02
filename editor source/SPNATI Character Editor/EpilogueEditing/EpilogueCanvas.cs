@@ -311,6 +311,14 @@ namespace SPNATI_Character_Editor.Controls
 
 			float offsetX = bounds.X + obj.PivotX / obj.Width * bounds.Width;
 			float offsetY = bounds.Y + obj.PivotY / obj.Height * bounds.Height;
+			if (float.IsNaN(offsetX))
+			{
+				offsetX = 0;
+			}
+			if (float.IsNaN(offsetY))
+			{
+				offsetY = 0;
+			}
 			g.TranslateTransform(offsetX, offsetY);
 			g.RotateTransform(obj.Rotation);
 			g.TranslateTransform(-offsetX, -offsetY);

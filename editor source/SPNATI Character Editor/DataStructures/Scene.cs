@@ -11,7 +11,11 @@ namespace SPNATI_Character_Editor
 {
 	public class Scene : ICloneable
 	{
-		[FileSelect(DisplayName = "Background", GroupOrder = 0, Description = "Scene's background image", Default = true)]
+		[Text(DisplayName = "Name", GroupOrder = -1, Description = "Scene name")]
+		[XmlAttribute("name")]
+		public string Name;
+
+		[FileSelect(DisplayName = "Background", GroupOrder = 0, Description = "Scene's background image")]
 		[XmlAttribute("background")]
 		public string Background;
 
@@ -70,7 +74,7 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			string background = string.IsNullOrEmpty(Background) ? BackgroundColor : Background;
-			return $"Scene: {background} ({Width},{Height})";
+			return $"Scene: {Name} ({background}: {Width},{Height})";
 		}
 
 		public Scene() { }
