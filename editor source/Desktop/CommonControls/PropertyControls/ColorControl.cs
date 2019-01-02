@@ -63,19 +63,23 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private void TxtValue_TextChanged(object sender, EventArgs e)
 		{
+			if (string.IsNullOrEmpty(txtValue.Text))
+			{
+				_cleared = true;
+				Save();
+				return;
+			}
+
 			string hex = "#" + txtValue.Text;
 			try
 			{
 				Color color = ColorTranslator.FromHtml(hex);
 				cmdColor.BackColor = color;
+				_cleared = false;
 				Save();
 			}
-			catch
-			{
-				txtValue.Text = "";
-			}
+			catch { }
 		}
-
 
 		public override void Clear()
 		{

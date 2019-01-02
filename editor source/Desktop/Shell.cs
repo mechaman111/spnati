@@ -74,10 +74,6 @@ namespace Desktop
 		private void Shell_Load(object sender, EventArgs e)
 		{
 			BuildWorkspaceMap();
-
-			////Load data
-			//Settings.Load();
-			//DataLoader.Load(Settings.DataSet);
 		}
 
 		public static void ShowMessage(string message)
