@@ -27,10 +27,12 @@ namespace SPNATI_Character_Editor.Controls
 		public event EventHandler<CaseCreationEventArgs> CreatedCase;
 
 		private Character _character;
+		private CharacterEditorData _editorData;
 		private DialogueNode _selectedNode;
 		private bool _changingViews;
 		private IDialogueTreeView _view;
 		private Queue<TreeNode> _pendingDeletion = new Queue<TreeNode>();
+		private bool _showHidden;
 
 		public DialogueTree()
 		{
@@ -43,6 +45,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetData(Character character)
 		{
 			_character = character;
+			_editorData = CharacterDatabase.GetEditorData(_character);
 			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			int view = Config.GetInt(LastViewSetting);
 			cboView.SelectedIndex = view;
@@ -59,7 +62,7 @@ namespace SPNATI_Character_Editor.Controls
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
 			_character.Behavior.CaseModified += Behavior_CaseModified;
 			PopulateTriggerMenu();
-			_view.BuildTree();
+			_view.BuildTree(_showHidden);
 
 			treeDialogue.BeforeSelect += TreeDialogue_BeforeSelect;
 			treeDialogue.AfterSelect += TreeDialogue_AfterSelect;
@@ -96,7 +99,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		public void RegenerateTree()
 		{
-			_view.BuildTree();
+			_view.BuildTree(_showHidden);
 		}
 
 		/// <summary>
@@ -168,7 +171,7 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedNode = null;
 			treeDialogue.SelectedNode = null;
 		}
-		
+
 		/// <summary>
 		/// Removes a case from the tree
 		/// </summary>
@@ -378,7 +381,7 @@ namespace SPNATI_Character_Editor.Controls
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
 			TreeFilterMode mode = (TreeFilterMode)cboTreeFilter.SelectedIndex;
 			_view.SetFilter(mode, recTreeTarget.RecordKey);
-			_view.BuildTree();
+			_view.BuildTree(_showHidden);
 			_changingViews = false;
 		}
 		#endregion
@@ -405,7 +408,50 @@ namespace SPNATI_Character_Editor.Controls
 					}
 				}
 				group.Visible = (visibleCount > 0);
-			}			
+			}
+		}
+
+		private void tsConfig_DropDownOpening(object sender, EventArgs e)
+		{
+			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			if (node == null || node.Case == null)
+			{
+				tsHide.Enabled = false;
+				tsUnhide.Enabled = false;
+			}
+			else
+			{
+				Case selectedCase = node.Case;
+				bool hidden = _editorData.IsHidden(selectedCase);
+				tsHide.Enabled = !hidden;
+				tsUnhide.Enabled = hidden;
+			}
+		}
+
+		private void tsHide_Click(object sender, EventArgs e)
+		{
+			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			Case selectedCase = node?.Case;
+			if (selectedCase == null) { return; }
+
+			_editorData.HideCase(selectedCase, true);
+			_view.HideCase(selectedCase, true);
+		}
+
+		private void tsUnhide_Click(object sender, EventArgs e)
+		{
+			DialogueNode node = treeDialogue.SelectedNode?.Tag as DialogueNode;
+			Case selectedCase = node?.Case;
+			if (selectedCase == null) { return; }
+
+			_editorData.HideCase(selectedCase, false);
+			_view.HideCase(selectedCase, false);
+		}
+
+		private void tsShowHidden_Click(object sender, EventArgs e)
+		{
+			_showHidden = !_showHidden;
+			RegenerateTree();
 		}
 	}
 

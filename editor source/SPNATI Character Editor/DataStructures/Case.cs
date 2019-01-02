@@ -20,10 +20,16 @@ namespace SPNATI_Character_Editor
 		public string Tag;
 
 		/// <summary>
-		/// Unique case identifier. Unused by the game, but important for the editor
+		/// Unique case identifier in the format Stage-Id. Unused by the game, but important for the editor
 		/// </summary>
-		[DefaultValue(0)]
+		[DefaultValue(null)]
 		[XmlAttribute("id")]
+		public string StageId;
+
+		/// <summary>
+		/// ID for a working case. Like the 2nd piece of StageId
+		/// </summary>
+		[XmlIgnore]
 		public int Id;
 
 		[RecordSelect(DisplayName = "Target", GroupName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase")]

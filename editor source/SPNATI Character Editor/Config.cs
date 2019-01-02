@@ -231,6 +231,15 @@ namespace SPNATI_Character_Editor
 				Shell.Instance.AutoTickFrequency = value * 60000;
 			}
 		}
+
+		/// <summary>
+		/// Whether variable intellisense is enabled
+		/// </summary>
+		public static bool UseIntellisense
+		{
+			get { return !GetBoolean(Settings.DisableIntellisense); }
+			set { Set(Settings.DisableIntellisense, !value); }
+		}
 	}
 
 	public static class Settings
@@ -240,6 +249,7 @@ namespace SPNATI_Character_Editor
 		public static readonly string LastVersionRun = "version";
 		public static readonly string UserName = "username";
 		public static readonly string AutoSaveInterval = "autosave";
+		public static readonly string DisableIntellisense = "nointellisense";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";

@@ -27,14 +27,17 @@ namespace SPNATI_Character_Editor.Controls
 		private TreeView treeDialogue;
 		private ContextMenuStrip splitMenu;
 		private Character _character;
+		private CharacterEditorData _editorData;
 		private TreeFilterMode _filterMode;
 		private string _filterKey;
+		private bool _showHidden;
 
 		public void Initialize(TreeView tree, Character character)
 		{
 			treeDialogue = tree;
 			treeDialogue.TreeViewNodeSorter = null;
 			_character = character;
+			_editorData = CharacterDatabase.GetEditorData(_character);
 		}
 
 		public ContextMenuStrip GetCopyMenu()
@@ -51,8 +54,9 @@ namespace SPNATI_Character_Editor.Controls
 			return splitMenu;
 		}
 
-		public void BuildTree()
+		public void BuildTree(bool showHidden)
 		{
+			_showHidden = showHidden;
 			treeDialogue.Nodes.Clear();
 			treeDialogue.Sorted = false;
 
@@ -70,6 +74,11 @@ namespace SPNATI_Character_Editor.Controls
 			//Make nodes for cases
 			foreach (Case workingCase in _character.Behavior.GetWorkingCases())
 			{
+				if (!_showHidden && _editorData.IsHidden(workingCase))
+				{
+					continue;
+				}
+
 				//Exclude cases depending on filters. These are just excluded from the UI. This has no bearing on the actual underlying data
 				switch (_filterMode)
 				{
@@ -162,10 +171,14 @@ namespace SPNATI_Character_Editor.Controls
 			return node;
 		}
 
-		private static void UpdateNodeAppearance(TreeNode node)
+		private void UpdateNodeAppearance(TreeNode node)
 		{
 			DialogueNode wrapper = node.Tag as DialogueNode;
-			if (wrapper.Case.Hidden == "1")
+			if (_editorData.IsHidden(wrapper.Case))
+			{
+				node.ForeColor = System.Drawing.Color.LightGray;
+			}
+			else if (wrapper.Case.Hidden == "1")
 			{
 				node.ForeColor = System.Drawing.Color.Gray;
 			}
@@ -176,6 +189,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				node.ForeColor = System.Drawing.Color.Black;
 				//Highlight lines that are still using the default
 				Tuple<string, string> template = DialogueDatabase.GetTemplate(wrapper.Case.Tag);
 				if (template != null)
@@ -207,7 +221,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_filterMode == mode && _filterKey == filterKey) { return; }
 			_filterMode = mode;
 			_filterKey = filterKey;
-			BuildTree();
+			BuildTree(_showHidden);
 		}
 
 		public void SelectNode(int stage, Case stageCase)
@@ -397,6 +411,48 @@ namespace SPNATI_Character_Editor.Controls
 				return true;
 			}
 			return TriggerDatabase.UsedInStage(trigger.Tag, _character, stage.Id);
+		}
+
+		public void HideCase(Case c, bool hide)
+		{
+			if (hide)
+			{
+				foreach (int stage in c.Stages)
+				{
+					TreeNode node = _caseMap.Get(c, stage);
+					if (node != null)
+					{
+						if (_showHidden)
+						{
+							UpdateNodeAppearance(node);
+						}
+						else
+						{
+							node.Remove();
+							_caseMap.Remove(c, stage);
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (int stage in c.Stages)
+				{
+					if (_showHidden)
+					{
+						//just update color since the node already exists
+						TreeNode node = _caseMap.Get(c, stage);
+						if (node != null)
+						{
+							UpdateNodeAppearance(node);
+						}
+					}
+					else
+					{
+						//wait, how would you even unhide a node if it's not in the tree already? just ignore implementing this for now
+					}
+				}
+			}
 		}
 	}
 }

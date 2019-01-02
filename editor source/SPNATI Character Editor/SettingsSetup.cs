@@ -14,6 +14,7 @@ namespace SPNATI_Character_Editor
 			folderBrowserDialog1.SelectedPath = gameDir;
 			txtUserName.Text = Config.UserName;
 			valAutoSave.Value = Config.AutoSaveInterval;
+			chkIntellisense.Checked = Config.UseIntellisense;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -56,6 +57,7 @@ namespace SPNATI_Character_Editor
 			Config.Set(Settings.GameDirectory, dir);
 			Config.AutoSaveInterval = (int)valAutoSave.Value;
 			Config.UserName = txtUserName.Text;
+			Config.UseIntellisense = chkIntellisense.Checked;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Close();

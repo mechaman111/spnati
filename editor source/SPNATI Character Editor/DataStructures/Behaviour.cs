@@ -77,7 +77,6 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (var stageCase in stage.Cases)
 				{
-					NextId = Math.Max(NextId, stageCase.Id);
 					foreach (var line in stageCase.Lines)
 					{
 						line.Text = XMLHelper.DecodeEntityReferences(line.Text);
@@ -277,14 +276,22 @@ namespace SPNATI_Character_Editor
 				foreach (int s in workingCase.Stages)
 				{
 					if (s >= Stages.Count) { continue; }
+
+					string id = null;
+					if (workingCase.Id > 0)
+					{
+						id = $"{s}-{workingCase.Id}";
+					}
+
 					Stage stage = Stages[s];
 
 					//Find a case to merge into
-					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase));
+					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase) && (c.StageId == id || (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(c.StageId))));
 					if (existingCase == null)
 					{
 						//No case exists yet, so create one
 						existingCase = workingCase.CopyConditions();
+						existingCase.StageId = id;
 						existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
 						stage.Cases.Add(existingCase);
 					}
@@ -316,6 +323,17 @@ namespace SPNATI_Character_Editor
 					if (!TriggerDatabase.UsedInStage(stageCase.Tag, _character, stage.Id))
 						continue;
 					int code = stageCase.GetCode();
+
+					int id = 0;
+					if (!string.IsNullOrEmpty(stageCase.StageId))
+					{
+						string[] idPieces = stageCase.StageId.Split('-');
+						if (idPieces.Length > 1)
+						{
+							int.TryParse(idPieces[1], out id);
+						}
+					}
+
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						var defaultLine = CreateDefaultLine(line);
@@ -326,6 +344,7 @@ namespace SPNATI_Character_Editor
 						if (!map.TryGetValue(hash, out existing))
 						{
 							existing = stageCase.CopyConditions();
+							existing.Id = id;
 							map[hash] = existing;
 							existing.Lines.Add(defaultLine);
 							buckets.Add(existing);
@@ -359,6 +378,7 @@ namespace SPNATI_Character_Editor
 				if (caseMatchingStages == null)
 				{
 					caseMatchingStages = bucket.CopyConditions();
+					caseMatchingStages.Id = bucket.Id;
 					caseMatchingStages.Stages.AddRange(bucket.Stages);
 					caseList.Add(caseMatchingStages);
 				}

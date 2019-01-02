@@ -81,7 +81,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void SaveLayer(int rowIndex)
 		{
 			DataGridViewRow row = gridWardrobe.Rows[rowIndex];
-			string name = row.Cells[0].Value?.ToString();
+			string name = row.Cells[1].Value?.ToString();
 			if (string.IsNullOrEmpty(name)) { return; }
 			string lowercase = row.Cells[1].Value?.ToString();
 			bool plural = row.Cells[2].Value != null ? (bool)row.Cells[2].Value : false;
@@ -95,6 +95,10 @@ namespace SPNATI_Character_Editor.Controls
 				layer.Plural = plural;
 				layer.Type = type;
 				layer.Position = position;
+			}
+			else
+			{
+				
 			}
 		}
 
@@ -168,9 +172,9 @@ namespace SPNATI_Character_Editor.Controls
 			if (_populatingWardrobe) { return; }
 
 			Clothing layer = new Clothing();
-			DataGridViewRow row = gridWardrobe.Rows[e.RowIndex];
-			row.Tag = layer;
 			int index = _wardrobe.AddLayer(layer);
+			DataGridViewRow row = gridWardrobe.Rows[index];
+			row.Tag = layer;
 			_wardrobeChanges.Enqueue(new WardrobeChange(WardrobeChangeType.Add, index));
 		}
 

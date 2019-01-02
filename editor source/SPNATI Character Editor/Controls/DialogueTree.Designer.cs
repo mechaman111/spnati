@@ -22,6 +22,11 @@
 			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.tsbtnSplit = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsbtnRemoveDialogue = new System.Windows.Forms.ToolStripButton();
+			this.tsConfig = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsHide = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsUnhide = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsShowHidden = new System.Windows.Forms.ToolStripMenuItem();
 			this.treeDialogue = new Desktop.CommonControls.DBTreeView();
 			this.cboTreeFilter = new System.Windows.Forms.ComboBox();
 			this.label33 = new System.Windows.Forms.Label();
@@ -60,7 +65,8 @@
 			this.tstrDialogue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnAddDialogue,
             this.tsbtnSplit,
-            this.tsbtnRemoveDialogue});
+            this.tsbtnRemoveDialogue,
+            this.tsConfig});
 			this.tstrDialogue.Location = new System.Drawing.Point(0, 0);
 			this.tstrDialogue.Name = "tstrDialogue";
 			this.tstrDialogue.Padding = new System.Windows.Forms.Padding(2, 2, 3, 2);
@@ -84,7 +90,7 @@
 			this.triggerMenu.Name = "triggerMenu";
 			this.triggerMenu.OwnerItem = this.tsbtnAddDialogue;
 			this.triggerMenu.ShowImageMargin = false;
-			this.triggerMenu.Size = new System.Drawing.Size(128, 26);
+			this.triggerMenu.Size = new System.Drawing.Size(36, 4);
 			this.triggerMenu.Opening += new System.ComponentModel.CancelEventHandler(this.triggerMenu_Opening);
 			// 
 			// tsbtnSplit
@@ -92,8 +98,8 @@
 			this.tsbtnSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsbtnSplit.Name = "tsbtnSplit";
 			this.tsbtnSplit.Padding = new System.Windows.Forms.Padding(3);
-			this.tsbtnSplit.Size = new System.Drawing.Size(85, 28);
-			this.tsbtnSplit.Text = "Copy Tools";
+			this.tsbtnSplit.Size = new System.Drawing.Size(54, 28);
+			this.tsbtnSplit.Text = "Copy";
 			// 
 			// tsbtnRemoveDialogue
 			// 
@@ -104,6 +110,47 @@
 			this.tsbtnRemoveDialogue.Size = new System.Drawing.Size(60, 28);
 			this.tsbtnRemoveDialogue.Text = "Remove";
 			this.tsbtnRemoveDialogue.Click += new System.EventHandler(this.tsmiRemove_Click);
+			// 
+			// tsConfig
+			// 
+			this.tsConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsConfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsHide,
+            this.tsUnhide,
+            this.toolStripSeparator1,
+            this.tsShowHidden});
+			this.tsConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsConfig.Name = "tsConfig";
+			this.tsConfig.Size = new System.Drawing.Size(56, 28);
+			this.tsConfig.Text = "Config";
+			this.tsConfig.DropDownOpening += new System.EventHandler(this.tsConfig_DropDownOpening);
+			// 
+			// tsHide
+			// 
+			this.tsHide.Name = "tsHide";
+			this.tsHide.Size = new System.Drawing.Size(178, 22);
+			this.tsHide.Text = "Hide Case";
+			this.tsHide.Click += new System.EventHandler(this.tsHide_Click);
+			// 
+			// tsUnhide
+			// 
+			this.tsUnhide.Name = "tsUnhide";
+			this.tsUnhide.Size = new System.Drawing.Size(178, 22);
+			this.tsUnhide.Text = "Unhide Case";
+			this.tsUnhide.Click += new System.EventHandler(this.tsUnhide_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+			// 
+			// tsShowHidden
+			// 
+			this.tsShowHidden.CheckOnClick = true;
+			this.tsShowHidden.Name = "tsShowHidden";
+			this.tsShowHidden.Size = new System.Drawing.Size(178, 22);
+			this.tsShowHidden.Text = "Show Hidden Cases";
+			this.tsShowHidden.Click += new System.EventHandler(this.tsShowHidden_Click);
 			// 
 			// treeDialogue
 			// 
@@ -243,5 +290,10 @@
 		private System.Windows.Forms.Timer tmrDelete;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox cboView;
+		private System.Windows.Forms.ToolStripDropDownButton tsConfig;
+		private System.Windows.Forms.ToolStripMenuItem tsUnhide;
+		private System.Windows.Forms.ToolStripMenuItem tsHide;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem tsShowHidden;
 	}
 }

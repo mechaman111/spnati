@@ -41,6 +41,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.valAutoSave = new System.Windows.Forms.NumericUpDown();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.chkIntellisense = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -65,7 +66,7 @@
 			// cmdOk
 			// 
 			this.cmdOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOk.Location = new System.Drawing.Point(457, 96);
+			this.cmdOk.Location = new System.Drawing.Point(457, 111);
 			this.cmdOk.Name = "cmdOk";
 			this.cmdOk.Size = new System.Drawing.Size(75, 23);
 			this.cmdOk.TabIndex = 4;
@@ -88,7 +89,7 @@
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(538, 96);
+			this.cmdCancel.Location = new System.Drawing.Point(538, 111);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 5;
@@ -144,13 +145,24 @@
 			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
         "ave.");
 			// 
+			// chkIntellisense
+			// 
+			this.chkIntellisense.AutoSize = true;
+			this.chkIntellisense.Location = new System.Drawing.Point(15, 91);
+			this.chkIntellisense.Name = "chkIntellisense";
+			this.chkIntellisense.Size = new System.Drawing.Size(119, 17);
+			this.chkIntellisense.TabIndex = 8;
+			this.chkIntellisense.Text = "Variable Intellisense";
+			this.chkIntellisense.UseVisualStyleBackColor = true;
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(625, 131);
+			this.ClientSize = new System.Drawing.Size(625, 146);
+			this.Controls.Add(this.chkIntellisense);
 			this.Controls.Add(this.valAutoSave);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.txtUserName);
@@ -185,5 +197,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.NumericUpDown valAutoSave;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox chkIntellisense;
 	}
 }

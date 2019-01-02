@@ -300,7 +300,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
 		{
-			if (_selectedCase == null || e.FormattedValue == null || _populatingCase)
+			if (_selectedCase == null || e.FormattedValue == null || _populatingCase || !Config.UseIntellisense)
 				return;
 
 			List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase.Tag, e.FormattedValue.ToString());
