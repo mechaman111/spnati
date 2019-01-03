@@ -1689,7 +1689,7 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case "text":
 					//kill any old textbox with the ID
-					SceneObject old = _textboxes.Find(b => b.Id == directive.Id);
+					SceneObject old = _textboxes.Find(b => !string.IsNullOrEmpty(b.Id) && b.Id == directive.Id);
 					if (old != null)
 					{
 						_textboxes.Remove(old);
