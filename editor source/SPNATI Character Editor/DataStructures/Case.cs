@@ -987,7 +987,7 @@ namespace SPNATI_Character_Editor
 				return null; //if I computed the truth table correctly, this should never happen
 			}
 
-			//if not stages have been set, apply it to all
+			//if no stages have been set, apply it to all
 			Trigger trigger = TriggerDatabase.GetTrigger(response.Tag);
 			if (response.Stages.Count == 0)
 			{
@@ -1266,6 +1266,17 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				speakerStageRange = min.ToString();
+			}
+
+			if (other.Tag.Contains("crotch") || other.Tag.Contains("chest"))
+			{
+				//if there is only one important for these layers, don't both including a targetStage
+				string position = (other.Tag.Contains("crotch") ? "lower" : "upper");
+				int layerCount = speaker.Wardrobe.Count(c => c.Position == position && c.Type == "important");
+				if (layerCount == 1)
+				{
+					speakerStageRange = null;
+				}
 			}
 
 			other.Target = speaker.FolderName;
@@ -1635,7 +1646,7 @@ namespace SPNATI_Character_Editor
 				return true;
 			}
 
-			if (trigger.Size != character.Size)
+			if (trigger.Size != null && trigger.Size != character.Size)
 			{
 				return false;
 			}
