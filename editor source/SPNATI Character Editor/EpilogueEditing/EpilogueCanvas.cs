@@ -1448,6 +1448,22 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				treeScenes.DeleteSelectedNode();
 			}
+			else if (e.KeyCode == Keys.Down)
+			{
+				MoveSelectedObject(0, 1);
+			}
+			else if (e.KeyCode == Keys.Up)
+			{
+				MoveSelectedObject(0, -1);
+			}
+			else if (e.KeyCode == Keys.Left)
+			{
+				MoveSelectedObject(-1, 0);
+			}
+			else if (e.KeyCode == Keys.Right)
+			{
+				MoveSelectedObject(1, 0);
+			}
 		}
 
 		private void TreeScenes_AfterSelect(object sender, SceneTreeEventArgs e)
@@ -1502,11 +1518,20 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				return false;
 			}
-			if (_selectedKeyframe == null && _selectedDirective.Keyframes.Count > 0 && record.Key == "time")
+
+			bool allowed = def.AllowsProperty(record.Key);
+			if (!allowed)
 			{
 				return false;
 			}
-			return def.AllowsProperty(record.Key);
+			if (_selectedKeyframe == null && _selectedDirective.Keyframes.Count > 0)
+			{
+				if (def.RequiresAnimatedProperty(record.Key))
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 
 		/// <summary>
@@ -2162,6 +2187,23 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 		}
+
+		public void MoveSelectedObject(int x, int y)
+		{
+			if (_selectedObject != null)
+			{
+				if (_selectedObject.AdjustPosition((int)_selectedObject.X + x, (int)_selectedObject.Y + y, _scenePreview))
+				{
+					treeScenes.UpdateNode(_selectedObject.LinkedFrame);
+					if (_selectedObject.LinkedFrame == propertyTable.Data)
+					{
+						propertyTable.UpdateProperty("X");
+						propertyTable.UpdateProperty("Y");
+					}
+					canvas.Invalidate();
+				}
+			}
+		}
 	}
 
 	public class EpilogueContext : IAutoCompleteList
@@ -2228,7 +2270,6 @@ namespace SPNATI_Character_Editor.Controls
 				return list;
 			}
 			return null;
-
 		}
 	}
 

@@ -176,6 +176,7 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
+			Version = "";
 		}
 
 		public override string ToString()

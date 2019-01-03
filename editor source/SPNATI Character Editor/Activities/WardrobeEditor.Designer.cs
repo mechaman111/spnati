@@ -242,6 +242,13 @@
             "upper",
             "lower",
             "both",
+            "head",
+            "neck",
+            "hands",
+            "arms",
+            "feet",
+            "legs",
+            "waist",
             "other"});
 			this.ColPosition.Name = "ColPosition";
 			// 

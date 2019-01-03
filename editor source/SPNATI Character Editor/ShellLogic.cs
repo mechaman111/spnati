@@ -97,7 +97,7 @@ namespace SPNATI_Character_Editor
 			{
 				def.RequiredProperties.Add(key);
 			}
-			foreach (string key in new string[] { "time" })
+			foreach (string key in new string[] { "time", "x", "y", "scalex", "scaley", "rotation", "alpha" })
 			{
 				def.RequiredAnimatedProperties.Add(key);
 			}
@@ -113,7 +113,7 @@ namespace SPNATI_Character_Editor
 			{
 				def.RequiredProperties.Add(key);
 			}
-			foreach (string key in new string[] { "time" })
+			foreach (string key in new string[] { "time", "x", "y", "zoom" })
 			{
 				def.RequiredAnimatedProperties.Add(key);
 			}
