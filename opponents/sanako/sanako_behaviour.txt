@@ -52,8 +52,10 @@ release=
 
 
 marker=sanako_bad_start,public,Sanako is off to a bad start.
+marker=sanako_bootstraps,public,Sanako's plan involves bootstraps. But only once because it's very annoying if she says it more than once.
 marker=sanako_drama_club_costumes,private,Sanako thinks a princess is just in costume.
 marker=sanako_baked,public,Sanako has some baked goodies for everyone after the game.
+marker=sanako_baked_buns,public,Sanako's buns are almost hot and ready.
 marker=sanako_explains_pairs,private,Sanako explains basic pairs gameplay.
 marker=sanako_hot,private,Sanako blames the heat for her skirt removal.
 marker=sanako_introductions,public,Sanako invites everybody to introduce themselves.
@@ -76,7 +78,7 @@ marker=sanako_zone-tan_strapless,public,Sanako mistakes Zone-tan's bare shoulder
 start=0-wave,I'm Sanako Isogai, eighteen years old.
 
 selected=wave,I'm Sanako Isogai, eighteen years old.
-selected,count-nagisa:0,marker:sanako_age_uncertainty=headtilt,I'm Sanako Isogai, thirt&mdash; eighteen years old.
+selected,count-nagisa:0,marker:sanako_age_uncertainty=headtilt,I'm Sanako Isogai, thirty-f&mdash; eighteen years old.
 
 game_start=headtilt,It's so very nice to make your acquaintance!
 game_start=headtilt,Let's all get along, okay?
@@ -221,7 +223,10 @@ clothes=Panties,panties,important,lower,plural
 #lost all clothing
 -3-good_hand=peacesign,Yes!
 -3-good_hand=hopeful,Look at that. Good cards at last.
--3-okay_hand=disappointed,I'll pull myself together by my bootstraps.
+-3-okay_hand,notSaidMarker:sanako_bootstraps,marker:sanako_bootstraps,priority:0=disappointed,I'll pull myself together by my bootstraps.
+-3-okay_hand=provocative,Wouldn't <i>you</i> like to know what I have in store for you...
+-3-okay_hand=tasty,I can't help but notice that you can't keep your eyes off me, ~player~.
+-3-okay_hand=peacesign,May the best woman win.
 -3-bad_hand=zzzstarting2,I can't hang on any longer!
 -3-bad_hand,totalExposed:0=covering,I'm useless!
 -3-bad_hand,totalExposed:0,consecutiveLosses:5=crying,I've had a terrible game! I'm useless!
@@ -244,6 +249,7 @@ clothes=Panties,panties,important,lower,plural
 0-stripping=zzzstripping1,I thought I might take off my socks too if that's all right.
 0-stripping,saidMarker:sanako_bad_start=zzzstripping2,Will my shoes be enough? Do you need my socks too?
 0-stripping,totalExposed:1-4=zzzstripping2,It's only fair that I take my socks off too.
+1-stripped,saidMarker:sanako_bad_start=aaastripped1,I don't really mind going first, but it's someone else's turn next.
 1-stripped=aaastripped1,There! I'm ready for the next round.
 
 #losing shirt
@@ -257,6 +263,7 @@ clothes=Panties,panties,important,lower,plural
 #losing skirt
 2-must_strip_winning=coy,It's okay that it's my turn. I am technically winning, after all.
 2-must_strip_normal,marker:sanako_hot=coy,It certainly is hot in here today.
+2-must_strip_normal,totalRounds:2=unsure,Oh dear...
 2-must_strip_losing=interested,You all are very good at this game!
 2-must_strip_losing,totalRounds:2=shocked,What?!
 2-stripping=zzzstripping1,This is a pretty groovy skirt, isn't it?
@@ -349,6 +356,7 @@ clothes=Panties,panties,important,lower,plural
 -3-female_human_must_strip=peacesign,Care to join me, ~name~?
 -3-female_must_strip=zzzstarting1,It's hard to say what's the right choice and what's the wrong choice in this situation.
 -3-female_must_strip=hopeful,Thanks for saving me.
+-3-female_must_strip=disappointed,I'm sorry, ~name~, but you can see that I'm in need here.
 -3-female_must_strip,hasHand:High Card,priority:0=peacesign,That was a close call for me.
 
 #masturbating
@@ -364,11 +372,11 @@ clothes=Panties,panties,important,lower,plural
 -1-male_must_strip=happy,Go on, ~name~.
 -1-female_human_must_strip=concerned,She lost this hand? Are you sure?
 -1-female_human_must_strip=confident,We're about to get a bit closer.
--1-female_must_strip=footcaress,Could you take one step closer to me? Come on, I'll make you a nice bath.
 -1-female_must_strip=happy,Don't mind me. I'm just a spectator now.
 -1-female_must_strip=facepalm,Did I go out too early? Maybe I should've held back.
 -1-female_must_strip=confident,Let's see those cards. Who's up next?
 -1-female_must_strip=covering,Even ~name~ beat me...
+-1-female_must_strip,filter:bi-curious,priority:0=footcaress,Could you take one step closer to me? Come on, I'll make you a nice bath.
 
 #targeted
 0-female_must_strip,filter:armor,targetStage:0=wondering,You have such pretty armor. Are you in a group that does historical re-enactments?
@@ -441,6 +449,7 @@ clothes=Panties,panties,important,lower,plural
 1-male_removed_accessory=calm,Let's keep moving forward.
 1-female_removing_accessory=calm,It might take us a few rounds to get started.
 1-female_removed_accessory=bodytilt,Please just do your best, will you?
+1-female_removed_accessory=bodytilt,~clothing.ifPlural(Those weren't your <i>lucky</i> ~clothing~, I hope.|That cute little ~clothing~ sure must get a lot of compliments.)~
 1-female_removed_accessory=headtilt,I don't have a problem with that.
 
 #lost shirt
@@ -538,7 +547,7 @@ clothes=Panties,panties,important,lower,plural
 #lost bra
 4-male_removing_minor=calm,Oh ~name~...
 4-male_removed_minor=embarrassed,I thought maybe seeing me so exposed might make you a little more motivated...
-4-male_removed_minor=calm,How did let your ~clothing~ get so dirty, ~name~? Give it to me and I'll launder it for you.
+4-male_removed_minor=calm,How did you let your ~clothing~ get so dirty, ~name~? Give it to me and I'll launder it for you.
 4-female_removing_minor=bodytilt,Here comes the stylish ~clothing~.
 4-female_removed_minor=happy,Who knew that ~name~ was such a lucky girl?
 4-female_removed_minor=calm,Do you always undress so slowly?
@@ -915,6 +924,7 @@ clothes=Panties,panties,important,lower,plural
 -1-female_masturbating=covering,Let's not get too loud.
 -1-female_masturbating=concerned,Was I good enough when it was my turn? What do you think, ~player~?
 -1-female_masturbating=happy,Everyone gets a turn to show off.
+-1-female_masturbating=footcaress,Let me know if you want some tips. I read all of the ladies' magazines.
 -1-female_masturbating,totalAlive:2,priority:0=happy,The game is quickly drawing to a close.
 -1-female_masturbating,totalMasturbating:2,priority:0=covering,Keep it down, you two!
 -1-female_masturbating,totalMasturbating:3,priority:0=covering,Something a lot like this happened to me when I went to the public bathhouse one afternoon.
@@ -952,7 +962,7 @@ finished_masturbating,totalAlive:3,priority:0=happy,I don't want to play favorit
 finished_masturbating,totalAlive:2,priority:0=delighted,Give it your best out there, you two!
 finished_masturbating=happy,Although I'm a little embarrassed, if I hadn't given it a shot, I never would have experienced so much happiness.
 finished_masturbating=covering,I didn't share too much during my penalty, did I? Sometimes I say things without even knowing it.
-finished_masturbating,saidMarker:sanako_baked,priority:0=happy,Don't forget that I have some baked goodies for you all. I can't wait for you to taste my buns.
+finished_masturbating,saidMarker:sanako_baked,notSaidMarker:sanako_baked_buns,marker:sanako_baked_buns,priority:0=happy,Don't forget that I have some baked goodies for you all. I can't wait for you to taste my buns.
 
 
 #GAME OVER VICTORY
