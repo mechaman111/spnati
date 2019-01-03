@@ -579,7 +579,7 @@ function readProperties(sourceObj, scene) {
     // scene directives
     targetObj.time = parseFloat(targetObj.time, 10) * 1000 || 0;
     targetObj.delay = parseFloat(targetObj.delay, 10) * 1000 || 0;
-    targetObj.alpha = parseFloat(targetObj.alpha, 10);
+    if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
     if (targetObj.scale) {
@@ -1238,6 +1238,9 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
     $(img).css("transform-origin", pivotX + " " + pivotY);
   }
 
+  if (typeof alpha === "undefined") {
+    alpha = 100;
+  }
   var obj = {
     element: vehicle,
     rotElement: img,
@@ -1248,9 +1251,6 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
     rotation: rotation || 0,
     alpha: alpha,
   };
-  if (typeof alpha === "undefined") {
-    alpha = 100;
-  }
   if (width) {
     if (width.endsWith("%")) {
       obj.widthPct = parseInt(width, 10) / 100;
