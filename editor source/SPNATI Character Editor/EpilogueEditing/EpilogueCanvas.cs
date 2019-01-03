@@ -2063,7 +2063,7 @@ namespace SPNATI_Character_Editor.Controls
 					anim.Update(elapsedMs);
 					if (!anim.Looped)
 					{
-						if (anim.Elapsed >= anim.Duration)
+						if (anim.IsComplete)
 						{
 							_animations.RemoveAt(i);
 						}

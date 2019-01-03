@@ -103,7 +103,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 				else
 				{
-					WidthPct = widthValue / (float)scene.Width;
+					WidthPct = widthValue / scene.Width;
 				}
 				if (string.IsNullOrEmpty(height))
 				{
@@ -112,7 +112,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			else
 			{
-				WidthPct = imgWidth / (float)scene.Width;
+				WidthPct = imgWidth / scene.Width;
 				if (ObjectType == SceneObjectType.Text)
 				{
 					WidthPct = 0.2f;
@@ -132,7 +132,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 				else
 				{
-					HeightPct = heightValue / (float)scene.Height;
+					HeightPct = heightValue / scene.Height;
 				}
 				if (string.IsNullOrEmpty(width))
 				{
@@ -141,7 +141,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			else
 			{
-				HeightPct = imgHeight / (float)scene.Height;
+				HeightPct = imgHeight / scene.Height;
 			}
 
 			if (ObjectType == SceneObjectType.Text)

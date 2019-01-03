@@ -89,7 +89,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite.";
-			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "loop", "ease", "tween" })
+			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "delay", "loop", "ease", "tween" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -105,7 +105,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("camera") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Pans or zooms the camera.";
-			foreach (string key in new string[] { "x", "y", "zoom", "time", "loop", "ease", "tween" })
+			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -121,7 +121,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("fade") as DirectiveDefinition;
 			def.Description = "Fades the overlay to a new color and opacity level.";
 			def.IsAnimatable = true;
-			foreach (string key in new string[] { "color", "alpha", "time", "loop", "ease", "tween" })
+			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween" })
 			{
 				def.AllowedProperties.Add(key);
 			}

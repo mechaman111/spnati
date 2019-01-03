@@ -68,7 +68,7 @@ namespace SPNATI_Character_Editor
 					upper = c.GenericName;
 				if (c.Position == "lower" && c.Type == "major")
 					lower = c.GenericName;
-				if (c.Position == "lower" && c.Type == "major")
+				if (c.Position == "both" && c.Type == "major")
 					foundBoth = true;
 				if (c.Position == "upper" && c.Type == "important")
 					importantUpper = c.GenericName;

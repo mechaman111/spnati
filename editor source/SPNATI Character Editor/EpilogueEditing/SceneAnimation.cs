@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public string TweenMethod;
 
 		public float Elapsed;
+		public float Delay;
 
 		private SceneObject _initialState;
 
@@ -28,6 +29,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			_initialState.Index = 0;
 			AssociatedObject = obj;
 			Looped = directive.Looped;
+			if (!string.IsNullOrEmpty(directive.Delay))
+			{
+				float.TryParse(directive.Delay, out Delay);
+			}
 			EasingMethod = directive.EasingMethod;
 			TweenMethod = directive.InterpolationMethod;
 			if (fullPlayback)
@@ -45,6 +50,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Scene = scene;
 
 			Build(true);
+		}
+
+		public bool IsComplete
+		{
+			get
+			{
+				return Elapsed - Delay >= Duration;
+			}
 		}
 
 		public void Rebuild()
@@ -99,12 +112,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public void Update(float elapsedMs)
 		{
 			Elapsed += elapsedMs;
-			if (Looped)
+			if (Looped && IsComplete)
 			{
-				Elapsed = Elapsed % Duration;
+				Elapsed -= Duration;
 			}
 
-			float t = Elapsed;
+			float t = Elapsed - Delay;
+			if (t < 0)
+			{
+				return;
+			}
 			if (Duration == 0)
 			{
 				t = 1;

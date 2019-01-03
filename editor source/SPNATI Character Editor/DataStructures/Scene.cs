@@ -173,6 +173,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("css")]
 		public string Css;
 
+		[Float(DisplayName = "Delay (s)", Key = "delay", GroupOrder = 39, Description = "Time in seconds before the animation begins", Minimum = 0, Maximum = 100, Increment = 0.5f)]
+		[XmlAttribute("delay")]
+		public string Delay;
+
 		[Boolean(DisplayName = "Looped", Key = "loop", GroupOrder = 42, Description = "If true, the animation will repeat indefinitely until stopped")]
 		[DefaultValue(false)]
 		[XmlAttribute("loop")]
@@ -208,9 +212,10 @@ namespace SPNATI_Character_Editor
 					return $"Add sprite ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
 				case "move":
 					string time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
+					string delay = string.IsNullOrEmpty(Delay) ? "" : $" delay {Delay}s";
 					string loop = Looped ? " (loop)" : "";
 					string props = GetProperties();
-					return $"Move sprite ({Id}) {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
+					return $"Move sprite ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
 				case "wait":
 					return "Wait for Animations";
 				case "pause":
