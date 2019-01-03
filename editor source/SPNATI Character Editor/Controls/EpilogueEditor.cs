@@ -158,7 +158,14 @@ namespace SPNATI_Character_Editor.Controls
 			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
 			tableGeneral.Data = _ending;
 			canvas.SetEpilogue(_ending, _character);
-			tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
+			if (ending != null)
+			{
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
+			}
+			else
+			{
+				tabs.SelectedTab = pageGeneral;
+			}
 		}
 
 		private void PopulateDataFields()

@@ -149,7 +149,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string DirectiveType;
 
-		[Text(DisplayName = "Id", GroupOrder = 0, Key = "id", Description = "Unique identifier")]
+		[Text(DisplayName = "ID", GroupOrder = 0, Key = "id", Description = "Unique identifier")]
 		[XmlAttribute("id")]
 		public string Id;
 
