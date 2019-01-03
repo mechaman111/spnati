@@ -58,7 +58,7 @@ epilogueContent.addEventListener('click', function() {
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
-function Animation(id, frames, updateFunc, loop, easingFunction) {
+function Animation(id, frames, updateFunc, loop, easingFunction, delay) {
   this.id = id;
   this.looped = loop === "1" || loop === "true";
   this.keyframes = frames;
@@ -68,6 +68,7 @@ function Animation(id, frames, updateFunc, loop, easingFunction) {
     frames[i].keyframes = frames;
   }
   this.duration = frames[frames.length - 1].end;
+  this.delay = delay;
   this.elapsed = 0;
   this.updateFunc = updateFunc;
 }
@@ -77,6 +78,9 @@ Animation.prototype.easingFunctions = {
   "ease-in": function (t) { return t * t; },
   "ease-out": function (t) { return t * (2 - t); },
 };
+Animation.prototype.isComplete = function () {
+  return this.elapsed - this.delay >= this.duration;
+};
 Animation.prototype.update = function (elapsedMs) {
   this.elapsed += elapsedMs;
 
@@ -84,10 +88,13 @@ Animation.prototype.update = function (elapsedMs) {
 
   //determine what keyframes we're between
   var last;
-  if (this.looped) {
-    this.elapsed = this.elapsed % this.duration;
+  if (this.looped && this.isComplete()) {
+    this.elapsed -= this.duration;
   }
-  var t = this.elapsed;
+  var t = this.elapsed - this.delay;
+  if (t < 0) {
+    return;
+  }
   var easingFunction = this.easingFunction;
   if (this.duration === 0) {
     t = 1;
@@ -571,7 +578,8 @@ function readProperties(sourceObj, scene) {
   if (targetObj.type !== "text") {
     // scene directives
     targetObj.time = parseFloat(targetObj.time, 10) * 1000 || 0;
-    targetObj.alpha = parseFloat(targetObj.alpha, 10);
+    targetObj.delay = parseFloat(targetObj.delay, 10) * 1000 || 0;
+    if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
     if (targetObj.scale) {
@@ -937,7 +945,7 @@ EpiloguePlayer.prototype.update = function (elapsed) {
     var anim = this.anims[i];
     anim.update(elapsed);
     if (!anim.looped) {
-      if (anim.elapsed >= anim.duration) {
+      if (anim.isComplete()) {
         this.anims.splice(i, 1);
       }
       else {
@@ -1230,6 +1238,9 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
     $(img).css("transform-origin", pivotX + " " + pivotY);
   }
 
+  if (typeof alpha === "undefined") {
+    alpha = 100;
+  }
   var obj = {
     element: vehicle,
     rotElement: img,
@@ -1238,7 +1249,7 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
     scalex: scaleX || 1,
     scaley: scaleY || 1,
     rotation: rotation || 0,
-    alpha: alpha || 100,
+    alpha: alpha,
   };
   if (width) {
     if (width.endsWith("%")) {
@@ -1277,6 +1288,11 @@ EpiloguePlayer.prototype.addImage = function (id, src, args) {
       width: obj.widthPct * this.activeScene.width,
       height: obj.heightPct * this.activeScene.height,
     });
+  $(img).css(
+  {
+    width: obj.widthPct * this.activeScene.width,
+    height: obj.heightPct * this.activeScene.height,
+  });
   this.$canvas.append(vehicle);
 
   this.sceneObjects[id] = obj;
@@ -1422,7 +1438,7 @@ EpiloguePlayer.prototype.moveSprite = function (directive, context) {
     context.scaley = sprite.scaley;
     context.alpha = sprite.alpha;
     frames.unshift(context);
-    this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease));
+    this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease, directive.delay));
   }
 }
 
@@ -1465,7 +1481,7 @@ EpiloguePlayer.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease));
+  this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay));
 }
 
 EpiloguePlayer.prototype.returnCamera = function (directive, context) {
@@ -1522,7 +1538,7 @@ EpiloguePlayer.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.overlay.a;
   frames.unshift(context);
-  this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease));
+  this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay));
 }
 
 EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
