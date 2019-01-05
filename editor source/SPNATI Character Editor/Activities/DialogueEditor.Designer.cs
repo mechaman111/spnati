@@ -219,13 +219,13 @@ namespace SPNATI_Character_Editor.Activities
 			this.splitDialogue.SplitterDistance = 266;
 			this.splitDialogue.TabIndex = 16;
 			// 
-			// tree
+			// treeDialogue
 			// 
 			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.treeDialogue.Location = new System.Drawing.Point(3, 3);
-			this.treeDialogue.Name = "tree";
+			this.treeDialogue.Name = "treeDialogue";
 			this.treeDialogue.Size = new System.Drawing.Size(259, 665);
 			this.treeDialogue.TabIndex = 40;
 			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
@@ -434,8 +434,8 @@ namespace SPNATI_Character_Editor.Activities
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.grpConditions.Controls.Add(this.valPriority);
 			this.grpConditions.Controls.Add(this.label73);
-			this.grpConditions.Controls.Add(this.tabControlConditions);
 			this.grpConditions.Controls.Add(this.tableConditions);
+			this.grpConditions.Controls.Add(this.tabControlConditions);
 			this.grpConditions.Location = new System.Drawing.Point(9, 184);
 			this.grpConditions.Name = "grpConditions";
 			this.grpConditions.Size = new System.Drawing.Size(682, 233);
@@ -1780,14 +1780,20 @@ namespace SPNATI_Character_Editor.Activities
 			// 
 			// tableConditions
 			// 
+			this.tableConditions.AllowDelete = true;
+			this.tableConditions.AllowFavorites = true;
+			this.tableConditions.AllowHelp = false;
 			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableConditions.Data = null;
+			this.tableConditions.HideAddField = false;
+			this.tableConditions.HideSpeedButtons = false;
 			this.tableConditions.Location = new System.Drawing.Point(6, 19);
 			this.tableConditions.Name = "tableConditions";
 			this.tableConditions.PlaceholderText = "Add a condition";
 			this.tableConditions.RemoveCaption = "Remove condition";
+			this.tableConditions.RowHeaderWidth = 0F;
 			this.tableConditions.Size = new System.Drawing.Size(670, 208);
 			this.tableConditions.TabIndex = 31;
 			this.tableConditions.UseAutoComplete = true;

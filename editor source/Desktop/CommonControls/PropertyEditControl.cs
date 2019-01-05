@@ -131,6 +131,17 @@ namespace Desktop.CommonControls
 		}
 
 		/// <summary>
+		/// Called to indicate that the data has been changed externally and should be reloaded
+		/// </summary>
+		public void Rebind()
+		{
+			OnRebindData();
+		}
+		protected virtual void OnRebindData()
+		{
+		}
+
+		/// <summary>
 		/// Clears the backing field
 		/// </summary>
 		public virtual void Clear() { }

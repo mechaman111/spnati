@@ -39,27 +39,50 @@ namespace SPNATI_Character_Editor.Activities
 				string path = folders[i++];
 				string folderName = Path.GetFileName(path);
 
-				if (Config.GetBoolean(Settings.LoadOnlyLastCharacter) && folderName != lastCharacter)
+				if (Config.GetBoolean(Settings.LoadOnlyLastCharacter) && folderName != lastCharacter && folderName != "reskins")
 				{
 					continue; //makes startup times way faster when you just need to check something really quick
 				}
 
 				await LoadChunk(folderName, step, () =>
 				{
-					Character character = Serialization.ImportCharacter(path);
-					if (character != null)
+					if (folderName == "reskins")
 					{
-						CharacterDatabase.Add(character);
-						for (int t = 0; t < character.Tags.Count; t++)
+						foreach (string skinFolder in Directory.EnumerateDirectories(path))
 						{
-							string tag = character.Tags[t].ToLowerInvariant();
-							character.Tags[t] = tag;
-							if (!string.IsNullOrEmpty(tag))
+							Costume reskin = Serialization.ImportSkin(skinFolder);
+							if (reskin != null)
 							{
-								TagDatabase.AddTag(tag);
+								CharacterDatabase.AddSkin(reskin);
+								reskin.Tags.ForEach(t =>
+								{
+									if (!string.IsNullOrEmpty(t.Name))
+									{
+										t.Name = t.Name.ToLowerInvariant();
+										TagDatabase.AddTag(t.Name);
+									}
+								});
+								TagDatabase.AddTag(reskin.Id);
 							}
 						}
-						TagDatabase.AddTag(character.DisplayName, false);
+					}
+					else
+					{
+						Character character = Serialization.ImportCharacter(path);
+						if (character != null)
+						{
+							CharacterDatabase.Add(character);
+							for (int t = 0; t < character.Tags.Count; t++)
+							{
+								string tag = character.Tags[t].ToLowerInvariant();
+								character.Tags[t] = tag;
+								if (!string.IsNullOrEmpty(tag))
+								{
+									TagDatabase.AddTag(tag);
+								}
+							}
+							TagDatabase.AddTag(character.DisplayName, false);
+						}
 					}
 				});
 			}
@@ -73,6 +96,24 @@ namespace SPNATI_Character_Editor.Activities
 			human.Behavior.OnAfterDeserialize(human);
 			CharacterDatabase.Add(human);
 			CharacterDatabase.AddEditorData(human, new CharacterEditorData() { Owner = "human" });
+
+			//link up skins
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				c.Metadata.AlternateSkins.ForEach(set =>
+				{
+					foreach (SkinLink link in set.Skins)
+					{
+						Costume skin = CharacterDatabase.GetSkin(link.Folder);
+						if (skin != null)
+						{
+							skin.Character = c;
+							link.Costume = skin;
+							skin.Link = link;
+						}
+					}
+				});
+			}
 
 			progressBar.Visible = false;
 			//display What's New form if this is a new version

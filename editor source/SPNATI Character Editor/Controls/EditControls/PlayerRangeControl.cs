@@ -20,6 +20,10 @@ namespace SPNATI_Character_Editor
 			{
 				cboMax.SelectedItem = pieces[1];
 			}
+			else
+			{
+				cboMax.SelectedItem = pieces[0];
+			}
 		}
 
 		public override void Clear()
@@ -39,27 +43,17 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 
-			if (string.IsNullOrEmpty(min))
+			int from;
+			int to;
+			if (!int.TryParse(min, out from))
 			{
-				min = "0";
+				from = -1;
 			}
-			if (string.IsNullOrEmpty(max))
+			if (!int.TryParse(max, out to))
 			{
-				SetValue(min);
+				to = -1;
 			}
-			else
-			{
-				int minValue = int.Parse(min);
-				int maxValue = int.Parse(max);
-				if (maxValue <= minValue)
-				{
-					SetValue(min);
-				}
-				else
-				{
-					SetValue($"{min}-{max}");
-				}
-			}
+			SetValue(GUIHelper.ToRange(from, to));
 		}
 
 		private void cboMin_SelectedIndexChanged(object sender, EventArgs e)

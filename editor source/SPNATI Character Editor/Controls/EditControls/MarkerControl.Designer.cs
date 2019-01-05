@@ -34,14 +34,14 @@
 			// recField
 			// 
 			this.recField.AllowCreate = true;
-			this.recField.Location = new System.Drawing.Point(3, 0);
+			this.recField.Location = new System.Drawing.Point(0, 0);
 			this.recField.Name = "recField";
 			this.recField.PlaceholderText = null;
 			this.recField.Record = null;
 			this.recField.RecordContext = null;
 			this.recField.RecordKey = null;
 			this.recField.RecordType = null;
-			this.recField.Size = new System.Drawing.Size(213, 20);
+			this.recField.Size = new System.Drawing.Size(219, 20);
 			this.recField.TabIndex = 0;
 			this.recField.UseAutoComplete = true;
 			// 

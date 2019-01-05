@@ -71,8 +71,8 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string DecodeEntityReferences(string text)
 		{
-			text = text.Replace("&lt;i&gt;", "<i>");
-			text = text.Replace("&lt;/i&gt;", "</i>");
+			//text = text.Replace("&lt;i&gt;", "<i>");
+			//text = text.Replace("&lt;/i&gt;", "</i>");
 			//text = text.Replace("&amp;", "&");
 			return text;
 		}

@@ -3,7 +3,7 @@
 	public static class DesktopMessages
 	{
 		/// <summary>
-		/// An image was replaced with a new version [CharacterImage]
+		/// An image was replaced with a new version [ImageReplacementArgs]
 		/// </summary>
 		public const int ReplaceImage = 1;
 	}

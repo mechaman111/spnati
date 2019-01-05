@@ -924,7 +924,9 @@ namespace UnitTests
 		{
 			Case c = new Case("good_hand");
 			c.AlsoPlaying = "other";
-			Assert.IsNull(c.CreateResponse(_male, _female));
+			Case response = c.CreateResponse(_male, _female);
+			Assert.IsTrue(response.Conditions.Count == 1);
+			Assert.AreEqual("other", response.Conditions[0].Filter);
 		}
 
 		[TestMethod]
@@ -932,7 +934,9 @@ namespace UnitTests
 		{
 			Case c = new Case("female_removing_accessory");
 			c.AlsoPlaying = "other";
-			Assert.IsNull(c.CreateResponse(_male, _female));
+			Case response = c.CreateResponse(_male, _female);
+			Assert.IsTrue(response.Conditions.Count == 1);
+			Assert.AreEqual("other", response.Conditions[0].Filter);
 		}
 
 		[TestMethod]
@@ -941,7 +945,9 @@ namespace UnitTests
 			Case c = new Case("female_removing_accessory");
 			c.Target = _female.FolderName;
 			c.AlsoPlaying = "other";
-			Assert.IsNull(c.CreateResponse(_male, _female));
+			Case response = c.CreateResponse(_male, _female);
+			Assert.IsTrue(response.Conditions.Count == 1);
+			Assert.AreEqual("other", response.Conditions[0].Filter);
 		}
 
 		[TestMethod]
@@ -950,7 +956,9 @@ namespace UnitTests
 			Case c = new Case("female_removing_accessory");
 			c.Target = "other1";
 			c.AlsoPlaying = "other2";
-			Assert.IsNull(c.CreateResponse(_male, _female));
+			Case response = c.CreateResponse(_male, _female);
+			Assert.IsTrue(response.Conditions.Count == 1);
+			Assert.AreEqual("other2", response.Conditions[0].Filter);
 		}
 
 		[TestMethod]

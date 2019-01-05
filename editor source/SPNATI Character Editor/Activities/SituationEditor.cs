@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
@@ -11,7 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 		private CharacterEditorData _editorData;
 		private ImageLibrary _imageLibrary;
 		private Situation _selectedCase;
-		
+
 		public SituationEditor()
 		{
 			InitializeComponent();
@@ -79,7 +80,16 @@ namespace SPNATI_Character_Editor.Activities
 
 		private DataGridViewRow BuildLine(Situation line)
 		{
-			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, line.GetStageString(), line.Case.ToString())];
+			DataGridViewRow row = gridCases.Rows[gridCases.Rows.Add(line.Name, line.Description, line.GetStageString(), line.LinkedCase.ToString())];
+			DataGridViewCell jumpButton = row.Cells["ColJump"];
+			if (line.Id == 0)
+			{
+				jumpButton.ToolTipText = "";// "Link Case";
+			}
+			else
+			{
+				jumpButton.ToolTipText = "Go to Case";
+			}
 			row.Tag = line;
 			return row;
 		}
@@ -118,7 +128,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (line == null) { return; }
 				HashSet<int> selectedStages = new HashSet<int>();
 				selectedStages.Add(line.MinStage);
-				gridLines.SetData(_character, _character.Behavior.Stages[line.MinStage], line.Case, selectedStages, _imageLibrary);
+				gridLines.SetData(_character, _character.Behavior.Stages[line.MinStage], line.LinkedCase, selectedStages, _imageLibrary);
 			}
 		}
 
@@ -136,6 +146,49 @@ namespace SPNATI_Character_Editor.Activities
 				img = _imageLibrary.Find(stage + "-" + image);
 			}
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+		}
+
+		private void gridCases_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.ColumnIndex == ColJump.Index && e.RowIndex >= 0)
+			{
+				Situation s = gridCases.Rows[e.RowIndex]?.Tag as Situation;
+				if (s == null || s.Id == 0)
+				{
+					return;
+				}
+
+				Image img = s.Id > 0 ? Properties.Resources.GoToLine : Properties.Resources.Link;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
+		}
+
+		private void gridCases_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (gridCases.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+			{
+				Situation situation = gridCases.Rows[e.RowIndex]?.Tag as Situation;
+				if (situation != null)
+				{
+					if (situation.Id == 0)
+					{
+						//Forms.SituationLinker linker = new Forms.SituationLinker();
+						//linker.SetData(_character, situation);
+						//linker.ShowDialog();
+					}
+					else
+					{
+						Shell.Instance.Launch<Character, DialogueEditor>(_character, new ValidationContext(new Stage(situation.LinkedCase.Stages[0]), situation.LinkedCase, null));
+					}
+				}
+			}
 		}
 	}
 }

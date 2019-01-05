@@ -67,21 +67,6 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public bool Unrecognized { get; set; }
 
-		#region Formatting help for xml export
-		[XmlAttribute("xmlGroup")]
-		/// <summary>
-		/// Group for sorting in the xml output
-		/// </summary>
-		/// <remarks>This order comes from observing Python's hashing, since make_xml.py just puts tags into a dictionary and prints them out in whatever order that ends up being</remarks>
-		public int XmlGroup;
-
-		[XmlAttribute("xmlOrder")]
-		/// <summary>
-		/// Order within group for sorting
-		/// </summary>
-		public int XmlOrder;
-		#endregion
-
 		/// <summary>
 		/// Used by the editor to group tags that correspond to the same phase (ex. must_strip_normal and must_strip_winning)
 		/// </summary>

@@ -66,8 +66,6 @@ namespace SPNATI_Character_Editor.Activities
 			foreach (string tag in tags)
 			{
 				gridTags.Rows.Add(tag);
-				//DataGridViewRow row = gridTags.Rows[gridTags.Rows.Add()];
-				//row.Cells[0].Value = tag;
 			}
 		}
 
@@ -81,11 +79,16 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void SaveTags()
 		{
-			_character.Tags.Clear();
+			HashSet<string> tags = new HashSet<string>();
 			foreach (TagControl ctl in flowPanel.Controls)
 			{
-				_character.Tags.AddRange(ctl.GetTags());
+				foreach (string tag in ctl.GetTags())
+				{
+					tags.Add(tag);
+				}
 			}
+			_character.Tags.Clear();
+			_character.Tags.AddRange(tags);
 
 			for (int i = 0; i < gridTags.Rows.Count; i++)
 			{
