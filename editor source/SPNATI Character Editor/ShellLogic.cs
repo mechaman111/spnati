@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 				Character c = ws.Record as Character;
 				if (c != null && !string.IsNullOrEmpty(c.Metadata?.Writer) && c.Metadata.Writer.Contains(Config.UserName))
 				{
-					Save(true);
+					Save(true, ws);
 				}
 			}
 		}
@@ -238,14 +238,14 @@ namespace SPNATI_Character_Editor
 
 		private static void Save()
 		{
-			Save(false);
+			Save(false, Shell.Instance.ActiveWorkspace);
 		}
 
-		private static void Save(bool auto)
+		private static void Save(bool auto, IWorkspace workspace)
 		{
 			Cursor.Current = Cursors.WaitCursor;
 			Shell.Instance.ActiveActivity?.Save();
-			Shell.Instance.ActiveWorkspace?.SendMessage(WorkspaceMessages.Save, auto);
+			workspace?.SendMessage(WorkspaceMessages.Save, auto);
 			Cursor.Current = Cursors.Default;
 		}
 

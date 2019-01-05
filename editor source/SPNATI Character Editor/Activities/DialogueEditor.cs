@@ -1186,6 +1186,8 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_selectedCase != null)
 			{
+				if (_editorData.IsCalledOut(_selectedCase)) { return; } //can't call something out twice
+
 				SaveCase();
 				if (!_selectedCase.HasFilters && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
 				{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -37,6 +38,7 @@ namespace SPNATI_Character_Editor.Controls
 					gridDialogue.RowHeadersVisible = false;
 					gridDialogue.EditMode = DataGridViewEditMode.EditProgrammatically;
 					gridDialogue.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+					ColDelete.Visible = false;
 				}
 				else
 				{
@@ -45,6 +47,7 @@ namespace SPNATI_Character_Editor.Controls
 					gridDialogue.RowHeadersVisible = true;
 					gridDialogue.EditMode = DataGridViewEditMode.EditOnEnter;
 					gridDialogue.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+					ColDelete.Visible = true;
 				}
 			}
 		}
@@ -53,8 +56,8 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			ColDelete.FlatStyle = FlatStyle.Popup;
-			ColDelete.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
+			//ColDelete.FlatStyle = FlatStyle.Popup;
+			//ColDelete.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
 
 			ColPerTarget.FalseValue = false;
 
@@ -274,6 +277,22 @@ namespace SPNATI_Character_Editor.Controls
 			SelectRow(e.RowIndex);
 		}
 
+		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.ColumnIndex == ColDelete.Index)
+			{
+				Image img = Properties.Resources.Delete;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
+		}
+
 		private void gridDialogue_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
 		{
 			if (_selectedCase == null)
@@ -335,7 +354,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridDialogue.Columns.Count || e.RowIndex == gridDialogue.NewRowIndex)
+			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridDialogue.Columns.Count || e.RowIndex == gridDialogue.NewRowIndex || ReadOnly)
 			{
 				return;
 			}

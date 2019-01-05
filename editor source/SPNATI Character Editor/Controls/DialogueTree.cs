@@ -281,16 +281,19 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Behavior_CaseModified(object sender, Case modifiedCase)
 		{
+			if (IsDisposed) { return; }
 			_view.ModifyCase(modifiedCase);
 		}
 
 		private void Behavior_CaseRemoved(object sender, Case removedCase)
 		{
+			if (IsDisposed) { return; }
 			_view.RemoveCase(removedCase);
 		}
 
 		private void Behavior_CaseAdded(object sender, Case newCase)
 		{
+			if (IsDisposed) { return; }
 			_view.AddCase(newCase);
 		}
 

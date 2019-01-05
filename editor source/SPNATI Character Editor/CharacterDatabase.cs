@@ -67,7 +67,7 @@ namespace SPNATI_Character_Editor
 		public static void AddEditorData(Character character, CharacterEditorData data)
 		{
 			data = data ?? new CharacterEditorData();
-			data.Owner = character.FolderName;
+			data.LinkOwner(character);
 			_editorData[character] = data;
 		}
 

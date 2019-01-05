@@ -431,6 +431,8 @@ namespace SPNATI_Character_Editor
 			if (_builtWorkingCases) { return; }
 			BuildWorkingCases();
 
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			editorData?.Initialize();
 			DataConversions.ConvertVersion(_character);
 		}
 
