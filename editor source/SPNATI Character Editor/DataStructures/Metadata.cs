@@ -1,8 +1,6 @@
-﻿using SPNATI_Character_Editor.IO;
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -15,7 +13,6 @@ namespace SPNATI_Character_Editor
 	[XmlRoot("opponent")]
 	public class Metadata : IHookSerialization
 	{
-		[XmlNewLine]
 		[XmlElement("enabled")]
 		public bool Enabled;
 
@@ -53,9 +50,6 @@ namespace SPNATI_Character_Editor
 		[DefaultValue(100.0f)]
 		public float Scale = 100.0f;
 
-		[XmlElement("has_ending")]
-		public bool HasEnding;
-
 		[XmlElement("epilogue")]
 		public List<EpilogueMeta> Endings;
 
@@ -65,6 +59,9 @@ namespace SPNATI_Character_Editor
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
 		public List<string> Tags;
+
+		[XmlElement("alternates")]
+		public List<AlternateSkin> AlternateSkins = new List<AlternateSkin>();
 
 		public Metadata()
 		{
@@ -86,14 +83,14 @@ namespace SPNATI_Character_Editor
 			Label = c.Label;
 			Gender = c.Gender;
 			Layers = c.Layers;
-			HasEnding = c.Endings.Count > 0;
 			Endings = c.Endings.ConvertAll(e => new EpilogueMeta
 			{
 				Title = e.Title,
 				Gender = e.Gender,
-				GalleryImage = e.GalleryImage ?? (e.Screens.Count > 0 ? e.Screens[0].Image : null),
+				GalleryImage = e.GalleryImage ?? (e.Scenes.Count > 0 ? e.Scenes[0].Background : null),
 				AlsoPlaying = e.AlsoPlaying,
 				PlayerStartingLayers = e.PlayerStartingLayers,
+				Hint = e.Hint,
 				HasMarkerConditions = !string.IsNullOrWhiteSpace(e.AllMarkers)
 					|| !string.IsNullOrWhiteSpace(e.AnyMarkers)
 					|| !string.IsNullOrWhiteSpace(e.NotMarkers)
@@ -133,6 +130,9 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
+
+		[XmlAttribute("hint")]
+		public string Hint;
 
 		[XmlText]
 		public string Title;

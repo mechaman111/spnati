@@ -1,6 +1,7 @@
 ﻿using System;
 using Desktop;
 using Desktop.CommonControls;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -42,7 +43,7 @@ namespace SPNATI_Character_Editor
 			if (range == null)
 			{
 				valFrom.Value = 0;
-				valTo.Text = "";
+				valTo.Value = 0;
 				return;
 			}
 			string[] pieces = range.Split('-');
@@ -52,16 +53,24 @@ namespace SPNATI_Character_Editor
 			{
 				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, from));
 			}
+			else
+			{
+				valFrom.Text = "";
+			}
 			if (pieces.Length > 1)
 			{
 				if (int.TryParse(pieces[1], out to))
 				{
 					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, to));
 				}
+				else
+				{
+					valTo.Text = "";
+				}
 			}
 			else
 			{
-				valTo.Text = "";
+				valTo.Value = valFrom.Value;
 			}
 		}
 
@@ -69,6 +78,8 @@ namespace SPNATI_Character_Editor
 		{
 			valFrom.ValueChanged -= ValueChanged;
 			valTo.ValueChanged -= ValueChanged;
+			valFrom.TextChanged -= Value_TextChanged;
+			valTo.TextChanged -= Value_TextChanged;
 			cboStatus.SelectedIndexChanged -= ValueChanged;
 			cboGender.SelectedIndexChanged -= ValueChanged;
 			recTag.RecordChanged -= RecordChanged;
@@ -79,6 +90,8 @@ namespace SPNATI_Character_Editor
 		{
 			valFrom.ValueChanged += ValueChanged;
 			valTo.ValueChanged += ValueChanged;
+			valFrom.TextChanged += Value_TextChanged;
+			valTo.TextChanged += Value_TextChanged;
 			cboStatus.SelectedIndexChanged += ValueChanged;
 			cboGender.SelectedIndexChanged += ValueChanged;
 			recTag.RecordChanged += RecordChanged;
@@ -95,6 +108,15 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
+		private void Value_TextChanged(object sender, EventArgs e)
+		{
+			NumericUpDown ctl = sender as NumericUpDown;
+			if (ctl?.Text == "")
+			{
+				Save();
+			}
+		}
+
 		private string GetCount()
 		{
 			int from = (int)valFrom.Value;
@@ -107,18 +129,7 @@ namespace SPNATI_Character_Editor
 			{
 				to = -1;
 			}
-			if (from == -1)
-			{
-				return null;
-			}
-			else if (to <= from)
-			{
-				return from.ToString();
-			}
-			else
-			{
-				return $"{from}-{to}";
-			}
+			return GUIHelper.ToRange(from, to);
 		}
 
 		public override void Clear()

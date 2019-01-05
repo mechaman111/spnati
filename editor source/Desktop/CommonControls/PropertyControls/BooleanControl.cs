@@ -4,34 +4,44 @@ namespace Desktop.CommonControls.PropertyControls
 {
 	public partial class BooleanControl : PropertyEditControl
 	{
+		private bool _autoSelect;
+
 		public BooleanControl()
 		{
 			InitializeComponent();
+		}
+
+		protected override void OnSetParameters(EditControlAttribute parameters)
+		{
+			BooleanAttribute attrib = parameters as BooleanAttribute;
+			_autoSelect = attrib.AutoCheck;
 		}
 
 		protected override void OnBoundData()
 		{
 			Type propType = PropertyType;
 
-			//False values will never even be bound to a control in the PropertyTable, so the only time someone should want to edit a boolean is to mark it true,
-			//So, let's just do that up front.
-			chkEnabled.Checked = true;
-			Save();
+			if (_autoSelect)
+			{
+				chkEnabled.Checked = true;
+				Save();
+			}
+			else
+			{
+				if (propType == typeof(bool))
+				{
+					chkEnabled.Checked = (bool)GetValue();
+				}
+				else
+				{
+					string value = GetValue()?.ToString();
+					if (!string.IsNullOrEmpty(value) && value != "0")
+					{
+						chkEnabled.Checked = true;
+					}
+				}
+			}
 
-			//If we *did* care about false, here it is for posterity's sake:
-			//if (propType == typeof(bool))
-			//{
-			//	chkEnabled.Checked = (bool)GetValue();
-			//}
-			//else
-			//{
-			//	string value = GetValue()?.ToString();
-			//	if (!string.IsNullOrEmpty(value) && value != "0")
-			//	{
-			//		chkEnabled.Checked = true;
-			//	}
-			//}
-			
 			chkEnabled.CheckedChanged += ChkEnabled_CheckedChanged;
 		}
 
@@ -65,5 +75,10 @@ namespace Desktop.CommonControls.PropertyControls
 		{
 			get { return typeof(BooleanControl); }
 		}
+
+		/// <summary>
+		/// If true, adding this property will automatically set it true
+		/// </summary>
+		public bool AutoCheck { get; set; }
 	}
 }

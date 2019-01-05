@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.recAdd = new Desktop.CommonControls.RecordField();
-			this.pnlRecords = new System.Windows.Forms.Panel();
+			this.pnlRecords = new Desktop.CommonControls.DBPanel();
 			this.shortcuts = new System.Windows.Forms.MenuStrip();
 			this.focusOnAdd = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuSpeedButtons = new System.Windows.Forms.MenuStrip();
@@ -111,7 +111,7 @@
 		#endregion
 
 		private RecordField recAdd;
-		private System.Windows.Forms.Panel pnlRecords;
+		private DBPanel pnlRecords;
 		private System.Windows.Forms.MenuStrip shortcuts;
 		private System.Windows.Forms.ToolStripMenuItem focusOnAdd;
 		private System.Windows.Forms.MenuStrip menuSpeedButtons;

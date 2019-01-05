@@ -133,7 +133,7 @@ namespace SPNATI_Character_Editor
 			CharacterEditorData editorData = ImportEditorData(folderName);
 			CharacterDatabase.AddEditorData(character, editorData);
 
-			return character;			
+			return character;
 		}
 
 		/// <summary>
@@ -304,6 +304,38 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return null;
+		}
+
+		public static Costume ImportSkin(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "costume.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+			Costume skin = ImportXml<Costume>(filename);
+			return skin;
+		}
+
+		public static bool ExportSkin(Costume skin)
+		{
+			string folder = skin.Folder;
+			if (string.IsNullOrEmpty(folder))
+			{
+				return false;
+			}
+			string dir = Path.Combine(Config.SpnatiDirectory, folder);
+			if (!Directory.Exists(dir))
+			{
+				Directory.CreateDirectory(dir);
+			}
+
+			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));
+			return success;
 		}
 	}
 

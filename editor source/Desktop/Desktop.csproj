@@ -43,17 +43,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicRecord.cs" />
+    <Compile Include="CommonControls\DBTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CommonControls\PropertyControls\BooleanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\BooleanControl.Designer.cs">
       <DependentUpon>BooleanControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonControls\PropertyControls\ColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\ColorControl.Designer.cs">
+      <DependentUpon>ColorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\PropertyControls\ComboBoxControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\ComboBoxControl.Designer.cs">
       <DependentUpon>ComboBoxControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\FloatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\FloatControl.Designer.cs">
+      <DependentUpon>FloatControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\NumericControl.cs">
       <SubType>UserControl</SubType>
@@ -66,6 +81,12 @@
     </Compile>
     <Compile Include="CommonControls\PropertyControls\RecordControl.Designer.cs">
       <DependentUpon>RecordControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\SliderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\SliderControl.Designer.cs">
+      <DependentUpon>SliderControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\TextControl.cs">
       <SubType>UserControl</SubType>
@@ -96,6 +117,12 @@
     </Compile>
     <Compile Include="CommonControls\RecordField.Designer.cs">
       <DependentUpon>RecordField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\SelectablePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CommonControls\TextField.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Activity.cs">
       <SubType>UserControl</SubType>
@@ -136,6 +163,7 @@
     <Compile Include="DataStructures\DualKeyDictionary.cs" />
     <Compile Include="DataStructures\DuplicateKeyComparer.cs" />
     <Compile Include="DataStructures\PropertyRecord.cs" />
+    <Compile Include="Extensions\NativeMethods.cs" />
     <Compile Include="Interfaces\IActivity.cs" />
     <Compile Include="Interfaces\IRecord.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
@@ -145,6 +173,11 @@
     <Compile Include="Metadata\ActivityAttribute.cs" />
     <Compile Include="Metadata\WorkspaceAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Providers\BasicProvider.cs" />
     <Compile Include="Providers\IRecordProvider.cs" />
     <Compile Include="Providers\PropertyProvider.cs" />
@@ -175,6 +208,9 @@
     <EmbeddedResource Include="CommonControls\PropertyControls\RecordControl.resx">
       <DependentUpon>RecordControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\PropertyControls\SliderControl.resx">
+      <DependentUpon>SliderControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\PropertyControls\TextControl.resx">
       <DependentUpon>TextControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,11 +232,20 @@
     <EmbeddedResource Include="Controls\WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Shell.resx">
       <DependentUpon>Shell.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Icons\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Eraser.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,8 +1,7 @@
 ﻿using Desktop;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -12,27 +11,14 @@ namespace SPNATI_Character_Editor.Controls
 	{
 		private Character _character;
 		private Epilogue _ending;
-		private int _screenIndex;
-		private Screen _screen;
-		private int _textIndex;
-		private HtmlDocument _doc;
 		private bool _populatingEnding;
+		private ValidationContext _context;
 
 		public EpilogueEditor()
 		{
 			InitializeComponent();
 
-			//Arrow combo boxes
-			DataGridViewComboBoxColumn col = gridText.Columns["ColArrow"] as DataGridViewComboBoxColumn;
-			col.Items.Clear();
-			col.Items.Add("none");
-			col.Items.Add("left");
-			col.Items.Add("right");
-			col.Items.Add("up");
-			col.Items.Add("down");
-
-			Enabled = _character != null;
-			EnableFields(false);
+			Enabled = false;
 		}
 
 		public override string Caption
@@ -43,44 +29,83 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private void EnableFields(bool enabled)
-		{
-			groupScreen.Enabled = enabled;
-			txtTitle.Enabled = enabled;
-			cboGender.Enabled = enabled;
-			cmdDeleteEnding.Enabled = enabled;
-			cmdAdvancedConditions.Enabled = enabled;
-		}
-
 		protected override void OnInitialize()
 		{
 			SetCharacter(Record as Character);
 		}
 
-		public void SetCharacter(Character character)
+		protected override void OnFirstActivate()
 		{
-			bool ready = !(_doc == null || _doc?.Url?.AbsoluteUri == "about:blank");
-			if (!ready)
+			tmrActivate.Enabled = true; //for lack of a good event for when controls are in place and visible, using a timer before launching the initial epilogue
+		}
+
+		protected override void OnParametersUpdated(params object[] parameters)
+		{
+			if (parameters.Length == 1)
 			{
-				wb.Navigate(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "epilogue.html"));
-			}
-			_character = character;
-			_ending = null;
-			_screen = null;
-			if (ready)
-			{
-				EnableForEdit();
+				ValidationContext context = parameters[0] as ValidationContext;
+				if (Enabled)
+				{
+					JumpToContext(context);
+				}
+				else
+				{
+					_context = context;
+				}
 			}
 		}
 
-		private void ClearFields()
+		protected override void OnActivate()
 		{
-			gridText.Rows.Clear();
-			txtTitle.Text = "";
-			txtScreenImage.Text = "";
-			lblScreen.Text = "";
-			UpdateImage();
-			UpdateTextBoxes();
+			Workspace.ToggleSidebar(false);
+		}
+
+		protected override void OnDeactivate()
+		{
+			Workspace.ToggleSidebar(true);
+		}
+
+		private void tmrActivate_Tick(object sender, EventArgs e)
+		{
+			tmrActivate.Enabled = false;
+			EnableForEdit();
+		}
+
+		private void EnableForEdit()
+		{
+			Enabled = true;
+			PopulateEndingCombo();
+
+			if (_character.Endings.Count > 0)
+			{
+				cboEnding.SelectedIndex = 0;
+			}
+			if (_context != null)
+			{
+				JumpToContext(_context);
+			}
+		}
+
+		private void JumpToContext(ValidationContext context)
+		{
+			_context = null;
+			//open the associated ending
+			cboEnding.SelectedItem = context.Epilogue;
+			if (context.Scene != null)
+			{
+				tabs.SelectedTab = pageScenes;
+				canvas.JumpToNode(context.Scene, context.Directive, null);
+			}
+			else
+			{
+				tabs.SelectedTab = pageGeneral;
+			}
+		}
+
+		public void SetCharacter(Character character)
+		{
+			_character = character;
+			_ending = null;
 		}
 
 		private void PopulateEndingCombo()
@@ -128,20 +153,63 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			SaveEnding();
 			_ending = ending;
-
-			if (_ending == null)
+			PopulateDataFields();
+			cmdDeleteEnding.Enabled = tabs.Enabled = (ending != null);
+			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
+			tableGeneral.Data = _ending;
+			canvas.SetEpilogue(_ending, _character);
+			if (ending != null)
 			{
-				cboGender.SelectedIndex = -1;
-				txtTitle.Text = "";
-				EnableFields(false);
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
 			}
 			else
 			{
-				cboGender.Text = ending.Gender;
-				txtTitle.Text = ending.Title;
-				EnableFields(true);
+				tabs.SelectedTab = pageGeneral;
 			}
-			LoadScreen(0);
+		}
+
+		private void PopulateDataFields()
+		{
+			if (_ending == null)
+			{
+				selAllMarkers.Clear();
+				selNotMarkers.Clear();
+				selAllMarkers.Clear();
+				selAlsoPlayingAllMarkers.Clear();
+				selAlsoPlayingAnyMarkers.Clear();
+				selAlsoPlayingNotMarkers.Clear();
+				return;
+			}
+
+			selAllMarkers.SelectableItems
+				= selNotMarkers.SelectableItems
+				= selAnyMarkers.SelectableItems
+				= _character.Markers.Values.ToList().ConvertAll(m => m.Name).ToArray();
+			selAllMarkers.SelectedItems = _ending.AllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selNotMarkers.SelectedItems = _ending.NotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAnyMarkers.SelectedItems = _ending.AnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+
+			HashSet<string> otherMarkers = new HashSet<string>();
+			foreach (Character c in CharacterDatabase.Characters)
+			{
+				if (c != _character)
+				{
+					foreach (Marker m in c.Markers.Values)
+					{
+						if (m.Scope == MarkerScope.Public)
+						{
+							otherMarkers.Add(m.Name);
+						}
+					}
+				}
+			}
+			selAlsoPlayingAllMarkers.SelectableItems
+				= selAlsoPlayingNotMarkers.SelectableItems
+				= selAlsoPlayingAnyMarkers.SelectableItems
+				= otherMarkers.ToArray();
+			selAlsoPlayingAllMarkers.SelectedItems = _ending.AlsoPlayingAllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAlsoPlayingNotMarkers.SelectedItems = _ending.AlsoPlayingNotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			selAlsoPlayingAnyMarkers.SelectedItems = _ending.AlsoPlayingAnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 		}
 
 		public override void Save()
@@ -153,19 +221,13 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_ending == null)
 				return;
-			_ending.Title = txtTitle.Text;
-			_ending.Gender = cboGender.Text;
-			SaveScreen();
 
-			//Strip out any empty screens
-			for (int i = _ending.Screens.Count - 1; i >= 0; i--)
-			{
-				Screen screen = _ending.Screens[i];
-				if (screen.IsEmpty)
-				{
-					_ending.Screens.RemoveAt(i);
-				}
-			}
+			_ending.AllMarkers = selAllMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAllMarkers.SelectedItems) : null;
+			_ending.NotMarkers = selNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selNotMarkers.SelectedItems) : null;
+			_ending.AnyMarkers = selAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAnyMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingAllMarkers = selAlsoPlayingAllMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAllMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingNotMarkers = selAlsoPlayingNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingNotMarkers.SelectedItems) : null;
+			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 		}
 
 		private void RemoveEnding()
@@ -180,302 +242,6 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				cboEnding.SelectedIndex = 0;
 			}
-		}
-
-		private void LoadScreen(int index)
-		{
-			if (_ending == null)
-				return;
-			SaveScreen();
-			if (index == _ending.Screens.Count)
-			{
-				//new screen
-				Screen screen = new Screen();
-				_ending.Screens.Add(screen);
-			}
-			else if (index >= _ending.Screens.Count)
-				index = -1;
-
-			_screenIndex = index;
-			gridText.Rows.Clear();
-			if (index == -1)
-			{
-				txtScreenImage.Text = "";
-				lblScreen.Text = "";
-				_screen = null;
-			}
-			else
-			{
-				_screen = _ending.Screens[index];
-				txtScreenImage.Text = _screen.Image;
-				lblScreen.Text = string.Format("Screen {0} of {1}", _screenIndex + 1, _ending.Screens.Count);
-				PopulateTextGrid();
-			}
-
-			cmdPrevScreen.Enabled = (index > 0);
-			cmdNextScreen.Text = (index == _ending.Screens.Count - 1 ? "Add" : "Next");
-			_textIndex = 0;
-			UpdateImage();
-			UpdateTextBoxes();
-		}
-
-		private void SaveScreen()
-		{
-			if (_screen == null)
-				return;
-			_screen.Image = txtScreenImage.Text;
-			_screen.Text.Clear();
-			foreach (DataGridViewRow row in gridText.Rows)
-			{
-				string x = row.Cells["ColX"]?.Value?.ToString();
-				string y = row.Cells["ColY"]?.Value?.ToString();
-				string width = row.Cells["ColWidth"]?.Value?.ToString();
-				string arrow = row.Cells["ColArrow"]?.Value?.ToString();
-				string content = row.Cells["ColContent"]?.Value?.ToString();
-				if (x == null || y == null || arrow == null || content == null)
-					continue;
-				EndingText text = new EndingText();
-				text.X = x;
-				text.Y = y;
-				text.Width = width;
-				text.Arrow = arrow;
-				text.Content = content;
-				_screen.Text.Add(text);
-			}
-		}
-
-		private void PopulateTextGrid()
-		{
-			if (_screen == null)
-				return;
-			foreach (EndingText text in _screen.Text)
-			{
-				DataGridViewRow row = gridText.Rows[gridText.Rows.Add()];
-				row.Cells["ColX"].Value = text.X;
-				row.Cells["ColY"].Value = text.Y;
-				row.Cells["ColWidth"].Value = text.Width;
-				row.Cells["ColArrow"].Value = text.Arrow;
-				row.Cells["ColContent"].Value = text.Content;
-			}
-		}
-
-		private void txtScreenImage_Validated(object sender, System.EventArgs e)
-		{
-			UpdateImage();
-		}
-
-		private void UpdateImage()
-		{
-			if (_character != null)
-			{
-				string image = txtScreenImage.Text;
-				string filename = Path.Combine(Config.GetRootDirectory(_character), image);
-				HtmlElement background = _doc.GetElementById("epilogue-screen");
-				if (File.Exists(filename))
-				{
-					background.Style = string.Format("background-image:url({0});", ("file:///" + filename).Replace("\\", "/"));
-				}
-				else
-				{
-					background.Style = "";
-				}
-			}
-		}
-
-		private void UpdateTextBoxes()
-		{
-			//Clear any existing textboxes
-			HtmlElement background = _doc.GetElementById("epilogue-screen");
-			background.InnerHtml = "";
-
-			for (int i = 0; i <= _textIndex && i < gridText.Rows.Count; i++)
-			{
-				var elem = CreateTextBox(i);
-				if (elem != null)
-				{
-					background.AppendChild(elem);
-				}
-			}
-		}
-
-		private HtmlElement CreateTextBox(int index)
-		{
-			DataGridViewRow row = gridText.Rows[index];
-			string x = row.Cells["ColX"]?.Value?.ToString();
-			string y = row.Cells["ColY"]?.Value?.ToString();
-			string width = row.Cells["ColWidth"]?.Value?.ToString();
-			string arrow = row.Cells["ColArrow"]?.Value?.ToString();
-			string text = row.Cells["ColContent"]?.Value?.ToString();
-			if (x == null || y == null || arrow == null || text == null)
-				return null;
-
-			if (width == null)
-				width = "20%";
-
-			if (x == "centered")
-			{
-				int w;
-				if (width.Length > 1 && int.TryParse(width.Substring(0, width.Length - 1), out w))
-				{
-					x = (50 - (w / 2.0f)).ToString() + "%";
-				}
-			}
-
-			StringBuilder sb = new StringBuilder();
-			HtmlElement root = _doc.CreateElement("div");
-			root.Style = string.Format("position:absolute;left:{0};top:{1};width:{2}", x, y, width);
-
-			sb.Append("<div class='bordered dialogue-bubble-area modal-dialogue'>");
-			sb.Append("<div class='dialogue-area'>");
-			sb.Append(string.Format("<span class='dialogue-bubble arrow-{0}'>", arrow));
-			sb.Append(text);
-			sb.Append("</span></div></div>");
-			root.InnerHtml = sb.ToString();
-			return root;
-		}
-
-		private void cmdPrevScreen_Click(object sender, System.EventArgs e)
-		{
-			LoadScreen(_screenIndex - 1);
-		}
-
-		private void cmdNextScreen_Click(object sender, System.EventArgs e)
-		{
-			LoadScreen(_screenIndex + 1);
-		}
-
-		private void cmdInsertScreen_Click(object sender, EventArgs e)
-		{
-			if (_ending == null || _screenIndex == -1)
-				return;
-			Screen screen = new Screen();
-			_ending.Screens.Insert(_screenIndex, screen);
-			LoadScreen(_screenIndex);
-		}
-
-		private void cmdRemoveScreen_Click(object sender, EventArgs e)
-		{
-			if (_ending == null || _screen == null)
-				return;
-			_ending.Screens.RemoveAt(_screenIndex);
-			if (_screenIndex == _ending.Screens.Count)
-				LoadScreen(_ending.Screens.Count - 1);
-			else LoadScreen(0);
-		}
-
-		private void cmdBrowseImage_Click(object sender, System.EventArgs e)
-		{
-			if (_character == null)
-				return;
-			string dir = Config.GetRootDirectory(_character);
-			imageFileDialog.InitialDirectory = dir;
-			DialogResult result = DialogResult.OK;
-			bool invalid;
-			do
-			{
-				invalid = false;
-				result = imageFileDialog.ShowDialog();
-				if (result == DialogResult.OK)
-				{
-					if (Path.GetDirectoryName(imageFileDialog.FileName) != dir)
-					{
-						MessageBox.Show("Images need to come from the character's folder.");
-						invalid = true;
-					}
-				}
-			}
-			while (invalid);
-
-			if (result == DialogResult.OK)
-			{
-				string file = Path.GetFileName(imageFileDialog.FileName);
-				txtScreenImage.Text = file;
-				UpdateImage();
-			}
-		}
-
-		private void gridText_CellEnter(object sender, DataGridViewCellEventArgs e)
-		{
-			_textIndex = e.RowIndex;
-			UpdateTextBoxes();
-		}
-
-		private void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-		{
-			if (wb.Document.Url.AbsoluteUri == "about:blank")
-				return;
-			_doc = wb.Document;
-			//Insert CSS
-			var element = _doc.CreateElement("link");
-			element.SetAttribute("rel", "stylesheet");
-			element.SetAttribute("type", "text/css");
-			element.SetAttribute("href", "file:///" + Path.Combine(Config.GetString(Settings.GameDirectory), "css", "spni.css"));
-			_doc.GetElementsByTagName("head")[0].AppendChild(element);
-
-			if (_character != null)
-			{
-				EnableForEdit();
-			}
-		}
-
-		private void EnableForEdit()
-		{
-			Enabled = true;
-			PopulateEndingCombo();
-
-			if (_character.Endings.Count > 0)
-			{
-				cboEnding.SelectedIndex = 0;
-			}
-			else
-			{
-				ClearFields();
-			}
-		}
-
-		private void gridText_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-		{
-			DataGridViewCell cell = gridText.Rows[e.RowIndex].Cells[e.ColumnIndex];
-			if (cell.Value == null)
-				return;
-
-			string value = cell.Value.ToString();
-			if (e.ColumnIndex == 0)
-			{
-				if (!value.EndsWith("%"))
-				{
-					if (value.ToLower().StartsWith("cen"))
-					{
-						cell.Value = "centered";
-					}
-					else
-					{
-						int intValue;
-						if (int.TryParse(value, out intValue))
-						{
-							cell.Value = intValue + "%";
-						}
-						else cell.Value = 0;
-					}
-				}
-			}
-			else if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
-			{
-				if (!value.EndsWith("%"))
-				{
-					int intValue;
-					if (int.TryParse(value, out intValue))
-					{
-						cell.Value = intValue + "%";
-					}
-					else cell.Value = 0;
-				}
-			}
-		}
-
-		private void cmdAdvancedConditions_Click(object sender, EventArgs e)
-		{
-			new AdvancedEpilogueConditions(_character, _ending).ShowDialog();
 		}
 	}
 }

@@ -43,6 +43,7 @@
 			this.ColDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColStages = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColTrigger = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColJump = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.label3 = new System.Windows.Forms.Label();
 			this.cboFilter = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -216,7 +217,8 @@
             this.ColName,
             this.ColDescription,
             this.ColStages,
-            this.ColTrigger});
+            this.ColTrigger,
+            this.ColJump});
 			this.gridSituations.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
 			this.gridSituations.Location = new System.Drawing.Point(6, 30);
 			this.gridSituations.MultiSelect = false;
@@ -225,6 +227,8 @@
 			this.gridSituations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridSituations.Size = new System.Drawing.Size(934, 264);
 			this.gridSituations.TabIndex = 3;
+			this.gridSituations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSituations_CellContentClick);
+			this.gridSituations.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridSituations_CellPainting);
 			this.gridSituations.SelectionChanged += new System.EventHandler(this.gridSituations_SelectionChanged);
 			// 
 			// ColCharacter
@@ -258,6 +262,12 @@
 			this.ColTrigger.Name = "ColTrigger";
 			this.ColTrigger.ReadOnly = true;
 			this.ColTrigger.Width = 150;
+			// 
+			// ColJump
+			// 
+			this.ColJump.HeaderText = "";
+			this.ColJump.Name = "ColJump";
+			this.ColJump.Width = 21;
 			// 
 			// label3
 			// 
@@ -387,11 +397,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.DataGridView gridSituations;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColCharacter;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColDescription;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColStages;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColTrigger;
 		private System.Windows.Forms.ComboBox cboFilter;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
@@ -405,5 +410,11 @@
 		private System.Windows.Forms.NumericUpDown valSuggestions;
 		private System.Windows.Forms.Button cmdJumpToDialogue;
 		private System.Windows.Forms.CheckBox chkFilter;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColCharacter;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColDescription;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColStages;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColTrigger;
+		private System.Windows.Forms.DataGridViewButtonColumn ColJump;
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SPNATI_Character_Editor.Charts.Builders
 {
@@ -22,7 +23,8 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				long count = 0;
 				string folder = Config.GetRootDirectory(c);
 				DirectoryInfo directory = new DirectoryInfo(folder);
-				foreach (FileInfo file in directory.GetFiles())
+				foreach (FileInfo file in directory.EnumerateFiles()
+					.Where(LinesPerMegabyteBuilder.FilterPaths))
 				{
 					count += file.Length;
 				}

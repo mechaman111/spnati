@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,7 +10,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
-		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1" };
+		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2" };
 
 		/// <summary>
 		/// Current Version
@@ -17,6 +18,33 @@ namespace SPNATI_Character_Editor
 		public static string Version { get { return VersionHistory[VersionHistory.Length - 1]; } }
 
 		private static Dictionary<string, string> _settings = new Dictionary<string, string>();
+
+		/// <summary>
+		/// Gets whether a version predates the target version
+		/// </summary>
+		/// <param name="version"></param>
+		/// <param name="targetVersion"></param>
+		/// <returns></returns>
+		public static bool VersionPredates(string version, string targetVersion)
+		{
+			if (string.IsNullOrEmpty(version))
+			{
+				return true;
+			}
+			for (int i = 0; i < VersionHistory.Length; i++)
+			{
+				string v = VersionHistory[i];
+				if (v == targetVersion)
+				{
+					return false;
+				}
+				if (v == version)
+				{
+					return true;
+				}
+			}
+			return false; //should never be hit with valid input
+		}
 
 		/// <summary>
 		/// Gets a string configuration setting
@@ -181,6 +209,37 @@ namespace SPNATI_Character_Editor
 				return "";
 			return Path.Combine(GetString(Settings.GameDirectory), "opponents", folder);
 		}
+
+		/// <summary>
+		/// Gets the current user
+		/// </summary>
+		public static string UserName
+		{
+			get { return GetString(Settings.UserName); }
+			set { Set(Settings.UserName, value); }
+		}
+
+		/// <summary>
+		/// How many minutes to auto-save
+		/// </summary>
+		public static int AutoSaveInterval
+		{
+			get { return GetInt(Settings.AutoSaveInterval); }
+			set
+			{
+				Set(Settings.AutoSaveInterval, value);
+				Shell.Instance.AutoTickFrequency = value * 60000;
+			}
+		}
+
+		/// <summary>
+		/// Whether variable intellisense is enabled
+		/// </summary>
+		public static bool UseIntellisense
+		{
+			get { return !GetBoolean(Settings.DisableIntellisense); }
+			set { Set(Settings.DisableIntellisense, !value); }
+		}
 	}
 
 	public static class Settings
@@ -188,6 +247,9 @@ namespace SPNATI_Character_Editor
 		public static readonly string GameDirectory = "game";
 		public static readonly string LastCharacter = "last";
 		public static readonly string LastVersionRun = "version";
+		public static readonly string UserName = "username";
+		public static readonly string AutoSaveInterval = "autosave";
+		public static readonly string DisableIntellisense = "nointellisense";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";

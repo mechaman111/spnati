@@ -54,6 +54,12 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		public void Clear()
+		{
+			lstSelectedItems.Items.Clear();
+			cboSelectableItems.Items.Clear();
+		}
+
 		private void cboSelectableItems_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			cmdAdd.Enabled = cboSelectableItems.SelectedIndex >= 0 || !String.IsNullOrWhiteSpace(cboSelectableItems.Text);
@@ -86,6 +92,14 @@ namespace SPNATI_Character_Editor.Controls
 		private void lstSelectedItems_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			cmdRemove.Enabled = lstSelectedItems.SelectedIndex >= 0;
+		}
+
+		private void cboSelectableItems_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+			{
+				cmdAdd_Click(this, EventArgs.Empty);
+			}
 		}
 	}
 }
