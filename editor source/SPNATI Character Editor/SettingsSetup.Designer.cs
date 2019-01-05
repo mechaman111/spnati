@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.txtApplicationDirectory = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -35,9 +36,13 @@
 			this.cmdBrowse = new System.Windows.Forms.Button();
 			this.cmdCancel = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
-			this.txtKisekae = new System.Windows.Forms.TextBox();
-			this.cmdBrowseKkl = new System.Windows.Forms.Button();
+			this.txtUserName = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.label3 = new System.Windows.Forms.Label();
+			this.valAutoSave = new System.Windows.Forms.NumericUpDown();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.chkIntellisense = new System.Windows.Forms.CheckBox();
+			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
@@ -52,7 +57,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(13, 15);
+			this.label1.Location = new System.Drawing.Point(12, 15);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(97, 13);
 			this.label1.TabIndex = 1;
@@ -61,10 +66,10 @@
 			// cmdOk
 			// 
 			this.cmdOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOk.Location = new System.Drawing.Point(457, 70);
+			this.cmdOk.Location = new System.Drawing.Point(457, 111);
 			this.cmdOk.Name = "cmdOk";
 			this.cmdOk.Size = new System.Drawing.Size(75, 23);
-			this.cmdOk.TabIndex = 2;
+			this.cmdOk.TabIndex = 4;
 			this.cmdOk.Text = "OK";
 			this.cmdOk.UseVisualStyleBackColor = true;
 			this.cmdOk.Click += new System.EventHandler(this.cmdOk_Click);
@@ -75,7 +80,7 @@
 			this.cmdBrowse.Location = new System.Drawing.Point(581, 10);
 			this.cmdBrowse.Name = "cmdBrowse";
 			this.cmdBrowse.Size = new System.Drawing.Size(32, 23);
-			this.cmdBrowse.TabIndex = 3;
+			this.cmdBrowse.TabIndex = 1;
 			this.cmdBrowse.Text = "...";
 			this.cmdBrowse.UseVisualStyleBackColor = true;
 			this.cmdBrowse.Click += new System.EventHandler(this.cmdBrowse_Click);
@@ -84,10 +89,10 @@
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(538, 70);
+			this.cmdCancel.Location = new System.Drawing.Point(538, 111);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
-			this.cmdCancel.TabIndex = 4;
+			this.cmdCancel.TabIndex = 5;
 			this.cmdCancel.Text = "Cancel";
 			this.cmdCancel.UseVisualStyleBackColor = true;
 			this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
@@ -95,38 +100,60 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(13, 43);
+			this.label2.Location = new System.Drawing.Point(12, 41);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(88, 13);
+			this.label2.Size = new System.Drawing.Size(58, 13);
 			this.label2.TabIndex = 5;
-			this.label2.Text = "Kisekae location:";
-			this.label2.Visible = false;
+			this.label2.Text = "Username:";
 			// 
-			// txtKisekae
+			// txtUserName
 			// 
-			this.txtKisekae.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.txtUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtKisekae.Location = new System.Drawing.Point(126, 40);
-			this.txtKisekae.Name = "txtKisekae";
-			this.txtKisekae.Size = new System.Drawing.Size(449, 20);
-			this.txtKisekae.TabIndex = 6;
-			this.txtKisekae.Visible = false;
-			// 
-			// cmdBrowseKkl
-			// 
-			this.cmdBrowseKkl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdBrowseKkl.Location = new System.Drawing.Point(581, 38);
-			this.cmdBrowseKkl.Name = "cmdBrowseKkl";
-			this.cmdBrowseKkl.Size = new System.Drawing.Size(32, 23);
-			this.cmdBrowseKkl.TabIndex = 7;
-			this.cmdBrowseKkl.Text = "...";
-			this.cmdBrowseKkl.UseVisualStyleBackColor = true;
-			this.cmdBrowseKkl.Visible = false;
+			this.txtUserName.Location = new System.Drawing.Point(126, 38);
+			this.txtUserName.Name = "txtUserName";
+			this.txtUserName.Size = new System.Drawing.Size(487, 20);
+			this.txtUserName.TabIndex = 2;
+			this.toolTip1.SetToolTip(this.txtUserName, "This is used for auto-saving. Only characters written by this user will be auto-s" +
+        "aved.");
 			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			this.openFileDialog1.Filter = "Exe files|*.exe";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(12, 66);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(103, 13);
+			this.label3.TabIndex = 7;
+			this.label3.Text = "Auto-save (minutes):";
+			// 
+			// valAutoSave
+			// 
+			this.valAutoSave.Location = new System.Drawing.Point(126, 64);
+			this.valAutoSave.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+			this.valAutoSave.Name = "valAutoSave";
+			this.valAutoSave.Size = new System.Drawing.Size(45, 20);
+			this.valAutoSave.TabIndex = 3;
+			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
+        "ave.");
+			// 
+			// chkIntellisense
+			// 
+			this.chkIntellisense.AutoSize = true;
+			this.chkIntellisense.Location = new System.Drawing.Point(15, 91);
+			this.chkIntellisense.Name = "chkIntellisense";
+			this.chkIntellisense.Size = new System.Drawing.Size(119, 17);
+			this.chkIntellisense.TabIndex = 8;
+			this.chkIntellisense.Text = "Variable Intellisense";
+			this.chkIntellisense.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -134,9 +161,11 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(625, 105);
-			this.Controls.Add(this.cmdBrowseKkl);
-			this.Controls.Add(this.txtKisekae);
+			this.ClientSize = new System.Drawing.Size(625, 146);
+			this.Controls.Add(this.chkIntellisense);
+			this.Controls.Add(this.valAutoSave);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.txtUserName);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.cmdCancel);
 			this.Controls.Add(this.cmdBrowse);
@@ -148,6 +177,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
+			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -162,8 +192,11 @@
 		private System.Windows.Forms.Button cmdBrowse;
 		private System.Windows.Forms.Button cmdCancel;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox txtKisekae;
-		private System.Windows.Forms.Button cmdBrowseKkl;
+		private System.Windows.Forms.TextBox txtUserName;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.NumericUpDown valAutoSave;
+		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox chkIntellisense;
 	}
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
+using SPNATI_Character_Editor.Controls;
 
 namespace SPNATI_Character_Editor
 {
@@ -22,6 +24,7 @@ namespace SPNATI_Character_Editor
 				validHands.Add(hand.ToLowerInvariant());
 			}
 
+			Dictionary<int, HashSet<string>> usedPoses = new Dictionary<int, HashSet<string>>();
 			HashSet<string> unusedImages = new HashSet<string>();
 			string folder = Config.GetRootDirectory(character);
 			foreach (string filename in Directory.EnumerateFiles(folder))
@@ -51,8 +54,60 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			//wardrobe
+			string upper = null;
+			string lower = null;
+			string importantUpper = null;
+			string importantLower = null;
+			bool foundBoth = false;
+			string otherMajor = null;
+			for (int i = 0; i < character.Layers; i++)
+			{
+				Clothing c = character.GetClothing(i);
+				if (c.Position == "upper" && c.Type == "major")
+					upper = c.GenericName;
+				if (c.Position == "lower" && c.Type == "major")
+					lower = c.GenericName;
+				if (c.Position == "both" && c.Type == "major")
+					foundBoth = true;
+				if (c.Position == "upper" && c.Type == "important")
+					importantUpper = c.GenericName;
+				if (c.Position == "lower" && c.Type == "important")
+					importantLower = c.GenericName;
+				if (c.Position == "other" && c.Type == "major")
+					otherMajor = c.GenericName;
+			}
+			if (!foundBoth)
+			{
+				if (string.IsNullOrEmpty(upper))
+				{
+					if (!string.IsNullOrEmpty(importantUpper))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantUpper} has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}					
+				}
+				if (string.IsNullOrEmpty(lower))
+				{
+					if (!string.IsNullOrEmpty(importantLower))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantLower} has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
+				}
+			}
+
+			//dialogue
 			foreach (Stage stage in character.Behavior.Stages)
 			{
+				HashSet<string> stageImages = usedPoses.GetOrAddDefault(stage.Id, () => new HashSet<string>());
+
 				foreach (Case stageCase in stage.Cases)
 				{
 					ValidationContext context = new ValidationContext(stage, stageCase, null);
@@ -106,29 +161,32 @@ namespace SPNATI_Character_Editor
 								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("target \"{1}\" is offline only. {0}", caseLabel, stageCase.Target), context));
 							}
 
-							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && target.FolderName != "human")
+							if (target.FolderName != "human")
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
-							}
-							if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
-							}
-							if (!string.IsNullOrEmpty(stageCase.TargetStage))
-							{
-								int targetStage;
-								if (int.TryParse(stageCase.TargetStage, out targetStage))
+								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
 								{
-									if (target.Layers + Clothing.ExtraStages <= targetStage)
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
+								}
+								if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
+								}
+								if (!string.IsNullOrEmpty(stageCase.TargetStage))
+								{
+									int targetStage;
+									if (int.TryParse(stageCase.TargetStage, out targetStage))
 									{
-										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
-									}
-									Clothing clothing;
-									if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
-									{
-										if (clothing == null)
-											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
-										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
+										if (target.Layers + Clothing.ExtraStages <= targetStage)
+										{
+											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
+										}
+										Clothing clothing;
+										if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
+										{
+											if (clothing == null)
+												warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
+											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.GenericName, clothing.Type), context));
+										}
 									}
 								}
 							}
@@ -225,7 +283,7 @@ namespace SPNATI_Character_Editor
 						{
 							if (other != null)
 							{
-								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage)
+								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage && other.FolderName != "human")
 								{
 									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.AlsoPlaying, stageCase.AlsoPlayingStage), context));
 								}
@@ -300,7 +358,7 @@ namespace SPNATI_Character_Editor
 					foreach (var condition in stageCase.Conditions)
 					{
 						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.Filter), caseLabel, 0, 5, context));
-						if (!TagDatabase.TagExists(condition.Filter))
+						if (condition.Filter != "human" && condition.Filter != "human_male" && condition.Filter != "human_female" && !string.IsNullOrEmpty(condition.Filter) && !TagDatabase.TagExists(condition.Filter))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.Filter), context));
 						}
@@ -309,29 +367,51 @@ namespace SPNATI_Character_Editor
 
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
+					Regex regex = new Regex(@"\<\/i\>");
+
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						context = new ValidationContext(stage, stageCase, line);
 
 						//Validate image
 						string img = line.Image;
-						unusedImages.Remove(img);
-						if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+						if (!string.IsNullOrEmpty(img))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+							unusedImages.Remove(img);
+							if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+							}
+							stageImages.Add(img);	
 						}
 
 						//Validate variables
 						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase.Tag, line.Text);
 						if (invalidVars.Count > 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Variables, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
 						}
 
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel), context));
+						}
+
+						//check for mismatched italics
+						string[] pieces = line.Text.ToLower().Split(new string[] { "<i>" }, StringSplitOptions.None);
+						int count = 0;
+						for (int i = 0; i < pieces.Length; i++)
+						{
+							if (i > 0)
+							{
+								count++;
+							}
+							count -= regex.Matches(pieces[i]).Count;
+						}
+						if (count != 0)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: {line.Text}", context));
 						}
 					}
 				}
@@ -340,15 +420,20 @@ namespace SPNATI_Character_Editor
 			//endings
 			foreach (Epilogue ending in character.Endings)
 			{
-				foreach (Screen screen in ending.Screens)
-				{
-					unusedImages.Remove(screen.Image);
-				}
+				ValidateEpilogue(ending, warnings, unusedImages);
 			}
 
 			if (unusedImages.Count > 0)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("The following images are never used: {0}", string.Join(", ", unusedImages))));
+			}
+
+			foreach (AlternateSkin alt in character.Metadata.AlternateSkins)
+			{
+				foreach (SkinLink link in alt.Skins)
+				{
+					ValidateSkin(character, link, warnings, usedPoses);
+				}
 			}
 
 			if (warnings.Count == 0)
@@ -461,6 +546,29 @@ namespace SPNATI_Character_Editor
 						}
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
 					}
+
+					if (!string.IsNullOrEmpty(value))
+					{
+						bool used = false;
+						Marker m = character.Markers.Values.FirstOrDefault(marker => marker.Name == name);
+						if (m != null)
+						{
+							used = m.Values.Contains(value);
+							if (!used)
+							{
+								int test;
+								//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+								if (int.TryParse(value, out test))
+								{
+									used = (m.Values.Contains("+") || m.Values.Contains("-"));
+								}
+							}
+						}
+						if (!used)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+						}
+					}
 				}
 			}
 		}
@@ -503,6 +611,154 @@ namespace SPNATI_Character_Editor
 			}
 			return true;
 		}
+
+		private static void ValidateEpilogue(Epilogue ending, List<ValidationError> warnings, HashSet<string> unusedImages)
+		{
+			if (string.IsNullOrEmpty(ending.Hint) && ending.HasSpecialConditions)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has special unlock conditions. Consider adding a hint to help the player know how to unlock it.", new ValidationContext(ending, null, null)));
+			}
+
+			if (string.IsNullOrEmpty(ending.GalleryImage))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has no gallery image and will appear blank in the epilogue gallery.", new ValidationContext(ending, null, null)));
+			}
+			else
+			{
+				unusedImages.Remove(ending.GalleryImage);
+			}
+
+			foreach (Scene scene in ending.Scenes)
+			{
+				HashSet<string> usedSpriteIds = new HashSet<string>();
+				if (!string.IsNullOrEmpty(scene.Background))
+				{
+					unusedImages.Remove(scene.Background);
+				}
+
+				foreach (Directive directive in scene.Directives)
+				{
+					if (directive.DirectiveType == "sprite")
+					{
+						string id = directive.Id;
+						if (string.IsNullOrEmpty(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a sprite directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+						}
+						else if (usedSpriteIds.Contains(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} uses the ID \"{id}\" for more than one sprite in the same scene.", new ValidationContext(ending, scene, directive)));
+						}
+						else
+						{
+							usedSpriteIds.Add(id);
+						}
+
+						if (!string.IsNullOrEmpty(directive.Src))
+						{
+							unusedImages.Remove(directive.Src);
+						}
+					}
+					else if (directive.DirectiveType == "move")
+					{
+						string id = directive.Id;
+						if (string.IsNullOrEmpty(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+						}
+						else if (!usedSpriteIds.Contains(id))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive with ID \"{id}\" which does not correspond to any sprite in that scene.", new ValidationContext(ending, scene, directive)));
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Validates an alternative skin
+		/// </summary>
+		/// <param name="character">Character</param>
+		/// <param name="link">Link to reskin</param>
+		/// <param name="warnings">All current warnings</param>
+		/// <param name="baseImages">List of images used per stage</param>
+		private static void ValidateSkin(Character character, SkinLink link, List<ValidationError> warnings, Dictionary<int, HashSet<string>> baseImages)
+		{
+			Costume skin = link.Costume;
+			if (skin == null)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"No reskin information found for {link.Name}"));
+				return;
+			}
+
+			if (string.IsNullOrEmpty(link.PreviewImage))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{link.Name} has no preview portait set."));
+			}
+
+			//gather list of images in this skin
+			HashSet<string> existingImages = new HashSet<string>();
+			HashSet<string> unusedImages = new HashSet<string>();
+			string folder = Path.Combine(Config.SpnatiDirectory, skin.Folder);
+			foreach (string filename in Directory.EnumerateFiles(folder))
+			{
+				string ext = Path.GetExtension(filename).ToLower();
+				if (ext.EndsWith(".png") || ext.EndsWith(".gif"))
+				{
+					string path = Path.GetFileName(filename);
+					existingImages.Add(path);
+					unusedImages.Add(path);
+				}
+			}
+
+			//go through each stage using the alt skin and make sure the images are all present
+			List<int> skinnedStages = new List<int>();
+			Dictionary<int, bool> stageUsingSkin = new Dictionary<int, bool>();
+			foreach (StageSpecificValue stageInfo in skin.Folders)
+			{
+				stageUsingSkin[stageInfo.Stage] = stageInfo.Value == skin.Folder;
+			}
+			bool inUse = false;
+			for (int i = 0; i < character.Layers + Clothing.ExtraStages; i++)
+			{
+				if (stageUsingSkin.ContainsKey(i))
+				{
+					inUse = stageUsingSkin[i];
+				}
+				else
+				{
+					stageUsingSkin[i] = inUse;
+				}
+			}
+
+			HashSet<string> missingImages = new HashSet<string>();
+			foreach (KeyValuePair<int, HashSet<string>> kvp in baseImages)
+			{
+				if (stageUsingSkin.Get(kvp.Key))
+				{
+					foreach (string image in kvp.Value)
+					{
+						if (existingImages.Contains(image))
+						{
+							unusedImages.Remove(image);
+						}
+						else
+						{
+							missingImages.Add(image);	
+						}
+					}
+				}
+			}
+
+			if (missingImages.Count > 0)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{skin.Folder} is missing the following images: {string.Join(",", missingImages)}"));
+			}
+			if (unusedImages.Count > 0)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{skin.Folder} contains images unused by any dialogue: {string.Join(",", unusedImages)}"));
+			}
+		}
 	}
 
 	public class ValidationError
@@ -532,16 +788,36 @@ namespace SPNATI_Character_Editor
 
 	public class ValidationContext
 	{
+		public Area ContextArea;
 		public Stage Stage;
 		public Case Case;
 		public DialogueLine Line;
+		public Epilogue Epilogue;
+		public Scene Scene;
+		public Directive Directive;
 
 		public ValidationContext() { }
 		public ValidationContext(Stage stage, Case stageCase, DialogueLine line)
 		{
+			ContextArea = Area.Dialogue;
 			Stage = stage;
 			Case = stageCase;
 			Line = line;
+		}
+
+		public ValidationContext(Epilogue epilogue, Scene scene, Directive directive)
+		{
+			ContextArea = Area.Epilogue;
+			Epilogue = epilogue;
+			Scene = scene;
+			Directive = directive;
+		}
+
+		public enum Area
+		{
+			Dialogue,
+			Epilogue,
+			Skin,
 		}
 	}
 
@@ -552,9 +828,11 @@ namespace SPNATI_Character_Editor
 		Minor = 1,
 		MissingImages = 2,
 		Metadata = 4,
-		Variables = 8,
+		Lines = 8,
 		TargetedDialogue = 16,
 		Case = 32,
-		Stage = 64
+		Stage = 64,
+		Epilogue = 128,
+		Reskins = 256
 	}
 }

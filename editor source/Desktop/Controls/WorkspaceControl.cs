@@ -205,5 +205,17 @@ namespace Desktop
 			if (!Shell.Instance.Activate(activity))
 				e.Cancel = true;
 		}
+
+		public bool IsSidebarExpanded
+		{
+			get { return Workspace.ActiveSidebarActivity != null && !splitContainer1.Panel2Collapsed; }
+		}
+
+		public void ToggleSidebar(bool expanded)
+		{
+			if (Workspace.ActiveSidebarActivity == null) { return; }
+
+			splitContainer1.Panel2Collapsed = !expanded;
+		}
 	}
 }

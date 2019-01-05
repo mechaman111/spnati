@@ -28,13 +28,18 @@ namespace SPNATI_Character_Editor
 		public event EventHandler<Case> CaseModified;
 
 		/// <summary>
+		/// Next ID for a case that needs one
+		/// </summary>
+		[XmlIgnore]
+		public int NextId { get; set; }
+
+		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
 		/// </summary>
 		[XmlNewLine(XmlNewLinePosition.After)]
 		[XmlElement("stage")]
 		public List<Stage> Stages = new List<Stage>();
 
-		//TODO: Make this private
 		/// <summary>
 		/// Flat structure of cases used when editing dialogue. When deserializing, this is constructed from Stages. When serializing, Stages is reconstructed using this info.
 		/// </summary>
@@ -91,8 +96,9 @@ namespace SPNATI_Character_Editor
 		{
 			_character = character;
 			_workingCases = new List<Case>();
+			_builtWorkingCases = false;
 
-			BuildWorkingCases();
+			EnsureWorkingCases();
 
 			EnsureDefaults(character); //If the input file had any missing dialogue, add it in now
 		}
@@ -269,14 +275,23 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (int s in workingCase.Stages)
 				{
+					if (s >= Stages.Count) { continue; }
+
+					string id = null;
+					if (workingCase.Id > 0)
+					{
+						id = $"{s}-{workingCase.Id}";
+					}
+
 					Stage stage = Stages[s];
 
 					//Find a case to merge into
-					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase));
+					Case existingCase = stage.Cases.Find(c => c.MatchesConditions(workingCase) && (c.StageId == id || (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(c.StageId))));
 					if (existingCase == null)
 					{
 						//No case exists yet, so create one
 						existingCase = workingCase.CopyConditions();
+						existingCase.StageId = id;
 						existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
 						stage.Cases.Add(existingCase);
 					}
@@ -287,13 +302,6 @@ namespace SPNATI_Character_Editor
 						existingCase.Lines.Add(CreateStageSpecificLine(line, s, character));
 					}
 				}
-			}
-
-			//Sort cases to try to match make_xml's output
-			//TODO: Is this even necessary anymore? [XmlSortMethod] should be taking care of this
-			foreach (var stage in Stages)
-			{
-				stage.Cases.Sort(stage.SortCases);
 			}
 		}
 
@@ -315,6 +323,17 @@ namespace SPNATI_Character_Editor
 					if (!TriggerDatabase.UsedInStage(stageCase.Tag, _character, stage.Id))
 						continue;
 					int code = stageCase.GetCode();
+
+					int id = 0;
+					if (!string.IsNullOrEmpty(stageCase.StageId))
+					{
+						string[] idPieces = stageCase.StageId.Split('-');
+						if (idPieces.Length > 1)
+						{
+							int.TryParse(idPieces[1], out id);
+						}
+					}
+
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						var defaultLine = CreateDefaultLine(line);
@@ -325,6 +344,7 @@ namespace SPNATI_Character_Editor
 						if (!map.TryGetValue(hash, out existing))
 						{
 							existing = stageCase.CopyConditions();
+							existing.Id = id;
 							map[hash] = existing;
 							existing.Lines.Add(defaultLine);
 							buckets.Add(existing);
@@ -358,6 +378,7 @@ namespace SPNATI_Character_Editor
 				if (caseMatchingStages == null)
 				{
 					caseMatchingStages = bucket.CopyConditions();
+					caseMatchingStages.Id = bucket.Id;
 					caseMatchingStages.Stages.AddRange(bucket.Stages);
 					caseList.Add(caseMatchingStages);
 				}
@@ -409,6 +430,10 @@ namespace SPNATI_Character_Editor
 		{
 			if (_builtWorkingCases) { return; }
 			BuildWorkingCases();
+
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+			editorData?.Initialize();
+			DataConversions.ConvertVersion(_character);
 		}
 
 		public IEnumerable<Case> GetWorkingCases()

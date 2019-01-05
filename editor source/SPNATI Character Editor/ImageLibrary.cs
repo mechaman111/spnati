@@ -1,7 +1,6 @@
 ﻿using Desktop;
-using System;
+using Desktop.Messaging;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,11 +12,11 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class ImageLibrary
 	{
-		private static Dictionary<Character, ImageLibrary> _libraries = new Dictionary<Character, ImageLibrary>();
+		private static Dictionary<ISkin, ImageLibrary> _libraries = new Dictionary<ISkin, ImageLibrary>();
 
 		public const string PreviewImage = "***preview***";
 
-		public static ImageLibrary Get(Character character)
+		public static ImageLibrary Get(ISkin character)
 		{
 			return _libraries.GetOrAddDefault(character, () =>
 			{
@@ -27,19 +26,22 @@ namespace SPNATI_Character_Editor
 			});
 		}
 
+		private ISkin _character;
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
+		private Costume _skin;
 
 		/// <summary>
 		/// Loads metadata for all images in the given folder
 		/// </summary>
 		/// <param name="folder"></param>
-		private void Load(Character character)
+		private void Load(ISkin character)
 		{
+			_character = character;
 			_stages.Clear();
 			_allImages.Clear();
-			string dir = Config.GetRootDirectory(character);
+			string dir = character.GetDirectory();
 			string[] extensions = { ".png", ".gif" };
 			foreach (string file in Directory.EnumerateFiles(dir, "*.*")
 				.Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
@@ -59,6 +61,22 @@ namespace SPNATI_Character_Editor
 		{
 			CharacterImage image = new CharacterImage(name, file);
 			_allImages.Add(image);
+
+			//Add in skin alternatives
+			//string[] extensions = { ".png", ".gif" };
+			//foreach (AlternateSkin alt in _character.Metadata.AlternateSkins)
+			//{
+			//	foreach (SkinLink link in alt.Skins)
+			//	{
+			//		string folder = Path.Combine(Config.SpnatiDirectory, link.Folder);
+			//		foreach(string altFile in Directory.EnumerateFiles(folder, "*.*")
+			//			.Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
+			//		{
+			//			string altName = Path.GetFileNameWithoutExtension(file);
+			//			//image.SetAlt(link.Folder, altName);
+			//		}
+			//	}
+			//}
 
 			if (file != PreviewImage)
 			{
@@ -173,6 +191,28 @@ namespace SPNATI_Character_Editor
 				return Add(path, Path.GetFileNameWithoutExtension(path));
 			}
 		}
+
+		/// <summary>
+		/// Starts pulling images from a different and replaces any currently referenced images
+		/// </summary>
+		/// <param name="skin"></param>
+		public void UpdateSkin(Costume skin)
+		{
+			_skin = skin;
+			foreach (CharacterImage img in _allImages)
+			{
+				Image replacement = img.UpdateSkin(_skin);
+				if (replacement != null)
+				{
+					ImageReplacementArgs args = new ImageReplacementArgs()
+					{
+						NewImage = replacement,
+						Reference = img
+					};
+					Shell.Instance.PostOffice.SendMessage(DesktopMessages.ReplaceImage, args);
+				}
+			}
+		}
 	}
 
 	public class ImageReplacementArgs
@@ -185,6 +225,8 @@ namespace SPNATI_Character_Editor
 	{
 		public bool Disposed { get; private set; }
 
+		private Costume _skin;
+
 		public string FileName;
 		public string FileExtension;
 		public string Name;
@@ -194,7 +236,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public bool IsGeneric;
 
-		public int ReferenceCount { get { return ImageCache.GetReferenceCount(FileName); } }
+		public int ReferenceCount { get { return ImageCache.GetReferenceCount(GetPath()); } }
 
 		public CharacterImage(string name, string filename)
 		{
@@ -209,6 +251,23 @@ namespace SPNATI_Character_Editor
 			return Name;
 		}
 
+		public string GetPath()
+		{
+			if (_skin == null)
+			{
+				return FileName;
+			}
+			else
+			{
+				string path = Path.Combine(Config.SpnatiDirectory, _skin.Folder, Name + FileExtension);
+				if (!File.Exists(path))
+				{
+					return FileName;
+				}
+				return path;
+			}
+		}
+
 		/// <summary>
 		/// Gets the real image associated with a filename.
 		/// EVERY call to this should be paired with a Release() when done.
@@ -217,7 +276,7 @@ namespace SPNATI_Character_Editor
 		public Image GetImage()
 		{
 			Disposed = false;
-			return ImageCache.Get(FileName);
+			return ImageCache.Get(GetPath());
 		}
 
 		/// <summary>
@@ -226,7 +285,28 @@ namespace SPNATI_Character_Editor
 		public void ReleaseImage()
 		{
 			Disposed = true;
-			ImageCache.Release(FileName);
+			ImageCache.Release(GetPath());
+		}
+
+		/// <summary>
+		/// Updates the image to use a new skin
+		/// </summary>
+		/// <param name="skin">New skin to use</param>
+		/// <returns>The new skin's image if there are any active references. The call should replace old image references with this one</returns>
+		public Image UpdateSkin(Costume skin)
+		{
+			string oldPath = GetPath();
+			int count = ReferenceCount;
+			_skin = skin;
+			string newPath = GetPath();
+			if (count > 0 && oldPath != newPath)
+			{
+				//need to swap out images
+				ImageCache.Release(oldPath);
+				Image image = ImageCache.Get(newPath);
+				return image;
+			}
+			return null;
 		}
 	}
 }

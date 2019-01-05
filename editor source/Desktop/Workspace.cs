@@ -210,5 +210,15 @@ namespace Desktop
 		{
 			_postOffice.SendMessage(message, args);
 		}
+
+		public bool IsSidebarExpanded
+		{
+			get { return Control.IsSidebarExpanded; }
+		}
+
+		public void ToggleSidebar(bool expanded)
+		{
+			Control.ToggleSidebar(expanded);
+		}
 	}
 }

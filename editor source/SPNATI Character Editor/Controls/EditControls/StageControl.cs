@@ -85,6 +85,7 @@ namespace SPNATI_Character_Editor
 			
 			string tag = selectedCase?.Tag;
 			string filterType = null;
+			string filterPosition = null;
 			bool removing = false;
 			bool removed = false;
 			bool lookForward = false;
@@ -102,6 +103,25 @@ namespace SPNATI_Character_Editor
 						filterType = tag.Substring(index + 1);
 						if (filterType == "accessory")
 							filterType = "extra";
+					}
+				}
+
+				if (string.IsNullOrEmpty(filterType))
+				{
+					removing = tag.Contains("will_be_visible");
+					removed = tag.Contains("is_visible");
+					lookForward = removing;
+					if (removing || removed)
+					{
+						filterType = "important";
+						if (tag.Contains("crotch"))
+						{
+							filterPosition = "lower";
+						}
+						else if (tag.Contains("chest"))
+						{
+							filterPosition = "upper";
+						}
 					}
 				}
 			}
@@ -136,7 +156,7 @@ namespace SPNATI_Character_Editor
 
 								Clothing clothing = character.Wardrobe[character.Layers - layer - 1];
 								string realType = clothing.Type;
-								if (filterType != realType.ToLower())
+								if (filterType != realType.ToLower() || (filterPosition != null && clothing.Position != filterPosition))
 									continue;
 							}
 							else continue;
@@ -184,6 +204,10 @@ namespace SPNATI_Character_Editor
 
 		private string ReadStage(ComboBox box)
 		{
+			if (string.IsNullOrEmpty(box.Text))
+			{
+				return null;
+			}
 			StageName stage = box.SelectedItem as StageName;
 			if (stage == null)
 			{

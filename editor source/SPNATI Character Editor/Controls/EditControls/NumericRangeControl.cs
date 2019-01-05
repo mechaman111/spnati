@@ -3,6 +3,7 @@ using Desktop.CommonControls;
 using Desktop.CommonControls.PropertyControls;
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -23,13 +24,30 @@ namespace SPNATI_Character_Editor
 			valTo.Maximum = p.Maximum;
 		}
 
+		private void AddHandlers()
+		{
+			valFrom.ValueChanged += ValueChanged;
+			valTo.ValueChanged += ValueChanged;
+			valFrom.TextChanged -= Value_TextChanged;
+			valTo.TextChanged -= Value_TextChanged;
+		}
+
+		private void RemoveHandlers()
+		{
+			valFrom.ValueChanged -= ValueChanged;
+			valTo.ValueChanged -= ValueChanged;
+			valFrom.TextChanged -= Value_TextChanged;
+			valTo.TextChanged -= Value_TextChanged;
+		}
+
 		protected override void OnBoundData()
 		{
 			string range = GetValue()?.ToString();
 			if (range == null)
 			{
-				valFrom.Value = 0;
+				valFrom.Text = "";
 				valTo.Text = "";
+				AddHandlers();
 				return;
 			}
 			string[] pieces = range.Split('-');
@@ -39,23 +57,36 @@ namespace SPNATI_Character_Editor
 			{
 				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, from));
 			}
+			else
+			{
+				//open range
+				valFrom.Text = "";
+			}
 			if (pieces.Length > 1)
 			{
 				if (int.TryParse(pieces[1], out to))
 				{
 					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, to));
 				}
+				else
+				{
+					//open upper range
+					valTo.Text = "";
+				}
 			}
 			else
 			{
-				valTo.Text = "";
+				valTo.Value = valFrom.Value; //single value uses a closed range with min and max being the same
 			}
+			AddHandlers();
 		}
 
 		public override void Clear()
 		{
+			RemoveHandlers();
 			valFrom.Text = "";
 			valTo.Text = "";
+			AddHandlers();
 			Save();
 		}
 
@@ -71,23 +102,21 @@ namespace SPNATI_Character_Editor
 			{
 				to = -1;
 			}
-			if (from == -1)
-			{
-				SetValue(null);
-			}
-			else if (to <= from)
-			{
-				SetValue(from.ToString());
-			}
-			else
-			{
-				SetValue($"{from}-{to}");
-			}
+			SetValue(GUIHelper.ToRange(from, to));
 		}
 
 		private void ValueChanged(object sender, EventArgs e)
 		{
 			Save();
+		}
+
+		private void Value_TextChanged(object sender, EventArgs e)
+		{
+			NumericUpDown ctl = sender as NumericUpDown;
+			if (ctl?.Text == "")
+			{
+				Save();
+			}
 		}
 	}
 

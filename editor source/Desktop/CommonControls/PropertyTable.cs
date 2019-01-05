@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -14,6 +15,8 @@ namespace Desktop.CommonControls
 		/// Contextual object that will be passed to edit controls
 		/// </summary>
 		public object Context;
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		private object _data;
 		/// <summary>
@@ -40,6 +43,11 @@ namespace Desktop.CommonControls
 		/// </summary>
 		public Func<PropertyRecord, bool> RecordFilter;
 
+		/// <summary>
+		/// Filter for making records show up even without a value
+		/// </summary>
+		public Func<PropertyRecord, bool> RequiredFilter;
+
 		private string _placeholder;
 		/// <summary>
 		/// What to show in the add field
@@ -54,10 +62,36 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		private bool _allowFavorites;
+		public bool AllowFavorites
+		{
+			get { return _allowFavorites; }
+			set
+			{
+				if (_allowFavorites != value)
+				{
+					_allowFavorites = value;
+					_favoriteRecords.Clear();
+				}
+			}
+		}
+
+		private bool _allowHelp = false;
+		public bool AllowHelp { get { return _allowHelp; } set { _allowHelp = value; } }
+		private bool _allowDelete = true;
+		public bool AllowDelete { get { return _allowDelete; } set { _allowDelete = value; } }
+
+		private HashSet<PropertyRecord> _favoriteRecords = new HashSet<PropertyRecord>();
+
 		/// <summary>
 		/// Caption for remove buttons
 		/// </summary>
 		public string RemoveCaption { get; set; }
+
+		/// <summary>
+		/// Whether property rows are sorted in the table, or added first-come-first-serve
+		/// </summary>
+		public bool Sorted { get; set; }
 
 		public bool UseAutoComplete
 		{
@@ -67,6 +101,42 @@ namespace Desktop.CommonControls
 				recAdd.UseAutoComplete = value;
 			}
 		}
+
+		private bool _hideAdd = false;
+		public bool HideAddField
+		{
+			get { return _hideAdd; }
+			set
+			{
+				_hideAdd = value;
+				recAdd.Visible = !value;
+				PositionControls();
+			}
+		}
+
+		private bool _hideMenu = false;
+		public bool HideSpeedButtons
+		{
+			get { return _hideMenu; }
+			set
+			{
+				_hideMenu = value;
+				menuSpeedButtons.Visible = !value;
+				PositionControls();
+			}
+		}
+
+		private void PositionControls()
+		{
+			recAdd.Visible = !_hideAdd;
+			menuSpeedButtons.Visible = !_hideMenu;
+			menuSpeedButtons.Left = _hideAdd ? 0 : recAdd.Right;
+			int bottom = pnlRecords.Bottom;
+			pnlRecords.Top = (_hideAdd && _hideMenu ? 0 : menuSpeedButtons.Bottom + 3);
+			pnlRecords.Height = bottom - pnlRecords.Top;
+		}
+
+		public float RowHeaderWidth { get; set; }
 
 		private DualKeyDictionary<string, int, PropertyTableRow> _rows = new DualKeyDictionary<string, int, PropertyTableRow>();
 
@@ -89,6 +159,45 @@ namespace Desktop.CommonControls
 				foreach (PropertyTableRow row in kvp.Value.Values)
 				{
 					row.EditControl.Save();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of keys of favorited records
+		/// </summary>
+		/// <returns></returns>
+		public List<string> GetFavorites()
+		{
+			List<string> list = new List<string>();
+			foreach (PropertyRecord rec in _favoriteRecords)
+			{
+				list.Add(rec.Key);
+			}
+			return list;
+		}
+
+		/// <summary>
+		/// Sets the list of favorited records
+		/// </summary>
+		/// <param name="favorites"></param>
+		public void SetFavorites(List<string> favorites)
+		{
+			if (Data == null) { return; }
+			_favoriteRecords.Clear();
+
+			Dictionary<string, PropertyRecord> recs = new Dictionary<string, PropertyRecord>();
+			foreach (PropertyRecord rec in PropertyProvider.GetEditControls(Data.GetType()))
+			{
+				recs[rec.Key] = rec;
+			}
+
+			foreach (string key in favorites)
+			{
+				PropertyRecord record;
+				if (recs.TryGetValue(key, out record))
+				{
+					_favoriteRecords.Add(record);
 				}
 			}
 		}
@@ -133,62 +242,110 @@ namespace Desktop.CommonControls
 		/// </summary>
 		private void BuildEditControls()
 		{
-			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+			this.SuspendDrawing();
+			try
 			{
-				foreach (PropertyTableRow row in kvp.Value.Values)
+
+				foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
 				{
-					DisposeRow(row);
+					foreach (PropertyTableRow row in kvp.Value.Values)
+					{
+						DisposeRow(row);
+					}
 				}
+				_rows.Clear();
+
+				if (Data == null) { return; }
+
+				bool addDefaults = true;
+				List<PropertyEditControl> defaultRows = new List<PropertyEditControl>();
+
+				SortedDictionary<string, List<PropertyRecord>> groups = new SortedDictionary<string, List<PropertyRecord>>();
+				foreach (PropertyRecord editControl in PropertyProvider.GetEditControls(Data.GetType()))
+				{
+					if (RecordFilter != null && !RecordFilter(editControl)) { continue; }
+
+					string group = editControl.Group;
+					if (!string.IsNullOrEmpty(group))
+					{
+						List<PropertyRecord> groupList;
+						if (!groups.TryGetValue(group, out groupList))
+						{
+							groupList = new List<PropertyRecord>();
+							groups[group] = groupList;
+						}
+						groupList.Add(editControl);
+					}
+
+					bool required = editControl.Required || (_hideMenu && _hideAdd);
+					if (!required && RequiredFilter != null)
+					{
+						required = RequiredFilter(editControl);
+					}
+					bool isDefault = editControl.Default;
+					bool hasData = true;
+
+					MemberInfo member = editControl.Member;
+					object value = member.GetValue(Data);
+					Type memberType = member.GetDataType();
+					if (memberType == typeof(int) && (int)value == 0 ||
+						memberType == typeof(bool) && (bool)value == false ||
+						value == null)
+					{
+						hasData = false;
+						bool favorited = _favoriteRecords.Contains(editControl);
+						if (!favorited && !required && (!addDefaults || !isDefault))
+						{
+							//skip the field if it has no value and is not favorited, required, or default
+							continue;
+						}
+					}
+
+					if (value != null && typeof(IList).IsAssignableFrom(memberType))
+					{
+						IList list = value as IList;
+						if (list.Count == 0)
+						{
+							continue;
+						}
+						for (int i = 0; i < list.Count; i++)
+						{
+							EditRecord(editControl, i);
+						}
+					}
+					else
+					{
+						if (!required && hasData)
+						{
+							addDefaults = false;
+
+							//found something not required, so get rid of any default fields added
+							foreach (PropertyEditControl defaultCtl in defaultRows)
+							{
+								PropertyTableRow row = _rows.Get(defaultCtl.Property, defaultCtl.Index);
+								RemoveRow(row);
+							}
+
+							if (isDefault && !hasData)
+							{
+								continue;
+							}
+						}
+
+						PropertyEditControl ctl = EditRecord(editControl, -1);
+						if (isDefault && !hasData)
+						{
+							defaultRows.Add(ctl);
+						}
+					}
+				}
+
+				BuildSpeedMenus(groups);
 			}
-			_rows.Clear();
-
-			if (Data == null) { return; }
-
-			SortedDictionary<string, List<PropertyRecord>> groups = new SortedDictionary<string, List<PropertyRecord>>();
-			foreach (PropertyRecord editControl in PropertyProvider.GetEditControls(Data.GetType()))
+			finally
 			{
-				if (RecordFilter != null && !RecordFilter(editControl)) { continue; }
-
-				string group = editControl.Group;
-				if (!string.IsNullOrEmpty(group))
-				{
-					List<PropertyRecord> groupList;
-					if (!groups.TryGetValue(group, out groupList))
-					{
-						groupList = new List<PropertyRecord>();
-						groups[group] = groupList;
-					}
-					groupList.Add(editControl);
-				}
-
-				MemberInfo member = editControl.Member;
-				object value = member.GetValue(Data);
-				Type memberType = member.GetDataType();
-				if (memberType == typeof(int) && (int)value == 0 ||
-					value == null)
-				{
-					continue;
-				}
-
-				if (typeof(IList).IsAssignableFrom(memberType))
-				{
-					IList list = value as IList;
-					if (list.Count == 0)
-					{
-						continue;
-					}
-					for (int i = 0; i < list.Count; i++)
-					{
-						EditRecord(editControl, i);
-					}
-				}
-				else
-				{
-					EditRecord(editControl, -1);
-				}
+				this.ResumeDrawing();
 			}
-
-			BuildSpeedMenus(groups);
 		}
 
 		private void BuildSpeedMenus(SortedDictionary<string, List<PropertyRecord>> groups)
@@ -262,8 +419,22 @@ namespace Desktop.CommonControls
 				ctl.SetData(Data, result.Property, index, Context);
 
 				row = new PropertyTableRow();
+				if (result.RowHeight > 0)
+				{
+					row.Height = result.RowHeight;
+				}
+				row.AllowFavorites = AllowFavorites;
+				row.AllowDelete = AllowDelete;
+				row.AllowHelp = AllowHelp;
+				if (RowHeaderWidth > 0)
+				{
+					row.HeaderWidth = RowHeaderWidth;
+				}
+				row.Required = result.Required || (_hideMenu && _hideAdd) || (RequiredFilter != null && RequiredFilter(result));
+				row.Favorited = _favoriteRecords.Contains(result);
 				row.PropertyChanged += Row_PropertyChanged;
 				row.RemoveRow += Row_RemoveRow;
+				row.ToggleFavorite += Row_ToggleFavorite;
 				row.Dock = DockStyle.Top;
 				row.RemoveCaption = RemoveCaption;
 				row.Set(ctl, result);
@@ -271,6 +442,18 @@ namespace Desktop.CommonControls
 
 				pnlRecords.Controls.Add(row);
 				pnlRecords.Controls.SetChildIndex(row, 0);
+				if (Sorted)
+				{
+					for (int i = pnlRecords.Controls.Count - 1; i >= 1; i--)
+					{
+						PropertyTableRow otherRow = pnlRecords.Controls[i] as PropertyTableRow;
+						if (row.CompareTo(otherRow) < 0)
+						{
+							pnlRecords.Controls.SetChildIndex(row, i);
+							break;
+						}
+					}
+				}				
 			}
 
 			return ctl;
@@ -280,6 +463,8 @@ namespace Desktop.CommonControls
 		{
 			pnlRecords.Controls.Remove(row);
 			row.PropertyChanged -= Row_PropertyChanged;
+			row.RemoveRow -= Row_RemoveRow;
+			row.ToggleFavorite -= Row_ToggleFavorite;
 			row.Destroy();
 			row.Dispose();
 		}
@@ -293,11 +478,56 @@ namespace Desktop.CommonControls
 					row.OnOtherPropertyChanged(sender, e);
 				}
 			}
+
+			PropertyTableRow propRow = sender as PropertyTableRow;
+			PropertyChanged?.Invoke(propRow.EditControl.Property, e);
+		}
+
+		/// <summary>
+		/// Manual notification that a property has changed and any rows listening to that (or bound to it) should be updated.
+		/// </summary>
+		/// <remarks>
+		/// Hacky workaround to a lack of databinding.
+		/// </remarks>
+		/// <param name="propertyName"></param>
+		public void UpdateProperty(string propertyName)
+		{
+			if (Data == null) { return; }
+			PropertyChangedEventArgs e = new PropertyChangedEventArgs(propertyName);
+			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+			{
+				foreach (PropertyTableRow row in kvp.Value.Values)
+				{
+					if (row.EditControl.Property == propertyName)
+					{
+						row.EditControl.Rebind();
+					}
+					else
+					{
+						row.OnOtherPropertyChanged(this, e);
+					}
+				}
+			}
+
+			//if no record exists for this property, add it
+			if (!_rows.ContainsPrimaryKey(propertyName))
+			{
+				PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == propertyName);
+				if (RecordFilter == null || RecordFilter(record))
+				{
+					AddControl(record);
+				}
+			}
 		}
 
 		private void Row_RemoveRow(object sender, EventArgs e)
 		{
 			PropertyTableRow row = sender as PropertyTableRow;
+			RemoveRow(row);
+		}
+
+		private void RemoveRow(PropertyTableRow row)
+		{
 			PropertyEditControl ctl = row.EditControl;
 			ctl.Clear();
 
@@ -330,6 +560,20 @@ namespace Desktop.CommonControls
 						_rows.Set(otherCtl.Property, otherCtl.Index, otherRow);
 					}
 				}
+			}
+		}
+
+		private void Row_ToggleFavorite(object sender, EventArgs e)
+		{
+			PropertyTableRow row = sender as PropertyTableRow;
+			PropertyRecord record = row.Record;
+			if (row.Favorited)
+			{
+				_favoriteRecords.Add(record);
+			}
+			else
+			{
+				_favoriteRecords.Remove(record);
 			}
 		}
 

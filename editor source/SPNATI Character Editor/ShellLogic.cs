@@ -14,10 +14,142 @@ namespace SPNATI_Character_Editor
 				Shell.Instance.Close();
 				return;
 			}
+			BuildDefinitions();
 			CreateToolbar();
 
 			Shell.Instance.LaunchWorkspace(new LoaderRecord());
 			Shell.Instance.Maximize(true);
+
+			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
+			Shell.Instance.AutoTick += Instance_AutoTick;
+		}
+
+		private static void Instance_AutoTick(object sender, System.EventArgs e)
+		{
+			//loop through all open characters and save only those whose author is the current user
+			foreach (IWorkspace ws in Shell.Instance.Workspaces)
+			{
+				Character c = ws.Record as Character;
+				if (c != null && !string.IsNullOrEmpty(c.Metadata?.Writer) && c.Metadata.Writer.Contains(Config.UserName))
+				{
+					Save(true, ws);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Builds definition data that isn't currently found in an xml file
+		/// </summary>
+		private static void BuildDefinitions()
+		{
+			BuildDirectiveTypes();
+		}
+
+		private static void BuildDirectiveTypes()
+		{
+			//TODO: should these go in an XML file like practically every other definition? Maybe, but the epilogue editor needs code updates to handle new directives either way
+
+			DirectiveProvider provider = new DirectiveProvider();
+			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
+			def.Description = "Adds a sprite to the scene.";
+			foreach (string key in new string[] { "id", "src", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "id", "src", "x", "y" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+
+			def = provider.Create("text") as DirectiveDefinition;
+			def.Description = "Displays a speech bubble.";
+			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+
+			def = provider.Create("clear") as DirectiveDefinition;
+			def.Description = "Removes a speech bubble.";
+			foreach (string key in new string[] { "id" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "id" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+
+			def = provider.Create("clear-all") as DirectiveDefinition;
+			def.Description = "Removes all speech bubbles.";
+
+			def = provider.Create("move") as DirectiveDefinition;
+			def.IsAnimatable = true;
+			def.Description = "Moves/rotates/scales a sprite.";
+			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "delay", "loop", "ease", "tween" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "id", "time", "loop" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+			foreach (string key in new string[] { "time", "x", "y", "scalex", "scaley", "rotation", "alpha" })
+			{
+				def.RequiredAnimatedProperties.Add(key);
+			}
+
+			def = provider.Create("camera") as DirectiveDefinition;
+			def.IsAnimatable = true;
+			def.Description = "Pans or zooms the camera.";
+			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "time", "loop" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+			foreach (string key in new string[] { "time", "x", "y", "zoom" })
+			{
+				def.RequiredAnimatedProperties.Add(key);
+			}
+
+			def = provider.Create("fade") as DirectiveDefinition;
+			def.Description = "Fades the overlay to a new color and opacity level.";
+			def.IsAnimatable = true;
+			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "time", "loop" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+			foreach (string key in new string[] { "time", "color", "alpha" })
+			{
+				def.RequiredAnimatedProperties.Add(key);
+			}
+
+			def = provider.Create("stop") as DirectiveDefinition;
+			def.Description = "Stops an animation.";
+			foreach (string key in new string[] { "id" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+			foreach (string key in new string[] { "id" })
+			{
+				def.RequiredProperties.Add(key);
+			}
+
+			def = provider.Create("wait") as DirectiveDefinition;
+			def.Description = "Waits for animations to complete.";
+
+			def = provider.Create("pause") as DirectiveDefinition;
+			def.Description = "Waits for the user to click next.";
 		}
 
 		private static bool DoInitialSetup()
@@ -76,6 +208,7 @@ namespace SPNATI_Character_Editor
 
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
+			shell.AddToolbarItem("Skins...", typeof(Costume));
 
 			//Validate
 			menu = shell.AddToolbarSubmenu("Validate");
@@ -105,9 +238,14 @@ namespace SPNATI_Character_Editor
 
 		private static void Save()
 		{
+			Save(false, Shell.Instance.ActiveWorkspace);
+		}
+
+		private static void Save(bool auto, IWorkspace workspace)
+		{
 			Cursor.Current = Cursors.WaitCursor;
 			Shell.Instance.ActiveActivity?.Save();
-			Shell.Instance.ActiveWorkspace?.SendMessage(WorkspaceMessages.Save);
+			workspace?.SendMessage(WorkspaceMessages.Save, auto);
 			Cursor.Current = Cursors.Default;
 		}
 

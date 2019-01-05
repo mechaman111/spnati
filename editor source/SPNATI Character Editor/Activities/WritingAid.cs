@@ -2,6 +2,7 @@
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -109,6 +110,7 @@ namespace SPNATI_Character_Editor.Activities
 					editorData = CharacterDatabase.GetEditorData(currentCharacter);
 				}
 
+				editorData.Initialize();
 				Situation situation = editorData.NoteworthySituations.GetRandom();
 				if (suggestions.Contains(situation))
 				{
@@ -118,7 +120,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (!_showExisting)
 				{
 					//see if we've already responded
-					Case response = situation.Case.CreateResponse(currentCharacter, _character);
+					Case response = situation.LinkedCase.CreateResponse(currentCharacter, _character);
 
 					if (response != null)
 					{
@@ -147,7 +149,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void BuildSuggestionRow(Character character, Situation line)
 		{
-			int index = gridSituations.Rows.Add(character.Name, line.Name, line.Description, line.GetStageString(), line.Case.ToString());
+			int index = gridSituations.Rows.Add(character.Name, line.Name, line.Description, line.GetStageString(), line.LinkedCase.ToString());
 			DataGridViewRow row = gridSituations.Rows[index];
 			row.Tag = new Tuple<Character, Situation>(character, line);
 		}
@@ -172,7 +174,7 @@ namespace SPNATI_Character_Editor.Activities
 			_activeCharacter = character;
 			_activeSituation = situation;
 			Stage stage = character.Behavior.Stages[situation.MinStage];
-			gridActiveSituation.SetData(character, stage, situation.Case, new HashSet<int>(), ImageLibrary.Get(character));
+			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>(), ImageLibrary.Get(character));
 		}
 
 		private void gridActiveSituation_HighlightRow(object sender, int index)
@@ -214,7 +216,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_activeSituation == null) { return; }
 
 			//TODO: If _showExisting is true, we already created the response and checked for matches up front, so save it off and retrieve here
-			_response = _activeSituation.Case.CreateResponse(_activeCharacter, _character);
+			_response = _activeSituation.LinkedCase.CreateResponse(_activeCharacter, _character);
 
 			if (_response == null || _response.Tag == null)
 			{
@@ -231,7 +233,7 @@ namespace SPNATI_Character_Editor.Activities
 			else
 			{
 				ResponseSetupForm setup = new ResponseSetupForm();
-				setup.SetData(_character, _activeSituation.Case, _response);
+				setup.SetData(_character, _activeSituation.LinkedCase, _response);
 				DialogResult result = setup.ShowDialog();
 				if (result == DialogResult.Cancel)
 				{
@@ -307,6 +309,43 @@ namespace SPNATI_Character_Editor.Activities
 		private void chkFilter_CheckedChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void gridSituations_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.RowIndex >= 0 && e.ColumnIndex == ColJump.Index)
+			{
+				Tuple<Character, Situation> tuple = gridSituations.Rows[e.RowIndex]?.Tag as Tuple<Character, Situation>;
+				if (tuple == null || tuple.Item2.Id == 0)
+				{
+					return;
+				}
+				Situation s = tuple.Item2;
+
+				Image img = Properties.Resources.GoToLine;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
+		}
+
+		private void gridSituations_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex >= 0 && e.ColumnIndex == ColJump.Index)
+			{
+				Tuple<Character, Situation> tuple = gridSituations.Rows[e.RowIndex]?.Tag as Tuple<Character, Situation>;
+				if (tuple == null || tuple.Item2.Id == 0)
+				{
+					return;
+				}
+				Situation s = tuple.Item2;
+				Shell.Instance.Launch<Character, DialogueEditor>(tuple.Item1, new ValidationContext(new Stage(s.LinkedCase.Stages[0]), s.LinkedCase, null));
+			}
 		}
 	}
 }

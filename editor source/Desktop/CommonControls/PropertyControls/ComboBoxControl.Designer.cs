@@ -40,7 +40,6 @@
 			this.cboItems.Name = "cboItems";
 			this.cboItems.Size = new System.Drawing.Size(175, 21);
 			this.cboItems.TabIndex = 0;
-			this.cboItems.SelectedIndexChanged += new System.EventHandler(this.cboItems_SelectedIndexChanged);
 			// 
 			// ComboBoxControl
 			// 

@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void UpdateIntellisense(Keys keyCode)
 		{
-			if (_textBox.SelectionStart == 0 || IsNavigationKey(keyCode)) { return; }
+			if (_textBox.SelectionStart == 0 || IsNavigationKey(keyCode) || !Config.UseIntellisense) { return; }
 
 			if (_lastContext.Context != ContextType.None && keyCode != Keys.Back && keyCode != Keys.Delete && keyCode != Keys.None)
 			{
@@ -123,6 +123,7 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case ContextType.FunctionName:
 					UpdateFunctionList(_lastContext.FunctionName);
+					DisplayTooltip();
 					break;
 				case ContextType.Parameter:
 					UpdateFunctionList(_lastContext.FunctionName);

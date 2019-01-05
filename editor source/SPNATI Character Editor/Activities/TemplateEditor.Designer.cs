@@ -47,6 +47,7 @@
 			this.cmdLoadTemplate = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.gridEmotions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLayers)).BeginInit();
 			this.SuspendLayout();
@@ -86,7 +87,7 @@
 			this.gridEmotions.Name = "gridEmotions";
 			this.gridEmotions.RowHeadersVisible = false;
 			this.gridEmotions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.gridEmotions.Size = new System.Drawing.Size(973, 232);
+			this.gridEmotions.Size = new System.Drawing.Size(973, 207);
 			this.gridEmotions.TabIndex = 17;
 			// 
 			// ColPoseKey
@@ -222,10 +223,24 @@
 			// 
 			this.saveFileDialog1.Filter = "Text files|*.txt";
 			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.Red;
+			this.label1.Location = new System.Drawing.Point(412, 572);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(636, 13);
+			this.label1.TabIndex = 19;
+			this.label1.Text = "In order for templates to work properly, make sure you export your codes in Kisek" +
+    "ae with appropriate filters set!";
+			// 
 			// TemplateEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.cmdPreviewPose);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.gridEmotions);
@@ -266,5 +281,6 @@
 		private System.Windows.Forms.Button cmdLoadTemplate;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		private System.Windows.Forms.Label label1;
 	}
 }

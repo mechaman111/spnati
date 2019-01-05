@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SPNATI_Character_Editor.Charts.Builders
 {
@@ -22,7 +23,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				long filesize = 0;
 				string folder = Config.GetRootDirectory(c);
 				DirectoryInfo directory = new DirectoryInfo(folder);
-				foreach (FileInfo file in directory.GetFiles())
+				foreach (FileInfo file in directory.GetFiles().Where(FilterPaths))
 				{
 					filesize += file.Length;
 				}
@@ -40,6 +41,27 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			{
 				return (t2.Item2).CompareTo(t1.Item2);
 			});
+		}
+
+		public static bool FilterPaths(FileInfo f)
+		{
+			string extension = f.Extension.ToLower();
+			if (extension == ".png" ||
+				extension == ".gif" ||
+				extension == ".jpg" ||
+				extension == ".css" ||
+				extension == ".js")
+			{
+				return true;
+			}
+			if (extension == ".xml")
+			{
+				if (f.Name == "behaviour.xml" || f.Name == "meta.xml")
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public List<List<ChartData>> GetSeries(string view)

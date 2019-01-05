@@ -40,7 +40,7 @@
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(101, 3);
+			this.label2.Location = new System.Drawing.Point(83, 3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(19, 13);
 			this.label2.TabIndex = 6;
@@ -50,7 +50,7 @@
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(2, 3);
+			this.label1.Location = new System.Drawing.Point(-2, 3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(33, 13);
 			this.label1.TabIndex = 5;
@@ -58,19 +58,17 @@
 			// 
 			// valFrom
 			// 
-			this.valFrom.Location = new System.Drawing.Point(41, 1);
+			this.valFrom.Location = new System.Drawing.Point(37, 1);
 			this.valFrom.Name = "valFrom";
-			this.valFrom.Size = new System.Drawing.Size(54, 20);
+			this.valFrom.Size = new System.Drawing.Size(43, 20);
 			this.valFrom.TabIndex = 7;
-			this.valFrom.ValueChanged += new System.EventHandler(this.ValueChanged);
 			// 
 			// valTo
 			// 
-			this.valTo.Location = new System.Drawing.Point(126, 1);
+			this.valTo.Location = new System.Drawing.Point(106, 1);
 			this.valTo.Name = "valTo";
-			this.valTo.Size = new System.Drawing.Size(54, 20);
+			this.valTo.Size = new System.Drawing.Size(41, 20);
 			this.valTo.TabIndex = 8;
-			this.valTo.ValueChanged += new System.EventHandler(this.ValueChanged);
 			// 
 			// NumericRangeControl
 			// 

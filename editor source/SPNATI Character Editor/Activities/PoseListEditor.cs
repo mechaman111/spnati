@@ -14,12 +14,13 @@ namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
 	[Activity(typeof(Character), 200)]
+	[Activity(typeof(Costume), 200)]
 	public partial class PoseListEditor : Activity
 	{
 		private const int MiniHeight = 200;
 		private ImageLibrary _imageLibrary;
 		private ImageMetadata _previewImageMetadata;
-		private Character _character;
+		private ISkin _character;
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
 
@@ -41,13 +42,22 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;	
+			_character = Record as ISkin;
+			if (_character is Costume)
+			{
+				chkRequired.Checked = true;
+				chkRequired.CheckedChanged += chkRequired_CheckedChanged;
+			}
+			else
+			{
+				chkRequired.Visible = false;
+			}
 		}
 
 		protected override void OnFirstActivate()
 		{
 			_imageLibrary = ImageLibrary.Get(_character);
-			string defaultFileName = Path.Combine(Config.GetRootDirectory(_character), "poses.txt");
+			string defaultFileName = Path.Combine(_character.GetDirectory(), "poses.txt");
 			if (File.Exists(defaultFileName))
 			{
 				ImportPoseList(defaultFileName);
@@ -227,6 +237,13 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void PopulatePoseGrid()
 		{
+			//pull in required images
+			HashSet<string> requiredImages = _character.GetRequiredPoses();
+			if (requiredImages == null)
+			{
+				requiredImages = new HashSet<string>();
+			}
+
 			DataGridViewImageColumn imageCol = gridPoses.Columns["ColImage"] as DataGridViewImageColumn;
 			imageCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
 
@@ -238,6 +255,7 @@ namespace SPNATI_Character_Editor.Activities
 				CleanUpGrid();
 				foreach (ImageMetadata pose in _poseList.Poses)
 				{
+					requiredImages.Remove(pose.ImageKey);
 					DataGridViewRow row = gridPoses.Rows[gridPoses.Rows.Add()];
 					WriteRow(pose, row);
 					if (imageIndex < InitialImageThreshold)
@@ -251,6 +269,29 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				MessageBox.Show("Error importing pose list. Is this actually a poses file?", "Import Pose List", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				gridPoses.Rows.Clear();
+			}
+
+			//add rows for required poses
+			if (chkRequired.Checked)
+			{
+				List<string> remaining = new List<string>();
+				remaining.AddRange(requiredImages);
+				remaining.Sort();
+				foreach (string pose in remaining)
+				{
+					bool imageExists = File.Exists(Path.Combine(_character.GetDirectory(), pose + ".png")) || File.Exists(Path.Combine(_character.GetDirectory(), pose + ".gif"));
+					if (imageExists)
+					{
+						continue;
+					}
+					DataGridViewRow row = gridPoses.Rows[gridPoses.Rows.Add()];
+					WriteRow(new ImageMetadata(pose, ""), row);
+					if (imageIndex < InitialImageThreshold)
+					{
+						imageIndex++;
+						UpdateImageCell(pose, row);
+					}
+				}
 			}
 		}
 
@@ -358,7 +399,7 @@ namespace SPNATI_Character_Editor.Activities
 					row.Cells["ColR"].Value = crop.Right;
 					row.Cells["ColT"].Value = crop.Top;
 					row.Cells["ColB"].Value = crop.Bottom;
-				}			
+				}
 			}
 		}
 
@@ -402,7 +443,12 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private DialogResult ChooseFileInDirectory(FileDialog dialog, ref string file)
 		{
-			string dir = Config.GetRootDirectory(_character);
+			string dir = _character.GetDirectory();
+			dir = dir.Replace('/', '\\');
+			if (dir.EndsWith("\\"))
+			{
+				dir = dir.Substring(0, dir.Length - 1);
+			}
 			dialog.InitialDirectory = dir;
 			dialog.FileName = Path.GetFileName(file);
 			DialogResult result = DialogResult.OK;
@@ -623,22 +669,24 @@ namespace SPNATI_Character_Editor.Activities
 		private string SaveImage(string imageKey, Image image)
 		{
 			string filename = imageKey + ".png";
-			string fullPath = Path.Combine(Config.GetRootDirectory(_character), filename);
+			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
 			//Back up the existing image if it hasn't been backed up yet
-			if (File.Exists(fullPath))
-			{
-				string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
-				if (!Directory.Exists(backupDir))
-				{
-					Directory.CreateDirectory(backupDir);
-				}
-				string backupPath = Path.Combine(backupDir, imageKey + ".png");
-				if (!File.Exists(backupPath))
-				{
-					File.Copy(fullPath, backupPath);
-				}
-			}
+
+			//commenting out - what's the point when there's git?
+			//if (File.Exists(fullPath))
+			//{
+			//	string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
+			//	if (!Directory.Exists(backupDir))
+			//	{
+			//		Directory.CreateDirectory(backupDir);
+			//	}
+			//	string backupPath = Path.Combine(backupDir, imageKey + ".png");
+			//	if (!File.Exists(backupPath))
+			//	{
+			//		File.Copy(fullPath, backupPath);
+			//	}
+			//}
 
 			image.Save(fullPath);
 
@@ -745,6 +793,11 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 		}
+
+		private void chkRequired_CheckedChanged(object sender, EventArgs e)
+		{
+			PopulatePoseGrid();
+		}
 	}
-	
+
 }

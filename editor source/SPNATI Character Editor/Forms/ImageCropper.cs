@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.Forms
 			}
 		}
 
-		public async void Import(ImageMetadata metadata, Character character, bool lockRectSize)
+		public async void Import(ImageMetadata metadata, ISkin character, bool lockRectSize)
 		{
 			lblWait.Visible = true;
 			tmrWait.Enabled = true;

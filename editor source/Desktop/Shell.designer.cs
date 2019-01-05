@@ -37,6 +37,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tmrAutoTick = new System.Windows.Forms.Timer(this.components);
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -90,6 +91,10 @@
 			this.lblStatus.Size = new System.Drawing.Size(39, 17);
 			this.lblStatus.Text = "Status";
 			// 
+			// tmrAutoTick
+			// 
+			this.tmrAutoTick.Tick += new System.EventHandler(this.tmrAutoTick_Tick);
+			// 
 			// Shell
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -124,6 +129,7 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+		private System.Windows.Forms.Timer tmrAutoTick;
 	}
 }
 

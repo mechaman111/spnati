@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -40,7 +41,7 @@ namespace Desktop.Providers
 			{
 				return editControls.Values;
 			}
-			return null;
+			return Enumerable.Empty<PropertyRecord>();
 		}
 
 		/// <summary>
