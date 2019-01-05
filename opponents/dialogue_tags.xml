@@ -109,14 +109,30 @@
     <defaultImage>finished</defaultImage>
     <defaultText>What the character says after they've finished masturbating.</defaultText>
   </trigger>
-  <trigger tag="opponent_lost" optional="true" start="0" end="10" label="Opponent Lost" hasTarget="true" description="An opponent lost the round and will either have to remove something or masturbate">
+  <trigger tag="opponent_lost" optional="true" start="0" end="10" label="Opponent Lost" hasTarget="true" description="An opponent lost the round and will either have to remove something or masturbate" group="10" order="0">
     <vars>
       <string>name</string>
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What they say to an opponent who has lost a round. This is considered in conjuction with the more specific (male/female) must strip/masturbate cases</defaultText>
   </trigger>
-  <trigger tag="male_human_must_strip" optional="true" start="0" end="10" label="Must Strip (Player, Male)" hasTarget="true" description="The human male player has lost a round and must remove something" group="3" order="0" xmlGroup="0" xmlOrder="23">
+  <trigger tag="opponent_stripping" start="0" end="10" label="Opponent Stripping" hasTarget="true" description="An opponent of either gender is removing something" group="10" order="1">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent is stripping.</defaultText>
+  </trigger>
+  <trigger tag="opponent_stripped" start="0" end="10" label="Opponent Stripped" hasTarget="true" description="An opponent of either gender has removed something" group="10" order="2">
+    <vars>
+      <string>name</string>
+      <string>clothing</string>
+    </vars>
+    <defaultImage>interested</defaultImage>
+    <defaultText>An opponent has stripped.</defaultText>
+  </trigger>
+  <trigger tag="male_human_must_strip" optional="true" start="0" end="10" label="Must Strip (Player, Male)" hasTarget="true" description="The human male player has lost a round and must remove something" group="3" order="8" xmlGroup="0" xmlOrder="23">
     <vars>
       <string>name</string>
     </vars>
@@ -445,19 +461,19 @@
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says when a female character "finishes" masturbating.</defaultText>
   </trigger>
-  <trigger tag="game_over_victory" start="0" end="8" label="Game Over (Victory)" oncePerStage="true" description="The game is over and this character won" group="10" order="0" xmlGroup="0" xmlOrder="30">
+  <trigger tag="game_over_victory" start="0" end="8" label="Game Over (Victory)" oncePerStage="true" description="The game is over and this character won" group="11" order="0" xmlGroup="0" xmlOrder="30">
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.</defaultText>
   </trigger>
-  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" oncePerStage="true" hasTarget="true" description="The game is over and this character lost" group="10" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
+  <trigger tag="game_over_defeat" start="10" end="10" label="Game Over (Defeat)" oncePerStage="true" hasTarget="true" description="The game is over and this character lost" group="11" order="0" noPrefix="true" xmlGroup="6" xmlOrder="1">
     <vars>
       <string>name</string>
     </vars>
     <defaultImage>calm</defaultImage>
     <defaultText>What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.</defaultText>
   </trigger>
-  <trigger tag="global" optional="true" start="0" end="10" label="Global" hasTarget="true" description="Used at all points in the game" group="11" order="0">
+  <trigger tag="global" optional="true" start="0" end="10" label="Global" hasTarget="true" description="Used at all points in the game" group="12" order="0">
     <vars>
       <string>name</string>
       <string>clothing</string>
@@ -540,16 +556,24 @@
 #The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
 ]]></description>
   </textGroup>
-  <textGroup id="10" name="Game over">
+  <textGroup id="10" name="Opponent lost/stripping">
+    <description><![CDATA[
+#GENERAL OPPONENT LOST/STRIPPING
+#Lines that trigger when a player has lost or is stripping regardless of gender or what they have left.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    ]]></description>
+  </textGroup>
+  <textGroup id="11" name="Game over">
     <description><![CDATA[
 #GAME OVER
 #Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
 ]]></description>
   </textGroup>
-  <textGroup id="11" name="Global">
+  <textGroup id="12" name="Global">
     <description>
       <![CDATA[
-#GAME OVER
+#GLOBAL
 #If your character is saying a set of lines in sequence where it doesn't matter what phase of the game it's at, you can use this area to avoid duplicating lines across cases. These lines are considered for every case in the game.
 ]]>
     </description>

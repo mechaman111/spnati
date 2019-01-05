@@ -292,7 +292,7 @@ function prepareToStripPlayer (player) {
         players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(players[player], toBeRemovedClothing, false);
 
-        updateAllBehaviours(player, PLAYER_STRIPPING, dialogueTrigger);
+        updateAllBehaviours(player, PLAYER_STRIPPING, [[dialogueTrigger, OPPONENT_STRIPPING]]);
         players[player].preloadStageImages(players[player].stage + 1);
     }
 }
@@ -434,7 +434,7 @@ function closeStrippingModal (id) {
         }
             
         /* update behaviour */
-        updateAllBehaviours(HUMAN_PLAYER, null, dialogueTrigger);
+        updateAllBehaviours(HUMAN_PLAYER, null, [[dialogueTrigger, OPPONENT_STRIPPED]]);
 
         /* allow progression */
         $('#stripping-modal').modal('hide');
@@ -478,7 +478,7 @@ function stripAIPlayer (player) {
 	players[player].updateFolder();
 
 	/* update behaviour */
-	updateAllBehaviours(player, PLAYER_STRIPPED, dialogueTrigger);
+    updateAllBehaviours(player, PLAYER_STRIPPED, [[dialogueTrigger, OPPONENT_STRIPPED]]);
 }
 
 /************************************************************
