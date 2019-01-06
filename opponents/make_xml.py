@@ -39,8 +39,8 @@ arrow_tag = "arrow"
 ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag, ending_conditions_tag, ending_hint_tag, scene_tag, directive_tag, keyframe_tag]
 screen_tags = [screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
 scene_tags = [scene_tag, directive_tag, keyframe_tag, text_tag]
-scene_attributes = ['name', 'width', 'height', 'background', 'x', 'y', 'zoom', 'color', 'overlay', 'overlay-alpha']
-directive_attributes = ['type', 'id', 'src', 'x', 'y', 'width', 'height', 'scale', 'scalex', 'scaley', 'pivotx', 'pivoty', 'zoom', 'rotation', 'alpha', 'arrow', 'time', 'ease', 'interpolation', 'loop', 'color', 'delay']
+scene_attributes = ['name', 'background', 'color', 'x', 'y',  'width', 'height', 'zoom', 'overlay', 'overlay-alpha']
+directive_attributes = ['type', 'id', 'time', 'src', 'x', 'y', 'width', 'height', 'scale', 'scalex', 'scaley', 'pivotx', 'pivoty', 'color', 'alpha', 'rotation', 'zoom', 'arrow', 'delay', 'loop', 'ease', 'interpolation']
 directive_types = ['sprite', 'text', 'clear', 'clear-all', 'move', 'camera', 'fade', 'stop', 'wait', 'pause']
 ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
 			  'markers', 'not-markers', 'any-markers',
