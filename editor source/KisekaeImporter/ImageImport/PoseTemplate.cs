@@ -72,7 +72,7 @@ namespace KisekaeImporter.ImageImport
 			for (int i = 0; i < Emotions.Count; i++)
 			{
 				var emotion = Emotions[i];
-				lines.Add(string.Format("emotion={0},{1}", emotion.Key, emotion.Code));
+				lines.Add(string.Format("emotion={0},{1},{2}", emotion.Key, emotion.Code, emotion.Crop.Serialize()));
 			}
 
 			File.WriteAllLines(filename, lines);
@@ -101,7 +101,18 @@ namespace KisekaeImporter.ImageImport
 						string[] pieces = value.Split(',');
 						if (pieces.Length == 1)
 							continue;
-						Emotion emotion = new Emotion(pieces[0], pieces[1]);
+						string l = "0";
+						string t = "0";
+						string r = "600";
+						string b = "1400";
+						if (pieces.Length >= 6)
+						{
+							l = pieces[2];
+							t = pieces[3];
+							r = pieces[4];
+							b = pieces[5];
+						}
+						Emotion emotion = new Emotion(pieces[0], pieces[1], l, t, r, b);
 						template.Emotions.Add(emotion);
 						break;
 				}
@@ -122,7 +133,9 @@ namespace KisekaeImporter.ImageImport
 				foreach (Emotion emotion in Emotions)
 				{
 					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion);
-					poses.Poses.Add(new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize()));
+					ImageMetadata data = new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize());
+					data.CropInfo = emotion.Crop;
+					poses.Poses.Add(data);
 				}
 			}
 			return poses;
@@ -208,15 +221,20 @@ namespace KisekaeImporter.ImageImport
 		/// Pose code
 		/// </summary>
 		public string Code;
+		/// <summary>
+		/// Cropping region
+		/// </summary>
+		public Rect Crop = new Rect(0, 0, 600, 1400);
 
 		public Emotion()
 		{
 		}
 
-		public Emotion(string key, string code)
+		public Emotion(string key, string code, string left, string top, string right, string bottom)
 		{
 			Key = key;
 			Code = code;
+			Crop = new Rect(left, top, right, bottom);
 		}
 	}
 }
