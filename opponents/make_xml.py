@@ -26,13 +26,22 @@ ending_tag = "ending" #name for the ending
 ending_gender_tag = "ending_gender" #player gender the ending is shown to
 ending_preview_tag = "gallery_image" # image to use for the preview in the gallery
 ending_conditions_tag = "ending_conditions" # All other conditions
+ending_hint_tag = "hint" #unlock hint
 screen_tag = "screen"
+scene_tag = "scene"
 text_tag = "text"
+directive_tag = "directive"
+keyframe_tag = "keyframe"
 x_tag = "x"
 y_tag = "y"
 width_tag = "width"
 arrow_tag = "arrow"
-ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag, ending_conditions_tag]
+ending_tags = [ending_tag, ending_gender_tag, ending_preview_tag, screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag, ending_conditions_tag, ending_hint_tag, scene_tag, directive_tag, keyframe_tag]
+screen_tags = [screen_tag, text_tag, x_tag, y_tag, width_tag, arrow_tag]
+scene_tags = [scene_tag, directive_tag, keyframe_tag, text_tag]
+scene_attributes = ['name', 'width', 'height', 'background', 'x', 'y', 'zoom', 'color', 'overlay', 'overlay-alpha']
+directive_attributes = ['type', 'id', 'src', 'x', 'y', 'width', 'height', 'scale', 'scalex', 'scaley', 'pivotx', 'pivoty', 'zoom', 'rotation', 'alpha', 'arrow', 'time', 'ease', 'interpolation', 'loop', 'color', 'delay']
+directive_types = ['sprite', 'text', 'clear', 'clear-all', 'move', 'camera', 'fade', 'stop', 'wait', 'pause']
 ending_condition_types = ['alsoPlaying', 'playerStartingLayers',
 			  'markers', 'not-markers', 'any-markers',
 			  'alsoplaying-markers', 'alsoplaying-not-markers', 'alsoplaying-any-markers']
@@ -336,6 +345,27 @@ def write_xml(data, filename):
 					if arrow_tag in text_box:
 						text_box_xml.subElement(arrow_tag, text_box[arrow_tag])
 					text_box_xml.subElement("content", capitalizeDialogue(text_box[text_tag]))
+
+			for scene in ending["scenes"]:
+				scene_xml = ending_xml.subElement("scene", None, None, blank_after=True)
+				for cond_type in scene_attributes:
+					if cond_type in scene:
+						scene_xml.set(cond_type, scene[cond_type])
+
+				for directive in scene["directives"]:
+					directive_text = None
+					if text_tag in directive:
+						directive_text = directive[text_tag]
+					directive_xml = scene_xml.subElement("directive", directive_text)
+					for directive_attr in directive_attributes:
+						if directive_attr in directive:
+							directive_xml.set(directive_attr, directive[directive_attr])
+
+					for keyframe in directive["keyframes"]:
+						keyframe_xml = directive_xml.subElement("keyframe")
+						for keyframe_attr in directive_attributes:
+							if keyframe_attr in keyframe:
+								keyframe_xml.set(keyframe_attr, keyframe[keyframe_attr])
 	
 	#done
 	
@@ -373,6 +403,117 @@ def add_ending(ending, d):
 		
 	endings.append(ending)
 	
+#scene-based endings
+def handle_scene_ending_string(key, content, ending, d):
+	#get the scenes variable
+	scenes = None
+	if "scenes" in ending:
+		scenes = ending["scenes"]
+	else:
+		#or make one, if it doesn't already exist
+		scenes = list()
+		ending["scenes"] = scenes
+		
+	#get the current screen
+	scene = None
+	if len(scenes) >= 1:
+		scene = scenes[-1]
+
+	#make a new scene
+	if key == scene_tag:
+		scene = dict()
+		scenes.append(scene)
+		scene["directives"] = list()
+		parts = content.split(',')
+		for c in parts:
+			try:
+				cond_type, cond_value = c.rsplit(':', 1)
+				cond_type = cond_type.strip()
+				cond_value = cond_value.strip()
+				if cond_type in scene_attributes:
+					if cond_value != '':
+						scene[cond_type] = cond_value
+					else:
+						print("Scene attribute without value for \"%s\": \"%s\". Skipping." % (ending['title'], cond_type))
+				else:
+					print("Unknown scene attribute %s" % cond_type)
+
+			except ValueError:
+				print("Scene attribute with empty value for \"%s\": \"%s\" Skipping." % (ending['title'], c))
+		return
+	
+	#make sure we have a screen ready, because the other tags are specific to a screen
+	if scene is None:
+		print("Error - using tag \"%s\" with value \"%s\", without a scene variable - use the \"%s\" tag first to put this information on that scene." % (key, content, scene_tag))
+		return
+
+	#new directive
+	if key == directive_tag:
+		directive = dict()
+		directive["keyframes"] = list()
+		scene["directives"].append(directive)
+		parts = content.split(',')
+		for c in parts:
+			try:
+				cond_type, cond_value = c.rsplit(':', 1)
+				cond_type = cond_type.strip()
+				cond_value = cond_value.strip()
+				if cond_type in directive_attributes:
+					if cond_value != '':
+						if cond_type == "type" and not cond_value in directive_types:
+							print("Unknown directive type %s. Skipping." % cond_value)
+						else:
+							directive[cond_type] = cond_value
+					else:
+						print("Directive attribute without value for \"%s\": \"%s\". Skipping." % (directive['type'], cond_type))
+				else:
+					print("Unknown directive attribute %s" % cond_type)
+
+			except ValueError:
+				print("Directive attribute with empty value for \"%s\": \"%s\" Skipping." % (directive['type'], c))
+		return
+
+	#new keyframe
+	if key == keyframe_tag:
+		directive = None
+		if len(scene["directives"]) >= 1:
+			directive = scene["directives"][-1]
+
+		if directive is None:
+			print("Error - using tag \"%s\" with value \"%s\", without a directive variable - use the \"%s\" tag first to put this information on that directive." % (key, content, directive_tag))
+			return
+
+		keyframe = dict()
+		directive["keyframes"].append(keyframe)
+		parts = content.split(',')
+		for c in parts:
+			try:
+				cond_type, cond_value = c.rsplit(':', 1)
+				cond_type = cond_type.strip()
+				cond_value = cond_value.strip()
+				if cond_type in directive_attributes:
+					if cond_value != '':
+						keyframe[cond_type] = cond_value
+					else:
+						print("Keyframe attribute without value for \"%s\": \"%s\". Skipping." % (directive['type'], cond_type))
+				else:
+					print("Unknown directive attribute %s" % cond_type)
+
+			except ValueError:
+				print("Keyframe attribute with empty value for \"%s\": \"%s\" Skipping." % (directive['type'], c))
+		return
+
+	#text
+	if key == text_tag:
+		directive = None
+		if len(scene["directives"]) >= 1:
+			directive = scene["directives"][-1]
+		if directive is None:
+			print("Error - using tag \"%s\" with value \"%s\", without a directive variable - use the \"%s\" tag first to put this information on that directive." % (key, content, directive_tag))
+			return
+
+		directive["text"] = content
+
 #handle the ending data
 def handle_ending_string(key, content, ending, d):
 	if key == ending_tag:
@@ -387,6 +528,9 @@ def handle_ending_string(key, content, ending, d):
 		if len(content) <= 0: #if the gender wasn't specified, use "any"
 			content = "any"
 		ending["gender"] = content
+		return
+	elif key == ending_hint_tag:
+		ending["hint"] = content
 		return
 	elif key == ending_preview_tag:
 		if len(content) > 0:
@@ -424,56 +568,59 @@ def handle_ending_string(key, content, ending, d):
 	screen = None
 	if len(screens) >= 1:
 		screen = screens[-1]
-	
-	#background image for a screen - makes a new screen
-	if key == screen_tag:
-		screen = dict()
-		screens.append(screen)
-		screen["image"] = content
-		screen["text_boxes"] = list()
-		return
-	
-	#make sure we have a screen ready, because the other tags are specific to a screen
-	if screen is None:
-		print("Error - using tag \"%s\" with value \"%s\", without a screen varaible - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag))
-		return
-	
-	text_boxes = screen["text_boxes"]
-	
-	#the actual text of the text box. this makes a new text box
-	if key == text_tag:
-		text_box = dict()
-		text_box[text_tag] = content
-		text_boxes.append(text_box)
-		return
-		
-	#get the current text box for the current screen
-	text_box = None
-	if len(text_boxes) >= 1:
-		text_box = text_boxes[-1]
+
+	if key in scene_tags and screen is None:
+		handle_scene_ending_string(key, content, ending, d)
 	else:
-		print("Error - trying to use tag \"%s\" with value \"%s\", without making a text box. Use the \"%s\" tag first." % (key, content, text_tag))
-		return
+		#background image for a screen - makes a new screen
+		if key == screen_tag:
+			screen = dict()
+			screens.append(screen)
+			screen["image"] = content
+			screen["text_boxes"] = list()
+			return
 	
-	#x position. Can be a css value, or "centered"
-	if key == x_tag:
-		text_box[x_tag] = content
-		return
+		#make sure we have a screen ready, because the other tags are specific to a screen
+		if screen is None:
+			print("Error - using tag \"%s\" with value \"%s\", without a screen varaible - use the \"%s\" tag first to put this information on that screen." % (key, content, screen_tag))
+			return
 	
-	#y position. Is a css value.
-	elif key == y_tag:
-		text_box[y_tag] = content
-		return
+		text_boxes = screen["text_boxes"]
 	
-	#width of a text box. defaults to 20%
-	elif key == width_tag:
-		text_box[width_tag] = content
-		return
+		#the actual text of the text box. this makes a new text box
+		if key == text_tag:
+			text_box = dict()
+			text_box[text_tag] = content
+			text_boxes.append(text_box)
+			return
 		
-	#direction of the dialogue box arrow (if anything)
-	elif key == arrow_tag:
-		text_box[arrow_tag] = content
-		return
+		#get the current text box for the current screen
+		text_box = None
+		if len(text_boxes) >= 1:
+			text_box = text_boxes[-1]
+		else:
+			print("Error - trying to use tag \"%s\" with value \"%s\", without making a text box. Use the \"%s\" tag first." % (key, content, text_tag))
+			return
+	
+		#x position. Can be a css value, or "centered"
+		if key == x_tag:
+			text_box[x_tag] = content
+			return
+	
+		#y position. Is a css value.
+		elif key == y_tag:
+			text_box[y_tag] = content
+			return
+	
+		#width of a text box. defaults to 20%
+		elif key == width_tag:
+			text_box[width_tag] = content
+			return
+		
+		#direction of the dialogue box arrow (if anything)
+		elif key == arrow_tag:
+			text_box[arrow_tag] = content
+			return
 		
 	
 #read in a character's data
