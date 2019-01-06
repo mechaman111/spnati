@@ -42,6 +42,7 @@
 			this.valAutoSave = new System.Windows.Forms.NumericUpDown();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.chkIntellisense = new System.Windows.Forms.CheckBox();
+			this.chkHideImages = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -155,6 +156,18 @@
 			this.chkIntellisense.Text = "Variable Intellisense";
 			this.chkIntellisense.UseVisualStyleBackColor = true;
 			// 
+			// chkHideImages
+			// 
+			this.chkHideImages.AutoSize = true;
+			this.chkHideImages.Location = new System.Drawing.Point(140, 91);
+			this.chkHideImages.Name = "chkHideImages";
+			this.chkHideImages.Size = new System.Drawing.Size(145, 17);
+			this.chkHideImages.TabIndex = 9;
+			this.chkHideImages.Text = "Include Prefixless Images";
+			this.toolTip1.SetToolTip(this.chkHideImages, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
+        "ogue lines.");
+			this.chkHideImages.UseVisualStyleBackColor = true;
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -162,6 +175,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(625, 146);
+			this.Controls.Add(this.chkHideImages);
 			this.Controls.Add(this.chkIntellisense);
 			this.Controls.Add(this.valAutoSave);
 			this.Controls.Add(this.label3);
@@ -198,5 +212,6 @@
 		private System.Windows.Forms.NumericUpDown valAutoSave;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.CheckBox chkIntellisense;
+		private System.Windows.Forms.CheckBox chkHideImages;
 	}
 }

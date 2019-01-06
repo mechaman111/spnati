@@ -115,7 +115,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				DataGridViewRow row = gridEmotions.Rows[gridEmotions.Rows.Add()];
 				row.Cells[0].Value = emotion.Key;
-				row.Cells[1].Value = emotion.Code;
+				row.Cells[1].Value = emotion.Crop.Left;
+				row.Cells[2].Value = emotion.Crop.Top;
+				row.Cells[3].Value = emotion.Crop.Right;
+				row.Cells[4].Value = emotion.Crop.Bottom;
+				row.Cells[5].Value = emotion.Code;
 			}
 			RestoreLabels();
 		}
@@ -203,10 +207,14 @@ namespace SPNATI_Character_Editor.Activities
 			if (row == null)
 				return null;
 			string key = row.Cells[0].Value?.ToString();
-			string value = row.Cells[1].Value?.ToString();
+			string value = row.Cells[5].Value?.ToString();
 			if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value))
 				return null;
-			Emotion emotion = new Emotion(key, value);
+			string left = row.Cells[1].Value?.ToString() ?? "0";
+			string top = row.Cells[2].Value?.ToString() ?? "0";
+			string right = row.Cells[3].Value?.ToString() ?? "600";
+			string bottom = row.Cells[4].Value?.ToString() ?? "1400";
+			Emotion emotion = new Emotion(key, value, left, top, right, bottom);
 			return emotion;
 		}
 

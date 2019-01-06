@@ -31,8 +31,6 @@
 			this.cmdPreviewPose = new System.Windows.Forms.Button();
 			this.label10 = new System.Windows.Forms.Label();
 			this.gridEmotions = new System.Windows.Forms.DataGridView();
-			this.ColPoseKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label9 = new System.Windows.Forms.Label();
 			this.gridLayers = new System.Windows.Forms.DataGridView();
 			this.ColLayerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +46,12 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.label1 = new System.Windows.Forms.Label();
+			this.ColPoseKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPoseL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridEmotions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLayers)).BeginInit();
 			this.SuspendLayout();
@@ -80,6 +84,10 @@
 			this.gridEmotions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridEmotions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColPoseKey,
+            this.ColPoseL,
+            this.ColT,
+            this.ColR,
+            this.ColB,
             this.dataGridViewTextBoxColumn1});
 			this.gridEmotions.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridEmotions.Location = new System.Drawing.Point(75, 359);
@@ -89,17 +97,6 @@
 			this.gridEmotions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.gridEmotions.Size = new System.Drawing.Size(973, 207);
 			this.gridEmotions.TabIndex = 17;
-			// 
-			// ColPoseKey
-			// 
-			this.ColPoseKey.HeaderText = "Emotion";
-			this.ColPoseKey.Name = "ColPoseKey";
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn1.HeaderText = "Code";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
 			// 
 			// label9
 			// 
@@ -236,6 +233,41 @@
 			this.label1.Text = "In order for templates to work properly, make sure you export your codes in Kisek" +
     "ae with appropriate filters set!";
 			// 
+			// ColPoseKey
+			// 
+			this.ColPoseKey.HeaderText = "Emotion";
+			this.ColPoseKey.Name = "ColPoseKey";
+			// 
+			// ColPoseL
+			// 
+			this.ColPoseL.HeaderText = "L";
+			this.ColPoseL.Name = "ColPoseL";
+			this.ColPoseL.Width = 40;
+			// 
+			// ColT
+			// 
+			this.ColT.HeaderText = "T";
+			this.ColT.Name = "ColT";
+			this.ColT.Width = 40;
+			// 
+			// ColR
+			// 
+			this.ColR.HeaderText = "R";
+			this.ColR.Name = "ColR";
+			this.ColR.Width = 40;
+			// 
+			// ColB
+			// 
+			this.ColB.HeaderText = "B";
+			this.ColB.Name = "ColB";
+			this.ColB.Width = 40;
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn1.HeaderText = "Code";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			// 
 			// TemplateEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,8 +297,6 @@
 		private System.Windows.Forms.Button cmdPreviewPose;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.DataGridView gridEmotions;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColPoseKey;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.DataGridView gridLayers;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLayerName;
@@ -282,5 +312,11 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColPoseKey;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColPoseL;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColT;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColR;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColB;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 	}
 }
