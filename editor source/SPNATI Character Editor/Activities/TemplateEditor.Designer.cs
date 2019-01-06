@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdPreviewPose = new System.Windows.Forms.Button();
 			this.label10 = new System.Windows.Forms.Label();
 			this.gridEmotions = new System.Windows.Forms.DataGridView();
@@ -52,6 +53,7 @@
 			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColCrop = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridEmotions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLayers)).BeginInit();
 			this.SuspendLayout();
@@ -88,7 +90,8 @@
             this.ColT,
             this.ColR,
             this.ColB,
-            this.dataGridViewTextBoxColumn1});
+            this.dataGridViewTextBoxColumn1,
+            this.ColCrop});
 			this.gridEmotions.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridEmotions.Location = new System.Drawing.Point(75, 359);
 			this.gridEmotions.MultiSelect = false;
@@ -97,6 +100,7 @@
 			this.gridEmotions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.gridEmotions.Size = new System.Drawing.Size(973, 207);
 			this.gridEmotions.TabIndex = 17;
+			this.gridEmotions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridEmotions_CellContentClick);
 			// 
 			// label9
 			// 
@@ -268,6 +272,17 @@
 			this.dataGridViewTextBoxColumn1.HeaderText = "Code";
 			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
 			// 
+			// ColCrop
+			// 
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.NullValue = "Crop";
+			this.ColCrop.DefaultCellStyle = dataGridViewCellStyle1;
+			this.ColCrop.HeaderText = "Crop";
+			this.ColCrop.Name = "ColCrop";
+			this.ColCrop.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColCrop.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.ColCrop.Width = 60;
+			// 
 			// TemplateEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,5 +333,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColR;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColB;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewButtonColumn ColCrop;
 	}
 }

@@ -7,6 +7,7 @@ using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.Properties;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor.Controls
 {
@@ -1875,7 +1876,7 @@ namespace SPNATI_Character_Editor.Controls
 			float time;
 			if (!string.IsNullOrEmpty(directive.Time))
 			{
-				if (!float.TryParse(directive.Time, out time))
+				if (!float.TryParse(directive.Time, NumberStyles.Float, CultureInfo.InvariantCulture, out time))
 				{
 					return;
 				}

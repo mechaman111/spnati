@@ -133,7 +133,9 @@ namespace KisekaeImporter.ImageImport
 				foreach (Emotion emotion in Emotions)
 				{
 					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion);
-					poses.Poses.Add(new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize()));
+					ImageMetadata data = new ImageMetadata(string.Format("{0}-{1}", stage.ToString(), emotion.Key), finalCode.Serialize());
+					data.CropInfo = emotion.Crop;
+					poses.Poses.Add(data);
 				}
 			}
 			return poses;

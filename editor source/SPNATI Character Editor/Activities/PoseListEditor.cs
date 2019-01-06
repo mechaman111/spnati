@@ -199,8 +199,8 @@ namespace SPNATI_Character_Editor.Activities
 				b = 1400;
 
 			string data = row.Cells["ColData"].Value?.ToString();
-			if (data == null)
-				data = string.Empty;
+			if (string.IsNullOrEmpty(data))
+				return null;
 
 			string key = GetKey(stage, pose);
 			ImageMetadata metadata = new ImageMetadata(key, data);
@@ -367,8 +367,8 @@ namespace SPNATI_Character_Editor.Activities
 			string data = row.Cells["ColData"].Value?.ToString();
 			if (string.IsNullOrEmpty(data))
 			{
-				//Dummy values for faster testing
-				data = "47**aa17.100.0.14.62.17.100.0.2.62_ab_ac_ba54_bb7.1_bc185.500.0.0.1_bd17_be180_ca79.0.6.63.50.31.44.49.30_cb0_daF9C9BD.0.0.100_db_dd9.3.16.0.12.29_dhF38484.20.50.43.3_di5_qa_qb_dc7.4.EEBABE.D68B8B.C96262_eh_ea26.33.33.56.0.0_ec10.29.33.33.56.42.63.1_ed0.24.0.1.33.56_ef_eg_r00_fa11.50.65.54.50.36.56_fb7_fh5_fc3.19.55.3.19.55.42.61.61.42.50.50_fd1.0.20.893A1A.893A1A_fe48.77_ff0000000000_fg1.58_pa0.0.0.0.10.50.85.78.0.0_t00_pb_pc_pd_pe_ga0_gb0_gc1.0_ge0000000000_gh_gf_gg_gd10000000_ha86.86_hb50.1.50.100_hc0.50.48.0.50.48_hd0.1.50.50_ia_if0.55.55.0.1.8.0.0.8.0.0.0.0.3_ib_id9.55.55.44.0.0.1.1.0.0.1.0.0.3_ic_jc_ie1.56.56.0.10.22.22.0.10.22.22.0.0_ja13.55.2.0_jb13.55.2.0_jd6.48.50.50_je6.48.50.50_jf_jg_ka4.18.18.18.0_kb10.A5C0F1.42.42_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_m00_n00_s00_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_ad0.0.0.0.0.0.0.0.0.0";
+				MessageBox.Show("Code must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
 			string key = GetKey(stage, pose);
 

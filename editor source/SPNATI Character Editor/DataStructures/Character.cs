@@ -199,7 +199,15 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				throw new NotImplementedException();
+				return FolderName;
+			}
+		}
+
+		Character ISkin.Character
+		{
+			get
+			{
+				return this;
 			}
 		}
 

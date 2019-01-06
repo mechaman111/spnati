@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using System.IO;
 
 namespace SPNATI_Character_Editor
@@ -120,9 +121,9 @@ namespace SPNATI_Character_Editor
 					scene.X = oldScene.LegacyX;
 					scene.Y = oldScene.LegacyY;
 					float zoom;
-					if (float.TryParse(oldScene.LegacyZoom.Substring(0, oldScene.LegacyZoom.Length - 1), out zoom))
+					if (float.TryParse(oldScene.LegacyZoom.Substring(0, oldScene.LegacyZoom.Length - 1), NumberStyles.Float, CultureInfo.InvariantCulture, out zoom))
 					{
-						scene.Zoom = (zoom / 100).ToString();
+						scene.Zoom = (zoom / 100).ToString(CultureInfo.InvariantCulture);
 					}
 
 					ending.Scenes.Add(scene);
