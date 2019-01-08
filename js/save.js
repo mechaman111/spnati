@@ -1,10 +1,10 @@
 //Class for saving user's progress and preferences
 
 function mergeObjects(a, b){
-	if(b===undefined){
+	if(b === undefined || b === null){
 		return a;
 	}
-	else if(a===undefined){
+	else if(a === undefined || a === null){
 		return b;
 	}
 	for(var v in b){
@@ -48,15 +48,18 @@ function Save(){
 		'askedUsageTracking': false,
 		'usageTracking': false,
 	};
+	
 	this.saveCookie = function(){
 		Cookies.set('save', this.data, {expires: 3652});
 	};
 
 	this.loadCookie = function(){
 		var cookie = Cookies.get('save');
+		console.log(this.data);
 		if(cookie !== undefined){
 			this.data = mergeObjects(this.data, JSON.parse(cookie));
 		}
+		console.log(this.data);
 		this.loadOptions();
 		this.loadPlayer();
 	};
