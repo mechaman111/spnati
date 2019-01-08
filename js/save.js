@@ -1,4 +1,3 @@
-
 //Class for saving user's progress and preferences
 
 function mergeObjects(a, b){
@@ -20,7 +19,7 @@ function mergeObjects(a, b){
 
 function Save(){
 	this.data = {
-		'background' : 1,
+		'background' : null,
 		'masturbationTimer' : 20,
 		'gender' : "male",
 		'autoFade' : 1,
@@ -73,7 +72,13 @@ function Save(){
 		USAGE_TRACKING = this.data['usageTracking'];
 		players[HUMAN_PLAYER].timer = this.data['masturbationTimer'] || 20;
 		players[HUMAN_PLAYER].gender = this.data['gender'];
-		setBackground(this.data['background']);
+		
+		if (!this.data['background'] || this.data['background'] == 1) {
+			setBackground(defaultBackground);
+		} else {
+			setBackground(this.data['background']);
+		}
+		
 
 		setAutoFade(this.data['autoFade']);
 		setCardSuggest(this.data['cardSuggest']);
@@ -86,12 +91,12 @@ function Save(){
 	this.saveOptions = function(){
 		this.data['usageTracking'] = USAGE_TRACKING;
 		this.data['masturbationTimer'] = players[HUMAN_PLAYER].timer;
-		var back = $("body").css('background-image');
-		var ind = back.indexOf('background')+10;
-		back = back.substr(ind);
-		ind = back.indexOf('.');
-		back = parseInt(back.substr(0,ind));
-		this.data['background'] = back;
+		
+		if (selectedBackground != defaultBackground-1) {
+			this.data['background'] = selectedBackground+1;
+		} else {
+			this.data['background'] = null;
+		}
 
 		this.saveCookie();
 	};
