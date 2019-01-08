@@ -47,7 +47,8 @@ var backgrounds = [
 	{ name: 'romantic', location: 'indoors' },
 	{ name: 'classic', location: 'indoors' }
 ];
-var selectedBackground = 0;
+var defaultBackground = 1;
+var selectedBackground = defaultBackground-1;
 
 /**********************************************************************
  *****                      Option Functions                      *****
