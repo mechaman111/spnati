@@ -3,19 +3,11 @@ import csv
 import sys
 
 modifications = {
-    'dd': {4: 60},
-    'r14': {
-        6: 20,
-        7: 100,
-        8: 296,
-        9: 587
-    },
-    'fg': {
+    'dh': {
         0: 1,
-        5: 0,
-        6: 0,
-        7: 0
-    }
+        1: 20,
+        4: 3
+    },
 }
 
 def modify_code(in_code):
