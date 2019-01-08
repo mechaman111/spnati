@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using KisekaeImporter;
 using KisekaeImporter.ImageImport;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Drawing;
 using System.IO;
@@ -9,10 +10,11 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 205)]
+	[Activity(typeof(Costume), 205)]
 	public partial class TemplateEditor : Activity
 	{
 		private ImageLibrary _imageLibrary;
-		private Character _character;
+		private ISkin _character;
 		private string _lastTemplateFile;
 		private PoseTemplate _lastTemplate;
 
@@ -31,21 +33,33 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;
+			_character = Record as ISkin;
 			_imageLibrary = ImageLibrary.Get(_character);
 		}
 
 		protected override void OnActivate()
 		{
+			PoseTemplate template = CreateTemplate(true);
+			IWardrobe wardrobe = _character as IWardrobe;
 			gridLayers.Rows.Clear();
-			for (int layer = 0; layer < _character.Layers + Clothing.ExtraStages; layer++)
+			for (int layer = 0; layer < wardrobe.Layers + Clothing.ExtraStages; layer++)
 			{
 				gridLayers.Rows.Add();
 			}
 			RestoreLabels();
-			if (_lastTemplate != null && gridLayers.Rows.Count == _lastTemplate.Stages.Count)
+
+			//pull back in the old values
+			if (template != null)
 			{
-				LoadTemplate(_lastTemplate);
+				for (int i = 0; i < gridLayers.Rows.Count - 1 && i < template.Stages.Count; i++)
+				{
+					StageTemplate stageCode = template.Stages[i];
+					DataGridViewRow row = gridLayers.Rows[i];
+					row.Cells[1].Value = stageCode.Code;
+					row.Cells[2].Value = stageCode.ExtraBlush;
+					row.Cells[3].Value = stageCode.ExtraAnger;
+					row.Cells[4].Value = stageCode.ExtraJuice;
+				}
 			}
 		}
 
@@ -56,7 +70,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private DialogResult ChooseFileInDirectory(FileDialog dialog, ref string file)
 		{
-			string dir = Config.GetRootDirectory(_character);
+			string dir = _character.GetDirectory();
 			dialog.InitialDirectory = dir;
 			dialog.FileName = Path.GetFileName(file);
 			DialogResult result = DialogResult.OK;
@@ -115,7 +129,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				DataGridViewRow row = gridEmotions.Rows[gridEmotions.Rows.Add()];
 				row.Cells[0].Value = emotion.Key;
-				row.Cells[1].Value = emotion.Code;
+				row.Cells[1].Value = emotion.Crop.Left;
+				row.Cells[2].Value = emotion.Crop.Top;
+				row.Cells[3].Value = emotion.Crop.Right;
+				row.Cells[4].Value = emotion.Crop.Bottom;
+				row.Cells[5].Value = emotion.Code;
 			}
 			RestoreLabels();
 		}
@@ -124,16 +142,17 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (ChooseFileInDirectory(saveFileDialog1, ref _lastTemplateFile) == DialogResult.OK)
 			{
-				PoseTemplate template = CreateTemplate();
+				PoseTemplate template = CreateTemplate(false);
 				template?.SaveToFile(saveFileDialog1.FileName);
 			}
 		}
 
 		private void RestoreLabels()
 		{
-			for (int layer = 0; layer < _character.Layers + Clothing.ExtraStages && layer < gridLayers.Rows.Count; layer++)
+			IWardrobe wardrobe = _character as IWardrobe;
+			for (int layer = 0; layer < wardrobe.Layers + Clothing.ExtraStages && layer < gridLayers.Rows.Count; layer++)
 			{
-				StageName name = _character.LayerToStageName(layer);
+				StageName name = _character.Character.LayerToStageName(layer, false, wardrobe);
 				string label = name?.DisplayName ?? "Unknown";
 				DataGridViewRow row = gridLayers.Rows[layer];
 				row.Cells[0].Value = label;
@@ -144,13 +163,16 @@ namespace SPNATI_Character_Editor.Activities
 		/// Creates a pose template from the template tab fields
 		/// </summary>
 		/// <returns></returns>
-		private PoseTemplate CreateTemplate()
+		private PoseTemplate CreateTemplate(bool silent)
 		{
 			PoseTemplate template = new PoseTemplate();
 			template.BaseCode = new KisekaeCode(txtBaseCode.Text);
 			if (string.IsNullOrWhiteSpace(txtBaseCode.Text))
 			{
-				MessageBox.Show("You must supply a base code.", "Generating Template");
+				if (!silent)
+				{
+					MessageBox.Show("You must supply a base code.", "Generating Template");
+				}
 				return null;
 			}
 			foreach (DataGridViewRow row in gridLayers.Rows)
@@ -203,31 +225,69 @@ namespace SPNATI_Character_Editor.Activities
 			if (row == null)
 				return null;
 			string key = row.Cells[0].Value?.ToString();
-			string value = row.Cells[1].Value?.ToString();
+			string value = row.Cells[5].Value?.ToString();
 			if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value))
 				return null;
-			Emotion emotion = new Emotion(key, value);
+			string left = row.Cells[1].Value?.ToString() ?? "0";
+			string top = row.Cells[2].Value?.ToString() ?? "0";
+			string right = row.Cells[3].Value?.ToString() ?? "600";
+			string bottom = row.Cells[4].Value?.ToString() ?? "1400";
+			Emotion emotion = new Emotion(key, value, left, top, right, bottom);
 			return emotion;
 		}
 
 		private void cmdGenerate_Click(object sender, EventArgs e)
 		{
-			PoseTemplate template = CreateTemplate();
+			PoseTemplate template = CreateTemplate(false);
 			if (template == null)
 			{
 				return;
 			}
 			PoseList list = template.GeneratePoseList();
-			Shell.Instance.Launch<Character, PoseListEditor>(_character, list);
+			if (_character is Costume)
+			{
+				Shell.Instance.Launch<Costume, PoseListEditor>(_character as Costume, list);
+			}
+			else
+			{
+				Shell.Instance.Launch<Character, PoseListEditor>(_character as Character, list);
+			}
 		}
 
 		private async void cmdPreviewPose_Click(object sender, EventArgs e)
 		{
+			Cursor.Current = Cursors.WaitCursor;
+			Enabled = false;
+			Rect cropInfo;
+			KisekaeCode code = GetPreviewCode(out cropInfo);
+			if (code == null)
+			{
+				return;
+			}
+			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character);
+			Enabled = true;
+			if (img != null)
+			{
+				CharacterImage preview = _imageLibrary.Replace(ImageLibrary.PreviewImage, img);
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, preview);
+			}
+			else
+			{
+				MessageBox.Show("Preview generation failed. Is Kisekae running?");
+			}
+			Cursor.Current = Cursors.Default;
+		}
+
+		private KisekaeCode GetPreviewCode(out Rect cropInfo)
+		{
+			cropInfo = new Rect(0, 0, 600, 1400);
 			KisekaeCode baseCode = new KisekaeCode(txtBaseCode.Text, true);
 			DataGridViewRow stageRow = null;
 			DataGridViewRow emotionRow = null;
 			if (gridLayers.Rows.Count == 0 || gridEmotions.Rows.Count == 0)
-				return;
+			{
+				return null;
+			}
 			if (gridLayers.SelectedCells.Count > 0)
 				stageRow = gridLayers.SelectedCells[0].OwningRow;
 			else stageRow = gridLayers.Rows[0];
@@ -241,30 +301,42 @@ namespace SPNATI_Character_Editor.Activities
 			if (stage == null)
 			{
 				MessageBox.Show("No clothing data has been defined yet.", "Preview");
-				return;
+				return null;
 			}
 			if (emotion == null)
 			{
 				MessageBox.Show("No pose has been defined yet.", "Preview");
-				return;
+				return null;
 			}
-
-			Cursor.Current = Cursors.WaitCursor;
-			Enabled = false;
 			KisekaeCode code = PoseTemplate.CreatePose(baseCode, stage, emotion);
-			Rect cropInfo = new Rect(0, 0, 600, 1400);
-			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character);
-			Enabled = true;
-			if (img != null)
+			cropInfo = emotion.Crop;
+			return code;
+		}
+
+		private void gridEmotions_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == ColCrop.Index && e.RowIndex >= 0 && e.RowIndex < gridEmotions.NewRowIndex)
 			{
-				CharacterImage preview = _imageLibrary.Replace(ImageLibrary.PreviewImage, img);
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, preview);
+				Rect cropInfo;
+				KisekaeCode code = GetPreviewCode(out cropInfo);
+				if (code == null)
+				{
+					return;
+				}
+				ImageCropper cropper = new ImageCropper();
+				ImageMetadata data = new ImageMetadata("zzPreview", code.ToString());
+				data.CropInfo = cropInfo;
+				cropper.Import(data, _character, false);
+				if (cropper.ShowDialog() == DialogResult.OK)
+				{
+					Rect crop = cropper.CroppingRegion;
+					DataGridViewRow row = gridEmotions.Rows[e.RowIndex];
+					row.Cells[1].Value = crop.Left;
+					row.Cells[2].Value = crop.Top;
+					row.Cells[3].Value = crop.Right;
+					row.Cells[4].Value = crop.Bottom;
+				}
 			}
-			else
-			{
-				MessageBox.Show("Preview generation failed. Is Kisekae running?");
-			}
-			Cursor.Current = Cursors.Default;
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class DialogueEditor : Activity
 	{
 		private const string UseOldEditorSetting = "UseOldEditor";
+		private const string FavoriteConditionsSetting = "FavoritedConditions";
 		private bool _usingOldEditor;
 
 		private Character _character;
@@ -76,11 +77,10 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnFirstActivate()
 		{
 			Character c = _character;
-			ImageCache.Clear();
 			treeDialogue.SetData(c);
 			_selectedStage = null;
 			_selectedCase = null;
-			
+
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
 
@@ -125,6 +125,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override bool CanQuit(CloseArgs args)
 		{
+			//Update favorite conditions
+			List<string> favorites = tableConditions.GetFavorites();
+			Config.Set(FavoriteConditionsSetting, string.Join("|", favorites));
+
 			return PromptToSave();
 		}
 
@@ -132,7 +136,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_exportOnQuit)
 			{
-				Export();
+				Export(false);
 			}
 		}
 
@@ -141,19 +145,19 @@ namespace SPNATI_Character_Editor.Activities
 		#region Messaging
 		private void SetupMessageHandlers()
 		{
-			SubscribeWorkspace(WorkspaceMessages.Save, OnSaveWorkspace);
+			SubscribeWorkspace<bool>(WorkspaceMessages.Save, OnSaveWorkspace);
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 		}
 
-		private void OnSaveWorkspace()
+		private void OnSaveWorkspace(bool auto)
 		{
-			if (_character.Behavior.EnsureDefaults(_character))
+			if (!auto && _character.Behavior.EnsureDefaults(_character))
 			{
 				Shell.Instance.SetStatus("Character was missing some required lines, so defaults were automatically pulled in.");
 			}
-			Export();
+			Export(auto);
 		}
 
 		private void OnFind()
@@ -215,7 +219,7 @@ namespace SPNATI_Character_Editor.Activities
 			markerAlsoPlaying.SetDataSource(c, false);
 			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c, false);
 		}
-		
+
 		/// <summary>
 		/// Checks or unchecks all stages besides the current stage
 		/// </summary>
@@ -292,7 +296,7 @@ namespace SPNATI_Character_Editor.Activities
 				e.Handled = true;
 			}
 		}
-		
+
 		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
 		{
 			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
@@ -323,19 +327,33 @@ namespace SPNATI_Character_Editor.Activities
 		/// <summary>
 		/// Exports the current character to disk (i.e. updates the meta.xml and behaviour.xml files)
 		/// </summary>
-		private bool Export()
+		private bool Export(bool auto)
 		{
 			if (_character == null)
 				return true;
 			Save();
 			if (Serialization.ExportCharacter(_character))
 			{
-				Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				if (auto)
+				{
+					Shell.Instance.SetStatus(string.Format("{0} autosaved at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				}
+				else
+				{
+					Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
+				}
 				return true;
 			}
 			else
 			{
-				Shell.Instance.SetStatus(string.Format("{0} failed to export.", _character));
+				if (auto)
+				{
+					Shell.Instance.SetStatus(string.Format("{0} failed to autosave.", _character));
+				}
+				else
+				{
+					Shell.Instance.SetStatus(string.Format("{0} failed to export.", _character));
+				}
 				return false;
 			}
 		}
@@ -611,7 +629,25 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					tableConditions.RecordFilter = FilterTargets;
 				}
+				bool firstPopulation = (tableConditions.Data == null);
 				tableConditions.Data = _selectedCase;
+
+				if (firstPopulation)
+				{
+					List<string> favorites = new List<string>();
+					string favoritesData = Config.GetString(FavoriteConditionsSetting);
+					if (!string.IsNullOrEmpty(favoritesData))
+					{
+						foreach (string key in favoritesData.Split('|'))
+						{
+							if (!string.IsNullOrEmpty(key))
+							{
+								favorites.Add(key);
+							}
+						}
+					}
+					tableConditions.SetFavorites(favorites);
+				}
 			}
 			else
 			{
@@ -1150,6 +1186,8 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_selectedCase != null)
 			{
+				if (_editorData.IsCalledOut(_selectedCase)) { return; } //can't call something out twice
+
 				SaveCase();
 				if (!_selectedCase.HasFilters && !TriggerDatabase.GetTrigger(_selectedCase.Tag).OncePerStage)
 				{
@@ -1248,7 +1286,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void tree_CreatedCase(object sender, CaseCreationEventArgs e)
 		{
-			
+
 		}
 	}
 }

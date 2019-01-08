@@ -90,7 +90,7 @@ function getClothingTrigger (player, clothing, removed) {
 			}
 		}
 		if (type == MAJOR_ARTICLE
-			&& (pos == OTHER_ARTICLE || player.clothing.some(function(c) {
+			&& ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(pos) < 0 || player.clothing.some(function(c) {
 				return (c.position == pos || c.position == FULL_ARTICLE)
 					&& c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
 			}))) { // There is another article left covering this part of the body
@@ -292,7 +292,7 @@ function prepareToStripPlayer (player) {
         players[player].removedClothing = toBeRemovedClothing;
         var dialogueTrigger = getClothingTrigger(players[player], toBeRemovedClothing, false);
 
-        updateAllBehaviours(player, PLAYER_STRIPPING, dialogueTrigger);
+        updateAllBehaviours(player, PLAYER_STRIPPING, [[dialogueTrigger, OPPONENT_STRIPPING]]);
         players[player].preloadStageImages(players[player].stage + 1);
     }
 }
@@ -389,7 +389,7 @@ function closeStrippingModal (id) {
         players[HUMAN_PLAYER].removedClothing = removedClothing;
 
         /* figure out if it should be important */
-        if (removedClothing.position != OTHER_ARTICLE) {
+        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0) {
             var otherClothing;
             for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
                 if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
@@ -434,7 +434,7 @@ function closeStrippingModal (id) {
         }
             
         /* update behaviour */
-        updateAllBehaviours(HUMAN_PLAYER, null, dialogueTrigger);
+        updateAllBehaviours(HUMAN_PLAYER, null, [[dialogueTrigger, OPPONENT_STRIPPED]]);
 
         /* allow progression */
         $('#stripping-modal').modal('hide');
@@ -478,7 +478,7 @@ function stripAIPlayer (player) {
 	players[player].updateFolder();
 
 	/* update behaviour */
-	updateAllBehaviours(player, PLAYER_STRIPPED, dialogueTrigger);
+    updateAllBehaviours(player, PLAYER_STRIPPED, [[dialogueTrigger, OPPONENT_STRIPPED]]);
 }
 
 /************************************************************

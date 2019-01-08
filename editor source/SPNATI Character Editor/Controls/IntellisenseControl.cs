@@ -77,36 +77,43 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void UpdateIntellisense(Keys keyCode)
 		{
-			if (_textBox.SelectionStart == 0 || IsNavigationKey(keyCode)) { return; }
+			if (_textBox.SelectionStart == 0 || IsNavigationKey(keyCode) || !Config.UseIntellisense)
+			{
+				Hide();
+				return;
+			}
 
 			if (_lastContext.Context != ContextType.None && keyCode != Keys.Back && keyCode != Keys.Delete && keyCode != Keys.None)
 			{
-				char lastChar = _textBox.Text[_textBox.SelectionStart - 1];
-				switch (_lastContext.Context)
+				if (_lastContext.Context != ContextType.VariableName || _lastContext.VariableName != "")
 				{
-					case ContextType.VariableName:
-						if (lastChar == ',' || lastChar == '?' || lastChar == ';' || lastChar == '!' ||
-							lastChar == ' ' || lastChar == '~' || lastChar == '.' || lastChar == ',')
-						{
-							AutoComplete(lastChar);
-							if (lastChar != '.')
+					char lastChar = _textBox.Text[_textBox.SelectionStart - 1];
+					switch (_lastContext.Context)
+					{
+						case ContextType.VariableName:
+							if (lastChar == ',' || lastChar == '?' || lastChar == ';' || lastChar == '!' ||
+								lastChar == ' ' || lastChar == '~' || lastChar == '.' || lastChar == ',')
 							{
-								return;
+								AutoComplete(lastChar);
+								if (lastChar != '.')
+								{
+									return;
+								}
 							}
-						}
-						break;
-					case ContextType.FunctionName:
-						if (lastChar == '(' || lastChar == '~')
-						{
-							AutoComplete(lastChar);
-						}
-						break;
-					case ContextType.Parameter:
-						if (lastChar == ')')
-						{
-							AutoComplete(lastChar);
-						}
-						break;
+							break;
+						case ContextType.FunctionName:
+							if (lastChar == '(' || lastChar == '~')
+							{
+								AutoComplete(lastChar);
+							}
+							break;
+						case ContextType.Parameter:
+							if (lastChar == ')')
+							{
+								AutoComplete(lastChar);
+							}
+							break;
+					}
 				}
 			}
 
@@ -123,6 +130,7 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case ContextType.FunctionName:
 					UpdateFunctionList(_lastContext.FunctionName);
+					DisplayTooltip();
 					break;
 				case ContextType.Parameter:
 					UpdateFunctionList(_lastContext.FunctionName);

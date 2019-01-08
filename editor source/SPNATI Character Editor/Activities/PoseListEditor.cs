@@ -14,12 +14,13 @@ namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
 	[Activity(typeof(Character), 200)]
+	[Activity(typeof(Costume), 200)]
 	public partial class PoseListEditor : Activity
 	{
 		private const int MiniHeight = 200;
 		private ImageLibrary _imageLibrary;
 		private ImageMetadata _previewImageMetadata;
-		private Character _character;
+		private ISkin _character;
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
 
@@ -41,13 +42,22 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;	
+			_character = Record as ISkin;
+			if (_character is Costume)
+			{
+				chkRequired.Checked = true;
+				chkRequired.CheckedChanged += chkRequired_CheckedChanged;
+			}
+			else
+			{
+				chkRequired.Visible = false;
+			}
 		}
 
 		protected override void OnFirstActivate()
 		{
 			_imageLibrary = ImageLibrary.Get(_character);
-			string defaultFileName = Path.Combine(Config.GetRootDirectory(_character), "poses.txt");
+			string defaultFileName = Path.Combine(_character.GetDirectory(), "poses.txt");
 			if (File.Exists(defaultFileName))
 			{
 				ImportPoseList(defaultFileName);
@@ -189,8 +199,8 @@ namespace SPNATI_Character_Editor.Activities
 				b = 1400;
 
 			string data = row.Cells["ColData"].Value?.ToString();
-			if (data == null)
-				data = string.Empty;
+			if (string.IsNullOrEmpty(data))
+				return null;
 
 			string key = GetKey(stage, pose);
 			ImageMetadata metadata = new ImageMetadata(key, data);
@@ -227,6 +237,13 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void PopulatePoseGrid()
 		{
+			//pull in required images
+			HashSet<string> requiredImages = _character.GetRequiredPoses();
+			if (requiredImages == null)
+			{
+				requiredImages = new HashSet<string>();
+			}
+
 			DataGridViewImageColumn imageCol = gridPoses.Columns["ColImage"] as DataGridViewImageColumn;
 			imageCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
 
@@ -238,6 +255,7 @@ namespace SPNATI_Character_Editor.Activities
 				CleanUpGrid();
 				foreach (ImageMetadata pose in _poseList.Poses)
 				{
+					requiredImages.Remove(pose.ImageKey);
 					DataGridViewRow row = gridPoses.Rows[gridPoses.Rows.Add()];
 					WriteRow(pose, row);
 					if (imageIndex < InitialImageThreshold)
@@ -251,6 +269,29 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				MessageBox.Show("Error importing pose list. Is this actually a poses file?", "Import Pose List", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				gridPoses.Rows.Clear();
+			}
+
+			//add rows for required poses
+			if (chkRequired.Checked)
+			{
+				List<string> remaining = new List<string>();
+				remaining.AddRange(requiredImages);
+				remaining.Sort();
+				foreach (string pose in remaining)
+				{
+					bool imageExists = File.Exists(Path.Combine(_character.GetDirectory(), pose + ".png")) || File.Exists(Path.Combine(_character.GetDirectory(), pose + ".gif"));
+					if (imageExists)
+					{
+						continue;
+					}
+					DataGridViewRow row = gridPoses.Rows[gridPoses.Rows.Add()];
+					WriteRow(new ImageMetadata(pose, ""), row);
+					if (imageIndex < InitialImageThreshold)
+					{
+						imageIndex++;
+						UpdateImageCell(pose, row);
+					}
+				}
 			}
 		}
 
@@ -326,8 +367,8 @@ namespace SPNATI_Character_Editor.Activities
 			string data = row.Cells["ColData"].Value?.ToString();
 			if (string.IsNullOrEmpty(data))
 			{
-				//Dummy values for faster testing
-				data = "47**aa17.100.0.14.62.17.100.0.2.62_ab_ac_ba54_bb7.1_bc185.500.0.0.1_bd17_be180_ca79.0.6.63.50.31.44.49.30_cb0_daF9C9BD.0.0.100_db_dd9.3.16.0.12.29_dhF38484.20.50.43.3_di5_qa_qb_dc7.4.EEBABE.D68B8B.C96262_eh_ea26.33.33.56.0.0_ec10.29.33.33.56.42.63.1_ed0.24.0.1.33.56_ef_eg_r00_fa11.50.65.54.50.36.56_fb7_fh5_fc3.19.55.3.19.55.42.61.61.42.50.50_fd1.0.20.893A1A.893A1A_fe48.77_ff0000000000_fg1.58_pa0.0.0.0.10.50.85.78.0.0_t00_pb_pc_pd_pe_ga0_gb0_gc1.0_ge0000000000_gh_gf_gg_gd10000000_ha86.86_hb50.1.50.100_hc0.50.48.0.50.48_hd0.1.50.50_ia_if0.55.55.0.1.8.0.0.8.0.0.0.0.3_ib_id9.55.55.44.0.0.1.1.0.0.1.0.0.3_ic_jc_ie1.56.56.0.10.22.22.0.10.22.22.0.0_ja13.55.2.0_jb13.55.2.0_jd6.48.50.50_je6.48.50.50_jf_jg_ka4.18.18.18.0_kb10.A5C0F1.42.42_kc_kd_ke_kf_la_lb_oa_os_ob_oc_od_oe_of_lc_m00_n00_s00_og_oh_oo_op_oq_or_om_on_ok_ol_oi_oj_ad0.0.0.0.0.0.0.0.0.0";
+				MessageBox.Show("Code must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
 			string key = GetKey(stage, pose);
 
@@ -358,7 +399,7 @@ namespace SPNATI_Character_Editor.Activities
 					row.Cells["ColR"].Value = crop.Right;
 					row.Cells["ColT"].Value = crop.Top;
 					row.Cells["ColB"].Value = crop.Bottom;
-				}			
+				}
 			}
 		}
 
@@ -402,7 +443,12 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private DialogResult ChooseFileInDirectory(FileDialog dialog, ref string file)
 		{
-			string dir = Config.GetRootDirectory(_character);
+			string dir = _character.GetDirectory();
+			dir = dir.Replace('/', '\\');
+			if (dir.EndsWith("\\"))
+			{
+				dir = dir.Substring(0, dir.Length - 1);
+			}
 			dialog.InitialDirectory = dir;
 			dialog.FileName = Path.GetFileName(file);
 			DialogResult result = DialogResult.OK;
@@ -623,22 +669,24 @@ namespace SPNATI_Character_Editor.Activities
 		private string SaveImage(string imageKey, Image image)
 		{
 			string filename = imageKey + ".png";
-			string fullPath = Path.Combine(Config.GetRootDirectory(_character), filename);
+			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
 			//Back up the existing image if it hasn't been backed up yet
-			if (File.Exists(fullPath))
-			{
-				string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
-				if (!Directory.Exists(backupDir))
-				{
-					Directory.CreateDirectory(backupDir);
-				}
-				string backupPath = Path.Combine(backupDir, imageKey + ".png");
-				if (!File.Exists(backupPath))
-				{
-					File.Copy(fullPath, backupPath);
-				}
-			}
+
+			//commenting out - what's the point when there's git?
+			//if (File.Exists(fullPath))
+			//{
+			//	string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
+			//	if (!Directory.Exists(backupDir))
+			//	{
+			//		Directory.CreateDirectory(backupDir);
+			//	}
+			//	string backupPath = Path.Combine(backupDir, imageKey + ".png");
+			//	if (!File.Exists(backupPath))
+			//	{
+			//		File.Copy(fullPath, backupPath);
+			//	}
+			//}
 
 			image.Save(fullPath);
 
@@ -745,6 +793,11 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 		}
+
+		private void chkRequired_CheckedChanged(object sender, EventArgs e)
+		{
+			PopulatePoseGrid();
+		}
 	}
-	
+
 }

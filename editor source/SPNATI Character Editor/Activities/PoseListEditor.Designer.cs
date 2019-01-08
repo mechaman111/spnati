@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdImportAll = new System.Windows.Forms.Button();
 			this.cmdImportNew = new System.Windows.Forms.Button();
 			this.cmdClear = new System.Windows.Forms.Button();
@@ -55,6 +55,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.lblCurrentPoseFile = new System.Windows.Forms.Label();
+			this.chkRequired = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -181,9 +182,9 @@
 			// ColData
 			// 
 			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColData.DefaultCellStyle = dataGridViewCellStyle5;
 			this.ColData.HeaderText = "Code";
 			this.ColData.Name = "ColData";
 			// 
@@ -274,10 +275,22 @@
 			this.lblCurrentPoseFile.TabIndex = 34;
 			this.lblCurrentPoseFile.Text = "No pose list loaded.";
 			// 
+			// chkRequired
+			// 
+			this.chkRequired.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkRequired.AutoSize = true;
+			this.chkRequired.Location = new System.Drawing.Point(607, 6);
+			this.chkRequired.Name = "chkRequired";
+			this.chkRequired.Size = new System.Drawing.Size(129, 17);
+			this.chkRequired.TabIndex = 35;
+			this.chkRequired.Text = "Include missing poses";
+			this.chkRequired.UseVisualStyleBackColor = true;
+			// 
 			// PoseListEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.chkRequired);
 			this.Controls.Add(this.lblCurrentPoseFile);
 			this.Controls.Add(this.cmdImportAll);
 			this.Controls.Add(this.cmdImportNew);
@@ -321,5 +334,6 @@
 		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
+		private System.Windows.Forms.CheckBox chkRequired;
 	}
 }

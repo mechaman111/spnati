@@ -38,6 +38,7 @@
 			this.ColPerTarget = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -59,7 +60,8 @@
             this.ColMarkerValue,
             this.ColPerTarget,
             this.ColDirection,
-            this.ColLocation});
+            this.ColLocation,
+            this.ColDelete});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -75,12 +77,15 @@
 			this.gridDialogue.Name = "gridDialogue";
 			this.gridDialogue.Size = new System.Drawing.Size(572, 380);
 			this.gridDialogue.TabIndex = 42;
+			this.gridDialogue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellContentClick);
 			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
+			this.gridDialogue.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridDialogue_CellPainting);
 			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
 			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
 			this.gridDialogue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellValueChanged);
 			this.gridDialogue.CurrentCellDirtyStateChanged += new System.EventHandler(this.gridDialogue_CurrentCellDirtyStateChanged);
 			this.gridDialogue.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridDialogue_EditingControlShowing);
+			this.gridDialogue.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridDialogue_RowsAdded);
 			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
 			// 
 			// ColImage
@@ -137,6 +142,12 @@
 			this.ColLocation.Visible = false;
 			this.ColLocation.Width = 60;
 			// 
+			// ColDelete
+			// 
+			this.ColDelete.HeaderText = "";
+			this.ColDelete.Name = "ColDelete";
+			this.ColDelete.Width = 21;
+			// 
 			// DialogueGrid
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,5 +171,6 @@
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPerTarget;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
+		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
 	}
 }

@@ -55,19 +55,24 @@ namespace SPNATI_Character_Editor.IO
 			writer.Dispose();
 		}
 
-		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder)
+		public static ElementInformation GetSerializationInformation(Type type)
 		{
-			if (data == null)
-				return;
-
-			Type type = data.GetType();
 			ElementInformation elementInfo = _serializationInfo.Get(type);
 			if (elementInfo == null)
 			{
 				elementInfo = new ElementInformation(type);
 				_serializationInfo[type] = elementInfo;
 			}
+			return elementInfo;
+		}
 
+		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder)
+		{
+			if (data == null)
+				return;
+
+			Type type = data.GetType();
+			ElementInformation elementInfo = GetSerializationInformation(type);
 			if (elementInfo.Header != null)
 			{
 				writer.Flush();
@@ -265,72 +270,72 @@ namespace SPNATI_Character_Editor.IO
 			line = line.Replace("{Version}", Config.Version);
 			return line;
 		}
+	}
 
-		/// <summary>
-		/// Cached attributes to limit the necessary amount of reflection during serialization
-		/// </summary>
-		private class ElementInformation
+	/// <summary>
+	/// Cached attributes to limit the necessary amount of reflection during serialization
+	/// </summary>
+	public class ElementInformation
+	{
+		public XmlHeaderAttribute Header;
+
+		public List<FieldInformation> Fields = new List<FieldInformation>();
+
+		public ElementInformation(Type type)
 		{
-			public XmlHeaderAttribute Header;
+			Header = type.GetCustomAttribute<XmlHeaderAttribute>();
 
-			public List<FieldInformation> Fields = new List<FieldInformation>();
-
-			public ElementInformation(Type type)
+			FieldInfo[] fields = type.GetFields();
+			foreach (FieldInfo field in fields)
 			{
-				Header = type.GetCustomAttribute<XmlHeaderAttribute>();
+				if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
+					continue;
 
-				FieldInfo[] fields = type.GetFields();
-				foreach (FieldInfo field in fields)
-				{
-					if (field.GetCustomAttribute<XmlIgnoreAttribute>() != null)
-						continue;
-
-					FieldInformation info = new FieldInformation(type, field);
-					Fields.Add(info);
-				}
+				FieldInformation info = new FieldInformation(type, field);
+				Fields.Add(info);
 			}
 		}
+	}
 
-		private class FieldInformation
+	public class FieldInformation
+	{
+		public FieldInfo Info;
+		public Type FieldType;
+		public DefaultValueAttribute DefaultValue;
+		public XmlElementAttribute Element;
+		public XmlArrayAttribute Array;
+		public XmlArrayItemAttribute ArrayItem;
+		public XmlTextAttribute Text;
+		public XmlAttributeAttribute Attribute;
+		public XmlNewLineAttribute NewLine;
+		public MethodInfo SortMethod;
+		public XmlAnyElementAttribute AnyElement;
+
+		public FieldInformation(Type parentType, FieldInfo field)
 		{
-			public FieldInfo Info;
-			public Type FieldType;
-			public DefaultValueAttribute DefaultValue;
-			public XmlElementAttribute Element;
-			public XmlArrayAttribute Array;
-			public XmlArrayItemAttribute ArrayItem;
-			public XmlTextAttribute Text;
-			public XmlAttributeAttribute Attribute;
-			public XmlNewLineAttribute NewLine;
-			public MethodInfo SortMethod;
-			public XmlAnyElementAttribute AnyElement;
+			Info = field;
+			FieldType = Info.FieldType;
+			DefaultValue = field.GetCustomAttribute<DefaultValueAttribute>();
+			Element = field.GetCustomAttribute<XmlElementAttribute>();
+			Array = field.GetCustomAttribute<XmlArrayAttribute>();
+			ArrayItem = field.GetCustomAttribute<XmlArrayItemAttribute>();
+			Text = field.GetCustomAttribute<XmlTextAttribute>();
+			Attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
+			NewLine = field.GetCustomAttribute<XmlNewLineAttribute>();
 
-			public FieldInformation(Type parentType, FieldInfo field)
+			XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
+			if (sortAttribute != null)
 			{
-				Info = field;
-				FieldType = Info.FieldType;
-				DefaultValue = field.GetCustomAttribute<DefaultValueAttribute>();
-				Element = field.GetCustomAttribute<XmlElementAttribute>();
-				Array = field.GetCustomAttribute<XmlArrayAttribute>();
-				ArrayItem = field.GetCustomAttribute<XmlArrayItemAttribute>();
-				Text = field.GetCustomAttribute<XmlTextAttribute>();
-				Attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
-				NewLine = field.GetCustomAttribute<XmlNewLineAttribute>();
-
-				XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
-				if (sortAttribute != null)
-				{
-					SortMethod = parentType.GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				}
-
-				AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
-
+				SortMethod = parentType.GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 			}
 
-			public object GetValue(object obj)
-			{
-				return Info.GetValue(obj);
-			}
+			AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
+
+		}
+
+		public object GetValue(object obj)
+		{
+			return Info.GetValue(obj);
 		}
 	}
 

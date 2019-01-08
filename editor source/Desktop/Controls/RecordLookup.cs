@@ -42,7 +42,7 @@ namespace Desktop
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, object recordContext)
 		{
-			return DoLookup(type, text, allowCreate, null, false, null);
+			return DoLookup(type, text, allowCreate, null, false, recordContext);
 		}
 
 		public static IRecord DoLookup(Type type, string text, bool allowCreate, Func<IRecord, bool> filter, object recordContext)
@@ -66,6 +66,11 @@ namespace Desktop
 				{
 					//No point in bringing up the form if there's only one record
 					List<IRecord> records = provider.GetRecords(text);
+					IRecord exactMatch = records.Find(r => r.Key == text);
+					if (exactMatch != null)
+					{
+						return exactMatch;
+					}
 					if (records.Count == 1 && (filter == null || filter(records[0])))
 					{
 						return records[0];

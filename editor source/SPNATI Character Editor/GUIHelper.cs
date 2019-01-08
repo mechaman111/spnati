@@ -152,5 +152,64 @@ namespace SPNATI_Character_Editor
 				return null;
 			return box.Value.ToString();
 		}
+
+		/// <summary>
+		/// Converts a range string to a display-friendly format
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public static string RangeToString(string range)
+		{
+			string[] pieces = range.Split('-');
+			if (pieces.Length == 1 || pieces[0] == pieces[1])
+			{
+				return pieces[0];
+			}
+			if (pieces.Length == 2 && string.IsNullOrEmpty(pieces[0]))
+			{
+				return $"0-{pieces[1]}";
+			}
+			if (pieces.Length == 2 && string.IsNullOrEmpty(pieces[1]))
+			{
+				return $"{pieces[0]}+";
+			}
+			return range;
+		}
+
+		/// <summary>
+		/// Converts a min and max to a range string
+		/// </summary>
+		/// <param name="min">Min bound, or -1 if no min bound</param>
+		/// <param name="max">Max bound, or -1 if no max bound</param>
+		/// <returns></returns>
+		public static string ToRange(int min, int max)
+		{
+			if (min == -1 && max == -1)
+			{
+				return null;
+			}
+			else if (min == -1)
+			{
+				//open-ended upper bound
+				return $"-{max}";
+			}
+			else if (max == -1)
+			{
+				//open-ended lower bound
+				return $"{min}-";
+			}
+			else if (max < min)
+			{
+				return $"{min}-{min}";
+			}
+			else if (max == min)
+			{
+				return $"{min}";
+			}
+			else
+			{
+				return $"{min}-{max}";
+			}
+		}
 	}
 }

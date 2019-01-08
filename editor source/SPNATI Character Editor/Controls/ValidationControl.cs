@@ -2,6 +2,7 @@
 using SPNATI_Character_Editor.Activities;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -115,6 +116,7 @@ namespace SPNATI_Character_Editor.Controls
 					Dictionary<Character, List<ValidationError>> allWarnings = new Dictionary<Character, List<ValidationError>>();
 					foreach (Character c in CharacterDatabase.Characters)
 					{
+						if (c.FolderName == "human") { continue; }
 						OpponentStatus status = Listing.Instance.GetCharacterStatus(c.FolderName);
 						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline)
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
@@ -234,7 +236,56 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (error == null || error.Context == null) { return; }
 
-			Shell.Instance.Launch<Character, DialogueEditor>(_character, error.Context);
+			switch (error.Context.ContextArea)
+			{
+				case ValidationContext.Area.Dialogue:
+					Shell.Instance.Launch<Character, DialogueEditor>(_character, error.Context);
+					break;
+				case ValidationContext.Area.Epilogue:
+					Shell.Instance.Launch<Character, EpilogueEditor>(_character, error.Context);
+					break;
+			}			
+		}
+
+		private void cmdCopy_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (ValidationError error in lstWarnings.Items)
+			{
+				sb.AppendLine(error.ToString());
+			}
+
+			Clipboard.Clear();
+			Clipboard.SetText(sb.ToString());
+			Shell.Instance.SetStatus("Validation errors copied to the clipboard.");
+		}
+
+		private void cmdCopyAll_Click(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			ValidationFilterLevel filterLevel = GetFilterLevel();
+			foreach (KeyValuePair<Character, List<ValidationError>> kvp in _warnings)
+			{
+				Character c = kvp.Key;
+				sb.AppendLine("***************************************************");
+				sb.AppendLine("Warnings for: " + c);
+				sb.AppendLine("***************************************************");
+				foreach (ValidationError error in kvp.Value)
+				{
+					if (CharacterValidator.IsInFilter(filterLevel, error.Level))
+					{
+						sb.AppendLine(error.ToString());
+					}
+				}
+				sb.AppendLine();
+				sb.AppendLine();
+				sb.AppendLine();
+				sb.AppendLine();
+			}
+
+			Clipboard.Clear();
+			Clipboard.SetText(sb.ToString());
+			Shell.Instance.SetStatus("Validation errors copied to the clipboard.");
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace SPNATI_Character_Editor
 			_workerQueue.ChangePriority(requester, 9999);
 		}
 
-		private static void CleanImage(KisekaeCode code, Character character)
+		private static void CleanImage(KisekaeCode code, ISkin character)
 		{
 			var poseComponent = code.GetComponent<KisekaePose>();
 			if (poseComponent != null)
@@ -91,7 +91,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, Character character)
+		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, ISkin character)
 		{
 			//reset some scene vars
 			CleanImage(code, character);
@@ -102,7 +102,7 @@ namespace SPNATI_Character_Editor
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, true, false); }, 1, null, 0);
 		}
 
-		public static async Task<Image> GetRawImage(KisekaeCode code, Character character)
+		public static async Task<Image> GetRawImage(KisekaeCode code, ISkin character)
 		{
 			//reset some scene vars
 			CleanImage(code, character);

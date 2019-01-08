@@ -29,5 +29,7 @@ namespace Desktop
 		Mailbox GetMailbox();
 		void SendMessage(int message);
 		void SendMessage<T>(int message, T args);
+		bool IsSidebarExpanded { get; }
+		void ToggleSidebar(bool expanded);
 	}
 }

@@ -34,6 +34,14 @@ namespace KisekaeImporter.ImageImport
 			Left = l;
 		}
 
+		public Rect(string l, string t, string r, string b)
+		{
+			int.TryParse(l, out Left);
+			int.TryParse(t, out Top);
+			int.TryParse(r, out Right);
+			int.TryParse(b, out Bottom);
+		}
+
 		public RectangleF ToRectangle(float zoom)
 		{
 			float l = Left * zoom;

@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <summary>
 		/// Clear and rebuild the tree
 		/// </summary>
-		void BuildTree();
+		void BuildTree(bool showHidden);
 
 		/// <summary>
 		/// Sets the node filter
@@ -71,6 +71,18 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="removedCase"></param>
 		void RemoveCase(Case removedCase);
+
+		/// <summary>
+		/// Gets whether a trigger in the Add menu can be used based on the currently selected node
+		/// </summary>
+		bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger);
+
+		/// <summary>
+		/// Hides or unhides a case
+		/// </summary>
+		/// <param name="theCase"></param>
+		/// <param name="hide"></param>
+		void HideCase(Case theCase, bool hide);
 	}
 
 	public enum TreeFilterMode

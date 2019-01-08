@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -37,6 +38,7 @@ namespace SPNATI_Character_Editor.Controls
 					gridDialogue.RowHeadersVisible = false;
 					gridDialogue.EditMode = DataGridViewEditMode.EditProgrammatically;
 					gridDialogue.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+					ColDelete.Visible = false;
 				}
 				else
 				{
@@ -45,6 +47,7 @@ namespace SPNATI_Character_Editor.Controls
 					gridDialogue.RowHeadersVisible = true;
 					gridDialogue.EditMode = DataGridViewEditMode.EditOnEnter;
 					gridDialogue.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+					ColDelete.Visible = true;
 				}
 			}
 		}
@@ -190,7 +193,10 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedStage == null)
 			{
 				images.AddRange(_imageLibrary.GetImages(0));
-				images.AddRange(_imageLibrary.GetImages(-1));
+				if (Config.UsePrefixlessImages)
+				{
+					images.AddRange(_imageLibrary.GetImages(-1));
+				}
 				foreach (var image in images)
 				{
 					col.Items.Add(image);
@@ -199,7 +205,10 @@ namespace SPNATI_Character_Editor.Controls
 			else
 			{
 				images.AddRange(_imageLibrary.GetImages(stageId));
-				images.AddRange(_imageLibrary.GetImages(-1));
+				if (Config.UsePrefixlessImages)
+				{
+					images.AddRange(_imageLibrary.GetImages(-1));
+				}
 
 				foreach (var image in images)
 				{
@@ -271,6 +280,22 @@ namespace SPNATI_Character_Editor.Controls
 			SelectRow(e.RowIndex);
 		}
 
+		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.ColumnIndex == ColDelete.Index)
+			{
+				Image img = Properties.Resources.Delete;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
+			}
+		}
+
 		private void gridDialogue_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
 		{
 			if (_selectedCase == null)
@@ -297,7 +322,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridDialogue_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
 		{
-			if (_selectedCase == null || e.FormattedValue == null || _populatingCase)
+			if (_selectedCase == null || e.FormattedValue == null || _populatingCase || !Config.UseIntellisense)
 				return;
 
 			List<string> invalidVars = DialogueLine.GetInvalidVariables(_selectedCase.Tag, e.FormattedValue.ToString());
@@ -321,6 +346,25 @@ namespace SPNATI_Character_Editor.Controls
 			if (gridDialogue.IsCurrentCellDirty)
 			{
 				gridDialogue.CommitEdit(DataGridViewDataErrorContexts.Commit);
+			}
+		}
+
+		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+		{
+			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+			row.Cells["ColDelete"].ToolTipText = "Delete row";
+		}
+
+		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex < 0 || e.ColumnIndex >= gridDialogue.Columns.Count || e.RowIndex == gridDialogue.NewRowIndex || ReadOnly)
+			{
+				return;
+			}
+			DataGridViewColumn col = gridDialogue.Columns[e.ColumnIndex];
+			if (col == ColDelete)
+			{
+				gridDialogue.Rows.RemoveAt(e.RowIndex);
 			}
 		}
 

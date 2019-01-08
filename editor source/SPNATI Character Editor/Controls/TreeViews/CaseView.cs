@@ -29,13 +29,16 @@ namespace SPNATI_Character_Editor.Controls
 		private TreeView treeDialogue;
 		private ContextMenuStrip splitMenu;
 		private Character _character;
+		private CharacterEditorData _editorData;
 		private TreeFilterMode _filterMode;
 		private string _filterKey;
+		private bool _showHidden;
 
 		public void Initialize(TreeView tree, Character character)
 		{
 			treeDialogue = tree;
 			_character = character;
+			_editorData = CharacterDatabase.GetEditorData(character);
 		}
 
 		public ContextMenuStrip GetCopyMenu()
@@ -50,8 +53,9 @@ namespace SPNATI_Character_Editor.Controls
 			return splitMenu;
 		}
 
-		public void BuildTree()
+		public void BuildTree(bool showHidden)
 		{
+			_showHidden = showHidden;
 			treeDialogue.Nodes.Clear();
 
 			_tagMap = new Dictionary<string, TreeNode>();
@@ -67,39 +71,44 @@ namespace SPNATI_Character_Editor.Controls
 				_tagMap[tag] = node;
 			}
 
-			string filterTarget = _filterKey;
-
 			//Add working cases to the right grouper
 			foreach (Case workingCase in _character.Behavior.GetWorkingCases())
 			{
-				//Exclude cases depending on filters. These are just excluded from the UI. This has no bearing on the actual underlying data
-				switch (_filterMode)
-				{
-					case TreeFilterMode.NonTargeted:
-						if (workingCase.HasFilters)
-							continue;
-						break;
-					case TreeFilterMode.Targeted:
-						if (!workingCase.HasFilters)
-							continue;
-						if (!string.IsNullOrEmpty(filterTarget))
-						{
-							if (workingCase.Target != filterTarget && workingCase.AlsoPlaying != filterTarget)
-								continue;
-						}
-						break;
-				}
+				if (!showHidden && _editorData.IsHidden(workingCase)) { continue; }
 
-				string tag = workingCase.Tag;
-				TreeNode grouper = _tagMap.Get(tag);
-				if (grouper == null) { continue; } //should we display a warning message here? The dialogue is using an unrecognized tag
-
-				DialogueNode wrapper = new DialogueNode(_character, new Stage(workingCase.Stages[0]), workingCase);
-				CreateNode(wrapper, grouper, false);
+				CreateCaseNode(workingCase);
 			}
 
 			treeDialogue.TreeViewNodeSorter = new NodeSorter();
 			treeDialogue.Sort();
+		}
+
+		private void CreateCaseNode(Case workingCase)
+		{
+			//Exclude cases depending on filters. These are just excluded from the UI. This has no bearing on the actual underlying data
+			switch (_filterMode)
+			{
+				case TreeFilterMode.NonTargeted:
+					if (workingCase.HasFilters)
+						return;
+					break;
+				case TreeFilterMode.Targeted:
+					if (!workingCase.HasFilters)
+						return;
+					if (!string.IsNullOrEmpty(_filterKey))
+					{
+						if (workingCase.Target != _filterKey && workingCase.AlsoPlaying != _filterKey)
+							return;
+					}
+					break;
+			}
+
+			string tag = workingCase.Tag;
+			TreeNode grouper = _tagMap.Get(tag);
+			if (grouper == null) { return; } //should we display a warning message here? The dialogue is using an unrecognized tag
+
+			DialogueNode wrapper = new DialogueNode(_character, new Stage(workingCase.Stages[0]), workingCase);
+			CreateNode(wrapper, grouper, false);
 		}
 
 		/// <summary>
@@ -142,10 +151,14 @@ namespace SPNATI_Character_Editor.Controls
 			return node;
 		}
 
-		private static void UpdateNodeAppearance(TreeNode node)
+		private void UpdateNodeAppearance(TreeNode node)
 		{
 			DialogueNode wrapper = node.Tag as DialogueNode;
-			if (wrapper.Case.Hidden == "1")
+			if (_editorData.IsHidden(wrapper.Case))
+			{
+				node.ForeColor = System.Drawing.Color.LightGray;
+			}
+			else if (wrapper.Case.Hidden == "1")
 			{
 				node.ForeColor = System.Drawing.Color.Gray;
 			}
@@ -156,6 +169,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				node.ForeColor = System.Drawing.Color.Black;
 				//Highlight lines that are still using the default
 				Tuple<string, string> template = DialogueDatabase.GetTemplate(wrapper.Case.Tag);
 				if (template != null)
@@ -180,38 +194,44 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Prefix the case with the stage range			
 			Case c = wrapper.Case;
-			int last = c.Stages[0];
-			int startRange = last;
 			StringBuilder sb = new StringBuilder();
-			for (int i = 1; i < c.Stages.Count; i++)
+			if (c.Stages.Count == 0)
 			{
-				int stage = c.Stages[i];
-				if (stage - 1 > last)
-				{
-					if (startRange == last)
-					{
-						sb.Append(startRange.ToString() + ",");
-					}
-					else
-					{
-						sb.Append($"{startRange}-{last},");
-					}
-					startRange = stage;
-				}
-				last = stage;
-			}
-			if (startRange == last)
-			{
-				sb.Append(startRange.ToString());
+				sb.Append("???");
 			}
 			else
 			{
-				sb.Append($"{startRange}-{last}");
+				int last = c.Stages[0];
+				int startRange = last;
+				for (int i = 1; i < c.Stages.Count; i++)
+				{
+					int stage = c.Stages[i];
+					if (stage - 1 > last)
+					{
+						if (startRange == last)
+						{
+							sb.Append(startRange.ToString() + ",");
+						}
+						else
+						{
+							sb.Append($"{startRange}-{last},");
+						}
+						startRange = stage;
+					}
+					last = stage;
+				}
+				if (startRange == last)
+				{
+					sb.Append(startRange.ToString());
+				}
+				else
+				{
+					sb.Append($"{startRange}-{last}");
+				}
+				wrapper.Stage = new Stage(c.Stages[0]);
 			}
 
 			node.Text = $"{sb.ToString()} - {wrapper.ToString()}";
-
-			wrapper.Stage = new Stage(c.Stages[0]);
 		}
 
 		public void SetFilter(TreeFilterMode mode, string filterKey)
@@ -219,7 +239,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_filterMode == mode && _filterKey == filterKey) { return; }
 			_filterMode = mode;
 			_filterKey = filterKey;
-			BuildTree();
+			BuildTree(_showHidden);
 		}
 
 		public void SelectNode(int stage, Case stageCase)
@@ -288,8 +308,8 @@ namespace SPNATI_Character_Editor.Controls
 				if (caseNode1 != null)
 				{
 					//case nodes
-					int stage1 = caseNode1.Case.Stages[0];
-					int stage2 = caseNode2.Case.Stages[0];
+					int stage1 = caseNode1.Case.Stages.Count > 0 ? caseNode1.Case.Stages[0] : -1;
+					int stage2 = caseNode2.Case.Stages.Count > 0 ? caseNode2.Case.Stages[0] : -1;
 					int diff = stage1.CompareTo(stage2);
 					if (diff == 0)
 					{
@@ -389,6 +409,47 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				Case selectedCase = selectedNode.Case;
 				_character.Behavior.RemoveWorkingCase(selectedCase);
+			}
+		}
+
+		public bool IsTriggerValid(DialogueNode selectedNode, Trigger trigger)
+		{
+			return true;
+		}
+
+		public void HideCase(Case c, bool hide)
+		{
+			if (hide)
+			{
+				TreeNode node = _caseMap.Get(c);
+				if (node != null)
+				{
+					if (_showHidden)
+					{
+						UpdateNodeAppearance(node);
+					}
+					else
+					{
+						node.Remove();
+						_caseMap.Remove(c);
+					}
+				}
+			}
+			else
+			{
+				if (_showHidden)
+				{
+					TreeNode node = _caseMap.Get(c);
+					if (node != null)
+					{
+						UpdateNodeAppearance(node);
+					}
+				}
+				else
+				{
+					//generate a node
+					CreateCaseNode(c);
+				}
 			}
 		}
 	}

@@ -13,9 +13,15 @@ namespace SPNATI_Character_Editor
 			get { return _characters; }
 		}
 
+		public static IEnumerable<Costume> Skins
+		{
+			get { return _reskins.Values; }
+		}
+
 		private static List<Character> _characters = new List<Character>();
 		private static Dictionary<string, Character> _characterMap = new Dictionary<string, Character>();
 		private static Dictionary<Character, CharacterEditorData> _editorData = new Dictionary<Character, CharacterEditorData>();
+		private static Dictionary<string, Costume> _reskins = new Dictionary<string, Costume>();
 
 		public static int Count
 		{
@@ -61,13 +67,13 @@ namespace SPNATI_Character_Editor
 		public static void AddEditorData(Character character, CharacterEditorData data)
 		{
 			data = data ?? new CharacterEditorData();
-			data.Owner = character.FolderName;
+			data.LinkOwner(character);
 			_editorData[character] = data;
 		}
 
 		public static CharacterEditorData GetEditorData(Character character)
 		{
-			return _editorData.Get(character);
+			return _editorData.GetOrAddDefault(character, () => new CharacterEditorData() { Owner = character.FolderName });
 		}
 
 		/// <summary>
@@ -78,6 +84,16 @@ namespace SPNATI_Character_Editor
 		public static bool FilterHuman(IRecord record)
 		{
 			return record.Key != "human";
+		}
+
+		public static void AddSkin(Costume skin)
+		{
+			_reskins[skin.Folder] = skin;
+		}
+
+		public static Costume GetSkin(string folder)
+		{
+			return _reskins.Get(folder);
 		}
 	}
 }

@@ -49,6 +49,7 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static bool TagExists(string key)
 		{
+			if (string.IsNullOrEmpty(key)) { return false; }
 			return _tags.ContainsKey(key.ToLowerInvariant());
 		}
 

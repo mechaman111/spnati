@@ -2013,6 +2013,54 @@ body.modal-open {
 	opacity: 0;
 }
 
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -11px -50px;
+  width: 100px;
+  height: 22px;
+  text-align: center;
+  font-size: 180%;
+  color: white;
+}
+
+.spinner-pip {
+  width: 18px;
+  height: 18px;
+  background-color: #CCC;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: ep-bouncedelay 1.4s infinite ease-in-out both;
+  animation: ep-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner > .spinner-pip:nth-child(1) {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner > .spinner-pip:nth-child(2) {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes ep-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes ep-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
 /************************************************************
  * Classes for the Gallery screens.
  ************************************************************/

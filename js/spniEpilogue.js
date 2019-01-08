@@ -792,6 +792,7 @@ function doEpilogue(){
  * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
  ************************************************************/
 function loadEpilogue(epilogue) {
+  $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
   epiloguePlayer.load();
   updateEpilogueButtons();
@@ -844,6 +845,8 @@ function EpiloguePlayer(epilogue) {
   this.viewportWidth = 0;
   this.viewportHeight = 0;
   this.loadingImages = 0;
+  this.totalImages = 0;
+  this.loadedImages = 0;
   this.waitingForAnims = false;
   this.overlay = { rgb: [0, 0, 0], a: 0 };
   this.epilogueContent = document.getElementById('epilogue-content');
@@ -879,9 +882,11 @@ EpiloguePlayer.prototype.load = function () {
  * This is a workaround for IE11 not supporting promises
  */
 EpiloguePlayer.prototype.onLoadComplete = function () {
+  $("#epilogue-progress").text(Math.floor(this.loadedImages / Math.max(1, this.totalImages) * 100) + "%");
   if (this.loadingImages > 0) { return; }
 
   if (this.readyToLoad) {
+    $("#epilogue-spinner").hide();
     this.$overlay.show();
     this.advanceScene();
     window.requestAnimationFrame(createClosure(this, this.loop));
@@ -895,10 +900,12 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
 EpiloguePlayer.prototype.fetchImage = function (path) {
   var img = new Image();
   this.loadingImages++;
+  this.totalImages++;
   var $this = this;
   img.onload = img.onerror = function () {
     $this.assetMap[path] = img;
     $this.loadingImages--;
+    $this.loadedImages++;
     $this.onLoadComplete();
   };
   img.src = path;

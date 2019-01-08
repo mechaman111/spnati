@@ -7,8 +7,14 @@ namespace SPNATI_Character_Editor.Providers
 {
 	public class CharacterProvider : IRecordProvider<Character>
 	{
+		private Costume _skinContext;
+
 		public string GetLookupCaption()
 		{
+			if (_skinContext != null)
+			{
+				return "Choose a character for which the reskin belongs";
+			}
 			return "Character Select";
 		}
 
@@ -23,6 +29,7 @@ namespace SPNATI_Character_Editor.Providers
 			c.FirstName = key;
 			c.Label = key;
 			c.FolderName = key;
+			c.Metadata.Writer = Config.UserName;
 
 			//Add in some barebones data to be at the minimal functional level
 			c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });
@@ -77,6 +84,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
+			_skinContext = context as Costume;
 		}
 	}
 }
