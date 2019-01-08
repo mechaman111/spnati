@@ -10,6 +10,7 @@ pages:
   - cp opponents/listing.xml .public/opponents
   - find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" | tar -cT - | tar -C .public -x
   - python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
+  - python opponents/analyze_image_space.py .public/opponents
   - mv .public public
   artifacts:
     paths:
