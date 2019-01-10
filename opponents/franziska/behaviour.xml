@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.2 at 9:53:36 PM on January 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.2 at 11:02:31 PM on January 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v3.2</version>
     <first>Franziska</first>
@@ -67,6 +67,16 @@
                 <state img="0-calm.png">Our battle... begins now... so you had better prepare yourself, ~player~!</state>
                 <state img="0-interested.png">My goal is to defeat you, and let the whole world know of your defeat.</state>
             </case>
+            <case tag="game_start" alsoPlaying="ini" priority="40">
+                <state img="0-disdain.png">Hmph. ...You! Redhead. Tell me, have we met somewhere?</state>
+            </case>
+            <case tag="game_start" alsoPlaying="mia" priority="40">
+                <state img="0-interested.png">Well, well. ...Mia Fey! You might have robbed me of victory in the trial of Maya Fey, but I will have my revenge!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="mia" priority="999">
+                <condition count="1" filter="ini" />
+                <state img="0-angry.png">What-! Mia Fey?! And... &lt;i&gt;you!&lt;/i&gt; You're the one who caused my defeat in the Kurain trial! &lt;i&gt;I will destroy you both!&lt;/i&gt;</state>
+            </case>
             <case tag="swap_cards">
                 <state img="0-thinking.png">I should not need more than ~cards~.</state>
                 <state img="0-calm.png">Dealer! Give me ~cards~.</state>
@@ -83,6 +93,11 @@
                 <state img="0-thinking.png">Hmph. As expected.</state>
                 <state img="0-happy.png">Ha! Guess you've avoided my whip for now, Dealer.</state>
                 <state img="0-thinking.png">Pah! Stop wasting time. Reveal your hand! Now!</state>
+            </case>
+            <case tag="good_hand" alsoPlaying="ini">
+                <state img="0-happy.png">Ms. Miney... are you ready to experience the full power of my revenge?</state>
+                <state img="0-interested.png">Ha! I will have my revenge for Kurain, Ms. Miney!</state>
+                <state img="0-smug.png">Don't think you'll escape me this time, Ms. Miney!</state>
             </case>
             <case tag="okay_hand">
                 <state img="0-thinking.png">Hmph.</state>
@@ -101,7 +116,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="0-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="0-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip" priority="41">
@@ -139,11 +154,8 @@
                 <state img="0-thinking.png">Hmph. As expected. Now strip.</state>
                 <state img="0-happy.png">Ha! Didn't I tell you that it is foolishness to think you can defeat me?!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="0-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="0-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="0-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="0-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -167,11 +179,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="0-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="0-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="0-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="0-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="0-thinking.png">Hmph. I &lt;i&gt;suppose&lt;/i&gt; that will do.</state>
@@ -191,8 +200,14 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="0-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="0-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="0-thinking.png">...Dealer! On to the next round.</state>
+            </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="0-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="0-thinking.png">Hmph. You merely delay my perfect victory.</state>
@@ -262,8 +277,8 @@
                 <state img="0-thinking.png">...&lt;i&gt;Pathetic.&lt;/i&gt;</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="0-thinking.png">Hmph. Nothing special.  ...Dealer! On to the next round.</state>
-                <state img="0-thinking.png">There it is. Next round, please.</state>
+                <state img="0-thinking.png">Hmph. Forgettable.</state>
+                <state img="0-thinking.png">I hope someone is impressed, because I am certainly not.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="0-thinking.png">Bah. Your dick looks as though it would bring more pain than pleasure.</state>
@@ -397,7 +412,7 @@
                 <state img="0-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="0-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
-            <case tag="game_over_victory" alsoPlaying="mia" alsoPlayingStage="0" priority="340">
+            <case tag="game_over_victory" alsoPlaying="mia" alsoPlayingStage="0" priority="900">
                 <state img="0-smug.png">Ha! ...Mia Fey! My perfect revenge against you is complete!</state>
             </case>
         </stage>
@@ -423,7 +438,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="1-happy.png">Ha! This hand is perfect.</state>
-                <state img="1-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="1-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="1-happy.png">Ha! ...Of course.</state>
@@ -475,6 +490,13 @@
                 <state img="1-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="1-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="1-sweating.png">What...! No, not again!</state>
+                <state img="1-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="1-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="1-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="1-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="1-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -484,7 +506,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="1-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="1-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -518,13 +540,20 @@
                 <state img="1-shocked.png">What! But that's...!</state>
                 <state img="1-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="1-stripping.png">...Hmph. Very well. I can afford to lose my boots, I suppose.</state>
-                <state img="1-stripping.png">Bah! Fine! I'll remove my boots.</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="1-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="1-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="1-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="1-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="1-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="1-stripped.png">But now... the gloves have come off!</state>
                 <state img="1-stripped.png">However... now I will not hold back! Prepare to learn the nature of Von Karma Total Victory!</state>
+            </case>
+            <case tag="stripping">
+                <state img="1-stripping.png">...Hmph. Very well. I can afford to lose my boots, I suppose.</state>
+                <state img="1-stripping.png">Bah! Fine! I'll remove my boots.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -557,11 +586,8 @@
                 <state img="1-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="1-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="1-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="1-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="1-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="1-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -598,11 +624,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="1-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="1-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="1-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="1-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="1-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -618,14 +641,14 @@
             <case tag="male_removed_accessory">
                 <state img="1-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="1-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="1-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="1-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="1-thinking.png">...Not that I'm surprised.</state>
                 <state img="1-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="1-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="1-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="1-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="1-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="1-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="1-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="1-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="1-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="1-crop attack.png">...How irritating.</state>
                 <state img="1-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -646,6 +669,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="1-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="1-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="1-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="1-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -660,14 +686,17 @@
                 <state img="1-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="1-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="1-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="1-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="1-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="1-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="1-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="1-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="1-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="1-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="1-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="1-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="1-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="1-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="1-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="1-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="1-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -718,14 +747,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="1-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="1-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="1-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="1-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="1-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="1-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="1-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="1-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="1-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="1-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="1-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="1-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="1-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="1-disdain.png">One more piece falls into place, ~name~...</state>
@@ -782,34 +811,34 @@
                 <state img="1-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="1-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="1-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="1-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="1-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="1-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="1-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="1-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="1-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="1-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="1-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="1-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="1-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="1-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="1-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="1-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="1-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="1-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="1-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="1-disdain.png">...Meh.</state>
+                <state img="1-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="1-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="1-disdain.png">...Yes, that is a penis.</state>
-                <state img="1-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="1-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="1-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="1-thinking.png">Hmph. That seems impractical.</state>
+                <state img="1-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="1-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="1-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="1-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="1-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="1-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -980,6 +1009,9 @@
                 <state img="1-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="1-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="1-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="2">
@@ -1003,7 +1035,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="2-happy.png">Ha! This hand is perfect.</state>
-                <state img="2-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="2-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="2-happy.png">Ha! ...Of course.</state>
@@ -1055,6 +1087,13 @@
                 <state img="2-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="2-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="2-sweating.png">What...! No, not again!</state>
+                <state img="2-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="2-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="2-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="2-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="2-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -1064,7 +1103,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="2-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="2-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -1098,13 +1137,20 @@
                 <state img="2-shocked.png">What! But that's...!</state>
                 <state img="2-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="2-stripping.png">Hmph. Very well. I shall remove my ribbon!</state>
-                <state img="2-stripping.png">...Bah. I shall rid myself of this ribbon.</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="2-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="2-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="2-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="2-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="2-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="2-stripped.png">But do not expect to see anything further! A Von Karma never loses!</state>
                 <state img="2-stripped.png">And I'll take them both off. Now cease your foolish whining.</state>
+            </case>
+            <case tag="stripping">
+                <state img="2-stripping.png">Hmph. Very well. I shall remove my ribbon!</state>
+                <state img="2-stripping.png">...Bah. I shall rid myself of this ribbon.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -1137,11 +1183,8 @@
                 <state img="2-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="2-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="2-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="2-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="2-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="2-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -1178,11 +1221,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="2-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="2-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="2-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="2-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="2-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -1198,14 +1238,14 @@
             <case tag="male_removed_accessory">
                 <state img="2-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="2-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="2-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="2-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="2-thinking.png">...Not that I'm surprised.</state>
                 <state img="2-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="2-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="2-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="2-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="2-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="2-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="2-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="2-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="2-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="2-crop attack.png">...How irritating.</state>
                 <state img="2-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -1226,6 +1266,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="2-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="2-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="2-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="2-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -1240,14 +1283,17 @@
                 <state img="2-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="2-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="2-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="2-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="2-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="2-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="2-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="2-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="2-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="2-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="2-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="2-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="2-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="2-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="2-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="2-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="2-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -1298,14 +1344,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="2-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="2-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="2-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="2-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="2-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="2-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="2-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="2-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="2-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="2-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="2-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="2-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="2-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="2-disdain.png">One more piece falls into place, ~name~...</state>
@@ -1362,34 +1408,34 @@
                 <state img="2-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="2-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="2-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="2-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="2-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="2-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="2-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="2-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="2-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="2-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="2-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="2-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="2-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="2-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="2-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="2-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="2-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="2-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="2-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="2-disdain.png">...Meh.</state>
+                <state img="2-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="2-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="2-disdain.png">...Yes, that is a penis.</state>
-                <state img="2-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="2-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="2-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="2-thinking.png">Hmph. That seems impractical.</state>
+                <state img="2-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="2-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="2-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="2-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="2-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="2-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -1560,6 +1606,9 @@
                 <state img="2-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="2-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="2-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="3">
@@ -1583,7 +1632,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="3-happy.png">Ha! This hand is perfect.</state>
-                <state img="3-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="3-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="3-happy.png">Ha! ...Of course.</state>
@@ -1635,6 +1684,13 @@
                 <state img="3-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="3-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="3-sweating.png">What...! No, not again!</state>
+                <state img="3-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="3-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="3-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="3-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="3-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -1644,7 +1700,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="3-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="3-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -1678,12 +1734,19 @@
                 <state img="3-shocked.png">What! But that's...!</state>
                 <state img="3-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="3-stripping.png">No smirking!</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="3-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="3-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="3-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="3-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="3-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="3-stripped.png">...Fine, I will take off my jacket as well. There, satisfied?</state>
                 <state img="3-stripped.png">Bah! The whining of foolish fools! ...Fine, I shall also remove my jacket.</state>
+            </case>
+            <case tag="stripping">
+                <state img="3-stripping.png">No smirking!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -1716,11 +1779,8 @@
                 <state img="3-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="3-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="3-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="3-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="3-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="3-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -1757,11 +1817,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="3-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="3-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="3-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="3-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="3-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -1777,14 +1834,14 @@
             <case tag="male_removed_accessory">
                 <state img="3-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="3-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="3-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="3-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="3-thinking.png">...Not that I'm surprised.</state>
                 <state img="3-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="3-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="3-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="3-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="3-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="3-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="3-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="3-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="3-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="3-crop attack.png">...How irritating.</state>
                 <state img="3-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -1805,6 +1862,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="3-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="3-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="3-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="3-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -1819,14 +1879,17 @@
                 <state img="3-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="3-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="3-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="3-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="3-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="3-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="3-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="3-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="3-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="3-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="3-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="3-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="3-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="3-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="3-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="3-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="3-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -1877,14 +1940,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="3-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="3-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="3-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="3-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="3-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="3-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="3-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="3-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="3-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="3-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="3-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="3-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="3-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="3-disdain.png">One more piece falls into place, ~name~...</state>
@@ -1941,34 +2004,34 @@
                 <state img="3-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="3-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="3-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="3-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="3-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="3-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="3-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="3-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="3-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="3-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="3-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="3-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="3-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="3-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="3-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="3-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="3-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="3-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="3-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="3-disdain.png">...Meh.</state>
+                <state img="3-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="3-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="3-disdain.png">...Yes, that is a penis.</state>
-                <state img="3-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="3-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="3-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="3-thinking.png">Hmph. That seems impractical.</state>
+                <state img="3-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="3-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="3-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="3-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="3-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="3-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -2139,6 +2202,9 @@
                 <state img="3-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="3-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="3-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="4">
@@ -2162,7 +2228,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="4-happy.png">Ha! This hand is perfect.</state>
-                <state img="4-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="4-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="4-happy.png">Ha! ...Of course.</state>
@@ -2214,6 +2280,13 @@
                 <state img="4-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="4-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="4-sweating.png">What...! No, not again!</state>
+                <state img="4-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="4-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="4-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="4-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="4-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -2223,7 +2296,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="4-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="4-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -2257,11 +2330,18 @@
                 <state img="4-shocked.png">What! But that's...!</state>
                 <state img="4-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="4-stripping.png">Hmph... to have pushed me this far...</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="4-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="4-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="4-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="4-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="4-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="4-stripped.png">The next one to laugh gets a cropping!</state>
+            </case>
+            <case tag="stripping">
+                <state img="4-stripping.png">Hmph... to have pushed me this far...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="4-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -2294,11 +2374,8 @@
                 <state img="4-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="4-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="4-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="4-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="4-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="4-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -2335,11 +2412,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="4-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="4-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="4-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="4-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="4-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -2355,14 +2429,14 @@
             <case tag="male_removed_accessory">
                 <state img="4-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="4-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="4-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="4-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="4-thinking.png">...Not that I'm surprised.</state>
                 <state img="4-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="4-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="4-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="4-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="4-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="4-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="4-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="4-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="4-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="4-crop attack.png">...How irritating.</state>
                 <state img="4-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -2383,6 +2457,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="4-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="4-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="4-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="4-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -2397,14 +2474,17 @@
                 <state img="4-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="4-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="4-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="4-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="4-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="4-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="4-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="4-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="4-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="4-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="4-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="4-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="4-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="4-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="4-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="4-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="4-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -2455,14 +2535,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="4-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="4-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="4-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="4-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="4-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="4-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="4-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="4-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="4-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="4-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="4-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="4-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="4-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="4-disdain.png">One more piece falls into place, ~name~...</state>
@@ -2519,34 +2599,34 @@
                 <state img="4-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="4-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="4-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="4-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="4-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="4-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="4-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="4-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="4-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="4-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="4-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="4-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="4-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="4-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="4-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="4-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="4-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="4-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="4-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="4-disdain.png">...Meh.</state>
+                <state img="4-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="4-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="4-disdain.png">...Yes, that is a penis.</state>
-                <state img="4-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="4-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="4-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="4-thinking.png">Hmph. That seems impractical.</state>
+                <state img="4-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="4-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="4-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="4-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="4-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="4-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -2717,6 +2797,9 @@
                 <state img="4-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="4-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="4-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="5">
@@ -2740,7 +2823,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="5-happy.png">Ha! This hand is perfect.</state>
-                <state img="5-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="5-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="5-happy.png">Ha! ...Of course.</state>
@@ -2792,6 +2875,13 @@
                 <state img="5-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="5-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="5-sweating.png">What...! No, not again!</state>
+                <state img="5-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="5-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="5-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="5-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="5-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -2801,7 +2891,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="5-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="5-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -2835,11 +2925,18 @@
                 <state img="5-shocked.png">What! But that's...!</state>
                 <state img="5-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="5-stripping.png">My stockings too...!</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="5-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="5-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="5-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="5-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="5-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="5-stripped.png">...I'll admit it. You're not as foolish as I thought.</state>
+            </case>
+            <case tag="stripping">
+                <state img="5-stripping.png">My stockings too...!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="5-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -2872,11 +2969,8 @@
                 <state img="5-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="5-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="5-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="5-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="5-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="5-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -2913,11 +3007,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="5-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="5-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="5-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="5-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="5-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -2933,14 +3024,14 @@
             <case tag="male_removed_accessory">
                 <state img="5-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="5-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="5-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="5-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="5-thinking.png">...Not that I'm surprised.</state>
                 <state img="5-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="5-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="5-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="5-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="5-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="5-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="5-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="5-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="5-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="5-crop attack.png">...How irritating.</state>
                 <state img="5-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -2961,6 +3052,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="5-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="5-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="5-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="5-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -2975,14 +3069,17 @@
                 <state img="5-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="5-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="5-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="5-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="5-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="5-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="5-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="5-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="5-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="5-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="5-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="5-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="5-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="5-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="5-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="5-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="5-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -3033,14 +3130,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="5-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="5-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="5-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="5-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="5-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="5-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="5-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="5-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="5-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="5-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="5-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="5-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="5-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="5-disdain.png">One more piece falls into place, ~name~...</state>
@@ -3097,34 +3194,34 @@
                 <state img="5-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="5-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="5-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="5-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="5-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="5-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="5-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="5-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="5-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="5-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="5-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="5-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="5-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="5-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="5-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="5-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="5-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="5-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="5-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="5-disdain.png">...Meh.</state>
+                <state img="5-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="5-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="5-disdain.png">...Yes, that is a penis.</state>
-                <state img="5-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="5-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="5-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="5-thinking.png">Hmph. That seems impractical.</state>
+                <state img="5-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="5-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="5-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="5-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="5-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="5-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -3295,6 +3392,9 @@
                 <state img="5-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="5-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="5-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="6">
@@ -3318,7 +3418,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="6-happy.png">Ha! This hand is perfect.</state>
-                <state img="6-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="6-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="6-happy.png">Ha! ...Of course.</state>
@@ -3370,6 +3470,13 @@
                 <state img="6-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="6-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="6-sweating.png">What...! No, not again!</state>
+                <state img="6-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="6-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="6-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="6-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="6-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -3379,7 +3486,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="6-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="6-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -3413,11 +3520,18 @@
                 <state img="6-shocked.png">What! But that's...!</state>
                 <state img="6-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="6-stripping.png">You've soiled the Von Karma name and dragged it through the mud.</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="6-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="6-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="6-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="6-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="6-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="6-stripped.png">You can be sure I'll pay you back... in full!</state>
+            </case>
+            <case tag="stripping">
+                <state img="6-stripping.png">You've soiled the Von Karma name and dragged it through the mud.</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="6-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -3450,11 +3564,8 @@
                 <state img="6-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="6-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="6-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="6-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="6-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="6-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -3491,11 +3602,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="6-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="6-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="6-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="6-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="6-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -3511,14 +3619,14 @@
             <case tag="male_removed_accessory">
                 <state img="6-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="6-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="6-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="6-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="6-thinking.png">...Not that I'm surprised.</state>
                 <state img="6-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="6-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="6-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="6-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="6-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="6-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="6-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="6-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="6-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="6-crop attack.png">...How irritating.</state>
                 <state img="6-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -3539,6 +3647,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="6-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="6-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="6-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="6-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -3553,14 +3664,17 @@
                 <state img="6-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="6-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="6-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="6-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="6-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="6-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="6-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="6-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="6-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="6-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="6-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="6-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="6-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="6-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="6-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="6-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="6-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -3611,14 +3725,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="6-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="6-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="6-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="6-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="6-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="6-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="6-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="6-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="6-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="6-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="6-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="6-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="6-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="6-disdain.png">One more piece falls into place, ~name~...</state>
@@ -3675,34 +3789,34 @@
                 <state img="6-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="6-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="6-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="6-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="6-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="6-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="6-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="6-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="6-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="6-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="6-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="6-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="6-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="6-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="6-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="6-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="6-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="6-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="6-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="6-disdain.png">...Meh.</state>
+                <state img="6-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="6-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="6-disdain.png">...Yes, that is a penis.</state>
-                <state img="6-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="6-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="6-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="6-thinking.png">Hmph. That seems impractical.</state>
+                <state img="6-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="6-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="6-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="6-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="6-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="6-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -3873,6 +3987,9 @@
                 <state img="6-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="6-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="6-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="7">
@@ -3896,7 +4013,7 @@
             <case tag="swap_cards">
                 <test expr="~cards~" value="0" />
                 <state img="7-happy.png">Ha! This hand is perfect.</state>
-                <state img="7-smug.png">Were you counting on me getting more cards? Too bad.</state>
+                <state img="7-smug.png">Were you counting on me needing more cards? Too bad.</state>
             </case>
             <case tag="good_hand">
                 <state img="7-happy.png">Ha! ...Of course.</state>
@@ -3948,6 +4065,13 @@
                 <state img="7-sweating.png">Bah...! You think you can defeat me?!</state>
                 <state img="7-sweating.png">The perfect hand... that is always a Von Karma's aim!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="7-sweating.png">What...! No, not again!</state>
+                <state img="7-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="7-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="7-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="7-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="7-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -3957,7 +4081,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="7-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="7-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="must_strip_winning">
@@ -3991,11 +4115,18 @@
                 <state img="7-shocked.png">What! But that's...!</state>
                 <state img="7-sweating.png">How. Can. This. Be!?</state>
             </case>
-            <case tag="stripping">
-                <state img="7-stripping.png">I... I haven't given in yet! I won't lose!</state>
+            <case tag="must_strip_losing" alsoPlaying="mia">
+                <state img="7-angry.png">What?! I've lost to Mia Fey &lt;i&gt;again?!&lt;/i&gt;</state>
+                <state img="7-sweating.png">No! Mia Fey... you've defeated me again!</state>
+                <state img="7-shocked.png">W-what?! No... this can't... Mia Fey...!</state>
+                <state img="7-sweating.png">I-impossible... Mia Fey... how have you bested me yet again...?</state>
+                <state img="7-angry.png">Mia Fey! Don't think you have me cornered just yet...!</state>
             </case>
             <case tag="stripped">
                 <state img="7-stripped.png">...Yes, they're pierced. Don't you &lt;i&gt;dare&lt;/i&gt; tell Miles!</state>
+            </case>
+            <case tag="stripping">
+                <state img="7-stripping.png">I... I haven't given in yet! I won't lose!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="7-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -4028,11 +4159,8 @@
                 <state img="7-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="7-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="7-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="7-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="7-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="7-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -4069,11 +4197,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="7-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="7-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="7-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="7-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="7-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -4089,14 +4214,14 @@
             <case tag="male_removed_accessory">
                 <state img="7-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="7-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="7-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="7-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="7-thinking.png">...Not that I'm surprised.</state>
                 <state img="7-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="7-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="7-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="7-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="7-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="7-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="7-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="7-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="7-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="7-crop attack.png">...How irritating.</state>
                 <state img="7-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -4117,6 +4242,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="7-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="7-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="7-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="7-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -4131,14 +4259,17 @@
                 <state img="7-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="7-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="7-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="7-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="7-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="7-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="7-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="7-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="7-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="7-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="7-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="7-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="7-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="7-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="7-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="7-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="7-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -4189,14 +4320,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="7-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="7-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="7-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="7-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="7-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="7-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="7-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="7-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="7-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="7-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="7-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="7-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="7-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="7-disdain.png">One more piece falls into place, ~name~...</state>
@@ -4253,34 +4384,34 @@
                 <state img="7-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="7-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="7-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="7-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="7-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="7-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="7-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="7-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="7-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="7-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="7-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="7-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="7-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="7-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="7-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="7-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="7-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="7-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="7-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="7-disdain.png">...Meh.</state>
+                <state img="7-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="7-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="7-disdain.png">...Yes, that is a penis.</state>
-                <state img="7-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="7-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="7-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="7-thinking.png">Hmph. That seems impractical.</state>
+                <state img="7-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="7-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="7-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="7-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="7-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="7-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -4451,6 +4582,9 @@
                 <state img="7-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="7-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="7-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="8">
@@ -4537,6 +4671,13 @@
                 <state img="8-angry.png">This will make crushing you into teensy weensy pieces all the better!</state>
                 <state img="8-angry.png">There is no room for further failure in my perfect game!</state>
             </case>
+            <case tag="bad_hand" alsoPlaying="mia" priority="900">
+                <state img="8-sweating.png">What...! No, not again!</state>
+                <state img="8-sweating.png">Impossible! For her to beat me again...</state>
+                <state img="8-angry.png">No! To lose to &lt;i&gt;her&lt;/i&gt; again...</state>
+                <state img="8-angry.png">Curse you... Mia Fey,,,!</state>
+                <state img="8-shocked.png">Mia Fey! How... how are you doing this to me?!</state>
+            </case>
             <case tag="hand" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="8-thinking.png">Hmph. As a Von Karma, I settle for nothing less than perfection!</state>
             </case>
@@ -4546,7 +4687,7 @@
             <case tag="hand" alsoPlaying="sei" alsoPlayingStage="5-8" alsoPlayingTimeInStage="3" alsoPlayingNotSaidMarker="sei_anal">
                 <state img="8-sweating.png">What? Anal? Me? N-no! Of course not! That would be foolish! And I am definitely not a fool! Yes!</state>
             </case>
-            <case tag="hand" notSaidMarker="wherearewe" priority="0">
+            <case tag="hand" timeInStage="3" notSaidMarker="wherearewe" priority="0">
                 <state img="8-disdain.png" marker="wherearewe=1">Where are we, anyway? This looks like Los Angeles, but also like Japan...</state>
             </case>
             <case tag="stripped">
@@ -4583,11 +4724,8 @@
                 <state img="8-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="8-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="8-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="8-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="8-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="8-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -4624,11 +4762,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="8-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="8-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="8-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="8-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="8-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -4644,14 +4779,14 @@
             <case tag="male_removed_accessory">
                 <state img="8-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="8-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="8-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="8-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="8-thinking.png">...Not that I'm surprised.</state>
                 <state img="8-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="8-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="8-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="8-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="8-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="8-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="8-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="8-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="8-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="8-crop attack.png">...How irritating.</state>
                 <state img="8-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -4672,6 +4807,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="8-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="8-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="8-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="8-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -4687,14 +4825,17 @@
                 <state img="8-disdain.png">Are you finished fooling around with foolish frivolities?</state>
                 <state img="8-thinking.png">Small or not, ~name~, you've lost your ~clothing~. That is one more step towards my inevitable victory.</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="8-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="8-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="8-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="8-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="8-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="8-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="8-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="8-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="8-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="8-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="8-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="8-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="8-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="8-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="8-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -4745,14 +4886,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="8-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="8-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="8-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="8-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="8-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="8-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="8-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="8-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="8-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="8-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="8-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="8-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="8-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="8-disdain.png">One more piece falls into place, ~name~...</state>
@@ -4811,36 +4952,36 @@
                 <state img="8-disdain.png">This barely even matters. I want to finish my turnabout!</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="8-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="8-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="8-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="8-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="8-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="8-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="8-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
                 <state img="8-disdain.png">The only reason I care about this is that it marks one more step towards my perfect turnabout.</state>
                 <state img="8-thinking.png">....Fantastic. Can we move on now? I have a turnabout to achieve.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="8-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="8-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="8-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="8-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="8-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="8-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="8-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="8-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="8-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="8-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="8-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="8-disdain.png">...Meh.</state>
+                <state img="8-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="8-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="8-disdain.png">...Yes, that is a penis.</state>
-                <state img="8-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="8-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="8-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="8-thinking.png">Hmph. That seems impractical.</state>
+                <state img="8-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="8-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="8-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="8-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="8-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="8-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -5028,6 +5169,9 @@
                 <state img="8-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="8-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="mia" priority="900">
+                <state img="8-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
+            </case>
         </stage>
 
         <stage id="9">
@@ -5056,8 +5200,8 @@
                 <state img="9-disdain.png">Enough... already...</state>
             </case>
             <case tag="male_removed_accessory">
-                <state img="9-disdain.png">Foolish... waste of time...</state>
-                <state img="9-disdain.png">Let's... move on...</state>
+                <state img="9-disdain.png">My... what a... brave man... you are...</state>
+                <state img="9-disdain.png">I hope... you're not... trying to... impress anyone...</state>
             </case>
             <case tag="female_removing_accessory">
                 <state img="9-sweating.png">Oh... come on, ~name~...</state>
@@ -5072,7 +5216,7 @@
                 <state img="9-disdain.png">We... get it...</state>
             </case>
             <case tag="male_removed_minor">
-                <state img="9-disdain.png">You... coward...</state>
+                <state img="9-disdain.png">You're... a whimpering... wuss...</state>
                 <state img="9-disdain.png">You're afraid to... get naked...</state>
             </case>
             <case tag="female_removing_minor">
@@ -5084,12 +5228,12 @@
                 <state img="9-interested.png">Mm... It'll do...</state>
             </case>
             <case tag="male_removing_major">
-                <state img="9-disdain.png">Well... go on...</state>
+                <state img="9-disdain.png">At last...</state>
                 <state img="9-disdain.png">Finally...</state>
             </case>
             <case tag="male_removed_major">
-                <state img="9-disdain.png">Hngh... can we... move on now...?</state>
-                <state img="9-disdain.png">I'm &lt;i&gt;so&lt;/i&gt;... impressed...</state>
+                <state img="9-disdain.png">He removes... something worth... our time...</state>
+                <state img="9-disdain.png">He does something... that might be... the least bit... manly...</state>
             </case>
             <case tag="female_removing_major">
                 <state img="9-interested.png">Go on, ~name~... take it off...</state>
@@ -5112,17 +5256,17 @@
                 <state img="9-disdain.png">A dick... how exciting...</state>
             </case>
             <case tag="male_small_crotch_is_visible">
-                <state img="9-happy.png">Looks like I... spoke too soon...</state>
+                <state img="9-happy.png">Aha... ahahaha... hahahaha&lt;i&gt;haaaaaaaa&lt;/i&gt;...!</state>
                 <state img="9-happy.png">I thought... you were... a &lt;i&gt;man&lt;/i&gt;, ~name~...</state>
                 <state img="9-happy.png">Now that's just... pathetic...</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="9-disdain.png">There it is... can we... keep going now...?</state>
-                <state img="9-disdain.png">Hooray... let's please... move on...</state>
+                <state img="9-disdain.png">Let's keep... going... maybe then... I'll see something... that does something... for me...</state>
+                <state img="9-disdain.png">Well... &lt;i&gt;that&lt;/i&gt; does... nothing for me...</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="9-disdain.png">That just... looks painful...</state>
-                <state img="9-disdain.png">Yes, yes... very nice... can we... move on now?</state>
+                <state img="9-disdain.png">I bet... that's all... you have... to be proud of... worm...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="9-interested.png">Let's see... what you're... hiding there... ~name~...</state>
@@ -5158,23 +5302,23 @@
                 <state img="9-disdain.png">Stare at me... and you'll taste... my crop's fury...</state>
             </case>
             <case tag="male_start_masturbating">
-                <state img="9-bate4.png">Just get it... over with...</state>
+                <state img="9-bate4.png">You should... feel ashamed...</state>
                 <state img="9-bate7.png">Hmph... fool...</state>
             </case>
             <case tag="male_masturbating">
                 <state img="9-disdain.png">I'm not... impressed...</state>
-                <state img="9-disdain.png">You look... &lt;i&gt;so&lt;/i&gt; foolish... right now...</state>
+                <state img="9-happy.png">You look... &lt;i&gt;so&lt;/i&gt; foolish... right now...</state>
             </case>
             <case tag="male_finished_masturbating">
-                <state img="9-disdain.png">I'm glad... &lt;i&gt;that's&lt;/i&gt; over...</state>
-                <state img="9-disdain.png">I hope... you didn't... expect me... to enjoy that...</state>
+                <state img="9-disdain.png">To put on... such a... poor show... how pathetic...</state>
+                <state img="9-disdain.png">I hope... you didn't... expect anyone... to enjoy that...</state>
             </case>
             <case tag="female_must_masturbate">
-                <state img="9-happy.png">Oh yeah... join in...</state>
-                <state img="9-interested.png">Mm... come on...</state>
+                <state img="9-interested.png">I might... want to watch...</state>
+                <state img="9-happy.png">Try and... impress me...</state>
             </case>
             <case tag="female_start_masturbating">
-                <state img="9-happy.png">~name~... I've been... looking forward... to this...</state>
+                <state img="9-happy.png">I confess, ~name~... I've been... looking forward... to this...</state>
                 <state img="9-happy.png">Now &lt;i&gt;this&lt;/i&gt;... will be fun...</state>
             </case>
             <case tag="female_start_masturbating" target="haru">
@@ -5185,11 +5329,11 @@
                 <state img="9-happy.png">On the contrary... I'm usually the one tying down Adria- ah, &lt;i&gt;my partner.&lt;/i&gt;</state>
             </case>
             <case tag="female_masturbating">
-                <state img="9-happy.png">Oh yes, ~name~... rub that cunt... for me...</state>
-                <state img="9-happy.png">Mm... that's right, ~name~... give me... a show...</state>
+                <state img="9-happy.png">Oh yes... ~name~... shame yourself... for my... pleasure...</state>
+                <state img="9-happy.png">~name~... show off... for me...</state>
             </case>
             <case tag="female_finished_masturbating">
-                <state img="9-happy.png">Ah! Oh yes, ~name~! That's so hot!</state>
+                <state img="9-happy.png">Ah! Oh yes, ~name~! You've pleased me...!</state>
                 <state img="9-happy.png">Oh yes, ~name~! That makes me... so wet...!</state>
             </case>
             <case tag="masturbating">
@@ -5201,6 +5345,15 @@
                 <state img="9-bate8.png">Mmm...</state>
                 <state img="9-bate9.png">Mmph-!</state>
                 <state img="9-bate2.png">Nnnn....</state>
+            </case>
+            <case tag="masturbating" alsoPlaying="ini" alsoPlayingStage="0-4" timeInStage="1-3" notSaidMarker="inibate">
+                <state img="9-bate7.png" marker="inibate=1">Mm... Ini Miney... I could use... a bimbo slave... interested...?</state>
+            </case>
+            <case tag="masturbating" alsoPlaying="ini" alsoPlayingStage="5-8" timeInStage="1-3" notSaidMarker="mimibate">
+                <state img="9-bate8.png" marker="mimi=1">I like... your attitude.. Mimi Miney... want to... help me... top Adrian... sometime...?</state>
+            </case>
+            <case tag="masturbating" alsoPlaying="mia" timeInStage="1-3" notSaidMarker="miabate">
+                <state img="9-heavybate1.png" marker="miabate=1">Oh yes... what breathtaking breasts... you have... Mia Fe- ah! Er...</state>
             </case>
             <case tag="heavy_masturbating">
                 <state img="9-heavybate1.png">Ahn!</state>
@@ -5248,11 +5401,8 @@
                 <state img="10-disdain.png">...Oh, are you still here? Pity.</state>
                 <state img="10-crop attack.png">Time to entertain me, ~name~. Strip. Now!</state>
             </case>
-            <case tag="male_must_strip" targetStatus="lost_all" priority="0">
-                <state img="10-happy.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="male_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="10-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="male_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="10-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="female_human_must_strip">
                 <state img="10-smug.png">What's wrong, ~player~? No snappy comeback remark?</state>
@@ -5289,11 +5439,8 @@
             <case tag="female_must_strip" target="joey" targetStage="3" alsoPlaying="ini" alsoPlayingStage="0-4" notSaidMarker="noberryever">
                 <state img="10-crop attack.png" marker="noberryever">Do not &lt;i&gt;ever&lt;/i&gt; mention that circus again unless you want to feel my crop on your hide!</state>
             </case>
-            <case tag="female_must_strip" targetStatus="lost_all" priority="0">
-                <state img="10-interested.png">Had enough yet, ~name~? Or do you think you have enough in you to turn things around even now!?</state>
-            </case>
-            <case tag="female_must_strip" targetStatus="not_lost_some" priority="0">
-                <state img="10-smug.png">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
+            <case tag="female_must_strip" targetStatus="not_lost_some" notSaidMarker="hurdle" priority="0">
+                <state img="10-smug.png" marker="hurdle=1">You're not about to fall at the first hurdle, now... are you, ~name~?</state>
             </case>
             <case tag="male_removing_accessory">
                 <state img="10-disdain.png">Hah! Still thinking small I see, ~name~. Or perhaps, not at all.</state>
@@ -5309,14 +5456,14 @@
             <case tag="male_removed_accessory">
                 <state img="10-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="10-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
-                <state img="10-disdain.png">I had hoped to exact my revenge in a different way... but I'll have to take what I can get</state>
+                <state img="10-disdain.png">Bah! I suppose you being anything other than a craven coward was far too much to hope for.</state>
                 <state img="10-thinking.png">...Not that I'm surprised.</state>
                 <state img="10-thinking.png">...Isn't that just &lt;i&gt;peachy&lt;/i&gt;.</state>
                 <state img="10-disdain.png">Looks like the lesson for today is that when ~name~ takes off his ~clothing~, he quickly becomes an annoying troublemaker.</state>
-                <state img="10-disdain.png">What were you hoping to accomplish by doing that?</state>
+                <state img="10-disdain.png">I would say that I thought you were better than that, but I would be lying.</state>
                 <state img="10-crop attack.png">You're such an inconsiderate, cowardly, idiotic, and all-around worthless man!</state>
-                <state img="10-crop attack.png">We've lost a lot of valuable time because of you, ~name~!</state>
-                <state img="10-disdain.png">There's no time for trivialities at a time like this!</state>
+                <state img="10-crop attack.png">~name~, you miserable man! You've wasted my precious time... prepare to be punished!</state>
+                <state img="10-disdain.png">A trivial trinket from a miniscule man.</state>
                 <state img="10-crop attack.png">...How irritating.</state>
                 <state img="10-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
             </case>
@@ -5337,6 +5484,9 @@
             <case tag="female_removing_accessory" target="florina" targetStage="0" targetSayingMarker="fled">
                 <state img="10-angry.png">HOLD IT! H-hey! Get back here!</state>
             </case>
+            <case tag="female_removing_accessory" target="mia" targetStage="2">
+                <state img="10-angry.png">HOLD IT! Miles Edgeworth told me about that... trinket! It allows you to see Psycho-Locks when someone is lying!</state>
+            </case>
             <case tag="female_removed_accessory">
                 <state img="10-disdain.png">Do you really think someone of Von Karma blood would lose due to something this petty?</state>
                 <state img="10-thinking.png">This has been the most extravagant waste of time that I've ever seen.</state>
@@ -5351,14 +5501,17 @@
                 <state img="10-disdain.png">Well, isn't this &lt;i&gt;grand&lt;/i&gt;.</state>
                 <state img="10-disdain.png">Are you finished fooling around with foolish frivolities?</state>
             </case>
+            <case tag="female_removed_accessory" target="mia" targetStage="3">
+                <state img="10-crop attack.png">...Mia Fey! The prosectution indicts you for &lt;i&gt;cheating at strip poker!&lt;/i&gt;</state>
+            </case>
             <case tag="male_removing_minor">
-                <state img="10-disdain.png">~Clothing~? I'm less than impressed, ~name~.</state>
+                <state img="10-disdain.png">~Clothing~? I'm less than impressed by you, ~name~.</state>
                 <state img="10-thinking.png">There is not a single shred of fashion sense in your ~clothing~, ~name~.</state>
-                <state img="10-thinking.png">Bah! At least you cannot choose your foolish ~clothing~ twice.</state>
-                <state img="10-disdain.png">Your ~clothing~? Hmph. Delay your defeat all you like, ~name~... it is still inevitable!</state>
+                <state img="10-thinking.png">If you're trying to entertain me by removing your ~clothing~, ~name~, you have failed.</state>
+                <state img="10-disdain.png">Your ~clothing~? Hmph. Stalling or no, ~name~, you will end this game groveling before me!</state>
                 <state img="10-thinking.png">Hmph. Your ~clothing~ barely qualifies as evidence.</state>
-                <state img="10-smug.png">Still trying to draw out your inevitable failure? How foolish.</state>
-                <state img="10-thinking.png">Bah. At least you're getting rid of your ~clothing~ now, I suppose.</state>
+                <state img="10-smug.png">Aww, does little ~name~ too scared to lose more than his ~clothing~?</state>
+                <state img="10-thinking.png">Hmph. I hope you're not trying to impress anyone with your bravery, ~name~.</state>
                 <state img="10-disdain.png">Your ~clothing~? My. How &lt;i&gt;courageous.&lt;/i&gt;</state>
                 <state img="10-smug.png">Ha! Is someone starting to regret playing tonight?</state>
             </case>
@@ -5409,14 +5562,14 @@
             </case>
             <case tag="male_removing_major">
                 <state img="10-smug.png">Now the &lt;i&gt;real&lt;/i&gt; trial begins... ~Name~! I hope you're ready!</state>
-                <state img="10-disdain.png">...This was the plan from the start. Now, ~name~, if you would kindly shut up and strip.</state>
+                <state img="10-disdain.png">Now, ~name~, if you would kindly shut up and strip.</state>
                 <state img="10-interested.png">Well, well... what an obedient cur you are.</state>
-                <state img="10-smug.png">Ha! Have we reached the real evidence already?</state>
+                <state img="10-smug.png">Ha! Is that fear I see in your eyes?</state>
                 <state img="10-thinking.png">Let's see if you have anything impressive to present.</state>
-                <state img="10-disdain.png">Hmph. No more stalling. Get on with it.</state>
+                <state img="10-disdain.png">Hmph. Be a good boy and get on with it.</state>
                 <state img="10-smug.png">Giving up your ~clothing~ already? It won't be long before you're naked, ~name~.</state>
                 <state img="10-crop attack.png">Hurry up and strip before I hit you with something more painful than a penalty!</state>
-                <state img="10-smug.png">Losing your ~clothing~ so soon? Just give up already, ~name~!</state>
+                <state img="10-smug.png">Losing your ~clothing~ so soon? Be a good boy and give up already, ~name~!</state>
             </case>
             <case tag="male_removed_major">
                 <state img="10-disdain.png">One more piece falls into place, ~name~...</state>
@@ -5473,34 +5626,34 @@
                 <state img="10-thinking.png">Hurry up and present your chest already.</state>
             </case>
             <case tag="male_chest_is_visible">
-                <state img="10-disdain.png">All this fuss over a bare chest...?</state>
-                <state img="10-crop attack.png">Done? Good. Dealer! Next hand!</state>
+                <state img="10-happy.png">...You know, bare chested or not, I could stand to see you grovel a little more.</state>
+                <state img="10-crop attack.png">Hmph. If you had taken any longer, you'd have received some well-deserved punishment.</state>
                 <state img="10-thinking.png">Has everyone had a nice, long look? Good. Can we move on now?</state>
-                <state img="10-happy.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
+                <state img="10-interested.png">...I care not about the bare chest of a fool, but I'll admit: it &lt;i&gt;is&lt;/i&gt; fun to see you squirm.</state>
             </case>
             <case tag="male_crotch_will_be_visible">
                 <state img="10-thinking.png">That look in your eyes... You remind me of &lt;i&gt;that man&lt;/i&gt; when he is cornered.</state>
-                <state img="10-disdain.png">Just hurry up and present your dick to the court.</state>
+                <state img="10-disdain.png">Looking at you... I'm already preparing myself for disappointment.</state>
                 <state img="10-smug.png">No backing out now... let's see exactly what sort of whip &lt;i&gt;you're&lt;/i&gt; carrying, ~name~.</state>
-                <state img="10-disdain.png">Yes, yes, the big reveal. Let's get this over with.</state>
+                <state img="10-disdain.png">Let's just say that I'm not expecting to be thrilled by this.</state>
             </case>
             <case tag="male_small_crotch_is_visible">
                 <state img="10-happy.png">...Wow. That barely even counts as presenting something.</state>
                 <state img="10-happy.png">Well, &lt;i&gt;this&lt;/i&gt; is anticlimactic.</state>
-                <state img="10-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress me!</state>
+                <state img="10-happy.png">I hope you're not a foolish enough fool to think that &lt;i&gt;that&lt;/i&gt; will impress anyone.</state>
                 <state img="10-happy.png">Now &lt;i&gt;that's&lt;/i&gt; a sad little stick.</state>
             </case>
             <case tag="male_medium_crotch_is_visible">
-                <state img="10-disdain.png">...Meh.</state>
+                <state img="10-disdain.png">Look at you... exposed like an animal. Disgusting.</state>
                 <state img="10-smug.png">It &lt;i&gt;does&lt;/i&gt; cheer me up to think you've almost lost, ~name~...</state>
-                <state img="10-disdain.png">...Yes, that is a penis.</state>
-                <state img="10-disdain.png">Wonderful. Penis added to the Court Record. Next hand?</state>
+                <state img="10-disdain.png">...Well, if that is where all your blood is, it explains why you play so badly.</state>
+                <state img="10-disdain.png">Wonderful. Unremarkable Penis added to the Court Record.</state>
             </case>
             <case tag="male_large_crotch_is_visible">
-                <state img="10-thinking.png">Hmph. That seems impractical.</state>
+                <state img="10-thinking.png">Hmph. They probably don't tell you, but I bet your partners &lt;i&gt;hate&lt;/i&gt; having to take that.</state>
                 <state img="10-disdain.png">...All right, even &lt;i&gt;I'll&lt;/i&gt; admit: that's a little impressive.</state>
                 <state img="10-calm.png">...Well. I didn't know they came in that size.</state>
-                <state img="10-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like it as a strap-on...</state>
+                <state img="10-happy.png">This may be forward, ~name~, but may I take a cast of that? Adrian might like to feel it as a strap-on...</state>
             </case>
             <case tag="female_chest_will_be_visible">
                 <state img="10-interested.png">This time, there are &lt;i&gt;two&lt;/i&gt; pieces of evidence I want to see...</state>
@@ -5699,6 +5852,18 @@
             <case tag="game_over_defeat">
                 <state img="10-angry.png">...I can't stand to listen to any more of this foolishness!</state>
                 <state img="10-angry.png">Your inane blathering makes less and less sense every time we meet.</state>
+            </case>
+            <case tag="game_over_defeat" alsoPlaying="ini" alsoPlayingStage="0-4" priority="900">
+                <state img="10-angry.png">...You! Ini Miney! I lost &lt;i&gt;again&lt;/i&gt; because of your foolish foolishness, you foolhardy fool with a fool's foolhardy heart!</state>
+            </case>
+            <case tag="game_over_defeat" alsoPlaying="ini" alsoPlayingStage="5-8" priority="900">
+                <state img="10-angry.png">...You! Mimii Miney! I lost &lt;i&gt;again&lt;/i&gt; because of you! &lt;i&gt;I will not forget this!&lt;/i&gt;</state>
+            </case>
+            <case tag="game_over_defeat" alsoPlaying="mia" notSaidMarker="miabate" priority="900">
+                <state img="10-angry.png">...Mia... FEEEEEEEEEEEEEEEEEEEEEEEEY!!!</state>
+            </case>
+            <case tag="game_over_defeat" alsoPlaying="mia" saidMarker="miabate" priority="900">
+                <state img="10-crop attack.png">...Mia Fey! If you tell anyone what I said while I was... forfeiting... my crop shall show no mercy!</state>
             </case>
         </stage>
 
