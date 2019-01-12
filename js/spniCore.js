@@ -298,15 +298,36 @@ function Player (id) {
 }
 
 /*******************************************************************
+ * Sets initial values of state variables used by targetStatus,
+ * targetStartingLayers etc. adccording to wardrobe.
+ *******************************************************************/
+Player.prototype.initClothingStatus = function () {
+	this.startingLayers = this.clothing.length;
+	this.exposed = { upper: true, lower: true };
+	for (var position in this.exposed) {
+		if (this.clothing.some(function(c) {
+			return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE)
+				&& (c.position == position || c.position == FULL_ARTICLE);
+		})) {
+			this.exposed[position] = false;
+		};
+	}
+	this.mostlyClothed = this.decent = !(this.exposed.upper || this.exposed.lower)
+		&& this.clothing.some(function(c) {
+			return c.type == MAJOR_ARTICLE
+				&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0;
+		});
+}
+
+/*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
 Player.prototype.resetState = function () {
-    this.out = this.finished = this.exposed = false;
+    this.out = this.finished = false;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
-	this.exposed = { upper: false, lower: false };
 
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
@@ -389,8 +410,7 @@ Player.prototype.resetState = function () {
     	});
 
         this.clothing = clothingArr;
-		this.startingLayers = clothingArr.length;
-		this.mostlyClothed = checkPlayerStatus(this, STATUS_DECENT);
+		this.initClothingStatus();
 	}
 
 	this.updateLabel();
