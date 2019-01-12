@@ -417,58 +417,77 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
     parseNotQuiteLegacyEpilogue(player, epilogue, $epilogue, sceneWidth, sceneHeight);
   }
   else {
+    var scene;
     $epilogue.children("scene").each(function (index, rawScene) {
       var $scene = $(rawScene);
-      var width = parseInt($scene.attr("width"), 10);
-      var height = parseInt($scene.attr("height"), 10);
-      var scene = {
-        background: $scene.attr("background"),
-        width: width,
-        height: height,
-        aspectRatio: width / height,
-        zoom: parseFloat($scene.attr("zoom"), 10),
-        color: $scene.attr("color"),
-        overlayColor: $scene.attr("overlay"),
-        overlayAlpha: $scene.attr("overlay-alpha"),
-        directives: [],
+      if ($scene.attr("transition")) {
+        if (scenes.length === 0) {
+          //add a blank scene to transition from
+          scene = {
+            color: $scene.attr("color"),
+            directives: [],
+          };
+          scenes.push(scene);
+        }
+        scene = scenes[scenes.length - 1];
+        scene.transition = readProperties(rawScene, scene);
       }
-      scenes.push(scene);
-      scene.x = toSceneX($scene.attr("x"), scene);
-      scene.y = toSceneY($scene.attr("y"), scene);
+      else {
+        var width = parseInt($scene.attr("width"), 10);
+        var height = parseInt($scene.attr("height"), 10);
+        scene = {
+          background: $scene.attr("background"),
+          width: width,
+          height: height,
+          aspectRatio: width / height,
+          zoom: parseFloat($scene.attr("zoom"), 10),
+          color: $scene.attr("color"),
+          overlayColor: $scene.attr("overlay"),
+          overlayAlpha: $scene.attr("overlay-alpha"),
+          directives: [],
+        }
+        scenes.push(scene);
+        scene.x = toSceneX($scene.attr("x"), scene);
+        scene.y = toSceneY($scene.attr("y"), scene);
 
-      var directives = scene.directives;
+        var directives = scene.directives;
 
-      $scene.find("directive").each(function (i, item) {
-        var totalTime = 0;
-        var directive = readProperties(item, scene);
-        directive.keyframes = [];
-        $(item).find("keyframe").each(function (i2, frame) {
-          var keyframe = readProperties(frame, scene);
-          keyframe.ease = keyframe.ease || directive.ease;
-          keyframe.start = totalTime;
-          totalTime = Math.max(totalTime, keyframe.time);
-          keyframe.end = totalTime;
-          keyframe.interpolation = directive.interpolation || "linear";
-          directive.keyframes.push(keyframe);
+        $scene.find("directive").each(function (i, item) {
+          var totalTime = 0;
+          var directive = readProperties(item, scene);
+          directive.keyframes = [];
+          $(item).find("keyframe").each(function (i2, frame) {
+            var keyframe = readProperties(frame, scene);
+            keyframe.ease = keyframe.ease || directive.ease;
+            keyframe.start = totalTime;
+            totalTime = Math.max(totalTime, keyframe.time);
+            keyframe.end = totalTime;
+            keyframe.interpolation = directive.interpolation || "linear";
+            directive.keyframes.push(keyframe);
+          });
+          if (directive.keyframes.length === 0) {
+            //if no explicity keyframes were provided, use the directive itself as a keyframe
+            directive.start = 0;
+            directive.end = directive.time;
+            directive.keyframes.push(directive);
+          }
+          else {
+            directive.time = totalTime;
+          }
+
+          directives.push(directive);
         });
-        if (directive.keyframes.length === 0) {
-          //if no explicity keyframes were provided, use the directive itself as a keyframe
-          directive.start = 0;
-          directive.end = directive.time;
-          directive.keyframes.push(directive);
-        }
-        else {
-          directive.time = totalTime;
-        }
-
-        directives.push(directive);
-      });
-
-      var transitionEffect = $scene.find("transition").first();
-      if (transitionEffect.length > 0) {
-        scene.transition = readProperties(transitionEffect.get(0), scene);
       }
     });
+
+    //if the last scene has a transition, add a dummy scene to the end
+    if (scenes.length > 0 && scenes[scenes.length - 1].transition) {
+      scene = {
+        color: scenes[scenes.length - 1].transition.color,
+        directives: [],
+      };
+      scenes.push(scene);
+    }
   }
   return epilogue;
 }
@@ -628,6 +647,7 @@ function readProperties(sourceObj, scene) {
     if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
+    targetObj.angle = parseFloat(targetObj.angle, 10) || 0;
     if (targetObj.scale) {
       targetObj.scalex = targetObj.scaley = targetObj.scale;
     }
@@ -1132,7 +1152,7 @@ EpiloguePlayer.prototype.addAction = function (view, directive, doFunc, undoFunc
  */
 EpiloguePlayer.prototype.revertDirective = function () {
   if (this.activeTransition) { return; }
-  this.activeScene.view.haltAnimations(true);
+  this.activeScene.view.haltAnimations(false);
 
   var canRevert = (this.sceneIndex > 0);
   if (!canRevert) {
@@ -1168,14 +1188,16 @@ EpiloguePlayer.prototype.revertDirective = function () {
   //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
   this.sceneIndex--;
   this.setupScene(this.sceneIndex, true);
-  var pauseIndex;
-  for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
-    if (this.activeScene.directives[pauseIndex].type === "pause") {
-      break;
+  if (!this.activeTransition) {
+    var pauseIndex;
+    for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
+      if (this.activeScene.directives[pauseIndex].type === "pause") {
+        break;
+      }
     }
-  }
-  while (this.directiveIndex < pauseIndex) {
-    this.advanceDirective();
+    while (this.directiveIndex < pauseIndex) {
+      this.advanceDirective();
+    }
   }
 }
 
@@ -1216,6 +1238,7 @@ function SceneView(container, index, assetMap) {
   this.camera = null;
   this.assetMap = assetMap;
   this.sceneObjects = {};
+  this.textObjects = {};
   this.viewportWidth = 0;
   this.viewportHeight = 0;
   this.particlePool = [];
@@ -1237,10 +1260,11 @@ SceneView.prototype.cleanup = function () {
 
   //clear old textboxes
   this.$textContainer.empty();
+  this.textObjects = {};
 
   //clear old images
   for (var obj in this.sceneObjects) {
-    $(this.sceneObjects[obj].element).remove();
+    this.sceneObjects[obj].destroy();
   }
   this.sceneObjects = {};
 
@@ -1251,6 +1275,7 @@ SceneView.prototype.cleanup = function () {
 SceneView.prototype.destroy = function () {
   this.cleanup();
 
+  this.particlePool = null;
   this.$viewport.remove();
 }
 
@@ -1484,7 +1509,7 @@ SceneView.prototype.addSceneObject = function (obj) {
 }
 
 SceneView.prototype.removeSceneObject = function (directive) {
-  $(this.sceneObjects[directive.id].element).remove();
+  this.sceneObjects[directive.id].destroy();
   delete this.sceneObjects[directive.id];
 }
 
@@ -1507,39 +1532,35 @@ SceneView.prototype.showSceneObject = function (directive, context) {
   }
 }
 
-SceneView.prototype.getId = function (id) {
-  if (!id) {
-    return id;
-  }
-  return this.index + "_" + id;
-}
-
 SceneView.prototype.addText = function (directive, context) {
-  var id = this.getId(directive.id);
+  var id = directive.id;
   context.id = id;
   this.lastTextId = id;
 
-  var box = $(document.getElementById(id));
-  if (box.length > 0) {
+  var box = this.textObjects[id];
+  if (box) {
     //reuse the DOM element if one of the same ID already exists
     context.oldDirective = box.data("directive");
   }
   else {
-    box = $(document.createElement('div')).attr('id', id).addClass('epilogue-text');
+    box = $(document.createElement('div')).addClass('epilogue-text');
     //attach new div element to the content div
     this.$textContainer.append(box[0]);
+    box.data("id", id);
+    this.textObjects[id] = box;
   }
   this.applyTextDirective(directive, box);
 }
 
 SceneView.prototype.removeText = function (directive, context) {
   this.lastTextId = context.id;
-  var box = document.getElementById(this.lastTextId);
+  var box = this.textObjects[directive.id];
   if (context.oldDirective) {
-    this.applyTextDirective(context.oldDirective, $(box));
+    this.applyTextDirective(context.oldDirective, box);
   }
   else {
-    this.$textContainer.get(0).removeChild(box);
+    this.$textContainer.get(0).removeChild(box[0]);
+    delete this.textObjects[directive.id];
   }
 }
 
@@ -1561,27 +1582,30 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
 SceneView.prototype.clearAllText = function (directive, context) {
   var $this = this;
   context = context || {};
-  this.$textContainer.children().each(function () {
-    $this.lastTextId = this.id;
-    $this.clearText({}, context);
-  });
+  for (var box in this.textObjects) {
+    this.clearText({ id: this.textObjects[box].data("id") }, context, true);
+  }
+  this.textObjects = {};
 }
 
-SceneView.prototype.clearText = function (directive, context) {
+SceneView.prototype.clearText = function (directive, context, keepObject) {
   context.boxes = context.boxes || [];
   var boxContext = {};
   context.boxes.push(boxContext);
 
-  var id = this.getId(directive.id) || this.lastTextId;
-  boxContext.id = this.lastTextId = id;
-  var box = $(document.getElementById(id));
+  var id = directive.id || this.lastTextId;
+  boxContext.id = lastTextId = id;
+  var box = this.textObjects[id];
 
-  if (box.length === 0) {
+  if (!box) {
     return;
   }
 
   boxContext.directive = box.data("directive");
   this.$textContainer.get(0).removeChild(box[0]);
+  if (!keepObject) {
+    delete this.textObjects[id];
+  }
 }
 
 SceneView.prototype.restoreText = function (directive, context) {
@@ -1612,6 +1636,7 @@ SceneView.prototype.updateObject = function (id, last, next, t) {
 
 SceneView.prototype.addAnimation = function (anim) {
   this.anims.push(anim);
+  return anim;
 }
 
 SceneView.prototype.moveSprite = function (directive, context) {
@@ -1625,7 +1650,7 @@ SceneView.prototype.moveSprite = function (directive, context) {
     context.scaley = sprite.scaley;
     context.alpha = sprite.alpha;
     frames.unshift(context);
-    this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+    context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
   }
 }
 
@@ -1650,7 +1675,17 @@ SceneView.prototype.returnSprite = function (directive, context) {
     if (typeof context.alpha !== "undefined") {
       sprite.alpha = context.alpha;
     }
+    this.removeAnimation(context.anim);
     this.draw();
+  }
+}
+
+SceneView.prototype.removeAnimation = function (anim) {
+  if (anim) {
+    var index = this.anims.indexOf(anim);
+    if (index >= 0) {
+      this.anims.splice(index, 1);
+    }
   }
 }
 
@@ -1668,7 +1703,7 @@ SceneView.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.returnCamera = function (directive, context) {
@@ -1681,6 +1716,7 @@ SceneView.prototype.returnCamera = function (directive, context) {
   if (context.zoom) {
     this.camera.zoom = context.zoom;
   }
+  this.removeAnimation(context.anim);
   this.draw();
 }
 
@@ -1690,11 +1726,12 @@ SceneView.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.scene.view.overlay.a;
   frames.unshift(context);
-  this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.restoreOverlay = function (directive, context) {
   this.setOverlay(context.color, context.alpha);
+  this.removeAnimation(context.anim);
 }
 
 SceneView.prototype.isAnimRunning = function () {
@@ -1811,9 +1848,10 @@ function SceneObject(id, element, view, args) {
   this.rotation = args.rotation || 0;
   this.alpha = alpha;
   this.view = view;
+  this.layer = args.layer;
 
   var scene = this.view.scene;
-
+  
   if (element) {
     var vehicle = document.createElement("div");
     vehicle.appendChild(element);
@@ -1825,7 +1863,7 @@ function SceneObject(id, element, view, args) {
       pivotY = pivotY || "center";
       $(element).css("transform-origin", pivotX + " " + pivotY);
     }
-    if (args.layer) {
+    if (this.layer) {
       $(vehicle).css("z-index", args.layer);
     }
 
@@ -1887,6 +1925,12 @@ function SceneObject(id, element, view, args) {
 }
 
 SceneObject.prototype = {
+  destroy: function () {
+    if (this.element) {
+      $(this.element).remove();
+    }
+  },
+
   update: function (elapsedMs) {
   },
 
@@ -1925,9 +1969,20 @@ function Emitter(id, element, view, args, pool) {
   this.startRotation = this.createRandomParameter(args.startrotation, 0, 0);
   this.endRotation = this.createRandomParameter(args.endrotation, this.startRotation);
   this.lifetime = this.createRandomParameter(args.lifetime, 1, 1);
+  this.angle = args.angle;
 }
 Emitter.prototype = Object.create(SceneObject.prototype);
 Emitter.prototype.constructor = Emitter;
+
+Emitter.prototype.destroy = function () {
+  SceneObject.prototype.destroy.call(this);
+
+  //destroy all particles
+  for (var i = 0; i < this.activeParticles.length; i++) {
+    var particle = this.activeParticles[i];
+    particle.destroy();
+  }
+}
 
 Emitter.prototype.createRandomParameter = function (value, defaultMin, defaultMax) {
   if (typeof value !== "undefined") {
@@ -1982,7 +2037,13 @@ Emitter.prototype.update = function (elapsedMs) {
 
 Emitter.prototype.emit = function () {
   var particle = this.getFreeParticle();
-  particle.spawn(this.x - this.width / 2, this.y - this.height / 2, this.rotation, {
+
+  //randomize the rotation by the emission angle range
+  var rotation = this.rotation;
+  var angle = Math.floor(Math.random() * (this.angle * 2 + 1)) - this.angle;
+  rotation += angle;
+
+  particle.spawn(this.x - this.width / 2, this.y - this.height / 2, rotation, {
     src: this.src,
     width: this.width,
     height: this.height,
@@ -2001,6 +2062,7 @@ Emitter.prototype.emit = function () {
     endAlpha: this.endAlpha.get(),
     startRotation: this.startRotation.get(),
     endRotation: this.endRotation.get(),
+    layer: this.layer,
   });
   this.activeParticles.push(particle);
 };
@@ -2054,6 +2116,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
     "width": args.width + "px",
     "height": args.height + "px",
   });
+  $(this.element).css("z-index", args.layer || "");
   this.width = args.width;
   this.height = args.height;
   this.x = x;
