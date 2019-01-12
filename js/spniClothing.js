@@ -413,6 +413,10 @@ function closeStrippingModal (id) {
         if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
             players[HUMAN_PLAYER].mostlyClothed = false;
         }
+        if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0
+			&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0) {
+            players[HUMAN_PLAYER].decent = false;
+        }
         if (removedClothing.type == IMPORTANT_ARTICLE) {
             players[HUMAN_PLAYER].exposed[removedClothing.position] = true;
         }
@@ -531,12 +535,7 @@ function checkPlayerStatus(player, status) {
 	case STATUS_MOSTLY_CLOTHED:
 		return player.mostlyClothed;
 	case STATUS_DECENT:
-		return !(player.exposed.upper || player.exposed.lower)
-		&& player.clothing.some(function(c) {
-			return (c.position == UPPER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
-		}) && player.clothing.some(function(c) {
-			return (c.position == LOWER_ARTICLE || c.position == FULL_ARTICLE) && c.type == MAJOR_ARTICLE;
-		});
+		return player.decent;
 	case STATUS_EXPOSED_TOP:
 		return player.exposed.upper;
 	case STATUS_EXPOSED_BOTTOM:

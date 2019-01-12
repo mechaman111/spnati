@@ -501,13 +501,7 @@ function wearClothing () {
 		players[HUMAN_PLAYER].clothing.push(position[2][i]);
 	}
 
-	players[HUMAN_PLAYER].startingLayers = players[HUMAN_PLAYER].clothing.length;
-	players[HUMAN_PLAYER].mostlyClothed = checkPlayerStatus(players[HUMAN_PLAYER], STATUS_DECENT);
-	for (position in players[HUMAN_PLAYER].exposed) {
-		players[HUMAN_PLAYER].exposed[position] = !players[HUMAN_PLAYER].clothing.some(function(c) {
-			return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE) && c.position == position;
-		});
-	}
+	players[HUMAN_PLAYER].initClothingStatus();
 
 	/* update the visuals */
     displayHumanPlayerClothing();
