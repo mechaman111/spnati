@@ -599,8 +599,17 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 labels: $xml.find('label'),
                 tags: null,
                 folders: this.folder,
-                wardrobe: $xml.find('wardrobe')
+                wardrobe: $xml.find('wardrobe'),
             };
+            
+            var poses = $xml.find('poses');
+            var poseDefs = {};
+            $(poses).find('pose').each(function (i, elem) {
+                var def = new PoseDefinition($(elem), this.folder);
+                poseDefs[def.id] = def;
+            }.bind(this));
+            
+            this.poses = poseDefs;
 
             var tags = $xml.find('tags');
             var tagsArray = [this.id];

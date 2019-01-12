@@ -207,8 +207,17 @@ function updateGameVisual (player) {
             $gameDialogues[player-1].html(fixupDialogue(chosenState.dialogue));
             
             /* update image */
-            $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
-			$gameImages[player-1].show()
+            if (chosenState.image.startsWith('custom:')) {
+                var key = chosenState.image.split(':', 2)[1];
+                var poseDef = players[player].poses[key];
+                if (poseDef) {
+                    drawPoseToSlot(poseDef.toPose(), player);
+                } else {
+                    $gameImages[player-1].hide();
+                }
+            } else {
+                drawPoseToSlot(players[player].folder + chosenState.image, player);
+            }
 
             /* update label */
             $gameLabels[player].html(players[player].label.initCap());
