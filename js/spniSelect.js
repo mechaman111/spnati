@@ -66,6 +66,14 @@ $suggestionQuads = [
     [$("#opponent-suggestion-4-1"), $("#opponent-suggestion-4-2"), $("#opponent-suggestion-4-3"), $("#opponent-suggestion-4-4")],
 ]
 
+mainSelectDisplays = [
+	new MainSelectScreenDisplay(1),
+	new MainSelectScreenDisplay(2),
+	new MainSelectScreenDisplay(3),
+	new MainSelectScreenDisplay(4)
+]
+
+
 /* individual select screen */
 $individualSelectTable = $("#individual-select-table");
 $individualNameLabels = [$("#individual-name-label-1"), $("#individual-name-label-2"), $("#individual-name-label-3"), $("#individual-name-label-4")];
@@ -1072,48 +1080,7 @@ function altCostumeSelected(slot, inGroup) {
 function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
-        if (players[i] && players[i].isLoaded()) {
-            /* update dialogue */
-            $selectDialogues[i-1].html(fixupDialogue(players[i].chosenState.dialogue));
-
-            /* update image */
-            if (players[i].folder + players[i].chosenState.image
-                != $selectImages[i-1].attr('src')) {
-                var slot = i;
-                $selectImages[i-1].attr('src', players[i].folder + players[i].chosenState.image);
-                $selectImages[i-1].one('load', function() {
-                    $selectBubbles[slot-1].show();
-                    $selectImages[slot-1].css('height', players[slot].scale + '%');
-                    $selectImages[slot-1].show();
-                });
-            } else {
-                $selectBubbles[i-1].show();
-                $selectBubbles[i-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+(players[i].chosenState.direction));
-                bubbleArrowOffsetRules[i-1][0].style.left = players[i].chosenState.location;
-                bubbleArrowOffsetRules[i-1][1].style.top = players[i].chosenState.location;
-                $selectImages[i-1].show();
-            }
-
-            /* update label */
-            $selectLabels[i-1].html(players[i].label.initCap());
-
-            /* change the button */
-            $selectButtons[i-1].html("Remove Opponent");
-            $selectButtons[i-1].removeClass("smooth-button-green");
-            $selectButtons[i-1].addClass("smooth-button-red");
-        } else {
-            /* clear the view */
-            $selectDialogues[i-1].html("");
-            $selectAdvanceButtons[i-1].css({opacity : 0});
-			$selectBubbles[i-1].hide();
-			$selectImages[i-1].hide();
-            $selectLabels[i-1].html("Opponent "+i);
-
-            /* change the button */
-            $selectButtons[i-1].html("Select Opponent");
-            $selectButtons[i-1].removeClass("smooth-button-red");
-            $selectButtons[i-1].addClass("smooth-button-green");
-        }
+		mainSelectDisplays[i-1].update(players[i]);
     }
 
     /* Check to see if all opponents are loaded. */
@@ -1121,12 +1088,9 @@ function updateSelectionVisuals () {
     players.forEach(function(p, idx) {
         if (idx > 0) {
             filled++;
-            if (!p.isLoaded()) {
-                $selectButtons[idx-1].html('Loading...');
-            } else {
+            if (p.isLoaded()) {
                 loaded++;
             }
-            $selectButtons[idx-1].attr('disabled', !p.isLoaded());
         }
     });
 

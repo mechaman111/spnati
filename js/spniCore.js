@@ -387,6 +387,8 @@ Player.prototype.resetState = function () {
 
     		clothingArr.push(newClothing);
     	});
+        
+        this.poses = appearance.poses;
 
         this.clothing = clothingArr;
 		this.startingLayers = clothingArr.length;
@@ -434,6 +436,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    this.poses = {};
 
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
@@ -526,6 +529,15 @@ Opponent.prototype.loadAlternateCostume = function () {
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
             };
+            
+            var poses = $xml.find('poses');
+            var poseDefs = {};
+            $(poses).find('pose').each(function (i, elem) {
+                var def = new PoseDefinition($(elem), this);
+                poseDefs[def.id] = def;
+            }.bind(this));
+            
+            this.alt_costume.poses = poseDefs;
 
             this.onSelected();
         }.bind(this),
@@ -599,17 +611,17 @@ Opponent.prototype.loadBehaviour = function (slot) {
                 labels: $xml.find('label'),
                 tags: null,
                 folders: this.folder,
-                wardrobe: $xml.find('wardrobe'),
+                wardrobe: $xml.find('wardrobe')
             };
             
             var poses = $xml.find('poses');
             var poseDefs = {};
             $(poses).find('pose').each(function (i, elem) {
-                var def = new PoseDefinition($(elem), this.folder);
+                var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
             }.bind(this));
             
-            this.poses = poseDefs;
+            this.default_costume.poses = poseDefs;
 
             var tags = $xml.find('tags');
             var tagsArray = [this.id];
@@ -658,6 +670,7 @@ Player.prototype.getImagesForStage = function (stage) {
 
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
+    var advPoses = this.poses;
     var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
                     : 'stage[id='+stage+'] case');
     this.xml.find(selector).each(function () {
@@ -668,11 +681,23 @@ Player.prototype.getImagesForStage = function (stage) {
             && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
             && (filter === undefined || players.some(function(p) { return p.tags.indexOf(filter) >= 0; })))
         {
-            $(this).children('state').each(function () {
-                imageSet[folder+$(this).attr('img')] = true;
-            })
+            $(this).children('state').each(function (i, e) {
+                var poseName = $(e).attr('img');
+                if (!poseName) return;
+                
+                if (poseName.startsWith('custom:')) {
+                    var key = poseName.split(':', 2)[1];
+                    var pose = advPoses[key];
+                    if (pose) pose.getUsedImages().forEach(function (img) {
+                        imageSet[img] = true;
+                    });
+                } else {
+                    imageSet[folder+poseName] = true;
+                }
+            });
         }
     });
+    
     return Object.keys(imageSet);
 };
 
