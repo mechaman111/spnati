@@ -14,14 +14,6 @@ namespace SPNATI_Character_Editor.Controls
 	public partial class EpilogueCanvas : UserControl
 	{
 		/// <summary>
-		/// Control point size in pixels
-		/// </summary>
-		private const int ControlPointSize = 8;
-		/// <summary>
-		/// Control point radius in pixels
-		/// </summary>
-		private const int ControlPointHalfSize = ControlPointSize / 2;
-		/// <summary>
 		/// How many pixels the user has to click within to select a handle
 		/// </summary>
 		private const int SelectionLeeway = 5;
@@ -266,11 +258,9 @@ namespace SPNATI_Character_Editor.Controls
 					Point pt = new Point(_lastMouse.X - arrow.Width / 2, _lastMouse.Y - arrow.Height / 2);
 
 					//rotate to face the object's center
-					RectangleF bounds = ToScreenRegion(_selectedObject);
-					float cx = bounds.X + bounds.Width / 2;
-					float cy = bounds.Y + bounds.Height / 2;
+					PointF center = ToScreenCenter(_selectedObject);;
 
-					double angle = Math.Atan2(cy - pt.Y, cx - pt.X);
+					double angle = Math.Atan2(center.Y - pt.Y, center.X - pt.X);
 					angle = angle * (180 / Math.PI) - 90;
 
 					g.TranslateTransform(_lastMouse.X, _lastMouse.Y);
@@ -616,6 +606,12 @@ namespace SPNATI_Character_Editor.Controls
 				Rectangle viewport = GetViewportBounds();
 				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
 			}
+			else if (obj.ObjectType == SceneObjectType.Emitter)
+			{
+				//emitters don't actually have a size, so just use a constant sized box centered around the upper left to represent where things get emitted from
+				Point center = ToScreenPoint(new PointF(obj.X, obj.Y));
+				return new RectangleF(center.X - SceneEmitter.EmitterRadius, center.Y - SceneEmitter.EmitterRadius, SceneEmitter.EmitterRadius * 2, SceneEmitter.EmitterRadius * 2);
+			}
 			else
 			{
 				//rotations are not computed currently when considering the bounding box
@@ -686,6 +682,26 @@ namespace SPNATI_Character_Editor.Controls
 			Point br = ToScreenPoint(new PointF(pt.X + obj.Width, pt.Y + obj.Height));
 			RectangleF rect = new RectangleF(tl.X, tl.Y, br.X - tl.X, br.Y - tl.Y);
 			return rect;
+		}
+
+		/// <summary>
+		/// Gets the "center" of an object's selection
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		private PointF ToScreenCenter(SceneObject obj)
+		{
+			RectangleF bounds = ToScreenRegion(obj);
+			if (obj.ObjectType == SceneObjectType.Emitter)
+			{
+				return new PointF(bounds.X, bounds.Y);
+			}
+			else
+			{
+				float cx = bounds.X + bounds.Width / 2;
+				float cy = bounds.Y + bounds.Height / 2;
+				return new PointF(cx, cy);
+			}
 		}
 
 		/// <summary>
@@ -824,7 +840,7 @@ namespace SPNATI_Character_Editor.Controls
 										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.TextBoxes);
 									}
 
-									//3 - sprite
+									//3 - scene object
 									if (obj == null)
 									{
 										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.Objects);
@@ -868,82 +884,95 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedObject != null)
 			{
 				RectangleF bounds = ToAbsScreenRegion(_selectedObject);
-				if (_selectedObject.ObjectType == SceneObjectType.Sprite)
+				if (_selectedObject.ObjectType == SceneObjectType.Sprite || _selectedObject.ObjectType == SceneObjectType.Emitter)
 				{
+					bool allowPivot = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+					bool allowRotate = true;
+					bool allowScale = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
 					float dt = Math.Abs(screenPt.Y - bounds.Y);
 					float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
 
 					//pivot position
-					RectangleF pivotBounds = ToUnscaledScreenRegion(_selectedObject);
-					PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX / _selectedObject.Width * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY / _selectedObject.Height * pivotBounds.Height);
-
-					//pivoting - hovering over the pivot circle
-					if (_selectedDirective?.DirectiveType == "sprite")
+					if (allowPivot)
 					{
-						float px = Math.Abs(screenPt.X - pivot.X);
-						float py = Math.Abs(screenPt.Y - pivot.Y);
-						if (px <= SelectionLeeway && py <= SelectionLeeway)
+						RectangleF pivotBounds = ToUnscaledScreenRegion(_selectedObject);
+						PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX / _selectedObject.Width * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY / _selectedObject.Height * pivotBounds.Height);
+
+						//pivoting - hovering over the pivot circle
+						if (_selectedDirective?.DirectiveType == "sprite")
 						{
-							return HoverContext.Pivot;
+							float px = Math.Abs(screenPt.X - pivot.X);
+							float py = Math.Abs(screenPt.Y - pivot.Y);
+							if (px <= SelectionLeeway && py <= SelectionLeeway)
+							{
+								return HoverContext.Pivot;
+							}
 						}
 					}
 
-					//rotating - hovering outside a corner
-					if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dr <= RotationLeeway ||
-						screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
+					if (allowRotate)
 					{
-						return HoverContext.Rotate;
-					}
-
-					//scaling/stretching - grabbing an edge
-					if (dl <= SelectionLeeway)
-					{
-						if (dt <= SelectionLeeway)
+						//rotating - hovering outside a corner
+						if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
+							screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dl <= RotationLeeway ||
+							screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && dt <= RotationLeeway ||
+							screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dr <= RotationLeeway ||
+							screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && db <= RotationLeeway ||
+							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dl <= RotationLeeway ||
+							screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
+							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
-							return HoverContext.ScaleTop | HoverContext.ScaleLeft;
-						}
-						else if (db <= SelectionLeeway)
-						{
-							return HoverContext.ScaleBottom | HoverContext.ScaleLeft;
-						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
-						{
-							return HoverContext.ScaleLeft;
+							return HoverContext.Rotate;
 						}
 					}
 
-					if (dr <= SelectionLeeway)
+					if (allowScale)
 					{
-						if (dt <= SelectionLeeway)
+						//scaling/stretching - grabbing an edge
+						if (dl <= SelectionLeeway)
 						{
-							return HoverContext.ScaleTop | HoverContext.ScaleRight;
+							if (dt <= SelectionLeeway)
+							{
+								return HoverContext.ScaleTop | HoverContext.ScaleLeft;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return HoverContext.ScaleBottom | HoverContext.ScaleLeft;
+							}
+							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+							{
+								return HoverContext.ScaleLeft;
+							}
 						}
-						else if (db <= SelectionLeeway)
-						{
-							return HoverContext.ScaleBottom | HoverContext.ScaleRight;
-						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
-						{
-							return HoverContext.ScaleRight;
-						}
-					}
 
-					if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-					{
-						return HoverContext.ScaleTop;
-					}
+						if (dr <= SelectionLeeway)
+						{
+							if (dt <= SelectionLeeway)
+							{
+								return HoverContext.ScaleTop | HoverContext.ScaleRight;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return HoverContext.ScaleBottom | HoverContext.ScaleRight;
+							}
+							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+							{
+								return HoverContext.ScaleRight;
+							}
+						}
 
-					if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-					{
-						return HoverContext.ScaleBottom;
+						if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							return HoverContext.ScaleTop;
+						}
+
+						if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							return HoverContext.ScaleBottom;
+						}
 					}
 				}
 				else if (_selectedObject.ObjectType == SceneObjectType.Text)

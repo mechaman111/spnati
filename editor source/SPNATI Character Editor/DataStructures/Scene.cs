@@ -125,7 +125,7 @@ namespace SPNATI_Character_Editor
 			for (int i = 0; i < Directives.Count; i++)
 			{
 				Directive d = Directives[i];
-				if (d.Id == id && (d.DirectiveType == "sprite" || d.DirectiveType == "text"))
+				if (d.Id == id && (d.DirectiveType == "sprite" || d.DirectiveType == "text" || d.DirectiveType == "emitter"))
 				{
 					return d;
 				}

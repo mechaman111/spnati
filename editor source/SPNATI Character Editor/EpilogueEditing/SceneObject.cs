@@ -171,7 +171,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			PivotY = ParsePivot(directive.PivotY, Height);
 		}
 
-		private int ParsePivot(string pivot, float size)
+		protected int ParsePivot(string pivot, float size)
 		{
 			switch (pivot)
 			{

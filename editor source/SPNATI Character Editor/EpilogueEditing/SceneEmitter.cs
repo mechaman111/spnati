@@ -5,6 +5,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 {
 	public class SceneEmitter : SceneObject
 	{
+		public const int EmitterRadius = 15;
+
 		internal Random Random = new Random();
 		public float Rate = 0;
 		public float EmissionTimer = 0;
@@ -61,6 +63,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			StartRotation = RandomParameter.Create(directive.StartRotation, 0, 0);
 			EndRotation = RandomParameter.Create(directive.EndRotation, StartRotation);
 			Lifetime = RandomParameter.Create(directive.Lifetime, 1, 1);
+
+			PivotX = EmitterRadius;
+			PivotY = EmitterRadius;
+			Width = EmitterRadius * 2;
+			Height = EmitterRadius * 2;
 		}
 
 		public override SceneObject Copy()

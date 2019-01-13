@@ -669,6 +669,16 @@ namespace SPNATI_Character_Editor.Controls
 					directive.Width = "20%";
 					directive.Text = "New text";
 					break;
+				case "emitter":
+					directive.Id = id;
+					directive.X = "0";
+					directive.Y = "0";
+					directive.PivotX = "50%";
+					directive.PivotY = "50%";
+					directive.Rate = "1";
+					directive.StartAlpha = "100";
+					directive.EndAlpha = "0";
+					break;
 			}
 		}
 
