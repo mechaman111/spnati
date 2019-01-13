@@ -59,6 +59,10 @@ PoseSprite.prototype.draw = function() {
       'height': this.height,
       'width': this.width
     });
+    
+    if (this.img.src !== this.src) {
+        this.img.src = this.src;
+    }
 }
 
 
@@ -76,8 +80,6 @@ function PoseAnimation (targetSprite, args) {
         kf.startTime = totalTime;
         totalTime = kf.time;
     });
-    
-    console.log(this.keyframes);
     
     this.duration = this.keyframes[this.keyframes.length-1].time;
     this.delay = args.delay || 0;
@@ -124,6 +126,10 @@ PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
 }
 
 PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
+    if (this.interpolation == 'none' && fromFrame.src) {
+        this.target.src = fromFrame.src;
+    }
+    
     this.interpolate("x", fromFrame, toFrame, t, idx);
     this.interpolate("y", fromFrame, toFrame, t, idx);
     this.interpolate("rotation", fromFrame, toFrame, t, idx);
@@ -233,6 +239,7 @@ function parseSpriteDefinition ($xml, player) {
 function parseKeyframeDefinition($xml) {
     var targetObj = parseSpriteDefinition($xml);
     targetObj.time = parseFloat(targetObj.time) * 1000;
+    targetObj.delay = (parseFloat(targetObj.delay) * 1000) || 0;
     
     return targetObj;
 }
@@ -245,6 +252,14 @@ function parseDirective ($xml) {
         targetObj.keyframes = [];
         $($xml).find('keyframe').each(function (i, elem) {
             targetObj.keyframes.push(parseKeyframeDefinition(elem));
+        });
+    } else if (targetObj.type === 'sequence') {
+        // Sequential frame sequence
+        targetObj.frameTime = parseFloat(targetObj.frametime);
+        targetObj.delay = parseFloat(targetObj.delay) || 0;
+        targetObj.frames = [];
+        $($xml).find('animFrame').each(function (i, elem) {
+            targetObj.frames.push(xmlToObject(elem));
         });
     }
     
@@ -265,6 +280,27 @@ function PoseDefinition ($xml, player) {
         var directive = parseDirective(elem);
         if (directive.type === 'animation') {
             this.animations.push(directive);
+        } else if (directive.type === 'sequence') {
+            // Convert the sequence into a set of Animation objects.
+            var curDelay = directive.delay;
+            var totalTime = directive.frameTime * directive.frames.length;
+            
+            directive.frames.forEach(function (frame) {
+                this.animations.push({
+                    type: 'animation',
+                    id: frame.id,
+                    looped: directive.looped,
+                    interpolation: 'none',
+                    delay: curDelay * 1000,
+                    keyframes: [
+                        {time: 0, alpha: 100},
+                        {time: directive.frameTime*1000, alpha:0},
+                        {time: totalTime*1000, alpha:0}
+                    ]
+                });
+                
+                curDelay += directive.frameTime;
+            }.bind(this));
         }
     }.bind(this));
     
