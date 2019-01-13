@@ -487,14 +487,18 @@ Opponent.prototype.isLoaded = function() {
 	return this.xml != undefined;
 }
 
-Opponent.prototype.onSelected = function() {
+Opponent.prototype.onSelected = function(individual) {
     this.resetState();
-	console.log(this.slot+": "+this);
+    console.log(this.slot+": "+this);
     this.preloadStageImages(-1);
-	this.updateBehaviour(SELECTED);
-    this.commitBehaviourUpdate();
+    if (individual) {
+        updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
+    } else {
+        this.updateBehaviour(SELECTED);
+        this.commitBehaviourUpdate();
+    }
 
-	updateSelectionVisuals();
+    updateSelectionVisuals();
 }
 
 Opponent.prototype.updateLabel = function () {
@@ -531,7 +535,7 @@ Opponent.prototype.getIntelligence = function () {
     return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
 
-Opponent.prototype.loadAlternateCostume = function () {
+Opponent.prototype.loadAlternateCostume = function (individual) {
     $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
@@ -547,7 +551,7 @@ Opponent.prototype.loadAlternateCostume = function () {
                 wardrobe: $xml.find('wardrobe')
             };
 
-            this.onSelected();
+            this.onSelected(individual);
         }.bind(this),
         error: function () {
             console.error("Failed to load alternate costume: "+this.selected_costume);
@@ -590,13 +594,13 @@ Opponent.prototype.unloadAlternateCostume = function () {
  * The onLoadFinished parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-Opponent.prototype.loadBehaviour = function (slot) {
+Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
         if (this.selected_costume) {
             this.loadAlternateCostume();
         } else {
-            this.onSelected();
+            this.onSelected(individual);
         }
         return;
     }
@@ -653,7 +657,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
             } else {
-                this.onSelected();
+                this.onSelected(individual);
             }
 		}.bind(this),
 		/* Error callback. */
