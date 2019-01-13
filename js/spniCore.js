@@ -298,15 +298,36 @@ function Player (id) {
 }
 
 /*******************************************************************
+ * Sets initial values of state variables used by targetStatus,
+ * targetStartingLayers etc. adccording to wardrobe.
+ *******************************************************************/
+Player.prototype.initClothingStatus = function () {
+	this.startingLayers = this.clothing.length;
+	this.exposed = { upper: true, lower: true };
+	for (var position in this.exposed) {
+		if (this.clothing.some(function(c) {
+			return (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE)
+				&& (c.position == position || c.position == FULL_ARTICLE);
+		})) {
+			this.exposed[position] = false;
+		};
+	}
+	this.mostlyClothed = this.decent = !(this.exposed.upper || this.exposed.lower)
+		&& this.clothing.some(function(c) {
+			return c.type == MAJOR_ARTICLE
+				&& [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0;
+		});
+}
+
+/*******************************************************************
  * (Re)Initialize the player properties that change during a game
  *******************************************************************/
 Player.prototype.resetState = function () {
-    this.out = this.finished = this.exposed = false;
+    this.out = this.finished = false;
 	this.forfeit = "";
 	this.stage = this.current = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
-	this.exposed = { upper: false, lower: false };
 
 	if (this.xml !== null) {
         /* Load in the legacy "start" lines, and also
@@ -391,8 +412,7 @@ Player.prototype.resetState = function () {
         this.poses = appearance.poses;
 
         this.clothing = clothingArr;
-		this.startingLayers = clothingArr.length;
-		this.mostlyClothed = checkPlayerStatus(this, STATUS_DECENT);
+		this.initClothingStatus();
 	}
 
 	this.updateLabel();
@@ -470,14 +490,18 @@ Opponent.prototype.isLoaded = function() {
 	return this.xml != undefined;
 }
 
-Opponent.prototype.onSelected = function() {
+Opponent.prototype.onSelected = function(individual) {
     this.resetState();
-	console.log(this.slot+": "+this);
+    console.log(this.slot+": "+this);
     this.preloadStageImages(-1);
-	this.updateBehaviour(SELECTED);
-    this.commitBehaviourUpdate();
+    if (individual) {
+        updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
+    } else {
+        this.updateBehaviour(SELECTED);
+        this.commitBehaviourUpdate();
+    }
 
-	updateSelectionVisuals();
+    updateSelectionVisuals();
 }
 
 Opponent.prototype.updateLabel = function () {
@@ -514,7 +538,7 @@ Opponent.prototype.getIntelligence = function () {
     return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
 
-Opponent.prototype.loadAlternateCostume = function () {
+Opponent.prototype.loadAlternateCostume = function (individual) {
     $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
@@ -539,7 +563,7 @@ Opponent.prototype.loadAlternateCostume = function () {
             
             this.alt_costume.poses = poseDefs;
 
-            this.onSelected();
+            this.onSelected(individual);
         }.bind(this),
         error: function () {
             console.error("Failed to load alternate costume: "+this.selected_costume);
@@ -582,13 +606,13 @@ Opponent.prototype.unloadAlternateCostume = function () {
  * The onLoadFinished parameter must be a function capable of
  * receiving a new player object and a slot number.
  ************************************************************/
-Opponent.prototype.loadBehaviour = function (slot) {
+Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
         if (this.selected_costume) {
             this.loadAlternateCostume();
         } else {
-            this.onSelected();
+            this.onSelected(individual);
         }
         return;
     }
@@ -654,7 +678,7 @@ Opponent.prototype.loadBehaviour = function (slot) {
             if (ALT_COSTUMES_ENABLED && this.selected_costume) {
                 this.loadAlternateCostume();
             } else {
-                this.onSelected();
+                this.onSelected(individual);
             }
 		}.bind(this),
 		/* Error callback. */
