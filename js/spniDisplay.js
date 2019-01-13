@@ -3,11 +3,6 @@
  as well as code related to displaying tables for selection and the main game.
  ********************************************************************************/
 
-$imageAreas =  [$("#game-image-area-1"),
-               $("#game-image-area-2"),
-               $("#game-image-area-3"),
-               $("#game-image-area-4")];
-
 /* NOTE: These are basically the same as epilogue engine sprites.
  * There's a _lot_ of common code here that can probably be merged.
  */
@@ -60,61 +55,165 @@ PoseSprite.prototype.draw = function() {
     });
     
     $(this.img).css({
-      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ")",
+      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
       'height': this.height,
       'width': this.width
     });
 }
 
+
+function PoseAnimation (targetSprite, args) {
+    this.target = targetSprite;
+    this.elapsed = 0;
+    this.looped = args.looped || false;
+    this.keyframes = args.keyframes.sort(function (kf1, kf2) {
+        if (kf1.time === kf2.time) return 0;
+        return (kf1.time < kf2.time) ? -1 : 1;
+    });
+    
+    var totalTime = 0;
+    this.keyframes.forEach(function (kf) {
+        kf.startTime = totalTime;
+        totalTime = kf.time;
+    });
+    
+    console.log(this.keyframes);
+    
+    this.duration = this.keyframes[this.keyframes.length-1].time;
+    this.delay = args.delay || 0;
+    this.interpolation = args.interpolation || 'none';
+}
+
+PoseAnimation.prototype.isComplete = function () {
+    return (this.elapsed - this.delay) >= this.duration;
+}
+
+PoseAnimation.prototype.update = function (dt) {
+    this.elapsed += dt;
+    
+    if (this.looped && this.isComplete()) { this.elapsed -= this.duration; }
+    var t = (this.elapsed - this.delay);
+    if (t < 0) return;
+    
+    // Find current keyframe pair and update
+    for (var i=this.keyframes.length-1;i>=0;i--) {
+        var frame = this.keyframes[i];
+        if (t <= frame.startTime) continue;
+
+        var lastFrame = (i > 0) ? this.keyframes[i-1] : frame;
+        var progress = (t - frame.startTime) / (frame.time - frame.startTime);
+        progress = (t <= 0) ? 0 : Math.min(1, Math.max(0, progress));
+        
+        this.updateSprite(lastFrame, frame, progress, i);
+        return;
+    }
+}
+
+// Borrowed heavily from spniEpilogue
+PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
+    var current = this.target[prop];
+    var start = last[prop];
+    var end = next[prop];
+    
+    if (typeof start === "undefined" || isNaN(start) || typeof end === "undefined" || isNaN(end)) {
+      return;
+    }
+    
+    var mode = this.interpolation;
+    this.target[prop] = interpolationModes[mode](prop, start, end, t, this.keyframes, idx);   
+}
+
+PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
+    this.interpolate("x", fromFrame, toFrame, t, idx);
+    this.interpolate("y", fromFrame, toFrame, t, idx);
+    this.interpolate("rotation", fromFrame, toFrame, t, idx);
+    this.interpolate("scalex", fromFrame, toFrame, t, idx);
+    this.interpolate("scaley", fromFrame, toFrame, t, idx);
+    this.interpolate("alpha", fromFrame, toFrame, t, idx);
+    this.target.draw();
+}
+
+
 function Pose(poseDef) {
     this.id = poseDef.id;
-    this.sprites = [];
+    this.player = poseDef.player;
+    this.sprites = {};
+    this.totalSprites = 0;
+    this.animations = [];
     this.loaded = false;
     this.n_loaded = 0;
     this.onLoadComplete = null;
-    
-    poseDef.sprites.forEach(function (def) {
-        this.sprites.push(new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), def));
-    }.bind(this));
+    this.lastUpdateTS = null;
+    this.active = false;
     
     var container = document.createElement('div');
     $(container).addClass("opponent-image custom-pose").css({
         "position": "relative",
         'z-index': -1
     });
-    
-    this.sprites.forEach(function(s) {
-        container.appendChild(s.vehicle);
-    });
-    
     this.container = container;
+    
+    poseDef.sprites.forEach(function (def) {
+        var sprite = new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), def);
+        this.sprites[def.id] = sprite
+        this.totalSprites++;
+        
+        container.appendChild(sprite.vehicle);
+    }.bind(this));
+    
+    poseDef.animations.forEach(function (def) {
+        var target = this.sprites[def.id];
+        if (!target) return;
+        
+        var anim = new PoseAnimation(target, def);
+        this.animations.push(anim);
+    }.bind(this));
 }
 
 Pose.prototype.onSpriteLoaded = function() {
     this.n_loaded++;
-    if (this.n_loaded >= this.sprites.length) {
+    if (this.n_loaded >= this.totalSprites) {
         this.loaded = true;
         
         if (this.onLoadComplete) { return this.onLoadComplete(); }
     }
 }
 
+Pose.prototype.update = function (timestamp) {
+    if (this.animations.length === 0) return;
+    
+    if (this.lastUpdateTS === null) { this.lastUpdateTS = timestamp; }
+    var dt = timestamp - this.lastUpdateTS;
+
+    for (var i=0;i<this.animations.length;i++) {
+        this.animations[i].update(dt);
+    }
+    
+    this.lastUpdateTS = timestamp;
+}
+
 Pose.prototype.draw = function() {
-    this.sprites.forEach(function (s) {
-        s.draw();
-    });
+    for (key in this.sprites) {
+        this.sprites[key].draw();
+    }
 }
 
 
-
-function parseSpriteDefinition ($xml, player) {
+function xmlToObject($xml) {
     var targetObj = {};
-    var $obj = $($xml);
     $.each($xml.attributes, function (i, attr) {
       var name = attr.name.toLowerCase();
       var value = attr.value;
       targetObj[name] = value;
     });
+    
+    return targetObj;
+}
+
+
+/* Common function for parsing sprite and directive definitions. */
+function parseSpriteDefinition ($xml, player) {
+    var targetObj = xmlToObject($xml);
   
     //properties needing special handling
     if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
@@ -131,14 +230,44 @@ function parseSpriteDefinition ($xml, player) {
     return targetObj;
 }
 
+function parseKeyframeDefinition($xml) {
+    var targetObj = parseSpriteDefinition($xml);
+    targetObj.time = parseFloat(targetObj.time) * 1000;
+    
+    return targetObj;
+}
+
+function parseDirective ($xml) {
+    var targetObj = xmlToObject($xml);
+    
+    if (targetObj.type === 'animation') {
+        // Keyframe / interpolated animation
+        targetObj.keyframes = [];
+        $($xml).find('keyframe').each(function (i, elem) {
+            targetObj.keyframes.push(parseKeyframeDefinition(elem));
+        });
+    }
+    
+    return targetObj;
+}
+
+
 function PoseDefinition ($xml, player) {
     this.id = $xml.attr('id').trim();
-    var spriteDefs = [];
-    $xml.find('sprite').each(function (i, elem) {
-        spriteDefs.push(parseSpriteDefinition(elem, player));
-    });
     
-    this.sprites = spriteDefs;
+    this.sprites = [];
+    $xml.find('sprite').each(function (i, elem) {
+        this.sprites.push(parseSpriteDefinition(elem, player));
+    }.bind(this));
+    
+    this.animations = [];
+    $xml.find('directive').each(function (i, elem) {
+        var directive = parseDirective(elem);
+        if (directive.type === 'animation') {
+            this.animations.push(directive);
+        }
+    }.bind(this));
+    
     this.player = player;
 }
 
@@ -162,6 +291,8 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.simpleImage = simpleImageElem;
     this.imageArea = imageArea;
     this.label = labelElem;
+    
+    this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
 }
 
 OpponentDisplay.prototype.hideBubble = function () {
@@ -170,6 +301,7 @@ OpponentDisplay.prototype.hideBubble = function () {
 }
 
 OpponentDisplay.prototype.clearPose = function () {
+    this.pose = null;
     this.simpleImage.hide();
     this.imageArea.children('.custom-pose').remove();
 }
@@ -180,6 +312,7 @@ OpponentDisplay.prototype.drawPose = function (pose) {
     if (typeof(pose) === 'string') {
         this.simpleImage.attr('src', pose).show();
     } else if (pose instanceof Pose) {
+        this.pose = pose;
         this.imageArea.append(pose.container);
         pose.draw();
     }
@@ -208,8 +341,7 @@ OpponentDisplay.prototype.update = function(player) {
         var key = chosenState.image.split(':', 2)[1];
         var poseDef = player.poses[key];
         if (poseDef) {
-            this.pose = new Pose(poseDef);
-            this.drawPose(this.pose);
+            this.drawPose(new Pose(poseDef));
         } else {
             this.clearPose();
         }
@@ -235,6 +367,14 @@ OpponentDisplay.prototype.update = function(player) {
         appendRepeats(player);
     }
 }
+
+OpponentDisplay.prototype.loop = function (timestamp) {
+    this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
+    
+    if (!this.pose) return;
+    this.pose.update(timestamp);
+}
+
 
 function GameScreenDisplay (slot) {
     OpponentDisplay.call(
