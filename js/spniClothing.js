@@ -389,7 +389,8 @@ function closeStrippingModal (id) {
         players[HUMAN_PLAYER].removedClothing = removedClothing;
 
         /* figure out if it should be important */
-        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0) {
+        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
+            && (removedClothing.type == IMPORTANT_ARTICLE || removedClothing.type == MAJOR_ARTICLE)) {
             var otherClothing;
             for (var i = 0; i < players[HUMAN_PLAYER].clothing.length; i++) {
                 if (players[HUMAN_PLAYER].clothing[i].position === removedClothing.position
