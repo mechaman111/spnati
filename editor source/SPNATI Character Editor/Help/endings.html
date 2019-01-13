@@ -82,6 +82,7 @@
             <ul>
                 <li><span class="label">Add Scene:</span> Adds a new scene to the timeline after the current scene.</li>
                 <li><span class="label">Remove Selected Node:</span> Permanently deletes the currently selected scene, directive or keyframe.</li>
+                <li><span class="label">Add Scene Transition:</span> Adds a transition effect between scenes, inserting it immediately after whatever scene is currently selected.</li>
                 <li><span class="label">Add Directive:</span> Adds a directive to the current scene, inserting it immediately after whatever is currently selected.</li>
                 <li>
                     <span class="label">Add Keyframe:</span> Only available when an animatable directive is selected. Adds a keyframe to that directive.
@@ -154,12 +155,40 @@
                     <ul>
                         <li><span class="label">ID</span> Sprite's unique identifier. This is used to match "Move" directives with a particular sprite. All sprites need a unique ID.</li>
                         <li><span class="label">Source</span> Image to use with the sprite. You can use any image from your character's folder, but also from other characters as well.</li>
+                        <li><span class="label">Layer</span> Layering order. Higher values appear on top of lower values. By default, objects are layered in the order they are added to the scene. Anything with a specific layer defined will appear above all objects that do not.</li>
                         <li><span class="label">X/Y</span> Position in scene coordinates for where the sprite should initially appear. The coordinates represent the sprite's upper left corner's offset from the upper left of the scene. Note that if your sprite has scaling applied, it won't necessarily line up with the upper left point.</li>
                         <li><span class="label">Pivot X/Y</span> The pivot point is a point expressed as a percentage of the sprite's bounds which represents the point of origin for rotations and scaling. 50% means to use the center of the sprite, 0% means the left/top, 100% means the right/bottom, etc.</li>
                         <li><span class="label">Scale X/Y</span> Custom scaling to apply along the X and Y axes. Values from 0-1 will shrink the sprite along that axis. Values over 1 will stretch the sprite. Values below 0 will flip the sprite.</li>
                         <li><span class="label">Rotation</span> Number of degrees to initially rotate the sprite.</li>
                         <li><span class="label">Opacity</span> The sprite's initial transparency level. 0 is fully transparent. 100 is fully opaque.</li>
                         <li><span class="label">Width/Height</span> By default, a sprite's size is based on its source image's size. If you want to use custom dimensions as the basis, you can do so here. For instance, if you want a sprite to be 100x200 pixels regardless of whether the source image was 400x800 or 50x100, you can set it here.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="label">Add Emitter</span> Adds an emitter to the scene.
+                    <ul>
+                        <li><span class="label">ID</span> Emitter's unique identifier. This is used to match "Move" directives with a particular emitter. All emitters need a unique ID.</li>
+                        <li><span class="label">Source</span> Image to use for objects emitted from this emitter. If no source is defined, colored particles will be emitted instead.</li>
+                        <li><span class="label">Layer</span> Layering order. Higher values appear on top of lower values. By default, objects are layered in the order they are added to the scene. Anything with a specific layer defined will appear above all objects that do not.</li>
+                        <li><span class="label">X/Y</span> Position in scene coordinates for where the emitter should initially appear. The coordinates represent the emitter's center relative to the upper left of the scene.</li>
+                        <li><span class="label">Rotation</span> Number of degrees to initially rotate the emitter. Objects emitted move in the direction of the emitter is rotated, indicated by the arrow on the emitter object.</li>
+                        <li><span class="label">Rate</span> Number of objects emitted per second. Keep in mind the epilogue engine is not designed with large numbers of objects in mind, so emitting too many objects can cause a severe performance drain.</li>
+                        <li><span class="label">Particle Life</span> The number of a seconds an emitted object will persist before disappearing. If a range is defined, the object's life will be somewhere within that range.</li>
+                        <li><span class="label">Angle</span> Number of degrees away from the emitter's orientation that objects can be emitted. For example, 30 will allow particles to be emitted in a direction anywhere from 30 degrees counterclockwise to 30 degrees clockwise from the emitter's facing.</li>
+                        <li><span class="label">Start/End Scale X/Y</span> The starting and ending scaling factors applied to emitted objects. If a range is defined, then the scale will start/end at a random point within that range.</li>
+                        <li><span class="label">Speed</span> The speed that emitted objects move in scene units per second. If a range is defined, objects will start with a random speed within that range. Objects move in the direction the emitter is facing at the time the object is emitted.</li>
+                        <li><span class="label">Acceleration</span> The acceleration applied to emitted objects in scene units per second squared. If a range is defined, objects will be given a random acceleration within that range. Acceleration is applied in the direction the object was first emitted.</li>
+                        <li><span class="label">Force X/Y</span> Global forces applied per frame to emitted objects, such as wind or gravity. +X is in the right direction, +Y is down.</li>
+                        <li><span class="label">Start/End Color</span> The starting or ending color of an emitted object. This only applies to particles, not images. If a range is defined, the color will be a random value within the provided range.</li>
+                        <li><span class="label">Start/End Alpha</span> The starting or ending transparency of an emitted object from 0 (transparent) to 100 (opaque). If a range is defined, the transparency will be a random value within the provided range.</li>
+                        <li><span class="label">Easing</span> The determines the "easing" of the interpolation between an emitted object's starting and ending values. See <a href="#easings">Easings</a> for more information.</li>
+                        <li><span class="label">Width/Height</span> Controls the size of emitted objects. By default, images use the source image's resolution. Particles use 10px.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="label">Remove Sprite/Emitter</span> Removes a sprite or emitter from the scene.
+                    <ul>
+                        <li><span class="label">ID</span> ID of the sprite or emitter to remove.</li>
                     </ul>
                 </li>
                 <li>
@@ -188,9 +217,11 @@
                         <li><span class="label">Time</span> The total time in seconds it takes to move the sprite from its previous orientation to the new one.</li>
                         <li><span class="label">Animatable Properties</span> With the exception of the ID, source, and width/height, anything in the Add Sprite directive can be given a new value here. Blank values will retain their previous settings.</li>
                         <li><span class="label">Delay</span> The total time in seconds before the animation begins. This could be used to sequence multiple animations that shouldn't all begin at once.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. Linear means it will move at a constant rate from beginning to end. Smooth means it will start slowly, gain momentum and then slow down again before reaching the end. Ease-in will start slowly and speed up to the end. Ease-out will slow down when nearing the end. If not supplied, the default is <strong>smooth</strong></li>
+                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
                         <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will loop indefinitely, jumping directly from its last keyframe to the first.</li>
+                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Repeat Method</span> Controls how animations are looped.  See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
                     </ul>
                 </li>
                 <li>
@@ -199,9 +230,11 @@
                         <li><span class="label">Time</span> The total time in seconds it takes to move the camera from its previous position to the new one.</li>
                         <li><span class="label">X/Y/Zoom</span> New values from what was initially set in the Scene.</li>
                         <li><span class="label">Delay</span> The total time in seconds before the camera begins moving.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. Linear means it will move at a constant rate from beginning to end. Smooth means it will start slowly, gain momentum and then slow down again before reaching the end. Ease-in will start slowly and speed up to the end. Ease-out will slow down when nearing the end. If not supplied, the default is <strong>smooth</strong></li>
+                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
                         <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will loop indefinitely, jumping directly from its last keyframe to the first.</li>
+                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Repeat Method</span> Controls how animations are looped.  See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
                     </ul>
                 </li>
                 <li>
@@ -217,9 +250,11 @@
                         <li><span class="label">Color</span> The color to fade to. The starting color is determined by the Scene settings, or a previous Fade in the scene.</li>
                         <li><span class="label">Opacity</span> 0 to fade the overlay out completely. 100 to fade it in completely.</li>
                         <li><span class="label">Delay</span> The total time in seconds before the fade begins.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. Linear means it will move at a constant rate from beginning to end. Smooth means it will start slowly, gain momentum and then slow down again before reaching the end. Ease-in will start slowly and speed up to the end. Ease-out will slow down when nearing the end. If not supplied, the default is <strong>smooth</strong></li>
+                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
                         <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will loop indefinitely, jumping directly from its last keyframe to the first.</li>
+                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Repeat Method</span> Controls how animations are looped. See <a href="#loops">Looping Animations</a> for more information.</li>
+                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
                     </ul>
                 </li>
                 <li>
@@ -228,6 +263,29 @@
                 <li>
                     <span class="label">Wait for Input</span> The cutscene system will pause until the user presses Next (or clicks somewhere in the scene). Animations will continue to play while paused.
                 </li>
+            </ul>
+        </section>
+        <section class="card" id="easings">
+            <h1>Easing</h1>
+            In technical terms, an easing function describes the value of an animated property as a function of its completion through the animation. In layman's terms, moving a car starts and stops gradually rather than instantly. Dropping an object onto the floor will bounce back up a few times before coming to a rest. Easing functions describe what behavior an animation should follow. This is not limited to movement; it could describe fading, scaling, or anything else that can be animated.
+            Supported functions include:
+            <ul>
+                <li><span class="label">Linear</span> The animation proceeds at a constant rate, starting and stopping instantly.</li>
+                <li><span class="label">Smooth</span> The animation starts slowly, gains speed, and then slows down before stopping.</li>
+                <li><span class="label">Ease-In</span> The animation starts slowly and picks up momentum. Variants (ex. sin, cubic) control the momentum curve.</li>
+                <li><span class="label">Ease-Out</span> The animation starts at full speed and slows down as it reaches the end. Variants (ex. sin, cubic) control the momentum curve.</li>
+                <li><span class="label">Ease-In-Out</span> The same as <strong>smooth></strong> but the variants (ex. cubic) affect the curve at which it happens.</li>
+                <li><span class="label">Elastic</span> The animations eases in, passes the target and bounces back like a rubber band or spring.</li>
+                <li><span class="label">Bounce</span> The animation starts slowly, gains speed, hits the target, and bounces back a few times (without passing the target).</li>
+            </ul>
+        </section>
+        <section class="card" id="loops">
+            <h1>Looping Animations</h1>
+            Animations marked as "Looped?" will repeat one or more times until either stopped by a "stop animation" directive, or when reaching a new scene. What happens when reaching the end of the animation can be controlled by setting the "Repeat" behavior. The default is to <strong>wrap</strong>.
+            <ul>
+                <li><span class="label">Clamp</span> Upon reaching the end of the animation, it won't move any further. Since looping animations do not stop when the user advances through a "Wait for Input" directive, you could use a clamped looping function to make a one-time animation persist through multiple text boxes.</li>
+                <li><span class="label">Wrap</span> Upon reaching the end of the animation, it starts over, jumping back immediately to its initial value.</li>
+                <li><span class="label">Mirror</span> Upon reaching the end of the animation, it repeats in the reverse direction until reaching the start, continuining back and forth.</li>
             </ul>
         </section>
         <section class="card navCard" id="next">

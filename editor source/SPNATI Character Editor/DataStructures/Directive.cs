@@ -75,73 +75,73 @@ namespace SPNATI_Character_Editor
 		public string Text;
 
 		#region Emitter attributes
-		[Float(DisplayName = "Rate", Key = "rate", GroupOrder = 100, Description = "Emissions per second", Minimum = 0, Maximum = 100, DecimalPlaces = 2)]
+		[Float(DisplayName = "Rate", Key = "rate", GroupOrder = 19, Description = "Emissions per second", Minimum = 0, Maximum = 100, DecimalPlaces = 2)]
 		[XmlAttribute("rate")]
 		public string Rate;
 
-		[ParticleFloat(DisplayName = "Start Scale X", Key = "startScaleX", GroupOrder = 20, Description = "Initial horizontal stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
-		[XmlAttribute("startScaleX")]
-		public string StartScaleX;
-
-		[ParticleFloat(DisplayName = "Start Scale Y", Key = "startScaleY", GroupOrder = 21, Description = "Initial vertical stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
-		[XmlAttribute("startScaleY")]
-		public string StartScaleY;
-
-		[ParticleFloat(DisplayName = "End Scale X", Key = "endScaleX", GroupOrder = 22, Description = "Ending horizontal stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
-		[XmlAttribute("endScaleX")]
-		public string EndScaleX;
-
-		[ParticleFloat(DisplayName = "End Scale Y", Key = "endScaleY", GroupOrder = 23, Description = "Ending vertical stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
-		[XmlAttribute("endScaleY")]
-		public string EndScaleY;
-
-		[ParticleFloat(DisplayName = "Speed", Key = "speed", GroupOrder = 24, Description = "Initial speed range (px/sec)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("speed")]
-		public string Speed;
-
-		[ParticleFloat(DisplayName = "Acceleration", Key = "accel", GroupOrder = 25, Description = "Initial acceleration range (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("accel")]
-		public string Acceleration;
-
-		[ParticleFloat(DisplayName = "Force X", Key = "forceX", GroupOrder = 26, Description = "World horizontal force (wind) (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("forceX")]
-		public string ForceX;
-
-		[ParticleFloat(DisplayName = "Force Y", Key = "forceY", GroupOrder = 27, Description = "World vertical force (gravity) (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("forceY")]
-		public string ForceY;
-
-		[ParticleColor(DisplayName = "Start Color", Key = "startColor", GroupOrder = 28, Description = "Initial particle color")]
-		[XmlAttribute("startColor")]
-		public string StartColor;
-
-		[ParticleColor(DisplayName = "End Color", Key = "startColor", GroupOrder = 29, Description = "Ending particle color")]
-		[XmlAttribute("endColor")]
-		public string EndColor;
-
-		[ParticleFloat(DisplayName = "Start Alpha", Key = "startAlpha", GroupOrder = 30, Description = "Initial transparency range", Minimum = 0, Maximum = 100, DecimalPlaces = 0)]
-		[XmlAttribute("startAlpha")]
-		public string StartAlpha;
-
-		[ParticleFloat(DisplayName = "End Alpha", Key = "endAlpha", GroupOrder = 31, Description = "Ending transparency range", Minimum = 0, Maximum = 100, DecimalPlaces = 0)]
-		[XmlAttribute("endAlpha")]
-		public string EndAlpha;
-
-		[ParticleFloat(DisplayName = "Start Spin", Key = "startRotation", GroupOrder = 32, Description = "Initial spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("startRotation")]
-		public string StartRotation;
-
-		[ParticleFloat(DisplayName = "End Spin", Key = "endRotation", GroupOrder = 33, Description = "Ending spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
-		[XmlAttribute("endRotation")]
-		public string EndRotation;
-
-		[ParticleFloat(DisplayName = "Particle Life (s)", Key = "lifetime", GroupOrder = 34, Description = "Time in seconds before an emitted object disappears", Minimum = 0.1f, Maximum = 1000, DecimalPlaces = 2)]
+		[ParticleFloat(DisplayName = "Particle Life (s)", Key = "lifetime", GroupOrder = 20, Description = "Time in seconds before an emitted object disappears", Minimum = 0.1f, Maximum = 1000, DecimalPlaces = 2)]
 		[XmlAttribute("lifetime")]
 		public string Lifetime;
 
-		[Float(DisplayName = "Angle", Key = "angle", GroupOrder = 35, Description = "Degrees away from emitter's forward direction that objects can be emitted in", Minimum = -180, Maximum = 180, DecimalPlaces = 0)]
+		[Float(DisplayName = "Angle", Key = "angle", GroupOrder = 21, Description = "Degrees away from emitter's forward direction that objects can be emitted in", Minimum = -180, Maximum = 180, DecimalPlaces = 0)]
 		[XmlAttribute("angle")]
 		public string Angle;
+
+		[ParticleFloat(DisplayName = "Start Scale X", Key = "startScaleX", GroupOrder = 22, Description = "Initial horizontal stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
+		[XmlAttribute("startScaleX")]
+		public string StartScaleX;
+
+		[ParticleFloat(DisplayName = "Start Scale Y", Key = "startScaleY", GroupOrder = 23, Description = "Initial vertical stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
+		[XmlAttribute("startScaleY")]
+		public string StartScaleY;
+
+		[ParticleFloat(DisplayName = "End Scale X", Key = "endScaleX", GroupOrder = 24, Description = "Ending horizontal stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
+		[XmlAttribute("endScaleX")]
+		public string EndScaleX;
+
+		[ParticleFloat(DisplayName = "End Scale Y", Key = "endScaleY", GroupOrder = 25, Description = "Ending vertical stretching range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 2)]
+		[XmlAttribute("endScaleY")]
+		public string EndScaleY;
+
+		[ParticleFloat(DisplayName = "Speed", Key = "speed", GroupOrder = 26, Description = "Initial speed range (px/sec)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("speed")]
+		public string Speed;
+
+		[ParticleFloat(DisplayName = "Acceleration", Key = "accel", GroupOrder = 27, Description = "Initial acceleration range (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("accel")]
+		public string Acceleration;
+
+		[ParticleFloat(DisplayName = "Force X", Key = "forceX", GroupOrder = 28, Description = "World horizontal force (wind) (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("forceX")]
+		public string ForceX;
+
+		[ParticleFloat(DisplayName = "Force Y", Key = "forceY", GroupOrder = 29, Description = "World vertical force (gravity) (px/sec^2)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("forceY")]
+		public string ForceY;
+
+		[ParticleColor(DisplayName = "Start Color", Key = "startColor", GroupOrder = 30, Description = "Initial particle color")]
+		[XmlAttribute("startColor")]
+		public string StartColor;
+
+		[ParticleColor(DisplayName = "End Color", Key = "startColor", GroupOrder = 31, Description = "Ending particle color")]
+		[XmlAttribute("endColor")]
+		public string EndColor;
+
+		[ParticleFloat(DisplayName = "Start Alpha", Key = "startAlpha", GroupOrder = 32, Description = "Initial transparency range", Minimum = 0, Maximum = 100, DecimalPlaces = 0)]
+		[XmlAttribute("startAlpha")]
+		public string StartAlpha;
+
+		[ParticleFloat(DisplayName = "End Alpha", Key = "endAlpha", GroupOrder = 33, Description = "Ending transparency range", Minimum = 0, Maximum = 100, DecimalPlaces = 0)]
+		[XmlAttribute("endAlpha")]
+		public string EndAlpha;
+
+		[ParticleFloat(DisplayName = "Start Spin", Key = "startRotation", GroupOrder = 34, Description = "Initial spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("startRotation")]
+		public string StartRotation;
+
+		[ParticleFloat(DisplayName = "End Spin", Key = "endRotation", GroupOrder = 35, Description = "Ending spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[XmlAttribute("endRotation")]
+		public string EndRotation;
 		#endregion
 
 		[XmlElement("keyframe")]

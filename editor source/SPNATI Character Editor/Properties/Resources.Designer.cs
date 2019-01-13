@@ -183,6 +183,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Fade {
+            get {
+                object obj = ResourceManager.GetObject("Fade", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FitToScreen {
             get {
                 object obj = ResourceManager.GetObject("FitToScreen", resourceCulture);

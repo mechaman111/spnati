@@ -42,6 +42,7 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _lockedBeforePlayback;
 		private int _directiveIndex = -1;
 		private bool _waitingForAnims = false;
+		private bool _showOverlay = true;
 
 		private float _zoom = 1;
 		public float ZoomLevel
@@ -204,13 +205,16 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			//overlay
-			if (tmrPlay.Enabled && _mode == EditMode.Edit && _selectedAnimation?.AssociatedObject == _overlay)
+			if (_showOverlay || _mode == EditMode.Playback)
 			{
-				g.FillRectangle(_selectedAnimation.PreviewObject.Color, 0, 0, canvas.Width, canvas.Height);
-			}
-			else
-			{
-				g.FillRectangle(_overlay.Color, 0, 0, canvas.Width, canvas.Height);
+				if (tmrPlay.Enabled && _mode == EditMode.Edit && _selectedAnimation?.AssociatedObject == _overlay)
+				{
+					g.FillRectangle(_selectedAnimation.PreviewObject.Color, 0, 0, canvas.Width, canvas.Height);
+				}
+				else
+				{
+					g.FillRectangle(_overlay.Color, 0, 0, canvas.Width, canvas.Height);
+				}
 			}
 
 			//textboxes
@@ -2315,6 +2319,12 @@ namespace SPNATI_Character_Editor.Controls
 					canvas.Invalidate();
 				}
 			}
+		}
+
+		private void cmdToggleFade_Click(object sender, EventArgs e)
+		{
+			_showOverlay = !_showOverlay;
+			canvas.Invalidate();
 		}
 	}
 
