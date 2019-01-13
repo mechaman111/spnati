@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Desktop.CommonControls;
 using Desktop;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor.Controls.EditControls
 {
@@ -56,7 +57,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			{
 				string[] pieces = value.Split(':');
 				float min;
-				if (float.TryParse(pieces[0], out min))
+				if (float.TryParse(pieces[0], NumberStyles.Float, CultureInfo.InvariantCulture, out min))
 				{
 					min = (float)Math.Round(min, valFrom.DecimalPlaces);
 					valFrom.Value = (decimal)min;
@@ -68,7 +69,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				if (pieces.Length > 1)
 				{
 					float max;
-					if (float.TryParse(pieces[1], out max))
+					if (float.TryParse(pieces[1], NumberStyles.Float, CultureInfo.InvariantCulture, out max))
 					{
 						max = (float)Math.Round(max, valFrom.DecimalPlaces);
 						valTo.Value = (decimal)max;
@@ -132,11 +133,11 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				}
 				if (min >= max)
 				{
-					SetValue(min.ToString());
+					SetValue(min.ToString(CultureInfo.InvariantCulture));
 				}
 				else
 				{
-					SetValue($"{min}:{max}");
+					SetValue($"{min.ToString(CultureInfo.InvariantCulture)}:{max.ToString(CultureInfo.InvariantCulture)}");
 				}
 			}
 		}
