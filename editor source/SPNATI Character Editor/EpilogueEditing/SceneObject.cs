@@ -1,5 +1,6 @@
 ﻿using SPNATI_Character_Editor.Controls;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -9,7 +10,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 {
 	public class SceneObject : IDisposable
 	{
-		private Character _character;
+		public Character Character;
 		public float X;
 		public float Y;
 		public float WidthPct;
@@ -64,9 +65,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public SceneObject() { }
 
-		public SceneObject(SceneObject source)
+		public virtual SceneObject Copy()
 		{
-			CopyValuesFrom(source);
+			SceneObject copy = new SceneObject();
+			copy.CopyValuesFrom(this);
+			return copy;	
 		}
 
 		public SceneObject(ScenePreview scene, Character character, Directive directive) : this(scene, character, directive.Id, directive.Src, directive.Color)
@@ -79,6 +82,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			else if (directive.DirectiveType == "text")
 			{
 				ObjectType = SceneObjectType.Text;
+			}
+			else if (directive.DirectiveType == "emitter")
+			{
+				ObjectType = SceneObjectType.Emitter;
 			}
 
 			string width = directive.Width;
@@ -186,9 +193,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			LinkedAnimation?.Rebuild();
 		}
 
-		private void CopyValuesFrom(SceneObject source)
+		protected void CopyValuesFrom(SceneObject source)
 		{
-			_character = source._character;
+			Character = source.Character;
+			ObjectType = source.ObjectType;
 			X = source.X;
 			Y = source.Y;
 			Width = source.Width;
@@ -213,7 +221,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public SceneObject(ScenePreview scene, Character character, string id, string imagePath, string color)
 		{
-			_character = character;
+			Character = character;
 			Id = id;
 			if (!string.IsNullOrEmpty(color))
 			{
@@ -269,6 +277,15 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				value = value / 100.0f * sceneSize;
 			}
 			return value;
+		}
+
+		/// <summary>
+		/// Runs every frame when previewing
+		/// </summary>
+		/// <param name="elapsedSec"></param>
+		/// <param name="scene"></param>
+		public virtual void UpdateTick(float elapsedSec, ScenePreview scene)
+		{
 		}
 
 		/// <summary>
@@ -353,11 +370,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return Id;
 		}
 
-		private string GetImagePath(string path)
+		protected string GetImagePath(string path)
 		{
 			if (!path.StartsWith("/"))
 			{
-				return Path.Combine(Config.GetRootDirectory(_character), path);
+				return Path.Combine(Config.GetRootDirectory(Character), path);
 			}
 			return Path.Combine(Config.SpnatiDirectory, path.Substring(1));
 		}
@@ -755,6 +772,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public Color OverlayColor = System.Drawing.Color.Black;
 		public Scene LinkedScene;
 
+		public List<SceneObject> Objects = new List<SceneObject>();
+		public List<SceneObject> TextBoxes = new List<SceneObject>();
+
 		public ScenePreview(Scene scene)
 		{
 			LinkedScene = scene;
@@ -807,10 +827,23 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
+		internal bool IsDisposing;
 		public override void Dispose()
 		{
+			IsDisposing = true;
 			BackgroundColor?.Dispose();
+			foreach (SceneObject obj in Objects)
+			{
+				obj.Dispose();
+			}
+			foreach (SceneObject obj in TextBoxes)
+			{
+				obj.Dispose();
+			}
+			Objects.Clear();
+			TextBoxes.Clear();
 			base.Dispose();
+			IsDisposing = false;
 		}
 
 		public override bool AdjustPosition(int x, int y, ScenePreview scene)
@@ -951,6 +984,17 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			return true;
 		}
+
+		public void AddObject(SceneObject obj)
+		{
+			Objects.Add(obj);
+
+			ResortObjects();
+		}
+
+		public void ResortObjects()
+		{
+		}
 	}
 
 	public enum SceneObjectType
@@ -960,5 +1004,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		Text,
 		Keyframe,
 		Camera,
+		Emitter,
+		Particle,
 	}
 }

@@ -439,6 +439,10 @@ namespace SPNATI_Character_Editor
 			}
 			Behavior.OnBeforeSerialize(this);
 			Metadata.PopulateFromCharacter(this);
+			foreach (Epilogue ending in Endings)
+			{
+				ending.OnBeforeSerialize();
+			}
 		}
 
 		public void OnAfterDeserialize()

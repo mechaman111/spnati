@@ -65,8 +65,7 @@ namespace SPNATI_Character_Editor.Controls
 		private DateTime _lastTick;
 		private SceneObject _selectedObject = null;
 		private ScenePreview _scenePreview = null;
-		private List<SceneObject> _sprites = new List<SceneObject>();
-		private List<SceneObject> _textboxes = new List<SceneObject>();
+		private SceneTransition _sceneTransition;
 		private SceneObject _overlay = null;
 		private List<SceneAnimation> _animations = new List<SceneAnimation>();
 
@@ -174,6 +173,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Canvas_Paint(object sender, PaintEventArgs e)
 		{
+			if (_sceneTransition != null)
+			{
+				_sceneTransition.Draw(e.Graphics, canvas.Width, canvas.Height);
+				return;
+			}
+
 			if (_scenePreview == null) { return; }
 			Graphics g = e.Graphics;
 
@@ -191,7 +196,7 @@ namespace SPNATI_Character_Editor.Controls
 			//g.DrawLine(_borderPen, 0, viewportBottomRight.Y, canvas.Width, viewportBottomRight.Y);
 
 			//images
-			foreach (SceneObject obj in _sprites)
+			foreach (SceneObject obj in _scenePreview.Objects)
 			{
 				//keyframes
 				if (_selectedAnimation?.AssociatedObject == obj && _mode == EditMode.Edit)
@@ -217,7 +222,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			//textboxes
-			foreach (SceneObject obj in _textboxes)
+			foreach (SceneObject obj in _scenePreview.TextBoxes)
 			{
 				DrawTextBox(g, obj);
 			}
@@ -324,36 +329,51 @@ namespace SPNATI_Character_Editor.Controls
 			g.RotateTransform(obj.Rotation);
 			g.TranslateTransform(-offsetX, -offsetY);
 
-			if (obj.Image == null)
+			if (obj.ObjectType == SceneObjectType.Emitter)
 			{
-				if (obj.ObjectType != SceneObjectType.Sprite)
+				if (_mode != EditMode.Playback)
 				{
-					g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+					Point center = ToScreenPoint(new PointF(obj.X, obj.Y));
+					g.DrawImage(Resources.emitter, center.X - Resources.emitter.Width / 2, center.Y - Resources.emitter.Height / 2);
 				}
 			}
 			else
 			{
-				if (obj.Alpha > 0)
+				if (obj.Image == null)
 				{
-					if (obj.Alpha < 100)
+					if (obj.ObjectType == SceneObjectType.Other)
 					{
-						float[][] matrixItems = new float[][] {
+						g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+					}
+					else
+					{
+						g.FillEllipse(obj.Color, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+					}
+				}
+				else
+				{
+					if (obj.Alpha > 0)
+					{
+						if (obj.Alpha < 100)
+						{
+							float[][] matrixItems = new float[][] {
 							new float[] { 1, 0, 0, 0, 0 },
 							new float[] { 0, 1, 0, 0, 0 },
 							new float[] { 0, 0, 1, 0, 0 },
 							new float[] { 0, 0, 0, obj.Alpha / 100.0f, 0 },
 							new float[] { 0, 0, 0, 0, 1 }
 						};
-						ColorMatrix cm = new ColorMatrix(matrixItems);
-						ImageAttributes ia = new ImageAttributes();
-						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+							ColorMatrix cm = new ColorMatrix(matrixItems);
+							ImageAttributes ia = new ImageAttributes();
+							ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-						Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-						g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
-					}
-					else
-					{
-						g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+							Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
+							g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
+						}
+						else
+						{
+							g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+						}
 					}
 				}
 			}
@@ -801,13 +821,13 @@ namespace SPNATI_Character_Editor.Controls
 									//2 - textbox
 									if (obj == null)
 									{
-										obj = GetObjectAtPoint(e.X, e.Y, _textboxes);
+										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.TextBoxes);
 									}
 
 									//3 - sprite
 									if (obj == null)
 									{
-										obj = GetObjectAtPoint(e.X, e.Y, _sprites);
+										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.Objects);
 									}
 
 									if (obj != null && obj != _selectedObject && (string.IsNullOrEmpty(obj.Id) || obj.Id != _selectedObject?.Id))
@@ -1027,7 +1047,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			//see if we're on top of an object
-			SceneObject obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _textboxes) ?? GetObjectAtPoint(screenPt.X, screenPt.Y, _sprites);
+			SceneObject obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.TextBoxes) ?? GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.Objects);
 			if (obj != null && obj.ObjectType != SceneObjectType.Other)
 			{
 				return HoverContext.Select;
@@ -1491,7 +1511,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else if (e.Scene != null)
 			{
-				propertyTable.RecordFilter = null;
+				propertyTable.RecordFilter = SceneFilter;
 				propertyTable.Data = e.Scene;
 			}
 			else
@@ -1533,6 +1553,38 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			return true;
+		}
+
+		private static readonly string[] TransitionProperties = new string[] { "effect", "ease", "time" }; //hardcoding allowed properties for now since I don't expect this to change
+		private bool SceneFilter(PropertyRecord record)
+		{
+			if (_selectedScene == null)
+			{
+				return true;
+			}
+
+			string key = record.Key;
+
+			if (key == "color")
+			{
+				return true;
+			}
+
+			for (int i = 0; i < TransitionProperties.Length; i++)
+			{
+				if (TransitionProperties[i] == key)
+				{
+					if (_selectedScene.Transition)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			return !_selectedScene.Transition;
 		}
 
 		/// <summary>
@@ -1583,16 +1635,8 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedObject = null;
 			_selectedAnimation = null;
 			_animations.Clear();
-			foreach (SceneObject obj in _sprites)
-			{
-				obj.Dispose();
-			}
-			_sprites.Clear();
-			foreach (SceneObject obj in _textboxes)
-			{
-				obj.Dispose();
-			}
-			_textboxes.Clear();
+			_scenePreview?.Dispose();
+			_sceneTransition = null;
 
 			canvas.Invalidate();
 
@@ -1601,11 +1645,19 @@ namespace SPNATI_Character_Editor.Controls
 				_scenePreview = null;
 				return;
 			}
+
+			if (_selectedScene.Transition)
+			{
+				_scenePreview = null;
+				_sceneTransition = new SceneTransition(_selectedScene, canvas.Width, canvas.Height);
+				return;
+			}
+
 			_scenePreview = new ScenePreview(_selectedScene);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);
-			_sprites.Add(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
+			_scenePreview.AddObject(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
 
 			if (!previewMode)
 			{
@@ -1613,7 +1665,7 @@ namespace SPNATI_Character_Editor.Controls
 				bool readyToStop = _selectedDirective == null;
 				foreach (Directive d in _selectedScene.Directives)
 				{
-					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text")
+					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text" && d.DirectiveType != "emitter")
 					{
 						break;
 					}
@@ -1633,10 +1685,10 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					string id = _selectedDirective.Id;
 					//select the object corresponding to the selected directive
-					_selectedObject = _sprites.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
+					_selectedObject = _scenePreview.Objects.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
 					if (_selectedObject == null)
 					{
-						_selectedObject = _textboxes.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
+						_selectedObject = _scenePreview.TextBoxes.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
 					}
 				}
 			}
@@ -1669,12 +1721,21 @@ namespace SPNATI_Character_Editor.Controls
 			SceneObject obj = null;
 			if (directive.Id != null)
 			{
-				obj = _sprites.Find(o => o.Id == directive.Id);
+				obj = _scenePreview.Objects.Find(o => o.Id == directive.Id);
 			}
 			switch (directive.DirectiveType)
 			{
 				case "sprite":
-					_sprites.Add(new SceneObject(_scenePreview, _character, directive));
+					_scenePreview.AddObject(new SceneObject(_scenePreview, _character, directive));
+					canvas.Invalidate();
+					break;
+				case "emitter":
+					_scenePreview.AddObject(new SceneEmitter(_scenePreview, _character, directive));
+					canvas.Invalidate();
+					break;
+				case "remove":
+					_scenePreview.Objects.Remove(obj);
+					obj.Dispose();
 					canvas.Invalidate();
 					break;
 				case "fade":
@@ -1715,12 +1776,12 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case "text":
 					//kill any old textbox with the ID
-					SceneObject old = _textboxes.Find(b => !string.IsNullOrEmpty(b.Id) && b.Id == directive.Id);
+					SceneObject old = _scenePreview.TextBoxes.Find(b => !string.IsNullOrEmpty(b.Id) && b.Id == directive.Id);
 					if (old != null)
 					{
-						_textboxes.Remove(old);
+						_scenePreview.TextBoxes.Remove(old);
 					}
-					_textboxes.Add(new SceneObject(_scenePreview, _character, directive));
+					_scenePreview.TextBoxes.Add(new SceneObject(_scenePreview, _character, directive));
 					canvas.Invalidate();
 					break;
 				case "move":
@@ -1798,7 +1859,7 @@ namespace SPNATI_Character_Editor.Controls
 				case "wait":
 					for (int i = 0; i < _animations.Count; i++)
 					{
-						if (!_animations[i].Looped)
+						if (!_animations[i].Looped || _animations[i].Iterations > 0)
 						{
 							_waitingForAnims = true;
 							break;
@@ -1820,11 +1881,11 @@ namespace SPNATI_Character_Editor.Controls
 					}
 					break;
 				case "clear":
-					SceneObject textBox = _textboxes.Find(t => t.Id == directive.Id);
-					_textboxes.Remove(textBox);
+					SceneObject textBox = _scenePreview.TextBoxes.Find(t => t.Id == directive.Id);
+					_scenePreview.TextBoxes.Remove(textBox);
 					break;
 				case "clear-all":
-					_textboxes.Clear();
+					_scenePreview.TextBoxes.Clear();
 					break;
 			}
 
@@ -1860,9 +1921,9 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void RebuildTextBoxes()
 		{
-			for (int i = 0; i < _textboxes.Count; i++)
+			for (int i = 0; i < _scenePreview.TextBoxes.Count; i++)
 			{
-				_textboxes[i] = new SceneObject(_scenePreview, _character, _textboxes[i].LinkedFrame as Directive);
+				_scenePreview.TextBoxes[i] = new SceneObject(_scenePreview, _character, _scenePreview.TextBoxes[i].LinkedFrame as Directive);
 			}
 		}
 
@@ -1887,7 +1948,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_selectedAnimation = animation;
 			}
-			if (_selectedDirective == directive && _selectedKeyframe == null)
+			if (_mode == EditMode.Playback || (_selectedDirective == directive && _selectedKeyframe == null))
 			{
 				obj.LinkedAnimation = animation;
 			}
@@ -2066,19 +2127,36 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tmrPlay_Tick(object sender, EventArgs e)
 		{
-			UpdateAnimations();
-			if (_viewportLocked)
+			DateTime now = DateTime.Now;
+			TimeSpan elapsed = now - _lastTick;
+			float elapsedSec = (float)elapsed.TotalSeconds;
+			_lastTick = now;
+			if (_sceneTransition != null)
 			{
-				FitToCamera();
+				_sceneTransition.Update(elapsedSec);
+				canvas.Invalidate();
+			}
+			else
+			{
+				for (int i = 0; i < _scenePreview.Objects.Count; i++)
+				{
+					SceneObject obj = _scenePreview.Objects[i];
+					obj.UpdateTick(elapsedSec, _scenePreview);
+					if (obj.ObjectType == SceneObjectType.Emitter)
+					{
+						canvas.Invalidate();
+					}
+				}
+				UpdateAnimations(elapsedSec);
+				if (_viewportLocked)
+				{
+					FitToCamera();
+				}
 			}
 		}
 
-		private void UpdateAnimations()
-		{
-			DateTime now = DateTime.Now;
-			TimeSpan elapsed = now - _lastTick;
-			float elapsedMs = (float)elapsed.TotalSeconds;
-			_lastTick = now;
+		private void UpdateAnimations(float elapsedSec)
+		{	
 			int nonLoopingCount = 0;
 
 			if (_mode == EditMode.Playback)
@@ -2086,14 +2164,14 @@ namespace SPNATI_Character_Editor.Controls
 				for (int i = _animations.Count - 1; i >= 0; i--)
 				{
 					SceneAnimation anim = _animations[i];
-					anim.Update(elapsedMs);
-					if (!anim.Looped)
+					anim.Update(elapsedSec);
+					if (anim.IsComplete)
 					{
-						if (anim.IsComplete)
-						{
-							_animations.RemoveAt(i);
-						}
-						else
+						_animations.RemoveAt(i);
+					}
+					else
+					{
+						if (!anim.Looped)
 						{
 							nonLoopingCount++;
 						}
@@ -2106,7 +2184,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				_selectedAnimation?.Update(elapsedMs);
+				_selectedAnimation?.Update(elapsedSec);
 			}
 			canvas.Invalidate();
 		}
@@ -2232,25 +2310,42 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				return null;
 			}
-			string sourceType = null;
-			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop")
+			HashSet<string> sourceType = new HashSet<string>();
+			bool allowCamera = false;
+			bool allowFade = false;
+			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop" || dir.DirectiveType == "remove")
 			{
-				sourceType = "sprite";
+				sourceType.Add("sprite");
+				sourceType.Add("emitter");
+
+				if (dir.DirectiveType == "stop")
+				{
+					allowCamera = true;
+					allowFade = true;
+				}
 			}
 			else if (dir.DirectiveType == "clear")
 			{
-				sourceType = "text";
+				sourceType.Add("text");
 			}
-			if (sourceType == null)
+			if (sourceType.Count == 0)
 			{
 				return null;
 			}
 			HashSet<string> items = new HashSet<string>();
 			if (Scene != null)
 			{
+				if (allowCamera)
+				{
+					items.Add("camera");
+				}
+				if (allowFade)
+				{
+					items.Add("fade");
+				}
 				foreach (Directive d in Scene.Directives)
 				{
-					if (d.DirectiveType == sourceType)
+					if (sourceType.Contains(d.DirectiveType))
 					{
 						string id = d.Id;
 						if (!string.IsNullOrEmpty(id) && !items.Contains(id))

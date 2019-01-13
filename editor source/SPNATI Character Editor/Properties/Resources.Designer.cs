@@ -93,6 +93,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddTransition {
+            get {
+                object obj = ResourceManager.GetObject("AddTransition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Center {
             get {
                 object obj = ResourceManager.GetObject("Center", resourceCulture);
@@ -157,6 +167,16 @@ namespace SPNATI_Character_Editor.Properties {
             get {
                 object obj = ResourceManager.GetObject("editor", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap emitter {
+            get {
+                object obj = ResourceManager.GetObject("emitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

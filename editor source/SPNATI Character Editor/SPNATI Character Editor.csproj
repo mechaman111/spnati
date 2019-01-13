@@ -126,6 +126,18 @@
     <Compile Include="Controls\EditControls\MeasurementControl.Designer.cs">
       <DependentUpon>MeasurementControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditControls\ParticleColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\ParticleColorControl.Designer.cs">
+      <DependentUpon>ParticleColorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\ParticleFloatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\ParticleFloatControl.Designer.cs">
+      <DependentUpon>ParticleFloatControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SceneTree.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -374,6 +386,7 @@
       <DependentUpon>EpilogueEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\CountedSet.cs" />
+    <Compile Include="DataStructures\Directive.cs" />
     <Compile Include="DataStructures\Epilogue.cs" />
     <Compile Include="DataStructures\ISkin.cs" />
     <Compile Include="DataStructures\Marker.cs" />
@@ -396,8 +409,12 @@
     <Compile Include="EpilogueEditing\EpilogueCanvas.Designer.cs">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </Compile>
+    <Compile Include="EpilogueEditing\RandomParameter.cs" />
     <Compile Include="EpilogueEditing\SceneAnimation.cs" />
     <Compile Include="EpilogueEditing\SceneObject.cs" />
+    <Compile Include="EpilogueEditing\SceneEmitter.cs" />
+    <Compile Include="EpilogueEditing\SceneParticle.cs" />
+    <Compile Include="EpilogueEditing\SceneTransition.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileNameSelect.cs">
@@ -462,6 +479,7 @@
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
     <Compile Include="KisekaeConverter.cs" />
+    <Compile Include="MathUtil.cs" />
     <Compile Include="Multithreading\BackgroundQueue.cs" />
     <Compile Include="Forms\PropImporter.cs">
       <SubType>Form</SubType>
@@ -591,6 +609,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\NumericRangeControl.resx">
       <DependentUpon>NumericRangeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\ParticleColorControl.resx">
+      <DependentUpon>ParticleColorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\ParticleFloatControl.resx">
+      <DependentUpon>ParticleFloatControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\PlayerRangeControl.resx">
       <DependentUpon>PlayerRangeControl.cs</DependentUpon>
@@ -733,6 +757,8 @@
     <None Include="Icons\GoToLine.png" />
     <None Include="Icons\Delete.png" />
     <None Include="Icons\Link.png" />
+    <None Include="Icons\AddTransition.png" />
+    <None Include="Icons\emitter.png" />
     <Content Include="tag_dictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

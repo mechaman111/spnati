@@ -34,6 +34,7 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAddScene = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.tsAddTransition = new System.Windows.Forms.ToolStripButton();
 			this.tsAddDirective = new System.Windows.Forms.ToolStripSplitButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +58,9 @@
 			this.tsCopy = new System.Windows.Forms.ToolStripButton();
 			this.tsPaste = new System.Windows.Forms.ToolStripButton();
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
+			this.addEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.removeObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
@@ -116,6 +120,7 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAddScene,
             this.tsRemove,
+            this.tsAddTransition,
             this.tsAddDirective,
             this.tsAddKeyframe,
             this.toolStripSeparator1,
@@ -128,7 +133,7 @@
             this.tsDuplicate});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(285, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(277, 25);
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -154,11 +159,25 @@
 			this.tsRemove.ToolTipText = "Remove selected node";
 			this.tsRemove.Click += new System.EventHandler(this.TsRemove_Click);
 			// 
+			// tsAddTransition
+			// 
+			this.tsAddTransition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddTransition.Image = global::SPNATI_Character_Editor.Properties.Resources.AddTransition;
+			this.tsAddTransition.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddTransition.Name = "tsAddTransition";
+			this.tsAddTransition.Size = new System.Drawing.Size(23, 22);
+			this.tsAddTransition.Text = "Add Transition";
+			this.tsAddTransition.ToolTipText = "Add Scene Transition";
+			this.tsAddTransition.Click += new System.EventHandler(this.tsAddTransition_Click);
+			// 
 			// tsAddDirective
 			// 
 			this.tsAddDirective.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsAddDirective.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addSpriteToolStripMenuItem,
+            this.addEmitterToolStripMenuItem,
+            this.removeObjectToolStripMenuItem,
+            this.toolStripSeparator6,
             this.addSpeechBubbleToolStripMenuItem,
             this.removeSpeechBubbleToolStripMenuItem,
             this.clearSpeechBubblesToolStripMenuItem,
@@ -225,9 +244,9 @@
 			// 
 			this.moveSpriteToolStripMenuItem.Name = "moveSpriteToolStripMenuItem";
 			this.moveSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
 			this.moveSpriteToolStripMenuItem.Tag = "move";
-			this.moveSpriteToolStripMenuItem.Text = "Move/Rotate/Scale Sprite";
+			this.moveSpriteToolStripMenuItem.Text = "Move/Rotate/Scale Sprite/Emitter";
 			this.moveSpriteToolStripMenuItem.ToolTipText = "Transform a sprite on screen";
 			this.moveSpriteToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
@@ -369,6 +388,29 @@
 			this.tsDuplicate.Text = "Duplicate";
 			this.tsDuplicate.Click += new System.EventHandler(this.tsDuplicate_Click);
 			// 
+			// addEmitterToolStripMenuItem
+			// 
+			this.addEmitterToolStripMenuItem.Name = "addEmitterToolStripMenuItem";
+			this.addEmitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.addEmitterToolStripMenuItem.Tag = "emitter";
+			this.addEmitterToolStripMenuItem.Text = "Add Emitter";
+			this.addEmitterToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// removeObjectToolStripMenuItem
+			// 
+			this.removeObjectToolStripMenuItem.Name = "removeObjectToolStripMenuItem";
+			this.removeObjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+			this.removeObjectToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.removeObjectToolStripMenuItem.Tag = "remove";
+			this.removeObjectToolStripMenuItem.Text = "Remove Sprite/Emitter";
+			this.removeObjectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(274, 6);
+			// 
 			// SceneTree
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -419,5 +461,9 @@
 		private System.Windows.Forms.ToolStripButton tsCopy;
 		private System.Windows.Forms.ToolStripButton tsPaste;
 		private System.Windows.Forms.ToolStripButton tsDuplicate;
+		private System.Windows.Forms.ToolStripButton tsAddTransition;
+		private System.Windows.Forms.ToolStripMenuItem addEmitterToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 	}
 }

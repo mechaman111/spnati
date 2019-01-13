@@ -16,9 +16,16 @@ namespace Desktop.CommonControls.PropertyControls
 			valValue.Maximum = p.Maximum;
 		}
 
+		private void AddHandlers()
+		{
+			valValue.ValueChanged += valValue_ValueChanged;
+			valValue.TextChanged += valValue_TextChanged;
+		}
+
 		protected override void OnBoundData()
 		{
 			valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (int)GetValue()));
+			AddHandlers();
 		}
 
 		public override void Clear()
@@ -29,12 +36,27 @@ namespace Desktop.CommonControls.PropertyControls
 
 		public override void Save()
 		{
-			SetValue((int)valValue.Value);
+			if (string.IsNullOrEmpty(valValue.Text))
+			{
+				SetValue(0);
+			}
+			else
+			{
+				SetValue((int)valValue.Value);
+			}
 		}
 
 		private void valValue_ValueChanged(object sender, EventArgs e)
 		{
 			Save();
+		}
+
+		private void valValue_TextChanged(object sender, EventArgs e)
+		{
+			if (valValue.Text == "")
+			{
+				Save();
+			}
 		}
 	}
 

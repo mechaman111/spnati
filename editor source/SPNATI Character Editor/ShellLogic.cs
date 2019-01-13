@@ -88,8 +88,8 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
-			def.Description = "Moves/rotates/scales a sprite.";
-			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "delay", "loop", "ease", "tween" })
+			def.Description = "Moves/rotates/scales a sprite or emitter.";
+			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -105,7 +105,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("camera") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Pans or zooms the camera.";
-			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween" })
+			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -121,7 +121,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("fade") as DirectiveDefinition;
 			def.Description = "Fades the overlay to a new color and opacity level.";
 			def.IsAnimatable = true;
-			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween" })
+			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -150,6 +150,21 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("pause") as DirectiveDefinition;
 			def.Description = "Waits for the user to click next.";
+
+			def = provider.Create("remove") as DirectiveDefinition;
+			def.Description = "Removes a sprite or emitter from the scene.";
+			foreach (string key in new string[] { "id" })
+			{
+				def.AllowedProperties.Add(key);
+			}
+
+			def = provider.Create("emitter") as DirectiveDefinition;
+			def.Description = "Adds an object emitter to the scene.";
+			foreach (string key in new string[] { "id", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
+				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease"})
+			{
+				def.AllowedProperties.Add(key);
+			}
 		}
 
 		private static bool DoInitialSetup()

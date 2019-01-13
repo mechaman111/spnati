@@ -18,6 +18,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public bool Looped;
 		public string EasingMethod;
 		public string TweenMethod;
+		public string ClampMethod;
+		public int Iterations;
 
 		public float Elapsed;
 		public float Delay;
@@ -26,7 +28,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public SceneAnimation(SceneObject obj, Directive directive, ScenePreview scene, bool fullPlayback)
 		{
-			_initialState = new SceneObject(obj); //copy off current values to use as the first keyframe
+			_initialState = obj.Copy(); //copy off current values to use as the first keyframe
 			_initialState.Index = 0;
 			AssociatedObject = obj;
 			Looped = directive.Looped;
@@ -36,6 +38,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			EasingMethod = directive.EasingMethod;
 			TweenMethod = directive.InterpolationMethod;
+			ClampMethod = directive.ClampingMethod;
+			Iterations = directive.Iterations;
 			if (fullPlayback)
 			{
 				PreviewObject = AssociatedObject;
@@ -43,7 +47,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			else
 			{
 				Looped = true;
-				PreviewObject = new SceneObject(_initialState);
+				PreviewObject = _initialState.Copy();
 			}
 			_initialState.ObjectType = SceneObjectType.Keyframe;
 			Id = obj.Id;
@@ -57,7 +61,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			get
 			{
-				return Elapsed - Delay >= Duration;
+				float life = Elapsed - Delay;
+				if (Looped)
+				{
+					return Iterations > 0 ? life / Duration >= Iterations : false;
+				}
+				return life >= Duration;
 			}
 		}
 
@@ -78,7 +87,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			SceneObject lastFrame = _initialState;
 			if (Directive.Keyframes.Count == 0)
 			{
-				SceneObject kf = new SceneObject(lastFrame);
+				SceneObject kf = lastFrame.Copy();
 				kf.Index = 0;
 				kf.LinkedFrame = Directive;
 				kf.ObjectType = SceneObjectType.Keyframe;
@@ -94,7 +103,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				foreach (Keyframe frame in Directive.Keyframes)
 				{
-					SceneObject kf = new SceneObject(lastFrame);
+					SceneObject kf = lastFrame.Copy();
 					kf.LinkedFrame = frame;
 					kf.Tween = TweenMethod;
 					kf.Index = Frames.Count;
@@ -110,13 +119,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
-		public void Update(float elapsedMs)
+		public void Update(float elapsedSec)
 		{
-			Elapsed += elapsedMs;
-			if (Looped && IsComplete)
-			{
-				Elapsed -= Duration;
-			}
+			Elapsed += elapsedSec;
 
 			float t = Elapsed - Delay;
 			if (t < 0)
@@ -129,7 +134,21 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			else
 			{
-				t = Ease(t / Duration) * Duration;
+				t /= Duration;
+				if (Looped)
+				{
+					t = Clamp(t);
+					if (IsComplete)
+					{
+						t = 1;
+					}
+				}
+				else
+				{
+					t = Math.Min(1, t);
+				}
+				t = Ease(EasingMethod, t);
+				t *= Duration;
 			}
 			for (int i = Frames.Count - 1; i >= 0; i--)
 			{
@@ -137,11 +156,33 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				if (t >= frame.Start)
 				{
 					SceneObject last = (i > 0 ? Frames[i - 1] : frame);
-					float time = t == 0 ? 0 : Math.Min(1, Math.Max(0, (t - frame.Start) / (frame.End - frame.Start)));
+					float time = 0;
+					if (frame.Start == frame.End)
+					{
+						time = 1;
+					}
+					else
+					{
+						time = t == 0 ? 0 : (t - frame.Start) / (frame.End - frame.Start);
+					}
+					
 					UpdateValues(frame, last, time);
-
 					return;
 				}
+			}
+		}
+
+		private float Clamp(float t)
+		{
+			switch (ClampMethod)
+			{
+				case "clamp":
+					return t;
+				case "mirror":
+					t %= 2.0f;
+					return t > 1 ? 2 - t : t;
+				default:
+					return t % 1.0f;
 			}
 		}
 
@@ -175,7 +216,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		private float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
 		{
-			t = Math.Min(1, Math.Max(0, t));
 			switch (interpolationMode)
 			{
 				case "spline":
@@ -204,9 +244,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return Color.FromArgb(lastValue.Color.A, (int)r, (int)g, (int)b);
 		}
 
-		private float Ease(float t)
+		public static float Ease(string method, float t)
 		{
-			switch (EasingMethod)
+			switch (method)
 			{
 				case "linear":
 					return t;
@@ -214,6 +254,39 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					return t * t;
 				case "ease-out":
 					return t * (2 - t);
+				case "elastic":
+					return t == 0 ? 0 : (0.04f - 0.04f / t) * (float)Math.Sin(25 * t) + 1;
+				case "ease-in-cubic":
+					return t * t * t;
+				case "ease-out-cubic":
+					t--;
+					return 1 + t * t * t;
+				case "ease-in-sin":
+					return 1 + (float)Math.Sin(Math.PI / 2 * t - Math.PI / 2);
+				case "ease-out-sin":
+					return (float)Math.Sin(Math.PI / 2 * t);
+				case "ease-in-out-cubic":
+					return t < 0.5f ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+				case "bounce":
+					if (t < 0.3636f)
+					{
+						return 7.5625f * t * t;
+					}
+					else if (t < 0.7273f)
+					{
+						t -= 0.5455f;
+						return 7.5625f * t * t + 0.75f;
+					}
+					else if (t < 0.9091f)
+					{
+						t -= 0.8182f;
+						return 7.5625f * t * t + 0.9375f;
+					}
+					else
+					{
+						t -= 0.9545f;
+						return 7.5625f * t * t + 0.984375f;
+					}
 			}
 			return 3 * t * t - 2 * t * t * t;
 		}
