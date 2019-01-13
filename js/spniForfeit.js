@@ -189,7 +189,6 @@ function tickForfeitTimers () {
 function finishMasturbation (player) {
 	// HARD SET STAGE
 	players[player].stage += 1;
-	players[player].timeInStage = -1;
 	players[player].finished = true;
     players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
 	players[player].updateLabel();
@@ -201,6 +200,7 @@ function finishMasturbation (player) {
         PLAYER_FINISHED_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
     );
+	players[player].timeInStage = 0;
     
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
