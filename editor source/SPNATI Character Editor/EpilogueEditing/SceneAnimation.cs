@@ -50,6 +50,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				PreviewObject = _initialState.Copy();
 			}
 			_initialState.ObjectType = SceneObjectType.Keyframe;
+			_initialState.SourceObject = obj;
 			Id = obj.Id;
 			Directive = directive;
 			Scene = scene;
@@ -91,6 +92,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				kf.Index = 0;
 				kf.LinkedFrame = Directive;
 				kf.ObjectType = SceneObjectType.Keyframe;
+				kf.SourceObject = _initialState.SourceObject;
 				kf.Update(Directive, Scene);
 				kf.Start = 0;
 				kf.End = kf.Time;
@@ -108,6 +110,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					kf.Tween = TweenMethod;
 					kf.Index = Frames.Count;
 					kf.ObjectType = SceneObjectType.Keyframe;
+					kf.SourceObject = _initialState.SourceObject;
 					kf.Update(frame, Scene);
 					kf.Start = totalTime;
 					totalTime = Math.Max(totalTime, kf.Time);

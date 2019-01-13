@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string DirectiveType;
 
-		[Text(DisplayName = "ID", GroupOrder = 0, Key = "id", Description = "Unique identifier")]
+		[Text(DisplayName = "ID", GroupOrder = 0, Key = "id", Description = "Unique identifier", Validator = "ValidateId")]
 		[XmlAttribute("id")]
 		public string Id;
 
@@ -227,6 +227,61 @@ namespace SPNATI_Character_Editor
 				clone.Keyframes.Add(clonedFrame);
 			}
 			return clone;
+		}
+
+		public string ValidateId(string id, object context)
+		{
+			if (string.IsNullOrEmpty(id))
+			{
+				return null;
+			}
+
+			//check for reserved variables
+			if (DirectiveType == "sprite" || DirectiveType == "text" || DirectiveType == "emitter")
+			{
+				if (id == "background" || id == "camera" || id == "fade")
+				{
+					return $"{id} is a reserved ID and cannot be used here.";
+				}
+			}
+
+			EpilogueContext cxt = context as EpilogueContext;
+			if (cxt == null || cxt.Scene == null)
+			{
+				return null;
+			}
+			Scene scene = cxt.Scene;
+
+			HashSet<string> usedIds = new HashSet<string>();
+
+			//make sure this is the first "add" directive with this ID
+			for (int i = 0; i < scene.Directives.Count; i++)
+			{
+				Directive directive = scene.Directives[i];
+				if (directive == this)
+				{
+					if (DirectiveType == "sprite" || DirectiveType == "text" || DirectiveType == "emitter")
+					{
+						if (usedIds.Contains(id))
+						{
+							return $"{id} is already used by an earlier object in the scene.";
+						}
+					}
+					else
+					{
+						if (!usedIds.Contains(id))
+						{
+							return $"No earlier directive defines an object with this {id}.";
+						}
+					}
+					break;
+				}
+				else if (!string.IsNullOrEmpty(directive.Id))
+				{
+					usedIds.Add(directive.Id);
+				}
+			}
+			return null;
 		}
 	}
 

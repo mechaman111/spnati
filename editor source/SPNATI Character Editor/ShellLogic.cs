@@ -52,7 +52,7 @@ namespace SPNATI_Character_Editor
 			DirectiveProvider provider = new DirectiveProvider();
 			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
 			def.Description = "Adds a sprite to the scene.";
-			foreach (string key in new string[] { "id", "src", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty" })
+			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -160,7 +160,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
-			foreach (string key in new string[] { "id", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
+			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease"})
 			{
 				def.AllowedProperties.Add(key);

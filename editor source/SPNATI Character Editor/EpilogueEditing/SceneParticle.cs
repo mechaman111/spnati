@@ -31,12 +31,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float angle = emitter.Random.Next(-(int)emitter.Angle, (int)emitter.Angle + 1);
 			rotation += angle;
 
-			X = emitter.X - emitter.Width / 2;
-			Y = emitter.Y - emitter.Height / 2;
+			X = emitter.X - emitter.ParticleWidth / 2;
+			Y = emitter.Y - emitter.ParticleHeight / 2;
 
 			Image = emitter.Image;
-			Width = emitter.Width;
-			Height = emitter.Height;
+			Width = emitter.ParticleWidth;
+			Height = emitter.ParticleHeight;
 			PivotX = Width / 2.0f;
 			PivotY = Height / 2.0f;
 
@@ -68,6 +68,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			Elapsed = 0;
 			Duration = emitter.Lifetime.Get() * 1000;
+			UpdateTick(0, null);
 		}
 
 		public bool IsDead

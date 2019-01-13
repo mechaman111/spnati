@@ -16,6 +16,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public List<SceneParticle> ActiveParticles = new List<SceneParticle>();
 
+		public float ParticleWidth;
+		public float ParticleHeight;
+
 		public RandomParameter StartScaleX;
 		public RandomParameter EndScaleX;
 		public RandomParameter StartScaleY;
@@ -37,6 +40,19 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public SceneEmitter(ScenePreview scene, Character character, Directive directive) : base(scene, character, directive)
 		{
 			Scene = scene;
+
+			if (string.IsNullOrEmpty(directive.Src))
+			{
+				if (string.IsNullOrEmpty(directive.Width))
+				{
+					Width = 10;
+				}
+				if (string.IsNullOrEmpty(directive.Height))
+				{
+					Height = 10;
+				}
+			}
+
 			ObjectType = SceneObjectType.Emitter;
 			if (!string.IsNullOrEmpty(directive.Rate))
 			{
@@ -64,6 +80,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			EndRotation = RandomParameter.Create(directive.EndRotation, StartRotation);
 			Lifetime = RandomParameter.Create(directive.Lifetime, 1, 1);
 
+			ParticleWidth = Width;
+			ParticleHeight = Height;
+
 			PivotX = EmitterRadius;
 			PivotY = EmitterRadius;
 			Width = EmitterRadius * 2;
@@ -76,6 +95,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			copy.CopyValuesFrom(this);
 
 			copy.EmissionTimer = EmissionTimer;
+			copy.ParticleWidth = ParticleWidth;
+			copy.ParticleHeight = ParticleHeight;
 			copy.Scene = Scene;
 			copy.StartScaleX = StartScaleX;
 			copy.EndScaleX = EndScaleX;

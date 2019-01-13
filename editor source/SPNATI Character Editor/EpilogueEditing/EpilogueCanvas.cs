@@ -606,7 +606,7 @@ namespace SPNATI_Character_Editor.Controls
 				Rectangle viewport = GetViewportBounds();
 				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
 			}
-			else if (obj.ObjectType == SceneObjectType.Emitter)
+			else if (obj.ObjectType == SceneObjectType.Emitter || obj?.SourceObject?.ObjectType == SceneObjectType.Emitter)
 			{
 				//emitters don't actually have a size, so just use a constant sized box centered around the upper left to represent where things get emitted from
 				Point center = ToScreenPoint(new PointF(obj.X, obj.Y));
@@ -2167,9 +2167,13 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				for (int i = 0; i < _scenePreview.Objects.Count; i++)
+				//updates can add to the object collection and resort it, which will royally screw up this loop, so copy off first, as inefficient as that is
+				List<SceneObject> objects = new List<SceneObject>();
+				objects.AddRange(_scenePreview.Objects);
+
+				for (int i = 0; i < objects.Count; i++)
 				{
-					SceneObject obj = _scenePreview.Objects[i];
+					SceneObject obj = objects[i];
 					obj.UpdateTick(elapsedSec, _scenePreview);
 					if (obj.ObjectType == SceneObjectType.Emitter)
 					{
