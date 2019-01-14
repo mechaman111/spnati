@@ -657,6 +657,7 @@ function readProperties(sourceObj, scene) {
     if (targetObj.y) { targetObj.y = toSceneY(targetObj.y, scene); }
     targetObj.iterations = parseInt(targetObj.iterations) || 0;
     targetObj.rate = parseFloat(targetObj.rate, 10) || 0;
+    targetObj.count = parseFloat(targetObj.count, 10) || 0;
   }
   else {
     // textboxes
@@ -1124,6 +1125,9 @@ EpiloguePlayer.prototype.performDirective = function () {
         break;
       case "emitter":
         this.addAction(view, directive, view.addEmitter, view.removeSceneObject);
+        break;
+      case "emit":
+        this.addAction(view, directive, view.burstParticles, view.clearParticles);
         break;
     }
 
@@ -1779,6 +1783,26 @@ SceneView.prototype.addEmitter = function (directive, context) {
   this.addSceneObject(new Emitter(directive.id, element, this, directive, this.particlePool));
 }
 
+SceneView.prototype.burstParticles = function (directive, context) {
+  var emitter = this.sceneObjects[directive.id];
+  if (emitter && emitter.emit) {
+    context.emitter = emitter;
+    for (var i = 0; i < directive.count; i++) {
+      emitter.emit();
+    }
+  }
+}
+
+SceneView.prototype.clearParticles = function (directive, context) {
+  var emitter = context.emitter;
+  if (emitter) {
+    context.emitter = emitter;
+    for (var i = 0; i < directive.count; i++) {
+      emitter.killParticles();
+    }
+  }
+}
+
 function RandomParameter(startValue, endValue) {
   this.start = startValue;
   this.end = endValue;
@@ -1797,9 +1821,10 @@ function RandomColor(startValue, endValue) {
 
 RandomColor.prototype = {
   get: function () {
-    return [lerp(this.start[0], this.end[0], Math.random()),
-    lerp(this.start[1], this.end[1], Math.random()),
-    lerp(this.start[2], this.end[2], Math.random())];
+    var t = Math.random();
+    return [lerp(this.start[0], this.end[0], t),
+    lerp(this.start[1], this.end[1], t),
+    lerp(this.start[2], this.end[2], t)];
   }
 };
 
@@ -1952,6 +1977,9 @@ function Emitter(id, element, view, args, pool) {
   this.pool = pool;
   this.rate = args.rate;
   this.emissionTimer = 0;
+  if (this.rate > 0) {
+    this.emissionTimer = 1000 / this.rate;
+  }
   this.activeParticles = [];
   this.src = args.src;
   this.startScaleX = this.createRandomParameter(args.startscalex, 1, 1);
@@ -1976,8 +2004,10 @@ Emitter.prototype.constructor = Emitter;
 
 Emitter.prototype.destroy = function () {
   SceneObject.prototype.destroy.call(this);
+  this.killParticles();
+}
 
-  //destroy all particles
+Emitter.prototype.killParticles = function () {
   for (var i = 0; i < this.activeParticles.length; i++) {
     var particle = this.activeParticles[i];
     particle.destroy();
@@ -2018,10 +2048,10 @@ Emitter.prototype.createRandomColor = function (value, defaultMin, defaultMax) {
 Emitter.prototype.update = function (elapsedMs) {
   if (this.rate > 0) {
     var cooldown = 1000 / this.rate;
-    this.emissionTimer -= elapsedMs;
-    while (this.emissionTimer <= 0) {
+    this.emissionTimer += elapsedMs;
+    while (this.emissionTimer >= cooldown) {
       this.emit();
-      this.emissionTimer += cooldown;
+      this.emissionTimer -= cooldown;
     }
   }
 
@@ -2116,7 +2146,11 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
     "width": args.width + "px",
     "height": args.height + "px",
   });
-  $(this.element).css("z-index", args.layer || "");
+  $(this.element).css({
+    "z-index": args.layer || "",
+    "width": args.width + "px",
+    "height": args.height + "px",
+  });
   this.width = args.width;
   this.height = args.height;
   this.x = x;
@@ -2129,6 +2163,11 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   tweens["alpha"] = new TweenableParameter(args.startAlpha, args.endAlpha);
   tweens["color"] = new TweenableColor(args.startColor, args.endColor);
   tweens["spin"] = new TweenableParameter(args.startRotation, args.endRotation);
+  this.scalex = args.startScaleX;
+  this.scaley = args.startScaleY;
+  this.alpha = args.startAlpha;
+  this.color = args.startColor;
+  this.spin = args.startRotation;
 
   //initial speed is in the direction of the starting rotation
   this.rotation = rotation;
