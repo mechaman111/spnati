@@ -996,7 +996,8 @@ function advanceSelectScreen () {
             'game': gameID,
             'userAgent': navigator.userAgent,
             'origin': getReportedOrigin(),
-            'table': {}
+            'table': {},
+			'tags': players[HUMAN_PLAYER].tags
         };
 
         for (let i=1;i<5;i++) {
