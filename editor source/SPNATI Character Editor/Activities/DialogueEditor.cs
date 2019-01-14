@@ -1213,22 +1213,35 @@ namespace SPNATI_Character_Editor.Activities
 			Character responder = RecordLookup.DoLookup(typeof(Character), last, false, CharacterDatabase.FilterHuman, true, null) as Character;
 			if (responder != null)
 			{
-				if (responder == _character)
+				CharacterEditorData responderData = CharacterDatabase.GetEditorData(responder);
+				Case existing = responderData.GetResponse(_character, _selectedCase);
+				Case response = null;
+				if (existing != null)
 				{
-					if (MessageBox.Show("Do you really want to respond to your own lines?", "Make Response", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+					//jump to the existing response
+					response = existing;
+				}
+				else
+				{
+					if (responder == _character)
 					{
+						if (MessageBox.Show("Do you really want to respond to your own lines?", "Make Response", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+						{
+							return;
+						}
+					}
+
+					response = _selectedCase.CreateResponse(_character, responder);
+					if (response == null)
+					{
+						MessageBox.Show("Couldn't create a response based on this case's conditions.", "Make Response", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						return;
 					}
-				}
 
-				Case response = _selectedCase.CreateResponse(_character, responder);
-				if (response == null)
-				{
-					MessageBox.Show("Couldn't create a response based on this case's conditions.", "Make Response", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
+					responderData.MarkResponse(_character, _selectedCase, response);
+					responder.PrepareForEdit();
+					responder.Behavior.AddWorkingCase(response);
 				}
-				responder.PrepareForEdit();
-				responder.Behavior.AddWorkingCase(response);
 				Shell.Instance.Launch<Character, DialogueEditor>(responder, response);
 			}
 		}

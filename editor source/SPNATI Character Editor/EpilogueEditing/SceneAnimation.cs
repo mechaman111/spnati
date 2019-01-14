@@ -200,51 +200,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			int index = last.Index;
 			SceneObject lastLast = (index > 0 ? Frames[index - 1] : last);
 			SceneObject nextNext = index < Frames.Count - 2 ? Frames[index + 1] : frame;
-			PreviewObject.X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
-			PreviewObject.Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
-			PreviewObject.ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
-			PreviewObject.ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
-			PreviewObject.Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
-			PreviewObject.Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
-			PreviewObject.Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
-			PreviewObject.Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
-			PreviewObject.Color.Color = Color.FromArgb((int)(PreviewObject.Alpha / 100 * 255), PreviewObject.Color.Color);
+			PreviewObject.Interpolate(last, frame, time, lastLast, nextNext);
 		}
 
 		public void Halt()
 		{
 			SceneObject frame = Frames[Frames.Count - 1];
 			UpdateValues(frame, frame, 1);
-		}
-
-		private float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
-		{
-			switch (interpolationMode)
-			{
-				case "spline":
-					float p0 = lastLastValue;
-					float p1 = lastValue;
-					float p2 = nextValue;
-					float p3 = nextNextValue;
-					float a = 2 * p1;
-					float b = p2 - p0;
-					float c = 2 * p0 - 5 * p1 + 4 * p2 - p3;
-					float d = -p0 + 3 * p1 - 3 * p2 + p3;
-					float p = 0.5f * (a + (b * t) + (c * t * t) + (d * t * t * t));
-					return p;
-				default:
-					return (nextValue - lastValue) * t + lastValue;
-			}
-		}
-
-		private Color Interpolate(SolidBrush lastValue, SolidBrush nextValue, string interpolationMode, float t, SolidBrush lastLastValue, SolidBrush nextNextValue)
-		{
-			t = Math.Min(1, Math.Max(0, t));
-
-			float r = Interpolate(lastValue.Color.R, nextValue.Color.R, interpolationMode, t, lastLastValue.Color.R, nextNextValue.Color.R);
-			float g = Interpolate(lastValue.Color.G, nextValue.Color.G, interpolationMode, t, lastLastValue.Color.G, nextNextValue.Color.G);
-			float b = Interpolate(lastValue.Color.B, nextValue.Color.B, interpolationMode, t, lastLastValue.Color.B, nextNextValue.Color.B);
-			return Color.FromArgb(lastValue.Color.A, (int)r, (int)g, (int)b);
 		}
 
 		public static float Ease(string method, float t)

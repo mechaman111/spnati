@@ -66,6 +66,9 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			ColorTween = new TweenableColor(emitter.StartColor.Get(), emitter.EndColor.Get());
 			SpinTween = new TweenableParameter(emitter.StartRotation.Get(), emitter.EndRotation.Get());
 
+			Layer = emitter.Layer;
+			SortLayer = ++NextLayer;
+
 			Elapsed = 0;
 			Duration = emitter.Lifetime.Get() * 1000;
 			UpdateTick(0, null);

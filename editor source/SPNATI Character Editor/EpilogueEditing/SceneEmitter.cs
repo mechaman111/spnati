@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
@@ -8,7 +9,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public const int EmitterRadius = 15;
 
 		internal Random Random = new Random();
-		public float Rate = 0;
 		public float EmissionTimer = 0;
 		public float Angle;
 
@@ -54,15 +54,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			ObjectType = SceneObjectType.Emitter;
-			if (!string.IsNullOrEmpty(directive.Rate))
-			{
-				float.TryParse(directive.Rate, out Rate);
-			}
 			if (!string.IsNullOrEmpty(directive.Angle))
 			{
 				float.TryParse(directive.Angle, out Angle);
 			}
-			EmissionTimer = 0;
+			if (Rate > 0)
+			{
+				EmissionTimer = 1000 / Rate;
+			}
 
 			StartScaleX = RandomParameter.Create(directive.StartScaleX, 1, 1);
 			EndScaleX = RandomParameter.Create(directive.EndScaleX, StartScaleX);
@@ -139,11 +138,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (Rate > 0)
 			{
 				float cooldown = 1000 / Rate;
-				EmissionTimer -= elapsedMs;
-				while (EmissionTimer <= 0)
+				EmissionTimer += elapsedMs;
+				while (EmissionTimer >= cooldown)
 				{
 					Emit();
-					EmissionTimer += cooldown;
+					EmissionTimer -= cooldown;
 				}
 			}
 
@@ -158,7 +157,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
-		private void Emit()
+		public override void Update(Keyframe frame, ScenePreview scene)
+		{
+			base.Update(frame, scene);
+			if (!string.IsNullOrEmpty(frame.Rate))
+			{
+				float.TryParse(frame.Rate, NumberStyles.Float, CultureInfo.InvariantCulture, out Rate);
+			}
+		}
+
+		public void Emit()
 		{
 			SceneParticle particle = new SceneParticle(LinkedAnimation?.PreviewObject as SceneEmitter ?? this);
 			Scene.AddObject(particle);

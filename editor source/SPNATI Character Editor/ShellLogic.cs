@@ -89,7 +89,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
-			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
+			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -162,6 +162,13 @@ namespace SPNATI_Character_Editor
 			def.Description = "Adds an object emitter to the scene.";
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
 				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease"})
+			{
+				def.AllowedProperties.Add(key);
+			}
+
+			def = provider.Create("emit") as DirectiveDefinition;
+			def.Description = "Emits an object from an emitter.";
+			foreach (string key in new string[] { "id", "count" })
 			{
 				def.AllowedProperties.Add(key);
 			}

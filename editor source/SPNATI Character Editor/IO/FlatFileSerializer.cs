@@ -875,6 +875,12 @@ namespace SPNATI_Character_Editor
 						{
 							objValue = (value == "1" ? true : false);
 						}
+						else if (field.FieldType == typeof(int))
+						{
+							int v;
+							int.TryParse(value, out v);
+							objValue = v;
+						}
 						
 						field.Info.SetValue(instance, objValue);
 					}

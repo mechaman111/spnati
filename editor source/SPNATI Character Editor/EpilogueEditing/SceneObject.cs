@@ -46,6 +46,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float PivotX;
 		public float PivotY;
 		public int Index;
+		public float Rate = 0;
 
 		/// <summary>
 		/// Previous directive or keyframe in the scene that affects this object
@@ -172,6 +173,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Text = directive.Text;
 			PivotX = ParsePivot(directive.PivotX, Width);
 			PivotY = ParsePivot(directive.PivotY, Height);
+			if (!string.IsNullOrEmpty(directive.Rate))
+			{
+				float.TryParse(directive.Rate, out Rate);
+			}
 
 			SortLayer = ++NextLayer;
 			if (directive.Layer > 0)
@@ -228,6 +233,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Zoom = source.Zoom;
 			SortLayer = source.SortLayer;
 			Layer = source.Layer;
+			Rate = source.Rate;
 		}
 
 		public SceneObject(ScenePreview scene, Character character, string id, string imagePath, string color)
@@ -303,7 +309,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		/// Sets current values to those of a keyframe
 		/// </summary>
 		/// <param name="frame"></param>
-		public void Update(Keyframe frame, ScenePreview scene)
+		public virtual void Update(Keyframe frame, ScenePreview scene)
 		{
 			if (!string.IsNullOrEmpty(frame.Time))
 			{
@@ -374,6 +380,50 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			SetColor(frame);
+		}
+
+		public virtual void Interpolate(SceneObject last, SceneObject frame, float time, SceneObject lastLast, SceneObject nextNext)
+		{
+			X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
+			Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
+			ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
+			ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
+			Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
+			Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
+			Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
+			Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
+			Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
+			Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+		}
+
+		protected float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
+		{
+			switch (interpolationMode)
+			{
+				case "spline":
+					float p0 = lastLastValue;
+					float p1 = lastValue;
+					float p2 = nextValue;
+					float p3 = nextNextValue;
+					float a = 2 * p1;
+					float b = p2 - p0;
+					float c = 2 * p0 - 5 * p1 + 4 * p2 - p3;
+					float d = -p0 + 3 * p1 - 3 * p2 + p3;
+					float p = 0.5f * (a + (b * t) + (c * t * t) + (d * t * t * t));
+					return p;
+				default:
+					return (nextValue - lastValue) * t + lastValue;
+			}
+		}
+
+		protected Color Interpolate(SolidBrush lastValue, SolidBrush nextValue, string interpolationMode, float t, SolidBrush lastLastValue, SolidBrush nextNextValue)
+		{
+			t = Math.Min(1, Math.Max(0, t));
+
+			float r = Interpolate(lastValue.Color.R, nextValue.Color.R, interpolationMode, t, lastLastValue.Color.R, nextNextValue.Color.R);
+			float g = Interpolate(lastValue.Color.G, nextValue.Color.G, interpolationMode, t, lastLastValue.Color.G, nextNextValue.Color.G);
+			float b = Interpolate(lastValue.Color.B, nextValue.Color.B, interpolationMode, t, lastLastValue.Color.B, nextNextValue.Color.B);
+			return System.Drawing.Color.FromArgb(lastValue.Color.A, (int)r, (int)g, (int)b);
 		}
 
 		public override string ToString()

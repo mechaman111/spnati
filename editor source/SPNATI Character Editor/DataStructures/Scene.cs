@@ -86,16 +86,20 @@ namespace SPNATI_Character_Editor
 		public List<EndingText> LegacyText = new List<EndingText>();
 		#endregion
 
+		[XmlIgnore]
+		public bool Locked;
+
 		public override string ToString()
 		{
+			string prefix = (Locked ? "🔒 " : "");
 			if (Transition)
 			{
-				return $"Transition: {Effect} ({Time}s)";
+				return $"{prefix}Transition: {Effect} ({Time}s)";
 			}
 			else
 			{
 				string background = string.IsNullOrEmpty(Background) ? BackgroundColor : Background;
-				return $"Scene: {Name} ({background}: {Width},{Height})";
+				return $"{prefix}Scene: {Name} ({background}: {Width},{Height})";
 			}
 		}
 

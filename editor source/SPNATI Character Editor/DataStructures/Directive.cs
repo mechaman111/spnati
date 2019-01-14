@@ -75,10 +75,6 @@ namespace SPNATI_Character_Editor
 		public string Text;
 
 		#region Emitter attributes
-		[Float(DisplayName = "Rate", Key = "rate", GroupOrder = 19, Description = "Emissions per second", Minimum = 0, Maximum = 100, DecimalPlaces = 2)]
-		[XmlAttribute("rate")]
-		public string Rate;
-
 		[ParticleFloat(DisplayName = "Particle Life (s)", Key = "lifetime", GroupOrder = 20, Description = "Time in seconds before an emitted object disappears", Minimum = 0.1f, Maximum = 1000, DecimalPlaces = 2)]
 		[XmlAttribute("lifetime")]
 		public string Lifetime;
@@ -142,6 +138,11 @@ namespace SPNATI_Character_Editor
 		[ParticleFloat(DisplayName = "End Spin", Key = "endRotation", GroupOrder = 35, Description = "Ending spin range", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
 		[XmlAttribute("endRotation")]
 		public string EndRotation;
+
+		[DefaultValue(0)]
+		[Numeric(DisplayName = "Count", Key = "count", GroupOrder = 10, Description = "Number of particles to emit", Minimum = 1, Maximum = 100)]
+		[XmlAttribute("count")]
+		public int Count;
 		#endregion
 
 		[XmlElement("keyframe")]
@@ -156,51 +157,68 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			string prefix = (Locked ? "🔒 " : "");
+			string text = DirectiveType;
 			switch (DirectiveType)
 			{
 				case "sprite":
-					return $"Add sprite ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
+					text = $"Add sprite ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
+					break;
 				case "move":
 					string time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 					string delay = string.IsNullOrEmpty(Delay) ? "" : $" delay {Delay}s";
 					string loop = Looped ? " (loop)" : "";
 					string props = GetProperties();
-					return $"Move sprite ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
+					text = $"Move sprite ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
+					break;
 				case "wait":
-					return "Wait for Animations";
+					text = "Wait for Animations";
+					break;
 				case "pause":
-					return "Pause";
+					text = "Pause";
+					break;
 				case "text":
-					return $"{Id}: {(Text ?? "Speech Bubble")}";
+					text = $"{Id}: {(Text ?? "Speech Bubble")}";
+					break;
 				case "clear":
-					return $"Clear bubble {Id}";
+					text = $"Clear bubble {Id}";
+					break;
 				case "fade":
 					if (Keyframes.Count > 0)
 					{
-						return "Fade";
+						text = "Fade";
 					}
 					else
 					{
 						time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 						loop = Looped ? " (loop)" : "";
-						return $"Fade to {Color} (opacity: {Opacity}) {time}{loop}";
+						text = $"Fade to {Color} (opacity: {Opacity}) {time}{loop}";
 					}
+					break;
 				case "clear-all":
-					return "Clear all bubbles";
+					text = "Clear all bubbles";
+					break;
 				case "camera":
 					time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 					loop = Looped ? " (loop)" : "";
 					props = GetProperties();
-					return $"Camera {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
+					text = $"Camera {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
+					break;
 				case "stop":
-					return $"Stop {Id}";
+					text = $"Stop {Id}";
+					break;
 				case "remove":
-					return $"Remove {Id}";
+					text = $"Remove {Id}";
+					break;
 				case "emitter":
-					return $"Add emitter ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
-				default:
-					return DirectiveType;
+					text = $"Add emitter ({Id}) {(!string.IsNullOrEmpty(Src) ? "- " + Src : "")} ({X},{Y})";
+					break;
+				case "emit":
+					text = $"Emit {Id} ({Count})";
+					break;
 			}
+
+			return $"{prefix}{text}";
 		}
 
 		[XmlIgnore]
@@ -300,6 +318,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("time")]
 		public string Time;
 
+		[Float(DisplayName = "Rate", Key = "rate", GroupOrder = 19, Description = "Emissions per second", Minimum = 0, Maximum = 100, DecimalPlaces = 2)]
+		[XmlAttribute("rate")]
+		public string Rate;
+
 		[Measurement(DisplayName = "X", Key = "x", GroupOrder = 10, Description = "Scene X position")]
 		[XmlAttribute("x")]
 		public string X;
@@ -342,6 +364,9 @@ namespace SPNATI_Character_Editor
 		[Float(DisplayName = "Zoom", Key = "zoom", GroupOrder = 17, Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("zoom")]
 		public string Zoom;
+
+		[XmlIgnore]
+		public bool Locked;
 
 		/// <summary>
 		/// Gets whether any animatable properties are currently set
@@ -422,12 +447,13 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			string prefix = (Locked ? "🔒 " : "");
 			string props = GetProperties();
 			if (string.IsNullOrEmpty(props))
 			{
 				props = " new frame";
 			}
-			return $"@{Time}s -{props}";
+			return $"{prefix}@{Time}s -{props}";
 		}
 
 		public virtual object Clone()

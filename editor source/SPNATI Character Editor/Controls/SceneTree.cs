@@ -969,6 +969,31 @@ namespace SPNATI_Character_Editor.Controls
 			tsPaste_Click(sender, e);
 			_clipboard = clipboard;
 		}
+
+		private void tsLock_Click(object sender, EventArgs e)
+		{
+			TreeNode selectedNode = treeScenes.SelectedNode;
+			if (selectedNode == null) { return; }
+			Scene scene = selectedNode.Tag as Scene;
+			if (scene != null)
+			{
+				if (!scene.Transition)
+				{
+					scene.Locked = !scene.Locked;
+					UpdateNode(scene);
+				}
+				return;
+			}
+			Directive directive = selectedNode.Tag as Directive;
+			if (directive != null)
+			{
+				if (directive.DirectiveType == "sprite" || directive.DirectiveType == "emitter" || directive.DirectiveType == "text")
+				{
+					directive.Locked = !directive.Locked;
+					UpdateNode(directive);
+				}
+			}
+		}
 	}
 
 	public class SceneTreeEventArgs

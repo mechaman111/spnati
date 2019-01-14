@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.Activities
 		private const int DefaultSuggestionCount = 10;
 
 		private Character _character;
+		private CharacterEditorData _editorData;
 
 		private int _maxSuggestions = 0;
 
@@ -40,6 +41,7 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			_editorData = CharacterDatabase.GetEditorData(_character);
 			int suggestions = Config.GetInt(SuggestionPreference);
 			if (suggestions == 0)
 			{
@@ -59,9 +61,9 @@ namespace SPNATI_Character_Editor.Activities
 			cboFilter.Items.Add("- All - ");
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				if (c == _character)
+				if (c.FolderName == "human" || c == _character)
 				{
-					continue; //can't respond to yourself
+					continue;
 				}
 				cboFilter.Items.Add(c);
 
@@ -101,6 +103,11 @@ namespace SPNATI_Character_Editor.Activities
 			List<Situation> suggestions = new List<Situation>();
 			List<Character> noteworthyCharacters = CharacterDatabase.Characters.Where(c => c != _character && CharacterDatabase.GetEditorData(c).NoteworthySituations.Count > 0).ToList();
 
+			if (filter == null && noteworthyCharacters.Count == 0)
+			{
+				return;
+			}
+
 			int attempts = max + 20; //it's possible to get into an infinite loop if there is a short supply of situations, so take the dumb way out of avoiding this by just trying a maximum number of times
 			while (suggestions.Count < max && attempts-- > 0)
 			{
@@ -120,20 +127,30 @@ namespace SPNATI_Character_Editor.Activities
 				if (!_showExisting)
 				{
 					//see if we've already responded
-					Case response = situation.LinkedCase.CreateResponse(currentCharacter, _character);
-
-					if (response != null)
+					bool responded = false;
+					if (situation.LinkedCase.Id > 0)
 					{
-						//See if they already have a response
-						Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, false));
-						if (match != null)
+						//if the case has an ID, then we can potentially speed things up
+						responded = _editorData.HasResponse(currentCharacter, situation.LinkedCase);
+					}
+					if (!responded)
+					{
+						Case response = situation.LinkedCase.CreateResponse(currentCharacter, _character);
+
+						if (response != null)
 						{
-							if (filter != null)
-							{
-								max--; //avoid an infinite loop of trying the same situation over and over
-							}
-							continue;
+							//See if they already have a response
+							Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, false));
+							responded = match != null;
 						}
+					}
+					if (responded)
+					{
+						if (filter != null)
+						{
+							max--; //avoid an infinite loop of trying the same situation over and over
+						}
+						continue;
 					}
 				}
 
@@ -225,7 +242,11 @@ namespace SPNATI_Character_Editor.Activities
 			}
 
 			//See if they already have a response
-			Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(_response) && c.MatchesStages(_response, false));
+			Case match = _editorData.GetResponse(_activeCharacter, _activeSituation.LinkedCase);
+			if (match == null)
+			{
+				match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(_response) && c.MatchesStages(_response, false));
+			}
 			if (match != null)
 			{
 				_response = match;
@@ -240,6 +261,8 @@ namespace SPNATI_Character_Editor.Activities
 					_response = null;
 					return;
 				}
+
+				_editorData.MarkResponse(_activeCharacter, _activeSituation.LinkedCase, _response);
 			}
 
 			if (_response.Stages.Count == 0)

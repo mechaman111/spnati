@@ -17,6 +17,7 @@
         <li><a href="#general">General Tab</a></li>
         <li><a href="#screens">Scene</a></li>
         <li><a href="#directives">Directives</a></li>
+        <li><a href="#emitters">Emitters</a></li>
     </ul>
     <article id="main">
         <section class="card" id="basics">
@@ -142,7 +143,7 @@
                 <li><span class="label">Zoom</span> Drag the slider to adjust the canvas' zoom level. Alternatively, hold Ctrl+mouse wheel inside the canvas to zoom it.</li>
                 <li><span class="label">Lock to Scene Camera</span> Toggling this on will lock the canvas to the camera's viewport and give you a preview of exactly what would actually be seen in-game. Everything outside the camera's viewport will be blacked out. You cannot pan the canvas or zoom while locked to the camera.</li>
                 <li><span class="label">Fit to screen</span> This will auto-zoom to try to give a best fit of the camera viewport to the canvas window, and recenter things to the center of the viewport.</li>
-                <li><span class="label">Play/stop selected animation</span> With an animatable directive selected, this toggle will loop the animation through its keyframes to give you an idea how the animation looks. Note that only the selected animation will play. If multiple sprites are being animated at once, you will need to play the whole scene to see them animate together.</li>
+                <li><span class="label">Play/stop selected animation</span> With an animatable directive selected, this toggle will loop the animation through its keyframes to give you an idea how the animation looks. Note that only the selected animation will play. If multiple sprites are being animated at once, you will need to play the whole scene to see them animate together. If an emitter is selected, this will also preview its emissions, allowing you to tweak the properties in realtime.</li>
                 <li><span class="label">Play/stop scene</span> This will play the scene from beginning to end, locking it to the camera's view and simulating how it would look in game. <strong>You should still test your epilogue in the actual game before submitting.</strong></li>
             </ul>
         </section>
@@ -181,6 +182,7 @@
                         <li><span class="label">Force X/Y</span> Global forces applied per frame to emitted objects, such as wind or gravity. +X is in the right direction, +Y is down.</li>
                         <li><span class="label">Start/End Color</span> The starting or ending color of an emitted object. This only applies to particles, not images. If a range is defined, the color will be a random value within the provided range.</li>
                         <li><span class="label">Start/End Alpha</span> The starting or ending transparency of an emitted object from 0 (transparent) to 100 (opaque). If a range is defined, the transparency will be a random value within the provided range.</li>
+                        <li><span class="label">Start/End Spin</span> The starting or ending spinning speed of an emitted object. If a range is defined, the spin will be a random value within the provided range.</li>
                         <li><span class="label">Easing</span> The determines the "easing" of the interpolation between an emitted object's starting and ending values. See <a href="#easings">Easings</a> for more information.</li>
                         <li><span class="label">Width/Height</span> Controls the size of emitted objects. By default, images use the source image's resolution. Particles use 10px.</li>
                     </ul>
@@ -287,6 +289,10 @@
                 <li><span class="label">Wrap</span> Upon reaching the end of the animation, it starts over, jumping back immediately to its initial value.</li>
                 <li><span class="label">Mirror</span> Upon reaching the end of the animation, it repeats in the reverse direction until reaching the start, continuining back and forth.</li>
             </ul>
+        </section>
+        <section class="card" id="emitters">
+            <h1>Emitters</h1>
+            Emitters are invisible objects in a scene that spit out sprites or particles over time which are moved using physics rather than animations. Each emitted object has starting and ending values for scale, color, speed, etc. which can be randomized to create neat effects. Like sprites, emitters can be moved around and rotated using animations. See the Add Emitter directive above for more details about what properties can be tweaked. You can preview an emitter the same way you preview an animation in the scene preview canvas.
         </section>
         <section class="card navCard" id="next">
             <a href="dialogue.html">« 6. Dialogue</a> | <a href="listing.html">8. Adding to the Game »</a>

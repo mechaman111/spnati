@@ -887,6 +887,13 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedObject != null)
 			{
+				bool locked = false;
+				Keyframe frame = _selectedObject.LinkedFrame;
+				if (frame != null)
+				{
+					locked = frame.Locked;
+				}
+
 				RectangleF bounds = ToAbsScreenRegion(_selectedObject);
 				if (_selectedObject.ObjectType == SceneObjectType.Sprite || _selectedObject.ObjectType == SceneObjectType.Emitter)
 				{
@@ -912,7 +919,7 @@ namespace SPNATI_Character_Editor.Controls
 							float py = Math.Abs(screenPt.Y - pivot.Y);
 							if (px <= SelectionLeeway && py <= SelectionLeeway)
 							{
-								return HoverContext.Pivot;
+								return locked ? HoverContext.Locked : HoverContext.Pivot;
 							}
 						}
 					}
@@ -929,7 +936,7 @@ namespace SPNATI_Character_Editor.Controls
 							screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
 							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
-							return HoverContext.Rotate;
+							return locked ? HoverContext.Locked : HoverContext.Rotate;
 						}
 					}
 
@@ -940,15 +947,15 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							if (dt <= SelectionLeeway)
 							{
-								return HoverContext.ScaleTop | HoverContext.ScaleLeft;
+								return locked ? HoverContext.Locked : HoverContext.ScaleTop | HoverContext.ScaleLeft;
 							}
 							else if (db <= SelectionLeeway)
 							{
-								return HoverContext.ScaleBottom | HoverContext.ScaleLeft;
+								return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleLeft;
 							}
 							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 							{
-								return HoverContext.ScaleLeft;
+								return locked ? HoverContext.Locked : HoverContext.ScaleLeft;
 							}
 						}
 
@@ -956,26 +963,26 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							if (dt <= SelectionLeeway)
 							{
-								return HoverContext.ScaleTop | HoverContext.ScaleRight;
+								return locked ? HoverContext.Locked : HoverContext.ScaleTop | HoverContext.ScaleRight;
 							}
 							else if (db <= SelectionLeeway)
 							{
-								return HoverContext.ScaleBottom | HoverContext.ScaleRight;
+								return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleRight;
 							}
 							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 							{
-								return HoverContext.ScaleRight;
+								return locked ? HoverContext.Locked : HoverContext.ScaleRight;
 							}
 						}
 
 						if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
 						{
-							return HoverContext.ScaleTop;
+							return locked ? HoverContext.Locked : HoverContext.ScaleTop;
 						}
 
 						if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
 						{
-							return HoverContext.ScaleBottom;
+							return locked ? HoverContext.Locked : HoverContext.ScaleBottom;
 						}
 					}
 				}
@@ -987,19 +994,19 @@ namespace SPNATI_Character_Editor.Controls
 						float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
 						if (dl > SelectionLeeway && screenPt.X < bounds.X && dl <= RotationLeeway)
 						{
-							return HoverContext.ArrowLeft;
+							return locked ? HoverContext.Locked : HoverContext.ArrowLeft;
 						}
 						else if (dl <= SelectionLeeway)
 						{
-							return HoverContext.SizeLeft;
+							return locked ? HoverContext.Locked : HoverContext.SizeLeft;
 						}
 						if (dr <= RotationLeeway && dr > SelectionLeeway && screenPt.X > bounds.X + bounds.Width)
 						{
-							return HoverContext.ArrowRight;
+							return locked ? HoverContext.Locked : HoverContext.ArrowRight;
 						}
 						else if (dr <= SelectionLeeway)
 						{
-							return HoverContext.SizeRight;
+							return locked ? HoverContext.Locked : HoverContext.SizeRight;
 						}
 					}
 					if (bounds.X + bounds.Width / 4 <= screenPt.X && screenPt.X <= bounds.X + bounds.Width - bounds.Width / 4)
@@ -1008,11 +1015,11 @@ namespace SPNATI_Character_Editor.Controls
 						float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
 						if (dt > SelectionLeeway && (screenPt.Y < bounds.Y && dt <= RotationLeeway))
 						{
-							return HoverContext.ArrowUp;
+							return locked ? HoverContext.Locked : HoverContext.ArrowUp;
 						}
 						else if (db > SelectionLeeway && screenPt.Y >= bounds.Y + bounds.Height && db <= RotationLeeway)
 						{
-							return HoverContext.ArrowDown;
+							return locked ? HoverContext.Locked : HoverContext.ArrowDown;
 						}
 					}
 				}
@@ -1020,7 +1027,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width &&
 					bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 				{
-					return HoverContext.Drag;
+					return locked ? HoverContext.Locked : HoverContext.Drag;
 				}
 			}
 
@@ -1028,53 +1035,56 @@ namespace SPNATI_Character_Editor.Controls
 			Rectangle viewport = GetViewportBounds();
 			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked)
 			{
-				bool canStretch = (_selectedDirective == null);
-				float dcl = Math.Abs(screenPt.X - viewport.X);
-				float dcr = Math.Abs(screenPt.X - (viewport.X + viewport.Width));
-				float dct = Math.Abs(screenPt.Y - viewport.Y);
-				float dcb = Math.Abs(screenPt.Y - (viewport.Y + viewport.Height));
-				if (dcl <= SelectionLeeway)
+				if (_selectedScene != null && !_selectedScene.Locked)
 				{
-					if (dct <= SelectionLeeway)
+					bool canStretch = (_selectedDirective == null);
+					float dcl = Math.Abs(screenPt.X - viewport.X);
+					float dcr = Math.Abs(screenPt.X - (viewport.X + viewport.Width));
+					float dct = Math.Abs(screenPt.Y - viewport.Y);
+					float dcb = Math.Abs(screenPt.Y - (viewport.Y + viewport.Height));
+					if (dcl <= SelectionLeeway)
 					{
-						return HoverContext.CameraZoomTopLeft;
-					}
-					else if (dcb <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomBottomLeft;
-					}
-					else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
-					{
-						return HoverContext.CameraSizeLeft;
-					}
-				}
-
-				if (dcr <= SelectionLeeway)
-				{
-					if (dct <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomTopRight;
-					}
-					else if (dcb <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomBottomRight;
-					}
-					else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
-					{
-						return HoverContext.CameraSizeRight;
-					}
-				}
-
-				if (canStretch)
-				{
-					if (dct <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
-					{
-						return HoverContext.CameraSizeTop;
+						if (dct <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomTopLeft;
+						}
+						else if (dcb <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomBottomLeft;
+						}
+						else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
+						{
+							return HoverContext.CameraSizeLeft;
+						}
 					}
 
-					if (dcb <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+					if (dcr <= SelectionLeeway)
 					{
-						return HoverContext.CameraSizeBottom;
+						if (dct <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomTopRight;
+						}
+						else if (dcb <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomBottomRight;
+						}
+						else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
+						{
+							return HoverContext.CameraSizeRight;
+						}
+					}
+
+					if (canStretch)
+					{
+						if (dct <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+						{
+							return HoverContext.CameraSizeTop;
+						}
+
+						if (dcb <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+						{
+							return HoverContext.CameraSizeBottom;
+						}
 					}
 				}
 			}
@@ -1083,10 +1093,14 @@ namespace SPNATI_Character_Editor.Controls
 			SceneObject obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.TextBoxes) ?? GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.Objects);
 			if (obj != null && obj.ObjectType != SceneObjectType.Other)
 			{
+				if (obj.LinkedFrame != null && obj.LinkedFrame.Locked)
+				{
+					return HoverContext.None;
+				}
 				return HoverContext.Select;
 			}
 
-			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked)
+			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked && !_selectedScene.Locked)
 			{
 				//finally see if we're within the camera viewport
 				if (viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width &&
@@ -1165,12 +1179,15 @@ namespace SPNATI_Character_Editor.Controls
 								case HoverContext.Pivot:
 									canvas.Cursor = Cursors.Cross;
 									break;
+								case HoverContext.Locked:
+									canvas.Cursor = Cursors.No;
+									break;
 								default:
 									canvas.Cursor = Cursors.Default;
 									break;
 							}
 
-							if (e.Button == MouseButtons.Left && context != HoverContext.None)
+							if (e.Button == MouseButtons.Left && context != HoverContext.None && context != HoverContext.Locked)
 							{
 								//start dragging
 								if (HoverContext.Object.HasFlag(context))
@@ -1920,6 +1937,16 @@ namespace SPNATI_Character_Editor.Controls
 				case "clear-all":
 					_scenePreview.TextBoxes.Clear();
 					break;
+				case "emit":
+					SceneEmitter emitter = _scenePreview.Objects.Find(o => o.Id == directive.Id && o.ObjectType == SceneObjectType.Emitter) as SceneEmitter;
+					if (emitter != null && (directive == _selectedDirective || _mode == EditMode.Playback))
+					{
+						for (int i = 0; i < directive.Count; i++)
+						{
+							emitter.Emit();
+						}
+					}
+					break;
 			}
 
 			if (_mode == EditMode.Edit)
@@ -2356,7 +2383,7 @@ namespace SPNATI_Character_Editor.Controls
 			HashSet<string> sourceType = new HashSet<string>();
 			bool allowCamera = false;
 			bool allowFade = false;
-			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop" || dir.DirectiveType == "remove")
+			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop" || dir.DirectiveType == "remove" || dir.DirectiveType == "emit")
 			{
 				sourceType.Add("sprite");
 				sourceType.Add("emitter");
@@ -2445,6 +2472,8 @@ namespace SPNATI_Character_Editor.Controls
 		CameraPan = 1 << 22,
 		Select = 1 << 23,
 		Pivot = 1 << 24,
+		Locked = 1 << 25,
+
 		ScaleVertical = ScaleTop | ScaleBottom,
 		ScaleHorizontal = ScaleLeft | ScaleRight,
 		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | Rotate |
