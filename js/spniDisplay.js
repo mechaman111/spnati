@@ -9,7 +9,7 @@
 function PoseSprite(id, src, onload, args) {
     this.id = id;
     this.player = args.player;
-    this.src = args.player.folder + src;
+    this.src = 'opponents/' + src;
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
@@ -308,7 +308,7 @@ function PoseDefinition ($xml, player) {
 }
 
 PoseDefinition.prototype.getUsedImages = function(stage) {
-    var baseFolder = this.player.folders ? this.player.getByStage(this.player.folders, stage) : this.player.folder;
+    var baseFolder = 'opponents/';
     var imageSet = {};
     
     this.sprites.forEach(function (sprite) {
