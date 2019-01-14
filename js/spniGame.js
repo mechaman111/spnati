@@ -20,10 +20,6 @@ $gameDialogues = [$("#game-dialogue-1"),
                   $("#game-dialogue-2"),
                   $("#game-dialogue-3"),
                   $("#game-dialogue-4")];
-$gameAdvanceButtons = [$("#game-advance-button-1"),
-                       $("#game-advance-button-2"),
-                       $("#game-advance-button-3"),
-                       $("#game-advance-button-4")];
 $gameImages = [$("#game-image-1"),
                $("#game-image-2"),
                $("#game-image-3"),
@@ -221,13 +217,11 @@ function updateGameVisual (player) {
         } else {
             /* hide their dialogue bubble */
             $gameDialogues[player-1].html("");
-            $gameAdvanceButtons[player-1].css({opacity : 0});
             $gameBubbles[player-1].hide();
         }
     }
     else {
         $gameDialogues[player-1].html("");
-        $gameAdvanceButtons[player-1].css({opacity : 0});
         $gameBubbles[player-1].hide();
 
 		$gameImages[player-1].hide();
@@ -474,7 +468,6 @@ function continueDealPhase () {
 	/* hide the dialogue bubbles */
     for (var i = 1; i < players.length; i++) {
         $gameDialogues[i-1].html("");
-        $gameAdvanceButtons[i-1].css({opacity : 0});
         $gameBubbles[i-1].hide();
     }
 

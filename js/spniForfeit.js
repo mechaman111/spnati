@@ -116,7 +116,6 @@ function tickForfeitTimers () {
                 for (var j = 1; j < players.length; j++) {
                     if (i != j) {
                         $gameDialogues[j-1].html("");
-                        $gameAdvanceButtons[j-1].css({opacity : 0});
                         $gameBubbles[j-1].hide();
                     }
                 }
