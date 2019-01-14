@@ -112,8 +112,6 @@ namespace SPNATI_Character_Editor.Controls
 
 			_outsideBrush = new SolidBrush(Color.FromArgb(80, 0, 10, 30));
 
-			propertyTable.RequiredFilter = RequireField;
-
 			_borderPen = new Pen(Brushes.DarkGray, 1);
 			_borderPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
 
@@ -1569,6 +1567,7 @@ namespace SPNATI_Character_Editor.Controls
 				propertyTable.RecordFilter = null;
 				propertyTable.Data = null;
 			}
+			propertyTable.RunFilter(HideRow);
 
 			BuildScene(false);
 			if (_selectedScene != oldScene)
@@ -1637,44 +1636,73 @@ namespace SPNATI_Character_Editor.Controls
 			return !_selectedScene.Transition;
 		}
 
-		/// <summary>
-		/// Determines which properties should display by default for selected nodes
-		/// </summary>
-		/// <param name="record"></param>
-		/// <returns></returns>
-		private bool RequireField(PropertyRecord record)
-		{
-			if (_selectedDirective == null)
-			{
-				return false;
-			}
-
-			DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(_selectedDirective.DirectiveType);
-			if (def == null)
-			{
-				return false;
-			}
-			if (_selectedKeyframe == null)
-			{
-				if (_selectedDirective.Keyframes.Count == 0 && def.IsAnimatable)
-				{
-					return def.RequiresAnimatedProperty(record.Key);
-				}
-				else
-				{
-					return def.RequiresProperty(record.Key);
-				}
-			}
-			else
-			{
-				return def.RequiresAnimatedProperty(record.Key);
-			}
-		}
-
 		private void propertyTable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			treeScenes.UpdateNode(propertyTable.Data);
 			BuildScene(false);
+			if (e.PropertyName == "Id")
+			{
+				propertyTable.RunFilter(HideRow);
+			}
+		}
+
+		private bool HideRow(PropertyRecord record, object data, object context)
+		{
+			if (_selectedDirective == null || record.Key == "id")
+			{
+				return true;
+			}
+			DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(_selectedDirective.DirectiveType);
+			if (def == null || !def.FilterPropertiesById)
+			{
+				return true;
+			}
+
+			string id = _selectedDirective.Id;
+			if (string.IsNullOrEmpty(id))
+			{
+				return false;
+			}
+
+			string closestMatch = "";
+			string matchType = "";
+
+			for (int i = 0; i < _selectedScene.Directives.Count; i++)
+			{
+				Directive directive = _selectedScene.Directives[i];
+				if (directive == _selectedDirective)
+				{
+					if (matchType.Length == 0)
+					{
+						return false; //nothing previously defined the ID, so we have no idea what this type is supposed to be
+					}
+					else
+					{
+						//hardcoded list for now. may want to move this to the DirectiveDefinition
+						string key = record.Key;
+						if (key == "rate" || key == "counter")
+						{
+							return matchType == "emitter";
+						}
+						else if (key == "scalex" || key == "scaley" || key == "alpha")
+						{
+							return matchType == "sprite";
+						}
+						else
+						{
+							return true; //other properties are assumed to be globally available
+						}
+					}
+				}
+
+				if (!string.IsNullOrEmpty(directive.Id) && directive.Id.StartsWith(id) && directive.Id.Length > closestMatch.Length)
+				{
+					closestMatch = directive.Id;
+					matchType = directive.DirectiveType;
+				}
+			}
+
+			return false; //if no ID is available, don't make anything available yet
 		}
 
 		/// <summary>

@@ -56,20 +56,12 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
-			foreach (string key in new string[] { "id", "src", "x", "y" })
-			{
-				def.RequiredProperties.Add(key);
-			}
 
 			def = provider.Create("text") as DirectiveDefinition;
 			def.Description = "Displays a speech bubble.";
 			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width" })
 			{
 				def.AllowedProperties.Add(key);
-			}
-			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width" })
-			{
-				def.RequiredProperties.Add(key);
 			}
 
 			def = provider.Create("clear") as DirectiveDefinition;
@@ -78,10 +70,6 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
-			foreach (string key in new string[] { "id" })
-			{
-				def.RequiredProperties.Add(key);
-			}
 
 			def = provider.Create("clear-all") as DirectiveDefinition;
 			def.Description = "Removes all speech bubbles.";
@@ -89,13 +77,10 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
+			def.FilterPropertiesById = true;
 			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
-			}
-			foreach (string key in new string[] { "id", "time", "loop" })
-			{
-				def.RequiredProperties.Add(key);
 			}
 			foreach (string key in new string[] { "time", "x", "y", "scalex", "scaley", "rotation", "alpha" })
 			{
@@ -109,10 +94,6 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
-			foreach (string key in new string[] { "time", "loop" })
-			{
-				def.RequiredProperties.Add(key);
-			}
 			foreach (string key in new string[] { "time", "x", "y", "zoom" })
 			{
 				def.RequiredAnimatedProperties.Add(key);
@@ -125,10 +106,6 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
-			foreach (string key in new string[] { "time", "loop" })
-			{
-				def.RequiredProperties.Add(key);
-			}
 			foreach (string key in new string[] { "time", "color", "alpha" })
 			{
 				def.RequiredAnimatedProperties.Add(key);
@@ -139,10 +116,6 @@ namespace SPNATI_Character_Editor
 			foreach (string key in new string[] { "id" })
 			{
 				def.AllowedProperties.Add(key);
-			}
-			foreach (string key in new string[] { "id" })
-			{
-				def.RequiredProperties.Add(key);
 			}
 
 			def = provider.Create("wait") as DirectiveDefinition;

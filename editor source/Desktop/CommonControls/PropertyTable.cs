@@ -583,5 +583,20 @@ namespace Desktop.CommonControls
 			PropertyRecord record = item.Tag as PropertyRecord;
 			AddControl(record);
 		}
+
+		/// <summary>
+		/// Runs a filter over added rows to hide and show them
+		/// </summary>
+		/// <param name="filter"></param>
+		public void RunFilter(Func<PropertyRecord, object, object, bool> filter)
+		{
+			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+			{
+				foreach (PropertyTableRow row in kvp.Value.Values)
+				{
+					row.Visible = filter(row.Record, Data, Context);
+				}
+			}
+		}
 	}
 }
