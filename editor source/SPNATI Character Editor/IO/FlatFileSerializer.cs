@@ -211,6 +211,16 @@ namespace SPNATI_Character_Editor
 							int filters1 = c1.HasFilters ? 1 : 0;
 							int filters2 = c2.HasFilters ? 1 : 0;
 							compare = filters1.CompareTo(filters2);
+							if (compare == 0)
+							{
+								//5th key: actual filters
+								compare = Stage.GetSortKey(c1).CompareTo(Stage.GetSortKey(c2));
+
+								if (compare == 0 && c1.Lines.Count > 0 && c2.Lines.Count > 0)
+								{
+									compare = c1.Lines[0].Text.CompareTo(c2.Lines[0].Text.ToString());
+								}
+							}
 						}
 					}
 				}

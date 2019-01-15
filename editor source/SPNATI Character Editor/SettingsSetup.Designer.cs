@@ -41,8 +41,10 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.valAutoSave = new System.Windows.Forms.NumericUpDown();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.chkIntellisense = new System.Windows.Forms.CheckBox();
 			this.chkHideImages = new System.Windows.Forms.CheckBox();
+			this.chkIntellisense = new System.Windows.Forms.CheckBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.txtFilter = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -146,16 +148,6 @@
 			this.toolTip1.SetToolTip(this.valAutoSave, "Number of minutes to auto-save characters you\'ve written. Use 0 to disable auto-s" +
         "ave.");
 			// 
-			// chkIntellisense
-			// 
-			this.chkIntellisense.AutoSize = true;
-			this.chkIntellisense.Location = new System.Drawing.Point(15, 91);
-			this.chkIntellisense.Name = "chkIntellisense";
-			this.chkIntellisense.Size = new System.Drawing.Size(119, 17);
-			this.chkIntellisense.TabIndex = 8;
-			this.chkIntellisense.Text = "Variable Intellisense";
-			this.chkIntellisense.UseVisualStyleBackColor = true;
-			// 
 			// chkHideImages
 			// 
 			this.chkHideImages.AutoSize = true;
@@ -167,6 +159,33 @@
 			this.toolTip1.SetToolTip(this.chkHideImages, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
         "ogue lines.");
 			this.chkHideImages.UseVisualStyleBackColor = true;
+			this.chkHideImages.CheckedChanged += new System.EventHandler(this.chkHideImages_CheckedChanged);
+			// 
+			// chkIntellisense
+			// 
+			this.chkIntellisense.AutoSize = true;
+			this.chkIntellisense.Location = new System.Drawing.Point(15, 91);
+			this.chkIntellisense.Name = "chkIntellisense";
+			this.chkIntellisense.Size = new System.Drawing.Size(119, 17);
+			this.chkIntellisense.TabIndex = 8;
+			this.chkIntellisense.Text = "Variable Intellisense";
+			this.chkIntellisense.UseVisualStyleBackColor = true;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(291, 92);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(143, 13);
+			this.label4.TabIndex = 10;
+			this.label4.Text = "Exclude images starting with:";
+			// 
+			// txtFilter
+			// 
+			this.txtFilter.Location = new System.Drawing.Point(440, 89);
+			this.txtFilter.Name = "txtFilter";
+			this.txtFilter.Size = new System.Drawing.Size(92, 20);
+			this.txtFilter.TabIndex = 11;
 			// 
 			// SettingsSetup
 			// 
@@ -175,6 +194,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(625, 146);
+			this.Controls.Add(this.txtFilter);
+			this.Controls.Add(this.label4);
 			this.Controls.Add(this.chkHideImages);
 			this.Controls.Add(this.chkIntellisense);
 			this.Controls.Add(this.valAutoSave);
@@ -213,5 +234,7 @@
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.CheckBox chkIntellisense;
 		private System.Windows.Forms.CheckBox chkHideImages;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox txtFilter;
 	}
 }

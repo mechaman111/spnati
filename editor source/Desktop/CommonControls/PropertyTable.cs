@@ -453,7 +453,12 @@ namespace Desktop.CommonControls
 							break;
 						}
 					}
-				}				
+					for (int i = 0; i < pnlRecords.Controls.Count; i++)
+					{
+						Control rowCtl = pnlRecords.Controls[i];
+						rowCtl.TabIndex = pnlRecords.Controls.Count - i - 1;
+					}
+				}
 			}
 
 			return ctl;

@@ -249,6 +249,15 @@ namespace SPNATI_Character_Editor
 			get { return !GetBoolean(Settings.HideNoPrefix); }
 			set { Set(Settings.HideNoPrefix,! value); }
 		}
+
+		/// <summary>
+		/// Filter of prefixes to hide from dialogue poses
+		/// </summary>
+		public static string PrefixFilter
+		{
+			get { return GetString(Settings.PrefixFilter); }
+			set { Set(Settings.PrefixFilter, value); }
+		}
 	}
 
 	public static class Settings
@@ -260,6 +269,7 @@ namespace SPNATI_Character_Editor
 		public static readonly string AutoSaveInterval = "autosave";
 		public static readonly string DisableIntellisense = "nointellisense";
 		public static readonly string HideNoPrefix = "hidenoprefix";
+		public static readonly string PrefixFilter = "prefixfilter";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";

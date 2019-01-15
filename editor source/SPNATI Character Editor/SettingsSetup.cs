@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor
 			valAutoSave.Value = Config.AutoSaveInterval;
 			chkIntellisense.Checked = Config.UseIntellisense;
 			chkHideImages.Checked = Config.UsePrefixlessImages;
+			txtFilter.Text = Config.PrefixFilter;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -60,6 +61,7 @@ namespace SPNATI_Character_Editor
 			Config.UserName = txtUserName.Text;
 			Config.UseIntellisense = chkIntellisense.Checked;
 			Config.UsePrefixlessImages = chkHideImages.Checked;
+			Config.PrefixFilter = txtFilter.Text;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Close();
@@ -69,6 +71,11 @@ namespace SPNATI_Character_Editor
 		{
 			DialogResult = DialogResult.Cancel;
 			Close();
+		}
+
+		private void chkHideImages_CheckedChanged(object sender, EventArgs e)
+		{
+			txtFilter.Enabled = chkHideImages.Checked;
 		}
 	}
 }
