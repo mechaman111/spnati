@@ -2267,6 +2267,36 @@ function SceneTransition(fromView, toView, transitionDirective, overlay) {
     case "wipe-down":
       this.effect = this.wipeDown;
       break;
+    case "slide-right":
+      this.effect = this.slideRight;
+      break;
+    case "slide-left":
+      this.effect = this.slideLeft;
+      break;
+    case "slide-up":
+      this.effect = this.slideUp;
+      break;
+    case "slide-down":
+      this.effect = this.slideDown;
+      break;
+    case "barn-open-horizontal":
+      this.effect = this.barnOpenHorizontal;
+      break;
+    case "barn-close-horizontal":
+      this.effect = this.barnCloseHorizontal;
+      break;
+    case "barn-open-vertical":
+      this.effect = this.barnOpenVertical;
+      break;
+    case "barn-close-vertical":
+      this.effect = this.barnCloseVertical;
+      break;
+    case "fly-through":
+      this.effect = this.flyThrough;
+      break;
+    case "spin":
+      this.effect = this.spin;
+      break;
     default:
       this.effect = this.cut;
       break;
@@ -2333,7 +2363,7 @@ SceneTransition.prototype.fade = function (t) {
   viewport2.css("opacity", t < 0.5 ? 0 : 1);
 }
 
-SceneTransition.prototype.wipeRight = function (t) {
+SceneTransition.prototype.slideRight = function (t) {
   var left = Math.ceil(this.view2.viewportWidth * (1 - t));
   this.view2.$viewport.css({
     "transform": "translate(calc(-50% - " + left + "px), -50%)",
@@ -2341,7 +2371,7 @@ SceneTransition.prototype.wipeRight = function (t) {
   });
 }
 
-SceneTransition.prototype.wipeLeft = function (t) {
+SceneTransition.prototype.slideLeft = function (t) {
   var left = Math.ceil(this.view2.viewportWidth * (1 - t));
   this.view2.$viewport.css({
     "transform": "translate(calc(-50% + " + left + "px), -50%)",
@@ -2349,7 +2379,7 @@ SceneTransition.prototype.wipeLeft = function (t) {
   });
 }
 
-SceneTransition.prototype.wipeUp = function (t) {
+SceneTransition.prototype.slideUp = function (t) {
   var top = Math.ceil(this.view2.viewportHeight * (1 - t));
   this.view2.$viewport.css({
     "transform": "translate(-50%, calc(-50% + " + top + "px)",
@@ -2357,10 +2387,101 @@ SceneTransition.prototype.wipeUp = function (t) {
   });
 }
 
-SceneTransition.prototype.wipeDown = function (t) {
+SceneTransition.prototype.slideDown = function (t) {
   var top = Math.ceil(this.view2.viewportHeight * (1 - t));
   this.view2.$viewport.css({
     "transform": "translate(-50%, calc(-50% - " + top + "px)",
     "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeLeft = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, " + left + "px)",
+  });
+}
+
+SceneTransition.prototype.wipeRight = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + (this.view2.viewportWidth - left) + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeUp = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeDown = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.barnOpenHorizontal = function (t) {
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + (this.view2.viewportWidth / 2 + t * this.view2.viewportWidth / 2) + "px, " + this.view2.viewportHeight + "px, " + (this.view2.viewportWidth / 2 - t * this.view2.viewportWidth / 2) + "px)",
+  });
+}
+
+SceneTransition.prototype.barnCloseHorizontal = function (t) {
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "clip": "rect(0, " + (this.view2.viewportWidth / 2 + (1 - t) * this.view2.viewportWidth / 2) + "px, " + this.view2.viewportHeight + "px, " + (this.view2.viewportWidth / 2 - (1 - t) * this.view2.viewportWidth / 2) + "px)",
+  });
+}
+
+SceneTransition.prototype.barnOpenVertical = function (t) {
+  this.view2.$viewport.css({
+    "clip": "rect(" + (this.view2.viewportHeight / 2 - t * this.view2.viewportHeight / 2) + "px, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight / 2 + t * this.view2.viewportHeight / 2) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.barnCloseVertical = function (t) {
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "clip": "rect(" + (this.view2.viewportHeight / 2 - (1 - t) * this.view2.viewportHeight / 2) + "px, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight / 2 + (1 - t) * this.view2.viewportHeight / 2) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.spin = function (t) {
+  var viewport1 = this.view1.$viewport;
+  var viewport2 = this.view2.$viewport;
+
+  if (t < 0.5) {
+    t *= 2;
+    viewport1.css("opacity", 1);
+    viewport2.css("opacity", 0);
+    this.view1.$viewport.css({
+      "transform": "translate(-50%, -50%) rotate(" + t * 1080 + "deg) scale(" + (5 * t + 1) + ")",
+    });
+  }
+  else {
+    t = (1 - (t - 0.5) * 2);
+    viewport1.css("opacity", 0);
+    viewport2.css("opacity", 1);
+    this.view2.$viewport.css({
+      "transform": "translate(-50%, -50%) rotate(" + t * 1080 + "deg) scale(" + (5 * t + 1) + ")",
+    });
+  }
+}
+
+SceneTransition.prototype.flyThrough = function (t) {
+  var zoom = lerp(1, 2, t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, -50%) scale(" + zoom + ")",
+    "opacity": (1 - t),
+  });
+  zoom = lerp(0.5, 1, t);
+  this.view2.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, -50%) scale(" + zoom + ")",
+    "opacity": t,
   });
 }
