@@ -890,7 +890,7 @@ def make_meta_xml(data, filename):
 			pic = data["pic"]
 			if pic == "":
 				pic = "0-calm"
-                        o.subElement("pic", pic + ".png")
+			o.subElement("pic", pic + ".png")
 
 		elif value == "layers":
 			#the number of layers of clothing is taken directly from the clothing data
