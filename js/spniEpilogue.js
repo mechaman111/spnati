@@ -2279,6 +2279,30 @@ function SceneTransition(fromView, toView, transitionDirective, overlay) {
     case "slide-down":
       this.effect = this.slideDown;
       break;
+    case "push-left":
+      this.effect = this.pushLeft;
+      break;
+    case "push-right":
+      this.effect = this.pushRight;
+      break;
+    case "push-up":
+      this.effect = this.pushUp;
+      break;
+    case "push-down":
+      this.effect = this.pushDown;
+      break;
+    case "uncover-left":
+      this.effect = this.uncoverLeft;
+      break;
+    case "uncover-right":
+      this.effect = this.uncoverRight;
+      break;
+    case "uncover-up":
+      this.effect = this.uncoverUp;
+      break;
+    case "uncover-down":
+      this.effect = this.uncoverDown;
+      break;
     case "barn-open-horizontal":
       this.effect = this.barnOpenHorizontal;
       break;
@@ -2420,6 +2444,98 @@ SceneTransition.prototype.wipeDown = function (t) {
   var top = Math.ceil(this.view2.viewportHeight * (1 - t));
   this.view2.$viewport.css({
     "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushRight = function (t) {
+  var left = Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view1.viewportWidth * (1 - t)) + "px, " + this.view1.viewportHeight + "px, 0)",
+  });
+
+  left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% - " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, " + left + "px)",
+  });
+}
+
+SceneTransition.prototype.pushLeft = function (t) {
+  var left = -Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view1.viewportWidth + "px, " + this.view1.viewportHeight + "px, " + (-left) + "px)",
+  });
+
+  left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view2.viewportWidth - left) + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushUp = function (t) {
+  var top = -Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(" + (-top) + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushDown = function (t) {
+  var top = Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight * (1 - t)) + "px, 0)",
+  });
+
+  top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% - " + top + "px)",
+    "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverRight = function (t) {
+  var left = Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view1.viewportWidth * (1 - t)) + "px, " + this.view1.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverLeft = function (t) {
+  var left = -Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view1.viewportWidth + "px, " + this.view1.viewportHeight + "px, " + (-left) + "px)",
+  });
+}
+
+SceneTransition.prototype.uncoverUp = function (t) {
+  var top = -Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(" + (-top) + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverDown = function (t) {
+  var top = Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight * (1 - t)) + "px, 0)",
   });
 }
 
