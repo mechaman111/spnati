@@ -84,7 +84,7 @@ def get_cases(player_dictionary, situation, stage):
 
 	result_list = list()
 	def is_generic_line(line_data):
-		for target_type in all_targets:
+		for target_type in all_targets + ['tests', 'conditions']:
 			if target_type in line_data:
 				return False
 		return True
