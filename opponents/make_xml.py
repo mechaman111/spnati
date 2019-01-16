@@ -346,6 +346,8 @@ def write_xml(data, filename):
 						text_box_xml.subElement(arrow_tag, text_box[arrow_tag])
 					text_box_xml.subElement("content", capitalizeDialogue(text_box[text_tag]))
 
+			if not 'scenes' in ending:
+				continue
 			for scene in ending["scenes"]:
 				scene_xml = ending_xml.subElement("scene", None, None, blank_after=True)
 				for cond_type in scene_attributes:
