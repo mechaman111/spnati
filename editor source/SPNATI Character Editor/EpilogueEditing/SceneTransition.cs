@@ -70,6 +70,30 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				case "slide-down":
 					Effect = SlideDown;
 					break;
+				case "push-right":
+					Effect = PushRight;
+					break;
+				case "push-left":
+					Effect = PushLeft;
+					break;
+				case "push-up":
+					Effect = PushUp;
+					break;
+				case "push-down":
+					Effect = PushDown;
+					break;
+				case "uncover-right":
+					Effect = UncoverRight;
+					break;
+				case "uncover-left":
+					Effect = UncoverLeft;
+					break;
+				case "uncover-up":
+					Effect = UncoverUp;
+					break;
+				case "uncover-down":
+					Effect = UncoverDown;
+					break;
 				case "barn-open-horizontal":
 					Effect = OpenBarnDoorHorizontal;
 					break;
@@ -210,6 +234,54 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public void WipeDown(float t)
 		{
 			View2.CropBottom = (int)((1 - t) * View2.Height);
+		}
+
+		public void PushRight(float t)
+		{
+			View1.X = (int)(View1.Width * t);
+			View2.X = -(int)(View2.Width * (1 - t));
+		}
+
+		public void PushLeft(float t)
+		{
+			View1.X = -(int)(View1.Width * t);
+			View2.X = (int)(View2.Width * (1 - t));
+		}
+
+		public void PushUp(float t)
+		{
+			View1.Y = -(int)(View1.Height * t);
+			View2.Y = (int)(View2.Height * (1 - t));
+		}
+
+		public void PushDown(float t)
+		{
+			View1.Y = (int)(View1.Height * t);
+			View2.Y = -(int)(View2.Height * (1 - t));
+		}
+
+		public void UncoverRight(float t)
+		{
+			View1.OnTop = true;
+			View1.X = (int)(t * View1.Width);
+		}
+
+		public void UncoverLeft(float t)
+		{
+			View1.OnTop = true;
+			View1.X = -(int)(View1.Width * t);
+		}
+
+		public void UncoverUp(float t)
+		{
+			View1.OnTop = true;
+			View1.Y = -(int)(t * View2.Height);
+		}
+
+		public void UncoverDown(float t)
+		{
+			View1.OnTop = true;
+			View1.Y = (int)(t * View2.Height);
 		}
 
 		public void OpenBarnDoorHorizontal(float t)
