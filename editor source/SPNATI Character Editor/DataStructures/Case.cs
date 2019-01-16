@@ -83,11 +83,11 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("hasHand")]
 		public string HasHand;
 
-		[PlayerRange(DisplayName = "Total Males", GroupName = "Table", GroupOrder = 2, Description = "Number of males playing (including this character and the player)")]
+		[NumericRange(DisplayName = "Total Males", GroupName = "Table", GroupOrder = 2, Description = "Number of males playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalMales")]
 		public string TotalMales;
 
-		[PlayerRange(DisplayName = "Total Females", GroupName = "Table", GroupOrder = 1, Description = "Number of females playing (including this character and the player)")]
+		[NumericRange(DisplayName = "Total Females", GroupName = "Table", GroupOrder = 1, Description = "Number of females playing (including this character and the player)", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalFemales")]
 		public string TotalFemales;
 
@@ -107,23 +107,23 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("consecutiveLosses")]
 		public string ConsecutiveLosses;
 
-		[PlayerRange(DisplayName = "Total Playing", GroupName = "Table", GroupOrder = 3, Description = "Number of players still in the game")]
+		[NumericRange(DisplayName = "Total Playing", GroupName = "Table", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalAlive")]
 		public string TotalPlaying;
 
-		[PlayerRange(DisplayName = "Total Exposed", GroupName = "Table", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch")]
+		[NumericRange(DisplayName = "Total Exposed", GroupName = "Table", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalExposed")]
 		public string TotalExposed;
 
-		[PlayerRange(DisplayName = "Total Naked", GroupName = "Table", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing")]
+		[NumericRange(DisplayName = "Total Naked", GroupName = "Table", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalNaked")]
 		public string TotalNaked;
 
-		[PlayerRange(DisplayName = "Total Masturbating", GroupName = "Table", GroupOrder = 6, Description = "Number of players who are currently masturbating")]
+		[NumericRange(DisplayName = "Total Masturbating", GroupName = "Table", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalMasturbating")]
 		public string TotalMasturbating;
 
-		[PlayerRange(DisplayName = "Total Finished", GroupName = "Table", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game")]
+		[NumericRange(DisplayName = "Total Finished", GroupName = "Table", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
 		[XmlAttribute("totalFinished")]
 		public string TotalFinished;
 
