@@ -228,7 +228,7 @@ def create_case_xml(base_element, lines):
 
 			if "tests" in line_data:
 				for test in line_data["tests"]:
-					case_xml_element.subElement("test", [('expr', test[0]), ('value', test[1])])
+					case_xml_element.subElement("test", None, [('expr', test[0]), ('value', test[1])])
 
 
 		#now add the individual line
