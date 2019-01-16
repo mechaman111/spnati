@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public int Id;
 
-		[RecordSelect(DisplayName = "Target", GroupName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase")]
+		[RecordSelect(DisplayName = "Target", GroupName = "Target", GroupOrder = 0, Description = "Character performing the action", RecordType = typeof(Character), RecordFilter = "FilterTargetByCase", AllowCreate = true)]
 		[XmlAttribute("target")]
 		public string Target;
 
@@ -60,7 +60,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("targetStatus")]
 		public string TargetStatus;
 
-		[RecordSelect(DisplayName = "Also Playing", GroupName = "Also Playing", GroupOrder = 0, Description = "Character that is playing but not performing the current action", RecordType = typeof(Character))]
+		[RecordSelect(DisplayName = "Also Playing", GroupName = "Also Playing", GroupOrder = 0, Description = "Character that is playing but not performing the current action", RecordType = typeof(Character), AllowCreate = true)]
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
