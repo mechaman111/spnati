@@ -411,6 +411,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					float d = -p0 + 3 * p1 - 3 * p2 + p3;
 					float p = 0.5f * (a + (b * t) + (c * t * t) + (d * t * t * t));
 					return p;
+				case "none":
+					return lastValue;
 				default:
 					return (nextValue - lastValue) * t + lastValue;
 			}

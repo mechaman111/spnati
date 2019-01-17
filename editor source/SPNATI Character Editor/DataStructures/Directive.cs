@@ -52,7 +52,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("ease")]
 		public string EasingMethod;
 
-		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 41, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline" })]
+		[ComboBox(DisplayName = "Tweening Function", Key = "tween", GroupOrder = 41, Description = "Tweening function for how positions between keyframes are computed", Options = new string[] { "linear", "spline", "none" })]
 		[XmlAttribute("interpolation")]
 		public string InterpolationMethod;
 

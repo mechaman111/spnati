@@ -98,6 +98,11 @@ namespace SPNATI_Character_Editor
 		[XmlArrayItem("clothing")]
 		public List<Clothing> Wardrobe = new List<Clothing>();
 
+		[XmlNewLine]
+		[XmlArray("poses")]
+		[XmlArrayItem("pose")]
+		public List<Pose> Poses = new List<Pose>();
+
 		[XmlNewLine(XmlNewLinePosition.Both)]
 		[XmlElement("behaviour")]
 		public Behaviour Behavior = new Behaviour();
