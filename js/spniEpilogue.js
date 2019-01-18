@@ -144,6 +144,10 @@ function lerp(a, b, t)
  * Interpolation functions for animation movement interpolation
  ************************************************************/
 var interpolationModes = {
+    "none": function noInterpolation(prop, start, end, t, frames, index) {
+        return start;
+        
+    },
 	"linear": function linear(prop, start, end, t, frames, index)
 	{
 		return lerp(start, end, t);
