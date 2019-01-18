@@ -6,21 +6,24 @@
 /* NOTE: These are basically the same as epilogue engine sprites.
  * There's a _lot_ of common code here that can probably be merged.
  */
-function PoseSprite(id, src, onload, args) {
+function PoseSprite(id, src, onload, pose, args) {
+    this.pose = pose;
     this.id = id;
     this.player = args.player;
     this.src = 'opponents/' + src;
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
-    this.height = args.height || '100%';
-    this.width = args.width;
     this.scaleX = args.scaleX || 1;
     this.scaleY = args.scaleY || 1;
     this.rotation = args.rotation || 0;
     this.alpha = args.alpha;
     this.pivotX = args.pivotX;
     this.pivotY = args.pivotY;
+    
+    this.nativeSizeX = args.width;
+    this.nativeSizeY = args.height;
+    this.aspectRatio = (this.nativeSizeX / this.nativeSizeY);
     
     this.vehicle = document.createElement('div');
     this.vehicle.id = id;
@@ -44,20 +47,34 @@ function PoseSprite(id, src, onload, args) {
     $(this.vehicle).css("z-index", this.z);
 }
 
+PoseSprite.prototype.toDisplayY = function(y) {
+    return y * this.pose.getHeightScaleFactor();
+}
+
+PoseSprite.prototype.toDisplayX = function(x) {
+    var actualHeight = this.nativeSizeY * this.pose.getHeightScaleFactor();
+    var actualWidth = actualHeight * this.aspectRatio;
+    
+    return x * (actualWidth / this.nativeSizeX);
+}
+
 PoseSprite.prototype.draw = function() {
     $(this.vehicle).css({
       "position": "absolute",
       "left": "50%",
-      "transform":  "translateX(-50%) translateX("+this.x+"px) translateY(" + this.y + "px)",
+      "transform":  "translateX(-50%) translateX("+this.toDisplayX(this.x)+"px) translateY(" + this.toDisplayY(this.y) + "px)",
       "transform-origin": "top left",
       "opacity": this.alpha / 100,
       "height": '100%'
     });
     
+    var actualHeight = this.nativeSizeY * this.pose.getHeightScaleFactor();
+    var actualWidth = actualHeight * this.aspectRatio;
+    
     $(this.img).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
-      'height': this.height,
-      'width': this.width
+      'height': actualHeight+"px",
+      'width': actualWidth+"px"
     });
     
     if (this.img.src !== this.src) {
@@ -66,7 +83,8 @@ PoseSprite.prototype.draw = function() {
 }
 
 
-function PoseAnimation (targetSprite, args) {
+function PoseAnimation (targetSprite, pose, args) {
+    this.pose = pose;
     this.target = targetSprite;
     this.elapsed = 0;
     this.looped = args.looped || false;
@@ -140,9 +158,10 @@ PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
 }
 
 
-function Pose(poseDef) {
+function Pose(poseDef, display) {
     this.id = poseDef.id;
     this.player = poseDef.player;
+    this.display = display;
     this.sprites = {};
     this.totalSprites = 0;
     this.animations = [];
@@ -151,6 +170,7 @@ function Pose(poseDef) {
     this.onLoadComplete = null;
     this.lastUpdateTS = null;
     this.active = false;
+    this.baseHeight = poseDef.baseHeight || 1400;
     
     var container = document.createElement('div');
     $(container).addClass("opponent-image custom-pose").css({
@@ -160,7 +180,7 @@ function Pose(poseDef) {
     this.container = container;
     
     poseDef.sprites.forEach(function (def) {
-        var sprite = new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), def);
+        var sprite = new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), this, def);
         this.sprites[def.id] = sprite
         this.totalSprites++;
         
@@ -171,9 +191,13 @@ function Pose(poseDef) {
         var target = this.sprites[def.id];
         if (!target) return;
         
-        var anim = new PoseAnimation(target, def);
+        var anim = new PoseAnimation(target, this, def);
         this.animations.push(anim);
     }.bind(this));
+}
+
+Pose.prototype.getHeightScaleFactor = function() {
+    return this.display.height() / this.baseHeight;
 }
 
 Pose.prototype.onSpriteLoaded = function() {
@@ -269,6 +293,7 @@ function parseDirective ($xml) {
 
 function PoseDefinition ($xml, player) {
     this.id = $xml.attr('id').trim();
+    this.baseHeight = $xml.attr('baseHeight');
     
     this.sprites = [];
     $xml.find('sprite').each(function (i, elem) {
@@ -329,6 +354,11 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.label = labelElem;
     
     this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
+    window.addEventListener('resize', this.onResize.bind(this));
+}
+
+OpponentDisplay.prototype.height = function () {
+    return this.imageArea.height();
 }
 
 OpponentDisplay.prototype.hideBubble = function () {
@@ -351,6 +381,12 @@ OpponentDisplay.prototype.drawPose = function (pose) {
         this.pose = pose;
         this.imageArea.append(pose.container);
         pose.draw();
+    }
+}
+
+OpponentDisplay.prototype.onResize = function () {
+    if (this.pose) {
+        this.pose.draw();
     }
 }
 
@@ -377,7 +413,7 @@ OpponentDisplay.prototype.update = function(player) {
         var key = chosenState.image.split(':', 2)[1];
         var poseDef = player.poses[key];
         if (poseDef) {
-            this.drawPose(new Pose(poseDef));
+            this.drawPose(new Pose(poseDef, this));
         } else {
             this.clearPose();
         }
@@ -483,7 +519,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.removeClass("smooth-button-green");
         this.selectButton.addClass("smooth-button-red");
         
-        if (typeof(this.pose) === "string") {
+        if (!this.pose) {
             this.simpleImage.one('load', function() {
                 this.bubble.show();
                 this.simpleImage.css('height', player.scale + '%').show();
@@ -494,7 +530,6 @@ MainSelectScreenDisplay.prototype.update = function (player) {
                 this.imageArea.css('height', player.scale + '%').show();
             }.bind(this);
         }
-        
     }
 }
 
