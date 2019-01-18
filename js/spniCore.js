@@ -459,6 +459,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
     this.poses = {};
+    this.labelOverridden = false;
 
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
@@ -522,7 +523,7 @@ Opponent.prototype.onSelected = function(individual) {
 }
 
 Opponent.prototype.updateLabel = function () {
-    if (this.labels) this.label = this.getByStage(this.labels);
+    if (this.labels && !this.labelOverridden) this.label = this.getByStage(this.labels);
 }
 
 Opponent.prototype.updateFolder = function () {

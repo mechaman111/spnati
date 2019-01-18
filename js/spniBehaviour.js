@@ -103,6 +103,10 @@ function State($xml) {
 		// It seems that location was specified as a number without "%"
 		this.location = this.location + "%";
 	}
+	
+	this.setIntelligence = $xml.attr('set-intelligence');
+	this.setGender = $xml.attr('set-gender');
+	this.setLabel = $xml.attr('set-label');
     
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -1093,4 +1097,26 @@ function commitAllBehaviourUpdates () {
             p.commitBehaviourUpdate();
         }
     });
+	
+	/* special: apply per-state attribute updates
+	 * We only do this here to ensure that all players get a consistent view
+	 * of player attributes throughout the commit phase.
+	 * (this is particularly important with player labels)
+	 */
+	players.forEach(function (p) {
+		if (p && p !== players[HUMAN_PLAYER] && p.chosenState) {
+			if (p.chosenState.setIntelligence) {
+				p.intelligence = p.chosenState.setIntelligence;
+			}
+			
+			if (p.chosenState.setLabel) {
+				p.label = p.chosenState.setLabel;
+				p.labelOverridden = true;
+			}
+			
+			if (p.chosenState.setGender) {
+				p.gender = p.chosenState.setGender;
+			}
+		}
+	})
 }
