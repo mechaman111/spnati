@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Desktop.CommonControls.PropertyControls
 {
@@ -43,7 +44,8 @@ namespace Desktop.CommonControls.PropertyControls
 				{
 					valueStr = _defaultValue;
 				}
-				if (!float.TryParse(valueStr, out value))
+				
+				if (!float.TryParse(valueStr, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
 				{
 					valValue.Text = "";
 				}
@@ -88,7 +90,7 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 				else
 				{
-					SetValue(value.ToString());
+					SetValue(value.ToString(CultureInfo.InvariantCulture));
 				}
 			}
 			else

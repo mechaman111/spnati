@@ -56,9 +56,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			//ColDelete.FlatStyle = FlatStyle.Popup;
-			//ColDelete.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
-
 			ColPerTarget.FalseValue = false;
 
 			_intellisense = new IntellisenseControl();
@@ -196,7 +193,10 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedStage == null)
 			{
 				images.AddRange(_imageLibrary.GetImages(0));
-				images.AddRange(_imageLibrary.GetImages(-1));
+				if (Config.UsePrefixlessImages)
+				{
+					images.AddRange(_imageLibrary.GetImages(-1));
+				}
 				foreach (var image in images)
 				{
 					col.Items.Add(image);
@@ -205,7 +205,10 @@ namespace SPNATI_Character_Editor.Controls
 			else
 			{
 				images.AddRange(_imageLibrary.GetImages(stageId));
-				images.AddRange(_imageLibrary.GetImages(-1));
+				if (Config.UsePrefixlessImages)
+				{
+					images.AddRange(_imageLibrary.GetImages(-1));
+				}
 
 				foreach (var image in images)
 				{

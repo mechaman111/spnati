@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
@@ -31,7 +32,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Looped = directive.Looped;
 			if (!string.IsNullOrEmpty(directive.Delay))
 			{
-				float.TryParse(directive.Delay, out Delay);
+				float.TryParse(directive.Delay, NumberStyles.Float, CultureInfo.InvariantCulture, out Delay);
 			}
 			EasingMethod = directive.EasingMethod;
 			TweenMethod = directive.InterpolationMethod;

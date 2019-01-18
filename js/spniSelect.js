@@ -662,7 +662,7 @@ function suggestionSelected(slot, quad) {
             
         	updateSelectionVisuals();
 
-            players[slot].loadBehaviour(slot);
+            players[slot].loadBehaviour(slot, true);
 
             return;
         }
@@ -886,7 +886,7 @@ function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = shownIndividuals[slot-1];
 	updateSelectionVisuals();
-	players[selectedSlot].loadBehaviour(selectedSlot);
+	players[selectedSlot].loadBehaviour(selectedSlot, true);
 
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
@@ -996,7 +996,8 @@ function advanceSelectScreen () {
             'game': gameID,
             'userAgent': navigator.userAgent,
             'origin': getReportedOrigin(),
-            'table': {}
+            'table': {},
+			'tags': players[HUMAN_PLAYER].tags
         };
 
         for (let i=1;i<5;i++) {

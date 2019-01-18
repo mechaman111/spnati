@@ -22,7 +22,7 @@ $masturbationWarningLabel = $("#masturbation-warning-label");
  *****                    Background metadata                     *****
  **********************************************************************/
 var backgrounds = [
-	{ name: 'default', location: 'indoors' },
+	{ name: 'inventory', location: 'indoors' },
 	{ name: 'beach', location: 'outdoors' },
 	{ name: 'classroom', location: 'indoors' },
 	{ name: 'brick', location: 'indoors' },
@@ -45,8 +45,10 @@ var backgrounds = [
 	{ name: 'locker room', location: 'indoors' },
 	{ name: 'haunted forest', location: 'outdoors', filter: 'brightness(0.7) saturate(0.9)'},
 	{ name: 'romantic', location: 'indoors' },
+	{ name: 'classic', location: 'indoors' }
 ];
-var selectedBackground = 0;
+var defaultBackground = 1;
+var selectedBackground = defaultBackground-1;
 
 /**********************************************************************
  *****                      Option Functions                      *****
@@ -246,8 +248,10 @@ $("#options-modal").on("hidden.bs.modal", function () {
 });
 
 
-$backgroundSettings = [$("#settings-background-1"), $("#settings-background-2"), $("#settings-background-3"), $("#settings-background-4"), $("#settings-background-5"), $("#settings-background-6"), $("#settings-background-7"), $("#settings-background-8"), $("#settings-background-9"), $("#settings-background-10"), $("#settings-background-11"), $("#settings-background-12"), $("#settings-background-13"), $("#settings-background-14"), $("#settings-background-15"), $("#settings-background-16"), $("#settings-background-17"), $("#settings-background-18"), $("#settings-background-19"), $("#settings-background-20"), $("#settings-background-21"), $("#settings-background-22"), $("#settings-background-23")];
-
+$backgroundSettings = [];
+for (let i=1;i<=24;i++) {
+	$backgroundSettings.push($("#settings-background-"+(i.toString())));
+}
 
 /************************************************************
  * The player clicked the options button. Shows the options modal.

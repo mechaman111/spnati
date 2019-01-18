@@ -25,5 +25,9 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <returns></returns>
 		HashSet<string> GetRequiredPoses();
+		/// <summary>
+		/// Associated character
+		/// </summary>
+		Character Character { get; }
 	}
 }

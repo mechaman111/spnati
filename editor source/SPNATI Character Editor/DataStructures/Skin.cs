@@ -160,12 +160,17 @@ namespace SPNATI_Character_Editor
 
 		public string FolderName
 		{
-			get	{ return Folder; }
+			get { return Folder; }
 		}
 
 		public string GetDirectory()
 		{
-			return Path.Combine(Config.SpnatiDirectory, Folder);
+			string dir = Path.Combine(Config.SpnatiDirectory, Folder).Replace("/", "\\");
+			if (dir.EndsWith("\\"))
+			{
+				return dir.Substring(0, dir.Length - 1);
+			}
+			return dir;
 		}
 
 		public string GetAttachmentsDirectory()
@@ -181,7 +186,7 @@ namespace SPNATI_Character_Editor
 			}
 			HashSet<string> images = new HashSet<string>();
 			int endStage = Layers + Clothing.ExtraStages;
-			if (Folders.Count > 0)
+			if (Folders.Count > 1)
 			{
 				endStage = Folders[1].Stage;
 			}

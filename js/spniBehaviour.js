@@ -9,6 +9,7 @@
  **********************************************************************/
 
 var SELECTED = "selected";
+var OPPONENT_SELECTED = "opponent_selected";
 var GAME_START = "game_start";
 
 var SWAP_CARDS = "swap_cards";
@@ -33,6 +34,8 @@ var PLAYER_FINISHING_MASTURBATING = "finishing_masturbating";
 var PLAYER_FINISHED_MASTURBATING = "finished_masturbating";
 
 var OPPONENT_LOST = "opponent_lost";
+var OPPONENT_STRIPPING = "opponent_stripping";
+var OPPONENT_STRIPPED = "opponent_stripped";
 
 var MALE_HUMAN_MUST_STRIP = "male_human_must_strip";
 var MALE_MUST_STRIP = "male_must_strip";
