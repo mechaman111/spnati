@@ -261,8 +261,6 @@ function doEpilogueFromGallery(){
 				});
 			}
 		
-			//just in case, clear any leftover epilogue elements
-			$(epilogueContent).children(':not(.epilogue-background)').remove();
 			epilogueContainer.dataset.background = -1;
 			epilogueContainer.dataset.scene = -1;
 		
