@@ -393,8 +393,8 @@ function updateIndividualSelectScreen () {
 
             $individualLayers[index].show();
             $individualLayers[index].attr("src", "img/layers" + selectableOpponents[i].layers + ".png");
-
-			$individualImages[index].attr('src', selectableOpponents[i].folder + selectableOpponents[i].image);
+			
+			$individualImages[index].attr('src', selectableOpponents[i].selection_image);
 			$individualImages[index].css('height', selectableOpponents[i].scale + '%');
 			$individualImages[index].show();
 			if (selectableOpponents[i].enabled == "true") {
@@ -405,14 +405,21 @@ function updateIndividualSelectScreen () {
 				$individualButtons[index].attr('disabled', true);
 			}
 			
-			if (ALT_COSTUMES_ENABLED && selectableOpponents[i].alternate_costumes.length > 0) {
-				$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-				selectableOpponents[i].alternate_costumes.forEach(function (alt) {
-					$individualCostumeSelectors[index].append(getCostumeOption(alt));
-				});
-				$individualCostumeSelectors[index].show();
-			} else {
-				$individualCostumeSelectors[index].hide();
+			$individualCostumeSelectors[index].hide();
+			if (ALT_COSTUMES_ENABLED) {
+				if (
+					(!FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 0) ||
+					(FORCE_ALT_COSTUME && selectableOpponents[i].alternate_costumes.length > 1)
+				) {
+					if (!FORCE_ALT_COSTUME) {
+						$individualCostumeSelectors[index].empty().append($('<option>', {val: '', text: 'Default Skin'}));
+					}
+					
+					selectableOpponents[i].alternate_costumes.forEach(function (alt) {
+						$individualCostumeSelectors[index].append(getCostumeOption(alt));
+					});
+					$individualCostumeSelectors[index].show();
+				}
 			}
 		} else {
 			delete shownIndividuals[index];
@@ -486,14 +493,20 @@ function updateGroupSelectScreen () {
                 $groupBadges[i].hide();
             }
 			
-			if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-				$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
-				opponent.alternate_costumes.forEach(function (alt) {
-					$groupCostumeSelectors[i].append(getCostumeOption(alt));
-				});
-				$groupCostumeSelectors[i].show();
-			} else {
-				$groupCostumeSelectors[i].hide();
+			$groupCostumeSelectors[i].hide();
+			if (ALT_COSTUMES_ENABLED) {
+				if (
+					(!FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 0) ||
+					(FORCE_ALT_COSTUME && opponent.alternate_costumes.length > 1)
+				) {
+					if (!FORCE_ALT_COSTUME) {
+						$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
+					}
+					opponent.alternate_costumes.forEach(function (alt) {
+						$groupCostumeSelectors[i].append(getCostumeOption(alt));
+					});
+					$groupCostumeSelectors[i].show();
+				}
 			}
 
             updateStatusIcon($groupStatuses[i], opponent.status);
@@ -501,7 +514,7 @@ function updateGroupSelectScreen () {
             $groupLayers[i].show();
             $groupLayers[i].attr("src", "img/layers" + opponent.layers + ".png");
 
-			$groupImages[i].attr('src', opponent.folder + opponent.image);
+			$groupImages[i].attr('src', opponent.selection_image);
 			$groupImages[i].css('height', opponent.scale + '%');
 			$groupImages[i].show();
 		} else {
@@ -662,7 +675,7 @@ function suggestionSelected(slot, quad) {
             
         	updateSelectionVisuals();
 
-            players[slot].loadBehaviour(slot);
+            players[slot].loadBehaviour(slot, true);
 
             return;
         }
@@ -886,7 +899,7 @@ function selectIndividualOpponent (slot) {
     /* move the stored player into the selected slot and update visuals */
 	players[selectedSlot] = shownIndividuals[slot-1];
 	updateSelectionVisuals();
-	players[selectedSlot].loadBehaviour(selectedSlot);
+	players[selectedSlot].loadBehaviour(selectedSlot, true);
 
 	/* switch screens */
 	screenTransition($individualSelectScreen, $selectScreen);
@@ -996,7 +1009,8 @@ function advanceSelectScreen () {
             'game': gameID,
             'userAgent': navigator.userAgent,
             'origin': getReportedOrigin(),
-            'table': {}
+            'table': {},
+			'tags': players[HUMAN_PLAYER].tags
         };
 
         for (let i=1;i<5;i++) {

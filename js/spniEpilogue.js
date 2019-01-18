@@ -1,7 +1,6 @@
 /* Epilogue UI elements */
 $epilogueScreen = $('#epilogue-screen');
 var epilogueContainer = document.getElementById('epilogue-container');
-var epilogueContent = document.getElementById('epilogue-content');
 
 /* Epilogue selection modal elements */
 $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
@@ -49,7 +48,7 @@ document.getElementById('epilogue-buttons').addEventListener('click', function()
     moveEpilogueBack();
   }
 });
-epilogueContent.addEventListener('click', function() {
+epilogueContainer.addEventListener('click', function() {
   if (!nextButton.disabled) {
     moveEpilogueForward();
   }
@@ -58,11 +57,13 @@ epilogueContent.addEventListener('click', function() {
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
-function Animation(id, frames, updateFunc, loop, easingFunction, delay) {
+function Animation(id, frames, updateFunc, loop, easingFunction, delay, clampFunction, iterations) {
   this.id = id;
   this.looped = loop === "1" || loop === "true";
   this.keyframes = frames;
+  this.iterations = iterations;
   this.easingFunction = easingFunction || "smooth";
+  this.clampFunction = clampFunction || "wrap";
   for (var i = 0; i < frames.length; i++) {
     frames[i].index = i;
     frames[i].keyframes = frames;
@@ -77,9 +78,36 @@ Animation.prototype.easingFunctions = {
   "smooth": function (t) { return 3 * t * t - 2 * t * t * t; },
   "ease-in": function (t) { return t * t; },
   "ease-out": function (t) { return t * (2 - t); },
+  "elastic": function (t) { return (.04 - .04 / t) * Math.sin(25 * t) + 1; },
+  "ease-in-cubic": function (t) { return t * t * t; },
+  "ease-out-cubic": function (t) { t--; return 1 + t * t * t; },
+  "ease-in-sin": function (t) { return 1 + Math.sin(Math.PI / 2 * t - Math.PI / 2); },
+  "ease-out-sin": function (t) { return Math.sin(Math.PI / 2 * t); },
+  "ease-in-out-cubic": function (t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1; },
+  "bounce": function (t) {
+    if (t < 0.3636) {
+      return 7.5625 * t * t;
+    }
+    else if (t < 0.7273) {
+      t -= 0.5455;
+      return 7.5625 * t * t + 0.75;
+    }
+    else if (t < 0.9091) {
+      t -= 0.8182;
+      return 7.5625 * t * t + 0.9375;
+    }
+    else {
+      t -= 0.9545;
+      return 7.5625 * t * t + 0.984375;
+    }
+  },
 };
 Animation.prototype.isComplete = function () {
-  return this.elapsed - this.delay >= this.duration;
+  var life = this.elapsed - this.delay;
+  if (this.looped) {
+    return this.iterations > 0 ? life / this.duration >= this.iterations : false;
+  }
+  return life >= this.duration;
 };
 Animation.prototype.update = function (elapsedMs) {
   this.elapsed += elapsedMs;
@@ -88,19 +116,27 @@ Animation.prototype.update = function (elapsedMs) {
 
   //determine what keyframes we're between
   var last;
-  if (this.looped && this.isComplete()) {
-    this.elapsed -= this.duration;
-  }
   var t = this.elapsed - this.delay;
   if (t < 0) {
     return;
   }
-  var easingFunction = this.easingFunction;
   if (this.duration === 0) {
     t = 1;
   }
   else {
-    t = this.easingFunctions[easingFunction](t / this.duration) * this.duration;
+    var easingFunction = this.easingFunction;
+    t /= this.duration;
+    if (this.looped) {
+      t = clampingFunctions[this.clampFunction](t);
+      if (this.isComplete()) {
+        t = 1;
+      }
+    }
+    else {
+      t = Math.min(1, t);
+    }
+    t = this.easingFunctions[easingFunction](t)
+    t *= this.duration;
   }
   for (var i = this.keyframes.length - 1; i >= 0; i--) {
     var frame = this.keyframes[i];
@@ -108,7 +144,13 @@ Animation.prototype.update = function (elapsedMs) {
     if (t >= frame.start) {
       last = (i > 0 ? this.keyframes[i - 1] : frame);
       //normalize the time between frames
-      var time = t === 0 ? 0 : Math.min(1, Math.max(0, (t - frame.start) / (frame.end - frame.start)));
+      var time;
+      if (frame.end === frame.start) {
+        time = 1;
+      }
+      else {
+        time = t === 0 ? 0 : (t - frame.start) / (frame.end - frame.start);
+      }
       this.updateFunc(this.id, last, frame, time);
       return;
     }
@@ -136,9 +178,17 @@ function createClosure(instance, func)
  ************************************************************/
 function lerp(a, b, t)
 {
-	t = Math.min(1, Math.max(t));
 	return (b - a) * t + a;
 }
+
+/************************************************************
+ * Clamping functions for what to do with values that go outside [0:1] to put them back inside.
+ ************************************************************/
+var clampingFunctions = {
+  "clamp": function (t) { return Math.max(0, Math.min(1, t)); },  //everything after 1 is clamped to 1
+  "wrap": function (t) { return t % 1.0; },                       //passing 1 wraps back to 0 (ex. 1.1 => 0.1)
+  "mirror": function (t) { t %= 2.0; return t > 1 ? 2 - t : t; }, //bouncing back and forth from 0->1->0 (ex. 1.1 => 0.9, 2.1 => 0.1)
+};
 
 /************************************************************
  * Interpolation functions for animation movement interpolation
@@ -209,17 +259,8 @@ function toSceneY(y, scene)
 }
 
 /************************************************************
- * Linear smoothing
- ************************************************************/
-function linearInterpolation(t)
-{
-	return t;
-}
-
-/************************************************************
  * Return the numerical part of a string s. E.g. "20%" -> 20
  ************************************************************/
-
 function getNumericalPart(s){
 	return parseFloat(s); //apparently I don't actually need to remove the % (or anything else) from the string before I do the conversion
 }
@@ -376,53 +417,77 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
     parseNotQuiteLegacyEpilogue(player, epilogue, $epilogue, sceneWidth, sceneHeight);
   }
   else {
+    var scene;
     $epilogue.children("scene").each(function (index, rawScene) {
       var $scene = $(rawScene);
-      var width = parseInt($scene.attr("width"), 10);
-      var height = parseInt($scene.attr("height"), 10);
-      var scene = {
-        background: $scene.attr("background"),
-        width: width,
-        height: height,
-        aspectRatio: width / height,
-        zoom: parseFloat($scene.attr("zoom"), 10),
-        color: $scene.attr("color"),
-        overlayColor: $scene.attr("overlay"),
-        overlayAlpha: $scene.attr("overlay-alpha"),
-        directives: [],
+      if ($scene.attr("transition")) {
+        if (scenes.length === 0) {
+          //add a blank scene to transition from
+          scene = {
+            color: $scene.attr("color"),
+            directives: [],
+          };
+          scenes.push(scene);
+        }
+        scene = scenes[scenes.length - 1];
+        scene.transition = readProperties(rawScene, scene);
       }
-      scenes.push(scene);
-      scene.x = toSceneX($scene.attr("x"), scene);
-      scene.y = toSceneY($scene.attr("y"), scene);
+      else {
+        var width = parseInt($scene.attr("width"), 10);
+        var height = parseInt($scene.attr("height"), 10);
+        scene = {
+          background: $scene.attr("background"),
+          width: width,
+          height: height,
+          aspectRatio: width / height,
+          zoom: parseFloat($scene.attr("zoom"), 10),
+          color: $scene.attr("color"),
+          overlayColor: $scene.attr("overlay"),
+          overlayAlpha: $scene.attr("overlay-alpha"),
+          directives: [],
+        }
+        scenes.push(scene);
+        scene.x = toSceneX($scene.attr("x"), scene);
+        scene.y = toSceneY($scene.attr("y"), scene);
 
-      var directives = scene.directives;
+        var directives = scene.directives;
 
-      $scene.find("directive").each(function (i, item) {
-        var totalTime = 0;
-        var directive = readProperties(item, scene);
-        directive.keyframes = [];
-        $(item).find("keyframe").each(function (i2, frame) {
-          var keyframe = readProperties(frame, scene);
-          keyframe.ease = keyframe.ease || directive.ease;
-          keyframe.start = totalTime;
-          totalTime = Math.max(totalTime, keyframe.time);
-          keyframe.end = totalTime;
-          keyframe.interpolation = directive.interpolation || "linear";
-          directive.keyframes.push(keyframe);
+        $scene.find("directive").each(function (i, item) {
+          var totalTime = 0;
+          var directive = readProperties(item, scene);
+          directive.keyframes = [];
+          $(item).find("keyframe").each(function (i2, frame) {
+            var keyframe = readProperties(frame, scene);
+            keyframe.ease = keyframe.ease || directive.ease;
+            keyframe.start = totalTime;
+            totalTime = Math.max(totalTime, keyframe.time);
+            keyframe.end = totalTime;
+            keyframe.interpolation = directive.interpolation || "linear";
+            directive.keyframes.push(keyframe);
+          });
+          if (directive.keyframes.length === 0) {
+            //if no explicity keyframes were provided, use the directive itself as a keyframe
+            directive.start = 0;
+            directive.end = directive.time;
+            directive.keyframes.push(directive);
+          }
+          else {
+            directive.time = totalTime;
+          }
+
+          directives.push(directive);
         });
-        if (directive.keyframes.length === 0) {
-          //if no explicity keyframes were provided, use the directive itself as a keyframe
-          directive.start = 0;
-          directive.end = directive.time;
-          directive.keyframes.push(directive);
-        }
-        else {
-          directive.time = totalTime;
-        }
-
-        directives.push(directive);
-      });
+      }
     });
+
+    //if the last scene has a transition, add a dummy scene to the end
+    if (scenes.length > 0 && scenes[scenes.length - 1].transition) {
+      scene = {
+        color: scenes[scenes.length - 1].transition.color,
+        directives: [],
+      };
+      scenes.push(scene);
+    }
   }
   return epilogue;
 }
@@ -582,6 +647,7 @@ function readProperties(sourceObj, scene) {
     if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
+    targetObj.angle = parseFloat(targetObj.angle, 10) || 0;
     if (targetObj.scale) {
       targetObj.scalex = targetObj.scaley = targetObj.scale;
     }
@@ -589,6 +655,9 @@ function readProperties(sourceObj, scene) {
     targetObj.scaley = parseFloat(targetObj.scaley, 10);
     if (targetObj.x) { targetObj.x = toSceneX(targetObj.x, scene); }
     if (targetObj.y) { targetObj.y = toSceneY(targetObj.y, scene); }
+    targetObj.iterations = parseInt(targetObj.iterations) || 0;
+    targetObj.rate = parseFloat(targetObj.rate, 10) || 0;
+    targetObj.count = parseFloat(targetObj.count, 10) || 0;
   }
   else {
     // textboxes
@@ -777,8 +846,6 @@ function doEpilogue(){
 		});
 	}
 
-	//just in case, clear any leftover epilogue elements
-  $(epilogueContent).children(':not(.epilogue-background)').remove();
   epilogueContainer.dataset.background = -1;
   epilogueContainer.dataset.scene = -1;
 
@@ -792,6 +859,7 @@ function doEpilogue(){
  * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
  ************************************************************/
 function loadEpilogue(epilogue) {
+  $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
   epiloguePlayer.load();
   updateEpilogueButtons();
@@ -833,26 +901,18 @@ function updateEpilogueButtons() {
  ************************************************************/
 function EpiloguePlayer(epilogue) {
   $(window).resize(createClosure(this, this.resizeViewport));
-  this.anims = [];
   this.epilogue = epilogue;
-  this.lastUpdate = 0;
+  this.lastUpdate = performance.now();
   this.sceneIndex = -1;
   this.directiveIndex = -1;
-  this.sceneObjects = {};
   this.assetMap = {};
-  this.camera = null;
-  this.viewportWidth = 0;
-  this.viewportHeight = 0;
   this.loadingImages = 0;
+  this.totalImages = 0;
+  this.loadedImages = 0;
   this.waitingForAnims = false;
-  this.overlay = { rgb: [0, 0, 0], a: 0 };
-  this.epilogueContent = document.getElementById('epilogue-content');
-  this.$viewport = $("#epilogue-viewport");
-  this.$canvas = $("#epilogue-canvas");
-  this.$overlay = $("#epilogue-overlay");
-  this.$overlay.css("background-color", "#000000");
-  this.$overlay.css("opacity", "0");
-  this.sceneIndex = -1;
+  this.views = [];
+  this.viewIndex = 0;
+  this.activeTransition = null;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -879,10 +939,15 @@ EpiloguePlayer.prototype.load = function () {
  * This is a workaround for IE11 not supporting promises
  */
 EpiloguePlayer.prototype.onLoadComplete = function () {
+  $("#epilogue-progress").text(Math.floor(this.loadedImages / Math.max(1, this.totalImages) * 100) + "%");
   if (this.loadingImages > 0) { return; }
 
   if (this.readyToLoad) {
-    this.$overlay.show();
+    $("#epilogue-spinner").hide();
+    var container = $("#epilogue-container");
+    this.views.push(new SceneView(container, 0, this.assetMap));
+    this.views.push(new SceneView(container, 1, this.assetMap));
+    container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
     this.advanceScene();
     window.requestAnimationFrame(createClosure(this, this.loop));
   }
@@ -895,28 +960,25 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
 EpiloguePlayer.prototype.fetchImage = function (path) {
   var img = new Image();
   this.loadingImages++;
+  this.totalImages++;
   var $this = this;
   img.onload = img.onerror = function () {
     $this.assetMap[path] = img;
     $this.loadingImages--;
+    $this.loadedImages++;
     $this.onLoadComplete();
   };
   img.src = path;
 }
 
 EpiloguePlayer.prototype.destroy = function () {
-  this.haltAnimations(true);
-
-  //clear old textboxes
-  $(this.epilogueContent).empty();
-
-  //clear old images
-  for (var obj in this.sceneObjects) {
-    $(this.sceneObjects[obj].element).remove();
+  for (var i = 0; i < this.views.length; i++) {
+    this.views[i].destroy();
   }
-  this.sceneObjects = {};
 
-  this.$overlay.hide();
+  $("#scene-fade").remove();
+
+  EpiloguePlayer.prototype.layer = 0;
 }
 
 EpiloguePlayer.prototype.hasMoreDirectives = function () {
@@ -930,9 +992,19 @@ EpiloguePlayer.prototype.hasPreviousDirectives = function () {
 EpiloguePlayer.prototype.loop = function (timestamp) {
   var elapsed = timestamp - this.lastUpdate;
 
-  if (this.anims.length > 0) {
-    this.update(elapsed);
-    this.draw();
+  if (this.activeTransition) {
+    this.activeTransition.update(elapsed);
+    if (this.activeTransition.isComplete()) {
+      this.activeTransition = null;
+    }
+  }
+
+  for (var i = 0; i < this.views.length; i++) {
+    if (this.views[i].isActive()) {
+      this.update(elapsed);
+      this.draw();
+      break;
+    }
   }
 
   this.lastUpdate = timestamp;
@@ -941,17 +1013,8 @@ EpiloguePlayer.prototype.loop = function (timestamp) {
 
 EpiloguePlayer.prototype.update = function (elapsed) {
   var nonLoopingCount = 0;
-  for (var i = this.anims.length - 1; i >= 0; i--) {
-    var anim = this.anims[i];
-    anim.update(elapsed);
-    if (!anim.looped) {
-      if (anim.isComplete()) {
-        this.anims.splice(i, 1);
-      }
-      else {
-        nonLoopingCount++;
-      }
-    }
+  for (var i = 0; i < this.views.length; i++) {
+    nonLoopingCount += this.views[i].update(elapsed);
   }
   if (nonLoopingCount === 0 && this.waitingForAnims) {
     this.advanceDirective();
@@ -959,40 +1022,10 @@ EpiloguePlayer.prototype.update = function (elapsed) {
 }
 
 EpiloguePlayer.prototype.draw = function () {
-  for (var obj in this.sceneObjects) {
-    this.drawObject(this.sceneObjects[obj]);
+  for (var i = 0; i < this.views.length; i++) {
+    this.views[i].draw();
   }
 }
-
-EpiloguePlayer.prototype.drawObject = function (sprite) {
-  var properties = [
-    "scale(" + this.viewportWidth / this.activeScene.width * this.camera.zoom + ")",
-    "translate(" + this.toViewX(sprite.x) + ", " + this.toViewY(sprite.y) + ")"
-  ];
-  var transform = properties.join(" ");
-
-  $(sprite.element).css({
-    "transform": transform,
-    "transform-origin": "top left",
-    "opacity": sprite.alpha / 100,
-  });
-  $(sprite.rotElement).css({
-    "transform": "rotate(" + sprite.rotation + "deg) scale(" + sprite.scalex + ", " + sprite.scaley + ")",
-  });
-}
-
-EpiloguePlayer.prototype.toViewX = function (x) {
-  var sceneWidth = this.camera.width;
-  var offset = sceneWidth / this.camera.zoom / 2 - sceneWidth / 2 + x - this.camera.x;
-  return offset + "px";
-}
-
-EpiloguePlayer.prototype.toViewY = function (y) {
-  var sceneHeight = this.camera.height;
-  var offset = sceneHeight / this.camera.zoom / 2 - sceneHeight / 2 + y - this.camera.y;
-  return offset + "px";
-}
-
 
 /** Advances to the next scene if there is one */
 EpiloguePlayer.prototype.advanceScene = function () {
@@ -1002,65 +1035,32 @@ EpiloguePlayer.prototype.advanceScene = function () {
   }
 }
 
-EpiloguePlayer.prototype.setupScene = function (index) {
-  this.haltAnimations(true);
+EpiloguePlayer.prototype.layer = 0;
 
-  //clear old textboxes
-  this.clearAllText();
+EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
+  var lastScene = this.activeScene;
 
-  //clear old images
-  for (var obj in this.sceneObjects) {
-    $(this.sceneObjects[obj].element).remove();
-  }
-  this.sceneObjects = {};
-
+  this.lastUpdate = performance.now();
   this.activeScene = this.epilogue.scenes[index];
+
+  var view = this.activeScene.view = this.views[this.viewIndex];
+  this.viewIndex = (this.viewIndex + 1) % this.views.length;
   this.directiveIndex = -1;
 
-  if (!this.activeScene.width) {
-    //if no scene dimensions were provided, use the background image's dimensions
-    var backgroundImg = this.assetMap[this.activeScene.background];
-    if (backgroundImg) {
-      this.activeScene.width = backgroundImg.naturalWidth;
-      this.activeScene.height = backgroundImg.naturalHeight;
-      this.activeScene.aspectRatio = backgroundImg.naturalWidth / backgroundImg.naturalHeight;
-
-      //backwards compatibility: for really skinny ratios, we probably don't want to use it since it'll make textboxes really squished. Use the first scene's instead
-      if (this.sceneIndex > 0) {
-        var previousScene = this.epilogue.scenes[0];
-        if (this.activeScene.aspectRatio < 0.5) {
-          this.activeScene.width = previousScene.width;
-          this.activeScene.height = previousScene.height;
-          this.activeScene.aspectRatio = previousScene.aspectRatio;
-        }
-      }      
-    }
-  }
-
-  this.camera = {
-    x: isNaN(this.activeScene.x) ? 0 : toSceneX(this.activeScene.x, this.activeScene),
-    y: isNaN(this.activeScene.y) ? 0 : toSceneY(this.activeScene.y, this.activeScene),
-    width: this.activeScene.width,
-    height: this.activeScene.height,
-    zoom: this.activeScene.zoom || 1,
-  }
-
-  var overlayColor;
-  var overlayAlpha = 0;
-  if (this.activeScene.overlayAlpha) {
-    overlayAlpha = parseInt(this.activeScene.overlayAlpha, 10);
-  }
-  if (this.activeScene.overlayColor) {
-    this.setOverlay(this.fromHex(this.activeScene.overlayColor), overlayAlpha);
-  }
+  view.setup(this.activeScene, index, this.epilogue, lastScene);
 
   //fit the viewport based on the scene's aspect ratio and the window size
   this.resizeViewport();
 
-  if (this.activeScene.background) {
-    this.addBackground(this.activeScene.background);
+  //scene transition effect
+  if (lastScene) {
+    if (lastScene.transition && this.activeScene && !skipTransition) {
+      this.activeTransition = new SceneTransition(lastScene.view, this.activeScene.view, lastScene.transition, $("#scene-fade"));
+    }
+    if (!this.activeTransition) {
+      lastScene.view.cleanup();
+    }
   }
-  this.$viewport.css("background-color", this.activeScene.color);
 
   this.performDirective();
 }
@@ -1070,83 +1070,65 @@ EpiloguePlayer.prototype.resizeViewport = function () {
     return;
   }
 
-  var windowHeight = $(window).height();
-  var windowWidth = $(window).width();
-
-  var viewWidth = this.activeScene.aspectRatio * windowHeight;
-  if (viewWidth > windowWidth) {
-    //take full width of window
-    this.viewportWidth = windowWidth;
-    this.viewportHeight = windowWidth / this.activeScene.aspectRatio;
-    this.$viewport.width(windowWidth);
-    this.$viewport.height(this.viewportHeight);
-  }
-  else {
-    //take full height of window
-    this.viewportWidth = viewWidth;
-    this.viewportHeight = windowHeight;
-    this.$viewport.width(this.viewportWidth);
-    this.$viewport.height(this.viewportHeight);
+  for (var i = 0; i < this.views.length; i++) {
+    this.views[i].resize();
   }
 
-  this.draw();
-}
-
-EpiloguePlayer.prototype.haltAnimations = function (haltLooping) {
-  this.waitingForAnims = false;
-  var animloop = this.anims.slice();
-  var j = 0;
-  for (var i = 0; i < animloop.length; i++) {
-    if (haltLooping || !animloop[i].looped) {
-      animloop[i].halt();
-      this.anims.splice(j, 1);
-    }
-    else {
-      j++;
-    }
-  }
   this.draw();
 }
 
 EpiloguePlayer.prototype.advanceDirective = function () {
-  this.haltAnimations(false);
+  if (this.activeTransition) { return; } //prevent advancing during a scene transition
+  this.waitingForAnims = false;
+  this.activeScene.view.haltAnimations(false);
   this.performDirective();
 }
 
 EpiloguePlayer.prototype.performDirective = function () {
+  if (this.sceneIndex >= this.epilogue.scenes.length) { return; }
   this.directiveIndex++;
   if (this.directiveIndex < this.activeScene.directives.length) {
+    var view = this.activeScene.view;
     var directive = this.activeScene.directives[this.directiveIndex];
     switch (directive.type) {
       case "sprite":
-        this.addAction(directive, this.addSprite, this.removeSprite);
+        this.addAction(view, directive, view.addSprite, view.removeSceneObject);
         break;
       case "text":
-        this.addAction(directive, this.addText, this.removeText);
+        this.addAction(view, directive, view.addText, view.removeText);
         break;
       case "clear":
-        this.addAction(directive, this.clearText, this.restoreText);
+        this.addAction(view, directive, view.clearText, view.restoreText);
         break;
       case "clear-all":
-        this.addAction(directive, this.clearAllText, this.restoreText);
+        this.addAction(view, directive, view.clearAllText, view.restoreText);
         break;
       case "move":
-        this.addAction(directive, this.moveSprite, this.returnSprite);
+        this.addAction(view, directive, view.moveSprite, view.returnSprite);
         break;
       case "camera":
-        this.addAction(directive, this.moveCamera, this.returnCamera);
+        this.addAction(view, directive, view.moveCamera, view.returnCamera);
         break;
       case "fade":
-        this.addAction(directive, this.fade, this.restoreOverlay);
+        this.addAction(view, directive, view.fade, view.restoreOverlay);
         break;
       case "stop":
-        this.addAction(directive, this.stopAnimation, this.restoreAnimation);
+        this.addAction(view, directive, view.stopAnimation, view.restoreAnimation);
         break;
       case "wait":
-        this.addAction(directive, this.awaitAnims, function () { });
+        this.addAction(this, directive, this.awaitAnims, function () { });
         return;
       case "pause":
         return;
+      case "remove":
+        this.addAction(view, directive, view.hideSceneObject, view.showSceneObject);
+        break;
+      case "emitter":
+        this.addAction(view, directive, view.addEmitter, view.removeSceneObject);
+        break;
+      case "emit":
+        this.addAction(view, directive, view.burstParticles, view.clearParticles);
+        break;
     }
 
     this.performDirective();
@@ -1162,9 +1144,9 @@ EpiloguePlayer.prototype.performDirective = function () {
  * @param {Function} doFunc Function to perform the directive
  * @param {Function} undoFunc Function to undo the directive
  */
-EpiloguePlayer.prototype.addAction = function (directive, doFunc, undoFunc) {
+EpiloguePlayer.prototype.addAction = function (view, directive, doFunc, undoFunc) {
   var context = {}; //contextual information for the do action to store off that the revert action can refer to
-  var action = { directive: directive, context: context, perform: createClosure(this, doFunc), revert: createClosure(this, undoFunc) };
+  var action = { directive: directive, context: context, perform: createClosure(view, doFunc), revert: createClosure(view, undoFunc) };
   directive.action = action;
   action.perform(directive, context);
 }
@@ -1173,7 +1155,8 @@ EpiloguePlayer.prototype.addAction = function (directive, doFunc, undoFunc) {
  * Reverts all changes up until the last "pause" directive
  */
 EpiloguePlayer.prototype.revertDirective = function () {
-  this.haltAnimations(true);
+  if (this.activeTransition) { return; }
+  this.activeScene.view.haltAnimations(false);
 
   var canRevert = (this.sceneIndex > 0);
   if (!canRevert) {
@@ -1188,168 +1171,404 @@ EpiloguePlayer.prototype.revertDirective = function () {
 
   if (!canRevert) { return; }
 
-  for (var i = this.directiveIndex - 1; i >= 0; i--) {
+  var currentIndex = this.directiveIndex;
+  for (var i = currentIndex - 1; i >= 0; i--) {
     this.directiveIndex = i;
     var directive = this.activeScene.directives[i];
     if (directive.action) {
       directive.action.revert(directive, directive.action.context);
     }
-    if (directive.type === "pause") {
+    if (i < currentIndex - 1 && directive.type === "pause") {
       return;
     }
   }
 
   //reached the start of the scene, so time to back up an entire scene
 
+  if (this.sceneIndex >= this.epilogue.scenes.length) {
+    this.sceneIndex--; //the last scene had finished, so back up an extra time to move past that scene
+  }
+
   //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
   this.sceneIndex--;
-  this.setupScene(this.sceneIndex);
-  while (this.directiveIndex < this.activeScene.directives.length - 1) {
-    this.advanceDirective();
+  this.setupScene(this.sceneIndex, true);
+  if (!this.activeTransition) {
+    var pauseIndex;
+    for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
+      if (this.activeScene.directives[pauseIndex].type === "pause") {
+        break;
+      }
+    }
+    while (this.directiveIndex < pauseIndex) {
+      this.advanceDirective();
+    }
   }
 }
 
-EpiloguePlayer.prototype.addBackground = function (background) {
+fromHex = function (hex) {
+  var value = parseInt(hex.substring(1), 16);
+  var r = (value & 0xff0000) >> 16;
+  var g = (value & 0x00ff00) >> 8;
+  var b = (value & 0x0000ff);
+  return [r, g, b];
+}
+
+toHexPiece = function (v) {
+  var hex = Math.round(v).toString(16);
+  if (hex.length < 2) {
+    hex = "0" + hex;
+  }
+  return hex;
+}
+
+toHex = function (rgb) {
+  return "#" + this.toHexPiece(rgb[0]) + this.toHexPiece(rgb[1]) + this.toHexPiece(rgb[2]);
+}
+
+EpiloguePlayer.prototype.awaitAnims = function (directive, context) {
+  for (var i = 0; i < this.views.length; i++) {
+    if (this.views[i].isAnimRunning()) {
+      this.waitingForAnims = true;
+      return;
+    }
+  }
+  this.advanceDirective();
+}
+
+function SceneView(container, index, assetMap) {
+  this.scene = null;
+  this.index = index;
+  this.anims = [];
+  this.camera = null;
+  this.assetMap = assetMap;
+  this.sceneObjects = {};
+  this.textObjects = {};
+  this.viewportWidth = 0;
+  this.viewportHeight = 0;
+  this.particlePool = [];
+
+  var viewport = this.$viewport = $("<div id='epilogue-viewport" + index + "' class='epilogue-viewport'></div>");
+  this.$canvas = $("<div id='epilogue-canvas" + index + "' class='epilogue-canvas'></div>");
+  viewport.append(this.$canvas);
+  this.$overlay = $("<div id='epilogue-overlay" + index + "' class='epilogue-overlay'></div>");
+  viewport.append(this.$overlay);
+  this.$textContainer = $("<div id='epilogue-content" + index + "' class='epilogue-content'></div>");
+  viewport.append(this.$textContainer);
+  this.overlay = { rgb: [0, 0, 0], a: 0 };
+  container.append(this.$viewport);
+  viewport.hide();
+}
+
+SceneView.prototype.cleanup = function () {
+  this.haltAnimations(true);
+
+  //clear old textboxes
+  this.$textContainer.empty();
+  this.textObjects = {};
+
+  //clear old images
+  for (var obj in this.sceneObjects) {
+    this.sceneObjects[obj].destroy();
+  }
+  this.sceneObjects = {};
+
+  //hide until needed again
+  this.$viewport.hide();
+}
+
+SceneView.prototype.destroy = function () {
+  this.cleanup();
+
+  this.particlePool = null;
+  this.$viewport.remove();
+}
+
+SceneView.prototype.updateOverlay = function (id, last, next, t) {
+  if (typeof next.color !== "undefined") {
+    var rgb1 = fromHex(last.color);
+    var rgb2 = fromHex(next.color);
+
+    var rgb = [0, 0, 0];
+    for (var i = 0; i < rgb.length; i++) {
+      rgb[i] = lerp(rgb1[i], rgb2[i], t);
+    }
+  }
+  else {
+    rgb = this.overlay.rgb;
+  }
+  var alpha = lerp(last.alpha, next.alpha, t);
+
+  this.setOverlay(rgb, alpha);
+}
+
+SceneView.prototype.setOverlay = function (color, alpha) {
+  if (typeof color !== "undefined") {
+    this.overlay.rgb = color;
+  }
+  this.overlay.a = alpha;
+  this.$overlay.css({
+    "opacity": alpha / 100,
+    "background-color": toHex(this.overlay.rgb)
+  });
+}
+
+SceneView.prototype.isActive = function () {
+  if (this.anims.length > 0) {
+    return true;
+  }
+  for (var obj in this.sceneObjects) {
+    var sceneObj = this.sceneObjects[obj];
+    if (sceneObj instanceof Emitter && (sceneObj.activeParticles.length > 0 || sceneObj.rate > 0)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+SceneView.prototype.update = function (elapsed) {
+  var nonLoopingCount = 0;
+
+  for (var obj in this.sceneObjects) {
+    this.sceneObjects[obj].update(elapsed);
+  }
+
+  for (var i = this.anims.length - 1; i >= 0; i--) {
+    var anim = this.anims[i];
+    anim.update(elapsed);
+    if (anim.isComplete()) {
+      this.anims.splice(i, 1);
+    }
+    else {
+      if (!anim.looped) {
+        nonLoopingCount++;
+      }
+    }
+  }
+  return nonLoopingCount;
+}
+
+SceneView.prototype.draw = function () {
+  for (var obj in this.sceneObjects) {
+    this.sceneObjects[obj].draw();
+  }
+}
+
+SceneView.prototype.drawObject = function (obj) {
+  if (!obj.element) { return; }
+  var properties = [
+    "scale(" + this.viewportWidth / this.scene.width * this.camera.zoom + ")",
+    "translate(" + this.toViewX(obj.x) + ", " + this.toViewY(obj.y) + ")"
+  ];
+  var transform = properties.join(" ");
+
+  $(obj.element).css({
+    "transform": transform,
+    "transform-origin": "top left",
+    "opacity": obj.alpha / 100,
+  });
+  $(obj.rotElement).css({
+    "transform": "rotate(" + obj.rotation + "deg) scale(" + obj.scalex + ", " + obj.scaley + ")",
+  });
+}
+
+SceneView.prototype.toViewX = function (x) {
+  var sceneWidth = this.camera.width;
+  var offset = sceneWidth / this.camera.zoom / 2 - sceneWidth / 2 + x - this.camera.x;
+  return offset + "px";
+}
+
+SceneView.prototype.toViewY = function (y) {
+  var sceneHeight = this.camera.height;
+  var offset = sceneHeight / this.camera.zoom / 2 - sceneHeight / 2 + y - this.camera.y;
+  return offset + "px";
+}
+
+SceneView.prototype.setup = function (scene, sceneIndex, epilogue, lastScene) {
+  this.scene = scene;
+
+  //copy the overlay values from the previous scene
+  if (lastScene) {
+    this.setOverlay(lastScene.view.overlay.rgb, lastScene.view.overlay.a);
+  }
+
+  if (!scene.width) {
+    //if no scene dimensions were provided, use the background image's dimensions
+    var backgroundImg = this.assetMap[scene.background];
+    if (backgroundImg) {
+      scene.width = backgroundImg.naturalWidth;
+      scene.height = backgroundImg.naturalHeight;
+      scene.aspectRatio = backgroundImg.naturalWidth / backgroundImg.naturalHeight;
+
+      //backwards compatibility: for really skinny ratios, we probably don't want to use it since it'll make textboxes really squished. Use the first scene's instead
+      if (sceneIndex > 0) {
+        var previousScene = epilogue.scenes[0];
+        if (scene.aspectRatio < 0.5) {
+          scene.width = previousScene.width;
+          scene.height = previousScene.height;
+          scene.aspectRatio = previousScene.aspectRatio;
+        }
+      }  
+    }
+  }
+
+  this.camera = {
+    x: isNaN(scene.x) ? 0 : toSceneX(scene.x, scene),
+    y: isNaN(scene.y) ? 0 : toSceneY(scene.y, scene),
+    width: scene.width,
+    height: scene.height,
+    zoom: scene.zoom || 1,
+  }
+
+  this.initOverlay(scene.overlayColor, scene.overlayAlpha);
+
+  if (scene.background) {
+    this.addBackground(scene.background);
+  }
+  this.$viewport.css({
+    "background-color": scene.color,
+    "z-index": EpiloguePlayer.prototype.layer++,
+  });
+  this.$viewport.show();
+}
+
+SceneView.prototype.initOverlay = function (rgb, a) {
+  var alpha;
+  if (!this.overlay.rgb) {
+    this.setOverlay([0, 0, 0], 0);
+  }
+  if (a) {
+    alpha = parseInt(a, 10);
+    if (typeof alpha === "undefined") {
+      alpha = 100;
+    }
+  }
+  else {
+    alpha = this.overlay.a || 0;
+  }
+  if (rgb) {
+    this.setOverlay(fromHex(rgb), alpha);
+  }
+}
+
+SceneView.prototype.resize = function () {
+  if (!this.scene) {
+    return;
+  }
+  var windowHeight = $(window).height();
+  var windowWidth = $(window).width();
+
+  var viewWidth = this.scene.aspectRatio * windowHeight;
+  var width = viewWidth;
+  var height = windowHeight;
+  if (viewWidth > windowWidth) {
+    //take full width of window
+    width = windowWidth;
+    height = windowWidth / this.scene.aspectRatio;
+  }
+
+  width = Math.ceil(width);
+  height = Math.ceil(height);
+  this.viewportWidth = width;
+  this.viewportHeight = height;
+  this.$viewport.width(width);
+  this.$viewport.height(height);
+}
+
+SceneView.prototype.haltAnimations = function (haltLooping) {
+  var animloop = this.anims.slice();
+  var j = 0;
+  for (var i = 0; i < animloop.length; i++) {
+    if (haltLooping || !animloop[i].looped) {
+      animloop[i].halt();
+      this.anims.splice(j, 1);
+    }
+    else {
+      j++;
+    }
+  }
+  this.draw();
+}
+
+SceneView.prototype.addBackground = function (background) {
   var img = this.assetMap[background];
   this.addImage("background", background, { x: 0, y: 0, width: img.naturalWidth + "px", height: img.naturalHeight + "px" });
 }
 
-EpiloguePlayer.prototype.addImage = function (id, src, args) {
-  var vehicle = document.createElement("div");
-  vehicle.id = id;
+SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
   img.src = this.assetMap[src].src;
-  vehicle.appendChild(img);
+  this.addSceneObject(new SceneObject(id, img, this, args));
+}
 
-  var x = args.x;
-  var y = args.y;
-  var width = args.width;
-  var height = args.height;
-  var scaleX = args.scalex;
-  var scaleY = args.scaley;
-  var rotation = args.rotation;
-  var alpha = args.alpha;
-  var pivotX = args.pivotx;
-  var pivotY = args.pivoty;
+SceneView.prototype.addSprite = function (directive) {
+  this.addImage(directive.id, directive.src, directive);
+}
 
-  if (pivotX || pivotY) {
-    pivotX = pivotX || "center";
-    pivotY = pivotY || "center";
-    $(img).css("transform-origin", pivotX + " " + pivotY);
+SceneView.prototype.addSceneObject = function (obj) {
+  this.sceneObjects[obj.id] = obj;
+  if (obj.element) {
+    this.$canvas.append(obj.element);
   }
-
-  if (typeof alpha === "undefined") {
-    alpha = 100;
-  }
-  var obj = {
-    element: vehicle,
-    rotElement: img,
-    x: x,
-    y: y,
-    scalex: scaleX || 1,
-    scaley: scaleY || 1,
-    rotation: rotation || 0,
-    alpha: alpha,
-  };
-  if (width) {
-    if (width.endsWith("%")) {
-      obj.widthPct = parseInt(width, 10) / 100;
-    }
-    else {
-      obj.widthPct = parseInt(width, 10) / this.activeScene.width;
-    }
-    if (!height) {
-      obj.heightPct = img.naturalHeight / img.naturalWidth * obj.widthPct * this.activeScene.aspectRatio;
-    }
-  }
-  else {
-    obj.widthPct = img.naturalWidth / this.activeScene.width;
-  }
-  if (height) {
-    if (height.endsWith("%")) {
-      obj.heightPct = parseInt(height, 10) / 100;
-    }
-    else {
-      obj.heightPct = parseInt(height, 10) / this.activeScene.height;
-    }
-    if (!width) {
-      obj.widthPct = img.naturalWidth / img.naturalHeight * obj.heightPct / this.activeScene.aspectRatio;
-    }
-  }
-  else if (!obj.heightPct) {
-    obj.heightPct = img.naturalHeight / this.activeScene.height;
-  }
-
-  $(vehicle).css(
-    {
-      position: "absolute",
-      left: 0,
-      top: 0,
-      width: obj.widthPct * this.activeScene.width,
-      height: obj.heightPct * this.activeScene.height,
-    });
-  $(img).css(
-  {
-    width: obj.widthPct * this.activeScene.width,
-    height: obj.heightPct * this.activeScene.height,
-  });
-  this.$canvas.append(vehicle);
-
-  this.sceneObjects[id] = obj;
   this.draw();
-  return obj;
 }
 
-EpiloguePlayer.prototype.addSprite = function (directive) {
-  this.addImage(directive.id, directive.src, {
-    x: directive.x,
-    y: directive.y,
-    width: directive.width,
-    height: directive.height,
-    scalex: directive.scalex,
-    scaley: directive.scaley,
-    rotation: directive.rotation,
-    alpha: directive.alpha,
-    pivotx: directive.pivotx,
-    pivoty: directive.pivoty,
-  });
-}
-
-EpiloguePlayer.prototype.removeSprite = function (directive) {
-  $(this.sceneObjects[directive.id].element).remove();
+SceneView.prototype.removeSceneObject = function (directive) {
+  this.sceneObjects[directive.id].destroy();
   delete this.sceneObjects[directive.id];
 }
 
-EpiloguePlayer.prototype.addText = function (directive, context) {
+SceneView.prototype.hideSceneObject = function (directive, context) {
+  context.object = this.sceneObjects[directive.id];
+  context.anims = {};
+  if (context.object) {
+    $(context.object.element).hide();
+    this.stopAnimation(directive, context.anims);
+    delete this.sceneObjects[directive.id];
+  }
+}
+
+SceneView.prototype.showSceneObject = function (directive, context) {
+  var obj = context.object;
+  if (obj) {
+    this.sceneObjects[directive.id] = obj;
+    this.restoreAnimation(directive, context.anims);
+    $(obj.element).show();
+  }
+}
+
+SceneView.prototype.addText = function (directive, context) {
   var id = directive.id;
   context.id = id;
   this.lastTextId = id;
 
-  var box = $(document.getElementById(id));
-  if (box.length > 0) {
+  var box = this.textObjects[id];
+  if (box) {
     //reuse the DOM element if one of the same ID already exists
     context.oldDirective = box.data("directive");
   }
   else {
-    box = $(document.createElement('div')).attr('id', id).addClass('epilogue-text');
+    box = $(document.createElement('div')).addClass('epilogue-text');
     //attach new div element to the content div
-    this.epilogueContent.appendChild(box[0]);
+    this.$textContainer.append(box[0]);
+    box.data("id", id);
+    this.textObjects[id] = box;
   }
   this.applyTextDirective(directive, box);
 }
 
-EpiloguePlayer.prototype.removeText = function (directive, context) {
+SceneView.prototype.removeText = function (directive, context) {
   this.lastTextId = context.id;
-  var box = document.getElementById(this.lastTextId);
+  var box = this.textObjects[directive.id];
   if (context.oldDirective) {
-    this.applyTextDirective(context.oldDirective, $(box));
+    this.applyTextDirective(context.oldDirective, box);
   }
   else {
-    this.epilogueContent.removeChild(document.getElementById(this.lastTextId));
+    this.$textContainer.get(0).removeChild(box[0]);
+    delete this.textObjects[directive.id];
   }
 }
 
-EpiloguePlayer.prototype.applyTextDirective = function (directive, box) {
+SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, players[HUMAN_PLAYER]);
 
   box.html('<span class="dialogue-bubble ' + directive.arrow + '">' + content + '</span>');
@@ -1364,32 +1583,36 @@ EpiloguePlayer.prototype.applyTextDirective = function (directive, box) {
   box.data("directive", directive);
 }
 
-EpiloguePlayer.prototype.clearAllText = function (directive, context) {
+SceneView.prototype.clearAllText = function (directive, context) {
   var $this = this;
   context = context || {};
-  $(this.epilogueContent).children().each(function () {
-    $this.clearText({ id: this.id }, context);
-  });
+  for (var box in this.textObjects) {
+    this.clearText({ id: this.textObjects[box].data("id") }, context, true);
+  }
+  this.textObjects = {};
 }
 
-EpiloguePlayer.prototype.clearText = function (directive, context) {
+SceneView.prototype.clearText = function (directive, context, keepObject) {
   context.boxes = context.boxes || [];
   var boxContext = {};
   context.boxes.push(boxContext);
 
   var id = directive.id || this.lastTextId;
   boxContext.id = lastTextId = id;
-  var box = $(document.getElementById(id));
+  var box = this.textObjects[id];
 
-  if (box.length === 0) {
+  if (!box) {
     return;
   }
 
   boxContext.directive = box.data("directive");
-  this.epilogueContent.removeChild(box[0]);
+  this.$textContainer.get(0).removeChild(box[0]);
+  if (!keepObject) {
+    delete this.textObjects[id];
+  }
 }
 
-EpiloguePlayer.prototype.restoreText = function (directive, context) {
+SceneView.prototype.restoreText = function (directive, context) {
   for (var i = 0; i < context.boxes.length; i++) {
     var boxContext = context.boxes[i];
     var id = this.lastTextId = boxContext.id;
@@ -1399,7 +1622,7 @@ EpiloguePlayer.prototype.restoreText = function (directive, context) {
   }
 }
 
-EpiloguePlayer.prototype.interpolate = function (obj, prop, last, next, t) {
+SceneView.prototype.interpolate = function (obj, prop, last, next, t) {
   var current = obj[prop];
   var start = last[prop];
   var end = next[prop];
@@ -1410,24 +1633,17 @@ EpiloguePlayer.prototype.interpolate = function (obj, prop, last, next, t) {
   obj[prop] = interpolationModes[mode](prop, start, end, t, last.keyframes, last.index)
 }
 
-EpiloguePlayer.prototype.updateSprite = function (id, last, next, t) {
-  var sprite = this.sceneObjects[id];
-  this.interpolate(sprite, "x", last, next, t);
-  this.interpolate(sprite, "y", last, next, t);
-  this.interpolate(sprite, "rotation", last, next, t);
-  this.interpolate(sprite, "scalex", last, next, t);
-  this.interpolate(sprite, "scaley", last, next, t);
-  this.interpolate(sprite, "alpha", last, next, t);
+SceneView.prototype.updateObject = function (id, last, next, t) {
+  var obj = this.sceneObjects[id];
+  obj.interpolateProperties(last, next, t);
 }
 
-EpiloguePlayer.prototype.addAnimation = function (anim) {
-  if (this.anims.length === 0) {
-    this.lastUpdate = performance.now();
-  }
+SceneView.prototype.addAnimation = function (anim) {
   this.anims.push(anim);
+  return anim;
 }
 
-EpiloguePlayer.prototype.moveSprite = function (directive, context) {
+SceneView.prototype.moveSprite = function (directive, context) {
   var sprite = this.sceneObjects[directive.id];
   if (sprite) {
     var frames = directive.keyframes.slice();
@@ -1438,11 +1654,11 @@ EpiloguePlayer.prototype.moveSprite = function (directive, context) {
     context.scaley = sprite.scaley;
     context.alpha = sprite.alpha;
     frames.unshift(context);
-    this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateSprite), directive.loop, directive.ease, directive.delay));
+    context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
   }
 }
 
-EpiloguePlayer.prototype.returnSprite = function (directive, context) {
+SceneView.prototype.returnSprite = function (directive, context) {
   var sprite = this.sceneObjects[directive.id];
   if (sprite) {
     if (typeof context.x !== "undefined") {
@@ -1463,11 +1679,21 @@ EpiloguePlayer.prototype.returnSprite = function (directive, context) {
     if (typeof context.alpha !== "undefined") {
       sprite.alpha = context.alpha;
     }
+    this.removeAnimation(context.anim);
     this.draw();
   }
 }
 
-EpiloguePlayer.prototype.updateCamera = function (id, last, next, t) {
+SceneView.prototype.removeAnimation = function (anim) {
+  if (anim) {
+    var index = this.anims.indexOf(anim);
+    if (index >= 0) {
+      this.anims.splice(index, 1);
+    }
+  }
+}
+
+SceneView.prototype.updateCamera = function (id, last, next, t) {
   this.interpolate(this.camera, "x", last, next, t);
   this.interpolate(this.camera, "y", last, next, t);
   if (last.zoom && next.zoom) {
@@ -1475,16 +1701,16 @@ EpiloguePlayer.prototype.updateCamera = function (id, last, next, t) {
   }
 }
 
-EpiloguePlayer.prototype.moveCamera = function (directive, context) {
+SceneView.prototype.moveCamera = function (directive, context) {
   var frames = directive.keyframes.slice();
   context.x = this.camera.x;
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay));
+  context.anim = this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
 }
 
-EpiloguePlayer.prototype.returnCamera = function (directive, context) {
+SceneView.prototype.returnCamera = function (directive, context) {
   if (typeof context.x !== "undefined") {
     this.camera.x = context.x;
   }
@@ -1494,79 +1720,34 @@ EpiloguePlayer.prototype.returnCamera = function (directive, context) {
   if (context.zoom) {
     this.camera.zoom = context.zoom;
   }
+  this.removeAnimation(context.anim);
   this.draw();
 }
 
-EpiloguePlayer.prototype.fromHex = function (hex) {
-  var value = parseInt(hex.substring(1), 16);
-  var r = (value & 0xff0000) >> 16;
-  var g = (value & 0x00ff00) >> 8;
-  var b = (value & 0x0000ff);
-  return [r, g, b];
-}
-
-EpiloguePlayer.prototype.toHexPiece = function (v) {
-  var hex = Math.round(v).toString(16);
-  if (hex.length < 2) {
-    hex = "0" + hex;
-  }
-  return hex;
-}
-
-EpiloguePlayer.prototype.toHex = function (rgb) {
-  return "#" + this.toHexPiece(rgb[0]) + this.toHexPiece(rgb[1]) + this.toHexPiece(rgb[2]);
-}
-
-EpiloguePlayer.prototype.updateOverlay = function (id, last, next, t) {
-  if (typeof next.color !== "undefined") {
-    var rgb1 = this.fromHex(last.color);
-    var rgb2 = this.fromHex(next.color);
-
-    var rgb = [0, 0, 0];
-    for (var i = 0; i < rgb.length; i++) {
-      rgb[i] = lerp(rgb1[i], rgb2[i], t);
-    }
-  }
-  var alpha = lerp(last.alpha, next.alpha, t);
-
-  this.setOverlay(rgb, alpha);
-}
-
-EpiloguePlayer.prototype.fade = function (directive, context) {
-  var color = this.toHex(this.overlay.rgb);
+SceneView.prototype.fade = function (directive, context) {
+  var color = toHex(this.scene.view.overlay.rgb);
   var frames = directive.keyframes.slice();
   context.color = color;
-  context.alpha = this.overlay.a;
+  context.alpha = this.scene.view.overlay.a;
   frames.unshift(context);
-  this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay));
+  context.anim = this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
 }
 
-EpiloguePlayer.prototype.setOverlay = function (color, alpha) {
-  if (typeof color !== "undefined") {
-    this.overlay.rgb = color;
-  }
-  this.overlay.a = alpha;
-  this.$overlay.css({
-    "opacity": alpha / 100,
-    "background-color": this.toHex(this.overlay.rgb)
-  });
-}
-
-EpiloguePlayer.prototype.restoreOverlay = function (directive, context) {
+SceneView.prototype.restoreOverlay = function (directive, context) {
   this.setOverlay(context.color, context.alpha);
+  this.removeAnimation(context.anim);
 }
 
-EpiloguePlayer.prototype.awaitAnims = function (directive, context) {
+SceneView.prototype.isAnimRunning = function () {
   for (var i = 0; i < this.anims.length; i++) {
     if (!this.anims[i].looped) {
-      this.waitingForAnims = true;
-      return;
+      return true;
     }
   }
-  this.advanceDirective();
+  return false;
 }
 
-EpiloguePlayer.prototype.stopAnimation = function (directive, context) {
+SceneView.prototype.stopAnimation = function (directive, context) {
   var anim;
   var id = directive.id;
   context.haltedAnims = [];
@@ -1581,11 +1762,842 @@ EpiloguePlayer.prototype.stopAnimation = function (directive, context) {
   }
 }
 
-EpiloguePlayer.prototype.restoreAnimation = function (directive, context) {
+SceneView.prototype.restoreAnimation = function (directive, context) {
   var haltedAnims = context.haltedAnims;
   for (var i = 0; i < haltedAnims.length; i++) {
     var anim = haltedAnims[i];
     anim.elapsed = 0;
-    this.anims.push(anim);
+    this.addAnimation(anim);
   }
+}
+
+SceneView.prototype.addEmitter = function (directive, context) {
+  var element;
+
+  if (directive.src) {
+    var srcImg = this.assetMap[directive.src];
+    directive.width = directive.width || srcImg.naturalWidth;
+    directive.height = directive.height || srcImg.naturalHeight;
+  }
+
+  this.addSceneObject(new Emitter(directive.id, element, this, directive, this.particlePool));
+}
+
+SceneView.prototype.burstParticles = function (directive, context) {
+  var emitter = this.sceneObjects[directive.id];
+  if (emitter && emitter.emit) {
+    context.emitter = emitter;
+    for (var i = 0; i < directive.count; i++) {
+      emitter.emit();
+    }
+  }
+}
+
+SceneView.prototype.clearParticles = function (directive, context) {
+  var emitter = context.emitter;
+  if (emitter) {
+    context.emitter = emitter;
+    for (var i = 0; i < directive.count; i++) {
+      emitter.killParticles();
+    }
+  }
+}
+
+function RandomParameter(startValue, endValue) {
+  this.start = startValue;
+  this.end = endValue;
+}
+
+RandomParameter.prototype = {
+  get: function () {
+    return lerp(this.start, this.end, Math.random());
+  }
+};
+
+function RandomColor(startValue, endValue) {
+  this.start = startValue;
+  this.end = endValue;
+}
+
+RandomColor.prototype = {
+  get: function () {
+    var t = Math.random();
+    return [lerp(this.start[0], this.end[0], t),
+    lerp(this.start[1], this.end[1], t),
+    lerp(this.start[2], this.end[2], t)];
+  }
+};
+
+function TweenableParameter(startValue, endValue, ease) {
+  this.start = startValue;
+  this.end = endValue;
+  this.value = this.start;
+}
+
+TweenableParameter.prototype = {
+  tween: function (t) {
+    this.value = lerp(this.start, this.end, t);
+    return this.value;
+  }
+};
+
+function TweenableColor(startValue, endValue) {
+  this.start = startValue;
+  this.end = endValue;
+  this.value = this.start;
+}
+
+TweenableColor.prototype = {
+  tween: function (t) {
+    var value = [];
+    value[0] = lerp(this.start[0], this.end[0], t);
+    value[1] = lerp(this.start[1], this.end[1], t);
+    value[2] = lerp(this.start[2], this.end[2], t);
+    this.value = value;
+    return value;
+  }
+};
+
+function SceneObject(id, element, view, args) {
+  var alpha = args.alpha;
+  if (typeof alpha === "undefined") {
+    alpha = 100;
+  }
+
+  this.tweenableProperties = ["x", "y", "rotation", "scalex", "scaley", "alpha"];
+  this.id = id;
+  this.x = args.x || 0;
+  this.y = args.y || 0;
+  this.scalex = args.scalex || 1;
+  this.scaley = args.scaley || 1;
+  this.rotation = args.rotation || 0;
+  this.alpha = alpha;
+  this.view = view;
+  this.layer = args.layer;
+
+  var scene = this.view.scene;
+  
+  if (element) {
+    var vehicle = document.createElement("div");
+    vehicle.appendChild(element);
+
+    var pivotX = args.pivotx;
+    var pivotY = args.pivoty;
+    if (pivotX || pivotY) {
+      pivotX = pivotX || "center";
+      pivotY = pivotY || "center";
+      $(element).css("transform-origin", pivotX + " " + pivotY);
+    }
+    if (this.layer) {
+      $(vehicle).css("z-index", args.layer);
+    }
+
+    this.element = vehicle;
+    this.rotElement = element;
+
+    var width = args.width;
+    var height = args.height;
+    var naturalWidth = element.naturalWidth || 100;
+    var naturalHeight = element.naturalHeight || 100;
+
+    if (width) {
+      if (width.endsWith("%")) {
+        this.widthPct = parseInt(width, 10) / 100;
+      }
+      else {
+        this.widthPct = parseInt(width, 10) / scene.width;
+      }
+      if (!height) {
+        this.heightPct = naturalHeight / naturalWidth * this.widthPct * scene.aspectRatio;
+      }
+    }
+    else {
+      this.widthPct = naturalWidth / scene.width;
+    }
+    if (height) {
+      if (height.endsWith("%")) {
+        this.heightPct = parseInt(height, 10) / 100;
+      }
+      else {
+        this.heightPct = parseInt(height, 10) / scene.height;
+      }
+      if (!width) {
+        this.widthPct = naturalWidth / naturalHeight * this.heightPct / scene.aspectRatio;
+      }
+    }
+    else if (!this.heightPct) {
+      this.heightPct = naturalHeight / scene.height;
+    }
+
+    this.width = this.widthPct * scene.width;
+    this.height = this.heightPct * scene.height;
+    $(vehicle).css({
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: this.width,
+      height: this.height,
+    });
+    $(element).css({
+      width: this.width,
+      height: this.height,
+    });
+  }
+  else {
+    this.width = parseInt(args.width, 10) || 10;
+    this.height = parseInt(args.height, 10) || 10;
+  }
+}
+
+SceneObject.prototype = {
+  destroy: function () {
+    if (this.element) {
+      $(this.element).remove();
+    }
+  },
+
+  update: function (elapsedMs) {
+  },
+
+  draw: function () {
+    this.view.drawObject(this);
+  },
+
+  interpolateProperties: function (last, next, t) {
+    for (var i = 0; i < this.tweenableProperties.length; i++) {
+      this.view.interpolate(this, this.tweenableProperties[i], last, next, t);
+    }
+  },
+};
+
+function Emitter(id, element, view, args, pool) {
+  SceneObject.call(this, id, element, view, args);
+  this.tweenableProperties.push("rate");
+
+  this.pool = pool;
+  this.rate = args.rate;
+  this.emissionTimer = 0;
+  if (this.rate > 0) {
+    this.emissionTimer = 1000 / this.rate;
+  }
+  this.activeParticles = [];
+  this.src = args.src;
+  this.startScaleX = this.createRandomParameter(args.startscalex, 1, 1);
+  this.endScaleX = this.createRandomParameter(args.endscalex, this.startScaleX);
+  this.startScaleY = this.createRandomParameter(args.startscaley, 1, 1);
+  this.endScaleY = this.createRandomParameter(args.endscaley, this.startScaleY);
+  this.speed = this.createRandomParameter(args.speed, 0, 0);
+  this.accel = this.createRandomParameter(args.accel, 0, 0);
+  this.forceX = this.createRandomParameter(args.forcex, 0, 0);
+  this.forceY = this.createRandomParameter(args.forcey, 0, 0);
+  this.startColor = this.createRandomColor(args.startcolor, [255, 255, 255], [255, 255, 255]);
+  this.endColor = this.createRandomColor(args.endcolor, this.startColor);
+  this.startAlpha = this.createRandomParameter(args.startalpha, 100, 100);
+  this.endAlpha = this.createRandomParameter(args.endalpha, this.startAlpha);
+  this.startRotation = this.createRandomParameter(args.startrotation, 0, 0);
+  this.endRotation = this.createRandomParameter(args.endrotation, this.startRotation);
+  this.lifetime = this.createRandomParameter(args.lifetime, 1, 1);
+  this.angle = args.angle;
+}
+Emitter.prototype = Object.create(SceneObject.prototype);
+Emitter.prototype.constructor = Emitter;
+
+Emitter.prototype.destroy = function () {
+  SceneObject.prototype.destroy.call(this);
+  this.killParticles();
+}
+
+Emitter.prototype.killParticles = function () {
+  for (var i = 0; i < this.activeParticles.length; i++) {
+    var particle = this.activeParticles[i];
+    particle.destroy();
+  }
+}
+
+Emitter.prototype.createRandomParameter = function (value, defaultMin, defaultMax) {
+  if (typeof value !== "undefined") {
+    var range = value.split(":");
+    var min = parseFloat(range[0], 10);
+    var max = (range.length > 1 ? parseFloat(range[1], 10) : min);
+    if (!isNaN(min) && !isNaN(max)) {
+      return new RandomParameter(min, max);
+    }
+  }
+  if (defaultMin instanceof RandomParameter) {
+    return defaultMin;
+  }
+  return new RandomParameter(defaultMin, defaultMax);
+};
+
+Emitter.prototype.createRandomColor = function (value, defaultMin, defaultMax) {
+  if (typeof value !== "undefined") {
+    var range = value.split(":");
+    var min = fromHex(range[0]);
+    var max = (range.length > 1 ? fromHex(range[1]) : min);
+    if (min && max) {
+      return new RandomColor(min, max);
+    }
+  }
+  if (defaultMin instanceof RandomColor) {
+    return defaultMin;
+  }
+  return new RandomColor(defaultMin, defaultMax);
+};
+
+
+Emitter.prototype.update = function (elapsedMs) {
+  if (this.rate > 0) {
+    var cooldown = 1000 / this.rate;
+    this.emissionTimer += elapsedMs;
+    while (this.emissionTimer >= cooldown) {
+      this.emit();
+      this.emissionTimer -= cooldown;
+    }
+  }
+
+  for (var i = this.activeParticles.length - 1; i >= 0; i--) {
+    var particle = this.activeParticles[i];
+    particle.update(elapsedMs);
+    if (particle.isDead()) {
+      this.activeParticles.splice(i, 1);
+      this.pool.push(particle); //return to the global inactive pool
+    }
+  }
+};
+
+Emitter.prototype.emit = function () {
+  var particle = this.getFreeParticle();
+
+  //randomize the rotation by the emission angle range
+  var rotation = this.rotation;
+  var angle = Math.floor(Math.random() * (this.angle * 2 + 1)) - this.angle;
+  rotation += angle;
+
+  particle.spawn(this.x - this.width / 2, this.y - this.height / 2, rotation, {
+    src: this.src,
+    width: this.width,
+    height: this.height,
+    duration: this.lifetime.get() * 1000,
+    startScaleX: this.startScaleX.get(),
+    endScaleX: this.endScaleX.get(),
+    startScaleY: this.startScaleY.get(),
+    endScaleY: this.endScaleY.get(),
+    speed: this.speed.get(),
+    accel: this.accel.get(),
+    forceX: this.forceX.get(),
+    forceY: this.forceY.get(),
+    startColor: this.startColor.get(),
+    endColor: this.endColor.get(),
+    startAlpha: this.startAlpha.get(),
+    endAlpha: this.endAlpha.get(),
+    startRotation: this.startRotation.get(),
+    endRotation: this.endRotation.get(),
+    layer: this.layer,
+  });
+  this.activeParticles.push(particle);
+};
+
+Emitter.prototype.getFreeParticle = function () {
+  var particle;
+  if (this.pool.length === 0) {
+    particle = new Particle("particle" + this.pool.length, this.view, {});
+    this.pool.push(particle);
+    this.view.$canvas.append(particle.element);
+  }
+  particle = this.pool[0];
+  this.pool.splice(0, 1);
+  return particle;
+};
+
+Emitter.prototype.draw = function () {
+  if (this.element) {
+    SceneObject.prototype.draw.call(this);
+  }
+
+  for (var i = this.activeParticles.length - 1; i >= 0; i--) {
+    this.activeParticles[i].draw();
+  }
+};
+
+function Particle(id, view, args) {
+  var element = document.createElement("img");
+  SceneObject.call(this, id, element, view, args);
+  this.$element = $(this.element);
+  this.tweens = {};
+}
+
+Particle.prototype = Object.create(SceneObject.prototype);
+Particle.prototype.constructor = Particle;
+
+Particle.prototype.spawn = function (x, y, rotation, args) {
+  var tweens = this.tweens;
+
+  var particleElem = this.rotElement;
+  if (args.src) {
+    particleElem.src = args.src;
+    particleElem.className = "";
+  }
+  else {
+    particleElem.removeAttribute("src");
+    particleElem.className = "particle";
+  }
+
+  $(particleElem).css({
+    "width": args.width + "px",
+    "height": args.height + "px",
+  });
+  $(this.element).css({
+    "z-index": args.layer || "",
+    "width": args.width + "px",
+    "height": args.height + "px",
+  });
+  this.width = args.width;
+  this.height = args.height;
+  this.x = x;
+  this.y = y;
+  this.elapsed = 0;
+  this.duration = args.duration;
+  this.ease = args.ease || "smooth";
+  tweens["scalex"] = new TweenableParameter(args.startScaleX, args.endScaleX);
+  tweens["scaley"] = new TweenableParameter(args.startScaleY, args.endScaleY);
+  tweens["alpha"] = new TweenableParameter(args.startAlpha, args.endAlpha);
+  tweens["color"] = new TweenableColor(args.startColor, args.endColor);
+  tweens["spin"] = new TweenableParameter(args.startRotation, args.endRotation);
+  this.scalex = args.startScaleX;
+  this.scaley = args.startScaleY;
+  this.alpha = args.startAlpha;
+  this.color = args.startColor;
+  this.spin = args.startRotation;
+
+  //initial speed is in the direction of the starting rotation
+  this.rotation = rotation;
+  var degrees = rotation;
+  var radians = degrees * (Math.PI / 180);
+  var speed = args.speed;
+  this.initialAngle = radians;
+
+  //convert rotation angle to direction vector where 0 deg = [0,-1], 90 deg = [1,0]
+  var u = Math.sin(radians);
+  var v = -Math.cos(radians);
+
+  this.speedX = speed * u;
+  this.speedY = speed * v;
+
+  this.accel = args.accel;
+  this.forceX = args.forceX;
+  this.forceY = args.forceY;
+
+  this.$element.show();
+},
+
+  Particle.prototype.isDead = function () {
+    return this.elapsed >= this.duration;
+  };
+
+Particle.prototype.die = function () {
+  this.$element.hide();
+};
+
+Particle.prototype.update = function (elapsedMs) {
+  this.elapsed += elapsedMs;
+  var dt = elapsedMs / 1000;
+
+  if (this.isDead()) {
+    this.die();
+  }
+
+  var t = this.elapsed / this.duration;
+  t = Animation.prototype.easingFunctions[this.ease](t);
+  for (var prop in this.tweens) {
+    this[prop] = this.tweens[prop].tween(t);
+  }
+
+  this.rotation += this.spin * dt;
+
+  //accelerate in the forward direction
+  var forward = this.initialAngle;
+  //forward = this.rotation * (Math.PI / 180);
+  var u = Math.sin(forward);
+  var v = -Math.cos(forward);
+
+  var accelX = this.accel * u;
+  var accelY = this.accel * v;
+
+  this.speedX += (accelX + this.forceX) * dt;
+  this.speedY += (accelY + this.forceY) * dt;
+
+  this.x += dt * this.speedX;
+  this.y += dt * this.speedY;
+};
+
+Particle.prototype.draw = function (view) {
+  if (!this.rotElement.src) {
+    var color = toHex(this.color);
+    $(this.rotElement).css({
+      "background-color": color,
+    });
+  }
+  SceneObject.prototype.draw.call(this);
+};
+
+function SceneTransition(fromView, toView, transitionDirective, overlay) {
+  this.view1 = fromView;
+  this.view2 = toView;
+  this.duration = transitionDirective.time;
+  this.elapsed = 0;
+  this.overlay = overlay;
+  this.overlay.css("background-color", transitionDirective.color);
+  this.ease = transitionDirective.ease || "ease-out";
+  switch (transitionDirective.effect) {
+    case "dissolve":
+      this.effect = this.dissolve;
+      break;
+    case "fade":
+      this.effect = this.fade;
+      break;
+    case "wipe-right":
+      this.effect = this.wipeRight;
+      break;
+    case "wipe-left":
+      this.effect = this.wipeLeft;
+      break;
+    case "wipe-up":
+      this.effect = this.wipeUp;
+      break;
+    case "wipe-down":
+      this.effect = this.wipeDown;
+      break;
+    case "slide-right":
+      this.effect = this.slideRight;
+      break;
+    case "slide-left":
+      this.effect = this.slideLeft;
+      break;
+    case "slide-up":
+      this.effect = this.slideUp;
+      break;
+    case "slide-down":
+      this.effect = this.slideDown;
+      break;
+    case "push-left":
+      this.effect = this.pushLeft;
+      break;
+    case "push-right":
+      this.effect = this.pushRight;
+      break;
+    case "push-up":
+      this.effect = this.pushUp;
+      break;
+    case "push-down":
+      this.effect = this.pushDown;
+      break;
+    case "uncover-left":
+      this.effect = this.uncoverLeft;
+      break;
+    case "uncover-right":
+      this.effect = this.uncoverRight;
+      break;
+    case "uncover-up":
+      this.effect = this.uncoverUp;
+      break;
+    case "uncover-down":
+      this.effect = this.uncoverDown;
+      break;
+    case "barn-open-horizontal":
+      this.effect = this.barnOpenHorizontal;
+      break;
+    case "barn-close-horizontal":
+      this.effect = this.barnCloseHorizontal;
+      break;
+    case "barn-open-vertical":
+      this.effect = this.barnOpenVertical;
+      break;
+    case "barn-close-vertical":
+      this.effect = this.barnCloseVertical;
+      break;
+    case "fly-through":
+      this.effect = this.flyThrough;
+      break;
+    case "spin":
+      this.effect = this.spin;
+      break;
+    default:
+      this.effect = this.cut;
+      break;
+  }
+  this.effect(0);
+}
+
+SceneTransition.prototype.isComplete = function () {
+  return this.elapsed >= this.duration;
+}
+
+SceneTransition.prototype.finish = function () {
+  var styleReset = {
+    "transform": "",
+    "clip": "",
+    "opacity": "",
+  };
+  this.view1.$viewport.css(styleReset);
+  this.view2.$viewport.css(styleReset);
+  this.view1.cleanup();
+  this.overlay.css("opacity", "");
+}
+
+SceneTransition.prototype.update = function (elapsed) {
+  this.elapsed += elapsed;
+
+  if (this.isComplete()) {
+    this.finish();
+    return;
+  }
+
+  var t = Math.min(1, this.elapsed / this.duration);
+  if (this.duration === 0) {
+    t = 1;
+  }
+  else {
+    var easingFunction = Animation.prototype.easingFunctions[this.ease];
+    t = easingFunction(t);
+  }
+  this.effect(t);
+}
+
+SceneTransition.prototype.cut = function (t) {
+  this.elapsed = this.duration;
+  this.view1.$viewport.hide();
+}
+
+SceneTransition.prototype.dissolve = function (t) {
+  var viewport1 = this.view1.$viewport;
+  var viewport2 = this.view2.$viewport;
+
+  viewport1.css("opacity", 1 - t);
+  viewport2.css("opacity", t);
+}
+
+SceneTransition.prototype.fade = function (t) {
+  var viewport1 = this.view1.$viewport;
+  var viewport2 = this.view2.$viewport;
+
+  var alpha = (t <= 0.5 ? t * 2 : (1 - (t - 0.5) * 2));
+
+  this.overlay.css("opacity", alpha);
+  viewport1.css("opacity", t < 0.5 ? 1 : 0);
+  viewport2.css("opacity", t < 0.5 ? 0 : 1);
+}
+
+SceneTransition.prototype.slideRight = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% - " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, " + left + "px)",
+  });
+}
+
+SceneTransition.prototype.slideLeft = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view2.viewportWidth - left) + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.slideUp = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.slideDown = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% - " + top + "px)",
+    "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeLeft = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, " + left + "px)",
+  });
+}
+
+SceneTransition.prototype.wipeRight = function (t) {
+  var left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + (this.view2.viewportWidth - left) + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeUp = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.wipeDown = function (t) {
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushRight = function (t) {
+  var left = Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view1.viewportWidth * (1 - t)) + "px, " + this.view1.viewportHeight + "px, 0)",
+  });
+
+  left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% - " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, " + left + "px)",
+  });
+}
+
+SceneTransition.prototype.pushLeft = function (t) {
+  var left = -Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view1.viewportWidth + "px, " + this.view1.viewportHeight + "px, " + (-left) + "px)",
+  });
+
+  left = Math.ceil(this.view2.viewportWidth * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view2.viewportWidth - left) + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushUp = function (t) {
+  var top = -Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(" + (-top) + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+
+  var top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight - top) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.pushDown = function (t) {
+  var top = Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight * (1 - t)) + "px, 0)",
+  });
+
+  top = Math.ceil(this.view2.viewportHeight * (1 - t));
+  this.view2.$viewport.css({
+    "transform": "translate(-50%, calc(-50% - " + top + "px)",
+    "clip": "rect(" + top + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverRight = function (t) {
+  var left = Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + (this.view1.viewportWidth * (1 - t)) + "px, " + this.view1.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverLeft = function (t) {
+  var left = -Math.ceil(this.view1.viewportWidth * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(calc(-50% + " + left + "px), -50%)",
+    "clip": "rect(0, " + this.view1.viewportWidth + "px, " + this.view1.viewportHeight + "px, " + (-left) + "px)",
+  });
+}
+
+SceneTransition.prototype.uncoverUp = function (t) {
+  var top = -Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(" + (-top) + "px, " + this.view2.viewportWidth + "px, " + this.view2.viewportHeight + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.uncoverDown = function (t) {
+  var top = Math.ceil(this.view1.viewportHeight * t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, calc(-50% + " + top + "px)",
+    "clip": "rect(0, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight * (1 - t)) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.barnOpenHorizontal = function (t) {
+  this.view2.$viewport.css({
+    "clip": "rect(0, " + (this.view2.viewportWidth / 2 + t * this.view2.viewportWidth / 2) + "px, " + this.view2.viewportHeight + "px, " + (this.view2.viewportWidth / 2 - t * this.view2.viewportWidth / 2) + "px)",
+  });
+}
+
+SceneTransition.prototype.barnCloseHorizontal = function (t) {
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "clip": "rect(0, " + (this.view2.viewportWidth / 2 + (1 - t) * this.view2.viewportWidth / 2) + "px, " + this.view2.viewportHeight + "px, " + (this.view2.viewportWidth / 2 - (1 - t) * this.view2.viewportWidth / 2) + "px)",
+  });
+}
+
+SceneTransition.prototype.barnOpenVertical = function (t) {
+  this.view2.$viewport.css({
+    "clip": "rect(" + (this.view2.viewportHeight / 2 - t * this.view2.viewportHeight / 2) + "px, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight / 2 + t * this.view2.viewportHeight / 2) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.barnCloseVertical = function (t) {
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "clip": "rect(" + (this.view2.viewportHeight / 2 - (1 - t) * this.view2.viewportHeight / 2) + "px, " + this.view2.viewportWidth + "px, " + (this.view2.viewportHeight / 2 + (1 - t) * this.view2.viewportHeight / 2) + "px, 0)",
+  });
+}
+
+SceneTransition.prototype.spin = function (t) {
+  var viewport1 = this.view1.$viewport;
+  var viewport2 = this.view2.$viewport;
+
+  if (t < 0.5) {
+    t *= 2;
+    viewport1.css("opacity", 1);
+    viewport2.css("opacity", 0);
+    this.view1.$viewport.css({
+      "transform": "translate(-50%, -50%) rotate(" + t * 1080 + "deg) scale(" + (5 * t + 1) + ")",
+    });
+  }
+  else {
+    t = (1 - (t - 0.5) * 2);
+    viewport1.css("opacity", 0);
+    viewport2.css("opacity", 1);
+    this.view2.$viewport.css({
+      "transform": "translate(-50%, -50%) rotate(" + t * 1080 + "deg) scale(" + (5 * t + 1) + ")",
+    });
+  }
+}
+
+SceneTransition.prototype.flyThrough = function (t) {
+  var zoom = lerp(1, 2, t);
+  this.view1.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, -50%) scale(" + zoom + ")",
+    "opacity": (1 - t),
+  });
+  zoom = lerp(0.5, 1, t);
+  this.view2.$viewport.css({
+    "z-index": EpiloguePlayer.prototype.layer + 1,
+    "transform": "translate(-50%, -50%) scale(" + zoom + ")",
+    "opacity": t,
+  });
 }
