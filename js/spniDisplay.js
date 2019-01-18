@@ -20,10 +20,8 @@ function PoseSprite(id, src, onload, pose, args) {
     this.alpha = args.alpha;
     this.pivotX = args.pivotX;
     this.pivotY = args.pivotY;
-    
-    this.nativeSizeX = args.width;
-    this.nativeSizeY = args.height;
-    this.aspectRatio = (this.nativeSizeX / this.nativeSizeY);
+    this.height = args.height;
+    this.width = args.width;
     
     this.vehicle = document.createElement('div');
     this.vehicle.id = id;
@@ -47,34 +45,24 @@ function PoseSprite(id, src, onload, pose, args) {
     $(this.vehicle).css("z-index", this.z);
 }
 
-PoseSprite.prototype.toDisplayY = function(y) {
-    return y * this.pose.getHeightScaleFactor();
-}
-
-PoseSprite.prototype.toDisplayX = function(x) {
-    var actualHeight = this.nativeSizeY * this.pose.getHeightScaleFactor();
-    var actualWidth = actualHeight * this.aspectRatio;
-    
-    return x * (actualWidth / this.nativeSizeX);
+PoseSprite.prototype.scaleToDisplay = function(x) {
+    return x * this.pose.getHeightScaleFactor();
 }
 
 PoseSprite.prototype.draw = function() {
     $(this.vehicle).css({
       "position": "absolute",
       "left": "50%",
-      "transform":  "translateX(-50%) translateX("+this.toDisplayX(this.x)+"px) translateY(" + this.toDisplayY(this.y) + "px)",
+      "transform":  "translateX(-50%) translateX("+this.scaleToDisplay(this.x)+"px) translateY(" + this.scaleToDisplay(this.y) + "px)",
       "transform-origin": "top left",
       "opacity": this.alpha / 100,
       "height": '100%'
     });
     
-    var actualHeight = this.nativeSizeY * this.pose.getHeightScaleFactor();
-    var actualWidth = actualHeight * this.aspectRatio;
-    
     $(this.img).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
-      'height': actualHeight+"px",
-      'width': actualWidth+"px"
+      'height': this.scaleToDisplay(this.height)+"px",
+      'width': this.scaleToDisplay(this.width)+"px"
     });
     
     if (this.img.src !== this.src) {
