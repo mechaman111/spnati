@@ -2383,9 +2383,9 @@ namespace SPNATI_Character_Editor.Controls
 		}
 	}
 
-	public class EpilogueContext : IAutoCompleteList
+	public class EpilogueContext : IAutoCompleteList, ICharacterContext
 	{
-		public Character Character { get; set; }
+		public ISkin Character { get; set; }
 		public Epilogue Epilogue { get; set; }
 		public Scene Scene { get; set; }
 

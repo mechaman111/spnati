@@ -44,6 +44,13 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public int NextId;
 
+		[XmlArray("poses")]
+		[XmlArrayItem("pose")]
+		/// <summary>
+		/// Poses available to a stage that don't meet follow prefix conventions
+		/// </summary>
+		public List<CrossStagePose> Poses = new List<CrossStagePose>();
+
 		/// <summary>
 		/// Deferred initialization of things that aren't part of serialization and don't need to exist until the character's lines are being worked on
 		/// </summary>
@@ -119,6 +126,10 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
+			foreach (CrossStagePose pose in Poses)
+			{
+				pose.OnBeforeSerialize();
+			}
 		}
 
 		public void OnAfterDeserialize()
@@ -126,6 +137,11 @@ namespace SPNATI_Character_Editor
 			foreach (Situation c in NoteworthySituations)
 			{
 				c.OnAfterDeserialize();
+			}
+
+			foreach (CrossStagePose pose in Poses)
+			{
+				pose.OnAfterDeserialize();
 			}
 		}
 

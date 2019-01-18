@@ -8,7 +8,7 @@ namespace SPNATI_Character_Editor.Controls
 {
 	public partial class ImageFileSelectControl : PropertyEditControl
 	{
-		private Character _character;
+		private ISkin _character;
 
 		public ImageFileSelectControl()
 		{
@@ -23,7 +23,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnBoundData()
 		{
-			EpilogueContext context = Context as EpilogueContext;
+			ICharacterContext context = Context as ICharacterContext;
 			if (context == null || context.Character == null)
 			{
 				throw new Exception("ImageFileSelectControl requires a Character context!");
@@ -38,49 +38,9 @@ namespace SPNATI_Character_Editor.Controls
 			string filename = txtValue.Text;
 			filename = filename.Replace("/", "\\");
 
-			string root = Config.SpnatiDirectory;
-			string localPath = Config.GetRootDirectory(_character.FolderName);
-
-			if (!string.IsNullOrEmpty(filename))
+			if (openFileDialog1.ShowDialog(_character, filename) == DialogResult.OK)
 			{
-				if (filename.StartsWith("\\"))
-				{
-					//absolute path
-					openFileDialog1.InitialDirectory = Path.Combine(root, Path.GetDirectoryName(filename).Substring(1));
-				}
-				else
-				{
-					//relative path
-					openFileDialog1.InitialDirectory = localPath;
-				}
-			}
-			else
-			{
-				openFileDialog1.InitialDirectory = localPath;
-			}
-			openFileDialog1.FileName = Path.GetFileName(filename);
-
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				filename = openFileDialog1.FileName;
-				if (filename.StartsWith(localPath))
-				{
-					//file is in character's folder
-					filename = filename.Substring(localPath.Length + 1);
-				}
-				else if (filename.StartsWith(root))
-				{
-					//file is in another game folder
-					filename = filename.Substring(root.Length);
-				}
-				else
-				{
-					//file is outside the game, so copy it in (otherwise it won't be available on the website)
-					File.Copy(filename, Path.Combine(localPath, Path.GetFileName(filename)));
-					filename = Path.GetFileName(filename);
-				}
-				filename = filename.Replace("\\", "/");
-				txtValue.Text = filename;
+				txtValue.Text = openFileDialog1.FileName;
 				Save();
 			}
 		}
@@ -110,5 +70,10 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			get { return typeof(ImageFileSelectControl); }
 		}
+	}
+
+	public interface ICharacterContext
+	{
+		ISkin Character { get; }
 	}
 }
