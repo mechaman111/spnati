@@ -379,16 +379,16 @@ Player.prototype.resetState = function () {
                 var tag = $elem.text();
                 var removed = $elem.attr('remove') || '';
                 if (removed.toLowerCase() === 'true') {
-                    if (this.tags.indexOf(tag) > 0) {
+                    if (this.tags.indexOf(tag) >= 0) {
                         this.tags.splice(this.tags.indexOf(tag), 1);
                     }
-                } else {
+                } else if (this.tags.indexOf(tag) < 0) {
                     this.tags.push(tag);
                 }
             }.bind(this));
         }
 
-        if (appearance.id) {
+        if (appearance.id && this.tags.indexOf(appearance.id) < 0) {
             this.tags.push(appearance.id);
         }
 
