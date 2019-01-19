@@ -235,7 +235,7 @@ namespace Desktop
 				}
 				return;
 			}
-			cmdNew.Enabled = false;
+			cmdNew.Enabled = (txtName.Text.Length > 0);
 			AcceptButton = cmdAccept;
 			List<IRecord> records = _provider.GetRecords(txtName.Text);
 			_provider.Sort(records);
