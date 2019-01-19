@@ -311,7 +311,7 @@ def close_character_vagina(character):
     
     try:
         character['dc'][5] = '0'
-    except KeyError:
+    except (KeyError, IndexError):
         pass
     
     return character
