@@ -619,6 +619,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			#endregion
 
+			txtNotes.Text = _editorData.GetNote(_selectedCase);
+
 			if (!_usingOldEditor)
 			{
 				if (caseTrigger.HasTarget)
@@ -997,6 +999,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_selectedCase == null)
 				return false;
 
+			SaveNotes();
 			bool needRegeneration = false;
 			var c = _selectedCase;
 			if (c.Tag != Trigger.StartTrigger)
@@ -1300,6 +1303,20 @@ namespace SPNATI_Character_Editor.Activities
 		private void tree_CreatedCase(object sender, CaseCreationEventArgs e)
 		{
 
+		}
+
+		private void txtNotes_Validated(object sender, EventArgs e)
+		{
+			SaveNotes();
+		}
+
+		private void SaveNotes()
+		{
+			if (_selectedCase == null)
+			{
+				return;
+			}
+			_editorData.SetNote(_selectedCase, txtNotes.Text);
 		}
 	}
 }

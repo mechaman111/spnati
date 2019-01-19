@@ -32,11 +32,10 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.lstPoses = new System.Windows.Forms.ListBox();
 			this.tsPoseList = new System.Windows.Forms.ToolStrip();
-			this.table = new Desktop.CommonControls.PropertyTable();
-			this.canvas = new Desktop.CommonControls.DBPanel();
-			this.tsAddLink = new System.Windows.Forms.ToolStripButton();
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.table = new Desktop.CommonControls.PropertyTable();
+			this.canvas = new Desktop.CommonControls.DBPanel();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -103,7 +102,6 @@
 			// 
 			this.tsPoseList.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsPoseList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsAddLink,
             this.tsAdd,
             this.tsRemove});
 			this.tsPoseList.Location = new System.Drawing.Point(0, 0);
@@ -111,6 +109,27 @@
 			this.tsPoseList.Size = new System.Drawing.Size(248, 25);
 			this.tsPoseList.TabIndex = 1;
 			this.tsPoseList.Text = "toolStrip1";
+			// 
+			// tsAdd
+			// 
+			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.tsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAdd.Name = "tsAdd";
+			this.tsAdd.Size = new System.Drawing.Size(23, 22);
+			this.tsAdd.Text = "Add Pose";
+			this.tsAdd.ToolTipText = "Add sprite-based pose";
+			// 
+			// tsRemove
+			// 
+			this.tsRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemove.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemove.Name = "tsRemove";
+			this.tsRemove.Size = new System.Drawing.Size(23, 22);
+			this.tsRemove.Text = "Remove pose";
+			this.tsRemove.ToolTipText = "Remove pose";
+			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
 			// table
 			// 
@@ -139,38 +158,6 @@
 			this.canvas.Name = "canvas";
 			this.canvas.Size = new System.Drawing.Size(738, 670);
 			this.canvas.TabIndex = 0;
-			// 
-			// tsAddLink
-			// 
-			this.tsAddLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAddLink.Image = global::SPNATI_Character_Editor.Properties.Resources.AddLink;
-			this.tsAddLink.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAddLink.Name = "tsAddLink";
-			this.tsAddLink.Size = new System.Drawing.Size(23, 22);
-			this.tsAddLink.Text = "Add pose link";
-			this.tsAddLink.ToolTipText = "Link image across stages";
-			this.tsAddLink.Click += new System.EventHandler(this.tsAddLink_Click);
-			// 
-			// tsAdd
-			// 
-			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.tsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAdd.Name = "tsAdd";
-			this.tsAdd.Size = new System.Drawing.Size(23, 22);
-			this.tsAdd.Text = "Add Pose";
-			this.tsAdd.ToolTipText = "Add sprite-based pose";
-			// 
-			// tsRemove
-			// 
-			this.tsRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRemove.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
-			this.tsRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemove.Name = "tsRemove";
-			this.tsRemove.Size = new System.Drawing.Size(23, 22);
-			this.tsRemove.Text = "Remove pose";
-			this.tsRemove.ToolTipText = "Remove pose";
-			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
 			// openFileDialog1
 			// 
@@ -207,7 +194,6 @@
 		private System.Windows.Forms.ToolStripButton tsRemove;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Desktop.CommonControls.PropertyTable table;
-		private System.Windows.Forms.ToolStripButton tsAddLink;
 		private Desktop.CommonControls.DBPanel canvas;
 		private Controls.CharacterImageDialog openFileDialog1;
 	}

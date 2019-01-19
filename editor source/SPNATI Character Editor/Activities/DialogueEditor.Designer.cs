@@ -35,19 +35,16 @@ namespace SPNATI_Character_Editor.Activities
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitDialogue = new System.Windows.Forms.SplitContainer();
-			this.treeDialogue = new SPNATI_Character_Editor.Controls.DialogueTree();
 			this.grpCase = new System.Windows.Forms.GroupBox();
 			this.cmdMakeResponse = new System.Windows.Forms.Button();
 			this.cmdToggleMode = new System.Windows.Forms.Button();
 			this.cmdCallOut = new System.Windows.Forms.Button();
 			this.ckbShowBubbleColumns = new System.Windows.Forms.CheckBox();
-			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.lblHelpText = new System.Windows.Forms.Label();
 			this.cmdPasteAll = new System.Windows.Forms.Button();
 			this.cmdCopyAll = new System.Windows.Forms.Button();
 			this.cboCaseTags = new System.Windows.Forms.ComboBox();
 			this.label34 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
 			this.lblAvailableVars = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.chkSelectAll = new System.Windows.Forms.CheckBox();
@@ -55,9 +52,9 @@ namespace SPNATI_Character_Editor.Activities
 			this.grpConditions = new System.Windows.Forms.GroupBox();
 			this.valPriority = new System.Windows.Forms.NumericUpDown();
 			this.label73 = new System.Windows.Forms.Label();
+			this.tableConditions = new Desktop.CommonControls.PropertyTable();
 			this.tabControlConditions = new System.Windows.Forms.TabControl();
 			this.tabTarget = new System.Windows.Forms.TabPage();
-			this.markerTarget = new SPNATI_Character_Editor.Controls.MarkerConditionField();
 			this.label76 = new System.Windows.Forms.Label();
 			this.valMaxStartingLayers = new System.Windows.Forms.NumericUpDown();
 			this.valStartingLayers = new System.Windows.Forms.NumericUpDown();
@@ -92,7 +89,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.cboLineFilter = new System.Windows.Forms.ComboBox();
 			this.cboTargetStage = new System.Windows.Forms.ComboBox();
 			this.tabOther = new System.Windows.Forms.TabPage();
-			this.markerAlsoPlaying = new SPNATI_Character_Editor.Controls.MarkerConditionField();
 			this.cboAlsoPlayingNotMarker = new System.Windows.Forms.ComboBox();
 			this.label71 = new System.Windows.Forms.Label();
 			this.label67 = new System.Windows.Forms.Label();
@@ -117,7 +113,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.ColStatusFilter = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColFilterCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabSelf = new System.Windows.Forms.TabPage();
-			this.markerSelf = new SPNATI_Character_Editor.Controls.MarkerConditionField();
 			this.cboNotMarker = new System.Windows.Forms.ComboBox();
 			this.label70 = new System.Windows.Forms.Label();
 			this.cboOwnHand = new System.Windows.Forms.ComboBox();
@@ -166,9 +161,18 @@ namespace SPNATI_Character_Editor.Activities
 			this.label31 = new System.Windows.Forms.Label();
 			this.cboTotalMales = new System.Windows.Forms.ComboBox();
 			this.cboTotalFemales = new System.Windows.Forms.ComboBox();
-			this.tableConditions = new Desktop.CommonControls.PropertyTable();
 			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.tabs = new System.Windows.Forms.TabControl();
+			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.tabNotes = new System.Windows.Forms.TabPage();
+			this.treeDialogue = new SPNATI_Character_Editor.Controls.DialogueTree();
+			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
+			this.markerTarget = new SPNATI_Character_Editor.Controls.MarkerConditionField();
+			this.markerAlsoPlaying = new SPNATI_Character_Editor.Controls.MarkerConditionField();
+			this.markerSelf = new SPNATI_Character_Editor.Controls.MarkerConditionField();
+			this.label1 = new System.Windows.Forms.Label();
+			this.txtNotes = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitDialogue)).BeginInit();
 			this.splitDialogue.Panel1.SuspendLayout();
 			this.splitDialogue.Panel2.SuspendLayout();
@@ -200,6 +204,9 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabMisc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).BeginInit();
+			this.tabs.SuspendLayout();
+			this.tabDialogue.SuspendLayout();
+			this.tabNotes.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitDialogue
@@ -219,38 +226,19 @@ namespace SPNATI_Character_Editor.Activities
 			this.splitDialogue.SplitterDistance = 266;
 			this.splitDialogue.TabIndex = 16;
 			// 
-			// treeDialogue
-			// 
-			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.treeDialogue.Location = new System.Drawing.Point(3, 3);
-			this.treeDialogue.Name = "treeDialogue";
-			this.treeDialogue.Size = new System.Drawing.Size(259, 665);
-			this.treeDialogue.TabIndex = 40;
-			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
-			this.treeDialogue.SelectedNodeChanged += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedCaseChanged);
-			this.treeDialogue.CreatingCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatingCase);
-			this.treeDialogue.CreatedCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatedCase);
-			// 
 			// grpCase
 			// 
 			this.grpCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.grpCase.BackColor = System.Drawing.SystemColors.Control;
+			this.grpCase.Controls.Add(this.tabs);
 			this.grpCase.Controls.Add(this.cmdMakeResponse);
 			this.grpCase.Controls.Add(this.cmdToggleMode);
 			this.grpCase.Controls.Add(this.cmdCallOut);
-			this.grpCase.Controls.Add(this.ckbShowBubbleColumns);
-			this.grpCase.Controls.Add(this.gridDialogue);
 			this.grpCase.Controls.Add(this.lblHelpText);
-			this.grpCase.Controls.Add(this.cmdPasteAll);
-			this.grpCase.Controls.Add(this.cmdCopyAll);
 			this.grpCase.Controls.Add(this.cboCaseTags);
 			this.grpCase.Controls.Add(this.label34);
-			this.grpCase.Controls.Add(this.label8);
-			this.grpCase.Controls.Add(this.lblAvailableVars);
 			this.grpCase.Controls.Add(this.groupBox3);
 			this.grpCase.Controls.Add(this.grpConditions);
 			this.grpCase.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -301,26 +289,13 @@ namespace SPNATI_Character_Editor.Activities
 			// 
 			this.ckbShowBubbleColumns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ckbShowBubbleColumns.AutoSize = true;
-			this.ckbShowBubbleColumns.Location = new System.Drawing.Point(361, 426);
+			this.ckbShowBubbleColumns.Location = new System.Drawing.Point(353, 6);
 			this.ckbShowBubbleColumns.Name = "ckbShowBubbleColumns";
 			this.ckbShowBubbleColumns.Size = new System.Drawing.Size(168, 17);
 			this.ckbShowBubbleColumns.TabIndex = 43;
 			this.ckbShowBubbleColumns.Text = "Show speech bubble columns";
 			this.ckbShowBubbleColumns.UseVisualStyleBackColor = true;
 			this.ckbShowBubbleColumns.CheckedChanged += new System.EventHandler(this.ckbShowSpeechBubbleColumns_CheckedChanged);
-			// 
-			// gridDialogue
-			// 
-			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridDialogue.Location = new System.Drawing.Point(6, 452);
-			this.gridDialogue.Name = "gridDialogue";
-			this.gridDialogue.ReadOnly = false;
-			this.gridDialogue.Size = new System.Drawing.Size(685, 220);
-			this.gridDialogue.TabIndex = 42;
-			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
-			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
 			// 
 			// lblHelpText
 			// 
@@ -336,7 +311,7 @@ namespace SPNATI_Character_Editor.Activities
 			// cmdPasteAll
 			// 
 			this.cmdPasteAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdPasteAll.Location = new System.Drawing.Point(616, 423);
+			this.cmdPasteAll.Location = new System.Drawing.Point(608, 3);
 			this.cmdPasteAll.Name = "cmdPasteAll";
 			this.cmdPasteAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdPasteAll.TabIndex = 40;
@@ -347,7 +322,7 @@ namespace SPNATI_Character_Editor.Activities
 			// cmdCopyAll
 			// 
 			this.cmdCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdCopyAll.Location = new System.Drawing.Point(535, 423);
+			this.cmdCopyAll.Location = new System.Drawing.Point(527, 3);
 			this.cmdCopyAll.Name = "cmdCopyAll";
 			this.cmdCopyAll.Size = new System.Drawing.Size(75, 23);
 			this.cmdCopyAll.TabIndex = 39;
@@ -373,21 +348,10 @@ namespace SPNATI_Character_Editor.Activities
 			this.label34.TabIndex = 34;
 			this.label34.Text = "Type:";
 			// 
-			// label8
-			// 
-			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(6, 423);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(52, 13);
-			this.label8.TabIndex = 33;
-			this.label8.Text = "Dialogue:";
-			// 
 			// lblAvailableVars
 			// 
 			this.lblAvailableVars.AutoSize = true;
-			this.lblAvailableVars.Location = new System.Drawing.Point(6, 436);
+			this.lblAvailableVars.Location = new System.Drawing.Point(2, 8);
 			this.lblAvailableVars.Name = "lblAvailableVars";
 			this.lblAvailableVars.Size = new System.Drawing.Size(53, 13);
 			this.lblAvailableVars.TabIndex = 32;
@@ -466,6 +430,27 @@ namespace SPNATI_Character_Editor.Activities
 			this.label73.TabIndex = 60;
 			this.label73.Text = "Priority:";
 			// 
+			// tableConditions
+			// 
+			this.tableConditions.AllowDelete = true;
+			this.tableConditions.AllowFavorites = true;
+			this.tableConditions.AllowHelp = false;
+			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableConditions.Data = null;
+			this.tableConditions.HideAddField = false;
+			this.tableConditions.HideSpeedButtons = false;
+			this.tableConditions.Location = new System.Drawing.Point(6, 19);
+			this.tableConditions.Name = "tableConditions";
+			this.tableConditions.PlaceholderText = "Add a condition";
+			this.tableConditions.RemoveCaption = "Remove condition";
+			this.tableConditions.RowHeaderWidth = 0F;
+			this.tableConditions.Size = new System.Drawing.Size(670, 208);
+			this.tableConditions.Sorted = false;
+			this.tableConditions.TabIndex = 31;
+			this.tableConditions.UseAutoComplete = true;
+			// 
 			// tabControlConditions
 			// 
 			this.tabControlConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -525,14 +510,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabTarget.TabIndex = 0;
 			this.tabTarget.Text = "Target";
 			this.tabTarget.UseVisualStyleBackColor = true;
-			// 
-			// markerTarget
-			// 
-			this.markerTarget.Location = new System.Drawing.Point(81, 154);
-			this.markerTarget.Name = "markerTarget";
-			this.markerTarget.Size = new System.Drawing.Size(242, 23);
-			this.markerTarget.TabIndex = 94;
-			this.markerTarget.Value = null;
 			// 
 			// label76
 			// 
@@ -878,14 +855,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabOther.Text = "Other Player";
 			this.tabOther.UseVisualStyleBackColor = true;
 			// 
-			// markerAlsoPlaying
-			// 
-			this.markerAlsoPlaying.Location = new System.Drawing.Point(99, 126);
-			this.markerAlsoPlaying.Name = "markerAlsoPlaying";
-			this.markerAlsoPlaying.Size = new System.Drawing.Size(226, 23);
-			this.markerAlsoPlaying.TabIndex = 46;
-			this.markerAlsoPlaying.Value = null;
-			// 
 			// cboAlsoPlayingNotMarker
 			// 
 			this.cboAlsoPlayingNotMarker.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1175,14 +1144,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabSelf.TabIndex = 4;
 			this.tabSelf.Text = "Self";
 			this.tabSelf.UseVisualStyleBackColor = true;
-			// 
-			// markerSelf
-			// 
-			this.markerSelf.Location = new System.Drawing.Point(115, 45);
-			this.markerSelf.Name = "markerSelf";
-			this.markerSelf.Size = new System.Drawing.Size(200, 23);
-			this.markerSelf.TabIndex = 68;
-			this.markerSelf.Value = null;
 			// 
 			// cboNotMarker
 			// 
@@ -1778,31 +1739,124 @@ namespace SPNATI_Character_Editor.Activities
 			this.cboTotalFemales.Size = new System.Drawing.Size(54, 21);
 			this.cboTotalFemales.TabIndex = 1;
 			// 
-			// tableConditions
-			// 
-			this.tableConditions.AllowDelete = true;
-			this.tableConditions.AllowFavorites = true;
-			this.tableConditions.AllowHelp = false;
-			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableConditions.Data = null;
-			this.tableConditions.HideAddField = false;
-			this.tableConditions.HideSpeedButtons = false;
-			this.tableConditions.Location = new System.Drawing.Point(6, 19);
-			this.tableConditions.Name = "tableConditions";
-			this.tableConditions.PlaceholderText = "Add a condition";
-			this.tableConditions.RemoveCaption = "Remove condition";
-			this.tableConditions.RowHeaderWidth = 0F;
-			this.tableConditions.Size = new System.Drawing.Size(670, 208);
-			this.tableConditions.TabIndex = 31;
-			this.tableConditions.UseAutoComplete = true;
-			// 
 			// triggerMenu
 			// 
 			this.triggerMenu.Name = "triggerMenu";
 			this.triggerMenu.ShowImageMargin = false;
 			this.triggerMenu.Size = new System.Drawing.Size(36, 4);
+			// 
+			// tabs
+			// 
+			this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabs.Controls.Add(this.tabDialogue);
+			this.tabs.Controls.Add(this.tabNotes);
+			this.tabs.Location = new System.Drawing.Point(0, 420);
+			this.tabs.Name = "tabs";
+			this.tabs.SelectedIndex = 0;
+			this.tabs.Size = new System.Drawing.Size(697, 251);
+			this.tabs.TabIndex = 95;
+			// 
+			// tabDialogue
+			// 
+			this.tabDialogue.Controls.Add(this.lblAvailableVars);
+			this.tabDialogue.Controls.Add(this.cmdCopyAll);
+			this.tabDialogue.Controls.Add(this.ckbShowBubbleColumns);
+			this.tabDialogue.Controls.Add(this.cmdPasteAll);
+			this.tabDialogue.Controls.Add(this.gridDialogue);
+			this.tabDialogue.Location = new System.Drawing.Point(4, 22);
+			this.tabDialogue.Name = "tabDialogue";
+			this.tabDialogue.Padding = new System.Windows.Forms.Padding(3);
+			this.tabDialogue.Size = new System.Drawing.Size(689, 225);
+			this.tabDialogue.TabIndex = 0;
+			this.tabDialogue.Text = "Dialogue";
+			this.tabDialogue.UseVisualStyleBackColor = true;
+			// 
+			// tabNotes
+			// 
+			this.tabNotes.Controls.Add(this.txtNotes);
+			this.tabNotes.Controls.Add(this.label1);
+			this.tabNotes.Location = new System.Drawing.Point(4, 22);
+			this.tabNotes.Name = "tabNotes";
+			this.tabNotes.Padding = new System.Windows.Forms.Padding(3);
+			this.tabNotes.Size = new System.Drawing.Size(689, 225);
+			this.tabNotes.TabIndex = 1;
+			this.tabNotes.Text = "Notes";
+			this.tabNotes.UseVisualStyleBackColor = true;
+			// 
+			// treeDialogue
+			// 
+			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeDialogue.Location = new System.Drawing.Point(3, 3);
+			this.treeDialogue.Name = "treeDialogue";
+			this.treeDialogue.Size = new System.Drawing.Size(259, 665);
+			this.treeDialogue.TabIndex = 40;
+			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
+			this.treeDialogue.SelectedNodeChanged += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedCaseChanged);
+			this.treeDialogue.CreatingCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatingCase);
+			this.treeDialogue.CreatedCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatedCase);
+			// 
+			// gridDialogue
+			// 
+			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridDialogue.Location = new System.Drawing.Point(3, 32);
+			this.gridDialogue.Name = "gridDialogue";
+			this.gridDialogue.ReadOnly = false;
+			this.gridDialogue.Size = new System.Drawing.Size(680, 336);
+			this.gridDialogue.TabIndex = 42;
+			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
+			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);
+			// 
+			// markerTarget
+			// 
+			this.markerTarget.Location = new System.Drawing.Point(81, 154);
+			this.markerTarget.Name = "markerTarget";
+			this.markerTarget.Size = new System.Drawing.Size(242, 23);
+			this.markerTarget.TabIndex = 94;
+			this.markerTarget.Value = null;
+			// 
+			// markerAlsoPlaying
+			// 
+			this.markerAlsoPlaying.Location = new System.Drawing.Point(99, 126);
+			this.markerAlsoPlaying.Name = "markerAlsoPlaying";
+			this.markerAlsoPlaying.Size = new System.Drawing.Size(226, 23);
+			this.markerAlsoPlaying.TabIndex = 46;
+			this.markerAlsoPlaying.Value = null;
+			// 
+			// markerSelf
+			// 
+			this.markerSelf.Location = new System.Drawing.Point(115, 45);
+			this.markerSelf.Name = "markerSelf";
+			this.markerSelf.Size = new System.Drawing.Size(200, 23);
+			this.markerSelf.TabIndex = 68;
+			this.markerSelf.Value = null;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 3);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(413, 13);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Jot down any personal notes about this case here. These notes won\'t appear in gam" +
+    "e.";
+			// 
+			// txtNotes
+			// 
+			this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtNotes.Location = new System.Drawing.Point(5, 19);
+			this.txtNotes.Multiline = true;
+			this.txtNotes.Name = "txtNotes";
+			this.txtNotes.Size = new System.Drawing.Size(678, 206);
+			this.txtNotes.TabIndex = 1;
+			this.txtNotes.Validated += new System.EventHandler(this.txtNotes_Validated);
 			// 
 			// DialogueEditor
 			// 
@@ -1849,6 +1903,11 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabMisc.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valMaxGameRounds)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.valGameRounds)).EndInit();
+			this.tabs.ResumeLayout(false);
+			this.tabDialogue.ResumeLayout(false);
+			this.tabDialogue.PerformLayout();
+			this.tabNotes.ResumeLayout(false);
+			this.tabNotes.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1864,7 +1923,6 @@ namespace SPNATI_Character_Editor.Activities
 		private System.Windows.Forms.Button cmdCopyAll;
 		private System.Windows.Forms.ComboBox cboCaseTags;
 		private System.Windows.Forms.Label label34;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label lblAvailableVars;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.CheckBox chkSelectAll;
@@ -1990,5 +2048,10 @@ namespace SPNATI_Character_Editor.Activities
 		private System.Windows.Forms.Button cmdToggleMode;
 		private System.Windows.Forms.Button cmdMakeResponse;
 		private Controls.DialogueTree treeDialogue;
+		private System.Windows.Forms.TabControl tabs;
+		private System.Windows.Forms.TabPage tabDialogue;
+		private System.Windows.Forms.TabPage tabNotes;
+		private System.Windows.Forms.TextBox txtNotes;
+		private System.Windows.Forms.Label label1;
 	}
 }

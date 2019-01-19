@@ -30,7 +30,6 @@ namespace SPNATI_Character_Editor
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
-		private Dictionary<string, CharacterImage> _crossStageImages = new Dictionary<string, CharacterImage>();
 		private Costume _skin;
 
 		/// <summary>
@@ -49,19 +48,6 @@ namespace SPNATI_Character_Editor
 			{
 				string name = Path.GetFileNameWithoutExtension(file);
 				Add(file, name);
-			}
-
-			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character.Character);
-			if (editorData != null)
-			{
-				string folder = character.GetDirectory();
-				foreach (CrossStagePose pose in editorData.Poses)
-				{
-					string name = Path.GetFileNameWithoutExtension(pose.FileName);
-					CharacterImage image = new CharacterImage(Path.Combine(folder, pose.FileName), name);
-					//image.d
-					_crossStageImages[pose.FileName] = image;
-				}
 			}
 		}
 
@@ -163,23 +149,6 @@ namespace SPNATI_Character_Editor
 					yield return img;
 				}
 			}
-
-			// >>>> NOT READY FOR 3.4
-			//CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character.Character);
-			//if (editorData != null)
-			//{
-			//	foreach (CrossStagePose pose in editorData.Poses)
-			//	{
-			//		if (pose.Stages.Contains(stage) && !pose.FileName.StartsWith(stage.ToString()))
-			//		{
-			//			CharacterImage img = _crossStageImages.Get(pose.FileName);
-			//			if (img != null)
-			//			{
-			//				yield return img;
-			//			}
-			//		}
-			//	}
-			//}
 		}
 
 		/// <summary>
