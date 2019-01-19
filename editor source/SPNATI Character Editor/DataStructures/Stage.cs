@@ -66,7 +66,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="c1"></param>
 		/// <returns></returns>
-		private string GetSortKey(Case c1)
+		public static string GetSortKey(Case c1)
 		{
 			//TODO: Would it be worth pre-computing this whenever a case gets saved?
 			//Not really. 1100 lines spent 1000ms on serialization and only 10ms sorting.

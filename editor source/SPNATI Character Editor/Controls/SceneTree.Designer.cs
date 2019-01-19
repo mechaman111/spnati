@@ -34,8 +34,12 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAddScene = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.tsAddTransition = new System.Windows.Forms.ToolStripButton();
 			this.tsAddDirective = new System.Windows.Forms.ToolStripSplitButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.removeObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.addSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearSpeechBubblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +61,10 @@
 			this.tsCopy = new System.Windows.Forms.ToolStripButton();
 			this.tsPaste = new System.Windows.Forms.ToolStripButton();
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsLock = new System.Windows.Forms.ToolStripButton();
+			this.emitParticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
@@ -116,6 +124,7 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAddScene,
             this.tsRemove,
+            this.tsAddTransition,
             this.tsAddDirective,
             this.tsAddKeyframe,
             this.toolStripSeparator1,
@@ -125,10 +134,12 @@
             this.tsCut,
             this.tsCopy,
             this.tsPaste,
-            this.tsDuplicate});
+            this.tsDuplicate,
+            this.toolStripSeparator7,
+            this.tsLock});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(285, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(337, 25);
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -154,11 +165,27 @@
 			this.tsRemove.ToolTipText = "Remove selected node";
 			this.tsRemove.Click += new System.EventHandler(this.TsRemove_Click);
 			// 
+			// tsAddTransition
+			// 
+			this.tsAddTransition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddTransition.Image = global::SPNATI_Character_Editor.Properties.Resources.AddTransition;
+			this.tsAddTransition.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddTransition.Name = "tsAddTransition";
+			this.tsAddTransition.Size = new System.Drawing.Size(23, 22);
+			this.tsAddTransition.Text = "Add Transition";
+			this.tsAddTransition.ToolTipText = "Add Scene Transition";
+			this.tsAddTransition.Click += new System.EventHandler(this.tsAddTransition_Click);
+			// 
 			// tsAddDirective
 			// 
 			this.tsAddDirective.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsAddDirective.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addSpriteToolStripMenuItem,
+            this.removeObjectToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.addEmitterToolStripMenuItem,
+            this.emitParticleToolStripMenuItem,
+            this.toolStripSeparator8,
             this.addSpeechBubbleToolStripMenuItem,
             this.removeSpeechBubbleToolStripMenuItem,
             this.clearSpeechBubblesToolStripMenuItem,
@@ -182,18 +209,41 @@
 			// addSpriteToolStripMenuItem
 			// 
 			this.addSpriteToolStripMenuItem.Name = "addSpriteToolStripMenuItem";
-			this.addSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.addSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.addSpriteToolStripMenuItem.Tag = "sprite";
 			this.addSpriteToolStripMenuItem.Text = "Add Sprite";
 			this.addSpriteToolStripMenuItem.ToolTipText = "Add a sprite to the scene";
 			this.addSpriteToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
+			// addEmitterToolStripMenuItem
+			// 
+			this.addEmitterToolStripMenuItem.Name = "addEmitterToolStripMenuItem";
+			this.addEmitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
+			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.addEmitterToolStripMenuItem.Tag = "emitter";
+			this.addEmitterToolStripMenuItem.Text = "Add Emitter";
+			this.addEmitterToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// removeObjectToolStripMenuItem
+			// 
+			this.removeObjectToolStripMenuItem.Name = "removeObjectToolStripMenuItem";
+			this.removeObjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+			this.removeObjectToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.removeObjectToolStripMenuItem.Tag = "remove";
+			this.removeObjectToolStripMenuItem.Text = "Remove Sprite/Emitter";
+			this.removeObjectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(288, 6);
+			// 
 			// addSpeechBubbleToolStripMenuItem
 			// 
 			this.addSpeechBubbleToolStripMenuItem.Name = "addSpeechBubbleToolStripMenuItem";
-			this.addSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.addSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
+			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.addSpeechBubbleToolStripMenuItem.Tag = "text";
 			this.addSpeechBubbleToolStripMenuItem.Text = "Add Speech Bubble";
 			this.addSpeechBubbleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -201,8 +251,8 @@
 			// removeSpeechBubbleToolStripMenuItem
 			// 
 			this.removeSpeechBubbleToolStripMenuItem.Name = "removeSpeechBubbleToolStripMenuItem";
-			this.removeSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.removeSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.removeSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6)));
+			this.removeSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.removeSpeechBubbleToolStripMenuItem.Tag = "clear";
 			this.removeSpeechBubbleToolStripMenuItem.Text = "Remove Speech Bubble";
 			this.removeSpeechBubbleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -210,8 +260,8 @@
 			// clearSpeechBubblesToolStripMenuItem
 			// 
 			this.clearSpeechBubblesToolStripMenuItem.Name = "clearSpeechBubblesToolStripMenuItem";
-			this.clearSpeechBubblesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-			this.clearSpeechBubblesToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.clearSpeechBubblesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7)));
+			this.clearSpeechBubblesToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.clearSpeechBubblesToolStripMenuItem.Tag = "clear-all";
 			this.clearSpeechBubblesToolStripMenuItem.Text = "Clear Speech Bubbles";
 			this.clearSpeechBubblesToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -219,23 +269,23 @@
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(274, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(288, 6);
 			// 
 			// moveSpriteToolStripMenuItem
 			// 
 			this.moveSpriteToolStripMenuItem.Name = "moveSpriteToolStripMenuItem";
-			this.moveSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.moveSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D8)));
+			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.moveSpriteToolStripMenuItem.Tag = "move";
-			this.moveSpriteToolStripMenuItem.Text = "Move/Rotate/Scale Sprite";
+			this.moveSpriteToolStripMenuItem.Text = "Move/Rotate/Scale Sprite/Emitter";
 			this.moveSpriteToolStripMenuItem.ToolTipText = "Transform a sprite on screen";
 			this.moveSpriteToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
 			// moveZoomCameraToolStripMenuItem
 			// 
 			this.moveZoomCameraToolStripMenuItem.Name = "moveZoomCameraToolStripMenuItem";
-			this.moveZoomCameraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-			this.moveZoomCameraToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.moveZoomCameraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D9)));
+			this.moveZoomCameraToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.moveZoomCameraToolStripMenuItem.Tag = "camera";
 			this.moveZoomCameraToolStripMenuItem.Text = "Move/Zoom Camera";
 			this.moveZoomCameraToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -243,8 +293,8 @@
 			// stopAnimationToolStripMenuItem
 			// 
 			this.stopAnimationToolStripMenuItem.Name = "stopAnimationToolStripMenuItem";
-			this.stopAnimationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-			this.stopAnimationToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.stopAnimationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+			this.stopAnimationToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.stopAnimationToolStripMenuItem.Tag = "stop";
 			this.stopAnimationToolStripMenuItem.Text = "Stop Animation";
 			this.stopAnimationToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -252,13 +302,14 @@
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(274, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(288, 6);
 			// 
 			// fadeEffectToolStripMenuItem
 			// 
 			this.fadeEffectToolStripMenuItem.Name = "fadeEffectToolStripMenuItem";
-			this.fadeEffectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-			this.fadeEffectToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.fadeEffectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D1)));
+			this.fadeEffectToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.fadeEffectToolStripMenuItem.Tag = "fade";
 			this.fadeEffectToolStripMenuItem.Text = "Fade Effect";
 			this.fadeEffectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -266,14 +317,14 @@
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(274, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(288, 6);
 			// 
 			// waitForAnimationsToolStripMenuItem
 			// 
 			this.waitForAnimationsToolStripMenuItem.Name = "waitForAnimationsToolStripMenuItem";
 			this.waitForAnimationsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Space)));
-			this.waitForAnimationsToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.waitForAnimationsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.waitForAnimationsToolStripMenuItem.Tag = "wait";
 			this.waitForAnimationsToolStripMenuItem.Text = "Wait for Animations";
 			this.waitForAnimationsToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -282,7 +333,7 @@
 			// 
 			this.waitForInputToolStripMenuItem.Name = "waitForInputToolStripMenuItem";
 			this.waitForInputToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Space)));
-			this.waitForInputToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.waitForInputToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
 			this.waitForInputToolStripMenuItem.Tag = "pause";
 			this.waitForInputToolStripMenuItem.Text = "Wait For Input";
 			this.waitForInputToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -369,6 +420,35 @@
 			this.tsDuplicate.Text = "Duplicate";
 			this.tsDuplicate.Click += new System.EventHandler(this.tsDuplicate_Click);
 			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsLock
+			// 
+			this.tsLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsLock.Image = global::SPNATI_Character_Editor.Properties.Resources.Lock;
+			this.tsLock.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsLock.Name = "tsLock";
+			this.tsLock.Size = new System.Drawing.Size(23, 22);
+			this.tsLock.Text = "Lock changes in canvas";
+			this.tsLock.Click += new System.EventHandler(this.tsLock_Click);
+			// 
+			// emitParticleToolStripMenuItem
+			// 
+			this.emitParticleToolStripMenuItem.Name = "emitParticleToolStripMenuItem";
+			this.emitParticleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
+			this.emitParticleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.emitParticleToolStripMenuItem.Tag = "emit";
+			this.emitParticleToolStripMenuItem.Text = "Emit Particle";
+			this.emitParticleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(288, 6);
+			// 
 			// SceneTree
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -419,5 +499,13 @@
 		private System.Windows.Forms.ToolStripButton tsCopy;
 		private System.Windows.Forms.ToolStripButton tsPaste;
 		private System.Windows.Forms.ToolStripButton tsDuplicate;
+		private System.Windows.Forms.ToolStripButton tsAddTransition;
+		private System.Windows.Forms.ToolStripMenuItem addEmitterToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripButton tsLock;
+		private System.Windows.Forms.ToolStripMenuItem emitParticleToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 	}
 }

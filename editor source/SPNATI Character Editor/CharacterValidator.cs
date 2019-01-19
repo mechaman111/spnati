@@ -628,9 +628,19 @@ namespace SPNATI_Character_Editor
 				unusedImages.Remove(ending.GalleryImage);
 			}
 
+			bool lastTransition = false;
 			foreach (Scene scene in ending.Scenes)
 			{
-				HashSet<string> usedSpriteIds = new HashSet<string>();
+				if (scene.Transition)
+				{
+					if (lastTransition)
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a scene with more than one transition. Only one transition is allowed.", new ValidationContext(ending, scene, null)));
+					}
+					lastTransition = true;
+				}
+
+				HashSet<string> usedObjectIds = new HashSet<string>();
 				if (!string.IsNullOrEmpty(scene.Background))
 				{
 					unusedImages.Remove(scene.Background);
@@ -638,20 +648,20 @@ namespace SPNATI_Character_Editor
 
 				foreach (Directive directive in scene.Directives)
 				{
-					if (directive.DirectiveType == "sprite")
+					if (directive.DirectiveType == "sprite" || directive.DirectiveType == "emitter")
 					{
 						string id = directive.Id;
 						if (string.IsNullOrEmpty(id))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a sprite directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a {directive.DirectiveType} directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
 						}
-						else if (usedSpriteIds.Contains(id))
+						else if (usedObjectIds.Contains(id))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} uses the ID \"{id}\" for more than one sprite in the same scene.", new ValidationContext(ending, scene, directive)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} uses the ID \"{id}\" for more than one object in the same scene.", new ValidationContext(ending, scene, directive)));
 						}
 						else
 						{
-							usedSpriteIds.Add(id);
+							usedObjectIds.Add(id);
 						}
 
 						if (!string.IsNullOrEmpty(directive.Src))
@@ -659,16 +669,16 @@ namespace SPNATI_Character_Editor
 							unusedImages.Remove(directive.Src);
 						}
 					}
-					else if (directive.DirectiveType == "move")
+					else if (directive.DirectiveType == "move" || directive.DirectiveType == "remove")
 					{
 						string id = directive.Id;
 						if (string.IsNullOrEmpty(id))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a {directive.DirectiveType} directive ({directive}) with no ID.", new ValidationContext(ending, scene, directive)));
 						}
-						else if (!usedSpriteIds.Contains(id))
+						else if (!usedObjectIds.Contains(id))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a move directive with ID \"{id}\" which does not correspond to any sprite in that scene.", new ValidationContext(ending, scene, directive)));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Epilogue, $"Ending {ending.Title} has a {directive.DirectiveType} directive with ID \"{id}\" which does not correspond to any object in that scene.", new ValidationContext(ending, scene, directive)));
 						}
 					}
 				}

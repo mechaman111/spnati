@@ -30,6 +30,7 @@ namespace SPNATI_Character_Editor
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
+		private Dictionary<string, CharacterImage> _crossStageImages = new Dictionary<string, CharacterImage>();
 		private Costume _skin;
 
 		/// <summary>
@@ -49,6 +50,19 @@ namespace SPNATI_Character_Editor
 				string name = Path.GetFileNameWithoutExtension(file);
 				Add(file, name);
 			}
+
+			CharacterEditorData editorData = CharacterDatabase.GetEditorData(character.Character);
+			if (editorData != null)
+			{
+				string folder = character.GetDirectory();
+				foreach (CrossStagePose pose in editorData.Poses)
+				{
+					string name = Path.GetFileNameWithoutExtension(pose.FileName);
+					CharacterImage image = new CharacterImage(Path.Combine(folder, pose.FileName), name);
+					//image.d
+					_crossStageImages[pose.FileName] = image;
+				}
+			}
 		}
 
 		/// <summary>
@@ -61,22 +75,6 @@ namespace SPNATI_Character_Editor
 		{
 			CharacterImage image = new CharacterImage(name, file);
 			_allImages.Add(image);
-
-			//Add in skin alternatives
-			//string[] extensions = { ".png", ".gif" };
-			//foreach (AlternateSkin alt in _character.Metadata.AlternateSkins)
-			//{
-			//	foreach (SkinLink link in alt.Skins)
-			//	{
-			//		string folder = Path.Combine(Config.SpnatiDirectory, link.Folder);
-			//		foreach(string altFile in Directory.EnumerateFiles(folder, "*.*")
-			//			.Where(s => extensions.Any(ext => ext == Path.GetExtension(s))))
-			//		{
-			//			string altName = Path.GetFileNameWithoutExtension(file);
-			//			//image.SetAlt(link.Folder, altName);
-			//		}
-			//	}
-			//}
 
 			if (file != PreviewImage)
 			{
@@ -160,9 +158,28 @@ namespace SPNATI_Character_Editor
 			List<CharacterImage> list;
 			if (_stages.TryGetValue(stage, out list))
 			{
-				return list;
+				foreach (CharacterImage img in list)
+				{
+					yield return img;
+				}
 			}
-			return new List<CharacterImage>();
+
+			// >>>> NOT READY FOR 3.4
+			//CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character.Character);
+			//if (editorData != null)
+			//{
+			//	foreach (CrossStagePose pose in editorData.Poses)
+			//	{
+			//		if (pose.Stages.Contains(stage) && !pose.FileName.StartsWith(stage.ToString()))
+			//		{
+			//			CharacterImage img = _crossStageImages.Get(pose.FileName);
+			//			if (img != null)
+			//			{
+			//				yield return img;
+			//			}
+			//		}
+			//	}
+			//}
 		}
 
 		/// <summary>

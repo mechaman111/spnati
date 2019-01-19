@@ -28,34 +28,30 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.picBox = new System.Windows.Forms.PictureBox();
-			((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
+			this.canvas = new Desktop.CommonControls.DBPanel();
 			this.SuspendLayout();
 			// 
-			// picBox
+			// canvas
 			// 
-			this.picBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.picBox.Location = new System.Drawing.Point(0, 0);
-			this.picBox.Name = "picBox";
-			this.picBox.Size = new System.Drawing.Size(197, 493);
-			this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picBox.TabIndex = 0;
-			this.picBox.TabStop = false;
+			this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.canvas.Location = new System.Drawing.Point(0, 0);
+			this.canvas.Name = "canvas";
+			this.canvas.Size = new System.Drawing.Size(197, 493);
+			this.canvas.TabIndex = 1;
+			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
 			// 
 			// CharacterImageBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.picBox);
+			this.Controls.Add(this.canvas);
 			this.Name = "CharacterImageBox";
 			this.Size = new System.Drawing.Size(197, 493);
-			((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.PictureBox picBox;
+		private Desktop.CommonControls.DBPanel canvas;
 	}
 }

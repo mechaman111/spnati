@@ -1,5 +1,7 @@
 ﻿using Desktop;
 using Desktop.Messaging;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -8,6 +10,8 @@ namespace SPNATI_Character_Editor.Controls
 	{
 		private CharacterImage _image;
 		private Mailbox _mailbox;
+		private Image _imageReference;
+		private bool _animating;
 
 		public CharacterImageBox()
 		{
@@ -24,7 +28,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_image != null)
 			{
-				picBox.Image = null;
+				_imageReference = null;
 				_image.ReleaseImage();
 				_image = null;
 			}
@@ -37,22 +41,52 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 			Destroy();
+			if (_imageReference != null && _animating)
+			{
+				ImageAnimator.StopAnimate(_imageReference, OnFrameChanged);
+			}
 			_image = image;
 			if (image == null)
 			{
-				picBox.Image = null;
+				_imageReference = null;
 			}
 			else
 			{
-				picBox.Image = image.GetImage();
+				_imageReference = image.GetImage();
+				if (ImageAnimator.CanAnimate(_imageReference))
+				{
+					_animating = true;
+					ImageAnimator.Animate(_imageReference, OnFrameChanged);
+				}
 			}
+			canvas.Invalidate();
+		}
+
+		private void OnFrameChanged(object sender, EventArgs e)
+		{
+			canvas.Invalidate();
 		}
 
 		private void OnReplaceImage(ImageReplacementArgs args)
 		{
 			if (_image == args.Reference)
 			{
-				picBox.Image = args.NewImage;
+				canvas.Invalidate();
+				_imageReference = args.NewImage;
+			}
+		}
+
+		private void canvas_Paint(object sender, PaintEventArgs e)
+		{
+			Graphics g = e.Graphics;
+			if (_imageReference != null)
+			{
+				ImageAnimator.UpdateFrames();
+
+				//scale to the height
+				int height = canvas.Height;
+				int width = (int)(_imageReference.Width / (float)_imageReference.Height * canvas.Height);
+				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, 0, width, height);
 			}
 		}
 	}
