@@ -84,7 +84,7 @@ def get_cases(player_dictionary, situation, stage):
 
 	result_list = list()
 	def is_generic_line(line_data):
-		for target_type in all_targets:
+		for target_type in all_targets + ['tests', 'conditions']:
 			if target_type in line_data:
 				return False
 		return True
@@ -228,7 +228,7 @@ def create_case_xml(base_element, lines):
 
 			if "tests" in line_data:
 				for test in line_data["tests"]:
-					case_xml_element.subElement("test", [('expr', test[0]), ('value', test[1])])
+					case_xml_element.subElement("test", None, [('expr', test[0]), ('value', test[1])])
 
 
 		#now add the individual line
@@ -346,6 +346,8 @@ def write_xml(data, filename):
 						text_box_xml.subElement(arrow_tag, text_box[arrow_tag])
 					text_box_xml.subElement("content", capitalizeDialogue(text_box[text_tag]))
 
+			if not 'scenes' in ending:
+				continue
 			for scene in ending["scenes"]:
 				scene_xml = ending_xml.subElement("scene", None, None, blank_after=True)
 				for cond_type in scene_attributes:
@@ -888,7 +890,7 @@ def make_meta_xml(data, filename):
 			pic = data["pic"]
 			if pic == "":
 				pic = "0-calm"
-                        o.subElement("pic", pic + ".png")
+			o.subElement("pic", pic + ".png")
 
 		elif value == "layers":
 			#the number of layers of clothing is taken directly from the clothing data

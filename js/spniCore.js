@@ -13,6 +13,7 @@ var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
+var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
@@ -39,6 +40,7 @@ var MALE_SYMBOL = IMG + 'male.png';
 var FEMALE_SYMBOL = IMG + 'female.png';
 
 var includedOpponentStatuses = {};
+var alternateCostumeSets = {};
 
 
 /* game table */
@@ -377,16 +379,16 @@ Player.prototype.resetState = function () {
                 var tag = $elem.text();
                 var removed = $elem.attr('remove') || '';
                 if (removed.toLowerCase() === 'true') {
-                    if (this.tags.indexOf(tag) > 0) {
+                    if (this.tags.indexOf(tag) >= 0) {
                         this.tags.splice(this.tags.indexOf(tag), 1);
                     }
-                } else {
+                } else if (this.tags.indexOf(tag) < 0) {
                     this.tags.push(tag);
                 }
             }.bind(this));
         }
 
-        if (appearance.id) {
+        if (appearance.id && this.tags.indexOf(appearance.id) < 0) {
             this.tags.push(appearance.id);
         }
 
@@ -458,13 +460,27 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
 
-    this.alternate_costumes = $metaXml.find('alternates').find('costume').map(function () {
-        return {
-            'folder': $(this).attr('folder'),
-            'label': $(this).text(),
-            'image': $(this).attr('img')
-        };
-    }).get();
+    this.alternate_costumes = [];
+    this.selection_image = this.folder + this.image;
+    
+    $metaXml.find('alternates').find('costume').each(function (i, elem) {
+        var set = $(elem).attr('set') || 'offline';
+        
+        if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
+            var costume_descriptor = {
+                'folder': $(elem).attr('folder'),
+                'label': $(elem).text(),
+                'image': $(elem).attr('img'),
+                'set': set
+            };
+            
+            if (set === FORCE_ALT_COSTUME) {
+                this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
+            }
+            
+            this.alternate_costumes.push(costume_descriptor);
+        }
+    }.bind(this)).get();
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -489,7 +505,8 @@ Opponent.prototype.isLoaded = function() {
 
 Opponent.prototype.onSelected = function(individual) {
     this.resetState();
-    console.log(this.slot+": "+this);
+    console.log(this.slot+": ");
+    console.log(this);
     this.preloadStageImages(-1);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
@@ -536,6 +553,7 @@ Opponent.prototype.getIntelligence = function () {
 };
 
 Opponent.prototype.loadAlternateCostume = function (individual) {
+    console.log("Loading alternate costume: "+this.selected_costume);
     $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
@@ -654,11 +672,20 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.targetedLines = targetedLines;
 
-            if (ALT_COSTUMES_ENABLED && this.selected_costume) {
-                this.loadAlternateCostume();
-            } else {
-                this.onSelected(individual);
+            if (ALT_COSTUMES_ENABLED) {
+                if (this.selected_costume) {
+                    return this.loadAlternateCostume();
+                } else if (FORCE_ALT_COSTUME) {
+                    for (var i=0;i<this.alternate_costumes.length;i++) {
+                        if (this.alternate_costumes[i].set === FORCE_ALT_COSTUME) {
+                            this.selectAlternateCostume(this.alternate_costumes[i].folder);
+                            return this.loadAlternateCostume();
+                        }
+                    }
+                }
             }
+            
+            return this.onSelected(individual);
 		}.bind(this),
 		/* Error callback. */
         function(err) {
@@ -675,6 +702,7 @@ Player.prototype.getImagesForStage = function (stage) {
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var selector = (stage == -1 ? 'start, stage[id=1] case[tag=game_start]'
                     : 'stage[id='+stage+'] case');
+                    
     this.xml.find(selector).each(function () {
         var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
             filter = $(this).attr('filter');
@@ -806,6 +834,22 @@ function loadConfigFile () {
             if(_alts === "true") {
                 ALT_COSTUMES_ENABLED = true;
                 console.log("Alternate costumes enabled");
+                
+                FORCE_ALT_COSTUME = $(xml).find('force-alternate-costume').text();
+                if (FORCE_ALT_COSTUME) {
+                    console.log("Forcing alternate costume set: "+FORCE_ALT_COSTUME);
+                    alternateCostumeSets[FORCE_ALT_COSTUME] = true;
+                } else {
+                    $(xml).find('alternate-costume-sets').each(function () {
+                        var set = $(this).text();
+                        alternateCostumeSets[set] = true;
+                        if (set === 'all') {
+                            console.log("Including all alternate costume sets");
+                        } else {
+                            console.log("Including alternate costume set: "+set);
+                        }
+                    });
+                }
             } else {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
