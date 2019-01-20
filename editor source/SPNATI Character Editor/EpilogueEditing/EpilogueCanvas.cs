@@ -14,14 +14,6 @@ namespace SPNATI_Character_Editor.Controls
 	public partial class EpilogueCanvas : UserControl
 	{
 		/// <summary>
-		/// Control point size in pixels
-		/// </summary>
-		private const int ControlPointSize = 8;
-		/// <summary>
-		/// Control point radius in pixels
-		/// </summary>
-		private const int ControlPointHalfSize = ControlPointSize / 2;
-		/// <summary>
 		/// How many pixels the user has to click within to select a handle
 		/// </summary>
 		private const int SelectionLeeway = 5;
@@ -50,6 +42,7 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _lockedBeforePlayback;
 		private int _directiveIndex = -1;
 		private bool _waitingForAnims = false;
+		private bool _showOverlay = true;
 
 		private float _zoom = 1;
 		public float ZoomLevel
@@ -65,8 +58,7 @@ namespace SPNATI_Character_Editor.Controls
 		private DateTime _lastTick;
 		private SceneObject _selectedObject = null;
 		private ScenePreview _scenePreview = null;
-		private List<SceneObject> _sprites = new List<SceneObject>();
-		private List<SceneObject> _textboxes = new List<SceneObject>();
+		private SceneTransition _sceneTransition;
 		private SceneObject _overlay = null;
 		private List<SceneAnimation> _animations = new List<SceneAnimation>();
 
@@ -120,8 +112,6 @@ namespace SPNATI_Character_Editor.Controls
 
 			_outsideBrush = new SolidBrush(Color.FromArgb(80, 0, 10, 30));
 
-			propertyTable.RequiredFilter = RequireField;
-
 			_borderPen = new Pen(Brushes.DarkGray, 1);
 			_borderPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
 
@@ -174,6 +164,12 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void Canvas_Paint(object sender, PaintEventArgs e)
 		{
+			if (_sceneTransition != null)
+			{
+				_sceneTransition.Draw(e.Graphics, canvas.Width, canvas.Height);
+				return;
+			}
+
 			if (_scenePreview == null) { return; }
 			Graphics g = e.Graphics;
 
@@ -191,7 +187,7 @@ namespace SPNATI_Character_Editor.Controls
 			//g.DrawLine(_borderPen, 0, viewportBottomRight.Y, canvas.Width, viewportBottomRight.Y);
 
 			//images
-			foreach (SceneObject obj in _sprites)
+			foreach (SceneObject obj in _scenePreview.Objects)
 			{
 				//keyframes
 				if (_selectedAnimation?.AssociatedObject == obj && _mode == EditMode.Edit)
@@ -207,17 +203,20 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			//overlay
-			if (tmrPlay.Enabled && _mode == EditMode.Edit && _selectedAnimation?.AssociatedObject == _overlay)
+			if (_showOverlay || _mode == EditMode.Playback)
 			{
-				g.FillRectangle(_selectedAnimation.PreviewObject.Color, 0, 0, canvas.Width, canvas.Height);
-			}
-			else
-			{
-				g.FillRectangle(_overlay.Color, 0, 0, canvas.Width, canvas.Height);
+				if (tmrPlay.Enabled && _mode == EditMode.Edit && _selectedAnimation?.AssociatedObject == _overlay)
+				{
+					g.FillRectangle(_selectedAnimation.PreviewObject.Color, 0, 0, canvas.Width, canvas.Height);
+				}
+				else
+				{
+					g.FillRectangle(_overlay.Color, 0, 0, canvas.Width, canvas.Height);
+				}
 			}
 
 			//textboxes
-			foreach (SceneObject obj in _textboxes)
+			foreach (SceneObject obj in _scenePreview.TextBoxes)
 			{
 				DrawTextBox(g, obj);
 			}
@@ -261,11 +260,9 @@ namespace SPNATI_Character_Editor.Controls
 					Point pt = new Point(_lastMouse.X - arrow.Width / 2, _lastMouse.Y - arrow.Height / 2);
 
 					//rotate to face the object's center
-					RectangleF bounds = ToScreenRegion(_selectedObject);
-					float cx = bounds.X + bounds.Width / 2;
-					float cy = bounds.Y + bounds.Height / 2;
+					PointF center = ToScreenCenter(_selectedObject);;
 
-					double angle = Math.Atan2(cy - pt.Y, cx - pt.X);
+					double angle = Math.Atan2(center.Y - pt.Y, center.X - pt.X);
 					angle = angle * (180 / Math.PI) - 90;
 
 					g.TranslateTransform(_lastMouse.X, _lastMouse.Y);
@@ -324,36 +321,51 @@ namespace SPNATI_Character_Editor.Controls
 			g.RotateTransform(obj.Rotation);
 			g.TranslateTransform(-offsetX, -offsetY);
 
-			if (obj.Image == null)
+			if (obj.ObjectType == SceneObjectType.Emitter)
 			{
-				if (obj.ObjectType != SceneObjectType.Sprite)
+				if (_mode != EditMode.Playback)
 				{
-					g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+					Point center = ToScreenPoint(new PointF(obj.X, obj.Y));
+					g.DrawImage(Resources.emitter, center.X - Resources.emitter.Width / 2, center.Y - Resources.emitter.Height / 2);
 				}
 			}
 			else
 			{
-				if (obj.Alpha > 0)
+				if (obj.Image == null)
 				{
-					if (obj.Alpha < 100)
+					if (obj.ObjectType == SceneObjectType.Other)
 					{
-						float[][] matrixItems = new float[][] {
+						g.FillRectangle(obj.Color, 0, 0, canvas.Width, canvas.Height);
+					}
+					else
+					{
+						g.FillEllipse(obj.Color, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+					}
+				}
+				else
+				{
+					if (obj.Alpha > 0)
+					{
+						if (obj.Alpha < 100)
+						{
+							float[][] matrixItems = new float[][] {
 							new float[] { 1, 0, 0, 0, 0 },
 							new float[] { 0, 1, 0, 0, 0 },
 							new float[] { 0, 0, 1, 0, 0 },
 							new float[] { 0, 0, 0, obj.Alpha / 100.0f, 0 },
 							new float[] { 0, 0, 0, 0, 1 }
 						};
-						ColorMatrix cm = new ColorMatrix(matrixItems);
-						ImageAttributes ia = new ImageAttributes();
-						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+							ColorMatrix cm = new ColorMatrix(matrixItems);
+							ImageAttributes ia = new ImageAttributes();
+							ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-						Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-						g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
-					}
-					else
-					{
-						g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+							Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
+							g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
+						}
+						else
+						{
+							g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+						}
 					}
 				}
 			}
@@ -596,6 +608,12 @@ namespace SPNATI_Character_Editor.Controls
 				Rectangle viewport = GetViewportBounds();
 				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
 			}
+			else if (obj.ObjectType == SceneObjectType.Emitter || obj?.SourceObject?.ObjectType == SceneObjectType.Emitter)
+			{
+				//emitters don't actually have a size, so just use a constant sized box centered around the upper left to represent where things get emitted from
+				Point center = ToScreenPoint(new PointF(obj.X, obj.Y));
+				return new RectangleF(center.X - SceneEmitter.EmitterRadius, center.Y - SceneEmitter.EmitterRadius, SceneEmitter.EmitterRadius * 2, SceneEmitter.EmitterRadius * 2);
+			}
 			else
 			{
 				//rotations are not computed currently when considering the bounding box
@@ -666,6 +684,26 @@ namespace SPNATI_Character_Editor.Controls
 			Point br = ToScreenPoint(new PointF(pt.X + obj.Width, pt.Y + obj.Height));
 			RectangleF rect = new RectangleF(tl.X, tl.Y, br.X - tl.X, br.Y - tl.Y);
 			return rect;
+		}
+
+		/// <summary>
+		/// Gets the "center" of an object's selection
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		private PointF ToScreenCenter(SceneObject obj)
+		{
+			RectangleF bounds = ToScreenRegion(obj);
+			if (obj.ObjectType == SceneObjectType.Emitter)
+			{
+				return new PointF(bounds.X, bounds.Y);
+			}
+			else
+			{
+				float cx = bounds.X + bounds.Width / 2;
+				float cy = bounds.Y + bounds.Height / 2;
+				return new PointF(cx, cy);
+			}
 		}
 
 		/// <summary>
@@ -801,13 +839,13 @@ namespace SPNATI_Character_Editor.Controls
 									//2 - textbox
 									if (obj == null)
 									{
-										obj = GetObjectAtPoint(e.X, e.Y, _textboxes);
+										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.TextBoxes);
 									}
 
-									//3 - sprite
+									//3 - scene object
 									if (obj == null)
 									{
-										obj = GetObjectAtPoint(e.X, e.Y, _sprites);
+										obj = GetObjectAtPoint(e.X, e.Y, _scenePreview.Objects);
 									}
 
 									if (obj != null && obj != _selectedObject && (string.IsNullOrEmpty(obj.Id) || obj.Id != _selectedObject?.Id))
@@ -847,83 +885,103 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedObject != null)
 			{
-				RectangleF bounds = ToAbsScreenRegion(_selectedObject);
-				if (_selectedObject.ObjectType == SceneObjectType.Sprite)
+				bool locked = false;
+				Keyframe frame = _selectedObject.LinkedFrame;
+				if (frame != null)
 				{
+					locked = frame.Locked;
+				}
+
+				RectangleF bounds = ToAbsScreenRegion(_selectedObject);
+				if (_selectedObject.ObjectType == SceneObjectType.Sprite || _selectedObject.ObjectType == SceneObjectType.Emitter)
+				{
+					bool allowPivot = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+					bool allowRotate = true;
+					bool allowScale = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
 					float dt = Math.Abs(screenPt.Y - bounds.Y);
 					float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
 
 					//pivot position
-					RectangleF pivotBounds = ToUnscaledScreenRegion(_selectedObject);
-					PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX / _selectedObject.Width * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY / _selectedObject.Height * pivotBounds.Height);
-
-					//pivoting - hovering over the pivot circle
-					if (_selectedDirective?.DirectiveType == "sprite")
+					if (allowPivot)
 					{
-						float px = Math.Abs(screenPt.X - pivot.X);
-						float py = Math.Abs(screenPt.Y - pivot.Y);
-						if (px <= SelectionLeeway && py <= SelectionLeeway)
+						RectangleF pivotBounds = ToUnscaledScreenRegion(_selectedObject);
+						PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX / _selectedObject.Width * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY / _selectedObject.Height * pivotBounds.Height);
+
+						//pivoting - hovering over the pivot circle
+						if (_selectedDirective?.DirectiveType == "sprite")
 						{
-							return HoverContext.Pivot;
+							float px = Math.Abs(screenPt.X - pivot.X);
+							float py = Math.Abs(screenPt.Y - pivot.Y);
+							if (px <= SelectionLeeway && py <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.Pivot;
+							}
 						}
 					}
 
-					//rotating - hovering outside a corner
-					if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dr <= RotationLeeway ||
-						screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
+					if (allowRotate)
 					{
-						return HoverContext.Rotate;
-					}
-
-					//scaling/stretching - grabbing an edge
-					if (dl <= SelectionLeeway)
-					{
-						if (dt <= SelectionLeeway)
+						//rotating - hovering outside a corner
+						if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
+							screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dl <= RotationLeeway ||
+							screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && dt <= RotationLeeway ||
+							screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dr <= RotationLeeway ||
+							screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && db <= RotationLeeway ||
+							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dl <= RotationLeeway ||
+							screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
+							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
-							return HoverContext.ScaleTop | HoverContext.ScaleLeft;
-						}
-						else if (db <= SelectionLeeway)
-						{
-							return HoverContext.ScaleBottom | HoverContext.ScaleLeft;
-						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
-						{
-							return HoverContext.ScaleLeft;
+							return locked ? HoverContext.Locked : HoverContext.Rotate;
 						}
 					}
 
-					if (dr <= SelectionLeeway)
+					if (allowScale)
 					{
-						if (dt <= SelectionLeeway)
+						//scaling/stretching - grabbing an edge
+						if (dl <= SelectionLeeway)
 						{
-							return HoverContext.ScaleTop | HoverContext.ScaleRight;
+							if (dt <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleTop | HoverContext.ScaleLeft;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleLeft;
+							}
+							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleLeft;
+							}
 						}
-						else if (db <= SelectionLeeway)
-						{
-							return HoverContext.ScaleBottom | HoverContext.ScaleRight;
-						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
-						{
-							return HoverContext.ScaleRight;
-						}
-					}
 
-					if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-					{
-						return HoverContext.ScaleTop;
-					}
+						if (dr <= SelectionLeeway)
+						{
+							if (dt <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleTop | HoverContext.ScaleRight;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleRight;
+							}
+							else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+							{
+								return locked ? HoverContext.Locked : HoverContext.ScaleRight;
+							}
+						}
 
-					if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
-					{
-						return HoverContext.ScaleBottom;
+						if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							return locked ? HoverContext.Locked : HoverContext.ScaleTop;
+						}
+
+						if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							return locked ? HoverContext.Locked : HoverContext.ScaleBottom;
+						}
 					}
 				}
 				else if (_selectedObject.ObjectType == SceneObjectType.Text)
@@ -934,19 +992,19 @@ namespace SPNATI_Character_Editor.Controls
 						float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
 						if (dl > SelectionLeeway && screenPt.X < bounds.X && dl <= RotationLeeway)
 						{
-							return HoverContext.ArrowLeft;
+							return locked ? HoverContext.Locked : HoverContext.ArrowLeft;
 						}
 						else if (dl <= SelectionLeeway)
 						{
-							return HoverContext.SizeLeft;
+							return locked ? HoverContext.Locked : HoverContext.SizeLeft;
 						}
 						if (dr <= RotationLeeway && dr > SelectionLeeway && screenPt.X > bounds.X + bounds.Width)
 						{
-							return HoverContext.ArrowRight;
+							return locked ? HoverContext.Locked : HoverContext.ArrowRight;
 						}
 						else if (dr <= SelectionLeeway)
 						{
-							return HoverContext.SizeRight;
+							return locked ? HoverContext.Locked : HoverContext.SizeRight;
 						}
 					}
 					if (bounds.X + bounds.Width / 4 <= screenPt.X && screenPt.X <= bounds.X + bounds.Width - bounds.Width / 4)
@@ -955,11 +1013,11 @@ namespace SPNATI_Character_Editor.Controls
 						float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
 						if (dt > SelectionLeeway && (screenPt.Y < bounds.Y && dt <= RotationLeeway))
 						{
-							return HoverContext.ArrowUp;
+							return locked ? HoverContext.Locked : HoverContext.ArrowUp;
 						}
 						else if (db > SelectionLeeway && screenPt.Y >= bounds.Y + bounds.Height && db <= RotationLeeway)
 						{
-							return HoverContext.ArrowDown;
+							return locked ? HoverContext.Locked : HoverContext.ArrowDown;
 						}
 					}
 				}
@@ -967,7 +1025,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width &&
 					bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
 				{
-					return HoverContext.Drag;
+					return locked ? HoverContext.Locked : HoverContext.Drag;
 				}
 			}
 
@@ -975,65 +1033,72 @@ namespace SPNATI_Character_Editor.Controls
 			Rectangle viewport = GetViewportBounds();
 			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked)
 			{
-				bool canStretch = (_selectedDirective == null);
-				float dcl = Math.Abs(screenPt.X - viewport.X);
-				float dcr = Math.Abs(screenPt.X - (viewport.X + viewport.Width));
-				float dct = Math.Abs(screenPt.Y - viewport.Y);
-				float dcb = Math.Abs(screenPt.Y - (viewport.Y + viewport.Height));
-				if (dcl <= SelectionLeeway)
+				if (_selectedScene != null && !_selectedScene.Locked)
 				{
-					if (dct <= SelectionLeeway)
+					bool canStretch = (_selectedDirective == null);
+					float dcl = Math.Abs(screenPt.X - viewport.X);
+					float dcr = Math.Abs(screenPt.X - (viewport.X + viewport.Width));
+					float dct = Math.Abs(screenPt.Y - viewport.Y);
+					float dcb = Math.Abs(screenPt.Y - (viewport.Y + viewport.Height));
+					if (dcl <= SelectionLeeway)
 					{
-						return HoverContext.CameraZoomTopLeft;
-					}
-					else if (dcb <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomBottomLeft;
-					}
-					else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
-					{
-						return HoverContext.CameraSizeLeft;
-					}
-				}
-
-				if (dcr <= SelectionLeeway)
-				{
-					if (dct <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomTopRight;
-					}
-					else if (dcb <= SelectionLeeway)
-					{
-						return HoverContext.CameraZoomBottomRight;
-					}
-					else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
-					{
-						return HoverContext.CameraSizeRight;
-					}
-				}
-
-				if (canStretch)
-				{
-					if (dct <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
-					{
-						return HoverContext.CameraSizeTop;
+						if (dct <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomTopLeft;
+						}
+						else if (dcb <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomBottomLeft;
+						}
+						else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
+						{
+							return HoverContext.CameraSizeLeft;
+						}
 					}
 
-					if (dcb <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+					if (dcr <= SelectionLeeway)
 					{
-						return HoverContext.CameraSizeBottom;
+						if (dct <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomTopRight;
+						}
+						else if (dcb <= SelectionLeeway)
+						{
+							return HoverContext.CameraZoomBottomRight;
+						}
+						else if (canStretch && viewport.Y <= screenPt.Y && screenPt.Y <= viewport.Y + viewport.Height)
+						{
+							return HoverContext.CameraSizeRight;
+						}
+					}
+
+					if (canStretch)
+					{
+						if (dct <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+						{
+							return HoverContext.CameraSizeTop;
+						}
+
+						if (dcb <= SelectionLeeway && viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width)
+						{
+							return HoverContext.CameraSizeBottom;
+						}
 					}
 				}
 			}
 
 			//see if we're on top of an object
-			SceneObject obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _textboxes) ?? GetObjectAtPoint(screenPt.X, screenPt.Y, _sprites);
+			SceneObject obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.TextBoxes) ?? GetObjectAtPoint(screenPt.X, screenPt.Y, _scenePreview.Objects);
 			if (obj != null && obj.ObjectType != SceneObjectType.Other)
 			{
+				if (obj.LinkedFrame != null && obj.LinkedFrame.Locked)
+				{
+					return HoverContext.None;
+				}
 				return HoverContext.Select;
 			}
 
-			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked)
+			if ((_selectedDirective == null || _selectedDirective.DirectiveType == "camera") && !_viewportLocked && !_selectedScene.Locked)
 			{
 				//finally see if we're within the camera viewport
 				if (viewport.X <= screenPt.X && screenPt.X <= viewport.X + viewport.Width &&
@@ -1112,12 +1177,15 @@ namespace SPNATI_Character_Editor.Controls
 								case HoverContext.Pivot:
 									canvas.Cursor = Cursors.Cross;
 									break;
+								case HoverContext.Locked:
+									canvas.Cursor = Cursors.No;
+									break;
 								default:
 									canvas.Cursor = Cursors.Default;
 									break;
 							}
 
-							if (e.Button == MouseButtons.Left && context != HoverContext.None)
+							if (e.Button == MouseButtons.Left && context != HoverContext.None && context != HoverContext.Locked)
 							{
 								//start dragging
 								if (HoverContext.Object.HasFlag(context))
@@ -1491,7 +1559,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else if (e.Scene != null)
 			{
-				propertyTable.RecordFilter = null;
+				propertyTable.RecordFilter = SceneFilter;
 				propertyTable.Data = e.Scene;
 			}
 			else
@@ -1499,6 +1567,7 @@ namespace SPNATI_Character_Editor.Controls
 				propertyTable.RecordFilter = null;
 				propertyTable.Data = null;
 			}
+			propertyTable.RunFilter(HideRow);
 
 			BuildScene(false);
 			if (_selectedScene != oldScene)
@@ -1535,44 +1604,105 @@ namespace SPNATI_Character_Editor.Controls
 			return true;
 		}
 
-		/// <summary>
-		/// Determines which properties should display by default for selected nodes
-		/// </summary>
-		/// <param name="record"></param>
-		/// <returns></returns>
-		private bool RequireField(PropertyRecord record)
+		private static readonly string[] TransitionProperties = new string[] { "effect", "ease", "time" }; //hardcoding allowed properties for now since I don't expect this to change
+		private bool SceneFilter(PropertyRecord record)
 		{
-			if (_selectedDirective == null)
+			if (_selectedScene == null)
 			{
-				return false;
+				return true;
 			}
 
-			DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(_selectedDirective.DirectiveType);
-			if (def == null)
+			string key = record.Key;
+
+			if (key == "color")
 			{
-				return false;
+				return true;
 			}
-			if (_selectedKeyframe == null)
+
+			for (int i = 0; i < TransitionProperties.Length; i++)
 			{
-				if (_selectedDirective.Keyframes.Count == 0 && def.IsAnimatable)
+				if (TransitionProperties[i] == key)
 				{
-					return def.RequiresAnimatedProperty(record.Key);
-				}
-				else
-				{
-					return def.RequiresProperty(record.Key);
+					if (_selectedScene.Transition)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
 				}
 			}
-			else
-			{
-				return def.RequiresAnimatedProperty(record.Key);
-			}
+			return !_selectedScene.Transition;
 		}
 
 		private void propertyTable_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			treeScenes.UpdateNode(propertyTable.Data);
 			BuildScene(false);
+			if (e.PropertyName == "Id")
+			{
+				propertyTable.RunFilter(HideRow);
+			}
+		}
+
+		private bool HideRow(PropertyRecord record, object data, object context)
+		{
+			if (_selectedDirective == null || record.Key == "id")
+			{
+				return true;
+			}
+			DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(_selectedDirective.DirectiveType);
+			if (def == null || !def.FilterPropertiesById)
+			{
+				return true;
+			}
+
+			string id = _selectedDirective.Id;
+			if (string.IsNullOrEmpty(id))
+			{
+				return false;
+			}
+
+			string closestMatch = "";
+			string matchType = "";
+
+			for (int i = 0; i < _selectedScene.Directives.Count; i++)
+			{
+				Directive directive = _selectedScene.Directives[i];
+				if (directive == _selectedDirective)
+				{
+					if (matchType.Length == 0)
+					{
+						return false; //nothing previously defined the ID, so we have no idea what this type is supposed to be
+					}
+					else
+					{
+						//hardcoded list for now. may want to move this to the DirectiveDefinition
+						string key = record.Key;
+						if (key == "rate" || key == "counter")
+						{
+							return matchType == "emitter";
+						}
+						else if (key == "scalex" || key == "scaley" || key == "alpha")
+						{
+							return matchType == "sprite";
+						}
+						else
+						{
+							return true; //other properties are assumed to be globally available
+						}
+					}
+				}
+
+				if (!string.IsNullOrEmpty(directive.Id) && directive.Id.StartsWith(id) && directive.Id.Length > closestMatch.Length)
+				{
+					closestMatch = directive.Id;
+					matchType = directive.DirectiveType;
+				}
+			}
+
+			return false; //if no ID is available, don't make anything available yet
 		}
 
 		/// <summary>
@@ -1583,16 +1713,8 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedObject = null;
 			_selectedAnimation = null;
 			_animations.Clear();
-			foreach (SceneObject obj in _sprites)
-			{
-				obj.Dispose();
-			}
-			_sprites.Clear();
-			foreach (SceneObject obj in _textboxes)
-			{
-				obj.Dispose();
-			}
-			_textboxes.Clear();
+			_scenePreview?.Dispose();
+			_sceneTransition = null;
 
 			canvas.Invalidate();
 
@@ -1601,11 +1723,19 @@ namespace SPNATI_Character_Editor.Controls
 				_scenePreview = null;
 				return;
 			}
+
+			if (_selectedScene.Transition)
+			{
+				_scenePreview = null;
+				_sceneTransition = new SceneTransition(_selectedScene, canvas.Width, canvas.Height);
+				return;
+			}
+
 			_scenePreview = new ScenePreview(_selectedScene);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);
-			_sprites.Add(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
+			_scenePreview.AddObject(new SceneObject(_scenePreview, _character, "background", _selectedScene.Background, _selectedScene.BackgroundColor));
 
 			if (!previewMode)
 			{
@@ -1613,7 +1743,7 @@ namespace SPNATI_Character_Editor.Controls
 				bool readyToStop = _selectedDirective == null;
 				foreach (Directive d in _selectedScene.Directives)
 				{
-					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text")
+					if (readyToStop && d.DirectiveType != "sprite" && d.DirectiveType != "text" && d.DirectiveType != "emitter")
 					{
 						break;
 					}
@@ -1633,10 +1763,10 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					string id = _selectedDirective.Id;
 					//select the object corresponding to the selected directive
-					_selectedObject = _sprites.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
+					_selectedObject = _scenePreview.Objects.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
 					if (_selectedObject == null)
 					{
-						_selectedObject = _textboxes.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
+						_selectedObject = _scenePreview.TextBoxes.Find(obj => (!string.IsNullOrEmpty(id) && obj.Id == id) || obj.LinkedFrame == _selectedDirective);
 					}
 				}
 			}
@@ -1669,12 +1799,21 @@ namespace SPNATI_Character_Editor.Controls
 			SceneObject obj = null;
 			if (directive.Id != null)
 			{
-				obj = _sprites.Find(o => o.Id == directive.Id);
+				obj = _scenePreview.Objects.Find(o => o.Id == directive.Id);
 			}
 			switch (directive.DirectiveType)
 			{
 				case "sprite":
-					_sprites.Add(new SceneObject(_scenePreview, _character, directive));
+					_scenePreview.AddObject(new SceneObject(_scenePreview, _character, directive));
+					canvas.Invalidate();
+					break;
+				case "emitter":
+					_scenePreview.AddObject(new SceneEmitter(_scenePreview, _character, directive));
+					canvas.Invalidate();
+					break;
+				case "remove":
+					_scenePreview.Objects.Remove(obj);
+					obj.Dispose();
 					canvas.Invalidate();
 					break;
 				case "fade":
@@ -1715,12 +1854,12 @@ namespace SPNATI_Character_Editor.Controls
 					break;
 				case "text":
 					//kill any old textbox with the ID
-					SceneObject old = _textboxes.Find(b => !string.IsNullOrEmpty(b.Id) && b.Id == directive.Id);
+					SceneObject old = _scenePreview.TextBoxes.Find(b => !string.IsNullOrEmpty(b.Id) && b.Id == directive.Id);
 					if (old != null)
 					{
-						_textboxes.Remove(old);
+						_scenePreview.TextBoxes.Remove(old);
 					}
-					_textboxes.Add(new SceneObject(_scenePreview, _character, directive));
+					_scenePreview.TextBoxes.Add(new SceneObject(_scenePreview, _character, directive));
 					canvas.Invalidate();
 					break;
 				case "move":
@@ -1798,7 +1937,7 @@ namespace SPNATI_Character_Editor.Controls
 				case "wait":
 					for (int i = 0; i < _animations.Count; i++)
 					{
-						if (!_animations[i].Looped)
+						if (!_animations[i].Looped || _animations[i].Iterations > 0)
 						{
 							_waitingForAnims = true;
 							break;
@@ -1820,11 +1959,21 @@ namespace SPNATI_Character_Editor.Controls
 					}
 					break;
 				case "clear":
-					SceneObject textBox = _textboxes.Find(t => t.Id == directive.Id);
-					_textboxes.Remove(textBox);
+					SceneObject textBox = _scenePreview.TextBoxes.Find(t => t.Id == directive.Id);
+					_scenePreview.TextBoxes.Remove(textBox);
 					break;
 				case "clear-all":
-					_textboxes.Clear();
+					_scenePreview.TextBoxes.Clear();
+					break;
+				case "emit":
+					SceneEmitter emitter = _scenePreview.Objects.Find(o => o.Id == directive.Id && o.ObjectType == SceneObjectType.Emitter) as SceneEmitter;
+					if (emitter != null && (directive == _selectedDirective || _mode == EditMode.Playback))
+					{
+						for (int i = 0; i < directive.Count; i++)
+						{
+							emitter.Emit();
+						}
+					}
 					break;
 			}
 
@@ -1860,9 +2009,9 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		private void RebuildTextBoxes()
 		{
-			for (int i = 0; i < _textboxes.Count; i++)
+			for (int i = 0; i < _scenePreview.TextBoxes.Count; i++)
 			{
-				_textboxes[i] = new SceneObject(_scenePreview, _character, _textboxes[i].LinkedFrame as Directive);
+				_scenePreview.TextBoxes[i] = new SceneObject(_scenePreview, _character, _scenePreview.TextBoxes[i].LinkedFrame as Directive);
 			}
 		}
 
@@ -1887,7 +2036,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_selectedAnimation = animation;
 			}
-			if (_selectedDirective == directive && _selectedKeyframe == null)
+			if (_mode == EditMode.Playback || (_selectedDirective == directive && _selectedKeyframe == null))
 			{
 				obj.LinkedAnimation = animation;
 			}
@@ -2066,19 +2215,40 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tmrPlay_Tick(object sender, EventArgs e)
 		{
-			UpdateAnimations();
-			if (_viewportLocked)
+			DateTime now = DateTime.Now;
+			TimeSpan elapsed = now - _lastTick;
+			float elapsedSec = (float)elapsed.TotalSeconds;
+			_lastTick = now;
+			if (_sceneTransition != null)
 			{
-				FitToCamera();
+				_sceneTransition.Update(elapsedSec);
+				canvas.Invalidate();
+			}
+			else
+			{
+				//updates can add to the object collection and resort it, which will royally screw up this loop, so copy off first, as inefficient as that is
+				List<SceneObject> objects = new List<SceneObject>();
+				objects.AddRange(_scenePreview.Objects);
+
+				for (int i = 0; i < objects.Count; i++)
+				{
+					SceneObject obj = objects[i];
+					obj.UpdateTick(elapsedSec, _scenePreview);
+					if (obj.ObjectType == SceneObjectType.Emitter)
+					{
+						canvas.Invalidate();
+					}
+				}
+				UpdateAnimations(elapsedSec);
+				if (_viewportLocked)
+				{
+					FitToCamera();
+				}
 			}
 		}
 
-		private void UpdateAnimations()
-		{
-			DateTime now = DateTime.Now;
-			TimeSpan elapsed = now - _lastTick;
-			float elapsedMs = (float)elapsed.TotalSeconds;
-			_lastTick = now;
+		private void UpdateAnimations(float elapsedSec)
+		{	
 			int nonLoopingCount = 0;
 
 			if (_mode == EditMode.Playback)
@@ -2086,14 +2256,14 @@ namespace SPNATI_Character_Editor.Controls
 				for (int i = _animations.Count - 1; i >= 0; i--)
 				{
 					SceneAnimation anim = _animations[i];
-					anim.Update(elapsedMs);
-					if (!anim.Looped)
+					anim.Update(elapsedSec);
+					if (anim.IsComplete)
 					{
-						if (anim.IsComplete)
-						{
-							_animations.RemoveAt(i);
-						}
-						else
+						_animations.RemoveAt(i);
+					}
+					else
+					{
+						if (!anim.Looped)
 						{
 							nonLoopingCount++;
 						}
@@ -2106,7 +2276,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				_selectedAnimation?.Update(elapsedMs);
+				_selectedAnimation?.Update(elapsedSec);
 			}
 			canvas.Invalidate();
 		}
@@ -2205,11 +2375,17 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 		}
+
+		private void cmdToggleFade_Click(object sender, EventArgs e)
+		{
+			_showOverlay = !_showOverlay;
+			canvas.Invalidate();
+		}
 	}
 
-	public class EpilogueContext : IAutoCompleteList
+	public class EpilogueContext : IAutoCompleteList, ICharacterContext
 	{
-		public Character Character { get; set; }
+		public ISkin Character { get; set; }
 		public Epilogue Epilogue { get; set; }
 		public Scene Scene { get; set; }
 
@@ -2232,25 +2408,42 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				return null;
 			}
-			string sourceType = null;
-			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop")
+			HashSet<string> sourceType = new HashSet<string>();
+			bool allowCamera = false;
+			bool allowFade = false;
+			if (dir.DirectiveType == "move" || dir.DirectiveType == "stop" || dir.DirectiveType == "remove" || dir.DirectiveType == "emit")
 			{
-				sourceType = "sprite";
+				sourceType.Add("sprite");
+				sourceType.Add("emitter");
+
+				if (dir.DirectiveType == "stop")
+				{
+					allowCamera = true;
+					allowFade = true;
+				}
 			}
 			else if (dir.DirectiveType == "clear")
 			{
-				sourceType = "text";
+				sourceType.Add("text");
 			}
-			if (sourceType == null)
+			if (sourceType.Count == 0)
 			{
 				return null;
 			}
 			HashSet<string> items = new HashSet<string>();
 			if (Scene != null)
 			{
+				if (allowCamera)
+				{
+					items.Add("camera");
+				}
+				if (allowFade)
+				{
+					items.Add("fade");
+				}
 				foreach (Directive d in Scene.Directives)
 				{
-					if (d.DirectiveType == sourceType)
+					if (sourceType.Contains(d.DirectiveType))
 					{
 						string id = d.Id;
 						if (!string.IsNullOrEmpty(id) && !items.Contains(id))
@@ -2307,6 +2500,8 @@ namespace SPNATI_Character_Editor.Controls
 		CameraPan = 1 << 22,
 		Select = 1 << 23,
 		Pivot = 1 << 24,
+		Locked = 1 << 25,
+
 		ScaleVertical = ScaleTop | ScaleBottom,
 		ScaleHorizontal = ScaleLeft | ScaleRight,
 		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | Rotate |

@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +55,11 @@ namespace SPNATI_Character_Editor
 		[XmlArray("wardrobe")]
 		[XmlArrayItem("clothing")]
 		public List<Clothing> Wardrobe = new List<Clothing>();
+
+		[XmlNewLine]
+		[XmlArray("poses")]
+		[XmlArrayItem("pose")]
+		public List<Pose> Poses = new List<Pose>();
 
 		[XmlIgnore]
 		public Character Character { get; set; }

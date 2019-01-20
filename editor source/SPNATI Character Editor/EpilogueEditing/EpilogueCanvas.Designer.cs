@@ -31,11 +31,14 @@
 			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
 			this.propertyTable = new Desktop.CommonControls.PropertyTable();
 			this.canvasStrip = new System.Windows.Forms.ToolStrip();
 			this.cmdLock = new System.Windows.Forms.ToolStripButton();
 			this.cmdFit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cmdToggleFade = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.cmdPlayDirective = new System.Windows.Forms.ToolStripButton();
 			this.cmdPlay = new System.Windows.Forms.ToolStripButton();
 			this.canvas = new Desktop.CommonControls.SelectablePanel();
@@ -45,7 +48,6 @@
 			this.lblCoord = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
-			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -98,6 +100,16 @@
 			this.splitContainer2.SplitterDistance = 302;
 			this.splitContainer2.TabIndex = 0;
 			// 
+			// treeScenes
+			// 
+			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeScenes.Enabled = false;
+			this.treeScenes.Location = new System.Drawing.Point(0, 0);
+			this.treeScenes.Name = "treeScenes";
+			this.treeScenes.Size = new System.Drawing.Size(293, 302);
+			this.treeScenes.TabIndex = 0;
+			this.treeScenes.AfterSelect += new System.EventHandler<SPNATI_Character_Editor.Controls.SceneTreeEventArgs>(this.TreeScenes_AfterSelect);
+			// 
 			// propertyTable
 			// 
 			this.propertyTable.AllowDelete = false;
@@ -126,11 +138,13 @@
             this.cmdLock,
             this.cmdFit,
             this.toolStripSeparator1,
+            this.cmdToggleFade,
+            this.toolStripSeparator2,
             this.cmdPlayDirective,
             this.cmdPlay});
 			this.canvasStrip.Location = new System.Drawing.Point(184, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(101, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(161, 25);
 			this.canvasStrip.TabIndex = 0;
 			// 
 			// cmdLock
@@ -160,6 +174,25 @@
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cmdToggleFade
+			// 
+			this.cmdToggleFade.Checked = true;
+			this.cmdToggleFade.CheckOnClick = true;
+			this.cmdToggleFade.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cmdToggleFade.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cmdToggleFade.Image = global::SPNATI_Character_Editor.Properties.Resources.Fade;
+			this.cmdToggleFade.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cmdToggleFade.Name = "cmdToggleFade";
+			this.cmdToggleFade.Size = new System.Drawing.Size(23, 22);
+			this.cmdToggleFade.Text = "Play";
+			this.cmdToggleFade.ToolTipText = "Toggle fade overlay";
+			this.cmdToggleFade.Click += new System.EventHandler(this.cmdToggleFade_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// cmdPlayDirective
 			// 
@@ -246,16 +279,6 @@
 			this.tmrPlay.Interval = 32;
 			this.tmrPlay.Tick += new System.EventHandler(this.tmrPlay_Tick);
 			// 
-			// treeScenes
-			// 
-			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeScenes.Enabled = false;
-			this.treeScenes.Location = new System.Drawing.Point(0, 0);
-			this.treeScenes.Name = "treeScenes";
-			this.treeScenes.Size = new System.Drawing.Size(293, 302);
-			this.treeScenes.TabIndex = 0;
-			this.treeScenes.AfterSelect += new System.EventHandler<SPNATI_Character_Editor.Controls.SceneTreeEventArgs>(this.TreeScenes_AfterSelect);
-			// 
 			// EpilogueCanvas
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,5 +323,7 @@
 		private System.Windows.Forms.ToolStripButton cmdLock;
 		private System.Windows.Forms.Timer tmrPlay;
 		private System.Windows.Forms.ToolStripButton cmdPlayDirective;
+		private System.Windows.Forms.ToolStripButton cmdToggleFade;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 	}
 }
