@@ -1047,7 +1047,7 @@ EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
   this.viewIndex = (this.viewIndex + 1) % this.views.length;
   this.directiveIndex = -1;
 
-  view.setup(this.activeScene, index, this.epilogue, lastScene);
+  view.setup(this.activeScene, index, this.epilogue, skipTransition ? null : lastScene);
 
   //fit the viewport based on the scene's aspect ratio and the window size
   this.resizeViewport();
@@ -1389,6 +1389,10 @@ SceneView.prototype.setup = function (scene, sceneIndex, epilogue, lastScene) {
   //copy the overlay values from the previous scene
   if (lastScene) {
     this.setOverlay(lastScene.view.overlay.rgb, lastScene.view.overlay.a);
+  }
+  else {
+    //otherwise clear them completely
+    this.setOverlay([0, 0, 0], 0);
   }
 
   if (!scene.width) {
