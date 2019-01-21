@@ -22,8 +22,18 @@ TEXT_ESCAPE_RE = re.compile('|'.join(TEXT_ESCAPES.keys()))
 
 ENTITY_RE = re.compile('&(?:(\w+)|#(?:(\d+)|x([\da-f]+)));')
 
+TEXT_UNESCAPES = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>'
+}
+TEXT_UNESCAPE_RE = re.compile('|'.join(map(re.escape, TEXT_UNESCAPES.keys())))
+
 def XMLEscape(string, table, regex):
     return regex.sub(lambda m: '&' + table[m.group(0)] + ';', string)
+
+def XMLUnescape(string, table, regex):
+    return regex.sub(lambda m: table[m.group(0)], string)
 
 class OrderedXMLElement(object):
     """Represents an XML element with an ordered set of attributes and either child elements or raw text within."""
@@ -78,7 +88,7 @@ class OrderedXMLElement(object):
             return ["<{:s}{:s} />".format(self.type, attr_string)]
         elif len(self.children) == 0 and self.text is not None:
             # <[type] [attributes...]>[text]</[type]>
-            escaped_text = re.sub
+            self.text = XMLUnescape(self.text, TEXT_UNESCAPES, TEXT_UNESCAPE_RE)
             return ["<{:s}{:s}>{:s}</{:s}>".format(self.type, attr_string, XMLEscape(self.text, TEXT_ESCAPES, TEXT_ESCAPE_RE), self.type)]
         elif len(self.children) > 0 and self.text is None:
             l = ["<{:s}{:s}>".format(self.type, attr_string)]

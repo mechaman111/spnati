@@ -424,7 +424,7 @@ OpponentDisplay.prototype.update = function(player) {
     }
     
     if (showDebug) {
-        appendRepeats(player);
+        appendRepeats(this.slot);
     }
 }
 

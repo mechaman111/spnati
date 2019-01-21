@@ -22,6 +22,7 @@ _decl_tag = re.compile(r'\<\?(.*?)\?\>', re.DOTALL)  # ignored for now
 
 base_tag_spec = {
     'opponent': {
+        'version': None,
         'first': None,
         'last': None,
         'label': None,

@@ -217,6 +217,8 @@ function expandDialogue (dialogue, self, target) {
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+				} else if (fn === 'plural') {
+					substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
@@ -1118,5 +1120,5 @@ function commitAllBehaviourUpdates () {
 				p.gender = p.chosenState.setGender;
 			}
 		}
-	})
+	});
 }
