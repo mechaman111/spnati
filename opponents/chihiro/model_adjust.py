@@ -2,31 +2,12 @@ import kkl_import as kkl
 import csv
 import sys
 
+#       0 1 2 3   4  5  6  7 8  9 10 11
+#85**ca68.1.0.105.0.-20.25.0.30.0.60.57
 modifications = {
     'ca': {
-        1: 1,
-        5: -20
+        11: 57
     },
-    'dh': {
-        4: 2
-    },
-    'di': {
-        0: 1
-    },
-    'qa': {
-        3: 30,  # penis length
-        4: 40,  # penis girth
-        10: 3   # circumcision
-    },
-    'qb': {
-        0: 1,
-        1: 40   # ball size
-    },
-    'eh': {
-        0: 1,
-        1: 27,
-        2: 100
-    }
 }
 
 def modify_code(in_code):
@@ -36,9 +17,9 @@ def modify_code(in_code):
             continue
         
         for idx, value in modifications[subcode.prefix].items():
-            if idx <= len(subcode.attributes):
+            if idx < len(subcode.attributes):
                 for i in range(len(subcode.attributes), idx+1):
-                    subcode.attributes.append('0')
+                    value.append('0')
                     
             subcode[idx] = value
     
