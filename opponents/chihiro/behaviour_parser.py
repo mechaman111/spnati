@@ -40,7 +40,7 @@ base_tag_spec = {
         'wardrobe': { 'clothing': None },
         'behaviour': {
             'stage': {
-                'case': { 'priority': None, 'condition': None, 'state': None }
+                'case': { 'priority': None, 'condition': None, 'test': None, 'state': None }
             }
         },
         'epilogue': {
