@@ -201,7 +201,7 @@ var playerTagOptions = {
             { value: 'short_hair', text: 'Short Hair - Does Not Pass Jawline'},
             { value: 'medium_hair', text: 'Medium Hair - Reaches Between Jawline and Shoulders'},
             { value: 'long_hair', text: 'Long Hair - Reaches Beyond Shoulders'},
-            { value: 'very_long_hair long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
+            { value: 'very_long_hair', text: 'Very Long Hair - Reaches the Thighs or Beyond'},
         ],
     },
     'physical_build': {
