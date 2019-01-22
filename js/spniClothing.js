@@ -464,7 +464,8 @@ function stripAIPlayer (player) {
 		players[player].mostlyClothed = false;
 	}
 	if (removedClothing.type === IMPORTANT_ARTICLE) {
-		players[player].exposed[removedClothing.position] = true;
+	    players[player].exposed[removedClothing.position] = true;
+	    players[player].decent = false;
 	} else if (removedClothing.type === MAJOR_ARTICLE) {
 		for (position in players[player].exposed) {
 			if (!players[player].clothing.some(function(c) {
@@ -473,6 +474,7 @@ function stripAIPlayer (player) {
 				players[player].exposed[position] = true;
 			}
 		}
+	    players[player].decent = false;
 	}
 	var dialogueTrigger = getClothingTrigger(players[player], removedClothing, true);
 

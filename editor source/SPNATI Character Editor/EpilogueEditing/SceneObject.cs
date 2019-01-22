@@ -175,7 +175,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			PivotY = ParsePivot(directive.PivotY, Height);
 			if (!string.IsNullOrEmpty(directive.Rate))
 			{
-				float.TryParse(directive.Rate, out Rate);
+				float.TryParse(directive.Rate, NumberStyles.Number, CultureInfo.InvariantCulture, out Rate);
 			}
 
 			SortLayer = ++NextLayer;
