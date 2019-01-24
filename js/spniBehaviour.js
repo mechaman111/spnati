@@ -291,7 +291,7 @@ function fixupDialogue (str) {
         return (idx % 2) ? part :
             part.replace(/"([^"]*)"/g, "\u201c$1\u201d")
             .replace(fixupDialogueRE, function(match) {
-                return fixupDialogueSubstitutions[match]
+                return fixupDialogueSubstitutions[match.toLowerCase()]
             });
     }).join('');
 }
