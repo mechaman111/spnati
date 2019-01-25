@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.4 at 7:55:23 PM on January 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.4 at 11:32:04 PM on January 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v3.4</version>
     <first>Haru</first>
@@ -64,6 +64,9 @@
             </case>
             <case tag="game_start" alsoPlaying="ann" priority="103">
                 <state img="0-joyful.png" marker="pt_playing">Ann-chan! Are you going to join us?</state>
+            </case>
+            <case tag="game_start" alsoPlaying="franziska">
+                <state img="0-shock.png">Is that a... what?</state>
             </case>
             <case tag="game_start" alsoPlaying="futaba" priority="105">
                 <state img="0-joyful.png" marker="pt_playing">Futaba-chan! How good to see you!</state>
@@ -319,8 +322,17 @@
                 <state img="0-sad.png">This reminds me a bit of my father's parlor...</state>
                 <state img="0-shoot.png">On the very first round? Curse my luck!</state>
             </case>
+            <case tag="hand" alsoPlaying="franziska" totalRounds="0" priority="75">
+                <state img="0-ahhhhh.png">W... Why would you bring a riding crop to a poker game, miss?</state>
+            </case>
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="PTs_is_futaba_cool">
                 <state img="0-perky.png" marker="FUTABA_IS_COOL!!">I think you are simply amazing!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="0-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="0-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
             </case>
             <case tag="hand" alsoPlaying="kali" saidMarker="kaliplaying" notSaidMarker="kaliplaying2" priority="1000">
                 <state img="0-ahhhhh.png" marker="kaliplaying2">&lt;i&gt;Well! This is going to be really awkward...&lt;/i&gt;</state>
@@ -337,6 +349,13 @@
             <case tag="hand" alsoPlaying="ryuji" totalRounds="0">
                 <condition count="1" filter="futaba" />
                 <state img="0-perky.png">I'm so glad you're all here. I assumed I was going to play with strangers, but this is so much better!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="0-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="0-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="0-calm.png">It's alright, I have more clothing than everyone else.</state>
@@ -383,7 +402,7 @@
             </case>
             <case tag="must_strip_losing">
                 <state img="0-sad.png">Aww...</state>
-                <state img="0-sad.png">Looks like I can't win every round.</state>
+                <state img="0-embarrassed.png">I can't believe I'm doing so poorly!</state>
                 <state img="0-sad.png">If only I had a better hand...</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="jura" alsoPlayingStage="0-6">
@@ -428,6 +447,10 @@
                 <state img="0-strip.png">This is fine. N-Nothing indecent here.</state>
                 <state img="0-strip.png">I don't mind losing my shoes, I guess...</state>
             </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="0-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="0-terrified.png">No no no no no no...</state>
             </case>
@@ -459,7 +482,7 @@
             </case>
             <case tag="male_must_strip" target="ryuji">
                 <state img="0-embarrassed.png">It looks like you've lost, Ryuji-kun... erm, not that I wanted to see you strip, anyways!</state>
-                <state img="0-calm.png">It's alright! I'll try to support if you if need be.</state>
+                <state img="0-calm.png">It's alright! I'll try to support you if need be.</state>
                 <state img="0-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
             </case>
             <case tag="male_must_strip" totalRounds="0-0" priority="999">
@@ -1030,7 +1053,7 @@
                 <state img="0-embarrassed.png">&lt;i&gt;I wonder if he'd be--no, let's not think about that.&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="0-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
+                <state img="0-creepy.png">&lt;i&gt;Oh? NOW you're flustered?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" totalRounds="0-5">
                 <state img="0-shock.png">B-But the game just started!</state>
@@ -1216,7 +1239,7 @@
                 <state img="0-nudepanic.png">Who even does that!?</state>
             </case>
             <case tag="male_medium_crotch_is_visible" target="ryuji">
-                <state img="0-embarrassed.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
+                <state img="0-ahhhhh.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="0-shock.png">What the...!</state>
@@ -1392,7 +1415,7 @@
                 <state img="0-terrified.png">You are so &lt;i&gt;vulgar&lt;/i&gt;!!</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="0-aroused.png">,,,</state>
+                <state img="0-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="0-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -1457,6 +1480,21 @@
                 <state img="0-sad.png">Ummm...</state>
                 <state img="0-sad.png">&lt;i&gt;I don't want to be here...&lt;/i&gt;</state>
             </case>
+            <case tag="male_masturbating" totalMasturbating="2-5">
+                <state img="0-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="0-shock.png">Oh my...</state>
+                <state img="0-ahhhhh.png">...</state>
+                <state img="0-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="0-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="0-embarrassed.png">Everyone...</state>
+                <state img="0-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="0-embarrassed.png">S-So naughty...</state>
+                <state img="0-shock.png">H-Has this ever happened before?</state>
+                <state img="0-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="0-sad.png">Guys... I feel a little left out.</state>
+                <state img="0-sad.png">...</state>
+                <state img="0-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
+            </case>
             <case tag="male_finished_masturbating">
                 <state img="0-terrified.png">That wasn't an invitation!</state>
                 <state img="0-terrified.png">W-Watch where you finish!</state>
@@ -1474,8 +1512,6 @@
                 <state img="0-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
             <case tag="male_finished_masturbating" target="ryuji">
-                <state img="0-shock.png">Are you alright, Ryuji?</state>
-                <state img="0-shock.png">Did you... just shock yourself?</state>
                 <state img="0-embarrassed.png">Alright... You're finished. Let's move on.</state>
             </case>
             <case tag="female_must_masturbate">
@@ -1622,6 +1658,21 @@
             <case tag="female_masturbating" target="vriska" targetTimeInStage="0-0" targetSaidMarker="9a">
                 <state img="0-creepy.png">&lt;i&gt;Oh, this is PEFECT.&lt;/i&gt;</state>
                 <state img="0-creepy.png">Cheaters never prosper, you know?</state>
+            </case>
+            <case tag="female_masturbating" totalMasturbating="2-5">
+                <state img="0-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="0-shock.png">Oh my...</state>
+                <state img="0-ahhhhh.png">...</state>
+                <state img="0-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="0-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="0-embarrassed.png">Everyone...</state>
+                <state img="0-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="0-embarrassed.png">S-So naughty...</state>
+                <state img="0-shock.png">H-Has this ever happened before?</state>
+                <state img="0-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="0-sad.png">Guys... I feel a little left out.</state>
+                <state img="0-sad.png">...</state>
+                <state img="0-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="0-embarrassed.png">On the bright side, I'm at least closer to winning...?</state>
@@ -1839,6 +1890,12 @@
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="PTs_is_futaba_cool">
                 <state img="1-perky.png" marker="FUTABA_IS_COOL!!">I think you are simply amazing!</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="1-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="1-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="kali" saidMarker="kaliplaying" notSaidMarker="kaliplaying2" priority="1000">
                 <state img="1-ahhhhh.png" marker="kaliplaying2">&lt;i&gt;Well! This is going to be really awkward...&lt;/i&gt;</state>
             </case>
@@ -1846,8 +1903,15 @@
                 <state img="1-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="1-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="1-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
             <case tag="must_strip" alsoPlaying="futaba">
                 <state img="1-perky.png">I find it comfortable, honestly.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="1-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="1-calm.png">It's alright, I have more clothing than everyone else.</state>
@@ -1876,7 +1940,7 @@
             </case>
             <case tag="must_strip_losing">
                 <state img="1-sad.png">Aww...</state>
-                <state img="1-sad.png">Looks like I can't win every round.</state>
+                <state img="1-embarrassed.png">I can't believe I'm doing so poorly!</state>
                 <state img="1-sad.png">If only I had a better hand...</state>
             </case>
             <case tag="must_strip_losing" alsoPlaying="futaba" alsoPlayingStage="0-6">
@@ -1916,6 +1980,10 @@
             <case tag="stripped" alsoPlaying="ryuji" alsoPlayingStage="6-9">
                 <state img="1-sad.png">I'm sorry, Ryuji-kun.</state>
             </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="1-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="1-terrified.png">No no no no no no...</state>
             </case>
@@ -1944,7 +2012,7 @@
             </case>
             <case tag="male_must_strip" target="ryuji">
                 <state img="1-embarrassed.png">It looks like you've lost, Ryuji-kun... erm, not that I wanted to see you strip, anyways!</state>
-                <state img="1-calm.png">It's alright! I'll try to support if you if need be.</state>
+                <state img="1-calm.png">It's alright! I'll try to support you if need be.</state>
                 <state img="1-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
             </case>
             <case tag="female_human_must_strip">
@@ -2474,7 +2542,7 @@
                 <state img="1-embarrassed.png">&lt;i&gt;I wonder if he'd be--no, let's not think about that.&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="1-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
+                <state img="1-creepy.png">&lt;i&gt;Oh? NOW you're flustered?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" totalRounds="0-5">
                 <state img="1-shock.png">B-But the game just started!</state>
@@ -2654,7 +2722,7 @@
                 <state img="1-nudepanic.png">Who even does that!?</state>
             </case>
             <case tag="male_medium_crotch_is_visible" target="ryuji">
-                <state img="1-embarrassed.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
+                <state img="1-ahhhhh.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="1-shock.png">What the...!</state>
@@ -2828,7 +2896,7 @@
                 <state img="1-terrified.png">You are so &lt;i&gt;vulgar&lt;/i&gt;!!</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="1-aroused.png">,,,</state>
+                <state img="1-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="1-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -2893,6 +2961,21 @@
                 <state img="1-sad.png">Ummm...</state>
                 <state img="1-sad.png">&lt;i&gt;I don't want to be here...&lt;/i&gt;</state>
             </case>
+            <case tag="male_masturbating" totalMasturbating="2-5">
+                <state img="1-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="1-shock.png">Oh my...</state>
+                <state img="1-ahhhhh.png">...</state>
+                <state img="1-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="1-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="1-embarrassed.png">Everyone...</state>
+                <state img="1-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="1-embarrassed.png">S-So naughty...</state>
+                <state img="1-shock.png">H-Has this ever happened before?</state>
+                <state img="1-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="1-sad.png">Guys... I feel a little left out.</state>
+                <state img="1-sad.png">...</state>
+                <state img="1-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
+            </case>
             <case tag="male_finished_masturbating">
                 <state img="1-terrified.png">That wasn't an invitation!</state>
                 <state img="1-terrified.png">W-Watch where you finish!</state>
@@ -2910,8 +2993,6 @@
                 <state img="1-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
             <case tag="male_finished_masturbating" target="ryuji">
-                <state img="1-shock.png">Are you alright, Ryuji?</state>
-                <state img="1-shock.png">Did you... just shock yourself?</state>
                 <state img="1-embarrassed.png">Alright... You're finished. Let's move on.</state>
             </case>
             <case tag="female_must_masturbate">
@@ -3055,6 +3136,21 @@
             <case tag="female_masturbating" target="vriska" targetTimeInStage="0-0" targetSaidMarker="9a">
                 <state img="1-creepy.png">&lt;i&gt;Oh, this is PEFECT.&lt;/i&gt;</state>
                 <state img="1-creepy.png">Cheaters never prosper, you know?</state>
+            </case>
+            <case tag="female_masturbating" totalMasturbating="2-5">
+                <state img="1-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="1-shock.png">Oh my...</state>
+                <state img="1-ahhhhh.png">...</state>
+                <state img="1-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="1-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="1-embarrassed.png">Everyone...</state>
+                <state img="1-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="1-embarrassed.png">S-So naughty...</state>
+                <state img="1-shock.png">H-Has this ever happened before?</state>
+                <state img="1-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="1-sad.png">Guys... I feel a little left out.</state>
+                <state img="1-sad.png">...</state>
+                <state img="1-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="1-embarrassed.png">On the bright side, I'm at least closer to winning...?</state>
@@ -3271,12 +3367,25 @@
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="PTs_is_futaba_cool">
                 <state img="2-perky.png" marker="FUTABA_IS_COOL!!">I think you are simply amazing!</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="2-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="2-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="kali" saidMarker="kaliplaying" notSaidMarker="kaliplaying2" priority="1000">
                 <state img="2-ahhhhh.png" marker="kaliplaying2">&lt;i&gt;Well! This is going to be really awkward...&lt;/i&gt;</state>
             </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="2-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="2-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="2-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="2-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="2-calm.png">It's alright, I have more clothing than everyone else.</state>
@@ -3299,7 +3408,7 @@
             </case>
             <case tag="must_strip_losing">
                 <state img="2-sad.png">Aww...</state>
-                <state img="2-sad.png">Looks like I can't win every round.</state>
+                <state img="2-embarrassed.png">I can't believe I'm doing so poorly!</state>
                 <state img="2-sad.png">If only I had a better hand...</state>
             </case>
             <case tag="must_strip_losing" consecutiveLosses="4-7">
@@ -3349,6 +3458,10 @@
             <case tag="stripped" saidMarker="dirtt">
                 <state img="2-pleasant.png" marker="stressrelief1">Right, I forgot to mention I do gardening in my spare time. It's one of my few methods of stress relief.</state>
             </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="2-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="2-terrified.png">No no no no no no...</state>
             </case>
@@ -3377,7 +3490,7 @@
             </case>
             <case tag="male_must_strip" target="ryuji">
                 <state img="2-embarrassed.png">It looks like you've lost, Ryuji-kun... erm, not that I wanted to see you strip, anyways!</state>
-                <state img="2-calm.png">It's alright! I'll try to support if you if need be.</state>
+                <state img="2-calm.png">It's alright! I'll try to support you if need be.</state>
                 <state img="2-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
             </case>
             <case tag="female_human_must_strip">
@@ -3904,7 +4017,7 @@
                 <state img="2-embarrassed.png">&lt;i&gt;I wonder if he'd be--no, let's not think about that.&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="2-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
+                <state img="2-creepy.png">&lt;i&gt;Oh? NOW you're flustered?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" totalRounds="0-5">
                 <state img="2-shock.png">B-But the game just started!</state>
@@ -4088,7 +4201,7 @@
                 <state img="2-nudepanic.png">Who even does that!?</state>
             </case>
             <case tag="male_medium_crotch_is_visible" target="ryuji">
-                <state img="2-embarrassed.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
+                <state img="2-ahhhhh.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="2-shock.png">What the...!</state>
@@ -4263,7 +4376,7 @@
                 <state img="2-terrified.png">You are so &lt;i&gt;vulgar&lt;/i&gt;!!</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="2-aroused.png">,,,</state>
+                <state img="2-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="2-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -4328,6 +4441,21 @@
                 <state img="2-sad.png">Ummm...</state>
                 <state img="2-sad.png">&lt;i&gt;I don't want to be here...&lt;/i&gt;</state>
             </case>
+            <case tag="male_masturbating" totalMasturbating="2-5">
+                <state img="2-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="2-shock.png">Oh my...</state>
+                <state img="2-ahhhhh.png">...</state>
+                <state img="2-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="2-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="2-embarrassed.png">Everyone...</state>
+                <state img="2-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="2-embarrassed.png">S-So naughty...</state>
+                <state img="2-shock.png">H-Has this ever happened before?</state>
+                <state img="2-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="2-sad.png">Guys... I feel a little left out.</state>
+                <state img="2-sad.png">...</state>
+                <state img="2-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
+            </case>
             <case tag="male_finished_masturbating">
                 <state img="2-terrified.png">That wasn't an invitation!</state>
                 <state img="2-terrified.png">W-Watch where you finish!</state>
@@ -4345,8 +4473,6 @@
                 <state img="2-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
             <case tag="male_finished_masturbating" target="ryuji">
-                <state img="2-shock.png">Are you alright, Ryuji?</state>
-                <state img="2-shock.png">Did you... just shock yourself?</state>
                 <state img="2-embarrassed.png">Alright... You're finished. Let's move on.</state>
             </case>
             <case tag="female_must_masturbate">
@@ -4487,6 +4613,21 @@
             <case tag="female_masturbating" target="vriska" targetTimeInStage="0-0" targetSaidMarker="9a">
                 <state img="2-creepy.png">&lt;i&gt;Oh, this is PEFECT.&lt;/i&gt;</state>
                 <state img="2-creepy.png">Cheaters never prosper, you know?</state>
+            </case>
+            <case tag="female_masturbating" totalMasturbating="2-5">
+                <state img="2-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="2-shock.png">Oh my...</state>
+                <state img="2-ahhhhh.png">...</state>
+                <state img="2-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="2-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="2-embarrassed.png">Everyone...</state>
+                <state img="2-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="2-embarrassed.png">S-So naughty...</state>
+                <state img="2-shock.png">H-Has this ever happened before?</state>
+                <state img="2-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="2-sad.png">Guys... I feel a little left out.</state>
+                <state img="2-sad.png">...</state>
+                <state img="2-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="2-embarrassed.png">On the bright side, I'm at least closer to winning...?</state>
@@ -4698,12 +4839,25 @@
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="PTs_is_futaba_cool">
                 <state img="3-perky.png" marker="FUTABA_IS_COOL!!">I think you are simply amazing!</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="3-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="3-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="kali" saidMarker="kaliplaying" notSaidMarker="kaliplaying2" priority="1000">
                 <state img="3-ahhhhh.png" marker="kaliplaying2">&lt;i&gt;Well! This is going to be really awkward...&lt;/i&gt;</state>
             </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="3-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="3-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="3-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="3-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="3-calm.png">It's alright, I have more clothing than everyone else.</state>
@@ -4767,6 +4921,10 @@
             <case tag="stripped" alsoPlaying="ryuji" alsoPlayingStage="6-9">
                 <state img="3-sad.png">I'm sorry, Ryuji-kun.</state>
             </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="3-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="3-terrified.png">No no no no no no...</state>
             </case>
@@ -4795,7 +4953,7 @@
             </case>
             <case tag="male_must_strip" target="ryuji">
                 <state img="3-embarrassed.png">It looks like you've lost, Ryuji-kun... erm, not that I wanted to see you strip, anyways!</state>
-                <state img="3-calm.png">It's alright! I'll try to support if you if need be.</state>
+                <state img="3-calm.png">It's alright! I'll try to support you if need be.</state>
                 <state img="3-sad.png">I wish we could work together, but it's every person for themselves unfortunately.</state>
             </case>
             <case tag="female_human_must_strip">
@@ -5316,7 +5474,7 @@
                 <state img="3-embarrassed.png">&lt;i&gt;I wonder if he'd be--no, let's not think about that.&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="3-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
+                <state img="3-creepy.png">&lt;i&gt;Oh? NOW you're flustered?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" totalRounds="0-5">
                 <state img="3-shock.png">B-But the game just started!</state>
@@ -5499,7 +5657,7 @@
                 <state img="3-nudepanic.png">Who even does that!?</state>
             </case>
             <case tag="male_medium_crotch_is_visible" target="ryuji">
-                <state img="3-embarrassed.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
+                <state img="3-ahhhhh.png">&lt;i&gt;(internal screaming)&lt;/i&gt;</state>
             </case>
             <case tag="male_large_crotch_is_visible">
                 <state img="3-shock.png">What the...!</state>
@@ -5662,7 +5820,7 @@
                 <state img="3-terrified.png">You are so &lt;i&gt;vulgar&lt;/i&gt;!!</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="3-aroused.png">,,,</state>
+                <state img="3-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="3-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -5727,6 +5885,21 @@
                 <state img="3-sad.png">Ummm...</state>
                 <state img="3-sad.png">&lt;i&gt;I don't want to be here...&lt;/i&gt;</state>
             </case>
+            <case tag="male_masturbating" totalMasturbating="2-5">
+                <state img="3-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="3-shock.png">Oh my...</state>
+                <state img="3-ahhhhh.png">...</state>
+                <state img="3-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="3-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="3-embarrassed.png">Everyone...</state>
+                <state img="3-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="3-embarrassed.png">S-So naughty...</state>
+                <state img="3-shock.png">H-Has this ever happened before?</state>
+                <state img="3-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="3-sad.png">Guys... I feel a little left out.</state>
+                <state img="3-sad.png">...</state>
+                <state img="3-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
+            </case>
             <case tag="male_finished_masturbating">
                 <state img="3-shock.png">That wasn't an invitation!</state>
                 <state img="3-annoyed.png">W-Watch where you finish!</state>
@@ -5744,8 +5917,6 @@
                 <state img="3-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
             <case tag="male_finished_masturbating" target="ryuji">
-                <state img="3-shock.png">Are you alright, Ryuji?</state>
-                <state img="3-shock.png">Did you... just shock yourself?</state>
                 <state img="3-embarrassed.png">Alright... You're finished. Let's move on.</state>
             </case>
             <case tag="female_must_masturbate">
@@ -5889,6 +6060,21 @@
             <case tag="female_masturbating" target="vriska" targetTimeInStage="0-0" targetSaidMarker="9a">
                 <state img="3-creepy.png">&lt;i&gt;Oh, this is PEFECT.&lt;/i&gt;</state>
                 <state img="3-creepy.png">Cheaters never prosper, you know?</state>
+            </case>
+            <case tag="female_masturbating" totalMasturbating="2-5">
+                <state img="3-sad.png">&lt;i&gt;I'm probably the only one not masturbating...&lt;/i&gt;</state>
+                <state img="3-shock.png">Oh my...</state>
+                <state img="3-ahhhhh.png">...</state>
+                <state img="3-aroused.png">&lt;i&gt;On one hand, I&lt;/i&gt; want &lt;i&gt;to join them. On the other hand, i-it'd be so embarrassing and---&lt;/i&gt;</state>
+                <state img="3-ahhhhh.png">&lt;i&gt;Someone help me!&lt;/i&gt;</state>
+                <state img="3-embarrassed.png">Everyone...</state>
+                <state img="3-aroused.png">I bet you're all having fun... &lt;i&gt;(I sort of want to join in too...)&lt;/i&gt;</state>
+                <state img="3-embarrassed.png">S-So naughty...</state>
+                <state img="3-shock.png">H-Has this ever happened before?</state>
+                <state img="3-ahhhhh.png">&lt;i&gt;This is awful! Why am I getting so aroused from this?&lt;/i&gt;</state>
+                <state img="3-sad.png">Guys... I feel a little left out.</state>
+                <state img="3-sad.png">...</state>
+                <state img="3-embarrassed.png">That's fine! I-I'll just... stand over here and watch.</state>
             </case>
             <case tag="female_finished_masturbating">
                 <state img="3-embarrassed.png">On the bright side, I'm at least closer to winning...?</state>
@@ -6106,9 +6292,22 @@
             <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="PTs_is_futaba_cool">
                 <state img="4-perky.png" marker="FUTABA_IS_COOL!!">I think you are simply amazing!</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="4-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="4-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="4-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="4-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="4-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="4-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-pleasant.png">It'd be more embarrassing if I wasn't the only indecent one here. &lt;i&gt;I'm already indecent, so might as well quit hiding it.&lt;/i&gt;</state>
@@ -6171,6 +6370,10 @@
             <case tag="stripped" priority="9999">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="4-embarrassed.png">&lt;i&gt;Deep breaths, Haru. The other Phantom Thieves would be brave here.&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="4-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
             </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="4-terrified.png">No no no no no no...</state>
@@ -6647,7 +6850,7 @@
                 <state img="4-perky.png">Well... Look on the bright side! At least you aren't alone!</state>
             </case>
             <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="4-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
+                <state img="4-creepy.png">&lt;i&gt;Oh? NOW you're flustered?&lt;/i&gt;</state>
             </case>
             <case tag="male_removing_major" timeInStage="0-5" priority="998">
                 <state img="4-shock.png">Oh my!</state>
@@ -7010,7 +7213,7 @@
                 <state img="4-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="4-aroused.png">,,,</state>
+                <state img="4-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="4-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -7091,10 +7294,6 @@
             </case>
             <case tag="male_finished_masturbating" target="jin">
                 <state img="4-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
-            </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="4-shock.png">Are you alright, Ryuji?</state>
-                <state img="4-shock.png">Did you... just shock yourself?</state>
             </case>
             <case tag="male_finished_masturbating" timeInStage="0-5" priority="999">
                 <state img="4-shock.png">Oh!</state>
@@ -7438,12 +7637,25 @@
             <case tag="hand" alsoPlaying="futaba" notSaidMarker="dirtytalk_lesson" alsoPlayingSayingMarker="haru_dirty_talk_2">
                 <state img="5-creepy.png" marker="dirtytalk_lesson">Then tell them. Or better yet, tell them what &lt;i&gt;you&lt;/i&gt; want to do with &lt;i&gt;them.&lt;/i&gt;</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="5-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="5-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="futaba" timeInStage="0" alsoPlayingSayingMarker="haru_dirty_talk">
                 <state img="5-aroused.png">That, my friend, is a secret.</state>
             </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="5-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="5-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="5-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="5-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="5-creepy.png">I might as well join everyone here...</state>
@@ -7503,6 +7715,10 @@
             <case tag="stripped" alsoPlaying="futaba">
                 <condition count="1" filter="ryuji" />
                 <state img="5-annoyed.png">And what's &lt;i&gt;that&lt;/i&gt; supposed to mean?</state>
+            </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="5-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
             </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="5-terrified.png">No no no no no no...</state>
@@ -7917,12 +8133,10 @@
                 <state img="5-pleasant.png">Show me what you're hiding. Don't be shy.</state>
                 <state img="5-aroused.png">Beautiful.</state>
                 <state img="5-creepy.png">Don't be shy.</state>
+                <state img="5-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removing_major" target="corrin_m" targetStage="4">
                 <state img="5-creepy.png">I wonder what you're wearing under those leggings...</state>
-            </case>
-            <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="5-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="5-joyful.png">&lt;i&gt;I'm excited! What else is he going to reveal?&lt;/i&gt;</state>
@@ -8247,7 +8461,7 @@
                 <state img="5-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="5-aroused.png">,,,</state>
+                <state img="5-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="5-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -8351,6 +8565,7 @@
                 <state img="5-pleasant.png">Excellent.</state>
                 <state img="5-creepy.png">Good boy.</state>
                 <state img="5-creepy.png">You made quite a mess. If I had it my way, you'd also tied up and completely helpless underneath me.</state>
+                <state img="5-perky.png">That was fun, wasn't it?</state>
             </case>
             <case tag="male_finished_masturbating" filter="aggressive">
                 <state img="5-annoyed.png">That wasn't an invitation!</state>
@@ -8367,10 +8582,6 @@
             <case tag="male_finished_masturbating" target="jin">
                 <state img="5-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="5-shock.png">Are you alright, Ryuji?</state>
-                <state img="5-shock.png">Did you... just shock yourself?</state>
-            </case>
             <case tag="female_must_masturbate">
                 <state img="5-creepy.png">Well?</state>
                 <state img="5-aroused.png">I think I might enjoy this...</state>
@@ -8379,6 +8590,9 @@
             </case>
             <case tag="female_must_masturbate" alsoPlaying="nayru" saidMarker="nayrupossessed" alsoPlayingSaidMarker="v_forfeit">
                 <state img="5-embarrassed.png" marker="null_dirtytalk">Oh...</state>
+            </case>
+            <case tag="female_must_masturbate" target="franziska">
+                <state img="5-creepy.png">Hmm... I'd say you need proper punishment, Franziska.</state>
             </case>
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="5-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
@@ -8410,6 +8624,9 @@
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="5-confused.png">Huh, I never found out you could do this...</state>
                 <state img="5-pleasant.png" marker="tandemoffer">Well then! Would anyone else be interested in doing something like that with me?</state>
+            </case>
+            <case tag="female_start_masturbating" target="franziska">
+                <state img="5-pleasant.png">You know what I want to do? Take that riding crop and whip you into submission.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="5-aroused.png">&lt;i&gt;Ah... I wish I could do that.&lt;/i&gt;</state>
@@ -8478,6 +8695,15 @@
             </case>
             <case tag="female_masturbating" filter="tandem" saidMarker="tandemoffer">
                 <state img="5-creepy.png">I have plenty of kinks. Kinbaku, for instance.</state>
+            </case>
+            <case tag="female_masturbating" target="franziska">
+                <state img="5-creepy.png">On your knees!</state>
+                <state img="5-aroused.png">You should give me that riding crop. I'll show you what &lt;i&gt;real&lt;/i&gt; punishment feels like.</state>
+                <state img="5-pleasant.png">I don't think my hands are sufficient enough to make that rear red.</state>
+                <state img="5-creepy.png">I want you to bend over on my lap so I can give you a proper spanking.</state>
+                <state img="5-perky.png">I prefer using floggers over riding crops. I happen to own both. Which one should I bring?</state>
+                <state img="5-annoyed.png">You call &lt;i&gt;this&lt;/i&gt; a punishment? We need to show you &lt;i&gt;proper&lt;/i&gt; punishment.</state>
+                <state img="5-aroused.png">Dirty girl. You ought'a be ashamed of yourself.</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="5-creepy.png">Don't think I don't notice the way you look at me, Futaba-chan.</state>
@@ -8743,9 +8969,22 @@
             <case tag="hand" alsoPlaying="futaba" notSaidMarker="dirtytalk_lesson" alsoPlayingSayingMarker="haru_dirty_talk_2">
                 <state img="6-creepy.png" marker="dirtytalk_lesson">Then tell them. Or better yet, tell them what &lt;i&gt;you&lt;/i&gt; want to do with &lt;i&gt;them.&lt;/i&gt;</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="6-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="6-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="6-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="6-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="6-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
+            </case>
+            <case tag="must_strip" timeInStage="4-15">
+                <state img="6-sad.png">Looks like I can't win every round.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="6-creepy.png">I might as well join everyone here...</state>
@@ -8791,6 +9030,10 @@
             </case>
             <case tag="stripped" alsoPlaying="nayru" saidMarker="nayrupossessed" alsoPlayingNotSaidMarker="null_possess">
                 <state img="6-sad.png">&lt;i&gt;I wish I didn't have to strip in front of... her.&lt;/i&gt;</state>
+            </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="6-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
             </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="6-terrified.png">No no no no no no...</state>
@@ -9166,12 +9409,10 @@
                 <state img="6-pleasant.png">Show me what you're hiding. Don't be shy.</state>
                 <state img="6-aroused.png">Beautiful.</state>
                 <state img="6-creepy.png">Don't be shy.</state>
+                <state img="6-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removing_major" target="corrin_m" targetStage="4">
                 <state img="6-creepy.png">I wonder what you're wearing under those leggings...</state>
-            </case>
-            <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="6-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="6-aroused.png">Good boy.</state>
@@ -9489,7 +9730,7 @@
                 <state img="6-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="6-aroused.png">,,,</state>
+                <state img="6-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="6-perky.png">Forgive me if I ever bring the mood down.</state>
@@ -9593,6 +9834,7 @@
                 <state img="6-pleasant.png">Excellent.</state>
                 <state img="6-creepy.png">Good boy.</state>
                 <state img="6-creepy.png">You made quite a mess. If I had it my way, you'd also tied up and completely helpless underneath me.</state>
+                <state img="6-perky.png">That was fun, wasn't it?</state>
             </case>
             <case tag="male_finished_masturbating" filter="aggressive">
                 <state img="6-annoyed.png">That wasn't an invitation!</state>
@@ -9609,10 +9851,6 @@
             <case tag="male_finished_masturbating" target="jin">
                 <state img="6-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="6-shock.png">Are you alright, Ryuji?</state>
-                <state img="6-shock.png">Did you... just shock yourself?</state>
-            </case>
             <case tag="female_must_masturbate">
                 <state img="6-creepy.png">Well?</state>
                 <state img="6-aroused.png">I think I might enjoy this...</state>
@@ -9621,6 +9859,9 @@
             </case>
             <case tag="female_must_masturbate" alsoPlaying="nayru" saidMarker="nayrupossessed" alsoPlayingSaidMarker="v_forfeit">
                 <state img="6-embarrassed.png" marker="null_dirtytalk">Oh...</state>
+            </case>
+            <case tag="female_must_masturbate" target="franziska">
+                <state img="6-creepy.png">Hmm... I'd say you need proper punishment, Franziska.</state>
             </case>
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="6-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
@@ -9652,6 +9893,9 @@
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="6-confused.png">Huh, I never found out you could do this...</state>
                 <state img="6-pleasant.png" marker="tandemoffer">Well then! Would anyone else be interested in doing something like that with me?</state>
+            </case>
+            <case tag="female_start_masturbating" target="franziska">
+                <state img="6-pleasant.png">You know what I want to do? Take that riding crop and whip you into submission.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="6-aroused.png">&lt;i&gt;Ah... I wish I could do that.&lt;/i&gt;</state>
@@ -9720,6 +9964,15 @@
             </case>
             <case tag="female_masturbating" filter="tandem" saidMarker="tandemoffer">
                 <state img="6-creepy.png">I have plenty of kinks. Kinbaku, for instance.</state>
+            </case>
+            <case tag="female_masturbating" target="franziska">
+                <state img="6-creepy.png">On your knees!</state>
+                <state img="6-aroused.png">You should give me that riding crop. I'll show you what &lt;i&gt;real&lt;/i&gt; punishment feels like.</state>
+                <state img="6-pleasant.png">I don't think my hands are sufficient enough to make that rear red.</state>
+                <state img="6-creepy.png">I want you to bend over on my lap so I can give you a proper spanking.</state>
+                <state img="6-perky.png">I prefer using floggers over riding crops. I happen to own both. Which one should I bring?</state>
+                <state img="6-annoyed.png">You call &lt;i&gt;this&lt;/i&gt; a punishment? We need to show you &lt;i&gt;proper&lt;/i&gt; punishment.</state>
+                <state img="6-aroused.png">Dirty girl. You ought'a be ashamed of yourself.</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="6-creepy.png">Don't think I don't notice the way you look at me, Futaba-chan.</state>
@@ -9994,9 +10247,19 @@
             <case tag="hand" alsoPlaying="futaba" notSaidMarker="dirtytalk_lesson" alsoPlayingSayingMarker="haru_dirty_talk_2">
                 <state img="7-creepy.png" marker="dirtytalk_lesson">Then tell them. Or better yet, tell them what &lt;i&gt;you&lt;/i&gt; want to do with &lt;i&gt;them.&lt;/i&gt;</state>
             </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="futaba_juke" alsoPlayingSayingMarker="futaba_juke_ask">
+                <state img="7-sad.png" marker="futaba_juke">Unfortunately not...</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" notSaidMarker="musicmakesyoulosecontrol" alsoPlayingSayingMarker="futaba_jukebox" priority="112">
+                <state img="7-perky.png" marker="musicmakesyoulosecontrol">I'd love to listen to some songs!</state>
+            </case>
             <case tag="hand" alsoPlaying="pinkie_pie" notSaidMarker="pinkabegins" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="7-murderous.png" marker="pinkabegins">Don't come near me with that thing, you understand!?</state>
                 <state img="7-murderous.png" marker="pinkabegins">I'm not your plaything, you scumbag!</state>
+            </case>
+            <case tag="hand" alsoPlaying="futaba" alsoPlayingSayingMarker="futaba_jukebox" priority="115">
+                <condition count="1" filter="ryuji" />
+                <state img="7-confused.png" marker="classical_deathmetal">I personally prefer classical music. Or death metal.</state>
             </case>
             <case tag="stripped">
                 <state img="7-aroused.png">Well... Here I am. Fully nude.</state>
@@ -10018,6 +10281,10 @@
                 <state img="7-embarrassed.png">Ah! M-My intention wasn't to make someone feel bad about their own body! I think you're beautiful the way you are.</state>
                 <state img="7-aroused.png">My chest may be larger, but I think yours is more attractive.</state>
                 <state img="7-aroused.png">Don't be envious. What wouldn't I give to play with your cute little breasts?</state>
+            </case>
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="7-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
             </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="7-terrified.png">No no no no no no...</state>
@@ -10470,12 +10737,10 @@
                 <state img="7-pleasant.png">Show me what you're hiding. Don't be shy.</state>
                 <state img="7-aroused.png">Beautiful.</state>
                 <state img="7-creepy.png">Don't be shy.</state>
+                <state img="7-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removing_major" target="corrin_m" targetStage="4">
                 <state img="7-creepy.png">I wonder what you're wearing under those leggings...</state>
-            </case>
-            <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="7-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="7-aroused.png">Good boy.</state>
@@ -10794,7 +11059,7 @@
                 <state img="7-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="7-aroused.png">,,,</state>
+                <state img="7-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="7-joyful.png">I hope the game will provide us more interesting results...</state>
@@ -10917,6 +11182,7 @@
                 <state img="7-pleasant.png">Excellent.</state>
                 <state img="7-creepy.png">Good boy.</state>
                 <state img="7-creepy.png">You made quite a mess. If I had it my way, you'd also tied up and completely helpless underneath me.</state>
+                <state img="7-perky.png">That was fun, wasn't it?</state>
             </case>
             <case tag="male_finished_masturbating" filter="aggressive">
                 <state img="7-annoyed.png">That wasn't an invitation!</state>
@@ -10933,15 +11199,14 @@
             <case tag="male_finished_masturbating" target="jin">
                 <state img="7-confused.png">What in the world was &lt;i&gt;that&lt;/i&gt;?</state>
             </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="7-shock.png">Are you alright, Ryuji?</state>
-                <state img="7-shock.png">Did you... just shock yourself?</state>
-            </case>
             <case tag="female_must_masturbate">
                 <state img="7-creepy.png">Well?</state>
                 <state img="7-aroused.png">I think I might enjoy this...</state>
                 <state img="7-aroused.png">(&lt;i&gt;giggle&lt;/i&gt;) If it helps, try imagining me dressed in tight leather with a whip in hand.</state>
                 <state img="7-creepy.png">Would it help if I tell you all the things I want to do to you, ~name~?</state>
+            </case>
+            <case tag="female_must_masturbate" target="franziska">
+                <state img="7-creepy.png">Hmm... I'd say you need proper punishment, Franziska.</state>
             </case>
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="7-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
@@ -10976,6 +11241,9 @@
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="7-confused.png">Huh, I never found out you could do this...</state>
                 <state img="7-pleasant.png" marker="tandemoffer">Well then! Would anyone else be interested in doing something like that with me?</state>
+            </case>
+            <case tag="female_start_masturbating" target="franziska">
+                <state img="7-pleasant.png">You know what I want to do? Take that riding crop and whip you into submission.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="7-aroused.png">&lt;i&gt;Ah... I wish I could do that.&lt;/i&gt;</state>
@@ -11044,6 +11312,15 @@
             </case>
             <case tag="female_masturbating" filter="tandem" saidMarker="tandemoffer">
                 <state img="7-creepy.png">I have plenty of kinks. Kinbaku, for instance.</state>
+            </case>
+            <case tag="female_masturbating" target="franziska">
+                <state img="7-creepy.png">On your knees!</state>
+                <state img="7-aroused.png">You should give me that riding crop. I'll show you what &lt;i&gt;real&lt;/i&gt; punishment feels like.</state>
+                <state img="7-pleasant.png">I don't think my hands are sufficient enough to make that rear red.</state>
+                <state img="7-creepy.png">I want you to bend over on my lap so I can give you a proper spanking.</state>
+                <state img="7-perky.png">I prefer using floggers over riding crops. I happen to own both. Which one should I bring?</state>
+                <state img="7-annoyed.png">You call &lt;i&gt;this&lt;/i&gt; a punishment? We need to show you &lt;i&gt;proper&lt;/i&gt; punishment.</state>
+                <state img="7-aroused.png">Dirty girl. You ought'a be ashamed of yourself.</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="7-creepy.png">Don't think I don't notice the way you look at me, Futaba-chan.</state>
@@ -11197,6 +11474,10 @@
         </stage>
 
         <stage id="8">
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="8-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="8-terrified.png">No no no no no no...</state>
             </case>
@@ -11522,12 +11803,10 @@
                 <state img="8-pleasant.png">Show me what you're hiding. Don't be shy.</state>
                 <state img="8-aroused.png">Beautiful.</state>
                 <state img="8-creepy.png">Don't be shy.</state>
+                <state img="8-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removing_major" target="corrin_m" targetStage="4">
                 <state img="8-creepy.png">I wonder what you're wearing under those leggings...</state>
-            </case>
-            <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="8-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="8-aroused.png">Good boy.</state>
@@ -11821,7 +12100,7 @@
                 <state img="8-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="8-aroused.png">,,,</state>
+                <state img="8-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="8-kinky_b.png">Haaah...!</state>
@@ -11899,6 +12178,7 @@
                 <state img="8-pleasant.png">Excellent.</state>
                 <state img="8-creepy.png">Good boy.</state>
                 <state img="8-creepy.png">You made quite a mess. If I had it my way, you'd also tied up and completely helpless underneath me.</state>
+                <state img="8-perky.png">That was fun, wasn't it?</state>
             </case>
             <case tag="male_finished_masturbating" filter="aggressive">
                 <state img="8-annoyed.png">That wasn't an invitation!</state>
@@ -11912,15 +12192,14 @@
             <case tag="male_finished_masturbating" target="corrin_m">
                 <state img="8-shock.png">Wha--what &lt;i&gt;was&lt;/i&gt; that!?</state>
             </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="8-shock.png">Are you alright, Ryuji?</state>
-                <state img="8-shock.png">Did you... just shock yourself?</state>
-            </case>
             <case tag="female_must_masturbate">
                 <state img="8-kinky_a.png">Well?</state>
                 <state img="8-joyful.png">I think I might enjoy this...</state>
                 <state img="8-perky.png">(&lt;i&gt;giggle&lt;/i&gt;) If it helps, try imagining me dressed in tight leather with a whip in hand.</state>
                 <state img="8-kinky_b.png">Would it help if I tell you all the things I want to do to you, ~name~?</state>
+            </case>
+            <case tag="female_must_masturbate" target="franziska">
+                <state img="8-creepy.png">Hmm... I'd say you need proper punishment, Franziska.</state>
             </case>
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="8-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
@@ -11955,6 +12234,9 @@
             <case tag="female_start_masturbating" notSaidMarker="null_dirtytalk">
                 <state img="8-pleasant.png">Let's work together, ~name~.</state>
                 <state img="8-creepy.png">Yes. Good girl.</state>
+            </case>
+            <case tag="female_start_masturbating" target="franziska">
+                <state img="8-pleasant.png">You know what I want to do? Take that riding crop and whip you into submission.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="8-aroused.png">&lt;i&gt;Ah... I wish I could do that.&lt;/i&gt;</state>
@@ -11995,11 +12277,11 @@
                 <state img="8-creepy.png">(&lt;i&gt;giggle&lt;/i&gt;) You're so cute whimpering like that! If only I could tie you up...</state>
                 <state img="8-pleasant.png">My legs are getting tired from standing. Perhaps I should use your face as a seat...</state>
                 <state img="8-kinky_b.png">Good girl.</state>
-                <state img="8-kinky_a.png">You don't happen to enjoy being dominated, do you, ~name~?</state>
+                <state img="8-creepy.png">You don't happen to enjoy being dominated, do you, ~name~?</state>
                 <state img="8-kinky_a.png">You're such a naughty girl, ~name~!</state>
-                <state img="8-kinky_a.png">I wonder...</state>
+                <state img="8-pleasant.png">I wonder...</state>
                 <state img="8-kinky_b.png">That's it. Now imagine you're on your knees and receiving a good whipping from me!</state>
-                <state img="8-kinky_b.png">I bet you wish I was sitting on your face. Don't hide anything from mommy.</state>
+                <state img="8-creepy.png">I bet you wish I was sitting on your face. Don't hide anything from mommy.</state>
                 <state img="8-kinky_a.png">Would you like it if you referred to me as "mommy"? I'd like that very much.</state>
             </case>
             <case tag="female_masturbating" filter="deity" priority="200">
@@ -12016,6 +12298,15 @@
                 <state img="8-sad.png">&lt;i&gt;This is really awkward...&lt;/i&gt;</state>
                 <state img="8-sad.png">Please don't look at me...</state>
                 <state img="8-annoyed.png">It's hard to focus...</state>
+            </case>
+            <case tag="female_masturbating" target="franziska">
+                <state img="8-creepy.png">On your knees!</state>
+                <state img="8-kinky_a.png">You should give me that riding crop. I'll show you what &lt;i&gt;real&lt;/i&gt; punishment feels like.</state>
+                <state img="8-kinky_b.png">I don't think my hands are sufficient enough to make that rear red.</state>
+                <state img="8-kinky_a.png">I want you to bend over on my lap so I can give you a proper spanking.</state>
+                <state img="8-perky.png">I prefer using floggers over riding crops. I happen to own both. Which one should I bring?</state>
+                <state img="8-annoyed.png">You call &lt;i&gt;this&lt;/i&gt; a punishment? We need to show you &lt;i&gt;proper&lt;/i&gt; punishment.</state>
+                <state img="8-kinky_a.png">Dirty girl. You ought'a be ashamed of yourself.</state>
             </case>
             <case tag="female_masturbating" target="kizuna" targetTimeInStage="0">
                 <state img="8-creepy.png">&lt;i&gt;I'm waiting&lt;/i&gt;, ~name~.</state>
@@ -12166,6 +12457,10 @@
         </stage>
 
         <stage id="9">
+            <case tag="opponent_lost" alsoPlaying="ryuji" saidMarker="classical_deathmetal" notSaidMarker="classical_deathmetal2" alsoPlayingSaidMarker="rockmusic_lover">
+                <condition count="1" filter="futaba" />
+                <state img="9-perky.png" marker="classical_deathmetal2">Mhmm! I heard plants best flourish when exposed to death metal!</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2" priority="115">
                 <state img="9-terrified.png">No no no no no no...</state>
             </case>
@@ -12531,12 +12826,10 @@
                 <state img="9-pleasant.png">Show me what you're hiding. Don't be shy.</state>
                 <state img="9-aroused.png">Beautiful.</state>
                 <state img="9-creepy.png">Don't be shy.</state>
+                <state img="9-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removing_major" target="corrin_m" targetStage="4">
                 <state img="9-creepy.png">I wonder what you're wearing under those leggings...</state>
-            </case>
-            <case tag="male_removing_major" target="ryuji" targetStage="5">
-                <state img="9-creepy.png">Oh? &lt;i&gt;Now&lt;/i&gt; you're flustered?</state>
             </case>
             <case tag="male_removed_major">
                 <state img="9-aroused.png">Good boy.</state>
@@ -12828,7 +13121,7 @@
                 <state img="9-creepy.png">I believe you'll have to touch yourself quite soon. Right in front of us.</state>
             </case>
             <case tag="opponent_stripping">
-                <state img="9-aroused.png">,,,</state>
+                <state img="9-aroused.png">...</state>
             </case>
             <case tag="opponent_stripped">
                 <state img="9-joyful.png">I hope the game will provide us more interesting results...</state>
@@ -12921,6 +13214,7 @@
                 <state img="9-pleasant.png">Excellent.</state>
                 <state img="9-creepy.png">Good boy.</state>
                 <state img="9-creepy.png">You made quite a mess. If I had it my way, you'd also tied up and completely helpless underneath me.</state>
+                <state img="9-perky.png">That was fun, wasn't it?</state>
             </case>
             <case tag="male_finished_masturbating" filter="aggressive">
                 <state img="9-annoyed.png">That wasn't an invitation!</state>
@@ -12940,15 +13234,14 @@
             <case tag="male_finished_masturbating" target="corrin_m">
                 <state img="9-shock.png">Wha--what &lt;i&gt;was&lt;/i&gt; that!?</state>
             </case>
-            <case tag="male_finished_masturbating" target="ryuji">
-                <state img="9-shock.png">Are you alright, Ryuji?</state>
-                <state img="9-shock.png">Did you... just shock yourself?</state>
-            </case>
             <case tag="female_must_masturbate">
                 <state img="9-creepy.png">Well?</state>
                 <state img="9-aroused.png">I think I might enjoy this...</state>
                 <state img="9-aroused.png">(&lt;i&gt;giggle&lt;/i&gt;) If it helps, try imagining me dressed in tight leather with a whip in hand.</state>
                 <state img="9-creepy.png">Would it help if I tell you all the things I want to do to you, ~name~?</state>
+            </case>
+            <case tag="female_must_masturbate" target="franziska">
+                <state img="9-creepy.png">Hmm... I'd say you need proper punishment, Franziska.</state>
             </case>
             <case tag="female_must_masturbate" target="kyoko">
                 <state img="9-shock.png">&lt;i&gt;But her hands...!!&lt;/i&gt;</state>
@@ -12979,6 +13272,9 @@
             </case>
             <case tag="female_start_masturbating" filter="deity">
                 <state img="9-joyful.png">&lt;i&gt;This might just be the best day of my life!&lt;/i&gt;</state>
+            </case>
+            <case tag="female_start_masturbating" target="franziska">
+                <state img="9-pleasant.png">You know what I want to do? Take that riding crop and whip you into submission.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione">
                 <state img="9-aroused.png">&lt;i&gt;Ah... I wish I could do that.&lt;/i&gt;</state>
@@ -13013,6 +13309,11 @@
                 <state img="9-perky.png">If it helps, just imagine me dressed in leather with a whip in hand!</state>
                 <state img="9-creepy.png">Don't disappoint mommy now, or else she'll have something in store for you.</state>
             </case>
+            <case tag="finished_masturbating">
+                <state img="9-perky.png">Ah... That was wonderful...</state>
+                <state img="9-joyful.png">It was never this intense before!</state>
+                <state img="9-calm.png">Mmm... If only I did it with more grace.</state>
+            </case>
             <case tag="female_masturbating">
                 <state img="9-creepy.png">Good girl.</state>
                 <state img="9-creepy.png">You don't happen to enjoy being dominated, do you, ~name~?</state>
@@ -13029,11 +13330,6 @@
                 <state img="9-creepy.png">(&lt;i&gt;giggle&lt;/i&gt;) You're so cute whimpering like that! If only I could tie you up...</state>
                 <state img="9-pleasant.png">My legs are getting tired from standing. Perhaps I should use your face as a seat...</state>
             </case>
-            <case tag="finished_masturbating">
-                <state img="9-perky.png">Ah... That was wonderful...</state>
-                <state img="9-joyful.png">It was never this intense before!</state>
-                <state img="9-calm.png">Mmm... If only I did it with more grace.</state>
-            </case>
             <case tag="finished_masturbating" alsoPlaying="jolyne">
                 <state img="9-pleasant.png">You liked that side of me. Don't deny it.</state>
                 <state img="9-creepy.png">Don't judge a book by it's cover. Those who do wind up regretting it.</state>
@@ -13045,6 +13341,15 @@
                 <state img="9-shock.png">&lt;i&gt;Are we really worthy of seeing this though?&lt;/i&gt;</state>
                 <state img="9-aroused.png">I hope you don't mind the audience.</state>
                 <state img="9-joyful.png">&lt;i&gt;I will never forget this!&lt;/i&gt;</state>
+            </case>
+            <case tag="female_masturbating" target="franziska">
+                <state img="9-creepy.png">On your knees!</state>
+                <state img="9-aroused.png">You should give me that riding crop. I'll show you what &lt;i&gt;real&lt;/i&gt; punishment feels like.</state>
+                <state img="9-pleasant.png">I don't think my hands are sufficient enough to make that rear red.</state>
+                <state img="9-creepy.png">I want you to bend over on my lap so I can give you a proper spanking.</state>
+                <state img="9-perky.png">I prefer using floggers over riding crops. I happen to own both. Which one should I bring?</state>
+                <state img="9-annoyed.png">You call &lt;i&gt;this&lt;/i&gt; a punishment? We need to show you &lt;i&gt;proper&lt;/i&gt; punishment.</state>
+                <state img="9-aroused.png">Dirty girl. You ought'a be ashamed of yourself.</state>
             </case>
             <case tag="female_masturbating" target="futaba">
                 <state img="9-creepy.png">Don't think I don't notice the way you look at me, Futaba-chan.</state>
@@ -13168,7 +13473,7 @@
                 <state img="9-pleasant.png">You did your best and that's all that matters.</state>
             </case>
             <case tag="game_over_defeat" target="human" notSaidMarker="pt_playing">
-                <state img="9-calm.png" marker="epilogue">Even if this wasn't what I excepted, I still had fun, ~player~... Perhaps we can meet each other again later.</state>
+                <state img="9-calm.png" marker="epilogue">Even if this wasn't what I expected, I still had fun, ~player~... Perhaps we can meet each other again later.</state>
             </case>
             <case tag="game_over_defeat" target="natsuki" targetStage="0">
                 <state img="9-begoneTHOT.png">What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little "clever" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.</state>
