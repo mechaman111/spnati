@@ -102,15 +102,19 @@ def main():
                 if tag == 'stripping':
                     for state_elem in case_elem.iter('state'):
                         state_elem.set('set-intelligence', 'good')
-                        state_elem.set('set-label', 'Alter Ego')
                         state_elem.set('img', 'custom:4-runaway')
         elif stage == '5':
             for case_elem in stage_elem.iter('case'):
                 tag = case_elem.get('tag')
                 if tag in ['must_strip', 'must_strip_normal', 'must_strip_losing', 'must_strip_winning']:
                     for state_elem in case_elem.iter('state'):
-                        state_elem.set('set-gender', 'male')
                         state_elem.set('set-label', 'Chihiro')
+                elif tag == 'stripping':
+                    for state_elem in case_elem.iter('state'):
+                        state_elem.set('set-gender', 'male')
+                elif tag == 'stripped':
+                    for state_elem in case_elem.iter('state'):
+                        state_elem.set('set-label', 'Alter Ego')
                         
                 for state_elem in case_elem.iter('state'):
                     try:
