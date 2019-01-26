@@ -14,12 +14,12 @@ function PoseSprite(id, src, onload, pose, args) {
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
-    this.scaleX = args.scaleX || 1;
-    this.scaleY = args.scaleY || 1;
+    this.scaleX = args.scalex || 1;
+    this.scaleY = args.scaley || 1;
     this.rotation = args.rotation || 0;
     this.alpha = args.alpha;
-    this.pivotX = args.pivotX;
-    this.pivotY = args.pivotY;
+    this.pivotX = args.pivotx;
+    this.pivotY = args.pivoty;
     this.height = args.height;
     this.width = args.width;
     
@@ -58,6 +58,8 @@ PoseSprite.prototype.draw = function() {
       "opacity": this.alpha / 100,
       "height": '100%'
     });
+    
+    console.log(this.x+"->"+this.scaleToDisplay(this.x)+"px");
     
     $(this.img).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
@@ -239,9 +241,13 @@ function parseSpriteDefinition ($xml, player) {
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
     if (targetObj.scale) {
         targetObj.scalex = targetObj.scaley = targetObj.scale;
+    } else {
+        targetObj.scalex = parseFloat(targetObj.scalex, 10);
+        targetObj.scaley = parseFloat(targetObj.scaley, 10);
     }
-    targetObj.scalex = parseFloat(targetObj.scalex, 10);
-    targetObj.scaley = parseFloat(targetObj.scaley, 10);
+    
+    targetObj.x = parseFloat(targetObj.x, 10);
+    targetObj.y = parseFloat(targetObj.y, 10);
     
     targetObj.player = player;
     
