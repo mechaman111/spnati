@@ -9,6 +9,31 @@ AE_BASE_Y_OFFSET = 275
 with Image.open('vfx/AE-overlay.png') as overlay:
     AE_OVERLAY_SIZE = overlay.size
 
+runaway_anim_def = {
+    'id': 'base',
+    'interpolation': 'spline',
+    'keyframes': [
+        {'time': 0,   'x':  0},
+        {'time': 0.2, 'x': -30},
+        {'time': 0.9, 'x': -35},
+        {'time': 1.1, 'x': -75},
+        {'time': 1.8, 'x': -80},
+        {'time': 2.8, 'x': -10080},
+    ]
+}
+
+def dict_to_directive(in_def):
+    animationElem = OrderedXMLElement('directive', init_attrs={
+        'id': in_def['id'],
+        'type': 'animation',
+        'interpolation': in_def['interpolation']
+    })
+    
+    for keyframe in in_def['keyframes']:
+        animationElem.subElement('keyframe', init_attrs=keyframe)
+        
+    return animationElem
+
 def runaway_anim():
     elem = OrderedXMLElement('pose', init_attrs={'id': '4-runaway', 'baseHeight': 1400})
     
@@ -19,31 +44,7 @@ def runaway_anim():
             'width': img.width, 'height': img.height
         })
         
-        animationElem = elem.subElement('directive', init_attrs={
-            'id': 'base',
-            'type': 'animation',
-            'interpolation': 'linear'
-        })
-        
-        animationElem.subElement('keyframe', init_attrs={
-            'time': 0,
-            'x': 0
-        })
-        
-        animationElem.subElement('keyframe', init_attrs={
-            'time': 0.75,
-            'x': -300
-        })
-        
-        animationElem.subElement('keyframe', init_attrs={
-            'time': 1.25,
-            'x': -300
-        })
-        
-        animationElem.subElement('keyframe', init_attrs={
-            'time': 1.25+1.0,
-            'x': -10300
-        })
+        elem.append(dict_to_directive(runaway_anim_def))
     
     return elem
 
