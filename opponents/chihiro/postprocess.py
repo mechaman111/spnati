@@ -6,7 +6,7 @@ import sys
 import shutil
 
 AE_BASE_Y_OFFSET = 275
-with Image.open('AE-overlay.png') as overlay:
+with Image.open('vfx/AE-overlay.png') as overlay:
     AE_OVERLAY_SIZE = overlay.size
 
 def runaway_anim():
@@ -62,7 +62,7 @@ def ae_pose(emotion, img_path):
         
         overlaySprite = elem.subElement('sprite', init_attrs={
             'id': 'overlay',
-            'src': 'chihiro/AE-overlay.png',
+            'src': 'chihiro/vfx/AE-overlay.png',
             'width': AE_OVERLAY_SIZE[0], 'height': AE_OVERLAY_SIZE[1],
             'z': 2,
             'y': AE_BASE_Y_OFFSET,
