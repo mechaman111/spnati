@@ -20,14 +20,20 @@ function PoseSprite(id, src, onload, pose, args) {
     this.alpha = args.alpha;
     this.pivotX = args.pivotx;
     this.pivotY = args.pivoty;
-    this.height = args.height;
-    this.width = args.width;
+    this.height = args.height || 0;
+    this.width = args.width || 0;
     
     this.vehicle = document.createElement('div');
     this.vehicle.id = id;
     
     this.img = document.createElement('img');
-    this.img.onload = this.img.onerror = onload;
+    this.img.onload = this.img.onerror = function() {
+        if (!this.height) this.height = this.img.naturalHeight;
+        if (!this.width) this.width = this.img.naturalWidth;
+        
+        onload();
+        this.draw();
+    }.bind(this);
     this.img.src = this.src;
     
     this.vehicle.appendChild(this.img);
@@ -59,15 +65,13 @@ PoseSprite.prototype.draw = function() {
       "height": '100%'
     });
     
-    console.log(this.x+"->"+this.scaleToDisplay(this.x)+"px");
-    
     $(this.img).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
     
-    if (this.img.src !== this.src) {
+    if (this.img.src != this.src) {
         this.img.src = this.src;
     }
 }
