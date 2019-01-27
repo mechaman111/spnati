@@ -78,11 +78,11 @@ namespace SPNATI_Character_Editor
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
 			def.FilterPropertiesById = true;
-			foreach (string key in new string[] { "id", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
+			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
 			{
 				def.AllowedProperties.Add(key);
 			}
-			foreach (string key in new string[] { "time", "x", "y", "scalex", "scaley", "rotation", "alpha" })
+			foreach (string key in new string[] { "time", "src", "x", "y", "scalex", "scaley", "rotation", "alpha" })
 			{
 				def.RequiredAnimatedProperties.Add(key);
 			}
@@ -134,7 +134,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
-				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease"})
+				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation"})
 			{
 				def.AllowedProperties.Add(key);
 			}

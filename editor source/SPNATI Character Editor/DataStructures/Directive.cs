@@ -19,10 +19,6 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
-		[FileSelect(DisplayName = "Source", GroupOrder = 5, Key = "src", Description = "Sprite source image")]
-		[XmlAttribute("src")]
-		public string Src;
-
 		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 95, Description = "Custom sprite width relative to the scene width")]
 		[XmlAttribute("width")]
 		public string Width;
@@ -143,6 +139,11 @@ namespace SPNATI_Character_Editor
 		[Numeric(DisplayName = "Count", Key = "count", GroupOrder = 10, Description = "Number of particles to emit", Minimum = 1, Maximum = 100)]
 		[XmlAttribute("count")]
 		public int Count;
+
+		[Boolean(DisplayName = "Ignore rotation", Key = "ignoreRotation", GroupOrder = 19, Description = "If true, particles will spawn facing upwards regardless of the emitter's current rotation")]
+		[DefaultValue(false)]
+		[XmlAttribute("ignoreRotation")]
+		public bool IgnoreRotation;
 		#endregion
 
 		[XmlElement("keyframe")]
@@ -169,7 +170,7 @@ namespace SPNATI_Character_Editor
 					string delay = string.IsNullOrEmpty(Delay) ? "" : $" delay {Delay}s";
 					string loop = Looped ? " (loop)" : "";
 					string props = GetProperties();
-					text = $"Move sprite ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
+					text = $"Animate ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
 					break;
 				case "wait":
 					text = "Wait for Animations";
@@ -322,6 +323,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("rate")]
 		public string Rate;
 
+		[FileSelect(DisplayName = "Source", GroupOrder = 5, Key = "src", Description = "Sprite source image")]
+		[XmlAttribute("src")]
+		public string Src;
+
 		[Measurement(DisplayName = "X", Key = "x", GroupOrder = 10, Description = "Scene X position")]
 		[XmlAttribute("x")]
 		public string X;
@@ -375,7 +380,7 @@ namespace SPNATI_Character_Editor
 		public bool HasAnimatableProperties()
 		{
 			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale) || !string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY)
-				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom);
+				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src);
 		}
 
 		public Keyframe() { }
@@ -398,6 +403,7 @@ namespace SPNATI_Character_Editor
 			Opacity = src.Opacity;
 			Rotation = src.Rotation;
 			Zoom = src.Zoom;
+			Src = src.Src;
 
 			src.Time = null;
 			src.X = null;
@@ -409,6 +415,7 @@ namespace SPNATI_Character_Editor
 			src.Zoom = null;
 			src.ScaleX = null;
 			src.ScaleY = null;
+			src.Src = null;
 		}
 
 		public string GetProperties()
@@ -441,6 +448,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(Zoom))
 			{
 				sb.Append($" Zoom:{Zoom}");
+			}
+			if (!string.IsNullOrEmpty(Src))
+			{
+				sb.Append($" Src:{Src}");
 			}
 			return sb.ToString();
 		}

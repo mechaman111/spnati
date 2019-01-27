@@ -1731,7 +1731,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			_scenePreview = new ScenePreview(_selectedScene);
+			_scenePreview = new ScenePreview(_selectedScene, _character);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);

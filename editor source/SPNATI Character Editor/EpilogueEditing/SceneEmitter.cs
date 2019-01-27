@@ -34,6 +34,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public RandomParameter StartRotation;
 		public RandomParameter EndRotation;
 		public RandomParameter Lifetime;
+		public bool IgnoreParent;
 
 		public SceneEmitter() { }
 
@@ -78,6 +79,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			StartRotation = RandomParameter.Create(directive.StartRotation, 0, 0);
 			EndRotation = RandomParameter.Create(directive.EndRotation, StartRotation);
 			Lifetime = RandomParameter.Create(directive.Lifetime, 1, 1);
+			IgnoreParent = directive.IgnoreRotation;
 
 			ParticleWidth = Width;
 			ParticleHeight = Height;
@@ -113,7 +115,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			copy.EndRotation = EndRotation;
 			copy.Lifetime = Lifetime;
 			copy.Angle = Angle;
-
+			copy.IgnoreParent = IgnoreParent;
 			return copy;
 		}
 

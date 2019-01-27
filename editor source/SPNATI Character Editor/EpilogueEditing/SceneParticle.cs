@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			PivotX = Width / 2.0f;
 			PivotY = Height / 2.0f;
 
-			Rotation = rotation;
+			Rotation = emitter.IgnoreParent ? 0 : rotation;
 			float degrees = rotation;
 			float radians = degrees * (float)Math.PI / 180.0f;
 			float speed = emitter.Speed.Get();
