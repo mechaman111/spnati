@@ -251,6 +251,7 @@ namespace SPNATI_Character_Editor
 			if (string.IsNullOrEmpty(text))
 			{
 				_notes.Remove(workingCase.Id);
+				return;
 			}
 			AssignId(workingCase);
 			_notes[workingCase.Id] = text;
