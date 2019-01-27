@@ -700,6 +700,9 @@ function handleGameOver() {
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
+		if (endWaitDisplay == 0) {
+			players.forEach(function(p) { p.timeInStage++; });
+		}
 		allowProgression(eGamePhase.END_LOOP);
 	}
 }
