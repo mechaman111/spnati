@@ -158,6 +158,14 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				line.Marker = $"{markerValue}{marker}";
 			}
+			else if (markerValue == "+1")
+			{
+				line.Marker = $"+{marker}";
+			}
+			else if (markerValue == "-1")
+			{
+				line.Marker = $"-{marker}";
+			}
 			else
 			{
 				line.Marker = $"{marker}={markerValue}";
