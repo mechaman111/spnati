@@ -70,6 +70,15 @@ def ae_pose(emotion, img_path):
             'scaley': 1.40,
             'scalex': 0.80
         })
+        
+        laptopSprite = elem.subElement('sprite', init_attrs={
+            'id': 'laptop',
+            'src': 'chihiro/vfx/laptop.png',
+            'z': 1,
+            'y': 1050,
+            'scaley': 1,
+            'scalex': 1
+        })
     
     return elem
 
