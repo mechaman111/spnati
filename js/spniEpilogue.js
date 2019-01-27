@@ -857,14 +857,14 @@ function loadEpilogue(epilogue) {
 }
 
 function moveEpilogueForward() {
-  if (epiloguePlayer) {
+  if (epiloguePlayer && epiloguePlayer.loaded) {
     epiloguePlayer.advanceDirective();
     updateEpilogueButtons();
   }
 }
 
 function moveEpilogueBack() {
-  if (epiloguePlayer) {
+  if (epiloguePlayer && epiloguePlayer.loaded) {
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
@@ -897,6 +897,7 @@ function EpiloguePlayer(epilogue) {
   this.sceneIndex = -1;
   this.directiveIndex = -1;
   this.assetMap = {};
+  this.loaded = false;
   this.loadingImages = 0;
   this.totalImages = 0;
   this.loadedImages = 0;
@@ -946,6 +947,7 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 0, this.assetMap));
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
+    this.loaded = true;
     this.advanceScene();
     window.requestAnimationFrame(createClosure(this, this.loop));
   }
@@ -2019,6 +2021,7 @@ function Emitter(id, element, view, args, pool) {
   this.endRotation = this.createRandomParameter(args.endrotation, this.startRotation);
   this.lifetime = this.createRandomParameter(args.lifetime, 1, 1);
   this.angle = args.angle;
+  this.ignoreRotation = args.ignorerotation === "1" || args.ignorerotation === "true";
 }
 Emitter.prototype = Object.create(SceneObject.prototype);
 Emitter.prototype.constructor = Emitter;
@@ -2114,6 +2117,7 @@ Emitter.prototype.emit = function () {
     startRotation: this.startRotation.get(),
     endRotation: this.endRotation.get(),
     layer: this.layer,
+    ignoreRotation: this.ignoreRotation,
   });
   this.activeParticles.push(particle);
 };
@@ -2179,6 +2183,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   this.elapsed = 0;
   this.duration = args.duration;
   this.ease = args.ease || "smooth";
+  this.ignoreRotation = args.ignoreRotation;
   tweens["scalex"] = new TweenableParameter(args.startScaleX, args.endScaleX);
   tweens["scaley"] = new TweenableParameter(args.startScaleY, args.endScaleY);
   tweens["alpha"] = new TweenableParameter(args.startAlpha, args.endAlpha);
@@ -2191,7 +2196,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   this.spin = args.startRotation;
 
   //initial speed is in the direction of the starting rotation
-  this.rotation = rotation;
+  this.rotation = this.ignoreRotation ? 0 : rotation;
   var degrees = rotation;
   var radians = degrees * (Math.PI / 180);
   var speed = args.speed;
