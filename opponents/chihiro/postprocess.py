@@ -8,6 +8,9 @@ import shutil
 AE_BASE_Y_OFFSET = 275
 with Image.open('vfx/AE-overlay.png') as overlay:
     AE_OVERLAY_SIZE = overlay.size
+    
+LAPTOP_X_SCALE = 0.70
+LAPTOP_Y_SCALE = 1.0
 
 runaway_anim_def = {
     'id': 'base',
@@ -22,11 +25,52 @@ runaway_anim_def = {
     ]
 }
 
+runaway_laptop_anim_1 = {
+    'id': 'laptop',
+    'interpolation': 'none',
+    'keyframes': [
+        {'time': 0,   'alpha':  0},
+        {'time': 1.8, 'alpha':  100},
+    ]
+}
+
+runaway_laptop_anim_2 = {
+    'id': 'laptop',
+    'interpolation': 'spline',
+    'delay': 1.8,
+    'keyframes': [
+        {'time': 0,   'x':  -80, 'y': 600,  'rotation': -30},
+        {'time': 0.15/2, 'x':  -40, 'y': 450,  'rotation': 10},
+        {'time': 0.15, 'x':  0,   'y': 1050, 'rotation': 0},
+    ]
+}
+
+overlay_flicker_anim = {
+    'id': 'overlay',
+    'interpolation': 'none',
+    'keyframes': [
+        {'time': 0,   'alpha':  0},
+        {'time': 2.5, 'alpha':  100},
+        {'time': 2.75, 'alpha':  0},
+        {'time': 3.25, 'alpha':  100},
+    ]
+}
+
+ae_flicker_anim = {
+    'id': 'alter_ego',
+    'interpolation': 'none',
+    'keyframes': [
+        {'time': 0,   'alpha':  0},
+        {'time': 3.50, 'alpha':  100},
+    ]
+}
+
 def dict_to_directive(in_def):
     animationElem = OrderedXMLElement('directive', init_attrs={
         'id': in_def['id'],
         'type': 'animation',
-        'interpolation': in_def['interpolation']
+        'interpolation': in_def['interpolation'],
+        'delay': in_def.get('delay', 0)
     })
     
     for keyframe in in_def['keyframes']:
@@ -41,22 +85,63 @@ def runaway_anim():
         baseSprite = elem.subElement('sprite', init_attrs={
             'id': 'base',
             'src': 'chihiro/4-runaway.png',
+            'z': 2,
             'width': img.width, 'height': img.height
         })
         
-        elem.append(dict_to_directive(runaway_anim_def))
+        laptopSprite = elem.subElement('sprite', init_attrs={
+            'id': 'laptop',
+            'src': 'chihiro/vfx/laptop.png',
+            'z': 1,
+            'x': -80,
+            'y': 600,
+            'rotation': -30,
+            'scalex': LAPTOP_X_SCALE,
+            'scaley': LAPTOP_Y_SCALE
+        })
+        
+    with Image.open('./5-base.png') as img:
+        aeSprite = elem.subElement('sprite', init_attrs={
+            'id': 'alter_ego',
+            'src': 'chihiro/5-base.png',
+            'width': img.width, 'height': img.height,
+            'alpha': 0,
+            'z': 1,
+            'x': 0,
+            'y': AE_BASE_Y_OFFSET+12,
+            'scale': 1.40
+        })
+        
+        overlaySprite = elem.subElement('sprite', init_attrs={
+            'id': 'overlay',
+            'src': 'chihiro/vfx/AE-overlay.png',
+            'width': AE_OVERLAY_SIZE[0], 'height': AE_OVERLAY_SIZE[1],
+            'alpha': 0,
+            'z': 2,
+            'x': 0,
+            'y': AE_BASE_Y_OFFSET,
+            'scaley': 1.40,
+            'scalex': 0.90
+        })
+        
+    elem.append(dict_to_directive(runaway_anim_def))
+    elem.append(dict_to_directive(runaway_laptop_anim_1))
+    elem.append(dict_to_directive(runaway_laptop_anim_2))
+    elem.append(dict_to_directive(overlay_flicker_anim))
+    elem.append(dict_to_directive(ae_flicker_anim))
     
     return elem
 
-def ae_pose(emotion, img_path):
-    elem = OrderedXMLElement('pose', init_attrs={'id': '5-'+emotion, 'baseHeight': 1400})
+def ae_pose(emotion, img_path, x=0):
+    elem = OrderedXMLElement('pose', init_attrs={'id': emotion, 'baseHeight': 1400})
     
     with Image.open(img_path) as img:
         baseSprite = elem.subElement('sprite', init_attrs={
-            'id': 'base',
+            'id': 'alter_ego',
             'src': 'chihiro/'+img_path.name,
             'width': img.width, 'height': img.height,
             'z': 1,
+            'x': x,
             'y': AE_BASE_Y_OFFSET+12,
             'scale': 1.40
         })
@@ -66,6 +151,7 @@ def ae_pose(emotion, img_path):
             'src': 'chihiro/vfx/AE-overlay.png',
             'width': AE_OVERLAY_SIZE[0], 'height': AE_OVERLAY_SIZE[1],
             'z': 2,
+            'x': x,
             'y': AE_BASE_Y_OFFSET,
             'scaley': 1.40,
             'scalex': 0.90
@@ -75,12 +161,27 @@ def ae_pose(emotion, img_path):
             'id': 'laptop',
             'src': 'chihiro/vfx/laptop.png',
             'z': 1,
+            'x': x,
             'y': 1050,
-            'scaley': 1,
-            'scalex': 1
+            'scalex': LAPTOP_X_SCALE,
+            'scaley': LAPTOP_Y_SCALE
         })
     
     return elem
+
+def ae_tandem_pose(name, pose_img_path, ae_img_path):
+    pose = ae_pose(name, ae_img_path, x=150)
+    
+    with Image.open(pose_img_path) as img:
+        chihiroSprite = pose.subElement('sprite', init_attrs={
+            'id': 'chihiro',
+            'src': 'chihiro/'+pose_img_path.name,
+            'width': img.width, 'height': img.height,
+            'z': 3,
+            'x': -100
+        })
+        
+    return pose
 
 def main():
     shutil.copyfile('./behaviour.xml', './behaviour.xml.bak')
@@ -97,9 +198,11 @@ def main():
         except ValueError:
             continue
             
-        if stage == 5:
-            poses_elem.append(ae_pose(emotion, path))
-            
+        if stage == 5 and emotion != 'strip':
+            poses_elem.append(ae_pose('5-'+emotion, path))
+    
+    poses_elem.append(ae_tandem_pose('5-return', Path('./5-return.png'), Path('./5-shocked.png')))        
+    poses_elem.append(ae_tandem_pose('5-strip', Path('./5-strip.png'), Path('./5-embarassed.png')))
     poses_elem.append(runaway_anim())
     
     for stage_elem in root.find('behaviour').iter('stage'):
@@ -118,9 +221,11 @@ def main():
                 if tag in ['must_strip', 'must_strip_normal', 'must_strip_losing', 'must_strip_winning']:
                     for state_elem in case_elem.iter('state'):
                         state_elem.set('set-label', 'Chihiro')
+                        state_elem.set('img', 'custom:5-return')
                 elif tag == 'stripping':
                     for state_elem in case_elem.iter('state'):
                         state_elem.set('set-gender', 'male')
+                        state_elem.set('img', 'custom:5-strip')
                 elif tag == 'stripped':
                     for state_elem in case_elem.iter('state'):
                         state_elem.set('set-label', 'Alter Ego')
