@@ -740,7 +740,29 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (gridPoses.SelectedRows.Count == 0) { return; }
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					DataGridViewCell cell = gridPoses.SelectedCells[0];
+					if (cell is DataGridViewTextBoxCell)
+					{
+						string text = cell.Value?.ToString();
+						if (!string.IsNullOrEmpty(text))
+						{
+							Clipboard.Clear();
+							Clipboard.SetText(text);
+							TextBox box = gridPoses.EditingControl as TextBox;
+							if (box != null)
+							{
+								box.Text = "";
+							}
+						}
+					}
+				}
+				return;
+			}
+
 			CopySelectedLine();
 			//remove the line
 			int index = gridPoses.SelectedRows[0].Index;
@@ -749,13 +771,43 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CopySelectedLine();
+			var count = gridPoses.SelectedCells.Count;
+			if (count == 1)
+			{
+				//if cursor is in a cell, do standard clipboard action
+				TextBox box = gridPoses.EditingControl as TextBox;
+				if (box != null)
+				{
+					Clipboard.Clear();
+					Clipboard.SetText(box.Text);
+				}
+			}
+			else
+			{
+				//otherwise, copy the whole row
+				CopySelectedLine();
+			}
 		}
 
 		private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_clipboard == null) { return; }
-			if (gridPoses.SelectedRows.Count == 0) { return; }
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					DataGridViewCell cell = gridPoses.SelectedCells[0];
+					if (cell is DataGridViewTextBoxCell)
+					{
+						TextBox box = gridPoses.EditingControl as TextBox;
+						if (box != null)
+						{
+							box.Text = Clipboard.GetText();
+						}
+					}
+				}
+				return;
+			}
 
 			DataGridViewRow row = gridPoses.SelectedRows[0];
 			if (row.Index == gridPoses.Rows.Count - 1)

@@ -11,6 +11,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
+		[XmlAttribute("baseHeight")]
+		public string BaseHeight;
+
 		[XmlElement("sprite")]
 		public List<Sprite> Sprites = new List<Sprite>();
 

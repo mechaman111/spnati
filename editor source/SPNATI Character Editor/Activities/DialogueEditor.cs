@@ -484,6 +484,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			bool firstPopulation = (tableConditions.Data == null);
 			tableConditions.Data = _selectedCase;
+			AddSpeedButtons();
 
 			if (firstPopulation)
 			{
@@ -513,6 +514,25 @@ namespace SPNATI_Character_Editor.Activities
 
 			_populatingCase = false;
 			HighlightRow(0);
+		}
+
+		private void AddSpeedButtons()
+		{
+			if (_selectedCase == null) { return; }
+			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
+			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
+			if (caseTrigger.AvailableVariables.Contains("clothing") && caseTrigger.HasTarget)
+			{
+				tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+			}
+		}
+
+		private string AddVariableTest(string variable, object data)
+		{
+			Case theCase = data as Case;
+			theCase.Expressions.Add(new ExpressionTest(variable, ""));
+			return "Expressions";
 		}
 
 		private HashSet<int> GetSelectedStages()
