@@ -96,6 +96,7 @@ function PoseAnimation (targetSprite, pose, args) {
     this.duration = this.keyframes[this.keyframes.length-1].time;
     this.delay = args.delay || 0;
     this.interpolation = args.interpolation || 'none';
+    this.ease = args.ease || 'linear';
 }
 
 PoseAnimation.prototype.isComplete = function () {
@@ -117,6 +118,8 @@ PoseAnimation.prototype.update = function (dt) {
         var lastFrame = (i > 0) ? this.keyframes[i-1] : frame;
         var progress = (t - frame.startTime) / (frame.time - frame.startTime);
         progress = (t <= 0) ? 0 : Math.min(1, Math.max(0, progress));
+        
+        progress = Animation.prototype.easingFunctions[this.ease](progress);
         
         this.updateSprite(lastFrame, frame, progress, i);
         return;
@@ -261,7 +264,6 @@ function parseSpriteDefinition ($xml, player) {
 function parseKeyframeDefinition($xml) {
     var targetObj = parseSpriteDefinition($xml);
     targetObj.time = parseFloat(targetObj.time) * 1000;
-    targetObj.delay = (parseFloat(targetObj.delay) * 1000) || 0;
     
     return targetObj;
 }
@@ -272,6 +274,7 @@ function parseDirective ($xml) {
     if (targetObj.type === 'animation') {
         // Keyframe / interpolated animation
         targetObj.keyframes = [];
+        targetObj.delay = parseFloat(targetObj.delay) || 0;
         $($xml).find('keyframe').each(function (i, elem) {
             targetObj.keyframes.push(parseKeyframeDefinition(elem));
         });
