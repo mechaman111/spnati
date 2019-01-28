@@ -1030,6 +1030,19 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }
+	
+	if (this.chosenState.setLabel) {
+		this.label = this.chosenState.setLabel;
+		this.labelOverridden = true;
+	}
+	
+	if (this.chosenState.setIntelligence) {
+		this.intelligence = this.chosenState.setIntelligence;
+	}
+	
+	if (this.chosenState.setGender) {
+		this.gender = this.chosenState.setGender;
+	}
     
     this.stateCommitted = true;
 }
@@ -1094,31 +1107,17 @@ function updateAllVolatileBehaviours () {
  * Commits all player behaviour updates.
  ************************************************************/
 function commitAllBehaviourUpdates () {
+	/* Apply setLabel first so that ~name~ is the same for all players */
+	players.forEach(function (p) {
+		if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
+			p.label = p.chosenState.setLabel;
+			p.labelOverridden = true;
+		}
+	});
+	
     players.forEach(function (p) {
         if (p !== players[HUMAN_PLAYER]) {
             p.commitBehaviourUpdate();
         }
     });
-	
-	/* special: apply per-state attribute updates
-	 * We only do this here to ensure that all players get a consistent view
-	 * of player attributes throughout the commit phase.
-	 * (this is particularly important with player labels)
-	 */
-	players.forEach(function (p) {
-		if (p && p !== players[HUMAN_PLAYER] && p.chosenState) {
-			if (p.chosenState.setIntelligence) {
-				p.intelligence = p.chosenState.setIntelligence;
-			}
-			
-			if (p.chosenState.setLabel) {
-				p.label = p.chosenState.setLabel;
-				p.labelOverridden = true;
-			}
-			
-			if (p.chosenState.setGender) {
-				p.gender = p.chosenState.setGender;
-			}
-		}
-	});
 }
