@@ -68,7 +68,7 @@ def ae_pose(emotion, img_path):
             'z': 2,
             'y': AE_BASE_Y_OFFSET,
             'scaley': 1.40,
-            'scalex': 0.80
+            'scalex': 0.90
         })
         
         laptopSprite = elem.subElement('sprite', init_attrs={
