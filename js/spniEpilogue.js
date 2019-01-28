@@ -195,8 +195,7 @@ var clampingFunctions = {
  ************************************************************/
 var interpolationModes = {
     "none": function noInterpolation(prop, start, end, t, frames, index) {
-        return start;
-        
+        return (t < 1) ? start : end;
     },
 	"linear": function linear(prop, start, end, t, frames, index)
 	{

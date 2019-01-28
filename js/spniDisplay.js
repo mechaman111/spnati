@@ -274,7 +274,7 @@ function parseDirective ($xml) {
     if (targetObj.type === 'animation') {
         // Keyframe / interpolated animation
         targetObj.keyframes = [];
-        targetObj.delay = parseFloat(targetObj.delay) || 0;
+        targetObj.delay = parseFloat(targetObj.delay) * 1000 || 0;
         $($xml).find('keyframe').each(function (i, elem) {
             targetObj.keyframes.push(parseKeyframeDefinition(elem));
         });
