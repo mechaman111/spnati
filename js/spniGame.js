@@ -735,7 +735,7 @@ function allowProgression (nextPhase) {
 		nextPhase = gamePhase;
 	}
 	
-    if (AUTO_FORFEIT && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && timers[HUMAN_PLAYER] > 1) {
+    if (AUTO_FORFEIT && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].timer > 1) {
         timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
     } else if (AUTO_ENDING && nextPhase != eGamePhase.GAME_OVER && (players[HUMAN_PLAYER].finished || (!players[HUMAN_PLAYER].out && gameOver))) {
         /* Human is finished or human is the winner */
@@ -745,7 +745,7 @@ function allowProgression (nextPhase) {
         actualMainButtonState = false;
     }
 
-	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && timers[HUMAN_PLAYER] == 1 && gamePhase != eGamePhase.STRIP) {
+	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && players[HUMAN_PLAYER].timer == 1 && gamePhase != eGamePhase.STRIP) {
 		$mainButton.html("Cum!");
 	} else if (nextPhase[0]) {
 		$mainButton.html(nextPhase[0]);

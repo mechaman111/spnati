@@ -141,7 +141,7 @@ function tickForfeitTimers () {
 			if (i == HUMAN_PLAYER) {
 				/* human player */
 				/* update the player label */
-				$gameClothingLabel.html("<b>'Finished' in "+timers[i]+" phases</b>");
+				$gameClothingLabel.html("<b>'Finished' in "+players[i].timer+" phases</b>");
 				$gamePlayerCountdown.html(players[i].timer);
 				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {
