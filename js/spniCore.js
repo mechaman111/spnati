@@ -269,7 +269,7 @@ function fetchCompressedURL(baseUrl, successCb, errorCb) {
   *   Can vary by stage.
   * gender (constant), their gender.
   * clothing (array of Clothing objects), their clothing.
-  * timer (integer), time until forfeit is finished.
+  * stamina (integer), time until forfeit is finished (initial timer value).
   * state (array of PlayerState objects), their sequential states.
   * xml (jQuery object), the player's loaded behaviour.xml file.
   * metaXml (jQuery object), the player's loaded meta.xml file.
@@ -286,7 +286,7 @@ function Player (id) {
     this.size = eSize.MEDIUM;
     this.intelligence = eIntelligence.AVERAGE;
     this.gender = eGender.MALE;
-    this.timer = 20;
+    this.stamina = 20;
     this.scale = undefined;
     this.tags = [id];
     this.xml = null;
@@ -646,7 +646,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.xml = $xml;
             this.size = $xml.find('size').text();
-            this.timer = Number($xml.find('timer').text());
+            this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
 
             this.default_costume = {
@@ -944,13 +944,10 @@ function returnToPreviousScreen (screen) {
  * Resets the game state so that the game can be restarted.
  ************************************************************/
 function resetPlayers () {
-	for (var i = 0; i < players.length; i++) {
-		if (players[i] != null) {
-            players[i].resetState();
-		}
-		timers[i] = 0;
-	}
-	updateAllBehaviours(null, null, SELECTED);
+    players.forEach(function(p) {
+        p.resetState();
+    });
+    updateAllBehaviours(null, null, SELECTED);
 }
 
 /************************************************************

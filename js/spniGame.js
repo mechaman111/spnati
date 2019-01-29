@@ -692,7 +692,7 @@ function handleGameOver() {
 	/* determine true end and identify winner (even though endRound() did that too) */
 	if (!players.some(function(p, i) {
 		if (!p.out) winner = p;
-		return timers[i] > 0;
+		return p.out && !p.finished;
 	})) {
 		/* true end */
         updateAllBehaviours(winner.slot, GAME_OVER_VICTORY, GAME_OVER_DEFEAT);
