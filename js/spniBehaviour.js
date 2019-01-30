@@ -105,6 +105,7 @@ function State($xml) {
 	}
 	
 	this.setIntelligence = $xml.attr('set-intelligence');
+	this.setSize = $xml.attr('set-size');
 	this.setGender = $xml.attr('set-gender');
 	this.setLabel = $xml.attr('set-label');
     
@@ -1041,6 +1042,10 @@ Opponent.prototype.commitBehaviourUpdate = function () {
 	
 	if (this.chosenState.setGender) {
 		this.gender = this.chosenState.setGender;
+	}
+	
+	if (this.chosenState.setSize) {
+		this.size = this.chosenState.setSize;
 	}
     
     this.stateCommitted = true;
