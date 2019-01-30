@@ -920,12 +920,15 @@ EpiloguePlayer.prototype.load = function () {
         directive.src = directive.src.charAt(0) === '/' ? directive.src : this.epilogue.player.base_folder + directive.src;
         this.fetchImage(directive.src);
       }
-      for (var k = 0; k < directive.keyframes.length; k++) {
-        var keyframe = directive.keyframes[k];
-        if (keyframe.src && keyframe !== directive) {
-          keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src : this.epilogue.player.base_folder + keyframe.src;
-          this.fetchImage(keyframe.src);
-        }
+      
+      if (directive.keyframes) {
+          for (var k = 0; k < directive.keyframes.length; k++) {
+            var keyframe = directive.keyframes[k];
+            if (keyframe.src && keyframe !== directive) {
+              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src : this.epilogue.player.base_folder + keyframe.src;
+              this.fetchImage(keyframe.src);
+            }
+          }
       }
     }
   }
