@@ -1812,8 +1812,11 @@ namespace SPNATI_Character_Editor.Controls
 					canvas.Invalidate();
 					break;
 				case "remove":
-					_scenePreview.Objects.Remove(obj);
-					obj.Dispose();
+					if (obj != null)
+					{
+						_scenePreview.Objects.Remove(obj);
+						obj.Dispose();
+					}
 					canvas.Invalidate();
 					break;
 				case "fade":

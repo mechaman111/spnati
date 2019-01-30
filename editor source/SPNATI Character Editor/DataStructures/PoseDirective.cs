@@ -8,8 +8,14 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string Type;
 
+		[XmlAttribute("id")]
+		public string Id;
+
 		[XmlAttribute("looped")]
 		public string Looped;
+
+		[XmlAttribute("interpolation")]
+		public string Interpolation;
 
 		[XmlAttribute("frameTime")]
 		public string FrameTime;

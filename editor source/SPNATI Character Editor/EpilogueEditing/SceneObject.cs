@@ -615,7 +615,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public virtual void Dispose()
 		{
-			Image?.Dispose();
 			Color?.Dispose();
 		}
 

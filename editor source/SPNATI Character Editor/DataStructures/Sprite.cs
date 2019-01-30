@@ -7,6 +7,22 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class Sprite
 	{
+		/// <summary>
+		/// personal notes
+		/// x,y,width,height are all % of baseHeight
+		/// ex. true width = width * display.height / baseHeight
+		/// 
+		/// width and height are basically required, since otherwise it doesn't scale with display
+		/// 
+		/// keyframes need a starting frame - can't just rely on the previous state
+		/// 
+		/// x is centered (i.e. x = container.width * 0.5 + x * display.height / baseHeight
+		/// </summary>
+
+
+		[XmlAttribute("id")]
+		public string Id;
+
 		[XmlAttribute("src")]
 		public string Src;
 
