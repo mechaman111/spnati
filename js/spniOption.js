@@ -62,7 +62,6 @@ function setActiveOption(optionGroupId, selected) {
     });
 }
 
-
 // Handle changing of active option in one place.
 $('#options-modal .pagination, #game-settings-modal ul.pagination').on('click', 'a', function() {
     $(this).parent().siblings().removeClass('active');
@@ -83,6 +82,9 @@ function showOptionsModal () {
     setActiveOption('options-minimal-ui', MINIMAL_UI);
     $("#options-modal").modal('show');
 }
+$("#options-modal").on('shown.bs.modal', function() {
+	$("#options-modal").find('li.active a').first().focus();
+});
 
 function setUIMode(minimal) {
     MINIMAL_UI = minimal;
@@ -141,8 +143,12 @@ $('ul#options-minimal-ui').on('click', 'a', function() {
  ************************************************************/
 function showGameSettingsModal () {
     setActiveOption('settings-background', selectedBackground);
-    $gameSettingsModal.modal('show');
+    $('#game-settings-modal').modal('show');
 }
+$('#game-settings-modal').on('shown.bs.modal', function() {
+	$('#settings-background-' + (selectedBackground + 1) + '>a').focus();
+	console.log($('.modal:visible'));
+});
 
 $('ul#settings-background').on('click', 'a', function() {
     setBackground($(this).attr('data-value'));

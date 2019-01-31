@@ -85,7 +85,6 @@ var SHOW_ENDING_DELAY = 5000; //5 seconds
 var CARD_SUGGEST = false;
 var AUTO_FADE = true;
 var MINIMAL_UI = true;
-var KEYBINDINGS_ENABLED = false;
 var DEBUG = false;
 
 /* game state */
@@ -197,10 +196,8 @@ function loadGameScreen () {
 
     /* enable and set up the main button */
 	allowProgression(eGamePhase.DEAL);
-    
-    /* late settings */
-    KEYBINDINGS_ENABLED = true;
-    document.addEventListener('keyup', game_keyUp, false);
+
+    $(document).keyup(game_keyUp);
 }
 
 /**********************************************************************
@@ -1006,8 +1003,9 @@ function showLogModal () {
 function game_keyUp(e)
 {
     console.log(e);
-    if (KEYBINDINGS_ENABLED) {
+    if ($('.modal:visible').length == 0) {
         if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
+			e.preventDefault();
             advanceGame();
         }
         else if (e.keyCode == 49 && !$cardButtons[0].prop('disabled')) { // 1

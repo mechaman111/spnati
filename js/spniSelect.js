@@ -104,6 +104,7 @@ $groupMaxPageIndicator = $("#group-max-page-indicator");
 
 $groupCreditsButton = $('#group-credits-button');
 
+$searchModal = $('#search-modal');
 $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
@@ -114,13 +115,22 @@ $sourceList = $("#sourceList");
 $creatorList = $("#creatorList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
+$searchModal.on('shown.bs.modal', function() {
+	$searchName.focus();
+});
+
 $sortingOptionsItems = $(".sort-dropdown-options li");
 
+$groupSearchModal = $('#group-search-modal');
 $groupSearchGroupName = $("#group-search-group-name");
 $groupSearchName = $("#group-search-name");
 $groupSearchSource = $("#group-search-source");
 $groupSearchTag = $("#group-search-tag");
 $groupSearchGenderOptions = [$("#group-search-gender-1"), $("#group-search-gender-2"), $("#group-search-gender-3"), $("#group-search-gender-4")];
+
+$groupSearchModal.on('shown.bs.modal', function() {
+	$groupSearchGroupName.focus();
+});
 
 /**********************************************************************
  *****                  Select Screen Variables                   *****
