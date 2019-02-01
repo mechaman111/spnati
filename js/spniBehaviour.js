@@ -291,7 +291,7 @@ function fixupDialogue (str) {
         return (idx % 2) ? part :
             part.replace(/"([^"]*)"/g, "\u201c$1\u201d")
             .replace(fixupDialogueRE, function(match) {
-                return fixupDialogueSubstitutions[match]
+                return fixupDialogueSubstitutions[match.toLowerCase()]
             });
     }).join('');
 }
@@ -835,12 +835,11 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
  * provided tag.
  ************************************************************/
 Opponent.prototype.updateBehaviour = function(tags, opp) {
-	/* determine if the AI is dialogue locked */
-	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
-	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
-		/* their is restricted to this only */
-		//tag = players[player].forfeit[0];
-	//}
+    /* determine if the AI is dialogue locked */
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
+        /* their is restricted to this only */
+        tags = [this.forfeit[0]];
+    }
     
     if (!Array.isArray(tags)) {
         tags = [tags];

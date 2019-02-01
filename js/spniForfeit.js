@@ -21,9 +21,6 @@ var ORGASM_DELAY = 2000;
 var HEAVY_FIRST_ROUND = 6;
 var HEAVY_LAST_ROUND = 2;
  
-/* forfeit timers */
-var timers = [0, 0, 0, 0, 0];
- 
 /**********************************************************************
  *****                      Forfeit Functions                     *****
  **********************************************************************/
@@ -32,18 +29,15 @@ var timers = [0, 0, 0, 0, 0];
  * Sets the forfeit timer of the given player, with a random
  * offset, if applicable.
  ************************************************************/
-function setForfeitTimer (player) {
+Player.prototype.setForfeitTimer = function() {
 	// THE TIMER IS HARD SET RIGHT NOW
-	timers[player] = players[player].timer;
-    if (player == HUMAN_PLAYER) {
-      $gamePlayerCountdown.html(timers[player]);
-    }
+	this.timer = this.stamina;
 	
 	// THE STAGE IS HARD SET RIGHT NOW
-	players[player].stage += 1;
-	players[player].timeInStage = -1;
-	players[player].updateLabel();
-	players[player].updateFolder();
+	this.stage += 1;
+	this.timeInStage = -1;
+	this.updateLabel();
+	this.updateFolder();
 }
 
 /************************************************************
@@ -64,14 +58,14 @@ function startMasturbation (player) {
         PLAYER_START_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
     );
+
+    players[player].setForfeitTimer();
     
-	if (player == HUMAN_PLAYER) {
-		$gameClothingLabel.html("You're Masturbating...");
+    if (player == HUMAN_PLAYER) {
+        $gameClothingLabel.html("You're Masturbating...");
+        $gamePlayerCountdown.html(players[HUMAN_PLAYER].timer);
         $gamePlayerCountdown.show();
-		setForfeitTimer(player);
-	}
-    
-    setForfeitTimer(player);
+    }
     
 	/* allow progression */
 	endRound();
@@ -84,18 +78,18 @@ function startMasturbation (player) {
 function tickForfeitTimers () {
     console.log("Ticking forfeit timers...");
     
-    var masturbatingPlayers = [];
+    var masturbatingPlayers = [], heavyMasturbatingPlayers = [];
 
 	for (var i = 0; i < players.length; i++) {
-		if (players[i] && players[i].out && !players[i].finished && timers[i] == 0) {
+		if (players[i] && players[i].out && !players[i].finished && players[i].timer == 0) {
 			finishMasturbation(i);
 			return true;
 		}
 	}
 
     if (gamePhase != eGamePhase.STRIP) for (var i = 0; i < players.length; i++) {
-        if (players[i] && players[i].out && timers[i] == 1) {
-            timers[i] = 0;
+        if (players[i] && players[i].out && players[i].timer == 1) {
+            players[i].timer = 0;
             /* set the button state */
             $mainButton.html("Cumming...");
             $mainButton.attr('disabled', true);
@@ -141,14 +135,14 @@ function tickForfeitTimers () {
     }
 
     for (var i = 0; i < players.length; i++) {
-		if (players[i] && players[i].out && timers[i] > 1) {
-        	timers[i]--;
+        if (players[i] && players[i].out && players[i].timer > 1) {
+            players[i].timer--;
 
 			if (i == HUMAN_PLAYER) {
 				/* human player */
 				/* update the player label */
-				$gameClothingLabel.html("<b>'Finished' in "+timers[i]+" phases</b>");
-				$gamePlayerCountdown.html(timers[i]);	
+				$gameClothingLabel.html("<b>'Finished' in "+players[i].timer+" phases</b>");
+				$gamePlayerCountdown.html(players[i].timer);
 				masturbatingPlayers.push(i); // Double the chance of commenting on human player
 			} else {
 				/* AI player */
@@ -156,27 +150,34 @@ function tickForfeitTimers () {
 				// CHANGE THIS TO ACTIVATE ONLY IN THE LAST 4 TURNS
 				var randomChance = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
 				
-				if (randomChance > timers[i]-1) {
+				if (randomChance > players[i].timer-1) {
 					/* this player is now heavily masturbating */
 					players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-					players[i].updateBehaviour(PLAYER_HEAVY_MASTURBATING);
-                    players[i].commitBehaviourUpdate();
-					updateGameVisual(i);
 				}
 			}
 			masturbatingPlayers.push(i);
+            if (players[i].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
+                heavyMasturbatingPlayers.push(i);
+            }
         }
     }
-	
-	// Show a player masturbating while dealing or after the game, if there is one available
-	if (masturbatingPlayers.length > 0
-		&& ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
-		var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
+
+    if (heavyMasturbatingPlayers.length > 0) {
+        masturbatingPlayers = heavyMasturbatingPlayers;
+    }
+    // Show a player masturbating while dealing or after the game, if there is one available
+    if (masturbatingPlayers.length > 0
+        && ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
+        var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
+        var others_tags = [players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING];
+        if (players[playerToShow].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
+            others_tags.unshift(players[playerToShow].gender == eGender.MALE ? MALE_HEAVY_MASTURBATING : FEMALE_HEAVY_MASTURBATING);
+        }
         
         updateAllBehaviours(
             playerToShow,
             players[playerToShow].forfeit[0],
-            players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING
+            others_tags
         );
 	}
 	
@@ -189,7 +190,6 @@ function tickForfeitTimers () {
 function finishMasturbation (player) {
 	// HARD SET STAGE
 	players[player].stage += 1;
-	players[player].timeInStage = -1;
 	players[player].finished = true;
     players[player].forfeit = [PLAYER_FINISHED_MASTURBATING, CAN_SPEAK];
 	players[player].updateLabel();
@@ -201,6 +201,7 @@ function finishMasturbation (player) {
         PLAYER_FINISHED_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
     );
+	players[player].timeInStage = 0;
     
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
