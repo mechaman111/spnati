@@ -649,6 +649,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.stamina = Number($xml.find('timer').text());
             this.intelligence = $xml.find('intelligence');
 
+            /* The gender listed in meta.xml and behaviour.xml might differ
+             * (for example with gender-revealing characters)
+             * So assume behaviour.xml holds the 'definitive' starting gender
+             * for the character.
+             */
+            var startGender = $xml.find('gender').text();
+            if (startGender) {
+                this.gender = startGender;    
+            }
+
             this.default_costume = {
                 id: null,
                 labels: $xml.find('label'),
