@@ -216,6 +216,10 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private static string GetKey(string stage, string pose)
 		{
+			if (string.IsNullOrEmpty(stage))
+			{
+				return pose;
+			}
 			return string.Format("{0}-{1}", stage, pose);
 		}
 
@@ -303,6 +307,11 @@ namespace SPNATI_Character_Editor.Activities
 				row.Cells["ColStage"].Value = "0";
 				row.Cells["ColPose"].Value = pose.ImageKey;
 			}
+			else if (piecedKey.Length == 1)
+			{
+				row.Cells["ColStage"].Value = "";
+				row.Cells["ColPose"].Value = piecedKey[0];
+			}
 			else
 			{
 				row.Cells["ColStage"].Value = piecedKey[0];
@@ -359,9 +368,9 @@ namespace SPNATI_Character_Editor.Activities
 
 			string stage = row.Cells["ColStage"].Value?.ToString();
 			string pose = row.Cells["ColPose"].Value?.ToString();
-			if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
+			if (string.IsNullOrEmpty(pose))
 			{
-				MessageBox.Show("Stage and Pose must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Pose must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 			string data = row.Cells["ColData"].Value?.ToString();
