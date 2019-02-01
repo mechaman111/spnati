@@ -65,6 +65,26 @@ ae_flicker_anim = {
     ]
 }
 
+# Chihiro pose, then AE pose
+AE_TANDEM_POSES = {
+    'angry': ['angry', 'angry'],
+    'base': ['base', 'base'],
+    'happy': ['happy', 'relieved'],
+    'embarassed': ['embarassed', 'nervous'],
+    'nervous': ['nervous', 'embarassed'],
+    'excited': ['excited', 'happy'],
+    'relieved': ['relieved', 'relieved'],
+    'sad': ['sad', 'thinking-2'],
+    'shocked': ['shocked', 'angry'],
+    'shy': ['shy', 'thinking-1'],
+    'thinking-1': ['thinking-1', 'happy'],
+    'thinking-2': ['thinking-2', 'angry'],
+    'start': ['start', 'embarassed'],
+    'heavy-1': ['heavy-1', 'embarassed'],
+    'heavy-2': ['heavy-2', 'embarassed'],
+    'finish': ['finish', 'shocked'],
+}
+
 def dict_to_directive(in_def):
     animationElem = OrderedXMLElement('directive', init_attrs={
         'id': in_def['id'],
@@ -200,6 +220,13 @@ def main():
             
         if stage == 5 and emotion != 'strip':
             poses_elem.append(ae_pose('5-'+emotion, path))
+        elif stage in [6, 7, 8]:
+            chi_img, ae_img = AE_TANDEM_POSES[emotion]
+            
+            chi_img = Path('./{}-{}.png'.format(stage, chi_img))
+            ae_img = Path('./5-{}.png'.format(ae_img))
+
+            poses_elem.append(ae_tandem_pose('{}-{}'.format(stage, emotion), chi_img, ae_img))
     
     poses_elem.append(ae_tandem_pose('5-return', Path('./5-return.png'), Path('./5-shocked.png')))        
     poses_elem.append(ae_tandem_pose('5-strip', Path('./5-strip.png'), Path('./5-embarassed.png')))
@@ -229,7 +256,9 @@ def main():
                 elif tag == 'stripped':
                     for state_elem in case_elem.iter('state'):
                         state_elem.set('set-label', 'Alter Ego')
-                        
+        
+        if stage in ['5', '6', '7', '8']:            
+            for case_elem in stage_elem.iter('case'):
                 for state_elem in case_elem.iter('state'):
                     try:
                         img = state_elem.get('img')
