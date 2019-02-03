@@ -174,6 +174,16 @@ namespace SPNATI_Character_Editor.Controls
 			line.Direction = direction;
 			line.Location = location;
 
+			string ai = row.Cells["ColIntelligence"].Value?.ToString();
+			string size = row.Cells["ColSize"].Value?.ToString();
+			string label = row.Cells["ColLabel"].Value?.ToString();
+			string gender = row.Cells["ColGender"].Value?.ToString();
+
+			line.Intelligence = ai;
+			line.Size = size;
+			line.Label = label;
+			line.Gender = gender;
+
 			return line;
 		}
 
@@ -408,11 +418,12 @@ namespace SPNATI_Character_Editor.Controls
 				gridDialogue.EditingControl.Select();
 		}
 
-		public bool ShowSpeechBubbleColumns
+		public bool ShowAdvancedColumns
 		{
 			set
 			{
 				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
+				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = value;
 			}
 		}
 
@@ -492,6 +503,11 @@ namespace SPNATI_Character_Editor.Controls
 
 			DataGridViewCell locationCell = row.Cells["ColLocation"];
 			locationCell.Value = line.Location;
+
+			row.Cells["ColIntelligence"].Value = line.Intelligence;
+			row.Cells["ColSize"].Value = line.Size;
+			row.Cells["ColGender"].Value = line.Gender;
+			row.Cells["ColLabel"].Value = line.Label;
 		}
 
 		/// <summary>

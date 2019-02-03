@@ -261,9 +261,9 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
+		private void ckbShowAdvanced_CheckedChanged(object sender, EventArgs e)
 		{
-			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
+			this.gridDialogue.ShowAdvancedColumns = ckbShowAdvanced.Checked;
 		}
 		#endregion
 

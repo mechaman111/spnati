@@ -36,6 +36,10 @@
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarkerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColPerTarget = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ColGender = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColIntelligence = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.ColSize = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColDirection = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.ColLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -59,6 +63,10 @@
             this.ColMarker,
             this.ColMarkerValue,
             this.ColPerTarget,
+            this.ColGender,
+            this.ColLabel,
+            this.ColIntelligence,
+            this.ColSize,
             this.ColDirection,
             this.ColLocation,
             this.ColDelete});
@@ -121,6 +129,48 @@
 			this.ColPerTarget.Name = "ColPerTarget";
 			this.ColPerTarget.Width = 70;
 			// 
+			// ColGender
+			// 
+			this.ColGender.HeaderText = "Gender";
+			this.ColGender.Items.AddRange(new object[] {
+            "",
+            "female",
+            "male"});
+			this.ColGender.Name = "ColGender";
+			this.ColGender.Visible = false;
+			this.ColGender.Width = 80;
+			// 
+			// ColLabel
+			// 
+			this.ColLabel.HeaderText = "Label";
+			this.ColLabel.Name = "ColLabel";
+			this.ColLabel.Visible = false;
+			this.ColLabel.Width = 80;
+			// 
+			// ColIntelligence
+			// 
+			this.ColIntelligence.HeaderText = "AI";
+			this.ColIntelligence.Items.AddRange(new object[] {
+            "",
+            "bad",
+            "average",
+            "good"});
+			this.ColIntelligence.Name = "ColIntelligence";
+			this.ColIntelligence.Visible = false;
+			this.ColIntelligence.Width = 80;
+			// 
+			// ColSize
+			// 
+			this.ColSize.HeaderText = "Size";
+			this.ColSize.Items.AddRange(new object[] {
+            "",
+            "small",
+            "medium",
+            "large"});
+			this.ColSize.Name = "ColSize";
+			this.ColSize.Visible = false;
+			this.ColSize.Width = 80;
+			// 
 			// ColDirection
 			// 
 			this.ColDirection.HeaderText = "Arrow direction";
@@ -169,6 +219,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarkerValue;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPerTarget;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColGender;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColLabel;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColIntelligence;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ColSize;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ColDirection;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColLocation;
 		private System.Windows.Forms.DataGridViewButtonColumn ColDelete;

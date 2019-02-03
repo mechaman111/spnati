@@ -38,7 +38,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.lblAvailableVars = new System.Windows.Forms.Label();
 			this.cmdCopyAll = new System.Windows.Forms.Button();
-			this.ckbShowBubbleColumns = new System.Windows.Forms.CheckBox();
+			this.ckbShowAdvanced = new System.Windows.Forms.CheckBox();
 			this.cmdPasteAll = new System.Windows.Forms.Button();
 			this.gridDialogue = new SPNATI_Character_Editor.Controls.DialogueGrid();
 			this.tabNotes = new System.Windows.Forms.TabPage();
@@ -141,7 +141,7 @@ namespace SPNATI_Character_Editor.Activities
 			// 
 			this.tabDialogue.Controls.Add(this.lblAvailableVars);
 			this.tabDialogue.Controls.Add(this.cmdCopyAll);
-			this.tabDialogue.Controls.Add(this.ckbShowBubbleColumns);
+			this.tabDialogue.Controls.Add(this.ckbShowAdvanced);
 			this.tabDialogue.Controls.Add(this.cmdPasteAll);
 			this.tabDialogue.Controls.Add(this.gridDialogue);
 			this.tabDialogue.Location = new System.Drawing.Point(4, 22);
@@ -174,15 +174,15 @@ namespace SPNATI_Character_Editor.Activities
 			// 
 			// ckbShowBubbleColumns
 			// 
-			this.ckbShowBubbleColumns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ckbShowBubbleColumns.AutoSize = true;
-			this.ckbShowBubbleColumns.Location = new System.Drawing.Point(353, 6);
-			this.ckbShowBubbleColumns.Name = "ckbShowBubbleColumns";
-			this.ckbShowBubbleColumns.Size = new System.Drawing.Size(168, 17);
-			this.ckbShowBubbleColumns.TabIndex = 43;
-			this.ckbShowBubbleColumns.Text = "Show speech bubble columns";
-			this.ckbShowBubbleColumns.UseVisualStyleBackColor = true;
-			this.ckbShowBubbleColumns.CheckedChanged += new System.EventHandler(this.ckbShowSpeechBubbleColumns_CheckedChanged);
+			this.ckbShowAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ckbShowAdvanced.AutoSize = true;
+			this.ckbShowAdvanced.Location = new System.Drawing.Point(417, 6);
+			this.ckbShowAdvanced.Name = "ckbShowBubbleColumns";
+			this.ckbShowAdvanced.Size = new System.Drawing.Size(104, 17);
+			this.ckbShowAdvanced.TabIndex = 43;
+			this.ckbShowAdvanced.Text = "Show advanced";
+			this.ckbShowAdvanced.UseVisualStyleBackColor = true;
+			this.ckbShowAdvanced.CheckedChanged += new System.EventHandler(this.ckbShowAdvanced_CheckedChanged);
 			// 
 			// cmdPasteAll
 			// 
@@ -426,7 +426,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private System.Windows.Forms.SplitContainer splitDialogue;
 		private System.Windows.Forms.GroupBox grpCase;
-		private System.Windows.Forms.CheckBox ckbShowBubbleColumns;
+		private System.Windows.Forms.CheckBox ckbShowAdvanced;
 		private Controls.DialogueGrid gridDialogue;
 		private System.Windows.Forms.Label lblHelpText;
 		private System.Windows.Forms.Button cmdPasteAll;

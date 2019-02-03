@@ -28,6 +28,22 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("location")]
 		public string Location;
 
+		[DefaultValue("")]
+		[XmlAttribute("set-gender")]
+		public string Gender;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-intelligence")]
+		public string Intelligence;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-size")]
+		public string Size;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-label")]
+		public string Label;
+
 		[XmlIgnore]
 		public string ImageExtension;
 
@@ -60,6 +76,10 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (Marker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Direction ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Location ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Gender ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Intelligence ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Size ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Label ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
