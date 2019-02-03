@@ -8,6 +8,7 @@ namespace SPNATI_Character_Editor.Providers
 	public class CharacterProvider : IRecordProvider<Character>
 	{
 		private Costume _skinContext;
+		private Character _characterContext;
 
 		public string GetLookupCaption()
 		{
@@ -29,21 +30,30 @@ namespace SPNATI_Character_Editor.Providers
 			c.FirstName = key;
 			c.Label = key;
 			c.FolderName = key;
-			c.Metadata.Writer = Config.UserName;
 
-			//Add in some barebones data to be at the minimal functional level
-			c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });
-			c.Wardrobe.Add(new Clothing() { FormalName = "First Layer", GenericName = "first layer", Position = "upper", Type = "important" });
-			c.Behavior.EnsureDefaults(c);
+			if (_characterContext == null)
+			{
+				//adding a new character
+				c.Metadata.Writer = Config.UserName;
 
-			Serialization.ExportCharacter(c);
-			CharacterDatabase.Add(c);
+				//Add in some barebones data to be at the minimal functional level
+				c.Wardrobe.Add(new Clothing() { FormalName = "Final Layer", GenericName = "final layer", Position = "lower", Type = "important" });
+				c.Wardrobe.Add(new Clothing() { FormalName = "First Layer", GenericName = "first layer", Position = "upper", Type = "important" });
+				c.Behavior.EnsureDefaults(c);
 
-			//Add to the listing under testing status
-			c.Metadata.Enabled = true;
-			Listing.Instance.Characters.Add(new Opponent(c.FolderName, OpponentStatus.Testing));
-			Serialization.ExportListing(Listing.Instance);
+				Serialization.ExportCharacter(c);
+				CharacterDatabase.Add(c);
 
+				//Add to the listing under testing status
+				c.Metadata.Enabled = true;
+				Listing.Instance.Characters.Add(new Opponent(c.FolderName, OpponentStatus.Testing));
+				Serialization.ExportListing(Listing.Instance);
+			}
+			else
+			{
+				//making  a placeholder for this session
+				CharacterDatabase.Add(c);
+			}
 			return c;
 		}
 
@@ -84,6 +94,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
+			_characterContext = context as Character;
 			_skinContext = context as Costume;
 		}
 	}

@@ -90,7 +90,15 @@ namespace SPNATI_Character_Editor.Activities
 			images.AddRange(_imageLibrary.GetImages(0));
 			if (Config.UsePrefixlessImages)
 			{
-				images.AddRange(_imageLibrary.GetImages(-1));
+				string prefix = Config.PrefixFilter;
+				foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+				{
+					string file = img.Name;
+					if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+					{
+						images.Add(img);
+					}
+				}
 			}
 			cboDefaultPic.DataSource = images;
 			_populatingImages = false;

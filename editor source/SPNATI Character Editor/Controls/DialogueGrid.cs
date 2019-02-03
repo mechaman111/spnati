@@ -195,7 +195,15 @@ namespace SPNATI_Character_Editor.Controls
 				images.AddRange(_imageLibrary.GetImages(0));
 				if (Config.UsePrefixlessImages)
 				{
-					images.AddRange(_imageLibrary.GetImages(-1));
+					string prefix = Config.PrefixFilter;
+					foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+					{
+						string file = img.Name;
+						if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+						{
+							images.Add(img);
+						}
+					}
 				}
 				foreach (var image in images)
 				{
@@ -207,7 +215,15 @@ namespace SPNATI_Character_Editor.Controls
 				images.AddRange(_imageLibrary.GetImages(stageId));
 				if (Config.UsePrefixlessImages)
 				{
-					images.AddRange(_imageLibrary.GetImages(-1));
+					string prefix = Config.PrefixFilter;
+					foreach (CharacterImage img in _imageLibrary.GetImages(-1))
+					{
+						string file = img.Name;
+						if (string.IsNullOrEmpty(prefix) || !file.StartsWith(prefix))
+						{
+							images.Add(img);
+						}
+					}
 				}
 
 				foreach (var image in images)
@@ -352,7 +368,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridDialogue_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
 			DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-			row.Cells["ColDelete"].ToolTipText = "Delete row";
+			row.Cells["ColDelete"].ToolTipText = "Delete line";
 		}
 
 		private void gridDialogue_CellContentClick(object sender, DataGridViewCellEventArgs e)

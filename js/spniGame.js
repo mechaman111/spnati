@@ -62,6 +62,13 @@ $debugButtons = [$("#debug-button-0"),
 /* restart modal */
 $restartModal = $("#restart-modal");
 
+gameDisplays = [
+    new GameScreenDisplay(1),
+    new GameScreenDisplay(2),
+    new GameScreenDisplay(3),
+    new GameScreenDisplay(4)
+]
+
 /**********************************************************************
  *****                   Game Screen Variables                    *****
  **********************************************************************/
@@ -122,16 +129,10 @@ function loadGameScreen () {
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
+        gameDisplays[i-1].reset(players[i]);
+        
         if (players[i]) {
             players[i].current = 0;
-            $gameOpponentAreas[i-1].show();
-            $gameImages[i-1].css('height', players[i].scale + '%');
-            $gameLabels[i].removeClass("current loser tied");
-            clearHand(i);
-        }
-        else {
-            $gameOpponentAreas[i-1].hide();
-            $gameBubbles[i-1].hide();
         }
     }
     $gameLabels[HUMAN_PLAYER].removeClass("loser tied");
@@ -189,46 +190,7 @@ function loadGameScreen () {
  * Updates all of the main visuals on the main game screen.
  ************************************************************/
 function updateGameVisual (player) {
-    /* update all opponents */
-    if (players[player]) {
-        if (players[player].chosenState) {
-            var chosenState = players[player].chosenState;
-
-            /* update dialogue */
-            $gameDialogues[player-1].html(fixupDialogue(chosenState.dialogue));
-            
-            /* update image */
-            $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
-			$gameImages[player-1].show()
-
-            /* update label */
-            $gameLabels[player].html(players[player].label.initCap());
-
-            /* check silence */
-            if (!chosenState.dialogue) {
-                $gameBubbles[player-1].hide();
-            }
-            else {
-                $gameBubbles[player-1].show();
-                $gameBubbles[player-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+chosenState.direction);
-                bubbleArrowOffsetRules[player-1][0].style.left = chosenState.location;
-                bubbleArrowOffsetRules[player-1][1].style.top = chosenState.location;
-            }
-        } else {
-            /* hide their dialogue bubble */
-            $gameDialogues[player-1].html("");
-            $gameBubbles[player-1].hide();
-        }
-    }
-    else {
-        $gameDialogues[player-1].html("");
-        $gameBubbles[player-1].hide();
-
-		$gameImages[player-1].hide();
-    }
-    if (showDebug) {
-        appendRepeats(player);
-    }
+    gameDisplays[player-1].update(players[player]);
 }
 
 /************************************************************
@@ -722,7 +684,7 @@ function handleGameOver() {
 	/* determine true end and identify winner (even though endRound() did that too) */
 	if (!players.some(function(p, i) {
 		if (!p.out) winner = p;
-		return timers[i] > 0;
+		return p.out && !p.finished;
 	})) {
 		/* true end */
         updateAllBehaviours(winner.slot, GAME_OVER_VICTORY, GAME_OVER_DEFEAT);
@@ -730,6 +692,9 @@ function handleGameOver() {
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
 	} else {
+		if (endWaitDisplay == 0) {
+			players.forEach(function(p) { p.timeInStage++; });
+		}
 		allowProgression(eGamePhase.END_LOOP);
 	}
 }
@@ -762,7 +727,7 @@ function allowProgression (nextPhase) {
 		nextPhase = gamePhase;
 	}
 	
-    if (AUTO_FORFEIT && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && timers[HUMAN_PLAYER] > 1) {
+    if (AUTO_FORFEIT && nextPhase != eGamePhase.GAME_OVER && players[HUMAN_PLAYER].out && players[HUMAN_PLAYER].timer > 1) {
         timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
     } else if (AUTO_ENDING && nextPhase != eGamePhase.GAME_OVER && (players[HUMAN_PLAYER].finished || (!players[HUMAN_PLAYER].out && gameOver))) {
         /* Human is finished or human is the winner */
@@ -772,7 +737,7 @@ function allowProgression (nextPhase) {
         actualMainButtonState = false;
     }
 
-	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && timers[HUMAN_PLAYER] == 1 && gamePhase != eGamePhase.STRIP) {
+	if (players[HUMAN_PLAYER].out && !players[HUMAN_PLAYER].finished && players[HUMAN_PLAYER].timer == 1 && gamePhase != eGamePhase.STRIP) {
 		$mainButton.html("Cum!");
 	} else if (nextPhase[0]) {
 		$mainButton.html(nextPhase[0]);

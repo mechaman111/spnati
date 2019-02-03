@@ -30,7 +30,7 @@
 		{
 			this.txtValue = new System.Windows.Forms.TextBox();
 			this.cmdBrowse = new System.Windows.Forms.Button();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
 			this.SuspendLayout();
 			// 
 			// txtValue
@@ -55,7 +55,7 @@
 			// 
 			// openFileDialog1
 			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.Filter = "";
 			// 
 			// ImageFileSelectControl
 			// 
@@ -74,6 +74,6 @@
 
 		private System.Windows.Forms.TextBox txtValue;
 		private System.Windows.Forms.Button cmdBrowse;
-		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private CharacterImageDialog openFileDialog1;
 	}
 }

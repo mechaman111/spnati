@@ -39,7 +39,6 @@
 			this.valValue.Name = "valValue";
 			this.valValue.Size = new System.Drawing.Size(576, 20);
 			this.valValue.TabIndex = 1;
-			this.valValue.ValueChanged += new System.EventHandler(this.valValue_ValueChanged);
 			// 
 			// NumericControl
 			// 

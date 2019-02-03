@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
-		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1" };
+		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4" };
 
 		/// <summary>
 		/// Current Version
@@ -249,6 +249,15 @@ namespace SPNATI_Character_Editor
 			get { return !GetBoolean(Settings.HideNoPrefix); }
 			set { Set(Settings.HideNoPrefix,! value); }
 		}
+
+		/// <summary>
+		/// Filter of prefixes to hide from dialogue poses
+		/// </summary>
+		public static string PrefixFilter
+		{
+			get { return GetString(Settings.PrefixFilter); }
+			set { Set(Settings.PrefixFilter, value); }
+		}
 	}
 
 	public static class Settings
@@ -260,6 +269,7 @@ namespace SPNATI_Character_Editor
 		public static readonly string AutoSaveInterval = "autosave";
 		public static readonly string DisableIntellisense = "nointellisense";
 		public static readonly string HideNoPrefix = "hidenoprefix";
+		public static readonly string PrefixFilter = "prefixfilter";
 
 		#region Settings that probably only make sense for debugging
 		public static readonly string LoadOnlyLastCharacter = "loadlast";

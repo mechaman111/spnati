@@ -453,7 +453,12 @@ namespace Desktop.CommonControls
 							break;
 						}
 					}
-				}				
+					for (int i = 0; i < pnlRecords.Controls.Count; i++)
+					{
+						Control rowCtl = pnlRecords.Controls[i];
+						rowCtl.TabIndex = pnlRecords.Controls.Count - i - 1;
+					}
+				}
 			}
 
 			return ctl;
@@ -582,6 +587,21 @@ namespace Desktop.CommonControls
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
 			PropertyRecord record = item.Tag as PropertyRecord;
 			AddControl(record);
+		}
+
+		/// <summary>
+		/// Runs a filter over added rows to hide and show them
+		/// </summary>
+		/// <param name="filter"></param>
+		public void RunFilter(Func<PropertyRecord, object, object, bool> filter)
+		{
+			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+			{
+				foreach (PropertyTableRow row in kvp.Value.Values)
+				{
+					row.Visible = filter(row.Record, Data, Context);
+				}
+			}
 		}
 	}
 }

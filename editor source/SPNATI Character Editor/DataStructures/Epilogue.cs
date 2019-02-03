@@ -78,6 +78,11 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public void OnBeforeSerialize()
+		{
+			
+		}
+
 		public void OnAfterDeserialize()
 		{
 			//Convert left, top, etc. to percentages since I don't feel like making an edit control that can handle those right now
@@ -88,7 +93,7 @@ namespace SPNATI_Character_Editor
 					directive.PivotX = ConvertPivot(directive.PivotX);
 					directive.PivotY = ConvertPivot(directive.PivotY);
 				}
-			}
+			}			
 		}
 
 		private static string ConvertPivot(string pivot)

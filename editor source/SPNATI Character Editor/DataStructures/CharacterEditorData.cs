@@ -31,11 +31,25 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public List<int> HiddenCases = new List<int>();
 
+		[XmlArray("responses")]
+		[XmlArrayItem("response")]
+		/// <summary>
+		/// Lines this character has responded to already
+		/// </summary>
+		public List<SituationResponse> Responses = new List<SituationResponse>();
+
 		[XmlElement("nextId")]
 		/// <summary>
 		/// Next unique ID to assign
 		/// </summary>
 		public int NextId;
+
+		[XmlArray("poses")]
+		[XmlArrayItem("pose")]
+		/// <summary>
+		/// Poses available to a stage that don't meet follow prefix conventions
+		/// </summary>
+		public List<CrossStagePose> Poses = new List<CrossStagePose>();
 
 		/// <summary>
 		/// Deferred initialization of things that aren't part of serialization and don't need to exist until the character's lines are being worked on
@@ -71,6 +85,32 @@ namespace SPNATI_Character_Editor
 		{
 			Owner = character.FolderName;
 			_character = character;
+			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
+		}
+
+		private void Behavior_CaseRemoved(object sender, Case deletedCase)
+		{
+			//delete anything using this case
+			if (deletedCase.Id > 0)
+			{
+				HiddenCases.Remove(deletedCase.Id);
+				for (int i = Responses.Count - 1; i >= 0; i--)
+				{
+					if (Responses[i].Id == deletedCase.Id)
+					{
+						Responses.RemoveAt(i);
+						break;
+					}
+				}
+				for (int i = NoteworthySituations.Count - 1; i >= 0; i--)
+				{
+					if (NoteworthySituations[i].Id == deletedCase.Id)
+					{
+						NoteworthySituations.RemoveAt(i);
+						break;
+					}
+				}
+			}
 		}
 
 		public Situation MarkNoteworthy(Case c)
@@ -86,6 +126,10 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
+			foreach (CrossStagePose pose in Poses)
+			{
+				pose.OnBeforeSerialize();
+			}
 		}
 
 		public void OnAfterDeserialize()
@@ -93,6 +137,11 @@ namespace SPNATI_Character_Editor
 			foreach (Situation c in NoteworthySituations)
 			{
 				c.OnAfterDeserialize();
+			}
+
+			foreach (CrossStagePose pose in Poses)
+			{
+				pose.OnAfterDeserialize();
 			}
 		}
 
@@ -143,7 +192,56 @@ namespace SPNATI_Character_Editor
 		/// <param name="c"></param>
 		private void AssignId(Case c)
 		{
+			if (c.Id > 0) { return; }
 			c.Id = ++NextId;
+		}
+
+		/// <summary>
+		/// Gets whether the character has responded to a particular case before
+		/// </summary>
+		/// <param name="opponent"></param>
+		/// <param name="opponentCase"></param>
+		/// <returns></returns>
+		public bool HasResponse(Character opponent, Case opponentCase)
+		{
+			if (opponentCase.Id == 0)
+			{
+				return false;
+			}
+			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == opponentCase.Id);
+			return response != null;
+		}
+
+		public Case GetResponse(Character opponent, Case opponentCase)
+		{
+			if (opponentCase.Id == 0)
+			{
+				return null;
+			}
+			SituationResponse response = Responses.Find(r => r.Opponent == opponent.FolderName && r.OpponentId == opponentCase.Id);
+			if (response != null)
+			{
+				foreach (Case c in _character.Behavior.GetWorkingCases())
+				{
+					if (c.Id == response.Id)
+					{
+						return c;
+					}
+				}
+			}
+			return null;
+		}
+
+		public void MarkResponse(Character opponent, Case opponentCase, Case response)
+		{
+			if (opponentCase.Id == 0 || HasResponse(opponent, opponentCase))
+			{
+				return;
+			}
+
+			AssignId(response);
+			SituationResponse situationResponse = new SituationResponse(response, opponent, opponentCase);
+			Responses.Add(situationResponse);
 		}
 	}
 
@@ -211,6 +309,31 @@ namespace SPNATI_Character_Editor
 					LegacyCase.AlsoPlayingStage = null;
 				}
 			}
+		}
+	}
+
+	public class SituationResponse
+	{
+		[XmlAttribute("id")]
+		public int Id;
+
+		[XmlAttribute("opponent")]
+		public string Opponent;
+
+		[XmlAttribute("opponentId")]
+		public int OpponentId;
+
+		public SituationResponse() { }
+		public SituationResponse(Case response, Character opponent, Case opponentCase)
+		{
+			Id = response.Id;
+			Opponent = opponent.FolderName;
+			OpponentId = opponentCase.Id;
+		}
+
+		public override string ToString()
+		{
+			return $"{Opponent}-{OpponentId}";
 		}
 	}
 }

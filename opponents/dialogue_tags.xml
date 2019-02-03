@@ -5,19 +5,19 @@
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says after they've been selected if the new triggers aren't used</defaultText>
   </trigger>
-  <trigger tag="selected" optional="true" start="0" end="0" label="Selected" description="When added to the selection screen" group="0" order="0">
+  <trigger tag="selected" optional="true" start="0" end="0" label="Selected" oncePerStage="true" description="When added to the selection screen" group="0" order="0">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says after they've been selected</defaultText>
   </trigger>
-  <trigger tag="opponent_selected" optional="true" start="0" end="0" label="Opponent Selected" description="When another character is added to the selection screen" group="0" order="0">
+  <trigger tag="opponent_selected" optional="true" start="0" end="0" hasTarget="true" label="Opponent Selected" description="When another character is added to the selection screen" group="0" order="0">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says after another character has been (individually) selected</defaultText>
   </trigger>
-  <trigger tag="game_start" optional="true" start="0" end="0" label="Game start" description="When the game starts" group="0" order="1">
+  <trigger tag="game_start" optional="true" start="0" end="0" label="Game start" oncePerStage="true" description="When the game starts" group="0" order="1">
     <defaultImage>happy</defaultImage>
     <defaultText>This is what the character says when the game starts</defaultText>
   </trigger>
-  <trigger tag="stripped" start="1" end="8" label="After Stripping" description="Immediately after removing the previous stage's clothing" group="2" order="5" previousStage="true">
+  <trigger tag="stripped" start="1" end="8" label="After Stripping" oncePerStage="true" description="Immediately after removing the previous stage's clothing" group="2" order="5" previousStage="true">
     <vars>
       <string>clothing</string>
     </vars>
@@ -433,28 +433,35 @@
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a male character is masturbating.</defaultText>
   </trigger>
-  <trigger tag="male_finished_masturbating" start="0" end="10" label="Finished (Male)" hasTarget="true" gender="male" description="A male opponent has just finished masturbating" group="9" order="3">
+  <trigger tag="male_heavy_masturbating" start="0" end="10" label="Masturbating (Heavy, Male)" optional="true" hasTarget="true" gender="male" description="A male opponent is masturbating heavily" group="9" order="3">
+    <vars>
+      <string>name</string>
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says while a male character is close to cumming.</defaultText>
+  </trigger>
+  <trigger tag="male_finished_masturbating" start="0" end="10" label="Finished (Male)" hasTarget="true" gender="male" description="A male opponent has just finished masturbating" group="9" order="4">
     <vars>
       <string>name</string>
     </vars>
     <defaultImage>shocked</defaultImage>
     <defaultText>What the character says when a male character "finishes" masturbating.</defaultText>
   </trigger>
-  <trigger tag="female_must_masturbate" start="0" end="10" label="Must Masturbate (Female)" hasTarget="true" gender="female" description="A female opponent must start masturbating" group="9" order="4" spacer="true">
+  <trigger tag="female_must_masturbate" start="0" end="10" label="Must Masturbate (Female)" hasTarget="true" gender="female" description="A female opponent must start masturbating" group="9" order="5" spacer="true">
     <vars>
       <string>name</string>
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a female character has lost a hand while nude, and must masturbate.</defaultText>
   </trigger>
-  <trigger tag="female_start_masturbating" start="0" end="10" label="Start Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent has started masturbating" group="9" order="5">
+  <trigger tag="female_start_masturbating" start="0" end="10" label="Start Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent has started masturbating" group="9" order="6">
     <vars>
       <string>name</string>
     </vars>
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says when a female character has started masturbating.</defaultText>
   </trigger>
-  <trigger tag="female_masturbating" start="0" end="10" label="Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent is masturbating" group="9" order="6">
+  <trigger tag="female_masturbating" start="0" end="10" label="Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent is masturbating" group="9" order="7">
     <vars>
       <string>name</string>
 
@@ -462,7 +469,15 @@
     <defaultImage>horny</defaultImage>
     <defaultText>What the character says while a female character is masturbating.</defaultText>
   </trigger>
-  <trigger tag="female_finished_masturbating" start="0" end="10" label="Finished (Female)" hasTarget="true" gender="female" description="A female opponent must just finished masturbating" group="9" order="7">
+  <trigger tag="female_heavy_masturbating" start="0" end="10" label="Masturbating (Heavy, Female)" hasTarget="true" optional="true" gender="female" description="A female opponent is close to cumming" group="9" order="8">
+    <vars>
+      <string>name</string>
+
+    </vars>
+    <defaultImage>horny</defaultImage>
+    <defaultText>What the character says while a female character is masturbating heavily.</defaultText>
+  </trigger>
+  <trigger tag="female_finished_masturbating" start="0" end="10" label="Finished (Female)" hasTarget="true" gender="female" description="A female opponent must just finished masturbating" group="9" order="9">
     <vars>
       <string>name</string>
     </vars>

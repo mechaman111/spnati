@@ -130,22 +130,40 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (scene != null)
 			{
-				tsAddDirective.Enabled = true;
-				tsAddKeyframe.Enabled = false;
+				EnableMenu(tsAddDirective, !scene.Transition);
+				EnableMenu(tsAddKeyframe, false);
 			}
 			else if (directive != null)
 			{
-				tsAddDirective.Enabled = true;
+				EnableMenu(tsAddDirective, true);
 				DirectiveDefinition def = Definitions.Instance.Get<DirectiveDefinition>(directive.DirectiveType);
-				tsAddKeyframe.Enabled = (def != null && def.IsAnimatable);
+				EnableMenu(tsAddKeyframe, def != null && def.IsAnimatable);
 			}
 			else if (keyframe != null)
 			{
-				tsAddDirective.Enabled = false;
-				tsAddKeyframe.Enabled = true;
+				EnableMenu(tsAddDirective, false);
+				EnableMenu(tsAddKeyframe, true);
 			}
 
 			AfterSelect?.Invoke(this, new SceneTreeEventArgs(node));
+		}
+
+		/// <summary>
+		/// Enables a menu and all items within since disabling the top-level menu doesn't disable shortcuts of sub-items.
+		/// </summary>
+		/// <param name="menu"></param>
+		/// <param name="enabled"></param>
+		private void EnableMenu(ToolStripItem menu, bool enabled)
+		{
+			menu.Enabled = enabled;
+			ToolStripDropDownItem dropDownItem = menu as ToolStripDropDownItem;
+			if (dropDownItem != null)
+			{
+				foreach (ToolStripItem item in dropDownItem.DropDownItems)
+				{
+					EnableMenu(item, enabled);
+				}
+			}
 		}
 
 		private void TreeScenes_KeyDown(object sender, KeyEventArgs e)
@@ -177,6 +195,11 @@ namespace SPNATI_Character_Editor.Controls
 			AddScene();
 		}
 
+		private void tsAddTransition_Click(object sender, EventArgs e)
+		{
+			AddSceneTransition();
+		}
+
 		private void TsAddKeyframe_Click(object sender, EventArgs e)
 		{
 			AddKeyframe();
@@ -206,7 +229,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			TreeNode node = treeScenes.SelectedNode;
 			if (node == null) { return; }
-			string nodeType = (node.Tag is Scene ? "scene" : node.Tag is Directive ? "directive" : "keyframe");
+			string nodeType = (node.Tag is Scene ? (((Scene)node.Tag).Transition ? "transition" : "scene") : node.Tag is Directive ? "directive" : "keyframe");
 			if (MessageBox.Show($"Are you sure you want to remove this {nodeType}?", $"Remove {nodeType}", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 			{
 				return;
@@ -275,6 +298,14 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				Scene scene = targetNode.Tag as Scene;
+				if (scene != null && scene.Transition && draggingDirective)
+				{
+					//can't drag things into a transition
+					e.Effect = DragDropEffects.None;
+					lblDragger.Visible = false;
+					return;
+				}
 				e.Effect = DragDropEffects.Move;
 			}
 
@@ -337,6 +368,9 @@ namespace SPNATI_Character_Editor.Controls
 					}
 					else if (!targetDirective)
 					{
+						Scene scene = targetNode.Tag as Scene;
+						if (scene.Transition) { return; }
+
 						//insert at start of target scene
 						MoveDirectiveNode(targetNode, dragNode, 0);
 					}
@@ -550,6 +584,32 @@ namespace SPNATI_Character_Editor.Controls
 			treeScenes.SelectedNode = node;
 		}
 
+		private void AddSceneTransition()
+		{
+			Scene scene = GetSelectedScene();
+
+			Scene transition = new Scene(true)
+			{
+				Transition = true
+			};
+			TreeNode node = new TreeNode(transition.ToString());
+			_nodes[transition] = node;
+			node.Tag = transition;
+
+			if (scene != null)
+			{
+				int index = _epilogue.Scenes.IndexOf(scene);
+				treeScenes.Nodes.Insert(index + 1, node);
+				_epilogue.Scenes.Insert(index + 1, transition);
+			}
+			else
+			{
+				_epilogue.Scenes.Add(transition);
+				treeScenes.Nodes.Add(node);
+			}
+			treeScenes.SelectedNode = node;
+		}
+
 		private void AddDirective(string type)
 		{
 			Scene scene = GetSelectedScene();
@@ -608,6 +668,16 @@ namespace SPNATI_Character_Editor.Controls
 					directive.Y = "0";
 					directive.Width = "20%";
 					directive.Text = "New text";
+					break;
+				case "emitter":
+					directive.Id = id;
+					directive.X = "0";
+					directive.Y = "0";
+					directive.PivotX = "50%";
+					directive.PivotY = "50%";
+					directive.Rate = "1";
+					directive.StartAlpha = "100";
+					directive.EndAlpha = "0";
 					break;
 			}
 		}
@@ -898,6 +968,31 @@ namespace SPNATI_Character_Editor.Controls
 			tsCopy_Click(sender, e);
 			tsPaste_Click(sender, e);
 			_clipboard = clipboard;
+		}
+
+		private void tsLock_Click(object sender, EventArgs e)
+		{
+			TreeNode selectedNode = treeScenes.SelectedNode;
+			if (selectedNode == null) { return; }
+			Scene scene = selectedNode.Tag as Scene;
+			if (scene != null)
+			{
+				if (!scene.Transition)
+				{
+					scene.Locked = !scene.Locked;
+					UpdateNode(scene);
+				}
+				return;
+			}
+			Directive directive = selectedNode.Tag as Directive;
+			if (directive != null)
+			{
+				if (directive.DirectiveType == "sprite" || directive.DirectiveType == "emitter" || directive.DirectiveType == "text")
+				{
+					directive.Locked = !directive.Locked;
+					UpdateNode(directive);
+				}
+			}
 		}
 	}
 

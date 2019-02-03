@@ -111,11 +111,11 @@ namespace SPNATI_Character_Editor.EditControls
 			if (property == "Background")
 			{
 				EpilogueContext context = Context as EpilogueContext;
-				Character character = context?.Character;
+				ISkin character = context?.Character;
 				string file = GetBindingValue(property)?.ToString();
 				if (!string.IsNullOrEmpty(file) && character != null)
 				{
-					file = Path.Combine(Config.GetRootDirectory(character), file);
+					file = Path.Combine(character.GetDirectory(), file);
 					if (File.Exists(file))
 					{
 						using (Bitmap bmp = new Bitmap(file))

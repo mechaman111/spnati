@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls.PropertyControls
 {
 	public partial class TextControl : PropertyEditControl
 	{
+		private string _validatorMethodName;
+
 		public TextControl()
 		{
 			InitializeComponent();
@@ -14,6 +17,19 @@ namespace Desktop.CommonControls.PropertyControls
 		{
 			TextAttribute attrib = parameters as TextAttribute;
 			txtValue.Multiline = attrib.Multiline;
+			_validatorMethodName = attrib.Validator;
+		}
+
+		private void AddHandlers()
+		{
+			txtValue.TextChanged += txtValue_TextChanged;
+			txtValue.Validating += TxtValue_Validating;
+		}
+
+		private void RemoveHandlers()
+		{
+			txtValue.TextChanged -= txtValue_TextChanged;
+			txtValue.Validating -= TxtValue_Validating;
 		}
 
 		protected override void OnBoundData()
@@ -33,11 +49,14 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 			}
 			txtValue.Text = GetValue()?.ToString();
+			AddHandlers();
 		}
 
 		public override void Clear()
 		{
+			RemoveHandlers();
 			txtValue.Text = "";
+			AddHandlers();
 			Save();
 		}
 
@@ -50,6 +69,28 @@ namespace Desktop.CommonControls.PropertyControls
 		{
 			Save();
 		}
+
+		private void TxtValue_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (!string.IsNullOrEmpty(_validatorMethodName))
+			{
+				MethodInfo mi = Data.GetType().GetMethod(_validatorMethodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+				if (mi != null)
+				{
+					Func<string, object, string> filter = (Func<string, object, string>)Delegate.CreateDelegate(typeof(Func<string, object, string>), Data, mi);
+					string msg = filter(txtValue.Text, Context);
+					if (!string.IsNullOrEmpty(msg))
+					{
+						e.Cancel = true;
+						error.SetError(txtValue, msg);
+					}
+					else
+					{
+						error.SetError(txtValue, "");
+					}
+				}
+			}
+		}
 	}
 
 	public class TextAttribute : EditControlAttribute
@@ -60,6 +101,7 @@ namespace Desktop.CommonControls.PropertyControls
 		}
 
 		public bool Multiline;
+		public string Validator;
 	}
 
 	public interface IAutoCompleteList

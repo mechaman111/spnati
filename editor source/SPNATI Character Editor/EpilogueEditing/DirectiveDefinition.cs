@@ -9,10 +9,10 @@ namespace SPNATI_Character_Editor
 		/// Which properties can be set in this directive
 		/// </summary>
 		public HashSet<string> AllowedProperties = new HashSet<string>();
-		public HashSet<string> RequiredProperties = new HashSet<string>();
 		public HashSet<string> RequiredAnimatedProperties = new HashSet<string>();
-
 		public bool IsAnimatable;
+
+		public bool FilterPropertiesById;
 
 		/// <summary>
 		/// Gets whether a particular property is allowed for this directive
@@ -22,16 +22,6 @@ namespace SPNATI_Character_Editor
 		public bool AllowsProperty(string prop)
 		{
 			return AllowedProperties.Contains(prop);
-		}
-
-		/// <summary>
-		/// Gets whether a particular property is required
-		/// </summary>
-		/// <param name="prop"></param>
-		/// <returns></returns>
-		public bool RequiresProperty(string prop)
-		{
-			return RequiredProperties.Contains(prop);
 		}
 
 		/// <summary>

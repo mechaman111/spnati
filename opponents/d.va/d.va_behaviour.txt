@@ -1,30 +1,3 @@
-# The following xml is for both D.Va's regular and Cruiser image sets. As Cruiser D.Va mostly has D.Va's regular dialogue, this will keep them synchronized.
-# When generating her xml from this file, please do so twice. The second time you generate, follow these steps:
-
-##1. Uncomment the following tag. The game will look for this repeatedly when deciding whether to play Cruiser lines:
-#tag=d.va_cruiser
-
-##2. Uncomment the following clothing and start lines and DELETE the original ones further below.
-#clothes=Gloves,gloves,extra,other,plural
-#clothes=Boots,boots,extra,other,plural
-#clothes=Headphones,headphones,extra,other,plural
-#clothes=Jeans and shirt,jeans and shirt,major,other,plural
-#clothes=Bra,bra,important,upper
-#clothes=Panties,panties,important,lower,plural
-#start=0-peaceside,What's happenin', Daddio?
-#selected=peaceside,What's happenin', Daddio?
-#game_start=calm,Wow, nice comp. This is gonna be easy!
-#game_start=warpaint,Makeup? Nuh-uh! This is <i>warpaint</i>!
-#game_start=awkward,Oh, a fan, huh? Oh, well, who can blame you?
-#game_start=excited,Oh, by the way, I know I say "NERF THIS" a lot. Please don't <i>actually</i> "NERF THIS", okay?
-#game_start=riveting_cruiser,I can do it!
-
-##3. Generate the xml to go with her Cruiser folder.
-
-##4. Undo steps 1 and 2 for this document.
-
-
-
 #required for behaviour.xml
 first=D.Va
 last=
@@ -83,9 +56,11 @@ release=49
 
 
 marker=d.va_accuses_cheating,public,Hana has multiple lines which accuse other players of cheating.
+marker=d.va_doritos,public,D.Va has a body too perfect for snack foods.
 marker=d.va_kicks_butt_without_shoes,public,Hana doesn't need shoes to kick your butt.
 marker=d.va_high_score,public,As a gamer, Hana likes getting a high score.
 marker=d.va_lucio_playing,public,Hana heard that Lucio is playing at "Inner City Spectacle" tonight.
+marker=d.va_stripping_party,public,Hana is getting into the "stripping party".
 marker=d.va_needs_a_hug,public,Some characters react to Hana saying she needs a hug via Hana using an alsoPlaying. This marker will replace that method in the future.
 marker=d.va_noobs,public,Hana can sometimes call other players "noobs".
 marker=d.va_second_place,private,D.Va must_masturbate when only two players are left, meaning she placed second.
@@ -109,7 +84,7 @@ marker=d.va_mari_art,public,
 clothes=Gloves,gloves,extra,other,plural
 clothes=Boots,boots,extra,other,plural
 clothes=Headphones,headphones,extra,other,plural
-clothes=Suit,suit,major,other
+clothes=Suit,suit,major,both
 clothes=Bra,bra,important,upper
 clothes=Panties,panties,important,lower,plural
 
@@ -122,11 +97,14 @@ selected=peaceside,Hiya, I'm D.Va. Game on!
 selected,alsoPlaying:chiaki=calm,Hi, Chiaki. Here to do your placement matches?
 selected,alsoPlaying:mercy=calm,Mercy, I'm always glad to have you around. I hope you don't mind being schooled now that you're an older lady.
 selected,alsoPlaying:zone-tan=awkward,Wow! Zone-tan is playing too! I know you from... Um. Let's all introduce ourselves first.
+selected,count-d.va_cruiser:1=peaceside,What's happenin', Daddio?
 
 game_start=calm,Wow, nice comp. This is gonna be easy!
-game_start=warpaint,Makeup whiskers? Nuh-uh! This is <i>warpaint</i>!
+game_start,count-d.va_cruiser:0,priority:0=warpaint,Makeup whiskers? Nuh-uh! This is <i>warpaint</i>!
+game_start,count-d.va_cruiser:1,priority:0=warpaint,Makeup? Nuh-uh! This is <i>warpaint</i>!
 game_start=awkward,Oh, a fan, huh? Oh, well, who can blame you?
-game_start=winking,Oh, is this like Fighters of the Storm 2? Because I used to main Garrosh.
+game_start,count-d.va_cruiser:0,priority:0=winking,Oh, is this like Fighters of the Storm 2? Because I used to main Garrosh.
+game_start,count-d.va_cruiser:1,priority:0=riveting_cruiser,I can do it!
 game_start=excited,Oh, by the way, I know I say "NERF THIS" a lot. Please don't <i>actually</i> "NERF THIS", okay?
 game_start,alsoPlaying:natsuki=excited,Everyone here is so cute! I'm obviously in the right room.
 
@@ -292,6 +270,7 @@ swap_cards=serene,~cards~ cards.
 0-stripping,count-d.va_cruiser:1,priority:0=strip,I've got places to be, so how about I take this thing off, too?
 0-stripping,alsoPlaying:streaming-chan=heart,Quick shoutout to my fans: Thanks for all the love and support!
 1-stripped=stripped,I'm back in the fight!
+1-stripped,count-d.va_black_cat:1=stripped,Guess this kitty's claws are finally coming out!
 
 #Losing Shoes (accessory)
 1-must_strip_winning,marker:d.va_noobs=peace,I'm owning all you noobs anyway.
@@ -317,6 +296,8 @@ swap_cards=serene,~cards~ cards.
 2-must_strip_losing=angry,I really just want to ragequit at this point...
 2-stripping=strip,They're just headphones...
 2-stripping=strip,But how can I listen to Lucio's new album now?
+2-stripping,count-d.va_black_cat:1=strip,Without my collar, I guess one of you'll just <i>have</i> to take me home now, right?
+2-stripping,count-d.va_black_cat:1=strip,I'd normally take my headphones off around now, but...
 3-stripped=sad,I've lost my awareness advantage now.
 3-stripped=stripped,Time to get serious!
 3-stripped=stripped,Down, but not out.
@@ -324,18 +305,20 @@ swap_cards=serene,~cards~ cards.
 #Losing Suit (major)
 3-must_strip_winning=excited,There goes my winning streak...
 3-must_strip_winning=heart,It seems you have enough credits to unlock my alternate outfit!
-3-must_strip_normal,count-d.va_cruiser:0,priority:0=awkward,My suit took too much damage. Bailing out!
-3-must_strip_normal,count-d.va_cruiser:1,priority:0,totalFemales:1-5=prestrip_cruiser,My outfit took too much damage. Bailing out!
+3-must_strip_normal=awkward,My suit took too much damage. Bailing out!
+3-must_strip_normal,count-d.va_cruiser:1,priority:0=prestrip_cruiser,My outfit took too much damage. Bailing out!
+3-must_strip_normal,count-d.va_black_cat:1,priority:0=awkward,My dress took too much damage. Bailing out!
 3-must_strip_normal=excited,I was hoping I'd get the chance to show off!
 3-must_strip_losing=shy,Time to raise my APM...
 3-must_strip_losing=loss,I feel like you're teaming up on me...
 3-stripping=strip,Suiting down...
 3-stripping,count-d.va_cruiser:1,priority:1000=strip,Yeah, I've got a stream to get to, so this round's a twofer.
+3-stripping,count-d.va_black_cat:1,priority:1000=strip,Guess there's really only one way to see a cat's... skin? The analogy is less erotic than I'd like.
 4-stripped,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
 4-stripped,alsoPlaying:asuna,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
 4-stripped,alsoPlaying:kim,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
 4-stripped,alsoPlaying:xander,marker:d.va_needs_a_hug=stripped,I could really use a hug right now.
-4-stripped=stripped,With a figure like this, how can people say that my diet is entirely Doritos and Mountain Dew?
+4-stripped,marker:d.va_doritos=stripped,With a figure like this, how can people say that my diet is entirely Doritos and Mountain Dew?
 4-stripped=excited,D.Va in the flesh, woo! How do you like it?
 
 #Losing Bra (medium chest)
@@ -404,11 +387,13 @@ swap_cards=serene,~cards~ cards.
 #Lost Suit
 4-male_human_must_strip,marker:male_human_first_piece=stripped,You got me out of my suit, so I'm hoping for a lot here!
 4-male_human_must_strip,marker:male_human_first_piece,count-d.va_cruiser:1,priority:1000=stripped,You got me out of my clothes, so I'm hoping for a lot here!
+4-male_human_must_strip,marker:male_human_first_piece,count-d.va_black_cat:1,priority:1000=stripped,You got me out of my dress, so I'm hoping for a lot here!
 4-male_human_must_strip,marker:male_human_first_piece,target:human,targetStage:0=awkward,Wow, you're pretty good... Are you a pro at this?
 #bug: target:human,targetStage:0 works on humans of all stages
 4-male_must_strip=loss,Believe me that this is more than a fair trade!
 4-female_human_must_strip,marker:female_human_first_piece=winking,Why not take off two things? I had to take off my whole suit in one go.
 4-female_human_must_strip,marker:female_human_first_piece,count-d.va_cruiser:1,priority:1000=winking,Why not take off two things? It's only fair.
+4-female_human_must_strip,marker:female_human_first_piece,count-d.va_black_cat:1,priority:1000=winking,Why not take off two things? My dress must have had, like, at <i>least</i> seven or eight different parts!
 4-female_must_strip=heart,Configuration: Celebratory!
 4-female_must_strip=calm,The huntress lays a trap for her prey...
 4-female_must_strip=winking,Ding!
@@ -778,6 +763,7 @@ female_removed_accessory,target:revy,targetStage:4=loss,Sure, just throw your gu
 4-female_removed_minor=shy,I took off my whole bodysuit! You could at least take off something a little bigger than your ~clothing~!
 4-female_removed_minor,count-d.va_cruiser:1,priority:1000=shy,I took off my my shirt <i>and</i> pants! You could at least take off something a little bigger than your ~clothing~!
 4-female_removed_minor,count-d.va_cruiser:1,priority:1000=sad,You know I'm in a rush, right?
+4-female_removed_minor,count-d.va_black_cat:1,priority:1000=shy,I took off that big, puffy dress! You could at least take off something a little bigger than your ~clothing~!
  
 #Lost Bra
 5-male_removing_minor=peace,I don't mind showing off my boobs... But I DO mind losing!
@@ -1083,7 +1069,7 @@ female_removed_minor,target:aimee,targetStage:3=calm,Three for three. Nice accur
 -3-male_large_crotch_is_visible=horny,Aw... After this match is over. Right now, it's time to get serious!
  
 -3-female_chest_will_be_visible=shy,I'm taking you down with me!
--3-female_chest_will_be_visible=peace,There ain't no party like a stripping party!
+-3-female_chest_will_be_visible,marker:d.va_stripping_party=peace,There ain't no party like a stripping party!
 -3-female_small_chest_is_visible=heart,Super cute, ~name~!
 -3-female_medium_chest_is_visible=excited,Hmmm... I wouldn't mind pulling THOSE triggers...
 -3-female_large_chest_is_visible=loss,Size isn't everything.
@@ -1269,6 +1255,15 @@ female_large_chest_is_visible,target:nugi-chan=winking,Nice try.
 1-female_crotch_will_be_visible,target:revy=serene,Revy, I'm gonna unmute you for a bit just to hear how salty you get!
 2-female_crotch_will_be_visible,target:revy=serene,Revy, I'm gonna unmute you for a bit just to hear how salty you get!
 
+0-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+1-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+2-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+3-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+4-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+5-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+-3-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+-2-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
+-1-female_crotch_is_visible,count-d.va_black_cat:1,notSaidMarker:d.va_black_cat_kitty_joke,marker:d.va_black_cat_kitty_joke=horny,Isn't <i>that</i> a pretty kitty?
 0-female_crotch_is_visible,target:aimee=horny,Aimee's "one".
 1-female_crotch_is_visible,target:aimee=horny,Aimee's "one".
 2-female_crotch_is_visible,target:aimee=horny,Aimee's "one".
@@ -1345,7 +1340,9 @@ female_large_chest_is_visible,target:nugi-chan=winking,Nice try.
  
 #Lost Headphones
 3-male_must_masturbate=excited,Without my headphones, I'll be able to hear you fap!
+3-male_must_masturbate,count-d.va_black_cat:1=excited,These ears actually have a strategic advantage too, y'know?
 3-male_start_masturbating=stripped,Come on, you can try harder than that!
+3-male_start_masturbating,count-d.va_black_cat:1=stripped,They can pick up <i>every</i> little sound you make, so don't try and hide it!
 3-male_masturbating=shocked,Nice! This is Play of the Game material!
 3-male_finished_masturbating=horny,Enemy turret destroyed. 
  
@@ -1640,9 +1637,7 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 2-stripped,alsoPlaying:xander=stripped,I don't need shoes to kick your butt.
 2-stripping,alsoPlaying:xander=strip,They're just headphones...
 2-female_must_strip,target:buffy,targetStage:3=winking,"Buffy"? More like "Nerfy", am I right?
-2-female_must_strip,filter:mushroom_kingdom,targetStage:4=winking,Well, ~name~, seems like your power star went out!
 2-female_removed_accessory,target:buffy=winking,You should consider wearing a bodysuit into combat. At least for the eye candy factor!
-2-female_crotch_is_visible,filter:mushroom_kingdom=winking,There's your hidden block!
 2-female_crotch_is_visible,filter:shaved=shy,Silky smooth! That's pretty rare!
 2-female_finished_masturbating,target:tracer=hornier,Awesome! Tracer, how about you Recall and do that all again?
 
@@ -1717,6 +1712,7 @@ game_over_defeat,saidMarker:d.va_wager_loss,target:human=winking,Somehow I lost 
 ending=Cam Show
 	ending_gender=any
 
+		scene=
 		screen=dvaending1.jpg
 				text=Come on, everyone. Let's get to a new high cam score!
 				x=30%

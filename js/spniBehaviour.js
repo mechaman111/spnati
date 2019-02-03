@@ -105,6 +105,11 @@ function State($xml) {
 		// It seems that location was specified as a number without "%"
 		this.location = this.location + "%";
 	}
+	
+	this.setIntelligence = $xml.attr('set-intelligence');
+	this.setSize = $xml.attr('set-size');
+	this.setGender = $xml.attr('set-gender');
+	this.setLabel = $xml.attr('set-label');
     
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -215,6 +220,8 @@ function expandDialogue (dialogue, self, target) {
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+				} else if (fn === 'plural') {
+					substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
@@ -287,13 +294,13 @@ var fixupDialogueSubstitutions = { // Order matters
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
 function fixupDialogue (str) {
-    return str.split(/(<script>.*?<\/script>)/i).map(function(part, idx) {
-        // Odd parts will be script tags; leave them alone and do
-        // substitutions on the rest
+    return str.split(/(<script>.*?<\/script>|<[^>]+>)/i).map(function(part, idx) {
+        // Odd parts will be script tags with content, or other tags;
+        // leave them alone and do substitutions on the rest
         return (idx % 2) ? part :
             part.replace(/"([^"]*)"/g, "\u201c$1\u201d")
             .replace(fixupDialogueRE, function(match) {
-                return fixupDialogueSubstitutions[match]
+                return fixupDialogueSubstitutions[match.toLowerCase()]
             });
     }).join('');
 }
@@ -837,12 +844,11 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
  * provided tag.
  ************************************************************/
 Opponent.prototype.updateBehaviour = function(tags, opp) {
-	/* determine if the AI is dialogue locked */
-	//Allow characters to speak. If we change forfeit ideas, we'll likely need to change this as well.
-	//if (players[player].forfeit[1] == CANNOT_SPEAK) {
-		/* their is restricted to this only */
-		//tag = players[player].forfeit[0];
-	//}
+    /* determine if the AI is dialogue locked */
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
+        /* their is restricted to this only */
+        tags = [this.forfeit[0]];
+    }
     
     if (!Array.isArray(tags)) {
         tags = [tags];
@@ -1026,6 +1032,23 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }
+	
+	if (this.chosenState.setLabel) {
+		this.label = this.chosenState.setLabel;
+		this.labelOverridden = true;
+	}
+	
+	if (this.chosenState.setIntelligence) {
+		this.intelligence = this.chosenState.setIntelligence;
+	}
+	
+	if (this.chosenState.setGender) {
+		this.gender = this.chosenState.setGender;
+	}
+	
+	if (this.chosenState.setSize) {
+		this.size = this.chosenState.setSize;
+	}
     
     this.stateCommitted = true;
 }
@@ -1090,6 +1113,14 @@ function updateAllVolatileBehaviours () {
  * Commits all player behaviour updates.
  ************************************************************/
 function commitAllBehaviourUpdates () {
+	/* Apply setLabel first so that ~name~ is the same for all players */
+	players.forEach(function (p) {
+		if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
+			p.label = p.chosenState.setLabel;
+			p.labelOverridden = true;
+		}
+	});
+	
     players.forEach(function (p) {
         if (p !== players[HUMAN_PLAYER]) {
             p.commitBehaviourUpdate();
