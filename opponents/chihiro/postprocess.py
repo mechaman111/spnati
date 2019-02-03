@@ -80,8 +80,10 @@ AE_TANDEM_POSES = {
     'thinking-1': ['thinking-1', 'happy'],
     'thinking-2': ['thinking-2', 'angry'],
     'start': ['start', 'embarassed'],
-    'heavy-1': ['heavy-1', 'embarassed'],
-    'heavy-2': ['heavy-2', 'embarassed'],
+    'mast-1': ['mast-1', 'embarassed'],
+    'mast-2': ['mast-2', 'embarassed'],
+    'mast-3': ['mast-3', 'shy'],
+    'mast-4': ['mast-4', 'nervous'],
     'finish': ['finish', 'shocked'],
 }
 
