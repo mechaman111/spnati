@@ -26,6 +26,12 @@ base_tag_spec = {
         'last': None,
         'label': None,
         'gender': None,
+        'poses': {
+            'pose': {
+                'sprite': None,
+                'directive': { 'keyframe': None, 'animFrame': None }
+            }
+        },
         'size': None,
         'timer': None,
         'intelligence': None,
@@ -68,7 +74,8 @@ meta_tag_spec = {
         'description': None,
         'has_ending': None,
         'layers': None,
-        'tags': { 'tag': None }
+        'tags': { 'tag': None },
+        'costume': None
     }
 }
 

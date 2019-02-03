@@ -17,6 +17,8 @@ import re
 import sys
 import time
 
+import numpy as np
+from scipy import ndimage
 from PIL import Image
 
 
@@ -203,7 +205,7 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        self.version = 68
+        self.version = 85
         self.characters = []
         self.scene = None
         
@@ -355,8 +357,7 @@ def _get_wine_kkl_directory():
     wine_path = Path.home() / '.wine' / 'drive_c' / 'users' / username / 'Application Data' / "kkl" / "Local Store"
     
     return wine_path
-    
-    
+
 def get_kkl_directory():
     """
     Retrieve the path to the main KisekaeLocal application directory.
@@ -468,20 +469,35 @@ def auto_crop_box(image, margin_y=15):
         A cropping box as a 4-tuple, suitable to be passed to Image.crop().    
     """
     
-    left, top, right, bottom = image.getbbox()
+    arr = np.array(image)
+    intensity = np.sum(arr, axis=2)
+    nonzero = np.greater(intensity, 0).T
     
-    out_width = (right - left) + 2
-    if out_width < 600:
-        out_width = 600
+    centroid = ndimage.measurements.center_of_mass(nonzero)
+    
+    left, top, right, bottom = image.getbbox()
     
     out_height = bottom - top
     if out_height < 1400:
         out_height = 1400
         
+    com_x = centroid[0]
     center_x = int((right + left) / 2)
+    shift_x = int(center_x-com_x)   # negative:right, positive:left
     
-    crop_left = int(center_x - (out_width // 2))
-    crop_right = int(center_x + (out_width // 2))
+    out_width = (right - left) + 2
+    if out_width < 600:
+        out_width = 600
+    
+    crop_left = int(com_x - (out_width // 2))
+    crop_right = int(com_x + (out_width // 2))
+    
+    if shift_x < 0:
+        # Add extra space to the left side
+        crop_left -= shift_x
+    elif shift_x > 0:
+        crop_right += shift_x
+
     crop_top = (bottom + margin_y) - out_height
     crop_bottom = bottom + margin_y
     
@@ -642,15 +658,21 @@ def process_csv(infile, dest_dir, **kwargs):
             if 'enabled' in row and row['enabled'].strip().lower() == "false":
                 continue
              
-            if len(row['stage']) <= 0 or len(row['code']) <= 0:
+            if 'stage' not in row or 'code' not in row or 'pose' not in row:
                 continue
+             
+            if len(row['stage']) <= 0 or len(row['code']) <= 0 or len(row['pose']) <= 0:
+                continue
+                
+            # normalize pose name:
+            row['pose'] = re.sub(r"[^\w\-\_]", '', row['pose']).lower().strip()
                 
             stage = int(row['stage'])
             
             if kwargs['stage'] is not None and len(kwargs['stage']) > 0 and stage not in kwargs['stage']:
                 continue
             
-            if kwargs['pose'] is not None and len(kwargs['stage']) > 0 and row['pose'] not in kwargs['pose']:
+            if kwargs['pose'] is not None and len(kwargs['pose']) > 0 and row['pose'] not in kwargs['pose']:
                 continue
                 
             pose_name = '{:d}-{:s}'.format(stage, row['pose'])
