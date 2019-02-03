@@ -103,6 +103,11 @@ function State($xml) {
 		// It seems that location was specified as a number without "%"
 		this.location = this.location + "%";
 	}
+	
+	this.setIntelligence = $xml.attr('set-intelligence');
+	this.setSize = $xml.attr('set-size');
+	this.setGender = $xml.attr('set-gender');
+	this.setLabel = $xml.attr('set-label');
     
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -213,6 +218,8 @@ function expandDialogue (dialogue, self, target) {
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+				} else if (fn === 'plural') {
+					substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
@@ -1023,6 +1030,23 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }
+	
+	if (this.chosenState.setLabel) {
+		this.label = this.chosenState.setLabel;
+		this.labelOverridden = true;
+	}
+	
+	if (this.chosenState.setIntelligence) {
+		this.intelligence = this.chosenState.setIntelligence;
+	}
+	
+	if (this.chosenState.setGender) {
+		this.gender = this.chosenState.setGender;
+	}
+	
+	if (this.chosenState.setSize) {
+		this.size = this.chosenState.setSize;
+	}
     
     this.stateCommitted = true;
 }
@@ -1087,6 +1111,14 @@ function updateAllVolatileBehaviours () {
  * Commits all player behaviour updates.
  ************************************************************/
 function commitAllBehaviourUpdates () {
+	/* Apply setLabel first so that ~name~ is the same for all players */
+	players.forEach(function (p) {
+		if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
+			p.label = p.chosenState.setLabel;
+			p.labelOverridden = true;
+		}
+	});
+	
     players.forEach(function (p) {
         if (p !== players[HUMAN_PLAYER]) {
             p.commitBehaviourUpdate();

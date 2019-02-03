@@ -66,6 +66,13 @@ $debugButtons = [$("#debug-button-0"),
 /* restart modal */
 $restartModal = $("#restart-modal");
 
+gameDisplays = [
+    new GameScreenDisplay(1),
+    new GameScreenDisplay(2),
+    new GameScreenDisplay(3),
+    new GameScreenDisplay(4)
+]
+
 /**********************************************************************
  *****                   Game Screen Variables                    *****
  **********************************************************************/
@@ -131,16 +138,10 @@ function loadGameScreen () {
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
+        gameDisplays[i-1].reset(players[i]);
+        
         if (players[i]) {
             players[i].current = 0;
-            $gameOpponentAreas[i-1].show();
-            $gameImages[i-1].css('height', players[i].scale + '%');
-            $gameLabels[i].css({"background-color" : clearColour});
-            clearHand(i);
-        }
-        else {
-            $gameOpponentAreas[i-1].hide();
-            $gameBubbles[i-1].hide();
         }
     }
     $gameLabels[HUMAN_PLAYER].css({"background-color" : clearColour});
@@ -198,48 +199,7 @@ function loadGameScreen () {
  * Updates all of the main visuals on the main game screen.
  ************************************************************/
 function updateGameVisual (player) {
-    /* update all opponents */
-    if (players[player]) {
-        if (players[player].chosenState) {
-            var chosenState = players[player].chosenState;
-
-            /* update dialogue */
-            $gameDialogues[player-1].html(fixupDialogue(chosenState.dialogue));
-            
-            /* update image */
-            $gameImages[player-1].attr('src', players[player].folder + chosenState.image);
-			$gameImages[player-1].show()
-
-            /* update label */
-            $gameLabels[player].html(players[player].label.initCap());
-
-            /* check silence */
-            if (!chosenState.dialogue) {
-                $gameBubbles[player-1].hide();
-            }
-            else {
-                $gameBubbles[player-1].show();
-                $gameBubbles[player-1].children('.dialogue-bubble').attr('class', 'dialogue-bubble arrow-'+chosenState.direction);
-                bubbleArrowOffsetRules[player-1][0].style.left = chosenState.location;
-                bubbleArrowOffsetRules[player-1][1].style.top = chosenState.location;
-            }
-        } else {
-            /* hide their dialogue bubble */
-            $gameDialogues[player-1].html("");
-            $gameAdvanceButtons[player-1].css({opacity : 0});
-            $gameBubbles[player-1].hide();
-        }
-    }
-    else {
-        $gameDialogues[player-1].html("");
-        $gameAdvanceButtons[player-1].css({opacity : 0});
-        $gameBubbles[player-1].hide();
-
-		$gameImages[player-1].hide();
-    }
-    if (showDebug) {
-        appendRepeats(player);
-    }
+    gameDisplays[player-1].update(players[player]);
 }
 
 /************************************************************
