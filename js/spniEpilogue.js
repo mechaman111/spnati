@@ -28,27 +28,27 @@ var epilogueSuffix = 0;
 // Attach some event listeners
 var previousButton = document.getElementById('epilogue-previous');
 var nextButton = document.getElementById('epilogue-next');
-previousButton.addEventListener('click', function(e) {
+previousButton.addEventListener('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   moveEpilogueBack();
 });
-nextButton.addEventListener('click', function(e) {
+nextButton.addEventListener('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   moveEpilogueForward();
 });
-document.getElementById('epilogue-restart').addEventListener('click', function(e) {
+document.getElementById('epilogue-restart').addEventListener('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   showRestartModal();
 });
-document.getElementById('epilogue-buttons').addEventListener('click', function() {
+document.getElementById('epilogue-buttons').addEventListener('click', function () {
   if (!previousButton.disabled) {
     moveEpilogueBack();
   }
 });
-epilogueContainer.addEventListener('click', function() {
+epilogueContainer.addEventListener('click', function () {
   if (!nextButton.disabled) {
     moveEpilogueForward();
   }
@@ -164,21 +164,18 @@ Animation.prototype.halt = function () {
 /************************************************************
  * Creates a closure in order to maintain a function's "this"
  ************************************************************/
-function createClosure(instance, func)
-{
-	var $this = instance;
-	return function ()
-	{
-		func.apply($this, arguments);
-	};
+function createClosure(instance, func) {
+  var $this = instance;
+  return function () {
+    func.apply($this, arguments);
+  };
 }
 
 /************************************************************
  * Linear interpolation
  ************************************************************/
-function lerp(a, b, t)
-{
-	return (b - a) * t + a;
+function lerp(a, b, t) {
+  return (b - a) * t + a;
 }
 
 /************************************************************
@@ -194,193 +191,187 @@ var clampingFunctions = {
  * Interpolation functions for animation movement interpolation
  ************************************************************/
 var interpolationModes = {
-	"linear": function linear(prop, start, end, t, frames, index)
-	{
-		return lerp(start, end, t);
-	},
-	"spline": function catmullrom(prop, start, end, t, frames, index)
-	{
-		var p0 = index > 0 ? frames[index - 1][prop] : start;
-		var p1 = start;
-		var p2 = end;
-		var p3 = index < frames.length - 2 ? frames[index + 1][prop] : end;
+  "none": function noInterpolation(prop, start, end, t, frames, index) {
+    return t >= 1 ? end : start;
 
-		if (typeof p0 === "undefined" || isNaN(p0))
-		{
-			p0 = start;
-		}
-		if (typeof p3 === "undefined" || isNaN(p3))
-		{
-			p3 = end;
-		}
+  },
+  "linear": function linear(prop, start, end, t, frames, index) {
+    return lerp(start, end, t);
+  },
+  "spline": function catmullrom(prop, start, end, t, frames, index) {
+    var p0 = index > 0 ? frames[index - 1][prop] : start;
+    var p1 = start;
+    var p2 = end;
+    var p3 = index < frames.length - 2 ? frames[index + 1][prop] : end;
 
-		var a = 2 * p1;
-		var b = p2 - p0;
-		var c = 2 * p0 - 5 * p1 + 4 * p2 - p3;
-		var d = -p0 + 3 * p1 - 3 * p2 + p3;
+    if (typeof p0 === "undefined" || isNaN(p0)) {
+      p0 = start;
+    }
+    if (typeof p3 === "undefined" || isNaN(p3)) {
+      p3 = end;
+    }
 
-		var p = 0.5 * (a + (b * t) + (c * t * t) + (d * t * t * t));
-		return p;
-	},
+    var a = 2 * p1;
+    var b = p2 - p0;
+    var c = 2 * p0 - 5 * p1 + 4 * p2 - p3;
+    var d = -p0 + 3 * p1 - 3 * p2 + p3;
+
+    var p = 0.5 * (a + (b * t) + (c * t * t) + (d * t * t * t));
+    return p;
+  },
 };
 
 /************************************************************
  * Converts a px or % value to the equivalent scene value
  ************************************************************/
-function toSceneX(x, scene)
-{
-	if (typeof x === "undefined") { return; }
-	if ($.isNumeric(x)) { return parseInt(x, 10); }
-	if (x.endsWith("%"))
-	{
-		return parseInt(x, 10) / 100 * scene.width;
-	}
-	else
-	{
-		return parseInt(x, 10);
-	}
+function toSceneX(x, scene) {
+  if (typeof x === "undefined") { return; }
+  if ($.isNumeric(x)) { return parseInt(x, 10); }
+  if (x.endsWith("%")) {
+    return parseInt(x, 10) / 100 * scene.width;
+  }
+  else {
+    return parseInt(x, 10);
+  }
 }
 
 /************************************************************
  * Converts a px or % value to the equivalent scene value
  ************************************************************/
-function toSceneY(y, scene)
-{
-	if (typeof y === "undefined") { return; }
-	if ($.isNumeric(y)) { return parseInt(y, 10); }
-	if (y.endsWith("%"))
-	{
-		return parseInt(y, 10) / 100 * scene.height;
-	}
-	else
-	{
-		return parseInt(y, 10);
-	}
+function toSceneY(y, scene) {
+  if (typeof y === "undefined") { return; }
+  if ($.isNumeric(y)) { return parseInt(y, 10); }
+  if (y.endsWith("%")) {
+    return parseInt(y, 10) / 100 * scene.height;
+  }
+  else {
+    return parseInt(y, 10);
+  }
 }
 
 /************************************************************
  * Return the numerical part of a string s. E.g. "20%" -> 20
  ************************************************************/
-function getNumericalPart(s){
-	return parseFloat(s); //apparently I don't actually need to remove the % (or anything else) from the string before I do the conversion
+function getNumericalPart(s) {
+  return parseFloat(s); //apparently I don't actually need to remove the % (or anything else) from the string before I do the conversion
 }
 
 /************************************************************
  * Return the approriate left: setting so that a text box of the specified width is centred
  * Assumes a % width
  ************************************************************/
-function getCenteredPosition(width){
-	var w = getNumericalPart(width); //numerical value of the width
-	var left = 50 - (w/2); //centre of the text box is at the 50% position
-	return left + "%";
+function getCenteredPosition(width) {
+  var w = getNumericalPart(width); //numerical value of the width
+  var left = 50 - (w / 2); //centre of the text box is at the 50% position
+  return left + "%";
 }
 
 /************************************************************
  * Load the Epilogue data for a character
  ************************************************************/
 function loadEpilogueData(player) {
-    if (!player || !player.xml) { //return an empty list if a character doesn't have an XML variable. (Most likely because they're the player.)
-        return [];
-    }
+  if (!player || !player.xml) { //return an empty list if a character doesn't have an XML variable. (Most likely because they're the player.)
+    return [];
+  }
 
-	var playerGender = players[HUMAN_PLAYER].gender;
+  var playerGender = players[HUMAN_PLAYER].gender;
 
-	//get the XML tree that relates to the epilogue, for the specific player gender
-	//var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
+  //get the XML tree that relates to the epilogue, for the specific player gender
+  //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
 
   var epilogues = player.xml.find('epilogue').filter(function (index) {
-      /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
-       * Conversely, returning false from this function will make the current epilogue not selectable.
-       */
+    /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
+     * Conversely, returning false from this function will make the current epilogue not selectable.
+     */
 
-      /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
-      var epilogue_gender = $(this).attr('gender');
-      if (epilogue_gender && epilogue_gender !== playerGender && epilogue_gender !== 'any') {
-          // if the gender doesn't match, don't make this epilogue selectable
-          return false;
-      }
+    /* 'gender' attribute: the epilogue will only be selectable if the player character has the given gender, or if the epilogue is marked for 'any' gender. */
+    var epilogue_gender = $(this).attr('gender');
+    if (epilogue_gender && epilogue_gender !== playerGender && epilogue_gender !== 'any') {
+      // if the gender doesn't match, don't make this epilogue selectable
+      return false;
+    }
 
-      var alsoPlaying = $(this).attr('alsoPlaying');
-      if (alsoPlaying !== undefined && !(players.some(function(p) { return p.id == alsoPlaying; }))) {
-          return false;
-      }
+    var alsoPlaying = $(this).attr('alsoPlaying');
+    if (alsoPlaying !== undefined && !(players.some(function (p) { return p.id == alsoPlaying; }))) {
+      return false;
+    }
 
-      var playerStartingLayers = parseInterval($(this).attr('playerStartingLayers'));
-      if (playerStartingLayers !== undefined && !inInterval(players[HUMAN_PLAYER].startingLayers, playerStartingLayers)) {
-          return false;
-      }
+    var playerStartingLayers = parseInterval($(this).attr('playerStartingLayers'));
+    if (playerStartingLayers !== undefined && !inInterval(players[HUMAN_PLAYER].startingLayers, playerStartingLayers)) {
+      return false;
+    }
 
-      /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers listed within the attribute set. */
-      var all_marker_attr = $(this).attr('markers');
-      if (all_marker_attr
-          && !all_marker_attr.trim().split(/\s+/).every(function(marker) {
-              return checkMarker(marker, player);
-          })) {
-          // not every marker set
-          return false;
-      }
+    /* 'markers' attribute: the epilogue will only be selectable if the character has ALL markers listed within the attribute set. */
+    var all_marker_attr = $(this).attr('markers');
+    if (all_marker_attr
+      && !all_marker_attr.trim().split(/\s+/).every(function (marker) {
+        return checkMarker(marker, player);
+      })) {
+      // not every marker set
+      return false;
+    }
 
-      /* 'not-markers' attribute: the epilogue will only be selectable if the character has NO markers listed within the attribute set. */
-      var no_marker_attr = $(this).attr('not-markers');
-      if (no_marker_attr
-          && no_marker_attr.trim().split(/\s+/).some(function(marker) {
-              return checkMarker(marker, player);
-          })) {
-          // some disallowed marker set
-          return false;
-      }
+    /* 'not-markers' attribute: the epilogue will only be selectable if the character has NO markers listed within the attribute set. */
+    var no_marker_attr = $(this).attr('not-markers');
+    if (no_marker_attr
+      && no_marker_attr.trim().split(/\s+/).some(function (marker) {
+        return checkMarker(marker, player);
+      })) {
+      // some disallowed marker set
+      return false;
+    }
 
-      /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers listed within the attribute set. */
-      var any_marker_attr = $(this).attr('any-markers');
-      if (any_marker_attr
-          && !any_marker_attr.trim().split(/\s+/).some(function(marker) {
-              return checkMarker(marker, player);
-          })) {
-          // none of the markers set
-          return false;
-      }
+    /* 'any-markers' attribute: the epilogue will only be selectable if the character has at least ONE of the markers listed within the attribute set. */
+    var any_marker_attr = $(this).attr('any-markers');
+    if (any_marker_attr
+      && !any_marker_attr.trim().split(/\s+/).some(function (marker) {
+        return checkMarker(marker, player);
+      })) {
+      // none of the markers set
+      return false;
+    }
 
-      /* 'alsoplaying-markers' attribute: this epilogue will only be selectable if ALL markers within the attribute are set for any OTHER characters in the game. */
-      var alsoplaying_marker_attr = $(this).attr('alsoplaying-markers');
-      if (alsoplaying_marker_attr
-          && !alsoplaying_marker_attr.trim().split(/\s+/).every(function(marker) {
-              return players.some(function(p) {
-                  return p !== player && checkMarker(marker, p);
-              });
-          })) {
-          // not every marker set by some other character
-          return false;
-      }
+    /* 'alsoplaying-markers' attribute: this epilogue will only be selectable if ALL markers within the attribute are set for any OTHER characters in the game. */
+    var alsoplaying_marker_attr = $(this).attr('alsoplaying-markers');
+    if (alsoplaying_marker_attr
+      && !alsoplaying_marker_attr.trim().split(/\s+/).every(function (marker) {
+        return players.some(function (p) {
+          return p !== player && checkMarker(marker, p);
+        });
+      })) {
+      // not every marker set by some other character
+      return false;
+    }
 
-      /* 'alsoplaying-not-markers' attribute: this epilogue will only be selectable if NO markers within the attribute are set for other characters in the game. */
-      var alsoplaying_not_marker_attr = $(this).attr('alsoplaying-not-markers');
-      if (alsoplaying_not_marker_attr
-          && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function(marker) {
-              return players.some(function(p) {
-                  return p !== player && checkMarker(marker, p);
-              });
-          })) {
-          // some disallowed marker set by some other character
-          return false;
-      }
+    /* 'alsoplaying-not-markers' attribute: this epilogue will only be selectable if NO markers within the attribute are set for other characters in the game. */
+    var alsoplaying_not_marker_attr = $(this).attr('alsoplaying-not-markers');
+    if (alsoplaying_not_marker_attr
+      && alsoplaying_not_marker_attr.trim().split(/\s+/).some(function (marker) {
+        return players.some(function (p) {
+          return p !== player && checkMarker(marker, p);
+        });
+      })) {
+      // some disallowed marker set by some other character
+      return false;
+    }
 
-      /* 'alsoplaying-any-markers' attribute: this epilogue will only be selectable if at least one marker within the attribute are set for any OTHER character in the game. */
-      var alsoplaying_any_marker_attr = $(this).attr('alsoplaying-any-markers');
-      if (alsoplaying_any_marker_attr
-          && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function(marker) {
-              return players.some(function(p) {
-                  return p !== player && checkMarker(marker, p);
-              });
-          })) {
-          // none of the markers set by any other player
-          return false;
-      }
+    /* 'alsoplaying-any-markers' attribute: this epilogue will only be selectable if at least one marker within the attribute are set for any OTHER character in the game. */
+    var alsoplaying_any_marker_attr = $(this).attr('alsoplaying-any-markers');
+    if (alsoplaying_any_marker_attr
+      && !alsoplaying_any_marker_attr.trim().split(/\s+/).some(function (marker) {
+        return players.some(function (p) {
+          return p !== player && checkMarker(marker, p);
+        });
+      })) {
+      // none of the markers set by any other player
+      return false;
+    }
 
-      // if we made it this far the epilogue must be selectable
-      return true;
+    // if we made it this far the epilogue must be selectable
+    return true;
   }).map(function (i, e) { return parseEpilogue(player, e); }).get();
 
-	return epilogues;
+  return epilogues;
 }
 
 function parseEpilogue(player, rawEpilogue, galleryEnding) {
@@ -466,7 +457,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
             directive.keyframes.push(keyframe);
           });
           if (directive.keyframes.length === 0) {
-            //if no explicity keyframes were provided, use the directive itself as a keyframe
+            //if no explicit keyframes were provided, use the directive itself as a keyframe
             directive.start = 0;
             directive.end = directive.time;
             directive.keyframes.push(directive);
@@ -622,13 +613,13 @@ function parseSceneContent(player, scene, $scene) {
     addedPause = true;
   });
   if (!addedPause) {
-      scene.directives.push({ type: "pause" });
+    scene.directives.push({ type: "pause" });
   }
 }
 
- /************************************************************
- * Read attributes from a source XML object and put them into properties of a JS object
- ************************************************************/
+/************************************************************
+* Read attributes from a source XML object and put them into properties of a JS object
+************************************************************/
 function readProperties(sourceObj, scene) {
   var targetObj = {};
   var $obj = $(sourceObj);
@@ -705,36 +696,36 @@ function readProperties(sourceObj, scene) {
  * Add the epilogue to the Epilogue modal
  ************************************************************/
 
-function addEpilogueEntry(epilogue){
-	var num = epilogues.length; //index number of the new epilogue
-	epilogues.push(epilogue);
-	var player = epilogue.player
+function addEpilogueEntry(epilogue) {
+  var num = epilogues.length; //index number of the new epilogue
+  epilogues.push(epilogue);
+  var player = epilogue.player
 
-	var nameStr = player.first+" "+player.last;
-	if (player.first.length <= 0 || player.last.length <= 0){
-		nameStr = player.first+player.last; //only use a space if they have both first and last names
-	}
+  var nameStr = player.first + " " + player.last;
+  if (player.first.length <= 0 || player.last.length <= 0) {
+    nameStr = player.first + player.last; //only use a space if they have both first and last names
+  }
 
-	var epilogueTitle = nameStr+": "+epilogue.title;
-	var idName = 'epilogue-option-'+num;
-	var clickAction = "selectEpilogue("+num+")";
-	var unlocked = save.hasEnding(player.id, epilogue.title) ? " unlocked" : "";
+  var epilogueTitle = nameStr + ": " + epilogue.title;
+  var idName = 'epilogue-option-' + num;
+  var clickAction = "selectEpilogue(" + num + ")";
+  var unlocked = save.hasEnding(player.id, epilogue.title) ? " unlocked" : "";
 
-	var htmlStr = '<li id="'+idName+'" class="epilogue-entry'+unlocked+'"><button onclick="'+clickAction+'">'+epilogueTitle+'</button></li>';
+  var htmlStr = '<li id="' + idName + '" class="epilogue-entry' + unlocked + '"><button onclick="' + clickAction + '">' + epilogueTitle + '</button></li>';
 
-	$epilogueList.append(htmlStr);
-	epilogueSelections.push($('#'+idName));
+  $epilogueList.append(htmlStr);
+  epilogueSelections.push($('#' + idName));
 }
 
 /************************************************************
  * Clear the Epilogue modal
  ************************************************************/
 
-function clearEpilogueList(){
-	$epilogueHeader.html('');
-	$epilogueList.html('');
-	epilogues = [];
-	epilogueSelections = [];
+function clearEpilogueList() {
+  $epilogueHeader.html('');
+  $epilogueList.html('');
+  epilogues = [];
+  epilogueSelections = [];
 }
 
 /************************************************************
@@ -751,113 +742,113 @@ function clearEpilogue() {
  * The user has clicked on a button to choose a particular Epilogue
  ************************************************************/
 
-function selectEpilogue(epNumber){
-	chosenEpilogue = epilogues[epNumber]; //select the chosen epilogues
+function selectEpilogue(epNumber) {
+  chosenEpilogue = epilogues[epNumber]; //select the chosen epilogues
 
-	for (var i = 0; i < epilogues.length; i++){
-		epilogueSelections[i].removeClass("active"); //make sure no other epilogue is selected
-	}
-	epilogueSelections[epNumber].addClass("active"); //mark the selected epilogue as selected
-	$epilogueAcceptButton.prop("disabled", false); //allow the player to accept the epilogue
+  for (var i = 0; i < epilogues.length; i++) {
+    epilogueSelections[i].removeClass("active"); //make sure no other epilogue is selected
+  }
+  epilogueSelections[epNumber].addClass("active"); //mark the selected epilogue as selected
+  $epilogueAcceptButton.prop("disabled", false); //allow the player to accept the epilogue
 }
 
 /************************************************************
  * Show the modal for the player to choose an Epilogue, or restart the game.
  ************************************************************/
-function doEpilogueModal(){
+function doEpilogueModal() {
 
-	clearEpilogueList(); //remove any already loaded epilogues
-	chosenEpilogue = null; //reset any currently-chosen epilogue
-	$epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one
+  clearEpilogueList(); //remove any already loaded epilogues
+  chosenEpilogue = null; //reset any currently-chosen epilogue
+  $epilogueAcceptButton.prop("disabled", true); //don't let the player accept an epilogue until they've chosen one
 
-	//whether or not the human player won
-	var playerWon = !players[HUMAN_PLAYER].out;
+  //whether or not the human player won
+  var playerWon = !players[HUMAN_PLAYER].out;
 
-	if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
-		//load the epilogue data for each player
-		players.forEach(function(p) {
-			loadEpilogueData(p).forEach(addEpilogueEntry);
-		});
-	}
+  if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
+    //load the epilogue data for each player
+    players.forEach(function (p) {
+      loadEpilogueData(p).forEach(addEpilogueEntry);
+    });
+  }
 
-	//are there any epilogues available for the player to see?
-	var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
-	$epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
+  //are there any epilogues available for the player to see?
+  var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
+  $epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
 
-    if (EPILOGUES_ENABLED) {
-        //decide which header string to show the player. This describes the situation.
-    	var headerStr = '';
-    	if (playerWon){
-    		headerStr = winStr; //player won, and there are epilogues available
-    		if (!haveEpilogues){
-    			headerStr = winStrNone; //player won, but none of the NPCs have epilogues
-    		}
-    	} else {
-    		headerStr = lossStr; //player lost
-    	}
+  if (EPILOGUES_ENABLED) {
+    //decide which header string to show the player. This describes the situation.
+    var headerStr = '';
+    if (playerWon) {
+      headerStr = winStr; //player won, and there are epilogues available
+      if (!haveEpilogues) {
+        headerStr = winStrNone; //player won, but none of the NPCs have epilogues
+      }
     } else {
-        if (playerWon) {
-            headerStr = winEpiloguesDisabledStr;
-        } else {
-            headerStr = lossEpiloguesDisabledStr;
-        }
+      headerStr = lossStr; //player lost
     }
+  } else {
+    if (playerWon) {
+      headerStr = winEpiloguesDisabledStr;
+    } else {
+      headerStr = lossEpiloguesDisabledStr;
+    }
+  }
 
-	$epilogueHeader.html(headerStr); //set the header string
-	$epilogueSelectionModal.modal("show");//show the epilogue selection modal
+  $epilogueHeader.html(headerStr); //set the header string
+  $epilogueSelectionModal.modal("show");//show the epilogue selection modal
 }
 
 /************************************************************
  * Start the Epilogue
  ************************************************************/
-function doEpilogue(){
-	save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
+function doEpilogue() {
+  save.addEnding(chosenEpilogue.player.id, chosenEpilogue.title);
 
-	if (USAGE_TRACKING) {
-		var usage_tracking_report = {
-			'date': (new Date()).toISOString(),
-            'commit': VERSION_COMMIT,
-			'type': 'epilogue',
-			'session': sessionID,
-			'game': gameID,
-			'userAgent': navigator.userAgent,
-			'origin': getReportedOrigin(),
-			'table': {},
-			'chosen': {
-				'id': chosenEpilogue.player.id,
-				'title': chosenEpilogue.title
-			}
-		};
+  if (USAGE_TRACKING) {
+    var usage_tracking_report = {
+      'date': (new Date()).toISOString(),
+      'commit': VERSION_COMMIT,
+      'type': 'epilogue',
+      'session': sessionID,
+      'game': gameID,
+      'userAgent': navigator.userAgent,
+      'origin': getReportedOrigin(),
+      'table': {},
+      'chosen': {
+        'id': chosenEpilogue.player.id,
+        'title': chosenEpilogue.title
+      }
+    };
 
-		for (let i=1;i<5;i++) {
-			if (players[i]) {
-				usage_tracking_report.table[i] = players[i].id;
-			}
-		}
+    for (let i = 1; i < 5; i++) {
+      if (players[i]) {
+        usage_tracking_report.table[i] = players[i].id;
+      }
+    }
 
-		$.ajax({
-			url: USAGE_TRACKING_ENDPOINT,
-			method: 'POST',
-			data: JSON.stringify(usage_tracking_report),
-			contentType: 'application/json',
-			error: function (jqXHR, status, err) {
-				console.error("Could not send usage tracking report - error "+status+": "+err);
-			},
-		});
-	}
+    $.ajax({
+      url: USAGE_TRACKING_ENDPOINT,
+      method: 'POST',
+      data: JSON.stringify(usage_tracking_report),
+      contentType: 'application/json',
+      error: function (jqXHR, status, err) {
+        console.error("Could not send usage tracking report - error " + status + ": " + err);
+      },
+    });
+  }
 
   epilogueContainer.dataset.background = -1;
   epilogueContainer.dataset.scene = -1;
 
   loadEpilogue(chosenEpilogue);
 
-	screenTransition($titleScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
-	$epilogueSelectionModal.modal("hide");
+  screenTransition($titleScreen, $epilogueScreen); //currently transitioning from title screen, because this is for testing
+  $epilogueSelectionModal.modal("hide");
 }
 
- /************************************************************
- * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
- ************************************************************/
+/************************************************************
+* Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
+************************************************************/
 function loadEpilogue(epilogue) {
   $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
@@ -866,14 +857,14 @@ function loadEpilogue(epilogue) {
 }
 
 function moveEpilogueForward() {
-  if (epiloguePlayer) {
+  if (epiloguePlayer && epiloguePlayer.loaded) {
     epiloguePlayer.advanceDirective();
     updateEpilogueButtons();
   }
 }
 
 function moveEpilogueBack() {
-  if (epiloguePlayer) {
+  if (epiloguePlayer && epiloguePlayer.loaded) {
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
@@ -896,9 +887,9 @@ function updateEpilogueButtons() {
   $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
 }
 
- /************************************************************
- * Class for playing through an epilogue
- ************************************************************/
+/************************************************************
+* Class for playing through an epilogue
+************************************************************/
 function EpiloguePlayer(epilogue) {
   $(window).resize(createClosure(this, this.resizeViewport));
   this.epilogue = epilogue;
@@ -906,6 +897,7 @@ function EpiloguePlayer(epilogue) {
   this.sceneIndex = -1;
   this.directiveIndex = -1;
   this.assetMap = {};
+  this.loaded = false;
   this.loadingImages = 0;
   this.totalImages = 0;
   this.loadedImages = 0;
@@ -928,6 +920,16 @@ EpiloguePlayer.prototype.load = function () {
         directive.src = directive.src.charAt(0) === '/' ? directive.src : this.epilogue.player.base_folder + directive.src;
         this.fetchImage(directive.src);
       }
+      
+      if (directive.keyframes) {
+          for (var k = 0; k < directive.keyframes.length; k++) {
+            var keyframe = directive.keyframes[k];
+            if (keyframe.src && keyframe !== directive) {
+              keyframe.src = keyframe.src.charAt(0) === '/' ? keyframe.src : this.epilogue.player.base_folder + keyframe.src;
+              this.fetchImage(keyframe.src);
+            }
+          }
+      }
     }
   }
   this.readyToLoad = true;
@@ -948,6 +950,7 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 0, this.assetMap));
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
+    this.loaded = true;
     this.advanceScene();
     window.requestAnimationFrame(createClosure(this, this.loop));
   }
@@ -986,7 +989,7 @@ EpiloguePlayer.prototype.hasMoreDirectives = function () {
 }
 
 EpiloguePlayer.prototype.hasPreviousDirectives = function () {
-  return this.sceneIndex > 0|| this.directiveIndex > 0;
+  return this.sceneIndex > 0 || this.directiveIndex > 0;
 }
 
 EpiloguePlayer.prototype.loop = function (timestamp) {
@@ -1411,7 +1414,7 @@ SceneView.prototype.setup = function (scene, sceneIndex, epilogue, lastScene) {
           scene.height = previousScene.height;
           scene.aspectRatio = previousScene.aspectRatio;
         }
-      }  
+      }
     }
   }
 
@@ -1501,7 +1504,9 @@ SceneView.prototype.addBackground = function (background) {
 SceneView.prototype.addImage = function (id, src, args) {
   var img = document.createElement("img");
   img.src = this.assetMap[src].src;
-  this.addSceneObject(new SceneObject(id, img, this, args));
+  var obj = new SceneObject(id, img, this, args);
+  obj.setImage(src);
+  this.addSceneObject(obj);
 }
 
 SceneView.prototype.addSprite = function (directive) {
@@ -1626,15 +1631,15 @@ SceneView.prototype.restoreText = function (directive, context) {
   }
 }
 
-SceneView.prototype.interpolate = function (obj, prop, last, next, t) {
+SceneView.prototype.interpolate = function (obj, prop, last, next, t, mode) {
   var current = obj[prop];
   var start = last[prop];
   var end = next[prop];
-  if (typeof start === "undefined" || isNaN(start) || typeof end === "undefined" || isNaN(end)) {
+  if (mode !== "none" && (typeof start === "undefined" || isNaN(start) || typeof end === "undefined" || isNaN(end))) {
     return;
   }
-  var mode = next.interpolation || "linear";
-  obj[prop] = interpolationModes[mode](prop, start, end, t, last.keyframes, last.index)
+  mode = mode || next.interpolation || "linear";
+  obj[prop] = interpolationModes[mode](prop, start, end, t, last.keyframes, last.index);
 }
 
 SceneView.prototype.updateObject = function (id, last, next, t) {
@@ -1657,6 +1662,7 @@ SceneView.prototype.moveSprite = function (directive, context) {
     context.scalex = sprite.scalex;
     context.scaley = sprite.scaley;
     context.alpha = sprite.alpha;
+    context.src = sprite.src;
     frames.unshift(context);
     context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
   }
@@ -1682,6 +1688,9 @@ SceneView.prototype.returnSprite = function (directive, context) {
     }
     if (typeof context.alpha !== "undefined") {
       sprite.alpha = context.alpha;
+    }
+    if (typeof context.src !== "undefined") {
+      sprite.setImage(context.src);
     }
     this.removeAnimation(context.anim);
     this.draw();
@@ -1880,7 +1889,7 @@ function SceneObject(id, element, view, args) {
   this.layer = args.layer;
 
   var scene = this.view.scene;
-  
+
   if (element) {
     var vehicle = document.createElement("div");
     vehicle.appendChild(element);
@@ -1971,6 +1980,19 @@ SceneObject.prototype = {
     for (var i = 0; i < this.tweenableProperties.length; i++) {
       this.view.interpolate(this, this.tweenableProperties[i], last, next, t);
     }
+
+    if (next.src) {
+      var oldSrc = this.src;
+      this.view.interpolate(this, "src", last, next, t, "none");
+      if (oldSrc !== this.src) {
+        this.setImage(this.src);
+      }
+    }
+  },
+
+  setImage: function (src) {
+    this.rotElement.src = this.view.assetMap[src].src;
+    this.src = src;
   },
 };
 
@@ -2002,6 +2024,7 @@ function Emitter(id, element, view, args, pool) {
   this.endRotation = this.createRandomParameter(args.endrotation, this.startRotation);
   this.lifetime = this.createRandomParameter(args.lifetime, 1, 1);
   this.angle = args.angle;
+  this.ignoreRotation = args.ignorerotation === "1" || args.ignorerotation === "true";
 }
 Emitter.prototype = Object.create(SceneObject.prototype);
 Emitter.prototype.constructor = Emitter;
@@ -2097,6 +2120,7 @@ Emitter.prototype.emit = function () {
     startRotation: this.startRotation.get(),
     endRotation: this.endRotation.get(),
     layer: this.layer,
+    ignoreRotation: this.ignoreRotation,
   });
   this.activeParticles.push(particle);
 };
@@ -2162,6 +2186,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   this.elapsed = 0;
   this.duration = args.duration;
   this.ease = args.ease || "smooth";
+  this.ignoreRotation = args.ignoreRotation;
   tweens["scalex"] = new TweenableParameter(args.startScaleX, args.endScaleX);
   tweens["scaley"] = new TweenableParameter(args.startScaleY, args.endScaleY);
   tweens["alpha"] = new TweenableParameter(args.startAlpha, args.endAlpha);
@@ -2174,7 +2199,7 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   this.spin = args.startRotation;
 
   //initial speed is in the direction of the starting rotation
-  this.rotation = rotation;
+  this.rotation = this.ignoreRotation ? 0 : rotation;
   var degrees = rotation;
   var radians = degrees * (Math.PI / 180);
   var speed = args.speed;

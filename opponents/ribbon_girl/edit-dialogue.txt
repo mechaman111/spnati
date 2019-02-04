@@ -1,0 +1,2132 @@
+#required for behaviour.xml
+first=Ribbon Girl
+last=
+label=Ribbon Girl
+gender=female
+size=small
+
+#Number of phases to "finish" masturbating
+timer=30
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=blonde
+tag=long_hair
+tag=drill_hair
+tag=ponytail
+tag=blue_eyes
+tag=fair-skinned
+tag=athletic
+tag=trimmed
+tag=small_breasts
+tag=masked
+tag=cheerful
+tag=fashionable
+tag=kind
+tag=boob_envy
+tag=straight
+tag=video_game
+tag=nintendo
+tag=celebrity
+tag=fighter
+tag=musician
+tag=arms_franchise
+
+#required for meta.xml
+#select screen image
+pic=0-start
+height=5'6"
+from=ARMS
+writer=BlueKoin
+artist=BlueKoin
+description=A heart-of-gold popstar and fighter in the ARMS Grand Prix.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=gloves,gloves,extra,hands,plural
+clothes=chest guard,chest guard,extra,upper
+clothes=boots,boots,minor,feet,plural
+clothes=shirt,shirt,major,upper
+clothes=skirt,skirt,minor,lower
+clothes=shorts,shorts,major,lower,plural
+clothes=Bra,bra,important,upper
+clothes=Panties,panties,important,lower,plural
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=happy,♪He-e-eyy!♪
+0-selected=dukes,Ready?
+0-selected=happy,Don't worry, my arms can look normal, too! See?
+0-selected=happy,Surprise! Normal arms! Bet you didn't see that coming!
+0-game_start,marker:NotAHero=happy,Heh. Before anyone asks, no, I'm not a super hero. I'm an ARMS competitor! This mask regulates my ARMS power.
+0-game_start=happy,Don't worry, my arms can go normal too! See!
+0-game_start,marker:NotHiding=happy,Heh. Before anyone asks, no, I'm not trying to play anonymously. This mask regulates my ARMS power.
+0-game_start,marker:NotHiding=happy,Heh. Before anyone asks, no, I'm not trying hide my identity because I'm ashamed to play. This mask regulates my ARMS power.
+0-game_start=happy,Don't worry, I won't have coil arms the whole game!
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=calm,I'll exchange ~cards~ cards, please.
+swap_cards=calm,~cards~, please.
+swap_cards=calm,I'll take ~cards~, please.
+swap_cards=calm,I need ~cards~, please.
+good_hand=happy,Alright!
+good_hand=happy,Aw yeah!
+good_hand=happy,This hand is so good, I would put money on it being the best!
+good_hand=wink,Sorry, guys, but this hand is too good for me to lose!
+good_hand=dukes,This hand may be good, but nothing is unbeatable!... Except for a royal flush, I guess...
+good_hand=happy,I'm never gonna give up a hand like this!
+okay_hand=calm,This isn't so bad. It could work.
+okay_hand=dukes,I guess these cards make this a fair fight!
+okay_hand=calm,I hope these cards don't let me down!
+okay_hand=calm,These should be fine.
+okay_hand=calm,This hand isn't so bad.
+bad_hand=dukes,This hand won't keep me down! The fight's not over until the bell rings!
+bad_hand=dukes,You can't give up just because things look hopeless! A bad hand isn't the end!
+bad_hand=flustered,Aw darn, I think I've lost this one!
+bad_hand=flustered,Aw darn, I don't have anything!
+bad_hand=flustered,Ahaha, this hand is terrible.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-hand,alsoPlaying:kizuna,alsoPlayingSayingMarker:kizuna_hi=happy,Hi, Kizuna! Nice to meet you! I'm Ribbon Girl, a famous singer and ARMS fighter!
+0-hand,alsoPlaying:twilight,totalRounds:0=happy,Oh! It's not every day I meet someone with skin like yours, Twilight. Last person I met who had purple skin was Master Mummy!
+0-hand,totalRounds:0,count-celebrity:2-3=happy,I'm glad to see I'm not the only celebrity here. That would've been a little awkward.
+0-hand,totalRounds:0,count-prince:1=happy,Oh wow, a prince! For once, I'm not the most famous person in the room! Hahaha!
+0-hand,totalRounds:0,count-princess:1=happy,Oh wow, a princess! For once, I'm not the most famous person in the room! Hahaha!
+0-hand,totalRounds:0,count-princess:2-3=happy,Oh wow, princesses! For once, I'm not the most famous person in the room! Hahaha!
+0-hand,totalRounds:0,count-superhero:1=happy,Oh cool, a <i>real</i> superhero! What are your powers?
+0-hand,totalRounds:0,count-superhero:2-4=happy,Oh cool, <i>real</i> superheroes! I want to know what each of your powers are!
+0-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost gloves
+1-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost chest guard
+2-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost boots
+3-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost shirt
+4-good_hand=wink,Sorry, but it looks like you won't be seeing any more skin from me this round!
+4-good_hand=wink,I bet you wish I didn't have this bra on, huh? Too bad! I won't be losing this round!
+4-good_hand=wink,Seems like the cards want me to stay dressed for this round. Too bad!
+4-good_hand=happy,With a hand like this, I can't help but smile!
+4-good_hand=wink,I hope you like this look, because it won't be changing this round!
+4-okay_hand=calm,These should work.
+4-okay_hand=calm,Yeah... this hand should be fine.
+4-okay_hand=calm,These could be better, but I guess you can say that about anything.
+4-okay_hand=dukes,These should work. Anything can work, if you try!
+4-okay_hand=calm,These aren't great, but I'll hold on to hope that they'll be enough.
+4-bad_hand=flustered,This hand doesn't inspire much confidence!
+4-bad_hand=embarrassed,Aw, I lost for sure with a hand like this...
+4-bad_hand=flustered,This hand isn't helping my confidence
+4-bad_hand=flustered,Aw man, this can't end well...
+4-bad_hand=flustered,Aw darn, this is a losing hand for sure!
+4-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost skirt
+5-good_hand=wink,Sorry, but it looks like you won't be seeing any more skin from me this round!
+5-good_hand=wink,I bet you wish I didn't have this bra on, huh? Too bad! I won't be losing this round!
+5-good_hand=wink,Seems like the cards want me to stay dressed for this round. Too bad!
+5-good_hand=happy,With a hand like this, I can't help but smile!
+5-good_hand=wink,I hope you like this look, because it won't be changing this round!
+5-okay_hand=calm,These should work.
+5-okay_hand=calm,Yeah... this hand should be fine.
+5-okay_hand=calm,These could be better, but I guess you can say that about anything.
+5-okay_hand=dukes,These should work. Anything can work, if you try!
+5-okay_hand=calm,These aren't great, but I'll hold on to hope that they'll be enough.
+5-bad_hand=flustered,This hand doesn't inspire much confidence!
+5-bad_hand=embarrassed,Aw, I lost for sure with a hand like this...
+5-bad_hand=flustered,This hand isn't helping my confidence
+5-bad_hand=flustered,Aw man, this can't end well...
+5-bad_hand=flustered,Aw darn, this is a losing hand for sure!
+5-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost shorts
+6-good_hand=wink,Sorry, but it looks like you won't be seeing any more skin from me this round!
+6-good_hand=wink,I bet you wish I didn't have this bra on, huh? Too bad! I won't be losing this round!
+6-good_hand=wink,Seems like the cards want me to stay dressed for this round. Too bad!
+6-good_hand=happy,With a hand like this, I can't help but smile!
+6-good_hand=wink,I hope you like this look, because it won't be changing this round!
+6-okay_hand=calm,These should work.
+6-okay_hand=calm,Yeah... this hand should be fine.
+6-okay_hand=calm,These could be better, but I guess you can say that about anything.
+6-okay_hand=dukes,These should work. Anything can work, if you try!
+6-okay_hand=calm,These aren't great, but I'll hold on to hope that they'll be enough.
+6-bad_hand=flustered,This hand doesn't inspire much confidence!
+6-bad_hand=embarrassed,Aw, I lost for sure with a hand like this...
+6-bad_hand=flustered,This hand isn't helping my confidence
+6-bad_hand=flustered,Aw man, this can't end well...
+6-bad_hand=flustered,Aw darn, this is a losing hand for sure!
+6-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#lost bra
+7-good_hand=happy,Boy, am I glad to see these cards!
+7-good_hand=happy,Ah, what a relief. This hand should keep me safe.
+7-good_hand=happy,Phew. A good hand. Wonderful.
+7-good_hand=cheer,♪Ah~ yeah! Let’s go! Go, go, going up!♪
+7-good_hand=dukes,You can't keep a good fighter down!
+7-okay_hand=calm,Th-these are... these are fine.
+7-okay_hand=calm,Y-yeah, these should do.
+7-okay_hand=calm,N-not bad, but not really that good...
+7-okay_hand=flustered,Ah, this should be fine... I shouldn't worry...
+7-bad_hand=embarrassed,Oh... This isn't good...
+7-bad_hand=flustered,Looks like you have me beat for sure this round! Haha...
+7-bad_hand=flustered,O-oh. Th-this hand isn't good at all. Ahaha...
+7-bad_hand=embarrassed,<i>♪... Let's fight on, even if we get sad and unable to stand up...♪</i>
+7-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+#naked
+-3-good_hand=happy,Boy, am I glad to see these cards!
+-3-good_hand=happy,Ah, what a relief. This hand should keep me safe.
+-3-good_hand=happy,Phew. A good hand. Wonderful.
+-3-good_hand=cheer,♪Ah~ yeah! Let’s go! Go, go, going up!♪
+-3-good_hand=dukes,You can't keep a good fighter down!
+-3-okay_hand=calm,Th-these are... these are fine.
+-3-okay_hand=calm,Y-yeah, these should do.
+-3-okay_hand=calm,N-not bad, but not really that good...
+-3-okay_hand=flustered,Ah, this should be fine... I shouldn't worry...
+-3-bad_hand=embarrassed,Oh... This isn't good...
+-3-bad_hand=flustered,Looks like you have me beat for sure this round! Haha...
+-3-bad_hand=flustered,O-oh. Th-this hand isn't good at all. Ahaha...
+-3-bad_hand=embarrassed,<i>♪... Let's fight on, even if we get sad and unable to stand up...♪</i>
+-3-hand,totalAlive:2,notSaidMarker:1v1,marker:1v1=dukes,This is it; just you and me. Don't give up now!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip_winning=happy,My turn? Alright!
+must_strip_winning=happy,Me next? No problem!
+must_strip_winning=happy,Looks like I'm up!
+must_strip_winning=happy,I'm up? No worries, I've still got plenty on!
+must_strip_winning=happy,Down, but not out!
+must_strip_winning=happy,Looks like it's my turn in the spotlight!
+must_strip_normal=happy,My turn? Alright!
+must_strip_normal=happy,Me next? No problem!
+must_strip_normal=happy,Looks like I'm up!
+must_strip_normal=happy,I'm up? No worries, I've still got plenty on!
+must_strip_normal=happy,Down, but not out!
+must_strip_normal=happy,Looks like it's my turn in the spotlight!
+must_strip_losing=happy,My turn? Alright!
+must_strip_losing=happy,Me next? No problem!
+must_strip_losing=happy,Looks like I'm up!
+must_strip_losing=happy,I'm up? No worries, I've still got plenty on!
+must_strip_losing=happy,Down, but not out!
+must_strip_losing=happy,Looks like it's my turn in the spotlight!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing gloves
+0-must_strip,alsoPlaying:aella=flustered,Oh, uh, it... kinda just does this naturally. It's been like this ever since I got the ARMS ability.
+0-stripping=stripping,Let's start smart: Sparkies first. This'll make it easier to take everything else off.
+0-stripping=stripping,I'm going to do myself a favor and take my Sparkies off first. This'll make taking other things off easier.
+0-stripping,marker:NoFumbling=stripping,If you were hoping I'd keep my Sparkies on the whole time and fumble taking off my clothes, sorry to disappoint you!
+0-stripping=stripping,I don't want to have a tough time taking my other things off, so I'll start with my Sparkies.
+
+
+#losing chest guard
+1-stripped=stripped,Why yes, I <i>do</i> have hands underneath.
+1-stripped,marker:SurprisedAtHands=strippedO,Ohmigosh, <i>hands</i>!
+1-stripped=stripped,Must be strange to see an ARMS fighter's hands, huh?
+1-stripped=stripped,Can you believe some people think I don't have hands?
+1-stripped,marker:SurprisedAtHands=strippedO,<i>Woah! Hands! Mind blowing!</i>
+1-stripping=stripping,Let's go for the chest guard next. It's kinda restrictive, anyway, so it'll be nice to have it off.
+1-stripping=stripping,My chest guard is kind of uncomfortable, so I'll take that off next.
+1-stripping=stripping,Time for my chest guard to go. It's not like I need the protection right now, and it's kinda uncomfortable too.
+
+
+#losing boots
+2-stripped=stripped,Ah! Much better!
+2-stripped=stripped,That's better!
+2-stripped=stripped,Oh yeah, that's much better!
+2-stripping=stripping,One more for comfort: time to get out of these heels.
+2-stripping=stripping,At least I get a chance to get out of these heels.
+2-stripping=stripping,These boots might be fashionable, but they certainly aren't very comfortable!
+
+
+#losing shirt
+3-stripped=stripped,I'll take off my socks too. I'm sure no one wants me standing around in my sweaty, stinky gym socks anyway.
+3-stripped=stripped,I'll take off my socks too. I haven't had a chance to wash them, so they probably smell bad anyway!
+3-stripped=stripped,I'll take off my socks too. No point stalling with them, and they probably stick too, so I'm doing you all two favors!
+3-stripping=stripping,I <i>could</i> go for my skirt, but my shirt would show more skin, so that should be next, don't you think?
+3-stripping=stripping,I think it's time for me to show a lot more skin, don't you think? I'll skip my skirt and take off my shirt instead.
+3-stripping=stripping,My skirt <i>could</i> be next, but wouldn't it be more exciting if I took off my shirt instead?
+
+
+#losing skirt
+4-stripped=stripped,Th-there. Better than just seeing more of my shorts, r-right?
+4-stripped=stripped,My time at the gym sure does pay off, doesn't it?
+4-stripped=stripped,Like what you see so far?
+4-must_strip_winning=flustered,Haha. Kind of running out of items now...
+4-must_strip_winning=happy,Looks like I have to take another step towards indecency.
+4-must_strip_winning=happy,My turn? Y-yeah, no problem!
+4-must_strip_winning=happy,A-alright, here I go again!
+4-must_strip_winning=flustered,O-oh hey, it's my turn again. How about that!
+4-must_strip_normal=flustered,Haha. Kind of running out of items now...
+4-must_strip_normal=happy,Looks like I have to take another step towards indecency.
+4-must_strip_normal=happy,My turn? Y-yeah, no problem!
+4-must_strip_normal=happy,A-alright, here I go again!
+4-must_strip_normal=flustered,O-oh hey, it's my turn again. How about that!
+4-must_strip_losing=flustered,Haha. Kind of running out of items now...
+4-must_strip_losing=happy,Looks like I have to take another step towards indecency.
+4-must_strip_losing=happy,My turn? Y-yeah, no problem!
+4-must_strip_losing=happy,A-alright, here I go again!
+4-must_strip_losing=flustered,O-oh hey, it's my turn again. How about that!
+4-stripping=stripping,Sorry to disappoint, but I won't be skipping my skirt again.
+4-stripping=stripping,No skipping this time. Off comes my skirt.
+4-stripping=stripping,Back to stripped sensibly. Skirt time!
+
+
+#losing shorts
+5-stripped=stripped,This is a nice sporty look, don't you think?
+5-stripped=stripped,I've seen some people go jogging like this. It's definitely a nice sporty look!
+5-stripped=stripped,I've seen some people at the gym dressed like this. Not a bad look, wouldn't you say?
+5-must_strip_winning=flustered,Haha. Kind of running out of items now...
+5-must_strip_winning=happy,Looks like I have to take another step towards indecency.
+5-must_strip_winning=happy,My turn? Y-yeah, no problem!
+5-must_strip_winning=happy,A-alright, here I go again!
+5-must_strip_winning=flustered,O-oh hey, it's my turn again. How about that!
+5-must_strip_normal=flustered,Haha. Kind of running out of items now...
+5-must_strip_normal=happy,Looks like I have to take another step towards indecency.
+5-must_strip_normal=happy,My turn? Y-yeah, no problem!
+5-must_strip_normal=happy,A-alright, here I go again!
+5-must_strip_normal=flustered,O-oh hey, it's my turn again. How about that!
+5-must_strip_losing=flustered,Haha. Kind of running out of items now...
+5-must_strip_losing=happy,Looks like I have to take another step towards indecency.
+5-must_strip_losing=happy,My turn? Y-yeah, no problem!
+5-must_strip_losing=happy,A-alright, here I go again!
+5-must_strip_losing=flustered,O-oh hey, it's my turn again. How about that!
+5-stripping=stripping,Here goes my last line of defense.
+5-stripping=stripping,Once I take these shorts off, I'll have nothing but underwear left.
+5-stripping=stripping,This is it, my last line of defense.
+
+
+#losing bra
+6-stripped=stripped,If I lose again, things are going to get <i>scandalous</i> around here!
+6-stripped=stripped,If I lose again, you'll all get to see something that not many have!
+6-stripped=stripped,One more loss and we're going to have a scandal on our hands!
+6-stripped=stripped,If I lose again, you'll all get to see something that thousands wish they could!
+6-must_strip_winning=flustered,Haha. Kind of running out of items now...
+6-must_strip_winning=happy,Looks like I have to take another step towards indecency.
+6-must_strip_winning=happy,My turn? Y-yeah, no problem!
+6-must_strip_winning=happy,A-alright, here I go again!
+6-must_strip_winning=flustered,O-oh hey, it's my turn again. How about that!
+6-must_strip_normal=flustered,Haha. Kind of running out of items now...
+6-must_strip_normal=happy,Looks like I have to take another step towards indecency.
+6-must_strip_normal=happy,My turn? Y-yeah, no problem!
+6-must_strip_normal=happy,A-alright, here I go again!
+6-must_strip_normal=flustered,O-oh hey, it's my turn again. How about that!
+6-must_strip_losing=flustered,Haha. Kind of running out of items now...
+6-must_strip_losing=happy,Looks like I have to take another step towards indecency.
+6-must_strip_losing=happy,My turn? Y-yeah, no problem!
+6-must_strip_losing=happy,A-alright, here I go again!
+6-must_strip_losing=flustered,O-oh hey, it's my turn again. How about that!
+6-stripping=stripping,Well, here we go. Get your cameras ready!
+6-stripping=stripping,Hope your cameras are ready, because here comes something special!
+6-stripping=stripping,H-here we go, celebrity breasts! Get your cameras ready!
+
+
+#losing panties
+7-stripped=stripped,... I was kidding about that, by the way. Please don't take pictures.
+7-stripped=stripped,... P-please don't actually take pictures...
+7-stripped=stripped,I, uh... I was joking, by the way. Please don't take pictures.
+7-must_strip_winning=flustered,Eheh. I didn't really think I'd lose so much.
+7-must_strip_winning=embarrassed,Oh boy, I lost again...
+7-must_strip_winning=wink,Well, if you were waiting for me to be naked, you're finally getting your wish!
+7-must_strip_normal=flustered,Eheh. I didn't really think I'd lose so much.
+7-must_strip_normal=embarrassed,Oh boy, I lost again...
+7-must_strip_normal=wink,Well, if you were waiting for me to be naked, you're finally getting your wish!
+7-must_strip_losing=flustered,Eheh. I didn't really think I'd lose so much.
+7-must_strip_losing=embarrassed,Oh boy, I lost again...
+7-must_strip_losing=wink,Well, if you were waiting for me to be naked, you're finally getting your wish!
+7-stripping=stripping,Th-this is it. M-my last item...
+7-stripping=stripping,H-here it goes. M-my last item...
+7-stripping=stripping,Th-this is it. I-I'm about to be naked...
+
+
+#naked
+-3-stripped=stripped,S-so? What do you think?
+-3-stripped=stripped,W-well? How do I look?
+-3-stripped=stripped,S-so? Is my body everything you thought it'd be?
+-3-stripped,marker:NudeGloveLook=stripped,I hope you like the "nude with gloves" look, because this is as normal as my arms can get.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=happy,Don't let one hit keep you down!
+male_must_strip=happy,Take it on the chin, ~name~!
+male_must_strip=dukes,Can't dodge <i>this</i> hit!
+male_must_strip=happy,Better luck next time, ~name~!
+male_must_strip=happy,Your turn, ~name~!
+male_must_strip=happy,You're up, ~name~!
+male_must_strip=happy,Spotlight's on you, ~name~!
+male_must_strip=happy,Your turn in the spotlight, ~name~!
+female_must_strip=happy,Don't let one hit keep you down!
+female_must_strip=happy,Take it on the chin, ~name~!
+female_must_strip=dukes,Can't dodge <i>this</i> hit!
+female_must_strip=happy,Better luck next time, ~name~!
+female_must_strip=happy,Your turn, ~name~!
+female_must_strip=happy,You're up, ~name~!
+female_must_strip=happy,Spotlight's on you, ~name~!
+female_must_strip=happy,Your turn in the spotlight, ~name~!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-opponent_lost,targetStage:0,filter:formal_attire=happy,That's a very nice outfit you have on, ~name~! Too bad you'll probably be taking all of it off.
+0-opponent_lost,targetStage:0,filter:robot=dukes,I'm no stranger to having robotic opponents, ~name~! I once faced Springtron in the ring!
+0-opponent_lost,targetStage:0,filter:robot=dukes,I'm no stranger to having robotic opponents, ~name~! I once faced Byte and Barq in the ring!
+0-opponent_lost,targetStage:0,filter:robot=happy,Oh, a robot, huh? I bet Mechanica would like to meet you; she loves robots!
+0-opponent_lost,targetStage:0,filter:robot=happy,Oh, a robot, huh? I bet Mechanica would like to meet you!... Hopefully she won't take you apart!
+0-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+0-female_must_strip,target:joey,targetStage:2=happy,Okay!
+0-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost gloves
+1-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+1-female_must_strip,target:joey,targetStage:2=happy,Okay!
+1-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost chest guard
+2-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+2-female_must_strip,target:joey,targetStage:2=happy,Okay!
+2-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost boots
+3-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+3-female_must_strip,target:joey,targetStage:2=happy,Okay!
+3-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost shirt
+4-male_must_strip=happy,Your turn to show some skin, ~name~!
+4-male_must_strip=dukes,Time for you to take another blow!
+4-male_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+4-male_must_strip=happy,♪Your turn, ~name~~!♪
+4-male_must_strip=happy,♪Time to take something off, ~name~~!♪
+4-male_must_strip=dukes,Look out, ~name~, here comes another blow!
+4-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+4-female_must_strip=happy,Your turn to show some skin, ~name~!
+4-female_must_strip=dukes,Time for you to take another blow!
+4-female_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+4-female_must_strip=happy,♪Your turn, ~name~~!♪
+4-female_must_strip=happy,♪Time to take something off, ~name~~!♪
+4-female_must_strip=dukes,Look out, ~name~, here comes another blow!
+4-female_must_strip,target:joey,targetStage:2=happy,Okay!
+4-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost skirt
+5-male_must_strip=happy,Your turn to show some skin, ~name~!
+5-male_must_strip=dukes,Time for you to take another blow!
+5-male_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+5-male_must_strip=happy,♪Your turn, ~name~~!♪
+5-male_must_strip=happy,♪Time to take something off, ~name~~!♪
+5-male_must_strip=dukes,Look out, ~name~, here comes another blow!
+5-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+5-female_must_strip=happy,Your turn to show some skin, ~name~!
+5-female_must_strip=dukes,Time for you to take another blow!
+5-female_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+5-female_must_strip=happy,♪Your turn, ~name~~!♪
+5-female_must_strip=happy,♪Time to take something off, ~name~~!♪
+5-female_must_strip=dukes,Look out, ~name~, here comes another blow!
+5-female_must_strip,target:joey,targetStage:2=happy,Okay!
+5-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost shorts
+6-male_must_strip=happy,Your turn to show some skin, ~name~!
+6-male_must_strip=dukes,Time for you to take another blow!
+6-male_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+6-male_must_strip=happy,♪Your turn, ~name~~!♪
+6-male_must_strip=happy,♪Time to take something off, ~name~~!♪
+6-male_must_strip=dukes,Look out, ~name~, here comes another blow!
+6-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+6-female_must_strip=happy,Your turn to show some skin, ~name~!
+6-female_must_strip=dukes,Time for you to take another blow!
+6-female_must_strip=happy,Gotcha, ~name~! Now it's your turn to strip!
+6-female_must_strip=happy,♪Your turn, ~name~~!♪
+6-female_must_strip=happy,♪Time to take something off, ~name~~!♪
+6-female_must_strip=dukes,Look out, ~name~, here comes another blow!
+6-female_must_strip,target:joey,targetStage:2=happy,Okay!
+6-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#lost bra
+7-male_must_strip=wink,It can't be me who strips <i>every</i> time, you know!
+7-male_must_strip=calm,Looks like you're next, ~name~.
+7-male_must_strip=wink,You're up, ~name~. Don't disappoint!
+7-male_must_strip=dukes,Don't dish out what you can't handle!
+7-male_must_strip=happy,What'll it be this time, ~name~?
+7-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+7-female_must_strip=wink,It can't be me who strips <i>every</i> time, you know!
+7-female_must_strip=calm,Looks like you're next, ~name~.
+7-female_must_strip=wink,You're up, ~name~. Don't disappoint!
+7-female_must_strip=dukes,Don't dish out what you can't handle!
+7-female_must_strip=happy,What'll it be this time, ~name~?
+7-female_must_strip,target:joey,targetStage:2=happy,Okay!
+7-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#naked
+-3-male_must_strip=wink,It can't be me who strips <i>every</i> time, you know!
+-3-male_must_strip=calm,Looks like you're next, ~name~.
+-3-male_must_strip=wink,You're up, ~name~. Don't disappoint!
+-3-male_must_strip=dukes,Don't dish out what you can't handle!
+-3-male_must_strip=happy,What'll it be this time, ~name~?
+-3-female_human_must_strip,notSaidMarker:PlayerWager,marker:PlayerWager=dukes,You've got a certain kind of energy about you, ~player~. We should be rivals!
+-3-female_must_strip=wink,It can't be me who strips <i>every</i> time, you know!
+-3-female_must_strip=calm,Looks like you're next, ~name~.
+-3-female_must_strip=wink,You're up, ~name~. Don't disappoint!
+-3-female_must_strip=dukes,Don't dish out what you can't handle!
+-3-female_must_strip=happy,What'll it be this time, ~name~?
+-3-female_must_strip,target:joey,targetStage:2=happy,Okay!
+-3-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#masturbating
+-2-male_must_strip=happy,<i>Ah</i>, great, ~name~ strips next!
+-2-male_must_strip=cheer,Yes, <i>ah</i>, ~name~ is next!
+-2-male_must_strip=wink,H-hey, maybe you can take off something spicy for me, ~name~? <i>Mmph...</i>
+-2-male_must_strip=happy,<i>Ah</i>, lucky me. Time for ~name~ to take something off.
+-2-male_must_strip=wink,Don't keep me waiting, ~name~. I'm already dripping with anticipation.
+-2-female_must_strip=happy,Aw, sorry, ~name~... <i>ah</i>... it's your turn.
+-2-female_must_strip=calm,You're - <i>ah</i>... You're up, ~name~.
+-2-female_must_strip=calm,Mmph... Your turn, ~name~.
+-2-female_must_strip=happy,You're up, ~name~. Make this one count!
+-2-female_must_strip=happy,Better... Mmph... Better luck next time.
+-2-female_must_strip,target:joey,targetStage:2=happy,Okay!
+-2-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+#finished
+-1-male_must_strip=happy,Your turn, ~name~. You know the drill.
+-1-male_must_strip=happy,Let's keep this game going, ~name~!
+-1-male_must_strip=happy,Well then? Don't keep us waiting, ~name~.
+-1-male_must_strip=happy,Sorry, ~name~, but the game's not over yet!
+-1-female_must_strip=happy,Your turn, ~name~. You know the drill.
+-1-female_must_strip=happy,Let's keep this game going, ~name~!
+-1-female_must_strip=happy,Well then? Don't keep us waiting, ~name~.
+-1-female_must_strip=happy,Sorry, ~name~, but the game's not over yet!
+-1-female_must_strip,target:joey,targetStage:2=happy,Okay!
+-1-female_must_strip,target:joey,targetStage:5=flustered,A-another trick? Are you sure that's a good idea?
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=calm,Just your ~clothing~, then?
+male_removing_accessory=calm,That's all? Your ~clothing~?
+male_removing_accessory=calm,Ah, of course, your ~clothing~.
+male_removing_accessory=calm,Your ~clothing~? And nothing else?
+male_removed_accessory=happy,Nothing wrong with going slow.
+male_removed_accessory=happy,Nothing wrong with pacing yourself.
+male_removed_accessory=happy,It's always good to pace yourself!
+male_removed_accessory=happy,Let's just call that a warm-up.
+male_removed_accessory=happy,I'm sure you're just getting warmed up!
+female_removing_accessory=calm,Just your ~clothing~, then?
+female_removing_accessory=calm,That's all? Your ~clothing~?
+female_removing_accessory=calm,Ah, of course, your ~clothing~.
+female_removing_accessory=calm,Your ~clothing~? And nothing else?
+female_removed_accessory=happy,Nothing wrong with going slow.
+female_removed_accessory=happy,Nothing wrong with pacing yourself.
+female_removed_accessory=happy,It's always good to pace yourself!
+female_removed_accessory=happy,Let's just call that a warm-up.
+female_removed_accessory=happy,I'm sure you're just getting warmed up!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+0-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+0-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+0-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+0-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+0-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+0-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost gloves
+1-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+1-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+1-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+1-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+1-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+1-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+1-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost chest guard
+2-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+2-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+2-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+2-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+2-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+2-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+2-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost boots
+3-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+3-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+3-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+3-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+3-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+3-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+3-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost shirt
+4-male_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+4-male_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+4-male_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+4-male_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+4-male_removed_accessory=happy,That's fine. I can't get mad over that.
+4-male_removed_accessory=happy,Oh well! There's always next time!
+4-female_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+4-female_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+4-female_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+4-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+4-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+4-female_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+4-female_removed_accessory=happy,That's fine. I can't get mad over that.
+4-female_removed_accessory=happy,Oh well! There's always next time!
+4-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+4-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+4-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+4-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+4-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost skirt
+5-male_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+5-male_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+5-male_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+5-male_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+5-male_removed_accessory=happy,That's fine. I can't get mad over that.
+5-male_removed_accessory=happy,Oh well! There's always next time!
+5-female_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+5-female_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+5-female_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+5-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+5-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+5-female_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+5-female_removed_accessory=happy,That's fine. I can't get mad over that.
+5-female_removed_accessory=happy,Oh well! There's always next time!
+5-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+5-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+5-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+5-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+5-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost shorts
+6-male_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+6-male_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+6-male_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+6-male_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+6-male_removed_accessory=happy,That's fine. I can't get mad over that.
+6-male_removed_accessory=happy,Oh well! There's always next time!
+6-female_removing_accessory=flustered,Oh, that's all? Just your ~clothing~? I was hoping for more...
+6-female_removing_accessory=flustered,That's it? Sorry, I was hoping for more.
+6-female_removing_accessory=embarrassed,Your ~clothing~? That's not a whole lot...
+6-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+6-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+6-female_removed_accessory=happy,That's okay. You can take off whatever you want, after all.
+6-female_removed_accessory=happy,That's fine. I can't get mad over that.
+6-female_removed_accessory=happy,Oh well! There's always next time!
+6-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+6-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+6-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+6-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+6-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#lost bra
+7-male_removing_accessory=embarrassed,O-oh, that's all? T-too bad, I guess...
+7-male_removing_accessory=embarrassed,Your ~clothing~, huh?... That's fine...
+7-male_removing_accessory=embarrassed,Y-your ~clothing~?... And nothing else...?
+7-male_removed_accessory=happy,I'm glad ~clothing.ifPlural(those are|that is)~ out of the way now, at least.
+7-male_removed_accessory=flustered,I'll be honest, though, I wish you had just ignored ~clothing.ifPlural(those|that)~...
+7-male_removed_accessory=happy,That's okay. We're in this for good fun, after all.
+7-female_removing_accessory=embarrassed,O-oh, that's all? T-too bad, I guess...
+7-female_removing_accessory=embarrassed,Your ~clothing~, huh?... That's fine...
+7-female_removing_accessory=embarrassed,Y-your ~clothing~?... And nothing else...?
+7-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+7-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+7-female_removed_accessory=happy,I'm glad ~clothing.ifPlural(those are|that is)~ out of the way now, at least.
+7-female_removed_accessory=flustered,I'll be honest, though, I wish you had just ignored ~clothing.ifPlural(those|that)~...
+7-female_removed_accessory=happy,That's okay. We're in this for good fun, after all.
+7-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+7-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+7-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+7-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+7-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#naked
+-3-male_removing_accessory=embarrassed,O-oh, that's all? T-too bad, I guess...
+-3-male_removing_accessory=embarrassed,Your ~clothing~, huh?... That's fine...
+-3-male_removing_accessory=embarrassed,Y-your ~clothing~?... And nothing else...?
+-3-male_removed_accessory=happy,I'm glad ~clothing.ifPlural(those are|that is)~ out of the way now, at least.
+-3-male_removed_accessory=flustered,I'll be honest, though, I wish you had just ignored ~clothing.ifPlural(those|that)~...
+-3-male_removed_accessory=happy,That's okay. We're in this for good fun, after all.
+-3-female_removing_accessory=embarrassed,O-oh, that's all? T-too bad, I guess...
+-3-female_removing_accessory=embarrassed,Your ~clothing~, huh?... That's fine...
+-3-female_removing_accessory=embarrassed,Y-your ~clothing~?... And nothing else...?
+-3-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+-3-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+-3-female_removed_accessory=happy,I'm glad ~clothing.ifPlural(those are|that is)~ out of the way now, at least.
+-3-female_removed_accessory=flustered,I'll be honest, though, I wish you had just ignored ~clothing.ifPlural(those|that)~...
+-3-female_removed_accessory=happy,That's okay. We're in this for good fun, after all.
+-3-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+-3-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+-3-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+-3-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+-3-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#masturbating
+-2-male_removing_accessory=embarrassed,O-oh, that's it? I... <i>ah</i>... was hoping for more...
+-2-male_removing_accessory=embarrassed,Ah... I was hoping you'd take off... s-something bigger...
+-2-male_removing_accessory=embarrassed,Th-that's all?... Not exactly turned on watching you remove your ~clothing~...
+-2-male_removed_accessory=flustered,I'm sure you'll... <i>ah</i>... do better next time.
+-2-male_removed_accessory=flustered,Th-that's fine. Just, uh... maybe pick something bigger next time?
+-2-male_removed_accessory=flustered,Oh well. I'll just hope that you lose another round...
+-2-female_removing_accessory=happy,Y-you still had your ~clothing~? Ahaha...
+-2-female_removing_accessory=happy,Ahaha, I didn't even realize you still had your ~clothing~...
+-2-female_removing_accessory=happy,You still have your ~clothing~? Uh... cool...
+-2-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+-2-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+-2-female_removed_accessory=flustered,Fine by me, really. I've already lost...
+-2-female_removed_accessory=flustered,Well, uh... good job... taking ~clothing.ifPlural(those|that)~ off.
+-2-female_removed_accessory=calm,That's... ah... That's fine, really. Let's carry on.
+-2-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+-2-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+-2-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+-2-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+-2-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+#finished
+-1-male_removing_accessory=shocked,You kept ~clothing.ifPlural(those|that)~ this whole time?
+-1-male_removing_accessory=shocked,You had your ~clothing~ this whole time?
+-1-male_removing_accessory=shocked,Oh wow! You kept your ~clothing~ on all this time?
+-1-male_removed_accessory=dukes,Maybe I should've kept my Sparkies on so I could knock some sense into you! Haha...
+-1-male_removed_accessory=flustered,Well, uh... Good for you, I guess.
+-1-male_removed_accessory=happy,Well played, I guess!
+-1-female_removing_accessory=shocked,You kept ~clothing.ifPlural(those|that)~ this whole time?
+-1-female_removing_accessory=shocked,You had your ~clothing~ this whole time?
+-1-female_removing_accessory=shocked,Oh wow! You kept your ~clothing~ on all this time?
+-1-female_removing_accessory,target:joey,targetStage:1=shocked,Gasp! Joey, don't you know it's dangerous to wear red shoes? You might dance yourself to death!
+-1-female_removing_accessory,target:twilight,targetStage:3=flustered,I guess this <i>is</i> your last important item.
+-1-female_removed_accessory=dukes,Maybe I should've kept my Sparkies on so I could knock some sense into you! Haha...
+-1-female_removed_accessory=flustered,Well, uh... Good for you, I guess.
+-1-female_removed_accessory=happy,Well played, I guess!
+-1-female_removed_accessory,target:twilight,targetStage:4=shocked,Gah! Way to catch me off guard! I wasn't expecting that at all!
+-1-female_removed_accessory,target:twilight,targetStage:4=shocked,Oh! Just when I had gotten used to your pattern, you changed it up!
+-1-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human,saidMarker:TwilightIsPony=flustered,Aha, yeah, I guess feet <i>are</i> pretty weird, even to me sometimes. Er, speaking as a human, that is.
+-1-female_removed_accessory,target:twilight,targetStage:5,targetSayingMarker:twilight_not_human=flustered,Aha, good one, Twilight... W-wait, you were kidding, right...?
+-1-female_removed_accessory,target:twilight,targetStage:6=wink,You're not just saying that to surprise us with another ribbon, are you?
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=happy,Aw, I liked your ~clothing~, but I guess everything has to come off eventually.
+male_removing_minor=happy,Aw, that's a bit of a shame. ~clothing.ifPlural(Your ~clothing~ tie|Your ~clothing~ ties)~ your outfit together.
+male_removing_minor=happy,Your ~clothing~? That's too bad, I liked ~clothing.ifPlural(them|it)~!
+male_removing_minor=happy,Dang, you took that hit right in the fashion sense! Ahaha.
+male_removed_minor=wink,Do you think you'll be able to take another hit like that?
+male_removed_minor=wink,I hope you'll be able to take another hit like that!
+male_removed_minor=happy,I hope you're able to keep this up!
+male_removed_minor=happy,Oh well, just shake it off!
+female_removing_minor=happy,Aw, I liked your ~clothing~, but I guess everything has to come off eventually.
+female_removing_minor=happy,Aw, that's a bit of a shame. ~clothing.ifPlural(Your ~clothing~ tie|Your ~clothing~ ties)~ your outfit together.
+female_removing_minor=happy,Your ~clothing~? That's too bad, I liked ~clothing.ifPlural(them|it)~!
+female_removing_minor=happy,Dang, you took that hit right in the fashion sense! Ahaha.
+female_removed_minor=wink,Do you think you'll be able to take another hit like that?
+female_removed_minor=wink,I hope you'll be able to take another hit like that!
+female_removed_minor=happy,I hope you're able to keep this up!
+female_removed_minor=happy,Oh well, just shake it off!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost shirt
+4-male_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+4-male_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+4-male_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+4-male_removed_minor=dukes,Feeling the heat yet?
+4-male_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+4-male_removed_minor=dukes,We'll wear you down yet!
+4-female_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+4-female_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+4-female_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+4-female_removed_minor=dukes,Feeling the heat yet?
+4-female_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+4-female_removed_minor=dukes,We'll wear you down yet!
+
+
+#lost skirt
+5-male_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+5-male_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+5-male_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+5-male_removed_minor=dukes,Feeling the heat yet?
+5-male_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+5-male_removed_minor=dukes,We'll wear you down yet!
+5-female_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+5-female_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+5-female_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+5-female_removed_minor=dukes,Feeling the heat yet?
+5-female_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+5-female_removed_minor=dukes,We'll wear you down yet!
+
+
+#lost shorts
+6-male_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+6-male_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+6-male_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+6-male_removed_minor=dukes,Feeling the heat yet?
+6-male_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+6-male_removed_minor=dukes,We'll wear you down yet!
+6-female_removing_minor=happy,Well, I liked your ~clothing~, but you <i>do</i> have some catching up to do.
+6-female_removing_minor=happy,Aw, I liked your ~clothing~, but at least you're catching up now.
+6-female_removing_minor=happy,Too bad about your ~clothing~, but then again, you do have a bit of catching up to do!
+6-female_removed_minor=dukes,Feeling the heat yet?
+6-female_removed_minor=dukes,If we keep the pressure on, you'll be naked in no time!
+6-female_removed_minor=dukes,We'll wear you down yet!
+
+
+#lost bra
+7-male_removing_minor=embarrassed,I guess we couldn't expect you to skip your ~clothing~, huh...?
+7-male_removing_minor=embarrassed,Well, your ~clothing had to come off eventually...
+7-male_removing_minor=embarrassed,You sure have been lucky this match, huh...?
+7-male_removed_minor=happy,I'm sure you'll get to the bigger stuff now your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ out of the way.
+7-male_removed_minor=happy,You're sure to catch up now.
+7-male_removed_minor=happy,Well, at least your ~clothing~ will be out of the way now.
+7-female_removing_minor=embarrassed,I guess we couldn't expect you to skip your ~clothing~, huh...?
+7-female_removing_minor=embarrassed,Well, your ~clothing had to come off eventually...
+7-female_removing_minor=embarrassed,You sure have been lucky this match, huh...?
+7-female_removed_minor=happy,I'm sure you'll get to the bigger stuff now your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ out of the way.
+7-female_removed_minor=happy,You're sure to catch up now.
+7-female_removed_minor=happy,Well, at least your ~clothing~ will be out of the way now.
+
+
+#naked
+-3-male_removing_minor=embarrassed,I guess we couldn't expect you to skip your ~clothing~, huh...?
+-3-male_removing_minor=embarrassed,Well, your ~clothing had to come off eventually...
+-3-male_removing_minor=embarrassed,You sure have been lucky this match, huh...?
+-3-male_removed_minor=happy,I'm sure you'll get to the bigger stuff now your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ out of the way.
+-3-male_removed_minor=happy,You're sure to catch up now.
+-3-male_removed_minor=happy,Well, at least your ~clothing~ will be out of the way now.
+-3-female_removing_minor=embarrassed,I guess we couldn't expect you to skip your ~clothing~, huh...?
+-3-female_removing_minor=embarrassed,Well, your ~clothing had to come off eventually...
+-3-female_removing_minor=embarrassed,You sure have been lucky this match, huh...?
+-3-female_removed_minor=happy,I'm sure you'll get to the bigger stuff now your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ out of the way.
+-3-female_removed_minor=happy,You're sure to catch up now.
+-3-female_removed_minor=happy,Well, at least your ~clothing~ will be out of the way now.
+
+
+#masturbating
+-2-male_removing_minor=embarrassed,Your ~clothing~? Not exactly the, um... spiciest of options...
+-2-male_removing_minor=embarrassed,Oh, uh... yeah, your ~clothing~... of course...
+-2-male_removing_minor=embarrassed,Ah, I guess your ~clothing~ ~clothing.ifPlural(<i>are</i>|<i>is</i>)~ in the way...
+-2-male_removed_minor=flustered,I sure can't wait for you to take off more...
+-2-male_removed_minor=flustered,I hope you take off more next time, at least...
+-2-male_removed_minor=flustered,Oh well. You know what they say, "no rain, no rainbow."
+-2-female_removing_minor=happy,Aha, wow, you sure have a lot left...
+-2-female_removing_minor=happy,Wow, I didn't realize how much you still have on, ~name~.
+-2-female_removing_minor=happy,You still have so much... I'm happy for you!...
+-2-female_removed_minor=happy,I wonder who will last longer, you or me? Hahaha...
+-2-female_removed_minor=happy,Haha. At this rate, I'll probably, finish before you lose...
+-2-female_removed_minor=happy,If we were betting on who'd win, I'd put my money on you!
+
+
+#finished
+-1-male_removing_minor=embarrassed,Wow, you still have so much on...
+-1-male_removing_minor=embarrassed,I can't believe you're still wearing so much...
+-1-male_removing_minor=embarrassed,Gosh, there's still so much left to go...
+-1-male_removed_minor=happy,Oh well, I guess I can't complain.
+-1-male_removed_minor=happy,I'm sure it'll all come off eventually!
+-1-male_removed_minor=happy,Oh well, I'm sure you'll lose some more anyway!
+-1-female_removing_minor=embarrassed,Wow, you still have so much on...
+-1-female_removing_minor=embarrassed,I can't believe you're still wearing so much...
+-1-female_removing_minor=embarrassed,Gosh, there's still so much left to go...
+-1-female_removed_minor=happy,Oh well, I guess I can't complain.
+-1-female_removed_minor=happy,I'm sure it'll all come off eventually!
+-1-female_removed_minor=happy,Oh well, I'm sure you'll lose some more anyway!
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=shocked,Oh! Have you run that low on items?
+male_removing_major=shocked,Oh! You're out of smaller things to take off?
+male_removing_major=shocked,Oh! Your ~clothing~? Are you sure?
+male_removed_major=flustered,I feel kind of bad that you took your ~clothing~ off before I've taken off anything that revealing.
+male_removed_major=flustered,Sorry I'm not equally exposed, I guess.
+male_removed_major=flustered,Well, that's strip poker for you, I guess!
+male_removed_major=flustered,I hope you can bounce back from this!
+female_removing_major=shocked,Oh! Have you run that low on items?
+female_removing_major=shocked,Oh! You're out of smaller things to take off?
+female_removing_major=shocked,Oh! Your ~clothing~? Are you sure?
+female_removed_major=flustered,I feel kind of bad that you took your ~clothing~ off before I've taken off anything that revealing.
+female_removed_major=flustered,Sorry I'm not equally exposed, I guess.
+female_removed_major=flustered,Well, that's strip poker for you, I guess!
+female_removed_major=flustered,I hope you can bounce back from this!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+0-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+0-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+0-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost gloves
+1-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+1-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+1-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+1-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost chest guard
+2-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+2-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+2-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+2-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost boots
+3-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+3-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+3-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+3-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost shirt
+4-male_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+4-male_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+4-male_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+4-male_removed_major=dukes,I always love a fair fight!
+4-male_removed_major=happy,There! Now we're on the same level!
+4-male_removed_major=dukes,Game's are always more fun when the opponents are even!
+4-female_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+4-female_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+4-female_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+4-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+4-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+4-female_removed_major=dukes,I always love a fair fight!
+4-female_removed_major=happy,There! Now we're on the same level!
+4-female_removed_major=dukes,Game's are always more fun when the opponents are even!
+4-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+4-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost skirt
+5-male_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+5-male_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+5-male_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+5-male_removed_major=dukes,I always love a fair fight!
+5-male_removed_major=happy,There! Now we're on the same level!
+5-male_removed_major=dukes,Game's are always more fun when the opponents are even!
+5-female_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+5-female_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+5-female_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+5-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+5-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+5-female_removed_major=dukes,I always love a fair fight!
+5-female_removed_major=happy,There! Now we're on the same level!
+5-female_removed_major=dukes,Game's are always more fun when the opponents are even!
+5-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+5-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost shorts
+6-male_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+6-male_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+6-male_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+6-male_removed_major=dukes,I always love a fair fight!
+6-male_removed_major=happy,There! Now we're on the same level!
+6-male_removed_major=dukes,Game's are always more fun when the opponents are even!
+6-female_removing_major=happy,Haha! Now it's <i>your turn</i> to embarrass yourself!
+6-female_removing_major=happy,Come on, ~name~, if I can do it, you can do it!
+6-female_removing_major=happy,Come on, ~name~. You'll get used to not having your ~clothing~!
+6-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+6-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+6-female_removed_major=dukes,I always love a fair fight!
+6-female_removed_major=happy,There! Now we're on the same level!
+6-female_removed_major=dukes,Game's are always more fun when the opponents are even!
+6-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+6-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#lost bra
+7-male_removing_major=cheer,Ah, good choice, ~name~!
+7-male_removing_major=cheer,Your ~clothing~? Alright!
+7-male_removing_major=cheer,Alright! Go, ~name~!
+7-male_removed_major=happy,You may be defeated just yet!
+7-male_removed_major=happy,I'm glad to see you showing more skin!
+7-male_removed_major=wink,If only you came to the match dressed like this. Haha.
+7-female_removing_major=cheer,Ah, good choice, ~name~!
+7-female_removing_major=cheer,Your ~clothing~? Alright!
+7-female_removing_major=cheer,Alright! Go, ~name~!
+7-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+7-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+7-female_removed_major=happy,You may be defeated just yet!
+7-female_removed_major=happy,I'm glad to see you showing more skin!
+7-female_removed_major=wink,If only you came to the match dressed like this. Haha.
+7-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+7-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#naked
+-3-male_removing_major=cheer,Ah, good choice, ~name~!
+-3-male_removing_major=cheer,Your ~clothing~? Alright!
+-3-male_removing_major=cheer,Alright! Go, ~name~!
+-3-male_removed_major=happy,You may be defeated just yet!
+-3-male_removed_major=happy,I'm glad to see you showing more skin!
+-3-male_removed_major=wink,If only you came to the match dressed like this. Haha.
+-3-female_removing_major=cheer,Ah, good choice, ~name~!
+-3-female_removing_major=cheer,Your ~clothing~? Alright!
+-3-female_removing_major=cheer,Alright! Go, ~name~!
+-3-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+-3-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+-3-female_removed_major=happy,You may be defeated just yet!
+-3-female_removed_major=happy,I'm glad to see you showing more skin!
+-3-female_removed_major=wink,If only you came to the match dressed like this. Haha.
+-3-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+-3-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#masturbating
+-2-male_removing_major=cheer,Ah, yes! Take off your ~clothing~!
+-2-male_removing_major=cheer,Alright! Take it off, ~name~!
+-2-male_removing_major=wink,Take ~clothing.ifPlural(them|it)~ off nice a slowly for me...
+-2-male_removed_major=happy,Oh, you're done already? Haha...
+-2-male_removed_major=happy,Not much left to go now, huh?
+-2-male_removed_major=happy,Aw, that was over quicker than I'd hoped...
+-2-female_removing_major=happy,Ah, you're finally removing your ~clothing~? That's great.
+-2-female_removing_major=happy,Ah great, your ~clothing~.
+-2-female_removing_major=happy,Aha, about time you lost your ~clothing~.
+-2-female_removing_major=happy,Taking off your ~clothing~ now? Haha, about time!
+-2-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+-2-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+-2-female_removed_major=flustered,S-sorry, that sounded mean. I don't mean to be mean...
+-2-female_removed_major=flustered,S-sorry, that sounded mean. I just meant it's nice to see the game moving along.
+-2-female_removed_major=flustered,Shoot, sorry, that sounded kind of mean. I didn't mean it like that...
+-2-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+-2-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+#finished
+-1-male_removing_major=happy,Aha, finally, your ~clothing~.
+-1-male_removing_major=happy,About time you lost your ~clothing~, ahaha.
+-1-male_removing_major=happy,Alright! Finally, you're taking your ~clothing~ off!
+-1-male_removed_major=cheer,Don't give up, though! You still have a few things left!
+-1-male_removed_major=flustered,Ah, not that I'm rooting for you to lose or anything!
+-1-male_removed_major=flustered,Oh, uh, not that I have anything against you winning!
+-1-female_removing_major=happy,Aha, finally, your ~clothing~.
+-1-female_removing_major=happy,About time you lost your ~clothing~, ahaha.
+-1-female_removing_major=happy,Alright! Finally, you're taking your ~clothing~ off!
+-1-female_removing_major,target:joey,targetStage:2=happy,I'm sure this will be great!
+-1-female_removing_major,target:joey,targetStage:3=flustered,Ahaha, yeah, good one, Joey...
+-1-female_removed_major=cheer,Don't give up, though! You still have a few things left!
+-1-female_removed_major=flustered,Ah, not that I'm rooting for you to lose or anything!
+-1-female_removed_major=flustered,Oh, uh, not that I have anything against you winning!
+-1-female_removed_major,target:joey,targetStage:3=shocked,Oh no! C-can't you get it back?
+-1-female_removed_major,target:joey,targetStage:4=shocked,Oh! And here I thought Lola Pop was the only clown with a food gimmick.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=flustered,Wow. You're taking your ~clothing~ off? I feel kind of bad...
+male_chest_will_be_visible=flustered,Oh wow, your ~clothing~, huh? I feel a little bad...
+male_chest_will_be_visible=flustered,You're taking off your ~clothing~? That's great, but I feel bad about it...
+male_chest_is_visible=wink,Looks like you wouldn't have a problem taking a couple on the chest! Haha!
+male_chest_is_visible=happy,Looking good, ~name~! Very toned!
+male_chest_is_visible=happy,Very nice! Do you work out?
+male_crotch_will_be_visible=wink,I hope you're not wearing a cup under your ~clothing~!
+male_crotch_will_be_visible=wink,You're not wearing a cup under your ~clothing~, are you?
+male_crotch_will_be_visible=happy,Now <i>this</i> is what I came to see!
+male_small_crotch_is_visible=flustered,Oh, uh... that's it? S-sorry, I shouldn't have said that!
+male_small_crotch_is_visible=flustered,It's, uh... Nice! Yeah!
+male_small_crotch_is_visible=flustered,Uh... Hey, don't worry, lightweight ARMS have their uses too!
+male_small_crotch_is_visible=flustered,Uh... Hey, not every weapon needs to be a heavyweight one!
+male_medium_crotch_is_visible=embarrassed,Oh wow...
+male_medium_crotch_is_visible=embarrassed,Wow... It's... Wow...
+male_medium_crotch_is_visible=embarrassed,Oh wow... It's wonderful...
+male_medium_crotch_is_visible=embarrassed,Wow... It's very nice...
+male_large_crotch_is_visible=shocked,Woah! It's <i>huge</i>!
+male_large_crotch_is_visible=shocked,Woah! That thing must have super armor!
+male_large_crotch_is_visible=shocked,Wow! You're enormous!
+female_chest_will_be_visible=embarrassed,I guess you have to show your breasts now, huh?...
+female_chest_will_be_visible=embarrassed,Taking off your ~clothing~ now, huh?...
+female_chest_will_be_visible=embarrassed,I guess it's time for you to let them loose, huh?...
+female_small_chest_is_visible=flustered,They're really... cute!
+female_small_chest_is_visible=flustered,Hey, don't worry, mine aren't very big, either!
+female_small_chest_is_visible=flustered,Uh... Hey, size isn't everything!
+female_medium_chest_is_visible=happy,Those are very healthy-looking!
+female_medium_chest_is_visible=happy,They look great!
+female_medium_chest_is_visible=happy,They look, uh... soft!
+female_large_chest_is_visible=embarrassed,Wow. Those are... those are pretty big.
+female_large_chest_is_visible=embarrassed,~clothing.ifPlural(Are your ~clothing~|Is your ~clothing~)~ comfortable, ~name~? If not, I hear Twintelle's line of bras are pretty... supportive.
+female_large_chest_is_visible=embarrassed,Wow. I bet guys just <i>love</i> those...
+female_crotch_will_be_visible=embarrassed,I guess you are kind of backed into a corner here, huh?...
+female_crotch_will_be_visible=embarrassed,I guess ~clothing.ifPlural(those are|this is)~ your last item, huh?...
+female_crotch_will_be_visible=embarrassed,This is it, huh? Your ~clothing~... Nothing left after this...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+0-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+0-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+0-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+0-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+0-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+0-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+0-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+0-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+0-female_crotch_is_visible=happy,It's, uh... well-groomed!
+0-female_crotch_is_visible=happy,Uh... Yeah! Looking good!
+0-female_crotch_is_visible=happy,That's, uh... nice!
+0-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+0-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+0-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+0-female_crotch_is_visible,target:human=embarrassed,O-oh wow... M-maybe losing to you wouldn't be so bad...
+0-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+0-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+0-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+0-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+0-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost gloves
+1-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+1-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+1-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+1-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+1-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+1-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+1-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+1-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+1-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+1-female_crotch_is_visible=happy,It's, uh... well-groomed!
+1-female_crotch_is_visible=happy,Uh... Yeah! Looking good!
+1-female_crotch_is_visible=happy,That's, uh... nice!
+1-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+1-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+1-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+1-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+1-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+1-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+1-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+1-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost chest guard
+2-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+2-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+2-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+2-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+2-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+2-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+2-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+2-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+2-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+2-female_crotch_is_visible=happy,It's, uh... well-groomed!
+2-female_crotch_is_visible=happy,Uh... Yeah! Looking good!
+2-female_crotch_is_visible=happy,That's, uh... nice!
+2-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+2-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+2-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+2-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+2-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+2-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+2-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+2-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost boots
+3-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+3-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+3-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+3-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+3-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+3-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+3-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+3-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+3-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+3-female_crotch_is_visible=happy,It's, uh... well-groomed!
+3-female_crotch_is_visible=happy,Uh... Yeah! Looking good!
+3-female_crotch_is_visible=happy,That's, uh... nice!
+3-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+3-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+3-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+3-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+3-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+3-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+3-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+3-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost shirt
+4-male_chest_will_be_visible=happy,Alright! Time for your ~clothing~!
+4-male_chest_will_be_visible=happy,Hope you're not shy about your chest!
+4-male_chest_will_be_visible=happy,Looks like it's time to see that chest of yours, ~name~!
+4-male_chest_is_visible=happy,Looking good, ~name~!
+4-male_chest_is_visible=dukes,Wanna have a shirts versus skins match? Haha!
+4-male_chest_is_visible=dukes,Looking good! Have you ever thought about taking up gloves?
+4-male_crotch_will_be_visible=happy,Here comes the best part!
+4-male_crotch_will_be_visible=happy,This is what I've been waiting for!
+4-male_crotch_will_be_visible=happy,I've been waiting all game for this!
+4-male_crotch_will_be_visible=happy,Here comes my favorite lyric!
+4-male_small_crotch_is_visible=flustered,Oh, uh... Not bad!
+4-male_small_crotch_is_visible=flustered,Hey, you know what they say: "one man's trash is another man's treasure."
+4-male_small_crotch_is_visible=flustered,A-alright! Yay!...
+4-male_medium_crotch_is_visible=flustered,Heh. I'm kinda surprised you're not hard yet.
+4-male_medium_crotch_is_visible=flustered,One more loss and you'll be out of the game, huh? Well, don't let that discourage you!
+4-male_medium_crotch_is_visible=wink,O-oh, I was expecting you to be hard. Want me to change that? Haha.
+4-male_large_crotch_is_visible=shocked,I've never seen one so big before!
+4-male_large_crotch_is_visible=shocked,It's so big! I can't believe it!
+4-male_large_crotch_is_visible=shocked,You could hurt someone with that thing!
+4-female_chest_will_be_visible=embarrassed,Your ~clothing~, huh? I'll probably be in that position pretty soon, too...
+4-female_chest_will_be_visible=flustered,If it's any consolation, I'll probably be topless soon too.
+4-female_chest_will_be_visible=flustered,I feel kind of bad for you, ~name~. Want me to take my bra off too? Aha...
+4-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+4-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+4-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+4-female_small_chest_is_visible=flustered,Don't worry, mine aren't that big either, as you can kinda see.
+4-female_small_chest_is_visible=flustered,I'm sure there's someone somewhere who'll love those!
+4-female_small_chest_is_visible=happy,They're kinda cute!
+4-female_medium_chest_is_visible=flustered,Haha. You got me beat in the size department.
+4-female_medium_chest_is_visible=happy,You should be proud of those, ~name~. I would be!
+4-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain bouncy dork that I know.
+4-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain jiggly goofball that I know.
+4-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+4-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+4-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+4-female_large_chest_is_visible=flustered,With breasts like those on display, do you even need to see mine? Hahaha...
+4-female_large_chest_is_visible=embarrassed,It's going to be hard to follow-up those...
+4-female_large_chest_is_visible=flustered,Aha, that's going to be a hard act to follow...
+4-female_crotch_will_be_visible=embarrassed,Hope you enjoyed your ~clothing~ while ~clothing.ifPlural(they|it)~ lasted, at least.
+4-female_crotch_will_be_visible=embarrassed,Aw, too bad, you have to take your ~clothing~ off now...
+4-female_crotch_will_be_visible=flustered,A-ah, I guess you have to show your, uh... ladybits now.
+4-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+4-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+4-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+4-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+4-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+4-female_crotch_is_visible=flustered,Yeah... looking good, ~name~.
+4-female_crotch_is_visible=flustered,It's... very nice!
+4-female_crotch_is_visible=flustered,It must feel nice!... To touch, I mean... Never mind...
+4-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+4-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+4-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+4-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+4-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+4-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost skirt
+5-male_chest_will_be_visible=happy,Alright! Time for your ~clothing~!
+5-male_chest_will_be_visible=happy,Hope you're not shy about your chest!
+5-male_chest_will_be_visible=happy,Looks like it's time to see that chest of yours, ~name~!
+5-male_chest_is_visible=happy,Looking good, ~name~!
+5-male_chest_is_visible=dukes,Wanna have a shirts versus skins match? Haha!
+5-male_chest_is_visible=dukes,Looking good! Have you ever thought about taking up gloves?
+5-male_crotch_will_be_visible=happy,Here comes the best part!
+5-male_crotch_will_be_visible=happy,This is what I've been waiting for!
+5-male_crotch_will_be_visible=happy,I've been waiting all game for this!
+5-male_crotch_will_be_visible=happy,Here comes my favorite lyric!
+5-male_small_crotch_is_visible=flustered,Oh, uh... Not bad!
+5-male_small_crotch_is_visible=flustered,Hey, you know what they say: "one man's trash is another man's treasure."
+5-male_small_crotch_is_visible=flustered,A-alright! Yay!...
+5-male_medium_crotch_is_visible=flustered,Heh. I'm kinda surprised you're not hard yet.
+5-male_medium_crotch_is_visible=flustered,One more loss and you'll be out of the game, huh? Well, don't let that discourage you!
+5-male_medium_crotch_is_visible=wink,O-oh, I was expecting you to be hard. Want me to change that? Haha.
+5-male_large_crotch_is_visible=shocked,I've never seen one so big before!
+5-male_large_crotch_is_visible=shocked,It's so big! I can't believe it!
+5-male_large_crotch_is_visible=shocked,You could hurt someone with that thing!
+5-female_chest_will_be_visible=embarrassed,Your ~clothing~, huh? I'll probably be in that position pretty soon, too...
+5-female_chest_will_be_visible=flustered,If it's any consolation, I'll probably be topless soon too.
+5-female_chest_will_be_visible=flustered,I feel kind of bad for you, ~name~. Want me to take my bra off too? Aha...
+5-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+5-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+5-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+5-female_small_chest_is_visible=flustered,Don't worry, mine aren't that big either, as you can kinda see.
+5-female_small_chest_is_visible=flustered,I'm sure there's someone somewhere who'll love those!
+5-female_small_chest_is_visible=happy,They're kinda cute!
+5-female_medium_chest_is_visible=flustered,Haha. You got me beat in the size department.
+5-female_medium_chest_is_visible=happy,You should be proud of those, ~name~. I would be!
+5-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain bouncy dork that I know.
+5-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain jiggly goofball that I know.
+5-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+5-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+5-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+5-female_large_chest_is_visible=flustered,With breasts like those on display, do you even need to see mine? Hahaha...
+5-female_large_chest_is_visible=embarrassed,It's going to be hard to follow-up those...
+5-female_large_chest_is_visible=flustered,Aha, that's going to be a hard act to follow...
+5-female_crotch_will_be_visible=embarrassed,Hope you enjoyed your ~clothing~ while ~clothing.ifPlural(they|it)~ lasted, at least.
+5-female_crotch_will_be_visible=embarrassed,Aw, too bad, you have to take your ~clothing~ off now...
+5-female_crotch_will_be_visible=flustered,A-ah, I guess you have to show your, uh... ladybits now.
+5-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+5-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+5-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+5-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+5-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+5-female_crotch_is_visible=flustered,Yeah... looking good, ~name~.
+5-female_crotch_is_visible=flustered,It's... very nice!
+5-female_crotch_is_visible=flustered,It must feel nice!... To touch, I mean... Never mind...
+5-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+5-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+5-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+5-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+5-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+5-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost shorts
+6-male_chest_will_be_visible=happy,Alright! Time for your ~clothing~!
+6-male_chest_will_be_visible=happy,Hope you're not shy about your chest!
+6-male_chest_will_be_visible=happy,Looks like it's time to see that chest of yours, ~name~!
+6-male_chest_is_visible=happy,Looking good, ~name~!
+6-male_chest_is_visible=dukes,Wanna have a shirts versus skins match? Haha!
+6-male_chest_is_visible=dukes,Looking good! Have you ever thought about taking up gloves?
+6-male_crotch_will_be_visible=happy,Here comes the best part!
+6-male_crotch_will_be_visible=happy,This is what I've been waiting for!
+6-male_crotch_will_be_visible=happy,I've been waiting all game for this!
+6-male_crotch_will_be_visible=happy,Here comes my favorite lyric!
+6-male_small_crotch_is_visible=flustered,Oh, uh... Not bad!
+6-male_small_crotch_is_visible=flustered,Hey, you know what they say: "one man's trash is another man's treasure."
+6-male_small_crotch_is_visible=flustered,A-alright! Yay!...
+6-male_medium_crotch_is_visible=flustered,Heh. I'm kinda surprised you're not hard yet.
+6-male_medium_crotch_is_visible=flustered,One more loss and you'll be out of the game, huh? Well, don't let that discourage you!
+6-male_medium_crotch_is_visible=wink,O-oh, I was expecting you to be hard. Want me to change that? Haha.
+6-male_large_crotch_is_visible=shocked,I've never seen one so big before!
+6-male_large_crotch_is_visible=shocked,It's so big! I can't believe it!
+6-male_large_crotch_is_visible=shocked,You could hurt someone with that thing!
+6-female_chest_will_be_visible=embarrassed,Your ~clothing~, huh? I'll probably be in that position pretty soon, too...
+6-female_chest_will_be_visible=flustered,If it's any consolation, I'll probably be topless soon too.
+6-female_chest_will_be_visible=flustered,I feel kind of bad for you, ~name~. Want me to take my bra off too? Aha...
+6-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+6-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+6-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+6-female_small_chest_is_visible=flustered,Don't worry, mine aren't that big either, as you can kinda see.
+6-female_small_chest_is_visible=flustered,I'm sure there's someone somewhere who'll love those!
+6-female_small_chest_is_visible=happy,They're kinda cute!
+6-female_medium_chest_is_visible=flustered,Haha. You got me beat in the size department.
+6-female_medium_chest_is_visible=happy,You should be proud of those, ~name~. I would be!
+6-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain bouncy dork that I know.
+6-female_medium_chest_is_visible=flustered,Aha. Suddenly I'm reminded of a certain jiggly goofball that I know.
+6-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+6-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+6-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not shy about this, at least!
+6-female_large_chest_is_visible=flustered,With breasts like those on display, do you even need to see mine? Hahaha...
+6-female_large_chest_is_visible=embarrassed,It's going to be hard to follow-up those...
+6-female_large_chest_is_visible=flustered,Aha, that's going to be a hard act to follow...
+6-female_crotch_will_be_visible=embarrassed,Hope you enjoyed your ~clothing~ while ~clothing.ifPlural(they|it)~ lasted, at least.
+6-female_crotch_will_be_visible=embarrassed,Aw, too bad, you have to take your ~clothing~ off now...
+6-female_crotch_will_be_visible=flustered,A-ah, I guess you have to show your, uh... ladybits now.
+6-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+6-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+6-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+6-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+6-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+6-female_crotch_is_visible=flustered,Yeah... looking good, ~name~.
+6-female_crotch_is_visible=flustered,It's... very nice!
+6-female_crotch_is_visible=flustered,It must feel nice!... To touch, I mean... Never mind...
+6-female_crotch_is_visible,target:human=embarrassed,O-oh wow... I might reconsider my options for what we'll do if I win...
+6-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+6-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+6-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+6-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+6-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#lost bra
+7-male_chest_will_be_visible=wink,I think it's only fair that you let me see your chest too, ~name~!
+7-male_chest_will_be_visible=wink,You can see my chest, I think it's only fair I get to see yours too!
+7-male_chest_will_be_visible=happy,Haha, now <i>I</i> get to see <i>your</i> chest!
+7-male_chest_is_visible=happy,That makes me feel a bit better about my state of dress.
+7-male_chest_is_visible=wink,Half-naked is a good start, but I hope you don't plan on stopping here.
+7-male_chest_is_visible=happy,Ooh, I sure would like to have a feel.
+7-male_crotch_will_be_visible=cheer,Time for you to <i>really</i> show off!
+7-male_crotch_will_be_visible=dukes,You'd better be hard already, or I'll have to beat you until you are. Hahaha.
+7-male_crotch_will_be_visible=wink,Well then? Drop ~clothing.ifPlural('em|it)~, ~name~.
+7-male_small_crotch_is_visible=flustered,Oh... Um... D-does it get bigger...?
+7-male_small_crotch_is_visible=flustered,O-oh, I see, it's like Helix; it might be small <i>now</i>, but it'll get bigger!... Right...?
+7-male_small_crotch_is_visible=flustered,O-oh, I see. You're a grower not a shower, r-right?
+7-male_medium_crotch_is_visible=happy,You should be proud of that, ~name~!
+7-male_medium_crotch_is_visible=happy,Totally worth the wait!
+7-male_medium_crotch_is_visible=happy,I hope I get a chance to see you handle that!
+7-male_large_crotch_is_visible=shocked,That's humongous! How'd it even get that big?
+7-male_large_crotch_is_visible=shocked,That thing is in a weight class of its own!
+7-male_large_crotch_is_visible=shocked,That's almost scary-big!
+7-female_chest_will_be_visible=happy,I guess it's time for you to show off your goods too, huh?
+7-female_chest_will_be_visible=wink,Looks like we're going to have another scandal on our hands, ahaha.
+7-female_chest_will_be_visible=happy,Time to let the goods hang free.
+7-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+7-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+7-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+7-female_small_chest_is_visible=flustered,Haha, they're just like mine.
+7-female_small_chest_is_visible=flustered,I bet we're the same size. Ahaha...
+7-female_small_chest_is_visible=happy,Uh... Hey, small breasts have their advantages!
+7-female_medium_chest_is_visible=embarrassed,Ah. Mine must look pretty small next to those...
+7-female_medium_chest_is_visible=flustered,Th-there, this isn't so bad, is it?
+7-female_medium_chest_is_visible=happy,It's becoming more and more like a locker room here by the moment. Aha...
+7-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+7-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+7-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not as shy about this as I am, at least!
+7-female_large_chest_is_visible=embarrassed,Wow... Those absolutely dwarf mine...
+7-female_large_chest_is_visible=embarrassed,I wonder how small mine look next to those...
+7-female_large_chest_is_visible=happy,Compared to you, I must look like I don't have breasts at all! Hahaha...
+7-female_crotch_will_be_visible=flustered,Wow. We're both pretty close to losing, huh...?
+7-female_crotch_will_be_visible=flustered,Aha, I guess we're both pretty close to having to... you know...
+7-female_crotch_will_be_visible=flustered,Ah, there ~clothing.ifPlural(go|goes)~ your ~clothing~...
+7-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+7-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+7-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+7-female_crotch_is_visible=embarrassed,I wonder who'll be out first, ~name~, you or me?
+7-female_crotch_is_visible=embarrassed,I wonder which of us will be able to last longer?
+7-female_crotch_is_visible=dukes,Think you can still come out on top, ~name~?
+7-female_crotch_is_visible=happy,Oh! Shaved, huh? Or is it waxed? It looks great!
+7-female_crotch_is_visible=happy,Oh! You shave, huh? It looks great!
+7-female_crotch_is_visible,target:human=embarrassed,O-oh wow... M-maybe losing to you wouldn't be so bad...
+7-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+7-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+7-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+7-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+7-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#naked
+-3-male_chest_will_be_visible=wink,I think it's only fair that you let me see your chest too, ~name~!
+-3-male_chest_will_be_visible=wink,You can see my chest, I think it's only fair I get to see yours too!
+-3-male_chest_will_be_visible=happy,Haha, now <i>I</i> get to see <i>your</i> chest!
+-3-male_chest_is_visible=happy,That makes me feel a bit better about my state of dress.
+-3-male_chest_is_visible=wink,Half-naked is a good start, but I hope you don't plan on stopping here.
+-3-male_chest_is_visible=happy,Ooh, I sure would like to have a feel.
+-3-male_crotch_will_be_visible=cheer,Time for you to <i>really</i> show off!
+-3-male_crotch_will_be_visible=dukes,You'd better be hard already, or I'll have to beat you until you are. Hahaha.
+-3-male_crotch_will_be_visible=wink,Well then? Drop ~clothing.ifPlural('em|it)~, ~name~.
+-3-male_small_crotch_is_visible=flustered,Oh... Um... D-does it get bigger...?
+-3-male_small_crotch_is_visible=flustered,O-oh, I see, it's like Helix; it might be small <i>now</i>, but it'll get bigger!... Right...?
+-3-male_small_crotch_is_visible=flustered,O-oh, I see. You're a grower not a shower, r-right?
+-3-male_medium_crotch_is_visible=happy,You should be proud of that, ~name~!
+-3-male_medium_crotch_is_visible=happy,Totally worth the wait!
+-3-male_medium_crotch_is_visible=happy,I hope I get a chance to see you handle that!
+-3-male_large_crotch_is_visible=shocked,That's humongous! How'd it even get that big?
+-3-male_large_crotch_is_visible=shocked,That thing is in a weight class of its own!
+-3-male_large_crotch_is_visible=shocked,That's almost scary-big!
+-3-female_chest_will_be_visible=happy,I guess it's time for you to show off your goods too, huh?
+-3-female_chest_will_be_visible=wink,Looks like we're going to have another scandal on our hands, ahaha.
+-3-female_chest_will_be_visible=happy,Time to let the goods hang free.
+-3-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+-3-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+-3-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+-3-female_small_chest_is_visible=flustered,Haha, they're just like mine.
+-3-female_small_chest_is_visible=flustered,I bet we're the same size. Ahaha...
+-3-female_small_chest_is_visible=happy,Uh... Hey, small breasts have their advantages!
+-3-female_medium_chest_is_visible=embarrassed,Ah. Mine must look pretty small next to those...
+-3-female_medium_chest_is_visible=flustered,Th-there, this isn't so bad, is it?
+-3-female_medium_chest_is_visible=happy,It's becoming more and more like a locker room here by the moment. Aha...
+-3-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+-3-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+-3-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not as shy about this as I am, at least!
+-3-female_large_chest_is_visible=embarrassed,Wow... Those absolutely dwarf mine...
+-3-female_large_chest_is_visible=embarrassed,I wonder how small mine look next to those...
+-3-female_large_chest_is_visible=happy,Compared to you, I must look like I don't have breasts at all! Hahaha...
+-3-female_crotch_will_be_visible=flustered,Wow. We're both pretty close to losing, huh...?
+-3-female_crotch_will_be_visible=flustered,Aha, I guess we're both pretty close to having to... you know...
+-3-female_crotch_will_be_visible=flustered,Ah, there ~clothing.ifPlural(go|goes)~ your ~clothing~...
+-3-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+-3-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+-3-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+-3-female_crotch_is_visible=embarrassed,I wonder who'll be out first, ~name~, you or me?
+-3-female_crotch_is_visible=embarrassed,I wonder which of us will be able to last longer?
+-3-female_crotch_is_visible=dukes,Think you can still come out on top, ~name~?
+-3-female_crotch_is_visible=flustered,Oh! You shave there, huh? I meant to do that too, but I couldn't find the time...
+-3-female_crotch_is_visible=flustered,Oh! Y-you shaved? I would've done that too, but I can never find the time...
+-3-female_crotch_is_visible,target:human=embarrassed,O-oh wow... M-maybe losing to you wouldn't be so bad...
+-3-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+-3-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+-3-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+-3-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+-3-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#masturbating
+-2-male_chest_will_be_visible=cheer,Alright! Let me see that chest of yours, ~name~!
+-2-male_chest_will_be_visible=happy,Oh good, I could use more to, uh... work with.
+-2-male_chest_will_be_visible=happy,Ah, good, more - <i>ah</i>... more motivation.
+-2-male_chest_will_be_visible,totalExposed:1=happy,Oh good, I was getting kind of tired of using my imagination.
+-2-male_chest_will_be_visible,totalExposed:1=happy,Oh good, I really need this right now.
+-2-male_chest_is_visible=calm,<i>Aah...</i> That's nice...
+-2-male_chest_is_visible=calm,L-looking good, ~name~... <i>very</i> good. <i>Mmm...</i>
+-2-male_chest_is_visible=calm,Ooh yeah... V-very nice, ~name~.
+-2-male_chest_is_visible,filter:muscular=heavy,<i>Mmmmph...</i> You're very... very well-built, ~name~...
+-2-male_crotch_will_be_visible=cheer,Perfect timing, ~name~!
+-2-male_crotch_will_be_visible=wink,Well then? If you're picking your ~clothing~, don't keep us waiting!
+-2-male_crotch_will_be_visible=wink,Come on, ~name~, don't make me beg!
+-2-male_small_crotch_is_visible=happy,Oh, uh... <i>Wow! That's hot!</i>
+-2-male_small_crotch_is_visible=happy,Ah... Uh, <i>ah! I really needed to see that!</i>
+-2-male_small_crotch_is_visible=happy,... Uh, <i> Oh yes! I love it!</i>
+-2-male_medium_crotch_is_visible=calm,<i>Aaah...</i> I hope you don't mind me staring at that for a bit.
+-2-male_medium_crotch_is_visible=happy,I wouldn't mind being TKOed by that. Ahahaha...
+-2-male_medium_crotch_is_visible=calm,I wouldn't mind getting my hands on that...
+-2-male_large_crotch_is_visible=shocked,Oh wow! That's a lot more than I was hoping for!
+-2-male_large_crotch_is_visible=shocked,Woah! That's a lot more than I needed to see!
+-2-male_large_crotch_is_visible=shocked,Gosh! Would that even fit in me...?
+-2-female_chest_will_be_visible=flustered,H-hey, I guess this is my chance to see if I'm secretly into breasts.
+-2-female_chest_will_be_visible=flustered,I wonder if this will do anything for me...
+-2-female_chest_will_be_visible=flustered,Well, uh... let's see them, then!
+-2-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+-2-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+-2-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+-2-female_small_chest_is_visible=happy,They're... <i>ah</i>... they're cute!
+-2-female_small_chest_is_visible=wink,I wonder if they're as sensitive as mine are...
+-2-female_small_chest_is_visible=wink,Are they sensitive? Mine sure are...
+-2-female_medium_chest_is_visible=happy,<i>Ah</i>... Those are nice!
+-2-female_medium_chest_is_visible=happy,They - <i>ah</i>... they have a nice amount of bounce to them!
+-2-female_medium_chest_is_visible=happy,Oh wow. I think I see what men like about those so much, haha...
+-2-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+-2-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+-2-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not as shy about this as I am, at least!
+-2-female_large_chest_is_visible=embarrassed,Uh, y-yeah, those are nice. Very... <i>mmph</i>... big.
+-2-female_large_chest_is_visible=embarrassed,Gosh, you - <i>ah</i>... you sure are busty...
+-2-female_large_chest_is_visible=embarrassed,<i>Mmmph</i>... You certainly are, uh... blessed.
+-2-female_crotch_will_be_visible=flustered,I guess this is it, then? After this, you'll be naked...
+-2-female_crotch_will_be_visible=happy,Oh no, ~clothing.ifPlural(those are your last item, aren't they|this is your last item, isn't it)~?
+-2-female_crotch_will_be_visible=happy,I guess now's a better time than ever to see you fully nude.
+-2-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+-2-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+-2-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+-2-female_crotch_is_visible=flustered,Oh! You shave there, huh? I meant to do that too, but I couldn't find the time...
+-2-female_crotch_is_visible=flustered,Oh! Y-you shaved? I would've done that too, but I can never find the time...
+-2-female_crotch_is_visible=happy,You... <i>ah</i>... You look good!
+-2-female_crotch_is_visible=happy,You... You look great naked!
+-2-female_crotch_is_visible=happy,You look... very nice!
+-2-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+-2-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+-2-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+-2-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+-2-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+#finished
+-1-male_chest_will_be_visible=happy,It's never too late to admire someone's pecs!
+-1-male_chest_will_be_visible=happy,I never pass up a good opportunity to check out some pecs!
+-1-male_chest_will_be_visible=happy,I always love it when a guy takes his ~clothing~ off!
+-1-male_chest_is_visible=happy,Very nice, ~name~.
+-1-male_chest_is_visible=happy,Ooh, mind if I come over to feel it?
+-1-male_chest_is_visible=happy,Ooh, you look great, ~name~!
+-1-male_crotch_will_be_visible=happy,This would've been nicer earlier, but I can't complain.
+-1-male_crotch_will_be_visible=happy,Your timing could use some work, ~name~.
+-1-male_crotch_will_be_visible=flustered,Aw man, why couldn't you have lost ~clothing.ifPlural(those|that)~ sooner?...
+-1-male_small_crotch_is_visible=flustered,Oh, uh... <i>Wow! Too bad I did get to see that sooner!</i>
+-1-male_small_crotch_is_visible=happy,... Uh, <i>Aw man, why couldn't you have gotten that out sooner?</i>
+-1-male_small_crotch_is_visible=happy,Uh... <i>Darn! If only I got to see that earlier!</i>
+-1-male_medium_crotch_is_visible=flustered,Aha... It's not against the rules to, uh... <i>go again</i>, is it..?
+-1-male_medium_crotch_is_visible=flustered,Aha... C-can I lose again...?
+-1-male_medium_crotch_is_visible=flustered,... M-maybe I'll just... A-ah, never mind...
+-1-male_large_crotch_is_visible=shocked,Wow! I wouldn't even <i>dream</i> of one that big!
+-1-male_large_crotch_is_visible=shocked,Wow! It's going to be a long time before I forget <i>that</i>!
+-1-male_large_crotch_is_visible=shocked,Wow! I didn't realize the Big Time ARMS affected... <i>those!</i>
+-1-female_chest_will_be_visible=flustered,I guess this had to happen eventually...
+-1-female_chest_will_be_visible=flustered,It had to happen sooner or later, I guess...
+-1-female_chest_will_be_visible=flustered,Aha, looks like we finally got your ~clothing~ off.
+-1-female_chest_will_be_visible,target:joey=happy,Well, I guess you don't have much to lose if this goes wrong.
+-1-female_chest_will_be_visible,target:twilight,targetStage:1=shocked,Woah! Your bra next? I guess I shouldn't be surprised!
+-1-female_chest_will_be_visible,target:twilight,targetStage:6=flustered,The order you took everything off in sure was... odd, but definitely made things exciting!
+-1-female_small_chest_is_visible=happy,What a lovely little pair!
+-1-female_small_chest_is_visible=happy,They're really nice, ~name~! Very cute!
+-1-female_small_chest_is_visible=happy,Aw, they're, uh... very fitting!
+-1-female_medium_chest_is_visible=happy,Those are... neat!
+-1-female_medium_chest_is_visible=happy,Bouncy... Aha, just like a certain dork that I know...
+-1-female_medium_chest_is_visible=happy,Jjiggly... Aha, just like a certain goofball that I know...
+-1-female_medium_chest_is_visible,target:joey=flustered,Ah, see, that's not so bad. It was just your tie.
+-1-female_medium_chest_is_visible,target:twilight,targetStage:2=dukes,Better watch out, Twilight! I'm catching on to your strategy! Haha!
+-1-female_medium_chest_is_visible,target:twilight,targetStage:7=happy,It's nice to see that you're not as shy about this as I am, at least!
+-1-female_large_chest_is_visible=shocked,Wow! Those are... huge!
+-1-female_large_chest_is_visible=shocked,Woah! That's... a lot of cushioning!
+-1-female_large_chest_is_visible=shocked,Wow! You sure are... blessed!
+-1-female_crotch_will_be_visible=flustered,I shouldn't feel bad about this, but I kind of do...
+-1-female_crotch_will_be_visible=flustered,Ah, I feel kind of bad about this, but I know I shouldn't...
+-1-female_crotch_will_be_visible=flustered,Aw, I feel kind of bad that you have to get naked now...
+-1-female_crotch_will_be_visible,target:joey=flustered,Uh, yeah, t-totally!
+-1-female_crotch_will_be_visible,target:twilight,targetStage:0=shocked,Oh gosh! I can't say I ever expected you to pick <i>those</i> first!
+-1-female_crotch_will_be_visible,target:twilight,targetStage:2=dukes,I see right through you now!... Er, I mean, I see through your strategy. Important stuff first.
+-1-female_crotch_is_visible=flustered,If it makes you feel better, losing wasn't so bad.
+-1-female_crotch_is_visible=happy,Whoever dates you will be one lucky guy!... Or girl! Or whoever you're into!
+-1-female_crotch_is_visible=happy,You have a very healthy-looking body, ~name~!
+-1-female_crotch_is_visible=flustered,Oh! You shave there, huh? I meant to do that too, but I couldn't find the time...
+-1-female_crotch_is_visible=flustered,Oh! Y-you shaved? I would've done that too, but I can never find the time...
+-1-female_crotch_is_visible,target:joey=shocked,Woah! Clowns sure do know how to keep me on my toes!
+-1-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Well, at least you're playing unpredictably! That's always good!
+-1-female_crotch_is_visible,target:twilight,targetStage:1=flustered,Way to keep your opponents on their toes, I guess!
+-1-female_crotch_is_visible,target:twilight,targetStage:3=happy,Not a fan of skirts, huh? I'm pretty fond of them, myself. Most of my outfits involve one, if not a dress.
+-1-female_crotch_is_visible,target:twilight,targetStage:3,targetSayingMarker:twilight_not_human,marker:TwilightIsPony=shocked,W-wait, did you just say "<i>pony</i>?" You're a horse?
+
+
+
+
+#OPPONENT STRIPPING IN GENERAL
+#Lines that trigger when a player is strips regardless of gender or what they are removing.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    
+
+#fully clothed
+0-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost gloves
+1-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost chest guard
+2-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost boots
+3-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost shirt
+4-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost skirt
+5-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost shorts
+6-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#lost bra
+7-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+#naked
+-3-opponent_stripped,target:human,notSaidMarker:WagerStart,marker:WagerStart=happy,How about this: if you win, we can do whatever you want afterwards, but if I win... ah, we can work that out later.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=happy,Sorry, ~name~, looks like you're out.
+male_must_masturbate=flustered,Sorry, ~name~, looks like you have to... you know...
+male_must_masturbate=flustered,Oh dang, I guess you're out, ~name~.
+male_start_masturbating=embarrassed,If it helps, you can, uh, look at me.
+male_start_masturbating=embarrassed,You can look at me while you do that, if you want.
+male_start_masturbating=flustered,Sorry that I'm not showing anything, uh... pleasing.
+male_start_masturbating=embarrassed,I know I'm not showing much skin, but you can look at me if it helps you...
+male_masturbating=flustered,Sorry, I'm staring, aren't I?
+male_masturbating=embarrassed,You're, uh... pretty good at that.
+male_masturbating=flustered,Hope your arm isn't getting tired yet, ~name~! Haha...
+male_masturbating=embarrassed,Want some help over there, ~name~? Haha...
+male_finished_masturbating=shocked,Oh! I guess you're done, then!
+male_finished_masturbating=shocked,Ah! I wasn't ready for that!
+male_finished_masturbating=shocked,Oh! That was... quite a load!
+female_must_masturbate=flustered,Sorry, ~name~, looks like you're out.
+female_must_masturbate=flustered,Sorry, ~name~, looks like you have to... you know...
+female_must_masturbate=flustered,Oh dang, I guess you're out, ~name~.
+female_start_masturbating=embarrassed,I don't know if it'll help, but you can look at me, if you like...
+female_start_masturbating=flustered,Well, uh... h-have fun!
+female_start_masturbating=flustered,Sorry that you have to do this while I'm still mostly dressed.
+female_masturbating=flustered,Hey, ~name~, why not try... ah, no, never mind. I'm sure you know what you're doing...
+female_masturbating=embarrassed,Yeah, um, keep at it, ~name~.
+female_masturbating=embarrassed,How are you doing over there, ~name~?
+female_finished_masturbating=flustered,Woah! That was... something!
+female_finished_masturbating=flustered,I, uh... I guess you're done, then...?
+female_finished_masturbating=flustered,Yeah, uh... good job, ~name~!...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+0-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+0-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+0-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+
+
+#lost gloves
+1-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+1-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+1-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+1-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+
+
+#lost chest guard
+2-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+2-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+2-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+2-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+
+
+#lost boots
+3-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+3-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+3-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+3-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+
+
+#lost shirt
+4-male_must_masturbate=flustered,I guess you're out of the game, ~name~.
+4-male_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+4-male_must_masturbate=flustered,Ah, you have to... you know... because you lost.
+4-male_start_masturbating=happy,Hopefully seeing my underwear helps you out a bit!
+4-male_start_masturbating=happy,Hope you like midriffs, at least!
+4-male_start_masturbating=wink,Maybe if you're lucky, I'll lose a few more rounds!
+4-male_masturbating=wink,I'm sure you're rooting for me to lose a few more hands, huh, ~name~?
+4-male_masturbating=happy,Be sure to pace yourself, ~name~. We wouldn't want you tiring yourself out before you can finish! Haha!
+4-male_masturbating=happy,That's it, ~name~! Keep it up!
+4-male_masturbating=happy,I hope I'm helping you at least a little bit, ~name~!
+4-male_finished_masturbating=shocked,Woah! Can I get a warning next time?
+4-male_finished_masturbating=shocked,Ah! Sorry, I can never get used to that!
+4-male_finished_masturbating=shocked,Woah! You sure had quite a lot built up, huh?
+4-female_must_masturbate=flustered,Looks like you're out, ~name~.
+4-female_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+4-female_must_masturbate=flustered,You're out of the game now, ~name~. Sorry!
+4-female_must_masturbate=flustered,I guess you have to, uh... you know... because you lost.
+4-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+4-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+4-female_start_masturbating=embarrassed,You're welcome to look at me. If you're into half naked girls, anyway.
+4-female_start_masturbating=flustered,L-let me know if there's anything I can do to help, I guess!
+4-female_start_masturbating=flustered,Sh-should I look away, or would it help more if I watch?...
+4-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+4-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+4-female_masturbating=embarrassed,Uh, yeah, keep it up, ~name~.
+4-female_masturbating=embarrassed,That's it. Just, uh... keep doing what you're doing, ~name~.
+4-female_masturbating=flustered,A-are you doing alright over there, ~name~?
+4-female_finished_masturbating=flustered,That must've felt pretty good, huh?
+4-female_finished_masturbating=flustered,I bet you feel great now, huh?
+4-female_finished_masturbating=happy,I hope you feel more relaxed now!
+
+
+#lost skirt
+5-male_must_masturbate=flustered,I guess you're out of the game, ~name~.
+5-male_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+5-male_must_masturbate=flustered,Ah, you have to... you know... because you lost.
+5-male_start_masturbating=happy,Hopefully seeing my underwear helps you out a bit!
+5-male_start_masturbating=happy,Hope you like midriffs, at least!
+5-male_start_masturbating=wink,Maybe if you're lucky, I'll lose a few more rounds!
+5-male_masturbating=wink,I'm sure you're rooting for me to lose a few more hands, huh, ~name~?
+5-male_masturbating=happy,Be sure to pace yourself, ~name~. We wouldn't want you tiring yourself out before you can finish! Haha!
+5-male_masturbating=happy,That's it, ~name~! Keep it up!
+5-male_masturbating=happy,I hope I'm helping you at least a little bit, ~name~!
+5-male_finished_masturbating=shocked,Woah! Can I get a warning next time?
+5-male_finished_masturbating=shocked,Ah! Sorry, I can never get used to that!
+5-male_finished_masturbating=shocked,Woah! You sure had quite a lot built up, huh?
+5-female_must_masturbate=flustered,Looks like you're out, ~name~.
+5-female_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+5-female_must_masturbate=flustered,You're out of the game now, ~name~. Sorry!
+5-female_must_masturbate=flustered,I guess you have to, uh... you know... because you lost.
+5-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+5-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+5-female_start_masturbating=embarrassed,You're welcome to look at me. If you're into half naked girls, anyway.
+5-female_start_masturbating=flustered,L-let me know if there's anything I can do to help, I guess!
+5-female_start_masturbating=flustered,Sh-should I look away, or would it help more if I watch?...
+5-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+5-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+5-female_masturbating=embarrassed,Uh, yeah, keep it up, ~name~.
+5-female_masturbating=embarrassed,That's it. Just, uh... keep doing what you're doing, ~name~.
+5-female_masturbating=flustered,A-are you doing alright over there, ~name~?
+5-female_finished_masturbating=flustered,That must've felt pretty good, huh?
+5-female_finished_masturbating=flustered,I bet you feel great now, huh?
+5-female_finished_masturbating=happy,I hope you feel more relaxed now!
+
+
+#lost shorts
+6-male_must_masturbate=flustered,I guess you're out of the game, ~name~.
+6-male_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+6-male_must_masturbate=flustered,Ah, you have to... you know... because you lost.
+6-male_start_masturbating=happy,Hopefully seeing my underwear helps you out a bit!
+6-male_start_masturbating=happy,Hope you like midriffs, at least!
+6-male_start_masturbating=wink,Maybe if you're lucky, I'll lose a few more rounds!
+6-male_masturbating=wink,I'm sure you're rooting for me to lose a few more hands, huh, ~name~?
+6-male_masturbating=happy,Be sure to pace yourself, ~name~. We wouldn't want you tiring yourself out before you can finish! Haha!
+6-male_masturbating=happy,That's it, ~name~! Keep it up!
+6-male_masturbating=happy,I hope I'm helping you at least a little bit, ~name~!
+6-male_finished_masturbating=shocked,Woah! Can I get a warning next time?
+6-male_finished_masturbating=shocked,Ah! Sorry, I can never get used to that!
+6-male_finished_masturbating=shocked,Woah! You sure had quite a lot built up, huh?
+6-female_must_masturbate=flustered,Looks like you're out, ~name~.
+6-female_must_masturbate=flustered,Aw man, looks like you're out, ~name~.
+6-female_must_masturbate=flustered,You're out of the game now, ~name~. Sorry!
+6-female_must_masturbate=flustered,I guess you have to, uh... you know... because you lost.
+6-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+6-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+6-female_start_masturbating=embarrassed,You're welcome to look at me. If you're into half naked girls, anyway.
+6-female_start_masturbating=flustered,L-let me know if there's anything I can do to help, I guess!
+6-female_start_masturbating=flustered,Sh-should I look away, or would it help more if I watch?...
+6-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+6-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+6-female_masturbating=embarrassed,Uh, yeah, keep it up, ~name~.
+6-female_masturbating=embarrassed,That's it. Just, uh... keep doing what you're doing, ~name~.
+6-female_masturbating=flustered,A-are you doing alright over there, ~name~?
+6-female_finished_masturbating=flustered,That must've felt pretty good, huh?
+6-female_finished_masturbating=flustered,I bet you feel great now, huh?
+6-female_finished_masturbating=happy,I hope you feel more relaxed now!
+
+
+#lost bra
+7-male_must_masturbate=cheer,You're out, ~name~! Time to put on a show!
+7-male_must_masturbate=cheer,Now I get a change you see you work it!
+7-male_must_masturbate=happy,Hee hee! Sorry, but you've been defeated, ~name~!
+7-male_start_masturbating=wink,Lucky you! You've got an undressed pop star to look at while you do that!
+7-male_start_masturbating=wink,I'm sure you're glad I've lost as much as I have, huh?
+7-male_start_masturbating=wink,Try not to stare at me too much. I'm not the only other person here, you know!
+7-male_masturbating=happy,I hope I'm helping you out, ~name~.
+7-male_masturbating=flustered,Gosh, did it suddenly get hot in here? Haha...
+7-male_masturbating=flustered,Losing doesn't seem so bad right about now...
+7-male_masturbating=happy,Ah, I can't take my eyes off of you, ~name~.
+7-male_finished_masturbating=shocked,Woah! That was, uh.. that was a big one!
+7-male_finished_masturbating=shocked,Oh! Uh, yeah, there you go, let it all out.
+7-male_finished_masturbating=shocked,Wow! That was a lot more than I'm used to seeing!
+7-female_must_masturbate=happy,Sorry, ~name~, looks like you're out!
+7-female_must_masturbate=happy,You've been defeated, ~name~!
+7-female_must_masturbate=happy,Looks like it's time for you to put on a show for us, ~name~.
+7-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+7-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+7-female_start_masturbating=flustered,If it's any consolation, I'll probably lose soon too.
+7-female_start_masturbating=happy,Well, uh... You're welcome to use me as motivation, if you're into girls.
+7-female_start_masturbating=wink,If you want me to lend a hand, you might be able to persuade me.
+7-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+7-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+7-female_masturbating=flustered,Keep it up, ~name~. You're, uh... you're doing great!
+7-female_masturbating=embarrassed,That's, um... that's great, ~name~. Keep going.
+7-female_masturbating=flustered,You sure do make losing look fun. Ahaha...
+7-female_masturbating=flustered,You're, uh... you're doing great, ~name~!
+7-female_masturbating=happy,Uh... Good technique, ~name~!
+7-female_finished_masturbating=flustered,Heh. I kind of want to lose too now...
+7-female_finished_masturbating=flustered,Heh. Losing doesn't seem so bad anymore...
+7-female_finished_masturbating=happy,Good job, ~name~. You sure did lose with dignity.
+
+
+#naked
+-3-must_masturbate_first=flustered,W-well, I can't remove my mask, so I guess I'm the first one out, huh?
+-3-must_masturbate_first=flustered,Oh, uh... I guess I'm out. I don't really have anything else I can take off...
+-3-must_masturbate_first=flustered,Oh, uh... My earrings and hair ribbon wouldn't be enough, would they...? I guess I'm out then.
+-3-male_must_masturbate=cheer,You're out, ~name~! Time to put on a show!
+-3-male_must_masturbate=cheer,Now I get a change you see you work it!
+-3-male_must_masturbate=happy,Hee hee! Sorry, but you've been defeated, ~name~!
+-3-male_must_masturbate,saidMarker:1v1=flustered,Phew! That was a close match!
+-3-must_masturbate=embarrassed,I can't take off my mask or I'll lose control of my ARMS, so I guess I'm out...
+-3-must_masturbate=embarrassed,I can't take off my mask, and I doubt my earrings or bow will count, so I guess that means I'm out.
+-3-must_masturbate=flustered,Oh, ah... I lost, huh? I don't really have anything else to take off...
+-3-male_start_masturbating=wink,Lucky you! You've got an undressed pop star to look at while you do that!
+-3-male_start_masturbating=wink,I'm sure you're glad I've lost as much as I have, huh?
+-3-male_start_masturbating=wink,Try not to stare at me too much. I'm not the only other person here, you know!
+-3-male_masturbating=happy,I hope I'm helping you out, ~name~.
+-3-male_masturbating=flustered,Gosh, did it suddenly get hot in here? Haha...
+-3-male_masturbating=flustered,Losing doesn't seem so bad right about now...
+-3-male_masturbating=happy,Ah, I can't take my eyes off of you, ~name~.
+-3-male_finished_masturbating=shocked,Woah! That was, uh.. that was a big one!
+-3-male_finished_masturbating=shocked,Oh! Uh, yeah, there you go, let it all out.
+-3-male_finished_masturbating=shocked,Wow! That was a lot more than I'm used to seeing!
+-3-female_must_masturbate=happy,Sorry, ~name~, looks like you're out!
+-3-female_must_masturbate=happy,You've been defeated, ~name~!
+-3-female_must_masturbate=happy,Looks like it's time for you to put on a show for us, ~name~.
+-3-female_must_masturbate,saidMarker:1v1=flustered,Phew! That was a close match!
+-3-female_must_masturbate,target:human,marker:PlayerIsOut=happy,Sorry, ~player~, looks like you lost our wager.
+-3-female_must_masturbate,target:human,saidMarker:1v1=happy,Sorry, ~player~, looks like I win our wager!
+-3-female_start_masturbating=flustered,If it's any consolation, I'll probably lose soon too.
+-3-female_start_masturbating=happy,Well, uh... You're welcome to use me as motivation, if you're into girls.
+-3-female_start_masturbating=wink,If you want me to lend a hand, you might be able to persuade me.
+-3-female_start_masturbating,target:human,saidMarker:PlayerIsOut=happy,I could still lose too, though, so it could end up being a draw!
+-3-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+-3-female_masturbating=flustered,Keep it up, ~name~. You're, uh... you're doing great!
+-3-female_masturbating=embarrassed,That's, um... that's great, ~name~. Keep going.
+-3-female_masturbating=flustered,You sure do make losing look fun. Ahaha...
+-3-female_masturbating=flustered,You're, uh... you're doing great, ~name~!
+-3-female_masturbating=happy,Uh... Good technique, ~name~!
+-3-female_finished_masturbating=flustered,Heh. I kind of want to lose too now...
+-3-female_finished_masturbating=flustered,Heh. Losing doesn't seem so bad anymore...
+-3-female_finished_masturbating=happy,Good job, ~name~. You sure did lose with dignity.
+
+
+#masturbating
+-2-male_must_masturbate=cheer,Alright! Time for you to join me, ~name~!
+-2-male_must_masturbate=cheer,You couldn't have lost at better time, ~name~!
+-2-male_must_masturbate=cheer,You sure did lose at a great time, ~name~!
+-2-male_start_masturbating=wink,L-let me know if... <i>ah</i>... if you want a little help.
+-2-male_start_masturbating=wink,Don't... <i>ah</i>... Don't be afraid to watch me.
+-2-male_start_masturbating=wink,L-let me know if you... <i>ah</i>... if you need a better view.
+-2-male_start_masturbating=wink,Why not come sit by me, so we can trade hands? And I don't mean cards...
+-2-male_masturbating=calm,Oh yeah... Keep going, ~name~...
+-2-male_masturbating=flustered,S-sorry, I'm not staring too much, am I...?
+-2-male_masturbating=wink,You... <i>ah</i>... You sure are doing a good job over there, ~name~...
+-2-male_masturbating=dukes,Remember, ~name~, you're free to look, but stare too much, and you'll have to face me in the ring! Haha!
+-2-male_masturbating=dukes,H-hey, maybe this can be a new form of fighting? Ahaha...
+-2-male_finished_masturbating=flustered,Aw, done already?
+-2-male_finished_masturbating=flustered,Aw man, I was hoping you'd be able to keep going.
+-2-male_finished_masturbating=flustered,Aw man, you're done?...
+-2-male_finished_masturbating=flustered,Aw man, you're done?... Any chance for an encore?...
+-2-male_finished_masturbating=flustered,Done already? I think you need to work on your stamina, heh heh...
+-2-female_must_masturbate=happy,Ah, looks like you have to join me, ~name~.
+-2-female_must_masturbate=happy,Looks like we're in this together, ~name~.
+-2-female_must_masturbate=happy,Oh no, you lost too, ~name~!
+-2-female_start_masturbating=happy,Well, uh, you're welcome to watch me, if you're into that.
+-2-female_start_masturbating=happy,W-want some pointers? Aha...
+-2-female_start_masturbating=happy,I can give you some pointers, if you want. Ahaha.
+-2-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+-2-female_masturbating=flustered,I'm not going to lie, this is... kind of weird for me.
+-2-female_masturbating=calm,Are you... <i>ah</i>... Are you doing okay over there, ~name~?
+-2-female_masturbating=calm,Just relax... <i>ah</i>... and take your time...
+-2-female_masturbating=dukes,Remember, ~name~, you're free to look, but stare too much, and you'll have to face me in the ring! Haha!
+-2-female_masturbating=dukes,H-hey, maybe this can be a new form of fighting? Ahaha...
+-2-female_masturbating=calm,I'm not going to lie, this is... <i>ah</i>... this is hotter than I thought it'd be...
+-2-female_masturbating,target:human,targetTimeInStage:0=happy,I guess no one wins our wager then, ~player~. Oh well!
+-2-female_finished_masturbating=happy,I hope my climax is that big, haha...
+-2-female_finished_masturbating=happy,Hey, now that you're done, you can come help me. Haha...
+-2-female_finished_masturbating=wink,I think you need to work on your stamina, ~name~, heh heh...
+
+
+#finished
+-1-male_must_masturbate=cheer,Now <i>I</i> get to watch <i>you</i> touch yourself, ~name~!
+-1-male_must_masturbate=cheer,Now it's <i>your turn</i> to put on a show, ~name~!
+-1-male_must_masturbate=happy,Oh man, your show is starting? But I forgot to buy tickets! Haha.
+-1-male_start_masturbating=wink,Do a good job and maybe I'll help you out. Haha!
+-1-male_start_masturbating=wink,Why don't you come sit by me so I can give you a little help?
+-1-male_start_masturbating=wink,I don't have anything better to do, so maybe I'll give you a hand?
+-1-male_masturbating=wink,Maybe if you're lucky, I'll let you finish on me. Hahaha.
+-1-male_masturbating=flustered,Man, I almost want to go again...
+-1-male_masturbating=happy,See, losing isn't so bad, is it?
+-1-male_finished_masturbating=happy,There, don't you feel better now? I sure do, ahaha.
+-1-male_finished_masturbating=happy,Did you get it all out, ~name~? It sure looks like you did!
+-1-male_finished_masturbating=cheer,Encore! Encore!
+-1-female_must_masturbate=happy,Now it's your turn to touch yourself, ~name~!
+-1-female_must_masturbate=flustered,It feels mean to say it... so I'll sing it! ♪You lost~!♪... Ah, sorry, that sounded <i>more</i> mean...
+-1-female_must_masturbate=happy,Now it's <i>your turn</i> to put on a show, ~name~!
+-1-female_start_masturbating=flustered,Well... uh... have fun!
+-1-female_start_masturbating=flustered,Just, uh... remember to relax!
+-1-female_start_masturbating=flustered,Just, uh... take your time!
+-1-female_start_masturbating,target:joey=flustered,Aha, well, uh, I'm glad it's not a rabbit!
+-1-finished_masturbating=happy,Ah, I feel much better now!
+-1-finished_masturbating=calm,Guess I'll just... sit here and watch.
+-1-finished_masturbating=wink,I hope you enjoyed my display. It's not every day that a pop star touches herself in front of others.
+-1-finished_masturbating=happy,I really should have some "alone time" more often...
+-1-female_masturbating=happy,See, losing isn't so bad, is it?
+-1-female_masturbating=flustered,Aha, s-so that's what I looked like while doing that, huh...?
+-1-female_masturbating=happy,Having others watch isn't so bad once you get used to it.
+-1-female_masturbating,target:human,targetTimeInStage:0=happy,I guess no one wins our wager then, ~player~. Oh well!
+-1-finished_masturbating,timeInStage:0=finished,Ah... Ha... I need a moment...
+-1-finished_masturbating,timeInStage:0,marker:HowDidIDo=finished,So... Ah... How did I do...?
+-1-female_finished_masturbating=happy,There, don't you feel better now?
+-1-female_finished_masturbating=happy,Feel better now? I know I do!
+-1-female_finished_masturbating=happy,Take a bow, ~name~!
+-1-female_finished_masturbating=happy,Bravo, ~name~!
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-start_masturbating=starting,I-I'll be sure to put on a good show for you all!
+-3-start_masturbating=starting,I hope you all enjoy the show!
+-3-start_masturbating=starting,I don't do this in front of others very often, so I hope you all enjoy watching!
+-3-start_masturbating,saidMarker:PlayerWager,notSaidMarker:PlayerIsOut=starting,Don't get too confident, ~player~. You could still end up losing our wager too!
+
+
+#masturbating
+-2-masturbating=calm,Ah... I should find the time to do this more...
+-2-masturbating=calm,Ah...
+-2-masturbating=calm,Mmph...
+-2-masturbating=flustered,I got to admit, it's kind of a weird feeling doing this while others are watching...
+-2-masturbating=wink,D-don't be afraid to stare. It's part of the game, after all.
+-2-masturbating=calm,Am I doing good? It sure feels like I am...
+-2-masturbating,notSaidMarker:Fingers,marker:Fingers=calm,In case you were wondering, no, my fingers don't stretch at all. Haha...
+-2-heavy_masturbating=heavy,Ah... I think I'm close...
+-2-heavy_masturbating=heavy,Mmmph... Ah!...
+-2-heavy_masturbating=heavy,You'd better get a good look while you can. I don't think I'll be doing this much longer...
+-2-heavy_masturbating=heavy,♪Ah~, fire in the sky...♪
+-2-heavy_masturbating=heavy,It's almost time... for the climax of my performance...
+-2-finishing_masturbating=finishing,Mmmph!...
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=wink,Hope you enjoyed what you got to see of me! Who's up for round two?
+game_over_victory=wink,Hope you're not too disappointed I didn't lose! Who's up for round two?
+game_over_victory=happy,Sorry you didn't get to see much of me! We can play again, if you want!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=happy,A decisive victory!
+0-game_over_victory=cheer,I win! Flawless victory!
+0-game_over_victory=cheer,Perfect!
+0-game_over_victory=happy,That was fun! Who wants to play again?
+0-game_over_victory=wink,That was fun! Maybe next time you'll actually see something exciting from me!
+0-game_over_victory=wink,That was fun! We should play again so that you can actually see some skin from me!
+0-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost gloves
+1-game_over_victory=happy,That was fun! Who wants to play again?
+1-game_over_victory=wink,That was fun! Maybe next time you'll actually see something exciting from me!
+1-game_over_victory=wink,That was fun! We should play again so that you can actually see some skin from me!
+1-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost chest guard
+2-game_over_victory=happy,That was fun! Who wants to play again?
+2-game_over_victory=wink,That was fun! Maybe next time you'll actually see something exciting from me!
+2-game_over_victory=wink,That was fun! We should play again so that you can actually see some skin from me!
+2-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost boots
+3-game_over_victory=happy,That was fun! Who wants to play again?
+3-game_over_victory=wink,That was fun! Maybe next time you'll actually see something exciting from me!
+3-game_over_victory=wink,That was fun! We should play again so that you can actually see some skin from me!
+3-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost shirt
+4-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost skirt
+5-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost shorts
+6-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#lost bra
+7-game_over_victory=happy,Aha! See! No matter how close to defeat you get, you should never give up!
+7-game_over_victory=happy,Aha! A victory Spring Man would be proud of! So close to defeat, but I didn't give up!
+7-game_over_victory=happy,Aha! You nearly had me! Even in games of chance, you should never give up!
+7-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#naked
+-3-game_over_victory=happy,Aha! See! No matter how close to defeat you get, you should never give up!
+-3-game_over_victory=happy,Aha! A victory Spring Man would be proud of! So close to defeat, but I didn't give up!
+-3-game_over_victory=happy,Aha! You nearly had me! Even in games of chance, you should never give up!
+-3-game_over_victory,saidMarker:PlayerWager=happy,How about you come to my next concert, ~player~? I'll give you a ticket and a backstage pass!
+
+
+#finished
+game_over_defeat=happy,That was fun! I might play again sometime soon!
+game_over_defeat=happy,That was pretty fun! I think I might make this a regular thing.
+game_over_defeat=happy,Gosh, that was fun! I should find the time to play again soon!
+game_over_defeat,target:human,saidMarker:PlayerWager=happy,Well played, ~player~! We can do whatever you like just as soon as I get dressed!... U-unless you need me to stay undressed, of course!...
+
+#EPILOGUE/ENDING
