@@ -123,6 +123,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CollapseAll {
+            get {
+                object obj = ResourceManager.GetObject("CollapseAll", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Copy {
             get {
                 object obj = ResourceManager.GetObject("Copy", resourceCulture);
@@ -186,6 +196,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap emitter {
             get {
                 object obj = ResourceManager.GetObject("emitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExpandAll {
+            get {
+                object obj = ResourceManager.GetObject("ExpandAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

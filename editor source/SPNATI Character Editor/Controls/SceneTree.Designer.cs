@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.lblDragger = new System.Windows.Forms.Label();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -37,9 +36,11 @@
 			this.tsAddTransition = new System.Windows.Forms.ToolStripButton();
 			this.tsAddDirective = new System.Windows.Forms.ToolStripSplitButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.addEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.emitParticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.addSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearSpeechBubblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,29 +64,12 @@
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsLock = new System.Windows.Forms.ToolStripButton();
-			this.emitParticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// treeScenes
-			// 
-			this.treeScenes.AllowDrop = true;
-			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeScenes.HideSelection = false;
-			this.treeScenes.Location = new System.Drawing.Point(0, 0);
-			this.treeScenes.Name = "treeScenes";
-			this.treeScenes.Size = new System.Drawing.Size(357, 380);
-			this.treeScenes.TabIndex = 2;
-			this.treeScenes.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeScenes_ItemDrag);
-			this.treeScenes.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragDrop);
-			this.treeScenes.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragEnter);
-			this.treeScenes.DragOver += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragOver);
-			this.treeScenes.DragLeave += new System.EventHandler(this.TreeScenes_DragLeave);
-			this.treeScenes.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TreeScenes_QueryContinueDrag);
 			// 
 			// toolStripContainer1
 			// 
@@ -210,26 +194,17 @@
 			// 
 			this.addSpriteToolStripMenuItem.Name = "addSpriteToolStripMenuItem";
 			this.addSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.addSpriteToolStripMenuItem.Tag = "sprite";
 			this.addSpriteToolStripMenuItem.Text = "Add Sprite";
 			this.addSpriteToolStripMenuItem.ToolTipText = "Add a sprite to the scene";
 			this.addSpriteToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
-			// addEmitterToolStripMenuItem
-			// 
-			this.addEmitterToolStripMenuItem.Name = "addEmitterToolStripMenuItem";
-			this.addEmitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
-			this.addEmitterToolStripMenuItem.Tag = "emitter";
-			this.addEmitterToolStripMenuItem.Text = "Add Emitter";
-			this.addEmitterToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
-			// 
 			// removeObjectToolStripMenuItem
 			// 
 			this.removeObjectToolStripMenuItem.Name = "removeObjectToolStripMenuItem";
 			this.removeObjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-			this.removeObjectToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.removeObjectToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.removeObjectToolStripMenuItem.Tag = "remove";
 			this.removeObjectToolStripMenuItem.Text = "Remove Sprite/Emitter";
 			this.removeObjectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -237,13 +212,36 @@
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(288, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(274, 6);
+			// 
+			// addEmitterToolStripMenuItem
+			// 
+			this.addEmitterToolStripMenuItem.Name = "addEmitterToolStripMenuItem";
+			this.addEmitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
+			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.addEmitterToolStripMenuItem.Tag = "emitter";
+			this.addEmitterToolStripMenuItem.Text = "Add Emitter";
+			this.addEmitterToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// emitParticleToolStripMenuItem
+			// 
+			this.emitParticleToolStripMenuItem.Name = "emitParticleToolStripMenuItem";
+			this.emitParticleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
+			this.emitParticleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+			this.emitParticleToolStripMenuItem.Tag = "emit";
+			this.emitParticleToolStripMenuItem.Text = "Emit Particle";
+			this.emitParticleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(274, 6);
 			// 
 			// addSpeechBubbleToolStripMenuItem
 			// 
 			this.addSpeechBubbleToolStripMenuItem.Name = "addSpeechBubbleToolStripMenuItem";
 			this.addSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
-			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.addSpeechBubbleToolStripMenuItem.Tag = "text";
 			this.addSpeechBubbleToolStripMenuItem.Text = "Add Speech Bubble";
 			this.addSpeechBubbleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -252,7 +250,7 @@
 			// 
 			this.removeSpeechBubbleToolStripMenuItem.Name = "removeSpeechBubbleToolStripMenuItem";
 			this.removeSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6)));
-			this.removeSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.removeSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.removeSpeechBubbleToolStripMenuItem.Tag = "clear";
 			this.removeSpeechBubbleToolStripMenuItem.Text = "Remove Speech Bubble";
 			this.removeSpeechBubbleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -261,7 +259,7 @@
 			// 
 			this.clearSpeechBubblesToolStripMenuItem.Name = "clearSpeechBubblesToolStripMenuItem";
 			this.clearSpeechBubblesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7)));
-			this.clearSpeechBubblesToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.clearSpeechBubblesToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.clearSpeechBubblesToolStripMenuItem.Tag = "clear-all";
 			this.clearSpeechBubblesToolStripMenuItem.Text = "Clear Speech Bubbles";
 			this.clearSpeechBubblesToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -269,15 +267,15 @@
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(288, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(274, 6);
 			// 
 			// moveSpriteToolStripMenuItem
 			// 
 			this.moveSpriteToolStripMenuItem.Name = "moveSpriteToolStripMenuItem";
 			this.moveSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D8)));
-			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.moveSpriteToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.moveSpriteToolStripMenuItem.Tag = "move";
-			this.moveSpriteToolStripMenuItem.Text = "Move/Rotate/Scale Sprite/Emitter";
+			this.moveSpriteToolStripMenuItem.Text = "Animate Sprite/Emitter";
 			this.moveSpriteToolStripMenuItem.ToolTipText = "Transform a sprite on screen";
 			this.moveSpriteToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
 			// 
@@ -285,7 +283,7 @@
 			// 
 			this.moveZoomCameraToolStripMenuItem.Name = "moveZoomCameraToolStripMenuItem";
 			this.moveZoomCameraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D9)));
-			this.moveZoomCameraToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.moveZoomCameraToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.moveZoomCameraToolStripMenuItem.Tag = "camera";
 			this.moveZoomCameraToolStripMenuItem.Text = "Move/Zoom Camera";
 			this.moveZoomCameraToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -294,7 +292,7 @@
 			// 
 			this.stopAnimationToolStripMenuItem.Name = "stopAnimationToolStripMenuItem";
 			this.stopAnimationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-			this.stopAnimationToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.stopAnimationToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.stopAnimationToolStripMenuItem.Tag = "stop";
 			this.stopAnimationToolStripMenuItem.Text = "Stop Animation";
 			this.stopAnimationToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -302,14 +300,14 @@
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(288, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(274, 6);
 			// 
 			// fadeEffectToolStripMenuItem
 			// 
 			this.fadeEffectToolStripMenuItem.Name = "fadeEffectToolStripMenuItem";
 			this.fadeEffectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D1)));
-			this.fadeEffectToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.fadeEffectToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.fadeEffectToolStripMenuItem.Tag = "fade";
 			this.fadeEffectToolStripMenuItem.Text = "Fade Effect";
 			this.fadeEffectToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -317,14 +315,14 @@
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(288, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(274, 6);
 			// 
 			// waitForAnimationsToolStripMenuItem
 			// 
 			this.waitForAnimationsToolStripMenuItem.Name = "waitForAnimationsToolStripMenuItem";
 			this.waitForAnimationsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Space)));
-			this.waitForAnimationsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.waitForAnimationsToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.waitForAnimationsToolStripMenuItem.Tag = "wait";
 			this.waitForAnimationsToolStripMenuItem.Text = "Wait for Animations";
 			this.waitForAnimationsToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -333,7 +331,7 @@
 			// 
 			this.waitForInputToolStripMenuItem.Name = "waitForInputToolStripMenuItem";
 			this.waitForInputToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Space)));
-			this.waitForInputToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+			this.waitForInputToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
 			this.waitForInputToolStripMenuItem.Tag = "pause";
 			this.waitForInputToolStripMenuItem.Text = "Wait For Input";
 			this.waitForInputToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
@@ -435,19 +433,21 @@
 			this.tsLock.Text = "Lock changes in canvas";
 			this.tsLock.Click += new System.EventHandler(this.tsLock_Click);
 			// 
-			// emitParticleToolStripMenuItem
+			// treeScenes
 			// 
-			this.emitParticleToolStripMenuItem.Name = "emitParticleToolStripMenuItem";
-			this.emitParticleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
-			this.emitParticleToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
-			this.emitParticleToolStripMenuItem.Tag = "emit";
-			this.emitParticleToolStripMenuItem.Text = "Emit Particle";
-			this.emitParticleToolStripMenuItem.Click += new System.EventHandler(this.AddDirectiveToolstripItem_Click);
-			// 
-			// toolStripSeparator8
-			// 
-			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(288, 6);
+			this.treeScenes.AllowDrop = true;
+			this.treeScenes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeScenes.HideSelection = false;
+			this.treeScenes.Location = new System.Drawing.Point(0, 0);
+			this.treeScenes.Name = "treeScenes";
+			this.treeScenes.Size = new System.Drawing.Size(357, 380);
+			this.treeScenes.TabIndex = 2;
+			this.treeScenes.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeScenes_ItemDrag);
+			this.treeScenes.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragDrop);
+			this.treeScenes.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragEnter);
+			this.treeScenes.DragOver += new System.Windows.Forms.DragEventHandler(this.TreeScenes_DragOver);
+			this.treeScenes.DragLeave += new System.EventHandler(this.TreeScenes_DragLeave);
+			this.treeScenes.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TreeScenes_QueryContinueDrag);
 			// 
 			// SceneTree
 			// 

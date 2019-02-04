@@ -28,6 +28,22 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("location")]
 		public string Location;
 
+		[DefaultValue("")]
+		[XmlAttribute("set-gender")]
+		public string Gender;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-intelligence")]
+		public string Intelligence;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-size")]
+		public string Size;
+
+		[DefaultValue("")]
+		[XmlAttribute("set-label")]
+		public string Label;
+
 		[XmlIgnore]
 		public string ImageExtension;
 
@@ -60,6 +76,10 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (Marker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Direction ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Location ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Gender ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Intelligence ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Size ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Label ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
@@ -72,6 +92,8 @@ namespace SPNATI_Character_Editor
 		{
 			if (string.IsNullOrEmpty(image))
 				return image;
+			bool custom = image.StartsWith("custom:");
+
 			int hyphen = image.IndexOf('-');
 			if (hyphen > 0)
 			{
@@ -79,10 +101,20 @@ namespace SPNATI_Character_Editor
 				int value;
 				if (int.TryParse(prefix, out value))
 				{
-					return Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
+					string reduced = Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
+					if (custom)
+					{
+						reduced = "custom:" + reduced;
+					}
+					return reduced;
 				}
 			}
-			return Path.GetFileNameWithoutExtension(image);
+			string path = Path.GetFileNameWithoutExtension(image);
+			if (custom)
+			{
+				path = "custom:" + path;
+			}
+			return path;
 		}
 
 		/// <summary>

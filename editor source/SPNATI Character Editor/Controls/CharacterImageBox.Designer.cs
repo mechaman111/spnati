@@ -28,7 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.canvas = new Desktop.CommonControls.DBPanel();
+			this.tmrTick = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
 			// canvas
@@ -39,6 +41,11 @@
 			this.canvas.Size = new System.Drawing.Size(197, 493);
 			this.canvas.TabIndex = 1;
 			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+			// 
+			// tmrTick
+			// 
+			this.tmrTick.Interval = 30;
+			this.tmrTick.Tick += new System.EventHandler(this.tmrTick_Tick);
 			// 
 			// CharacterImageBox
 			// 
@@ -53,5 +60,6 @@
 
 		#endregion
 		private Desktop.CommonControls.DBPanel canvas;
+		private System.Windows.Forms.Timer tmrTick;
 	}
 }

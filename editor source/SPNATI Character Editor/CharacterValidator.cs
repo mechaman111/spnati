@@ -378,9 +378,21 @@ namespace SPNATI_Character_Editor
 						if (!string.IsNullOrEmpty(img))
 						{
 							unusedImages.Remove(img);
-							if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+							if (img.StartsWith("custom:"))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+								string id = img.Substring(7);
+								Pose pose = character.Poses.Find(p => p.Id == id);
+								if (pose == null)
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Pose {1} does not exist. {0}", caseLabel, img), context));
+								}
+							}
+							else
+							{
+								if (!File.Exists(Path.Combine(Config.GetRootDirectory(character), img)))
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("{1} does not exist. {0}", caseLabel, img), context));
+								}
 							}
 							stageImages.Add(img);	
 						}
@@ -421,6 +433,11 @@ namespace SPNATI_Character_Editor
 			foreach (Epilogue ending in character.Endings)
 			{
 				ValidateEpilogue(ending, warnings, unusedImages);
+			}
+
+			foreach (Pose pose in character.Poses)
+			{
+				ValidatePose(character, pose, warnings, unusedImages);
 			}
 
 			if (unusedImages.Count > 0)
@@ -683,6 +700,57 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Validates a custom pose
+		/// </summary>
+		/// <param name="pose"></param>
+		/// <param name="warnings"></param>
+		/// <param name="baseImages"></param>
+		private static void ValidatePose(Character character, Pose pose, List<ValidationError> warnings, HashSet<string> unusedImages)
+		{
+			unusedImages.Remove("custom:" + pose.Id);
+			foreach (Sprite sprite in pose.Sprites)
+			{
+				string path = GetRelativeImagePath(character, sprite.Src);
+				if (!string.IsNullOrEmpty(path))
+				{
+					unusedImages.Remove(path);
+				}
+			}
+
+			foreach (PoseDirective directive in pose.Directives)
+			{
+				foreach (Keyframe kf in directive.Keyframes)
+				{
+					if (!string.IsNullOrEmpty(kf.Src))
+					{
+						string path = GetRelativeImagePath(character, kf.Src);
+						if (!string.IsNullOrEmpty(path))
+						{
+							unusedImages.Remove(path);
+						}
+					}
+				}
+
+				foreach (PoseAnimFrame af in directive.AnimFrames)
+				{
+					
+				}
+			}
+		}
+
+		private static string GetRelativeImagePath(Character character, string path)
+		{
+			string characterRoot = character.GetDirectory();
+			string fullPath = Path.Combine(Config.SpnatiDirectory, "opponents", path);
+			if (fullPath.StartsWith(characterRoot))
+			{
+				string relPath = fullPath.Substring(characterRoot.Length + 1);
+				return relPath;
+			}
+			return path;
 		}
 
 		/// <summary>

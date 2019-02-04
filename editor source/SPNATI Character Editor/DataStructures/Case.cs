@@ -1432,6 +1432,18 @@ namespace SPNATI_Character_Editor
 				{
 					return tag;
 				}
+				else if (tag == "opponent_lost")
+				{
+					return "must_strip";
+				}
+				else if (tag == "opponent_stripping")
+				{
+					return "stripping";
+				}
+				else if (tag == "opponent_stripped")
+				{
+					return "stripped";
+				}
 			}
 
 			if (tag == "good_hand" || tag == "okay_hand" || tag == "bad_hand")

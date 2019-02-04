@@ -304,6 +304,22 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += string.Format(",marker:{0}", defaultLine.Marker);
 					}
+					if (!string.IsNullOrEmpty(defaultLine.Gender))
+					{
+						lineCode += $",set-gender:{defaultLine.Gender}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.Intelligence))
+					{
+						lineCode += $",set-intelligence:{defaultLine.Intelligence}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.Label))
+					{
+						lineCode += $",set-label:{defaultLine.Label}";
+					}
+					if (!string.IsNullOrEmpty(defaultLine.Size))
+					{
+						lineCode += $",set-size:{defaultLine.Size}";
+					}
 					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Image, text));
 				}
@@ -1121,6 +1137,18 @@ namespace SPNATI_Character_Editor
 							ExpressionTest test = new ExpressionTest() { Expression = parts[0], Value = parts[1] };
 							lineCase.Expressions.Add(test);
 						}
+						break;
+					case "set-gender":
+						line.Gender = value;
+						break;
+					case "set-intelligence":
+						line.Intelligence = value;
+						break;
+					case "set-label":
+						line.Label = value;
+						break;
+					case "set-size":
+						line.Size = value;
 						break;
 					default:
 						if (key.StartsWith("count-"))

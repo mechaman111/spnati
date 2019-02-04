@@ -9,6 +9,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 {
 	public class SceneObject : IDisposable
 	{
+		public ScenePreview PreviewScene;
 		public static int NextLayer = 0;
 		public Character Character;
 		public SceneObject SourceObject;
@@ -64,6 +65,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public SceneObjectType ObjectType = SceneObjectType.Other;
 
 		public Image Image;
+		public string Src;
 
 		public object Max { get; private set; }
 
@@ -78,6 +80,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public SceneObject(ScenePreview scene, Character character, Directive directive) : this(scene, character, directive.Id, directive.Src, directive.Color)
 		{
+			PreviewScene = scene;
 			LinkedFrame = directive;
 			if (directive.DirectiveType == "sprite")
 			{
@@ -175,7 +178,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			PivotY = ParsePivot(directive.PivotY, Height);
 			if (!string.IsNullOrEmpty(directive.Rate))
 			{
-				float.TryParse(directive.Rate, out Rate);
+				float.TryParse(directive.Rate, NumberStyles.Number, CultureInfo.InvariantCulture, out Rate);
 			}
 
 			SortLayer = ++NextLayer;
@@ -185,7 +188,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
-		protected int ParsePivot(string pivot, float size)
+		public static int ParsePivot(string pivot, float size)
 		{
 			switch (pivot)
 			{
@@ -209,6 +212,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		protected void CopyValuesFrom(SceneObject source)
 		{
+			PreviewScene = source.PreviewScene;
 			Character = source.Character;
 			ObjectType = source.ObjectType;
 			X = source.X;
@@ -234,10 +238,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			SortLayer = source.SortLayer;
 			Layer = source.Layer;
 			Rate = source.Rate;
+			Src = source.Src;
 		}
 
 		public SceneObject(ScenePreview scene, Character character, string id, string imagePath, string color)
 		{
+			PreviewScene = scene;
 			Character = character;
 			Id = id;
 			if (!string.IsNullOrEmpty(color))
@@ -250,15 +256,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			if (!string.IsNullOrEmpty(imagePath))
 			{
-				string path = GetImagePath(imagePath);
-				try
-				{
-					using (var temp = new Bitmap(path))
-					{
-						Image = new Bitmap(temp);
-					}
-				}
-				catch { }
+				SetImage(imagePath);
 			}
 
 			if (Image == null)
@@ -274,6 +272,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			Width = WidthPct * scene.Width;
 			Height = HeightPct * scene.Height;
+		}
+
+		private void SetImage(string src)
+		{
+			Src = src;
+			Image = PreviewScene.Images.Get(src);
 		}
 
 		public static float Parse(string str, float sceneSize)
@@ -339,6 +343,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float.TryParse(frame.Zoom, NumberStyles.Float, CultureInfo.InvariantCulture, out Zoom);
 			}
+			if (!string.IsNullOrEmpty(frame.Src) && frame.Src != Src)
+			{
+				SetImage(frame.Src);
+			}
 			SetColor(frame);
 
 			Directive directive = frame as Directive;
@@ -394,9 +402,25 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
 			Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
 			Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+			if (!string.IsNullOrEmpty(frame.Src))
+			{
+				string src = "";
+				if (time >= 1)
+				{
+					src = frame.Src;
+				}
+				else
+				{
+					src = last.Src;
+				}
+				if (src != Src)
+				{
+					SetImage(src);
+				}
+			}
 		}
 
-		protected float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
+		public static float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
 		{
 			switch (interpolationMode)
 			{
@@ -412,7 +436,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					float p = 0.5f * (a + (b * t) + (c * t * t) + (d * t * t * t));
 					return p;
 				case "none":
-					return lastValue;
+					return t >= 1 ? nextValue : lastValue;
 				default:
 					return (nextValue - lastValue) * t + lastValue;
 			}
@@ -591,7 +615,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public virtual void Dispose()
 		{
-			Image?.Dispose();
 			Color?.Dispose();
 		}
 

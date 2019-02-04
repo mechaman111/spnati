@@ -16,8 +16,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public List<SceneObject> Objects = new List<SceneObject>();
 		public List<SceneObject> TextBoxes = new List<SceneObject>();
 
-		public ScenePreview(Scene scene)
+		public Dictionary<string, Image> Images = new Dictionary<string, Image>();
+
+		public ScenePreview(Scene scene, Character character)
 		{
+			PreviewScene = this;
+			Character = character;
 			LinkedScene = scene;
 			try
 			{
@@ -37,7 +41,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			string h = scene.Height.Split(new string[] { "px" }, StringSplitOptions.None)[0];
 			float.TryParse(w, NumberStyles.Integer, CultureInfo.InvariantCulture, out Width);
 			float.TryParse(h, NumberStyles.Integer, CultureInfo.InvariantCulture, out Height);
-
 
 			X = (int)Parse(scene.X, Width);
 			Y = (int)Parse(scene.Y, Height);
@@ -66,6 +69,35 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				OverlayColor = System.Drawing.Color.FromArgb(0, OverlayColor);
 			}
+
+			AddImage(scene.Background);
+			foreach (Directive directive in scene.Directives)
+			{
+				AddImage(directive.Src);
+				foreach (Keyframe frame in directive.Keyframes)
+				{
+					AddImage(frame.Src);
+				}
+			}
+		}
+
+		private void AddImage(string src)
+		{
+			if (string.IsNullOrEmpty(src)) { return; }
+			if (Images.ContainsKey(src))
+			{
+				return;
+			}
+			string path = GetImagePath(src);
+			try
+			{
+				using (var temp = new Bitmap(path))
+				{
+					Bitmap img = new Bitmap(temp);
+					Images[src] = img;
+				}
+			}
+			catch { }
 		}
 
 		internal bool IsDisposing;
@@ -84,6 +116,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Objects.Clear();
 			TextBoxes.Clear();
 			base.Dispose();
+
+			foreach (Image img in Images.Values)
+			{
+				img.Dispose();
+			}
+			Images.Clear();
+
 			IsDisposing = false;
 		}
 

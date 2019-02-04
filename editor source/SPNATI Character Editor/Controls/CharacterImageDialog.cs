@@ -11,6 +11,11 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// If true, all paths in both character directory and others will be based on "opponents"
+		/// </summary>
+		public bool UseAbsolutePaths { get; set; }
+
 		private OpenFileDialog openFileDialog1;
 
 		public string FileName;
@@ -37,7 +42,11 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (!string.IsNullOrEmpty(filename))
 			{
-				if (filename.StartsWith("\\"))
+				if (UseAbsolutePaths)
+				{
+					openFileDialog1.InitialDirectory = Path.Combine(root, "opponents", Path.GetDirectoryName(filename));
+				}
+				else if (filename.StartsWith("\\"))
 				{
 					//absolute path
 					openFileDialog1.InitialDirectory = Path.Combine(root, Path.GetDirectoryName(filename).Substring(1));
@@ -58,21 +67,29 @@ namespace SPNATI_Character_Editor.Controls
 			if (result == DialogResult.OK)
 			{
 				filename = openFileDialog1.FileName;
-				if (filename.StartsWith(localPath))
+				if (UseAbsolutePaths)
 				{
-					//file is in character's folder
-					filename = filename.Substring(localPath.Length + 1);
-				}
-				else if (filename.StartsWith(root))
-				{
-					//file is in another game folder
-					filename = filename.Substring(root.Length);
+					string opponentRoot = Path.Combine(root, "opponents") + "\\";
+					filename = filename.Substring(opponentRoot.Length);
 				}
 				else
 				{
-					//file is outside the game, so copy it in (otherwise it won't be available on the website)
-					File.Copy(filename, Path.Combine(localPath, Path.GetFileName(filename)));
-					filename = Path.GetFileName(filename);
+					if (filename.StartsWith(localPath))
+					{
+						//file is in character's folder
+						filename = filename.Substring(localPath.Length + 1);
+					}
+					else if (filename.StartsWith(root))
+					{
+						//file is in another game folder
+						filename = filename.Substring(root.Length);
+					}
+					else
+					{
+						//file is outside the game, so copy it in (otherwise it won't be available on the website)
+						File.Copy(filename, Path.Combine(localPath, Path.GetFileName(filename)));
+						filename = Path.GetFileName(filename);
+					}
 				}
 				FileName = filename.Replace("\\", "/");
 			}
