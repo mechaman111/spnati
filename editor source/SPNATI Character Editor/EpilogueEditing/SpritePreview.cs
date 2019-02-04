@@ -35,14 +35,17 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float.TryParse(sprite.Y, NumberStyles.Number, CultureInfo.InvariantCulture, out Y);
 			int.TryParse(sprite.Width, out Width);
 			int.TryParse(sprite.Height, out Height);
-			pose.Images.TryGetValue(sprite.Src, out Image);
-			if (Width == 0)
+			if (!string.IsNullOrEmpty(sprite.Src))
 			{
-				Width = Image.Width;
-			}
-			if (Height == 0)
-			{
-				Height = Image.Height;
+				pose.Images.TryGetValue(sprite.Src, out Image);
+				if (Width == 0)
+				{
+					Width = Image.Width;
+				}
+				if (Height == 0)
+				{
+					Height = Image.Height;
+				}
 			}
 			if (!float.TryParse(sprite.ScaleX, NumberStyles.Number, CultureInfo.InvariantCulture, out ScaleX))
 			{

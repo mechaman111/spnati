@@ -251,9 +251,20 @@ namespace SPNATI_Character_Editor.Controls
 					bool allExist = true;
 					if (!image.IsGeneric)
 					{
+						bool custom = name.StartsWith("custom:");
+						string nameWithoutStage = name;
+						if (custom)
+						{
+							nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
+						}
 						foreach (int stage in selectedStages)
 						{
-							if (_imageLibrary.Find(stage + "-" + name) == null)
+							string key = stage + "-" + nameWithoutStage;
+							if (custom)
+							{
+								key = "custom:" + key;
+							}
+							if (_imageLibrary.Find(key) == null)
 							{
 								allExist = false;
 								break;

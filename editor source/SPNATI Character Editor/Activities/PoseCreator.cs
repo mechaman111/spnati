@@ -2,6 +2,7 @@
 using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
@@ -12,6 +13,7 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private CharacterEditorData _editorData;
 		private ISkin _character;
+		private ImageLibrary _library;
 
 		private Pose _currentPose;
 		private Sprite _currentSprite;
@@ -37,6 +39,7 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as ISkin;
+			_library = ImageLibrary.Get(_character);
 			_editorData = CharacterDatabase.GetEditorData(_character.Character);
 			table.Context = new PoseContext(_character, CharacterContext.Pose);
 		}
@@ -177,7 +180,13 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				table.RecordFilter = DirectiveFilter;
 			}
+			else
+			{
+				table.RecordFilter = null;
+			}
 			table.Data = node.Tag;
+
+			tsAddKeyframe.Enabled = (_currentDirective != null);
 
 			preview.SetImage(new CharacterImage(_currentPose));
 		}
@@ -251,6 +260,10 @@ namespace SPNATI_Character_Editor.Activities
 		private void table_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			UpdateNode(table.Data);
+			if (table.Data is Pose && e.PropertyName == "Id")
+			{
+				_library.Rename(_currentPose);
+			}
 			preview.SetImage(new CharacterImage(_currentPose));
 		}
 
@@ -282,6 +295,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			Pose pose = new Pose();
 			pose.Id = "New Pose";
+			_library.Add(pose);
 			_character.CustomPoses.Add(pose);
 			AddNode(pose);
 			SelectNode(pose);
@@ -348,6 +362,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (pose != null)
 			{
 				_character.CustomPoses.Remove(_currentPose);
+				_library.Remove(_currentPose);
 			}
 			else if (sprite != null)
 			{
@@ -403,12 +418,14 @@ namespace SPNATI_Character_Editor.Activities
 			TreeNode pastedNode = null;
 			if (pastedPose != null)
 			{
+				_character.CustomPoses.Add(pastedPose);
 				pastedNode = AddNode(pastedPose);
 			}
 			else if (pastedSprite != null)
 			{
 				if (_currentPose != null)
 				{
+					_currentPose.Sprites.Add(pastedSprite);
 					pastedNode = AddSprite(_currentPose, pastedSprite);
 				}
 			}
@@ -416,6 +433,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				if (_currentPose != null)
 				{
+					_currentPose.Directives.Add(pastedDirective);
 					pastedNode = AddDirective(_currentPose, pastedDirective);
 				}
 			}
@@ -423,6 +441,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				if (_currentDirective != null)
 				{
+					_currentDirective.Keyframes.Add(pastedKeyframe);
 					pastedNode = AddKeyframe(_currentDirective, pastedKeyframe);
 				}
 			}
@@ -439,6 +458,255 @@ namespace SPNATI_Character_Editor.Activities
 			tsCopy_Click(sender, e);
 			tsPaste_Click(sender, e);
 			_clipboard = clipboard;
+		}
+
+		private void lstPoses_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			TreeNode node = e.Item as TreeNode;
+			if (node != null && node.Tag is Pose)
+			{
+				lstPoses.CollapseAll();
+			}
+			DoDragDrop(e.Item, DragDropEffects.Move);
+		}
+
+		private void lstPoses_DragDrop(object sender, DragEventArgs e)
+		{
+			lblDragger.Visible = false;
+
+			TreeNode dragNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+			if (dragNode == null) { return; }
+			bool draggingDirective = dragNode.Tag is Directive;
+			bool draggingSprite = dragNode.Tag is Sprite;
+			bool draggingKeyframe = dragNode.Tag is Keyframe && !draggingDirective && !draggingSprite;
+
+			Point targetPoint = lstPoses.PointToClient(new Point(e.X, e.Y));
+			TreeNode targetNode = lstPoses.GetNodeAt(targetPoint);
+			if (targetNode == null) { return; }
+			bool targetSprite = targetNode.Tag is Sprite;
+			bool targetDirective = targetNode.Tag is Directive;
+			bool targetKeyframe = targetNode.Tag is Keyframe && !targetDirective && !targetSprite;
+
+			if (!dragNode.Equals(targetNode))
+			{
+				if (draggingDirective)
+				{
+					//dragging a directive
+
+					if (targetKeyframe)
+					{
+						MoveNode(dragNode, targetNode.Parent.Index + 1);
+					}
+					else if (!targetDirective)
+					{
+						//insert at start of target scene
+						MoveNode(dragNode, 0);
+					}
+					else
+					{
+						if (targetPoint.Y - targetNode.Bounds.Height / 2 < targetNode.Bounds.Y - 2)
+						{
+							if (targetNode.PrevNode == null)
+							{
+								//insert at first position in scene
+								MoveNode(dragNode, 0);
+							}
+							else
+							{
+								//insert beneath previous node
+								MoveNode(dragNode, targetNode.Index);
+							}
+						}
+						else
+						{
+							//insert beneath target node
+							MoveNode(dragNode, targetNode.Index + 1);
+						}
+					}
+				}
+				else if (draggingKeyframe)
+				{
+					//dragging a keyframe
+
+					if (targetKeyframe)
+					{
+						if (targetPoint.Y - targetNode.Bounds.Height / 2 < targetNode.Bounds.Y - 2)
+						{
+							MoveNode(dragNode, targetNode.Index);
+						}
+						else
+						{
+							MoveNode(dragNode, targetNode.Index + 1);
+						}
+					}
+				}
+				else
+				{
+					//dragging a pose
+
+					if (targetPoint.Y - targetNode.Bounds.Height / 2 < targetNode.Bounds.Y - 2)
+					{
+						//insert above target scene
+						MoveNode(dragNode, targetNode.Index);
+					}
+					else
+					{
+						if (targetDirective)
+						{
+							//this shouldn't happen since the tree collapses directives, but if it does, use the scene node
+							targetNode = targetNode.Parent;
+						}
+
+						//insert behind target scene
+						MoveNode(dragNode, targetNode.Index + 1);
+					}
+				}
+			}
+		}
+
+		private void MoveNode(TreeNode node, int index)
+		{
+			//if moving higher, adjust the index to account for the node being removed
+			if (node.Index < index)
+			{
+				index--;
+			}
+
+			TreeNode parent = node.Parent;
+			node.Remove();
+			if (parent != null)
+			{
+				parent.Nodes.Insert(index, node);
+			}
+			else
+			{
+				lstPoses.Nodes.Insert(index, node);
+			}
+
+			lstPoses.SelectedNode = node;
+		}
+
+		private void RemoveSelectionHandler()
+		{
+			lstPoses.AfterSelect -= lstPoses_AfterSelect;
+		}
+
+		private void AddSelectionHandler()
+		{
+			lstPoses.AfterSelect += lstPoses_AfterSelect;
+		}
+
+		private void lstPoses_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = DragDropEffects.Move;
+		}
+
+		private void lstPoses_DragLeave(object sender, EventArgs e)
+		{
+			lblDragger.Visible = false;
+		}
+
+		private void lstPoses_DragOver(object sender, DragEventArgs e)
+		{
+			lstPoses.Scroll();
+
+			TreeNode dragNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+			if (dragNode == null) { return; }
+			bool draggingSprite = dragNode.Tag is Sprite;
+			bool draggingDirective = dragNode.Tag is PoseDirective;
+			bool draggingKeyframe = dragNode.Tag is Keyframe && !draggingSprite && !draggingDirective;
+
+			Point targetPoint = lstPoses.PointToClient(new Point(e.X, e.Y));
+			TreeNode targetNode = lstPoses.GetNodeAt(targetPoint);
+			bool targetDirective = targetNode?.Tag is PoseDirective;
+
+
+			if (targetNode == null || (draggingKeyframe && (targetNode == null || targetNode.Parent != dragNode.Parent))
+				|| (draggingSprite && (targetNode == null || targetNode.Parent != dragNode.Parent)))
+			{
+				//keyframes can only be dragged within their original parent
+				e.Effect = DragDropEffects.None;
+				lblDragger.Visible = false;
+				return;
+			}
+			else
+			{
+				Pose pose = targetNode.Tag as Pose;
+				e.Effect = DragDropEffects.Move;
+			}
+
+			if (draggingDirective && !targetDirective)
+			{
+				//dragging a directive on top of a pose. always insert below
+				Point pt = lblDragger.Location;
+				pt.Y = lstPoses.Top + targetNode.Bounds.Y + targetNode.Bounds.Height;
+				lblDragger.Location = pt;
+				lblDragger.Visible = true;
+			}
+			else
+			{
+				if (targetPoint.Y - targetNode.Bounds.Height / 2 < targetNode.Bounds.Y - 2)
+				{
+					//hovering on the upper half of a node
+					Point pt = lblDragger.Location;
+					pt.Y = lstPoses.Top + targetNode.Bounds.Y;
+					lblDragger.Location = pt;
+					lblDragger.Visible = true;
+				}
+				else
+				{
+					//hovering on the lower half
+					Point pt = lblDragger.Location;
+					pt.Y = lstPoses.Top + targetNode.Bounds.Y + targetNode.Bounds.Height;
+					lblDragger.Location = pt;
+					lblDragger.Visible = true;
+				}
+			}
+			RemoveSelectionHandler();
+			lstPoses.SelectedNode = dragNode;
+			AddSelectionHandler();
+		}
+
+		private void lstPoses_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+		{
+			if (e.Action == DragAction.Cancel || e.Action == DragAction.Drop)
+			{
+				lblDragger.Visible = false;
+			}
+		}
+
+		private void addSpriteToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_currentPose == null)
+			{
+				return;
+			}
+			Sprite sprite = new Sprite();
+			_currentPose.Sprites.Add(sprite);
+			lstPoses.SelectedNode = AddSprite(_currentPose, sprite);
+		}
+
+		private void addAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (_currentPose == null)
+			{
+				return;
+			}
+			PoseDirective directive = new PoseDirective();
+			directive.DirectiveType = "animation";
+			_currentPose.Directives.Add(directive);
+			lstPoses.SelectedNode = AddDirective(_currentPose, directive);
+		}
+
+		private void tsAddKeyframe_Click(object sender, EventArgs e)
+		{
+			if (_currentDirective == null)
+			{
+				return;
+			}
+			Keyframe frame = new Keyframe();
+			_currentDirective.Keyframes.Add(frame);
+			lstPoses.SelectedNode = AddKeyframe(_currentDirective, frame);
 		}
 	}
 

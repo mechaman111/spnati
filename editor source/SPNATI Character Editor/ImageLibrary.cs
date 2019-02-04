@@ -81,6 +81,7 @@ namespace SPNATI_Character_Editor
 			{
 				name = name.Substring(7);
 			}
+			if (string.IsNullOrEmpty(name)) { return; }
 			int stage = -1;
 			if (char.IsNumber(name[0]))
 			{
@@ -108,9 +109,37 @@ namespace SPNATI_Character_Editor
 		public void Add(Pose pose)
 		{
 			CharacterImage image = new CharacterImage(pose);
+			pose.ImageLink = image;
 			_allImages.Add(image);
 
 			CacheStage(image);
+		}
+
+		public void Rename(Pose pose)
+		{
+			if (pose.ImageLink != null)
+			{
+				foreach (KeyValuePair<int, List<CharacterImage>> kvp in _stages)
+				{
+					kvp.Value.Remove(pose.ImageLink);
+				}
+				pose.ImageLink.Name = "custom:" + pose.Id;
+				pose.ImageLink.DefaultName = pose.ImageLink.Name;
+				CacheStage(pose.ImageLink);
+			}
+		}
+
+		public void Remove(Pose pose)
+		{
+			CharacterImage img = _allImages.Find(i => i.Pose == pose);
+			if (img != null)
+			{
+				_allImages.Remove(img);
+				foreach (KeyValuePair<int, List<CharacterImage>> kvp in _stages)
+				{
+					kvp.Value.Remove(img);
+				}
+			}
 		}
 
 		/// <summary>
