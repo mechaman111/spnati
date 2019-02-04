@@ -112,14 +112,19 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
 		{
 			DialogueLine copy = line.Copy();
+			bool custom = copy.Image != null && copy.Image.StartsWith("custom:");
 			if (copy.Image != null)
 			{
 				copy.Image = Path.GetFileNameWithoutExtension(copy.Image);
+				if (custom)
+				{
+					copy.Image = "custom:" + copy.Image;
+				}
 			}
 
 			string path = character != null ? Config.GetRootDirectory(character) : "";
 			string extension = line.ImageExtension;
-			if (string.IsNullOrEmpty(extension))
+			if (string.IsNullOrEmpty(extension) && !custom)
 			{
 				//figure out the extension by searching for files of different names
 				bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
@@ -151,7 +156,7 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			if (!copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
+			if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
 			{
 				copy.Image = stage + "-" + copy.Image;
 			}
@@ -256,7 +261,7 @@ namespace SPNATI_Character_Editor
 			string extension = line.ImageExtension ?? Path.GetExtension(line.Image);
 			copy.ImageExtension = extension;
 			line.ImageExtension = extension;
-			copy.Image = Path.GetFileNameWithoutExtension(DialogueLine.GetDefaultImage(line.Image));
+			copy.Image = DialogueLine.GetDefaultImage(line.Image);
 			copy.Text = line.Text.Trim();
 			return copy;
 		}

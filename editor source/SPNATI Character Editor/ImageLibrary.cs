@@ -49,6 +49,11 @@ namespace SPNATI_Character_Editor
 				string name = Path.GetFileNameWithoutExtension(file);
 				Add(file, name);
 			}
+
+			foreach (Pose pose in character.CustomPoses)
+			{
+				Add(pose);
+			}
 		}
 
 		/// <summary>
@@ -64,26 +69,48 @@ namespace SPNATI_Character_Editor
 
 			if (file != PreviewImage)
 			{
-				int stage = -1;
-				if (char.IsNumber(image.Name[0]))
-				{
-					int hyphen = image.Name.IndexOf('-', 1);
-					if (hyphen > 0)
-					{
-						stage = int.Parse(image.Name.Substring(0, hyphen));
-					}
-				}
-				if (stage < 0)
-					image.IsGeneric = true;
-				List<CharacterImage> list;
-				if (!_stages.TryGetValue(stage, out list))
-				{
-					list = new List<CharacterImage>();
-					_stages[stage] = list;
-				}
-				list.Add(image);
+				CacheStage(image);
 			}
 			return image;
+		}
+
+		private void CacheStage(CharacterImage image)
+		{
+			string name = image.Name;
+			if (name.StartsWith("custom:"))
+			{
+				name = name.Substring(7);
+			}
+			int stage = -1;
+			if (char.IsNumber(name[0]))
+			{
+				int hyphen = name.IndexOf('-', 1);
+				if (hyphen > 0)
+				{
+					stage = int.Parse(name.Substring(0, hyphen));
+				}
+			}
+			if (stage < 0)
+				image.IsGeneric = true;
+			List<CharacterImage> list;
+			if (!_stages.TryGetValue(stage, out list))
+			{
+				list = new List<CharacterImage>();
+				_stages[stage] = list;
+			}
+			list.Add(image);
+		}
+
+		/// <summary>
+		/// Adds a custom pose
+		/// </summary>
+		/// <param name="pose"></param>
+		public void Add(Pose pose)
+		{
+			CharacterImage image = new CharacterImage(pose);
+			_allImages.Add(image);
+
+			CacheStage(image);
 		}
 
 		/// <summary>
@@ -93,7 +120,13 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public CharacterImage Find(string name)
 		{
+			if (string.IsNullOrEmpty(name)) { return null; }
+			bool custom = name.StartsWith("custom:");
 			string shortName = Path.GetFileNameWithoutExtension(name);
+			if (custom)
+			{
+				shortName = "custom:" + shortName;
+			}
 			return _allImages.Find(img => img.Name == name || img.Name == shortName);
 		}
 
@@ -211,7 +244,9 @@ namespace SPNATI_Character_Editor
 	{
 		public bool Disposed { get; private set; }
 
-		private Costume _skin;
+		public Costume Skin;
+
+		public Pose Pose;
 
 		public string FileName;
 		public string FileExtension;
@@ -232,6 +267,13 @@ namespace SPNATI_Character_Editor
 			DefaultName = DialogueLine.GetDefaultImage(Name);
 		}
 
+		public CharacterImage(Pose pose)
+		{
+			Name = "custom:" + pose.Id;
+			Pose = pose;
+			DefaultName = DialogueLine.GetDefaultImage(Name);
+		}
+
 		public override string ToString()
 		{
 			return Name;
@@ -239,13 +281,13 @@ namespace SPNATI_Character_Editor
 
 		public string GetPath()
 		{
-			if (_skin == null)
+			if (Skin == null)
 			{
 				return FileName;
 			}
 			else
 			{
-				string path = Path.Combine(Config.SpnatiDirectory, _skin.Folder, Name + FileExtension);
+				string path = Path.Combine(Config.SpnatiDirectory, Skin.Folder, Name + FileExtension);
 				if (!File.Exists(path))
 				{
 					return FileName;
@@ -283,7 +325,7 @@ namespace SPNATI_Character_Editor
 		{
 			string oldPath = GetPath();
 			int count = ReferenceCount;
-			_skin = skin;
+			Skin = skin;
 			string newPath = GetPath();
 			if (count > 0 && oldPath != newPath)
 			{

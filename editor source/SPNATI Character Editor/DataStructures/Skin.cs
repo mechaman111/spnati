@@ -205,12 +205,22 @@ namespace SPNATI_Character_Editor
 						if (stage < endStage)
 						{
 							DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stage, Character);
-							images.Add(Path.GetFileNameWithoutExtension(stageLine.Image));
+							string name = Path.GetFileNameWithoutExtension(stageLine.Image);
+							if (!name.StartsWith("custom:"))
+							{
+								images.Add(name);
+							}
 						}
 					}
 				}
 			}
 			return images;
+		}
+
+		public List<Pose> CustomPoses
+		{
+			get { return Poses; }
+			set { Poses = value; }
 		}
 	}
 

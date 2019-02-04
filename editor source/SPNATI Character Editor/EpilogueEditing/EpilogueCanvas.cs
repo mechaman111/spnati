@@ -2389,6 +2389,7 @@ namespace SPNATI_Character_Editor.Controls
 	public class EpilogueContext : IAutoCompleteList, ICharacterContext
 	{
 		public ISkin Character { get; set; }
+		public CharacterContext Context { get; private set; }
 		public Epilogue Epilogue { get; set; }
 		public Scene Scene { get; set; }
 
@@ -2397,6 +2398,7 @@ namespace SPNATI_Character_Editor.Controls
 			Character = character;
 			Epilogue = epilogue;
 			Scene = scene;
+			Context = CharacterContext.Epilogue;
 		}
 
 		public override string ToString()

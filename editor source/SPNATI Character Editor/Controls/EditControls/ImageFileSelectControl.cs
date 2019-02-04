@@ -28,6 +28,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				throw new Exception("ImageFileSelectControl requires a Character context!");
 			}
+			openFileDialog1.UseAbsolutePaths = (context.Context == CharacterContext.Pose);
 			_character = context.Character;
 
 			txtValue.Text = GetValue()?.ToString();
@@ -75,5 +76,12 @@ namespace SPNATI_Character_Editor.Controls
 	public interface ICharacterContext
 	{
 		ISkin Character { get; }
+		CharacterContext Context { get; }
+	}
+
+	public enum CharacterContext
+	{
+		Epilogue,
+		Pose
 	}
 }

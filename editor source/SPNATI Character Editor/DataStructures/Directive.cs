@@ -66,6 +66,11 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("layer")]
 		public int Layer;
 
+		[DefaultValue(0)]
+		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 6, Description = "Sort order layer", Minimum = 0, Maximum = 100)]
+		[XmlAttribute("z")]
+		public int Z;
+
 		[Text(DisplayName = "Text", Key = "text", GroupOrder = 5, Description = "Speech bubble text", RowHeight = 52, Multiline = true)]
 		[XmlText]
 		public string Text;

@@ -188,7 +188,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
-		protected int ParsePivot(string pivot, float size)
+		public static int ParsePivot(string pivot, float size)
 		{
 			switch (pivot)
 			{
@@ -420,7 +420,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
-		protected float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
+		public static float Interpolate(float lastValue, float nextValue, string interpolationMode, float t, float lastLastValue, float nextNextValue)
 		{
 			switch (interpolationMode)
 			{

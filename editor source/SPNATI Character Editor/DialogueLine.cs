@@ -92,6 +92,8 @@ namespace SPNATI_Character_Editor
 		{
 			if (string.IsNullOrEmpty(image))
 				return image;
+			bool custom = image.StartsWith("custom:");
+
 			int hyphen = image.IndexOf('-');
 			if (hyphen > 0)
 			{
@@ -99,10 +101,20 @@ namespace SPNATI_Character_Editor
 				int value;
 				if (int.TryParse(prefix, out value))
 				{
-					return Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
+					string reduced = Path.GetFileNameWithoutExtension(image.Substring(hyphen + 1));
+					if (custom)
+					{
+						reduced = "custom:" + reduced;
+					}
+					return reduced;
 				}
 			}
-			return Path.GetFileNameWithoutExtension(image);
+			string path = Path.GetFileNameWithoutExtension(image);
+			if (custom)
+			{
+				path = "custom:" + path;
+			}
+			return path;
 		}
 
 		/// <summary>

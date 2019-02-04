@@ -517,7 +517,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="key"></param>
 		private void SetImage(DataGridViewComboBoxCell cell, string key)
 		{
-			string defaultKey = Path.GetFileNameWithoutExtension(DialogueLine.GetDefaultImage(key));
+			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (var item in cell.Items)
 			{
 				CharacterImage image = item as CharacterImage;

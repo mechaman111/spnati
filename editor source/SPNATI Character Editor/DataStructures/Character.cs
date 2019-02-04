@@ -463,6 +463,10 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnAfterDeserialize();
 			}
+			foreach (Pose pose in Poses)
+			{
+				pose.OnAfterDeserialize();
+			}
 		}
 		#endregion
 
@@ -712,6 +716,12 @@ namespace SPNATI_Character_Editor
 		public HashSet<string> GetRequiredPoses()
 		{
 			return null;
+		}
+
+		public List<Pose> CustomPoses
+		{
+			get { return Poses; }
+			set { Poses = value; }
 		}
 	}
 

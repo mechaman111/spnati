@@ -29,5 +29,10 @@ namespace SPNATI_Character_Editor
 		/// Associated character
 		/// </summary>
 		Character Character { get; }
+		/// <summary>
+		/// Gets a list of custom poses associated with this skin
+		/// </summary>
+		/// <returns></returns>
+		List<Pose> CustomPoses { get; set; }
 	}
 }
