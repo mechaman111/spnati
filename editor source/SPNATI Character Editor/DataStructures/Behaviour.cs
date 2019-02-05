@@ -112,15 +112,8 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
 		{
 			DialogueLine copy = line.Copy();
-			bool custom = copy.Image != null && copy.Image.StartsWith("custom:");
-			if (copy.Image != null)
-			{
-				copy.Image = Path.GetFileNameWithoutExtension(copy.Image);
-				if (custom)
-				{
-					copy.Image = "custom:" + copy.Image;
-				}
-			}
+			copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
+			bool custom = copy.Image.StartsWith("custom:");
 
 			string path = character != null ? Config.GetRootDirectory(character) : "";
 			string extension = line.ImageExtension;

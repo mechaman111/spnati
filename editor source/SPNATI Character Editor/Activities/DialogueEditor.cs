@@ -808,8 +808,8 @@ namespace SPNATI_Character_Editor.Activities
 			if (img == null)
 			{
 				int stage = _selectedStage == null ? 0 : _selectedStage.Id;
-				image = DialogueLine.GetDefaultImage(image);
-				img = _imageLibrary.Find(stage + "-" + image);
+				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
+				img = _imageLibrary.Find(image);
 			}
 			DisplayImage(img);
 		}

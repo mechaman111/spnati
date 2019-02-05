@@ -142,8 +142,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (text == null && image == null)
 				return null;
 			CharacterImage img = _imageLibrary.Find(image);
-			string extension = img != null ? img.FileExtension : ".png";
-			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
+			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image), text);
 
 			if (perTarget)
 			{
@@ -488,7 +487,7 @@ namespace SPNATI_Character_Editor.Controls
 				int stage = _selectedCase.Stages[0];
 				if (_selectedStage != null)
 					stage = _selectedStage.Id;
-				imageKey = string.Format("{0}-{1}", stage, imageKey);
+				imageKey = DialogueLine.GetStageImage(stage, imageKey);
 				image = _imageLibrary.Find(imageKey);
 			}
 
