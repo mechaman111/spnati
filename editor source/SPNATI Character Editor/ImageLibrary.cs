@@ -93,6 +93,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (stage < 0)
 				image.IsGeneric = true;
+			else image.IsGeneric = false;
 			List<CharacterImage> list;
 			if (!_stages.TryGetValue(stage, out list))
 			{
@@ -124,7 +125,7 @@ namespace SPNATI_Character_Editor
 					kvp.Value.Remove(pose.ImageLink);
 				}
 				pose.ImageLink.Name = "custom:" + pose.Id;
-				pose.ImageLink.DefaultName = pose.ImageLink.Name;
+				pose.ImageLink.DefaultName = DialogueLine.GetDefaultImage(pose.ImageLink.Name);
 				CacheStage(pose.ImageLink);
 			}
 		}

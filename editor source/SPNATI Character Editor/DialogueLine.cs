@@ -88,12 +88,20 @@ namespace SPNATI_Character_Editor
 			return Text;
 		}
 
+		/// <summary>
+		/// Converts an image name (ex. 0-shy.png) to a generic name (shy)
+		/// </summary>
+		/// <param name="image"></param>
+		/// <returns></returns>
 		public static string GetDefaultImage(string image)
 		{
 			if (string.IsNullOrEmpty(image))
 				return image;
 			bool custom = image.StartsWith("custom:");
-
+			if (custom)
+			{
+				image = image.Substring(7);
+			}
 			int hyphen = image.IndexOf('-');
 			if (hyphen > 0)
 			{
@@ -115,6 +123,28 @@ namespace SPNATI_Character_Editor
 				path = "custom:" + path;
 			}
 			return path;
+		}
+
+		/// <summary>
+		/// Converts a generic image name into a stage-specific one (ex. shy to 0-shy)
+		/// </summary>
+		/// <param name="stage"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static string GetStageImage(int stage, string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return name;
+			}
+			if (name.StartsWith("custom:"))
+			{
+				return $"custom:{stage}-{name.Substring(7)}";
+			}
+			else
+			{
+				return $"{stage}-{name}";
+			}
 		}
 
 		/// <summary>
