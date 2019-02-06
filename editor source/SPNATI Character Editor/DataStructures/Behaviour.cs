@@ -113,48 +113,51 @@ namespace SPNATI_Character_Editor
 		{
 			DialogueLine copy = line.Copy();
 			copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
-			bool custom = copy.Image.StartsWith("custom:");
-
-			string path = character != null ? Config.GetRootDirectory(character) : "";
-			string extension = line.ImageExtension;
-			if (string.IsNullOrEmpty(extension) && !custom)
+			if (copy.Image != null)
 			{
-				//figure out the extension by searching for files of different names
-				bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
-				bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+				bool custom = copy.Image.StartsWith("custom:");
 
-				if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+				string path = character != null ? Config.GetRootDirectory(character) : "";
+				string extension = line.ImageExtension;
+				if (string.IsNullOrEmpty(extension) && !custom)
+				{
+					//figure out the extension by searching for files of different names
+					bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
+					bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+
+					if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+					{
+						copy.Image = stage + "-" + copy.Image;
+						baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+						if (baseGifExists)
+						{
+							extension = ".gif";
+						}
+						else
+						{
+							extension = ".png";
+						}
+					}
+					else
+					{
+						if (baseGifExists)
+						{
+							extension = ".gif";
+						}
+						else
+						{
+							extension = ".png";
+						}
+					}
+				}
+
+				if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
 				{
 					copy.Image = stage + "-" + copy.Image;
-					baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-					if (baseGifExists)
-					{
-						extension = ".gif";
-					}
-					else
-					{
-						extension = ".png";
-					}
 				}
-				else
-				{
-					if (baseGifExists)
-					{
-						extension = ".gif";
-					}
-					else
-					{
-						extension = ".png";
-					}
-				}
+				copy.Image += extension;
+				copy.ImageExtension = extension;
 			}
-
-			if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
-			{
-				copy.Image = stage + "-" + copy.Image;
-			}
-			copy.Image += extension;
-			copy.ImageExtension = extension;
 			copy.Text = line.Text?.Trim();
 			return copy;
 		}
