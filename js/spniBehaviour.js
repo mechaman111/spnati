@@ -354,7 +354,7 @@ function checkMarker(predicate, self, target, currentOnly) {
             if (!isNaN(parseInt(match[5], 10))) {
                 cmpVal = parseInt(match[5], 10);
             } else {
-                cmpVal = expandDialogue(match[5], self, opp); 
+                cmpVal = expandDialogue(match[5], self, target); 
             }
         } else {
             op = '!!';
