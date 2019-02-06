@@ -2,12 +2,15 @@ import kkl_import as kkl
 import csv
 import sys
 
-#       0 1 2 3   4  5  6  7 8  9 10 11
-#85**ca68.1.0.105.0.-20.25.0.30.0.60.57
 modifications = {
     'ca': {
-        11: 57
+        7: 25,
+        11: 60
     },
+    'qa': {
+        3: 40,
+        4: 45
+    }
 }
 
 def modify_code(in_code):
