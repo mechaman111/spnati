@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.4 at 6:16:44 AM on January 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.4 at 5:42:10 PM on February 06, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v3.4</version>
     <first>Corrin</first>
@@ -52,7 +52,7 @@
         <clothing lowercase="armor" position="upper" formalName="Armor" type="important" />
         <clothing lowercase="pants" position="lower" formalName="Pants" type="minor" />
         <clothing lowercase="gloves" position="upper" formalName="Gloves" type="extra" />
-        <clothing lowercase="cape" position="other" formalName="Cape" type="extra" />
+        <clothing lowercase="cape" position="other" formalName="cape" type="extra" />
     </wardrobe>
 
     <poses />
@@ -62,8 +62,16 @@
             <case tag="selected">
                 <state img="0-shy.png">My wife, Camilla, signed me up for this. She says I must become comfortable with my kinks.</state>
             </case>
+            <case tag="selected">
+                <condition count="1" filter="corrin_m_valentine" />
+                <state img="0-happy.png">Let's do this! My wife dressed me for success!</state>
+            </case>
             <case tag="game_start">
                 <state img="0-shy.png">I hope I can keep my dragon blood at bay...</state>
+            </case>
+            <case tag="game_start">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="0-appreciative.png">Happy Valentine's Day. To both Camilla and ~player~.</state>
             </case>
             <case tag="swap_cards">
                 <state img="0-appreciative.png">My path is clear! I need ~cards~ new cards.</state>
@@ -390,6 +398,10 @@
             <case tag="stripping" alsoPlaying="elizabeth">
                 <condition count="1" filter="corrin_f" />
                 <state img="0-strip.png">Thank you.</state>
+            </case>
+            <case tag="stripping" priority="50">
+                <condition count="3-3" filter="corrin_m_valentine" />
+                <state img="0-strip.png">I suppose my mantle can go first.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="0-excited.png">It's your turn to undress, ~name~!</state>
@@ -1509,6 +1521,11 @@
                 <state img="0-victory.png">I did it! I was able to win against a goddess!</state>
                 <state img="0-victory.png">A victory against a goddess is something to be proud of!</state>
             </case>
+            <case tag="game_over_victory">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="0-victory.png">I did it! I won on the day of romance!</state>
+                <state img="0-victory.png">I didn't expect to win at this Valentine's Festival!</state>
+            </case>
         </stage>
 
         <stage id="1">
@@ -1739,6 +1756,10 @@
                 <state img="1-strip.png">Off it goes... Please make my luck magically better, Zizou.</state>
                 <state img="1-strip.png">I can't believe I'm doing this in front of a goddess...</state>
             </case>
+            <case tag="stripping" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="1-strip.png">Well, I think my gloves can go next.</state>
+            </case>
             <case tag="stripped">
                 <state img="1-stripped.png">I-I won't lose next time!</state>
                 <state img="1-stripped.png">If this keeps up, you'll all see me...</state>
@@ -1795,6 +1816,10 @@
                 <state img="1-stripped.png">Here I am... Please don't judge me too harshly, Goddess.</state>
                 <state img="1-stripped.png">This is so embarrassing... Is there a spell to make me more brave when I do this?</state>
                 <state img="1-stripped.png">You're a goddess... You've probably seen so many better looking guys.</state>
+            </case>
+            <case tag="stripped" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="1-stripped.png">It's not too big of a loss for me.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="1-excited.png">It's your turn to undress, ~name~!</state>
@@ -3165,6 +3190,10 @@
                 <state img="2-strip.png">Off it goes... Please make my luck magically better, Zizou.</state>
                 <state img="2-strip.png">I can't believe I'm doing this in front of a goddess...</state>
             </case>
+            <case tag="stripping" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="2-strip.png">I suppose it's time to kick off my boots.</state>
+            </case>
             <case tag="stripped">
                 <state img="2-stripped.png">I-I won't lose next time!</state>
                 <state img="2-stripped.png">If this keeps up, you'll all see me...</state>
@@ -3219,6 +3248,10 @@
                 <state img="2-stripped.png">Here I am... Please don't judge me too harshly, Goddess.</state>
                 <state img="2-stripped.png">This is so embarrassing... Is there a spell to make me more brave when I do this?</state>
                 <state img="2-stripped.png">You're a goddess... You've probably seen so many better looking guys.</state>
+            </case>
+            <case tag="stripped" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="2-stripped.png">I hope this game doesn't get out of hand. Get it?</state>
             </case>
             <case tag="male_must_strip">
                 <state img="2-excited.png">It's your turn to undress, ~name~!</state>
@@ -4603,6 +4636,10 @@
                 <condition count="1" filter="corrin_f" />
                 <state img="3-strip.png">Our culture really doesn't have surnames, Miss Elizabeth.</state>
             </case>
+            <case tag="stripping" priority="50">
+                <condition count="1" filter="corrin_m_valentine" />
+                <state img="3-strip.png">This bodice is a little tight. I won't mind taking it off.</state>
+            </case>
             <case tag="stripped">
                 <state img="3-stripped.png">I-I won't lose next time!</state>
                 <state img="3-stripped.png">If this keeps up, you'll all see me...</state>
@@ -4662,6 +4699,10 @@
                 <state img="3-stripped.png">Here I am... Please don't judge me too harshly, Goddess.</state>
                 <state img="3-stripped.png">This is so embarrassing... Is there a spell to make me more brave when I do this?</state>
                 <state img="3-stripped.png">You're a goddess... You've probably seen so many better looking guys.</state>
+            </case>
+            <case tag="stripped" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="3-stripped.png">I'm more used to being barefoot anyway. This isn't a big deal.</state>
             </case>
             <case tag="male_must_strip">
                 <state img="3-excited.png">It's your turn to undress, ~name~!</state>
@@ -6022,6 +6063,10 @@
                 <state img="4-strip.png">Off it goes... Please make my luck magically better, Zizou.</state>
                 <state img="4-strip.png">I can't believe I'm doing this in front of a goddess...</state>
             </case>
+            <case tag="stripping" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="4-strip.png">This fauld is really heavy. I'll be glad to take it off.</state>
+            </case>
             <case tag="stripped">
                 <state img="4-stripped.png">I-I won't lose next time!</state>
                 <state img="4-stripped.png">If this keeps up, you'll all see me...</state>
@@ -6094,6 +6139,10 @@
             <case tag="stripped" alsoPlaying="elizabeth">
                 <condition count="1" filter="corrin_f" />
                 <state img="4-stripped.png">I'm used to seeing multiple Corrins.</state>
+            </case>
+            <case tag="stripped" priority="50">
+                <condition count="1" filter="corrin_m_valentine" />
+                <state img="4-stripped.png">Now if only I was more impressive to look at...</state>
             </case>
             <case tag="stripped" alsoPlaying="catria" alsoPlayingStage="0-7">
                 <condition count="0" filter="corrin_m" />
@@ -7466,6 +7515,10 @@
                 <state img="5-strip.png">Off it goes... Please make my luck magically better, Zizou.</state>
                 <state img="5-strip.png">I can't believe I'm doing this in front of a goddess...</state>
             </case>
+            <case tag="stripping" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="5-strip.png">I must have courage! I must undress!</state>
+            </case>
             <case tag="stripped">
                 <state img="5-stripped.png">I-I won't lose next time!</state>
                 <state img="5-stripped.png">If this keeps up, you'll all see me...</state>
@@ -7559,6 +7612,10 @@
                 <state img="5-stripped.png">Here I am... Please don't judge me too harshly, Goddess.</state>
                 <state img="5-stripped.png">This is so embarrassing... Is there a spell to make me more brave when I do this?</state>
                 <state img="5-stripped.png">You're a goddess... You've probably seen so many better looking guys.</state>
+            </case>
+            <case tag="stripped" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="5-stripped.png">Now if I actually looked good like this, that would be a different story...</state>
             </case>
             <case tag="male_must_strip">
                 <state img="5-excited.png">It's your turn to undress, ~name~!</state>
@@ -8830,6 +8887,10 @@
                 <state img="6-stripped.png">This is so embarrassing... Is there a spell to make me more brave when I do this?</state>
                 <state img="6-stripped.png">You're a goddess... You've probably seen so many better looking guys.</state>
             </case>
+            <case tag="stripped" priority="50">
+                <condition count="0" filter="corrin_m_valentine" />
+                <state img="6-stripped.png">At least the tight thong is off now...</state>
+            </case>
             <case tag="male_must_strip">
                 <state img="6-excited.png">It's your turn to undress, ~name~!</state>
                 <state img="6-happy.png">You've lost this hand, ~name~, so please lose a piece of clothing.</state>
@@ -9786,6 +9847,10 @@
                 <state img="6-loss.png">I wish I didn't have to do this in front of the Goddess of Magic...</state>
                 <state img="6-loss.png">If I disappoint, Will you destroy people's connection to magic?</state>
             </case>
+            <case tag="must_masturbate_first" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="6-interested.png">I'm first? OK... Happy Valentine's Day, Camilla. I hope you're watching.</state>
+            </case>
             <case tag="male_must_masturbate" target="pit" targetStage="5">
                 <state img="6-interested.png">Pit was the first? Is there a goddess of luck you angered?</state>
                 <state img="6-horny.png">I don't mind watching you touch yourself, Pit. Just tell me if you need help.</state>
@@ -9837,6 +9902,10 @@
             <case tag="must_masturbate" alsoPlaying="elizabeth">
                 <condition count="1" filter="corrin_f" />
                 <state img="6-shy.png">I hope so. I always feel better with a partner.</state>
+            </case>
+            <case tag="must_masturbate" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="6-interested.png">Well at least I get to have fun on Valentine's Day...</state>
             </case>
             <case tag="male_masturbating">
                 <state img="6-happy.png">You can do it, ~name~.</state>
@@ -9958,6 +10027,10 @@
                 <state img="6-starting.png">Here I go, Zizou... Please be a kind goddess...</state>
                 <state img="6-starting.png">Goddess of Magic, Guide my hand.</state>
                 <state img="6-starting.png">I pray to the goddess of Magic that I do not disappoint.</state>
+            </case>
+            <case tag="start_masturbating" priority="50">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="6-starting.png">Here I go. I hope I live up to expectations on this special day.</state>
             </case>
             <case tag="game_over_victory">
                 <state img="6-victory.png">I have changed my fate!</state>
@@ -12527,6 +12600,10 @@
                 <state img="8-finished.png">I can't believe I masturbated in front of a goddess...</state>
                 <state img="8-finished.png">Forgive me for such lewdness, Zizou... Don't destroy magic...</state>
             </case>
+            <case tag="finished_masturbating" priority="50" timeInStage="0">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="8-appreciative.png">Happy Valentine's Day, everyone...</state>
+            </case>
             <case tag="female_masturbating" target="corrin_f">
                 <state img="8-excited.png">Yeah! Remember! Everyone back home believes in you!</state>
                 <state img="8-excited.png">Yeah! You tease your slit like an expert!</state>
@@ -12558,6 +12635,11 @@
                 <state img="8-interested.png">I thought I could win up until that last bad hand. Good job, ~name~.</state>
                 <state img="8-shy.png">I... I tried...</state>
                 <state img="8-calm.png">I did my best. There's no shame in that.</state>
+            </case>
+            <case tag="game_over_defeat">
+                <condition count="1-1" filter="corrin_m_valentine" />
+                <state img="8-submissive.png">I did my best. That's all that matters.</state>
+                <state img="8-presenting.png">OK, ~name~. I made a bet with my wife. You can take me if she gets to watch.</state>
             </case>
             <case tag="game_over_defeat" target="florina">
                 <state img="8-shy.png">I lost... But at least Florina still has her dignity...</state>
