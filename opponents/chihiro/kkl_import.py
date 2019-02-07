@@ -205,7 +205,7 @@ class KisekaeCode(object):
             characters (list of KisekaeCharacter): List of characters contained in the code.
         """
         
-        self.version = 85
+        self.version = 86
         self.characters = []
         self.scene = None
         
