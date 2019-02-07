@@ -221,6 +221,7 @@ namespace SPNATI_Character_Editor.Activities
 				case "id":
 				case "tween":
 				case "ease":
+				case "loop":
 				case "delay":
 					return true;
 				default:
