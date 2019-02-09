@@ -737,10 +737,30 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     if (!this.tests.every(function(test) {
         var expr = expandDialogue(test.attr('expr'), self, opp);
         var value = test.attr('value');
+		var cmp = test.attr('cmp') || '==';
+		
         var interval = parseInterval(value);
-        if (interval ? inInterval(Number(expr), interval) : expr == value) {
-            return true;
-        } else return false;
+		if (interval) {
+			return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+		}
+		
+		if (!isNaN(Number(expr))) expr = Number(expr);
+		if (!isNaN(Number(value))) value = Number(value);
+		
+		switch (cmp) {
+			case '>':
+				return expr > value;
+			case '>=':
+				return expr >= value;
+			case '<':
+				return expr < value;
+			case '<=':
+				return expr <= value;
+			case '!=':
+				return expr != value;
+			default:
+				return expr == value;
+		}
     })) {
         return false;
     }
