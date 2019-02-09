@@ -289,6 +289,9 @@ function expandDialogue (dialogue, self, target) {
 			case 'target':
 				substitution = expandPlayerVariable(fn, args, self, target);
 				break;
+			case 'self':
+				substitution = expandPlayerVariable(fn, args, self, self);
+				break;
 			default:
 				/* Find a specific character at the table by ID. */
 				players.some(function (p) {
