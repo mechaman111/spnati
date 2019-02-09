@@ -15,19 +15,24 @@ class ParseError(Exception):
     def __str__(self):
         return self.args[0]
         
-_opening_tag_start = re.compile(r'.*?\<([a-zA-Z0-9\-\_]+)\s*?', re.DOTALL)
-_opening_tag_end = re.compile(r'(\/?)\>', re.DOTALL)
-
-_attribute = re.compile(r"([a-zA-Z0-9\-\_\:]+)(?:\s*\=\s*(\"(.*?)\"))?")
+_tag_start = re.compile(r'.*?\<([a-zA-Z0-9\-\_]+)\s*?(.*?)\s*?(\/?)\>', re.DOTALL)
+_attribute = re.compile(r"([a-zA-Z0-9\-\_]+)(?:\s*\=\s*(\"(.*?)\"))?")
 _comment = re.compile(r'\s*(?:\<\!\-\-(.*?)\-\-\>)?', re.DOTALL)
 _decl_tag = re.compile(r'\<\?(.*?)\?\>', re.DOTALL)  # ignored for now
 
 base_tag_spec = {
     'opponent': {
+        'version': None,
         'first': None,
         'last': None,
         'label': None,
         'gender': None,
+        'poses': {
+            'pose': {
+                'sprite': None,
+                'directive': { 'keyframe': None, 'animFrame': None }
+            }
+        },
         'size': None,
         'timer': None,
         'intelligence': None,
@@ -36,28 +41,11 @@ base_tag_spec = {
         'wardrobe': { 'clothing': None },
         'behaviour': {
             'stage': {
-                'case': { 'priority': None, 'condition': None, 'state': None }
+                'case': { 'priority': None, 'condition': None, 'test': None, 'state': None }
             }
         },
         'epilogue': {
             'title': None,
-            'background': {
-                'scene': {
-                    'sprite': {
-                        'x': None,
-                        'y': None,
-                        'width': None,
-                        'src': None
-                    },
-                    'text': {
-                        'x': None,
-                        'y': None,
-                        'width': None,
-                        'arrow': None,
-                        'content': None,
-                    }
-                }
-            },
             'screen': {
                 'start': None,
                 'text': {
@@ -87,11 +75,8 @@ meta_tag_spec = {
         'description': None,
         'has_ending': None,
         'layers': None,
-        'release': None,
         'tags': { 'tag': None },
-        'epilogue': None,
-        'alternates': { 'costume': None },
-        'scale': None,
+        'costume': None
     }
 }
 
@@ -141,17 +126,16 @@ def _consume_re(seq, regex, index, suppress_eof_error=False):
     
     return match, index
 
-def parse_attribute_list(seq, elem, index):
-    attr_match, index = _consume_re(seq, _attribute, index)
+def parse_attribute_list(seq, elem):
+    attr_match, index = _consume_re(seq, _attribute, 0, True)
     
     while attr_match is not None:
-        attr_name = attr_match.group(1).strip()
         try:
-            elem.attributes[attr_name] = attr_match.group(3)
+            elem.attributes[attr_match.group(1)] = attr_match.group(3)
         except IndexError:
-            elem.attributes[attr_name] = True
+            elem.attributes[attr_match.group(1)] = True
             
-        attr_match, index = _consume_re(seq, _attribute, index)
+        attr_match, index = _consume_re(seq, _attribute, index, True)
         
     return index
 
@@ -159,7 +143,9 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
     if progress_cb is not None:
         progress_cb(index)
     
-    match, index = _consume_re(seq, _opening_tag_start, index)
+    _start_index = index
+    
+    match, index = _consume_re(seq, _tag_start, index)
     if match is None:
         raise ParseError("Expected opening tag", index)
     
@@ -170,13 +156,9 @@ def parse_tag(seq, index, tag_spec, progress_cb=None):
         raise ParseError("Unexpected tag type '{}'".format(tag_type), index)
     
     elem = OrderedXMLElement(tag_type)
-    index = parse_attribute_list(seq, elem, index)
-    
-    match, index = _consume_re(seq, _opening_tag_end, index)
-    if match is None:
-        raise ParseError("Expected close for opening tag", index)
-    
-    simple_tag_match = (len(match.group(1)) > 0)
+    if len(match.group(2)) > 0:
+        parse_attribute_list(match.group(2), elem)
+    simple_tag_match = (len(match.group(3)) > 0)
     
     try:
         # For simple tags (for example: <br />) just return the empty element
