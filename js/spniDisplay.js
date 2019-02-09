@@ -644,13 +644,8 @@ IndividualSelectDisplay.prototype.constructor = IndividualSelectDisplay;
 IndividualSelectDisplay.prototype.update = function (opponent) {
     OpponentPickerDisplay.prototype.update.call(this, opponent);
     
-    if (opponent.enabled == "true") {
-        this.button.html('Select Opponent');
-        this.button.attr('disabled', false);
-    } else {
-        this.button.html('Coming Soon');
-        this.button.attr('disabled', true);
-    }
+    this.button.html('Select Opponent');
+    this.button.attr('disabled', false);
 }
 
 IndividualSelectDisplay.prototype.clear = function () {
