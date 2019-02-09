@@ -405,13 +405,8 @@ function updateIndividualSelectScreen () {
 			$individualImages[index].attr('src', selectableOpponents[i].selection_image);
 			$individualImages[index].css('height', selectableOpponents[i].scale + '%');
 			$individualImages[index].show();
-			if (selectableOpponents[i].enabled == "true") {
-				$individualButtons[index].html('Select Opponent');
-				$individualButtons[index].attr('disabled', false);
-			} else {
-				$individualButtons[index].html('Coming Soon');
-				$individualButtons[index].attr('disabled', true);
-			}
+			$individualButtons[index].html('Select Opponent');
+			$individualButtons[index].attr('disabled', false);
 			
 			$individualCostumeSelectors[index].hide();
 			if (ALT_COSTUMES_ENABLED) {

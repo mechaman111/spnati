@@ -440,7 +440,6 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.base_folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
 
-    this.enabled = $metaXml.find('enabled').text();
     this.status = status;
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
