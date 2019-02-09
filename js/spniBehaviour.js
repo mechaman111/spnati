@@ -199,6 +199,32 @@ function getTargetMarker(marker, target) {
 }
 
 /************************************************************
+ * Expands ~target.*~ and ~[player].*~ variables.
+ ************************************************************/
+function expandPlayerVariable(fn, args, self, target) {
+	if (fn === 'position') {
+		if (target.slot === self.slot) return 'self';
+		return (target.slot < self.slot) ? 'left' : 'right';
+	} else if (fn === 'slot') {
+		return target.slot;
+	} else if (fn.substring(0, 6) === 'marker') {
+		var markerName = fn.split('.', 2)[1];
+		if (markerName) {
+			var marker;
+			if (target) {
+				marker = target.markers[getTargetMarker(markerName, target)];
+			}
+			if (!marker) {
+				marker = target.markers[markerName] || ("<UNDEFINED MARKER: " + markerName + ">");
+			}
+			return marker;
+		} else {
+			return "marker"; //didn't supply a marker name
+		}
+	}
+}
+
+/************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
 function expandDialogue (dialogue, self, target) {
@@ -260,6 +286,18 @@ function expandDialogue (dialogue, self, target) {
             case 'weekday':
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
+			case 'target':
+				substitution = expandPlayerVariable(fn, args, self, target);
+				break;
+			default:
+				/* Find a specific character at the table by ID. */
+				players.some(function (p) {
+					if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+						substitution = expandPlayerVariable(fn, args, self, p);
+						return true;
+					}
+				});
+				break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
@@ -272,7 +310,7 @@ function expandDialogue (dialogue, self, target) {
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.([\w\.]+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
