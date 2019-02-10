@@ -828,6 +828,12 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+
+			foreach (Pose pose in skin.Poses)
+			{
+				missingImages.Remove("custom:" + pose.Id);
+			}
+
 			if (missingImages.Count > 0)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{skin.Folder} is missing the following images: {string.Join(",", missingImages)}"));

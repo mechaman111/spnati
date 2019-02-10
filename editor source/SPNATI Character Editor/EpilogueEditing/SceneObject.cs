@@ -760,7 +760,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return false;
 		}
 
-		public virtual bool AdjustScale(Point point, ScenePreview scene, Point startPoint, HoverContext context, bool locked)
+		public virtual bool AdjustScale(Point point, Point startPoint, HoverContext context, bool locked)
 		{
 			bool horizontal = (context & HoverContext.ScaleHorizontal) != 0;
 			bool vertical = (context & HoverContext.ScaleVertical) != 0;

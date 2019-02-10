@@ -91,9 +91,7 @@ namespace SPNATI_Character_Editor
 					stage = int.Parse(name.Substring(0, hyphen));
 				}
 			}
-			if (stage < 0)
-				image.IsGeneric = true;
-			else image.IsGeneric = false;
+			image.IsGeneric = stage < 0;
 			List<CharacterImage> list;
 			if (!_stages.TryGetValue(stage, out list))
 			{
@@ -242,7 +240,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Starts pulling images from a different and replaces any currently referenced images
+		/// Starts pulling images from a different source and replaces any currently referenced images
 		/// </summary>
 		/// <param name="skin"></param>
 		public void UpdateSkin(Costume skin)
@@ -251,7 +249,7 @@ namespace SPNATI_Character_Editor
 			foreach (CharacterImage img in _allImages)
 			{
 				Image replacement = img.UpdateSkin(_skin);
-				if (replacement != null)
+				if (replacement != null || img.Pose != null)
 				{
 					ImageReplacementArgs args = new ImageReplacementArgs()
 					{
@@ -277,6 +275,7 @@ namespace SPNATI_Character_Editor
 		public Costume Skin;
 
 		public Pose Pose;
+		public Pose SkinnedPose;
 
 		public string FileName;
 		public string FileExtension;
@@ -301,6 +300,10 @@ namespace SPNATI_Character_Editor
 		{
 			Name = "custom:" + pose.Id;
 			Pose = pose;
+			if (Skin != null && Pose != null)
+			{
+				SkinnedPose = Skin.Poses.Find(p => p.Id == Pose.Id);
+			}
 			DefaultName = DialogueLine.GetDefaultImage(Name);
 		}
 
@@ -346,6 +349,11 @@ namespace SPNATI_Character_Editor
 			ImageCache.Release(GetPath());
 		}
 
+		public Pose GetPose()
+		{
+			return SkinnedPose ?? Pose;
+		}
+
 		/// <summary>
 		/// Updates the image to use a new skin
 		/// </summary>
@@ -353,16 +361,30 @@ namespace SPNATI_Character_Editor
 		/// <returns>The new skin's image if there are any active references. The call should replace old image references with this one</returns>
 		public Image UpdateSkin(Costume skin)
 		{
-			string oldPath = GetPath();
-			int count = ReferenceCount;
-			Skin = skin;
-			string newPath = GetPath();
-			if (count > 0 && oldPath != newPath)
+			if (Pose != null)
 			{
-				//need to swap out images
-				ImageCache.Release(oldPath);
-				Image image = ImageCache.Get(newPath);
-				return image;
+				if (skin != null)
+				{
+					SkinnedPose = skin.Poses.Find(p => p.Id == Pose.Id);
+				}
+				else
+				{
+					SkinnedPose = null;
+				}
+			}
+			else
+			{
+				string oldPath = GetPath();
+				int count = ReferenceCount;
+				Skin = skin;
+				string newPath = GetPath();
+				if (count > 0 && oldPath != newPath)
+				{
+					//need to swap out images
+					ImageCache.Release(oldPath);
+					Image image = ImageCache.Get(newPath);
+					return image;
+				}
 			}
 			return null;
 		}

@@ -47,6 +47,9 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string ImageExtension;
 
+		[XmlIgnore]
+		public bool IsGenericImage;
+
 		public DialogueLine()
 		{
 			Image = "";
@@ -86,6 +89,18 @@ namespace SPNATI_Character_Editor
 		public override string ToString()
 		{
 			return Text;
+		}
+
+		private static Regex _stageRegex = new Regex(@"^(custom:)?\d+-.*");
+		/// <summary>
+		/// Gets whether an image name is in the format [custom:]#-abc
+		/// </summary>
+		/// <param name="image"></param>
+		/// <returns></returns>
+		public static bool IsStageSpecificImage(string image)
+		{
+			if (string.IsNullOrEmpty(image)) { return true; }
+			return _stageRegex.IsMatch(image);
 		}
 
 		/// <summary>

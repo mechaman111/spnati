@@ -57,6 +57,7 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 
 			ColPerTarget.FalseValue = false;
+			ColImage.ValueType = typeof(CharacterImage);
 
 			_intellisense = new IntellisenseControl();
 			_intellisense.InsertSnippet += _intellisense_InsertSnippet;
@@ -123,7 +124,8 @@ namespace SPNATI_Character_Editor.Controls
 		private DialogueLine ReadLineFromDialogueGrid(int rowIndex)
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
-			string image = row.Cells["ColImage"].Value?.ToString();
+			CharacterImage pose = row.Cells["ColImage"].Value as CharacterImage;
+			string image = pose?.Name;
 			string text = row.Cells["ColText"].Value?.ToString();
 			string marker = row.Cells["ColMarker"].Value?.ToString();
 			if (string.IsNullOrEmpty(marker))
@@ -139,10 +141,13 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				text = "";
 			}
-			if (text == null && image == null)
+			if (text == null && pose == null)
 				return null;
-			CharacterImage img = _imageLibrary.Find(image);
-			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image), text);
+			if (pose != null && !pose.IsGeneric)
+			{
+				image = DialogueLine.GetDefaultImage(image);
+			}
+			DialogueLine line = new DialogueLine(image, text);
 
 			if (perTarget)
 			{
@@ -172,6 +177,10 @@ namespace SPNATI_Character_Editor.Controls
 
 			line.Direction = direction;
 			line.Location = location;
+			if (pose != null)
+			{
+				line.IsGenericImage = pose.IsGeneric;
+			}
 
 			string ai = row.Cells["ColIntelligence"].Value?.ToString();
 			string size = row.Cells["ColSize"].Value?.ToString();
@@ -344,7 +353,23 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_selectedCase == null)
 				return;
-			if (e.ColumnIndex == 1)
+			if (e.ColumnIndex == 0)
+			{
+				if (e.Value != null)
+				{
+					DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
+					foreach (object item in cell.Items)
+					{
+						if (((CharacterImage)item).DefaultName == e.Value.ToString())
+						{
+							e.Value = item;
+							e.ParsingApplied = true;
+							return;
+						}
+					}
+				}
+			}
+			else if (e.ColumnIndex == 1)
 			{
 				//Validate variables in text
 				string text = e.Value?.ToString();
@@ -481,15 +506,14 @@ namespace SPNATI_Character_Editor.Controls
 		private void AddLineToDialogueGrid(DialogueLine line)
 		{
 			string imageKey = line.Image;
-			CharacterImage image = _imageLibrary.Find(imageKey);
-			if (image == null && _selectedCase.Stages.Count > 0)
+			if (!line.IsGenericImage && _selectedCase.Stages.Count > 0)
 			{
 				int stage = _selectedCase.Stages[0];
 				if (_selectedStage != null)
 					stage = _selectedStage.Id;
 				imageKey = DialogueLine.GetStageImage(stage, imageKey);
-				image = _imageLibrary.Find(imageKey);
 			}
+			CharacterImage image = _imageLibrary.Find(imageKey);
 
 			DataGridViewRow row = gridDialogue.Rows[gridDialogue.Rows.Add()];
 			row.Tag = line;

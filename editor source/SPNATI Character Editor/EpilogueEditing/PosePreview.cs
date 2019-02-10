@@ -13,12 +13,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public Dictionary<string, Image> Images = new Dictionary<string, Image>();
 
+		public SpritePreview SelectedObject;
 		public List<SpritePreview> Sprites = new List<SpritePreview>();
 		private Dictionary<string, SpritePreview> _spriteMap = new Dictionary<string, SpritePreview>();
 
 		public List<PoseAnimation> Animations = new List<PoseAnimation>();
 
-		public PosePreview(ISkin character, Pose pose)
+		public float ElapsedTime;
+		public float TotalDuration;
+
+		public PosePreview(ISkin character, Pose pose, PoseDirective selectedDirective, Keyframe selectedKeyframe, Sprite selectedSprite)
 		{
 			Character = character;
 			Pose = pose;
@@ -39,6 +43,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					AddImage(sprite.Src);
 				}
 				SpritePreview preview = new SpritePreview(this, sprite, Sprites.Count);
+
+				if (selectedKeyframe != null && selectedDirective.Id == sprite.Id || (selectedSprite == sprite && pose.Directives.Find(d => d.DirectiveType == "animation" && d.Id == sprite.Id) != null))
+				{
+					SelectedObject = new SpritePreview(this, sprite, Sprites.Count);
+					preview.KeyframeActive = true;
+				}
+
 				Sprites.Add(preview);
 				if (!string.IsNullOrEmpty(sprite.Id))
 				{
@@ -53,7 +64,21 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					{
 						AddImage(directive.Src);
 					}
-					Animations.Add(new PoseAnimation(this, directive));
+					PoseAnimation animation = new PoseAnimation(this, directive);
+					if (SelectedObject != null)
+					{
+						foreach (KeyframePreview kf in animation.Frames)
+						{
+							if (kf.Keyframe == selectedKeyframe)
+							{
+								SelectedObject.LinkedFramePreview = kf;
+								SelectedObject.LinkedAnimation = animation;
+								break;
+							}
+						}
+					}
+					TotalDuration = Math.Max(TotalDuration, animation.Delay + animation.Duration);
+					Animations.Add(animation);
 				}
 				else
 				{
@@ -67,6 +92,21 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 			}
 			ResortSprites();
+
+			//update the preview to match the current timeline at its point
+			if (SelectedObject != null && SelectedObject.LinkedAnimation != null)
+			{
+				float time = SelectedObject.LinkedAnimation.Delay + SelectedObject.LinkedFramePreview.Time;
+				foreach (PoseAnimation anim in Animations)
+				{
+					if (anim.Sprite.Id == SelectedObject.Id && anim.Delay <= time)
+					{
+						anim.UpdateTo(anim == SelectedObject.LinkedAnimation ? time - anim.Delay : time, SelectedObject);
+						anim.UpdateTo(0, anim.Sprite);
+					}
+				}
+			}
+
 		}
 
 		public bool IsAnimated
@@ -133,17 +173,34 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			});
 		}
 
-		public void Draw(Graphics g, int width, int height)
+		public void Draw(Graphics g, int width, int height, Point offset)
 		{
 			foreach (SpritePreview sprite in Sprites)
 			{
-				sprite.Draw(g, width, height);
+				sprite.Draw(g, width, height, offset);
+			}
+
+			if (SelectedObject != null)
+			{
+				SelectedObject.Draw(g, width, height, offset);
 			}
 		}
 
 		public void Update(float elapsedSec)
 		{
 			float elapsedMs = elapsedSec * 1000;
+			ElapsedTime += elapsedMs;
+			if (SelectedObject != null && ElapsedTime >= TotalDuration)
+			{
+				ElapsedTime = 0;
+				for (int i = 0; i < Animations.Count; i++)
+				{
+					if (Animations[i].Sprite == null) { continue; }
+					Animations[i].Sprite.SetInitialParameters();
+					Animations[i].UpdateTo(-Animations[i].Delay, Animations[i].Sprite);
+				}
+				return;
+			}
 			for (int i = 0; i < Animations.Count; i++)
 			{
 				Animations[i].Update(elapsedMs);

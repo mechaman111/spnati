@@ -112,7 +112,10 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
 		{
 			DialogueLine copy = line.Copy();
-			copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
+			if (!copy.IsGenericImage)
+			{
+				copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
+			}
 			if (copy.Image != null)
 			{
 				bool custom = copy.Image.StartsWith("custom:");
@@ -259,6 +262,7 @@ namespace SPNATI_Character_Editor
 			line.ImageExtension = extension;
 			copy.Image = DialogueLine.GetDefaultImage(line.Image);
 			copy.Text = line.Text.Trim();
+			copy.IsGenericImage = line.IsGenericImage;
 			return copy;
 		}
 
@@ -366,6 +370,7 @@ namespace SPNATI_Character_Editor
 
 					foreach (DialogueLine line in stageCase.Lines)
 					{
+						line.IsGenericImage = !DialogueLine.IsStageSpecificImage(line.Image);
 						var defaultLine = CreateDefaultLine(line);
 						int hash = defaultLine.GetHashCode();
 						hash = code + hash;

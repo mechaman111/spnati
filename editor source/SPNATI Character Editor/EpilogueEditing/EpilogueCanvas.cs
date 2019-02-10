@@ -16,11 +16,11 @@ namespace SPNATI_Character_Editor.Controls
 		/// <summary>
 		/// How many pixels the user has to click within to select a handle
 		/// </summary>
-		private const int SelectionLeeway = 5;
-		private const int RotationLeeway = 30;
+		public const int SelectionLeeway = 5;
+		public const int RotationLeeway = 30;
 
-		private const float MinZoom = 0.25f;
-		private const float MaxZoom = 3;
+		public const float MinZoom = 0.25f;
+		public const float MaxZoom = 3;
 
 		private Epilogue _epilogue;
 		private Character _character;
@@ -79,32 +79,6 @@ namespace SPNATI_Character_Editor.Controls
 
 		private EditMode _mode = EditMode.Edit;
 		private CanvasState _state = CanvasState.Normal;
-
-		private enum CanvasState
-		{
-			Normal,
-			Panning,
-			MovingObject,
-			Scaling,
-			Resizing,
-			Rotating,
-			MovingCamera,
-			ResizingCamera,
-			ZoomingCamera,
-			MovingPivot,
-		}
-
-		private enum EditMode
-		{
-			/// <summary>
-			/// Can drag and tweak objects
-			/// </summary>
-			Edit,
-			/// <summary>
-			/// Playing a scene. Clicking will merely advance
-			/// </summary>
-			Playback
-		}
 
 		public EpilogueCanvas()
 		{
@@ -1385,7 +1359,7 @@ namespace SPNATI_Character_Editor.Controls
 							}
 							break;
 						case CanvasState.Scaling:
-							if (_selectedObject.AdjustScale(worldPt, _scenePreview, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift)))
+							if (_selectedObject.AdjustScale(worldPt, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift)))
 							{
 								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
 								if (_selectedObject.LinkedFrame == propertyTable.Data)
@@ -1398,7 +1372,7 @@ namespace SPNATI_Character_Editor.Controls
 							}
 							break;
 						case CanvasState.ZoomingCamera:
-							if (_scenePreview.AdjustScale(worldPt, _scenePreview, _downPoint, _moveContext, true))
+							if (_scenePreview.AdjustScale(worldPt, _downPoint, _moveContext, true))
 							{
 								treeScenes.UpdateNode(_selectedScene);
 								if (_selectedScene == propertyTable.Data || _scenePreview?.LinkedFrame == propertyTable.Data)
@@ -2513,4 +2487,31 @@ namespace SPNATI_Character_Editor.Controls
 			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom,
 		Camera = CameraPan | CameraSizeBottom | CameraSizeLeft | CameraSizeRight | CameraSizeTop | CameraZoomBottomLeft | CameraZoomBottomRight | CameraZoomTopLeft | CameraZoomTopRight,
 	}
+
+	public enum CanvasState
+	{
+		Normal,
+		Panning,
+		MovingObject,
+		Scaling,
+		Resizing,
+		Rotating,
+		MovingCamera,
+		ResizingCamera,
+		ZoomingCamera,
+		MovingPivot,
+	}
+
+	public enum EditMode
+	{
+		/// <summary>
+		/// Can drag and tweak objects
+		/// </summary>
+		Edit,
+		/// <summary>
+		/// Playing a scene. Clicking will merely advance
+		/// </summary>
+		Playback
+	}
+
 }
