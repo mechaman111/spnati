@@ -88,7 +88,7 @@ def main():
                 continue
                 
             if stage in stages:
-                os.unlink(osp.join(base_path, 'opponents', opp_id, fname))
+                os.unlink(osp.join(base_dir, 'opponents', opp_id, fname))
                 n_deleted += 1
         
         print("Deleted {} images from {}.".format(n_deleted, opp_id))
