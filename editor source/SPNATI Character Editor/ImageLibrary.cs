@@ -1,5 +1,4 @@
 ﻿using Desktop;
-using Desktop.Messaging;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -26,7 +25,6 @@ namespace SPNATI_Character_Editor
 			});
 		}
 
-		private ISkin _character;
 		private Dictionary<int, List<CharacterImage>> _stages = new Dictionary<int, List<CharacterImage>>();
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
@@ -38,7 +36,6 @@ namespace SPNATI_Character_Editor
 		/// <param name="folder"></param>
 		private void Load(ISkin character)
 		{
-			_character = character;
 			_stages.Clear();
 			_allImages.Clear();
 			string dir = character.GetDirectory();

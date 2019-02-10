@@ -22,7 +22,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Directive = directive;
 			foreach (Keyframe kf in directive.Keyframes)
 			{
-				KeyframePreview frame = new KeyframePreview(pose, kf);
+				KeyframePreview frame = new KeyframePreview(kf);
 				Frames.Add(frame);
 			}
 			Frames.Sort((f1, f2) => {
@@ -147,7 +147,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float Rotation = 0;
 		public string Src;
 
-		public KeyframePreview(PosePreview pose, Keyframe frame)
+		public KeyframePreview(Keyframe frame)
 		{
 			Keyframe = frame;
 			Src = frame.Src;

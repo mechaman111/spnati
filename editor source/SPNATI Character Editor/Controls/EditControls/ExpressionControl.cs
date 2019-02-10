@@ -77,8 +77,6 @@ namespace SPNATI_Character_Editor
 			}
 			_currentVariable = variable;
 
-			AutoCompleteStringCollection list = new AutoCompleteStringCollection();
-
 			cboValue.Items.Clear();
 			switch (_currentVariable)
 			{

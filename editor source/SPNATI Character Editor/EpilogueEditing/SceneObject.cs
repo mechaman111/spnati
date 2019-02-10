@@ -67,8 +67,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public Image Image;
 		public string Src;
 
-		public object Max { get; private set; }
-
 		public SceneObject() { }
 
 		public virtual SceneObject Copy()
@@ -828,7 +826,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return changed;
 		}
 
-		public bool AdjustRotation(Point point, ScenePreview scene)
+		public bool AdjustRotation(Point point)
 		{
 			//quick and dirty - just use the angle to look from the point to the center
 

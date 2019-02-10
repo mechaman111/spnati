@@ -43,11 +43,10 @@
 			this.cmdPlay = new System.Windows.Forms.ToolStripButton();
 			this.canvas = new Desktop.CommonControls.SelectablePanel();
 			this.label1 = new System.Windows.Forms.Label();
-			this.lblCoord = new System.Windows.Forms.Label();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
 			this.lblZoom = new System.Windows.Forms.Label();
 			this.sliderZoom = new System.Windows.Forms.TrackBar();
+			this.lblCoord = new System.Windows.Forms.Label();
+			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -242,22 +241,6 @@
 			this.label1.TabIndex = 11;
 			this.label1.Text = "Zoom:";
 			// 
-			// lblCoord
-			// 
-			this.lblCoord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblCoord.Location = new System.Drawing.Point(923, 7);
-			this.lblCoord.Name = "lblCoord";
-			this.lblCoord.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.lblCoord.Size = new System.Drawing.Size(175, 13);
-			this.lblCoord.TabIndex = 10;
-			this.lblCoord.Text = "(0,0)";
-			this.lblCoord.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// tmrPlay
-			// 
-			this.tmrPlay.Interval = 32;
-			this.tmrPlay.Tick += new System.EventHandler(this.tmrPlay_Tick);
-			// 
 			// lblZoom
 			// 
 			this.lblZoom.AutoSize = true;
@@ -278,6 +261,22 @@
 			this.sliderZoom.TabIndex = 12;
 			this.sliderZoom.Value = 3;
 			this.sliderZoom.ValueChanged += new System.EventHandler(this.SliderZoom_ValueChanged);
+			// 
+			// lblCoord
+			// 
+			this.lblCoord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCoord.Location = new System.Drawing.Point(923, 7);
+			this.lblCoord.Name = "lblCoord";
+			this.lblCoord.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.lblCoord.Size = new System.Drawing.Size(175, 13);
+			this.lblCoord.TabIndex = 10;
+			this.lblCoord.Text = "(0,0)";
+			this.lblCoord.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// tmrPlay
+			// 
+			this.tmrPlay.Interval = 32;
+			this.tmrPlay.Tick += new System.EventHandler(this.tmrPlay_Tick);
 			// 
 			// EpilogueCanvas
 			// 
@@ -312,7 +311,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label lblCoord;
 		private Desktop.CommonControls.PropertyTable propertyTable;
-		private System.Windows.Forms.ToolTip toolTip1;
 		private SceneTree treeScenes;
 		private System.Windows.Forms.ToolStrip canvasStrip;
 		private System.Windows.Forms.ToolStripButton cmdFit;

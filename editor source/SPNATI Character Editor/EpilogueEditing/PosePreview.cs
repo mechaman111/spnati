@@ -122,18 +122,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return _spriteMap.Get(id);
 		}
 
-		internal bool IsDisposing;
 		public void Dispose()
 		{
-			IsDisposing = true;
-
 			foreach (Image img in Images.Values)
 			{
 				img.Dispose();
 			}
 			Images.Clear();
-
-			IsDisposing = false;
 		}
 
 		private void AddImage(string src)

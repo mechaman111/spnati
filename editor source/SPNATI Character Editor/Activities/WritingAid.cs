@@ -343,8 +343,6 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					return;
 				}
-				Situation s = tuple.Item2;
-
 				Image img = Properties.Resources.GoToLine;
 				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 				var w = img.Width;

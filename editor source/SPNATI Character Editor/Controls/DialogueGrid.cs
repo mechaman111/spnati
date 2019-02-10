@@ -513,8 +513,6 @@ namespace SPNATI_Character_Editor.Controls
 					stage = _selectedStage.Id;
 				imageKey = DialogueLine.GetStageImage(stage, imageKey);
 			}
-			CharacterImage image = _imageLibrary.Find(imageKey);
-
 			DataGridViewRow row = gridDialogue.Rows[gridDialogue.Rows.Add()];
 			row.Tag = line;
 			DataGridViewComboBoxCell imageCell = row.Cells["ColImage"] as DataGridViewComboBoxCell;

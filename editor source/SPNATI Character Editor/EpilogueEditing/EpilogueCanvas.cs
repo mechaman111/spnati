@@ -128,14 +128,6 @@ namespace SPNATI_Character_Editor.Controls
 			treeScenes.SelectNode(scene, directive, keyframe);
 		}
 
-		/// <summary>
-		/// Resizes the canvas to equal zoom * viewport size
-		/// </summary>
-		private void ResizeCanvas()
-		{
-			canvas.Invalidate();
-		}
-
 		private void Canvas_Paint(object sender, PaintEventArgs e)
 		{
 			if (_sceneTransition != null)
@@ -147,8 +139,8 @@ namespace SPNATI_Character_Editor.Controls
 			if (_scenePreview == null) { return; }
 			Graphics g = e.Graphics;
 
-			Point viewportTopLeft = ToScreenPoint(new Point(0, 0));
-			Point viewportBottomRight = ToScreenPoint(new PointF(_scenePreview.Width, _scenePreview.Height));
+			//Point viewportTopLeft = ToScreenPoint(new Point(0, 0));
+			//Point viewportBottomRight = ToScreenPoint(new PointF(_scenePreview.Width, _scenePreview.Height));
 
 			//_font = new Font("Trebuchet MS", 14 * ZoomLevel / _scenePreview.Scale); //use this to scale font with viewport
 			//_font = new Font("Trebuchet MS", 14 * ZoomLevel); //use this to scale with zoom but constant relative to viewport
@@ -546,21 +538,6 @@ namespace SPNATI_Character_Editor.Controls
 			return new PointF(px, py);
 		}
 
-		private void PanelCanvas_Resize(object sender, EventArgs e)
-		{
-		}
-
-		/// <summary>
-		/// Converts a point from world space to screen space
-		/// </summary>
-		/// <param name="pt"></param>
-		/// <returns></returns>
-		private Point ToScreenPoint(Point pt)
-		{
-			int x = (int)((pt.X + _canvasOffset.X) * ZoomLevel);
-			int y = (int)((pt.Y + _canvasOffset.Y) * ZoomLevel);
-			return new Point(x, y);
-		}
 		private Point ToScreenPoint(PointF pt)
 		{
 			int x = (int)((pt.X + _canvasOffset.X) * ZoomLevel);
@@ -1383,7 +1360,7 @@ namespace SPNATI_Character_Editor.Controls
 							}
 							break;
 						case CanvasState.Rotating:
-							if (_selectedObject.AdjustRotation(worldPt, _scenePreview))
+							if (_selectedObject.AdjustRotation(worldPt))
 							{
 								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
 								if (_selectedObject.LinkedFrame == propertyTable.Data)
@@ -1463,7 +1440,6 @@ namespace SPNATI_Character_Editor.Controls
 		private void SliderZoom_ValueChanged(object sender, EventArgs e)
 		{
 			float zoom = sliderZoom.Value;
-			int min = sliderZoom.Minimum;
 			int max = sliderZoom.Maximum;
 
 			float amount = zoom / max;
@@ -2036,10 +2012,10 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void cmdLock_Click(object sender, EventArgs e)
 		{
-			LockViewport(cmdLock.Checked);
+			LockViewport();
 		}
 
-		private void LockViewport(bool locked)
+		private void LockViewport()
 		{
 			_viewportLocked = cmdLock.Checked;
 			sliderZoom.Enabled = !_viewportLocked;
@@ -2118,18 +2094,15 @@ namespace SPNATI_Character_Editor.Controls
 			float aspectRatio = _scenePreview.AspectRatio;
 			float viewWidth = aspectRatio * windowHeight;
 
-			int viewportWidth = 0;
 			int viewportHeight = 0;
 			if (viewWidth > windowWidth)
 			{
 				//take full width of window
-				viewportWidth = windowWidth;
 				viewportHeight = (int)(windowWidth / aspectRatio);
 			}
 			else
 			{
 				//take full height of window
-				viewportWidth = (int)viewWidth;
 				viewportHeight = windowHeight;
 			}
 
@@ -2294,7 +2267,7 @@ namespace SPNATI_Character_Editor.Controls
 			cmdLock.Enabled = !enabled;
 			cmdPlayDirective.Enabled = !enabled;
 			cmdFit.Enabled = !enabled;
-			LockViewport(cmdLock.Checked);
+			LockViewport();
 			canvas.Cursor = Cursors.Default;
 			BuildScene(enabled);
 			if (enabled)

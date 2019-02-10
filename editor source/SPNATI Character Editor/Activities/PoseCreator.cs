@@ -20,7 +20,6 @@ namespace SPNATI_Character_Editor.Activities
 		public const int SelectionLeeway = EpilogueCanvas.SelectionLeeway;
 		public const int RotationLeeway = EpilogueCanvas.RotationLeeway;
 
-		private CharacterEditorData _editorData;
 		private ISkin _character;
 		private ImageLibrary _library;
 
@@ -41,11 +40,8 @@ namespace SPNATI_Character_Editor.Activities
 
 		private Point _lastMouse;
 		private Point _canvasOffset = new Point(0, 0);
-		private Point _dragOffset = new Point(0, 0);
 		private Point _downPoint = new Point(0, 0);
 		private Point _startDragPosition = new Point(0, 0);
-		private Point _startDragPoint = new Point(0, 0);
-		private HoverContext _dragContext;
 		private HoverContext _moveContext;
 		private EditMode _mode = EditMode.Edit;
 		private CanvasState _state = CanvasState.Normal;
@@ -53,7 +49,6 @@ namespace SPNATI_Character_Editor.Activities
 		private Pen _penInnerSelection;
 		private Pen _penBoundary;
 		private Pen _penKeyframe;
-		private Pen _penKeyframeSegment;
 		private Pen _penKeyframeConnection;
 
 		public PoseCreator()
@@ -72,7 +67,6 @@ namespace SPNATI_Character_Editor.Activities
 			_penKeyframe.Width = 2;
 			_penKeyframeConnection = new Pen(Color.FromArgb(127, 255, 255, 255), 8);
 			_penKeyframeConnection.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-			_penKeyframeSegment = new Pen(Color.FromArgb(127, 255, 255, 255), 8);
 		}
 
 		public override string Caption
@@ -84,7 +78,6 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_character = Record as ISkin;
 			_library = ImageLibrary.Get(_character);
-			_editorData = CharacterDatabase.GetEditorData(_character.Character);
 		}
 
 		protected override void OnFirstActivate()
@@ -509,7 +502,6 @@ namespace SPNATI_Character_Editor.Activities
 			Sprite pastedSprite = obj as Sprite;
 			PoseDirective pastedDirective = obj as PoseDirective;
 			Keyframe pastedKeyframe = obj as Keyframe;
-			PoseAnimFrame pastedAnim = obj as PoseAnimFrame;
 
 			TreeNode pastedNode = null;
 			if (pastedPose != null)
@@ -734,7 +726,6 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				Pose pose = targetNode.Tag as Pose;
 				e.Effect = DragDropEffects.Move;
 			}
 
@@ -1231,14 +1222,10 @@ namespace SPNATI_Character_Editor.Activities
 								//start dragging
 								if (HoverContext.Object.HasFlag(context))
 								{
-									RectangleF objRect = _selectedObject.ToScreenRegion(canvas.Width, canvas.Height, _canvasOffset);
-									_dragOffset = new Point(screenPt.X - (int)objRect.X, screenPt.Y - (int)objRect.Y);
-
 									switch (context)
 									{
 										case HoverContext.Drag:
 											_startDragPosition = new Point((int)_selectedObject.X, (int)_selectedObject.Y);
-											_startDragPoint = new Point((int)objRect.X, (int)objRect.Y);
 											_state = CanvasState.MovingObject;
 											break;
 										case HoverContext.ScaleTopLeft:
@@ -1276,16 +1263,8 @@ namespace SPNATI_Character_Editor.Activities
 													context |= HoverContext.ScaleTop;
 												}
 											}
-											_dragContext = context;
 											_moveContext = context;
 											_state = CanvasState.Scaling;
-											break;
-										case HoverContext.SizeLeft:
-										case HoverContext.SizeTop:
-										case HoverContext.SizeRight:
-										case HoverContext.SizeBottom:
-											_dragContext = context;
-											_state = CanvasState.Resizing;
 											break;
 										case HoverContext.Rotate:
 											_state = CanvasState.Rotating;
@@ -1301,10 +1280,6 @@ namespace SPNATI_Character_Editor.Activities
 							//get difference from screen downPoint
 							int offsetX = screenPt.X - _downPoint.X;
 							int offsetY = screenPt.Y - _downPoint.Y;
-
-							//get the new screen position using that offset
-							int screenX = _startDragPoint.X + offsetX;
-							int screenY = _startDragPoint.Y + offsetY;
 
 							Rectangle rect = _selectedObject.ToScreenRegion(canvas.Width, canvas.Height, _canvasOffset);
 
@@ -1443,7 +1418,6 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (data is PoseDirective)
 			{
-				PoseDirective directive = data as PoseDirective;
 				HashSet<string> items = new HashSet<string>();
 				foreach (Sprite sprite in Pose.Sprites)
 				{
