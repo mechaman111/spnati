@@ -76,6 +76,9 @@ def main():
 
     # Delete previously-determined stages in base folders:
     for opp_id, stages in delete_stages.items():
+        if opp_id == 'chiaki':
+            continue
+        
         print("Deleting {} stages {}...".format(opp_id, str(stages)))
         
         n_deleted = 0
