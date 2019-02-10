@@ -66,12 +66,15 @@ $debugButtons = [$("#debug-button-0"),
 /* restart modal */
 $restartModal = $("#restart-modal");
 
+$logModal = $("#log-modal");
+$logContainer = $('#log-container');
+
 gameDisplays = [
     new GameScreenDisplay(1),
     new GameScreenDisplay(2),
     new GameScreenDisplay(3),
     new GameScreenDisplay(4)
-]
+];
 
 /**********************************************************************
  *****                   Game Screen Variables                    *****
@@ -107,6 +110,7 @@ var eGamePhase = {
 	END_LOOP:  [ undefined, function() { handleGameOver(); } ],
 	GAME_OVER: [ "Ending?", function() { actualMainButtonState = false; doEpilogueModal(); } ],
 	END_FORFEIT: [ "Continue..." ], // Specially handled; not a real phase. tickForfeitTimers() will always return true in this state.
+    EXIT_ROLLBACK: ['Return', function () { exitRollback(); }],
 };
 
 /* Masturbation Previous State Variables */
@@ -124,7 +128,13 @@ var showDebug = false;
 var chosenDebug = -1;
 var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
 var repeatLog = {1:{}, 2:{}, 3:{}, 4:{}};
-                      
+
+var rollbackHistory = [];
+
+// When in rollback, stores a RollbackPoint for the most current game state.
+// When exiting rollback, we load this rollback point.
+var returnRollbackPoint = null;
+
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
@@ -173,6 +183,7 @@ function loadGameScreen () {
     }.bind(this));
 
     updateAllBehaviours(null, null, GAME_START);
+    saveAllTranscriptEntries();
 
     /* set up the poker library */
     setupPoker();
@@ -268,6 +279,8 @@ function makeAIDecision () {
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
+    
+    saveSingleTranscriptEntry(currentTurn);
 
 	/* wait and implement AI action */
 	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
@@ -295,6 +308,8 @@ function implementAIAction () {
     players[currentTurn].updateVolatileBehaviour();
     players[currentTurn].commitBehaviourUpdate();
 	updateGameVisual(currentTurn);
+    
+    saveSingleTranscriptEntry(currentTurn);
 
 	/* wait and then advance the turn */
 	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
@@ -325,6 +340,8 @@ function advanceTurn () {
             players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
             players[currentTurn].commitBehaviourUpdate();
             updateGameVisual(currentTurn);
+            
+            saveSingleTranscriptEntry(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
             return;
@@ -337,12 +354,18 @@ function advanceTurn () {
         updateAllVolatileBehaviours();
         
         /* Commit updated states only. */
+        var updatedPlayers = [];
         players.forEach(function (p) {
             if (p.chosenState && !p.stateCommitted) {
                 p.commitBehaviourUpdate();
                 updateGameVisual(p.slot);
+                updatedPlayers.push(p.slot);
             }
         });
+        
+        if (updatedPlayers.length > 0) {
+            rollbackHistory.push(new RollbackPoint(updatedPlayers));
+        }
         
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
@@ -696,6 +719,7 @@ function handleGameOver() {
 	})) {
 		/* true end */
         updateAllBehaviours(winner.slot, GAME_OVER_VICTORY, GAME_OVER_DEFEAT);
+        saveAllTranscriptEntries();
 
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
@@ -764,14 +788,14 @@ function allowProgression (nextPhase) {
 /************************************************************
  * The player clicked the main button on the game screen.
  ************************************************************/
-function advanceGame () {
+function advanceGame () {    
     /* disable the button to prevent double clicking */
     $mainButton.attr('disabled', true);
     actualMainButtonState = true;
     autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
-    if (tickForfeitTimers()) return;
+    if (gamePhase !== eGamePhase.EXIT_ROLLBACK && tickForfeitTimers()) return;
 
 	if (AUTO_FADE && gamePhase[2] !== undefined) {
 		forceTableVisibility(gamePhase[2]);
@@ -789,6 +813,131 @@ function showRestartModal () {
 function closeRestartModal() {
 	$mainButton.attr('disabled', actualMainButtonState);
 }
+
+/************************************************************
+ * Functions and classes for the dialogue transcript and rollback.
+ ************************************************************/
+
+/************************************************************
+ * Encapsulates character state info for rollback.
+ ************************************************************/
+function RollbackPoint (logPlayers) {
+    this.states = [null, null, null, null];
+    
+    for (var i = 1; i < players.length; i++) {
+        if (players[i])
+            this.states[i] = players[i].chosenState;
+    }
+    
+    /* Record data for bug reporting purposes. */
+    this.currentRound = currentRound;
+    this.currentTurn = currentTurn;
+    this.previousLoser = previousLoser;
+    this.recentLoser = recentLoser;
+    this.gameOver = gameOver;
+    this.gamePhase = gamePhase;
+    
+    this.logEntries = [];
+    
+    if (logPlayers) {
+        logPlayers.forEach(function (p) {
+            if (!players[p]) return;
+            
+            this.logEntries.push([
+                players[p].label,
+                players[p].chosenState ? players[p].chosenState.dialogue : ''
+            ]);
+        }.bind(this));
+    }
+}
+
+RollbackPoint.prototype.load = function () {
+    if (!returnRollbackPoint) {
+        returnRollbackPoint = new RollbackPoint();
+        allowProgression(eGamePhase.EXIT_ROLLBACK);
+    }
+    
+    currentRound = this.currentRound;
+    currentTurn = this.currentTurn;
+    previousLoser = this.previousLoser;
+    recentLoser = this.recentLoser;
+    gameOver = this.gameOver;
+    
+    for (var i = 1; i < players.length; i++) {
+        if (players[i]) {
+            players[i].chosenState = this.states[i];
+        }
+    }
+    
+    updateAllGameVisuals();
+}
+
+function exitRollback() {
+    if (!returnRollbackPoint) return;
+    
+    returnRollbackPoint.load();
+    allowProgression(returnRollbackPoint.gamePhase);
+    returnRollbackPoint = null;
+}
+
+/* Creates a rollback point associated with a single entry in the dialogue
+ * transcript.
+ */
+function saveSingleTranscriptEntry (player) {
+    rollbackHistory.push(new RollbackPoint([player]));
+}
+
+/* Creates a rollback point associated with entries for all players
+ * in the dialogue transcript.
+ */
+function saveAllTranscriptEntries () {
+    rollbackHistory.push(new RollbackPoint([1, 2, 3, 4]));
+}
+ 
+/************************************************************
+ * Creates a DOM element for a log entry.
+ ************************************************************/
+function createLogEntryElement(label, text, pt) {
+    var container = document.createElement('div');
+    container.className = "log-entry-container clearfix";
+    
+    var labelElem = document.createElement('b');
+    labelElem.className = "log-entry-label";
+    $(labelElem).html(label);
+    
+    var textElem = document.createElement('div');
+    textElem.className = "log-entry-text";
+    $(textElem).html(text);
+    
+    container.appendChild(labelElem);
+    container.appendChild(textElem);
+    
+    container.onclick = function (ev) {
+        pt.load();
+    }
+    
+    return container;
+}
+
+/************************************************************
+ * The player clicked the log button. Shows the log modal.
+ ************************************************************/
+function showLogModal () {
+    $logContainer.empty();
+    
+    rollbackHistory.forEach(function (pt) {
+        pt.logEntries.forEach(function (e) {
+            logText = fixupDialogue(e[1]);
+            logText = logText.replace(/<script>.+<\/script>/g, '');
+            logText = logText.replace(/<button[^>]+>[^<]+<\/button>/g, '');
+    
+            $logContainer.append(createLogEntryElement(e[0], logText, pt));
+        });
+    });
+    
+    $logModal.modal('show');
+}
+
 
 /************************************************************
  * A keybound handler.

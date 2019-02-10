@@ -58,6 +58,8 @@ function startMasturbation (player) {
         PLAYER_START_MASTURBATING,
         players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
     );
+    
+    saveAllTranscriptEntries();
 
     players[player].setForfeitTimer();
     
@@ -122,6 +124,8 @@ function tickForfeitTimers () {
                 players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
                 players[i].commitBehaviourUpdate();
                 updateGameVisual(i);
+                
+                saveSingleTranscriptEntry(i);
 
                 /* trigger the callback */
                 var player = i, tableVisible = (tableOpacity > 0);
@@ -179,6 +183,8 @@ function tickForfeitTimers () {
             players[playerToShow].forfeit[0],
             others_tags
         );
+        
+        saveAllTranscriptEntries();
 	}
 	
 	return false;
@@ -202,6 +208,8 @@ function finishMasturbation (player) {
         players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
     );
 	players[player].timeInStage = 0;
+    
+    saveAllTranscriptEntries();
     
 	if (AUTO_FADE && globalSavedTableVisibility !== undefined) {
 		forceTableVisibility(globalSavedTableVisibility);
