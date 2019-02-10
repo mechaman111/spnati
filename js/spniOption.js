@@ -47,7 +47,7 @@ var backgrounds = [
 	{ name: 'romantic', location: 'indoors' },
 	{ name: 'classic', location: 'indoors' }
 ];
-var defaultBackground = 1;
+var defaultBackground = 23;
 var selectedBackground = defaultBackground-1;
 
 /**********************************************************************
