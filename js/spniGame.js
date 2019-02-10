@@ -129,7 +129,7 @@ var chosenDebug = -1;
 var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
 var repeatLog = {1:{}, 2:{}, 3:{}, 4:{}};
 
-var rollbackHistory = [];
+var transcriptHistory = [];
 
 // When in rollback, stores a RollbackPoint for the most current game state.
 // When exiting rollback, we load this rollback point.
@@ -363,9 +363,7 @@ function advanceTurn () {
             }
         });
         
-        if (updatedPlayers.length > 0) {
-            rollbackHistory.push(new RollbackPoint(updatedPlayers));
-        }
+        saveTranscriptEntries(updatedPlayers);
         
         /* human player's turn */
         if (players[HUMAN_PLAYER].out) {
@@ -388,6 +386,8 @@ function advanceTurn () {
  ************************************************************/
 function startDealPhase () {
     currentRound++;
+    saveTranscriptMessage("Starting round "+(currentRound+1)+"...");
+    
     /* dealing cards */
 	dealLock = 0;
     for (var i = 0; i < players.length; i++) {
@@ -582,6 +582,7 @@ function completeRevealPhase () {
 
 
     /* update behaviour */
+    saveTranscriptMessage("<b>"+players[recentLoser].label+"</b> has lost the hand.");
 	var clothes = playerMustStrip (recentLoser);
     
     /* playerMustStrip() calls updateAllBehaviours. */
@@ -820,14 +821,29 @@ function closeRestartModal() {
 
 /************************************************************
  * Encapsulates character state info for rollback.
+ * A lot of this data isn't actually user-visible,
+ * but is kept to support accurate submission of bug reports
+ * from a rolled-back state.
  ************************************************************/
 function RollbackPoint (logPlayers) {
-    this.states = [null, null, null, null];
+    this.playerData = [];
     
-    for (var i = 1; i < players.length; i++) {
-        if (players[i])
-            this.states[i] = players[i].chosenState;
-    }
+    players.forEach(function (p) {
+        var data = {};
+        
+        data.slot = p.slot;
+        data.stage = p.stage;
+        data.timeInStage = p.timeInStage;
+        data.markers = {};
+        
+        for (let marker in p.markers) {
+            data.markers[marker] = p.markers[marker];
+        }
+        
+        data.chosenState = p.chosenState;
+        
+        this.playerData.push(data);
+    }.bind(this));
     
     /* Record data for bug reporting purposes. */
     this.currentRound = currentRound;
@@ -863,36 +879,55 @@ RollbackPoint.prototype.load = function () {
     recentLoser = this.recentLoser;
     gameOver = this.gameOver;
     
-    for (var i = 1; i < players.length; i++) {
-        if (players[i]) {
-            players[i].chosenState = this.states[i];
-        }
-    }
+    this.playerData.forEach(function (p) {
+        var loadPlayer = players[p.slot];
+        
+        loadPlayer.stage = p.stage;
+        loadPlayer.timeInStage = p.timeInStage;
+        loadPlayer.markers = p.markers;
+        loadPlayer.chosenState = p.chosenState;
+    }.bind(this));
     
     updateAllGameVisuals();
 }
 
+function inRollback() {
+    return (!!returnRollbackPoint);
+}
+
 function exitRollback() {
-    if (!returnRollbackPoint) return;
+    if (!inRollback()) return;
     
     returnRollbackPoint.load();
     allowProgression(returnRollbackPoint.gamePhase);
     returnRollbackPoint = null;
 }
 
+/* Adds a log message to the dialogue transcript */
+function saveTranscriptMessage(msg) {
+    transcriptHistory.push(msg)
+}
+
+/* Creates a rollback point associated with a specified list of players. */
+function saveTranscriptEntries(players) {
+    transcriptHistory.push(new RollbackPoint(players));
+}
+ 
+
 /* Creates a rollback point associated with a single entry in the dialogue
  * transcript.
  */
 function saveSingleTranscriptEntry (player) {
-    rollbackHistory.push(new RollbackPoint([player]));
+    saveTranscriptEntries([player]);
 }
 
 /* Creates a rollback point associated with entries for all players
  * in the dialogue transcript.
  */
 function saveAllTranscriptEntries () {
-    rollbackHistory.push(new RollbackPoint([1, 2, 3, 4]));
+    saveTranscriptEntries([1, 2, 3, 4]);
 }
+
  
 /************************************************************
  * Creates a DOM element for a log entry.
@@ -914,7 +949,25 @@ function createLogEntryElement(label, text, pt) {
     
     container.onclick = function (ev) {
         pt.load();
+        $logModal.modal('hide');
     }
+    
+    return container;
+}
+
+/************************************************************
+* Creates a DOM element for a logged game message.
+************************************************************/
+function createLogMessageElement(text) {
+    var container = document.createElement('div');
+    container.className = "log-entry-container clearfix";
+    container.style = "opacity: 1; text-align:center;";
+    
+    var textElem = document.createElement('i');
+    textElem.className = "log-entry-message";
+    $(textElem).html(text);
+    
+    container.appendChild(textElem);
     
     return container;
 }
@@ -925,14 +978,18 @@ function createLogEntryElement(label, text, pt) {
 function showLogModal () {
     $logContainer.empty();
     
-    rollbackHistory.forEach(function (pt) {
-        pt.logEntries.forEach(function (e) {
-            logText = fixupDialogue(e[1]);
-            logText = logText.replace(/<script>.+<\/script>/g, '');
-            logText = logText.replace(/<button[^>]+>[^<]+<\/button>/g, '');
-    
-            $logContainer.append(createLogEntryElement(e[0], logText, pt));
-        });
+    transcriptHistory.forEach(function (pt) {
+        if (pt instanceof RollbackPoint) {
+            pt.logEntries.forEach(function (e) {
+                logText = fixupDialogue(e[1]);
+                logText = logText.replace(/<script>.+<\/script>/g, '');
+                logText = logText.replace(/<button[^>]+>[^<]+<\/button>/g, '');
+        
+                $logContainer.append(createLogEntryElement(e[0], logText, pt));
+            });
+        } else {
+            $logContainer.append(createLogMessageElement(pt));
+        }
     });
     
     $logModal.modal('show');

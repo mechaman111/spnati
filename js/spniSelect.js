@@ -1041,7 +1041,7 @@ function advanceSelectScreen () {
         player.preloadStageImages(0);
     });
 
-	rollbackHistory = [];
+	transcriptHistory = [];
 
     advanceToNextScreen($selectScreen);
 }
