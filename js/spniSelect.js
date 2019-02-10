@@ -356,8 +356,9 @@ function updateStatusIcon(elem, status) {
 /* Creates an <option> element in a jQuery object for an alternate costume.
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
-function getCostumeOption(alt_costume) {
-	return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label})
+function getCostumeOption(alt_costume, selected_costume) {
+    return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label,
+                          selected: alt_costume.folder == selected_costume})
 }
 
 /************************************************************
@@ -419,7 +420,7 @@ function updateIndividualSelectScreen () {
 					}
 					
 					selectableOpponents[i].alternate_costumes.forEach(function (alt) {
-						$individualCostumeSelectors[index].append(getCostumeOption(alt));
+						$individualCostumeSelectors[index].append(getCostumeOption(alt, selectableOpponents[i].selected_costume));
 					});
 					$individualCostumeSelectors[index].show();
 				}
@@ -506,7 +507,7 @@ function updateGroupSelectScreen () {
 						$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 					}
 					opponent.alternate_costumes.forEach(function (alt) {
-						$groupCostumeSelectors[i].append(getCostumeOption(alt));
+						$groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
 					});
 					$groupCostumeSelectors[i].show();
 				}
@@ -569,7 +570,7 @@ function updateSuggestionQuad(slot, quad, opponent) {
     img_elem.attr({
         'title': tooltip,
         'data-original-title': tooltip,
-        'src': opponent.folder+opponent.image
+        'src': opponent.selection_image
     }).tooltip();
 
     label_elem.text(opponent.label);
@@ -718,7 +719,6 @@ function selectOpponentSlot (slot) {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
 		
-		players[slot].unloadAlternateCostume();
         delete players[slot];
 
         updateSelectionVisuals();
@@ -865,10 +865,6 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-		if (players[i]) {
-			players[i].unloadAlternateCostume();
-		}
-		
         delete players[i];
         $selectImages[i-1].off('load');
     }
@@ -1068,13 +1064,8 @@ function altCostumeSelected(slot, inGroup) {
 		}
 	}
 	
-	if (costumeDesc) {
-		opponent.selectAlternateCostume(selectedCostume);
-		selectImage.attr('src', selectedCostume+costumeDesc.image);
-	} else {
-		opponent.selectAlternateCostume(null);
-		selectImage.attr('src', opponent.folder + opponent.image);
-	}
+    opponent.selectAlternateCostume(costumeDesc);
+    selectImage.attr('src', opponent.selection_image);
 }
 
 
