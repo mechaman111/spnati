@@ -145,6 +145,8 @@ var returnRollbackPoint = null;
  ************************************************************/
 function loadGameScreen () {
     $gameScreen.show();
+    
+    $('#game-screen [data-toggle="tooltip"]').tooltip();
 
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
