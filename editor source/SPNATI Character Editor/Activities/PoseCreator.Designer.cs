@@ -328,7 +328,6 @@
 			// 
 			// canvasStrip
 			// 
-			this.canvasStrip.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.canvasStrip.Dock = System.Windows.Forms.DockStyle.None;
 			this.canvasStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.canvasStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
