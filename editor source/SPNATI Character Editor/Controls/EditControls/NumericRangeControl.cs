@@ -28,8 +28,9 @@ namespace SPNATI_Character_Editor
 		{
 			valFrom.ValueChanged += ValueChanged;
 			valTo.ValueChanged += ValueChanged;
-			valFrom.TextChanged -= Value_TextChanged;
-			valTo.TextChanged -= Value_TextChanged;
+			valFrom.TextChanged += Value_TextChanged;
+			valTo.TextChanged += Value_TextChanged;
+			chkUpper.CheckedChanged += ValueChanged;
 		}
 
 		private void RemoveHandlers()
@@ -38,10 +39,12 @@ namespace SPNATI_Character_Editor
 			valTo.ValueChanged -= ValueChanged;
 			valFrom.TextChanged -= Value_TextChanged;
 			valTo.TextChanged -= Value_TextChanged;
+			chkUpper.CheckedChanged -= ValueChanged;
 		}
 
 		protected override void OnBoundData()
 		{
+			chkUpper.Checked = false;
 			string range = GetValue()?.ToString();
 			if (range == null)
 			{
@@ -72,11 +75,12 @@ namespace SPNATI_Character_Editor
 				{
 					//open upper range
 					valTo.Text = "";
+					chkUpper.Checked = true;
 				}
 			}
 			else
 			{
-				valTo.Value = valFrom.Value; //single value uses a closed range with min and max being the same
+				valTo.Text = "";
 			}
 			AddHandlers();
 		}
@@ -99,6 +103,10 @@ namespace SPNATI_Character_Editor
 				from = -1;
 			}
 			if (valTo.Text == "")
+			{
+				to = from;
+			}
+			if (chkUpper.Checked)
 			{
 				to = -1;
 			}

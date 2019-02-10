@@ -397,18 +397,31 @@ namespace Desktop.CommonControls
 					//create an item
 					if (index == -1)
 					{
-						Type itemType = memberType.GenericTypeArguments[0];
-						object item = null;
-						if (itemType == typeof(string))
+						//see if any item doesn't have a control yet and use that. Otherwise create a new item
+						for (int i = 0; i < list.Count; i++)
 						{
-							item = "";
+							PropertyTableRow indexRow = _rows.Get(result.Property, i);
+							if (indexRow == null)
+							{
+								index = i;
+								break;
+							}
 						}
-						else
+						if (index == -1)
 						{
-							item = Activator.CreateInstance(itemType);
+							Type itemType = memberType.GenericTypeArguments[0];
+							object item = null;
+							if (itemType == typeof(string))
+							{
+								item = "";
+							}
+							else
+							{
+								item = Activator.CreateInstance(itemType);
+							}
+							list.Add(item);
+							index = list.Count - 1;
 						}
-						list.Add(item);
-						index = list.Count - 1;
 					}
 				}
 
@@ -601,6 +614,42 @@ namespace Desktop.CommonControls
 				{
 					row.Visible = filter(row.Record, Data, Context);
 				}
+			}
+		}
+
+		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		{
+			ToolStripMenuItem groupMenu = null;
+			for (int i = 0; i < menuSpeedButtons.Items.Count; i++)
+			{
+				ToolStripItem mnuItem = menuSpeedButtons.Items[i];
+				if (mnuItem.Text == group)
+				{
+					groupMenu = mnuItem as ToolStripMenuItem;
+					break;
+				}
+			}
+			if (groupMenu == null)
+			{
+				groupMenu = new ToolStripMenuItem(group);
+				menuSpeedButtons.Items.Add(groupMenu);
+			}
+
+			ToolStripMenuItem item = new ToolStripMenuItem(caption);
+			item.Tag = propertyCreator;
+			item.Click += CustomSpeedButtonClick;
+			groupMenu.DropDownItems.Add(item);
+		}
+
+		private void CustomSpeedButtonClick(object sender, EventArgs e)
+		{
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			Func<object, string> func = item.Tag as Func<object, string>;
+			string property = func(Data);
+			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+			if (record != null)
+			{
+				AddControl(record);
 			}
 		}
 	}

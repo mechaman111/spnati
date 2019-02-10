@@ -38,18 +38,16 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public List<SituationResponse> Responses = new List<SituationResponse>();
 
+		[XmlArray("notes")]
+		[XmlArrayItem("note")]
+		public List<CaseNote> Notes = new List<CaseNote>();
+		private Dictionary<int, string> _notes = new Dictionary<int, string>();
+
 		[XmlElement("nextId")]
 		/// <summary>
 		/// Next unique ID to assign
 		/// </summary>
 		public int NextId;
-
-		[XmlArray("poses")]
-		[XmlArrayItem("pose")]
-		/// <summary>
-		/// Poses available to a stage that don't meet follow prefix conventions
-		/// </summary>
-		public List<CrossStagePose> Poses = new List<CrossStagePose>();
 
 		/// <summary>
 		/// Deferred initialization of things that aren't part of serialization and don't need to exist until the character's lines are being worked on
@@ -110,6 +108,8 @@ namespace SPNATI_Character_Editor
 						break;
 					}
 				}
+
+				_notes.Remove(deletedCase.Id);
 			}
 		}
 
@@ -126,9 +126,11 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
-			foreach (CrossStagePose pose in Poses)
+			Notes.Clear();
+			foreach (KeyValuePair<int, string> kvp in _notes)
 			{
-				pose.OnBeforeSerialize();
+				CaseNote note = new CaseNote() { Id = kvp.Key, Text = kvp.Value };
+				Notes.Add(note);
 			}
 		}
 
@@ -139,9 +141,9 @@ namespace SPNATI_Character_Editor
 				c.OnAfterDeserialize();
 			}
 
-			foreach (CrossStagePose pose in Poses)
+			foreach (CaseNote note in Notes)
 			{
-				pose.OnAfterDeserialize();
+				_notes[note.Id] = note.Text;
 			}
 		}
 
@@ -242,6 +244,28 @@ namespace SPNATI_Character_Editor
 			AssignId(response);
 			SituationResponse situationResponse = new SituationResponse(response, opponent, opponentCase);
 			Responses.Add(situationResponse);
+		}
+
+		public void SetNote(Case workingCase, string text)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				_notes.Remove(workingCase.Id);
+				return;
+			}
+			AssignId(workingCase);
+			_notes[workingCase.Id] = text;
+		}
+
+		public string GetNote(Case workingCase)
+		{
+			if (workingCase.Id == 0)
+			{
+				return "";
+			}
+			string text = "";
+			_notes.TryGetValue(workingCase.Id, out text);
+			return text;
 		}
 	}
 

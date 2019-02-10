@@ -11,9 +11,7 @@ namespace SPNATI_Character_Editor.Activities
 	[Activity(typeof(Character), 30)]
 	public partial class DialogueEditor : Activity
 	{
-		private const string UseOldEditorSetting = "UseOldEditor";
 		private const string FavoriteConditionsSetting = "FavoritedConditions";
-		private bool _usingOldEditor;
 
 		private Character _character;
 		private CharacterEditorData _editorData;
@@ -55,15 +53,6 @@ namespace SPNATI_Character_Editor.Activities
 			tableConditions.Context = _character;
 			SetupMessageHandlers();
 			grpCase.Enabled = false;
-
-			_usingOldEditor = Config.GetBoolean(UseOldEditorSetting);
-			EnableOldEditor(_usingOldEditor);
-		}
-
-		private void EnableOldEditor(bool value)
-		{
-			tableConditions.Visible = !value;
-			tabControlConditions.Visible = value;
 		}
 
 		/// <summary>
@@ -86,7 +75,6 @@ namespace SPNATI_Character_Editor.Activities
 
 			CreateStageCheckboxes();
 
-			PopulateListingFields();
 			SetupFindReplace();
 		}
 
@@ -195,31 +183,7 @@ namespace SPNATI_Character_Editor.Activities
 			gridDialogue.UpdateAvailableImagesForCase(GetSelectedStages(), true);
 			_populatingCase = false;
 		}
-
-		private void cboLineTarget_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if (_populatingCase)
-				return;
-			string key = cboLineTarget.SelectedItem.ToString();
-			Character c = CharacterDatabase.Get(key);
-			PopulateStageCombo(cboTargetStage, c, true);
-			PopulateStageCombo(cboTargetToStage, c, true);
-			markerTarget.SetDataSource(c, false);
-			PopulateMarkerCombo(cboTargetNotMarker, c, false);
-		}
-
-		private void cboAlsoPlaying_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if (_populatingCase)
-				return;
-			string key = cboAlsoPlaying.SelectedItem.ToString();
-			Character c = CharacterDatabase.Get(key);
-			PopulateStageCombo(cboAlsoPlayingStage, c, false);
-			PopulateStageCombo(cboAlsoPlayingMaxStage, c, false);
-			markerAlsoPlaying.SetDataSource(c, false);
-			PopulateMarkerCombo(cboAlsoPlayingNotMarker, c, false);
-		}
-
+		
 		/// <summary>
 		/// Checks or unchecks all stages besides the current stage
 		/// </summary>
@@ -297,9 +261,9 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void ckbShowSpeechBubbleColumns_CheckedChanged(object sender, EventArgs e)
+		private void ckbShowAdvanced_CheckedChanged(object sender, EventArgs e)
 		{
-			this.gridDialogue.ShowSpeechBubbleColumns = ckbShowBubbleColumns.Checked;
+			this.gridDialogue.ShowAdvancedColumns = ckbShowAdvanced.Checked;
 		}
 		#endregion
 
@@ -357,117 +321,7 @@ namespace SPNATI_Character_Editor.Activities
 				return false;
 			}
 		}
-
-		/// <summary>
-		/// Populates fields that list cross-character data (names, tags, etc.)
-		/// </summary>
-		private void PopulateListingFields()
-		{
-			List<string> items = new List<string>();
-			items.Add("");
-			foreach (var character in CharacterDatabase.Characters)
-			{
-				items.Add(character.FolderName);
-			}
-			items.Sort();
-			cboAlsoPlaying.DataSource = items;
-			cboAlsoPlaying.BindingContext = new BindingContext();
-
-			List<object> filters = new List<object>();
-			List<string> tags = new List<string>();
-			foreach (var tag in TagDatabase.Tags)
-			{
-				filters.Add(tag);
-				tags.Add(tag.Value);
-			}
-			filters.Add("");
-			filters.Add("human");
-			filters.Add("human_male");
-			filters.Add("human_female");
-			filters.Sort((i1, i2) => { return i1.ToString().CompareTo(i2.ToString()); });
-			tags.Add("");
-			tags.Add("human");
-			tags.Add("human_male");
-			tags.Add("human_female");
-			tags.Sort();
-			cboLineFilter.DataSource = filters;
-			cboLineFilter.BindingContext = new BindingContext();
-
-			((DataGridViewComboBoxColumn)gridFilters.Columns["ColStatusFilter"]).DataSource = TargetCondition.StatusTypes;
-			((DataGridViewComboBoxColumn)gridFilters.Columns["ColStatusFilter"]).ValueMember = "Key";
-			((DataGridViewComboBoxColumn)gridFilters.Columns["ColStatusFilter"]).DisplayMember = "Value";
-			cboTargetStatus.DataSource = TargetCondition.StatusTypes;
-			cboTargetStatus.ValueMember = "Key";
-			cboTargetStatus.DisplayMember = "Value";
-
-			DataGridViewComboBoxColumn gridCol = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
-			if (gridCol != null)
-			{
-				foreach (var tag in tags)
-				{
-					gridCol.Items.Add(tag);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Populates the target field with loaded characters of the appropriate gender for the current case
-		/// </summary>
-		private void PopulateTargetField()
-		{
-			cboLineTarget.Items.Clear();
-			List<string> items = new List<string>();
-			items.Add("");
-
-			Trigger trigger = TriggerDatabase.GetTrigger(_selectedCase?.Tag);
-			string gender = trigger?.Gender;
-			bool useGender = !string.IsNullOrEmpty(gender);
-			string size = trigger?.Size;
-			bool useSize = !string.IsNullOrEmpty(size);
-
-			foreach (var character in CharacterDatabase.Characters)
-			{
-				if ((!useGender || gender == character.Gender) && (!useSize || size == character.Size))
-				{
-					items.Add(character.FolderName);
-				}
-			}
-			items.Add("human");
-			items.Sort();
-			cboLineTarget.Items.Clear();
-			foreach (string item in items)
-			{
-				cboLineTarget.Items.Add(item);
-			}
-		}
-
-		/// <summary>
-		/// Updates a marker dropdown to contain only markers used in the given character's dialogue
-		/// </summary>
-		/// <param name="box"></param>
-		/// <param name="character"></param>
-		private void PopulateMarkerCombo(ComboBox box, Character character, bool allowPrivate)
-		{
-			string oldText = box.Text;
-			box.Items.Clear();
-			box.Text = "";
-			if (character == null)
-				return;
-
-			foreach (var marker in character.Markers.Values)
-			{
-				if (allowPrivate || marker.Scope == MarkerScope.Public)
-				{
-					box.Items.Add(marker.Name);
-				}
-			}
-
-			if (!string.IsNullOrEmpty(oldText))
-			{
-				box.Text = oldText;
-			}
-		}
-
+		
 		#region Find/Replace
 		/// <summary>
 		/// Hooks up event handlers for the Find/Replace form
@@ -558,7 +412,6 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void PopulateCase()
 		{
-			string minStage, maxStage;
 			if (_selectedCase == null)
 			{
 				grpCase.Visible = false;
@@ -619,126 +472,37 @@ namespace SPNATI_Character_Editor.Activities
 
 			#endregion
 
-			if (!_usingOldEditor)
-			{
-				if (caseTrigger.HasTarget)
-				{
-					tableConditions.RecordFilter = null;
-				}
-				else
-				{
-					tableConditions.RecordFilter = FilterTargets;
-				}
-				bool firstPopulation = (tableConditions.Data == null);
-				tableConditions.Data = _selectedCase;
+			txtNotes.Text = _editorData.GetNote(_selectedCase);
 
-				if (firstPopulation)
-				{
-					List<string> favorites = new List<string>();
-					string favoritesData = Config.GetString(FavoriteConditionsSetting);
-					if (!string.IsNullOrEmpty(favoritesData))
-					{
-						foreach (string key in favoritesData.Split('|'))
-						{
-							if (!string.IsNullOrEmpty(key))
-							{
-								favorites.Add(key);
-							}
-						}
-					}
-					tableConditions.SetFavorites(favorites);
-				}
+			if (caseTrigger.HasTarget)
+			{
+				tableConditions.RecordFilter = null;
 			}
 			else
 			{
-				PopulateTargetField();
-
-				#region Target tab
-				ClearConditionFields();
-				if (caseTrigger.HasTarget)
-				{
-					((Control)tabTarget).Enabled = true;
-					GUIHelper.SetComboBox(cboLineTarget, _selectedCase.Target);
-					GUIHelper.SetComboBox(cboTargetHand, _selectedCase.TargetHand);
-					GUIHelper.SetComboBox(cboLineFilter, _selectedCase.Filter);
-					GUIHelper.SetComboBox(cboTargetStatus, _selectedCase.TargetStatusType);
-					ckbTargetStatusNegated.Checked = _selectedCase.NegateTargetStatus;
-					Character target = CharacterDatabase.Get(_selectedCase.Target);
-					_selectedCase.SplitTargetStage(out minStage, out maxStage);
-					PopulateStageCombo(cboTargetStage, target, true);
-					SetStageComboBox(cboTargetStage, minStage);
-					PopulateStageCombo(cboTargetToStage, target, true);
-					SetStageComboBox(cboTargetToStage, maxStage);
-					markerTarget.SetDataSource(target, false);
-					markerTarget.Value = _selectedCase.TargetSaidMarker;
-					PopulateMarkerCombo(cboTargetNotMarker, target, false);
-					cboTargetNotMarker.Text = _selectedCase.TargetNotSaidMarker;
-					GUIHelper.SetRange(valTimeInStage, valMaxTimeInStage, _selectedCase.TargetTimeInStage);
-					GUIHelper.SetRange(valLosses, valMaxLosses, _selectedCase.ConsecutiveLosses);
-					GUIHelper.SetRange(valLayers, valMaxLayers, _selectedCase.TargetLayers);
-					GUIHelper.SetRange(valStartingLayers, valMaxStartingLayers, _selectedCase.TargetStartingLayers);
-					valOwnLosses.Enabled = false;
-					valMaxOwnLosses.Enabled = false;
-				}
-				else
-				{
-					((Control)tabTarget).Enabled = false;
-					GUIHelper.SetComboBox(cboLineTarget, "");
-					cboTargetStage.Text = "";
-					cboTargetToStage.Text = "";
-					markerTarget.Value = null;
-					cboTargetNotMarker.Text = "";
-					GUIHelper.SetComboBox(cboTargetHand, "");
-					GUIHelper.SetComboBox(cboLineFilter, "");
-					valOwnLosses.Enabled = true;
-					valMaxOwnLosses.Enabled = true;
-				}
-				#endregion
-
-				#region Also Playing tab
-				GUIHelper.SetComboBox(cboAlsoPlaying, _selectedCase.AlsoPlaying);
-				GUIHelper.SetComboBox(cboAlsoPlayingHand, _selectedCase.AlsoPlayingHand);
-				Character other = CharacterDatabase.Get(_selectedCase.AlsoPlaying);
-				cboAlsoPlayingStage.Text = "";
-				cboAlsoPlayingMaxStage.Text = "";
-				GUIHelper.SetRange(valAlsoTimeInStage, valMaxAlsoTimeInStage, _selectedCase.AlsoPlayingTimeInStage);
-
-				_selectedCase.SplitAlsoPlayingStage(out minStage, out maxStage);
-				PopulateStageCombo(cboAlsoPlayingStage, other, false);
-				SetStageComboBox(cboAlsoPlayingStage, minStage);
-				PopulateStageCombo(cboAlsoPlayingMaxStage, other, false);
-				SetStageComboBox(cboAlsoPlayingMaxStage, maxStage);
-				markerAlsoPlaying.SetDataSource(other, false);
-				markerAlsoPlaying.Value = _selectedCase.AlsoPlayingSaidMarker;
-				PopulateMarkerCombo(cboAlsoPlayingNotMarker, other, false);
-				cboAlsoPlayingNotMarker.Text = _selectedCase.AlsoPlayingNotSaidMarker;
-				#endregion
-
-				#region Self tab
-				cboOwnHand.SelectedItem = _selectedCase.HasHand;
-				GUIHelper.SetRange(valOwnLosses, valMaxOwnLosses, _selectedCase.ConsecutiveLosses);
-				GUIHelper.SetRange(valOwnTimeInStage, valMaxOwnTimeInStage, _selectedCase.TimeInStage);
-				markerSelf.SetDataSource(_character, true);
-				PopulateMarkerCombo(cboNotMarker, _character, true);
-				markerSelf.Value = _selectedCase.SaidMarker;
-				cboNotMarker.Text = _selectedCase.NotSaidMarker;
-				#endregion
-
-				#region Misc tab
-				GUIHelper.SetRange(cboTotalFemales, cboMaxTotalFemales, _selectedCase.TotalFemales);
-				GUIHelper.SetRange(cboTotalMales, cboMaxTotalMales, _selectedCase.TotalMales);
-				GUIHelper.SetRange(valGameRounds, valMaxGameRounds, _selectedCase.TotalRounds);
-				GUIHelper.SetRange(cboTotalPlaying, cboMaxTotalPlaying, _selectedCase.TotalPlaying);
-				GUIHelper.SetRange(cboTotalExposed, cboMaxTotalExposed, _selectedCase.TotalExposed);
-				GUIHelper.SetRange(cboTotalNaked, cboMaxTotalNaked, _selectedCase.TotalNaked);
-				GUIHelper.SetRange(cboTotalFinishing, cboMaxTotalFinishing, _selectedCase.TotalMasturbating);
-				GUIHelper.SetRange(cboTotalFinished, cboMaxTotalFinished, _selectedCase.TotalFinished);
-				#endregion
-
-				#region Tags tab
-				LoadFilterConditions();
-				#endregion
+				tableConditions.RecordFilter = FilterTargets;
 			}
+			bool firstPopulation = (tableConditions.Data == null);
+			tableConditions.Data = _selectedCase;
+			AddSpeedButtons();
+
+			if (firstPopulation)
+			{
+				List<string> favorites = new List<string>();
+				string favoritesData = Config.GetString(FavoriteConditionsSetting);
+				if (!string.IsNullOrEmpty(favoritesData))
+				{
+					foreach (string key in favoritesData.Split('|'))
+					{
+						if (!string.IsNullOrEmpty(key))
+						{
+							favorites.Add(key);
+						}
+					}
+				}
+				tableConditions.SetFavorites(favorites);
+			}
+			
 
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 
@@ -750,6 +514,25 @@ namespace SPNATI_Character_Editor.Activities
 
 			_populatingCase = false;
 			HighlightRow(0);
+		}
+
+		private void AddSpeedButtons()
+		{
+			if (_selectedCase == null) { return; }
+			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
+			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
+			if (caseTrigger.AvailableVariables.Contains("clothing") && caseTrigger.HasTarget)
+			{
+				tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+			}
+		}
+
+		private string AddVariableTest(string variable, object data)
+		{
+			Case theCase = data as Case;
+			theCase.Expressions.Add(new ExpressionTest(variable, ""));
+			return "Expressions";
 		}
 
 		private HashSet<int> GetSelectedStages()
@@ -764,24 +547,6 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 			return selectedStages;
-		}
-
-		private void ClearConditionFields()
-		{
-			foreach (TabPage page in tabControlConditions.TabPages)
-			{
-				foreach (Control ctl in page.Controls)
-				{
-					if (ctl is TextBox || ctl is NumericUpDown)
-						ctl.Text = "";
-					else if (ctl is ComboBox)
-					{
-						ComboBox box = ctl as ComboBox;
-						box.SelectedIndex = -1;
-						box.Text = "";
-					}
-				}
-			}
 		}
 
 		/// <summary>
@@ -924,60 +689,6 @@ namespace SPNATI_Character_Editor.Activities
 			return stage.Id;
 		}
 
-		/// <summary>
-		/// Populates the Filters grid
-		/// </summary>
-		private void LoadFilterConditions()
-		{
-			if (_selectedCase == null)
-				return;
-			gridFilters.Rows.Clear();
-			DataGridViewComboBoxColumn colTags = gridFilters.Columns["ColTagFilter"] as DataGridViewComboBoxColumn;
-			foreach (TargetCondition condition in _selectedCase.Conditions)
-			{
-				if (string.IsNullOrEmpty(condition.Filter))
-					continue;
-				DataGridViewRow row = gridFilters.Rows[gridFilters.Rows.Add()];
-				if (!colTags.Items.Contains(condition.Filter))
-				{
-					colTags.Items.Add(condition.Filter);
-				}
-				try
-				{
-					row.Cells["ColTagFilter"].Value = condition.Filter;
-					row.Cells["ColGenderFilter"].Value = condition.Gender;
-					row.Cells["ColStatusFilter"].Value = condition.StatusType;
-					row.Cells["ColStatusFilterNegated"].Value = condition.NegateStatus;
-					row.Cells["ColFilterCount"].Value = condition.Count;
-				}
-				catch { }
-			}
-		}
-
-		/// <summary>
-		/// Saves filter conditions into the case
-		/// </summary>
-		private void SaveFilterConditions()
-		{
-			if (_selectedCase == null)
-				return;
-			_selectedCase.Conditions.Clear();
-			for (int i = 0; i < gridFilters.Rows.Count; i++)
-			{
-				DataGridViewRow row = gridFilters.Rows[i];
-				string filter = row.Cells["ColTagFilter"].Value?.ToString();
-				string countValue = row.Cells["ColFilterCount"].Value?.ToString();
-				string gender = row.Cells["ColGenderFilter"].Value?.ToString();
-				string status = row.Cells["ColStatusFilter"].Value?.ToString();
-				object negStatus = row.Cells["ColStatusFilterNegated"].Value;
-
-				if (string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(countValue))
-					continue;
-				TargetCondition condition = new TargetCondition(filter, gender, status, negStatus != null && (bool)negStatus, countValue);
-				_selectedCase.Conditions.Add(condition);
-			}
-		}
-
 		private bool FilterTargets(PropertyRecord record)
 		{
 			if (record.Group == "Target")
@@ -997,6 +708,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_selectedCase == null)
 				return false;
 
+			SaveNotes();
 			bool needRegeneration = false;
 			var c = _selectedCase;
 			if (c.Tag != Trigger.StartTrigger)
@@ -1024,79 +736,8 @@ namespace SPNATI_Character_Editor.Activities
 						needRegeneration = true;
 				}
 
-				if (!_usingOldEditor)
-				{
-					tableConditions.Save();
-				}
-				else
-				{
-					#region Target tab
-					if (trigger.HasTarget)
-					{
-						c.Target = GUIHelper.ReadComboBox(cboLineTarget);
-						c.SetTargetStage(ReadStageComboBox(cboTargetStage), ReadStageComboBox(cboTargetToStage));
-						c.TargetHand = GUIHelper.ReadComboBox(cboTargetHand);
-						c.Filter = GUIHelper.ReadComboBox(cboLineFilter);
-						c.TargetTimeInStage = GUIHelper.ReadRange(valTimeInStage, valMaxTimeInStage);
-						c.ConsecutiveLosses = GUIHelper.ReadRange(valLosses, valMaxLosses);
-						c.TargetLayers = GUIHelper.ReadRange(valLayers, valMaxLayers);
-						c.TargetStartingLayers = GUIHelper.ReadRange(valStartingLayers, valMaxStartingLayers);
-						c.TargetStatusType = GUIHelper.ReadComboBox(cboTargetStatus);
-						c.NegateTargetStatus = ckbTargetStatusNegated.Checked;
-						c.TargetSaidMarker = markerTarget.Value;
-						c.TargetNotSaidMarker = GUIHelper.ReadComboBox(cboTargetNotMarker);
-					}
-					else
-					{
-						c.Target = null;
-						c.TargetStage = null;
-						c.TargetLayers = null;
-						c.TargetStatus = null;
-						c.NegateTargetStatus = false;
-						c.TargetHand = null;
-						c.Filter = null;
-						c.TargetTimeInStage = null;
-						c.TargetSaidMarker = null;
-						c.TargetNotSaidMarker = null;
-					}
-					#endregion
-
-					#region Also Playing Tab
-					c.AlsoPlaying = GUIHelper.ReadComboBox(cboAlsoPlaying);
-					c.AlsoPlayingHand = GUIHelper.ReadComboBox(cboAlsoPlayingHand);
-					c.SetAlsoPlayingStage(ReadStageComboBox(cboAlsoPlayingStage), ReadStageComboBox(cboAlsoPlayingMaxStage));
-					c.AlsoPlayingTimeInStage = GUIHelper.ReadRange(valAlsoTimeInStage, valMaxAlsoTimeInStage);
-					c.AlsoPlayingSaidMarker = markerAlsoPlaying.Value;
-					c.AlsoPlayingNotSaidMarker = GUIHelper.ReadComboBox(cboAlsoPlayingNotMarker);
-					#endregion
-
-					#region Self tab
-					c.SaidMarker = markerSelf.Value;
-					c.NotSaidMarker = GUIHelper.ReadComboBox(cboNotMarker);
-					c.HasHand = GUIHelper.ReadComboBox(cboOwnHand);
-					c.TimeInStage = GUIHelper.ReadRange(valOwnTimeInStage, valMaxOwnTimeInStage);
-					if (!trigger.HasTarget)
-					{
-						c.ConsecutiveLosses = GUIHelper.ReadRange(valOwnLosses, valMaxOwnLosses);
-					}
-					#endregion
-
-					#region Misc tab
-					c.TotalFemales = GUIHelper.ReadRange(cboTotalFemales, cboMaxTotalFemales);
-					c.TotalMales = GUIHelper.ReadRange(cboTotalMales, cboMaxTotalMales);
-					c.TotalRounds = GUIHelper.ReadRange(valGameRounds, valMaxGameRounds);
-					c.TotalPlaying = GUIHelper.ReadRange(cboTotalPlaying, cboMaxTotalPlaying);
-					c.TotalExposed = GUIHelper.ReadRange(cboTotalExposed, cboMaxTotalExposed);
-					c.TotalNaked = GUIHelper.ReadRange(cboTotalNaked, cboMaxTotalNaked);
-					c.TotalMasturbating = GUIHelper.ReadRange(cboTotalFinishing, cboMaxTotalFinishing);
-					c.TotalFinished = GUIHelper.ReadRange(cboTotalFinished, cboMaxTotalFinished);
-					#endregion
-
-					#region Tags tab
-					SaveFilterConditions();
-					#endregion
-				}
-
+				tableConditions.Save();
+				
 				c.CustomPriority = GUIHelper.ReadNumericBox(valPriority);
 			}
 
@@ -1167,8 +808,8 @@ namespace SPNATI_Character_Editor.Activities
 			if (img == null)
 			{
 				int stage = _selectedStage == null ? 0 : _selectedStage.Id;
-				image = DialogueLine.GetDefaultImage(image);
-				img = _imageLibrary.Find(stage + "-" + image);
+				image = DialogueLine.GetStageImage(stage, DialogueLine.GetDefaultImage(image));
+				img = _imageLibrary.Find(image);
 			}
 			DisplayImage(img);
 		}
@@ -1255,21 +896,6 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void cmdToggleMode_Click(object sender, EventArgs e)
-		{
-			if (_selectedCase != null)
-			{
-				SaveCase();
-			}
-			_usingOldEditor = !_usingOldEditor;
-			Config.Set(UseOldEditorSetting, _usingOldEditor);
-			EnableOldEditor(_usingOldEditor);
-			if (_selectedCase != null)
-			{
-				PopulateCase();
-			}
-		}
-
 		private void tree_SelectedNodeChanging(object sender, CaseSelectionEventArgs e)
 		{
 			SaveCase();
@@ -1300,6 +926,20 @@ namespace SPNATI_Character_Editor.Activities
 		private void tree_CreatedCase(object sender, CaseCreationEventArgs e)
 		{
 
+		}
+
+		private void txtNotes_Validated(object sender, EventArgs e)
+		{
+			SaveNotes();
+		}
+
+		private void SaveNotes()
+		{
+			if (_selectedCase == null)
+			{
+				return;
+			}
+			_editorData.SetNote(_selectedCase, txtNotes.Text);
 		}
 	}
 }

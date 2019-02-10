@@ -216,6 +216,10 @@ namespace SPNATI_Character_Editor.Activities
 		/// <returns></returns>
 		private static string GetKey(string stage, string pose)
 		{
+			if (string.IsNullOrEmpty(stage))
+			{
+				return pose;
+			}
 			return string.Format("{0}-{1}", stage, pose);
 		}
 
@@ -303,6 +307,11 @@ namespace SPNATI_Character_Editor.Activities
 				row.Cells["ColStage"].Value = "0";
 				row.Cells["ColPose"].Value = pose.ImageKey;
 			}
+			else if (piecedKey.Length == 1)
+			{
+				row.Cells["ColStage"].Value = "";
+				row.Cells["ColPose"].Value = piecedKey[0];
+			}
 			else
 			{
 				row.Cells["ColStage"].Value = piecedKey[0];
@@ -359,9 +368,9 @@ namespace SPNATI_Character_Editor.Activities
 
 			string stage = row.Cells["ColStage"].Value?.ToString();
 			string pose = row.Cells["ColPose"].Value?.ToString();
-			if (string.IsNullOrEmpty(stage) || string.IsNullOrEmpty(pose))
+			if (string.IsNullOrEmpty(pose))
 			{
-				MessageBox.Show("Stage and Pose must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Pose must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 			string data = row.Cells["ColData"].Value?.ToString();
@@ -740,7 +749,29 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (gridPoses.SelectedRows.Count == 0) { return; }
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					DataGridViewCell cell = gridPoses.SelectedCells[0];
+					if (cell is DataGridViewTextBoxCell)
+					{
+						string text = cell.Value?.ToString();
+						if (!string.IsNullOrEmpty(text))
+						{
+							Clipboard.Clear();
+							Clipboard.SetText(text);
+							TextBox box = gridPoses.EditingControl as TextBox;
+							if (box != null)
+							{
+								box.Text = "";
+							}
+						}
+					}
+				}
+				return;
+			}
+
 			CopySelectedLine();
 			//remove the line
 			int index = gridPoses.SelectedRows[0].Index;
@@ -749,13 +780,43 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CopySelectedLine();
+			var count = gridPoses.SelectedCells.Count;
+			if (count == 1)
+			{
+				//if cursor is in a cell, do standard clipboard action
+				TextBox box = gridPoses.EditingControl as TextBox;
+				if (box != null)
+				{
+					Clipboard.Clear();
+					Clipboard.SetText(box.Text);
+				}
+			}
+			else
+			{
+				//otherwise, copy the whole row
+				CopySelectedLine();
+			}
 		}
 
 		private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (_clipboard == null) { return; }
-			if (gridPoses.SelectedRows.Count == 0) { return; }
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					DataGridViewCell cell = gridPoses.SelectedCells[0];
+					if (cell is DataGridViewTextBoxCell)
+					{
+						TextBox box = gridPoses.EditingControl as TextBox;
+						if (box != null)
+						{
+							box.Text = Clipboard.GetText();
+						}
+					}
+				}
+				return;
+			}
 
 			DataGridViewRow row = gridPoses.SelectedRows[0];
 			if (row.Index == gridPoses.Rows.Count - 1)

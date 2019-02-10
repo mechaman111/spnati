@@ -1731,7 +1731,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			_scenePreview = new ScenePreview(_selectedScene);
+			_scenePreview = new ScenePreview(_selectedScene, _character);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);
@@ -1812,8 +1812,11 @@ namespace SPNATI_Character_Editor.Controls
 					canvas.Invalidate();
 					break;
 				case "remove":
-					_scenePreview.Objects.Remove(obj);
-					obj.Dispose();
+					if (obj != null)
+					{
+						_scenePreview.Objects.Remove(obj);
+						obj.Dispose();
+					}
 					canvas.Invalidate();
 					break;
 				case "fade":
@@ -2386,6 +2389,7 @@ namespace SPNATI_Character_Editor.Controls
 	public class EpilogueContext : IAutoCompleteList, ICharacterContext
 	{
 		public ISkin Character { get; set; }
+		public CharacterContext Context { get; private set; }
 		public Epilogue Epilogue { get; set; }
 		public Scene Scene { get; set; }
 
@@ -2394,6 +2398,7 @@ namespace SPNATI_Character_Editor.Controls
 			Character = character;
 			Epilogue = epilogue;
 			Scene = scene;
+			Context = CharacterContext.Epilogue;
 		}
 
 		public override string ToString()

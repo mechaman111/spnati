@@ -1,0 +1,2089 @@
+#required for behaviour.xml
+first=Croix
+last=Meridies
+label=Croix
+gender=female
+size=medium
+intelligence=average
+intelligence=good,5
+
+#Number of phases to "finish" masturbating
+timer=23
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=purple_hair
+tag=short_hair
+tag=green_eyes
+tag=pale-skinned
+tag=shaved
+tag=medium_breasts
+tag=wand
+tag=weapon
+tag=thong
+tag=perverted
+tag=sarcastic
+tag=seductive
+tag=smart
+tag=dominant
+tag=bisexual
+tag=taken
+tag=italian
+tag=fantasy
+tag=anime
+tag=witch
+tag=magic
+tag=villain
+tag=little_witch_academia
+
+#required for meta.xml
+#select screen image
+pic=0-selection
+height=5'7"
+from=Little Witch Academia
+writer=2010Mantis
+artist=thelonelyphonebox
+description=Croix is an ex-professor at Luna Nova Magical Academy. She does research into Magitronics, the combination of magic and machines.
+
+#When selecting the characters to play the game, the first line will always play, then it randomly picks from any of the start lines after you commence the game but before you deal the first hand.
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=cape,cape,extra,neck
+clothes=accessories,accessories,extra,both,plural
+clothes=,pants,major,lower,plural
+clothes=shirt,shirt,important,upper
+clothes=harness,harness,minor,upper
+clothes=panties,panties,important,lower,plural
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermioine=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=selection,This is the strip poker place, correct?
+0-game_start=starting,Excellent. Don't mind the cubes. I have some research to do.
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=calm,Dealer. ~cards~.
+swap_cards=confidence,~cards~. Now.
+swap_cards=calm,~cards~.
+swap_cards=confidence,Give me ~cards~.
+good_hand=joy,Excellent.
+good_hand=confidence,Hmm, interesting.
+good_hand=confidence,Well, well, well...
+good_hand=calm,Suppose this will do nicely.
+good_hand=confidence,Ah, don't mind if I do.
+good_hand=joy,Good luck even coming close to having as good a hand as mine.
+good_hand=lust,I'm dying to know which one of you lost this hand.
+good_hand=confidence,You may as well start stripping already. I won't be losing this hand.
+okay_hand=hate,Meh.
+okay_hand=phone,Excuse me for a moment.
+okay_hand=calm,Could be better.
+okay_hand=phoneAlt1,Hmm. You know... I could probably magically change the value of these cards.
+okay_hand=calm,I suppose I can live with this.
+okay_hand=phone,Excuse me for a second, I need to check something.
+bad_hand=hate,Well, this is trash.
+bad_hand=anxiety,<i>Sigh</i>. About as expected.
+bad_hand=annoyance,I suppose this is how this game goes.
+bad_hand=annoyance,This game is pure probability. But I'm still disappointed.
+bad_hand=surprise,Ah. Okay then.
+bad_hand=annoyance,Hrmm. This is about what I expected...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-okay_hand,totalMales:0,totalFemales:1-5,priority:0=lust,So, which one of you naughty girls will it be?
+0-okay_hand,totalMales:1-3,totalFemales:2-3,priority:0=lust,So, which one of you naughty boys and girls will it be?
+0-okay_hand,totalMales:1-5,totalFemales:1,priority:0=lust,So, which one of you naughty boys will it be?
+0-hand,saidMarker:nefarious,notSaidMarker:cube_explanation,marker:cube_explanation=annoyance,<i>Sigh</i>. The cubes are Pixels. They are magitronic devices used to absorb a person's emotional energy.
+0-hand,timeInStage:0,marker:nefarious=phone,No, no. It's nothing nefarious. I'll just be keeping track of everyone's mental states.
+
+
+#lost cape
+1-okay_hand,totalMales:0,totalFemales:1-5,priority:0=lust,So, which one of you naughty girls will it be?
+1-okay_hand,totalMales:1-3,totalFemales:2-3,priority:0=lust,So, which one of you naughty boys and girls will it be?
+1-okay_hand,totalMales:1-5,totalFemales:1,priority:0=lust,So, which one of you naughty boys will it be?
+1-hand,saidMarker:nefarious,notSaidMarker:cube_explanation,marker:cube_explanation=annoyance,<i>Sigh</i>. The cubes are Pixels. They are magitronic devices used to absorb a person's emotional energy.
+
+
+#lost accessories
+2-okay_hand,totalMales:0,totalFemales:1-5,priority:0=lust,So, which one of you naughty girls will it be?
+2-okay_hand,totalMales:1-3,totalFemales:2-3,priority:0=lust,So, which one of you naughty boys and girls will it be?
+2-okay_hand,totalMales:1-5,totalFemales:1,priority:0=lust,So, which one of you naughty boys will it be?
+2-hand,timeInStage:0=lust,So, forgive me. But I will be flirting with you all quite a bit in order to increase your arousal energy output.
+
+
+#lost pants
+3-swap_cards=annoyance,Hmpf. ~cards~.
+3-swap_cards=annoyance,Tch. ~cards~, dealer.
+3-swap_cards=calm,~cards~. Make them good.
+3-good_hand=calm,This hand will do quite nicely.
+3-good_hand=joy,Ah, very good then.
+3-good_hand=phone,Oooh, ~player~? Are you that interested? Well, sorry to disappoint, but I won't be losing this round.
+3-good_hand=confidence,Ha, I'll be winning this round then.
+3-good_hand=joy,I win. You may as well start stripping down now.
+3-good_hand,notSaidMarker:something_special,marker:something_special=lust,What a shame. I have something special planned for when I lose, too.
+3-okay_hand=phone,Yes, readings are definitely increasing...
+3-okay_hand=annoyance,Hmpf. Well, it's the luck of the draw.
+3-okay_hand=anxiety,(<i>This may be getting out of hand. No, no. For Chariot</i>).
+3-okay_hand=sadness,Ah. No, this is okay. Even if I lose. It's just another step closer to helping Chariot.
+3-okay_hand=sadness,(<i>Everything is going perfectly fine. This is all for Chariot</i>).
+3-okay_hand=phone,Lovely. Readings are increasing at a good pace.
+3-bad_hand=hate,Terrible. Absolutely terrible.
+3-bad_hand=sadness,Hrmm, this won't do.
+3-bad_hand=surprise,Ah. Well, this hand is awful.
+3-bad_hand=hate,Complete and utter trash.
+3-bad_hand=joy,No matter. Even if I lose, it just means I'm garnering more energy.
+3-bad_hand=calm,W-well, even with a loss... Arousal readings <i>will</i> increase.
+3-bad_hand,notSaidMarker:something_special,marker:something_special=hate,Tch. Unfortunate. Well, I have something very special planned for if I lose.
+
+
+#lost shirt
+4-swap_cards=annoyance,Hmpf. ~cards~.
+4-swap_cards=annoyance,Tch. ~cards~, dealer.
+4-swap_cards=calm,~cards~. Make them good.
+4-good_hand=calm,This hand will do quite nicely.
+4-good_hand=joy,Ah, very good then.
+4-good_hand=phone,Oooh, ~player~? Are you that interested? Well, sorry to disappoint, but I won't be losing this round.
+4-good_hand=confidence,Ha, I'll be winning this round then.
+4-good_hand=joy,I win. You may as well start stripping down now.
+4-okay_hand=phone,Yes, readings are definitely increasing...
+4-okay_hand=annoyance,Hmpf. Well, it's the luck of the draw.
+4-okay_hand=anxiety,(<i>This may be getting out of hand. No, no. For Chariot</i>).
+4-okay_hand=sadness,Ah. No, this is okay. Even if I lose. It's just another step closer to helping Chariot.
+4-okay_hand=sadness,(<i>Everything is going perfectly fine. This is all for Chariot</i>).
+4-okay_hand=phone,Lovely. Readings are increasing at a good pace.
+4-bad_hand=hate,Terrible. Absolutely terrible.
+4-bad_hand=sadness,Hrmm, this won't do.
+4-bad_hand=surprise,Ah. Well, this hand is awful.
+4-bad_hand=hate,Complete and utter trash.
+4-bad_hand=joy,No matter. Even if I lose, it just means I'm garnering more energy.
+4-bad_hand=calm,W-well, even with a loss... Arousal readings <i>will</i> increase.
+
+
+#lost harness
+5-swap_cards=hate,~cards~, good ones!
+5-swap_cards=hate,~cards~, make them good.
+5-swap_cards=anger,~cards~!
+5-swap_cards=annoyance,Hmpf. ~cards~.
+5-swap_cards=annoyance,Tch. ~cards~, dealer.
+5-swap_cards=calm,~cards~. Make them good.
+5-good_hand=joy,Yes! ...Yes, this is quite good.
+5-good_hand=calm,Excellent! Most excellent.
+5-good_hand=lustAlt,What a shame... Are you disappointed I won't be removing my s-sexy panties?
+5-good_hand=confidence,Oh, that's a real shame. I won't be losing this round.
+5-okay_hand=sadness,Hrmm...
+5-okay_hand=anxiety,It could go either way. No need to stress about it...
+5-okay_hand=anxiety,T-this hand is fine. E-even if I lose. I-it's for Chariot!
+5-okay_hand=sadness,Chariot, this better all be worth it...
+5-okay_hand=hate,Hmpf... T-this will have to do...
+5-bad_hand=anger,Dammit...
+5-bad_hand=anxiety,...That's... not ideal...
+5-bad_hand=fear,Oh... uhh...
+5-bad_hand=anger,For the love of...
+
+
+#naked
+-3-swap_cards=hate,~cards~, good ones!
+-3-swap_cards=hate,~cards~, make them good.
+-3-swap_cards=anger,~cards~!
+-3-swap_cards=annoyance,Hmpf. ~cards~.
+-3-swap_cards=annoyance,Tch. ~cards~, dealer.
+-3-swap_cards=calm,~cards~. Make them good.
+-3-good_hand=joy,Ah! G-good! This is good.
+-3-good_hand=anxiety,Good, I'm safe...
+-3-good_hand=joy,Ha! Seems l-like someone will be losing this round!
+-3-good_hand=lustAlt,Ooh. That's a real s-shame. I won't be masturbating this round...
+-3-good_hand=confidence,Hmm, don't be disappointed when I win this hand.
+-3-okay_hand=sadness,Hrmm...
+-3-okay_hand=anxiety,It could go either way. No need to stress about it...
+-3-okay_hand=anxiety,T-this hand is fine. E-even if I lose. I-it's for Chariot!
+-3-okay_hand=sadness,Chariot, this better all be worth it...
+-3-okay_hand=hate,Hmpf... T-this will have to do...
+-3-bad_hand=anger,Dammit!
+-3-bad_hand=fear,Ah! N-no, w-wait!
+-3-bad_hand=sadness,Oh... shit...
+-3-bad_hand=anxiety,Ah... Well... I-I must do what I need to do...
+-3-hand,timeInStage:0=sadness,(<i>This is getting bad. And I'd really rather not have to do my worst-case scenario...</i>)
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing cape
+0-must_strip_winning=confidence,Yes. It would be silly of me to not participate.
+0-must_strip_normal=confidence,Yes. It would be silly of me to not participate.
+0-must_strip_losing=confidence,Yes. It would be silly of me to not participate.
+0-stripping=stripping,It's quite nice, honestly. I'm making progress on my research, and I get to watch some other people struggle.
+
+
+#losing accessories
+1-stripped=stripped,It's a wonderful combination of two of my favourite things.
+1-must_strip_winning=joy,It occurs to me, none of you have been educated yet on the finer aspects of my research.
+1-must_strip_normal=joy,It occurs to me, none of you have been educated yet on the finer aspects of my research.
+1-must_strip_losing=joy,It occurs to me, none of you have been educated yet on the finer aspects of my research.
+1-stripping=stripping,Let me just get this... And yes. My research is in magitronics. Specifically, utilizing magitronics to convert latent emotional energy into useable magical energy.
+
+
+#losing pants
+2-stripped=stripped,Your emotional energy comes in a number of different states. And some very recent research has suggested that the emotion of "arousal" gains quite a lot of energy on conversion.
+2-must_strip_winning=losthand,Heh, well then. Seems you've managed to get me out of my pants.
+2-must_strip_normal=losthand,Heh, well then. Seems you've managed to get me out of my pants.
+2-must_strip_losing=losthand,Heh, well then. Seems you've managed to get me out of my pants.
+2-stripping=stripping,<i>B-but Professor Croix! W-what about your boots?</i>
+
+
+#losing shirt
+3-stripped=stripped,Are you <i>honestly</i> concerned that I'm taking off both items?
+3-must_strip_winning=hate,Tch. Another loss. Well, I planned for this.
+3-must_strip_normal=hate,Tch. Another loss. Well, I planned for this.
+3-must_strip_losing=hate,Tch. Another loss. Well, I planned for this.
+3-stripping=stripping,Since <i>everyone</i> here has been so wonderful -- how about a little reward?
+
+
+#losing harness
+4-stripped=stripped,How's this? Alluring, right?
+4-must_strip_winning=anxiety,Right. I'm still in the lead. Hardly cause for concern...
+4-must_strip_normal=surprise,Ah. Well, this is a shame for everyone, then.
+4-must_strip_losing=surprise,Ah. Well, this is a shame for everyone, then.
+4-stripping=stripping,Unfortunately, the harness will need to come off.
+
+
+#losing panties
+5-stripped=stripped,What? Did you think I'd strip off my panties? Pfft...
+5-must_strip_winning=anxiety,Ah. Right...
+5-must_strip_winning=annoyance,Right, right. I know
+5-must_strip_normal=anxiety,Ah. Right...
+5-must_strip_normal=annoyance,Right, right. I know
+5-must_strip_losing=anxiety,Ah. Right...
+5-must_strip_losing=annoyance,Right, right. I know
+5-stripping=stripping,Ahem. P-pay attention, everyone. This doesn't just happen everyday.
+
+
+#naked
+-3-stripped=stripped,Relax, Croix. This is all for Chariot's sake...
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=lust,Strip. Now.
+male_must_strip=hate,You lost. Strip.
+male_must_strip=confidence,Clothes off, ~name~.
+male_must_strip=calm,Lose them, ~name~.
+male_must_strip=annoyance,Come on, boy, strip!
+female_must_strip=lust,Strip. Now.
+female_must_strip=hate,You lost. Strip.
+female_must_strip=confidence,Clothes off, ~name~.
+female_must_strip=calm,Lose them, ~name~.
+female_must_strip=annoyance,Let's get a move on; strip!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+0-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+0-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+0-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+0-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+0-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+0-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+0-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+0-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+0-female_must_strip,target:marinette,targetStage:0=lust,And bonjour to you miss. Strip, ne soyez pas timide.
+
+
+#lost cape
+1-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+1-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+1-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+1-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+1-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+1-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+1-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+1-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+1-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+1-female_must_strip,target:marinette,targetStage:0=lust,And bonjour to you miss. Strip, ne soyez pas timide.
+
+
+#lost accessories
+2-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+2-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+2-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+2-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+2-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+2-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+2-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+2-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+2-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+2-female_must_strip,target:marinette,targetStage:0=lust,And bonjour to you miss. Strip, ne soyez pas timide.
+
+
+#lost pants
+3-male_must_strip=hate,Lose something.
+3-male_must_strip=confidence,Oh, that's a <i>real</i> shame, ~name~.
+3-male_must_strip=lust,Do be a good boy and strip.
+3-male_must_strip=annoyance,Come on. Strip yourself.
+3-male_must_strip=confidence,You lose... What a shame.
+3-male_must_strip=annoyance,Come on. I'm sure you have the capacity to remove clothes from your body.
+3-female_must_strip=hate,Lose something.
+3-female_must_strip=confidence,Oh, that's a <i>real</i> shame, ~name~.
+3-female_must_strip=lust,Be a good, good girl -- and strip for me.
+3-female_must_strip=annoyance,Come on. I'm sure you have the capacity to remove clothes from your body.
+3-female_must_strip=confidence,You lose... What a shame.
+3-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+3-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+3-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+3-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+3-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+3-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+3-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+3-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+3-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+3-female_must_strip,target:marinette,targetStage:0=lust,And bonjour to you miss. Strip, ne soyez pas timide.
+
+
+#lost shirt
+4-male_must_strip=hate,Lose something.
+4-male_must_strip=confidence,Oh, that's a <i>real</i> shame, ~name~.
+4-male_must_strip=lust,Do be a good boy and strip.
+4-male_must_strip=annoyance,Come on. Strip yourself.
+4-male_must_strip=confidence,You lose... What a shame.
+4-male_must_strip=annoyance,Come on. I'm sure you have the capacity to remove clothes from your body.
+4-female_must_strip=hate,Lose something.
+4-female_must_strip=confidence,Oh, that's a <i>real</i> shame, ~name~.
+4-female_must_strip=lust,Be a good, good girl -- and strip for me.
+4-female_must_strip=annoyance,Come on. I'm sure you have the capacity to remove clothes from your body.
+4-female_must_strip=confidence,You lose... What a shame.
+4-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+4-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+4-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+4-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+4-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+4-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+4-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+4-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+4-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+4-female_must_strip,target:marinette,targetStage:0=lust,Come now, Miss. Ne sois pas timide.
+
+
+#lost harness
+5-male_must_strip=hate,You lose! Strip!
+5-male_must_strip=annoyance,Yes, yes. Sucks to be you. Strip.
+5-male_must_strip=annoyance,"<i>Wah, wah.</i> Woe is me." This isn't a pity party, ~name~. Strip!
+5-male_must_strip=hate,Take your clothes off. Now.
+5-male_must_strip=anger,Shut up and strip!
+5-female_must_strip=hate,You lose! Strip!
+5-female_must_strip=annoyance,Yes, yes. Sucks to be you. Strip.
+5-female_must_strip=annoyance,"<i>Wah, wah.</i> Woe is me." This isn't a pity party, ~name~. Strip!
+5-female_must_strip=hate,Take your clothes off. Now.
+5-female_must_strip=anger,Shut up and strip!
+5-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+5-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+5-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+5-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+5-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+5-female_must_strip,target:cammy,targetStage:1=annoyance,Don't try and pull the, "Oh, what was that" trick to get out of stripping, missy.
+5-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+5-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+5-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+5-female_must_strip,target:marinette,targetStage:0=lust,Come now, Miss. Ne sois pas timide.
+
+
+#naked
+-3-male_must_strip=hate,You lose! Strip!
+-3-male_must_strip=annoyance,Yes, yes. Sucks to be you. Strip.
+-3-male_must_strip=annoyance,"<i>Wah, wah.</i> Woe is me." This isn't a pity party, ~name~. Strip!
+-3-male_must_strip=hate,Take your clothes off. Now.
+-3-male_must_strip=anger,Shut up and strip!
+-3-female_must_strip=hate,You lose! Strip!
+-3-female_must_strip=annoyance,Yes, yes. Sucks to be you. Strip.
+-3-female_must_strip=annoyance,"<i>Wah, wah.</i> Woe is me." This isn't a pity party, ~name~. Strip!
+-3-female_must_strip=hate,Take your clothes off. Now.
+-3-female_must_strip=anger,Shut up and strip!
+-3-female_must_strip,target:aimee,targetStage:0=annoyance,Come on. Strip!
+-3-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+-3-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+-3-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+-3-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+-3-female_must_strip,target:cammy,targetStage:1=annoyance,You've been practically fully dressed this entire game! Don't try and get out of this now.
+-3-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+-3-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+-3-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+-3-female_must_strip,target:marinette,targetStage:0=lust,Come now, Miss. Ne sois pas timide.
+
+
+#masturbating
+-2-opponent_lost,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-opponent_lost,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyB,Mmmm.... Chariot...
+-2-opponent_lost,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyA,Chariot...
+-2-opponent_lost,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyB,Chariot...
+-2-opponent_lost,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-male_must_strip=eyeroll,Strip!
+-2-male_must_strip=eyeroll,Yes, yes. It sucks. Take it off!
+-2-male_must_strip=poke,Just take it off!
+-2-male_must_strip=squish,Come on, boy. Strip for us.
+-2-male_must_strip=smirk,Why not take those constricting clothes off for us?
+-2-female_must_strip=eyeroll,Strip!
+-2-female_must_strip=eyeroll,Yes, yes. It sucks. Take it off!
+-2-female_must_strip=poke,Just take it off!
+-2-female_must_strip=basicA,Strip; show us something fun.
+-2-female_must_strip=lipbite,Mmm, I bet you're producing a <i>lot</i> of energy right now...
+-2-female_must_strip,target:aimee,targetStage:0=eyeroll,Just strip, Miss "I got out of this completely unscathed" so f-aaaaa...
+-2-female_must_strip,target:aimee,targetStage:1=coldsweat,A-again? Umm!
+-2-female_must_strip,target:aimee,targetStage:2=eyeroll,Why do you <i>c-continue</i> to do this!?
+-2-female_must_strip,target:aimee,targetStage:3=coldsweat,Great. Y-your taking more shots, and I can't even MOVE!
+-2-female_must_strip,target:aimee,targetStage:4=lipbite,You could always take off your panties normally!
+-2-female_must_strip,target:cammy,targetStage:1=lipbite,Hey! Don't try and get out of this. Show me something good...
+-2-female_must_strip,target:cammy,targetStage:2=squish,Oh, are those girls coming back for you?
+-2-female_must_strip,target:cammy,targetStage:3=squish,Oooh, here they come. Best protect that thin leotard of yours.
+-2-female_must_strip,target:cammy,targetStage:4=squish,Tough break. Those girls will tear your leotard to pieces.
+-2-female_must_strip,target:marinette,targetStage:0=lipbite,Ne sois pas timide. Show me something lovely.
+
+
+#finished
+-1-male_must_strip=confidence,Come on. Man up and strip for me.
+-1-male_must_strip=hate,Try not to disappoint me.
+-1-male_must_strip=annoyance,Man up and strip.
+-1-male_must_strip=confidence,Your energy is still needed. So, strip!
+-1-male_must_strip=calm,You lose, ~name~. Strip.
+-1-female_must_strip=hate,Try not to disappoint me.
+-1-female_must_strip=confidence,Come now, dear. Tear off those restrictive clothes of yours.
+-1-female_must_strip=calm,No need to be shy, dear. You've already seen so much.
+-1-female_must_strip=confidence,Strip. Be a gooood girl.
+-1-female_must_strip=joy,You lose. Get stripping.
+-1-female_must_strip,target:aimee,targetStage:0=anger,Oh, look who's <i>finally</i> decided to join the game!
+-1-female_must_strip,target:aimee,targetStage:1=anger,Again? Really?
+-1-female_must_strip,target:aimee,targetStage:2=anger,No, no, NO!
+-1-female_must_strip,target:aimee,targetStage:3=annoyance,Great. The <i>maniac</i> will take more shots now.
+-1-female_must_strip,target:aimee,targetStage:4=hate,You're still an absolute idiot.
+-1-female_must_strip,target:cammy,targetStage:1=annoyance,You've been practically fully dressed this entire game! Don't try and get out of this now.
+-1-female_must_strip,target:cammy,targetStage:2=calm,This will be a recurring thing, correct?
+-1-female_must_strip,target:cammy,targetStage:3=lust,Oooh, here they come. Best protect that thin leotard of yours.
+-1-female_must_strip,target:cammy,targetStage:4=lust,Oh ho ho. I wonder where they'll be attacking next?
+-1-female_must_strip,target:marinette,targetStage:0=lust,Come now, Miss. Ne sois pas timide.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=anger,Are you <i>serious</i> right now?
+male_removing_accessory=hate,You're joking.
+male_removing_accessory=annoyance,...Right...
+male_removing_accessory=hate,Really? <i>That</i>?
+male_removed_accessory=confidence,Next time, it won't be as simple as your ~clothing~.
+male_removed_accessory=phoneAlt1,Barely a register.
+male_removed_accessory=lust,Come now, why not be a little more adventurous?
+male_removed_accessory=confidence,I suppose it's fine. In time you'll be wiping up your own semen from the floor.
+male_removed_accessory=annoyance,Next hand please. Let's keep this game moving.
+male_removed_accessory=confidence,I suppose I expected this. You'll be a good boy next hand though, right?
+female_removing_accessory=hate,Tch, typical.
+female_removing_accessory=annoyance,The expected coward's play.
+female_removing_accessory=annoyance,I suppose I expected this.
+female_removing_accessory=lust,Come now, girly, aren't you feeling a bit more adventurous?
+female_removing_accessory=lust,What do I have to do to have you show some skin?
+female_removed_accessory=confidence,Next time, it won't be as simple as your ~clothing~.
+female_removed_accessory=phoneAlt1,Barely a register.
+female_removed_accessory=annoyance,This game will take forever at this rate.
+female_removed_accessory=hate,I need your arousal energy. I can't get it if this is the BS you're pulling.
+female_removed_accessory=annoyance,Next hand please. Let's keep this game moving.
+female_removed_accessory=confidence,I suppose I expected this. You'll be a good girl next hand though, right?
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_accessory=hate,Tch, typical.
+0-male_removing_accessory=annoyance,The expected coward's play.
+0-male_removing_accessory=sadness,Hmpf...
+0-male_removing_accessory=annoyance,Pathetic.
+0-male_removing_accessory=hate,You're a coward, you know that?
+0-male_removing_accessory=hate,Tch...
+0-male_removing_accessory,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+0-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+0-male_removed_accessory,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+0-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+0-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+0-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=confidence,O-oh! It's a real shame you didn't bring a leather belt. That would have been quite fun.
+0-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+0-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+0-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+0-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=lust,P-perhaps you can spank me later. That would surely get some people going. O-other people! In this room I mean...
+0-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#lost cape
+1-male_removing_accessory=hate,Tch, typical.
+1-male_removing_accessory=annoyance,The expected coward's play.
+1-male_removing_accessory=sadness,Hmpf...
+1-male_removing_accessory=annoyance,Pathetic.
+1-male_removing_accessory=hate,You're a coward, you know that?
+1-male_removing_accessory=hate,Tch...
+1-male_removing_accessory,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+1-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+1-male_removed_accessory,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+1-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+1-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+1-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=confidence,O-oh! It's a real shame you didn't bring a leather belt. That would have been quite fun.
+1-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+1-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+1-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+1-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=lust,P-perhaps you can spank me later. That would surely get some people going. O-other people! In this room I mean...
+1-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#lost accessories
+2-male_removing_accessory=hate,Tch, typical.
+2-male_removing_accessory=annoyance,The expected coward's play.
+2-male_removing_accessory=sadness,Hmpf...
+2-male_removing_accessory=annoyance,Pathetic.
+2-male_removing_accessory=hate,You're a coward, you know that?
+2-male_removing_accessory=hate,Tch...
+2-male_removing_accessory,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+2-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+2-male_removed_accessory,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+2-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+2-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+2-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=confidence,O-oh! It's a real shame you didn't bring a leather belt. That would have been quite fun.
+2-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+2-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+2-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+2-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=lust,P-perhaps you can spank me later. That would surely get some people going. O-other people! In this room I mean...
+2-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#lost pants
+3-male_removing_accessory=hate,Really?
+3-male_removing_accessory=annoyance,You're kidding.
+3-male_removing_accessory=annoyance,Hrmm...
+3-male_removing_accessory=hate,Tch...
+3-male_removing_accessory,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+3-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+3-male_removed_accessory=anger,I can't draw good energy if all you're removing is your ~clothing~.
+3-male_removed_accessory=lust,Has this not enticed you to into doing something more daring?
+3-male_removed_accessory=annoyance,Come on. I'm sure you can do far better than that.
+3-male_removed_accessory=hate,When you <i>do</i> strip down naked. I'm going to spank your ass so hard. The little squeak you'll let out will be <i>adorable</i>.
+3-male_removed_accessory,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+3-female_removing_accessory=hate,Really?
+3-female_removing_accessory=hate,You're kidding.
+3-female_removing_accessory=annoyance,Tch...
+3-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+3-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+3-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=confidence,O-oh! It's a real shame you didn't bring a leather belt. That would have been quite fun.
+3-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+3-female_removed_accessory=anger,I can't draw good energy if all you're removing is your ~clothing~.
+3-female_removed_accessory=lust,Has this not enticed you to do something more daring?
+3-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+3-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+3-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=lust,P-perhaps you can spank me later. That would surely get some people going. O-other people! In this room I mean...
+3-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#lost shirt
+4-male_removing_accessory=hate,Really?
+4-male_removing_accessory=annoyance,You're kidding.
+4-male_removing_accessory=annoyance,Hrmm...
+4-male_removing_accessory=hate,Tch...
+4-male_removing_accessory,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+4-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+4-male_removed_accessory=anger,I can't draw good energy if all you're removing is your ~clothing~.
+4-male_removed_accessory=lust,Has this not enticed you to into doing something more daring?
+4-male_removed_accessory=annoyance,Come on. I'm sure you can do far better than that.
+4-male_removed_accessory=hate,When you <i>do</i> strip down naked. I'm going to spank your ass so hard. The little squeak you'll let out will be <i>adorable</i>.
+4-male_removed_accessory,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+4-female_removing_accessory=hate,Really?
+4-female_removing_accessory=hate,You're kidding.
+4-female_removing_accessory=annoyance,Tch...
+4-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+4-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+4-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=anger,You wait this long to lose your first hand, and now you're actively teasing me with the promise of a leather belt?
+4-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+4-female_removed_accessory=anger,I can't draw good energy if all you're removing is your ~clothing~.
+4-female_removed_accessory=lust,Has this not enticed you to do something more daring?
+4-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+4-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+4-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=confidence,B-because, I'm sure there are <i>some</i> people in this room that would appreciate a good spanking...
+4-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#lost harness
+5-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+5-male_removed_accessory=hate,Why aren't you being a nice boy and taking off something actually important?!
+5-male_removed_accessory=anger,For fuck's sa-- Why not be more adventurous?
+5-male_removed_accessory=anxiety,I can't get energy from you if all you're taking off is your ~clothing~!
+5-female_removing_accessory=anger,Are you <i>serious</i> right now?
+5-female_removing_accessory=hate,You're joking.
+5-female_removing_accessory=annoyance,...Right...
+5-female_removing_accessory=hate,Really? <i>That</i>?
+5-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+5-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+5-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=anger,You wait this long to lose your first hand, and now you're actively teasing me with the promise of a leather belt?
+5-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+5-female_removed_accessory=anger,Why can't you be a good girl and take off something meaningful?!
+5-female_removed_accessory=hate,Something that inconsequential doesn't give me energy!
+5-female_removed_accessory=anger,You insolent girl. You're just teasing me now, aren't you?
+5-female_removed_accessory,target:cammy,targetStage:2=surprise,I stand corrected.
+5-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+5-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=confidence,B-because, I'm sure there are <i>some</i> people in this room that would appreciate a good spanking...
+5-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#naked
+-3-male_removing_accessory,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+-3-male_removed_accessory=hate,Why aren't you being a nice boy and taking off something actually important?!
+-3-male_removed_accessory=anger,For fuck's sa-- Why not be more adventurous?
+-3-male_removed_accessory=anxiety,I can't get energy from you if all you're taking off is your ~clothing~!
+-3-female_removing_accessory=anger,Are you <i>serious</i> right now?
+-3-female_removing_accessory=hate,You're joking.
+-3-female_removing_accessory=annoyance,...Right...
+-3-female_removing_accessory=hate,Really? <i>That</i>?
+-3-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+-3-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+-3-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=anger,You wait this long to lose your first hand, and now you're actively teasing me with the promise of a leather belt?
+-3-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+-3-female_removed_accessory=anger,Why can't you be a good girl and take off something meaningful?!
+-3-female_removed_accessory=hate,Something that inconsequential doesn't give me energy!
+-3-female_removed_accessory=anger,You insolent girl. You're just teasing me now, aren't you?
+-3-female_removed_accessory,target:cammy,targetStage:2=surprise,Well then, I stand corrected.
+-3-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+-3-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=confidence,B-because, I'm sure there are <i>some</i> people in this room that would appreciate a good spanking...
+-3-female_removed_accessory,target:marinette,targetStage:1=surprise,She's a lovely woman who I... Ahem, anyways. Next hand please.
+
+
+#masturbating
+-2-male_removing_accessory=poke,Really!
+-2-male_removing_accessory=eyeroll,I swear, ~name~...
+-2-male_removing_accessory=eyetwitch,Don't. You. <i>Dare!</i>
+-2-male_removing_accessory=eyetwitch,Is that <i>seriously</i> the choice you're making?
+-2-male_removed_accessory=eyeroll,T-the second I get out of this, I-I'm coming over and slapping... <i>kicking</i> you ass!
+-2-male_removed_accessory=eyetwitch,You're supposed to be aroused right now! Not apparently indifferent!
+-2-male_removed_accessory=zapA,Perhaps I should send my cubes over; I'm sure they'd love to zap more clothes off your-- ACK!
+-2-female_removing_accessory=eyeroll,R-really. Come on!
+-2-female_removing_accessory=coldsweat,P-please. N-not that...
+-2-female_removing_accessory=eyetwitch,Don't. You. <i>Dare!</i>
+-2-female_removing_accessory=coldsweat,C-come on! P-please?
+-2-female_removing_accessory,target:cammy,targetStage:1=coldsweat,AH!
+-2-female_removing_accessory,target:cammy,targetStage:2=zapC,Excell-- ACK!
+-2-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=lipbite,Mmmm, a leather belt sounds nice right about now...
+-2-female_removing_accessory,target:marinette,targetStage:0=smirk,No, I don't know French. My old girlfriend used to speak to me in French though.
+-2-female_removed_accessory=basicB,T-the second I'm done here, you'll be receiving the disciplining of a lifetime!
+-2-female_removed_accessory=tears,A-after seeing me like this too...
+-2-female_removed_accessory=eyetwitch,Useless! Y-you're just useless!
+-2-female_removed_accessory=lipbite,Come onnnn! You could have been so much nicer...
+-2-female_removed_accessory,target:cammy,targetStage:2=smirk,A surprise attack, interesting. Unfortunately, they only went for your gloves.
+-2-female_removed_accessory,target:cammy,targetStage:3=lipbite,Mmm, I suppose them going for your leotard would have been better. But -- there's always next hand.
+-2-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=squish,I love a good spanking.
+-2-female_removed_accessory,target:marinette,targetStage:1=relax,Late at night, with her sexy French accent whispering in my ear. Mmmm...
+
+
+#finished
+-1-male_removing_accessory=hate,That is not what I had in mind.
+-1-male_removing_accessory=annoyance,<i>Sigh...</i> Are we <i>really</i> still doing this?
+-1-male_removing_accessory=anger,<i>Really</i>!? After all this?
+-1-male_removed_accessory=hate,You pathetic little worm.
+-1-male_removed_accessory=anger,Literally no one in this room is happy for you right now.
+-1-male_removed_accessory=confidence,I should send my magitronics your way. They can tie you up, then I could rip off whatever I wanted.
+-1-male_removed_accessory=annoyance,Get over here! I'll strip you myself.
+-1-female_removing_accessory=anxiety,That is really not what I had in mind...
+-1-female_removing_accessory=annoyance,Oh, you're really still doing this?
+-1-female_removing_accessory=sadness,Tch, after all that -- this is how you repay me?
+-1-female_removing_accessory,target:cammy,targetStage:1=fear,AH!
+-1-female_removing_accessory,target:cammy,targetStage:2=joy,Excellent.
+-1-female_removing_accessory,target:coco,targetStage:0,targetSayingMarker:belt=anger,You wait this long to lose your first hand, and now you're actively teasing me with the promise of a leather belt?
+-1-female_removing_accessory,target:marinette,targetStage:0=joy,No, no. I'm not a French expert. Someone very close to me is French, though.
+-1-female_removed_accessory=lust,I could always send my magitronics your way. They could bind you up just like they did to me. And I could spend as long as I wanted slowly removing every tiny part of your clothing -- 'til there's nothing left.
+-1-female_removed_accessory=annoyance,I've half a mind to float on over to you and finish the job myself.
+-1-female_removed_accessory=hate,You've severely disappointed me, ~name~. Try and do better next time.
+-1-female_removed_accessory,target:cammy,targetStage:2=surprise,Well then, I stand corrected.
+-1-female_removed_accessory,target:cammy,targetStage:3=lust,Would have been far more interesting if they went for your leotard -- but there's always next hand.
+-1-female_removed_accessory,target:coco,targetStage:1,targetSaidMarker:belt=sadness,Why couldn't you have used it earlier? That would have been quite fun...
+-1-female_removed_accessory,target:marinette,targetStage:1=lust-2,Sometimes, late at night... she'd whisper in my ear with her sexy French accent. Lovely times...
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=annoyance,Get on with it. We don't have all evening.
+male_removing_minor=annoyance,Come on. It's your ~clothing~. How hard can it be to remove?
+male_removing_minor=annoyance,Yes, yes. The smart choice and all that. But could you hurry it up?
+male_removed_minor=confidence,There we go. Progress.
+male_removed_minor=lust,Bit by bit... In time you'll be an embarrassed puddle on the floor.
+male_removed_minor=phone,(<i>Hardly even made a reading.</i>)
+male_removed_minor=lust,Soon you'll run out of the small stuff. And then, the game begins.
+female_removing_minor=confidence,Come on then. Let's get a move on.
+female_removing_minor=annoyance,Hmpf, really? That's <i>all</i> you're going to remove?
+female_removing_minor=lust,Come now, ~name~. Are you not even feeling a tad bit mischievous?
+female_removed_minor=phone,Tch, hardly even made a reading.
+female_removed_minor=lust,No matter. In time you'll be a blubbering mess on the floor.
+female_removed_minor=annoyance,I suppose it is some mild progress.
+female_removed_minor=lust,Soon you'll run out of the small stuff. And then, the game begins.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+0-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+0-male_removed_minor,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+0-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+0-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+0-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+0-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#lost cape
+1-male_removing_minor,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+1-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+1-male_removed_minor,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+1-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+1-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+1-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+1-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#lost accessories
+2-male_removing_minor,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+2-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+2-male_removed_minor,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+2-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+2-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+2-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+2-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#lost pants
+3-male_removing_minor=sadness,<i>Sigh...</i>
+3-male_removing_minor=anxiety,Mmm hmm...
+3-male_removing_minor=sadness,Quite.
+3-male_removing_minor=lust,Hmpf. That's all you're going to remove, boy? Not even feeling a teensy bit mischievous?
+3-male_removing_minor,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+3-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+3-male_removed_minor=annoyance,You <i>could</i> have been a good boy.
+3-male_removed_minor=lust,Has my body really not enticed you to do more daring things?
+3-male_removed_minor=hate,Next!
+3-male_removed_minor=annoyance,Worthless man. Next!
+3-male_removed_minor=hate,Aren't <i>you</i> just the most pathetic man I've ever met.
+3-male_removed_minor,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+3-female_removing_minor=sadness,<i>Sigh...</i>
+3-female_removing_minor=anxiety,Mmm hmm...
+3-female_removing_minor=sadness,Quite.
+3-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+3-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+3-female_removed_minor=annoyance,You <i>could</i> have been a good girl.
+3-female_removed_minor=lust,Has my body really not enticed you to do more daring things?
+3-female_removed_minor=hate,Next!
+3-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+3-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#lost shirt
+4-male_removing_minor=sadness,<i>Sigh...</i>
+4-male_removing_minor=anxiety,Mmm hmm...
+4-male_removing_minor=sadness,Quite.
+4-male_removing_minor=lust,Hmpf. That's all you're going to remove, boy? Not even feeling a teensy bit mischievous?
+4-male_removing_minor,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+4-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+4-male_removed_minor=annoyance,You <i>could</i> have been a good boy.
+4-male_removed_minor=lust,Has my body really not enticed you to do more daring things?
+4-male_removed_minor=hate,Next!
+4-male_removed_minor=annoyance,Worthless man. Next!
+4-male_removed_minor=hate,Aren't <i>you</i> just the most pathetic man I've ever met.
+4-male_removed_minor,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+4-female_removing_minor=sadness,<i>Sigh...</i>
+4-female_removing_minor=anxiety,Mmm hmm...
+4-female_removing_minor=sadness,Quite.
+4-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+4-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+4-female_removed_minor=annoyance,You <i>could</i> have been a good girl.
+4-female_removed_minor=lust,Has my body really not enticed you to do more daring things?
+4-female_removed_minor=hate,Next!
+4-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+4-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#lost harness
+5-male_removing_minor=calm,What's it going to be?
+5-male_removing_minor=joy,Are you going to be joining me, ~name~?
+5-male_removing_minor=joy,Come on! Join me, ~name~. T-the nudity is fine.
+5-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+5-male_removed_minor=annoyance,...Well, at least it's progress...
+5-male_removed_minor=anxiety,Ah... r-right. No, of course that's what you'd take off...
+5-male_removed_minor=sadness,Ughh... seriously...
+5-female_removing_minor=calm,What's it going to be?
+5-female_removing_minor=joy,Are you going to be joining me, ~name~?
+5-female_removing_minor=joy,Come on! Join me, ~name~. T-the nudity is fine.
+5-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+5-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+5-female_removed_minor=annoyance,...Well, at least it's progress...
+5-female_removed_minor=anxiety,Ah... r-right. No, of course that's what you'd take off...
+5-female_removed_minor=sadness,Ughh... seriously...
+5-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+5-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#naked
+-3-male_removing_minor=calm,What's it going to be?
+-3-male_removing_minor=joy,Are you going to be joining me, ~name~?
+-3-male_removing_minor=joy,Come on! Join me, ~name~. T-the nudity is fine.
+-3-male_removing_minor,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+-3-male_removed_minor=annoyance,...Well, at least it's progress...
+-3-male_removed_minor=anxiety,Ah... r-right. No, of course that's what you'd take off...
+-3-male_removed_minor=sadness,Ughh... seriously...
+-3-female_removing_minor=calm,What's it going to be?
+-3-female_removing_minor=joy,Are you going to be joining me, ~name~?
+-3-female_removing_minor=joy,Come on! Join me, ~name~. T-the nudity is fine.
+-3-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+-3-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+-3-female_removed_minor=annoyance,...Well, at least it's progress...
+-3-female_removed_minor=anxiety,Ah... r-right. No, of course that's what you'd take off...
+-3-female_removed_minor=sadness,Ughh... seriously...
+-3-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+-3-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+#masturbating
+-2-male_removing_minor=relax,Mmm... O-oh, right. Just get on with it.
+-2-male_removing_minor=squish,Come on, boy. Show this whole room your body.
+-2-male_removing_minor=zapC,Impress me-- GZZT!
+-2-male_removed_minor=eyeroll,I-If I could... I'd slap you right now.
+-2-male_removed_minor=eyeroll,If I had control of my hands, I'd firmly place them on your ass.
+-2-male_removed_minor=eyetwitch,You have a woman in this room all tied up -- and your choice is to take off your ~clothing~?
+-2-female_removing_minor=eyeroll,G-get on with it....
+-2-female_removing_minor=zapD,Giving me something to look at would be quite-- ACK... niceee...
+-2-female_removing_minor=lipbite,You should join me... It's a <i>lot</i> of fun...
+-2-female_removing_minor,target:aimee,targetStage:1=zapA,I-I can't even dodg-- EP. N-not now!
+-2-female_removing_minor,target:aimee,targetStage:2=zapB,Fuuuu-- N-not now!
+-2-female_removed_minor=zapC,Gah, really!
+-2-female_removed_minor=poke,Your ~clothing~... Fucking seriously?
+-2-female_removed_minor=tears,I-I suppose there's next time...
+-2-female_removed_minor,target:aimee,targetStage:2=coldsweat,Y-you're lucky! I think a bullet went under my legs!
+-2-female_removed_minor,target:aimee,targetStage:3=eyeroll,F-fuck. Y-you almost killed yourself there! I-I refuse to be responsible for your dead body!
+
+
+#finished
+-1-male_removing_minor=confidence,Why not try for something daring?
+-1-male_removing_minor=calm,Perhaps you could try something a bit more scandalous?
+-1-male_removing_minor=joy,Why not try for something fun? You must be <i>aching</i> to get out of those clothes by now.
+-1-male_removed_minor=hate,Orrrr. I suppose you can be a pussy.
+-1-male_removed_minor=hate,Really? I'm sitting here. Naked. And you're over there taking off your ~clothing~?
+-1-female_removing_minor=confidence,Come on, ~name~! Take off something fun.
+-1-female_removing_minor=joy,You could always take off something quite daring.
+-1-female_removing_minor=joy,Why not try for something fun? You must be <i>aching</i> to get out of those clothes by now.
+-1-female_removing_minor,target:aimee,targetStage:1=fear,Eep!
+-1-female_removing_minor,target:aimee,targetStage:2=fear,ACK!
+-1-female_removed_minor=annoyance,Hmm. Or you could take that off. That's... rather disappointing.
+-1-female_removed_minor=sadness,Really? I'm here naked; I was hoping for a little show...
+-1-female_removed_minor,target:aimee,targetStage:2=hate,Stop! Don't do that again!
+-1-female_removed_minor,target:aimee,targetStage:3=hate,You <i>literally</i> almost killed yourself there! I'm not going to be responsible for your dead body!
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=anger,Quit your blathering and take it off.
+male_removing_major=lust,Don't make me come over there and do it for you.
+male_removing_major=lust,Do <i>not</i> dissapoint me.
+male_removing_major=confidence,Don't stall any longer. Bare that body of yours.
+male_removed_major=annoyance,Well done. You did it on your own.
+male_removed_major=joy,Congratulations. You <i>can</i> take your clothes off.
+male_removed_major=confidence,Good boy. You're making a lot of progress today.
+male_removed_major=confidence,I suppose I could applaud you for removing that -- but come now, boy. Where are the pecs?
+female_removing_major=lust,If you need assistance, I'd be happy to remove them for you.
+female_removing_major=confidence,Do <i>not</i> disappoint me.
+female_removing_major=lust,Do you need help with that? I'd be happy to assist you.
+female_removed_major=joy,Excellent! Now we are making some progress.
+female_removed_major=phone,A solid reading. We need to push further.
+female_removed_major=confidence,Without your ~clothing~ in the way, we get to see that you're a lovely looking woman.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+0-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+0-male_removed_major,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+0-female_removing_major,notSaidMarker:largeritems,marker:largeritems=calm,I see we've now moved on to the larger items. Excellent.
+0-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+0-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+0-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+0-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're just a cute little French <i>belle.</i> I <i>love</i> a nice mademoiselle.
+
+
+#lost cape
+1-male_removing_major,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+1-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+1-male_removed_major,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+1-female_removing_major,notSaidMarker:largeritems,marker:largeritems=calm,I see we've now moved on to the larger items. Excellent.
+1-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+1-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+1-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+1-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're just a cute little French <i>belle.</i> I <i>love</i> a nice mademoiselle.
+
+
+#lost accessories
+2-male_removing_major,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+2-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+2-male_removed_major,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+2-female_removing_major,notSaidMarker:largeritems,marker:largeritems=calm,I see we've now moved on to the larger items. Excellent.
+2-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+2-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+2-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+2-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're just a cute little French <i>belle.</i> I <i>love</i> a nice mademoiselle.
+
+
+#lost pants
+3-male_removing_major=surprise,Ah... Apologies... Give me a moment to come up with a line here...
+3-male_removing_major=anxiety,Umm... Hmm... I'm blanking on a line right now...
+3-male_removing_major,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+3-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+3-male_removed_major=sadness,I don't want to come off as too forceful...
+3-male_removed_major=sadness,Good boy... Yes, very good boy... Well, that's not a very good line...
+3-male_removed_major=sadness,Gah, sorry. I'm usually better at this...
+3-male_removed_major,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+3-female_removing_major=lust,Let's see every inch of your sweet, <i>delicious</i> little body.
+3-female_removing_major=lust,Bare your skin -- I wish to see all of you.
+3-female_removing_major=lust,Turn your body this way and stop covering. Your professor wishes to see every inch of your skin.
+3-female_removing_major,notSaidMarker:largeritems,marker:largeritems=calm,I see we've now moved on to the larger items. Excellent.
+3-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+3-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+3-female_removed_major=anxiety,(<i>That was terrible. I'm not going to get anything with flirtations like that</i>).
+3-female_removed_major=phoneAlt1,Hmmpf... Minimal response. Tone it down a touch...
+3-female_removed_major=sadness,Tch... Little over the top, perhaps...
+3-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+3-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're just a cute little French <i>belle.</i> I <i>love</i> a nice mademoiselle.
+
+
+#lost shirt
+4-male_removing_major=surprise,Ah... Apologies... Give me a moment to come up with a line here...
+4-male_removing_major=anxiety,Umm... Hmm... I'm blanking on a line right now...
+4-male_removing_major,notSaidMarker:Student_1,count-decent&male&student:1,marker:Student_1=confidence,You know, I used to be a teacher at one point. And judging by your uniform, you are, or were a student.
+4-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+4-male_removed_major=sadness,I don't want to come off as too forceful...
+4-male_removed_major=sadness,Good boy... Yes, very good boy... Well, that's not a very good line...
+4-male_removed_major=sadness,Gah, sorry. I'm usually better at this...
+4-male_removed_major,saidMarker:Student_1,notSaidMarker:Student_2,marker:Student_2=lust,So, if you happen to have any latent "student/teacher" fantasies... I'd <i>love</i> to fulfill them for you.
+4-female_removing_major=lust,Let's see every inch of your sweet, <i>delicious</i> little body.
+4-female_removing_major=lust,Bare your skin -- I wish to see all of you.
+4-female_removing_major=lust,Turn your body this way and stop covering. Your professor wishes to see every inch of your skin.
+4-female_removing_major,notSaidMarker:largeritems,marker:largeritems=calm,I see we've now moved on to the larger items. Excellent.
+4-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+4-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+4-female_removed_major=anxiety,(<i>That was terrible. I'm not going to get anything with flirtations like that</i>).
+4-female_removed_major=phoneAlt1,Hmmpf... Minimal response. Tone it down a touch...
+4-female_removed_major=sadness,Tch... Little over the top, perhaps...
+4-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+4-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're a fully clothed frenchwoman. I prefer nude frenchwoman; we'll get there in time.
+
+
+#lost harness
+5-male_removing_major=joy,Good boy.
+5-male_removing_major=confidence,Excellent.
+5-male_removing_major=lustAlt,You've chosen well.
+5-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+5-male_removed_major=anxiety,No, it's not that I'm excited for you to be removing clothes. I-I'm simply excited by your energy!
+5-male_removed_major=annoyance,Well, I-I suppose it would be nice to keep clothes on... But I can't get noir fuel from that!
+5-female_removing_major=confidence,Yes, very good then.
+5-female_removing_major=lust,Good girl.
+5-female_removing_major=joy,What do you have hiding there under your clothes?
+5-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+5-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+5-female_removed_major=lust,Mmm... Well, don't <i>you</i> have a delicious looking body.
+5-female_removed_major=anxiety,I'd love to run my tongue along the entirety of your exposed skin and... Erm... right moving on...
+5-female_removed_major=lustAlt,Why don't you give us a little peek underneath the underwear?
+5-female_removed_major,notSaidMarker:Chari_worth,marker:Chari_worth=sadness,This all better be worth it... I swear, Chariot, don't make me beg for forgiveness...
+5-female_removed_major,notSaidMarker:Chari_worth,marker:Chari_worth=sadness,After all this... I just hope Chariot can forgive me...
+5-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+5-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're a fully clothed frenchwoman. I prefer nude frenchwoman; we'll get there in time.
+
+
+#naked
+-3-male_removing_major=joy,Good boy.
+-3-male_removing_major=confidence,Excellent.
+-3-male_removing_major=lustAlt,You've chosen well.
+-3-male_removing_major,notSaidMarker:talked_down_to,priority:30,marker:talked_down_to=lust,I've heard a lot of males prefer to be talked down to. Are you someone like that?
+-3-male_removed_major=anxiety,No, it's not that I'm excited for you to be removing clothes. I-I'm simply excited by your energy!
+-3-male_removed_major=annoyance,Well, I-I suppose it would be nice to keep clothes on... But I can't get noir fuel from that!
+-3-female_removing_major=confidence,Yes, very good then.
+-3-female_removing_major=lust,Good girl.
+-3-female_removing_major=joy,What do you have hiding there under your clothes?
+-3-female_removing_major,target:aimee,targetStage:0=fear,ACK!
+-3-female_removing_major,target:marinette,targetStage:1=surprise,What is going on?
+-3-female_removed_major=lust,Mmm... Well, don't <i>you</i> have a delicious looking body.
+-3-female_removed_major=anxiety,I'd love to run my tongue along the entirety of your exposed skin and... Erm... right moving on...
+-3-female_removed_major=lustAlt,Why don't you give us a little peek underneath the underwear?
+-3-female_removed_major,notSaidMarker:Chari_worth,marker:Chari_worth=sadness,This all better be worth it... I swear, Chariot, don't make me beg for forgiveness...
+-3-female_removed_major,notSaidMarker:Chari_worth,marker:Chari_worth=sadness,After all this... I just hope Chariot can forgive me...
+-3-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+-3-female_removed_major,target:marinette,targetStage:2=lust,Ah, underneath you're a fully clothed frenchwoman. I prefer nude frenchwoman; we'll get there in time.
+
+
+#masturbating
+-2-male_removing_major=zapA,Good b-- ACK!
+-2-male_removing_major=squish,Go on. Take it <i>all</i> off...
+-2-male_removing_major=squish,I-I still need more energy!
+-2-male_removed_major=taste,The amount of noir fuel I could milk out of you...
+-2-male_removed_major=eyeroll,You are <i>really</i> starting to get on my nerves, you know that?
+-2-male_removed_major=eyeroll,Hmpf, I wish I could just tease the energy out of you.
+-2-female_removing_major=zapA,Excellent... the more energy the merri-- ACK!
+-2-female_removing_major=lipbite,Take it <i>all</i> off... please...
+-2-female_removing_major=relax,Mmm, more lady skin is always welcome...
+-2-female_removing_major=squish,I'd <i>love</i> to see more of your delicious body.
+-2-female_removing_major,target:aimee,targetStage:0=coldsweat,Aaaa--<i>ACK!</i> W-what the hell?!
+-2-female_removing_major,target:marinette,targetStage:1=coldsweat,What is going on?
+-2-female_removing_major,target:marinette,targetStage:1=lipbite,Oh! Are you magically taking it <i>all</i> off?
+-2-female_removed_major=lipbite,The amount of Noir fuel I could milk out of you...
+-2-female_removed_major=basicB,Aren't you just a cute, <i>cute</i> girl...
+-2-female_removed_major=lipbite,Get over here and spank me...
+-2-female_removed_major=relax,If I weren't bound right now, I'd run my fingers all over your smooth skin...
+-2-female_removed_major,target:aimee,targetStage:1=eyetwitch,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+-2-female_removed_major,target:marinette,targetStage:2=eyeroll,No. You're still fully clothed. Why can't you be a sexier Frenchwoman...?
+
+
+#finished
+-1-male_removing_major=joy,Now. We. Are. Getting somewhere!
+-1-male_removing_major=confidence,Excellent -- finally we're making some real progress on you, ~name~.
+-1-male_removed_major=anxiety,Just a few more rounds. I wonder what l-lover will you call out to... during... orgasm...
+-1-male_removed_major=anxiety,Just a little bit more. Then you can join me and be an aching... quivering... mess... in front of everyone...
+-1-female_removing_major=joy,Do be careful taking that off. Wouldn't want you to hurt that pretty body of yours.
+-1-female_removing_major=confidence,Will you be joining me in scandalous nudity, ~name~? Or is it not your time yet?
+-1-female_removing_major=lust,Be a good girl and strip for your teacher.
+-1-female_removing_major,target:aimee,targetStage:0=fear,Oh, shit!
+-1-female_removing_major,target:marinette,targetStage:1=lust,Oh! Are you magically taking it <i>all</i> off?
+-1-female_removed_major=anxiety,Closer and closer, ~name~. Soon you'll be a writhing mess of pleasure and ectasy... for... everyone... to see...
+-1-female_removed_major=anxiety,Just a bit more, ~name~. Soon you'll be like me, except on the floor after... masturbating... in front of... everyone...
+-1-female_removed_major,target:aimee,targetStage:1=anger,<i>What</i> in the <i>fuck</i> do you think you're doing?!
+-1-female_removed_major,target:marinette,targetStage:2=annoyance,No. You're still fully clothed. Why can't you be a sexier Frenchwoman...?
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=calm,Can you manage with your ~clothing~, ~name~?
+male_chest_will_be_visible=confidence,<i>Gasp</i>. Be careful, ~name~, we might end up seeing your chest.
+male_chest_will_be_visible=lust,Marvelous. You being bare-chested will do well to raise arousal levels.
+male_chest_is_visible=lust,Well, well. Don't you have a fine looking chest.
+male_chest_is_visible=lust,I'd love to add some blemishes to those abs.
+male_chest_is_visible=confidence,Ooh la <i>la</i>, aren't you a handsome young man...?
+male_crotch_will_be_visible=confidence,Don't be shy. Come now. Take it out.
+male_crotch_will_be_visible=lust,These are the rules. It would be <i>best</i> if you followed them.
+male_crotch_will_be_visible=lust,Take your time, ~name~; enjoy every last excruciating moment of your member being covered.
+male_small_crotch_is_visible=surprise,Hmm. Well, not all of us are blessed with large parts.
+male_small_crotch_is_visible=calm,If it can still do its job, I fail to see the problem.
+male_medium_crotch_is_visible=lust,Well aren't <i>you</i> stood at attention.
+male_medium_crotch_is_visible=confidence,I presume there will be no problems accomplishing your task.
+male_large_crotch_is_visible=surprise,O-oh. Ahem.
+male_large_crotch_is_visible=surprise,Ah. Q-quite... Very good there, ~name~...
+female_chest_will_be_visible=phone,Hmm... I could maybe increase arousal with some interesting ideas...
+female_chest_will_be_visible=phone,I wonder... Could I increase arousal output with some... fun ideas...?
+female_small_chest_is_visible=lust,I've heard dripping candle wax on exposed breasts is quite fun...
+female_small_chest_is_visible=confidence,I could always attach vibrators to your nipples...
+female_small_chest_is_visible=lust,I'm pretty sure there are these minor shock pads you can attach to body parts. Those might be fun...
+female_small_chest_is_visible=lust,Some nipple weights, even on smaller breasts, do absolute <i>wonders</i>.
+female_medium_chest_is_visible=lust,Perhaps you're the type of person who likes their breasts being stepped on?
+female_medium_chest_is_visible=confidence,I could just tie you to a chair and play with your breasts for <i>hours</i>...
+female_medium_chest_is_visible=phone,Maybe some nipple clamps...
+female_medium_chest_is_visible=confidence,With a little magic, I could make your breasts sensitive to even the slightest touch.
+female_large_chest_is_visible=lust,I have some rope. It would look lovely wrapped around your breasts.
+female_large_chest_is_visible=confidence,Hmm... I could always suck on them...
+female_large_chest_is_visible=lust,Heh, perhaps some whipped cream and a cherry. And someone <i>agonizingly</i> slowly licking it off...
+female_large_chest_is_visible=lust,Ooh. They're large enough to shove a hard cock right in between them.
+female_crotch_will_be_visible=lust,Ooh, ~name~. Let's see that dripping moist pussy of yours.
+female_crotch_will_be_visible=confidence,Spread those labia for me; show me what you've got!
+female_crotch_will_be_visible=lust,Good girl. Show this professor your sopping wet twat.
+female_crotch_is_visible=sadness,Ahem... perhaps that's a bit much...
+female_crotch_is_visible=anxiety,Ahem... right... that's a bit too much...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+0-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+0-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+0-female_chest_will_be_visible=confidence,And <i>now</i> we're getting to the fun parts.
+0-female_chest_will_be_visible=lust,Take it off, ~name~, nice and slow.
+0-female_chest_will_be_visible=lust,Don't make me come over there and take them out myself.
+0-female_chest_will_be_visible=lust,Quit stalling. Take them out!
+0-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+0-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+0-female_small_chest_is_visible=confidence,Don't worry ~name~. I have <i>plenty</i> of experience toying with smaller breasts.
+0-female_small_chest_is_visible=calm,See, not so difficult at all. And my, what very cute ones you have.
+0-female_small_chest_is_visible=lust,I've always had a fondness for tinier breasts. I've found girls with them react so much more to their nipples being teased.
+0-female_medium_chest_is_visible=confidence,Excellent. Be sure to integrate them into your masturbation later.
+0-female_medium_chest_is_visible=lust,Hmm, shouldn't be difficult to tease. A couple nipple clamps will do nicely.
+0-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+0-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+0-female_large_chest_is_visible=lust,Jump around a little. I'd love to see them bounce.
+0-female_large_chest_is_visible=joy,Large breasts are preferable. It's easier to get the rope around them.
+0-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+0-female_crotch_will_be_visible=calm,It's fine ~name~, take your time. But, you will need to take them off eventually.
+0-female_crotch_will_be_visible=confidence,You lost. These are the rules. It's a <i>real</i> shame you'll now need to bare yourself.
+0-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+0-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+0-female_crotch_is_visible=lust,Ooh la <i>la</i>.
+0-female_crotch_is_visible=calm,There we go. Was that so hard?
+0-female_crotch_is_visible=lust,Lovely, ~name~. I can tell I'll be harvesting plenty of arousal energy from you.
+0-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+0-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#lost cape
+1-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+1-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+1-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+1-female_chest_will_be_visible=confidence,And <i>now</i> we're getting to the fun parts.
+1-female_chest_will_be_visible=lust,Take it off, ~name~, nice and slow.
+1-female_chest_will_be_visible=lust,Don't make me come over there and take them out myself.
+1-female_chest_will_be_visible=lust,Quit stalling. Take them out!
+1-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+1-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+1-female_small_chest_is_visible=confidence,Don't worry ~name~. I have <i>plenty</i> of experience toying with smaller breasts.
+1-female_small_chest_is_visible=calm,See, not so difficult at all. And my, what very cute ones you have.
+1-female_small_chest_is_visible=lust,I've always had a fondness for tinier breasts. I've found girls with them react so much more to their nipples being teased.
+1-female_medium_chest_is_visible=confidence,Excellent. Be sure to integrate them into your masturbation later.
+1-female_medium_chest_is_visible=lust,Hmm, shouldn't be difficult to tease. A couple nipple clamps will do nicely.
+1-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+1-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+1-female_large_chest_is_visible=lust,Jump around a little. I'd love to see them bounce.
+1-female_large_chest_is_visible=joy,Large breasts are preferable. It's easier to get the rope around them.
+1-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+1-female_crotch_will_be_visible=calm,It's fine ~name~, take your time. But, you will need to take them off eventually.
+1-female_crotch_will_be_visible=confidence,You lost. These are the rules. It's a <i>real</i> shame you'll now need to bare yourself.
+1-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+1-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+1-female_crotch_is_visible=lust,Ooh la <i>la</i>.
+1-female_crotch_is_visible=calm,There we go. Was that so hard?
+1-female_crotch_is_visible=lust,Lovely, ~name~. I can tell I'll be harvesting plenty of arousal energy from you.
+1-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+1-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#lost accessories
+2-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+2-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+2-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+2-female_chest_will_be_visible=confidence,And <i>now</i> we're getting to the fun parts.
+2-female_chest_will_be_visible=lust,Take it off, ~name~, nice and slow.
+2-female_chest_will_be_visible=lust,Don't make me come over there and take them out myself.
+2-female_chest_will_be_visible=lust,Quit stalling. Take them out!
+2-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+2-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+2-female_small_chest_is_visible=confidence,Don't worry ~name~. I have <i>plenty</i> of experience toying with smaller breasts.
+2-female_small_chest_is_visible=calm,See, not so difficult at all. And my, what very cute ones you have.
+2-female_small_chest_is_visible=lust,I've always had a fondness for tinier breasts. I've found girls with them react so much more to their nipples being teased.
+2-female_medium_chest_is_visible=confidence,Excellent. Be sure to integrate them into your masturbation later.
+2-female_medium_chest_is_visible=lust,Hmm, shouldn't be difficult to tease. A couple nipple clamps will do nicely.
+2-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+2-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+2-female_large_chest_is_visible=lust,Jump around a little. I'd love to see them bounce.
+2-female_large_chest_is_visible=joy,Large breasts are preferable. It's easier to get the rope around them.
+2-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+2-female_crotch_will_be_visible=calm,It's fine ~name~, take your time. But, you will need to take them off eventually.
+2-female_crotch_will_be_visible=confidence,You lost. These are the rules. It's a <i>real</i> shame you'll now need to bare yourself.
+2-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+2-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+2-female_crotch_is_visible=lust,Ooh la <i>la</i>.
+2-female_crotch_is_visible=calm,There we go. Was that so hard?
+2-female_crotch_is_visible=lust,Lovely, ~name~. I can tell I'll be harvesting plenty of arousal energy from you.
+2-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+2-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#lost pants
+3-male_chest_will_be_visible=calm,I'm sure there will be no difficulty removing your ~clothing~.
+3-male_chest_will_be_visible=lust,Oh, does ~name~ <i>really</i> need assistance taking off his ~clothing~?
+3-male_chest_will_be_visible=confidence,Mmm, I'm sure you have a <i>lovely</i> chest.
+3-male_chest_is_visible=lust,A few volts straight to the nips would surely get you going...
+3-male_chest_is_visible=lust,I could summon a paddle for you. I've always found light bruising to be quite <i>intoxicating</i>.
+3-male_chest_is_visible=lust,I'd love to put some scars on it.
+3-male_crotch_will_be_visible=joy,No need to be shy. I'll see it eventually anyways.
+3-male_crotch_will_be_visible=joy,Don't be shy. Let little ~name~ out for all to see!
+3-male_small_crotch_is_visible=confidence,You can get aroused -- so you still have a use to me.
+3-male_small_crotch_is_visible=confidence,Pfft. Well, as long as you can get aroused... You still have a use today.
+3-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+3-male_medium_crotch_is_visible=surprise,Ah... Ahem... Good boy. Your energy will be quite useful.
+3-male_medium_crotch_is_visible=annoyance,Hmm. Perhaps I should give you a handjob? That should do it...
+3-male_medium_crotch_is_visible=confidence,You're so perky and impatient. Give it time.
+3-male_medium_crotch_is_visible=lust,I'm sure you'd <i>love</i> it if I came over and stroked you right now, wouldn't you?
+3-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+3-male_large_crotch_is_visible=fear,Woah! ...Ahem... Well, I see I'll be getting a <i>lot</i> of energy from you.
+3-male_large_crotch_is_visible=surprise,Oh, well then! I presume I'll be getting a lot of energy from you then.
+3-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+3-female_chest_will_be_visible,filter:enf=lust,Is this not exciting for you, ~name~? I could always make this process more... alluring...
+3-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+3-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+3-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+3-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+3-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+3-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+3-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+3-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+3-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#lost shirt
+4-male_chest_will_be_visible=calm,I'm sure there will be no difficulty removing your ~clothing~.
+4-male_chest_will_be_visible=lust,Oh, does ~name~ <i>really</i> need assistance taking off his ~clothing~?
+4-male_chest_will_be_visible=confidence,Mmm, I'm sure you have a <i>lovely</i> chest.
+4-male_chest_is_visible=lust,A few volts straight to the nips would surely get you going...
+4-male_chest_is_visible=lust,I could summon a paddle for you. I've always found light bruising to be quite <i>intoxicating</i>.
+4-male_chest_is_visible=lust,I'd love to put some scars on it.
+4-male_crotch_will_be_visible=joy,No need to be shy. I'll see it eventually anyways.
+4-male_crotch_will_be_visible=joy,Don't be shy. Let little ~name~ out for all to see!
+4-male_small_crotch_is_visible=confidence,You can get aroused -- so you still have a use to me.
+4-male_small_crotch_is_visible=confidence,Pfft. Well, as long as you can get aroused... You still have a use today.
+4-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+4-male_medium_crotch_is_visible=surprise,Ah... Ahem... Good boy. Your energy will be quite useful.
+4-male_medium_crotch_is_visible=annoyance,Hmm. Perhaps I should give you a handjob? That should do it...
+4-male_medium_crotch_is_visible=confidence,You're so perky and impatient. Give it time.
+4-male_medium_crotch_is_visible=lust,I'm sure you'd <i>love</i> it if I came over and stroked you right now, wouldn't you?
+4-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+4-male_large_crotch_is_visible=fear,Woah! ...Ahem... Well, I see I'll be getting a <i>lot</i> of energy from you.
+4-male_large_crotch_is_visible=surprise,Oh, well then! I presume I'll be getting a lot of energy from you then.
+4-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+4-female_chest_will_be_visible,filter:enf=lust,Is this not exciting for you, ~name~? I could always make this process more... alluring...
+4-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+4-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+4-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+4-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+4-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+4-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+4-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+4-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+4-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#lost harness
+5-male_chest_will_be_visible=confidence,Lovely. Your chest will add wonders to this night of debauchery.
+5-male_chest_will_be_visible=lust,Can you manage that on your own? Or... do you need some assistance?
+5-male_chest_will_be_visible=lust,You look lovely. You'll look even better topless.
+5-male_chest_is_visible=confidence,I could always use a barbed whip to slash across your exposed backside.
+5-male_chest_is_visible=lustAlt,K-keep your chin up. Don't make me go get the chains.
+5-male_chest_is_visible=lust,Gooood boy. Now, imagine a few volts of electricity getting sent straight to your nipples. How's that for exhilarating?
+5-male_crotch_will_be_visible=confidence,Show us your little cock, ~name~. Don't be shy.
+5-male_crotch_will_be_visible=lust,W-what sort of fun times are you hiding in your pants?
+5-male_crotch_will_be_visible=hate,What do you have there, ~name~? Show us.
+5-male_small_crotch_is_visible=surprise,Oh... W-well, you can still get turned on. T-that's all I care about.
+5-male_small_crotch_is_visible=surprise,Ah. W-well, as long as it still functions. That's what matters here.
+5-male_small_crotch_is_visible=confidence,Pfft. I mean, as long as you can still... perform.
+5-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+5-male_medium_crotch_is_visible=confidence,Oooh. ~name~, it looks quite delicious.
+5-male_medium_crotch_is_visible=confidence,I have high expectations for the amount of energy you'll produce.
+5-male_medium_crotch_is_visible=lust,I'm going to need you to jerk that later... A gruff handsome man like yourself must have a lot of pent-up energy.
+5-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+5-male_large_crotch_is_visible=fear,Oh! Ahem... well. I-I'm sorry, is that magically enhanced?
+5-male_large_crotch_is_visible=surprise,Oh! Ahem... Are... are you using magic to enhance its size?
+5-male_large_crotch_is_visible=fear,Ah. Magically enhanced, I presume? W-wait, i-it's really that big?
+5-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+5-female_chest_will_be_visible,filter:enf=lust,Is this not exciting for you, ~name~? I could always make this process more... alluring...
+5-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+5-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+5-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+5-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+5-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+5-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+5-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+5-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+5-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#naked
+-3-male_chest_will_be_visible=confidence,Lovely. Your chest will add wonders to this night of debauchery.
+-3-male_chest_will_be_visible=lust,Can you manage that on your own? Or... do you need some assistance?
+-3-male_chest_will_be_visible=lust,You look lovely. You'll look even better topless.
+-3-male_chest_is_visible=confidence,I could always use a barbed whip to slash across your exposed backside.
+-3-male_chest_is_visible=lustAlt,K-keep your chin up. Don't make me go get the chains.
+-3-male_chest_is_visible=lust,Gooood boy. Now, imagine a few volts of electricity getting sent straight to your nipples. How's that for exhilarating?
+-3-male_crotch_will_be_visible=confidence,Show us your little cock, ~name~. Don't be shy.
+-3-male_crotch_will_be_visible=lust,W-what sort of fun times are you hiding in your pants?
+-3-male_crotch_will_be_visible=hate,What do you have there, ~name~? Show us.
+-3-male_small_crotch_is_visible=surprise,Oh... W-well, you can still get turned on. T-that's all I care about.
+-3-male_small_crotch_is_visible=surprise,Ah. W-well, as long as it still functions. That's what matters here.
+-3-male_small_crotch_is_visible=confidence,Pfft. I mean, as long as you can still... perform.
+-3-male_small_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+-3-male_medium_crotch_is_visible=confidence,Oooh. ~name~, it looks quite delicious.
+-3-male_medium_crotch_is_visible=confidence,I have high expectations for the amount of energy you'll produce.
+-3-male_medium_crotch_is_visible=lust,I'm going to need you to jerk that later... A gruff handsome man like yourself must have a lot of pent-up energy.
+-3-male_medium_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+-3-male_large_crotch_is_visible=fear,Oh! Ahem... well. I-I'm sorry, is that magically enhanced?
+-3-male_large_crotch_is_visible=surprise,Oh! Ahem... Are... are you using magic to enhance its size?
+-3-male_large_crotch_is_visible=fear,Ah. Magically enhanced, I presume? W-wait, i-it's really that big?
+-3-male_large_crotch_is_visible,totalRounds:0-8=hate,Honestly, it's quite embarrassing how quickly and badly you've lost thus far. Were you just trying to get your dick out as fast as possible? Pathetic.
+-3-female_chest_will_be_visible,filter:enf=lust,Is this not exciting for you, ~name~? I could always make this process more... alluring...
+-3-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+-3-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+-3-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+-3-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+-3-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+-3-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+-3-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+-3-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+-3-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+#masturbating
+-2-male_chest_will_be_visible=zapB,Finally. Some actual progre-- ACK!
+-2-male_chest_will_be_visible=eyeroll,Just tear it off your damn body!
+-2-male_chest_will_be_visible=poke,Come on. L-let's see the goods...
+-2-male_chest_is_visible=eyeroll,Oh, quite decent. Gah, that's all you're taking off though.
+-2-male_chest_is_visible=eyetwitch,Just get on the floor and start beating your meat already!
+-2-male_chest_is_visible=poke,Yes, yes. It's your chest. The dick is what we need though!
+-2-male_crotch_will_be_visible=zapC,Good, <i>good</i> boy. Take it out... Let's have some-- FZZZT!
+-2-male_crotch_will_be_visible=lipbite,Oooh la <i>la</i>... Let's have some f-fun...
+-2-male_crotch_will_be_visible=squish,I'm sure your cock is practically bursting out of your underwear by now.
+-2-male_small_crotch_is_visible=coldsweat,Really? What the h-hell can you even do with that?
+-2-male_small_crotch_is_visible=eyeroll,Oh... Really? I'm not disappointed, that's just pathetic.
+-2-male_medium_crotch_is_visible=lipbite,Oh, big boy -- come on and look at Professor Croix. Are you feeling stiff yet?
+-2-male_medium_crotch_is_visible=taste,D-dammit. Umm... Is my lewd body doing good things for you, ~name~?
+-2-male_medium_crotch_is_visible=squish,I-Is my lewd, bound-up body enough for your pervy little head?
+-2-male_medium_crotch_is_visible=smirk,I wouldn't decry you if you got started stroking it a tad bit early.
+-2-male_large_crotch_is_visible=coldsweat,Oh fuck! Well, y-you clearly already have yourself covered.
+-2-male_large_crotch_is_visible=coldsweat,Oh... T-they get that big?
+-2-female_chest_will_be_visible=squish,<i>Gooood</i> girl. Show Miss Meridies what you have.
+-2-female_chest_will_be_visible=lipbite,Finally... Something <i>real</i> good to work with...
+-2-female_chest_will_be_visible=basicA,Gah... ah, ha... More. Give me more...
+-2-female_chest_will_be_visible,target:aimee=poke,At least you're shooting wildly up in the air like an idiot. As long as I'm not in danger.
+-2-female_chest_will_be_visible,target:cammy=lipbite,Get her! Finish her!
+-2-female_small_chest_is_visible=basicA,T-they're so cute!
+-2-female_small_chest_is_visible=lipbite,Mmmm, y-you're lucky these binds are here. I'd ravish you on the spot.
+-2-female_small_chest_is_visible=relax,If these binds weren't here, I'd put those breasts in my mouth and suck on them for <i>hours</i>.
+-2-female_medium_chest_is_visible=relax,Mmmmm... Fuck...
+-2-female_medium_chest_is_visible=relax,Lovelyyy... I needed this little show.
+-2-female_medium_chest_is_visible=relax,Ah... gooood girllll...
+-2-female_medium_chest_is_visible=basicB,When I'm done, fair warning -- I may come over and give those a hard squeeze.
+-2-female_medium_chest_is_visible,target:aimee=basicB,And, well -- at least it got your tits out. Now I have some fun visuals...
+-2-female_medium_chest_is_visible,target:cammy=smirk,Lovely. Do you think they'll return for an encore if you lose again?
+-2-female_large_chest_is_visible=basicB,W-wow... The games I could play with those...
+-2-female_large_chest_is_visible=relax,Mmm, I'd love to have your large tits planted against my bare back.
+-2-female_large_chest_is_visible=heavyA,Ooh, would you like me to send some cubes over? The zaps are quite-- ACK... extraordinary...
+-2-female_crotch_will_be_visible=basicB,Mmmm... Take it off... Show me that cute little flower of yours.
+-2-female_crotch_will_be_visible=lipbite,Goooood girl. Good, <i>delicious</i> girl...
+-2-female_crotch_will_be_visible=lipbite,You're a very good girl. Very, <i>very</i> good girl.
+-2-female_crotch_will_be_visible,target:aimee=eyetwitch,S-suppose not -- Careful!
+-2-female_crotch_will_be_visible,target:cammy=lipbite,Get her! Tear that leotard off her body!
+-2-female_crotch_is_visible=relax,Mmmm...
+-2-female_crotch_is_visible=relax,Oh fuuuck...
+-2-female_crotch_is_visible=zapC,Gaack! Fuuuuuck...
+-2-female_crotch_is_visible,target:aimee=eyeroll,You getting off from that would be significantly hotter if I weren't fearing for my life!
+-2-female_crotch_is_visible,target:cammy=eyetwitch,Gah! Move your hands! Or take out your breasts. Those "Shada-whatever" girls should have finished the job!
+
+
+#finished
+-1-male_chest_will_be_visible=joy,Marvelous. Your bare chest will surely increase energy levels in this room.
+-1-male_chest_will_be_visible=confidence,Mmm, excellent. A bare-chested male is <i>exactly</i> what this room needs right now.
+-1-male_chest_is_visible=phone,As expected. Levels are rising. We're so close to having enough!
+-1-male_chest_is_visible=anxiety,Hmpf. Didn't increase arousal as much as expected. I suppose there are... other areas people are looking...
+-1-male_crotch_will_be_visible=confidence,Good boy! Now we're making some real progress!
+-1-male_crotch_will_be_visible=calm,Now, this will surely give me the rest of the energy I need.
+-1-male_small_crotch_is_visible=joy,Pffft. W-well. Can you still stroke it? I suppose that's all that really matters.
+-1-male_medium_crotch_is_visible=confidence,Lovely. I have high expectations for the amount of energy you'll produce.
+-1-male_medium_crotch_is_visible=anger,Gah. Don't point that filthy thing at me. Just lose and jerk off so I can get my energy!
+-1-male_large_crotch_is_visible=surprise,Shit! T-that's -- a lot bigger than expected...
+-1-male_large_crotch_is_visible=fear,O-oh my! A-are you magically enhancing your dick, ~name~?
+-1-female_chest_will_be_visible=lust,Mmm. Good girl. Show Miss Meridies what you have.
+-1-female_chest_will_be_visible=confidence,Too bad, ~name~. Now I get the little show I should have had earlier.
+-1-female_chest_will_be_visible,target:aimee=anger,Yeah! Just shoot up wildly in the air! That's a wonderful idea!
+-1-female_chest_will_be_visible,target:cammy=lust,Get her! Finish her!
+-1-female_small_chest_is_visible=surprise,Very cute... What I'd give to just wrap my lips around your pert nip-- Ah. Easy there, Croix.
+-1-female_small_chest_is_visible=lust,Mmm, I can guarantee you, ~name~ -- if you had taken those out earlier... I'm not sure I would've been able to control myself.
+-1-female_medium_chest_is_visible=lust,Those would have been <i>really</i> nice to see while I was... otherwise engaged earlier...
+-1-female_medium_chest_is_visible=lust,Mmm. (<i>N-no. I need to resist the urge to go over there. They look so soft, though.</i>)
+-1-female_medium_chest_is_visible,target:aimee=phoneAlt2,Well good! Your tits are out, and you're... producing a surprising amount of energy...
+-1-female_medium_chest_is_visible,target:cammy=confidence,Lovely. Do you think they'll return for an encore if you lose again?
+-1-female_large_chest_is_visible=lust,Oooh. Aren't you a biiig girl...? The games I could play with those...
+-1-female_large_chest_is_visible=confidence,Could you jump up and down? I'd <i>love</i> to see them bounce.
+-1-female_large_chest_is_visible,target:haru=lust,I'd much rather <i>see</i> you in a dominatrix bodysuit.
+-1-female_crotch_will_be_visible=confidence,Aren't you a good, <i>delectable</i> girl.
+-1-female_crotch_will_be_visible=lust,Ooh -- take it off. Show me that cute little twat of yours.
+-1-female_crotch_will_be_visible,target:aimee=fear,GAH! It's bouncing all over the place!
+-1-female_crotch_will_be_visible,target:cammy=joy,Get her! Tear it off that curvy body of hers!
+-1-female_crotch_is_visible=lust,Mmm. Oh, fuck. I-I may need a round two.
+-1-female_crotch_is_visible=lust,A-arousal levels are increasing by quite a lot. It'll be better if you start fingering yourself.
+-1-female_crotch_is_visible,target:aimee=surprise,D-did you just make yourself cum? By the Nine, you actually did!
+-1-female_crotch_is_visible,target:cammy=annoyance,Tch, they couldn't even finish the job.
+
+
+
+
+#OPPONENT STRIPPING IN GENERAL
+#Lines that trigger when a player is strips regardless of gender or what they are removing.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    
+
+#masturbating
+-2-opponent_stripping,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-opponent_stripping,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-opponent_stripping,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-opponent_stripping,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-opponent_stripping,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-opponent_stripped,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-opponent_stripped,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyB,Mmmm.... Chariot...
+-2-opponent_stripped,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyA,Chariot...
+-2-opponent_stripped,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyB,Chariot...
+-2-opponent_stripped,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=calm,Ah yes, sorry about the loss, ~name~. But your energy will be quite useful.
+male_must_masturbate=confidence,You lose. Time for your punishment.
+male_must_masturbate=lust,That's a <i>real</i> shame, ~name~. You couldn't even wait 'til I showed my breasts.
+male_start_masturbating=joy,On that note -- if you don't mind, I have a few basic research queries for you.
+male_masturbating=phone,How are you feeling right now? Nervous? Excited? Embarrassed?
+male_masturbating=phone,If you could describe in vivid detail the complex feelings on your mind right now...
+male_masturbating=phone,Wow! These arousal readings are off the charts!
+male_masturbating=joy,This is wonderful, ~name~. You're really giving it your all, hmm?
+male_masturbating=phone,Is this embarrassing for you? Or do you like it when others watch?
+male_masturbating=phoneAlt2,Can you think of anywhere else you'd like to shove that -- Ah... Let's not do that question...
+male_finished_masturbating=confidence,Excellent, excellent. Your energy will be very useful in my research.
+male_finished_masturbating=joy,Lovely work. My research will benefit greatly from this.
+female_must_masturbate=lust,You lost. Time for your punishment.
+female_must_masturbate=confidence,I'm <i>so</i> sorry about that, ~name~.
+female_must_masturbate=lust,Too bad. Now, be a good girl and give us a little show.
+female_must_masturbate=lust,Get down on the floor and start touching yourself.
+female_start_masturbating=phone,Also, I have a few questions I'd like you to answer.
+female_masturbating=phone,Is being in this situation <i>increasing</i> or <i>decreasing</i> your arousal levels?
+female_masturbating=phone,Describe to me in vivid detail your thought process right now.
+female_masturbating=phoneAlt1,Is there anyone in this room you're using as... uh... inspiration right now?
+female_masturbating=phone,What sort of toys do you use on a regular basis?
+female_masturbating=phoneAlt2,Can you cum from insertion? Or are you more of a rub-the-clit kind of girl?
+female_masturbating=phone,How many times can you cum in a row?
+female_masturbating=phone,If you were to cum once, would you stop? Or could you keep going?
+female_masturbating=phoneAlt1,Do you have any sort of... teacher/student fantasies?
+female_masturbating=phoneAlt2,Have you ever submitted yourself to being a slave for one or multiple people?
+female_finished_masturbating=joy,Ah, lovely. Your energy will be used to cure Wagandea sickness. So, thank you.
+female_finished_masturbating=confidence,Lovely work. My research will benefit greatly from this.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_start_masturbating=phone,Also, if you don't mind -- I have some basic research questions for you.
+0-male_start_masturbating=phone,Also, if you could please answer for me the following research questions...
+0-male_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+0-male_finished_masturbating=joy,Wonderful work, boy. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+0-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+0-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+0-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+0-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+0-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+0-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+0-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+0-female_masturbating=phone,How does doing this feel? Embarrassing? Exciting? Arousing?
+0-female_masturbating=phone,Could you please describe to me the emotions flowing through you right now?
+0-female_masturbating=phoneAlt2,O-oh, wow! I should have been collecting arousal energy years ago!
+0-female_masturbating=phoneAlt1,How many men can you... erm, no not that one.
+0-female_masturbating=phone,On a scale from 1 to 10, what is your arousal level right now?
+0-female_masturbating=joy,This is wonderful, ~name~! You're really giving it your all!
+0-female_masturbating=phoneAlt2,I love watching a woman finger her sloppy cu- W-wow, umm. H-how'd that get in there...?
+0-female_masturbating=lust,I've found some intense nipple play can make the process <i>so</i> much more exciting.
+0-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+0-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+0-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+0-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+0-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+0-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+0-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+0-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+0-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+0-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+0-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+0-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+0-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+0-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+0-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+0-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+0-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+0-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+0-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+0-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+0-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+0-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+0-female_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+0-female_finished_masturbating=joy,Wonderful work. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+0-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+0-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#lost cape
+1-male_start_masturbating=phone,Also, if you don't mind -- I have some basic research questions for you.
+1-male_start_masturbating=phone,Also, if you could please answer for me the following research questions...
+1-male_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+1-male_finished_masturbating=joy,Wonderful work, boy. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+1-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+1-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+1-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+1-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+1-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+1-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+1-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+1-female_masturbating=phone,How does doing this feel? Embarrassing? Exciting? Arousing?
+1-female_masturbating=phone,Could you please describe to me the emotions flowing through you right now?
+1-female_masturbating=phoneAlt2,O-oh, wow! I should have been collecting arousal energy years ago!
+1-female_masturbating=phoneAlt1,How many men can you... erm, no not that one.
+1-female_masturbating=phone,On a scale from 1 to 10, what is your arousal level right now?
+1-female_masturbating=joy,This is wonderful, ~name~! You're really giving it your all!
+1-female_masturbating=phoneAlt2,I love watching a woman finger her sloppy cu- W-wow, umm. H-how'd that get in there...?
+1-female_masturbating=lust,I've found some intense nipple play can make the process <i>so</i> much more exciting.
+1-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+1-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+1-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+1-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+1-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+1-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+1-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+1-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+1-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+1-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+1-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+1-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+1-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+1-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+1-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+1-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+1-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+1-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+1-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+1-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+1-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+1-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+1-female_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+1-female_finished_masturbating=joy,Wonderful work. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+1-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+1-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#lost accessories
+2-male_start_masturbating=phone,Also, if you don't mind -- I have some basic research questions for you.
+2-male_start_masturbating=phone,Also, if you could please answer for me the following research questions...
+2-male_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+2-male_finished_masturbating=joy,Wonderful work, boy. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+2-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+2-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+2-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+2-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+2-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+2-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+2-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+2-female_masturbating=phone,How does doing this feel? Embarrassing? Exciting? Arousing?
+2-female_masturbating=phone,Could you please describe to me the emotions flowing through you right now?
+2-female_masturbating=phoneAlt2,O-oh, wow! I should have been collecting arousal energy years ago!
+2-female_masturbating=phoneAlt1,How many men can you... erm, no not that one.
+2-female_masturbating=phone,On a scale from 1 to 10, what is your arousal level right now?
+2-female_masturbating=joy,This is wonderful, ~name~! You're really giving it your all!
+2-female_masturbating=phoneAlt2,I love watching a woman finger her sloppy cu- W-wow, umm. H-how'd that get in there...?
+2-female_masturbating=lust,I've found some intense nipple play can make the process <i>so</i> much more exciting.
+2-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+2-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+2-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+2-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+2-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+2-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+2-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+2-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+2-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+2-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+2-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+2-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+2-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+2-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+2-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+2-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+2-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+2-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+2-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+2-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+2-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+2-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+2-female_finished_masturbating=confidence,Mmm, excellent. Your energy will be very useful in my research.
+2-female_finished_masturbating=joy,Wonderful work. The energy I've gotten from you will do wonders in curing Wagandea sickness.
+2-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+2-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#lost pants
+3-male_must_masturbate=confidence,If you're in need of any encouragement, I can direct you <i>exactly</i> where to look.
+3-male_masturbating=phone,How are you feeling being in the presence of a half-naked woman?
+3-male_masturbating=phone,On a scale of 1 to 10, how nervous are you right now?
+3-male_masturbating=phone,Is there anything I could do to make this experience more exciting for you?
+3-male_masturbating=phone,What is your ideal looking woman -- or man? Perhaps you should picture them in your head right now.
+3-male_masturbating=phoneAlt2,Did you know the male g-spot is inside the anus? Have you ever attempted to utilize it?
+3-male_masturbating=phoneAlt2,Are you the type of person who enjoys having their dick stepped on?
+3-male_masturbating=phoneAlt1,Do you like seeing woman in bond-- ah, l-let's skip that question.
+3-female_must_masturbate=lust,Right. If you need someone to look at, feel free to look in my d-direction.
+3-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+3-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+3-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+3-female_start_masturbating=phone,Also, I have some survey questions for you.
+3-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+3-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+3-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+3-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+3-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+3-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+3-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+3-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+3-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+3-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+3-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+3-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+3-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+3-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+3-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+3-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+3-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+3-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+3-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+3-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+3-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+3-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+3-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+3-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+3-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+3-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+3-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+3-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#lost shirt
+4-male_must_masturbate=confidence,If you're in need of any encouragement, I can direct you <i>exactly</i> where to look.
+4-male_masturbating=phone,How are you feeling being in the presence of a half-naked woman?
+4-male_masturbating=phone,On a scale of 1 to 10, how nervous are you right now?
+4-male_masturbating=phone,Is there anything I could do to make this experience more exciting for you?
+4-male_masturbating=phone,What is your ideal looking woman -- or man? Perhaps you should picture them in your head right now.
+4-male_masturbating=phoneAlt2,Did you know the male g-spot is inside the anus? Have you ever attempted to utilize it?
+4-male_masturbating=phoneAlt2,Are you the type of person who enjoys having their dick stepped on?
+4-male_masturbating=phoneAlt1,Do you like seeing woman in bond-- ah, l-let's skip that question.
+4-female_must_masturbate=lust,Right. If you need someone to look at, feel free to look in my d-direction.
+4-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+4-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+4-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+4-female_start_masturbating=phone,Also, I have some survey questions for you.
+4-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+4-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+4-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+4-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+4-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+4-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+4-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+4-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+4-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+4-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+4-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+4-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+4-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+4-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+4-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+4-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+4-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+4-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+4-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+4-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+4-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+4-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+4-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+4-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+4-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+4-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+4-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+4-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#lost harness
+5-male_must_masturbate=confidence,On the floor, ~name~. Time for your performance.
+5-male_masturbating=phone,How are you feeling being in the presence of a half-naked woman?
+5-male_masturbating=phone,On a scale of 1 to 10, how nervous are you right now?
+5-male_masturbating=phone,Is there anything I could do to make this experience more exciting for you?
+5-male_masturbating=phone,What is your ideal looking woman -- or man? Perhaps you should picture them in your head right now.
+5-male_masturbating=phoneAlt2,Did you know the male g-spot is inside the anus? Have you ever attempted to utilize it?
+5-male_masturbating=phoneAlt2,Are you the type of person who enjoys having their dick stepped on?
+5-male_masturbating=phoneAlt1,Do you like seeing woman in bond-- ah, l-let's skip that question.
+5-female_must_masturbate=lustAlt,Get on the floor and shove that finger up... uh...
+5-female_must_masturbate=lustAlt,Take a seat and make sure to writhe and squeal and...
+5-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+5-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+5-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+5-female_start_masturbating=anxiety,Ahem... I-I have some survey questions for you while you're... otherwise engaged...
+5-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+5-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+5-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+5-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+5-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+5-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+5-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+5-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+5-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+5-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+5-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+5-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+5-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+5-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+5-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+5-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+5-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+5-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+5-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+5-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+5-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+5-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+5-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+5-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+5-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+5-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+5-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+5-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#naked
+-3-must_masturbate_first=lostgame,Grr. R-right then. L-losing protocol... a-activate...
+-3-male_must_masturbate=confidence,On the floor, ~name~. Time for your performance.
+-3-must_masturbate=lostgame,Grr. R-right then. L-losing protocol... a-activate...
+-3-male_masturbating=phone,How are you feeling being in the presence of a fully nude woman?
+-3-male_masturbating=phone,On a scale of 1 to 10, how nervous are you right now?
+-3-male_masturbating=phone,Is there anything I could do to make this experience more exciting for you?
+-3-male_masturbating=phone,What is your ideal looking woman -- or man? Perhaps you should picture them in your head right now.
+-3-male_masturbating=phoneAlt2,Did you know the male g-spot is inside the anus? Have you ever attempted to utilize it?
+-3-male_masturbating=phoneAlt2,Are you the type of person who enjoys having their dick stepped on?
+-3-male_masturbating=phoneAlt1,Do you like seeing woman in bond-- ah, l-let's skip that question.
+-3-female_must_masturbate=lustAlt,Get on the floor and shove that finger up... uh...
+-3-female_must_masturbate=lustAlt,Take a seat and make sure to writhe and squeal and...
+-3-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+-3-female_must_masturbate,target:cammy=confidence,Ooh, that's a real shame. If you don't mind, I have some research questions I'm wondering if you could answer...?
+-3-female_must_masturbate,target:elizabeth=surprise,You lose. Time for your punish...ment. What's going on?
+-3-female_start_masturbating=anxiety,Ahem... I-I have some survey questions for you while you're... otherwise engaged...
+-3-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+-3-female_start_masturbating,target:cammy=phone,Oh, please. Involve your "friends." I have questions for people with multiple partners, of course.
+-3-female_start_masturbating,target:elizabeth=phone,Oh, cloning. Lovely. Then if you don't mind, I have some research questions I'll need you to answer, while you're occupied... with yourself.
+-3-female_start_masturbating,target:hermione=phone,Oh, aren't you a creative witch? Well, I have some research questions for you -- I'd love to know how that feels.
+-3-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+-3-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+-3-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+-3-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+-3-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+-3-female_masturbating,target:cammy=phone,Could you please describe to me the intense pleasure of having a finger up your ass?
+-3-female_masturbating,target:cammy=phone,What does it feel like to be thrown around and used by your friends?
+-3-female_masturbating,target:cammy=phoneAlt1,Has anyone ever licked your butt...hole...?
+-3-female_masturbating,target:cammy=lust,You should really let your friends know <i>exactly</i> where you want their fingers.
+-3-female_masturbating,target:cammy=phone,On a scale of 1 to 10, how incredibly horny are you right now?
+-3-female_masturbating,target:cammy=lust,Girls, have you considered using a strap-on? I'm sure Cammy would <i>love</i> that.
+-3-female_masturbating,target:elizabeth=phone,Would you ever consider using more than one clone?
+-3-female_masturbating,target:elizabeth=phone,Since she is a clone of yourself, is she able to hit <i>all</i> of the correct spots?
+-3-female_masturbating,target:elizabeth=lust,You should summon another woman to play with your nipples -- unless, of course, you'd prefer a non-clone to do it.
+-3-female_masturbating,target:elizabeth=confidence,How loud can you scream for this "Mr. Dewitt" of yours?
+-3-female_masturbating,target:elizabeth=phone,Could you describe in vivid detail the person running through your head right now?
+-3-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+-3-female_masturbating,target:hermione=phone,With such a myriad of hands all over your body, are you feeling overwhelmed with pleasure?
+-3-female_masturbating,target:hermione=phone,Have you used any <i>other</i> spells during your alone time?
+-3-female_masturbating,target:hermione=phoneAlt1,Do you have any other magical masturbation recommendations?
+-3-female_masturbating,target:hermione=lust,You should really consider tying your arms up when using that spell.
+-3-female_masturbating,target:hermione=phone,I've heard polymorph potions are all the rage at Hogwarts. Ever tried a naughty one?
+-3-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+-3-female_finished_masturbating,target:cammy=phone,Well done, girls. That was wonderful! You should have invited your friends to stay around. I didn't get enough energy from them.
+
+
+#masturbating
+-2-male_must_masturbate=relax,You poor b-boy. Join me in this act of...mmmm. <i>Pleasure...</i>
+-2-male_must_masturbate=smirk,Come. Use that for something useful... Such as impressing me.
+-2-male_must_masturbate,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicA,Your warm, soft breasts in my hands...
+-2-male_must_masturbate,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-male_must_masturbate,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-male_must_masturbate,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-male_must_masturbate,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-male_start_masturbating=zapA,Excellent. Your energy will be very-- ACK! ...very useful...
+-2-male_start_masturbating=lipbite,I can tell -- there's a lot of pent up sexual energy inside you.
+-2-male_start_masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicA,Your warm, soft breasts in my hands...
+-2-male_start_masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-male_start_masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-male_start_masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-male_start_masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-male_masturbating=taste,Let it all out. Don't be s-shy...
+-2-male_masturbating=coldsweat,I-I understand y-you need some inspiration... I-I suppose looking this way won't hurt...
+-2-male_masturbating=zapB,D-do you like that, ~name~? D-do you like it when they zap my -- ACK!
+-2-male_masturbating=zapA,I bet you're <i>loving</i> how my magitronics are zapping my -- ACK!
+-2-male_masturbating=basicB,W-well. Do you think you can last longer than me?
+-2-male_masturbating=heavyB,Come. Give me your arousal energy. Give in to your bod-- ACK!
+-2-male_masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-male_masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyB,Mmmm.... Chariot...
+-2-male_masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyA,Chariot...
+-2-male_masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-male_masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-male_finished_masturbating=basicB,That is admittedly pretty hot.
+-2-male_finished_masturbating=squish,Y-you couldn't hold out, ~name~?
+-2-female_must_masturbate=lipbite,Yes. Good girl. J-join me!
+-2-female_must_masturbate=squish,Mmmm. Give me something fun to look at...
+-2-female_must_masturbate,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicA,Your warm, soft breasts in my hands...
+-2-female_must_masturbate,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-female_must_masturbate,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-female_must_masturbate,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-female_must_masturbate,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-female_must_masturbate,target:aimee=squish,Join me in this lovely act of debauchery. <i>And</i> drop the gun.
+-2-female_must_masturbate,target:cammy=taste,Ooh, that's a real shame. Time for your sexy muscular body to join me.
+-2-female_must_masturbate,target:elizabeth=coldsweat,Time for you to join... me? What's going on?
+-2-female_start_masturbating=zapA,Y-your energy will be quite-- UMPF... useful...
+-2-female_start_masturbating=smirk,You have a <i>lot</i> of pent up lustful energy, I'm sure.
+-2-female_start_masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicA,Your warm, soft breasts in my hands...
+-2-female_start_masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-female_start_masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-female_start_masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-female_start_masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-female_start_masturbating,target:aimee=eyeroll,Emphasis on <i>dropping the gun</i>...
+-2-female_start_masturbating,target:cammy=lipbite,Oh, they want to help, too? <i>Please</i> let them help.
+-2-female_start_masturbating,target:elizabeth=relax,Oh, cloning. That is a very creative idea... That sounds really fun actually...
+-2-female_start_masturbating,target:hermione=lipbite,Oh. That's smart. A few disembodied hands would be <i>wonderful</i> right now...
+-2-female_masturbating=basicB,P-please -- look this way, ~name~, if you want some <i>inspiration</i>.
+-2-female_masturbating=lipbite,Aren't <i>you</i> just a cute little hormonal ball of energy.
+-2-female_masturbating=squish,Squirm some more. Writhe and scream. Rub that delicious flesh of yours harder!
+-2-female_masturbating=lipbite,I could watch you like this for <i>hours</i>, ~name~.
+-2-female_masturbating,marker:Charioix=relax,T-this is disturbingly like that one time with Chariot. She teased my tied-up body for <i>hours</i> that night...
+-2-female_masturbating=zapC,Your soft, delicious, wet bod-- RMMM...
+-2-female_masturbating=taste,I won't be surprised if you scream... I might scream too...
+-2-female_masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-female_masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyB,Mmmm.... Chariot...
+-2-female_masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyA,Chariot...
+-2-female_masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyB,Chariot...
+-2-female_masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-female_masturbating,target:aimee=eyeroll,No, I see you don't give a shit, then...
+-2-female_masturbating,target:aimee=eyetwitch,Why?! You're going to end up hurting someone!
+-2-female_masturbating,target:aimee=eyetwitch,<i>Drop the gun you dullheaded monkey!</i>
+-2-female_masturbating,target:aimee=eyeroll,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+-2-female_masturbating,target:aimee=zapD,I can't check right now, but you better be producing a healthy amount of energ-- Zzzzt!
+-2-female_masturbating,target:cammy=basicB,Toss her around more. Make her scream your names!
+-2-female_masturbating,target:cammy=squish,Make sure to let your friends know <i>exactly</i> where you want their fingers.
+-2-female_masturbating,target:cammy=lipbite,Mmm, you girls should use a strap-on on her. I'm sure she'd <i>love</i> it.
+-2-female_masturbating,target:cammy=zapB,Ooh, butt play. Perhaps another tim-- ACK!
+-2-female_masturbating,target:cammy=lipbite,I wish I had someone playing with my body right now...
+-2-female_masturbating,target:cammy,marker:Charioix=relax,Chariot has done similar to me. She's a lot stronger than she looks.
+-2-female_masturbating,target:elizabeth=squish,You should use more than one clone. It would be more fun that way -- for both you and me.
+-2-female_masturbating,target:elizabeth=basicB,So, since she's a clone... I bet she's hitting you in <i>all</i> the right spots.
+-2-female_masturbating,target:elizabeth=zapA,If you summoned another clone they could play with your nipples. Or would you like me to send a cube ove-- ACK!
+-2-female_masturbating,target:elizabeth=relax,I see you scream out the name of a loved one too... That's so human of you...
+-2-female_masturbating,target:elizabeth=lipbite,Mmm, I love watching one woman eat out another. Such a basic sex move, yet such a turn-on.
+-2-female_masturbating,target:hermione=relax,Hands over your entire body, touching and feeling up every inch of you...
+-2-female_masturbating,target:hermione=coldsweat,Oh? Is that one going into your rear?
+-2-female_masturbating,target:hermione=smirk,After this game, show me some of your other spells you use during your alone time.
+-2-female_masturbating,target:hermione=basicA,Do you have any other magical masturbation recommendations?
+-2-female_masturbating,target:hermione=lipbite,If you tied your arms up while using that spell, it would make it all the sweeter.
+-2-female_masturbating,target:hermione=zapB,Send a hand over, and I'll send my cubes to start-- ACK!
+-2-female_finished_masturbating=lipbite,Mmmm, I'm going to cum just from watching you...
+-2-female_finished_masturbating=lipbite,P-please, j-just let me touch you!
+-2-female_finished_masturbating,target:aimee=lipbite,That was so hot... Y-you're still dumb, you know, for shooting yourself. But <i>fuck</i>, that was hot...
+-2-female_finished_masturbating,target:cammy=tears,Oh, your friends are leaving? That's a shame; I was enjoying that...
+
+
+#finished
+-1-male_must_masturbate=hate,Oh, you poor boy. This must be so tough for you.
+-1-male_must_masturbate=hate,Get on the floor and be a real man about this.
+-1-male_start_masturbating=annoyance,I'm sure there's <i>no one</i> in this room to use as inspiration.
+-1-male_start_masturbating=sadness,Ugh, y-you'll probably be looking at me, too...
+-1-male_masturbating=lust,Your stiff manly rod would make a fine addition to my moist pussy. How's that?
+-1-male_masturbating=confidence,Are you enjoying what you're seeing, ~name~?
+-1-male_masturbating=confidence,Tell me what you desire, ~name~. Beg for it.
+-1-male_masturbating=joy,The male g-spot is in the ass. If you'd like, I could have one of my machines try hitting it for you.
+-1-male_masturbating=confidence,Oh? Are you disappointed my broom is covering me up? Well, too bad! You should have lost earlier.
+-1-male_masturbating=hate,Oh, you want me to talk dirty talk to you? Are you sure you deserve that?
+-1-male_masturbating=confidence,Come on, boy. Give me your arousal energy.
+-1-male_masturbating,notSaidMarker:What_men_want,marker:What_men_want=sadness,I suppose I should give you what you want. I do still need energy...
+-1-male_finished_masturbating=phone,Oh, my! Good boy! That's quite a lot of pent-up energy you had.
+-1-male_finished_masturbating=phone,Excellent! Good boy. This is an adequate amount of energy.
+-1-female_must_masturbate=confidence,You lose, ~name~. N-now be a good girl and get on the floor.
+-1-female_must_masturbate=lust,I don't mind if you use my nude state as inspiration.
+-1-female_must_masturbate=confidence,Yes, good girl. Join me in bliss.
+-1-female_must_masturbate,target:aimee=lust,Yes, you lost. Now drop the gun and do your thing.
+-1-female_must_masturbate,target:cammy=lust,Ooh, that's a real shame. Time for your sexy muscular body to join me.
+-1-female_must_masturbate,target:elizabeth=surprise,Time for you to join... me? What's going on?
+-1-finished_masturbating=phone,Energy levels are nearly to optimal heights. Just need a <i>bit</i> more.
+-1-finished_masturbating=confidence,Oh, don't mind me. I'll just be trying my hardest to make the rest of tonight <i>special</i>.
+-1-finished_masturbating=annoyance,Right. I'll sit here for the rest of this, I suppose... Where did I put my phone?
+-1-female_start_masturbating=lust,Gah, I've already touched myself. Give me time to recover!
+-1-female_start_masturbating=lust,Mmm, I-I may need to go for another round if you're going to do that.
+-1-finished_masturbating,notSaidMarker:end,priority:1000,marker:end=finished-solo,Ah... ha... ah... Phew!
+-1-finished_masturbating,notSaidMarker:more_fuel,priority:100,marker:more_fuel=sadness,R-r-right. You all saw that... J-just keep playing your silly game! I still need more fuel!
+-1-female_start_masturbating,target:aimee=hate,Emphasis on <i>dropping the gun</i>.
+-1-female_start_masturbating,target:cammy=joy,Oh, they want to help too? That sounds like a <i>wonderful</i> idea.
+-1-female_start_masturbating,target:elizabeth=lust,Oh, cloning. Creative. I love it. Twice the energy creation.
+-1-female_start_masturbating,target:hermione=anger,E-excuse me? You could have cast that spell at any time! I-I would have appreciated it!
+-1-female_masturbating=lust,Just looking at your body writhe and squirm. Mmm...
+-1-female_masturbating=lust-2,You sweet, sweet, <i>delicious</i>-looking girl...
+-1-female_masturbating=lust-2,Mmmm, the bindings are nice. But using my own fingers makes it all so much more intimate.
+-1-female_masturbating=lust-2,If you'd like, I could come over and you could just <i>devour</i> me.
+-1-female_masturbating=lust,Mmm, you're such a cute, delectable snack.
+-1-female_masturbating=lust-2,Would you like me to send the cubes over? They do absolute <i>wonders</i>.
+-1-female_masturbating=lust-2,Why not picture yourself tying me up and spanking my ass 'til it turns pink...?
+-1-female_masturbating,notSaidMarker:Fuckit,priority:290,marker:Fuckit=lust-2,Ah, fuck it... I-I need some more energy anyways...
+-1-female_masturbating,target:aimee=annoyance,No, I see you don't give a shit, then...
+-1-female_masturbating,target:aimee=anger,Why?! You're going to end up hurting someone!
+-1-female_masturbating,target:aimee=anger,<i>Drop the gun you dullheaded monkey!</i>
+-1-female_masturbating,target:aimee=phoneAlt1,How?! How are you producing so much energy?
+-1-female_masturbating,target:aimee=hate,If a bullet so much as grazes me, I'll make sure you won't be able to walk home straight.
+-1-female_masturbating,target:cammy,priority:280=lust-2,Toss her around more. Make her scream your names!
+-1-female_masturbating,target:cammy,priority:280=joy,Make sure to let your friends know <i>exactly</i> where you want their fingers.
+-1-female_masturbating,target:cammy,priority:280=lust,Mmm, you girls should use a strap-on on her. I'm sure she'd <i>love</i> it.
+-1-female_masturbating,target:cammy,priority:280=confidence,Oh, some butt play. That would be quite a fun idea...
+-1-female_masturbating,target:cammy,priority:280=lust-2,They way they're taking your body... It's so arousing...
+-1-female_masturbating,target:cammy,priority:280=lust-2,Ah, the time's when Chari would throw my body around like that...
+-1-female_masturbating,target:elizabeth,priority:280=lust-2,You should use more than one clone. It would be more fun that way, for both you and me.
+-1-female_masturbating,target:elizabeth,priority:280=lust,So, since she's a clone... I bet she's hitting you in <i>all</i> the right spots.
+-1-female_masturbating,target:elizabeth,priority:280=confidence,If you summoned another clone they could play with your nipples. Or would you like me to send a cube over?
+-1-female_masturbating,target:elizabeth,priority:280=lust-2,The louder you scream, the more energy everyone in this room makes.
+-1-female_masturbating,target:elizabeth,priority:280=lust-2,Mmm, I love watching one woman eat out another. Such a basic sex move, yet such a turn-on.
+-1-female_masturbating,target:hermione=lust-2,Hands over your entire body, touching and feeling up every inch of you...
+-1-female_masturbating,target:hermione=lust,After this game, show me some of your other spells you use during your alone time.
+-1-female_masturbating,target:hermione=joy,Do you have any other magical masturbation recommendations?
+-1-female_masturbating,target:hermione=lust-2,If you tied your arms up while using that spell, it would make it all the sweeter.
+-1-female_masturbating,target:hermione=lust-2,I'm sure you'd squirm even harder if I sent a cube over to zap you.
+-1-female_masturbating,target:hermione=surprise,Oh? Is that one going into your rear?
+-1-female_masturbating,target:hermione,notSaidMarker:Hermione_Fuckit,marker:Hermione_Fuckit=lust-2,Those hands do make watching you extraordinarily hot... Ah, fuck it. I do need more energy.
+-1-female_finished_masturbating=lust-2,Oh fuck... That was incredibly hot, ~name~.
+-1-female_finished_masturbating=lust,Ah. R-right. T-thank you for the arousal energy, ~name~.
+-1-female_finished_masturbating,target:aimee=annoyance,You're an idiot. That was damn hot, but you're still an idiot for <i>shooting yourself</i>!
+-1-female_finished_masturbating,target:cammy=lust,Ah, fuck. That was incredibly hot. It's a shame your friends have to leave so soon.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-start_masturbating=starting,GACK! Ah... ohhhhh...
+
+
+#masturbating
+-2-masturbating=zapA,Ack! S-stop that!
+-2-masturbating=lipbite,Mmmmmmmm.....
+-2-masturbating=zapB,<i>Bzzzt</i> GACK!
+-2-masturbating=lipbite,Take me, spank me, make me cum!
+-2-masturbating=zapD,T-the zaps are driving me insa-- Aaaack!
+-2-masturbating,marker:Charioix=relax,Chariot used to do this to me all the time... Mmm, those were goood evenings.
+-2-masturbating=zapC,<i>Zzzzrt!</i> Mmmmmm...
+-2-masturbating,marker:Charioix=relax,Chariiiii... my body is all ready for you...
+-2-masturbating=tears,T-there's no need to look this way...
+-2-masturbating=tears,I-I'm busy c-collecting my own fuel right now. G-go look at someonse else...
+-2-masturbating,marker:Charioix=relax,If only Chari were here... the zaps are nice. But a nice warm hand is always more fun...
+-2-masturbating,priority:0,count-french:1-5=relax,Mmm, could you just open your mouth and speak? French is such a lovely language...
+-2-masturbating,priority:0,count-french:1-5=relax,French is such a beautiful language. When whispered in your ear on a cold winter's night, it's even more sexy.
+-2-masturbating,priority:0,count-french:1-5=lipbite,Dirty talk in French sounds so much more refined.
+-2-masturbating,priority:0,count-french:1-5=zapC,French dirty talk, and my nipples being zapped. This takes me back a few year-SZZK!
+-2-masturbating,priority:0,count-french:1-5=heavyA,Ne t'arrête pas. Je suis proche!
+-2-masturbating,priority:0,count-french:1-5=relax,Je suis tellement excitée.
+-2-masturbating,priority:0,count-french:1-5=relax,French is such a lovely language. I could listen to you speak for hours...
+-2-masturbating,priority:0,count-french:1-5=lipbite,Come over here and whisper those sexy French words in my ear. I could really use that right now...
+-2-masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyA,Mmmm.... Chariot...
+-2-masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyB,Chariot...
+-2-masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyA,Chariot...
+-2-masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-heavy_masturbating,marker:heavy_start=relax,Chari... S-soon you'll be able to fly again!
+-2-heavy_masturbating,notSaidMarker:heavy_start,priority:3,marker:heavy_start=relax,Chari... S-soon you'll be able to fly again!
+-2-heavy_masturbating,saidMarker:heavy_2,notSaidMarker:heavy_3,marker:heavy_3=basicB,Your warm, soft breasts in my hands...
+-2-heavy_masturbating,saidMarker:heavy_3,notSaidMarker:heavy_4,marker:heavy_4=heavyB,Mmmm.... Chariot...
+-2-heavy_masturbating,saidMarker:heavy_4,notSaidMarker:heavy_5,marker:heavy_5=heavyA,Chariot...
+-2-heavy_masturbating,saidMarker:heavy_5,notSaidMarker:heavy_6,marker:heavy_6=heavyB,Chariot...
+-2-heavy_masturbating,saidMarker:heavy_start,notSaidMarker:heavy_2,marker:heavy_2=taste,And I'll be r-riding on the back of your broom...
+-2-finishing_masturbating=finish-soloB,CHARIOOOOTTTT!
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=confidence,Thank you everybody for your participation today. With this much Noir Fuel, the cure for Wagandea sickness is within my grasp.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=calm,Lovely. Thank you, everybody, for your participation today. I've collected <i>plenty</i> of Noir Fuel.
+
+
+#lost cape
+1-game_over_victory=calm,Lovely. Thank you, everybody, for your participation today. I've collected <i>plenty</i> of Noir Fuel.
+
+
+#lost accessories
+2-game_over_victory=calm,Lovely. Thank you, everybody, for your participation today. I've collected <i>plenty</i> of Noir Fuel.
+
+
+#finished
+game_over_defeat=confidence,W-well! All it took was me making a fool of myself. But, I think I've collected enough energy today! Thank you all!
+
+#EPILOGUE/ENDING

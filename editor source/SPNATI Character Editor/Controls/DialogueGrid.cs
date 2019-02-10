@@ -142,8 +142,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (text == null && image == null)
 				return null;
 			CharacterImage img = _imageLibrary.Find(image);
-			string extension = img != null ? img.FileExtension : ".png";
-			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image) + extension, text);
+			DialogueLine line = new DialogueLine(DialogueLine.GetDefaultImage(image), text);
 
 			if (perTarget)
 			{
@@ -158,6 +157,14 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				line.Marker = $"{markerValue}{marker}";
 			}
+			else if (markerValue == "+1")
+			{
+				line.Marker = $"+{marker}";
+			}
+			else if (markerValue == "-1")
+			{
+				line.Marker = $"-{marker}";
+			}
 			else
 			{
 				line.Marker = $"{marker}={markerValue}";
@@ -165,6 +172,16 @@ namespace SPNATI_Character_Editor.Controls
 
 			line.Direction = direction;
 			line.Location = location;
+
+			string ai = row.Cells["ColIntelligence"].Value?.ToString();
+			string size = row.Cells["ColSize"].Value?.ToString();
+			string label = row.Cells["ColLabel"].Value?.ToString();
+			string gender = row.Cells["ColGender"].Value?.ToString();
+
+			line.Intelligence = ai;
+			line.Size = size;
+			line.Label = label;
+			line.Gender = gender;
 
 			return line;
 		}
@@ -233,9 +250,20 @@ namespace SPNATI_Character_Editor.Controls
 					bool allExist = true;
 					if (!image.IsGeneric)
 					{
+						bool custom = name.StartsWith("custom:");
+						string nameWithoutStage = name;
+						if (custom)
+						{
+							nameWithoutStage = DialogueLine.GetDefaultImage(image.Name.Substring(7));
+						}
 						foreach (int stage in selectedStages)
 						{
-							if (_imageLibrary.Find(stage + "-" + name) == null)
+							string key = stage + "-" + nameWithoutStage;
+							if (custom)
+							{
+								key = "custom:" + key;
+							}
+							if (_imageLibrary.Find(key) == null)
 							{
 								allExist = false;
 								break;
@@ -400,11 +428,12 @@ namespace SPNATI_Character_Editor.Controls
 				gridDialogue.EditingControl.Select();
 		}
 
-		public bool ShowSpeechBubbleColumns
+		public bool ShowAdvancedColumns
 		{
 			set
 			{
 				gridDialogue.Columns["ColDirection"].Visible = gridDialogue.Columns["ColLocation"].Visible = value;
+				ColGender.Visible = ColSize.Visible = ColIntelligence.Visible = ColLabel.Visible = value;
 			}
 		}
 
@@ -458,7 +487,7 @@ namespace SPNATI_Character_Editor.Controls
 				int stage = _selectedCase.Stages[0];
 				if (_selectedStage != null)
 					stage = _selectedStage.Id;
-				imageKey = string.Format("{0}-{1}", stage, imageKey);
+				imageKey = DialogueLine.GetStageImage(stage, imageKey);
 				image = _imageLibrary.Find(imageKey);
 			}
 
@@ -484,6 +513,11 @@ namespace SPNATI_Character_Editor.Controls
 
 			DataGridViewCell locationCell = row.Cells["ColLocation"];
 			locationCell.Value = line.Location;
+
+			row.Cells["ColIntelligence"].Value = line.Intelligence;
+			row.Cells["ColSize"].Value = line.Size;
+			row.Cells["ColGender"].Value = line.Gender;
+			row.Cells["ColLabel"].Value = line.Label;
 		}
 
 		/// <summary>
@@ -493,7 +527,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="key"></param>
 		private void SetImage(DataGridViewComboBoxCell cell, string key)
 		{
-			string defaultKey = Path.GetFileNameWithoutExtension(DialogueLine.GetDefaultImage(key));
+			string defaultKey = DialogueLine.GetDefaultImage(key);
 			foreach (var item in cell.Items)
 			{
 				CharacterImage image = item as CharacterImage;

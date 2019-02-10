@@ -32,6 +32,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.valFrom = new System.Windows.Forms.NumericUpDown();
 			this.valTo = new System.Windows.Forms.NumericUpDown();
+			this.chkUpper = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valFrom)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTo)).BeginInit();
 			this.SuspendLayout();
@@ -70,10 +71,21 @@
 			this.valTo.Size = new System.Drawing.Size(41, 20);
 			this.valTo.TabIndex = 8;
 			// 
+			// chkUpper
+			// 
+			this.chkUpper.AutoSize = true;
+			this.chkUpper.Location = new System.Drawing.Point(153, 2);
+			this.chkUpper.Name = "chkUpper";
+			this.chkUpper.Size = new System.Drawing.Size(103, 17);
+			this.chkUpper.TabIndex = 9;
+			this.chkUpper.Text = "No upper bound";
+			this.chkUpper.UseVisualStyleBackColor = true;
+			// 
 			// NumericRangeControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.chkUpper);
 			this.Controls.Add(this.valTo);
 			this.Controls.Add(this.valFrom);
 			this.Controls.Add(this.label2);
@@ -92,5 +104,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown valFrom;
 		private System.Windows.Forms.NumericUpDown valTo;
+		private System.Windows.Forms.CheckBox chkUpper;
 	}
 }

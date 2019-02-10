@@ -28,18 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.txtExpression = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.txtValue = new System.Windows.Forms.TextBox();
+			this.cboValue = new System.Windows.Forms.ComboBox();
+			this.cboExpression = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
-			// 
-			// txtExpression
-			// 
-			this.txtExpression.Location = new System.Drawing.Point(57, 0);
-			this.txtExpression.Name = "txtExpression";
-			this.txtExpression.Size = new System.Drawing.Size(100, 20);
-			this.txtExpression.TabIndex = 0;
 			// 
 			// label1
 			// 
@@ -53,39 +46,49 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(163, 2);
+			this.label2.Location = new System.Drawing.Point(176, 2);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(13, 13);
 			this.label2.TabIndex = 2;
 			this.label2.Text = "=";
 			// 
-			// txtValue
+			// cboValue
 			// 
-			this.txtValue.Location = new System.Drawing.Point(182, 0);
-			this.txtValue.Name = "txtValue";
-			this.txtValue.Size = new System.Drawing.Size(100, 20);
-			this.txtValue.TabIndex = 3;
+			this.cboValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.cboValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+			this.cboValue.FormattingEnabled = true;
+			this.cboValue.Location = new System.Drawing.Point(191, 0);
+			this.cboValue.Name = "cboValue";
+			this.cboValue.Size = new System.Drawing.Size(112, 21);
+			this.cboValue.TabIndex = 1;
+			// 
+			// cboExpression
+			// 
+			this.cboExpression.FormattingEnabled = true;
+			this.cboExpression.Location = new System.Drawing.Point(57, 0);
+			this.cboExpression.Name = "cboExpression";
+			this.cboExpression.Size = new System.Drawing.Size(118, 21);
+			this.cboExpression.TabIndex = 0;
 			// 
 			// ExpressionControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.txtValue);
+			this.Controls.Add(this.cboExpression);
+			this.Controls.Add(this.cboValue);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtExpression);
 			this.Name = "ExpressionControl";
-			this.Size = new System.Drawing.Size(433, 20);
+			this.Size = new System.Drawing.Size(433, 21);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.TextBox txtExpression;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox txtValue;
+		private System.Windows.Forms.ComboBox cboValue;
+		private System.Windows.Forms.ComboBox cboExpression;
 	}
 }

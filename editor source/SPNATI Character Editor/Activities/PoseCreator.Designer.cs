@@ -30,14 +30,27 @@
 		{
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.lstPoses = new System.Windows.Forms.ListBox();
 			this.tsPoseList = new System.Windows.Forms.ToolStrip();
 			this.table = new Desktop.CommonControls.PropertyTable();
 			this.canvas = new Desktop.CommonControls.DBPanel();
-			this.tsAddLink = new System.Windows.Forms.ToolStripButton();
+			this.lstPoses = new Desktop.CommonControls.DBTreeView();
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
+			this.tsCollapseAll = new System.Windows.Forms.ToolStripButton();
+			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsCut = new System.Windows.Forms.ToolStripButton();
+			this.tsCopy = new System.Windows.Forms.ToolStripButton();
+			this.tsPaste = new System.Windows.Forms.ToolStripButton();
+			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
+			this.lblDragger = new System.Windows.Forms.Label();
+			this.preview = new SPNATI_Character_Editor.Controls.CharacterImageBox();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
+			this.tsAddKeyframe = new System.Windows.Forms.ToolStripButton();
+			this.tsAddDirective = new System.Windows.Forms.ToolStripSplitButton();
+			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -47,6 +60,7 @@
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
 			this.tsPoseList.SuspendLayout();
+			this.canvas.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -77,6 +91,7 @@
 			// 
 			// splitContainer2.Panel1
 			// 
+			this.splitContainer2.Panel1.Controls.Add(this.lblDragger);
 			this.splitContainer2.Panel1.Controls.Add(this.lstPoses);
 			this.splitContainer2.Panel1.Controls.Add(this.tsPoseList);
 			// 
@@ -87,25 +102,22 @@
 			this.splitContainer2.SplitterDistance = 211;
 			this.splitContainer2.TabIndex = 2;
 			// 
-			// lstPoses
-			// 
-			this.lstPoses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstPoses.FormattingEnabled = true;
-			this.lstPoses.Location = new System.Drawing.Point(3, 23);
-			this.lstPoses.Name = "lstPoses";
-			this.lstPoses.Size = new System.Drawing.Size(242, 173);
-			this.lstPoses.TabIndex = 0;
-			this.lstPoses.SelectedIndexChanged += new System.EventHandler(this.lstPoses_SelectedIndexChanged);
-			// 
 			// tsPoseList
 			// 
 			this.tsPoseList.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsPoseList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsAddLink,
             this.tsAdd,
-            this.tsRemove});
+            this.tsRemove,
+            this.tsAddDirective,
+            this.tsAddKeyframe,
+            this.toolStripSeparator1,
+            this.tsCut,
+            this.tsCopy,
+            this.tsPaste,
+            this.tsDuplicate,
+            this.toolStripSeparator2,
+            this.tsCollapseAll,
+            this.tsExpandAll});
 			this.tsPoseList.Location = new System.Drawing.Point(0, 0);
 			this.tsPoseList.Name = "tsPoseList";
 			this.tsPoseList.Size = new System.Drawing.Size(248, 25);
@@ -134,22 +146,29 @@
 			// 
 			// canvas
 			// 
+			this.canvas.Controls.Add(this.preview);
 			this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.canvas.Location = new System.Drawing.Point(0, 0);
 			this.canvas.Name = "canvas";
 			this.canvas.Size = new System.Drawing.Size(738, 670);
 			this.canvas.TabIndex = 0;
 			// 
-			// tsAddLink
+			// lstPoses
 			// 
-			this.tsAddLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAddLink.Image = global::SPNATI_Character_Editor.Properties.Resources.AddLink;
-			this.tsAddLink.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAddLink.Name = "tsAddLink";
-			this.tsAddLink.Size = new System.Drawing.Size(23, 22);
-			this.tsAddLink.Text = "Add pose link";
-			this.tsAddLink.ToolTipText = "Link image across stages";
-			this.tsAddLink.Click += new System.EventHandler(this.tsAddLink_Click);
+			this.lstPoses.AllowDrop = true;
+			this.lstPoses.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstPoses.Location = new System.Drawing.Point(0, 25);
+			this.lstPoses.Name = "lstPoses";
+			this.lstPoses.Size = new System.Drawing.Size(248, 182);
+			this.lstPoses.TabIndex = 2;
+			this.lstPoses.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lstPoses_ItemDrag);
+			this.lstPoses.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.lstPoses_AfterSelect);
+			this.lstPoses.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstPoses_DragDrop);
+			this.lstPoses.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstPoses_DragEnter);
+			this.lstPoses.DragOver += new System.Windows.Forms.DragEventHandler(this.lstPoses_DragOver);
+			this.lstPoses.DragLeave += new System.EventHandler(this.lstPoses_DragLeave);
+			this.lstPoses.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.lstPoses_QueryContinueDrag);
+			this.lstPoses.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstPoses_KeyDown);
 			// 
 			// tsAdd
 			// 
@@ -160,6 +179,7 @@
 			this.tsAdd.Size = new System.Drawing.Size(23, 22);
 			this.tsAdd.Text = "Add Pose";
 			this.tsAdd.ToolTipText = "Add sprite-based pose";
+			this.tsAdd.Click += new System.EventHandler(this.tsAdd_Click);
 			// 
 			// tsRemove
 			// 
@@ -172,9 +192,143 @@
 			this.tsRemove.ToolTipText = "Remove pose";
 			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
+			// tsCollapseAll
+			// 
+			this.tsCollapseAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCollapseAll.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
+			this.tsCollapseAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCollapseAll.Name = "tsCollapseAll";
+			this.tsCollapseAll.Size = new System.Drawing.Size(23, 22);
+			this.tsCollapseAll.Text = "Collapse all";
+			this.tsCollapseAll.ToolTipText = "Collapse all";
+			this.tsCollapseAll.Click += new System.EventHandler(this.tsCollapseAll_Click);
+			// 
+			// tsExpandAll
+			// 
+			this.tsExpandAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsExpandAll.Image = global::SPNATI_Character_Editor.Properties.Resources.ExpandAll;
+			this.tsExpandAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsExpandAll.Name = "tsExpandAll";
+			this.tsExpandAll.Size = new System.Drawing.Size(23, 20);
+			this.tsExpandAll.Text = "Expand all";
+			this.tsExpandAll.ToolTipText = "Expand all";
+			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsCut
+			// 
+			this.tsCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCut.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
+			this.tsCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCut.Name = "tsCut";
+			this.tsCut.Size = new System.Drawing.Size(23, 22);
+			this.tsCut.Text = "Cut";
+			this.tsCut.Click += new System.EventHandler(this.tsCut_Click);
+			// 
+			// tsCopy
+			// 
+			this.tsCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCopy.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
+			this.tsCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCopy.Name = "tsCopy";
+			this.tsCopy.Size = new System.Drawing.Size(23, 22);
+			this.tsCopy.Text = "Copy";
+			this.tsCopy.Click += new System.EventHandler(this.tsCopy_Click);
+			// 
+			// tsPaste
+			// 
+			this.tsPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsPaste.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
+			this.tsPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsPaste.Name = "tsPaste";
+			this.tsPaste.Size = new System.Drawing.Size(23, 22);
+			this.tsPaste.Text = "Paste";
+			this.tsPaste.Click += new System.EventHandler(this.tsPaste_Click);
+			// 
+			// tsDuplicate
+			// 
+			this.tsDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsDuplicate.Image = global::SPNATI_Character_Editor.Properties.Resources.Duplicate;
+			this.tsDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsDuplicate.Name = "tsDuplicate";
+			this.tsDuplicate.Size = new System.Drawing.Size(23, 22);
+			this.tsDuplicate.Text = "Duplicate";
+			this.tsDuplicate.Click += new System.EventHandler(this.tsDuplicate_Click);
+			// 
+			// lblDragger
+			// 
+			this.lblDragger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDragger.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.lblDragger.Location = new System.Drawing.Point(5, 102);
+			this.lblDragger.Name = "lblDragger";
+			this.lblDragger.Size = new System.Drawing.Size(220, 2);
+			this.lblDragger.TabIndex = 4;
+			this.lblDragger.Visible = false;
+			// 
+			// preview
+			// 
+			this.preview.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.preview.Location = new System.Drawing.Point(0, 0);
+			this.preview.Name = "preview";
+			this.preview.Size = new System.Drawing.Size(738, 670);
+			this.preview.TabIndex = 0;
+			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.Filter = "";
+			this.openFileDialog1.UseAbsolutePaths = false;
+			// 
+			// tsAddKeyframe
+			// 
+			this.tsAddKeyframe.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddKeyframe.Image = global::SPNATI_Character_Editor.Properties.Resources.AddKeyframe;
+			this.tsAddKeyframe.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddKeyframe.Name = "tsAddKeyframe";
+			this.tsAddKeyframe.Size = new System.Drawing.Size(23, 22);
+			this.tsAddKeyframe.Text = "Add Keyframe";
+			this.tsAddKeyframe.Click += new System.EventHandler(this.tsAddKeyframe_Click);
+			// 
+			// tsAddDirective
+			// 
+			this.tsAddDirective.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddDirective.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSpriteToolStripMenuItem,
+            this.addAnimationToolStripMenuItem});
+			this.tsAddDirective.Image = global::SPNATI_Character_Editor.Properties.Resources.AddChildNode;
+			this.tsAddDirective.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddDirective.Name = "tsAddDirective";
+			this.tsAddDirective.Size = new System.Drawing.Size(32, 22);
+			this.tsAddDirective.Text = "Add";
+			this.tsAddDirective.ToolTipText = "Add a new directive to the selected scene";
+			// 
+			// addSpriteToolStripMenuItem
+			// 
+			this.addSpriteToolStripMenuItem.Name = "addSpriteToolStripMenuItem";
+			this.addSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+			this.addSpriteToolStripMenuItem.Tag = "sprite";
+			this.addSpriteToolStripMenuItem.Text = "Add Sprite";
+			this.addSpriteToolStripMenuItem.ToolTipText = "Add a sprite to the scene";
+			this.addSpriteToolStripMenuItem.Click += new System.EventHandler(this.addSpriteToolStripMenuItem_Click);
+			// 
+			// removeObjectToolStripMenuItem
+			// 
+			this.addAnimationToolStripMenuItem.Name = "removeObjectToolStripMenuItem";
+			this.addAnimationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+			this.addAnimationToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+			this.addAnimationToolStripMenuItem.Tag = "remove";
+			this.addAnimationToolStripMenuItem.Text = "Add Animation";
+			this.addAnimationToolStripMenuItem.Click += new System.EventHandler(this.addAnimationToolStripMenuItem_Click);
 			// 
 			// PoseCreator
 			// 
@@ -194,6 +348,7 @@
 			this.splitContainer2.ResumeLayout(false);
 			this.tsPoseList.ResumeLayout(false);
 			this.tsPoseList.PerformLayout();
+			this.canvas.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -201,14 +356,27 @@
 		#endregion
 
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.ListBox lstPoses;
 		private System.Windows.Forms.ToolStrip tsPoseList;
 		private System.Windows.Forms.ToolStripButton tsAdd;
 		private System.Windows.Forms.ToolStripButton tsRemove;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Desktop.CommonControls.PropertyTable table;
-		private System.Windows.Forms.ToolStripButton tsAddLink;
 		private Desktop.CommonControls.DBPanel canvas;
 		private Controls.CharacterImageDialog openFileDialog1;
+		private Desktop.CommonControls.DBTreeView lstPoses;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton tsCollapseAll;
+		private System.Windows.Forms.ToolStripButton tsExpandAll;
+		private System.Windows.Forms.ToolStripButton tsCut;
+		private System.Windows.Forms.ToolStripButton tsCopy;
+		private System.Windows.Forms.ToolStripButton tsPaste;
+		private System.Windows.Forms.ToolStripButton tsDuplicate;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private Controls.CharacterImageBox preview;
+		private System.Windows.Forms.Label lblDragger;
+		private System.Windows.Forms.ToolStripSplitButton tsAddDirective;
+		private System.Windows.Forms.ToolStripMenuItem addSpriteToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addAnimationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton tsAddKeyframe;
 	}
 }
