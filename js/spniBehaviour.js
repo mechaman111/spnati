@@ -202,7 +202,7 @@ function getTargetMarker(marker, target) {
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
 function expandPlayerVariable(split_fn, args, self, target) {
-    var fn = split_fn[1].toLowerCase();
+    if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
     case 'position':
@@ -211,7 +211,7 @@ function expandPlayerVariable(split_fn, args, self, target) {
     case 'slot':
         return target.slot;
     case 'marker':
-        var markerName = split_fn[2];
+        var markerName = split_fn[1];
         if (markerName) {
             var marker;
             if (target) {
@@ -239,9 +239,10 @@ function expandDialogue (dialogue, self, target) {
     function substitute(match, variable, fn, args) {
         // If substitution fails, return match unchanged.
         var substitution = match;
+        var fn_parts = [];
         
         if (fn) {
-            var fn_parts = fn.split('.');
+            fn_parts = fn.split('.');
             fn = fn_parts[0].toLowerCase();
         }
         
@@ -320,6 +321,7 @@ function expandDialogue (dialogue, self, target) {
                 substitution = substitution.initCap();
             }
         } catch (ex) {
+            //throw ex;
             console.log("Invalid substitution caused exception " + ex);
         }
         return substitution;
