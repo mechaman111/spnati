@@ -201,26 +201,34 @@ function getTargetMarker(marker, target) {
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
-function expandPlayerVariable(fn, args, self, target) {
-    if (fn === 'position') {
+function expandPlayerVariable(split_fn, args, self, target) {
+    var fn = split_fn[1].toLowerCase();
+    
+    switch (fn) {
+    case 'position':
         if (target.slot === self.slot) return 'self';
-            return (target.slot < self.slot) ? 'left' : 'right';
-        } else if (fn === 'slot') {
-            return target.slot;
-        } else if (fn.substring(0, 6) === 'marker') {
-            var markerName = fn.split('.', 2)[1];
-            if (markerName) {
-                var marker;
-                if (target) {
-                    marker = target.markers[getTargetMarker(markerName, target)];
-                }
-                if (!marker) {
-                    marker = target.markers[markerName] || ("<UNDEFINED MARKER: " + markerName + ">");
-                }
-                return marker;
+        return (target.slot < self.slot) ? 'left' : 'right';
+    case 'slot':
+        return target.slot;
+    case 'marker':
+        var markerName = split_fn[2];
+        if (markerName) {
+            var marker;
+            if (target) {
+                marker = target.markers[getTargetMarker(markerName, target)];
+            }
+            if (!marker) {
+                marker = target.markers[markerName] || "";
+            }
+            return marker;
         } else {
             return "marker"; //didn't supply a marker name
         }
+    case 'costume':
+        if (!target.alt_costume) return 'default';
+        return target.alt_costume.id;
+    default:
+        return target.label;
     }
 }
 
@@ -231,7 +239,12 @@ function expandDialogue (dialogue, self, target) {
     function substitute(match, variable, fn, args) {
         // If substitution fails, return match unchanged.
         var substitution = match;
-        if (fn) fn = fn.toLowerCase();
+        
+        if (fn) {
+            var fn_parts = fn.split('.');
+            fn = fn_parts[0].toLowerCase();
+        }
+        
         try {
             switch (variable.toLowerCase()) {
             case 'player':
@@ -263,13 +276,14 @@ function expandDialogue (dialogue, self, target) {
                 }
                 break;
             case 'marker':
+                fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
                     var marker;
                     if (target) {
                         marker = self.markers[getTargetMarker(fn, target)];
                     }
                     if (!marker) {
-                        marker = self.markers[fn] || ("<UNDEFINED MARKER: " + fn + ">");
+                        marker = self.markers[fn] || "";
                     }
                     substitution = marker;
                 } else {
@@ -287,16 +301,16 @@ function expandDialogue (dialogue, self, target) {
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
             case 'target':
-                substitution = expandPlayerVariable(fn, args, self, target);
+                substitution = expandPlayerVariable(fn_parts, args, self, target);
                 break;
             case 'self':
-                substitution = expandPlayerVariable(fn, args, self, self);
+                substitution = expandPlayerVariable(fn_parts, args, self, self);
                 break;
             default:
                 /* Find a specific character at the table by ID. */
                 players.some(function (p) {
                     if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
-                        substitution = expandPlayerVariable(fn, args, self, p);
+                        substitution = expandPlayerVariable(fn_parts, args, self, p);
                         return true;
                     }
                 });
