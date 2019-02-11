@@ -112,49 +112,55 @@ namespace SPNATI_Character_Editor
 		public static DialogueLine CreateStageSpecificLine(DialogueLine line, int stage, Character character)
 		{
 			DialogueLine copy = line.Copy();
-			copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
-			bool custom = copy.Image.StartsWith("custom:");
-
-			string path = character != null ? Config.GetRootDirectory(character) : "";
-			string extension = line.ImageExtension;
-			if (string.IsNullOrEmpty(extension) && !custom)
+			if (!copy.IsGenericImage)
 			{
-				//figure out the extension by searching for files of different names
-				bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
-				bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+				copy.Image = DialogueLine.GetStageImage(stage, copy.Image);
+			}
+			if (copy.Image != null)
+			{
+				bool custom = copy.Image.StartsWith("custom:");
 
-				if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+				string path = character != null ? Config.GetRootDirectory(character) : "";
+				string extension = line.ImageExtension;
+				if (string.IsNullOrEmpty(extension) && !custom)
+				{
+					//figure out the extension by searching for files of different names
+					bool basePngExists = File.Exists(Path.Combine(path, copy.Image + ".png"));
+					bool baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+
+					if (!copy.Image.StartsWith(stage + "-") && !basePngExists && !baseGifExists)
+					{
+						copy.Image = stage + "-" + copy.Image;
+						baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
+						if (baseGifExists)
+						{
+							extension = ".gif";
+						}
+						else
+						{
+							extension = ".png";
+						}
+					}
+					else
+					{
+						if (baseGifExists)
+						{
+							extension = ".gif";
+						}
+						else
+						{
+							extension = ".png";
+						}
+					}
+				}
+
+				if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
 				{
 					copy.Image = stage + "-" + copy.Image;
-					baseGifExists = File.Exists(Path.Combine(path, copy.Image + ".gif"));
-					if (baseGifExists)
-					{
-						extension = ".gif";
-					}
-					else
-					{
-						extension = ".png";
-					}
 				}
-				else
-				{
-					if (baseGifExists)
-					{
-						extension = ".gif";
-					}
-					else
-					{
-						extension = ".png";
-					}
-				}
+				copy.Image += extension;
+				copy.ImageExtension = extension;
 			}
-
-			if (!custom && !copy.Image.StartsWith(stage + "-") && !File.Exists(Path.Combine(path, copy.Image + extension)))
-			{
-				copy.Image = stage + "-" + copy.Image;
-			}
-			copy.Image += extension;
-			copy.ImageExtension = extension;
 			copy.Text = line.Text?.Trim();
 			return copy;
 		}
@@ -256,6 +262,7 @@ namespace SPNATI_Character_Editor
 			line.ImageExtension = extension;
 			copy.Image = DialogueLine.GetDefaultImage(line.Image);
 			copy.Text = line.Text.Trim();
+			copy.IsGenericImage = line.IsGenericImage;
 			return copy;
 		}
 
@@ -363,6 +370,7 @@ namespace SPNATI_Character_Editor
 
 					foreach (DialogueLine line in stageCase.Lines)
 					{
+						line.IsGenericImage = !DialogueLine.IsStageSpecificImage(line.Image);
 						var defaultLine = CreateDefaultLine(line);
 						int hash = defaultLine.GetHashCode();
 						hash = code + hash;

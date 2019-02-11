@@ -907,7 +907,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
 
     /* quick check to see if the stage exists */
     if (!stage) {
-        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tag "+tag);
+        console.log("Error: couldn't find stage for player "+this.slot+" on stage number "+stageNum+" for tags "+tags);
         return;
     }
 

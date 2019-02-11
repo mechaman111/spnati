@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Directive = directive;
 			Scene = scene;
 
-			Build(true);
+			Build();
 		}
 
 		public bool IsComplete
@@ -73,10 +73,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public void Rebuild()
 		{
-			Build(false);
+			Build();
 		}
 
-		private void Build(bool firstTime)
+		private void Build()
 		{
 			Frames.Clear();
 			//current object values serve as the first keyframe

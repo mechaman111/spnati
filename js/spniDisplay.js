@@ -499,6 +499,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     if (!player) {
         this.hideBubble();
         this.clearPose();
+        this.label.html("Opponent " + this.slot);
         
         /* change the button */
         this.selectButton.html("Select Opponent");

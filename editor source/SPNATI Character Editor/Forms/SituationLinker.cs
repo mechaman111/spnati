@@ -9,7 +9,6 @@ namespace SPNATI_Character_Editor.Forms
 	/// </summary>
 	public partial class SituationLinker : Form
 	{
-		private Situation _situation;
 		private Character _character;
 
 		public SituationLinker()
@@ -19,7 +18,6 @@ namespace SPNATI_Character_Editor.Forms
 
 		public void SetData(Character character, Situation situation)
 		{
-			_situation = situation;
 			_character = character;
 
 			//find a case that looks like the situation
@@ -33,8 +31,6 @@ namespace SPNATI_Character_Editor.Forms
 					break;
 				}
 			}
-
-			_situation = situation;
 		}
 
 		private void cmdCancel_Click(object sender, EventArgs e)

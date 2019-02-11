@@ -437,7 +437,7 @@ namespace SPNATI_Character_Editor
 
 			foreach (Pose pose in character.Poses)
 			{
-				ValidatePose(character, pose, warnings, unusedImages);
+				ValidatePose(character, pose, unusedImages);
 			}
 
 			if (unusedImages.Count > 0)
@@ -708,7 +708,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="pose"></param>
 		/// <param name="warnings"></param>
 		/// <param name="baseImages"></param>
-		private static void ValidatePose(Character character, Pose pose, List<ValidationError> warnings, HashSet<string> unusedImages)
+		private static void ValidatePose(Character character, Pose pose, HashSet<string> unusedImages)
 		{
 			unusedImages.Remove("custom:" + pose.Id);
 			foreach (Sprite sprite in pose.Sprites)
@@ -732,11 +732,6 @@ namespace SPNATI_Character_Editor
 							unusedImages.Remove(path);
 						}
 					}
-				}
-
-				foreach (PoseAnimFrame af in directive.AnimFrames)
-				{
-					
 				}
 			}
 		}
@@ -790,7 +785,6 @@ namespace SPNATI_Character_Editor
 			}
 
 			//go through each stage using the alt skin and make sure the images are all present
-			List<int> skinnedStages = new List<int>();
 			Dictionary<int, bool> stageUsingSkin = new Dictionary<int, bool>();
 			foreach (StageSpecificValue stageInfo in skin.Folders)
 			{
@@ -826,6 +820,12 @@ namespace SPNATI_Character_Editor
 						}
 					}
 				}
+			}
+
+
+			foreach (Pose pose in skin.Poses)
+			{
+				missingImages.Remove("custom:" + pose.Id);
 			}
 
 			if (missingImages.Count > 0)
