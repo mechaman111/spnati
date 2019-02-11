@@ -30,11 +30,20 @@ namespace SPNATI_Character_Editor
 		{
 			_expression = GetValue() as ExpressionTest;
 			cboExpression.Text = _expression.Expression;
+			try
+			{
+				cboOperator.SelectedItem = _expression.Operator ?? "==";
+			}
+			catch
+			{
+				cboOperator.SelectedItem = "==";
+			}
 			cboValue.Text = _expression.Value;
 
 			UpdateAutoComplete();
 
 			cboExpression.TextChanged += TextValueChanged;
+			cboOperator.SelectedValueChanged += TextValueChanged;
 			cboValue.TextChanged += TextValueChanged;
 		}
 
@@ -47,6 +56,7 @@ namespace SPNATI_Character_Editor
 		public override void Clear()
 		{
 			cboExpression.Text = "";
+			cboExpression.SelectedItem = "==";
 			cboValue.Text = "";
 			Save();
 		}
@@ -54,6 +64,7 @@ namespace SPNATI_Character_Editor
 		public override void Save()
 		{
 			_expression.Expression = cboExpression.Text;
+			_expression.Operator = cboOperator.Text;
 			_expression.Value = cboValue.Text;
 		}
 
@@ -65,8 +76,6 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			_currentVariable = variable;
-
-			AutoCompleteStringCollection list = new AutoCompleteStringCollection();
 
 			cboValue.Items.Clear();
 			switch (_currentVariable)

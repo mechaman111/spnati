@@ -17,7 +17,6 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnSetParameters(EditControlAttribute parameters)
 		{
-			FileSelectAttribute p = parameters as FileSelectAttribute;
 			openFileDialog1.Filter = "Image files|*.bmp;*.jpg;*.jpeg;*.png;*.gif|All files|*.*";
 		}
 

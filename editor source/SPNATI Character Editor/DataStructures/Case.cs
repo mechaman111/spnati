@@ -1833,6 +1833,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("expr")]
 		public string Expression;
 
+		[DefaultValue("==")]
+		[XmlAttribute("cmp")]
+		public string Operator;
+
 		[XmlAttribute("value")]
 		public string Value;
 
@@ -1846,26 +1850,32 @@ namespace SPNATI_Character_Editor
 
 		public ExpressionTest Copy()
 		{
-			return new ExpressionTest(Expression, Value);
+			ExpressionTest copy = new ExpressionTest(Expression, Value)
+			{
+				Operator = Operator
+			};
+			return copy;
 		}
 
 		public override bool Equals(object obj)
 		{
 			ExpressionTest other = obj as ExpressionTest;
 			if (other == null) { return false; }
-			return Expression.Equals(other) && Value.Equals(other);
+			return Expression.Equals(other) && Value.Equals(other) && (Operator ?? "").Equals(other.Operator ?? "");
 		}
 
 		public override int GetHashCode()
 		{
 			int hash = Expression.GetHashCode();
 			hash = (hash * 397) ^ (Value ?? "").GetHashCode();
+			hash = (hash * 397) ^ (Operator ?? "").GetHashCode();
 			return hash;
 		}
 
 		public override string ToString()
 		{
-			return $"{Expression}={Value}";
+			string op = Operator ?? "==";
+			return $"{Expression}{op}{Value}";
 		}
 	}
 

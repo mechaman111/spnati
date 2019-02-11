@@ -17,9 +17,7 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _animating;
 
 		private DateTime _lastTick;
-
-		private Dictionary<string, Image> _sprites = new Dictionary<string, Image>();
-
+		
 		public CharacterImageBox()
 		{
 			InitializeComponent();
@@ -36,7 +34,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_image != null)
 			{
 				_imageReference = null;
-				if (_image.Pose != null)
+				if (_image.GetPose() != null)
 				{
 					_imagePose = null;
 				}
@@ -68,9 +66,9 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				if (image.Pose != null)
+				if (image.GetPose() != null)
 				{
-					_imagePose = new PosePreview(image.Skin, image.Pose);
+					_imagePose = new PosePreview(image.Skin, image.GetPose(), null, null, null);
 					_lastTick = DateTime.Now;
 					tmrTick.Enabled = _imagePose.IsAnimated;
 				}
@@ -97,6 +95,11 @@ namespace SPNATI_Character_Editor.Controls
 			if (_image == args.Reference)
 			{
 				canvas.Invalidate();
+				if (_image.GetPose() != null)
+				{
+					_imagePose?.Dispose();
+					_imagePose = new PosePreview(_image.Skin, _image.GetPose(), null, null, null);
+				}
 				_imageReference = args.NewImage;
 			}
 		}
@@ -106,7 +109,7 @@ namespace SPNATI_Character_Editor.Controls
 			Graphics g = e.Graphics;
 			if (_imagePose != null)
 			{
-				_imagePose.Draw(g, canvas.Width, canvas.Height);
+				_imagePose.Draw(g, canvas.Width, canvas.Height, new Point(0, 0));
 			}
 			else if (_imageReference != null)
 			{

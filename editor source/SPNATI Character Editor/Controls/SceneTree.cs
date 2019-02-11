@@ -544,23 +544,6 @@ namespace SPNATI_Character_Editor.Controls
 			return null;
 		}
 
-		/// <summary>
-		/// Finds the tree node associated with a scene
-		/// </summary>
-		/// <param name="scene"></param>
-		/// <returns></returns>
-		private TreeNode FindNode(Scene scene)
-		{
-			foreach (TreeNode node in treeScenes.Nodes)
-			{
-				if (node.Tag == scene)
-				{
-					return node;
-				}
-			}
-			return null;
-		}
-
 		private void AddScene()
 		{
 			Scene scene = GetSelectedScene();
@@ -886,7 +869,6 @@ namespace SPNATI_Character_Editor.Controls
 			Directive pastedDirective = obj as Directive;
 			Keyframe pastedFrame = obj as Keyframe;
 
-			Scene selectedScene = node.Tag as Scene;
 			Directive selectedDirective = node.Tag as Directive;
 			Keyframe selectedFrame = node.Tag as Keyframe;
 
@@ -896,14 +878,12 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (selectedDirective != null)
 			{
-				selectedScene = node.Parent.Tag as Scene;
 				sceneNode = node.Parent;
 				dirNode = node;
 			}
 			else if (selectedFrame != null)
 			{
 				selectedDirective = node.Parent.Tag as Directive;
-				selectedScene = node.Parent.Parent.Tag as Scene;
 				sceneNode = node.Parent.Parent;
 				dirNode = node.Parent;
 				frameNode = node;
