@@ -46,7 +46,6 @@
 			this.lblZoom = new System.Windows.Forms.Label();
 			this.sliderZoom = new System.Windows.Forms.TrackBar();
 			this.lblCoord = new System.Windows.Forms.Label();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -144,7 +143,7 @@
             this.cmdPlay});
 			this.canvasStrip.Location = new System.Drawing.Point(184, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(161, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(130, 25);
 			this.canvasStrip.TabIndex = 0;
 			// 
 			// cmdLock
@@ -309,12 +308,9 @@
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Desktop.CommonControls.SelectablePanel canvas;
-		private System.Windows.Forms.Label lblZoom;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TrackBar sliderZoom;
 		private System.Windows.Forms.Label lblCoord;
 		private Desktop.CommonControls.PropertyTable propertyTable;
-		private System.Windows.Forms.ToolTip toolTip1;
 		private SceneTree treeScenes;
 		private System.Windows.Forms.ToolStrip canvasStrip;
 		private System.Windows.Forms.ToolStripButton cmdFit;
@@ -325,5 +321,7 @@
 		private System.Windows.Forms.ToolStripButton cmdPlayDirective;
 		private System.Windows.Forms.ToolStripButton cmdToggleFade;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.Label lblZoom;
+		private System.Windows.Forms.TrackBar sliderZoom;
 	}
 }

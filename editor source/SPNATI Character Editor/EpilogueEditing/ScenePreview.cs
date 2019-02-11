@@ -221,7 +221,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return false;
 		}
 
-		public override bool AdjustScale(Point point, ScenePreview scene, Point startPoint, HoverContext context, bool locked)
+		public override bool AdjustScale(Point point, Point startPoint, HoverContext context, bool locked)
 		{
 			//get the object's center
 			int cx = (int)(X + Width / 2);
