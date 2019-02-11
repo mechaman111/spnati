@@ -224,6 +224,8 @@ function expandPlayerVariable(split_fn, args, self, target) {
         } else {
             return "marker"; //didn't supply a marker name
         }
+    case 'tag':
+        return target.tags.indexOf(split_fn[1].toLowerCase()) >= 0 ? 'true' : 'false';
     case 'costume':
         if (!target.alt_costume) return 'default';
         return target.alt_costume.id;
