@@ -259,6 +259,15 @@ var playerTagOptions = {
             { value: 'uncircumcised' }
         ],
     },
+    'sexual_orientation': {
+        values: [
+            { value: 'straight' },
+            { value: 'bi-curious' },
+            { value: 'bisexual' },
+            { value: 'gay', gender: 'male' },
+            { value: 'lesbian', gender: 'female' },
+        ]
+    }
 };
 var playerTagSelections = {};
 
