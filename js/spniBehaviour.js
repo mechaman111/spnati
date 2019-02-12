@@ -93,21 +93,21 @@ var GLOBAL_CASE = "global";
  **********************************************************************/
 
 function State($xml) {
-	this.image = $xml.attr('img');
-	this.direction = $xml.attr('direction') || 'down';
-	this.location = $xml.attr('location') || '';
-	var markerOp = $xml.attr('marker');
-	this.rawDialogue = $xml.html();
-	
-	if (this.location && Number(this.location) == this.location) {
-		// It seems that location was specified as a number without "%"
-		this.location = this.location + "%";
-	}
-	
-	this.setIntelligence = $xml.attr('set-intelligence');
-	this.setSize = $xml.attr('set-size');
-	this.setGender = $xml.attr('set-gender');
-	this.setLabel = $xml.attr('set-label');
+    this.image = $xml.attr('img');
+    this.direction = $xml.attr('direction') || 'down';
+    this.location = $xml.attr('location') || '';
+    var markerOp = $xml.attr('marker');
+    this.rawDialogue = $xml.html();
+    
+    if (this.location && Number(this.location) == this.location) {
+    // It seems that location was specified as a number without "%"
+    this.location = this.location + "%";
+    }
+    
+    this.setIntelligence = $xml.attr('set-intelligence');
+    this.setSize = $xml.attr('set-size');
+    this.setGender = $xml.attr('set-gender');
+    this.setLabel = $xml.attr('set-label');
     
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
@@ -190,12 +190,48 @@ State.prototype.applyMarker = function (self, opp) {
 }
 
 State.prototype.expandDialogue = function(self, target) {
-	this.dialogue = expandDialogue(this.rawDialogue, self, target);
+    this.dialogue = expandDialogue(this.rawDialogue, self, target);
 }
 
 function getTargetMarker(marker, target) {
     if (!target) { return marker; }
     return "__" + target.id + "_" + marker;
+}
+
+/************************************************************
+ * Expands ~target.*~ and ~[player].*~ variables.
+ ************************************************************/
+function expandPlayerVariable(split_fn, args, self, target) {
+    if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
+    
+    switch (fn) {
+    case 'position':
+        if (target.slot === self.slot) return 'self';
+        return (target.slot < self.slot) ? 'left' : 'right';
+    case 'slot':
+        return target.slot;
+    case 'marker':
+        var markerName = split_fn[1];
+        if (markerName) {
+            var marker;
+            if (target) {
+                marker = target.markers[getTargetMarker(markerName, target)];
+            }
+            if (!marker) {
+                marker = target.markers[markerName] || "";
+            }
+            return marker;
+        } else {
+            return "marker"; //didn't supply a marker name
+        }
+    case 'tag':
+        return target.tags.indexOf(split_fn[1].toLowerCase()) >= 0 ? 'true' : 'false';
+    case 'costume':
+        if (!target.alt_costume) return 'default';
+        return target.alt_costume.id;
+    default:
+        return target.label;
+    }
 }
 
 /************************************************************
@@ -205,7 +241,13 @@ function expandDialogue (dialogue, self, target) {
     function substitute(match, variable, fn, args) {
         // If substitution fails, return match unchanged.
         var substitution = match;
-        if (fn) fn = fn.toLowerCase();
+        var fn_parts = [];
+        
+        if (fn) {
+            fn_parts = fn.split('.');
+            fn = fn_parts[0].toLowerCase();
+        }
+        
         try {
             switch (variable.toLowerCase()) {
             case 'player':
@@ -218,8 +260,8 @@ function expandDialogue (dialogue, self, target) {
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
                     substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
-				} else if (fn === 'plural') {
-					substitution = clothing.plural ? 'plural' : 'single';
+                } else if (fn === 'plural') {
+                    substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
                     substitution = clothing.formal || clothing.generic;
                 } else if ((fn == 'type' || fn == 'position') && args === undefined) {
@@ -237,13 +279,14 @@ function expandDialogue (dialogue, self, target) {
                 }
                 break;
             case 'marker':
+                fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
                     var marker;
                     if (target) {
                         marker = self.markers[getTargetMarker(fn, target)];
                     }
                     if (!marker) {
-                        marker = self.markers[fn] || ("<UNDEFINED MARKER: " + fn + ">");
+                        marker = self.markers[fn] || "";
                     }
                     substitution = marker;
                 } else {
@@ -260,11 +303,27 @@ function expandDialogue (dialogue, self, target) {
             case 'weekday':
                 substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
                 break;
+            case 'target':
+                substitution = expandPlayerVariable(fn_parts, args, self, target);
+                break;
+            case 'self':
+                substitution = expandPlayerVariable(fn_parts, args, self, self);
+                break;
+            default:
+                /* Find a specific character at the table by ID. */
+                players.some(function (p) {
+                    if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+                        substitution = expandPlayerVariable(fn_parts, args, self, p);
+                        return true;
+                    }
+                });
+                break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
             }
         } catch (ex) {
+            //throw ex;
             console.log("Invalid substitution caused exception " + ex);
         }
         return substitution;
@@ -272,22 +331,22 @@ function expandDialogue (dialogue, self, target) {
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.(\w+)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.([\w\.]+)(?:\(([^)]*)\))?)?~/g, substitute);
 }
 
 function escapeRegExp(string) {
-  return string.replace(/[\[\].*+?^${}()|\\]/g, '\\$&'); // $& means the whole matched string
+    return string.replace(/[\[\].*+?^${}()|\\]/g, '\\$&'); // $& means the whole matched string
 }
 var fixupDialogueSubstitutions = { // Order matters
-	'...': '\u2026', // ellipsis
-	'---': '\u2015', // em dash
-	'--':  '\u2014', // en dash
-	'``':  '\u201c', // left double quotation mark
-	'`':   '\u2018', // left single quotation mark
-	"''":  '\u201d', // right double quotation mark
-	"'":   '\u2019', // right single quotation mark
-	'&lt;i&gt;': '<i>',
-	'&lt;/i&gt;': '</i>'
+    '...': '\u2026', // ellipsis
+    '---': '\u2015', // em dash
+    '--':  '\u2014', // en dash
+    '``':  '\u201c', // left double quotation mark
+    '`':   '\u2018', // left single quotation mark
+    "''":  '\u201d', // right double quotation mark
+    "'":   '\u2019', // right single quotation mark
+    '&lt;i&gt;': '<i>',
+    '&lt;/i&gt;': '</i>'
 };
 var fixupDialogueRE = new RegExp(Object.keys(fixupDialogueSubstitutions).map(escapeRegExp).join('|'), 'gi');
 
@@ -309,19 +368,18 @@ function fixupDialogue (str) {
  * twice, or the first and second number as the case may be
  ************************************************************/
 function parseInterval (str) {
-	if (!str) return undefined;
-	var pieces = str.split("-");
-	var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
-	if (pieces.length == 1 && isNaN(min)) return null;
-	var max = pieces.length == 1 ? min
-		: pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
-	return { min : min,
-			 max : max };
+    if (!str) return undefined;
+    var pieces = str.split("-");
+    var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
+    if (pieces.length == 1 && isNaN(min)) return null;
+    var max = pieces.length == 1 ? min
+    : pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
+    return { min : min, max : max };
 }
 
 function inInterval (value, interval) {
-	return (interval.min === null || interval.min <= value)
-		&& (interval.max === null || value <= interval.max);
+    return (interval.min === null || interval.min <= value)
+    && (interval.max === null || value <= interval.max);
 }
 
 
@@ -332,20 +390,20 @@ function inInterval (value, interval) {
  * current state marker only. This is used for volatile conditions.
  ************************************************************/
 function checkMarker(predicate, self, target, currentOnly) {
-	var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
+    var match = predicate.match(/([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?/);
     
     var name;
-	var perTarget;
-	var val;
+    var perTarget;
+    var val;
     var cmpVal;
     var op;
     
     /* Get comparison values if we can, otherwise default to 'normal' behaviour. */
-	if (!match) {
+    if (!match) {
         name = predicate;
         perTarget = false;
         op = '!!';
-	} else {
+    } else {
         name = match[1];
     	perTarget = match[2];
         
@@ -360,7 +418,7 @@ function checkMarker(predicate, self, target, currentOnly) {
             op = '!!';
         }
     }
-	
+    
     if (currentOnly) {
         if (!self.chosenState) return false;
         if (!self.chosenState.marker) return false;
@@ -402,7 +460,7 @@ function checkMarker(predicate, self, target, currentOnly) {
  **********************************************************************/
 
 function Case($xml, stage) {
-	if (typeof stage === "number") {
+    if (typeof stage === "number") {
         this.stage = {min: stage, max: stage};
     } else if (stage) {
         this.stage = parseInterval(stage);
@@ -410,60 +468,60 @@ function Case($xml, stage) {
         this.stage = parseInterval($xml.attr('stage'));
     }
     
-	this.tag =                      $xml.attr('tag');
-	this.target =                   $xml.attr("target");
-	this.filter =                   $xml.attr("filter");
-	this.targetStage =              parseInterval($xml.attr("targetStage"));
-	this.targetLayers =             parseInterval($xml.attr("targetLayers"));
-	this.targetStartingLayers =     parseInterval($xml.attr("targetStartingLayers"));
-	this.targetStatus =             $xml.attr("targetStatus");
-	this.targetTimeInStage =        parseInterval($xml.attr("targetTimeInStage"));
-	this.targetSaidMarker =         $xml.attr("targetSaidMarker");
-	this.targetNotSaidMarker =      $xml.attr("targetNotSaidMarker");
+    this.tag =                      $xml.attr('tag');
+    this.target =                   $xml.attr("target");
+    this.filter =                   $xml.attr("filter");
+    this.targetStage =              parseInterval($xml.attr("targetStage"));
+    this.targetLayers =             parseInterval($xml.attr("targetLayers"));
+    this.targetStartingLayers =     parseInterval($xml.attr("targetStartingLayers"));
+    this.targetStatus =             $xml.attr("targetStatus");
+    this.targetTimeInStage =        parseInterval($xml.attr("targetTimeInStage"));
+    this.targetSaidMarker =         $xml.attr("targetSaidMarker");
+    this.targetNotSaidMarker =      $xml.attr("targetNotSaidMarker");
     this.targetSayingMarker =       $xml.attr("targetSayingMarker");
-	this.oppHand =                  $xml.attr("oppHand");
-	this.hasHand =                  $xml.attr("hasHand");
-	this.alsoPlaying =              $xml.attr("alsoPlaying");
-	this.alsoPlayingStage =         parseInterval($xml.attr("alsoPlayingStage"));
-	this.alsoPlayingHand =          $xml.attr("alsoPlayingHand");
-	this.alsoPlayingTimeInStage =   parseInterval($xml.attr("alsoPlayingTimeInStage"));
-	this.alsoPlayingSaidMarker =    $xml.attr("alsoPlayingSaidMarker");
-	this.alsoPlayingNotSaidMarker = $xml.attr("alsoPlayingNotSaidMarker");
+    this.oppHand =                  $xml.attr("oppHand");
+    this.hasHand =                  $xml.attr("hasHand");
+    this.alsoPlaying =              $xml.attr("alsoPlaying");
+    this.alsoPlayingStage =         parseInterval($xml.attr("alsoPlayingStage"));
+    this.alsoPlayingHand =          $xml.attr("alsoPlayingHand");
+    this.alsoPlayingTimeInStage =   parseInterval($xml.attr("alsoPlayingTimeInStage"));
+    this.alsoPlayingSaidMarker =    $xml.attr("alsoPlayingSaidMarker");
+    this.alsoPlayingNotSaidMarker = $xml.attr("alsoPlayingNotSaidMarker");
     this.alsoPlayingSayingMarker =  $xml.attr("alsoPlayingSayingMarker");
-	this.totalMales =               parseInterval($xml.attr("totalMales"));
-	this.totalFemales =             parseInterval($xml.attr("totalFemales"));
-	this.timeInStage =              parseInterval($xml.attr("timeInStage"));
-	this.consecutiveLosses =        parseInterval($xml.attr("consecutiveLosses"));
-	this.totalAlive =               parseInterval($xml.attr("totalAlive"));
-	this.totalExposed =             parseInterval($xml.attr("totalExposed"));
-	this.totalNaked =               parseInterval($xml.attr("totalNaked"));
-	this.totalMasturbating =        parseInterval($xml.attr("totalMasturbating"));
-	this.totalFinished =            parseInterval($xml.attr("totalFinished"));
-	this.totalRounds =              parseInterval($xml.attr("totalRounds"));
-	this.saidMarker =               $xml.attr("saidMarker");
-	this.notSaidMarker =            $xml.attr("notSaidMarker");
-	this.customPriority =           parseInt($xml.attr("priority"), 10);
+    this.totalMales =               parseInterval($xml.attr("totalMales"));
+    this.totalFemales =             parseInterval($xml.attr("totalFemales"));
+    this.timeInStage =              parseInterval($xml.attr("timeInStage"));
+    this.consecutiveLosses =        parseInterval($xml.attr("consecutiveLosses"));
+    this.totalAlive =               parseInterval($xml.attr("totalAlive"));
+    this.totalExposed =             parseInterval($xml.attr("totalExposed"));
+    this.totalNaked =               parseInterval($xml.attr("totalNaked"));
+    this.totalMasturbating =        parseInterval($xml.attr("totalMasturbating"));
+    this.totalFinished =            parseInterval($xml.attr("totalFinished"));
+    this.totalRounds =              parseInterval($xml.attr("totalRounds"));
+    this.saidMarker =               $xml.attr("saidMarker");
+    this.notSaidMarker =            $xml.attr("notSaidMarker");
+    this.customPriority =           parseInt($xml.attr("priority"), 10);
     this.hidden =                   $xml.attr("hidden");
-	
-	var states = [];
-	$xml.find('state').each(function () {
-		states.push(new State($(this)));
-	});
-	this.states = states;
-	
-	var counters = [];
-	$xml.find("condition").each(function () {
-		counters.push($(this));
-	});
-	this.counters = counters;
-	
-	var tests = [];
-	$xml.find("test").each(function () {
-		tests.push($(this));
-	});
-	this.tests = tests;
-	
-	// Calculate case priority ahead of time.
+    
+    var states = [];
+    $xml.find('state').each(function () {
+        states.push(new State($(this)));
+    });
+    this.states = states;
+    
+    var counters = [];
+    $xml.find("condition").each(function () {
+        counters.push($(this));
+    });
+    this.counters = counters;
+    
+    var tests = [];
+    $xml.find("test").each(function () {
+        tests.push($(this));
+    });
+    this.tests = tests;
+    
+    // Calculate case priority ahead of time.
     if (!isNaN(this.customPriority)) {
         this.priority = this.customPriority;
     } else {
@@ -610,8 +668,8 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
             return false; 
         }
     }
-	
-	// targetStatus
+    
+    // targetStatus
     if (opp && this.targetStatus) {
         if (!checkPlayerStatus(opp, this.targetStatus)) {
             return false;
@@ -676,45 +734,45 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     }
 
     // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
-	if (this.alsoPlaying) {
+    if (this.alsoPlaying) {
         var ap = this.getAlsoPlaying(opp);
         
-		if (!ap) {
-			return false; // failed "alsoPlaying" requirement
-		} else {
-			if (this.alsoPlayingStage) {
-				if (!inInterval(ap.stage, this.alsoPlayingStage)) {
+        if (!ap) {
+            return false; // failed "alsoPlaying" requirement
+        } else {
+            if (this.alsoPlayingStage) {
+                if (!inInterval(ap.stage, this.alsoPlayingStage)) {
                     return false;		// failed "alsoPlayingStage" requirement
-				}
-			}
-            
-			if (this.alsoPlayingTimeInStage) {
-				if (!inInterval(ap.timeInStage, this.alsoPlayingTimeInStage)) {
+                }
+            }
+                    
+            if (this.alsoPlayingTimeInStage) {
+                if (!inInterval(ap.timeInStage, this.alsoPlayingTimeInStage)) {
                     return false;		// failed "alsoPlayingTimeInStage" requirement
-				}
-			}
-            
-			if (this.alsoPlayingHand) {
-				if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
-				{
+                }
+            }
+                    
+            if (this.alsoPlayingHand) {
+                if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
+                {
                     return false;		// failed "alsoPlayingHand" requirement
-				}
-			}
-            
-			// marker checks have very low priority as they're mainly intended to be used with other target types
-			if (this.alsoPlayingSaidMarker) {
-				if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
+                }
+            }
+                    
+            // marker checks have very low priority as they're mainly intended to be used with other target types
+            if (this.alsoPlayingSaidMarker) {
+                if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
                     return false;
-				}
-			}
-            
-			if (this.alsoPlayingNotSaidMarker) {
-				if (ap.markers[this.alsoPlayingNotSaidMarker]) {
+                }
+            }
+                    
+            if (this.alsoPlayingNotSaidMarker) {
+                if (ap.markers[this.alsoPlayingNotSaidMarker]) {
                     return false;
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 
     // filter counter targets
     if(!this.counters.every(function (ctr) {
@@ -737,10 +795,30 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     if (!this.tests.every(function(test) {
         var expr = expandDialogue(test.attr('expr'), self, opp);
         var value = test.attr('value');
+		var cmp = test.attr('cmp') || '==';
+		
         var interval = parseInterval(value);
-        if (interval ? inInterval(Number(expr), interval) : expr == value) {
-            return true;
-        } else return false;
+		if (interval) {
+			return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+		}
+		
+		if (!isNaN(Number(expr))) expr = Number(expr);
+		if (!isNaN(Number(value))) value = Number(value);
+		
+		switch (cmp) {
+			case '>':
+				return expr > value;
+			case '>=':
+				return expr >= value;
+			case '<':
+				return expr < value;
+			case '<=':
+				return expr <= value;
+			case '!=':
+				return expr != value;
+			default:
+				return expr == value;
+		}
     })) {
         return false;
     }
@@ -1030,23 +1108,23 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
     }
-	
-	if (this.chosenState.setLabel) {
-		this.label = this.chosenState.setLabel;
-		this.labelOverridden = true;
-	}
-	
-	if (this.chosenState.setIntelligence) {
-		this.intelligence = this.chosenState.setIntelligence;
-	}
-	
-	if (this.chosenState.setGender) {
-		this.gender = this.chosenState.setGender;
-	}
-	
-	if (this.chosenState.setSize) {
-		this.size = this.chosenState.setSize;
-	}
+    
+    if (this.chosenState.setLabel) {
+        this.label = this.chosenState.setLabel;
+        this.labelOverridden = true;
+    }
+    
+    if (this.chosenState.setIntelligence) {
+        this.intelligence = this.chosenState.setIntelligence;
+    }
+    
+    if (this.chosenState.setGender) {
+        this.gender = this.chosenState.setGender;
+    }
+    
+    if (this.chosenState.setSize) {
+        this.size = this.chosenState.setSize;
+    }
     
     this.stateCommitted = true;
 }
@@ -1064,25 +1142,25 @@ Opponent.prototype.applyMarkers = function (chosenCase, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (target, target_tags, other_tags) {
-	for (var i = 1; i < players.length; i++) {
-		if (players[i] && (target === null || i != target)) {
-			if (typeof other_tags === 'object') {
-				other_tags.some(function(t) {
-					return players[i].updateBehaviour(t, players[target]);
-				});
-			} else {
-				players[i].updateBehaviour(other_tags, players[target]);
-			}
-		}
-	}
-	
-	if (target !== null && target_tags !== null) {
-		players[target].updateBehaviour(target_tags, null);
-	}
-	
-	updateAllVolatileBehaviours();
-	commitAllBehaviourUpdates();
-	updateAllGameVisuals();
+    for (var i = 1; i < players.length; i++) {
+        if (players[i] && (target === null || i != target)) {
+            if (typeof other_tags === 'object') {
+                other_tags.some(function(t) {
+                    return players[i].updateBehaviour(t, players[target]);
+                });
+            } else {
+                    players[i].updateBehaviour(other_tags, players[target]);
+            }
+        }
+    }
+    
+    if (target !== null && target_tags !== null) {
+        players[target].updateBehaviour(target_tags, null);
+    }
+    
+    updateAllVolatileBehaviours();
+    commitAllBehaviourUpdates();
+    updateAllGameVisuals();
 }
 
 /************************************************************
@@ -1111,14 +1189,14 @@ function updateAllVolatileBehaviours () {
  * Commits all player behaviour updates.
  ************************************************************/
 function commitAllBehaviourUpdates () {
-	/* Apply setLabel first so that ~name~ is the same for all players */
-	players.forEach(function (p) {
-		if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
-			p.label = p.chosenState.setLabel;
-			p.labelOverridden = true;
-		}
-	});
-	
+    /* Apply setLabel first so that ~name~ is the same for all players */
+    players.forEach(function (p) {
+        if (p !== players[HUMAN_PLAYER] && p.chosenState && p.chosenState.setLabel) {
+            p.label = p.chosenState.setLabel;
+            p.labelOverridden = true;
+        }
+    });
+    
     players.forEach(function (p) {
         if (p !== players[HUMAN_PLAYER]) {
             p.commitBehaviourUpdate();
