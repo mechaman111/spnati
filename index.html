@@ -1030,6 +1030,10 @@
   </div>
 </div>
 
+<!-- Tab completion lists shared by individual and group filter modals -->
+<datalist id='sourceList'></datalist>
+<datalist id='tagList'></datalist>
+
 <!-- Start of Search Modal -->
 <div id="search-modal" class="modal table-modal fade">
   <div class="modal-table-container">
@@ -1065,14 +1069,13 @@
                 <tr>
                   <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>
                   <td>
-                    <input type="text" id="search-source" class='bordered wide-textbox'/>
+                    <input list='sourceList' type="text" id="search-source" class='bordered wide-textbox'/>
                   </td>
                 </tr>
                 <tr>
                   <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
                   <td>
                     <input list='tagList' id="search-tag" class='bordered wide-textbox'/>
-                    <datalist id='tagList'></datalist>
                   </td>
                 </tr>
                 <tr>
@@ -1153,13 +1156,13 @@
                 <tr>
                   <td style="width:25%"><h4 class="modal-title modal-left">Source Filter</h4></td>
                   <td>
-                    <input type="text" id="group-search-source" class='bordered wide-textbox'/>
+                    <input list="sourceList" type="text" id="group-search-source" class='bordered wide-textbox'/>
                   </td>
                 </tr>
-                <tr hidden>
+                <tr>
                   <td style="width:25%"><h4 class="modal-title modal-left">Tag Filter</h4></td>
                   <td>
-                    <input type="text" id="group-search-tag" class='bordered wide-textbox'/>
+                    <input list="tagList" type="text" id="group-search-tag" class='bordered wide-textbox'/>
                   </td>
                 </tr>
               </table>

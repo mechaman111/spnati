@@ -132,6 +132,7 @@ $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $tagList = $("#tagList");
+$sourceList = $("#sourceList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
@@ -161,7 +162,8 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
-var tagList = [];
+var tagSet = {};
+var sourceSet = {};
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -220,11 +222,10 @@ function loadListingFile () {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
-        opp.tags.forEach(function(tag) {
-          if (!~tagList.indexOf(tag)) {
-            tagList.push(tag);
-          }
-        })
+                opp.tags.forEach(function(tag) {
+                    tagSet[tag] = true;
+                });
+                sourceSet[opp.source] = true;
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -239,6 +240,14 @@ function loadListingFile () {
 			updateSelectableGroups(1);
 			updateGroupSelectScreen();
 		}
+        if (outstandingLoads == 0) {
+            $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
+                return new Option(tag);
+            }));
+            $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+                return new Option(source);
+            }));
+        }
 	}
 
 	/* grab and parse the opponent listing file */
@@ -780,6 +789,12 @@ function updateSelectableGroups(screen) {
             return opp.source.toLowerCase().indexOf(source) >= 0;
         })) return false;
 
+        if (tag && !group.opponents.some(function(opp) {
+            return opp.tags.some(function(t) {
+                return t.toLowerCase() == tag;
+            })
+        })) return false;
+
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
             && !group.opponents.every(function(opp) {
                 return opp.gender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
@@ -1200,16 +1215,8 @@ function hideGroupSelectionTable() {
 }
 
 function openSearchModal() {
-  /* build the list of tags for the filter (once) */
-  if (!$tagList.children('option').length) {
-    tagList.forEach(function(tag) {
-      $tagList.append('<option value="' + tag + '"/>');
-    });
-  }
-
-  $searchModal.modal('show');
+    $searchModal.modal('show');
 }
-
 
 function closeSearchModal() {
     // perform the search and sort logic
