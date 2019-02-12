@@ -1157,8 +1157,8 @@ function showPlayerTagsModal () {
             var $existing = $('form#player-tags [name="'+choiceName+'"]');
             if (!replace && $existing.length) continue;
             var $select = $('<select>', { name: choiceName });
-            $select.append(new Option(), playerTagOptions[choiceName].values.map(function(opt) {
-                return new Option(opt.text || opt.value.replace(/_/g, ' ').initCap(), opt.value);
+            $select.append('<option>', playerTagOptions[choiceName].values.map(function(opt) {
+                return $('<option>').val(opt.value).addClass(opt.gender).append(opt.text || opt.value.replace(/_/g, ' ').initCap());
             }));
             if ($existing.length) {
                 $existing.parent().replaceWith($select);
