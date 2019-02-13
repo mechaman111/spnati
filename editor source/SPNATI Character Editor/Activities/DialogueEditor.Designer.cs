@@ -157,9 +157,9 @@ namespace SPNATI_Character_Editor.Activities
 			this.lblAvailableVars.AutoSize = true;
 			this.lblAvailableVars.Location = new System.Drawing.Point(2, 8);
 			this.lblAvailableVars.Name = "lblAvailableVars";
-			this.lblAvailableVars.Size = new System.Drawing.Size(53, 13);
+			this.lblAvailableVars.Size = new System.Drawing.Size(158, 13);
 			this.lblAvailableVars.TabIndex = 32;
-			this.lblAvailableVars.Text = "Variables:";
+			this.lblAvailableVars.Text = "Hover to see available variables";
 			// 
 			// cmdCopyAll
 			// 
