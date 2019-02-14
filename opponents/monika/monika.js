@@ -611,8 +611,9 @@ if(!monika) {
                 $gameLabels[player].html("Monika & Sayori");
             } else {
                 /* 'Regular' glitch masturbation */
-                var el = $gameImages[player-1]
-                var current_img = el.attr('src').substr(17);
+                var el = $gameImages[player-1];
+                var src = el.attr('src');
+                var current_img = src.substring(src.lastIndexOf('/'));
                 
                 if (el[0].complete) {
                     monika.glitch_pose_transition(player, current_img, 0, 200);

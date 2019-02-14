@@ -180,6 +180,7 @@ monika.glitch_masturbation = function(slot) {
 
         glitch_count += 1;
         
+        slot = monika.find_slot();
         monika.glitchCharacter(slot, null, null, function (cv) {
             monika.active_effects.glitch_masturbation = setTimeout(set_next_image, glitchTime);
         });
