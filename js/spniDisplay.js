@@ -45,7 +45,7 @@ function PoseSprite(id, src, onload, pose, args) {
     if (this.pivotx || this.pivoty) {
         this.pivotx = this.pivotx || "center";
         this.pivoty = this.pivoty || "center";
-        $(this.img).css("transform-origin", pivotx + " " + pivoty);
+        $(this.img).css("transform-origin", this.pivotx + " " + this.pivoty);
     }
     
     $(this.vehicle).css("z-index", this.z);
