@@ -76,6 +76,9 @@ def main():
 
     # Delete previously-determined stages in base folders:
     for opp_id, stages in delete_stages.items():
+        if opp_id == 'chiaki':
+            continue
+        
         print("Deleting {} stages {}...".format(opp_id, str(stages)))
         
         n_deleted = 0
@@ -88,7 +91,7 @@ def main():
                 continue
                 
             if stage in stages:
-                os.unlink(osp.join(base_path, 'opponents', opp_id, fname))
+                os.unlink(osp.join(base_dir, 'opponents', opp_id, fname))
                 n_deleted += 1
         
         print("Deleted {} images from {}.".format(n_deleted, opp_id))

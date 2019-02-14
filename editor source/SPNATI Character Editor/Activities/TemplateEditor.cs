@@ -16,7 +16,6 @@ namespace SPNATI_Character_Editor.Activities
 		private ImageLibrary _imageLibrary;
 		private ISkin _character;
 		private string _lastTemplateFile;
-		private PoseTemplate _lastTemplate;
 
 		public TemplateEditor()
 		{
@@ -113,7 +112,6 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="template"></param>
 		private void LoadTemplate(PoseTemplate template)
 		{
-			_lastTemplate = template;
 			txtBaseCode.Text = template.BaseCode.Serialize();
 			gridLayers.Rows.Clear();
 			gridEmotions.Rows.Clear();

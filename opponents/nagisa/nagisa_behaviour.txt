@@ -45,9 +45,6 @@ tag=enf
 #Other tags
 tag=student
 
-#uncomment the following tag when generating Nagisa's behaviour.xml for Valentine's Day week
-#tag=nagisa_valentine
-
 
 
 marker=nagisa_asks_buffy_about_school,public,Nagisa and Buffy feel differently about high school.
@@ -112,8 +109,10 @@ release=42
 start=0-dango,My name is Nagisa Furukawa. It's nice to meet you all!
 
 selected=dango,My name is Nagisa Furukawa. It's nice to meet you all!
+selected,count-nagisa_valentine:1=thinking,May I take your order?
 
 game_start=shy,Is... is this where the game is being played?
+game_start,count-nagisa_valentine:1=winkthumbsup,<i>Just kidding!</i> It's me, Nagisa! I'm just wearing my waitress uniform from the cafe I work at. Today is a special day, after all...
 game_start,marker:nagisa_where_is_kyou=worried,Where is Kyou? I hope she isn't late. We're about to start!
 game_start,alsoPlaying:jura,marker:nagisa_jura_underdressed=veryembarrassed,Lady in black, it's okay if you want to put more on before we start.
 game_start,alsoPlaying:kyu,marker:nagisa_kyu_showing_panties=veryembarrassed,Why is that girl already showing her panties?
@@ -185,7 +184,7 @@ clothes=Panties,panties,important,lower,plural
 0-okay_hand=thinking,Oh, this is okay.
 0-bad_hand=shy,I'm sure that everybody else has better than this.
 0-bad_hand=worried,Oh...
-0-bad_hand=thinking,Ryou taught me out to play regular poker, but I was never very good at it.
+0-bad_hand=thinking,Ryou taught me how to play regular poker, but I was never very good at it.
 
 0-good_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
 0-okay_hand,totalRounds:0=calm,It's nice to meet you, everyone. My name is Nagisa.
@@ -325,7 +324,8 @@ clothes=Panties,panties,important,lower,plural
 
 #lost socks and shoes
 2-good_hand=interested,This is better than my last hand!
-2-good_hand=interested,I think my jacket is safe!
+2-good_hand=happy,I think this is a good one.
+2-good_hand,count-nagisa_valentine:0,priority:0=interested,I think my jacket is safe!
 2-okay_hand=calm,This hand is probably enough.
 2-okay_hand=handsbehindback,I guess this should be okay.
 2-bad_hand=worried,I might lose this one...
@@ -350,7 +350,7 @@ clothes=Panties,panties,important,lower,plural
 3-bad_hand=shy,I don't know about this...
 3-bad_hand=stripped,Aw, man...
 3-bad_hand=shy,Ah... I'm starting to worry!
-3-bad_hand=shy,I should've worn my coat over my jacket.
+3-bad_hand,count-nagisa_valentine:0,priority:0=shy,I should've worn my coat over my jacket.
 
 3-good_hand,alsoPlaying:elaine,notSaidMarker:nagisa_terrible_pirate,marker:nagisa_terrible_pirate=shy,I would make a terrible pirate. I could never steal someone's intellectual property.
 3-good_hand,alsoPlaying:nugi-chan,alsoPlayingStage:5=shy,I'm sure your webmaster would understand if you took off your ribbons next, Nugi-chan...
@@ -454,19 +454,19 @@ clothes=Panties,panties,important,lower,plural
 2-stripped,alsoPlaying:hermione,alsoPlayingStage:0=calm,I'm fine, Hermione. Thank you for asking!
 
 #losing jacket (accessory)
-2-must_strip_winning=worried,I can take my jacket off now, I guess.
+2-must_strip_winning,count-nagisa_valentine:0,priority:0=worried,I can take my jacket off now, I guess.
 2-must_strip_winning=crossedarms,No cameras are allowed to be on anymore, right?
 2-must_strip_winning=crossedarms,To be honest, I'm a little embarrassed.
 2-must_strip_winning,alsoPlaying:nugi-chan,alsoPlayingStage:0-3=happy,What do you mean, Nugi-chan? I don't understand.
 2-must_strip_normal=determined,I'll work harder next round to make up for this one!
-2-must_strip_losing=worried,Oh no, my jacket was my last piece of clothing before... y'know...
+2-must_strip_losing,count-nagisa_valentine:0,priority:0=worried,Oh no, my jacket was my last piece of clothing before... y'know...
 2-must_strip_losing=shy,I was trying to follow the plan, but I keep messing it up!
 2-stripping=strip,It feels weird to do this with you guys watching.
 2-stripping=strip,Doing this is a little embarrassing, actually.
 2-stripping=strip,Sorry, guys. Just a little nervous.
 2-stripping,totalMales:0=strip,I shouldn't be nervous. It's just us girls here.
 2-stripping,alsoPlaying:xander=strip,It feels weird to do this with you guys watching.
-3-stripped=stripped,This is my winter uniform, so of course I still have long sleeves.
+3-stripped,count-nagisa_valentine:0,priority:0=stripped,This is my winter uniform, so of course I still have long sleeves.
 3-stripped=shy,Please be nice to me.
 
 #losing shirt (major)
@@ -731,7 +731,7 @@ clothes=Panties,panties,important,lower,plural
 1-female_must_strip,target:lara,targetStage:0=happy,Lara, you're from England, aren't you? It would be fun to visit there someday!
 2-female_must_strip,target:lara,targetStage:0=handsbehindback,Lara, you're from England, aren't you? It would be fun to visit there someday!
 3-female_must_strip,target:lara,targetStage:0=thinking,Lara, you're from England, aren't you? It would be fun to visit there someday!
-0-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_0=thinking,I thinking putting down the camera would be a good idea.
+0-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_0=thinking,I think putting down the camera would be a good idea.
 1-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_1=raisedhand,Does anyone else feel weird with a camera around?
 2-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_2=shy,You're not going to be taking any photos of me, are you?
 3-female_must_strip,target:mahiru,targetStage:0,marker:nagisa_mahiru_camera_3=shy,I'd really appreciate it if you weren't holding your camera now.
@@ -1123,11 +1123,11 @@ clothes=Panties,panties,important,lower,plural
 1-female_removed_minor,target:aimee,targetStage:3=embarrassed,Aimee... what are you going to wear home?
 2-female_removed_minor,target:aimee,targetStage:3=sad,Aimee... what are you going to wear home?
 3-female_removed_minor,target:aimee,targetStage:3=sad,Aimee... what are you going to wear home?
-4-female_removed_minor,target:aimee,targetStage:3=sorry,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
-5-female_removed_minor,target:aimee,targetStage:3=veryembarrassed,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
-6-female_removed_minor,target:aimee,targetStage:3=shy,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
--3-female_removed_minor,target:aimee,targetStage:3=embarrassed,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
--1-female_removed_minor,target:aimee,targetStage:3=closedeyes,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
+4-female_removed_minor,target:aimee,targetStage:3,count-nagisa_valentine:0=sorry,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
+5-female_removed_minor,target:aimee,targetStage:3,count-nagisa_valentine:0=veryembarrassed,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
+6-female_removed_minor,target:aimee,targetStage:3,count-nagisa_valentine:0=shy,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
+-3-female_removed_minor,target:aimee,targetStage:3,count-nagisa_valentine:0=embarrassed,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
+-1-female_removed_minor,target:aimee,targetStage:3,count-nagisa_valentine:0=closedeyes,Aimee, um, you can wear my shirt home if you need to. I'll be okay with just my jacket.
 0-female_removed_minor,target:buffy,targetStage:1=supportive,If anyone laughs at you, Buffy, than that person is just a bully!
 1-female_removed_minor,target:buffy,targetStage:1=sad,If anyone laughs at you, Buffy, than that person is just a bully!
 2-female_removed_minor,target:buffy,targetStage:1=determined,If anyone laughs at you, Buffy, than that person is just a bully!
@@ -1174,7 +1174,7 @@ clothes=Panties,panties,important,lower,plural
 ##ANOTHER CHARACTER REMOVING MAJOR CLOTHING
 #fully clothed
 0-male_removing_major=embarrassed,What if someone sees us?
-0-male_removed_major=embarrassed,I can lend you my jacket if you start getting cold.
+0-male_removed_major,count-nagisa_valentine:0,priority:0=embarrassed,I can lend you my jacket if you start getting cold.
 0-male_removed_major=embarrassed,Don't we need to get permission to play something like this?
 0-female_removing_major=shy,I didn't expect you to take off your ~clothing~, ~name~.
 0-female_removed_major=embarrassed,If I play my cards right, I won't have to do that too.
@@ -1801,7 +1801,8 @@ clothes=Panties,panties,important,lower,plural
 4-female_must_masturbate=relieved,You're not going to really do it, are you, ~name~?
 4-female_start_masturbating=maximumembarrassed,I didn't think you were going to do it!
 4-female_masturbating=veryembarrassed,You're still doing it... even though everybody can see you!
-4-female_finished_masturbating=stripped,I can't lose another round!
+4-female_finished_masturbating,totalAlive:2-5=stripped,I can't lose another round!
+4-female_finished_masturbating=sorry,I'm so sorry! I... I was really trying to win, but I didn't think about how you would feel, ~name~.
 
 #lost skirt (underwear only)
 5-male_must_masturbate=veryembarrassed,I know that boys do this, but they're not supposed to show anyone!
@@ -1845,7 +1846,8 @@ clothes=Panties,panties,important,lower,plural
 -3-female_start_masturbating,saidMarker:nagisa_rear=nervous,Oh, but then I would be really close to it, and everyone would look at my butt again...
 -3-female_masturbating=shocked,I never thought of doing it like that...
 -3-female_masturbating=shocked,I don't want people to come because of something like that!
--3-female_finished_masturbating=determined,I have renewed determination! I won't give up!
+-3-female_finished_masturbating,totalAlive:2-5=determined,I have renewed determination! I won't give up!
+-3-female_finished_masturbating=rear,There's no rule that says I have to be watching, is there?
 
 #finished
 -1-male_must_masturbate=embarrassed,I think that maybe I can handle this now!
@@ -2070,7 +2072,7 @@ game_over_defeat,target:zone-tan,targetSaidMarker:zone-tan_deciding,alsoPlaying:
 2-female_removed_minor,target:elizabeth=shy,Elizabeth, I think of everyone here, us two are most alike. Maybe... could we be friends if that's okay?
 
 3-female_removed_minor,filter:cheerful=wink,I'm sure you'll do great next time, ~name~!
-3-female_removed_major,filter:confident=stripped,You did that so confidently! And there I was worried to take off my jacket.
+3-female_removed_major,filter:confident,count-nagisa_valentine:0,priority:0=stripped,You did that so confidently! And there I was worried to take off my jacket.
 
 4-male_must_strip,filter:straight=stripped,~Name~, you're the one that's meant to be undressing, so please stop making me feel like you're undressing me with your eyes!
 4-female_removed_major,target:kim=happy,I know that this is embarrassing, but your pink underwear... so pretty.

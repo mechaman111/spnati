@@ -126,7 +126,7 @@ function compileBaseErrorReport(userDesc, bugType) {
 
             if (players[i].chosenState) {
                 playerData.currentLine    = players[i].chosenState.rawDialogue;
-                playerData.currentImage   = players[i].chosenState.image;
+                playerData.currentImage   = players[i].folder + players[i].chosenState.image;
             }
 
             tableReports[i-1] = playerData;
@@ -292,10 +292,6 @@ function Player (id) {
     this.xml = null;
     this.metaXml = null;
 
-    this.selected_costume = null;
-    this.alt_costume = null;
-    this.default_costume = null;
-
     this.resetState();
 }
 
@@ -440,7 +436,6 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.base_folder = 'opponents/'+id+'/';
     this.metaXml = $metaXml;
 
-    this.enabled = $metaXml.find('enabled').text();
     this.status = status;
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
@@ -458,6 +453,9 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
     this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    this.selected_costume = null;
+    this.alt_costume = null;
+    this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
 
@@ -480,6 +478,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
             
             if (set === FORCE_ALT_COSTUME) {
                 this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
+                this.selectAlternateCostume(costume_descriptor);
             }
             
             this.alternate_costumes.push(costume_descriptor);
@@ -548,8 +547,14 @@ Opponent.prototype.getByStage = function (arr, stage) {
     return bestFit;
 };
 
-Opponent.prototype.selectAlternateCostume = function (folder) {
-    this.selected_costume = folder;
+Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
+    if (costumeDesc === undefined) {
+        this.selected_costume = null;
+        this.selection_image = this.base_folder + this.image;
+    } else {
+        this.selected_costume = costumeDesc.folder;
+        this.selection_image = costumeDesc.folder + costumeDesc.image;
+    }
 };
 
 Opponent.prototype.getIntelligence = function () {
@@ -557,6 +562,13 @@ Opponent.prototype.getIntelligence = function () {
 };
 
 Opponent.prototype.loadAlternateCostume = function (individual) {
+    if (this.alt_costume) {
+        if (this.alt_costume.folder != this.selected_costume) {
+            this.unloadAlternateCostume();
+        } else {
+            return;
+        }
+    }
     console.log("Loading alternate costume: "+this.selected_costume);
     $.ajax({
         type: "GET",
@@ -569,6 +581,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
                 tags: $xml.find('tags'),
+                folder: this.selected_costume,
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
             };
@@ -631,6 +644,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         if (this.selected_costume) {
             this.loadAlternateCostume();
         } else {
+            this.unloadAlternateCostume();
             this.onSelected(individual);
         }
         return;
@@ -704,17 +718,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.targetedLines = targetedLines;
 
-            if (ALT_COSTUMES_ENABLED) {
-                if (this.selected_costume) {
-                    return this.loadAlternateCostume();
-                } else if (FORCE_ALT_COSTUME) {
-                    for (var i=0;i<this.alternate_costumes.length;i++) {
-                        if (this.alternate_costumes[i].set === FORCE_ALT_COSTUME) {
-                            this.selectAlternateCostume(this.alternate_costumes[i].folder);
-                            return this.loadAlternateCostume();
-                        }
-                    }
-                }
+            if (this.selected_costume) {
+                return this.loadAlternateCostume();
             }
             
             return this.onSelected(individual);
@@ -1152,8 +1157,8 @@ function showPlayerTagsModal () {
             var $existing = $('form#player-tags [name="'+choiceName+'"]');
             if (!replace && $existing.length) continue;
             var $select = $('<select>', { name: choiceName });
-            $select.append(new Option(), playerTagOptions[choiceName].values.map(function(opt) {
-                return new Option(opt.text || opt.value.replace(/_/g, ' ').initCap(), opt.value);
+            $select.append('<option>', playerTagOptions[choiceName].values.map(function(opt) {
+                return $('<option>').val(opt.value).addClass(opt.gender).append(opt.text || opt.value.replace(/_/g, ' ').initCap());
             }));
             if ($existing.length) {
                 $existing.parent().replaceWith($select);

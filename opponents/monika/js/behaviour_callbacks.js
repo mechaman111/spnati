@@ -190,13 +190,13 @@ monika.sayonikaYes = function () {
         players[slot].markers['affections-glitch'] = 1;
         
         $gameDialogues[slot-1].html("W-Wait, really? I wasn't expecting you to answer-- whoops!");
-        $gameImages[slot-1].attr('src', 'opponents/monika/2-shocked.png');
+        $gameImages[slot-1].attr('src', players[slot].folder+'2-shocked.png');
         
         monika.temporaryCharacterGlitch(sayori_slot, 0, 500);
         
         setTimeout(function () {
             $gameDialogues[slot-1].html("S-Sorry about that... your answer kinda caught me by surprise. A-And, uhm, I think I just messed up something in the code...");
-            $gameImages[slot-1].attr('src', 'opponents/monika/2-awkward-question.png');
+            $gameImages[slot-1].attr('src', players[slot].folder+'2-awkward-question.png');
         }, 1500);
     } catch (e) {
         monika.reportException("when handling Sayonika accept dialogue", e);
@@ -209,7 +209,7 @@ monika.sayonikaNo = function () {
     try {
         var slot = monika.find_slot();
         $gameDialogues[slot-1].html("Oh, I was just teasing you a bit! I didn't expect you to actually answer that, ehehe~!");
-        $gameImages[slot-1].attr('src', 'opponents/monika/2-happy.png');
+        $gameImages[slot-1].attr('src', players[slot].folder+'2-happy.png');
     } catch (e) {
         monika.reportException("when handling Sayonika disable dialogue", e);
     }

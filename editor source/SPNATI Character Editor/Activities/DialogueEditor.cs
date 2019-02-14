@@ -550,80 +550,6 @@ namespace SPNATI_Character_Editor.Activities
 		}
 
 		/// <summary>
-		/// Updates a stage-specific dropdown to have display friendly options specific to the character being targeted
-		/// </summary>
-		/// <param name="box"></param>
-		/// <param name="character"></param>
-		/// <param name="useLookForward">If true, for removed/removing cases, only valid stages will be provided</param>
-		private void PopulateStageCombo(ComboBox box, Character character, bool filterStages)
-		{
-			string oldText = box.Text;
-			box.Items.Clear();
-			box.Text = "";
-
-			string tag = _selectedCase?.Tag;
-			string filterType = null;
-			bool removing = false;
-			bool removed = false;
-			bool lookForward = false;
-			if (tag != null && filterStages)
-			{
-				removing = tag.Contains("removing_");
-				removed = tag.Contains("removed_");
-				lookForward = removing;
-				if (removing || removed)
-				{
-					int index = tag.LastIndexOf('_');
-					if (index >= 0 && index < tag.Length - 1)
-					{
-						filterType = tag.Substring(index + 1);
-						if (filterType == "accessory")
-							filterType = "extra";
-					}
-				}
-			}
-
-			if (character == null)
-			{
-				//If the character is not valid, still allow something but there's no way to give a useful name to it
-				for (int i = 0; i < 8 + Clothing.ExtraStages; i++)
-				{
-					box.Items.Add(i);
-				}
-			}
-			else
-			{
-				for (int i = 0; i < character.Layers + Clothing.ExtraStages; i++)
-				{
-					if (filterStages)
-					{
-						if (filterType != null)
-						{
-							//Filter out stages that will never be valid
-							if (i >= 0 && i <= character.Layers)
-							{
-								int layer = removed ? i - 1 : i;
-								if (layer < 0 || layer >= character.Layers)
-									continue;
-
-								Clothing clothing = character.Wardrobe[character.Layers - layer - 1];
-								string realType = clothing.Type;
-								if (filterType != realType.ToLower())
-									continue;
-							}
-							else continue;
-						}
-					}
-					box.Items.Add(character.LayerToStageName(i, lookForward));
-				}
-				if (!string.IsNullOrEmpty(oldText))
-				{
-					box.Text = oldText;
-				}
-			}
-		}
-
-		/// <summary>
 		/// Sets the checked state for each stage for the current case
 		/// </summary>
 		private void CreateStageCheckboxes()
@@ -650,43 +576,6 @@ namespace SPNATI_Character_Editor.Activities
 				check.Margin = new Padding(0);
 				flowStageChecks.Controls.Add(check);
 			}
-		}
-
-		/// <summary>
-		/// Sets a stage target box to the given stage
-		/// </summary>
-		/// <param name="box"></param>
-		/// <param name="stage"></param>
-		private void SetStageComboBox(ComboBox box, string stage)
-		{
-			for (int i = 0; i < box.Items.Count; i++)
-			{
-				StageName stageName = box.Items[i] as StageName;
-				if (stageName != null && stageName.Id == stage)
-				{
-					box.SelectedIndex = i;
-					return;
-				}
-			}
-
-			box.Text = stage; //If couldn't set an object, just set the text
-		}
-
-		/// <summary>
-		/// Reads the value from a stage dropdown
-		/// </summary>
-		/// <param name="box"></param>
-		/// <returns></returns>
-		private string ReadStageComboBox(ComboBox box)
-		{
-			StageName stage = box.SelectedItem as StageName;
-			if (stage == null)
-			{
-				//Must be a generic stage
-				return box.Text;
-			}
-
-			return stage.Id;
 		}
 
 		private bool FilterTargets(PropertyRecord record)
@@ -717,7 +606,6 @@ namespace SPNATI_Character_Editor.Activities
 				if (newTag != c.Tag)
 					needRegeneration = true;
 				c.Tag = newTag;
-				Trigger trigger = TriggerDatabase.GetTrigger(newTag);
 
 				//Figure out the stages
 				List<int> oldStages = new List<int>();

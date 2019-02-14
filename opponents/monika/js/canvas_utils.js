@@ -45,17 +45,31 @@ monika.restore_image = function(cv) {
 }
 
 monika.split_pose_filename = function(src) {
-    var re = /\/?opponents\/(.+?)\/(\d+?)\-(.+?)\.(\w+)/mi
-    var match = re.exec(src);
+    var splitIdx = src.lastIndexOf('/')+1;
+    var base = src.substring(0, splitIdx);
+    var filename = src.substring(splitIdx);
+    
+    // Won't work with weird filenames, but it'll work for most cases.
+    // Just gotta be careful...
+    var stem = filename.substring(0, filename.lastIndexOf('.'));
+    var ext = filename.substring(filename.lastIndexOf('.')+1);
+    
+    var sp1 = stem.split('-', 2);
+    var stage = undefined;
+    var pose = stem;
+    if (sp1.length === 2) {
+        stage = parseInt(sp1[0], 10);
+        pose = sp1[1];
+    }
     
     return {
-        'opponent': match[1],
-        'stage': match[2],
-        'pose': match[3],
-        'ext': match[4],
+        'base': base,
+        'stage': stage,
+        'pose': pose,
+        'ext': ext
     }
 }
 
 monika.assemble_pose_filename = function(pose) {
-    return "opponents/"+pose.opponent+"/"+pose.stage+'-'+pose.pose+'.'+pose.ext;
+    return pose.base+pose.stage+'-'+pose.pose+'.'+pose.ext;
 }
