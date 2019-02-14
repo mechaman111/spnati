@@ -14,12 +14,12 @@ function PoseSprite(id, src, onload, pose, args) {
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
-    this.scaleX = args.scalex || 1;
-    this.scaleY = args.scaley || 1;
+    this.scalex = args.scalex || 1;
+    this.scaley = args.scaley || 1;
     this.rotation = args.rotation || 0;
     this.alpha = args.alpha;
-    this.pivotX = args.pivotx;
-    this.pivotY = args.pivoty;
+    this.pivotx = args.pivotx;
+    this.pivoty = args.pivoty;
     this.height = args.height || 0;
     this.width = args.width || 0;
     
@@ -42,10 +42,10 @@ function PoseSprite(id, src, onload, pose, args) {
         this.alpha = 100;
     }
     
-    if (this.pivotX || this.pivotY) {
-        this.pivotX = this.pivotX || "center";
-        this.pivotY = this.pivotY || "center";
-        $(this.img).css("transform-origin", pivotX + " " + pivotY);
+    if (this.pivotx || this.pivoty) {
+        this.pivotx = this.pivotx || "center";
+        this.pivoty = this.pivoty || "center";
+        $(this.img).css("transform-origin", pivotx + " " + pivoty);
     }
     
     $(this.vehicle).css("z-index", this.z);
@@ -66,7 +66,7 @@ PoseSprite.prototype.draw = function() {
     });
     
     $(this.img).css({
-      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scaleX + ", " + this.scaleY + ")",
+      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ")",
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
@@ -137,7 +137,7 @@ PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
     }
     
     var mode = this.interpolation;
-    this.target[prop] = interpolationModes[mode](prop, start, end, t, this.keyframes, idx);   
+    this.target[prop] = interpolationModes[mode](prop, start, end, t, this.keyframes, idx);
 }
 
 PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
@@ -275,6 +275,7 @@ function parseDirective ($xml) {
         // Keyframe / interpolated animation
         targetObj.keyframes = [];
         targetObj.delay = parseFloat(targetObj.delay) * 1000 || 0;
+        targetObj.looped = targetObj.looped || targetObj.loop;
         $($xml).find('keyframe').each(function (i, elem) {
             targetObj.keyframes.push(parseKeyframeDefinition(elem));
         });
@@ -315,7 +316,7 @@ function PoseDefinition ($xml, player) {
                 this.animations.push({
                     type: 'animation',
                     id: frame.id,
-                    looped: directive.looped,
+                    looped: directive.looped || directive.loop,
                     interpolation: 'none',
                     delay: curDelay * 1000,
                     keyframes: [
