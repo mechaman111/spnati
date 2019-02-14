@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace KisekaeImporter.ImageImport
@@ -14,6 +14,11 @@ namespace KisekaeImporter.ImageImport
 		/// KKL import string
 		/// </summary>
 		public string Data;
+
+		/// <summary>
+		/// Key-value pairs of other data to include in the import (ex. transparencies)
+		/// </summary>
+		public Dictionary<string, string> ExtraData = new Dictionary<string, string>();
 
 		/// <summary>
 		/// Custom cropping information
@@ -33,7 +38,14 @@ namespace KisekaeImporter.ImageImport
 
 		public string Serialize()
 		{
-			return string.Format("{0}={1}", ImageKey, Data);
+			List<string> attributes = new List<string>();
+			foreach (KeyValuePair<string, string> kvp in ExtraData)
+			{
+				KisekaePart key = kvp.Key.ToKisekaePart();
+				int keyIndex = (int)key;
+				attributes.Add($"{keyIndex}={kvp.Value}");
+			}
+			return string.Format("{0}={1}|{2}", ImageKey, Data, string.Join(",", attributes));
 		}
 	}
 }

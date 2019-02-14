@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -92,7 +93,7 @@ namespace KisekaeImporter.ImageImport
 		/// <returns></returns>
 		public Image Reimport()
 		{
-			return ImportCode("54**"); //import an empty scene so that nothing changes but we get a file outputted
+			return ImportCode("54**", new Dictionary<string, string>()); //import an empty scene so that nothing changes but we get a file outputted
 		}
 
 		private void SetupForImport()
@@ -144,10 +145,10 @@ namespace KisekaeImporter.ImageImport
 				data = DefaultVersion + image.Data;
 			}
 
-			return ImportCode(data);
+			return ImportCode(data, image.ExtraData);
 		}
 
-		private Image ImportCode(string data)
+		private Image ImportCode(string data, Dictionary<string, string> extraData)
 		{
 			try
 			{
@@ -162,7 +163,24 @@ namespace KisekaeImporter.ImageImport
 				}
 
 				//Write the image data where kkl can find it
-				File.WriteAllText(dataFileName, data);
+				List<string> lines = new List<string>();
+				if (extraData != null)
+				{
+					foreach (KeyValuePair<string, string> kvp in extraData)
+					{
+						string[] subpieces = kvp.Key.Split('/');
+						foreach (string subpiece in subpieces)
+						{
+							float v;
+							if (float.TryParse(kvp.Value, out v))
+							{
+								lines.Add($"{subpiece}={v / 100.0f}");
+							}
+						}
+					}
+				}
+				lines.Add(data);
+				File.WriteAllLines(dataFileName, lines);
 
 				//Wait for KKL to pick it up and create an image
 				Image result = null;

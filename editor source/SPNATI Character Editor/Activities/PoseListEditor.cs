@@ -106,6 +106,9 @@ namespace SPNATI_Character_Editor.Activities
 				string trimmedLine = line.Trim();
 				if (trimmedLine.StartsWith("#") || string.IsNullOrEmpty(trimmedLine))
 					continue;
+
+				string[] values = trimmedLine.Split('|');
+				trimmedLine = values[0];
 				string[] pieces = trimmedLine.Split('=');
 
 				if (pieces.Length < 2)
@@ -133,6 +136,24 @@ namespace SPNATI_Character_Editor.Activities
 
 				ImageMetadata metadata = new ImageMetadata(key, data);
 				metadata.CropInfo = cropInfo;
+
+				if (values.Length > 1)
+				{
+					string[] extraPieces = values[1].Split(',');
+					foreach (string extra in extraPieces)
+					{
+						string[] kvp = extra.Split('=');
+						string partKey = kvp[0];
+						int part;
+						if (int.TryParse(partKey, out part))
+						{
+							KisekaePart kkPart = (KisekaePart)part;
+							string partValue = kvp[1];
+							metadata.ExtraData[kkPart.Serialize()] = partValue;
+						}
+					}
+				}
+
 				_poseList.Poses.Add(metadata);
 			}
 
@@ -202,8 +223,11 @@ namespace SPNATI_Character_Editor.Activities
 			if (string.IsNullOrEmpty(data))
 				return null;
 
+			Dictionary<string, string> extraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string>;
+
 			string key = GetKey(stage, pose);
 			ImageMetadata metadata = new ImageMetadata(key, data);
+			metadata.ExtraData = extraData;
 			metadata.CropInfo = new Rect(l, t, r, b);
 			return metadata;
 		}
@@ -324,6 +348,7 @@ namespace SPNATI_Character_Editor.Activities
 			row.Cells["ColB"].Value = pose.CropInfo.Bottom;
 
 			row.Cells["ColData"].Value = pose.Data;
+			row.Cells["ColAdvanced"].Tag = pose.ExtraData;
 		}
 
 		private void UpdateImageCell(string key, DataGridViewRow row)
@@ -352,9 +377,33 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="e"></param>
 		private void gridPoses_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (gridPoses.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+			DataGridViewButtonColumn col = gridPoses.Columns[e.ColumnIndex] as DataGridViewButtonColumn;
+			if (col != null && e.RowIndex >= 0)
 			{
-				ImportImageForCropping(e.RowIndex);
+				if (col == ColImport)
+				{
+					ImportImageForCropping(e.RowIndex);
+				}
+				else if (col == ColAdvanced)
+				{
+					ShowAdvancedSettings(e.RowIndex);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Shows the form for setting things like transparencies
+		/// </summary>
+		/// <param name="index">Selected row index</param>
+		private void ShowAdvancedSettings(int index)
+		{
+			PoseSettingsForm form = new PoseSettingsForm();
+			DataGridViewRow row = gridPoses.Rows[index];
+			Dictionary<string, string> extraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string>;
+			form.SetData(extraData);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				row.Cells["ColAdvanced"].Tag = form.GetData();
 			}
 		}
 
@@ -393,6 +442,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (!int.TryParse(row.Cells["ColB"].Value?.ToString(), out b))
 				b = 1400;
 			_previewImageMetadata.CropInfo = new Rect(l, t, r, b);
+			_previewImageMetadata.ExtraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string> ?? new Dictionary<string, string>();
 
 			ImageCropper cropper = new ImageCropper();
 			cropper.Import(_previewImageMetadata, _character, false);
@@ -623,7 +673,7 @@ namespace SPNATI_Character_Editor.Activities
 						progress.Report(current++);
 						try
 						{
-							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character);
+							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData);
 							if (img == null)
 							{
 								//Something went wrong. Stop here.

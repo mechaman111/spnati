@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdImportAll = new System.Windows.Forms.Button();
 			this.cmdImportNew = new System.Windows.Forms.Button();
@@ -36,15 +37,6 @@
 			this.cmdExport = new System.Windows.Forms.Button();
 			this.cmdImport = new System.Windows.Forms.Button();
 			this.gridPoses = new System.Windows.Forms.DataGridView();
-			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +48,16 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.lblCurrentPoseFile = new System.Windows.Forms.Label();
 			this.chkRequired = new System.Windows.Forms.CheckBox();
+			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColAdvanced = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -127,6 +129,7 @@
             this.ColR,
             this.ColB,
             this.ColData,
+            this.ColAdvanced,
             this.ColImage,
             this.ColImport});
 			this.gridPoses.ContextMenuStrip = this.contextMenu;
@@ -144,62 +147,6 @@
 			this.gridPoses.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridPoses_RowsAdded);
 			this.gridPoses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.gridPoses_Scroll);
 			this.gridPoses.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gridPoses_MouseDown);
-			// 
-			// ColStage
-			// 
-			this.ColStage.HeaderText = "Stage";
-			this.ColStage.Name = "ColStage";
-			this.ColStage.Width = 50;
-			// 
-			// ColPose
-			// 
-			this.ColPose.HeaderText = "Pose";
-			this.ColPose.Name = "ColPose";
-			// 
-			// ColL
-			// 
-			this.ColL.HeaderText = "L";
-			this.ColL.Name = "ColL";
-			this.ColL.Width = 40;
-			// 
-			// ColT
-			// 
-			this.ColT.HeaderText = "T";
-			this.ColT.Name = "ColT";
-			this.ColT.Width = 40;
-			// 
-			// ColR
-			// 
-			this.ColR.HeaderText = "R";
-			this.ColR.Name = "ColR";
-			this.ColR.Width = 40;
-			// 
-			// ColB
-			// 
-			this.ColB.HeaderText = "B";
-			this.ColB.Name = "ColB";
-			this.ColB.Width = 40;
-			// 
-			// ColData
-			// 
-			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColData.DefaultCellStyle = dataGridViewCellStyle2;
-			this.ColData.HeaderText = "Code";
-			this.ColData.Name = "ColData";
-			// 
-			// ColImage
-			// 
-			this.ColImage.HeaderText = "Image";
-			this.ColImage.Name = "ColImage";
-			this.ColImage.Width = 75;
-			// 
-			// ColImport
-			// 
-			this.ColImport.HeaderText = "";
-			this.ColImport.Name = "ColImport";
-			this.ColImport.Width = 70;
 			// 
 			// contextMenu
 			// 
@@ -287,6 +234,73 @@
 			this.chkRequired.Text = "Include missing poses";
 			this.chkRequired.UseVisualStyleBackColor = true;
 			// 
+			// ColStage
+			// 
+			this.ColStage.HeaderText = "Stage";
+			this.ColStage.Name = "ColStage";
+			this.ColStage.Width = 50;
+			// 
+			// ColPose
+			// 
+			this.ColPose.HeaderText = "Pose";
+			this.ColPose.Name = "ColPose";
+			// 
+			// ColL
+			// 
+			this.ColL.HeaderText = "L";
+			this.ColL.Name = "ColL";
+			this.ColL.Width = 40;
+			// 
+			// ColT
+			// 
+			this.ColT.HeaderText = "T";
+			this.ColT.Name = "ColT";
+			this.ColT.Width = 40;
+			// 
+			// ColR
+			// 
+			this.ColR.HeaderText = "R";
+			this.ColR.Name = "ColR";
+			this.ColR.Width = 40;
+			// 
+			// ColB
+			// 
+			this.ColB.HeaderText = "B";
+			this.ColB.Name = "ColB";
+			this.ColB.Width = 40;
+			// 
+			// ColData
+			// 
+			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
+			this.ColData.HeaderText = "Code";
+			this.ColData.Name = "ColData";
+			// 
+			// ColAdvanced
+			// 
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.NullValue = "More...";
+			this.ColAdvanced.DefaultCellStyle = dataGridViewCellStyle2;
+			this.ColAdvanced.HeaderText = "";
+			this.ColAdvanced.Name = "ColAdvanced";
+			this.ColAdvanced.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColAdvanced.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.ColAdvanced.Width = 70;
+			// 
+			// ColImage
+			// 
+			this.ColImage.HeaderText = "Image";
+			this.ColImage.Name = "ColImage";
+			this.ColImage.Width = 75;
+			// 
+			// ColImport
+			// 
+			this.ColImport.HeaderText = "";
+			this.ColImport.Name = "ColImport";
+			this.ColImport.Width = 70;
+			// 
 			// PoseListEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -316,15 +330,6 @@
 		private System.Windows.Forms.Button cmdExport;
 		private System.Windows.Forms.Button cmdImport;
 		private System.Windows.Forms.DataGridView gridPoses;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColStage;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColPose;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColL;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColT;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColR;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColB;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ColData;
-		private System.Windows.Forms.DataGridViewImageColumn ColImage;
-		private System.Windows.Forms.DataGridViewButtonColumn ColImport;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
@@ -336,5 +341,15 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
 		private System.Windows.Forms.CheckBox chkRequired;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColStage;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColPose;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColL;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColT;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColR;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColB;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColData;
+		private System.Windows.Forms.DataGridViewButtonColumn ColAdvanced;
+		private System.Windows.Forms.DataGridViewImageColumn ColImage;
+		private System.Windows.Forms.DataGridViewButtonColumn ColImport;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using KisekaeImporter.DataStructures.Kisekae;
+using KisekaeImporter.SubCodes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +21,7 @@ namespace KisekaeImporter
 		public string Version { get; set; }
 
 		public KisekaeModel[] Models = new KisekaeModel[9];
-
+		
 		public KisekaeChunk Scene = null;
 
 		public KisekaeCode()
@@ -79,9 +80,17 @@ namespace KisekaeImporter
 		{
 			int mergingVersion;
 			int version;
-			if (int.TryParse(code.Version, out mergingVersion) && int.TryParse(Version, out version) && mergingVersion > version)
+			if (int.TryParse(code.Version, out mergingVersion) && int.TryParse(Version, out version))
 			{
-				Version = code.Version;
+				if (mergingVersion > version)
+				{
+					StepUpTransform(this, version, mergingVersion);
+					Version = code.Version;
+				}
+				else if (mergingVersion < version)
+				{
+					StepUpTransform(code, mergingVersion, version);
+				}
 			}
 
 			if (code.Scene != null)
@@ -234,6 +243,14 @@ namespace KisekaeImporter
 			return Models[0].GetOrAddComponent<T>();
 		}
 
+		public void ReplaceComponent<T>(T component) where T : KisekaeComponent
+		{
+			if (Models[0] != null)
+			{
+				Models[0].ReplaceComponent(component);
+			}
+		}
+
 		/// <summary>
 		/// Deserializes a code into its parts
 		/// </summary>
@@ -306,6 +323,105 @@ namespace KisekaeImporter
 					count += Scene.Assets.Count;
 				}
 				return count;
+			}
+		}
+
+		/// <summary>
+		/// Performs code transformations so merging separate versions doesn't screw things up
+		/// </summary>
+		/// <param name="code"></param>
+		/// <param name="oldVersion"></param>
+		/// <param name="newVersion"></param>
+		private static void StepUpTransform(KisekaeCode code, int oldVersion, int newVersion)
+		{
+			for (int i = 0; i < code.Models.Length; i++)
+			{
+				KisekaeModel model = code.Models[i];
+				if (model != null)
+				{
+					if (oldVersion < 83 && newVersion >= 83)
+					{
+						//mouth shapes
+						KisekaeExpression expression = model.GetComponent<KisekaeExpression>();
+						if (expression != null)
+						{
+							expression.Mouth.OffsetX = 50;
+							expression.Mouth.OffsetY = 50;
+							expression.Mouth.Rotation = 50;
+						}
+						KisekaeClothing clothing = model.GetComponent<KisekaeClothing>();
+						if (clothing != null)
+						{
+							ConvertShoe84(clothing.LeftShoe);
+							ConvertShoe84(clothing.RightShoe);
+						}
+					}
+				}
+			}
+		}
+
+		private static void ConvertShoe84(KisekaeShoe shoe)
+		{
+			switch (shoe.Type)
+			{
+				case 0:
+					shoe.Top = 1;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color1;
+					break;
+				case 1:
+					shoe.Top = 2;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 10:
+					shoe.Type = 1;
+					shoe.Top = 3;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 11:
+					shoe.Type = 1;
+					shoe.Top = 4;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 15:
+					shoe.Top = 6;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color1;
+					break;
+				case 16:
+					shoe.Type = 1;
+					shoe.Top = 7;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 17:
+					shoe.Type = 14;
+					shoe.Top = 8;
+					shoe.TopColor1 = shoe.Color1;
+					shoe.TopColor2 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 18:
+					shoe.Type = 14;
+					shoe.Top = 9;
+					shoe.TopColor1 = shoe.Color1;
+					shoe.TopColor2 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 19:
+					shoe.Type = 15;
+					shoe.Top = 10;
+					shoe.TopColor1 = shoe.Color2;
+					shoe.Color2 = shoe.Color3;
+					break;
+				case 20:
+					shoe.Type = 16;
+					shoe.Top = 11;
+					shoe.TopColor1 = shoe.Color2;
+					break;
 			}
 		}
 	}

@@ -66,7 +66,7 @@ namespace SPNATI_Character_Editor.Forms
 			_cropBounds.X = _cropBounds.X + ImageImporter.ImageXOffset * zoom;
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
-			Image image = await CharacterGenerator.GetRawImage(code, character);
+			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData);
 			tmrWait.Enabled = false;
 			lblWait.Visible = false;
 			_previewImage = image;
