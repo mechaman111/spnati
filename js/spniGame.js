@@ -131,9 +131,17 @@ var repeatLog = {1:{}, 2:{}, 3:{}, 4:{}};
 
 var transcriptHistory = [];
 
-// When in rollback, stores a RollbackPoint for the most current game state.
-// When exiting rollback, we load this rollback point.
+/*When in rollback, we store a RollbackPoint for the most current game state
+   to returnRollbackPoint. 
+  When exiting rollback, we load state from returnRollbackPoint.
+  
+  The only thing we don't load from a RollbackPoint is the game phase,
+  since we set it to eGamePhase.EXIT_ROLLBACK.
+  So, to make it available for bug reporting, we copy the game phase in the
+  rollback point to rolledBackGamePhase.
+ */
 var returnRollbackPoint = null;
+var rolledBackGamePhase = null;
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -880,6 +888,7 @@ RollbackPoint.prototype.load = function () {
     previousLoser = this.previousLoser;
     recentLoser = this.recentLoser;
     gameOver = this.gameOver;
+    rolledBackGamePhase = this.gamePhase;
     
     this.playerData.forEach(function (p) {
         var loadPlayer = players[p.slot];
