@@ -1,9 +1,8 @@
-﻿using System;
-using Desktop;
+﻿using Desktop;
 using Desktop.CommonControls;
-using System.Windows.Forms;
-using SPNATI_Character_Editor.Controls;
+using System;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -11,7 +10,6 @@ namespace SPNATI_Character_Editor
 	{
 		private ExpressionTest _expression;
 		private string _currentVariable;
-		private bool _linkedToAlsoPlaying;
 
 		public ExpressionControl()
 		{
@@ -117,7 +115,6 @@ namespace SPNATI_Character_Editor
 			}
 			_currentVariable = variable;
 
-			_linkedToAlsoPlaying = false;
 			Regex regex = new Regex(@"~(.*)\.(.*)~");
 			Match m = regex.Match(variable);
 			if (m.Groups.Count > 2)
