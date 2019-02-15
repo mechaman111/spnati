@@ -51,7 +51,7 @@
 			// cmdOK
 			// 
 			this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOK.Location = new System.Drawing.Point(490, 566);
+			this.cmdOK.Location = new System.Drawing.Point(490, 601);
 			this.cmdOK.Name = "cmdOK";
 			this.cmdOK.Size = new System.Drawing.Size(75, 23);
 			this.cmdOK.TabIndex = 1;
@@ -63,7 +63,7 @@
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(571, 566);
+			this.cmdCancel.Location = new System.Drawing.Point(571, 601);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 2;
@@ -118,7 +118,7 @@
 			this.panelClothing.AutoScroll = true;
 			this.panelClothing.Location = new System.Drawing.Point(12, 371);
 			this.panelClothing.Name = "panelClothing";
-			this.panelClothing.Size = new System.Drawing.Size(634, 188);
+			this.panelClothing.Size = new System.Drawing.Size(634, 224);
 			this.panelClothing.TabIndex = 6;
 			// 
 			// PoseSettingsForm
@@ -127,7 +127,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(658, 601);
+			this.ClientSize = new System.Drawing.Size(658, 636);
 			this.ControlBox = false;
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.panelClothing);

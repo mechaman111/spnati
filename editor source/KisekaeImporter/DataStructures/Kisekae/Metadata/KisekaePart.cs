@@ -31,6 +31,8 @@
 		Bra,
 		Panties,
 		Skirt,
+		UpperUndershirt,
+		LowerUndershirt,
 	}
 
 	public static class KisekaeExtensions
@@ -87,6 +89,10 @@
 					return "Shirt (upper)";
 				case KisekaePart.LowerShirt:
 					return "Shirt (lower)";
+				case KisekaePart.UpperUndershirt:
+					return "Undershirt (upper)";
+				case KisekaePart.LowerUndershirt:
+					return "Undershirt (lower)";
 				case KisekaePart.None:
 					return "None";
 				default:
@@ -146,6 +152,10 @@
 					return "mune.YsyatuMune/mune.YsyatuMune2";
 				case KisekaePart.LowerShirt:
 					return "dou.YsyatuDou";
+				case KisekaePart.UpperUndershirt:
+					return "mune.TsyatuMune/mune.TsyatuMune2";
+				case KisekaePart.LowerUndershirt:
+					return "dou.TsyatuDou";
 				case KisekaePart.Necktie:
 					return "mune.Necktie0/mune.Necktie1";
 				case KisekaePart.Bra:
@@ -211,6 +221,10 @@
 					return KisekaePart.UpperShirt;
 				case "dou.YsyatuDou":
 					return KisekaePart.LowerShirt;
+				case "mune.TsyatuMune/mune.TsyatuMune2":
+					return KisekaePart.UpperUndershirt;
+				case "dou.TsyatuDou":
+					return KisekaePart.LowerUndershirt;
 				case "mune.Necktie0/mune.Necktie1":
 					return KisekaePart.Necktie;
 				case "mune.Bura/dou.Bura":

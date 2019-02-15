@@ -3,6 +3,7 @@ using Desktop;
 using Desktop.CommonControls;
 using System.Windows.Forms;
 using SPNATI_Character_Editor.Controls;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -10,6 +11,7 @@ namespace SPNATI_Character_Editor
 	{
 		private ExpressionTest _expression;
 		private string _currentVariable;
+		private bool _linkedToAlsoPlaying;
 
 		public ExpressionControl()
 		{
@@ -58,7 +60,25 @@ namespace SPNATI_Character_Editor
 
 		protected override void OnBindingUpdated(string property)
 		{
-			if (property == "Target")
+			if (property == "AlsoPlaying")
+			{
+				if (cboExpression.Text.StartsWith("~_."))
+				{
+					Case data = Data as Case;
+					if (data != null)
+					{
+						string id = data.AlsoPlaying;
+						if (!string.IsNullOrEmpty(id))
+						{
+							string key = CharacterDatabase.GetId(id);
+							string variable = cboExpression.Text;
+							variable = $"~{key}.{variable.Substring(3)}";
+							cboExpression.Text = variable;
+						}
+					}
+				}
+			}
+			if (property == "Target" || property == "AlsoPlaying")
 			{
 				UpdateAutoComplete(true);
 			}
@@ -89,11 +109,22 @@ namespace SPNATI_Character_Editor
 		{
 			Character character = Context as Character;
 			string variable = cboExpression.Text;
+			string key = "";
+			string func = "";
 			if (!force && variable == _currentVariable)
 			{
 				return;
 			}
 			_currentVariable = variable;
+
+			_linkedToAlsoPlaying = false;
+			Regex regex = new Regex(@"~(.*)\.(.*)~");
+			Match m = regex.Match(variable);
+			if (m.Groups.Count > 2)
+			{
+				key = m.Groups[1].Value;
+				func = m.Groups[2].Value;
+			}
 
 			cboValue.Items.Clear();
 			switch (_currentVariable)
@@ -235,6 +266,48 @@ namespace SPNATI_Character_Editor
 						"false",
 					});
 					break;
+			}
+			Character characterVar = CharacterDatabase.GetById(key);
+			if (characterVar != null || key == "_")
+			{
+				switch (func)
+				{
+					case "costume":
+						Case data = Data as Case;
+						cboValue.Items.Add("default");
+						if (characterVar != null)
+						{
+							foreach (AlternateSkin alt in characterVar.Metadata.AlternateSkins)
+							{
+								foreach (SkinLink skin in alt.Skins)
+								{
+									cboValue.Items.Add(skin.Costume.Id);
+								}
+							}
+						}
+						break;
+					case "position":
+						cboValue.Items.AddRange(new string[] {
+							"left",
+							"right",
+							"self",
+						});
+						break;
+					case "slot":
+						cboValue.Items.AddRange(new string[] {
+							"1",
+							"2",
+							"3",
+							"4",
+						});
+						break;
+					case "tag":
+						cboValue.Items.AddRange(new string[] {
+							"true",
+							"false",
+						});
+						break;
+				}
 			}
 			cboValue.Sorted = true;
 			cboValue.AutoCompleteSource = AutoCompleteSource.ListItems;

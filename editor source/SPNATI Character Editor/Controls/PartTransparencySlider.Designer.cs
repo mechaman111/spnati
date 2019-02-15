@@ -35,11 +35,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.valValue)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// label1
+			// lblName
 			// 
 			this.lblName.AutoSize = true;
 			this.lblName.Location = new System.Drawing.Point(3, 6);
-			this.lblName.Name = "label1";
+			this.lblName.Name = "lblName";
 			this.lblName.Size = new System.Drawing.Size(58, 13);
 			this.lblName.TabIndex = 0;
 			this.lblName.Text = "Part name:";
@@ -49,10 +49,10 @@
 			this.track.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.track.LargeChange = 10;
-			this.track.Location = new System.Drawing.Point(88, -1);
+			this.track.Location = new System.Drawing.Point(110, -1);
 			this.track.Maximum = 100;
 			this.track.Name = "track";
-			this.track.Size = new System.Drawing.Size(166, 45);
+			this.track.Size = new System.Drawing.Size(144, 45);
 			this.track.SmallChange = 5;
 			this.track.TabIndex = 1;
 			this.track.TickFrequency = 10;

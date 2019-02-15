@@ -51,6 +51,8 @@ namespace SPNATI_Character_Editor.Forms
 			AddSlider(KisekaePart.LowerVest, panelClothing);
 			AddSlider(KisekaePart.UpperShirt, panelClothing);
 			AddSlider(KisekaePart.LowerShirt, panelClothing);
+			AddSlider(KisekaePart.UpperUndershirt, panelClothing);
+			AddSlider(KisekaePart.LowerUndershirt, panelClothing);
 			AddSlider(KisekaePart.Skirt, panelClothing);
 			AddSlider(KisekaePart.Necktie, panelClothing);
 			AddSlider(KisekaePart.Bra, panelClothing);

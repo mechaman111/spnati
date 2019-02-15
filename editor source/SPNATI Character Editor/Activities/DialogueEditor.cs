@@ -534,6 +534,10 @@ namespace SPNATI_Character_Editor.Activities
 				tableConditions.AddSpeedButton("Target", "Target Position", (data) => { return AddVariableTest("~target.position~", data); });
 				tableConditions.AddSpeedButton("Target", "Target Slot", (data) => { return AddVariableTest("~target.slot~", data); });
 			}
+			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
 		}
 
 		private string AddVariableTest(string variable, object data)
