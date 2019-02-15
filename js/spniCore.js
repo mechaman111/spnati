@@ -143,11 +143,16 @@ function compileBaseErrorReport(userDesc, bugType) {
         'previousLoser': previousLoser,
         'recentLoser': recentLoser,
         'gameOver': gameOver,
-        'visibleScreens': []
+        'visibleScreens': [],
+        'rollback': inRollback()
     }
 
     if (gamePhase) {
-        circumstances.gamePhase = gamePhase[0];
+        if (inRollback()) {
+            circumstances.gamePhase = rolledBackGamePhase[0];
+        } else {
+            circumstances.gamePhase = gamePhase[0];
+        }
     }
 
     for (let i=0;i<allScreens.length;i++) {

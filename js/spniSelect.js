@@ -1047,6 +1047,8 @@ function advanceSelectScreen () {
         player.preloadStageImages(0);
     });
 
+	transcriptHistory = [];
+
     advanceToNextScreen($selectScreen);
 }
 

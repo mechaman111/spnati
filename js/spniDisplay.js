@@ -437,7 +437,7 @@ OpponentDisplay.prototype.update = function(player) {
         bubbleArrowOffsetRules[this.slot-1][1].style.top = chosenState.location;
     }
     
-    if (showDebug) {
+    if (showDebug && !inRollback()) {
         appendRepeats(this.slot);
     }
 }
