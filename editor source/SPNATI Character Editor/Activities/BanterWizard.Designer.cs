@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.cmdLoadTags = new System.Windows.Forms.Button();
 			this.lstTags = new System.Windows.Forms.ListBox();
 			this.lblTags = new System.Windows.Forms.Label();
 			this.lstCharacters = new System.Windows.Forms.ListBox();
@@ -48,6 +49,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.lblResponse = new System.Windows.Forms.Label();
 			this.gridResponse = new SPNATI_Character_Editor.Controls.DialogueGrid();
+			this.lblNoMatches = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -71,6 +73,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.cmdLoadTags);
 			this.splitContainer1.Panel1.Controls.Add(this.lstTags);
 			this.splitContainer1.Panel1.Controls.Add(this.lblTags);
 			this.splitContainer1.Panel1.Controls.Add(this.lstCharacters);
@@ -83,6 +86,18 @@
 			this.splitContainer1.SplitterDistance = 206;
 			this.splitContainer1.TabIndex = 1;
 			// 
+			// cmdLoadTags
+			// 
+			this.cmdLoadTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdLoadTags.Location = new System.Drawing.Point(12, 375);
+			this.cmdLoadTags.Name = "cmdLoadTags";
+			this.cmdLoadTags.Size = new System.Drawing.Size(184, 23);
+			this.cmdLoadTags.TabIndex = 4;
+			this.cmdLoadTags.Text = "View";
+			this.cmdLoadTags.UseVisualStyleBackColor = true;
+			this.cmdLoadTags.Click += new System.EventHandler(this.cmdLoadTags_Click);
+			// 
 			// lstTags
 			// 
 			this.lstTags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -93,6 +108,7 @@
 			this.lstTags.Name = "lstTags";
 			this.lstTags.Size = new System.Drawing.Size(184, 277);
 			this.lstTags.TabIndex = 3;
+			this.lstTags.Visible = false;
 			this.lstTags.SelectedIndexChanged += new System.EventHandler(this.lstTags_SelectedIndexChanged);
 			// 
 			// lblTags
@@ -133,6 +149,7 @@
 			// 
 			// splitContainer2.Panel1
 			// 
+			this.splitContainer2.Panel1.Controls.Add(this.lblNoMatches);
 			this.splitContainer2.Panel1.Controls.Add(this.lblCaseInfo);
 			this.splitContainer2.Panel1.Controls.Add(this.cmdCreateResponse);
 			this.splitContainer2.Panel1.Controls.Add(this.lblLines);
@@ -293,6 +310,16 @@
 			this.gridResponse.TabIndex = 0;
 			this.gridResponse.HighlightRow += new System.EventHandler<int>(this.gridResponse_HighlightRow);
 			// 
+			// lblNoMatches
+			// 
+			this.lblNoMatches.AutoSize = true;
+			this.lblNoMatches.Location = new System.Drawing.Point(3, 25);
+			this.lblNoMatches.Name = "lblNoMatches";
+			this.lblNoMatches.Size = new System.Drawing.Size(63, 13);
+			this.lblNoMatches.TabIndex = 4;
+			this.lblNoMatches.Text = "None found";
+			this.lblNoMatches.Visible = false;
+			// 
 			// BanterWizard
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,5 +370,7 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label lblResponse;
 		private Controls.DialogueGrid gridResponse;
+		private System.Windows.Forms.Button cmdLoadTags;
+		private System.Windows.Forms.Label lblNoMatches;
 	}
 }
