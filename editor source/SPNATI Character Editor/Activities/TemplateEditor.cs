@@ -3,6 +3,7 @@ using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using SPNATI_Character_Editor.Forms;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -262,7 +263,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character);
+			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character, new Dictionary<string, string>());
 			Enabled = true;
 			if (img != null)
 			{

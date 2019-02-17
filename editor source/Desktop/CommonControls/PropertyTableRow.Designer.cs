@@ -32,9 +32,9 @@
 			this.table = new System.Windows.Forms.TableLayoutPanel();
 			this.lblName = new System.Windows.Forms.Label();
 			this.cmdPin = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.cmdRemove = new System.Windows.Forms.Button();
 			this.lblHelp = new System.Windows.Forms.Label();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.table.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,11 +73,12 @@
 			// 
 			this.cmdPin.FlatAppearance.BorderSize = 0;
 			this.cmdPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.cmdPin.Location = new System.Drawing.Point(577, 3);
+			this.cmdPin.Image = global::Desktop.Properties.Resources.StarOutline;
+			this.cmdPin.Location = new System.Drawing.Point(575, 1);
+			this.cmdPin.Margin = new System.Windows.Forms.Padding(1);
 			this.cmdPin.Name = "cmdPin";
 			this.cmdPin.Size = new System.Drawing.Size(20, 22);
 			this.cmdPin.TabIndex = 2;
-			this.cmdPin.Text = "☆";
 			this.toolTip1.SetToolTip(this.cmdPin, "Marks or unmarks the condition as a favorite so it appears by default");
 			this.cmdPin.UseVisualStyleBackColor = true;
 			this.cmdPin.Click += new System.EventHandler(this.cmdPin_Click);
@@ -88,11 +89,12 @@
 			this.cmdRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.cmdRemove.Font = new System.Drawing.Font("Segoe UI", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmdRemove.ForeColor = System.Drawing.Color.DarkRed;
-			this.cmdRemove.Location = new System.Drawing.Point(603, 3);
+			this.cmdRemove.Image = global::Desktop.Properties.Resources.Delete;
+			this.cmdRemove.Location = new System.Drawing.Point(601, 1);
+			this.cmdRemove.Margin = new System.Windows.Forms.Padding(1);
 			this.cmdRemove.Name = "cmdRemove";
 			this.cmdRemove.Size = new System.Drawing.Size(20, 22);
 			this.cmdRemove.TabIndex = 1;
-			this.cmdRemove.Text = "❌";
 			this.toolTip1.SetToolTip(this.cmdRemove, "Remove condition");
 			this.cmdRemove.UseVisualStyleBackColor = true;
 			this.cmdRemove.Click += new System.EventHandler(this.cmdRemove_Click);

@@ -47,13 +47,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (!string.IsNullOrEmpty(Sprite.Src))
 			{
 				Pose.Images.TryGetValue(Sprite.Src, out Image);
-				if (Width == 0)
+				if (Image != null)
 				{
-					Width = Image.Width;
-				}
-				if (Height == 0)
-				{
-					Height = Image.Height;
+					if (Width == 0)
+					{
+						Width = Image.Width;
+					}
+					if (Height == 0)
+					{
+						Height = Image.Height;
+					}
 				}
 			}
 			PivotX = SceneObject.ParsePivot(Sprite.PivotX ?? "center", Width);

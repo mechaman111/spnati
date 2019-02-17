@@ -91,22 +91,24 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, ISkin character)
+		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, ISkin character, Dictionary<string, string> extraData)
 		{
 			//reset some scene vars
 			CleanImage(code, character);
 			ImageMetadata data = new ImageMetadata("raw", code.ToString())
 			{
-				CropInfo = crop
+				CropInfo = crop,
+				ExtraData = extraData
 			};
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, true, false); }, 1, null, 0);
 		}
 
-		public static async Task<Image> GetRawImage(KisekaeCode code, ISkin character)
+		public static async Task<Image> GetRawImage(KisekaeCode code, ISkin character, Dictionary<string, string> extraData)
 		{
 			//reset some scene vars
 			CleanImage(code, character);
 			ImageMetadata data = new ImageMetadata("raw", code.ToString());
+			data.ExtraData = extraData;
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, false, false); }, 1, null, 0);
 		}
 	}

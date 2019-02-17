@@ -80,5 +80,35 @@
 			get { return GetInt(13); }
 			set { Set(13, value.ToString()); }
 		}
+
+		public int Pocket
+		{
+			get { return GetInt(14); }
+			set { Set(14, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor1
+		{
+			get { return new KisekaeColor(GetString(15)); }
+			set { Set(15, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor2
+		{
+			get { return new KisekaeColor(GetString(16)); }
+			set { Set(16, value.ToString()); }
+		}
+
+		public KisekaeColor PocketColor3
+		{
+			get { return new KisekaeColor(GetString(17)); }
+			set { Set(17, value.ToString()); }
+		}
+
+		public int PocketSide
+		{
+			get { return GetInt(18); }
+			set { Set(18, value.ToString()); }
+		}
 	}
 }

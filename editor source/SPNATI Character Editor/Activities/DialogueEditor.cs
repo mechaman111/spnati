@@ -468,7 +468,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				vars.Add($"~{variable}~");
 			}
-			lblAvailableVars.Text = string.Format("Variables: {0}", string.Join(" ", vars));
+			toolTip1.SetToolTip(lblAvailableVars, string.Format("Variables: {0}", string.Join(" ", vars)));
 
 			#endregion
 
@@ -521,11 +521,23 @@ namespace SPNATI_Character_Editor.Activities
 			if (_selectedCase == null) { return; }
 			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
+			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
 			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
-			if (caseTrigger.AvailableVariables.Contains("clothing") && caseTrigger.HasTarget)
+			if (caseTrigger.HasTarget)
 			{
-				tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+				if (caseTrigger.AvailableVariables.Contains("clothing"))
+				{
+					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
+				}
+				tableConditions.AddSpeedButton("Target", "Target Costume", (data) => { return AddVariableTest("~target.costume~", data); });
+				tableConditions.AddSpeedButton("Target", "Target Position", (data) => { return AddVariableTest("~target.position~", data); });
+				tableConditions.AddSpeedButton("Target", "Target Slot", (data) => { return AddVariableTest("~target.slot~", data); });
 			}
+			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
+			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
 		}
 
 		private string AddVariableTest(string variable, object data)

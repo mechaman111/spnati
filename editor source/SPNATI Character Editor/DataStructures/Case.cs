@@ -210,7 +210,7 @@ namespace SPNATI_Character_Editor
 		[XmlElement("condition")]
 		public List<TargetCondition> Conditions;
 
-		[Expression(DisplayName = "Variable Test (+)", GroupName = "Game", GroupOrder = 5, Description = "Tests the value of a variable. Multiple can be added")]
+		[Expression(DisplayName = "Variable Test (+)", GroupName = "Game", GroupOrder = 5, Description = "Tests the value of a variable. Multiple can be added", BoundProperties = new string[] { "Target", "AlsoPlaying" })]
 		[XmlElement("test")]
 		public List<ExpressionTest> Expressions;
 

@@ -62,7 +62,7 @@ namespace Desktop.CommonControls
 			set
 			{
 				_favorited = value;
-				cmdPin.Text = value ? "★" : "☆";
+				cmdPin.Image = value ? Properties.Resources.StarFilled : Properties.Resources.StarOutline;
 			}
 		}
 
@@ -83,14 +83,12 @@ namespace Desktop.CommonControls
 				_required = value;
 				if (_required)
 				{
-					cmdRemove.Text = "";
 					cmdRemove.Image = Properties.Resources.Eraser;
 					toolTip1.SetToolTip(cmdRemove, "Clear");
 				}
 				else
 				{
-					cmdRemove.Text = "❌";
-					cmdRemove.Image = null;
+					cmdRemove.Image = Properties.Resources.Delete;
 					toolTip1.SetToolTip(cmdRemove, "Remove");
 				}
 			}

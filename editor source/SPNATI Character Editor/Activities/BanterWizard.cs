@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -46,82 +47,73 @@ namespace SPNATI_Character_Editor.Activities
 			//Scan other characters to see who talks to this character
 			foreach (Character other in CharacterDatabase.Characters)
 			{
-				foreach (var stageCase in other.GetWorkingCasesTargetedAtCharacter(_character, TargetType.All))
-				{
-					List<TargetData> lines;
-					if (!string.IsNullOrEmpty(stageCase.Filter))
-					{
-						if (!_filterLines.TryGetValue(other, out lines))
-						{
-							lstTags.Items.Add(other);
-							lines = new List<TargetData>();
-							_filterLines[other] = lines;
-						}
-					}
-					else
-					{
-						if (!_lines.TryGetValue(other, out lines))
-						{
-							lstCharacters.Items.Add(other);
-							lines = new List<TargetData>();
-							_lines[other] = lines;
-						}
-					}
-
-					//Split the case into sequential ranges, since you can't target non-sequential ranges in a response
-					int startStage = stageCase.Stages[0];
-					int stage = startStage;
-					for (int i = 1; i < stageCase.Stages.Count; i++)
-					{
-						int nextStage = stageCase.Stages[i];
-						if (nextStage - stage > 1)
-						{
-							//Found a splitting point
-							Case subCase = stageCase.Copy();
-							for (int s = startStage; s <= stage; s++)
-							{
-								subCase.Stages.Add(s);
-							}
-							TargetData subdata = new TargetData(other, subCase);
-							lines.Add(subdata);
-							startStage = nextStage;
-							stage = nextStage;
-						}
-						else
-						{
-							stage = nextStage;
-						}
-					}
-					Case lastCase = stageCase.Copy();
-					for (int s = startStage; s <= stage; s++)
-					{
-						lastCase.Stages.Add(s);
-					}
-					TargetData data = new TargetData(other, lastCase);
-					lines.Add(data);
-				}
+				if (other.FolderName == "human" || other == _character) { continue; }
+				lstCharacters.Items.Add(other);
 			}
 		}
 
 		private void lstCharacters_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ShowTargetedLines(lstCharacters.SelectedItem as Character, _lines);
+			ShowTargetedLines(lstCharacters.SelectedItem as Character, _lines, TargetType.DirectTarget);
 			SelectLine(0);
 		}
 
 		private void lstTags_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ShowTargetedLines(lstTags.SelectedItem as Character, _filterLines);
+			ShowTargetedLines(lstTags.SelectedItem as Character, _filterLines, TargetType.Filter);
 			SelectLine(0);
 		}
 
-		private void ShowTargetedLines(Character other, Dictionary<Character, List<TargetData>> targetedLines)
+		private List<TargetData> LoadLines(Character other, TargetType targetType)
+		{
+			List<TargetData> lines = new List<TargetData>();
+			foreach (var stageCase in other.GetWorkingCasesTargetedAtCharacter(_character, targetType))
+			{
+				//Split the case into sequential ranges, since you can't target non-sequential ranges in a response
+				int startStage = stageCase.Stages[0];
+				int stage = startStage;
+				for (int i = 1; i < stageCase.Stages.Count; i++)
+				{
+					int nextStage = stageCase.Stages[i];
+					if (nextStage - stage > 1)
+					{
+						//Found a splitting point
+						Case subCase = stageCase.Copy();
+						for (int s = startStage; s <= stage; s++)
+						{
+							subCase.Stages.Add(s);
+						}
+						TargetData subdata = new TargetData(other, subCase);
+						lines.Add(subdata);
+						startStage = nextStage;
+						stage = nextStage;
+					}
+					else
+					{
+						stage = nextStage;
+					}
+				}
+				Case lastCase = stageCase.Copy();
+				for (int s = startStage; s <= stage; s++)
+				{
+					lastCase.Stages.Add(s);
+				}
+				TargetData data = new TargetData(other, lastCase);
+				lines.Add(data);
+			}
+			return lines;
+		}
+
+		private void ShowTargetedLines(Character other, Dictionary<Character, List<TargetData>> targetedLines, TargetType type)
 		{
 			if (other == null)
 				return;
 			lblLines.Text = "Lines spoken by " + other;
 			HideResponses();
-			List<TargetData> lines = targetedLines[other];
+			List<TargetData> lines = targetedLines.GetOrAddDefault(other, () =>
+			{
+				return LoadLines(other, type);
+			});
 			gridLines.Rows.Clear();
 			foreach (var data in lines)
 			{
@@ -130,6 +122,7 @@ namespace SPNATI_Character_Editor.Activities
 					DataGridViewRow row = gridLines.Rows[gridLines.Rows.Add()];
 					row.Tag = data;
 					row.Cells["ColText"].Value = line.Text;
+					row.Cells["ColText"].Tag = line;
 					if (data.Case.Stages.Count == 1)
 					{
 						row.Cells["ColStage"].Value = data.Case.Stages[0];
@@ -142,6 +135,9 @@ namespace SPNATI_Character_Editor.Activities
 					row.Cells["ColCase"].Value = GetCaseLabel(data.Case, trigger);
 				}
 			}
+
+			gridLines.Visible = (lines.Count > 0);
+			lblNoMatches.Visible = (lines.Count == 0);
 		}
 
 		private string GetCaseLabel(Case targetedCase, Trigger trigger)
@@ -200,6 +196,19 @@ namespace SPNATI_Character_Editor.Activities
 
 				lblBaseLine.Text = string.Format("{0} is reacting to these lines from {1}:", _selectedData.Character, _character);
 
+				ImageLibrary library = ImageLibrary.Get(_selectedData.Character);
+				DialogueLine line = row.Cells["ColText"].Tag as DialogueLine;
+				if (line != null)
+				{
+					string image = DialogueLine.GetStageImage(data.Case.Stages[0], line.Image);
+					CharacterImage img = library.Find(image);
+					if (img != null)
+					{
+						Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, img);
+					}
+				}
+
+
 				//See if the character already has a response, and display it if so
 				Case sampleResponse = _selectedData.Case.CreateResponse(_selectedData.Character, _character);
 				if (sampleResponse == null)
@@ -227,6 +236,10 @@ namespace SPNATI_Character_Editor.Activities
 						ShowBasicLines();
 					}
 				}
+			}
+			else
+			{
+				lstBasicLines.Items.Clear();
 			}
 		}
 
@@ -359,6 +372,32 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				gridResponse.Save();
 			}
+		}
+
+		private void cmdLoadTags_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("This can take a long time. Proceed?", "Load Tag Information", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+			{
+				Cursor.Current = Cursors.WaitCursor;
+				LoadTags();
+				Cursor.Current = Cursors.Default;
+			}
+		}
+
+		private void LoadTags()
+		{
+			foreach (Character other in CharacterDatabase.Characters)
+			{
+				List<TargetData> lines = LoadLines(other, TargetType.Filter);
+				_filterLines[other] = lines;
+				if (lines.Count > 0)
+				{
+					lstTags.Items.Add(other);
+				}
+			}
+
+			cmdLoadTags.Visible = false;
+			lstTags.Visible = true;
 		}
 	}
 }
