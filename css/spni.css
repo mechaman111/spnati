@@ -500,11 +500,11 @@ body.modal-open {
     color: white;
 }
 
-#player-tags-modal.male .player-tag-select.female {
+#player-tags-modal.male .player-tag-select.female, #player-tags-modal.male .player-tag-select option.female {
     display: none;
 }
 
-#player-tags-modal.female .player-tag-select.male {
+#player-tags-modal.female .player-tag-select.male, #player-tags-modal.female .player-tag-select option.male {
     display: none;
 }
 
@@ -621,6 +621,51 @@ body.modal-open {
 
 #usage-reporting-modal ul {
 	padding-left: 20px;
+}
+
+/************************************************************
+ * Classes for the dialogue transcript modal.
+ ************************************************************/
+#log-container {
+	width: 100%;
+	overflow-y: scroll;
+	max-height: 65vh;
+}
+ 
+.log-entry-container {
+	border: 2px solid #111111;
+	border-radius: 5px;
+	background: #F5F5F5;
+	display: flex;
+	align-items: center;
+	margin-bottom: .5%;
+	opacity: .75;
+	cursor: pointer;
+}
+
+.log-entry-container:hover {
+	opacity: 1;
+}
+
+.log-entry-label {
+	float: left;
+	margin-left: .25em;
+	width: 12.5%;
+	height: 100%;
+}
+
+.log-entry-text {
+	float: left;
+	margin-left: .5em;
+	width: 87.5%;
+	height: 100%;
+	text-align:left;
+}
+
+
+.log-entry-message {
+	width: 100%;
+	height: 100%;
 }
 
 /************************************************************
@@ -1714,13 +1759,19 @@ body.modal-open {
 #game-home-button {
     position: absolute;
     left: 1.5%;
-    bottom: 8%;
+    bottom: 7.5%;
 }
 
 #game-settings-button {
     position: absolute;
     left: 1.5%;
     bottom: 2%;
+}
+
+#game-log-button {
+    position: absolute;
+    left: 1.5%;
+    bottom: 13%;
 }
 
 .dock-options-button {

@@ -112,12 +112,13 @@ monika.generate_mast_images = function() {
     // masturbation images go from 9-mast-1[-alt].png to 9-mast-9[-alt].png.
 
     monika.mast_images = [];
+    var pl = monika.find_monika_player();
 
     for(var i=1;i<=9;i++) {
         if(monika.active_effects.glitch_heavy_masturbation) {
-            monika.mast_images.push('opponents/monika/9-mast-'+i.toString()+'-alt.png');
+            monika.mast_images.push(pl.folder+'9-mast-'+i.toString()+'-alt.png');
         } else {
-            monika.mast_images.push('opponents/monika/9-mast-'+i.toString()+'.png');
+            monika.mast_images.push(pl.folder+'9-mast-'+i.toString()+'.png');
         }
     }
 
@@ -179,6 +180,7 @@ monika.glitch_masturbation = function(slot) {
 
         glitch_count += 1;
         
+        slot = monika.find_slot();
         monika.glitchCharacter(slot, null, null, function (cv) {
             monika.active_effects.glitch_masturbation = setTimeout(set_next_image, glitchTime);
         });
@@ -196,7 +198,8 @@ monika.glitch_masturbation = function(slot) {
         if(glitch_count === yuri_glitch_at) {
             yuri_original_dialogue = $gameDialogues[slot-1].html();
 
-            $gameImages[slot-1].attr('src', 'opponents/monika/9-yuri-surprised.png');
+            var pl = monika.find_monika_player();
+            $gameImages[slot-1].attr('src', pl.folder+'9-yuri-surprised.png');
             $gameDialogues[slot-1].html([
                 "W-what? W-w-where am I? What is this? Are you--",
                 "Wait, w-where am I? What just happened? Wait... are you--",

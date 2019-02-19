@@ -132,6 +132,7 @@ $searchName = $("#search-name");
 $searchSource = $("#search-source");
 $searchTag = $("#search-tag");
 $tagList = $("#tagList");
+$sourceList = $("#sourceList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $sortingOptionsItems = $(".sort-dropdown-options li");
@@ -161,7 +162,8 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
-var tagList = [];
+var tagSet = {};
+var sourceSet = {};
 
 /* page variables */
 var groupSelectScreen = 0;
@@ -220,11 +222,10 @@ function loadListingFile () {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
-        opp.tags.forEach(function(tag) {
-          if (!~tagList.indexOf(tag)) {
-            tagList.push(tag);
-          }
-        })
+                opp.tags.forEach(function(tag) {
+                    tagSet[tag] = true;
+                });
+                sourceSet[opp.source] = true;
 			}
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
@@ -239,6 +240,14 @@ function loadListingFile () {
 			updateSelectableGroups(1);
 			updateGroupSelectScreen();
 		}
+        if (outstandingLoads == 0) {
+            $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
+                return new Option(tag);
+            }));
+            $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+                return new Option(source);
+            }));
+        }
 	}
 
 	/* grab and parse the opponent listing file */
@@ -356,8 +365,9 @@ function updateStatusIcon(elem, status) {
 /* Creates an <option> element in a jQuery object for an alternate costume.
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
-function getCostumeOption(alt_costume) {
-	return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label})
+function getCostumeOption(alt_costume, selected_costume) {
+    return $('<option>', {val: alt_costume.folder, text: 'Alternate Skin: '+alt_costume.label,
+                          selected: alt_costume.folder == selected_costume})
 }
 
 /************************************************************
@@ -419,7 +429,7 @@ function updateIndividualSelectScreen () {
 					}
 					
 					selectableOpponents[i].alternate_costumes.forEach(function (alt) {
-						$individualCostumeSelectors[index].append(getCostumeOption(alt));
+						$individualCostumeSelectors[index].append(getCostumeOption(alt, selectableOpponents[i].selected_costume));
 					});
 					$individualCostumeSelectors[index].show();
 				}
@@ -506,7 +516,7 @@ function updateGroupSelectScreen () {
 						$groupCostumeSelectors[i].empty().append($('<option>', {val: '', text: 'Default Skin'}));
 					}
 					opponent.alternate_costumes.forEach(function (alt) {
-						$groupCostumeSelectors[i].append(getCostumeOption(alt));
+						$groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
 					});
 					$groupCostumeSelectors[i].show();
 				}
@@ -569,7 +579,7 @@ function updateSuggestionQuad(slot, quad, opponent) {
     img_elem.attr({
         'title': tooltip,
         'data-original-title': tooltip,
-        'src': opponent.folder+opponent.image
+        'src': opponent.selection_image
     }).tooltip();
 
     label_elem.text(opponent.label);
@@ -718,7 +728,6 @@ function selectOpponentSlot (slot) {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
 		
-		players[slot].unloadAlternateCostume();
         delete players[slot];
 
         updateSelectionVisuals();
@@ -778,6 +787,12 @@ function updateSelectableGroups(screen) {
 
         if (source && !group.opponents.some(function(opp) {
             return opp.source.toLowerCase().indexOf(source) >= 0;
+        })) return false;
+
+        if (tag && !group.opponents.some(function(opp) {
+            return opp.tags.some(function(t) {
+                return t.toLowerCase() == tag;
+            })
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
@@ -865,10 +880,6 @@ function clickedRandomFillButton (predicate) {
 function clickedRemoveAllButton ()
 {
     for (var i = 1; i < 5; i++) {
-		if (players[i]) {
-			players[i].unloadAlternateCostume();
-		}
-		
         delete players[i];
         $selectImages[i-1].off('load');
     }
@@ -1036,6 +1047,8 @@ function advanceSelectScreen () {
         player.preloadStageImages(0);
     });
 
+	transcriptHistory = [];
+
     advanceToNextScreen($selectScreen);
 }
 
@@ -1068,13 +1081,8 @@ function altCostumeSelected(slot, inGroup) {
 		}
 	}
 	
-	if (costumeDesc) {
-		opponent.selectAlternateCostume(selectedCostume);
-		selectImage.attr('src', selectedCostume+costumeDesc.image);
-	} else {
-		opponent.selectAlternateCostume(null);
-		selectImage.attr('src', opponent.folder + opponent.image);
-	}
+    opponent.selectAlternateCostume(costumeDesc);
+    selectImage.attr('src', opponent.selection_image);
 }
 
 
@@ -1209,16 +1217,8 @@ function hideGroupSelectionTable() {
 }
 
 function openSearchModal() {
-  /* build the list of tags for the filter (once) */
-  if (!$tagList.children('option').length) {
-    tagList.forEach(function(tag) {
-      $tagList.append('<option value="' + tag + '"/>');
-    });
-  }
-
-  $searchModal.modal('show');
+    $searchModal.modal('show');
 }
-
 
 function closeSearchModal() {
     // perform the search and sort logic

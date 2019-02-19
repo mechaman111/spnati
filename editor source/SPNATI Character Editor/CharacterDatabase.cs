@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -20,6 +21,7 @@ namespace SPNATI_Character_Editor
 
 		private static List<Character> _characters = new List<Character>();
 		private static Dictionary<string, Character> _characterMap = new Dictionary<string, Character>();
+		private static Dictionary<string, Character> _idMap = new Dictionary<string, Character>();
 		private static Dictionary<Character, CharacterEditorData> _editorData = new Dictionary<Character, CharacterEditorData>();
 		private static Dictionary<string, Costume> _reskins = new Dictionary<string, Costume>();
 
@@ -32,6 +34,16 @@ namespace SPNATI_Character_Editor
 		{
 			_characters.Add(character);
 			_characterMap[character.FolderName] = character;
+			_idMap[GetId(character)] = character;
+		}
+
+		public static string GetId(Character character)
+		{
+			return GetId(character.FolderName);
+		}
+		public static string GetId(string id)
+		{
+			return Regex.Replace(id, @"\W", "");
 		}
 
 		public static Character GetRandom()
@@ -44,6 +56,11 @@ namespace SPNATI_Character_Editor
 			return _characterMap.Get(folderName);
 		}
 
+		public static Character GetById(string id)
+		{
+			return _idMap.Get(id);
+		}
+
 		public static bool Exists(string folderName)
 		{
 			return _characterMap.ContainsKey(folderName);
@@ -52,6 +69,7 @@ namespace SPNATI_Character_Editor
 		public static void Set(string folderName, Character character)
 		{
 			_characterMap[folderName] = character;
+			_idMap[GetId(character)] = character;
 			for (int i = 0; i < _characters.Count; i++)
 			{
 				if (_characters[i].FolderName == folderName)

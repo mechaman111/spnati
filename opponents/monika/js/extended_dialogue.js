@@ -25,7 +25,7 @@ monika.display_dialogue = function(pose, dialogue) {
     var slot = monika.find_slot();
     
     var current_img = monika.assemble_pose_filename({
-        'opponent': "monika",
+        'base': players[slot].folder,
         'stage': players[slot].stage,
         'pose': pose,
         'ext': 'png'

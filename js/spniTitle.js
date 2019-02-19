@@ -22,10 +22,7 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
-    "meia/0-disappointed.png",
-    "meia/1-busy.png",
-    "meia/2-pleased.png",
-    "meia/2-addressing.png",
+    /*
     "elizabeth/0-calm.png",
     "elizabeth/1-awkward.png",
     "elizabeth/2-interested.png",
@@ -38,10 +35,6 @@ var CANDY_LIST = [
     "pit/1-happy.png",
     "pit/2-pumped.png",
     "pit/3-shy.png",
-    "uravity/0-calm.png",
-    "uravity/1-heroic.png",
-    "uravity/2-happy.png",
-    "uravity/3-embarrassed.png",
     "misato/0-Confident.png",
     "misato/1-Happy.png",
     "misato/2-Smug.png",
@@ -50,10 +43,6 @@ var CANDY_LIST = [
     "palutena/1-calm.png",
     "palutena/2-tranquil.png",
     "palutena/3-surprised.png",
-    "zone-tan/0-calm.png",
-    "zone-tan/1-interested.png",
-    "zone-tan/1-serene2.png",
-    "zone-tan/2-wink.png",
     "videl/0-confident.png",
     "videl/1-flying.png",
     "videl/2-happy.png",
@@ -86,30 +75,14 @@ var CANDY_LIST = [
     "jin/1-Excited.png",
     "jin/2-Happy.png",
     "jin/3-Flirt.png",
-    "corrin_m/0-calm.png",
-    "corrin_m/1-happy.png",
-    "corrin_m/2-excited.png",
-    "corrin_m/3-shy.png",
     "futaba/0-happy.png",
     "futaba/1-triumphant.png",
     "futaba/2-awkward.png",
     "futaba/3-excited.png",
-    "monika/0-writing-tip.png",
-    "monika/1-interested.png",
-    "monika/2-happy.png",
-    "monika/3-shy-happy.png",
     "velma/0-happy.png",
     "velma/0-calm.png",
     "velma/1-confident.png",
     "velma/1-shocked.png",
-    "d.va/0-winking.png",
-    "d.va/1-excited.png",
-    "d.va/2-peace.png",
-    "d.va/3-shocked.png",
-    "nagisa/0-dango.png",
-    "nagisa/1-calm.png",
-    "nagisa/2-interested.png",
-    "nagisa/3-veryembarrassed.png",
     "gwen/0-start.png",
     "gwen/2-happy.png",
     "gwen/2-normal.png",
@@ -162,6 +135,60 @@ var CANDY_LIST = [
     "zizou/1-excited.png",
     "zizou/2-happy.png",
     "zizou/3-interested.png",
+    
+    "nagisa/0-dango.png",
+    "nagisa/1-calm.png",
+    "nagisa/2-interested.png",
+    "nagisa/3-veryembarrassed.png",
+    */
+    "reskins/meia_cupid/0-disappointed.png",
+    "reskins/meia_cupid/1-busy.png",
+    "reskins/meia_cupid/2-pleased.png",
+    "reskins/meia_cupid/2-addressing.png",
+    "reskins/cheerleaderochako/0-calm.png",
+    "reskins/cheerleaderochako/1-heroic.png",
+    "reskins/cheerleaderochako/2-happy.png",
+    "reskins/cheerleaderochako/3-embarrassed.png",
+    "reskins/zone-tan_valentine/0-calm.png",
+    "reskins/zone-tan_valentine/1-interested.png",
+    "reskins/zone-tan_valentine/1-serene2.png",
+    "reskins/zone-tan_valentine/2-wink.png",
+    "reskins/corrin_m_valentine/0-calm.png",
+    "reskins/corrin_m_valentine/1-happy.png",
+    "reskins/corrin_m_valentine/2-excited.png",
+    "reskins/corrin_m_valentine/3-shy.png",
+    "reskins/monika_love_bug/0-writing-tip.png",
+    "reskins/monika_love_bug/1-interested.png",
+    "reskins/monika_love_bug/2-happy.png",
+    "reskins/monika_love_bug/3-shy-happy.png",
+    "reskins/d.va_cruiser/0-winking.png",
+    "reskins/d.va_cruiser/1-excited.png",
+    "reskins/d.va_cruiser/2-peace.png",
+    "reskins/d.va_cruiser/3-shocked.png",
+    "reskins/flower_girl_ini/0-sleepy.png",
+    "reskins/flower_girl_ini/1-excited.png",
+    "reskins/flower_girl_ini/2-dumb.png",
+    "reskins/flower_girl_ini/3-cracker.png",
+    "reskins/dapper_date/0-calm.png",
+    "reskins/dapper_date/1-joyful.png",
+    "reskins/dapper_date/2-pleasant.png",
+    "reskins/dapper_date/3-perky.png",
+    "reskins/festival_aella/0-happy.png",
+    "reskins/festival_aella/1-flustered.png",
+    "reskins/festival_aella/2-interested.png",
+    "reskins/festival_aella/2-happy.png",
+    "reskins/lynbride/0-calm.png",
+    "reskins/lynbride/1-happy.png",
+    "reskins/lynbride/2-interested.png",
+    "reskins/lynbride/3-happy.png",
+    "reskins/chiakimaid/0-sleepy.png",
+    "reskins/chiakimaid/1-happy.png",
+    "reskins/chiakimaid/2-excited.png",
+    "reskins/chiakimaid/3-embarrassed.png",
+    "reskins/zizou_valentine/0-happy.png",
+    "reskins/zizou_valentine/1-excited.png",
+    "reskins/zizou_valentine/2-appreciative.png",
+    "reskins/zizou_valentine/2-puzzled.png",
 ];
 
 var clothingChoices = [];
@@ -232,6 +259,15 @@ var playerTagOptions = {
             { value: 'uncircumcised' }
         ],
     },
+    'sexual_orientation': {
+        values: [
+            { value: 'straight' },
+            { value: 'bi-curious' },
+            { value: 'bisexual' },
+            { value: 'gay', gender: 'male' },
+            { value: 'lesbian', gender: 'female' },
+        ]
+    }
 };
 var playerTagSelections = {};
 
@@ -516,7 +552,9 @@ function selectTitleCandy() {
     var candy1 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 	var candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 
-    while (candy1.slice(0, candy1.indexOf("/")) == candy2.slice(0, candy2.indexOf("/"))) {
+
+    
+    while (candy1.slice(0, candy1.lastIndexOf("/")) == candy2.slice(0, candy2.lastIndexOf("/"))) {
 		candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 	}
 

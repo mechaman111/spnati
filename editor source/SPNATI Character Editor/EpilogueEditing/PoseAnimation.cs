@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
@@ -25,7 +22,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Directive = directive;
 			foreach (Keyframe kf in directive.Keyframes)
 			{
-				KeyframePreview frame = new KeyframePreview(pose, kf);
+				KeyframePreview frame = new KeyframePreview(kf);
 				Frames.Add(frame);
 			}
 			Frames.Sort((f1, f2) => {
@@ -53,6 +50,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 		}
 
+		/// <summary>
+		/// Advances the animation a certain amount
+		/// </summary>
+		/// <param name="elapsedMs"></param>
 		public void Update(float elapsedMs)
 		{
 			Elapsed += elapsedMs;
@@ -60,7 +61,21 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				Elapsed -= Duration;
 			}
-			float t = Elapsed - Delay;
+			UpdateTo(Elapsed - Delay, Sprite);
+		}
+
+		/// <summary>
+		/// Updates the animation to a specific point in time
+		/// </summary>
+		/// <param name="time"></param>
+		public void UpdateTo(float time, SpritePreview sprite)
+		{
+			Elapsed = time + Delay;
+			while (Directive.Looped && IsComplete && Duration > 0)
+			{
+				Elapsed -= Duration;
+			}
+			float t = time;
 
 			if (Sprite == null) { return; }
 			for (int i = Frames.Count - 1; i >= 0; i--)
@@ -76,45 +91,45 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				progress = (t <= 0 ? 0 : Math.Min(1, Math.Max(0, progress)));
 
 				progress = SceneAnimation.Ease(Directive.EasingMethod ?? "linear", progress);
-				UpdateSprite(lastFrame, frame, progress, i);
+				UpdateSprite(lastFrame, frame, progress, i, sprite);
 				return;
 			}
 		}
 
-		private void UpdateSprite(KeyframePreview fromFrame, KeyframePreview toFrame, float time, int index)
+		private void UpdateSprite(KeyframePreview fromFrame, KeyframePreview toFrame, float time, int index, SpritePreview sprite)
 		{
-			if (Sprite == null) { return; }
-			string interpolation = Directive.InterpolationMethod ?? "linear";
+			if (sprite == null) { return; }
+			string interpolation = Directive.InterpolationMethod ?? "none";
 			if (Directive.InterpolationMethod == "none" && !string.IsNullOrEmpty(fromFrame.Src))
 			{
-				Sprite.Image = Pose.Images[fromFrame.Src];
+				sprite.Image = Pose.Images[fromFrame.Src];
 			}
 
 			KeyframePreview lastLast = (index > 0 ? Frames[index - 1] : fromFrame);
 			KeyframePreview nextNext = index < Frames.Count - 2 ? Frames[index + 1] : toFrame;
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.X))
 			{
-				Sprite.X = SceneObject.Interpolate(fromFrame.X, toFrame.X, interpolation, time, lastLast.X, nextNext.X);
+				sprite.X = SceneObject.Interpolate(fromFrame.X, toFrame.X, interpolation, time, lastLast.X, nextNext.X);
 			}
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.Y))
 			{
-				Sprite.Y = SceneObject.Interpolate(fromFrame.Y, toFrame.Y, interpolation, time, lastLast.Y, nextNext.Y);
+				sprite.Y = SceneObject.Interpolate(fromFrame.Y, toFrame.Y, interpolation, time, lastLast.Y, nextNext.Y);
 			}
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.ScaleX))
 			{
-				Sprite.ScaleX = SceneObject.Interpolate(fromFrame.ScaleX, toFrame.ScaleX, interpolation, time, lastLast.ScaleX, nextNext.ScaleX);
+				sprite.ScaleX = SceneObject.Interpolate(fromFrame.ScaleX, toFrame.ScaleX, interpolation, time, lastLast.ScaleX, nextNext.ScaleX);
 			}
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.ScaleY))
 			{
-				Sprite.ScaleY = SceneObject.Interpolate(fromFrame.ScaleY, toFrame.ScaleY, interpolation, time, lastLast.ScaleY, nextNext.ScaleY);
+				sprite.ScaleY = SceneObject.Interpolate(fromFrame.ScaleY, toFrame.ScaleY, interpolation, time, lastLast.ScaleY, nextNext.ScaleY);
 			}
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.Rotation))
 			{
-				Sprite.Rotation = SceneObject.Interpolate(fromFrame.Rotation, toFrame.Rotation, interpolation, time, lastLast.Rotation, nextNext.Rotation);
+				sprite.Rotation = SceneObject.Interpolate(fromFrame.Rotation, toFrame.Rotation, interpolation, time, lastLast.Rotation, nextNext.Rotation);
 			}
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.Opacity))
 			{
-				Sprite.Alpha = SceneObject.Interpolate(fromFrame.Alpha, toFrame.Alpha, interpolation, time, lastLast.Alpha, nextNext.Alpha);
+				sprite.Alpha = SceneObject.Interpolate(fromFrame.Alpha, toFrame.Alpha, interpolation, time, lastLast.Alpha, nextNext.Alpha);
 			}
 		}
 	}
@@ -132,7 +147,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float Rotation = 0;
 		public string Src;
 
-		public KeyframePreview(PosePreview pose, Keyframe frame)
+		public KeyframePreview(Keyframe frame)
 		{
 			Keyframe = frame;
 			Src = frame.Src;

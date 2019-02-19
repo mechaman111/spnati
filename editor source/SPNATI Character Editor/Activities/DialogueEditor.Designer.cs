@@ -157,9 +157,9 @@ namespace SPNATI_Character_Editor.Activities
 			this.lblAvailableVars.AutoSize = true;
 			this.lblAvailableVars.Location = new System.Drawing.Point(2, 8);
 			this.lblAvailableVars.Name = "lblAvailableVars";
-			this.lblAvailableVars.Size = new System.Drawing.Size(53, 13);
+			this.lblAvailableVars.Size = new System.Drawing.Size(158, 13);
 			this.lblAvailableVars.TabIndex = 32;
-			this.lblAvailableVars.Text = "Variables:";
+			this.lblAvailableVars.Text = "Hover to see available variables";
 			// 
 			// cmdCopyAll
 			// 
@@ -172,12 +172,12 @@ namespace SPNATI_Character_Editor.Activities
 			this.cmdCopyAll.UseVisualStyleBackColor = true;
 			this.cmdCopyAll.Click += new System.EventHandler(this.cmdCopyAll_Click);
 			// 
-			// ckbShowBubbleColumns
+			// ckbShowAdvanced
 			// 
 			this.ckbShowAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ckbShowAdvanced.AutoSize = true;
 			this.ckbShowAdvanced.Location = new System.Drawing.Point(417, 6);
-			this.ckbShowAdvanced.Name = "ckbShowBubbleColumns";
+			this.ckbShowAdvanced.Name = "ckbShowAdvanced";
 			this.ckbShowAdvanced.Size = new System.Drawing.Size(104, 17);
 			this.ckbShowAdvanced.TabIndex = 43;
 			this.ckbShowAdvanced.Text = "Show advanced";
@@ -203,7 +203,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.gridDialogue.Location = new System.Drawing.Point(3, 32);
 			this.gridDialogue.Name = "gridDialogue";
 			this.gridDialogue.ReadOnly = false;
-			this.gridDialogue.Size = new System.Drawing.Size(680, 336);
+			this.gridDialogue.Size = new System.Drawing.Size(680, 190);
 			this.gridDialogue.TabIndex = 42;
 			this.gridDialogue.KeyDown += new System.EventHandler<System.Windows.Forms.KeyEventArgs>(this.gridDialogue_KeyDown);
 			this.gridDialogue.HighlightRow += new System.EventHandler<int>(this.gridDialogue_HighlightRow);

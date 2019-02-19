@@ -35,12 +35,12 @@
 			// cmdSearch
 			// 
 			this.cmdSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdSearch.Image = global::Desktop.Properties.Resources.Search;
 			this.cmdSearch.Location = new System.Drawing.Point(129, -1);
 			this.cmdSearch.Margin = new System.Windows.Forms.Padding(0);
 			this.cmdSearch.Name = "cmdSearch";
 			this.cmdSearch.Size = new System.Drawing.Size(22, 22);
 			this.cmdSearch.TabIndex = 3;
-			this.cmdSearch.Text = "🔍";
 			this.cmdSearch.UseVisualStyleBackColor = true;
 			this.cmdSearch.Click += new System.EventHandler(this.cmdSearch_Click);
 			// 
