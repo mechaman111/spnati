@@ -504,6 +504,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetSayingMarker:" + stageCase.TargetSayingMarker);
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetSaying))
+			{
+				filters.Add("targetSaying:" + stageCase.TargetSaying);
+			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
 				filters.Add("alsoPlaying:" + stageCase.AlsoPlaying);
@@ -531,6 +535,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSayingMarker))
 			{
 				filters.Add("alsoPlayingSayingMarker:" + stageCase.AlsoPlayingSayingMarker);
+			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaying))
+			{
+				filters.Add("alsoPlayingSaying:" + stageCase.AlsoPlayingSaying);
 			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
@@ -1055,6 +1063,9 @@ namespace SPNATI_Character_Editor
 						case "targetsayingmarker":
 							lineCase.TargetSayingMarker = value;
 							break;
+						case "targetsaying":
+							lineCase.TargetSaying = value;
+							break;
 					}
 				}
 
@@ -1081,6 +1092,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "alsoplayingnotsaidmarker":
 						lineCase.AlsoPlayingNotSaidMarker = value;
+						break;
+					case "alsoplayingsaying":
+						lineCase.AlsoPlayingSaying = value;
 						break;
 					case "hashand":
 						lineCase.HasHand = value;
