@@ -162,12 +162,16 @@ namespace SPNATI_Character_Editor
 				filters.Add("alsoplayingnotsaidmarker:" + c1.AlsoPlayingNotSaidMarker);
 			if (!string.IsNullOrEmpty(c1.AlsoPlayingSayingMarker))
 				filters.Add("alsoplayingsayingmarker:" + c1.AlsoPlayingSayingMarker);
+			if (!string.IsNullOrEmpty(c1.AlsoPlayingSaying))
+				filters.Add("alsoplayingsaying:" + c1.AlsoPlayingSaying);
 			if (!string.IsNullOrEmpty(c1.TargetSaidMarker))
 				filters.Add("targetsaidmarker:" + c1.TargetSaidMarker);
 			if (!string.IsNullOrEmpty(c1.TargetNotSaidMarker))
 				filters.Add("targetnotsaidmarker:" + c1.TargetNotSaidMarker);
 			if (!string.IsNullOrEmpty(c1.TargetSayingMarker))
 				filters.Add("targetsayingmarker:" + c1.TargetSayingMarker);
+			if (!string.IsNullOrEmpty(c1.TargetSaying))
+				filters.Add("targetsaying:" + c1.TargetSaying);
 			if (!string.IsNullOrEmpty(c1.CustomPriority))
 				filters.Add("priority:" + c1.CustomPriority);
 

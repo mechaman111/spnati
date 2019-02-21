@@ -479,6 +479,7 @@ function Case($xml, stage) {
     this.targetSaidMarker =         $xml.attr("targetSaidMarker");
     this.targetNotSaidMarker =      $xml.attr("targetNotSaidMarker");
     this.targetSayingMarker =       $xml.attr("targetSayingMarker");
+    this.targetSaying =             $xml.attr("targetSaying");
     this.oppHand =                  $xml.attr("oppHand");
     this.hasHand =                  $xml.attr("hasHand");
     this.alsoPlaying =              $xml.attr("alsoPlaying");
@@ -488,6 +489,7 @@ function Case($xml, stage) {
     this.alsoPlayingSaidMarker =    $xml.attr("alsoPlayingSaidMarker");
     this.alsoPlayingNotSaidMarker = $xml.attr("alsoPlayingNotSaidMarker");
     this.alsoPlayingSayingMarker =  $xml.attr("alsoPlayingSayingMarker");
+    this.alsoPlayingSaying =        $xml.attr("alsoPlayingSaying");
     this.totalMales =               parseInterval($xml.attr("totalMales"));
     this.totalFemales =             parseInterval($xml.attr("totalFemales"));
     this.timeInStage =              parseInterval($xml.attr("timeInStage"));
@@ -534,6 +536,7 @@ function Case($xml, stage) {
     	if (this.targetStatus)             this.priority += 70;
     	if (this.targetSaidMarker)         this.priority += 1;
     	if (this.targetSayingMarker)       this.priority += 1;
+        if (this.targetSaying)             this.priority += 1;
     	if (this.targetNotSaidMarker)      this.priority += 1;
     	if (this.consecutiveLosses)        this.priority += 60;
     	if (this.oppHand)                  this.priority += 30;
@@ -546,6 +549,7 @@ function Case($xml, stage) {
     	if (this.alsoPlayingSaidMarker)    this.priority += 1;
     	if (this.alsoPlayingNotSaidMarker) this.priority += 1;
     	if (this.alsoPlayingSayingMarker)  this.priority += 1;
+        if (this.alsoPlayingSaying)        this.priority += 1;
     	if (this.totalRounds)              this.priority += 10;
     	if (this.timeInStage)              this.priority += 8;
     	if (this.totalMales)               this.priority += 5;
@@ -587,11 +591,11 @@ Case.prototype.getAlsoPlaying = function (opp) {
 
 /* Is this case dependent on marker values in the same phase? */
 Case.prototype.isVolatile = function () {
-    if (this.targetSayingMarker) {
+    if (this.targetSayingMarker || this.targetSaying) {
         return true;
     }
     
-    if (this.alsoPlaying && this.alsoPlayingSayingMarker) {
+    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
         return true;
     }
     
@@ -605,14 +609,22 @@ Case.prototype.volatileRequirementsMet = function (self, opp) {
             return false;
         }
     }
+    if (this.targetSaying) {
+        if (!opp) return false;
+        if (!opp.chosenState) return false;
+        if (!opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
+    }
     
-    if (this.alsoPlaying && this.alsoPlayingSayingMarker) {
+    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
         var ap = this.getAlsoPlaying(opp);
         if (!ap) return false;
         
-        if (!checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
+        if (this.alsoPlayingSayingMarker && !checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
             return false;
         }
+        if (this.alsoPlayingSaying
+            && (!ap.chosenState || ap.chosenState.rawDialogue.toLowerCase().indexOf(this.alsoPlayingSaying.toLowerCase()) < 0))
+            return false;
     }
     
     return true;
@@ -622,11 +634,11 @@ Case.prototype.volatileRequirementsMet = function (self, opp) {
 Case.prototype.getVolatileDependencies = function (self, opp) {
     var deps = [];
     
-    if (opp && this.target && this.targetSayingMarker) {
+    if (opp && this.target && (this.targetSayingMarker || this.targetSaying)) {
         deps.push(opp);
     }
     
-    if (this.alsoPlaying && this.alsoPlayingSayingMarker) {
+    if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {
         deps.push(this.getAlsoPlaying(opp));
     }
     
