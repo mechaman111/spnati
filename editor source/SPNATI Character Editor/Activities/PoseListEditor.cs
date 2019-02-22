@@ -492,6 +492,7 @@ namespace SPNATI_Character_Editor.Activities
 				row.Cells["ColT"].Value = "0";
 				row.Cells["ColR"].Value = "600";
 				row.Cells["ColB"].Value = "1400";
+				row.Cells["ColAdvanced"].Tag = new Dictionary<string, string>();
 			}
 		}
 
