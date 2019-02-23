@@ -28,13 +28,16 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.cmdFilter = new System.Windows.Forms.Button();
 			this.cmdLoadTags = new System.Windows.Forms.Button();
 			this.lstTags = new System.Windows.Forms.ListBox();
 			this.lblTags = new System.Windows.Forms.Label();
 			this.lstCharacters = new System.Windows.Forms.ListBox();
 			this.lblCharacters = new System.Windows.Forms.Label();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.lblNoMatches = new System.Windows.Forms.Label();
 			this.lblCaseInfo = new System.Windows.Forms.Label();
 			this.cmdCreateResponse = new System.Windows.Forms.Button();
 			this.lblLines = new System.Windows.Forms.Label();
@@ -49,7 +52,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.lblResponse = new System.Windows.Forms.Label();
 			this.gridResponse = new SPNATI_Character_Editor.Controls.DialogueGrid();
-			this.lblNoMatches = new System.Windows.Forms.Label();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -73,6 +76,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.cmdFilter);
 			this.splitContainer1.Panel1.Controls.Add(this.cmdLoadTags);
 			this.splitContainer1.Panel1.Controls.Add(this.lstTags);
 			this.splitContainer1.Panel1.Controls.Add(this.lblTags);
@@ -85,6 +89,19 @@
 			this.splitContainer1.Size = new System.Drawing.Size(1161, 674);
 			this.splitContainer1.SplitterDistance = 206;
 			this.splitContainer1.TabIndex = 1;
+			// 
+			// cmdFilter
+			// 
+			this.cmdFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdFilter.Location = new System.Drawing.Point(12, 25);
+			this.cmdFilter.Name = "cmdFilter";
+			this.cmdFilter.Size = new System.Drawing.Size(184, 23);
+			this.cmdFilter.TabIndex = 5;
+			this.cmdFilter.Text = "Filter Targets";
+			this.toolTip1.SetToolTip(this.cmdFilter, "Only display characters who actually target yours. Very slow!");
+			this.cmdFilter.UseVisualStyleBackColor = true;
+			this.cmdFilter.Click += new System.EventHandler(this.cmdFilter_Click);
 			// 
 			// cmdLoadTags
 			// 
@@ -125,9 +142,9 @@
 			this.lstCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstCharacters.FormattingEnabled = true;
-			this.lstCharacters.Location = new System.Drawing.Point(12, 25);
+			this.lstCharacters.Location = new System.Drawing.Point(12, 51);
 			this.lstCharacters.Name = "lstCharacters";
-			this.lstCharacters.Size = new System.Drawing.Size(184, 329);
+			this.lstCharacters.Size = new System.Drawing.Size(184, 303);
 			this.lstCharacters.TabIndex = 1;
 			this.lstCharacters.SelectedIndexChanged += new System.EventHandler(this.lstCharacters_SelectedIndexChanged);
 			// 
@@ -161,6 +178,16 @@
 			this.splitContainer2.Size = new System.Drawing.Size(951, 674);
 			this.splitContainer2.SplitterDistance = 272;
 			this.splitContainer2.TabIndex = 0;
+			// 
+			// lblNoMatches
+			// 
+			this.lblNoMatches.AutoSize = true;
+			this.lblNoMatches.Location = new System.Drawing.Point(3, 25);
+			this.lblNoMatches.Name = "lblNoMatches";
+			this.lblNoMatches.Size = new System.Drawing.Size(63, 13);
+			this.lblNoMatches.TabIndex = 4;
+			this.lblNoMatches.Text = "None found";
+			this.lblNoMatches.Visible = false;
 			// 
 			// lblCaseInfo
 			// 
@@ -310,16 +337,6 @@
 			this.gridResponse.TabIndex = 0;
 			this.gridResponse.HighlightRow += new System.EventHandler<int>(this.gridResponse_HighlightRow);
 			// 
-			// lblNoMatches
-			// 
-			this.lblNoMatches.AutoSize = true;
-			this.lblNoMatches.Location = new System.Drawing.Point(3, 25);
-			this.lblNoMatches.Name = "lblNoMatches";
-			this.lblNoMatches.Size = new System.Drawing.Size(63, 13);
-			this.lblNoMatches.TabIndex = 4;
-			this.lblNoMatches.Text = "None found";
-			this.lblNoMatches.Visible = false;
-			// 
 			// BanterWizard
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -372,5 +389,7 @@
 		private Controls.DialogueGrid gridResponse;
 		private System.Windows.Forms.Button cmdLoadTags;
 		private System.Windows.Forms.Label lblNoMatches;
+		private System.Windows.Forms.Button cmdFilter;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

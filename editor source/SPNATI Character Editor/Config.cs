@@ -10,7 +10,8 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
-		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6", "v3.7", "v3.7.1" };
+		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
+			"v3.7", "v3.7.1", "v3.8" };
 
 		/// <summary>
 		/// Current Version
@@ -198,6 +199,17 @@ namespace SPNATI_Character_Editor
 			return GetRootDirectory(character.FolderName);
 		}
 
+
+		/// <summary>
+		/// Retrieves the backup directory for a character
+		/// </summary>
+		public static string GetBackupDirectory(Character character)
+		{
+			if (character == null || string.IsNullOrEmpty(character.FolderName))
+				return "";
+			return Path.Combine(AppDataDirectory, character.FolderName);
+		}
+
 		/// <summary>
 		/// Retrieves the full directory name for a folder
 		/// </summary>
@@ -233,6 +245,18 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// How many minutes to auto-backup
+		/// </summary>
+		public static bool AutoBackupEnabled
+		{
+			get { return !GetBoolean("disableautobackup"); }
+			set
+			{
+				Set("disableautobackup", !value);
+			}
+		}
+
+		/// <summary>
 		/// Whether variable intellisense is enabled
 		/// </summary>
 		public static bool UseIntellisense
@@ -257,6 +281,15 @@ namespace SPNATI_Character_Editor
 		{
 			get { return GetString(Settings.PrefixFilter); }
 			set { Set(Settings.PrefixFilter, value); }
+		}
+
+		/// <summary>
+		/// Load other character info up front in banter wizard
+		/// </summary>
+		public static bool AutoLoadBanterWizard
+		{
+			get { return GetBoolean("autoloadbanter"); }
+			set { Set("autoloadbanter", value); }
 		}
 	}
 

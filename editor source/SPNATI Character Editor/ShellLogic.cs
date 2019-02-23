@@ -2,11 +2,14 @@
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Forms;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace SPNATI_Character_Editor
 {
 	public static class ShellLogic
 	{
+		private static DispatcherTimer _backupTimer = new DispatcherTimer();
+
 		public static void Initialize()
 		{
 			if (!DoInitialSetup())
@@ -22,6 +25,26 @@ namespace SPNATI_Character_Editor
 
 			Shell.Instance.AutoTickFrequency = Config.AutoSaveInterval * 60000;
 			Shell.Instance.AutoTick += Instance_AutoTick;
+
+			_backupTimer.Tick += _backupTimer_Tick;
+			_backupTimer.Interval = new System.TimeSpan(0, 5, 0);
+			_backupTimer.Start();
+		}
+
+		private static void _backupTimer_Tick(object sender, System.EventArgs e)
+		{
+			if (!Config.AutoBackupEnabled) { return; }
+			Cursor cursor = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+			foreach (IWorkspace ws in Shell.Instance.Workspaces)
+			{
+				Character c = ws.Record as Character;
+				if (c != null)
+				{
+					Serialization.BackupCharacter(c);
+				}
+			}
+			Cursor.Current = cursor;
 		}
 
 		private static void Instance_AutoTick(object sender, System.EventArgs e)
@@ -213,6 +236,7 @@ namespace SPNATI_Character_Editor
 			menu = shell.AddToolbarSubmenu("Tools");
 			shell.AddToolbarItem("Charts...", typeof(ChartRecord), menu);
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
+			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 
 			//Help
 			shell.AddToolbarSeparator();
@@ -225,7 +249,7 @@ namespace SPNATI_Character_Editor
 		private static void OpenCharacterSelect()
 		{
 			IRecord record = RecordLookup.DoLookup(typeof(Character), "", true, CharacterDatabase.FilterHuman, null);
-			if(record != null)
+			if (record != null)
 			{
 				Shell.Instance.LaunchWorkspace(record as Character);
 			}
@@ -274,6 +298,32 @@ namespace SPNATI_Character_Editor
 		{
 			About form = new About();
 			form.ShowDialog();
+		}
+
+		private static void OpenDataRecovery()
+		{
+			DataRecovery recovery = new DataRecovery();
+			Character c = GetActiveCharacter();
+			recovery.SetCharacter(c);
+			if (recovery.ShowDialog() == DialogResult.OK)
+			{
+				IWorkspace ws = Shell.Instance.GetWorkspace(c);
+				if (ws != null)
+				{
+					Shell.Instance.CloseWorkspace(ws, true);
+				}
+				Shell.Instance.LaunchWorkspace(recovery.RecoveredCharacter);
+			}
+		}
+
+		private static void OpenDataRecovery(string name)
+		{
+			DataRecovery recovery = new DataRecovery();
+			recovery.SetCharacter(name);
+			if (recovery.ShowDialog() == DialogResult.OK)
+			{
+				Shell.Instance.LaunchWorkspace(recovery.RecoveredCharacter);
+			}
 		}
 
 		private static Character GetActiveCharacter()
@@ -334,6 +384,11 @@ namespace SPNATI_Character_Editor
 		public static void Teardown()
 		{
 			Config.Save();
+		}
+
+		public static void RecoverCharacter(string name)
+		{
+			OpenDataRecovery(name);
 		}
 	}
 }

@@ -154,10 +154,18 @@ namespace SPNATI_Character_Editor
 			}
 			if (name.StartsWith("custom:"))
 			{
+				if (name.StartsWith($"custom:{stage}-"))
+				{
+					return name;
+				}
 				return $"custom:{stage}-{name.Substring(7)}";
 			}
 			else
 			{
+				if (name.StartsWith($"{stage}-"))
+				{
+					return name;
+				}
 				return $"{stage}-{name}";
 			}
 		}

@@ -44,11 +44,17 @@ namespace SPNATI_Character_Editor.Activities
 			lblCharacters.Text = string.Format(lblCharacters.Text, _character);
 			lstCharacters.Sorted = true;
 
-			//Scan other characters to see who talks to this character
-			foreach (Character other in CharacterDatabase.Characters)
+			if (Config.AutoLoadBanterWizard)
 			{
-				if (other.FolderName == "human" || other == _character) { continue; }
-				lstCharacters.Items.Add(other);
+				FilterTargets();
+			}
+			else
+			{
+				foreach (Character other in CharacterDatabase.Characters)
+				{
+					if (other.FolderName == "human" || other == _character) { continue; }
+					lstCharacters.Items.Add(other);
+				}
 			}
 		}
 
@@ -398,6 +404,45 @@ namespace SPNATI_Character_Editor.Activities
 
 			cmdLoadTags.Visible = false;
 			lstTags.Visible = true;
+		}
+
+		private void cmdFilter_Click(object sender, EventArgs e)
+		{
+			FilterTargets();
+		}
+
+		private void FilterTargets()
+		{
+			Cursor.Current = Cursors.WaitCursor;
+			lstCharacters.Items.Clear();
+			foreach (Character other in CharacterDatabase.Characters)
+			{
+				if (other == _character || other.FolderName == "human")
+				{
+					continue;
+				}
+				if (_lines.ContainsKey(other))
+				{
+					if (_lines[other].Count > 0)
+					{
+						lstCharacters.Items.Add(other);
+					}
+				}
+				else
+				{
+					List<TargetData> lines = LoadLines(other, TargetType.DirectTarget);
+					_lines[other] = lines;
+					if (lines.Count > 0)
+					{
+						lstCharacters.Items.Add(other);
+					}
+				}
+			}
+			int margin = lstCharacters.Top - cmdFilter.Bottom;
+			lstCharacters.Height = lstCharacters.Height + cmdFilter.Height + margin;
+			lstCharacters.Top = cmdFilter.Top;
+			cmdFilter.Visible = false;
+			Cursor.Current = Cursors.Default;
 		}
 	}
 }

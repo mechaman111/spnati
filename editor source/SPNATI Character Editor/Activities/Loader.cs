@@ -30,6 +30,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			string lastCharacter = Config.GetString(Settings.LastCharacter);
 
+			List<string> failedCharacters = new List<string>();
+
 			List<string> folders = Directory.EnumerateDirectories(Path.Combine(Config.GetString(Settings.GameDirectory), "opponents")).ToList();
 			int count = folders.Count;
 			int i = 0;
@@ -88,6 +90,11 @@ namespace SPNATI_Character_Editor.Activities
 							}
 							TagDatabase.AddTag(character.DisplayName, false);
 						}
+						else
+						{
+							failedCharacters.Add(folderName);
+							CharacterDatabase.FailedCharacters.Add(folderName);
+						}
 					}
 				});
 			}
@@ -127,11 +134,23 @@ namespace SPNATI_Character_Editor.Activities
 				new WhatsNew().ShowDialog();
 			}
 
+			if (failedCharacters.Count > 0)
+			{
+				Shell.Instance.SetStatus($"Failed to load {failedCharacters.Count} character(s). See errorlog.txt for more details.");
+			}
+
 			Shell.Instance.CloseWorkspace(Workspace);
 			Shell.Instance.Maximize(false);
 			if (!string.IsNullOrEmpty(lastCharacter))
 			{
-				Shell.Instance.LaunchWorkspace(CharacterDatabase.Get(lastCharacter));
+				if (failedCharacters.Contains(lastCharacter))
+				{
+					ShellLogic.RecoverCharacter(lastCharacter);
+				}
+				else
+				{
+					Shell.Instance.LaunchWorkspace(CharacterDatabase.Get(lastCharacter));
+				}
 			}
 		}
 
