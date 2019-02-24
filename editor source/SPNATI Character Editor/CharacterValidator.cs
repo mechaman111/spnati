@@ -104,12 +104,12 @@ namespace SPNATI_Character_Editor
 			}
 
 			//dialogue
-			foreach (Stage stage in character.Behavior.Stages)
+			foreach (Case stageCase in character.Behavior.GetWorkingCases())
 			{
-				HashSet<string> stageImages = usedPoses.GetOrAddDefault(stage.Id, () => new HashSet<string>());
-
-				foreach (Case stageCase in stage.Cases)
+				foreach (int stageIndex in stageCase.Stages)
 				{
+					Stage stage = new Stage(stageIndex);
+					HashSet<string> stageImages = usedPoses.GetOrAddDefault(stage.Id, () => new HashSet<string>());
 					ValidationContext context = new ValidationContext(stage, stageCase, null);
 
 					Trigger trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
@@ -373,8 +373,10 @@ namespace SPNATI_Character_Editor
 					{
 						context = new ValidationContext(stage, stageCase, line);
 
+						DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stageIndex, character);
+
 						//Validate image
-						string img = line.Image;
+						string img = stageLine.Image;
 						if (!string.IsNullOrEmpty(img))
 						{
 							unusedImages.Remove(img);

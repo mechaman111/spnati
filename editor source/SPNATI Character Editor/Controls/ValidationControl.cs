@@ -81,6 +81,7 @@ namespace SPNATI_Character_Editor.Controls
 			progressBar.Value = 0;
 			progressBar.Maximum = CharacterDatabase.Count;
 			Enabled = false;
+			cmdGoTo.Visible = false;
 
 			int count = CharacterDatabase.Count;
 			var progressUpdate = new Progress<Character>(next => {
