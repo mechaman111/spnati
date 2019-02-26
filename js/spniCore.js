@@ -1407,7 +1407,7 @@ function autoResizeFont ()
 {
 	/* resize font */
 	var screenWidth = getScreenWidth();
-	document.body.style.fontSize = (14*(screenWidth/1000))+'px';
+	$(':root').css('font-size', (screenWidth/100.0)+'px');
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
 		var w = window.innerWidth, h = window.innerHeight;
