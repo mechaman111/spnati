@@ -177,6 +177,9 @@ function Pose(poseDef, display) {
     this.container = container;
     
     poseDef.sprites.forEach(function (def) {
+        if (def.marker && !checkMarker(def.marker, this.player)) {
+            return;
+        }
         var sprite = new PoseSprite(def.id, def.src, this.onSpriteLoaded.bind(this), this, def);
         this.sprites[def.id] = sprite
         this.totalSprites++;
@@ -185,6 +188,9 @@ function Pose(poseDef, display) {
     }.bind(this));
     
     poseDef.animations.forEach(function (def) {
+        if (def.marker && !checkMarker(def.marker, this.player)) {
+          return;
+        }
         var target = this.sprites[def.id];
         if (!target) return;
         

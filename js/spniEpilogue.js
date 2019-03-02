@@ -377,10 +377,12 @@ function loadEpilogueData(player) {
 function parseEpilogue(player, rawEpilogue, galleryEnding) {
   //use parseXML() so that <image> tags come through properly
   //not using parseXML() because internet explorer doesn't like it
-
+  
   if (!rawEpilogue) {
     return;
   }
+
+  player.markers = player.markers || {}; //ensure markers collection exists in the gallery even though they'll be empty
 
   var $epilogue = $(rawEpilogue);
   var title = $epilogue.find("title").html().trim();
@@ -466,6 +468,9 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
             directive.time = totalTime;
           }
 
+          if (directive.marker && !checkMarker(directive.marker, player)) {
+            directive.type = "skip";
+          }
           directives.push(directive);
         });
       }
@@ -699,7 +704,7 @@ function readProperties(sourceObj, scene) {
 function addEpilogueEntry(epilogue) {
   var num = epilogues.length; //index number of the new epilogue
   epilogues.push(epilogue);
-  var player = epilogue.player
+  var player = epilogue.player;
 
   var nameStr = player.first + " " + player.last;
   if (player.first.length <= 0 || player.last.length <= 0) {
@@ -1131,6 +1136,9 @@ EpiloguePlayer.prototype.performDirective = function () {
         break;
       case "emit":
         this.addAction(view, directive, view.burstParticles, view.clearParticles);
+        break;
+      case "skip":
+        this.addAction(null, directive, function () { }, function () { });
         break;
     }
 
