@@ -8,8 +8,8 @@ namespace KisekaeImporter
 {
 	public abstract class KisekaeComponent
 	{
-		private Dictionary<Type, Dictionary<string, string>> _map = new Dictionary<Type, Dictionary<string, string>>();
-		private Dictionary<Type, Dictionary<string, Type>> _arrayMap = new Dictionary<Type, Dictionary<string, Type>>();
+		private static Dictionary<Type, Dictionary<string, string>> _map = new Dictionary<Type, Dictionary<string, string>>();
+		private static Dictionary<Type, Dictionary<string, Type>> _arrayMap = new Dictionary<Type, Dictionary<string, Type>>();
 
 		protected Dictionary<string, KisekaeSubCode> _subcodes = new Dictionary<string, KisekaeSubCode>();
 
