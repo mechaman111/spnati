@@ -81,7 +81,7 @@ gameDisplays = [
  **********************************************************************/
 
 /* pseudo constants */
-var GAME_DELAY = 600;
+var GAME_DELAY = 800;
 var FORFEIT_DELAY = 7500;
 var ENDING_DELAY = 7500;
 var GAME_OVER_DELAY = 1000;
