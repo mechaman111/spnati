@@ -1007,20 +1007,20 @@ function game_keyUp(e)
         if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
             advanceGame();
         }
-        else if (e.keyCode == 49 && !$cardButtons[4].prop('disabled')) { // 1
-            selectCard(4);
+        else if (e.keyCode == 49 && !$cardButtons[0].prop('disabled')) { // 1
+            selectCard(0);
         }
-        else if (e.keyCode == 50 && !$cardButtons[3].prop('disabled')) { // 2
-            selectCard(3);
+        else if (e.keyCode == 50 && !$cardButtons[1].prop('disabled')) { // 2
+            selectCard(1);
         }
         else if (e.keyCode == 51 && !$cardButtons[2].prop('disabled')) { // 3
             selectCard(2);
         }
-        else if (e.keyCode == 52 && !$cardButtons[1].prop('disabled')) { // 4
-            selectCard(1);
+        else if (e.keyCode == 52 && !$cardButtons[3].prop('disabled')) { // 4
+            selectCard(3);
         }
-        else if (e.keyCode == 53 && !$cardButtons[0].prop('disabled')) { // 5
-            selectCard(0);
+        else if (e.keyCode == 53 && !$cardButtons[4].prop('disabled')) { // 5
+            selectCard(4);
         }
         else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;
