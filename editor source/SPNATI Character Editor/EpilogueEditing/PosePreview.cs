@@ -18,11 +18,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		private Dictionary<string, SpritePreview> _spriteMap = new Dictionary<string, SpritePreview>();
 
 		public List<PoseAnimation> Animations = new List<PoseAnimation>();
+		public Dictionary<string, string> Markers = new Dictionary<string, string>();
 
 		public float ElapsedTime;
 		public float TotalDuration;
 
-		public PosePreview(ISkin character, Pose pose, PoseDirective selectedDirective, Keyframe selectedKeyframe, Sprite selectedSprite)
+		public PosePreview(ISkin character, Pose pose, PoseDirective selectedDirective, Keyframe selectedKeyframe, Sprite selectedSprite, List<string> markers)
 		{
 			Character = character;
 			Pose = pose;
@@ -36,8 +37,20 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				BaseHeight = baseHeight;
 			}
 
+			if (markers != null)
+			{
+				foreach (string marker in markers)
+				{
+					Markers[marker] = "1";
+				}
+			}
+
 			foreach (Sprite sprite in pose.Sprites)
 			{
+				if (!string.IsNullOrEmpty(sprite.Marker) && !Marker.CheckMarker(sprite.Marker, Markers))
+				{
+					continue;
+				}
 				if (!string.IsNullOrEmpty(sprite.Src))
 				{
 					AddImage(sprite.Src);
@@ -58,6 +71,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			foreach (PoseDirective directive in pose.Directives)
 			{
+				if (!string.IsNullOrEmpty(directive.Marker) && !Marker.CheckMarker(directive.Marker, Markers))
+				{
+					continue;
+				}
 				if (directive.DirectiveType == "animation")
 				{
 					if (!string.IsNullOrEmpty(directive.Src))

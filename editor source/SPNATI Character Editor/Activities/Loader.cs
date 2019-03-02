@@ -92,8 +92,11 @@ namespace SPNATI_Character_Editor.Activities
 						}
 						else
 						{
-							failedCharacters.Add(folderName);
-							CharacterDatabase.FailedCharacters.Add(folderName);
+							if (folderName != ".vs" && folderName != "human")
+							{
+								failedCharacters.Add(folderName);
+								CharacterDatabase.FailedCharacters.Add(folderName);
+							}
 						}
 					}
 				});

@@ -68,7 +68,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (image.GetPose() != null)
 				{
-					_imagePose = new PosePreview(image.Skin, image.GetPose(), null, null, null);
+					_imagePose = new PosePreview(image.Skin, image.GetPose(), null, null, null, null);
 					_lastTick = DateTime.Now;
 					tmrTick.Enabled = _imagePose.IsAnimated;
 				}
@@ -98,7 +98,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (_image.GetPose() != null)
 				{
 					_imagePose?.Dispose();
-					_imagePose = new PosePreview(_image.Skin, _image.GetPose(), null, null, null);
+					_imagePose = new PosePreview(_image.Skin, _image.GetPose(), null, null, null, null);
 				}
 				_imageReference = args.NewImage;
 			}

@@ -40,6 +40,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public string Text;
 		public string Arrow;
 		public float Time;
+		public string AlignmentX;
+		public string AlignmentY;
 		public string Tween;
 		public string Ease;
 		public float Start;
@@ -172,6 +174,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			Arrow = directive.Arrow;
 			Text = directive.Text;
+			AlignmentX = directive.AlignmentX;
+			AlignmentY = directive.AlignmentY;
 			PivotX = ParsePivot(directive.PivotX, Width);
 			PivotY = ParsePivot(directive.PivotY, Height);
 			if (!string.IsNullOrEmpty(directive.Rate))
@@ -229,6 +233,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Id = source.Id;
 			Text = source.Text;
 			Arrow = source.Arrow;
+			AlignmentX = source.AlignmentX;
+			AlignmentY = source.AlignmentY;
 			Tween = source.Tween;
 			Ease = source.Ease;
 			Image = source.Image;

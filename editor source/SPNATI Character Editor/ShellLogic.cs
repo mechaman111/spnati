@@ -75,33 +75,37 @@ namespace SPNATI_Character_Editor
 			DirectiveProvider provider = new DirectiveProvider();
 			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
 			def.Description = "Adds a sprite to the scene.";
-			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty" })
+			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
 
 			def = provider.Create("text") as DirectiveDefinition;
 			def.Description = "Displays a speech bubble.";
-			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width" })
+			foreach (string key in new string[] { "id", "x", "y", "text", "arrow", "width", "alignmentx", "alignmenty", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
 
 			def = provider.Create("clear") as DirectiveDefinition;
 			def.Description = "Removes a speech bubble.";
-			foreach (string key in new string[] { "id" })
+			foreach (string key in new string[] { "id", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
 
 			def = provider.Create("clear-all") as DirectiveDefinition;
+			foreach (string key in new string[] { "marker" })
+			{
+				def.AllowedProperties.Add(key);
+			}
 			def.Description = "Removes all speech bubbles.";
 
 			def = provider.Create("move") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
 			def.FilterPropertiesById = true;
-			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
+			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -113,7 +117,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("camera") as DirectiveDefinition;
 			def.IsAnimatable = true;
 			def.Description = "Pans or zooms the camera.";
-			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
+			foreach (string key in new string[] { "x", "y", "zoom", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -125,7 +129,7 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("fade") as DirectiveDefinition;
 			def.Description = "Fades the overlay to a new color and opacity level.";
 			def.IsAnimatable = true;
-			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations" })
+			foreach (string key in new string[] { "color", "alpha", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -136,20 +140,28 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("stop") as DirectiveDefinition;
 			def.Description = "Stops an animation.";
-			foreach (string key in new string[] { "id" })
+			foreach (string key in new string[] { "id", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
 
 			def = provider.Create("wait") as DirectiveDefinition;
 			def.Description = "Waits for animations to complete.";
+			foreach (string key in new string[] { "marker" })
+			{
+				def.AllowedProperties.Add(key);
+			}
 
 			def = provider.Create("pause") as DirectiveDefinition;
 			def.Description = "Waits for the user to click next.";
+			foreach (string key in new string[] { "marker" })
+			{
+				def.AllowedProperties.Add(key);
+			}
 
 			def = provider.Create("remove") as DirectiveDefinition;
 			def.Description = "Removes a sprite or emitter from the scene.";
-			foreach (string key in new string[] { "id" })
+			foreach (string key in new string[] { "id", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -157,14 +169,14 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX",
-				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation"})
+				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker"})
 			{
 				def.AllowedProperties.Add(key);
 			}
 
 			def = provider.Create("emit") as DirectiveDefinition;
 			def.Description = "Emits an object from an emitter.";
-			foreach (string key in new string[] { "id", "count" })
+			foreach (string key in new string[] { "id", "count", "marker" })
 			{
 				def.AllowedProperties.Add(key);
 			}

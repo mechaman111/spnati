@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.EpilogueEditing;
+using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Properties;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace SPNATI_Character_Editor.Activities
 		private Keyframe _currentKeyframe;
 		private PoseAnimFrame _currentAnimFrame;
 		private Dictionary<object, TreeNode> _nodes = new Dictionary<object, TreeNode>();
+		private List<string> _markers = new List<string>();
 
 		private PosePreview _preview;
 		private SpritePreview _selectedObject = null;
@@ -245,6 +247,7 @@ namespace SPNATI_Character_Editor.Activities
 				case "height":
 				case "alpha":
 				case "rotation":
+				case "marker":
 					return true;
 				default:
 					return false;
@@ -260,6 +263,7 @@ namespace SPNATI_Character_Editor.Activities
 				case "ease":
 				case "loop":
 				case "delay":
+				case "marker":
 					return true;
 				default:
 					return false;
@@ -884,7 +888,7 @@ namespace SPNATI_Character_Editor.Activities
 			_selectedObject = null;
 			_preview = null;
 			if (_currentPose == null) { return; }
-			_preview = new PosePreview(_character, _currentPose, _currentDirective, _currentKeyframe, _currentSprite);
+			_preview = new PosePreview(_character, _currentPose, _currentDirective, _currentKeyframe, _currentSprite, _markers);
 			_lastTick = DateTime.Now;
 			tmrTick.Enabled = _preview.IsAnimated;
 
@@ -1398,6 +1402,17 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_canvasOffset = new Point(0, 0);
 			canvas.Invalidate();
+		}
+
+		private void cmdMarkers_Click(object sender, EventArgs e)
+		{
+			MarkerSetup form = new MarkerSetup();
+			form.SetData(_character.Character, _markers);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_markers = form.Markers;
+				BuildPreview();
+			}
 		}
 	}
 

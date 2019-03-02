@@ -226,6 +226,44 @@ namespace SPNATI_Character_Editor
 		{
 			return Name.CompareTo(other.Name);
 		}
+
+		public static bool CheckMarker(string condition, Dictionary<string, string> markers)
+		{
+			MarkerOperator op;
+			string value;
+			bool perTarget;
+			string marker = ExtractConditionPieces(condition, out op, out value, out perTarget);
+			int targetIntValue;
+			if (string.IsNullOrEmpty(value))
+			{
+				value = "1";
+			}
+			int.TryParse(value, out targetIntValue);
+
+			string setValue = markers.Get(marker);
+			if (string.IsNullOrEmpty(setValue))
+			{
+				setValue = "0";
+			}
+			int intValue;
+			int.TryParse(setValue, out intValue);
+			switch (op)
+			{
+				case MarkerOperator.Equals:
+					return setValue == value;
+				case MarkerOperator.GreaterThan:
+					return intValue > targetIntValue;
+				case MarkerOperator.GreaterThanOrEqual:
+					return intValue >= targetIntValue;
+				case MarkerOperator.LessThan:
+					return intValue < targetIntValue;
+				case MarkerOperator.LessThanOrEqual:
+					return intValue <= targetIntValue;
+				case MarkerOperator.NotEqual:
+					return setValue != value;
+			}
+			return true;
+		}
 	}
 
 	public static class MarkerOperatorExtensions

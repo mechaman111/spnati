@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 
 			recTreeTarget.RecordType = typeof(Character);
-			cboTreeFilter.SelectedIndex = 0;
+			recTag.RecordType = typeof(Tag);
 		}
 
 		public void SetData(Character character)
@@ -57,7 +57,6 @@ namespace SPNATI_Character_Editor.Controls
 				_view.Initialize(treeDialogue, character);
 			}
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
-			_view.SetFilter(TreeFilterMode.All, "");
 			_character.Behavior.CaseAdded += Behavior_CaseAdded;
 			_character.Behavior.CaseRemoved += Behavior_CaseRemoved;
 			_character.Behavior.CaseModified += Behavior_CaseModified;
@@ -215,20 +214,65 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		#region Event handlers
-		private void cboTreeFilter_SelectedIndexChanged(object sender, EventArgs e)
+		private void chkHideTargeted_CheckedChanged(object sender, EventArgs e)
 		{
 			if (_character == null) { return; }
-			TreeFilterMode mode = (TreeFilterMode)cboTreeFilter.SelectedIndex;
 			LeaveNode();
-			_view.SetFilter(mode, recTreeTarget.RecordKey);
+			if (chkHideTargeted.Checked)
+			{
+				_view.SetFilter((Case workingCase) =>
+				{
+					return !workingCase.HasFilters;
+				});
+			}
+			else
+			{
+				_view.SetFilter(null);
+			}
 		}
 
 		private void recTreeTarget_RecordChanged(object sender, IRecord record)
 		{
 			if (_character == null) { return; }
-			TreeFilterMode mode = (TreeFilterMode)cboTreeFilter.SelectedIndex;
 			LeaveNode();
-			_view.SetFilter(mode, recTreeTarget.RecordKey);
+			string key = recTreeTarget.RecordKey;
+			if (string.IsNullOrEmpty(key))
+			{
+				_view.SetFilter(null);
+			}
+			else
+			{
+				_view.SetFilter((Case workingCase) =>
+				{
+					return workingCase.Target == key || workingCase.AlsoPlaying == key;
+				});
+			}
+			treeDialogue.ExpandAll();
+		}
+
+		private void recTag_RecordChanged(object sender, IRecord e)
+		{
+			if (_character == null) { return; }
+			LeaveNode();
+			string key = recTag.RecordKey;
+			if (string.IsNullOrEmpty(key))
+			{
+				_view.SetFilter(null);
+			}
+			else
+			{
+				_view.SetFilter((Case workingCase) =>
+				{
+					foreach (TargetCondition c in workingCase.Conditions)
+					{
+						if (c.Filter == key)
+						{
+							return true;
+						}
+					}
+					return workingCase.Filter == key;
+				});
+			}
 			treeDialogue.ExpandAll();
 		}
 
@@ -382,8 +426,7 @@ namespace SPNATI_Character_Editor.Controls
 			_view.SaveNode += _view_SaveNode;
 			_view.Initialize(treeDialogue, _character);
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
-			TreeFilterMode mode = (TreeFilterMode)cboTreeFilter.SelectedIndex;
-			_view.SetFilter(mode, recTreeTarget.RecordKey);
+			_view.SetFilter(null);
 			_view.BuildTree(_showHidden);
 			_changingViews = false;
 		}
