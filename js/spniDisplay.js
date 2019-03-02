@@ -70,10 +70,6 @@ PoseSprite.prototype.draw = function() {
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
-    
-    if (this.img.src != this.src) {
-        this.img.src = this.src;
-    }
 }
 
 
@@ -354,8 +350,8 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
     this.simpleImage = simpleImageElem;
     this.imageArea = imageArea;
     this.label = labelElem;
+    this.animCallbackID = undefined;
     
-    this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
     window.addEventListener('resize', this.onResize.bind(this));
 }
 
@@ -372,6 +368,10 @@ OpponentDisplay.prototype.clearPose = function () {
     this.pose = null;
     this.simpleImage.hide();
     this.imageArea.children('.custom-pose').remove();
+    if (this.animCallbackID) {
+        window.cancelAnimationFrame(this.animCallbackID);
+        this.animCallbackID = undefined;
+    }
 }
 
 OpponentDisplay.prototype.drawPose = function (pose) {
@@ -383,6 +383,9 @@ OpponentDisplay.prototype.drawPose = function (pose) {
         this.pose = pose;
         this.imageArea.append(pose.container);
         pose.draw();
+        if (this.pose.animations.length > 0) {
+            this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
+        }
     }
 }
 
@@ -443,10 +446,13 @@ OpponentDisplay.prototype.update = function(player) {
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {
-    this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
-    
     if (!this.pose) return;
     this.pose.update(timestamp);
+    if (this.pose.animations.some(function(a) { return a.looped || !a.isComplete(); })) {
+        this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
+    } else {
+        this.animCallbackID = undefined;
+    }
 }
 
 
@@ -471,7 +477,7 @@ GameScreenDisplay.prototype.reset = function (player) {
     if (player) {
         this.opponentArea.show();
         this.imageArea.css('height', player.scale + '%');
-        this.label.css({"background-color" : clearColour});
+        this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
         this.bubble.hide();

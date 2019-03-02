@@ -37,6 +37,8 @@ var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
 var OPPONENT_STRIPPED = "opponent_stripped";
 
+var PLAYERS_TIED = "tie";
+
 var MALE_HUMAN_MUST_STRIP = "male_human_must_strip";
 var MALE_MUST_STRIP = "male_must_strip";
 

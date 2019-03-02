@@ -469,7 +469,7 @@ function determineLowestHand () {
 	}
 
 	/* unresolvable tie */
-	return -1;
+	return lowestPlayers;
 }
  
 /************************************************************
