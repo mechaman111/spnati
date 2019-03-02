@@ -20,10 +20,6 @@ $gameDialogues = [$("#game-dialogue-1"),
                   $("#game-dialogue-2"),
                   $("#game-dialogue-3"),
                   $("#game-dialogue-4")];
-$gameAdvanceButtons = [$("#game-advance-button-1"),
-                       $("#game-advance-button-2"),
-                       $("#game-advance-button-3"),
-                       $("#game-advance-button-4")];
 $gameImages = [$("#game-image-1"),
                $("#game-image-2"),
                $("#game-image-3"),
@@ -93,11 +89,6 @@ var AUTO_FADE = true;
 var KEYBINDINGS_ENABLED = false;
 var DEBUG = false;
 
-/* colours */
-var currentColour = "#63AAE7"; 	/* indicates current turn */
-var clearColour = "#FFFFFF";	/* indicates neutral */
-var loserColour = "#DD4444";	/* indicates loser of a round */
-
 /* game state */
 var eGamePhase = {
 	DEAL:      [ "Deal", function() { startDealPhase(); }, true ],
@@ -164,7 +155,7 @@ function loadGameScreen () {
             players[i].current = 0;
         }
     }
-    $gameLabels[HUMAN_PLAYER].css({"background-color" : clearColour});
+    $gameLabels[HUMAN_PLAYER].removeClass("loser tied");
     clearHand(HUMAN_PLAYER);
 
     recentLoser = -1;
@@ -338,9 +329,9 @@ function advanceTurn () {
         /* highlight the player who's turn it is */
         for (var i = 0; i < players.length; i++) {
             if (currentTurn == i) {
-                $gameLabels[i].css({"background-color" : currentColour});
+                $gameLabels[i].addClass("current");
             } else {
-                $gameLabels[i].css({"background-color" : clearColour});
+                $gameLabels[i].removeClass("current");
             }
         }
 
@@ -430,7 +421,7 @@ function startDealPhase () {
 
 	/* clear the labels */
 	for (var i = 0; i < players.length; i++) {
-		$gameLabels[i].css({"background-color" : clearColour});
+		$gameLabels[i].removeClass("loser tied");
 	}
 
 	timeoutID = window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
@@ -472,7 +463,6 @@ function continueDealPhase () {
 	/* hide the dialogue bubbles */
     for (var i = 1; i < players.length; i++) {
         $gameDialogues[i-1].html("");
-        $gameAdvanceButtons[i-1].css({opacity : 0});
         $gameBubbles[i-1].hide();
     }
 
@@ -556,24 +546,28 @@ function completeRevealPhase () {
         recentLoser = chosenDebug;
     }
 
-    console.log("Player "+recentLoser+" is the loser.");
-
     /* look for the unlikely case of an absolute tie */
-    if (recentLoser == -1) {
+    if (typeof recentLoser == 'object') {
         console.log("Fuck... there was an absolute tie");
         /* inform the player */
+        players.forEach(function (p) {
+            if (p.chosenState) {
+                p.chosenState = null;
+            }
+        });
+        updateAllBehaviours(null, null, PLAYERS_TIED);
+        updateAllGameVisuals();
 
-        /* hide the dialogue bubbles */
-        for (var i = 1; i < players.length; i++) {
-            $gameDialogues[i-1].html("");
-            $gameAdvanceButtons[i-1].css({opacity : 0});
-            $gameBubbles[i-1].hide();
-        }
-
+        recentLoser.forEach(function(i) {
+            $gameLabels[i].addClass("tied");
+        });
+        recentLoser = -1;
         /* reset the round */
         allowProgression(eGamePhase.DEAL);
         return;
     }
+
+    console.log("Player "+recentLoser+" is the loser.");
 
     // update loss history
     if (previousLoser < 0) {
@@ -600,9 +594,7 @@ function completeRevealPhase () {
     /* highlight the loser */
     for (var i = 0; i < players.length; i++) {
         if (recentLoser == i) {
-            $gameLabels[i].css({"background-color" : loserColour});
-        } else {
-            $gameLabels[i].css({"background-color" : clearColour});
+            $gameLabels[i].addClass("loser");
         }
     }
 
