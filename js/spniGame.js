@@ -311,7 +311,7 @@ function reactToNewAICards () {
     saveSingleTranscriptEntry(currentTurn);
 
 	/* wait and then advance the turn */
-	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
+	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY / 2);
 }
 
 /************************************************************
