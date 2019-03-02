@@ -377,10 +377,12 @@ function loadEpilogueData(player) {
 function parseEpilogue(player, rawEpilogue, galleryEnding) {
   //use parseXML() so that <image> tags come through properly
   //not using parseXML() because internet explorer doesn't like it
-
+  
   if (!rawEpilogue) {
     return;
   }
+
+  player.markers = player.markers || {}; //ensure markers collection exists in the gallery even though they'll be empty
 
   var $epilogue = $(rawEpilogue);
   var title = $epilogue.find("title").html().trim();
@@ -466,6 +468,9 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
             directive.time = totalTime;
           }
 
+          if (directive.marker && !checkMarker(directive.marker, player)) {
+            directive.type = "skip";
+          }
           directives.push(directive);
         });
       }
@@ -699,7 +704,7 @@ function readProperties(sourceObj, scene) {
 function addEpilogueEntry(epilogue) {
   var num = epilogues.length; //index number of the new epilogue
   epilogues.push(epilogue);
-  var player = epilogue.player
+  var player = epilogue.player;
 
   var nameStr = player.first + " " + player.last;
   if (player.first.length <= 0 || player.last.length <= 0) {
@@ -1132,6 +1137,9 @@ EpiloguePlayer.prototype.performDirective = function () {
       case "emit":
         this.addAction(view, directive, view.burstParticles, view.clearParticles);
         break;
+      case "skip":
+        this.addAction(null, directive, function () { }, function () { });
+        break;
     }
 
     this.performDirective();
@@ -1479,6 +1487,12 @@ SceneView.prototype.resize = function () {
   this.viewportHeight = height;
   this.$viewport.width(width);
   this.$viewport.height(height);
+
+  for (var id in this.textObjects) {
+    var box = this.textObjects[id];
+    var directive = box.data("directive");
+    this.applyTextDirective(directive, box);
+  }
 }
 
 SceneView.prototype.haltAnimations = function (haltLooping) {
@@ -1588,6 +1602,33 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
   box.css('left', directive.x);
   box.css('top', directive.y);
   box.css('width', directive.width);
+
+  var arrowHeight = (directive.arrow === "arrow-up" || directive.arrow === "arrow-down" ? 15 : 0);
+  var arrowWidth = (directive.arrow === "arrow-left" || directive.arrow === "arrow-right" ? 15 : 0);
+  switch (directive.alignmenty) {
+    case "center":
+      var height = box.height() + arrowHeight;
+      var top = box.position().top;
+      box.css("top", (top - height / 2) + "px");
+      break;
+    case "bottom":
+      var height = box.height() + arrowHeight;
+      var top = box.position().top;
+      box.css("top", (top - height) + "px");
+      break;
+  }
+  switch (directive.alignmentx) {
+    case "center":
+      var width = box.width() + arrowWidth;
+      var left = box.position().left;
+      box.css("left", (left - width / 2) + "px");
+      break;
+    case "right":
+      var width = box.width() + arrowWidth;
+      var left = box.position().left;
+      box.css("left", (left - width) + "px");
+      break;
+  }
 
   box.data("directive", directive);
 }
