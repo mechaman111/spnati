@@ -152,8 +152,6 @@ var rolledBackGamePhase = null;
  * screen.
  ************************************************************/
 function loadGameScreen () {
-    $gameScreen.show();
-    
     $('#game-screen [data-toggle="tooltip"]').tooltip();
 
     /* reset all of the player's states */
