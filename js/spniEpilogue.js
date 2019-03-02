@@ -1479,6 +1479,12 @@ SceneView.prototype.resize = function () {
   this.viewportHeight = height;
   this.$viewport.width(width);
   this.$viewport.height(height);
+
+  for (var id in this.textObjects) {
+    var box = this.textObjects[id];
+    var directive = box.data("directive");
+    this.applyTextDirective(directive, box);
+  }
 }
 
 SceneView.prototype.haltAnimations = function (haltLooping) {
@@ -1588,6 +1594,33 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
   box.css('left', directive.x);
   box.css('top', directive.y);
   box.css('width', directive.width);
+
+  var arrowHeight = (directive.arrow === "arrow-up" || directive.arrow === "arrow-down" ? 15 : 0);
+  var arrowWidth = (directive.arrow === "arrow-left" || directive.arrow === "arrow-right" ? 15 : 0);
+  switch (directive.alignmenty) {
+    case "center":
+      var height = box.height() + arrowHeight;
+      var top = box.position().top;
+      box.css("top", (top - height / 2) + "px");
+      break;
+    case "bottom":
+      var height = box.height() + arrowHeight;
+      var top = box.position().top;
+      box.css("top", (top - height) + "px");
+      break;
+  }
+  switch (directive.alignmentx) {
+    case "center":
+      var width = box.width() + arrowWidth;
+      var left = box.position().left;
+      box.css("left", (left - width / 2) + "px");
+      break;
+    case "right":
+      var width = box.width() + arrowWidth;
+      var left = box.position().left;
+      box.css("left", (left - width) + "px");
+      break;
+  }
 
   box.data("directive", directive);
 }
