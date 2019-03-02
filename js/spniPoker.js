@@ -271,7 +271,7 @@ function shuffleDeck () {
 /************************************************************
  * Deals new cards to the given player.
  ************************************************************/
-function dealHand (player) {
+function dealHand (player, numPlayers, playersBefore) {
 	/* collect their old hand */
 	collectPlayerHand (player);
 	
@@ -286,7 +286,9 @@ function dealHand (player) {
 		drawnCard = getRandomNumber(0, inDeck.length);
 		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
-		animateDealtCard(player, i, 5*i+player);
+		// Simulate dealing one card to each player, then another to
+		// each player, and so on.
+		animateDealtCard(player, i, numPlayers * i + playersBefore);
 	}
 }
 
