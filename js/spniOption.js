@@ -176,16 +176,16 @@ function setDealSpeed (choice) {
 		case 1: ANIM_DELAY = 0;
 				ANIM_TIME = 0;
 				break;
-		case 2: ANIM_DELAY = 40;
+		case 2: ANIM_DELAY = 32;
 				ANIM_TIME = 200;
 				break;
-		case 3: ANIM_DELAY = 100;
+		case 3: ANIM_DELAY = 80;
 				ANIM_TIME = 500;
 				break;
-		case 4: ANIM_DELAY = 200;
+		case 4: ANIM_DELAY = 160;
 				ANIM_TIME = 1000;
 				break;
-		default: ANIM_DELAY = 100;
+		default: ANIM_DELAY = 80;
 				 ANIM_TIME = 500;
 				 break;
 	}

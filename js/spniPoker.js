@@ -59,7 +59,7 @@ $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3
  **********************************************************************/
 
 /* pseudo constants */
-var ANIM_DELAY = 100;
+var ANIM_DELAY = 80;
 var ANIM_TIME = 500;
 var CARDS_PER_HAND = 5;
  
