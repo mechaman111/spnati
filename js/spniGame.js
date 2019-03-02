@@ -424,7 +424,7 @@ function startDealPhase () {
 		$gameLabels[i].css({"background-color" : clearColour});
 	}
 
-	timeoutID = window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
+	timeoutID = window.setTimeout(checkDealLock, ANIM_DELAY * CARDS_PER_HAND * numPlayers + ANIM_TIME);
 }
 
 /************************************************************
@@ -432,15 +432,10 @@ function startDealPhase () {
  ************************************************************/
 function checkDealLock () {
 	/* count the players still in the game */
-	var inGame = 0;
-	for (var i = 0; i < players.length; i++) {
-		if (players[i] && !players[i].out) {
-			inGame++;
-		}
-	}
+	var inGame = getNumPlayersInStage(STATUS_ALIVE);
 
 	/* check the deal lock */
-	if (dealLock < inGame * 5) {
+	if (dealLock < inGame * CARDS_PER_HAND) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
 		gamePhase = eGamePhase.AITURN;
