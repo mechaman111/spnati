@@ -59,7 +59,7 @@ $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3
  **********************************************************************/
 
 /* pseudo constants */
-var ANIM_DELAY = 350;
+var ANIM_DELAY = 100;
 var ANIM_TIME = 1000;
 var CARDS_PER_HAND = 5;
  
@@ -363,7 +363,7 @@ function animateDealtCard (player, card, n) {
 		var animTime = distance / speed;
 	}
 
-	$clonedCard.delay(n * ANIM_DELAY / 5.0).animate({top: top, left: left}, animTime, function() {
+	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
 		displayCard(player, card, player == HUMAN_PLAYER);
 		dealLock++;

@@ -116,10 +116,10 @@ function Save(){
 		}
 		switch(ANIM_DELAY){
 			case 0: this.data['dealAnimation'] = 1; break;
-			case 150: this.data['dealAnimation'] = 2; break;
+			case 40: this.data['dealAnimation'] = 2; break;
 			default:
-			case 350: this.data['dealAnimation'] = 3; break;
-			case 800: this.data['dealAnimation'] = 4; break;
+			case 100: this.data['dealAnimation'] = 3; break;
+			case 200: this.data['dealAnimation'] = 4; break;
 		}
 		if(!AUTO_FORFEIT){
 			this.data['autoForfeit'] = 4;

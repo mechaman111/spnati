@@ -287,7 +287,7 @@ function makeAIDecision () {
     var n = players[currentTurn].hand.tradeIns.countTrue();
     exchangeCards(currentTurn);
     timeoutID = window.setTimeout(reactToNewAICards,
-                                  Math.max(GAME_DELAY, n ? (n - 1) * ANIM_DELAY / 5.0 + ANIM_TIME + GAME_DELAY / 3 : 0));
+                                  Math.max(GAME_DELAY, n ? (n - 1) * ANIM_DELAY + ANIM_TIME + GAME_DELAY / 4 : 0));
 }
 
 /************************************************************
@@ -446,7 +446,7 @@ function checkDealLock () {
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
-        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 100) {
             allowProgression();
         } else {
             continueDealPhase();
