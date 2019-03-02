@@ -160,8 +160,8 @@ function setAITurnTime (choice) {
 		case 1: GAME_DELAY = 0; break;
 		case 2: GAME_DELAY = 300; break;
 		case 3: GAME_DELAY = 600; break;
-		case 4: GAME_DELAY = 800; break;
-		case 5: GAME_DELAY = 1200; break;
+		case 4: GAME_DELAY = 1000; break;
+		case 5: GAME_DELAY = 1500; break;
 		default: GAME_DELAY = 600;
 	}
 	setActiveOption($AITurnTimeOptions, choice);
@@ -176,17 +176,17 @@ function setDealSpeed (choice) {
 		case 1: ANIM_DELAY = 0;
 				ANIM_TIME = 0;
 				break;
-		case 2: ANIM_DELAY = 150;
+		case 2: ANIM_DELAY = 160;
+				ANIM_TIME = 200;
+				break;
+		case 3: ANIM_DELAY = 400;
 				ANIM_TIME = 500;
 				break;
-		case 3: ANIM_DELAY = 350;
+		case 4: ANIM_DELAY = 800;
 				ANIM_TIME = 1000;
 				break;
-		case 4: ANIM_DELAY = 800;
-				ANIM_TIME = 2000;
-				break;
-		default: ANIM_DELAY = 350;
-				 ANIM_TIME = 1000;
+		default: ANIM_DELAY = 400;
+				 ANIM_TIME = 500;
 				 break;
 	}
 	setActiveOption($dealSpeedOptions, choice);

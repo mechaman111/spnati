@@ -171,62 +171,62 @@ function getCardSuitValue (card) {
  * Sets the given card to full opacity.
  ************************************************************/
 function fillCard (player, card) {
-	$cardCells[player][card].css({opacity: 1});
+    $cardCells[player][card].css({opacity: 1});
 }
 
 /************************************************************
  * Sets the given card to a lower opacity.
  ************************************************************/
 function dullCard (player, card) {
-	$cardCells[player][card].css({opacity: 0.4});
+    $cardCells[player][card].css({opacity: 0.4});
+}
+
+/************************************************************
+ * Removes a card from display
+ ************************************************************/
+function clearCard (player, i) {
+    $cardCells[player][i].css('visibility', 'hidden');
+    $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+}
+
+/************************************************************
+ * Displays a card, face up or face down
+ ************************************************************/
+function displayCard (player, i, visible) {
+    if (visible) {
+        $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+    } else {
+        $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+    }
+    fillCard(player, i);
+    $cardCells[player][i].css('visibility', '');
 }
 
 /************************************************************
  * Shows the given player's hand at full opacity.
  ************************************************************/
 function showHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		fillCard(player, i);
-	}
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        displayCard(player, i, true);
+    }
 }
 
 /************************************************************
- * Shows but completely dulls the given player's hand.
- ************************************************************/
-function dullHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		dullCard(player, i);
-	}
-}
-
-/************************************************************
- * Hides the given player's hand based on their state.
+ * Hides the given player's hand based
  ************************************************************/
 function hideHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player]) {
-            if (!players[player].out) {
-                $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
-            } else {
-                $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-            }
-            fillCard(player, i);
-        }
-	}
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        displayCard(player, i, false);
+    }
 }
 
 /************************************************************
  * Clears the given player's hand (in preparation of a new game).
  ************************************************************/
 function clearHand (player) {
-	if (players[player] && players[player].hand) {
-		for (var i = 0; i < CARDS_PER_HAND; i++) {
-			$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-			fillCard(player, i);
-		}
-	}
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        clearCard(player, i);
+    }
 }
 
 /*************************************************************
@@ -234,15 +234,6 @@ function clearHand (player) {
  *************************************************************/
 function stopCardAnimations () {
     $('.shown-card').stop(true, true);
-    players.forEach(function(player) {
-        if (player.hand) {
-            for (var i = 0; i < CARDS_PER_HAND; i++) {
-                if (player.hand.cards[i]) {
-                    clearTimeout(player.hand.cards[i].timeoutID);
-                }
-            }
-        }
-    });
 }
 
 
@@ -260,8 +251,8 @@ function collectPlayerHand (player) {
 			outDeck.push(players[player].hand.cards[i]);
 		}
 		players[player].hand.cards[i] = null;
-		$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 	}
+	clearHand(player);
 }
 
 /************************************************************
@@ -293,10 +284,9 @@ function dealHand (player) {
 	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		drawnCard = getRandomNumber(0, inDeck.length);
-        $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
-		delayDealtCard(player, i);
+		animateDealtCard(player, i, 5*i+player);
 	}
 }
 
@@ -322,15 +312,18 @@ function exchangeCards (player) {
 		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
 			players[player].hand.cards[i] = null;
+			clearCard(player, i);
 		}
 	}
 	
 	/* take the new cards */
+	var n = 0;
 	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		if (players[player].hand.tradeIns[i]) {
 			drawnCard = getRandomNumber(0, inDeck.length);
 			players[player].hand.cards[i] = inDeck[drawnCard];
+			animateDealtCard(player, i, n++);
 			inDeck.splice(drawnCard, 1);
             players[player].hand.tradeIns[i] = false;
 		}
@@ -342,17 +335,10 @@ function exchangeCards (player) {
  **********************************************************************/
 
 /************************************************************
- * Adds a short delay to the dealt card animation.
+ * Animates a small card into a player's hand.  n is the card's number
+ * in the order dealt, used to calculate the initial delay.
  ************************************************************/
-function delayDealtCard (player, card) {
-	card.timeoutID = window.setTimeout(function(){animateDealtCard(player, card)}, (player*(ANIM_DELAY/5)) + (card*ANIM_DELAY));
-}
-
-/************************************************************
- * Animates a small card into a player's hand.
- ************************************************************/
-function animateDealtCard (player, card) {
-	card.timeoutID = undefined;
+function animateDealtCard (player, card, n) {
 	$clonedCard = $hiddenLargeCard.clone().prependTo($gameHiddenArea);
 	$clonedCard.addClass("shown-card");
 	$clonedCard.attr('id', 'dealt-card-'+player+'-'+card);
@@ -377,9 +363,9 @@ function animateDealtCard (player, card) {
 		var animTime = distance / speed;
 	}
 
-	$clonedCard.animate({top:top, left:left}, animTime, function() {
+	$clonedCard.delay(n * ANIM_DELAY / 5.0).animate({top: top, left: left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
-		$cardCells[player][card].attr('src', UNKNOWN_CARD_IMAGE);
+		displayCard(player, card, player == HUMAN_PLAYER);
 		dealLock++;
 	});
 }

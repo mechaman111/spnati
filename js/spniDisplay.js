@@ -467,11 +467,11 @@ GameScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 GameScreenDisplay.prototype.constructor = GameScreenDisplay;
 
 GameScreenDisplay.prototype.reset = function (player) {
+    clearHand(this.slot);
     if (player) {
         this.opponentArea.show();
         this.imageArea.css('height', player.scale + '%');
         this.label.css({"background-color" : clearColour});
-        clearHand(i);
     } else {
         this.opponentArea.hide();
         this.bubble.hide();

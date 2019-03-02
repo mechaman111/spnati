@@ -278,13 +278,6 @@ function makeAIDecision () {
 	/* determine the AI's decision */
 	determineAIAction(players[currentTurn]);
 	
-	/* dull the cards they are trading in */
-	for (var i = 0; i < players[currentTurn].hand.tradeIns.length; i++) {
-		if (players[currentTurn].hand.tradeIns[i]) {
-			dullCard(currentTurn, i);
-		}
-	}
-
 	/* update a few hardcoded visuals */
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
@@ -292,19 +285,17 @@ function makeAIDecision () {
     
     saveSingleTranscriptEntry(currentTurn);
 
-	/* wait and implement AI action */
-	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
+    /* wait and implement AI action */
+    var n = players[currentTurn].hand.tradeIns.countTrue();
+    exchangeCards(currentTurn);
+    timeoutID = window.setTimeout(reactToNewAICards,
+                                  Math.max(GAME_DELAY, n ? (n - 1) * ANIM_DELAY / 5.0 + ANIM_TIME + GAME_DELAY / 3 : 0));
 }
 
 /************************************************************
- * Implements the AI's chosen action.
+ * React to the new cards
  ************************************************************/
-function implementAIAction () {
-	exchangeCards(currentTurn);
-
-	/* refresh the hand */
-	hideHand(currentTurn);
-
+function reactToNewAICards () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
@@ -525,7 +516,6 @@ function continueDealPhase () {
 function completeExchangePhase () {
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
-    showHand(HUMAN_PLAYER);
 
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
