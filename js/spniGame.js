@@ -452,11 +452,6 @@ function continueDealPhase () {
         $gameBubbles[i-1].hide();
     }
 
-	/* set visual state */
-    if (!players[HUMAN_PLAYER].out) {
-        showHand(HUMAN_PLAYER);
-    }
-
 	$mainButton.html("Wait...");
     
     /* enable player cards */
