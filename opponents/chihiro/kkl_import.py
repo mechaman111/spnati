@@ -323,8 +323,8 @@ def preprocess_character_code(in_code, blush=-1, anger=-1, juice=-1, remove_moti
     if remove_motion:
         disable_character_motion(code.characters[0])
     
-    if close_vagina:    
-        close_character_vagina(code.characters[0])
+    #if close_vagina:    
+    #    close_character_vagina(code.characters[0])
     
     blush = int(blush)
     anger = int(anger)
