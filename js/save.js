@@ -108,18 +108,18 @@ function Save(){
 		this.data['cardSuggest'] = CARD_SUGGEST?1:2;
 		switch(GAME_DELAY){
 			case 0: this.data['gameDelay'] = 1; break;
-			case 300: this.data['gameDelay'] = 2; break;
+			case 400: this.data['gameDelay'] = 2; break;
 			default:
-			case 600: this.data['gameDelay'] = 3; break;
-			case 800: this.data['gameDelay'] =  4; break;
-			case 1200: this.data['gameDelay'] = 5;
+			case 800: this.data['gameDelay'] = 3; break;
+			case 1200: this.data['gameDelay'] =  4; break;
+			case 1600: this.data['gameDelay'] = 5;
 		}
-		switch(ANIM_DELAY){
+		switch(ANIM_TIME){
 			case 0: this.data['dealAnimation'] = 1; break;
-			case 150: this.data['dealAnimation'] = 2; break;
+			case 200: this.data['dealAnimation'] = 2; break;
 			default:
-			case 350: this.data['dealAnimation'] = 3; break;
-			case 800: this.data['dealAnimation'] = 4; break;
+			case 500: this.data['dealAnimation'] = 3; break;
+			case 1000: this.data['dealAnimation'] = 4; break;
 		}
 		if(!AUTO_FORFEIT){
 			this.data['autoForfeit'] = 4;

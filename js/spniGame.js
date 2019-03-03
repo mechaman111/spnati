@@ -77,7 +77,7 @@ gameDisplays = [
  **********************************************************************/
 
 /* pseudo constants */
-var GAME_DELAY = 600;
+var GAME_DELAY = 800;
 var FORFEIT_DELAY = 7500;
 var ENDING_DELAY = 7500;
 var GAME_OVER_DELAY = 1000;
@@ -143,8 +143,6 @@ var rolledBackGamePhase = null;
  * screen.
  ************************************************************/
 function loadGameScreen () {
-    $gameScreen.show();
-    
     $('#game-screen [data-toggle="tooltip"]').tooltip();
 
     /* reset all of the player's states */
@@ -269,13 +267,6 @@ function makeAIDecision () {
 	/* determine the AI's decision */
 	determineAIAction(players[currentTurn]);
 	
-	/* dull the cards they are trading in */
-	for (var i = 0; i < players[currentTurn].hand.tradeIns.length; i++) {
-		if (players[currentTurn].hand.tradeIns[i]) {
-			dullCard(currentTurn, i);
-		}
-	}
-
 	/* update a few hardcoded visuals */
 	players[currentTurn].updateBehaviour(SWAP_CARDS);
     players[currentTurn].commitBehaviourUpdate();
@@ -283,19 +274,17 @@ function makeAIDecision () {
     
     saveSingleTranscriptEntry(currentTurn);
 
-	/* wait and implement AI action */
-	timeoutID = window.setTimeout(implementAIAction, GAME_DELAY);
+    /* wait and implement AI action */
+    var n = players[currentTurn].hand.tradeIns.countTrue();
+    exchangeCards(currentTurn);
+    timeoutID = window.setTimeout(reactToNewAICards,
+                                  Math.max(GAME_DELAY, n ? (n - 1) * ANIM_DELAY + ANIM_TIME + GAME_DELAY / 4 : 0));
 }
 
 /************************************************************
- * Implements the AI's chosen action.
+ * React to the new cards
  ************************************************************/
-function implementAIAction () {
-	exchangeCards(currentTurn);
-
-	/* refresh the hand */
-	hideHand(currentTurn);
-
+function reactToNewAICards () {
 	/* update behaviour */
 	determineHand(players[currentTurn]);
 	if (players[currentTurn].hand.strength == HIGH_CARD) {
@@ -313,7 +302,7 @@ function implementAIAction () {
     saveSingleTranscriptEntry(currentTurn);
 
 	/* wait and then advance the turn */
-	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
+	timeoutID = window.setTimeout(advanceTurn, GAME_DELAY / 2);
 }
 
 /************************************************************
@@ -398,12 +387,14 @@ function startDealPhase () {
         }
     }
     shuffleDeck();
+    var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
+    var n = 0;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
             console.log(players[i] + " "+ i);
             if (!players[i].out) {
                 /* deal out a new hand to this player */
-                dealHand(i);
+                dealHand(i, numPlayers, n++);
             } else {
                 if (HUMAN_PLAYER == i) {
                     $gamePlayerCardArea.hide();
@@ -424,7 +415,7 @@ function startDealPhase () {
 		$gameLabels[i].removeClass("loser tied");
 	}
 
-	timeoutID = window.setTimeout(checkDealLock, (ANIM_DELAY*(players.length))+ANIM_TIME);
+	timeoutID = window.setTimeout(checkDealLock, ANIM_DELAY * CARDS_PER_HAND * numPlayers + ANIM_TIME);
 }
 
 /************************************************************
@@ -432,15 +423,10 @@ function startDealPhase () {
  ************************************************************/
 function checkDealLock () {
 	/* count the players still in the game */
-	var inGame = 0;
-	for (var i = 0; i < players.length; i++) {
-		if (players[i] && !players[i].out) {
-			inGame++;
-		}
-	}
+	var inGame = getNumPlayersInStage(STATUS_ALIVE);
 
 	/* check the deal lock */
-	if (dealLock < inGame * 5) {
+	if (dealLock < inGame * CARDS_PER_HAND) {
 		timeoutID = window.setTimeout(checkDealLock, 100);
 	} else {
 		gamePhase = eGamePhase.AITURN;
@@ -448,7 +434,7 @@ function checkDealLock () {
 		   player to exchange cards, and someone is masturbating, and
 		   the card animation speed is to great, we need a pause so
 		   that the masturbation talk can be read. */
-        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 350) { 
+        if (players[HUMAN_PLAYER].out && getNumPlayersInStage(STATUS_MASTURBATING) > 0 && ANIM_DELAY < 100) {
             allowProgression();
         } else {
             continueDealPhase();
@@ -464,11 +450,6 @@ function continueDealPhase () {
     for (var i = 1; i < players.length; i++) {
         $gameDialogues[i-1].html("");
         $gameBubbles[i-1].hide();
-    }
-
-	/* set visual state */
-    if (!players[HUMAN_PLAYER].out) {
-        showHand(HUMAN_PLAYER);
     }
 
 	$mainButton.html("Wait...");
@@ -515,7 +496,6 @@ function continueDealPhase () {
 function completeExchangePhase () {
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
-    showHand(HUMAN_PLAYER);
 
     /* disable player cards */
     for (var i = 0; i < $cardButtons.length; i++) {
@@ -1009,20 +989,20 @@ function game_keyUp(e)
         if (e.keyCode == 32 && !$mainButton.prop('disabled')) { // Space
             advanceGame();
         }
-        else if (e.keyCode == 49 && !$cardButtons[4].prop('disabled')) { // 1
-            selectCard(4);
+        else if (e.keyCode == 49 && !$cardButtons[0].prop('disabled')) { // 1
+            selectCard(0);
         }
-        else if (e.keyCode == 50 && !$cardButtons[3].prop('disabled')) { // 2
-            selectCard(3);
+        else if (e.keyCode == 50 && !$cardButtons[1].prop('disabled')) { // 2
+            selectCard(1);
         }
         else if (e.keyCode == 51 && !$cardButtons[2].prop('disabled')) { // 3
             selectCard(2);
         }
-        else if (e.keyCode == 52 && !$cardButtons[1].prop('disabled')) { // 4
-            selectCard(1);
+        else if (e.keyCode == 52 && !$cardButtons[3].prop('disabled')) { // 4
+            selectCard(3);
         }
-        else if (e.keyCode == 53 && !$cardButtons[0].prop('disabled')) { // 5
-            selectCard(0);
+        else if (e.keyCode == 53 && !$cardButtons[4].prop('disabled')) { // 5
+            selectCard(4);
         }
         else if (e.keyCode == 81 && DEBUG) {
             showDebug = !showDebug;

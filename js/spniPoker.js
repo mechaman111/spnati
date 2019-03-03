@@ -59,8 +59,8 @@ $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3
  **********************************************************************/
 
 /* pseudo constants */
-var ANIM_DELAY = 350;
-var ANIM_TIME = 1000;
+var ANIM_DELAY = 80;
+var ANIM_TIME = 500;
 var CARDS_PER_HAND = 5;
  
 /* image constants */
@@ -171,62 +171,65 @@ function getCardSuitValue (card) {
  * Sets the given card to full opacity.
  ************************************************************/
 function fillCard (player, card) {
-	$cardCells[player][card].css({opacity: 1});
+    $cardCells[player][card].css({opacity: 1});
 }
 
 /************************************************************
  * Sets the given card to a lower opacity.
  ************************************************************/
 function dullCard (player, card) {
-	$cardCells[player][card].css({opacity: 0.4});
+    $cardCells[player][card].css({opacity: 0.4});
+}
+
+/************************************************************
+ * Removes a card from display
+ ************************************************************/
+function clearCard (player, i) {
+    $cardCells[player][i].css('visibility', 'hidden');
+    $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
+}
+
+/************************************************************
+ * Displays a card, face up or face down, or an empty space
+ * if the card is missing.
+ ************************************************************/
+function displayCard (player, i, visible) {
+    if (players[player].hand.cards[i]) {
+        if (visible) {
+            $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+        } else {
+            $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+        }
+        fillCard(player, i);
+        $cardCells[player][i].css('visibility', '');
+    } else {
+        clearCard(player, i);
+    }
 }
 
 /************************************************************
  * Shows the given player's hand at full opacity.
  ************************************************************/
 function showHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		fillCard(player, i);
-	}
+    displayHand(player, true);
 }
 
 /************************************************************
- * Shows but completely dulls the given player's hand.
+ * Renders the given player's hand
  ************************************************************/
-function dullHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		$cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
-		dullCard(player, i);
-	}
-}
-
-/************************************************************
- * Hides the given player's hand based on their state.
- ************************************************************/
-function hideHand (player) {
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player]) {
-            if (!players[player].out) {
-                $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
-            } else {
-                $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-            }
-            fillCard(player, i);
-        }
-	}
+function displayHand (player, visible) {
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        displayCard(player, i, visible);
+    }
 }
 
 /************************************************************
  * Clears the given player's hand (in preparation of a new game).
  ************************************************************/
 function clearHand (player) {
-	if (players[player] && players[player].hand) {
-		for (var i = 0; i < CARDS_PER_HAND; i++) {
-			$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
-			fillCard(player, i);
-		}
-	}
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        clearCard(player, i);
+    }
 }
 
 /*************************************************************
@@ -234,15 +237,6 @@ function clearHand (player) {
  *************************************************************/
 function stopCardAnimations () {
     $('.shown-card').stop(true, true);
-    players.forEach(function(player) {
-        if (player.hand) {
-            for (var i = 0; i < CARDS_PER_HAND; i++) {
-                if (player.hand.cards[i]) {
-                    clearTimeout(player.hand.cards[i].timeoutID);
-                }
-            }
-        }
-    });
 }
 
 
@@ -260,8 +254,8 @@ function collectPlayerHand (player) {
 			outDeck.push(players[player].hand.cards[i]);
 		}
 		players[player].hand.cards[i] = null;
-		$cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 	}
+	clearHand(player);
 }
 
 /************************************************************
@@ -280,7 +274,7 @@ function shuffleDeck () {
 /************************************************************
  * Deals new cards to the given player.
  ************************************************************/
-function dealHand (player) {
+function dealHand (player, numPlayers, playersBefore) {
 	/* collect their old hand */
 	collectPlayerHand (player);
 	
@@ -293,10 +287,11 @@ function dealHand (player) {
 	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		drawnCard = getRandomNumber(0, inDeck.length);
-        $cardCells[player][i].attr('src', BLANK_CARD_IMAGE);
 		players[player].hand.cards[i] = inDeck[drawnCard];
 		inDeck.splice(drawnCard, 1);
-		delayDealtCard(player, i);
+		// Simulate dealing one card to each player, then another to
+		// each player, and so on.
+		animateDealtCard(player, i, numPlayers * i + playersBefore);
 	}
 }
 
@@ -322,19 +317,24 @@ function exchangeCards (player) {
 		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
 			players[player].hand.cards[i] = null;
+			players[player].hand.tradeIns[i] = false;
 		}
 	}
+
+    /* Move kept cards to the left */
+    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    /* Refresh display. */
+    displayHand(player, player == HUMAN_PLAYER);
 	
-	/* take the new cards */
-	var drawnCard;
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.tradeIns[i]) {
-			drawnCard = getRandomNumber(0, inDeck.length);
-			players[player].hand.cards[i] = inDeck[drawnCard];
-			inDeck.splice(drawnCard, 1);
-            players[player].hand.tradeIns[i] = false;
-		}
-	}
+    /* take the new cards */
+    var n = 0;
+    var drawnCard;
+    for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++) {
+        drawnCard = getRandomNumber(0, inDeck.length);
+        players[player].hand.cards.push(inDeck[drawnCard]);
+        animateDealtCard(player, i, n++);
+        inDeck.splice(drawnCard, 1);
+    }
 }
 
 /**********************************************************************
@@ -342,17 +342,10 @@ function exchangeCards (player) {
  **********************************************************************/
 
 /************************************************************
- * Adds a short delay to the dealt card animation.
+ * Animates a small card into a player's hand.  n is the card's number
+ * in the order dealt, used to calculate the initial delay.
  ************************************************************/
-function delayDealtCard (player, card) {
-	card.timeoutID = window.setTimeout(function(){animateDealtCard(player, card)}, (player*(ANIM_DELAY/5)) + (card*ANIM_DELAY));
-}
-
-/************************************************************
- * Animates a small card into a player's hand.
- ************************************************************/
-function animateDealtCard (player, card) {
-	card.timeoutID = undefined;
+function animateDealtCard (player, card, n) {
 	$clonedCard = $hiddenLargeCard.clone().prependTo($gameHiddenArea);
 	$clonedCard.addClass("shown-card");
 	$clonedCard.attr('id', 'dealt-card-'+player+'-'+card);
@@ -377,9 +370,9 @@ function animateDealtCard (player, card) {
 		var animTime = distance / speed;
 	}
 
-	$clonedCard.animate({top:top, left:left}, animTime, function() {
+	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
 		$('#dealt-card-'+player+'-'+card).remove();
-		$cardCells[player][card].attr('src', UNKNOWN_CARD_IMAGE);
+		displayCard(player, card, player == HUMAN_PLAYER);
 		dealLock++;
 	});
 }
