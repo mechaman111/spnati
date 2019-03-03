@@ -190,33 +190,36 @@ function clearCard (player, i) {
 }
 
 /************************************************************
- * Displays a card, face up or face down
+ * Displays a card, face up or face down, or an empty space
+ * if the card is missing.
  ************************************************************/
 function displayCard (player, i, visible) {
-    if (visible) {
-        $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+    if (players[player].hand.cards[i]) {
+        if (visible) {
+            $cardCells[player][i].attr('src', IMG + players[player].hand.cards[i] + ".jpg");
+        } else {
+            $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+        }
+        fillCard(player, i);
+        $cardCells[player][i].css('visibility', '');
     } else {
-        $cardCells[player][i].attr('src', UNKNOWN_CARD_IMAGE);
+        clearCard(player, i);
     }
-    fillCard(player, i);
-    $cardCells[player][i].css('visibility', '');
 }
 
 /************************************************************
  * Shows the given player's hand at full opacity.
  ************************************************************/
 function showHand (player) {
-    for (var i = 0; i < CARDS_PER_HAND; i++) {
-        displayCard(player, i, true);
-    }
+    displayHand(player, true);
 }
 
 /************************************************************
- * Hides the given player's hand based
+ * Renders the given player's hand
  ************************************************************/
-function hideHand (player) {
+function displayHand (player, visible) {
     for (var i = 0; i < CARDS_PER_HAND; i++) {
-        displayCard(player, i, false);
+        displayCard(player, i, visible);
     }
 }
 
@@ -314,22 +317,24 @@ function exchangeCards (player) {
 		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
 			outDeck.push(players[player].hand.cards[i]);
 			players[player].hand.cards[i] = null;
-			clearCard(player, i);
+			players[player].hand.tradeIns[i] = false;
 		}
 	}
+
+    /* Move kept cards to the left */
+    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    /* Refresh display. */
+    displayHand(player, player == HUMAN_PLAYER);
 	
-	/* take the new cards */
-	var n = 0;
-	var drawnCard;
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.tradeIns[i]) {
-			drawnCard = getRandomNumber(0, inDeck.length);
-			players[player].hand.cards[i] = inDeck[drawnCard];
-			animateDealtCard(player, i, n++);
-			inDeck.splice(drawnCard, 1);
-            players[player].hand.tradeIns[i] = false;
-		}
-	}
+    /* take the new cards */
+    var n = 0;
+    var drawnCard;
+    for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++) {
+        drawnCard = getRandomNumber(0, inDeck.length);
+        players[player].hand.cards.push(inDeck[drawnCard]);
+        animateDealtCard(player, i, n++);
+        inDeck.splice(drawnCard, 1);
+    }
 }
 
 /**********************************************************************
