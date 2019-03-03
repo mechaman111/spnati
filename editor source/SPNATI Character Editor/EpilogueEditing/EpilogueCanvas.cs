@@ -8,6 +8,7 @@ using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.Properties;
 using System.Globalization;
+using SPNATI_Character_Editor.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
@@ -21,6 +22,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		public const float MinZoom = 0.25f;
 		public const float MaxZoom = 3;
+		private const int ArrowSize = 16;
 
 		private Epilogue _epilogue;
 		private Character _character;
@@ -43,6 +45,7 @@ namespace SPNATI_Character_Editor.Controls
 		private int _directiveIndex = -1;
 		private bool _waitingForAnims = false;
 		private bool _showOverlay = true;
+		private List<string> _markers = new List<string>();
 
 		private float _zoom = 1;
 		public float ZoomLevel
@@ -364,7 +367,6 @@ namespace SPNATI_Character_Editor.Controls
 		private void DrawTextBox(Graphics g, SceneObject textbox)
 		{
 			const int Padding = 5;
-			const int ArrowSize = 16;
 
 			RectangleF bounds = ToScreenRegion(textbox);
 			SizeF size = g.MeasureString(textbox.Text, _font, (int)(bounds.Width - Padding * 2), _textFormat);
@@ -557,7 +559,34 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				//textboxes are scaled and positioned relative to the viewport size and not the scene
 				Rectangle viewport = GetViewportBounds();
-				return new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
+				RectangleF position = new RectangleF(viewport.X + obj.X / 100.0f * viewport.Width, viewport.Y + obj.Y / 100.0f * viewport.Height, obj.Width / 100.0f * viewport.Width, obj.Height);
+				int arrowWidth = (obj.Arrow == "left" || obj.Arrow == "right") ? ArrowSize : 0;
+				int arrowHeight = (obj.Arrow == "up" || obj.Arrow == "down") ? ArrowSize : 0;
+				if (obj.AlignmentX == "right")
+				{
+					int width = (int)(position.Width + arrowWidth);
+					int left = (int)position.X;
+					position.X = (position.X - width);
+				}
+				else if (obj.AlignmentX == "center")
+				{
+					int width = (int)(position.Width + arrowWidth);
+					int left = (int)position.X;
+					position.X = (position.X - width * 0.5f);
+				}
+				if (obj.AlignmentY == "bottom")
+				{
+					int height = (int)(position.Height + arrowHeight);
+					int top = (int)position.Y;
+					position.Y = (position.Y - height);
+				}
+				else if (obj.AlignmentY == "center")
+				{
+					int height = (int)(position.Height + arrowHeight);
+					int top = (int)position.Y;
+					position.Y = (position.Y - height * 0.5f);
+				}
+				return position;
 			}
 			else if (obj.ObjectType == SceneObjectType.Emitter || obj?.SourceObject?.ObjectType == SceneObjectType.Emitter)
 			{
@@ -1681,7 +1710,7 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 			}
 
-			_scenePreview = new ScenePreview(_selectedScene, _character);
+			_scenePreview = new ScenePreview(_selectedScene, _character, _markers);
 			_overlay = new SceneObject(_scenePreview, _character, null, null, null);
 			_overlay.Id = "fade";
 			_overlay.SetColor(_epilogue, _selectedScene);
@@ -2330,6 +2359,17 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_showOverlay = !_showOverlay;
 			canvas.Invalidate();
+		}
+
+		private void cmdMarkers_Click(object sender, EventArgs e)
+		{
+			MarkerSetup form = new MarkerSetup();
+			form.SetData(_character, _markers);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_markers = form.Markers;
+				BuildScene(false);
+			}
 		}
 	}
 

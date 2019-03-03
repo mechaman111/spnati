@@ -329,128 +329,209 @@ namespace SPNATI_Character_Editor
 			lines.Add("\r\n#EPILOGUE/ENDING");
 			foreach (Epilogue ending in character.Endings)
 			{
-				lines.Add("");
-				lines.Add(string.Format("ending={0}", ending.Title));
-				lines.Add(string.Format("\tending_gender={0}", ending.Gender));
-				if (ending.HasSpecialConditions)
-				{
-					//list.Append("\tending_conditions=");
-					List<string> conditions = new List<string>();
-					if (!string.IsNullOrEmpty(ending.AlsoPlaying))
-					{
-						conditions.Add("alsoPlaying:" + ending.AlsoPlaying);
-					}
-					if (!string.IsNullOrEmpty(ending.PlayerStartingLayers))
-					{
-						conditions.Add("playerStartingLayers:" + ending.PlayerStartingLayers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
-					{
-						conditions.Add("markers:" + ending.AllMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
-					{
-						conditions.Add("not-markers:" + ending.NotMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
-					{
-						conditions.Add("any-markers:" + ending.AnyMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
-					{
-						conditions.Add("alsoplaying-markers:" + ending.AlsoPlayingAllMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
-					{
-						conditions.Add("alsoplaying-not-markers:" + ending.AlsoPlayingNotMarkers);
-					}
-					if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
-					{
-						conditions.Add("alsoplaying-any-markers:" + ending.AlsoPlayingAnyMarkers);
-					}
-					lines.Add($"\tending_conditions={string.Join(",", conditions)}");
-				}
-				if (ending.GalleryImage != null)
-				{
-					lines.Add(string.Format("\tgallery_image={0}", ending.GalleryImage));
-				}
-				if (!string.IsNullOrEmpty(ending.Hint))
-				{
-					lines.Add("\thint=" + ending.Hint);
-				}
+				SerializeEpilogue(lines, ending);
+			}
 
-				foreach (Scene scene in ending.Scenes)
-				{
-					lines.Add("");
-					List<string> sceneAttributes = new List<string>();
-					ElementInformation memberInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Scene));
-					foreach (FieldInformation fieldInfo in memberInfo.Fields)
-					{
-						if (fieldInfo.Attribute == null) { continue; }
-						string value = fieldInfo.GetValue(scene)?.ToString();
-						if (fieldInfo.FieldType == typeof(bool))
-						{
-							value = (bool)fieldInfo.GetValue(scene) ? "1" : null;
-						}
-						if (string.IsNullOrEmpty(value))
-						{
-							continue;
-						}
-						sceneAttributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
-					}
-					lines.Add($"\tscene={string.Join(",", sceneAttributes)}");
-
-					foreach (Directive directive in scene.Directives)
-					{
-						List<string> attributes = new List<string>();
-						ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
-						foreach (FieldInformation fieldInfo in directiveInfo.Fields)
-						{
-							if (fieldInfo.Attribute == null) { continue; }
-							string value = fieldInfo.GetValue(directive)?.ToString();
-							if (fieldInfo.FieldType == typeof(bool))
-							{
-								value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
-							}
-							if (string.IsNullOrEmpty(value))
-							{
-								continue;
-							}
-							attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
-						}
-						lines.Add($"\t\tdirective={string.Join(",", attributes)}");
-						if (!string.IsNullOrEmpty(directive.Text))
-						{
-							lines.Add($"\t\t\ttext={directive.Text}");
-						}
-
-						foreach (Keyframe keyframe in directive.Keyframes)
-						{
-							List<string> keyAttributes = new List<string>();
-							ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
-							foreach (FieldInformation info in keyframeInfo.Fields)
-							{
-								if (info.Attribute == null) { continue; }
-								string value = info.GetValue(keyframe)?.ToString();
-								if (info.FieldType == typeof(bool))
-								{
-									value = (bool)info.GetValue(keyframe) ? "1" : null;
-								}
-								if (string.IsNullOrEmpty(value))
-								{
-									continue;
-								}
-								keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
-							}
-							lines.Add($"\t\t\tkeyframe={string.Join(",", keyAttributes)}");
-						}
-					}
-				}
+			//poses
+			lines.Add("\r\n#CUSTOM POSES");
+			foreach (Pose pose in character.Poses)
+			{
+				SerializePose(lines, pose);
 			}
 
 			string filename = Path.Combine(Config.GetRootDirectory(character), "edit-dialogue.txt");
 			File.WriteAllLines(filename, lines);
 			return true;
+		}
+
+		private static void SerializeEpilogue(List<string> lines, Epilogue ending)
+		{
+			lines.Add("");
+			lines.Add(string.Format("ending={0}", ending.Title));
+			lines.Add(string.Format("\tending_gender={0}", ending.Gender));
+			if (ending.HasSpecialConditions)
+			{
+				List<string> conditions = new List<string>();
+				if (!string.IsNullOrEmpty(ending.AlsoPlaying))
+				{
+					conditions.Add("alsoPlaying:" + ending.AlsoPlaying);
+				}
+				if (!string.IsNullOrEmpty(ending.PlayerStartingLayers))
+				{
+					conditions.Add("playerStartingLayers:" + ending.PlayerStartingLayers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
+				{
+					conditions.Add("markers:" + ending.AllMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
+				{
+					conditions.Add("not-markers:" + ending.NotMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
+				{
+					conditions.Add("any-markers:" + ending.AnyMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAllMarkers))
+				{
+					conditions.Add("alsoplaying-markers:" + ending.AlsoPlayingAllMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingNotMarkers))
+				{
+					conditions.Add("alsoplaying-not-markers:" + ending.AlsoPlayingNotMarkers);
+				}
+				if (!string.IsNullOrEmpty(ending.AlsoPlayingAnyMarkers))
+				{
+					conditions.Add("alsoplaying-any-markers:" + ending.AlsoPlayingAnyMarkers);
+				}
+				lines.Add($"\tending_conditions={string.Join(",", conditions)}");
+			}
+			if (ending.GalleryImage != null)
+			{
+				lines.Add(string.Format("\tgallery_image={0}", ending.GalleryImage));
+			}
+			if (!string.IsNullOrEmpty(ending.Hint))
+			{
+				lines.Add("\thint=" + ending.Hint);
+			}
+
+			foreach (Scene scene in ending.Scenes)
+			{
+				lines.Add("");
+				List<string> sceneAttributes = new List<string>();
+				ElementInformation memberInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Scene));
+				foreach (FieldInformation fieldInfo in memberInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(scene)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(scene) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					sceneAttributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tscene={string.Join(",", sceneAttributes)}");
+
+				foreach (Directive directive in scene.Directives)
+				{
+					List<string> attributes = new List<string>();
+					ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
+					foreach (FieldInformation fieldInfo in directiveInfo.Fields)
+					{
+						if (fieldInfo.Attribute == null) { continue; }
+						string value = fieldInfo.GetValue(directive)?.ToString();
+						if (fieldInfo.FieldType == typeof(bool))
+						{
+							value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
+						}
+						if (string.IsNullOrEmpty(value))
+						{
+							continue;
+						}
+						attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+					}
+					lines.Add($"\t\tdirective={string.Join(",", attributes)}");
+					if (!string.IsNullOrEmpty(directive.Text))
+					{
+						lines.Add($"\t\t\ttext={directive.Text}");
+					}
+
+					foreach (Keyframe keyframe in directive.Keyframes)
+					{
+						List<string> keyAttributes = new List<string>();
+						ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
+						foreach (FieldInformation info in keyframeInfo.Fields)
+						{
+							if (info.Attribute == null) { continue; }
+							string value = info.GetValue(keyframe)?.ToString();
+							if (info.FieldType == typeof(bool))
+							{
+								value = (bool)info.GetValue(keyframe) ? "1" : null;
+							}
+							if (string.IsNullOrEmpty(value))
+							{
+								continue;
+							}
+							keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
+						}
+						lines.Add($"\t\t\tkeyframe={string.Join(",", keyAttributes)}");
+					}
+				}
+			}
+		}
+
+		private static void SerializePose(List<string> lines, Pose pose)
+		{
+			lines.Add("");
+			lines.Add($"pose={pose.Id}");
+			if (!string.IsNullOrEmpty(pose.BaseHeight))
+			{
+				lines.Add($"\tbase_height={pose.BaseHeight}");
+			}
+			foreach (Sprite sprite in pose.Sprites)
+			{
+				List<string> attributes = new List<string>();
+				ElementInformation spriteInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Sprite));
+				foreach (FieldInformation fieldInfo in spriteInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(sprite)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(sprite) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tsprite={string.Join(",", attributes)}");
+			}
+			foreach (PoseDirective directive in pose.Directives)
+			{
+				List<string> attributes = new List<string>();
+				ElementInformation directiveInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Directive));
+				foreach (FieldInformation fieldInfo in directiveInfo.Fields)
+				{
+					if (fieldInfo.Attribute == null) { continue; }
+					string value = fieldInfo.GetValue(directive)?.ToString();
+					if (fieldInfo.FieldType == typeof(bool))
+					{
+						value = (bool)fieldInfo.GetValue(directive) ? "1" : null;
+					}
+					if (string.IsNullOrEmpty(value))
+					{
+						continue;
+					}
+					attributes.Add($"{fieldInfo.Attribute.AttributeName}:{value}");
+				}
+				lines.Add($"\tdirective={string.Join(",", attributes)}");
+				foreach (Keyframe keyframe in directive.Keyframes)
+				{
+					List<string> keyAttributes = new List<string>();
+					ElementInformation keyframeInfo = SpnatiXmlSerializer.GetSerializationInformation(typeof(Keyframe));
+					foreach (FieldInformation info in keyframeInfo.Fields)
+					{
+						if (info.Attribute == null) { continue; }
+						string value = info.GetValue(keyframe)?.ToString();
+						if (info.FieldType == typeof(bool))
+						{
+							value = (bool)info.GetValue(keyframe) ? "1" : null;
+						}
+						if (string.IsNullOrEmpty(value))
+						{
+							continue;
+						}
+						keyAttributes.Add($"{info.Attribute.AttributeName}:{value}");
+					}
+					lines.Add($"\t\tkeyframe={string.Join(",", keyAttributes)}");
+				}
+			}
 		}
 
 		private static List<string> GetFilters(Case stageCase)
@@ -630,18 +711,20 @@ namespace SPNATI_Character_Editor
 			EndingText currentText = null;
 			Scene currentScene = null;
 			Directive currentDirective = null;
+			Pose currentPose = null;
+			PoseDirective currentPoseDirective = null;
 
 			foreach (string line in lines)
 			{
 				string data = line.Trim();
 				if (data.StartsWith("#") || string.IsNullOrEmpty(data))
 					continue;
-				string[] kvp = data.Split(new char[] { '=' }, 2);
-				if (kvp.Length != 2)
+				int splitIndex = data.LastIndexOf('='); //split on last occurrence of =. This will prevent characters from using = in dialogue, but allow conditional markers to parse properly
+				if (splitIndex < 0)
 					continue;
 
-				string key = kvp[0].ToLower();
-				string value = kvp[1];
+				string key = data.Substring(0, splitIndex);
+				string value = data.Substring(splitIndex + 1);
 				int intValue;
 				switch (key)
 				{
@@ -791,6 +874,12 @@ namespace SPNATI_Character_Editor
 							ParseAttributes(currentDirective, value);
 							currentScene.Directives.Add(currentDirective);
 						}
+						else if (currentPose != null)
+						{
+							currentPoseDirective = new PoseDirective();
+							ParseAttributes(currentPoseDirective, value);
+							currentPose.Directives.Add(currentPoseDirective);
+						}
 						break;
 					case "keyframe":
 						if (currentDirective != null)
@@ -799,10 +888,36 @@ namespace SPNATI_Character_Editor
 							ParseAttributes(keyframe, value);
 							currentDirective.Keyframes.Add(keyframe);
 						}
+						else if (currentPoseDirective != null)
+						{
+							Keyframe keyframe = new Keyframe();
+							ParseAttributes(keyframe, value);
+							currentPoseDirective.Keyframes.Add(keyframe);
+						}
+						break;
+					case "pose":
+						currentPose = new Pose();
+						currentPose.Id = value;
+						currentPoseDirective = null;
+						character.Poses.Add(currentPose);
+						break;
+					case "base_height":
+						if (currentPose != null)
+						{
+							currentPose.BaseHeight = value;
+						}
+						break;
+					case "sprite":
+						if (currentPose != null)
+						{
+							Sprite sprite = new Sprite();
+							ParseAttributes(sprite, value);
+							currentPose.Sprites.Add(sprite);
+						}
 						break;
 					default:
 						//Dialogue
-						Case newCase = MakeLine(kvp[0], value, character, false);
+						Case newCase = MakeLine(key, value, character, false);
 						if (newCase != null && newCase.Lines.Count > 0)
 						{
 							int stage = newCase.Stages[0];

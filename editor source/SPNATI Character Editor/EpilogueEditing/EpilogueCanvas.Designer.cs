@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EpilogueCanvas));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.treeScenes = new SPNATI_Character_Editor.Controls.SceneTree();
@@ -47,6 +48,7 @@
 			this.sliderZoom = new System.Windows.Forms.TrackBar();
 			this.lblCoord = new System.Windows.Forms.Label();
 			this.tmrPlay = new System.Windows.Forms.Timer(this.components);
+			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -138,12 +140,13 @@
             this.cmdFit,
             this.toolStripSeparator1,
             this.cmdToggleFade,
+            this.cmdMarkers,
             this.toolStripSeparator2,
             this.cmdPlayDirective,
             this.cmdPlay});
 			this.canvasStrip.Location = new System.Drawing.Point(184, 0);
 			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(130, 25);
+			this.canvasStrip.Size = new System.Drawing.Size(223, 25);
 			this.canvasStrip.TabIndex = 0;
 			// 
 			// cmdLock
@@ -278,6 +281,16 @@
 			this.tmrPlay.Interval = 32;
 			this.tmrPlay.Tick += new System.EventHandler(this.tmrPlay_Tick);
 			// 
+			// cmdMarkers
+			// 
+			this.cmdMarkers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.cmdMarkers.Image = ((System.Drawing.Image)(resources.GetObject("cmdMarkers.Image")));
+			this.cmdMarkers.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cmdMarkers.Name = "cmdMarkers";
+			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
+			this.cmdMarkers.Text = "Markers...";
+			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
+			// 
 			// EpilogueCanvas
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,5 +336,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.Label lblZoom;
 		private System.Windows.Forms.TrackBar sliderZoom;
+		private System.Windows.Forms.ToolStripButton cmdMarkers;
 	}
 }

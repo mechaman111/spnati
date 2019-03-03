@@ -158,7 +158,10 @@ namespace SPNATI_Character_Editor
 				{
 					copy.Image = stage + "-" + copy.Image;
 				}
-				copy.Image += extension;
+				if (extension != null && !copy.Image.EndsWith(extension))
+				{
+					copy.Image += extension;
+				}
 				copy.ImageExtension = extension;
 			}
 			copy.Text = line.Text?.Trim();

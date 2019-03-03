@@ -16,7 +16,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.recTreeTarget = new Desktop.CommonControls.RecordField();
 			this.tstrDialogue = new System.Windows.Forms.ToolStrip();
 			this.tsbtnAddDialogue = new System.Windows.Forms.ToolStripSplitButton();
 			this.triggerMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -27,34 +26,19 @@
 			this.tsUnhide = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsShowHidden = new System.Windows.Forms.ToolStripMenuItem();
-			this.treeDialogue = new Desktop.CommonControls.DBTreeView();
-			this.cboTreeFilter = new System.Windows.Forms.ComboBox();
 			this.label33 = new System.Windows.Forms.Label();
 			this.label35 = new System.Windows.Forms.Label();
 			this.label40 = new System.Windows.Forms.Label();
-			this.label39 = new System.Windows.Forms.Label();
 			this.tmrDelete = new System.Windows.Forms.Timer(this.components);
 			this.label1 = new System.Windows.Forms.Label();
 			this.cboView = new System.Windows.Forms.ComboBox();
+			this.lblTag = new System.Windows.Forms.Label();
+			this.chkHideTargeted = new System.Windows.Forms.CheckBox();
+			this.recTag = new Desktop.CommonControls.RecordField();
+			this.recTreeTarget = new Desktop.CommonControls.RecordField();
+			this.treeDialogue = new Desktop.CommonControls.DBTreeView();
 			this.tstrDialogue.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// recTreeTarget
-			// 
-			this.recTreeTarget.AllowCreate = false;
-			this.recTreeTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.recTreeTarget.Location = new System.Drawing.Point(55, 604);
-			this.recTreeTarget.Name = "recTreeTarget";
-			this.recTreeTarget.PlaceholderText = null;
-			this.recTreeTarget.Record = null;
-			this.recTreeTarget.RecordContext = null;
-			this.recTreeTarget.RecordKey = null;
-			this.recTreeTarget.RecordType = null;
-			this.recTreeTarget.Size = new System.Drawing.Size(278, 20);
-			this.recTreeTarget.TabIndex = 45;
-			this.recTreeTarget.UseAutoComplete = true;
-			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recTreeTarget_RecordChanged);
 			// 
 			// tstrDialogue
 			// 
@@ -152,34 +136,6 @@
 			this.tsShowHidden.Text = "Show Hidden Cases";
 			this.tsShowHidden.Click += new System.EventHandler(this.tsShowHidden_Click);
 			// 
-			// treeDialogue
-			// 
-			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.treeDialogue.HideSelection = false;
-			this.treeDialogue.Location = new System.Drawing.Point(3, 59);
-			this.treeDialogue.Name = "treeDialogue";
-			this.treeDialogue.Size = new System.Drawing.Size(330, 512);
-			this.treeDialogue.TabIndex = 41;
-			this.treeDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeDialogue_KeyDown);
-			// 
-			// cboTreeFilter
-			// 
-			this.cboTreeFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboTreeFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboTreeFilter.FormattingEnabled = true;
-			this.cboTreeFilter.Items.AddRange(new object[] {
-            "All Lines",
-            "Non-Targeted Only",
-            "Targeted Only"});
-			this.cboTreeFilter.Location = new System.Drawing.Point(55, 577);
-			this.cboTreeFilter.Name = "cboTreeFilter";
-			this.cboTreeFilter.Size = new System.Drawing.Size(278, 21);
-			this.cboTreeFilter.TabIndex = 44;
-			this.cboTreeFilter.SelectedIndexChanged += new System.EventHandler(this.cboTreeFilter_SelectedIndexChanged);
-			// 
 			// label33
 			// 
 			this.label33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -196,31 +152,21 @@
 			this.label35.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label35.AutoSize = true;
 			this.label35.ForeColor = System.Drawing.Color.Green;
-			this.label35.Location = new System.Drawing.Point(3, 627);
+			this.label35.Location = new System.Drawing.Point(143, 640);
 			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(128, 13);
+			this.label35.Size = new System.Drawing.Size(85, 13);
 			this.label35.TabIndex = 43;
-			this.label35.Text = "Green: Targeted dialogue";
+			this.label35.Text = "Green: Targeted";
 			// 
 			// label40
 			// 
 			this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label40.AutoSize = true;
-			this.label40.Location = new System.Drawing.Point(3, 607);
+			this.label40.Location = new System.Drawing.Point(3, 594);
 			this.label40.Name = "label40";
-			this.label40.Size = new System.Drawing.Size(41, 13);
+			this.label40.Size = new System.Drawing.Size(62, 13);
 			this.label40.TabIndex = 47;
-			this.label40.Text = "Target:";
-			// 
-			// label39
-			// 
-			this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label39.AutoSize = true;
-			this.label39.Location = new System.Drawing.Point(3, 580);
-			this.label39.Name = "label39";
-			this.label39.Size = new System.Drawing.Size(32, 13);
-			this.label39.TabIndex = 46;
-			this.label39.Text = "Filter:";
+			this.label40.Text = "Filter target:";
 			// 
 			// tmrDelete
 			// 
@@ -250,18 +196,87 @@
 			this.cboView.Size = new System.Drawing.Size(278, 21);
 			this.cboView.TabIndex = 48;
 			// 
+			// lblTag
+			// 
+			this.lblTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblTag.AutoSize = true;
+			this.lblTag.Location = new System.Drawing.Point(4, 620);
+			this.lblTag.Name = "lblTag";
+			this.lblTag.Size = new System.Drawing.Size(50, 13);
+			this.lblTag.TabIndex = 51;
+			this.lblTag.Text = "Filter tag:";
+			// 
+			// chkHideTargeted
+			// 
+			this.chkHideTargeted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.chkHideTargeted.AutoSize = true;
+			this.chkHideTargeted.Location = new System.Drawing.Point(7, 568);
+			this.chkHideTargeted.Name = "chkHideTargeted";
+			this.chkHideTargeted.Size = new System.Drawing.Size(139, 17);
+			this.chkHideTargeted.TabIndex = 42;
+			this.chkHideTargeted.Text = "Hide Targeted Dialogue";
+			this.chkHideTargeted.UseVisualStyleBackColor = true;
+			this.chkHideTargeted.CheckedChanged += new System.EventHandler(this.chkHideTargeted_CheckedChanged);
+			// 
+			// recTag
+			// 
+			this.recTag.AllowCreate = false;
+			this.recTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.recTag.Location = new System.Drawing.Point(71, 617);
+			this.recTag.Name = "recTag";
+			this.recTag.PlaceholderText = null;
+			this.recTag.Record = null;
+			this.recTag.RecordContext = null;
+			this.recTag.RecordKey = null;
+			this.recTag.RecordType = null;
+			this.recTag.Size = new System.Drawing.Size(262, 20);
+			this.recTag.TabIndex = 44;
+			this.recTag.UseAutoComplete = true;
+			this.recTag.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recTag_RecordChanged);
+			// 
+			// recTreeTarget
+			// 
+			this.recTreeTarget.AllowCreate = false;
+			this.recTreeTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.recTreeTarget.Location = new System.Drawing.Point(71, 591);
+			this.recTreeTarget.Name = "recTreeTarget";
+			this.recTreeTarget.PlaceholderText = null;
+			this.recTreeTarget.Record = null;
+			this.recTreeTarget.RecordContext = null;
+			this.recTreeTarget.RecordKey = null;
+			this.recTreeTarget.RecordType = null;
+			this.recTreeTarget.Size = new System.Drawing.Size(262, 20);
+			this.recTreeTarget.TabIndex = 43;
+			this.recTreeTarget.UseAutoComplete = true;
+			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recTreeTarget_RecordChanged);
+			// 
+			// treeDialogue
+			// 
+			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeDialogue.HideSelection = false;
+			this.treeDialogue.Location = new System.Drawing.Point(3, 59);
+			this.treeDialogue.Name = "treeDialogue";
+			this.treeDialogue.Size = new System.Drawing.Size(330, 500);
+			this.treeDialogue.TabIndex = 41;
+			this.treeDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeDialogue_KeyDown);
+			// 
 			// DialogueTree
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.chkHideTargeted);
+			this.Controls.Add(this.lblTag);
+			this.Controls.Add(this.recTag);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.cboView);
 			this.Controls.Add(this.label40);
-			this.Controls.Add(this.label39);
 			this.Controls.Add(this.recTreeTarget);
 			this.Controls.Add(this.tstrDialogue);
 			this.Controls.Add(this.treeDialogue);
-			this.Controls.Add(this.cboTreeFilter);
 			this.Controls.Add(this.label33);
 			this.Controls.Add(this.label35);
 			this.Name = "DialogueTree";
@@ -281,11 +296,9 @@
 		private System.Windows.Forms.ToolStripDropDownButton tsbtnSplit;
 		private System.Windows.Forms.ToolStripButton tsbtnRemoveDialogue;
 		private Desktop.CommonControls.DBTreeView treeDialogue;
-		private System.Windows.Forms.ComboBox cboTreeFilter;
 		private System.Windows.Forms.Label label33;
 		private System.Windows.Forms.Label label35;
 		private System.Windows.Forms.Label label40;
-		private System.Windows.Forms.Label label39;
 		private System.Windows.Forms.ContextMenuStrip triggerMenu;
 		private System.Windows.Forms.Timer tmrDelete;
 		private System.Windows.Forms.Label label1;
@@ -295,5 +308,8 @@
 		private System.Windows.Forms.ToolStripMenuItem tsHide;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem tsShowHidden;
+		private Desktop.CommonControls.RecordField recTag;
+		private System.Windows.Forms.Label lblTag;
+		private System.Windows.Forms.CheckBox chkHideTargeted;
 	}
 }

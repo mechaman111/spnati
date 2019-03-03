@@ -302,6 +302,7 @@ namespace SPNATI_Character_Editor
 				SkinnedPose = Skin.Poses.Find(p => p.Id == Pose.Id);
 			}
 			DefaultName = DialogueLine.GetDefaultImage(Name);
+			IsGeneric = !string.IsNullOrEmpty(pose.Id) && !char.IsDigit(pose.Id[0]);
 		}
 
 		public override string ToString()

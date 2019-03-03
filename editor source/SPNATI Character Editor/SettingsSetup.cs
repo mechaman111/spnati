@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -17,6 +18,8 @@ namespace SPNATI_Character_Editor
 			chkIntellisense.Checked = Config.UseIntellisense;
 			chkHideImages.Checked = Config.UsePrefixlessImages;
 			txtFilter.Text = Config.PrefixFilter;
+			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
+			chkAutoBackup.Checked = Config.AutoBackupEnabled;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -62,6 +65,8 @@ namespace SPNATI_Character_Editor
 			Config.UseIntellisense = chkIntellisense.Checked;
 			Config.UsePrefixlessImages = chkHideImages.Checked;
 			Config.PrefixFilter = txtFilter.Text;
+			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
+			Config.AutoBackupEnabled = chkAutoBackup.Checked;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Close();
@@ -76,6 +81,44 @@ namespace SPNATI_Character_Editor
 		private void chkHideImages_CheckedChanged(object sender, EventArgs e)
 		{
 			txtFilter.Enabled = chkHideImages.Checked;
+		}
+
+		private void tabsSections_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			Graphics g = e.Graphics;
+			Brush textBrush;
+			Brush backBrush;
+
+			Rectangle rect = tabsSections.ClientRectangle;
+
+			// Get the item from the collection.
+			TabPage tabPage = tabsSections.TabPages[e.Index];
+
+			// Get the real bounds for the tab rectangle.
+			Rectangle tabBounds = tabsSections.GetTabRect(e.Index);
+
+			if (e.State == DrawItemState.Selected)
+			{
+				// Draw a different background color, and don't paint a focus rectangle.
+				textBrush = new SolidBrush(Color.White);
+				backBrush = new SolidBrush(Color.SlateBlue);
+				g.FillRectangle(backBrush, e.Bounds);
+			}
+			else
+			{
+				textBrush = new SolidBrush(e.ForeColor);
+				//e.DrawBackground();
+				g.FillRectangle(Brushes.White, e.Bounds);
+			}
+
+			// Use our own font.
+			Font tabFont = new Font("Arial", (float)11.0, FontStyle.Bold, GraphicsUnit.Pixel);
+
+			// Draw string. Center the text.
+			StringFormat stringFlags = new StringFormat();
+			stringFlags.Alignment = StringAlignment.Center;
+			stringFlags.LineAlignment = StringAlignment.Center;
+			g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, new StringFormat(stringFlags));
 		}
 	}
 }

@@ -19,6 +19,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("id")]
 		public string Id;
 
+		[DirectiveMarker(DisplayName = "Marker", GroupOrder = 0, Key = "marker", Description = "Run this directive only if the marker's condition is met", ShowPrivate = true)]
+		[XmlAttribute("marker")]
+		public string Marker;
+
 		[Measurement(DisplayName = "Width", Key = "width", GroupOrder = 95, Description = "Custom sprite width relative to the scene width")]
 		[XmlAttribute("width")]
 		public string Width;
@@ -27,9 +31,19 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("height")]
 		public string Height;
 
+		#region Textbox properties
 		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Default = true, Options = new string[] { "down", "up", "left", "right" })]
 		[XmlAttribute("arrow")]
 		public string Arrow;
+
+		[HorizontalAlignment(DisplayName = "X Alignment", Key = "alignmentx", GroupOrder = 31, Description = "Horizontal alignment")]
+		[XmlAttribute("alignmentx")]
+		public string AlignmentX;
+
+		[VerticalAlignment(DisplayName = "Y Alignment", Key = "alignmenty", GroupOrder = 32, Description = "Vertical alignment")]
+		[XmlAttribute("alignmenty")]
+		public string AlignmentY;
+		#endregion
 
 		//The engine doesn't even use this currently, so not exposing it to the property table
 		[XmlAttribute("css")]

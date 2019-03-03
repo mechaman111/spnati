@@ -22,6 +22,7 @@ namespace Desktop.CommonControls
 			{
 				_favoriteWidth = table.ColumnStyles[3].Width;
 				_allowFavorites = value;
+				cmdPin.Visible = value;
 				if (!_allowFavorites)
 				{
 					table.ColumnStyles[3].Width = 0;

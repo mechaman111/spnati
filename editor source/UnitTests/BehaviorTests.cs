@@ -39,7 +39,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageSpecificLineHasPrefix()
 		{
-			DialogueLine line = new DialogueLine("4-hey", "Bubba");
+			DialogueLine line = new DialogueLine("hey", "Bubba");
 			line = Behaviour.CreateStageSpecificLine(line, 4, null);
 			Assert.AreEqual("4-hey.png", line.Image);
 			Assert.AreEqual("Bubba", line.Text);
@@ -49,6 +49,7 @@ namespace UnitTests
 		public void StageSpecificLineHasExtension()
 		{
 			DialogueLine line = new DialogueLine("hey.png", "Bubba");
+			line.IsGenericImage = true;
 			line = Behaviour.CreateStageSpecificLine(line, 4, null);
 			Assert.AreEqual("4-hey.png", line.Image);
 			Assert.AreEqual("Bubba", line.Text);
@@ -57,7 +58,7 @@ namespace UnitTests
 		[TestMethod]
 		public void StageSpecificLineHasPrefixAndExtension()
 		{
-			DialogueLine line = new DialogueLine("4-hey.png", "Bubba");
+			DialogueLine line = new DialogueLine("hey.png", "Bubba");
 			line = Behaviour.CreateStageSpecificLine(line, 4, null);
 			Assert.AreEqual("4-hey.png", line.Image);
 			Assert.AreEqual("Bubba", line.Text);

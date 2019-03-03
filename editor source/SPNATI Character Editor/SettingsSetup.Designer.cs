@@ -42,25 +42,38 @@
 			this.valAutoSave = new System.Windows.Forms.NumericUpDown();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.chkHideImages = new System.Windows.Forms.CheckBox();
+			this.helpAutoSave = new System.Windows.Forms.Button();
+			this.helpIntellisense = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.chkIntellisense = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.txtFilter = new System.Windows.Forms.TextBox();
+			this.tabsSections = new System.Windows.Forms.TabControl();
+			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.chkAutoBackup = new System.Windows.Forms.CheckBox();
+			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.tabBanter = new System.Windows.Forms.TabPage();
+			this.chkAutoBanter = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
+			this.tabsSections.SuspendLayout();
+			this.tabGeneral.SuspendLayout();
+			this.tabDialogue.SuspendLayout();
+			this.tabBanter.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
 			// 
 			this.txtApplicationDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtApplicationDirectory.Location = new System.Drawing.Point(126, 12);
+			this.txtApplicationDirectory.Location = new System.Drawing.Point(116, 8);
 			this.txtApplicationDirectory.Name = "txtApplicationDirectory";
-			this.txtApplicationDirectory.Size = new System.Drawing.Size(449, 20);
+			this.txtApplicationDirectory.Size = new System.Drawing.Size(353, 20);
 			this.txtApplicationDirectory.TabIndex = 0;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 15);
+			this.label1.Location = new System.Drawing.Point(6, 11);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(97, 13);
 			this.label1.TabIndex = 1;
@@ -69,7 +82,7 @@
 			// cmdOk
 			// 
 			this.cmdOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdOk.Location = new System.Drawing.Point(457, 111);
+			this.cmdOk.Location = new System.Drawing.Point(457, 118);
 			this.cmdOk.Name = "cmdOk";
 			this.cmdOk.Size = new System.Drawing.Size(75, 23);
 			this.cmdOk.TabIndex = 4;
@@ -80,7 +93,7 @@
 			// cmdBrowse
 			// 
 			this.cmdBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdBrowse.Location = new System.Drawing.Point(581, 10);
+			this.cmdBrowse.Location = new System.Drawing.Point(475, 6);
 			this.cmdBrowse.Name = "cmdBrowse";
 			this.cmdBrowse.Size = new System.Drawing.Size(32, 23);
 			this.cmdBrowse.TabIndex = 1;
@@ -92,7 +105,7 @@
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cmdCancel.Location = new System.Drawing.Point(538, 111);
+			this.cmdCancel.Location = new System.Drawing.Point(538, 118);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
 			this.cmdCancel.TabIndex = 5;
@@ -103,7 +116,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 41);
+			this.label2.Location = new System.Drawing.Point(7, 37);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(58, 13);
 			this.label2.TabIndex = 5;
@@ -113,9 +126,9 @@
 			// 
 			this.txtUserName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtUserName.Location = new System.Drawing.Point(126, 38);
+			this.txtUserName.Location = new System.Drawing.Point(116, 34);
 			this.txtUserName.Name = "txtUserName";
-			this.txtUserName.Size = new System.Drawing.Size(487, 20);
+			this.txtUserName.Size = new System.Drawing.Size(391, 20);
 			this.txtUserName.TabIndex = 2;
 			this.toolTip1.SetToolTip(this.txtUserName, "This is used for auto-saving. Only characters written by this user will be auto-s" +
         "aved.");
@@ -128,7 +141,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(12, 66);
+			this.label3.Location = new System.Drawing.Point(7, 62);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(103, 13);
 			this.label3.TabIndex = 7;
@@ -136,7 +149,7 @@
 			// 
 			// valAutoSave
 			// 
-			this.valAutoSave.Location = new System.Drawing.Point(126, 64);
+			this.valAutoSave.Location = new System.Drawing.Point(116, 60);
 			this.valAutoSave.Maximum = new decimal(new int[] {
             60,
             0,
@@ -151,7 +164,7 @@
 			// chkHideImages
 			// 
 			this.chkHideImages.AutoSize = true;
-			this.chkHideImages.Location = new System.Drawing.Point(140, 91);
+			this.chkHideImages.Location = new System.Drawing.Point(6, 29);
 			this.chkHideImages.Name = "chkHideImages";
 			this.chkHideImages.Size = new System.Drawing.Size(145, 17);
 			this.chkHideImages.TabIndex = 9;
@@ -161,20 +174,58 @@
 			this.chkHideImages.UseVisualStyleBackColor = true;
 			this.chkHideImages.CheckedChanged += new System.EventHandler(this.chkHideImages_CheckedChanged);
 			// 
+			// helpAutoSave
+			// 
+			this.helpAutoSave.FlatAppearance.BorderSize = 0;
+			this.helpAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpAutoSave.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpAutoSave.Location = new System.Drawing.Point(163, 58);
+			this.helpAutoSave.Name = "helpAutoSave";
+			this.helpAutoSave.Size = new System.Drawing.Size(26, 23);
+			this.helpAutoSave.TabIndex = 6;
+			this.toolTip1.SetToolTip(this.helpAutoSave, "Only characters with your username as the writer can be auto-saved");
+			this.helpAutoSave.UseVisualStyleBackColor = true;
+			// 
+			// helpIntellisense
+			// 
+			this.helpIntellisense.FlatAppearance.BorderSize = 0;
+			this.helpIntellisense.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.helpIntellisense.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.helpIntellisense.Location = new System.Drawing.Point(149, 2);
+			this.helpIntellisense.Name = "helpIntellisense";
+			this.helpIntellisense.Size = new System.Drawing.Size(26, 23);
+			this.helpIntellisense.TabIndex = 12;
+			this.toolTip1.SetToolTip(this.helpIntellisense, "Typing ~ in a dialogue line will bring up a popup containing available variables," +
+        " their meanings, parameters, and so on.");
+			this.helpIntellisense.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Image = global::SPNATI_Character_Editor.Properties.Resources.Help;
+			this.button1.Location = new System.Drawing.Point(149, 25);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(26, 23);
+			this.button1.TabIndex = 13;
+			this.toolTip1.SetToolTip(this.button1, "When checked, every image in the character\'s folder with no stage prefix (ex. 2-h" +
+        "appy.png) will be available for poses in every stage.");
+			this.button1.UseVisualStyleBackColor = true;
+			// 
 			// chkIntellisense
 			// 
 			this.chkIntellisense.AutoSize = true;
-			this.chkIntellisense.Location = new System.Drawing.Point(15, 91);
+			this.chkIntellisense.Location = new System.Drawing.Point(6, 6);
 			this.chkIntellisense.Name = "chkIntellisense";
-			this.chkIntellisense.Size = new System.Drawing.Size(119, 17);
+			this.chkIntellisense.Size = new System.Drawing.Size(141, 17);
 			this.chkIntellisense.TabIndex = 8;
-			this.chkIntellisense.Text = "Variable Intellisense";
+			this.chkIntellisense.Text = "Use Variable Intellisense";
 			this.chkIntellisense.UseVisualStyleBackColor = true;
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(291, 92);
+			this.label4.Location = new System.Drawing.Point(3, 53);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(143, 13);
 			this.label4.TabIndex = 10;
@@ -182,10 +233,97 @@
 			// 
 			// txtFilter
 			// 
-			this.txtFilter.Location = new System.Drawing.Point(440, 89);
+			this.txtFilter.Location = new System.Drawing.Point(155, 50);
 			this.txtFilter.Name = "txtFilter";
 			this.txtFilter.Size = new System.Drawing.Size(92, 20);
 			this.txtFilter.TabIndex = 11;
+			// 
+			// tabsSections
+			// 
+			this.tabsSections.Alignment = System.Windows.Forms.TabAlignment.Left;
+			this.tabsSections.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabsSections.Controls.Add(this.tabGeneral);
+			this.tabsSections.Controls.Add(this.tabDialogue);
+			this.tabsSections.Controls.Add(this.tabBanter);
+			this.tabsSections.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+			this.tabsSections.ItemSize = new System.Drawing.Size(25, 100);
+			this.tabsSections.Location = new System.Drawing.Point(2, 2);
+			this.tabsSections.Multiline = true;
+			this.tabsSections.Name = "tabsSections";
+			this.tabsSections.SelectedIndex = 0;
+			this.tabsSections.Size = new System.Drawing.Size(621, 110);
+			this.tabsSections.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+			this.tabsSections.TabIndex = 12;
+			this.tabsSections.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabsSections_DrawItem);
+			// 
+			// tabGeneral
+			// 
+			this.tabGeneral.BackColor = System.Drawing.SystemColors.Control;
+			this.tabGeneral.Controls.Add(this.chkAutoBackup);
+			this.tabGeneral.Controls.Add(this.helpAutoSave);
+			this.tabGeneral.Controls.Add(this.cmdBrowse);
+			this.tabGeneral.Controls.Add(this.txtApplicationDirectory);
+			this.tabGeneral.Controls.Add(this.label1);
+			this.tabGeneral.Controls.Add(this.txtUserName);
+			this.tabGeneral.Controls.Add(this.valAutoSave);
+			this.tabGeneral.Controls.Add(this.label2);
+			this.tabGeneral.Controls.Add(this.label3);
+			this.tabGeneral.Location = new System.Drawing.Point(104, 4);
+			this.tabGeneral.Name = "tabGeneral";
+			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
+			this.tabGeneral.Size = new System.Drawing.Size(513, 102);
+			this.tabGeneral.TabIndex = 0;
+			this.tabGeneral.Text = "General";
+			// 
+			// chkAutoBackup
+			// 
+			this.chkAutoBackup.AutoSize = true;
+			this.chkAutoBackup.Location = new System.Drawing.Point(257, 62);
+			this.chkAutoBackup.Name = "chkAutoBackup";
+			this.chkAutoBackup.Size = new System.Drawing.Size(176, 17);
+			this.chkAutoBackup.TabIndex = 8;
+			this.chkAutoBackup.Text = "Create data recovery snapshots";
+			this.chkAutoBackup.UseVisualStyleBackColor = true;
+			// 
+			// tabDialogue
+			// 
+			this.tabDialogue.BackColor = System.Drawing.SystemColors.Control;
+			this.tabDialogue.Controls.Add(this.button1);
+			this.tabDialogue.Controls.Add(this.helpIntellisense);
+			this.tabDialogue.Controls.Add(this.chkIntellisense);
+			this.tabDialogue.Controls.Add(this.txtFilter);
+			this.tabDialogue.Controls.Add(this.chkHideImages);
+			this.tabDialogue.Controls.Add(this.label4);
+			this.tabDialogue.Location = new System.Drawing.Point(104, 4);
+			this.tabDialogue.Name = "tabDialogue";
+			this.tabDialogue.Padding = new System.Windows.Forms.Padding(3);
+			this.tabDialogue.Size = new System.Drawing.Size(513, 102);
+			this.tabDialogue.TabIndex = 1;
+			this.tabDialogue.Text = "Dialogue";
+			// 
+			// tabBanter
+			// 
+			this.tabBanter.BackColor = System.Drawing.SystemColors.Control;
+			this.tabBanter.Controls.Add(this.chkAutoBanter);
+			this.tabBanter.Location = new System.Drawing.Point(104, 4);
+			this.tabBanter.Name = "tabBanter";
+			this.tabBanter.Padding = new System.Windows.Forms.Padding(3);
+			this.tabBanter.Size = new System.Drawing.Size(513, 102);
+			this.tabBanter.TabIndex = 2;
+			this.tabBanter.Text = "Banter Wizard";
+			// 
+			// chkAutoBanter
+			// 
+			this.chkAutoBanter.AutoSize = true;
+			this.chkAutoBanter.Location = new System.Drawing.Point(6, 6);
+			this.chkAutoBanter.Name = "chkAutoBanter";
+			this.chkAutoBanter.Size = new System.Drawing.Size(383, 17);
+			this.chkAutoBanter.TabIndex = 0;
+			this.chkAutoBanter.Text = "Always filter list to characters who actually target yours (very slow initial loa" +
+    "d)";
+			this.chkAutoBanter.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -193,28 +331,24 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(625, 146);
-			this.Controls.Add(this.txtFilter);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.chkHideImages);
-			this.Controls.Add(this.chkIntellisense);
-			this.Controls.Add(this.valAutoSave);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.txtUserName);
-			this.Controls.Add(this.label2);
+			this.ClientSize = new System.Drawing.Size(625, 153);
+			this.Controls.Add(this.tabsSections);
 			this.Controls.Add(this.cmdCancel);
-			this.Controls.Add(this.cmdBrowse);
 			this.Controls.Add(this.cmdOk);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtApplicationDirectory);
 			this.Name = "SettingsSetup";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).EndInit();
+			this.tabsSections.ResumeLayout(false);
+			this.tabGeneral.ResumeLayout(false);
+			this.tabGeneral.PerformLayout();
+			this.tabDialogue.ResumeLayout(false);
+			this.tabDialogue.PerformLayout();
+			this.tabBanter.ResumeLayout(false);
+			this.tabBanter.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -236,5 +370,14 @@
 		private System.Windows.Forms.CheckBox chkHideImages;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox txtFilter;
+		private System.Windows.Forms.TabControl tabsSections;
+		private System.Windows.Forms.TabPage tabGeneral;
+		private System.Windows.Forms.TabPage tabDialogue;
+		private System.Windows.Forms.Button helpAutoSave;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button helpIntellisense;
+		private System.Windows.Forms.TabPage tabBanter;
+		private System.Windows.Forms.CheckBox chkAutoBanter;
+		private System.Windows.Forms.CheckBox chkAutoBackup;
 	}
 }

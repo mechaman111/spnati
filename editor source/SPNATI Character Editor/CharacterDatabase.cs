@@ -25,6 +25,8 @@ namespace SPNATI_Character_Editor
 		private static Dictionary<Character, CharacterEditorData> _editorData = new Dictionary<Character, CharacterEditorData>();
 		private static Dictionary<string, Costume> _reskins = new Dictionary<string, Costume>();
 
+		public static List<string> FailedCharacters = new List<string>();
+
 		public static int Count
 		{
 			get { return _characters.Count; }

@@ -29,32 +29,34 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PoseCreator));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.lblDragger = new System.Windows.Forms.Label();
 			this.lstPoses = new Desktop.CommonControls.DBTreeView();
 			this.tsPoseList = new System.Windows.Forms.ToolStrip();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.table = new Desktop.CommonControls.PropertyTable();
+			this.lblCoord = new System.Windows.Forms.Label();
+			this.canvasStrip = new System.Windows.Forms.ToolStrip();
+			this.canvas = new Desktop.CommonControls.SelectablePanel();
+			this.tmrTick = new System.Windows.Forms.Timer(this.components);
 			this.tsAdd = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
 			this.tsAddDirective = new System.Windows.Forms.ToolStripSplitButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsAddKeyframe = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsCut = new System.Windows.Forms.ToolStripButton();
 			this.tsCopy = new System.Windows.Forms.ToolStripButton();
 			this.tsPaste = new System.Windows.Forms.ToolStripButton();
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsCollapseAll = new System.Windows.Forms.ToolStripButton();
 			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
-			this.table = new Desktop.CommonControls.PropertyTable();
-			this.lblCoord = new System.Windows.Forms.Label();
-			this.canvasStrip = new System.Windows.Forms.ToolStrip();
 			this.cmdFit = new System.Windows.Forms.ToolStripButton();
-			this.canvas = new Desktop.CommonControls.SelectablePanel();
-			this.tmrTick = new System.Windows.Forms.Timer(this.components);
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
+			this.cmdMarkers = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -159,6 +161,80 @@
 			this.tsPoseList.TabIndex = 1;
 			this.tsPoseList.Text = "toolStrip1";
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// table
+			// 
+			this.table.AllowDelete = false;
+			this.table.AllowFavorites = false;
+			this.table.AllowHelp = false;
+			this.table.Data = null;
+			this.table.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.table.HideAddField = true;
+			this.table.HideSpeedButtons = true;
+			this.table.Location = new System.Drawing.Point(0, 0);
+			this.table.Name = "table";
+			this.table.PlaceholderText = null;
+			this.table.RemoveCaption = "Remove";
+			this.table.RowHeaderWidth = 85F;
+			this.table.Size = new System.Drawing.Size(248, 455);
+			this.table.Sorted = true;
+			this.table.TabIndex = 0;
+			this.table.UseAutoComplete = true;
+			this.table.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.table_PropertyChanged);
+			// 
+			// lblCoord
+			// 
+			this.lblCoord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblCoord.Location = new System.Drawing.Point(560, 0);
+			this.lblCoord.Name = "lblCoord";
+			this.lblCoord.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.lblCoord.Size = new System.Drawing.Size(175, 13);
+			this.lblCoord.TabIndex = 15;
+			this.lblCoord.Text = "(0,0)";
+			this.lblCoord.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// canvasStrip
+			// 
+			this.canvasStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.canvasStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.canvasStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdFit,
+            this.cmdMarkers});
+			this.canvasStrip.Location = new System.Drawing.Point(0, 0);
+			this.canvasStrip.Name = "canvasStrip";
+			this.canvasStrip.Size = new System.Drawing.Size(119, 25);
+			this.canvasStrip.TabIndex = 14;
+			// 
+			// canvas
+			// 
+			this.canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.canvas.Location = new System.Drawing.Point(0, 28);
+			this.canvas.Name = "canvas";
+			this.canvas.Size = new System.Drawing.Size(738, 642);
+			this.canvas.TabIndex = 0;
+			this.canvas.TabStop = true;
+			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+			this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
+			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
+			this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
+			// 
+			// tmrTick
+			// 
+			this.tmrTick.Interval = 30;
+			this.tmrTick.Tick += new System.EventHandler(this.tmrTick_Tick);
+			// 
 			// tsAdd
 			// 
 			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -223,11 +299,6 @@
 			this.tsAddKeyframe.Text = "Add Keyframe";
 			this.tsAddKeyframe.Click += new System.EventHandler(this.tsAddKeyframe_Click);
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
 			// tsCut
 			// 
 			this.tsCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -268,11 +339,6 @@
 			this.tsDuplicate.Text = "Duplicate";
 			this.tsDuplicate.Click += new System.EventHandler(this.tsDuplicate_Click);
 			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
 			// tsCollapseAll
 			// 
 			this.tsCollapseAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -295,48 +361,6 @@
 			this.tsExpandAll.ToolTipText = "Expand all";
 			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
 			// 
-			// table
-			// 
-			this.table.AllowDelete = false;
-			this.table.AllowFavorites = false;
-			this.table.AllowHelp = false;
-			this.table.Data = null;
-			this.table.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.table.HideAddField = true;
-			this.table.HideSpeedButtons = true;
-			this.table.Location = new System.Drawing.Point(0, 0);
-			this.table.Name = "table";
-			this.table.PlaceholderText = null;
-			this.table.RemoveCaption = "Remove";
-			this.table.RowHeaderWidth = 85F;
-			this.table.Size = new System.Drawing.Size(248, 455);
-			this.table.Sorted = true;
-			this.table.TabIndex = 0;
-			this.table.UseAutoComplete = true;
-			this.table.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.table_PropertyChanged);
-			// 
-			// lblCoord
-			// 
-			this.lblCoord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblCoord.Location = new System.Drawing.Point(560, 0);
-			this.lblCoord.Name = "lblCoord";
-			this.lblCoord.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.lblCoord.Size = new System.Drawing.Size(175, 13);
-			this.lblCoord.TabIndex = 15;
-			this.lblCoord.Text = "(0,0)";
-			this.lblCoord.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// canvasStrip
-			// 
-			this.canvasStrip.Dock = System.Windows.Forms.DockStyle.None;
-			this.canvasStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.canvasStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdFit});
-			this.canvasStrip.Location = new System.Drawing.Point(0, 0);
-			this.canvasStrip.Name = "canvasStrip";
-			this.canvasStrip.Size = new System.Drawing.Size(26, 25);
-			this.canvasStrip.TabIndex = 14;
-			// 
 			// cmdFit
 			// 
 			this.cmdFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -348,31 +372,20 @@
 			this.cmdFit.ToolTipText = "Recenter scene and adjust zoom to fit the screen";
 			this.cmdFit.Click += new System.EventHandler(this.cmdFit_Click);
 			// 
-			// canvas
-			// 
-			this.canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.canvas.Location = new System.Drawing.Point(0, 28);
-			this.canvas.Name = "canvas";
-			this.canvas.Size = new System.Drawing.Size(738, 642);
-			this.canvas.TabIndex = 0;
-			this.canvas.TabStop = true;
-			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
-			this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
-			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
-			this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
-			// 
-			// tmrTick
-			// 
-			this.tmrTick.Interval = 30;
-			this.tmrTick.Tick += new System.EventHandler(this.tmrTick_Tick);
-			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.Filter = "";
 			this.openFileDialog1.UseAbsolutePaths = false;
+			// 
+			// cmdMarkers
+			// 
+			this.cmdMarkers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.cmdMarkers.Image = ((System.Drawing.Image)(resources.GetObject("cmdMarkers.Image")));
+			this.cmdMarkers.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cmdMarkers.Name = "cmdMarkers";
+			this.cmdMarkers.Size = new System.Drawing.Size(62, 22);
+			this.cmdMarkers.Text = "Markers...";
+			this.cmdMarkers.Click += new System.EventHandler(this.cmdMarkers_Click);
 			// 
 			// PoseCreator
 			// 
@@ -427,5 +440,6 @@
 		private System.Windows.Forms.ToolStrip canvasStrip;
 		private System.Windows.Forms.ToolStripButton cmdFit;
 		private System.Windows.Forms.Label lblCoord;
+		private System.Windows.Forms.ToolStripButton cmdMarkers;
 	}
 }

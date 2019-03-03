@@ -48,7 +48,12 @@ namespace SPNATI_Character_Editor
 			}
 			return true;
 		}
-
+		
+		/// <summary>
+		/// Generates a character's xml files
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
 		public static bool ExportCharacter(Character character)
 		{
 			string dir = Config.GetRootDirectory(character);
@@ -57,28 +62,66 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
-			bool success = BackupAndExportXml(character, character, "behaviour") &&
-				BackupAndExportXml(character, character.Metadata, "meta") &&
-				BackupAndExportXml(character, character.Markers, "markers") &&
-				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor");
+			string timestamp = GetTimeStamp();
+			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
+				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
+				BackupAndExportXml(character, character.Markers, "markers", timestamp) &&
+				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp);
 			return success;
 		}
 
-		private static bool BackupAndExportXml(Character character, object data, string name)
+		private static string GetTimeStamp()
+		{
+			return DateTime.Now.ToString("yyyyMMddHHmmss");
+		}
+
+		/// <summary>
+		/// Backs up a character's xml files
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public static bool BackupCharacter(Character character)
+		{
+			string dir = Config.GetBackupDirectory(character);
+			if (!Directory.Exists(dir))
+			{
+				Directory.CreateDirectory(dir);
+			}
+
+			string timestamp = GetTimeStamp();
+			bool success = ExportXml(character, Path.Combine(dir, $"behaviour-{timestamp}.bak")) &&
+				ExportXml(character.Metadata, Path.Combine(dir, $"meta-{timestamp}.bak")) &&
+				ExportXml(character.Markers, Path.Combine(dir, $"markers-{timestamp}.bak")) &&
+				ExportXml(CharacterDatabase.GetEditorData(character), Path.Combine(dir, $"editor-{timestamp}.bak"));
+			return success;
+		}
+
+		private static bool BackupAndExportXml(Character character, object data, string name, string timestamp)
 		{
 			if (data == null) { return false; }
 			string dir = Config.GetRootDirectory(character);
 			string filename = Path.Combine(dir, name + ".xml");
-			string backup = Path.Combine(dir, name + ".edit.bak");
-
-			//Backup the existing file every 12 hours
-			if (File.Exists(filename) && (!File.Exists(backup) || (DateTime.Now - File.GetLastWriteTime(backup)).TotalHours >= 12))
+			if (ExportXml(data, filename))
 			{
-				File.Delete(backup);
-				File.Copy(filename, backup);
-			}
+				string backup = Config.GetBackupDirectory(character);
+				if (!Directory.Exists(backup))
+				{
+					Directory.CreateDirectory(backup);
+				}
+				string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
+				try
+				{
+					if (File.Exists(backupFilename))
+					{
+						File.Delete(backupFilename);
+					}
 
-			return ExportXml(data, filename);
+					File.Copy(filename, backupFilename);
+				}
+				catch { }
+				return true;
+			}
+			return false;
 		}
 
 		public static Listing ImportListing()
@@ -137,12 +180,58 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Reverts a character to older versions of its files
+		/// </summary>
+		/// <param name="timestamp"></param>
+		/// <returns></returns>
+		public static Character RecoverCharacter(Character character, string timestamp)
+		{
+			string folder = Config.GetBackupDirectory(character);
+			if (!Directory.Exists(folder))
+			{
+				return character;
+			}
+			Character recoveredCharacter = ImportXml<Character>(Path.Combine(folder, $"behaviour-{timestamp}.bak"));
+			if (recoveredCharacter == null)
+			{
+				return character;
+			}
+			recoveredCharacter.FolderName = character.FolderName;
+
+			Metadata meta = ImportXml<Metadata>(Path.Combine(folder, $"meta-{timestamp}.bak"));
+			recoveredCharacter.Metadata = meta ?? character.Metadata;
+
+			string markerFile = Path.Combine(folder, $"markers-{timestamp}.bak");
+			if (File.Exists(markerFile))
+			{
+				MarkerData markers = ImportXml<MarkerData>(markerFile);
+				if (markers != null)
+				{
+					recoveredCharacter.Markers.Merge(markers);
+				}
+			}
+
+			CharacterDatabase.Set(character.FolderName, recoveredCharacter);
+			string editorFile = Path.Combine(folder, $"editor-{timestamp}.bak");
+			if (File.Exists(editorFile))
+			{
+				CharacterEditorData editorData = ImportXml<CharacterEditorData>(editorFile);
+				if (editorData != null)
+				{
+					CharacterDatabase.AddEditorData(recoveredCharacter, editorData);
+				}
+			}
+
+			return recoveredCharacter;
+		}
+
+		/// <summary>
 		/// Imports an XML file
 		/// </summary>
 		/// <typeparam name="T">Type of data to ipmort</typeparam>
 		/// <param name="filename">Filename to import</param>
 		/// <returns>An object of type T or null if it failed</returns>
-		private static T ImportXml<T>(string filename)
+		public static T ImportXml<T>(string filename)
 		{
 			TextReader reader = null;
 			try
