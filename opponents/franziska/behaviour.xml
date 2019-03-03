@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.5 at 5:03:44 AM on March 02, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.8 at 1:15:26 AM on March 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.5</version>
+    <version>v3.8</version>
     <first>Franziska</first>
     <last>von Karma</last>
     <label>Franziska</label>
@@ -464,14 +464,37 @@
                 <state img="0-point.png">~Player~! Your defeat begins here!</state>
                 <state img="0-happy.png">I hope you're not foolish enough to expect to win, ~player~.</state>
             </case>
-            <case tag="game_start" alsoPlaying="calisto" priority="40">
+            <case tag="game_start" alsoPlaying="calisto" priority="50">
                 <state img="0-sweating.png">You...! Yew! What are &lt;i&gt;you&lt;/i&gt; doing here?!</state>
             </case>
-            <case tag="game_start" alsoPlaying="ini" priority="40">
+            <case tag="game_start" alsoPlaying="faye" priority="39">
+                <state img="0-interested.png">My, my... Faye Valentine, a.k.a. "Poker Alice." I'd have liked the opportunity to prosecute you in court, but this will have to do!</state>
+                <state img="0-happy.png">Well, well, well, if it isn't "Poker Alice" herself. Don't think for a moment that your bounty-hunting activities have led me to forgive your past crimes!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="ini" priority="50">
                 <state img="0-point.png">Hmph. ...You! Redhead. Tell me, have we met somewhere?</state>
             </case>
-            <case tag="game_start" alsoPlaying="mia" priority="40">
+            <case tag="game_start" alsoPlaying="jolyne" priority="39">
+                <state img="0-disdain.png">Jolyne Cujoh. Wanted for escaping prison after a DUI murder conviction. You are the worst type of criminal scum, and I will take great pleasure in defeating you!</state>
+                <state img="0-point.png">Jolyne Cujoh! Do not think a criminal such as you will escape my wrath today!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="juri" priority="40">
+                <state img="0-disdain.png">...Juri Han. Assassin and fighter. It is almost beyond comprehension that a prosecutor's daughter would fall so low.</state>
+                <state img="0-disdain.png">Juri Han. Daughter of the man who prosecuted countless criminal organizations, and even took on Shadaloo. You shame his memory.</state>
+                <state img="0-point.png">Juri Han! You shame all those who inherit a prosecutor's legacy! I will defeat you here and now!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="kyoko" priority="39">
+                <state img="custom:0-curtsey">Kyoko Kirigiri... from a prodigy prosecutor to a prodigy detective, it is a pleasure to make your acquaintance.</state>
+                <state img="custom:0-curtsey">Kyoko Kirigiri... the Ultimate Detective. I am Franziska von Karma, the prosecutorial prodigy. Perhaps we shall have the pleasure of working together someday.</state>
+                <state img="custom:0-curtsey">A Kirigiri detective? ...Your family's skills are known even to me. A pleasure to meet you.</state>
+            </case>
+            <case tag="game_start" alsoPlaying="mia" priority="50">
                 <state img="0-interested.png">Well, well. ...Mia Fey! You might have robbed me of victory in the trial of Maya Fey, but I will have my revenge!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="shego" priority="39">
+                <state img="0-interested.png">Ha! So you're the infamous Shego. You've evaded justice for quite some time, but you won't escape me here!</state>
+                <state img="0-interested.png">Hmph. Who'd have thought I, Franziska von Karma, would meet such a famous criminal as Shego here... this will be interesting indeed.</state>
+                <state img="0-interested.png">Well, well... if it isn't Shego. Wanted for various crimes in eleven countries. Interpol has quite the file on you.</state>
             </case>
             <case tag="game_start" alsoPlaying="ini" priority="900">
                 <condition count="1" filter="calisto" />
@@ -529,19 +552,23 @@
                 <state img="0-happy.png">Ha! Guess you've avoided my whip for now, Dealer.</state>
                 <state img="0-thinking.png">Pah! Stop wasting time. Reveal your hand! Now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="0-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="0-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="0-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="0-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="0-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="0-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="0-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="0-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="0-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="0-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -553,6 +580,11 @@
             <case tag="bad_hand">
                 <state img="0-thinking.png">...Hrm.</state>
                 <state img="0-thinking.png">Hrm....</state>
+            </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="0-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="0-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
             </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="0-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
@@ -891,6 +923,9 @@
                 <state img="0-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="0-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="0-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" alsoPlayingStage="0" priority="900">
                 <state img="0-smug.png">Ha! ...Mia Fey! My perfect revenge against you is complete!</state>
             </case>
@@ -949,6 +984,10 @@
                 <state img="1-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="1-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="1-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="1-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="1-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="1-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -970,18 +1009,18 @@
                 <state img="1-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="1-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="1-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="1-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="1-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="1-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="1-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="1-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="1-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -1058,6 +1097,11 @@
                 <state img="1-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="1-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="1-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="1-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="1-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="1-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -1084,15 +1128,15 @@
                 <state img="1-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="1-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="1-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="1-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -1101,6 +1145,10 @@
             <case tag="must_strip">
                 <state img="custom:1-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:1-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="1-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="1-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -1557,6 +1605,11 @@
                 <state img="1-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="1-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="1-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="1-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="1-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="1-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="1-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -1666,6 +1719,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="1-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="1-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="1-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="1-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="1-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="1-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -1863,6 +1923,9 @@
                 <state img="1-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="1-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="1-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="1-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -1921,6 +1984,10 @@
                 <state img="2-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="2-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="2-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="2-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="2-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="2-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -1942,18 +2009,18 @@
                 <state img="2-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="2-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="2-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="2-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="2-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="2-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="2-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="2-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="2-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -2030,6 +2097,11 @@
                 <state img="2-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="2-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="2-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="2-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="2-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="2-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -2056,15 +2128,15 @@
                 <state img="2-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="2-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="2-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="2-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -2073,6 +2145,10 @@
             <case tag="must_strip">
                 <state img="custom:2-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:2-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="2-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="2-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -2531,6 +2607,11 @@
                 <state img="2-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="2-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="2-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="2-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="2-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="2-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="2-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -2640,6 +2721,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="2-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="2-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="2-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="2-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="2-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="2-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -2837,6 +2925,9 @@
                 <state img="2-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="2-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="2-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="2-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -2895,6 +2986,10 @@
                 <state img="3-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="3-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="3-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="3-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="3-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="3-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -2916,18 +3011,18 @@
                 <state img="3-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="3-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="3-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="3-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="3-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="3-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="3-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="3-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="3-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -3004,6 +3099,11 @@
                 <state img="3-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="3-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="3-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="3-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="3-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="3-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -3030,15 +3130,15 @@
                 <state img="3-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="3-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="3-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="3-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -3047,6 +3147,10 @@
             <case tag="must_strip">
                 <state img="custom:3-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:3-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="3-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="3-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -3504,6 +3608,11 @@
                 <state img="3-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="3-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="3-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="3-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="3-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="3-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="3-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -3613,6 +3722,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="3-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="3-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="3-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="3-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="3-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="3-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -3810,6 +3926,9 @@
                 <state img="3-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="3-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="3-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="3-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -3868,6 +3987,10 @@
                 <state img="4-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="4-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="4-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="4-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="4-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="4-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -3889,18 +4012,18 @@
                 <state img="4-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="4-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="4-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="4-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="4-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="4-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="4-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="4-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="4-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -3977,6 +4100,11 @@
                 <state img="4-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="4-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="4-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="4-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="4-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="4-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -4003,15 +4131,15 @@
                 <state img="4-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="4-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="4-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="4-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -4020,6 +4148,10 @@
             <case tag="must_strip">
                 <state img="custom:4-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:4-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="4-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -4475,6 +4607,11 @@
                 <state img="4-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="4-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="4-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="4-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="4-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="4-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="4-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -4584,6 +4721,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="4-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="4-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="4-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="4-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="4-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="4-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -4781,6 +4925,9 @@
                 <state img="4-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="4-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="4-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="4-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -4839,6 +4986,10 @@
                 <state img="5-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="5-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="5-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="5-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="5-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="5-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -4860,18 +5011,18 @@
                 <state img="5-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="5-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="5-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="5-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="5-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="5-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="5-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="5-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="5-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -4948,6 +5099,11 @@
                 <state img="5-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="5-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="5-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="5-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="5-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="5-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -4974,15 +5130,15 @@
                 <state img="5-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="5-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="5-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="5-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -4991,6 +5147,10 @@
             <case tag="must_strip">
                 <state img="custom:5-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:5-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="5-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="5-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -5442,6 +5602,11 @@
                 <state img="5-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="5-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="5-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="5-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="5-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="5-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="5-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -5551,6 +5716,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="5-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="5-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="5-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="5-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="5-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="5-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -5748,6 +5920,9 @@
                 <state img="5-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="5-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="5-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="5-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -5806,6 +5981,10 @@
                 <state img="6-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="6-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="6-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="6-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="6-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="6-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -5827,18 +6006,18 @@
                 <state img="6-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="6-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="6-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="6-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="6-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="6-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="6-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="6-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="6-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -5915,6 +6094,11 @@
                 <state img="6-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="6-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="6-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="6-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="6-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="6-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -5941,15 +6125,15 @@
                 <state img="6-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="6-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="6-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="6-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -5958,6 +6142,10 @@
             <case tag="must_strip">
                 <state img="custom:6-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:6-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="6-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="6-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -6409,6 +6597,11 @@
                 <state img="6-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="6-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="6-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="6-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="6-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="6-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="6-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -6518,6 +6711,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="6-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="6-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="6-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="6-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="6-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="6-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -6715,6 +6915,9 @@
                 <state img="6-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="6-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="6-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="6-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -6773,6 +6976,10 @@
                 <state img="7-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="7-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="7-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="7-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="7-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="7-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -6794,18 +7001,18 @@
                 <state img="7-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="7-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="7-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="7-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="7-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="7-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="7-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="7-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="7-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -6882,6 +7089,11 @@
                 <state img="7-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="7-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="7-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="7-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="7-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="7-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -6908,15 +7120,15 @@
                 <state img="7-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="7-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="7-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="7-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -6925,6 +7137,10 @@
             <case tag="must_strip">
                 <state img="custom:7-cropswing">Dealer! This is your fault!</state>
                 <state img="custom:7-cropswing">...~Player~! This is clearly your fault!</state>
+            </case>
+            <case tag="must_strip" priority="0">
+                <condition count="1-4" filter="criminal" status="alive" />
+                <state img="7-angry.png">For me to lose to criminal scum like this... how is it possible?!</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="7-thinking.png">You needn't worry. My reputation will not be shaken by something so petty.</state>
@@ -7379,6 +7595,11 @@
                 <state img="7-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="7-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="7-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="7-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="7-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="7-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="7-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -7488,6 +7709,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="7-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="7-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="7-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="7-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="7-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="7-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -7685,6 +7913,9 @@
                 <state img="7-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="7-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
             </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="7-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
+            </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="7-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
             </case>
@@ -7751,6 +7982,10 @@
                 <state img="8-smug.png">Don't think you'll escape me this time, Mimi Miney!</state>
                 <state img="8-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
+            <case tag="good_hand" alsoPlaying="juri" alsoPlayingStage="0-4" priority="0">
+                <state img="8-point.png">Juri Han! Prepare to feel the deep despair of defeat!</state>
+                <state img="8-point.png">Juri Han! I will show you what it truly means to uphold a prosecutor's legacy!</state>
+            </case>
             <case tag="good_hand" alsoPlaying="mia" alsoPlayingStage="0-6" priority="0">
                 <state img="8-interested.png">Ha! I have you now, Mia Fey!</state>
                 <state img="8-point.png">...Mia Fey! Your doom is at hand!</state>
@@ -7772,18 +8007,18 @@
                 <state img="8-point.png">Mimi Miney! I'll defeat you here and now!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1" filter="criminal" />
+                <condition count="1-4" filter="criminal" status="alive" />
+                <condition count="1" filter="lawyer" />
+                <state img="8-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <condition count="1" filter="criminal" status="alive" />
                 <state img="8-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="8-smug.png">Did you really think a worthless criminal like you could ever defeat me? Fool.</state>
                 <state img="8-happy.png">Ha! It is as foolish for a foolish criminal such as you to foolishly oppose me here as it would be in court!</state>
             </case>
             <case tag="good_hand" priority="0">
-                <condition count="1-4" filter="criminal" />
-                <condition count="1" filter="lawyer" />
-                <state img="8-happy.png">Unlike in court, criminals such as you have no attorney to hide behind here....</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <condition count="2-4" filter="criminal" />
+                <condition count="2-4" filter="criminal" status="alive" />
                 <state img="8-point.png">This is all I need to defeat you, criminal scum!</state>
                 <state img="8-smug.png">Did you really think worthless criminals like you could ever defeat me? Fool.</state>
                 <state img="8-happy.png">Ha! It is as foolish for you criminal fools to foolishly oppose me here as it would be in court!</state>
@@ -7864,6 +8099,11 @@
                 <state img="8-angry.png">Cornered again... and again because of you, Mimi Miney!</state>
                 <state img="8-angry.png">No..! I will not be outsmarted by some back-from-the-dead upstart murderer!</state>
             </case>
+            <case tag="bad_hand" priority="0">
+                <condition count="1-4" filter="criminal" />
+                <state img="8-angry.png">No! I refuse to give in to such... &lt;i&gt;criminal scum!&lt;/i&gt;</state>
+                <state img="8-angry.png">For me to feel this much pressure from a criminal... it's unthinkable...!</state>
+            </case>
             <case tag="hand" alsoPlaying="haru" alsoPlayingStage="0" totalRounds="0">
                 <state img="8-crop attack.png">Because they would not let me bring my whip after &lt;i&gt;last time.&lt;/i&gt; Obviously.</state>
                 <state img="8-disdain.png">...Why would I &lt;i&gt;not?&lt;/i&gt;</state>
@@ -7890,15 +8130,15 @@
                 <state img="8-disdain.png">Well then. Now that all the cheaters are out of the game, perhaps we can actually trust the fairness of the cards.</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="1-4" filter="cheater" />
+                <condition count="1-4" filter="cheater" status="alive" />
                 <state img="8-point.png">HOLD IT! ...I saw that, cheater!</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="magic" />
+                <condition count="2-4" filter="magic" status="alive" />
                 <state img="8-disdain.png">Hmph. None of you magic-users had better be using your magic to cheat...</state>
             </case>
             <case tag="hand" priority="0">
-                <condition count="2-4" filter="serious" />
+                <condition count="2-4" filter="serious" status="alive" />
                 <state img="8-thinking.png">Hmph. It's good to see someone else take this seriously for once.</state>
             </case>
             <case tag="hand" timeInStage="3-" notSaidMarker="wherearewe" priority="0">
@@ -8316,6 +8556,11 @@
                 <state img="8-disdain.png">I expected nothing better from criminal scum such as ~name~.</state>
                 <state img="8-interested.png">You weren't really expecting to get away without punishment for your crimes with me around, were you?</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="8-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="8-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="8-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="8-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="8-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -8425,6 +8670,13 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="8-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="8-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="faye" priority="0">
+                <state img="8-happy.png">My, my... how funny this is, Faye Valentine.</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="8-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="8-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="8-interested.png">TAKE THAT! ...Off. Now.</state>
@@ -8643,6 +8895,9 @@
                 <state img="8-curtsey.png">Extending my perfect win record. Naturally.</state>
                 <state img="8-curtsey.png">Run away with your tail between your legs like the ill-bred dog you are!</state>
                 <state img="8-curtsey.png">There is nothing more important in this world than a perfect victory!</state>
+            </case>
+            <case tag="game_over_victory" alsoPlaying="juri" priority="800">
+                <state img="8-disdain.png">...Let that be a lesson to you, Juri Han. Your actions only end in further disgrace for you and your father's memory.</state>
             </case>
             <case tag="game_over_victory" alsoPlaying="mia" priority="900">
                 <state img="8-interested.png">...Mia Fey! I have defeated you! This is my revenge!</state>
@@ -9260,6 +9515,11 @@
                 <state img="10-point.png">You've lost! Now... give up that ridiculous act of yours and stop trying to intimidate us!</state>
                 <state img="10-thinking.png">I've stood in court with hardened criminals. Creepy fools such as yourself always break down when they lose.</state>
             </case>
+            <case tag="opponent_lost" filter="detective" priority="0">
+                <state img="10-thinking.png">Hmph. You're the most useless detective since Scruffy.</state>
+                <state img="10-disdain.png">In the rankings of detectives... there's Gumshoe, Lacer, and then there's ~name~.</state>
+                <state img="10-disdain.png">...Were you really that bad at deducing our hands, ~name~? I don't think I'd want you on one of my investigations.</state>
+            </case>
             <case tag="opponent_lost" filter="disney" priority="0">
                 <state img="10-thinking.png">...I'll be careful with my words. Even the most fearsome of lawyers and prosecutors know the courtroom might of "the mouse."</state>
                 <state img="10-happy.png">Ha! I have to admit... as a prosecutor, this is excellent payback for all of the times "the Mouse" has won in court.</state>
@@ -9354,6 +9614,10 @@
             <case tag="opponent_lost" filter="witty" priority="0">
                 <state img="10-happy.png">What's the matter, ~name~? Can't talk your way out of this one?</state>
                 <state img="10-happy.png">Oh? Has ~name~ finally run out of witty retorts?</state>
+            </case>
+            <case tag="opponent_lost" target="kyoko" priority="0">
+                <state img="10-disdain.png">...This is the famed Kirigiri skill? I'm not impressed.</state>
+                <state img="10-disdain.png">I'm disappointed, ~name~. I thought your family was famous for their deductive reasoning.</state>
             </case>
             <case tag="opponent_lost" targetStatus="not_naked" priority="0">
                 <state img="10-interested.png">TAKE THAT! ...Off. Now.</state>
