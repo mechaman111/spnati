@@ -293,7 +293,7 @@ function Player (id) {
     this.gender = eGender.MALE;
     this.stamina = 20;
     this.scale = undefined;
-    this.tags = [id];
+    this.tags = this.baseTags = [canonicalizeTag(id)];
     this.xml = null;
     this.metaXml = null;
 
@@ -373,25 +373,39 @@ Player.prototype.resetState = function () {
 
         this.labels = appearance.labels;
         this.folders = appearance.folders;
-
+        
+        /* Build up a list of tags, starting from the opponent's baseTags list:
+         * - Filter out tags marked to be removed by alt. costumes
+         * - Add tags marked to be added by alt. costumes
+         * - Add the costume ID if necessary
+         * - Add implied tags
+         */
+        this.tags = this.baseTags.slice();
         if (appearance.tags) {
-            var alt_tags = appearance.tags.find('tag').each(function (idx, elem) {
+            var removed_tags = [];
+            var added_tags = [];
+            
+            appearance.tags.find('tag').each(function (idx, elem) {
                 var $elem = $(elem);
-                var tag = $elem.text();
+                var tag = canonicalizeTag($elem.text());
                 var removed = $elem.attr('remove') || '';
+                
                 if (removed.toLowerCase() === 'true') {
-                    if (this.tags.indexOf(tag) >= 0) {
-                        this.tags.splice(this.tags.indexOf(tag), 1);
-                    }
-                } else if (this.tags.indexOf(tag) < 0) {
-                    this.tags.push(tag);
+                    removed_tags.push(tag);
+                } else {
+                    added_tags.push(tag);
                 }
-            }.bind(this));
+            });
+            
+            this.tags = this.tags.filter(function (tag) { return removed_tags.indexOf(tag) < 0; });
+            Array.prototype.push.apply(this.tags, added_tags);
         }
 
-        if (appearance.id && this.tags.indexOf(appearance.id) < 0) {
-            this.tags.push(appearance.id);
+        if (appearance.id && this.tags.indexOf(canonicalizeTag(appearance.id)) < 0) {
+            this.tags.push(canonicalizeTag(appearance.id));
         }
+        
+        this.tags = expandTagsList(this.tags);
 
 		/* Load the player's wardrobe. */
 
@@ -456,13 +470,21 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.ending = this.endings.length > 0 || $metaXml.find('has_ending').text() === "true";
     this.layers = parseInt($metaXml.find('layers').text(), 10);
     this.scale = Number($metaXml.find('scale').text()) || 100.0;
-    this.tags = $metaXml.find('tags').children().map(function() { return $(this).text(); }).get();
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
     this.selected_costume = null;
     this.alt_costume = null;
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
+    
+    /* baseTags stores tags that will be later used in resetState to build the
+     * opponent's true tags list. It does not store implied tags.
+     *
+     * The tags list stores the fully-expanded list of tags for the opponent,
+     * including implied tags.
+     */
+    this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.tags = expandTagsList(this.baseTags);
 
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
@@ -553,7 +575,7 @@ Opponent.prototype.getByStage = function (arr, stage) {
 };
 
 Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
-    if (costumeDesc === undefined) {
+    if (!costumeDesc) {
         this.selected_costume = null;
         this.selection_image = this.base_folder + this.image;
     } else {
@@ -614,23 +636,9 @@ Opponent.prototype.unloadAlternateCostume = function () {
     }
 
     if (this.alt_costume.tags) {
-        this.alt_costume.tags.find('tag').each(function (idx, elem) {
-            var $elem = $(elem);
-            var tag = $elem.text();
-            var removed = $elem.attr('remove') || '';
-            if (removed.toLowerCase() === 'true') {
-                this.tags.push(tag);    // tag was previously removed, readd it
-            } else {
-                if (this.tags.indexOf(tag) > 0) {
-                    // remove added tag
-                    this.tags.splice(this.tags.indexOf(tag), 1);
-                }
-            }
-        }.bind(this));
+        this.tags = expandTagsList(this.baseTags);
     }
-
-    this.tags.splice(this.tags.indexOf(this.alt_costume.id), 1);
-
+    
     this.alt_costume = null;
     this.selectAlternateCostume(null);
     this.resetState();
@@ -703,7 +711,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 });
             }
 
-            this.tags = tagsArray;
+            this.baseTags = tagsArray.map(canonicalizeTag);
+            this.tags = expandTagsList(this.baseTags);
 
             var targetedLines = {};
 
@@ -748,7 +757,7 @@ Player.prototype.getImagesForStage = function (stage) {
                     
     this.xml.find(selector).each(function () {
         var target = $(this).attr('target'), alsoPlaying = $(this).attr('alsoPlaying'),
-            filter = $(this).attr('filter');
+            filter = canonicalizeTag($(this).attr('filter'));
         // Skip cases requiring a character that isn't present
         if ((target === undefined || players.some(function(p) { return p.id === target; }))
             && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))

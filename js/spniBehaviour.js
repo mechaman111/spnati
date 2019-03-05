@@ -90,6 +90,94 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
 
 var GLOBAL_CASE = "global";
 
+/* Tag alias list, mapping aliases to canonical tag names. */
+var TAG_ALIASES = {
+    // Add new aliases as follows:
+    // 'alias_name': 'tag_name',
+};
+
+/* Tag implications list, mapping tags to lists of implied tags. */
+var TAG_IMPLICATIONS = {
+    // Add tag implications as follows:
+    // 'child_tag': ['implied_tag', ...],
+};
+
+
+function fixupTagFormatting(tag) {
+    return tag.replace(/\s/g, '').toLowerCase();
+}
+
+/**********************************************************************
+ * Convert a tag to its 'canonical' form:
+ * - Remove all whitespace characters
+ * - Lowercase the string
+ * - Handle all alias conversions
+ **********************************************************************/
+function canonicalizeTag(tag) {
+    if (!tag) return '';
+    
+    tag = fixupTagFormatting(tag);
+    while (TAG_ALIASES.hasOwnProperty(tag)) {
+        tag = TAG_ALIASES[tag];
+    }
+    
+    return tag;
+}
+
+/* Ensure that the alias and implications mappings are themselves canonical.
+ * This could also be done in-place, but it feels cleaner and better to 
+ * ensure that TAG_ALIASES and TAG_IMPLICATIONS *only* have canonical-form tags.
+ */
+let fixedAliases = {};
+for (alias in TAG_ALIASES) {
+    fixedAliases[fixupTagFormatting(alias)] = fixupTagFormatting(TAG_ALIASES[alias]);
+}
+TAG_ALIASES = fixedAliases;
+
+let fixedImplies = {};
+for (child_tag in TAG_IMPLICATIONS) {    
+    let implied = TAG_IMPLICATIONS[child_tag].map(canonicalizeTag);
+    let canonical_child = canonicalizeTag(child_tag);
+    
+    // If multiple entries in TAG_IMPLICATIONS alias to the same tag,
+    // merge their lists of implications.
+    if (fixedImplies.hasOwnProperty(canonical_child)) {
+        implied.forEach(function (t) {
+            if (fixedImplies[canonical_child].indexOf(t) < 0)
+                fixedImplies[canonical_child].push(t);
+        });
+    } else {
+        fixedImplies[canonical_child] = implied;
+    }
+}
+TAG_IMPLICATIONS = fixedImplies;
+
+/**********************************************************************
+ * Convert a tags list to canonical form:
+ * - Canonicalize each input tag
+ * - Resolve tag implications
+ * This function also filters out duplicated tags.
+ **********************************************************************/
+function expandTagsList(input_tags) {
+    let tmp = input_tags.map(canonicalizeTag);
+    let output_tags = [];
+    
+    while (tmp.length > 0) {
+        let tag = tmp.shift();
+        
+        // Ensure exactly one instance of each tag remains within the output array.
+        if (output_tags.indexOf(tag) >= 0) continue;
+        output_tags.push(tag);
+        
+        // If this tag implies other tags, queue those for processing as well.
+        if (TAG_IMPLICATIONS.hasOwnProperty(tag)) {
+            Array.prototype.push.apply(tmp, TAG_IMPLICATIONS[tag]);
+        }
+    }
+    
+    return output_tags;
+}
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
@@ -227,7 +315,7 @@ function expandPlayerVariable(split_fn, args, self, target) {
             return "marker"; //didn't supply a marker name
         }
     case 'tag':
-        return target.tags.indexOf(split_fn[1].toLowerCase()) >= 0 ? 'true' : 'false';
+        return target.tags.indexOf(canonicalizeTag(split_fn[1])) >= 0 ? 'true' : 'false';
     case 'costume':
         if (!target.alt_costume) return 'default';
         return target.alt_costume.id;
@@ -664,7 +752,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     
     // filter
     if (opp && this.filter) {
-        if (opp.tags.indexOf(this.filter) < 0) {
+        if (opp.tags.indexOf(canonicalizeTag(this.filter)) < 0) {
             return false; // failed "filter" requirement
         }
     }
@@ -791,7 +879,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     // filter counter targets
     if(!this.counters.every(function (ctr) {
         var desiredCount = parseInterval(ctr.attr('count'));
-        var filterTag =    ctr.attr('filter');
+        var filterTag =    canonicalizeTag(ctr.attr('filter'));
         var filterGender = ctr.attr('gender');
         var filterStatus = ctr.attr('status');
         
