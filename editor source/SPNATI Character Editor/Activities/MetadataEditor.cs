@@ -42,7 +42,13 @@ namespace SPNATI_Character_Editor.Activities
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
 			PopulatePortraitDropdown();
-			cboDefaultPic.SelectedItem = _imageLibrary.Find(Path.GetFileNameWithoutExtension(_character.Metadata.Portrait));
+			if (_character.Metadata.Portrait != null)
+			{
+				string portrait = _character.Metadata.Portrait.Replace("custom:", "@@@");
+				portrait = Path.GetFileNameWithoutExtension(portrait);
+				portrait = portrait.Replace("@@@", "custom:");
+				cboDefaultPic.SelectedItem = _imageLibrary.Find(portrait);
+			}
 			LoadIntelligence();
 
 			OpponentStatus status = Listing.Instance.GetCharacterStatus(_character.FolderName);

@@ -30,6 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Directive _selectedDirective;
 		private Keyframe _selectedKeyframe;
 		private SceneAnimation _selectedAnimation;
+		private List<PendedDirective> _pendingDirectives = new List<PendedDirective>();
 
 		private bool _viewportLocked;
 		private Point _prelockOffset;
@@ -229,7 +230,7 @@ namespace SPNATI_Character_Editor.Controls
 					Point pt = new Point(_lastMouse.X - arrow.Width / 2, _lastMouse.Y - arrow.Height / 2);
 
 					//rotate to face the object's center
-					PointF center = ToScreenCenter(_selectedObject);;
+					PointF center = ToScreenCenter(_selectedObject); ;
 
 					double angle = Math.Atan2(center.Y - pt.Y, center.X - pt.X);
 					angle = angle * (180 / Math.PI) - 90;
@@ -1694,6 +1695,7 @@ namespace SPNATI_Character_Editor.Controls
 			_animations.Clear();
 			_scenePreview?.Dispose();
 			_sceneTransition = null;
+			_pendingDirectives.Clear();
 
 			canvas.Invalidate();
 
@@ -1761,7 +1763,15 @@ namespace SPNATI_Character_Editor.Controls
 			_directiveIndex++;
 			if (_directiveIndex < _selectedScene.Directives.Count)
 			{
-				if (!ApplyDirective(_selectedScene.Directives[_directiveIndex]))
+				Directive directive = _selectedScene.Directives[_directiveIndex];
+				if (!string.IsNullOrEmpty(directive.Delay) && directive.Delay != "0")
+				{
+					float delay;
+					float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out delay);
+					delay *= 1000;
+					PendDirective(directive, delay);
+				}
+				else if (!ApplyDirective(directive))
 				{
 					return;
 				}
@@ -1917,6 +1927,10 @@ namespace SPNATI_Character_Editor.Controls
 					_scenePreview.Update(directive, _scenePreview);
 					break;
 				case "wait":
+					if (_pendingDirectives.Count > 0)
+					{
+						_waitingForAnims = true;
+					}
 					for (int i = 0; i < _animations.Count; i++)
 					{
 						if (!_animations[i].Looped || _animations[i].Iterations > 0)
@@ -1984,6 +1998,30 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 			return true;
+		}
+
+		private class PendedDirective : IComparable<PendedDirective>
+		{
+			public long TriggerTime;
+			public Directive Directive;
+
+			public PendedDirective(Directive directive, float delay)
+			{
+				TriggerTime = DateTime.Now.AddMilliseconds(delay).Ticks;
+				Directive = directive;
+			}
+
+			public int CompareTo(PendedDirective other)
+			{
+				return TriggerTime.CompareTo(other.TriggerTime);
+			}
+		}
+
+		private void PendDirective(Directive directive, float delay)
+		{
+			PendedDirective info = new PendedDirective(directive, delay);
+			_pendingDirectives.Add(info);
+			_pendingDirectives.Sort();
 		}
 
 		/// <summary>
@@ -2205,6 +2243,18 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
+				long ticks = now.Ticks;
+				for (int i = 0; i < _pendingDirectives.Count; i++)
+				{
+					PendedDirective info = _pendingDirectives[i];
+					if (info.TriggerTime <= ticks)
+					{
+						ApplyDirective(info.Directive);
+						_pendingDirectives.RemoveAt(i);
+						i--;
+					}
+				}
+
 				//updates can add to the object collection and resort it, which will royally screw up this loop, so copy off first, as inefficient as that is
 				List<SceneObject> objects = new List<SceneObject>();
 				objects.AddRange(_scenePreview.Objects);
@@ -2227,8 +2277,8 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
 		private void UpdateAnimations(float elapsedSec)
-		{	
-			int nonLoopingCount = 0;
+		{
+			int nonLoopingCount = _pendingDirectives.Count;
 
 			if (_mode == EditMode.Playback)
 			{
@@ -2327,6 +2377,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void HaltAnimations(bool haltLooping)
 		{
+			foreach (PendedDirective info in _pendingDirectives)
+			{
+				ApplyDirective(info.Directive);
+			}
+			_pendingDirectives.Clear();
 			_waitingForAnims = false;
 			for (int i = 0; i < _animations.Count; i++)
 			{
