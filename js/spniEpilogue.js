@@ -57,7 +57,7 @@ epilogueContainer.addEventListener('click', function () {
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
-function Animation(id, frames, updateFunc, loop, easingFunction, delay, clampFunction, iterations) {
+function Animation(id, frames, updateFunc, loop, easingFunction, clampFunction, iterations) {
   this.id = id;
   this.looped = loop === "1" || loop === "true";
   this.keyframes = frames;
@@ -69,7 +69,6 @@ function Animation(id, frames, updateFunc, loop, easingFunction, delay, clampFun
     frames[i].keyframes = frames;
   }
   this.duration = frames[frames.length - 1].end;
-  this.delay = delay;
   this.elapsed = 0;
   this.updateFunc = updateFunc;
 }
@@ -103,7 +102,7 @@ Animation.prototype.easingFunctions = {
   },
 };
 Animation.prototype.isComplete = function () {
-  var life = this.elapsed - this.delay;
+  var life = this.elapsed;
   if (this.looped) {
     return this.iterations > 0 ? life / this.duration >= this.iterations : false;
   }
@@ -116,7 +115,7 @@ Animation.prototype.update = function (elapsedMs) {
 
   //determine what keyframes we're between
   var last;
-  var t = this.elapsed - this.delay;
+  var t = this.elapsed;
   if (t < 0) {
     return;
   }
@@ -635,11 +634,11 @@ function readProperties(sourceObj, scene) {
   });
 
   //properties needing special handling
+  targetObj.delay = parseFloat(targetObj.delay, 10) * 1000 || 0;
 
   if (targetObj.type !== "text") {
     // scene directives
     targetObj.time = parseFloat(targetObj.time, 10) * 1000 || 0;
-    targetObj.delay = parseFloat(targetObj.delay, 10) * 1000 || 0;
     if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
     targetObj.zoom = parseFloat(targetObj.zoom, 10);
     targetObj.rotation = parseFloat(targetObj.rotation, 10);
@@ -1098,68 +1097,20 @@ EpiloguePlayer.prototype.performDirective = function () {
   if (this.directiveIndex < this.activeScene.directives.length) {
     var view = this.activeScene.view;
     var directive = this.activeScene.directives[this.directiveIndex];
-    switch (directive.type) {
-      case "sprite":
-        this.addAction(view, directive, view.addSprite, view.removeSceneObject);
-        break;
-      case "text":
-        this.addAction(view, directive, view.addText, view.removeText);
-        break;
-      case "clear":
-        this.addAction(view, directive, view.clearText, view.restoreText);
-        break;
-      case "clear-all":
-        this.addAction(view, directive, view.clearAllText, view.restoreText);
-        break;
-      case "move":
-        this.addAction(view, directive, view.moveSprite, view.returnSprite);
-        break;
-      case "camera":
-        this.addAction(view, directive, view.moveCamera, view.returnCamera);
-        break;
-      case "fade":
-        this.addAction(view, directive, view.fade, view.restoreOverlay);
-        break;
-      case "stop":
-        this.addAction(view, directive, view.stopAnimation, view.restoreAnimation);
-        break;
-      case "wait":
-        this.addAction(this, directive, this.awaitAnims, function () { });
-        return;
-      case "pause":
-        return;
-      case "remove":
-        this.addAction(view, directive, view.hideSceneObject, view.showSceneObject);
-        break;
-      case "emitter":
-        this.addAction(view, directive, view.addEmitter, view.removeSceneObject);
-        break;
-      case "emit":
-        this.addAction(view, directive, view.burstParticles, view.clearParticles);
-        break;
-      case "skip":
-        this.addAction(null, directive, function () { }, function () { });
-        break;
+    directive.action = null;
+    if (directive.delay && directive.type !== "pause" && directive.type !== "wait") {
+      view.pendDirective(this, directive, directive.delay);
     }
-
+    else {
+      if (view.runDirective(this, directive)) {
+        return;
+      }
+    }
     this.performDirective();
   }
   else {
     this.advanceScene();
   }
-}
-
-/**
- * Adds an undoable action to the history
- * @param {any} context Context to pass to do and undo functions
- * @param {Function} doFunc Function to perform the directive
- * @param {Function} undoFunc Function to undo the directive
- */
-EpiloguePlayer.prototype.addAction = function (view, directive, doFunc, undoFunc) {
-  var context = {}; //contextual information for the do action to store off that the revert action can refer to
-  var action = { directive: directive, context: context, perform: createClosure(view, doFunc), revert: createClosure(view, undoFunc) };
-  directive.action = action;
-  action.perform(directive, context);
 }
 
 /**
@@ -1249,6 +1200,7 @@ EpiloguePlayer.prototype.awaitAnims = function (directive, context) {
 function SceneView(container, index, assetMap) {
   this.scene = null;
   this.index = index;
+  this.pendingDirectives = [];
   this.anims = [];
   this.camera = null;
   this.assetMap = assetMap;
@@ -1294,6 +1246,81 @@ SceneView.prototype.destroy = function () {
   this.$viewport.remove();
 }
 
+SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
+  switch (directive.type) {
+    case "sprite":
+      this.addAction(this, directive, this.addSprite, this.removeSceneObject);
+      break;
+    case "text":
+      this.addAction(this, directive, this.addText, this.removeText);
+      break;
+    case "clear":
+      this.addAction(this, directive, this.clearText, this.restoreText);
+      break;
+    case "clear-all":
+      this.addAction(this, directive, this.clearAllText, this.restoreText);
+      break;
+    case "move":
+      this.addAction(this, directive, this.moveSprite, this.returnSprite);
+      break;
+    case "camera":
+      this.addAction(this, directive, this.moveCamera, this.returnCamera);
+      break;
+    case "fade":
+      this.addAction(this, directive, this.fade, this.restoreOverlay);
+      break;
+    case "stop":
+      this.addAction(this, directive, this.stopAnimation, this.restoreAnimation);
+      break;
+    case "wait":
+      this.addAction(epiloguePlayer, directive, epiloguePlayer.awaitAnims, function () { });
+      return true;
+    case "pause":
+      return true;
+    case "remove":
+      this.addAction(this, directive, this.hideSceneObject, this.showSceneObject);
+      break;
+    case "emitter":
+      this.addAction(this, directive, this.addEmitter, this.removeSceneObject);
+      break;
+    case "emit":
+      this.addAction(this, directive, this.burstParticles, this.clearParticles);
+      break;
+    case "skip":
+      this.addAction(null, directive, function () { }, function () { });
+      break;
+  }
+  return false;
+}
+
+/**
+ * Adds an undoable action to the history
+ * @param {any} context Context to pass to do and undo functions
+ * @param {Function} doFunc Function to perform the directive
+ * @param {Function} undoFunc Function to undo the directive
+ */
+SceneView.prototype.addAction = function (view, directive, doFunc, undoFunc) {
+  var context = {}; //contextual information for the do action to store off that the revert action can refer to
+  var action = { directive: directive, context: context, perform: createClosure(view, doFunc), revert: createClosure(view, undoFunc) };
+  directive.action = action;
+  action.perform(directive, context);
+}
+
+SceneView.prototype.pendDirective = function (epiloguePlayer, directive, delay) {
+  var info = { epiloguePlayer: epiloguePlayer, directive: directive };
+  info.handle = setTimeout(this.runPendedDirective.bind(this), delay, info, true);
+  this.pendingDirectives.push(info);
+}
+
+SceneView.prototype.runPendedDirective = function (info, remove) {
+  info.handle = 0;
+  this.runDirective(info.epiloguePlayer, info.directive);
+  if (remove) {
+    var index = this.pendingDirectives.indexOf(info);
+    this.pendingDirectives.splice(index, 1);
+  }
+}
+
 SceneView.prototype.updateOverlay = function (id, last, next, t) {
   if (typeof next.color !== "undefined") {
     var rgb1 = fromHex(last.color);
@@ -1337,7 +1364,7 @@ SceneView.prototype.isActive = function () {
 }
 
 SceneView.prototype.update = function (elapsed) {
-  var nonLoopingCount = 0;
+  var nonLoopingCount = this.pendingDirectives.length;
 
   for (var obj in this.sceneObjects) {
     this.sceneObjects[obj].update(elapsed);
@@ -1496,6 +1523,15 @@ SceneView.prototype.resize = function () {
 }
 
 SceneView.prototype.haltAnimations = function (haltLooping) {
+  for (var i = 0; i < this.pendingDirectives.length; i++) {
+    var info = this.pendingDirectives[i];
+    if (info.handle) {
+      clearTimeout(info.handle);
+      this.runPendedDirective(info, false);
+    }
+  }
+  this.pendingDirectives = [];
+
   var animloop = this.anims.slice();
   var j = 0;
   for (var i = 0; i < animloop.length; i++) {
@@ -1705,7 +1741,7 @@ SceneView.prototype.moveSprite = function (directive, context) {
     context.alpha = sprite.alpha;
     context.src = sprite.src;
     frames.unshift(context);
-    context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+    context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.clamp, directive.iterations));
   }
 }
 
@@ -1761,7 +1797,7 @@ SceneView.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  context.anim = this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.returnCamera = function (directive, context) {
@@ -1784,7 +1820,7 @@ SceneView.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.scene.view.overlay.a;
   frames.unshift(context);
-  context.anim = this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.delay, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.restoreOverlay = function (directive, context) {
@@ -1793,6 +1829,9 @@ SceneView.prototype.restoreOverlay = function (directive, context) {
 }
 
 SceneView.prototype.isAnimRunning = function () {
+  if (this.pendingDirectives.length > 0) {
+    return true;
+  }
   for (var i = 0; i < this.anims.length; i++) {
     if (!this.anims[i].looped) {
       return true;
