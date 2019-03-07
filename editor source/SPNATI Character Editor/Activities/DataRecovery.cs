@@ -134,6 +134,10 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				string filename = Path.GetFileNameWithoutExtension(file);
 				string extension = Path.GetExtension(file);
+				if (extension != ".bak")
+				{
+					continue;
+				}
 				string timestamp = filename.Substring(root.Length + 1);
 				if (filename.StartsWith(root))
 				{
