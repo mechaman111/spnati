@@ -70,6 +70,9 @@ PoseSprite.prototype.draw = function() {
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
+    if (this.img.src !== this.src) {
+        this.img.src = this.src;
+    }
 }
 
 
@@ -137,7 +140,7 @@ PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
 }
 
 PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
-    if (this.interpolation == 'none' && fromFrame.src) {
+    if (fromFrame.src) {
         this.target.src = fromFrame.src;
     }
     
@@ -266,6 +269,9 @@ function parseSpriteDefinition ($xml, player) {
 function parseKeyframeDefinition($xml) {
     var targetObj = parseSpriteDefinition($xml);
     targetObj.time = parseFloat(targetObj.time) * 1000;
+    if (targetObj.src) {
+        targetObj.src = "opponents/" + targetObj.src;
+    }
     
     return targetObj;
 }
