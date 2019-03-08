@@ -314,7 +314,7 @@ function PoseDefinition ($xml, player) {
     $xml.find('directive').each(function (i, elem) {
         var directive = parseDirective(elem);
         if (directive.type === 'animation') {
-            this.animations.push(directive);
+            this.addAnimation(directive);
         } else if (directive.type === 'sequence') {
             // Convert the sequence into a set of Animation objects.
             var curDelay = directive.delay;
@@ -342,12 +342,87 @@ function PoseDefinition ($xml, player) {
     this.player = player;
 }
 
+//This is pretty much the same thing as spniEpilogue's addDirectiveToScene
+PoseDefinition.prototype.addAnimation = function (directive) {
+    if (directive.keyframes.length > 1) {
+        //first split the properties into buckets of frame indices where they appear
+        var propertyMap = {};
+        for (var i = 0; i < directive.keyframes.length; i++) {
+            var frame = directive.keyframes[i];
+            for (var j = 0; j < animatedProperties.length; j++) {
+                var property = animatedProperties[j];
+                if (frame.hasOwnProperty(property) && !Number.isNaN(frame[property])) {
+                    if (!propertyMap[property]) {
+                        propertyMap[property] = [];
+                    }
+                    propertyMap[property].push(i);
+                }
+            }
+        }
+
+        //next create directives for each combination of frames
+        var directives = {};
+        for (var prop in propertyMap) {
+            var key = propertyMap[prop].join(',');
+            var workingDirective = directives[key];
+            if (!workingDirective) {
+                //shallow copy the directive
+                workingDirective = {};
+                for (var srcProp in directive) {
+                    if (directive.hasOwnProperty(srcProp)) {
+                        workingDirective[srcProp] = directive[srcProp];
+                    }
+                }
+                workingDirective.keyframes = [];
+                directives[key] = workingDirective;
+                this.animations.push(workingDirective);
+            }
+            var lastStart = 0;
+            for (var i = 0; i < propertyMap[prop].length; i++) {
+                var srcFrame = directive.keyframes[propertyMap[prop][i]];
+                var targetFrame;
+                if (workingDirective.keyframes.length <= i) {
+                    //shallow copy the frame minus the animatable properties
+                    targetFrame = {};
+                    for (var srcProp in srcFrame) {
+                        if (srcFrame.hasOwnProperty(srcProp)) {
+                            targetFrame[srcProp] = srcFrame[srcProp];
+                        }
+                    }
+                    for (var j = 0; j < animatedProperties.length; j++) {
+                        var property = animatedProperties[j];
+                        delete targetFrame[property];
+                    }
+
+                    targetFrame.startTime = lastStart;
+                    workingDirective.keyframes.push(targetFrame);
+                    lastStart = srcFrame.time;
+                }
+                else {
+                    targetFrame = workingDirective.keyframes[i];
+                }
+                targetFrame[prop] = srcFrame[prop];
+            }
+        }
+    }
+    else {
+        this.animations.push(directive);
+    }
+}
+
 PoseDefinition.prototype.getUsedImages = function(stage) {
     var baseFolder = 'opponents/';
     var imageSet = {};
     
     this.sprites.forEach(function (sprite) {
         imageSet[baseFolder+sprite.src] = true;
+    });
+    this.animations.forEach(function (animation) {
+        animation.keyframes.forEach(function (keyframe) {
+            if (keyframe.src) {
+                imageSet[keyframe.src] = true;
+            }
+        });
     });
     
     return Object.keys(imageSet);
