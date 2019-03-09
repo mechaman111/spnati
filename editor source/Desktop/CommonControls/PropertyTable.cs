@@ -76,6 +76,8 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public bool RunInitialAddEvents { get; set; }
+
 		private bool _allowHelp = false;
 		public bool AllowHelp { get { return _allowHelp; } set { _allowHelp = value; } }
 		private bool _allowDelete = true;
@@ -217,9 +219,14 @@ namespace Desktop.CommonControls
 
 		private void AddControl(PropertyRecord result)
 		{
-			PropertyEditControl ctl = EditRecord(result, -1);
+			bool newlyAdded;
+			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
 			ctl.Focus(); //jump to the control for immediate editing
 			recAdd.Record = null;
+			if (newlyAdded && RunInitialAddEvents)
+			{
+				ctl.OnInitialAdd();
+			}
 		}
 
 		private void focusOnAdd_Click(object sender, EventArgs e)
@@ -301,6 +308,7 @@ namespace Desktop.CommonControls
 						}
 					}
 
+					bool newlyAdded;
 					if (value != null && typeof(IList).IsAssignableFrom(memberType))
 					{
 						IList list = value as IList;
@@ -310,7 +318,7 @@ namespace Desktop.CommonControls
 						}
 						for (int i = 0; i < list.Count; i++)
 						{
-							EditRecord(editControl, i);
+							EditRecord(editControl, i, out newlyAdded);
 						}
 					}
 					else
@@ -332,7 +340,7 @@ namespace Desktop.CommonControls
 							}
 						}
 
-						PropertyEditControl ctl = EditRecord(editControl, -1);
+						PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
 						if (isDefault && !hasData)
 						{
 							defaultRows.Add(ctl);
@@ -369,8 +377,9 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private PropertyEditControl EditRecord(PropertyRecord result, int index)
+		private PropertyEditControl EditRecord(PropertyRecord result, int index, out bool newControl)
 		{
+			newControl = false;
 			PropertyEditControl ctl = null;
 			PropertyTableRow row = _rows.Get(result.Property, index);
 			if (row != null)
@@ -425,6 +434,7 @@ namespace Desktop.CommonControls
 					}
 				}
 
+				newControl = true;
 				ctl = Activator.CreateInstance(result.EditControlType) as PropertyEditControl;
 				ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 				ctl.SetParameters(result.Attribute);

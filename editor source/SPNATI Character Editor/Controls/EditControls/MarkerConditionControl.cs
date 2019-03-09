@@ -14,6 +14,14 @@ namespace SPNATI_Character_Editor
 			recField.RecordType = typeof(Marker);
 		}
 
+		public override void OnInitialAdd()
+		{
+			if (recField.RecordContext != null)
+			{
+				recField.DoSearch();
+			}
+		}
+
 		protected override void OnBindingUpdated(string property)
 		{
 			recField.RecordContext = CharacterDatabase.Get(GetBindingValue(property)?.ToString());

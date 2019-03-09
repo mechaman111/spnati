@@ -35,6 +35,14 @@ namespace SPNATI_Character_Editor
 			cboExpression.AutoCompleteSource = AutoCompleteSource.ListItems;
 		}
 
+		public override void OnInitialAdd()
+		{
+			if (!string.IsNullOrEmpty(cboExpression.Text))
+			{
+				cboValue.Focus();
+			}
+		}
+
 		protected override void OnBoundData()
 		{
 			_expression = GetValue() as ExpressionTest;

@@ -100,7 +100,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			if (sprite == null) { return; }
 			string interpolation = Directive.InterpolationMethod ?? "none";
-			if (Directive.InterpolationMethod == "none" && !string.IsNullOrEmpty(fromFrame.Src))
+			if (!string.IsNullOrEmpty(fromFrame.Src))
 			{
 				sprite.Image = Pose.Images[fromFrame.Src];
 			}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace SPNATI_Character_Editor
 			txtFilter.Text = Config.PrefixFilter;
 			chkAutoBanter.Checked = Config.AutoLoadBanterWizard;
 			chkAutoBackup.Checked = Config.AutoBackupEnabled;
+			chkInitialAdd.Checked = Config.AutoOpenConditions;
 		}
 
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -67,8 +69,10 @@ namespace SPNATI_Character_Editor
 			Config.PrefixFilter = txtFilter.Text;
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
 			Config.AutoBackupEnabled = chkAutoBackup.Checked;
+			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			DialogResult = DialogResult.OK;
 			Config.Save();
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
 			Close();
 		}
 

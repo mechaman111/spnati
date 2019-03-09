@@ -281,6 +281,7 @@ namespace SPNATI_Character_Editor.Activities
 				case "scaley":
 				case "alpha":
 				case "rotation":
+				case "src":
 					return true;
 				default:
 					return false;

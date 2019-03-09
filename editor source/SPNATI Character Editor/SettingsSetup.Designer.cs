@@ -54,6 +54,7 @@
 			this.tabDialogue = new System.Windows.Forms.TabPage();
 			this.tabBanter = new System.Windows.Forms.TabPage();
 			this.chkAutoBanter = new System.Windows.Forms.CheckBox();
+			this.chkInitialAdd = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
@@ -166,9 +167,9 @@
 			this.chkHideImages.AutoSize = true;
 			this.chkHideImages.Location = new System.Drawing.Point(6, 29);
 			this.chkHideImages.Name = "chkHideImages";
-			this.chkHideImages.Size = new System.Drawing.Size(145, 17);
+			this.chkHideImages.Size = new System.Drawing.Size(143, 17);
 			this.chkHideImages.TabIndex = 9;
-			this.chkHideImages.Text = "Include Prefixless Images";
+			this.chkHideImages.Text = "Include prefixless images";
 			this.toolTip1.SetToolTip(this.chkHideImages, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
         "ogue lines.");
 			this.chkHideImages.UseVisualStyleBackColor = true;
@@ -217,9 +218,9 @@
 			this.chkIntellisense.AutoSize = true;
 			this.chkIntellisense.Location = new System.Drawing.Point(6, 6);
 			this.chkIntellisense.Name = "chkIntellisense";
-			this.chkIntellisense.Size = new System.Drawing.Size(141, 17);
+			this.chkIntellisense.Size = new System.Drawing.Size(139, 17);
 			this.chkIntellisense.TabIndex = 8;
-			this.chkIntellisense.Text = "Use Variable Intellisense";
+			this.chkIntellisense.Text = "Use variable intellisense";
 			this.chkIntellisense.UseVisualStyleBackColor = true;
 			// 
 			// label4
@@ -290,6 +291,7 @@
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.SystemColors.Control;
+			this.tabDialogue.Controls.Add(this.chkInitialAdd);
 			this.tabDialogue.Controls.Add(this.button1);
 			this.tabDialogue.Controls.Add(this.helpIntellisense);
 			this.tabDialogue.Controls.Add(this.chkIntellisense);
@@ -324,6 +326,16 @@
 			this.chkAutoBanter.Text = "Always filter list to characters who actually target yours (very slow initial loa" +
     "d)";
 			this.chkAutoBanter.UseVisualStyleBackColor = true;
+			// 
+			// chkInitialAdd
+			// 
+			this.chkInitialAdd.AutoSize = true;
+			this.chkInitialAdd.Location = new System.Drawing.Point(6, 74);
+			this.chkInitialAdd.Name = "chkInitialAdd";
+			this.chkInitialAdd.Size = new System.Drawing.Size(258, 17);
+			this.chkInitialAdd.TabIndex = 14;
+			this.chkInitialAdd.Text = "Auto-open selection form when adding conditions";
+			this.chkInitialAdd.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
@@ -379,5 +391,6 @@
 		private System.Windows.Forms.TabPage tabBanter;
 		private System.Windows.Forms.CheckBox chkAutoBanter;
 		private System.Windows.Forms.CheckBox chkAutoBackup;
+		private System.Windows.Forms.CheckBox chkInitialAdd;
 	}
 }

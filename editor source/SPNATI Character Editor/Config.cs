@@ -291,6 +291,15 @@ namespace SPNATI_Character_Editor
 			get { return GetBoolean("autoloadbanter"); }
 			set { Set("autoloadbanter", value); }
 		}
+
+		/// <summary>
+		/// Auto-open record select for targets, markers, etc. in dialogue
+		/// </summary>
+		public static bool AutoOpenConditions
+		{
+			get { return !GetBoolean("autocondition"); }
+			set { Set("autocondition", !value); }
+		}
 	}
 
 	public static class Settings

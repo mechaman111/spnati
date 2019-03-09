@@ -228,6 +228,11 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public void DoSearch()
+		{
+			DoSearch(true);
+		}
+
 		private void DoSearch(bool forceLookup, string text = null)
 		{
 			if (text == null)

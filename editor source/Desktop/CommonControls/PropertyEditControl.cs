@@ -44,6 +44,10 @@ namespace Desktop.CommonControls
 		{
 		}
 
+		public virtual void OnInitialAdd()
+		{
+		}
+
 		internal void RemoveFromList()
 		{
 			if (_list != null)

@@ -81,6 +81,13 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					{
 						AddImage(directive.Src);
 					}
+					foreach (Keyframe keyframe in directive.Keyframes)
+					{
+						if (!string.IsNullOrEmpty(keyframe.Src))
+						{
+							AddImage(keyframe.Src);
+						}
+					}
 					PoseAnimation animation = new PoseAnimation(this, directive);
 					if (SelectedObject != null)
 					{

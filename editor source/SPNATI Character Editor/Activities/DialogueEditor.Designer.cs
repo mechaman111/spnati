@@ -384,6 +384,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.tableConditions.PlaceholderText = "Add a condition";
 			this.tableConditions.RemoveCaption = "Remove condition";
 			this.tableConditions.RowHeaderWidth = 0F;
+			this.tableConditions.RunInitialAddEvents = true;
 			this.tableConditions.Size = new System.Drawing.Size(670, 208);
 			this.tableConditions.Sorted = false;
 			this.tableConditions.TabIndex = 31;

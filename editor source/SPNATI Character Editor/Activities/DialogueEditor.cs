@@ -3,7 +3,6 @@ using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
@@ -73,6 +72,8 @@ namespace SPNATI_Character_Editor.Activities
 			_character = c;
 			_imageLibrary = ImageLibrary.Get(c);
 
+			OnSettingsUpdated();
+
 			CreateStageCheckboxes();
 
 			SetupFindReplace();
@@ -137,6 +138,12 @@ namespace SPNATI_Character_Editor.Activities
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
+			SubscribeDesktop(DesktopMessages.SettingsUpdated, OnSettingsUpdated);
+		}
+
+		private void OnSettingsUpdated()
+		{
+			tableConditions.RunInitialAddEvents = Config.AutoOpenConditions;
 		}
 
 		private void OnSaveWorkspace(bool auto)

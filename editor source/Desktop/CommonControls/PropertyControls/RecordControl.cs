@@ -12,6 +12,11 @@ namespace Desktop.CommonControls.PropertyControls
 			InitializeComponent();
 		}
 
+		public override void OnInitialAdd()
+		{
+			recField.DoSearch();
+		}
+
 		protected override void OnSetParameters(EditControlAttribute parameters)
 		{
 			RecordSelectAttribute attr = parameters as RecordSelectAttribute;
