@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.6 at 5:58:28 AM on February 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.6 at 3:49:28 AM on March 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v3.6</version>
     <first>Ryuji</first>
@@ -76,7 +76,7 @@
                 <state img="0-thinking.png" marker="justincase">...</state>
             </case>
             <case tag="game_start" alsoPlaying="ann" priority="999">
-                <state img="0-fingerguns.png" marker="annplaying">'Sup, Ann!</state>
+                <state img="0-fingerguns.png" marker="ptplaying">'Sup, Ann!</state>
             </case>
             <case tag="game_start" alsoPlaying="futaba" priority="698">
                 <state img="0-cocky.png" marker="futabahasjoinedtheparty">You may be smarter, but can ya beat me at cards Futaba?</state>
@@ -85,10 +85,10 @@
                 <state img="0-fingerguns.png" marker="futabahasjoinedtheparty">Nice of ya to join us, Futaba!</state>
             </case>
             <case tag="game_start" alsoPlaying="haru">
-                <state img="0-cheerful.png">'Sup, Haru!</state>
+                <state img="0-cheerful.png" marker="ptplaying">'Sup, Haru!</state>
             </case>
             <case tag="game_start" alsoPlaying="haru" alsoPlayingSaidMarker="wrongpoker">
-                <state img="0-awkward.png">I... thought you knew.</state>
+                <state img="0-awkward.png" marker="ptplaying">I... thought you knew.</state>
             </case>
             <case tag="game_start" alsoPlaying="haru" totalAlive="3" priority="9999">
                 <state img="0-fingerguns.png" marker="haruonly">♫ Give into temptatiiiiooooooon!! ♫</state>
@@ -111,13 +111,9 @@
                 <condition count="1" filter="futaba" />
                 <state img="0-what.png">Wait, &lt;i&gt;what&lt;/i&gt;?</state>
             </case>
-            <case tag="game_start">
-                <condition count="3" filter="phantom_thieves" />
-                <state img="0-pumped.png">Aww, sweet! Just like the good ol' days, right guys?</state>
-            </case>
             <case tag="game_start" alsoPlaying="haru" priority="9999">
                 <condition count="3" filter="phantom_thieves" />
-                <state img="0-fingerguns.png">Yooo, the gang's all here!</state>
+                <state img="0-fingerguns.png" marker="ptplaying">Yooo, the gang's all here!</state>
             </case>
             <case tag="game_start" totalAlive="2-4">
                 <state img="0-thinking.png">Huh. I thought there'd be more people.</state>
@@ -910,11 +906,17 @@
                 <state img="0-grumpy.png" marker="nayrupossess">Don't think I don't have my eye on you!</state>
             </case>
             <case tag="male_must_strip" filter="hero" targetStage="0" totalRounds="0-5" priority="150">
-                <condition count="1" filter="phantom_thieves" />
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
                 <state img="0-pumped.png">Awesome!! You're a hero?</state>
                 <state img="0-pumped.png">You fight shitty people too?</state>
                 <state img="0-pumped.png">Maybe you should join the Phantom Thieves. We rid the world of shitty people too!</state>
                 <state img="0-pumped.png">Nice to see another vigilante!</state>
+            </case>
+            <case tag="male_must_strip" filter="hero" targetStage="0" totalAlive="4-" totalRounds="0-5" priority="150">
+                <condition count="2-3" filter="phantom_thieves" />
+                <state img="0-fingerguns.png">Nice to see another vigilante! Right guys?</state>
             </case>
             <case tag="male_must_strip" filter="creepy" totalRounds="0-4" notSaidMarker="creepnweirdo">
                 <state img="0-awkward.png" marker="creepnweirdo">&lt;i&gt;He's seriously givin' me the creeps.&lt;/i&gt;</state>
@@ -2441,10 +2443,6 @@
             </case>
             <case tag="opponent_lost" filter="smart" targetStatus="not_decent" notSaidMarker="smart_losing">
                 <state img="0-awkward.png" marker="smart_losing">&lt;i&gt;Jeez, didn't think a smart person like ~name~ would be losin' this badly...&lt;/i&gt;</state>
-            </case>
-            <case tag="opponent_lost" saidMarker="insertmarkerhere">
-                <state img="0-cocky.png">I want ya bent over.</state>
-                <state img="0-cocky.png">Don't stop there, ya slut.</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="5">
                 <state img="0-awkward.png">Hey... Ready to play?</state>
