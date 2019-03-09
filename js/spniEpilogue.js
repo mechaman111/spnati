@@ -161,16 +161,6 @@ Animation.prototype.halt = function () {
 }
 
 /************************************************************
- * Creates a closure in order to maintain a function's "this"
- ************************************************************/
-function createClosure(instance, func) {
-  var $this = instance;
-  return function () {
-    func.apply($this, arguments);
-  };
-}
-
-/************************************************************
  * Linear interpolation
  ************************************************************/
 function lerp(a, b, t) {
@@ -373,6 +363,88 @@ function loadEpilogueData(player) {
   return epilogues;
 }
 
+var animatedProperties = ["x", "y", "rotation", "scalex", "scaley", "alpha", "src", "zoom", "color"];
+
+function addDirectiveToScene(scene, directive) {
+  switch (directive.type) {
+    case "move":
+    case "camera":
+    case "fade":
+      if (directive.keyframes.length > 1) {
+        //split the directive into multiple directives so that all the keyframes affect the same properties
+        //for instance, an animation with [frame1: {x:5, y:2}, frame2: {y:4}, frame3: {x:8, y:10}] would be split into two: [frame1: {x:5}, frame3: {x:8}] and [frame1: {y:2}, frame2: {y:4}, frame3: {y:10}]
+        //this makes the tweening simple for properties that don't change in intermediate frames, because those intermediate frames are removed
+
+        //first split the properties into buckets of frame indices where they appear
+        var propertyMap = {};
+        for (var i = 0; i < directive.keyframes.length; i++) {
+          var frame = directive.keyframes[i];
+          for (var j = 0; j < animatedProperties.length; j++) {
+            var property = animatedProperties[j];
+            if (frame.hasOwnProperty(property) && !Number.isNaN(frame[property])) {
+              if (!propertyMap[property]) {
+                propertyMap[property] = [];
+              }
+              propertyMap[property].push(i);
+            }
+          }
+        }
+
+        //next create directives for each combination of frames
+        var directives = {};
+        for (var prop in propertyMap) {
+          var key = propertyMap[prop].join(',');
+          var workingDirective = directives[key];
+          if (!workingDirective) {
+            //shallow copy the directive
+            workingDirective = {};
+            for (var srcProp in directive) {
+              if (directive.hasOwnProperty(srcProp)) {
+                workingDirective[srcProp] = directive[srcProp];
+              }
+            }
+            workingDirective.keyframes = [];
+            directives[key] = workingDirective;
+            scene.directives.push(workingDirective);
+          }
+          var lastStart = 0;
+          for (var i = 0; i < propertyMap[prop].length; i++) {
+            var srcFrame = directive.keyframes[propertyMap[prop][i]];
+            var targetFrame;
+            if (workingDirective.keyframes.length <= i) {
+              //shallow copy the frame minus the animatable properties
+              targetFrame = {};
+              for (var srcProp in srcFrame) {
+                if (srcFrame.hasOwnProperty(srcProp)) {
+                  targetFrame[srcProp] = srcFrame[srcProp];
+                }
+              }
+              for (var j = 0; j < animatedProperties.length; j++) {
+                var property = animatedProperties[j];
+                delete targetFrame[property];
+              }
+
+              targetFrame.start = lastStart;
+              workingDirective.keyframes.push(targetFrame);
+              workingDirective.time = srcFrame.end;
+              lastStart = srcFrame.end;
+            }
+            else {
+              targetFrame = workingDirective.keyframes[i];
+            }
+            targetFrame[prop] = srcFrame[prop];
+          }
+        }
+      }
+      else {
+        scene.directives.push(directive);
+      }
+      break;
+    default:
+      scene.directives.push(directive);
+  }
+}
+
 function parseEpilogue(player, rawEpilogue, galleryEnding) {
   //use parseXML() so that <image> tags come through properly
   //not using parseXML() because internet explorer doesn't like it
@@ -458,7 +530,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
             directive.keyframes.push(keyframe);
           });
           if (directive.keyframes.length === 0) {
-            //if no explicit keyframes were provided, use the directive itself as a keyframe
+            //if no keyframes were explicitly provided, use the directive itself as a keyframe
             directive.start = 0;
             directive.end = directive.time;
             directive.keyframes.push(directive);
@@ -895,7 +967,7 @@ function updateEpilogueButtons() {
 * Class for playing through an epilogue
 ************************************************************/
 function EpiloguePlayer(epilogue) {
-  $(window).resize(createClosure(this, this.resizeViewport));
+  $(window).resize(this.resizeViewport.bind(this));
   this.epilogue = epilogue;
   this.lastUpdate = performance.now();
   this.sceneIndex = -1;
@@ -956,7 +1028,7 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
     this.loaded = true;
     this.advanceScene();
-    window.requestAnimationFrame(createClosure(this, this.loop));
+    window.requestAnimationFrame(this.loop.bind(this));
   }
 }
 
@@ -1015,7 +1087,7 @@ EpiloguePlayer.prototype.loop = function (timestamp) {
   }
 
   this.lastUpdate = timestamp;
-  window.requestAnimationFrame(createClosure(this, this.loop));
+  window.requestAnimationFrame(this.loop.bind(this));
 }
 
 EpiloguePlayer.prototype.update = function (elapsed) {
@@ -1249,45 +1321,45 @@ SceneView.prototype.destroy = function () {
 SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
   switch (directive.type) {
     case "sprite":
-      this.addAction(this, directive, this.addSprite, this.removeSceneObject);
+      this.addAction(directive, this.addSprite.bind(this), this.removeSceneObject.bind(this));
       break;
     case "text":
-      this.addAction(this, directive, this.addText, this.removeText);
+      this.addAction(directive, this.addText.bind(this), this.removeText.bind(this));
       break;
     case "clear":
-      this.addAction(this, directive, this.clearText, this.restoreText);
+      this.addAction(directive, this.clearText.bind(this), this.restoreText.bind(this));
       break;
     case "clear-all":
-      this.addAction(this, directive, this.clearAllText, this.restoreText);
+      this.addAction(directive, this.clearAllText.bind(this), this.restoreText.bind(this));
       break;
     case "move":
-      this.addAction(this, directive, this.moveSprite, this.returnSprite);
+      this.addAction(directive, this.moveSprite.bind(this), this.returnSprite.bind(this));
       break;
     case "camera":
-      this.addAction(this, directive, this.moveCamera, this.returnCamera);
+      this.addAction(directive, this.moveCamera.bind(this), this.returnCamera.bind(this));
       break;
     case "fade":
-      this.addAction(this, directive, this.fade, this.restoreOverlay);
+      this.addAction(directive, this.fade.bind(this), this.restoreOverlay.bind(this));
       break;
     case "stop":
-      this.addAction(this, directive, this.stopAnimation, this.restoreAnimation);
+      this.addAction(directive, this.stopAnimation.bind(this), this.restoreAnimation.bind(this));
       break;
     case "wait":
-      this.addAction(epiloguePlayer, directive, epiloguePlayer.awaitAnims, function () { });
+      this.addAction(directive, epiloguePlayer.awaitAnims.bind(epiloguePlayer), function () { });
       return true;
     case "pause":
       return true;
     case "remove":
-      this.addAction(this, directive, this.hideSceneObject, this.showSceneObject);
+      this.addAction(directive, this.hideSceneObject.bind(this), this.showSceneObject.bind(this));
       break;
     case "emitter":
-      this.addAction(this, directive, this.addEmitter, this.removeSceneObject);
+      this.addAction(directive, this.addEmitter.bind(this), this.removeSceneObject.bind(this));
       break;
     case "emit":
-      this.addAction(this, directive, this.burstParticles, this.clearParticles);
+      this.addAction(directive, this.burstParticles.bind(this), this.clearParticles.bind(this));
       break;
     case "skip":
-      this.addAction(null, directive, function () { }, function () { });
+      this.addAction(directive, function () { }, function () { });
       break;
   }
   return false;
@@ -1299,9 +1371,9 @@ SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
  * @param {Function} doFunc Function to perform the directive
  * @param {Function} undoFunc Function to undo the directive
  */
-SceneView.prototype.addAction = function (view, directive, doFunc, undoFunc) {
+SceneView.prototype.addAction = function (directive, doFunc, undoFunc) {
   var context = {}; //contextual information for the do action to store off that the revert action can refer to
-  var action = { directive: directive, context: context, perform: createClosure(view, doFunc), revert: createClosure(view, undoFunc) };
+  var action = { directive: directive, context: context, perform: doFunc, revert: undoFunc };
   directive.action = action;
   action.perform(directive, context);
 }
@@ -1741,7 +1813,7 @@ SceneView.prototype.moveSprite = function (directive, context) {
     context.alpha = sprite.alpha;
     context.src = sprite.src;
     frames.unshift(context);
-    context.anim = this.addAnimation(new Animation(directive.id, frames, createClosure(this, this.updateObject), directive.loop, directive.ease, directive.clamp, directive.iterations));
+    context.anim = this.addAnimation(new Animation(directive.id, frames, this.updateObject.bind(this), directive.loop, directive.ease, directive.clamp, directive.iterations));
   }
 }
 
@@ -1797,7 +1869,7 @@ SceneView.prototype.moveCamera = function (directive, context) {
   context.y = this.camera.y;
   context.zoom = this.camera.zoom;
   frames.unshift(context);
-  context.anim = this.addAnimation(new Animation("camera", frames, createClosure(this, this.updateCamera), directive.loop, directive.ease, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("camera", frames, this.updateCamera.bind(this), directive.loop, directive.ease, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.returnCamera = function (directive, context) {
@@ -1820,7 +1892,7 @@ SceneView.prototype.fade = function (directive, context) {
   context.color = color;
   context.alpha = this.scene.view.overlay.a;
   frames.unshift(context);
-  context.anim = this.addAnimation(new Animation("fade", frames, createClosure(this, this.updateOverlay), directive.loop, directive.ease, directive.clamp, directive.iterations));
+  context.anim = this.addAnimation(new Animation("fade", frames, this.updateOverlay.bind(this), directive.loop, directive.ease, directive.clamp, directive.iterations));
 }
 
 SceneView.prototype.restoreOverlay = function (directive, context) {
