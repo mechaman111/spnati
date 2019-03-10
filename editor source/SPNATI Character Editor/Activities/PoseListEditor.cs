@@ -731,23 +731,6 @@ namespace SPNATI_Character_Editor.Activities
 			string filename = imageKey + ".png";
 			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
-			//Back up the existing image if it hasn't been backed up yet
-
-			//commenting out - what's the point when there's git?
-			//if (File.Exists(fullPath))
-			//{
-			//	string backupDir = Path.Combine(Config.AppDataDirectory, _character.FolderName);
-			//	if (!Directory.Exists(backupDir))
-			//	{
-			//		Directory.CreateDirectory(backupDir);
-			//	}
-			//	string backupPath = Path.Combine(backupDir, imageKey + ".png");
-			//	if (!File.Exists(backupPath))
-			//	{
-			//		File.Copy(fullPath, backupPath);
-			//	}
-			//}
-
 			image.Save(fullPath);
 
 			_imageLibrary.Replace(fullPath, image);

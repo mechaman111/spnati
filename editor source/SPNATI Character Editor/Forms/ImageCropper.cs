@@ -64,6 +64,7 @@ namespace SPNATI_Character_Editor.Forms
 			Rect cropBounds = metadata.CropInfo;
 			_cropBounds = cropBounds.ToRectangle(zoom);
 			_cropBounds.X = _cropBounds.X + ImageImporter.ImageXOffset * zoom;
+			UpdateRectBoxes();
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
 			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData);
@@ -95,7 +96,10 @@ namespace SPNATI_Character_Editor.Forms
 				g.DrawImage(_previewImage, 0, 0, width, screenHeight);
 
 				//Crop boundary
-				g.DrawRectangle(_dragState == DragState.None ? Pens.Red : Pens.Blue, _cropBounds.X, _cropBounds.Y, _cropBounds.Width, _cropBounds.Height);
+				if (!chkNoCrop.Checked)
+				{
+					g.DrawRectangle(_dragState == DragState.None ? Pens.Red : Pens.Blue, _cropBounds.X, _cropBounds.Y, _cropBounds.Width, _cropBounds.Height);
+				}
 			}
 		}
 
@@ -142,7 +146,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void previewPanel_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (_previewImage == null || e.Button == MouseButtons.Middle)
+			if (_previewImage == null || e.Button == MouseButtons.Middle || chkNoCrop.Checked)
 				return;
 			DragState hoverState = GetDragState(e);
 			if (hoverState != DragState.None)
@@ -239,7 +243,6 @@ namespace SPNATI_Character_Editor.Forms
 				}
 				else if ((_dragState & DragState.Top) > 0)
 				{
-					//Not yet implemented
 					bottom = _cropBounds.Bottom;
 					top = Math.Max(0, Math.Min(bottom - MinBuffer, e.Y));
 					_cropBounds.Height = bottom - top;
@@ -252,8 +255,19 @@ namespace SPNATI_Character_Editor.Forms
 					_cropBounds.Height = bottom - top;
 				}
 
+				UpdateRectBoxes();
+
 				previewPanel.Invalidate();
 			}
+		}
+
+		private void UpdateRectBoxes()
+		{
+			Rect rect = CroppingRegion;
+			valLeft.Value = rect.Left;
+			valRight.Value = rect.Right;
+			valTop.Value = rect.Top;
+			valBottom.Value = rect.Bottom;
 		}
 
 		/// <summary>
@@ -288,7 +302,18 @@ namespace SPNATI_Character_Editor.Forms
 			DialogResult = DialogResult.OK;
 			if (_previewImage != null)
 			{
-				CroppedImage = _importer.Crop(_previewImage, _cropBounds.ToRect(ZoomRatio));
+				if (chkNoCrop.Checked)
+				{
+					CroppedImage = new Bitmap(_previewImage.Width, _previewImage.Height);
+					Graphics g = Graphics.FromImage(CroppedImage);
+
+					g.DrawImage(_previewImage, 0, 0);
+					g.Dispose();
+				}
+				else
+				{
+					CroppedImage = _importer.Crop(_previewImage, _cropBounds.ToRect(ZoomRatio));
+				}
 				_previewImage.Dispose();
 				_previewImage = null;
 			}
@@ -321,11 +346,43 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void cmdReimport_Click(object sender, EventArgs e)
 		{
+			ImportUnprocessed();
+		}
+
+		public void ImportUnprocessed()
+		{
+			if (_cropBounds == new RectangleF(0, 0, 10, 10))
+			{
+				_cropBounds = new Rect(0, 0, 600, 1400).ToRectangle(ZoomRatio);
+				_cropBounds.X = _cropBounds.X + ImageImporter.ImageXOffset * ZoomRatio;
+				UpdateRectBoxes();
+			}
 			_previewImage?.Dispose();
 			_previewImage = null;
 			Cursor.Current = Cursors.WaitCursor;
 			_previewImage = _importer.Reimport();
+			lblWait.Visible = false;
 			Cursor.Current = Cursors.Default;
+			previewPanel.Invalidate();
+		}
+
+		private void CropValueChanged(object sender, EventArgs e)
+		{
+			UpdateCropManually();
+		}
+
+		private void UpdateCropManually()
+		{
+			if (_dragState != DragState.None) { return; }
+			Rect rect = new Rect((int)valLeft.Value, (int)valTop.Value, (int)valRight.Value, (int)valBottom.Value);
+			float zoom = ZoomRatio;
+			_cropBounds = rect.ToRectangle(zoom);
+			_cropBounds.X = _cropBounds.X + ImageImporter.ImageXOffset * zoom;
+			previewPanel.Invalidate();
+		}
+
+		private void chkNoCrop_CheckedChanged(object sender, EventArgs e)
+		{
 			previewPanel.Invalidate();
 		}
 	}

@@ -1,6 +1,8 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Forms;
+using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -248,7 +250,10 @@ namespace SPNATI_Character_Editor
 			menu = shell.AddToolbarSubmenu("Tools");
 			shell.AddToolbarItem("Charts...", typeof(ChartRecord), menu);
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
+			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
+			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
+			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
 
 			//Help
 			shell.AddToolbarSeparator();
@@ -310,6 +315,31 @@ namespace SPNATI_Character_Editor
 		{
 			About form = new About();
 			form.ShowDialog();
+		}
+
+		/// <summary>
+		/// Cleans the kisekae #airversion folder after a bad import corrupted the importer
+		/// </summary>
+		private static void ResetKisekae()
+		{
+			if (MessageBox.Show("This will attempt fix Kisekae when imports are failing. Close kkl.exe before proceeding.", "Fix Kisekae", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+			{
+				return;
+			}
+			string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "kkl", "#airversion");
+			if (Directory.Exists(folder))
+			{
+				DirectoryInfo di = new DirectoryInfo(folder);
+				foreach (FileInfo file in di.EnumerateFiles())
+				{
+					file.Delete();
+				}
+				foreach (DirectoryInfo dir in di.EnumerateDirectories())
+				{
+					dir.Delete(true);
+				}
+			}
+			MessageBox.Show("Kisekae data cleaned up. You can restart kkl.exe.");
 		}
 
 		private static void OpenDataRecovery()
@@ -401,6 +431,12 @@ namespace SPNATI_Character_Editor
 		public static void RecoverCharacter(string name)
 		{
 			OpenDataRecovery(name);
+		}
+
+		private static void ConfigGame()
+		{
+			GameConfig form = new GameConfig();
+			form.ShowDialog();
 		}
 	}
 }
