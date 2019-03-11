@@ -1030,7 +1030,13 @@ namespace SPNATI_Character_Editor
 			}
 
 			//misc conditions are always the same
-			response.Conditions.AddRange(Conditions);
+			foreach (TargetCondition cond in Conditions)
+			{
+				if (cond.Filter != responder.FolderName)
+				{
+					response.Conditions.Add(cond);
+				}
+			}
 			response.Expressions.AddRange(Expressions);
 			response.ConsecutiveLosses = ConsecutiveLosses;
 			response.TotalFemales = TotalFemales;

@@ -314,27 +314,35 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				else
 				{
-					if (obj.Alpha > 0)
+					if ((obj.SkewX == 0 || obj.SkewX % 90 != 0) && (obj.SkewY == 0 || obj.SkewY % 90 != 0))
 					{
-						if (obj.Alpha < 100)
+						float skewedWidth = bounds.Height * (float)Math.Tan(Math.PI / 180.0f * obj.SkewX);
+						int skewDistanceX = (int)(skewedWidth / 2);
+						float skewedHeight = bounds.Width * (float)Math.Tan(Math.PI / 180.0f * obj.SkewY);
+						int skewDistanceY = (int)(skewedHeight / 2);
+						Point[] destPts = new Point[] { new Point((int)bounds.X - skewDistanceX, (int)bounds.Y - skewDistanceY), new Point((int)bounds.Right - skewDistanceX, (int)bounds.Y + skewDistanceY), new Point((int)bounds.X + skewDistanceX, (int)bounds.Bottom - skewDistanceY) };
+
+						if (obj.Alpha > 0)
 						{
-							float[][] matrixItems = new float[][] {
+							if (obj.Alpha < 100)
+							{
+								float[][] matrixItems = new float[][] {
 							new float[] { 1, 0, 0, 0, 0 },
 							new float[] { 0, 1, 0, 0, 0 },
 							new float[] { 0, 0, 1, 0, 0 },
 							new float[] { 0, 0, 0, obj.Alpha / 100.0f, 0 },
 							new float[] { 0, 0, 0, 0, 1 }
 						};
-							ColorMatrix cm = new ColorMatrix(matrixItems);
-							ImageAttributes ia = new ImageAttributes();
-							ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+								ColorMatrix cm = new ColorMatrix(matrixItems);
+								ImageAttributes ia = new ImageAttributes();
+								ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-							Rectangle rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-							g.DrawImage(obj.Image, rect, 0, 0, obj.Image.Width, obj.Image.Height, GraphicsUnit.Pixel, ia);
-						}
-						else
-						{
-							g.DrawImage(obj.Image, bounds, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+								g.DrawImage(obj.Image, destPts, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel, ia);
+							}
+							else
+							{
+								g.DrawImage(obj.Image, destPts, new Rectangle(0, 0, obj.Image.Width, obj.Image.Height), GraphicsUnit.Pixel);
+							}
 						}
 					}
 				}

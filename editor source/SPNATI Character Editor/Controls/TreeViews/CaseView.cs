@@ -230,7 +230,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void SelectNode(int stage, Case stageCase)
 		{
 			TreeNode node = _caseMap.Get(stageCase);
-			if(node != null)
+			if (node != null)
 			{
 				treeDialogue.SelectedNode = node;
 			}

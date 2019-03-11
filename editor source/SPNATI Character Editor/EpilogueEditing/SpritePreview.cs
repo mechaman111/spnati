@@ -27,6 +27,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public int Z;
 		public float ScaleX;
 		public float ScaleY;
+		public float SkewX;
+		public float SkewY;
 		public float Rotation;
 		public float Alpha;
 		public float PivotX;
@@ -65,7 +67,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		}
 
 		public void SetInitialParameters()
-		{	
+		{
 			float.TryParse(Sprite.X, NumberStyles.Number, CultureInfo.InvariantCulture, out X);
 			float.TryParse(Sprite.Y, NumberStyles.Number, CultureInfo.InvariantCulture, out Y);
 			if (!float.TryParse(Sprite.ScaleX, NumberStyles.Number, CultureInfo.InvariantCulture, out ScaleX))
@@ -78,6 +80,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			float.TryParse(Sprite.Rotation, NumberStyles.Number, CultureInfo.InvariantCulture, out Rotation);
 			float.TryParse(Sprite.Opacity ?? "100", NumberStyles.Number, CultureInfo.InvariantCulture, out Alpha);
+			float.TryParse(Sprite.SkewX, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewX);
+			float.TryParse(Sprite.SkewY, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewY);
 		}
 
 		public override string ToString()
@@ -94,7 +98,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			if (Image != null && alpha > 0)
 			{
-				Rectangle bounds = ToScreenRegion(displayWidth, displayHeight, offset);	
+				Rectangle bounds = ToScreenRegion(displayWidth, displayHeight, offset);
 
 				float offsetX = bounds.X + PivotX / Width * bounds.Width;
 				float offsetY = bounds.Y + PivotY / Height * bounds.Height;
@@ -111,24 +115,33 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				g.RotateTransform(Rotation);
 				g.TranslateTransform(-offsetX, -offsetY);
 
-				if (alpha < 100)
+				if ((SkewX == 0 || SkewX % 90 != 0) && (SkewY == 0 || SkewY % 90 != 0))
 				{
-					float[][] matrixItems = new float[][] {
+					float skewedWidth = bounds.Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
+					int skewDistanceX = (int)(skewedWidth / 2);
+					float skewedHeight = bounds.Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
+					int skewDistanceY = (int)(skewedHeight / 2);
+					Point[] destPts = new Point[] { new Point(bounds.X - skewDistanceX, bounds.Y - skewDistanceY), new Point(bounds.Right - skewDistanceX, bounds.Y + skewDistanceY), new Point(bounds.X + skewDistanceX, (int)bounds.Bottom - skewDistanceY) };
+
+					if (alpha < 100)
+					{
+						float[][] matrixItems = new float[][] {
 							new float[] { 1, 0, 0, 0, 0 },
 							new float[] { 0, 1, 0, 0, 0 },
 							new float[] { 0, 0, 1, 0, 0 },
 							new float[] { 0, 0, 0, alpha / 100.0f, 0 },
 							new float[] { 0, 0, 0, 0, 1 }
 						};
-					ColorMatrix cm = new ColorMatrix(matrixItems);
-					ImageAttributes ia = new ImageAttributes();
-					ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+						ColorMatrix cm = new ColorMatrix(matrixItems);
+						ImageAttributes ia = new ImageAttributes();
+						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-					g.DrawImage(Image, bounds, 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, ia);
-				}
-				else
-				{
-					g.DrawImage(Image, new Rectangle(bounds.X, bounds.Y, bounds.Width, bounds.Height), new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel);
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel, ia);
+					}
+					else
+					{
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel);
+					}
 				}
 
 				g.ResetTransform();

@@ -23,6 +23,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float Height;
 		public float ScaleX = 1;
 		public float ScaleY = 1;
+		public float SkewX = 0;
+		public float SkewY = 0;
 		public float Zoom = 1;
 		public float Rotation = 0;
 		private float _alpha = 100;
@@ -225,6 +227,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			HeightPct = source.HeightPct;
 			ScaleX = source.ScaleX;
 			ScaleY = source.ScaleY;
+			SkewX = source.SkewX;
+			SkewY = source.SkewY;
 			PivotX = source.PivotX;
 			PivotY = source.PivotY;
 			Rotation = source.Rotation;
@@ -331,6 +335,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float.TryParse(frame.ScaleY, NumberStyles.Float, CultureInfo.InvariantCulture, out ScaleY);
 			}
+			if (!string.IsNullOrEmpty(frame.SkewX))
+			{
+				float.TryParse(frame.SkewX, NumberStyles.Float, CultureInfo.InvariantCulture, out SkewX);
+			}
+			if (!string.IsNullOrEmpty(frame.SkewY))
+			{
+				float.TryParse(frame.SkewY, NumberStyles.Float, CultureInfo.InvariantCulture, out SkewY);
+			}
 			if (!string.IsNullOrEmpty(frame.Rotation))
 			{
 				float.TryParse(frame.Rotation, NumberStyles.Float, CultureInfo.InvariantCulture, out Rotation);
@@ -400,6 +412,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
 			ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
 			ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
+			SkewX = Interpolate(last.SkewX, frame.SkewX, frame.Tween, time, lastLast.SkewX, nextNext.SkewX);
+			SkewY = Interpolate(last.SkewY, frame.SkewY, frame.Tween, time, lastLast.SkewY, nextNext.SkewY);
 			Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
 			Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
 			Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);

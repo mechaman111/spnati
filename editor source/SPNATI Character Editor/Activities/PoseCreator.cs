@@ -241,6 +241,8 @@ namespace SPNATI_Character_Editor.Activities
 				case "z":
 				case "scalex":
 				case "scaley":
+				case "skewx":
+				case "skewy":
 				case "pivotx":
 				case "pivoty":
 				case "width":
@@ -279,6 +281,8 @@ namespace SPNATI_Character_Editor.Activities
 				case "y":
 				case "scalex":
 				case "scaley":
+				case "skewx":
+				case "skewy":
 				case "alpha":
 				case "rotation":
 				case "src":

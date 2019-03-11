@@ -19,6 +19,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public TweenableParameter AlphaTween;
 		public TweenableColor ColorTween;
 		public TweenableParameter SpinTween;
+		public TweenableParameter SkewXTween;
+		public TweenableParameter SkewYTween;
 
 		public ScenePreview Scene;
 
@@ -65,6 +67,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			AlphaTween = new TweenableParameter(emitter.StartAlpha.Get(), emitter.EndAlpha.Get());
 			ColorTween = new TweenableColor(emitter.StartColor.Get(), emitter.EndColor.Get());
 			SpinTween = new TweenableParameter(emitter.StartRotation.Get(), emitter.EndRotation.Get());
+			SkewXTween = new TweenableParameter(emitter.StartSkewX.Get(), emitter.EndSkewX.Get());
+			SkewYTween = new TweenableParameter(emitter.StartSkewY.Get(), emitter.EndSkewY.Get());
 
 			Layer = emitter.Layer;
 			SortLayer = ++NextLayer;
@@ -98,6 +102,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			t = SceneAnimation.Ease(Ease, t);
 			ScaleX = ScaleXTween.Tween(t);
 			ScaleY = ScaleYTween.Tween(t);
+			SkewX = SkewXTween.Tween(t);
+			SkewY = SkewYTween.Tween(t);
 			Color.Color = System.Drawing.Color.FromArgb((int)AlphaTween.Tween(t), ColorTween.Tween(t));
 			Alpha = AlphaTween.Value;
 			Spin = SpinTween.Tween(t);

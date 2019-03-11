@@ -23,6 +23,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public RandomParameter EndScaleX;
 		public RandomParameter StartScaleY;
 		public RandomParameter EndScaleY;
+		public RandomParameter StartSkewX;
+		public RandomParameter EndSkewX;
+		public RandomParameter StartSkewY;
+		public RandomParameter EndSkewY;
 		public RandomParameter Speed;
 		public RandomParameter Acceleration;
 		public RandomParameter ForceX;
@@ -68,6 +72,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			EndScaleX = RandomParameter.Create(directive.EndScaleX, StartScaleX);
 			StartScaleY = RandomParameter.Create(directive.StartScaleY, 1, 1);
 			EndScaleY = RandomParameter.Create(directive.EndScaleY, StartScaleY);
+			StartSkewX = RandomParameter.Create(directive.StartSkewX, 0, 0);
+			EndSkewX = RandomParameter.Create(directive.EndSkewX, StartSkewX);
+			StartSkewY = RandomParameter.Create(directive.StartSkewY, 0, 0);
+			EndSkewY = RandomParameter.Create(directive.EndSkewY, StartSkewY);
 			Speed = RandomParameter.Create(directive.Speed, 0, 0);
 			Acceleration = RandomParameter.Create(directive.Acceleration, 0, 0);
 			ForceX = RandomParameter.Create(directive.ForceX, 0, 0);
@@ -103,6 +111,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			copy.EndScaleX = EndScaleX;
 			copy.StartScaleY = StartScaleY;
 			copy.EndScaleY = EndScaleY;
+			copy.StartSkewX = StartSkewX;
+			copy.EndSkewX = EndSkewX;
+			copy.StartSkewY = StartSkewY;
+			copy.EndSkewY = EndSkewY;
 			copy.Speed = Speed;
 			copy.Acceleration = Acceleration;
 			copy.ForceX = ForceX;

@@ -128,20 +128,23 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					//see if we've already responded
 					bool responded = false;
-					if (situation.LinkedCase.Id > 0)
+					if (situation.LinkedCase != null)
 					{
-						//if the case has an ID, then we can potentially speed things up
-						responded = _editorData.HasResponse(currentCharacter, situation.LinkedCase);
-					}
-					if (!responded)
-					{
-						Case response = situation.LinkedCase.CreateResponse(currentCharacter, _character);
-
-						if (response != null)
+						if (situation.LinkedCase.Id > 0)
 						{
-							//See if they already have a response
-							Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, false));
-							responded = match != null;
+							//if the case has an ID, then we can potentially speed things up
+							responded = _editorData.HasResponse(currentCharacter, situation.LinkedCase);
+						}
+						if (!responded)
+						{
+							Case response = situation.LinkedCase.CreateResponse(currentCharacter, _character);
+
+							if (response != null)
+							{
+								//See if they already have a response
+								Case match = _character.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, false));
+								responded = match != null;
+							}
 						}
 					}
 					if (responded)

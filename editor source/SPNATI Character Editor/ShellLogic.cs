@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor
 			DirectiveProvider provider = new DirectiveProvider();
 			DirectiveDefinition def = provider.Create("sprite") as DirectiveDefinition;
 			def.Description = "Adds a sprite to the scene.";
-			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker", "delay" })
+			foreach (string key in new string[] { "id", "src", "layer", "width", "height", "x", "y", "scalex", "scaley", "rotation", "alpha", "pivotx", "pivoty", "marker", "delay", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -107,7 +107,7 @@ namespace SPNATI_Character_Editor
 			def.IsAnimatable = true;
 			def.Description = "Moves/rotates/scales a sprite or emitter.";
 			def.FilterPropertiesById = true;
-			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker" })
+			foreach (string key in new string[] { "id", "src", "x", "y", "scalex", "scaley", "rotation", "alpha", "rate", "time", "delay", "loop", "ease", "tween", "clamp", "iterations", "marker", "skewx", "skewy" })
 			{
 				def.AllowedProperties.Add(key);
 			}
@@ -171,7 +171,8 @@ namespace SPNATI_Character_Editor
 			def = provider.Create("emitter") as DirectiveDefinition;
 			def.Description = "Adds an object emitter to the scene.";
 			foreach (string key in new string[] { "id", "layer", "src", "rate", "angle", "width", "height", "x", "y", "rotation", "startScaleX", "startScaleY", "endScaleX", "delay", 
-				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker"})
+				"endScaleY", "speed", "accel", "forceX", "forceY", "startColor", "endColor", "startAlpha", "endAlpha", "startRotation", "endRotation", "lifetime", "ease", "ignoreRotation", "marker",
+				"startSkewX", "startSkewY", "endSkewX", "endSkewY" })
 			{
 				def.AllowedProperties.Add(key);
 			}

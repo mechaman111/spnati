@@ -131,6 +131,14 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				sprite.Alpha = SceneObject.Interpolate(fromFrame.Alpha, toFrame.Alpha, interpolation, time, lastLast.Alpha, nextNext.Alpha);
 			}
+			if (!string.IsNullOrEmpty(fromFrame.Keyframe.SkewX))
+			{
+				sprite.SkewX = SceneObject.Interpolate(fromFrame.SkewX, toFrame.SkewX, interpolation, time, lastLast.SkewX, nextNext.SkewX);
+			}
+			if (!string.IsNullOrEmpty(fromFrame.Keyframe.SkewY))
+			{
+				sprite.SkewY = SceneObject.Interpolate(fromFrame.SkewY, toFrame.SkewY, interpolation, time, lastLast.SkewY, nextNext.SkewY);
+			}
 		}
 	}
 
@@ -143,6 +151,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float Y;
 		public float ScaleX = 1;
 		public float ScaleY = 1;
+		public float SkewX = 0;
+		public float SkewY = 0;
 		public float Alpha = 100;
 		public float Rotation = 0;
 		public string Src;
@@ -164,6 +174,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float.TryParse(frame.Rotation, NumberStyles.Number, CultureInfo.InvariantCulture, out Rotation);
 			float.TryParse(frame.Opacity, NumberStyles.Number, CultureInfo.InvariantCulture, out Alpha);
 			float.TryParse(frame.Time, NumberStyles.Number, CultureInfo.InvariantCulture, out Time);
+			float.TryParse(frame.SkewX, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewX);
+			float.TryParse(frame.SkewY, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewY);
 			Time *= 1000;
 		}
 	}
