@@ -993,14 +993,14 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     
     // targetLayers
     if (opp && this.targetLayers) {
-        if (!inInterval(opp.clothing.length, this.targetLayers)) {
+        if (!inInterval(opp.countLayers(), this.targetLayers)) {
             return false; 
         }
     }
     
     // targetStatus
     if (opp && this.targetStatus) {
-        if (!checkPlayerStatus(opp, this.targetStatus)) {
+        if (!opp.checkStatus(this.targetStatus)) {
             return false;
         }
     }
@@ -1207,7 +1207,7 @@ Case.prototype.basicRequirementsMet = function (self, opp, captures) {
                 && (filterStage === undefined || inInterval(p.stage, filterStage))
                 && (filterTag == undefined || p.hasTag(filterTag))
                 && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
+                && (filterStatus == undefined || p.checkStatus(filterStatus));
         });
 
         if (inInterval(matches.length, desiredCount)) {

@@ -194,10 +194,10 @@ function determineStrippingSituation (player) {
 
 	players.forEach(function(p) {
 		if (p !== player) {
-			if (p.clothing.length <= player.clothing.length - 1) {
+			if (p.countLayers() <= player.countLayers() - 1) {
 				isMin = false;
 			}
-			if (p.clothing.length >= player.clothing.length - 1) {
+			if (p.countLayers() >= player.countLayers() - 1) {
 				isMax = false;
 			}
 		}
@@ -534,40 +534,6 @@ function stripPlayer (player) {
  ************************************************************/
 function getNumPlayersInStage(stage) {
 	return players.countTrue(function(player) {
-		return checkPlayerStatus(player, stage)
+		return player.checkStatus(stage)
 	});
-}
-
-function checkPlayerStatus(player, status) {
-	if (status.substr(0, 4) == "not_") {
-		return !checkPlayerStatus(player, status.substr(4));
-	}
-	switch (status.trim()) {
-	case STATUS_LOST_SOME:
-		return player.stage > 0;
-	case STATUS_MOSTLY_CLOTHED:
-		return player.mostlyClothed;
-	case STATUS_DECENT:
-		return player.decent;
-	case STATUS_EXPOSED_TOP:
-		return player.exposed.upper;
-	case STATUS_EXPOSED_BOTTOM:
-		return player.exposed.lower;
-	case STATUS_EXPOSED:
-		return player.exposed.upper || player.exposed.lower;
-	case STATUS_EXPOSED_TOP_ONLY:
-		return player.exposed.upper && !player.exposed.lower;
-	case STATUS_EXPOSED_BOTTOM_ONLY:
-		return !player.exposed.upper && player.exposed.lower;
-	case STATUS_NAKED:
-		return player.exposed.upper && player.exposed.lower;
-	case STATUS_ALIVE:
-		return !player.out;
-	case STATUS_LOST_ALL:
-		return player.clothing.length == 0;
-	case STATUS_MASTURBATING:
-		return player.out && !player.finished;
-	case STATUS_FINISHED:
-		return player.finished;
-	}
 }
