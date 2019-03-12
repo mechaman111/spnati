@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Forms;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -11,6 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 	public partial class ScreenshotTaker : Activity
 	{
 		private Character _character;
+		private Dictionary<string, string> _extraData = new Dictionary<string, string>();
 
 		public ScreenshotTaker()
 		{
@@ -37,7 +39,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 
 			ImageCropper cropper = new ImageCropper();
-			cropper.ImportUnprocessed();
+			cropper.ImportUnprocessed(_extraData);
 			
 			if (cropper.ShowDialog() == DialogResult.OK)
 			{
@@ -56,6 +58,16 @@ namespace SPNATI_Character_Editor.Activities
 			string fullPath = Path.Combine(_character.GetDirectory(), filename);
 
 			image.Save(fullPath);
+		}
+
+		private void cmdAdvanced_Click(object sender, EventArgs e)
+		{
+			PoseSettingsForm form = new PoseSettingsForm();
+			form.SetData(_extraData);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_extraData = form.GetData();
+			}
 		}
 	}
 }

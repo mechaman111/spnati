@@ -32,6 +32,7 @@
 			this.txtName = new System.Windows.Forms.TextBox();
 			this.cmdImport = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
+			this.cmdAdvanced = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -55,9 +56,9 @@
 			this.cmdImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmdImport.Location = new System.Drawing.Point(6, 29);
 			this.cmdImport.Name = "cmdImport";
-			this.cmdImport.Size = new System.Drawing.Size(156, 70);
+			this.cmdImport.Size = new System.Drawing.Size(232, 70);
 			this.cmdImport.TabIndex = 4;
-			this.cmdImport.Text = "Import";
+			this.cmdImport.Text = "Capture && Crop";
 			this.cmdImport.UseVisualStyleBackColor = true;
 			this.cmdImport.Click += new System.EventHandler(this.cmdImport_Click);
 			// 
@@ -65,17 +66,28 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.Location = new System.Drawing.Point(6, 106);
+			this.label2.Location = new System.Drawing.Point(6, 102);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(903, 169);
 			this.label2.TabIndex = 5;
 			this.label2.Text = "This will take a screenshot of whatever scene is currently in Kisekae without per" +
     "forming any additional processing and save it to the provided file name.";
 			// 
+			// cmdAdvanced
+			// 
+			this.cmdAdvanced.Location = new System.Drawing.Point(244, 29);
+			this.cmdAdvanced.Name = "cmdAdvanced";
+			this.cmdAdvanced.Size = new System.Drawing.Size(148, 23);
+			this.cmdAdvanced.TabIndex = 6;
+			this.cmdAdvanced.Text = "Set Part Transparencies...";
+			this.cmdAdvanced.UseVisualStyleBackColor = true;
+			this.cmdAdvanced.Click += new System.EventHandler(this.cmdAdvanced_Click);
+			// 
 			// ScreenshotTaker
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdAdvanced);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.cmdImport);
 			this.Controls.Add(this.txtName);
@@ -93,5 +105,6 @@
 		private System.Windows.Forms.TextBox txtName;
 		private System.Windows.Forms.Button cmdImport;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Button cmdAdvanced;
 	}
 }

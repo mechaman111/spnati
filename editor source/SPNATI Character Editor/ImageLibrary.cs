@@ -29,6 +29,7 @@ namespace SPNATI_Character_Editor
 		private List<CharacterImage> _allImages = new List<CharacterImage>();
 		private Dictionary<string, CharacterImage> _miniImages = new Dictionary<string, CharacterImage>();
 		private Costume _skin;
+		private string _key;
 
 		/// <summary>
 		/// Loads metadata for all images in the given folder
@@ -36,6 +37,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="folder"></param>
 		private void Load(ISkin character)
 		{
+			_key = character.FolderName;
 			_stages.Clear();
 			_allImages.Clear();
 			string dir = character.GetDirectory();
@@ -183,7 +185,7 @@ namespace SPNATI_Character_Editor
 					int width = (int)(aspect * height);
 					Bitmap mini = new Bitmap(fullSize, new Size(width, height));
 					img.ReleaseImage();
-					string key = "*MINI*" + name;
+					string key = $"*MINI*{_key}{name}";
 					existing = new CharacterImage(name, key);
 					_miniImages[name] = existing;
 					ImageCache.Add(key, mini);

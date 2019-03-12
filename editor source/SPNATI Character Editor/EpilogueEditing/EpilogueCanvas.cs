@@ -320,6 +320,7 @@ namespace SPNATI_Character_Editor.Controls
 						int skewDistanceX = (int)(skewedWidth / 2);
 						float skewedHeight = bounds.Width * (float)Math.Tan(Math.PI / 180.0f * obj.SkewY);
 						int skewDistanceY = (int)(skewedHeight / 2);
+						//TODO: This doesn't properly account for the pivot
 						Point[] destPts = new Point[] { new Point((int)bounds.X - skewDistanceX, (int)bounds.Y - skewDistanceY), new Point((int)bounds.Right - skewDistanceX, (int)bounds.Y + skewDistanceY), new Point((int)bounds.X + skewDistanceX, (int)bounds.Bottom - skewDistanceY) };
 
 						if (obj.Alpha > 0)

@@ -114,6 +114,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (filter == null)
 				{
 					currentCharacter = noteworthyCharacters.GetRandom();
+					currentCharacter.PrepareForEdit();
 					editorData = CharacterDatabase.GetEditorData(currentCharacter);
 				}
 
@@ -147,7 +148,7 @@ namespace SPNATI_Character_Editor.Activities
 							}
 						}
 					}
-					if (responded)
+					if (responded || situation.LinkedCase == null)
 					{
 						if (filter != null)
 						{

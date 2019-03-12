@@ -91,9 +91,9 @@ namespace KisekaeImporter.ImageImport
 		/// Reimports the last code
 		/// </summary>
 		/// <returns></returns>
-		public Image Reimport()
+		public Image Reimport(Dictionary<string, string> extraData)
 		{
-			return ImportCode("54**", new Dictionary<string, string>()); //import an empty scene so that nothing changes but we get a file outputted
+			return ImportCode("54**", extraData); //import an empty scene so that nothing changes but we get a file outputted
 		}
 
 		private void SetupForImport()

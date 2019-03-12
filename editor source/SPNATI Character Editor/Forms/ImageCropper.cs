@@ -1,6 +1,7 @@
 ﻿using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,6 +16,7 @@ namespace SPNATI_Character_Editor.Forms
 		private DragState _dragState = DragState.None;
 		private PointF _downPoint;
 		private bool _lockRect;
+		private Dictionary<string, string> _extraData = new Dictionary<string, string>();
 
 		public ImageCropper()
 		{
@@ -64,6 +66,7 @@ namespace SPNATI_Character_Editor.Forms
 			Rect cropBounds = metadata.CropInfo;
 			_cropBounds = cropBounds.ToRectangle(zoom);
 			_cropBounds.X = _cropBounds.X + ImageImporter.ImageXOffset * zoom;
+			_extraData = metadata.ExtraData;
 			UpdateRectBoxes();
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
@@ -346,10 +349,10 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void cmdReimport_Click(object sender, EventArgs e)
 		{
-			ImportUnprocessed();
+			ImportUnprocessed(_extraData);
 		}
 
-		public void ImportUnprocessed()
+		public void ImportUnprocessed(Dictionary<string, string> extraData)
 		{
 			if (_cropBounds == new RectangleF(0, 0, 10, 10))
 			{
@@ -360,7 +363,7 @@ namespace SPNATI_Character_Editor.Forms
 			_previewImage?.Dispose();
 			_previewImage = null;
 			Cursor.Current = Cursors.WaitCursor;
-			_previewImage = _importer.Reimport();
+			_previewImage = _importer.Reimport(extraData);
 			lblWait.Visible = false;
 			Cursor.Current = Cursors.Default;
 			previewPanel.Invalidate();
@@ -384,6 +387,16 @@ namespace SPNATI_Character_Editor.Forms
 		private void chkNoCrop_CheckedChanged(object sender, EventArgs e)
 		{
 			previewPanel.Invalidate();
+		}
+
+		private void cmdAdvanced_Click(object sender, EventArgs e)
+		{
+			PoseSettingsForm form = new PoseSettingsForm();
+			form.SetData(_extraData);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_extraData = form.GetData();
+			}
 		}
 	}
 }

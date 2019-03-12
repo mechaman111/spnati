@@ -53,6 +53,7 @@
 			this.valBottom = new System.Windows.Forms.NumericUpDown();
 			this.valRight = new System.Windows.Forms.NumericUpDown();
 			this.chkNoCrop = new System.Windows.Forms.CheckBox();
+			this.cmdAdvanced = new System.Windows.Forms.Button();
 			this.previewPanel.SuspendLayout();
 			this.panelManual.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valLeft)).BeginInit();
@@ -162,7 +163,7 @@
 			this.panelManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelManual.Controls.Add(this.label4);
 			this.panelManual.Controls.Add(this.label3);
-			this.panelManual.Location = new System.Drawing.Point(687, 312);
+			this.panelManual.Location = new System.Drawing.Point(687, 284);
 			this.panelManual.Name = "panelManual";
 			this.panelManual.Size = new System.Drawing.Size(210, 171);
 			this.panelManual.TabIndex = 24;
@@ -306,6 +307,16 @@
 			this.chkNoCrop.UseVisualStyleBackColor = true;
 			this.chkNoCrop.CheckedChanged += new System.EventHandler(this.chkNoCrop_CheckedChanged);
 			// 
+			// cmdAdvanced
+			// 
+			this.cmdAdvanced.Location = new System.Drawing.Point(696, 461);
+			this.cmdAdvanced.Name = "cmdAdvanced";
+			this.cmdAdvanced.Size = new System.Drawing.Size(189, 23);
+			this.cmdAdvanced.TabIndex = 36;
+			this.cmdAdvanced.Text = "Adjust Part Transparencies...";
+			this.cmdAdvanced.UseVisualStyleBackColor = true;
+			this.cmdAdvanced.Click += new System.EventHandler(this.cmdAdvanced_Click);
+			// 
 			// ImageCropper
 			// 
 			this.AcceptButton = this.cmdOK;
@@ -314,6 +325,7 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(909, 552);
 			this.ControlBox = false;
+			this.Controls.Add(this.cmdAdvanced);
 			this.Controls.Add(this.chkNoCrop);
 			this.Controls.Add(this.valRight);
 			this.Controls.Add(this.valBottom);
@@ -372,5 +384,6 @@
 		private System.Windows.Forms.NumericUpDown valBottom;
 		private System.Windows.Forms.NumericUpDown valRight;
 		private System.Windows.Forms.CheckBox chkNoCrop;
+		private System.Windows.Forms.Button cmdAdvanced;
 	}
 }
