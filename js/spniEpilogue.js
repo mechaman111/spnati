@@ -363,7 +363,7 @@ function loadEpilogueData(player) {
   return epilogues;
 }
 
-var animatedProperties = ["x", "y", "rotation", "scalex", "scaley", "alpha", "src", "zoom", "color"];
+var animatedProperties = ["x", "y", "rotation", "scalex", "scaley", "skewx", "skewy", "alpha", "src", "zoom", "color"];
 
 function addDirectiveToScene(scene, directive) {
   switch (directive.type) {
@@ -720,6 +720,8 @@ function readProperties(sourceObj, scene) {
     }
     targetObj.scalex = parseFloat(targetObj.scalex, 10);
     targetObj.scaley = parseFloat(targetObj.scaley, 10);
+    targetObj.skewx = parseFloat(targetObj.skewx, 10);
+    targetObj.skewy = parseFloat(targetObj.skewy, 10);
     if (targetObj.x) { targetObj.x = toSceneX(targetObj.x, scene); }
     if (targetObj.y) { targetObj.y = toSceneY(targetObj.y, scene); }
     targetObj.iterations = parseInt(targetObj.iterations) || 0;
@@ -1477,7 +1479,7 @@ SceneView.prototype.drawObject = function (obj) {
     "opacity": obj.alpha / 100,
   });
   $(obj.rotElement).css({
-    "transform": "rotate(" + obj.rotation + "deg) scale(" + obj.scalex + ", " + obj.scaley + ")",
+    "transform": "rotate(" + obj.rotation + "deg) scale(" + obj.scalex + ", " + obj.scaley + ") skew(" + obj.skewx + "deg, " + obj.skewy + "deg)",
   });
 }
 
@@ -1810,6 +1812,8 @@ SceneView.prototype.moveSprite = function (directive, context) {
     context.rotation = sprite.rotation;
     context.scalex = sprite.scalex;
     context.scaley = sprite.scaley;
+    context.skewx = sprite.skewx;
+    context.skewy = sprite.skewy;
     context.alpha = sprite.alpha;
     context.src = sprite.src;
     frames.unshift(context);
@@ -1834,6 +1838,12 @@ SceneView.prototype.returnSprite = function (directive, context) {
     }
     if (typeof context.scaley !== "undefined") {
       sprite.scaley = context.scaley;
+    }
+    if (typeof context.skewx !== "undefined") {
+      sprite.skewx = context.skewx;
+    }
+    if (typeof context.skewy !== "undefined") {
+      sprite.skewy = context.skewy;
     }
     if (typeof context.alpha !== "undefined") {
       sprite.alpha = context.alpha;
@@ -2029,12 +2039,14 @@ function SceneObject(id, element, view, args) {
     alpha = 100;
   }
 
-  this.tweenableProperties = ["x", "y", "rotation", "scalex", "scaley", "alpha"];
+  this.tweenableProperties = ["x", "y", "rotation", "scalex", "scaley", "alpha", "skewx", "skewy"];
   this.id = id;
   this.x = args.x || 0;
   this.y = args.y || 0;
   this.scalex = args.scalex || 1;
   this.scaley = args.scaley || 1;
+  this.skewx = args.skewx || 0;
+  this.skewy = args.skewy || 0;
   this.rotation = args.rotation || 0;
   this.alpha = alpha;
   this.view = view;
@@ -2164,6 +2176,10 @@ function Emitter(id, element, view, args, pool) {
   this.endScaleX = this.createRandomParameter(args.endscalex, this.startScaleX);
   this.startScaleY = this.createRandomParameter(args.startscaley, 1, 1);
   this.endScaleY = this.createRandomParameter(args.endscaley, this.startScaleY);
+  this.startSkewX = this.createRandomParameter(args.startskewx, 1, 1);
+  this.endSkewX = this.createRandomParameter(args.endskewx, this.startSkewX);
+  this.startSkewY = this.createRandomParameter(args.startskewy, 1, 1);
+  this.endSkewY = this.createRandomParameter(args.endskewy, this.startSkewY);
   this.speed = this.createRandomParameter(args.speed, 0, 0);
   this.accel = this.createRandomParameter(args.accel, 0, 0);
   this.forceX = this.createRandomParameter(args.forcex, 0, 0);
@@ -2261,6 +2277,10 @@ Emitter.prototype.emit = function () {
     endScaleX: this.endScaleX.get(),
     startScaleY: this.startScaleY.get(),
     endScaleY: this.endScaleY.get(),
+    startSkewX: this.startSkewX.get(),
+    endSkewX: this.endSkewX.get(),
+    startSkewY: this.startSkewY.get(),
+    endSkewY: this.endSkewY.get(),
     speed: this.speed.get(),
     accel: this.accel.get(),
     forceX: this.forceX.get(),
@@ -2341,11 +2361,15 @@ Particle.prototype.spawn = function (x, y, rotation, args) {
   this.ignoreRotation = args.ignoreRotation;
   tweens["scalex"] = new TweenableParameter(args.startScaleX, args.endScaleX);
   tweens["scaley"] = new TweenableParameter(args.startScaleY, args.endScaleY);
+  tweens["skewx"] = new TweenableParameter(args.startSkewX, args.endSkewX);
+  tweens["skewy"] = new TweenableParameter(args.startSkewY, args.endSkewY);
   tweens["alpha"] = new TweenableParameter(args.startAlpha, args.endAlpha);
   tweens["color"] = new TweenableColor(args.startColor, args.endColor);
   tweens["spin"] = new TweenableParameter(args.startRotation, args.endRotation);
   this.scalex = args.startScaleX;
   this.scaley = args.startScaleY;
+  this.skewx = args.startSkewX;
+  this.skewy = args.startSkewY;
   this.alpha = args.startAlpha;
   this.color = args.startColor;
   this.spin = args.startRotation;
