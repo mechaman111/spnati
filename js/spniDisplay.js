@@ -16,6 +16,8 @@ function PoseSprite(id, src, onload, pose, args) {
     this.z = args.z || 'auto';
     this.scalex = args.scalex || 1;
     this.scaley = args.scaley || 1;
+    this.skewx = args.skewx || 0;
+    this.skewy = args.skewy || 0;
     this.rotation = args.rotation || 0;
     this.alpha = args.alpha;
     this.pivotx = args.pivotx;
@@ -66,7 +68,7 @@ PoseSprite.prototype.draw = function() {
     });
     
     $(this.img).css({
-      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ")",
+      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
@@ -149,6 +151,8 @@ PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
     this.interpolate("rotation", fromFrame, toFrame, t, idx);
     this.interpolate("scalex", fromFrame, toFrame, t, idx);
     this.interpolate("scaley", fromFrame, toFrame, t, idx);
+    this.interpolate("skewx", fromFrame, toFrame, t, idx);
+    this.interpolate("skewy", fromFrame, toFrame, t, idx);
     this.interpolate("alpha", fromFrame, toFrame, t, idx);
     this.target.draw();
 }
@@ -258,6 +262,8 @@ function parseSpriteDefinition ($xml, player) {
         targetObj.scaley = parseFloat(targetObj.scaley, 10);
     }
     
+    targetObj.skewx = parseFloat(targetObj.skewx, 10);
+    targetObj.skewy = parseFloat(targetObj.skewy, 10);
     targetObj.x = parseFloat(targetObj.x, 10);
     targetObj.y = parseFloat(targetObj.y, 10);
     
