@@ -506,7 +506,7 @@ OpponentDisplay.prototype.drawPose = function (pose) {
 }
 
 OpponentDisplay.prototype.onResize = function () {
-    if (this.pose) {
+    if (this.pose && (this.pose instanceof Pose)) {
         this.pose.draw();
     }
 }
