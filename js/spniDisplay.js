@@ -643,7 +643,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.removeClass("smooth-button-green");
         this.selectButton.addClass("smooth-button-red");
         
-        if (!this.pose) {
+        if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
                 this.bubble.show();
                 this.simpleImage.css('height', player.scale + '%').show();
