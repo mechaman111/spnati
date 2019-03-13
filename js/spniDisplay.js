@@ -10,7 +10,7 @@ function PoseSprite(id, src, onload, pose, args) {
     this.pose = pose;
     this.id = id;
     this.player = args.player;
-    this.src = 'opponents/' + src;
+    this.src = this.prevSrc = 'opponents/' + src;
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
@@ -33,7 +33,7 @@ function PoseSprite(id, src, onload, pose, args) {
         if (!this.height) this.height = this.img.naturalHeight;
         if (!this.width) this.width = this.img.naturalWidth;
         
-        onload();
+        onload(this);
         this.draw();
     }.bind(this);
     this.img.src = this.src;
@@ -72,8 +72,9 @@ PoseSprite.prototype.draw = function() {
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
-    if (this.img.src !== this.src) {
-        this.img.src = this.src;
+    
+    if (this.prevSrc !== this.src) {
+        this.img.src = this.prevSrc = this.src;
     }
 }
 
@@ -164,9 +165,9 @@ function Pose(poseDef, display) {
     this.display = display;
     this.sprites = {};
     this.totalSprites = 0;
+    this.loaded_sprites = {};
     this.animations = [];
     this.loaded = false;
-    this.n_loaded = 0;
     this.onLoadComplete = null;
     this.lastUpdateTS = null;
     this.active = false;
@@ -206,11 +207,14 @@ Pose.prototype.getHeightScaleFactor = function() {
     return this.display.height() / this.baseHeight;
 }
 
-Pose.prototype.onSpriteLoaded = function() {
-    this.n_loaded++;
-    if (this.n_loaded >= this.totalSprites) {
+Pose.prototype.onSpriteLoaded = function(sprite) {
+    if (this.loaded_sprites[sprite.id]) { return; }
+    
+    this.loaded_sprites[sprite.id] = true;
+    var n_loaded = Object.keys(this.loaded_sprites).length;
+    
+    if (n_loaded >= this.totalSprites && !this.loaded) {
         this.loaded = true;
-        
         if (this.onLoadComplete) { return this.onLoadComplete(); }
     }
 }
@@ -457,9 +461,7 @@ OpponentDisplay.prototype.hideBubble = function () {
     this.bubble.hide();
 }
 
-OpponentDisplay.prototype.clearPose = function () {
-    this.pose = null;
-    this.simpleImage.hide();
+OpponentDisplay.prototype.clearCustomPose = function () {
     this.imageArea.children('.custom-pose').remove();
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
@@ -467,19 +469,40 @@ OpponentDisplay.prototype.clearPose = function () {
     }
 }
 
+OpponentDisplay.prototype.clearSimplePose = function () {
+    this.simpleImage.hide();
+}
+
+OpponentDisplay.prototype.clearPose = function () {
+    this.pose = null;
+    this.clearCustomPose();
+    this.clearSimplePose();
+}
+
 OpponentDisplay.prototype.drawPose = function (pose) {
-    this.clearPose();
-    
     if (typeof(pose) === 'string') {
+        // clear out previously shown custom poses if necessary
+        if (this.pose instanceof Pose) {
+            this.clearCustomPose(); 
+        }
         this.simpleImage.attr('src', pose).show();
     } else if (pose instanceof Pose) {
-        this.pose = pose;
+        if (typeof(this.pose) === 'string') {
+            // clear out previously shown simple poses
+            this.clearSimplePose();
+        } else if (this.pose instanceof Pose) {
+            // Remove any previously shown custom poses too
+            $(this.pose.container).remove();
+        }
+        
         this.imageArea.append(pose.container);
         pose.draw();
-        if (this.pose.animations.length > 0) {
+        if (pose.animations.length > 0) {
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
         }
     }
+    
+    this.pose = pose;
 }
 
 OpponentDisplay.prototype.onResize = function () {
@@ -516,8 +539,7 @@ OpponentDisplay.prototype.update = function(player) {
             this.clearPose();
         }
     } else {
-        this.pose = player.folder + chosenState.image;
-        this.drawPose(this.pose);
+        this.drawPose(player.folder + chosenState.image);
     }
     
     /* update label */
@@ -539,7 +561,7 @@ OpponentDisplay.prototype.update = function(player) {
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {
-    if (!this.pose) return;
+    if (!this.pose || !(this.pose instanceof Pose)) return;
     this.pose.update(timestamp);
     if (this.pose.animations.some(function(a) { return a.looped || !a.isComplete(); })) {
         this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
