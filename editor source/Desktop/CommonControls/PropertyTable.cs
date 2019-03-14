@@ -720,6 +720,7 @@ namespace Desktop.CommonControls
 
 		public void AddMacros()
 		{
+			if (Data == null) { return; }
 			if (HideSpeedButtons || !AllowMacros)
 			{
 				return;
