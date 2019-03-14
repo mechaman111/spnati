@@ -206,6 +206,11 @@ namespace SPNATI_Character_Editor
 				ErrorLog.LogError("SPNATI directory not specified.");
 				return false;
 			}
+			if (string.IsNullOrEmpty(Config.KisekaeDirectory))
+			{
+				KisekaeSetup setup = new KisekaeSetup();
+				setup.ShowDialog();
+			}
 			return true;
 		}
 

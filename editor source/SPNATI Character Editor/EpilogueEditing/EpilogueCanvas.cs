@@ -390,9 +390,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + bounds.Height - 1;
-				PointF p1 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p2 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p3 = new PointF(center, y + ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p1 = new PointF(center - ArrowSize, y);
+				PointF p2 = new PointF(center + ArrowSize, y);
+				PointF p3 = new PointF(center, y + ArrowSize);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "down" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -402,9 +402,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.X + bounds.Width / 2;
 				float y = bounds.Y + 1;
-				PointF p1 = new PointF(center + ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p2 = new PointF(center - ArrowSize * ZoomLevel / _scenePreview.Zoom, y);
-				PointF p3 = new PointF(center, y - ArrowSize * ZoomLevel / _scenePreview.Zoom);
+				PointF p1 = new PointF(center + ArrowSize, y);
+				PointF p2 = new PointF(center - ArrowSize, y);
+				PointF p3 = new PointF(center, y - ArrowSize);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "up" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -414,9 +414,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + 1;
-				PointF p1 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p2 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p3 = new PointF(x - ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
+				PointF p1 = new PointF(x, center - ArrowSize);
+				PointF p2 = new PointF(x, center + ArrowSize);
+				PointF p3 = new PointF(x - ArrowSize, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "left" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);
@@ -426,9 +426,9 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				float center = bounds.Y + bounds.Height / 2;
 				float x = bounds.X + bounds.Width - 1;
-				PointF p1 = new PointF(x, center + ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p2 = new PointF(x, center - ArrowSize * ZoomLevel / _scenePreview.Zoom);
-				PointF p3 = new PointF(x + ArrowSize * ZoomLevel / _scenePreview.Zoom, center);
+				PointF p1 = new PointF(x, center + ArrowSize);
+				PointF p2 = new PointF(x, center - ArrowSize);
+				PointF p3 = new PointF(x + ArrowSize, center);
 				PointF[] triangle = new PointF[] { p1, p2, p3 };
 				g.FillPolygon(textbox.Arrow == "right" ? Brushes.White : _brushPreviewArrow, triangle);
 				g.DrawLine(Pens.Black, p1, p3);

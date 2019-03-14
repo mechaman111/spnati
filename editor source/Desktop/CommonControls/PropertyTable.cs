@@ -219,13 +219,24 @@ namespace Desktop.CommonControls
 
 		private void AddControl(PropertyRecord result)
 		{
+			AddControl(result, null);
+		}
+		private void AddControl(PropertyRecord result, PropertyMacro macro)
+		{
 			bool newlyAdded;
 			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
 			ctl.Focus(); //jump to the control for immediate editing
 			recAdd.Record = null;
-			if (newlyAdded && RunInitialAddEvents)
+			if (newlyAdded)
 			{
-				ctl.OnInitialAdd();
+				if (macro != null)
+				{
+					ctl.ApplyMacro(macro.Values);
+				}
+				else if (RunInitialAddEvents)
+				{
+					ctl.OnInitialAdd();
+				}
 			}
 		}
 
@@ -627,7 +638,7 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		private ToolStripMenuItem GetOrAddGroupMenu(string group)
 		{
 			ToolStripMenuItem groupMenu = null;
 			for (int i = 0; i < menuSpeedButtons.Items.Count; i++)
@@ -644,6 +655,12 @@ namespace Desktop.CommonControls
 				groupMenu = new ToolStripMenuItem(group);
 				menuSpeedButtons.Items.Add(groupMenu);
 			}
+			return groupMenu;
+		}
+
+		public void AddSpeedButton(string group, string caption, Func<object, string> propertyCreator)
+		{
+			ToolStripMenuItem groupMenu = GetOrAddGroupMenu(group);
 
 			ToolStripMenuItem item = new ToolStripMenuItem(caption);
 			item.Tag = propertyCreator;
@@ -660,6 +677,45 @@ namespace Desktop.CommonControls
 			if (record != null)
 			{
 				AddControl(record);
+			}
+		}
+
+		public void AddMacros(List<PropertyMacro> macros)
+		{
+			if (HideSpeedButtons)
+			{
+				return;
+			}
+
+			foreach (PropertyMacro macro in macros)
+			{
+				AddMacro(macro);
+			}
+		}
+
+		public void AddMacro(PropertyMacro macro)
+		{
+			if (HideSpeedButtons)
+			{
+				return;
+			}
+
+			ToolStripMenuItem groupMenu = GetOrAddGroupMenu("Macros");
+			ToolStripMenuItem item = new ToolStripMenuItem(macro.Name);
+			item.Tag = macro;
+			item.Click += MacroButtonClick;
+			groupMenu.DropDownItems.Add(item);
+		}
+
+		private void MacroButtonClick(object sender, EventArgs e)
+		{
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			PropertyMacro macro = item.Tag as PropertyMacro;
+			string property = macro.Property;
+			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+			if (record != null)
+			{
+				AddControl(record, macro);
 			}
 		}
 	}

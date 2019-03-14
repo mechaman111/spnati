@@ -1,6 +1,7 @@
 ﻿using KisekaeImporter;
 using KisekaeImporter.DataStructures.Kisekae;
 using KisekaeImporter.ImageImport;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,24 +28,27 @@ namespace SPNATI_Character_Editor
 			_workerQueue.ChangePriority(requester, 9999);
 		}
 
-		private static void CleanImage(KisekaeCode code, ISkin character)
+		private static void CleanImage(KisekaeCode code, ISkin character, bool skipPreprocessing)
 		{
-			var poseComponent = code.GetComponent<KisekaePose>();
-			if (poseComponent != null)
+			if (!skipPreprocessing)
 			{
-				int offset = 410 - poseComponent.Placement.X;
-
-				poseComponent.Placement.X = 410;
-
-				for (int i = 1; i < code.Models.Length; i++)
+				var poseComponent = code.GetComponent<KisekaePose>();
+				if (poseComponent != null)
 				{
-					KisekaePose modelPose = code.Models[i]?.GetComponent<KisekaePose>();
-					if (modelPose != null)
+					int offset = 410 - poseComponent.Placement.X;
+
+					poseComponent.Placement.X = 410;
+
+					for (int i = 1; i < code.Models.Length; i++)
 					{
-						modelPose.Placement.X += offset;
+						KisekaePose modelPose = code.Models[i]?.GetComponent<KisekaePose>();
+						if (modelPose != null)
+						{
+							modelPose.Placement.X += offset;
+						}
 					}
+					code.Scene?.ShiftX(offset);
 				}
-				code.Scene?.ShiftX(offset);
 			}
 
 			List<string> unknownUrls = new List<string>();
@@ -87,14 +91,67 @@ namespace SPNATI_Character_Editor
 					importer.SetData(unknownUrls, imagesDir);
 					importer.ShowDialog();
 				}
-				chunk.ReplaceAssetPaths(imagesDir);
+				if (chunk.Assets.Count > 0)
+				{
+					string kklDir = Path.GetDirectoryName(Config.KisekaeDirectory);
+					if (string.IsNullOrEmpty(kklDir))
+					{
+						KisekaeSetup setup = new Forms.KisekaeSetup();
+						if (setup.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+						{
+							kklDir = Path.GetDirectoryName(Config.KisekaeDirectory);
+						}
+						else
+						{
+							continue;
+						}
+					}
+					kklDir = Path.Combine(kklDir, "images");
+					if (!Directory.Exists(kklDir))
+					{
+						Directory.CreateDirectory(kklDir);
+					}
+					UpdateAssets(imagesDir, kklDir);
+					chunk.ReplaceAssetPaths("images");
+				}
 			}
 		}
 
-		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, ISkin character, Dictionary<string, string> extraData)
+		/// <summary>
+		/// Copies files from character's attachments folder to an images subdirectory of kkl
+		/// </summary>
+		/// <param name="charDirectory"></param>
+		private static void UpdateAssets(string charDirectory, string kklDirectory)
+		{
+			foreach (string file in Directory.EnumerateFiles(charDirectory))
+			{
+				string filename = Path.GetFileName(file);
+				string imagePath = Path.Combine(kklDirectory, filename);
+				if (File.Exists(imagePath))
+				{
+					//If the kkl folder is newer, don't overwrite it.
+					FileInfo fi = new FileInfo(imagePath);
+					FileInfo fromFi = new FileInfo(file);
+					if (fromFi.LastWriteTimeUtc <= fi.LastWriteTimeUtc)
+					{
+						continue;
+					}
+				}
+				try
+				{
+					File.Copy(file, imagePath, true);
+				}
+				catch (Exception e)
+				{
+					ErrorLog.LogError(e.Message);
+				}
+			}
+		}
+
+		public static async Task<Image> GetCroppedImage(KisekaeCode code, Rect crop, ISkin character, Dictionary<string, string> extraData, bool skipPreprocessing)
 		{
 			//reset some scene vars
-			CleanImage(code, character);
+			CleanImage(code, character, skipPreprocessing);
 			ImageMetadata data = new ImageMetadata("raw", code.ToString())
 			{
 				CropInfo = crop,
@@ -103,11 +160,12 @@ namespace SPNATI_Character_Editor
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, true, false); }, 1, null, 0);
 		}
 
-		public static async Task<Image> GetRawImage(KisekaeCode code, ISkin character, Dictionary<string, string> extraData)
+		public static async Task<Image> GetRawImage(KisekaeCode code, ISkin character, Dictionary<string, string> extraData, bool skipPreprocessing)
 		{
 			//reset some scene vars
-			CleanImage(code, character);
+			CleanImage(code, character, skipPreprocessing);
 			ImageMetadata data = new ImageMetadata("raw", code.ToString());
+			data.SkipPreprocessing = skipPreprocessing;
 			data.ExtraData = extraData;
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, false, false); }, 1, null, 0);
 		}

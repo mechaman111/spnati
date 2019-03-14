@@ -48,6 +48,10 @@ namespace Desktop.CommonControls
 		{
 		}
 
+		public virtual void ApplyMacro(List<string> values)
+		{
+		}
+
 		internal void RemoveFromList()
 		{
 			if (_list != null)

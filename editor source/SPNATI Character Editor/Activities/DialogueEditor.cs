@@ -545,6 +545,12 @@ namespace SPNATI_Character_Editor.Activities
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
+
+			PropertyMacro macro = new PropertyMacro();
+			macro.Property = "AlsoPlaying";
+			macro.Values.Add("yukiko");
+			macro.Name = "Playing w/ Yukiko";
+			tableConditions.AddMacro(macro);
 		}
 
 		private string AddVariableTest(string variable, object data)

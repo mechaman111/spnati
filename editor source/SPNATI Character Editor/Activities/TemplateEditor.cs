@@ -263,7 +263,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character, new Dictionary<string, string>());
+			Image img = await CharacterGenerator.GetCroppedImage(code, cropInfo, _character, new Dictionary<string, string>(), false);
 			Enabled = true;
 			if (img != null)
 			{

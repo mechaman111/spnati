@@ -201,7 +201,7 @@ namespace KisekaeImporter.DataStructures.Kisekae
 				string fullpath = System.IO.Path.GetFullPath(System.IO.Path.Combine(newRelativePath, filename));
 				fullpath = fullpath.Replace("\\", "/");
 				fullpath = fullpath.Replace(" ", "%20");
-				Assets[i] = fullpath;
+				Assets[i] = System.IO.Path.Combine(newRelativePath, filename);
 			}
 		}
 

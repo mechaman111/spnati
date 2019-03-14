@@ -182,6 +182,15 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Gets where SPNATI is located
+		/// </summary>
+		public static string KisekaeDirectory
+		{
+			get { return GetString(Settings.KisekaeDirectory); }
+			set { Set(Settings.KisekaeDirectory, value); }
+		}
+
+		/// <summary>
 		/// Gets the programs %appdata% path
 		/// </summary>
 		public static string AppDataDirectory
@@ -305,6 +314,7 @@ namespace SPNATI_Character_Editor
 	public static class Settings
 	{
 		public static readonly string GameDirectory = "game";
+		public static readonly string KisekaeDirectory = "kkl";
 		public static readonly string LastCharacter = "last";
 		public static readonly string LastVersionRun = "version";
 		public static readonly string UserName = "username";

@@ -98,6 +98,12 @@ namespace SPNATI_Character_Editor.Forms
 			}
 		}
 
+		public bool UseManualCode
+		{
+			get { return chkManual.Checked; }
+			set { chkManual.Checked = value; }
+		}
+
 		public Dictionary<string, string> GetData()
 		{
 			Dictionary<string, string> data = new Dictionary<string, string>();

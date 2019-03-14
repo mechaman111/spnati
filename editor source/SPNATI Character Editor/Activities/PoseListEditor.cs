@@ -153,6 +153,11 @@ namespace SPNATI_Character_Editor.Activities
 						}
 					}
 				}
+				if (values.Length > 2)
+				{
+					string skipPreprocessing = values[2];
+					metadata.SkipPreprocessing = (skipPreprocessing == "1");
+				}
 
 				_poseList.Poses.Add(metadata);
 			}
@@ -229,6 +234,7 @@ namespace SPNATI_Character_Editor.Activities
 			ImageMetadata metadata = new ImageMetadata(key, data);
 			metadata.ExtraData = extraData;
 			metadata.CropInfo = new Rect(l, t, r, b);
+			metadata.SkipPreprocessing = row.Cells["ColData"].Tag?.ToString() == "1";
 			return metadata;
 		}
 
@@ -349,6 +355,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			row.Cells["ColData"].Value = pose.Data;
 			row.Cells["ColAdvanced"].Tag = pose.ExtraData;
+
+			row.Cells["ColData"].Tag = (pose.SkipPreprocessing ? "1" : null);
 		}
 
 		private void UpdateImageCell(string key, DataGridViewRow row)
@@ -400,10 +408,13 @@ namespace SPNATI_Character_Editor.Activities
 			PoseSettingsForm form = new PoseSettingsForm();
 			DataGridViewRow row = gridPoses.Rows[index];
 			Dictionary<string, string> extraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string>;
+			bool manual = row.Cells["ColData"].Tag?.ToString() == "1";
 			form.SetData(extraData);
+			form.UseManualCode = manual;
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				row.Cells["ColAdvanced"].Tag = form.GetData();
+				row.Cells["ColData"].Tag = (form.UseManualCode ? "1" : "");
 			}
 		}
 
@@ -444,6 +455,8 @@ namespace SPNATI_Character_Editor.Activities
 			_previewImageMetadata.CropInfo = new Rect(l, t, r, b);
 			_previewImageMetadata.ExtraData = row.Cells["ColAdvanced"].Tag as Dictionary<string, string> ?? new Dictionary<string, string>();
 
+			bool manual = row.Cells["ColData"].Tag?.ToString() == "1";
+			_previewImageMetadata.SkipPreprocessing = manual;
 			ImageCropper cropper = new ImageCropper();
 			cropper.Import(_previewImageMetadata, _character, false);
 			if (cropper.ShowDialog() == DialogResult.OK)
@@ -674,7 +687,7 @@ namespace SPNATI_Character_Editor.Activities
 						progress.Report(current++);
 						try
 						{
-							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData);
+							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData, metadata.SkipPreprocessing);
 							if (img == null)
 							{
 								//Something went wrong. Stop here.

@@ -70,7 +70,7 @@ namespace SPNATI_Character_Editor.Forms
 			UpdateRectBoxes();
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
-			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData);
+			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData, metadata.SkipPreprocessing);
 			tmrWait.Enabled = false;
 			lblWait.Visible = false;
 			_previewImage = image;

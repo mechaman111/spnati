@@ -13,6 +13,7 @@ namespace SPNATI_Character_Editor
 			InitializeComponent();
 			string gameDir = Config.GetString(Settings.GameDirectory);
 			txtApplicationDirectory.Text = gameDir;
+			txtKisekae.Text = Config.KisekaeDirectory;
 			folderBrowserDialog1.SelectedPath = gameDir;
 			txtUserName.Text = Config.UserName;
 			valAutoSave.Value = Config.AutoSaveInterval;
@@ -70,6 +71,7 @@ namespace SPNATI_Character_Editor
 			Config.AutoLoadBanterWizard = chkAutoBanter.Checked;
 			Config.AutoBackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
+			Config.KisekaeDirectory = txtKisekae.Text;
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
@@ -123,6 +125,16 @@ namespace SPNATI_Character_Editor
 			stringFlags.Alignment = StringAlignment.Center;
 			stringFlags.LineAlignment = StringAlignment.Center;
 			g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, new StringFormat(stringFlags));
+		}
+
+		private void cmdBrowseKisekae_Click(object sender, EventArgs e)
+		{
+			openFileDialog1.FileName = txtKisekae.Text;
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				string file = openFileDialog1.FileName;
+				txtKisekae.Text = Path.GetFullPath(file);
+			}
 		}
 	}
 }

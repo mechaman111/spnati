@@ -24,6 +24,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("id")]
 		public string Id;
 
+		[XmlElement("set")]
+		public string Set;
+
 		[XmlElement("label")]
 		public List<StageSpecificValue> Labels = new List<StageSpecificValue>();
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Desktop.CommonControls.PropertyControls
@@ -10,6 +11,14 @@ namespace Desktop.CommonControls.PropertyControls
 		public RecordControl()
 		{
 			InitializeComponent();
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				recField.RecordKey = values[0];
+			}
 		}
 
 		public override void OnInitialAdd()
