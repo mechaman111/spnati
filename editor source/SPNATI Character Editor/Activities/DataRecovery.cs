@@ -100,6 +100,10 @@ namespace SPNATI_Character_Editor.Activities
 				string file = eligibleForDeletion[i];
 				string name = Path.GetFileNameWithoutExtension(file);
 				string extension = Path.GetExtension(file);
+				if (extension != ".bak")
+				{
+					continue;
+				}
 				string timestamp = name.Substring("behaviour".Length + 1);
 				foreach (string prefix in new string[] { "behaviour", "meta", "markers", "editor" })
 				{
