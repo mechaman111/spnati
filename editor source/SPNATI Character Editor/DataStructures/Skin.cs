@@ -264,6 +264,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("img")]
 		public string PreviewImage;
 
+		[XmlAttribute("set")]
+		public string Set;
+
 		[XmlText]
 		public string Name;
 
