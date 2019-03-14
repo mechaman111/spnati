@@ -3,6 +3,7 @@ using Desktop.CommonControls;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -33,6 +34,23 @@ namespace SPNATI_Character_Editor
 			});
 			cboExpression.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			cboExpression.AutoCompleteSource = AutoCompleteSource.ListItems;
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 2)
+			{
+				cboExpression.Text = values[0];
+				cboOperator.SelectedItem = values[1];
+				cboValue.Text = values[2];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(cboExpression.Text);
+			values.Add(cboOperator.Text);
+			values.Add(cboValue.Text);
 		}
 
 		public override void OnInitialAdd()

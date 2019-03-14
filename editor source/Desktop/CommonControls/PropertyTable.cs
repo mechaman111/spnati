@@ -17,6 +17,8 @@ namespace Desktop.CommonControls
 		public object Context;
 
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event EventHandler<MacroArgs> EditingMacro;
+		public event EventHandler<Macro> MacroChanged;
 
 		private object _data;
 		/// <summary>
@@ -35,6 +37,11 @@ namespace Desktop.CommonControls
 				}
 				recAdd.Text = "";
 				BuildEditControls();
+
+				if (_data != null && !HideSpeedButtons)
+				{
+					AddMacros();
+				}
 			}
 		}
 
@@ -125,6 +132,17 @@ namespace Desktop.CommonControls
 				_hideMenu = value;
 				menuSpeedButtons.Visible = !value;
 				PositionControls();
+			}
+		}
+
+		private ToolStripMenuItem _macroMenu;
+		private bool _allowMacros = false;
+		public bool AllowMacros
+		{
+			get { return _allowMacros; }
+			set
+			{
+				_allowMacros = value;
 			}
 		}
 
@@ -227,16 +245,14 @@ namespace Desktop.CommonControls
 			PropertyEditControl ctl = EditRecord(result, -1, out newlyAdded);
 			ctl.Focus(); //jump to the control for immediate editing
 			recAdd.Record = null;
-			if (newlyAdded)
+			if (macro != null)
 			{
-				if (macro != null)
-				{
-					ctl.ApplyMacro(macro.Values);
-				}
-				else if (RunInitialAddEvents)
-				{
-					ctl.OnInitialAdd();
-				}
+				ctl.ApplyMacro(macro.Values);
+				newlyAdded = false;
+			}
+			if (newlyAdded && RunInitialAddEvents)
+			{
+				ctl.OnInitialAdd();
 			}
 		}
 
@@ -460,6 +476,7 @@ namespace Desktop.CommonControls
 				row.AllowFavorites = AllowFavorites;
 				row.AllowDelete = AllowDelete;
 				row.AllowHelp = AllowHelp;
+				row.EditingMacro += Row_EditingMacro;
 				if (RowHeaderWidth > 0)
 				{
 					row.HeaderWidth = RowHeaderWidth;
@@ -498,12 +515,33 @@ namespace Desktop.CommonControls
 			return ctl;
 		}
 
+		private void Row_EditingMacro(object sender, MacroArgs args)
+		{
+			EditingMacro?.Invoke(this, args);
+			if (args.Editor != null)
+			{
+				MacroEditor form = new MacroEditor();
+				form.SetMacro(args.Macro, args.Editor);
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					AddMacros();
+					MacroChanged?.Invoke(this, args.Macro);
+				}
+				else if (args.IsNew)
+				{
+					MacroProvider provider = new MacroProvider();
+					provider.Remove(Data.GetType(), args.Macro);
+				}
+			}
+		}
+
 		private void DisposeRow(PropertyTableRow row)
 		{
 			pnlRecords.Controls.Remove(row);
 			row.PropertyChanged -= Row_PropertyChanged;
 			row.RemoveRow -= Row_RemoveRow;
 			row.ToggleFavorite -= Row_ToggleFavorite;
+			row.EditingMacro -= Row_EditingMacro;
 			row.Destroy();
 			row.Dispose();
 		}
@@ -680,27 +718,42 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		public void AddMacros(List<PropertyMacro> macros)
+		public void AddMacros()
 		{
-			if (HideSpeedButtons)
+			if (HideSpeedButtons || !AllowMacros)
 			{
 				return;
 			}
+			if (_macroMenu != null)
+			{
+				_macroMenu.DropDownItems.Clear();
+			}
 
-			foreach (PropertyMacro macro in macros)
+			MacroProvider provider = new MacroProvider();
+			provider.SetContext(Data.GetType());
+			foreach (Macro macro in provider.GetRecords(""))
 			{
 				AddMacro(macro);
 			}
 		}
 
-		public void AddMacro(PropertyMacro macro)
+		private void AddMacro(Macro macro)
 		{
-			if (HideSpeedButtons)
+			//if any properties are filtered out, filter out the whole macro
+			if (RecordFilter != null)
 			{
-				return;
+				foreach (PropertyMacro property in macro.Properties)
+				{
+					PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property.Property);
+					if (!RecordFilter(record))
+					{
+						return;
+					}
+				}
 			}
 
 			ToolStripMenuItem groupMenu = GetOrAddGroupMenu("Macros");
+			_macroMenu = groupMenu;
 			ToolStripMenuItem item = new ToolStripMenuItem(macro.Name);
 			item.Tag = macro;
 			item.Click += MacroButtonClick;
@@ -710,13 +763,44 @@ namespace Desktop.CommonControls
 		private void MacroButtonClick(object sender, EventArgs e)
 		{
 			ToolStripMenuItem item = sender as ToolStripMenuItem;
-			PropertyMacro macro = item.Tag as PropertyMacro;
-			string property = macro.Property;
-			PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
-			if (record != null)
+			Macro macro = item.Tag as Macro;
+			ApplyMacro(macro);
+		}
+
+		/// <summary>
+		/// Applies a macro to the data
+		/// </summary>
+		/// <param name="macro"></param>
+		internal void ApplyMacro(Macro macro)
+		{
+			foreach (PropertyMacro application in macro.Properties)
 			{
-				AddControl(record, macro);
+				string property = application.Property;
+				PropertyRecord record = PropertyProvider.GetEditControls(Data.GetType()).FirstOrDefault(r => r.Property == property);
+				if (record != null)
+				{
+					AddControl(record, application);
+				}
 			}
+		}
+
+		/// <summary>
+		/// Converts the current properties into a macro
+		/// </summary>
+		/// <returns></returns>
+		public Macro CreateMacro()
+		{
+			Macro macro = new Macro();
+			foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> row in _rows)
+			{
+				foreach (KeyValuePair<int, PropertyTableRow> kvp in row.Value)
+				{
+					List<string> values = new List<string>();
+					kvp.Value.EditControl.BuildMacro(values);
+					macro.AddProperty(row.Key, kvp.Key, values);
+				}
+			}
+			return macro;
 		}
 	}
 }

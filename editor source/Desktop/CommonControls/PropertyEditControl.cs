@@ -52,6 +52,10 @@ namespace Desktop.CommonControls
 		{
 		}
 
+		public virtual void BuildMacro(List<string> values)
+		{
+		}
+
 		internal void RemoveFromList()
 		{
 			if (_list != null)

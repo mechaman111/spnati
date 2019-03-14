@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ namespace SPNATI_Character_Editor
 		/// List of released versions since update tracking was added, used for determining which updates a user skipped and providing info about those
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
-			"v3.7", "v3.7.1", "v3.8", "v3.8.1" };
+			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v4.0" };
 
 		/// <summary>
 		/// Current Version
@@ -308,6 +309,42 @@ namespace SPNATI_Character_Editor
 		{
 			get { return !GetBoolean("autocondition"); }
 			set { Set("autocondition", !value); }
+		}
+
+		public static bool SeenMacroHelp
+		{
+			get { return GetBoolean("macrohelp"); }
+			set { Set("macrohelp", value); }
+		}
+
+		public static void SaveMacros(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int index = 0;
+			foreach (IRecord record in provider.GetRecords(""))
+			{
+				index++;
+				Macro macro = record as Macro;
+				Set($"Macro{key}{index}", macro.Serialize());
+			}
+			Set($"Macro{key}0", index);
+
+			Save();
+		}
+
+		public static void LoadMacros<T>(string key)
+		{
+			MacroProvider provider = new MacroProvider();
+			int count = GetInt($"Macro{key}0");
+			for (int i = 1; i <= count; i++)
+			{
+				string value = GetString($"Macro{key}{i}");
+				Macro macro = Macro.Deserialize(value);
+				if (macro != null)
+				{
+					provider.Add(typeof(T), macro);
+				}
+			}
 		}
 	}
 

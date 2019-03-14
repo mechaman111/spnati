@@ -1,4 +1,6 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
+using Desktop.Providers;
 using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 30)]
-	public partial class DialogueEditor : Activity
+	public partial class DialogueEditor : Activity, IMacroEditor
 	{
 		private const string FavoriteConditionsSetting = "FavoritedConditions";
 
@@ -139,11 +141,17 @@ namespace SPNATI_Character_Editor.Activities
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 			SubscribeDesktop(DesktopMessages.SettingsUpdated, OnSettingsUpdated);
+			SubscribeDesktop(DesktopMessages.MacrosUpdated, OnMacrosUpdated);
 		}
 
 		private void OnSettingsUpdated()
 		{
 			tableConditions.RunInitialAddEvents = Config.AutoOpenConditions;
+		}
+
+		private void OnMacrosUpdated()
+		{
+			tableConditions.AddMacros();
 		}
 
 		private void OnSaveWorkspace(bool auto)
@@ -545,12 +553,6 @@ namespace SPNATI_Character_Editor.Activities
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Slot", (data) => { return AddVariableTest("~_.slot~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Tag", (data) => { return AddVariableTest("~_.tag~", data); });
-
-			PropertyMacro macro = new PropertyMacro();
-			macro.Property = "AlsoPlaying";
-			macro.Values.Add("yukiko");
-			macro.Name = "Playing w/ Yukiko";
-			tableConditions.AddMacro(macro);
 		}
 
 		private string AddVariableTest(string variable, object data)
@@ -853,6 +855,63 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 			_editorData.SetNote(_selectedCase, txtNotes.Text);
+		}
+
+		#region Macro editing
+		private void tableConditions_EditingMacro(object sender, MacroArgs args)
+		{
+			args.SetEditor(this);
+		}
+
+		public bool ShowHelp
+		{
+			get
+			{
+				if (!Config.SeenMacroHelp)
+				{
+					Config.SeenMacroHelp = true;
+					Config.Save();
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public string GetHelpText()
+		{
+			return "Macros are shortcuts for quickly pulling in one or more conditions. A \"Macros\" button will appear in the Case Editor with an option using the provided macro name. When selected, it will pull in all the conditions provided in this form, exactly as they are filled out.";
+		}
+
+		public object CreateData()
+		{
+			Case tag = new Case(_selectedCase.Tag);
+			tag.Stages.AddRange(_selectedCase.Stages);
+			return tag;
+		}
+
+		public object GetRecordContext()
+		{
+			return _character;
+		}
+
+		public Func<PropertyRecord, bool> GetRecordFilter(object data)
+		{
+			Case tag = data as Case;
+			Trigger trigger = TriggerDatabase.GetTrigger(tag.Tag);
+			if (trigger.HasTarget)
+			{
+				return FilterTargets;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		#endregion
+
+		private void tableConditions_MacroChanged(object sender, Macro e)
+		{
+			Config.SaveMacros("Case");
 		}
 	}
 }

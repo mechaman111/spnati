@@ -373,6 +373,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.tableConditions.AllowDelete = true;
 			this.tableConditions.AllowFavorites = true;
 			this.tableConditions.AllowHelp = false;
+			this.tableConditions.AllowMacros = true;
 			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -389,6 +390,8 @@ namespace SPNATI_Character_Editor.Activities
 			this.tableConditions.Sorted = false;
 			this.tableConditions.TabIndex = 31;
 			this.tableConditions.UseAutoComplete = true;
+			this.tableConditions.EditingMacro += new System.EventHandler<Desktop.CommonControls.MacroArgs>(this.tableConditions_EditingMacro);
+			this.tableConditions.MacroChanged += new System.EventHandler<Desktop.Macro>(this.tableConditions_MacroChanged);
 			// 
 			// triggerMenu
 			// 

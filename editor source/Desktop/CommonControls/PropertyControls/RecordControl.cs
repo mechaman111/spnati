@@ -21,6 +21,11 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(recField.RecordKey ?? "");
+		}
+
 		public override void OnInitialAdd()
 		{
 			recField.DoSearch();

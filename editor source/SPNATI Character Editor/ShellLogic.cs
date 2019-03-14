@@ -31,6 +31,8 @@ namespace SPNATI_Character_Editor
 			_backupTimer.Tick += _backupTimer_Tick;
 			_backupTimer.Interval = new System.TimeSpan(0, 5, 0);
 			_backupTimer.Start();
+
+			Config.LoadMacros<Case>("Case");
 		}
 
 		private static void _backupTimer_Tick(object sender, System.EventArgs e)
@@ -257,6 +259,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("Charts...", typeof(ChartRecord), menu);
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
 			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
+			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
@@ -443,6 +446,14 @@ namespace SPNATI_Character_Editor
 		{
 			GameConfig form = new GameConfig();
 			form.ShowDialog();
+		}
+
+		private static void ManageCaseMacros()
+		{
+			MacroManager form = new MacroManager();
+			form.SetType(typeof(Case), "Case");
+			form.ShowDialog();
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.MacrosUpdated);
 		}
 	}
 }

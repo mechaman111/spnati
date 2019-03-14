@@ -11,5 +11,10 @@
 		/// User settings were been changed
 		/// </summary>
 		public const int SettingsUpdated = 2;
+
+		/// <summary>
+		/// Macros were changed from the macro manager
+		/// </summary>
+		public const int MacrosUpdated = 3;
 	}
 }

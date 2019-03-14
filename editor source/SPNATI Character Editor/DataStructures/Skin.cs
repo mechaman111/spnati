@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -23,9 +22,6 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlElement("id")]
 		public string Id;
-
-		[XmlElement("set")]
-		public string Set;
 
 		[XmlElement("label")]
 		public List<StageSpecificValue> Labels = new List<StageSpecificValue>();
