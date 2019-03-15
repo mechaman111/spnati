@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.7.1 at 8:01:17 p. m. on marzo 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.7.1 at 11:36:35 p. m. on marzo 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v3.7.1</version>
     <first>Twilight</first>
@@ -90,6 +90,8 @@
                 <state img="0-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="0-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="0-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="0-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="0-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="0-happy.png">Almost perfect... One please!</state>
@@ -104,6 +106,19 @@
                 <state img="0-happy.png">Perfect, I won't change any cards...</state>
                 <state img="0-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="0-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="0-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="0-confident.png">How about ~cards~?</state>
+                <state img="0-smart.png">~cards~ should do the trick!</state>
+                <state img="0-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="0-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="0-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="0-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="0-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="0-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="0-shocked.png">Don't change a thing please!!</state>
@@ -721,6 +736,9 @@
             </case>
             <case tag="female_must_strip" timeInStage="1" priority="500">
                 <state img="0-happy.png">And score one for Equestria!</state>
+            </case>
+            <case tag="tie">
+                <state img="0-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="0-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -2050,18 +2068,35 @@
                 <state img="0-sad.png">But I wanted to get more comfortable.</state>
                 <state img="0-happy.png" marker="twilight_books">Yes! I knew reading all those books about poker would come in handy!</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="0-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="0-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="0-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="0-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="0-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="0-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="0-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="0-awkward.png">I think ~name~ is the one who needs saving right now...</state>
             </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="0-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="0-smug.png">Well, what do you have to say now?</state>
+                <state img="0-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="0-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="0-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="0-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="0-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="0-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="0-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
+            </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="0-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
                 <state img="0-smart.png">As Equestria's ambassador during this game, I'd like to formally invite you to meet Princess Celestia after this game, ~name~.</state>
                 <state img="0-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
-            <case tag="opponent_lost" filter="princess" targetStage="0" notSaidMarker="twilight_princess_summit">
+            <case tag="opponent_lost" filter="princess" targetStage="0" notSaidMarker="twilight_princess_summit" priority="0">
                 <state img="0-smart.png" marker="twilight_princess_summit">This isn't the princess summit that I was expecting to attend today, but this seems like fun too!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
@@ -2075,6 +2110,12 @@
                 <state img="0-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="0-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="0-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="0-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="0-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="0-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="0-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="0-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -2094,10 +2135,14 @@
                 <state img="0-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="0-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="0-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="0-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="0-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="0-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_stripping">
@@ -2604,6 +2649,8 @@
                 <state img="1-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="1-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="1-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="1-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="1-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="1-happy.png">Almost perfect... One please!</state>
@@ -2618,6 +2665,19 @@
                 <state img="1-happy.png">Perfect, I won't change any cards...</state>
                 <state img="1-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="1-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="1-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="1-confident.png">How about ~cards~?</state>
+                <state img="1-smart.png">~cards~ should do the trick!</state>
+                <state img="1-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="1-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="1-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="1-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="1-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="1-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="1-shocked.png">Don't change a thing please!!</state>
@@ -3251,6 +3311,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="1-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="1-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="1-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -4568,18 +4631,35 @@
                 <state img="1-sad.png">But I wanted to get more comfortable.</state>
                 <state img="1-happy.png" marker="twilight_books">Yes! I knew reading all those books about poker would come in handy!</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="1-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="1-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="1-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="1-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="1-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="1-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="1-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="1-awkward.png">I think ~name~ is the one who needs saving right now...</state>
             </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="1-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="1-smug.png">Well, what do you have to say now?</state>
+                <state img="1-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="1-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="1-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="1-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="1-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="1-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="1-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
+            </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="1-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
                 <state img="1-smart.png">As Equestria's ambassador during this game, I'd like to formally invite you to meet Princess Celestia after this game, ~name~.</state>
                 <state img="1-happy.png">And to think Cadance told me that royal meetings would be boring!</state>
             </case>
-            <case tag="opponent_lost" filter="princess" targetStage="0" notSaidMarker="twilight_princess_summit">
+            <case tag="opponent_lost" filter="princess" targetStage="0" notSaidMarker="twilight_princess_summit" priority="0">
                 <state img="1-smart.png" marker="twilight_princess_summit">This isn't the princess summit that I was expecting to attend today, but this seems like fun too!</state>
             </case>
             <case tag="opponent_lost" filter="serious" notSaidMarker="serious1st">
@@ -4593,6 +4673,12 @@
                 <state img="1-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="1-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="1-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="1-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="1-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="1-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="1-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="1-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -4612,10 +4698,14 @@
                 <state img="1-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="1-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="1-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="1-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="1-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="1-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -5123,6 +5213,8 @@
                 <state img="2-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="2-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="2-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="2-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="2-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="2-happy.png">Almost perfect... One please!</state>
@@ -5137,6 +5229,19 @@
                 <state img="2-happy.png">Perfect, I won't change any cards...</state>
                 <state img="2-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="2-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="2-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="2-confident.png">How about ~cards~?</state>
+                <state img="2-smart.png">~cards~ should do the trick!</state>
+                <state img="2-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="2-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="2-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="2-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="2-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="2-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="2-shocked.png">Don't change a thing please!!</state>
@@ -5650,6 +5755,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="2-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="2-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="2-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -6972,11 +7080,28 @@
                 <state img="2-happy.png" marker="twilight_books">Yes! I knew reading all those books about poker would come in handy!</state>
                 <state img="2-strip.png">Remember to make yourself more comfortable whenever you can, ~name~.</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="2-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="2-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="2-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="2-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="2-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="2-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="2-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="2-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="2-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="2-smug.png">Well, what do you have to say now?</state>
+                <state img="2-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="2-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="2-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="2-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="2-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="2-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="2-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="2-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -6994,6 +7119,12 @@
                 <state img="2-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="2-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="2-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="2-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="2-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="2-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="2-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="2-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -7013,10 +7144,14 @@
                 <state img="2-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="2-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="2-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="2-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="2-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="2-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -7526,6 +7661,8 @@
                 <state img="3-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="3-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="3-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="3-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="3-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="3-happy.png">Almost perfect... One please!</state>
@@ -7540,6 +7677,19 @@
                 <state img="3-happy.png">Perfect, I won't change any cards...</state>
                 <state img="3-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="3-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="3-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="3-confident.png">How about ~cards~?</state>
+                <state img="3-smart.png">~cards~ should do the trick!</state>
+                <state img="3-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="3-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="3-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="3-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="3-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="3-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="3-shocked.png">Don't change a thing please!!</state>
@@ -8035,6 +8185,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="3-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="3-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="3-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -9354,11 +9507,28 @@
                 <state img="3-smart.png">Expect yourself to be in this situation more and more, ~name~, for I will be playing at 120% from now on!</state>
                 <state img="3-smart.png">I see that ~name~ didn't get lucky this time, but see it as a chance to get more comfy, just like me!</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="3-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="3-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="3-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="3-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="3-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="3-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="3-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="3-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="3-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="3-smug.png">Well, what do you have to say now?</state>
+                <state img="3-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="3-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="3-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="3-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="3-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="3-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="3-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="3-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -9376,6 +9546,12 @@
                 <state img="3-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="3-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="3-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="3-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="3-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="3-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="3-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="3-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -9395,10 +9571,14 @@
                 <state img="3-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="3-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="3-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="3-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="3-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="3-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -9905,6 +10085,8 @@
                 <state img="4-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="4-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="4-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="4-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="4-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="4-happy.png">Almost perfect... One please!</state>
@@ -9919,6 +10101,19 @@
                 <state img="4-happy.png">Perfect, I won't change any cards...</state>
                 <state img="4-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="4-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="4-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="4-confident.png">How about ~cards~?</state>
+                <state img="4-smart.png">~cards~ should do the trick!</state>
+                <state img="4-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="4-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="4-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="4-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="4-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="4-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="4-shocked.png">Don't change a thing please!!</state>
@@ -10397,6 +10592,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="4-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="4-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="4-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -11719,11 +11917,28 @@
                 <state img="4-calm.png">I don't find the appeal of removing clothes still, but every time you do, I get closer to winning!</state>
                 <state img="4-rear.png">I think you might be inspired to remove something bigger if I show you my flank?</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="4-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="4-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="4-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="4-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="4-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="4-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="4-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="4-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="4-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="4-smug.png">Well, what do you have to say now?</state>
+                <state img="4-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="4-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="4-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="4-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="4-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="4-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="4-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="4-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -11741,6 +11956,12 @@
                 <state img="4-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="4-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="4-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="4-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="4-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="4-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="4-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="4-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -11760,10 +11981,14 @@
                 <state img="4-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="4-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="4-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="4-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="4-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="4-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -12270,6 +12495,8 @@
                 <state img="5-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="5-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="5-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="5-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="5-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="5-happy.png">Almost perfect... One please!</state>
@@ -12284,6 +12511,19 @@
                 <state img="5-happy.png">Perfect, I won't change any cards...</state>
                 <state img="5-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="5-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="5-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="5-confident.png">How about ~cards~?</state>
+                <state img="5-smart.png">~cards~ should do the trick!</state>
+                <state img="5-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="5-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="5-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="5-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="5-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="5-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="5-shocked.png">Don't change a thing please!!</state>
@@ -12769,6 +13009,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="5-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="5-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="5-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -14097,11 +14340,28 @@
                 <state img="5-smart.png">Expect yourself to be in this situation more and more, ~name~, for I will be playing at 120% from now on!</state>
                 <state img="5-smart.png">I see that ~name~ didn't get lucky this time, but see it as a chance to get more comfy, just like me!</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="5-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="5-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="5-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="5-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="5-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="5-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="5-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="5-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="5-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="5-smug.png">Well, what do you have to say now?</state>
+                <state img="5-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="5-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="5-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="5-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="5-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="5-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="5-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="5-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -14119,6 +14379,12 @@
                 <state img="5-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="5-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="5-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="5-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="5-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="5-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="5-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="5-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -14138,10 +14404,14 @@
                 <state img="5-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="5-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="5-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="5-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="5-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="5-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -14651,6 +14921,8 @@
                 <state img="6-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="6-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="6-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="6-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="6-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="6-happy.png">Almost perfect... One please!</state>
@@ -14665,6 +14937,19 @@
                 <state img="6-happy.png">Perfect, I won't change any cards...</state>
                 <state img="6-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="6-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="6-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="6-confident.png">How about ~cards~?</state>
+                <state img="6-smart.png">~cards~ should do the trick!</state>
+                <state img="6-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="6-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="6-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="6-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="6-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="6-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="6-shocked.png">Don't change a thing please!!</state>
@@ -15140,6 +15425,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="6-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="6-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="6-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -16470,11 +16758,28 @@
                 <state img="6-smart.png">Expect yourself to be in this situation more and more, ~name~, for I will be playing at 120% from now on!</state>
                 <state img="6-smart.png">I see that ~name~ didn't get lucky this time, but see it as a chance to get more comfy, just like me!</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="6-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="6-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="6-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="6-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="6-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="6-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="6-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="6-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="6-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="6-smug.png">Well, what do you have to say now?</state>
+                <state img="6-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="6-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="6-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="6-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="6-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="6-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="6-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="6-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -16492,6 +16797,12 @@
                 <state img="6-smart.png">Don't be shy, you'll only be exposing your naked body to the world!</state>
                 <state img="6-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="6-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
+            </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="6-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="6-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="6-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="6-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
             </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="6-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
@@ -16511,10 +16822,14 @@
                 <state img="6-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
                 <state img="6-laughing.png">Seems like you will have to add "strip poker" to the subjects you study, ~name~...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="6-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="6-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="6-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="6-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -17027,6 +17342,8 @@
                 <state img="7-smart.png">~cards~ more cards will increase my odds of winning by 85%!</state>
                 <state img="7-guess.png">With ~cards~ cards I should be fine.</state>
                 <state img="7-calm.png">Exchanging ~cards~ cards should be the best course of action here.</state>
+                <state img="7-smart.png">I'll need ~cards~ for this to work.</state>
+                <state img="7-interested.png">I'll take ~cards~!</state>
             </case>
             <case tag="swap_cards" hasHand="Four of a Kind">
                 <state img="7-happy.png">Almost perfect... One please!</state>
@@ -17041,6 +17358,19 @@
                 <state img="7-happy.png">Perfect, I won't change any cards...</state>
                 <state img="7-shocked.png">By Celestia! I won't need to change cards, thank you...</state>
                 <state img="7-smug.png">Wow! Now this is what I call good luck...</state>
+            </case>
+            <case tag="swap_cards" hasHand="High Card" priority="0">
+                <state img="7-calm.png">4, like the number of hooves I had back home...</state>
+                <state img="7-confident.png">How about ~cards~?</state>
+                <state img="7-smart.png">~cards~ should do the trick!</state>
+                <state img="7-calm.png">Can I get ~cards~ cards over here?</state>
+            </case>
+            <case tag="swap_cards" hasHand="Nothing" priority="0">
+                <state img="7-angry.png">Oh for Celestias... I'll take ~cards~...</state>
+                <state img="7-disappointed.png">Hmmm... nothing seems usefull here... ~cards~!</state>
+                <state img="7-disappointed.png">No good... maybe ~cards~ will fix it!</state>
+                <state img="7-disappointed.png">I'll take ~cards~ please...</state>
+                <state img="7-calm.png">~cards~ cards, dealer!</state>
             </case>
             <case tag="swap_cards" hasHand="Royal Flush">
                 <state img="7-shocked.png">Don't change a thing please!!</state>
@@ -17440,6 +17770,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="7-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="7-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="7-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -18784,11 +19117,28 @@
                 <state img="7-calm.png">This is your chance, free your crotch from your clothing as I did!</state>
                 <state img="7-happy.png">Come on ~name~! Join me and feel the nice breeze.</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="7-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="7-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="7-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="7-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="7-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="7-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="7-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="7-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="7-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="7-smug.png">Well, what do you have to say now?</state>
+                <state img="7-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="7-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="7-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="7-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="7-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="7-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="7-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="7-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -18807,6 +19157,12 @@
                 <state img="7-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="7-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
             </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="7-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="7-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="7-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="7-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
+            </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="7-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
                 <state img="7-smart.png">Do you like books, ~name~? I have a whole library full of books!</state>
@@ -18824,10 +19180,14 @@
                 <state img="7-smart.png">So what's your favourite subject, ~name~? Mine is The Theory of Magic!</state>
                 <state img="7-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="7-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="7-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="7-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="7-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -19536,6 +19896,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="8-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="8-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="8-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -20871,11 +21234,28 @@
                 <state img="8-calm.png">This is your chance, free your crotch from your clothing as I did!</state>
                 <state img="8-happy.png">Come on ~name~! Join me and feel the nice breeze.</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="8-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="8-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="8-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="8-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="8-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="8-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="8-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="8-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="8-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="8-smug.png">Well, what do you have to say now?</state>
+                <state img="8-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="8-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="8-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="8-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="8-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="8-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="8-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="8-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -20894,6 +21274,12 @@
                 <state img="8-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="8-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
             </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="8-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="8-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="8-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="8-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
+            </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="8-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
                 <state img="8-smart.png">Do you like books, ~name~? I have a whole library full of books!</state>
@@ -20909,10 +21295,14 @@
                 <state img="8-smart.png">So what's your favourite subject, ~name~? Mine is The Theory of Magic!</state>
                 <state img="8-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="8-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="8-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="8-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="8-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
@@ -21423,12 +21813,12 @@
                 <state img="8-awkward.png">I guess if I use my hands like this...</state>
                 <state img="8-what.png" marker="twilight_not_human">Ugh... How do you humans even use these fingers...</state>
                 <state img="8-calm.png">I think I might be getting the hang of it...</state>
-                <state img="8-shocked.png">I see... So when I do this... OH! ...</state>
+                <state img="8-buttstuffed.png">I see... So when I do this... OH! ...</state>
                 <state img="8-laughing.png">These hands might not be so bad after all...</state>
                 <state img="8-horny.png">This feels sooo amazing! I just want to do it all day!</state>
                 <state img="8-shocked.png" marker="twilight_want_it_need_it">I haven't had this much attention since I accidentally cast the "Want It, Need It" spell on myself.</state>
                 <state img="8-what.png">Is it normal for it to be this wet? It's very slippery!</state>
-                <state img="8-shocked.png">I wonder what will happen if I stick one of these fingers up into my flank... OOOOHHHHHH!</state>
+                <state img="8-buttstuffed.png">I wonder what will happen if I stick one of these fingers up into my flank... OOOOHHHHHH!</state>
                 <state img="8-horny.png">My imagination is running wild with sexual fantasies. This is amazing!</state>
                 <state img="8-awkward.png" marker="twilight_masturbation_inexperience">Sorry if I'm doing this wrong, it's the first time I do it with this body after all!</state>
                 <state img="8-calm.png">Oh, yes, I like how this is going.</state>
@@ -21635,6 +22025,9 @@
             </case>
             <case tag="female_must_strip" targetStatus="decent" priority="0">
                 <state img="9-interested.png">Oh, I'm sorry, ~name~. You'll win next round for sure.</state>
+            </case>
+            <case tag="tie">
+                <state img="9-awkward.png">Well... what now?</state>
             </case>
             <case tag="male_human_must_strip" alsoPlaying="miko" alsoPlayingStage="0-4" alsoPlayingSaying="How unfortunate a victory for me constitutes a loss for Master ">
                 <state img="9-flirty.png">Oh yes, I agree!, Do flex a bit, ~player~... You know... for research...</state>
@@ -22983,11 +23376,28 @@
                 <state img="9-flirty.png">I may be out now, but that only gives me more freedom to watch you closely as you undress... to take notes of course...</state>
                 <state img="9-finished.png">Don't worry about me, I'm just taking a small break.</state>
             </case>
+            <case tag="opponent_lost" filter="athletic" priority="0">
+                <state img="9-interested.png">Your body seems to be pretty healthy, ~name~, at least from what I know...</state>
+                <state img="9-happy.png">You are a good example of a fit body in this world, ~name~, now show me more of it!</state>
+                <state img="9-smart.png">So how much excersice is it needed to keep a good shape in this world? I'm not much of an athlete but I still want to stay healthy.</state>
+                <state img="9-flirty.png">I gotta be honest, I've always had something for ponies in good shape...</state>
+            </case>
             <case tag="opponent_lost" filter="hero" priority="0">
                 <state img="9-interested.png">So heroes exist in this world? Does that mean you know the Power Ponies?</state>
                 <state img="9-guess.png">I've saved Equestria a couple of times. It was exhausting. It's technically my job, but I couldn't imagine having to do it once a week!</state>
                 <state img="9-calm.png">Being a hero in a world where most people don't have access to magic must be a breeze... Am I right?</state>
                 <state img="9-awkward.png">I think ~name~ is the one who needs saving right now...</state>
+            </case>
+            <case tag="opponent_lost" filter="mean" priority="0">
+                <state img="9-confident.png">I'm not afraid of mean people, after all, turning enemies into friends is my specialty!</state>
+                <state img="9-smug.png">Well, what do you have to say now?</state>
+                <state img="9-smart.png">See? This is exactly why you should be nice instead!</state>
+                <state img="9-confident.png">Your bad manners are not going to get you any further,~name~. Am I right ~player~?</state>
+                <state img="9-smug.png">Being mean won't help you here, you can't scare the cards into doing what you want.</state>
+                <state img="9-smug.png">Redeeming bullies is my specialty!</state>
+                <state img="9-calm.png">No point in being mean, won't you prefer to have friends instead, ~name~?</state>
+                <state img="9-confident.png">If me and my friends could make Sunset change her ways, I can change you too, ~name~!</state>
+                <state img="9-calm.png">You see now that being mean won't get you anywhere, ~name~?</state>
             </case>
             <case tag="opponent_lost" filter="princess" priority="0">
                 <state img="9-calm.png">I have been to a  couple of royal events before, though they usually start with less clothing...</state>
@@ -23006,6 +23416,12 @@
                 <state img="9-calm.png">No need to be shy about your body, it's only natural!</state>
                 <state img="9-smart.png">Don't be scared, I'm sure if you open yourself a bit more we'll be able to become great friends!</state>
             </case>
+            <case tag="opponent_lost" filter="slutty" priority="0">
+                <state img="9-interested.png">You seem to be very eager to breed, ~name~ are you in heat?</state>
+                <state img="9-smart.png">Don't worry, ~name~. I know being in heat can be a real pain in the flank...</state>
+                <state img="9-laughing.png">Calm down a bit, ~name~! I won't be doing research on human breeding rituals until after this game is over!</state>
+                <state img="9-smart.png">No need to rush, ~name~. I'm pretty sure someone around here would love to have coitus with you after the game is over!</state>
+            </case>
             <case tag="opponent_lost" filter="smart" priority="0">
                 <state img="9-interested.png">You seem to be pretty inteligent, ~name~. Mind if we share notes with me once the game ends?</state>
                 <state img="9-smart.png">Do you like books, ~name~? I have a whole library full of books!</state>
@@ -23021,10 +23437,14 @@
                 <state img="9-smart.png">So what's your favourite subject, ~name~? Mine is The Theory of Magic!</state>
                 <state img="9-awkward.png">I hope you're doing well with your studies, ~name~. The last thing anyone wants is to get sent back to magic kindergarten...</state>
             </case>
+            <case tag="opponent_lost" filter="taken" priority="0">
+                <state img="9-interested.png">Your partner must be very open if you are allowed to come to this game, ~name~.</state>
+                <state img="9-flirty.png">I dream of the day I am lucky to find a partner like you have, ~name~.</state>
+            </case>
             <case tag="opponent_lost" target="pinkie_pie" targetStage="4" targetSaidMarker="pinka_start" targetNotSaidMarker="pinka_end2">
                 <state img="9-what.png">Don't worry everyone... My world's Pinkie has acted like this before... she'll be back to normal soon...</state>
             </case>
-            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece">
+            <case tag="opponent_lost" targetStatus="lost_some" notSaidMarker="another_piece" priority="0">
                 <state img="9-calm.png" marker="another_piece">Congratulations on being able to get rid of another piece, ~name~!</state>
             </case>
             <case tag="opponent_lost" targetStatus="lost_some" priority="0">
