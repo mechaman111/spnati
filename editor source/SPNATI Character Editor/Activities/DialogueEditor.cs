@@ -2,6 +2,7 @@
 using Desktop.CommonControls;
 using Desktop.Providers;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -867,19 +868,13 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			get
 			{
-				if (!Config.SeenMacroHelp)
-				{
-					Config.SeenMacroHelp = true;
-					Config.Save();
-					return true;
-				}
-				return false;
+				return MacroManager.ShowMacroHelp;
 			}
 		}
 
 		public string GetHelpText()
 		{
-			return "Macros are shortcuts for quickly pulling in one or more conditions. A \"Macros\" button will appear in the Case Editor with an option using the provided macro name. When selected, it will pull in all the conditions provided in this form, exactly as they are filled out.";
+			return MacroManager.HelpText;
 		}
 
 		public object CreateData()
