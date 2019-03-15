@@ -2,6 +2,7 @@
 using Desktop;
 using Desktop.CommonControls;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -19,11 +20,46 @@ namespace SPNATI_Character_Editor
 			cboStatus.DisplayMember = "Value";
 		}
 
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count >= 5)
+			{
+				string count = values[0];
+				string tag = values[1];
+				string gender = values[2];
+				bool inverted = (values[3] == "1");
+				string status = values[4];
+				chkNot.Checked = inverted;
+				cboGender.SelectedItem = gender;
+				if (cboGender.SelectedItem == null)
+				{
+					cboGender.SelectedIndex = 0;
+				}
+				recTag.RecordKey = tag;
+				cboStatus.SelectedValue = status ?? "";
+				SetCount(count);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			string count = GetCount() ?? "0";
+			string tag = recTag.RecordKey;
+			string gender = cboGender.SelectedItem?.ToString();
+			bool inverted = chkNot.Checked;
+			string status = (string)cboStatus.SelectedValue;
+			values.Add(count);
+			values.Add(tag ?? "");
+			values.Add(gender ?? "");
+			values.Add(inverted ? "1" : "");
+			values.Add(status);
+		}
+
 		protected override void OnBoundData()
 		{
 			_filter = GetValue() as TargetCondition;
 
-			SetCount();
+			SetCount(_filter.Count);
 			chkNot.Checked = _filter.NegateStatus;
 			cboGender.SelectedItem = _filter.Gender;
 			if (cboGender.SelectedItem == null)
@@ -37,9 +73,8 @@ namespace SPNATI_Character_Editor
 			AddHandlers();
 		}
 
-		private void SetCount()
+		private void SetCount(string range)
 		{
-			string range = _filter.Count;
 			if (range == null)
 			{
 				valFrom.Value = 0;

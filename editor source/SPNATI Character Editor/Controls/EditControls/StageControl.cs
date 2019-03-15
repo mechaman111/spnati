@@ -28,6 +28,20 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				ApplyValue(values[0]);
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			string value = BuildValue() ?? "";
+			values.Add(value);
+		}
+
 		protected override void OnBoundData()
 		{
 			if (_sourceProperty != null)
@@ -37,7 +51,16 @@ namespace SPNATI_Character_Editor
 
 			FillItems();
 
-			string min = GetValue()?.ToString();
+			string value = GetValue()?.ToString();
+			ApplyValue(value);
+
+			cboFrom.SelectedIndexChanged += cboFrom_SelectedIndexChanged;
+			cboTo.SelectedIndexChanged += cboTo_SelectedIndexChanged;
+		}
+
+		private void ApplyValue(string value)
+		{
+			string min = value?.ToString();
 			string max = null;
 			if (!string.IsNullOrEmpty(min))
 			{
@@ -49,9 +72,6 @@ namespace SPNATI_Character_Editor
 
 			SetCombo(cboFrom, min);
 			SetCombo(cboTo, max);
-
-			cboFrom.SelectedIndexChanged += cboFrom_SelectedIndexChanged;
-			cboTo.SelectedIndexChanged += cboTo_SelectedIndexChanged;
 		}
 
 		private void SetCombo(ComboBox box, string stage)
@@ -184,21 +204,26 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		public override void Save()
+		private string BuildValue()
 		{
 			string min = ReadStage(cboFrom);
 			string max = ReadStage(cboTo);
 
 			if (string.IsNullOrEmpty(min))
 			{
-				SetValue(null);
-				return;
+				return null;
 			}
 			string value = min;
 			if (!string.IsNullOrEmpty(max) && min != max)
 			{
 				value += "-" + max;
 			}
+			return value;
+		}
+
+		public override void Save()
+		{
+			string value = BuildValue();
 			SetValue(value);
 		}
 

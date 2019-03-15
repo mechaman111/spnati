@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Desktop.CommonControls.PropertyControls
 {
@@ -18,6 +19,20 @@ namespace Desktop.CommonControls.PropertyControls
 			cboItems.Items.Clear();
 			cboItems.Items.Add("");
 			cboItems.Items.AddRange(p.Options);
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				cboItems.SelectedItem = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			string text = cboItems.SelectedItem?.ToString();
+			values.Add(text);
 		}
 
 		private void RemoveHandlers()

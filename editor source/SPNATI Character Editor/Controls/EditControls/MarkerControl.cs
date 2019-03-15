@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
 using System;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor
 {
@@ -11,6 +12,19 @@ namespace SPNATI_Character_Editor
 			InitializeComponent();
 
 			recField.RecordType = typeof(Marker);
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				recField.RecordKey = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(recField.RecordKey ?? "");
 		}
 
 		public override void OnInitialAdd()

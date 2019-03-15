@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -18,6 +19,19 @@ namespace Desktop.CommonControls.PropertyControls
 			TextAttribute attrib = parameters as TextAttribute;
 			txtValue.Multiline = attrib.Multiline;
 			_validatorMethodName = attrib.Validator;
+		}
+
+		public override void ApplyMacro(List<string> values)
+		{
+			if (values.Count > 0)
+			{
+				txtValue.Text = values[0];
+			}
+		}
+
+		public override void BuildMacro(List<string> values)
+		{
+			values.Add(txtValue.Text);
 		}
 
 		private void AddHandlers()

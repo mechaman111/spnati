@@ -121,7 +121,7 @@ namespace Desktop
 			if (pieces.Length > 1)
 			{
 				application.Property = pieces[0];
-				foreach (string value in pieces[1].Split(new string[] { "%^" }, StringSplitOptions.None))
+				foreach (string value in pieces[1].Split(new string[] { "|*" }, StringSplitOptions.None))
 				{
 					application.Values.Add(value);
 				}
