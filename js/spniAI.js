@@ -69,9 +69,31 @@ function determineAIAction (player) {
 				console.log("Hand is " + (player.hand.strength == PAIR ? "okay" : "bad") + ", going for a flush, trading in one card. " + player.hand.tradeIns);
 				return;
 			}
+
+			for (var start_rank = 2; start_rank <= 10; start_rank++) {
+				/* Outside straight draw - four ranks in a row */
+				if (player.hand.ranks.slice(start_rank - 1, start_rank - 1 + 4).countTrue() == 4) {
+					player.hand.tradeIns = hand.map(function(c, idx) {
+						return c.rank < start_rank || c.rank > start_rank + 3
+							|| hand.slice(0, idx).some(function(c2) { return c2.rank == c.rank; });
+					});
+					console.log("Hand is " + (player.hand.strength == PAIR ? "okay" : "bad") + ", going for a straight, trading in one card. "+player.hand.tradeIns);
+					return;
+				}
+			}
+			for (var start_rank = 10; start_rank >= 1; start_rank--) {
+				/* Inside straight draw - four ranks out of five in a row */
+				if (player.hand.ranks.slice(start_rank - 1, start_rank - 1 + 5).countTrue() == 4) {
+					player.hand.tradeIns = hand.map(function(c, idx) {
+						return ((c.rank < start_rank || c.rank > start_rank + 4) && !(start_rank == 1 && c.rank == 14))
+							|| hand.slice(0, idx).some(function(c2) { return c2.rank == c.rank; });
+					});
+					console.log("Hand is " + (player.hand.strength == PAIR ? "okay" : "bad") + ", going for a straight, trading in one card. "+player.hand.tradeIns);
+					return;
+				}
+			}
 		}
 
-		/* We give up a pair for a flush draw, but not for a straight draw. */
 		if (player.hand.strength == PAIR) {
 			/* Keep the pair (rank = value[0]), discard the rest */
 			player.hand.tradeIns = hand.map(function(c) { return c.rank != player.hand.value[0]; });
@@ -80,30 +102,14 @@ function determineAIAction (player) {
 		}
 
 		if (player.getIntelligence() == eIntelligence.AVERAGE) {
-			/* then, look to see if a straight is possible. Note that no
-			 * pairs or better can exist at this point and that when a
-			 * straight draw exists in this situation, the difference
-			 * between the second highest and the lowest card, or the
-			 * highest and the second lowest card, has to be 3 or 4. */
-			/* Special-casing the Ace is easier this way than having to
-			 * account for a ranks array with 6 non-zero elements. */ 
-			var sorted_ranks = hand.map(function(c) { return c.rank; }).sort(function(a, b) { return a - b; });
-			var straight_draw_discard = null;
-			if (sorted_ranks[4] - sorted_ranks[1] == 3) { // Open-ended straight draw with a lower card (e.g. 3 6 7 8 9)
-				straight_draw_discard = sorted_ranks[0];
-			} else if (sorted_ranks[3] - sorted_ranks[0] == 3) { // Likewise (unless A-4), with a higher card (e.g. 6 7 8 9 Q)
-				straight_draw_discard = sorted_ranks[4];
-			} else if (sorted_ranks[4] == 14 && sorted_ranks[2] <= 5) { // Special case: 2 3 4 x A or e.g. 3 4 5 x A
-				straight_draw_discard = sorted_ranks[1];
-			} else if (sorted_ranks[4] - sorted_ranks[1] == 4) { // Inside straight draw with a lower card (e.g. 3 6 7 9 10)
-				straight_draw_discard = sorted_ranks[0];
-			} else if (sorted_ranks[3] - sorted_ranks[0] == 4) { // Likewise with a higher card (e.g. 6 7 9 10 Q)
-				straight_draw_discard = sorted_ranks[4];
-			}
-			if (straight_draw_discard !== null) {
-				player.hand.tradeIns = hand.map(function(c) { return c.rank == straight_draw_discard; });
-				console.log("Hand is bad, going for a straight, trading in one card. "+player.hand.tradeIns);
-				return;
+			for (var start_rank = 2; start_rank <= 11; start_rank++) {
+				if (player.hand.ranks.slice(start_rank - 1, start_rank - 1 + 3).countTrue() == 3) {
+					player.hand.tradeIns = hand.map(function(c, idx) {
+						return c.rank < start_rank || c.rank > start_rank + 2;
+					});
+					console.log("Hand is bad, going for a straight, trading in two cards. "+player.hand.tradeIns);
+					return;
+				}
 			}
 		}
 
