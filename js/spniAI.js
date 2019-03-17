@@ -11,6 +11,8 @@
  * Uses a basic poker AI to exchange cards.
  * player is an object
  ************************************************************/
+var AVERAGE_KEEP_HIGH = 2;
+
 function determineAIAction (player) {
 	/* determine the current hand */
 	player.hand.determine();
@@ -112,9 +114,12 @@ function determineAIAction (player) {
 				}
 			}
 		}
-
 		if (player.hand.strength == HIGH_CARD) {
-			if (player.getIntelligence() != eIntelligence.BEST || player.hand.value[0] >= 11) {
+			if (player.getIntelligence() == eIntelligence.AVERAGE) {
+				player.hand.tradeIns = hand.map(function(c) { return player.hand.value.slice(0, AVERAGE_KEEP_HIGH).indexOf(c.rank) < 0; });
+				console.log("Hand is bad, trading in "+ (CARDS_PER_HAND - AVERAGE_KEEP_HIGH) +" cards. "+player.hand.tradeIns);
+				return;
+			} else if (player.getIntelligence() != eIntelligence.BEST || player.hand.value[0] >= 10) {
 				player.hand.tradeIns = hand.map(function(c) { return c.rank != player.hand.value[0]; });
 				console.log("Hand is bad, trading in four cards. "+player.hand.tradeIns);
 				return;
