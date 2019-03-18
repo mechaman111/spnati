@@ -29,14 +29,24 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.cmdImportAll = new System.Windows.Forms.Button();
 			this.cmdImportNew = new System.Windows.Forms.Button();
 			this.cmdClear = new System.Windows.Forms.Button();
 			this.cmdExport = new System.Windows.Forms.Button();
 			this.cmdImport = new System.Windows.Forms.Button();
 			this.gridPoses = new System.Windows.Forms.DataGridView();
+			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColAdvanced = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
+			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,16 +58,6 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.lblCurrentPoseFile = new System.Windows.Forms.Label();
 			this.chkRequired = new System.Windows.Forms.CheckBox();
-			this.ColStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPose = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColAdvanced = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.ColImage = new System.Windows.Forms.DataGridViewImageColumn();
-			this.ColImport = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -148,6 +148,73 @@
 			this.gridPoses.Scroll += new System.Windows.Forms.ScrollEventHandler(this.gridPoses_Scroll);
 			this.gridPoses.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gridPoses_MouseDown);
 			// 
+			// ColStage
+			// 
+			this.ColStage.HeaderText = "Stage";
+			this.ColStage.Name = "ColStage";
+			this.ColStage.Width = 50;
+			// 
+			// ColPose
+			// 
+			this.ColPose.HeaderText = "Pose";
+			this.ColPose.Name = "ColPose";
+			// 
+			// ColL
+			// 
+			this.ColL.HeaderText = "L";
+			this.ColL.Name = "ColL";
+			this.ColL.Width = 40;
+			// 
+			// ColT
+			// 
+			this.ColT.HeaderText = "T";
+			this.ColT.Name = "ColT";
+			this.ColT.Width = 40;
+			// 
+			// ColR
+			// 
+			this.ColR.HeaderText = "R";
+			this.ColR.Name = "ColR";
+			this.ColR.Width = 40;
+			// 
+			// ColB
+			// 
+			this.ColB.HeaderText = "B";
+			this.ColB.Name = "ColB";
+			this.ColB.Width = 40;
+			// 
+			// ColData
+			// 
+			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColData.DefaultCellStyle = dataGridViewCellStyle5;
+			this.ColData.HeaderText = "Code";
+			this.ColData.Name = "ColData";
+			// 
+			// ColAdvanced
+			// 
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle6.NullValue = "More...";
+			this.ColAdvanced.DefaultCellStyle = dataGridViewCellStyle6;
+			this.ColAdvanced.HeaderText = "";
+			this.ColAdvanced.Name = "ColAdvanced";
+			this.ColAdvanced.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColAdvanced.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.ColAdvanced.Width = 70;
+			// 
+			// ColImage
+			// 
+			this.ColImage.HeaderText = "Image";
+			this.ColImage.Name = "ColImage";
+			this.ColImage.Width = 75;
+			// 
+			// ColImport
+			// 
+			this.ColImport.HeaderText = "";
+			this.ColImport.Name = "ColImport";
+			this.ColImport.Width = 70;
+			// 
 			// contextMenu
 			// 
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -157,7 +224,8 @@
             this.toolStripSeparator1,
             this.duplicateToolStripMenuItem});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(167, 98);
+			this.contextMenu.Size = new System.Drawing.Size(167, 120);
+			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
 			// 
 			// cutToolStripMenuItem
 			// 
@@ -233,73 +301,6 @@
 			this.chkRequired.TabIndex = 35;
 			this.chkRequired.Text = "Include missing poses";
 			this.chkRequired.UseVisualStyleBackColor = true;
-			// 
-			// ColStage
-			// 
-			this.ColStage.HeaderText = "Stage";
-			this.ColStage.Name = "ColStage";
-			this.ColStage.Width = 50;
-			// 
-			// ColPose
-			// 
-			this.ColPose.HeaderText = "Pose";
-			this.ColPose.Name = "ColPose";
-			// 
-			// ColL
-			// 
-			this.ColL.HeaderText = "L";
-			this.ColL.Name = "ColL";
-			this.ColL.Width = 40;
-			// 
-			// ColT
-			// 
-			this.ColT.HeaderText = "T";
-			this.ColT.Name = "ColT";
-			this.ColT.Width = 40;
-			// 
-			// ColR
-			// 
-			this.ColR.HeaderText = "R";
-			this.ColR.Name = "ColR";
-			this.ColR.Width = 40;
-			// 
-			// ColB
-			// 
-			this.ColB.HeaderText = "B";
-			this.ColB.Name = "ColB";
-			this.ColB.Width = 40;
-			// 
-			// ColData
-			// 
-			this.ColData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColData.DefaultCellStyle = dataGridViewCellStyle1;
-			this.ColData.HeaderText = "Code";
-			this.ColData.Name = "ColData";
-			// 
-			// ColAdvanced
-			// 
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.NullValue = "More...";
-			this.ColAdvanced.DefaultCellStyle = dataGridViewCellStyle2;
-			this.ColAdvanced.HeaderText = "";
-			this.ColAdvanced.Name = "ColAdvanced";
-			this.ColAdvanced.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColAdvanced.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.ColAdvanced.Width = 70;
-			// 
-			// ColImage
-			// 
-			this.ColImage.HeaderText = "Image";
-			this.ColImage.Name = "ColImage";
-			this.ColImage.Width = 75;
-			// 
-			// ColImport
-			// 
-			this.ColImport.HeaderText = "";
-			this.ColImport.Name = "ColImport";
-			this.ColImport.Width = 70;
 			// 
 			// PoseListEditor
 			// 

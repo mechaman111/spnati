@@ -352,6 +352,10 @@ namespace SPNATI_Character_Editor
 							}
 							stageImages.Add(img);
 						}
+						else if (!string.IsNullOrEmpty(line.Text))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
+						}
 
 						//Validate variables
 						List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase.Tag, line.Text);

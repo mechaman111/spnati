@@ -59,6 +59,10 @@ namespace SPNATI_Character_Editor.Forms
 
 		public async void Import(ImageMetadata metadata, ISkin character, bool lockRectSize)
 		{
+			cmdOK.Enabled = false;
+			cmdCancel.Enabled = false;
+			cmdReimport.Enabled = false;
+			cmdAdvanced.Enabled = false;
 			lblWait.Visible = true;
 			tmrWait.Enabled = true;
 			_lockRect = lockRectSize;
@@ -71,6 +75,10 @@ namespace SPNATI_Character_Editor.Forms
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
 			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData, metadata.SkipPreprocessing);
+			cmdOK.Enabled = true;
+			cmdCancel.Enabled = true;
+			cmdReimport.Enabled = true;
+			cmdAdvanced.Enabled = true;
 			tmrWait.Enabled = false;
 			lblWait.Visible = false;
 			_previewImage = image;

@@ -790,7 +790,6 @@ namespace SPNATI_Character_Editor.Activities
 			if (gridPoses.SelectedRows.Count == 0) { return; }
 			DataGridViewRow row = gridPoses.SelectedRows[0];
 			_clipboard = ReadRow(row);
-			pasteToolStripMenuItem.Enabled = true;
 			Shell.Instance.SetStatus("Pose copied to clipboard.");
 		}
 
@@ -897,7 +896,15 @@ namespace SPNATI_Character_Editor.Activities
 				gridPoses.ClearSelection();
 				if (hit.RowIndex >= 0 && hit.RowIndex < gridPoses.Rows.Count)
 				{
-					gridPoses.Rows[hit.RowIndex].Selected = true;
+					if (hit.ColumnIndex >= 0 && hit.ColumnIndex <= gridPoses.Columns.Count)
+					{
+						gridPoses.Rows[hit.RowIndex].Cells[hit.ColumnIndex].Selected = true;
+						gridPoses.BeginEdit(true);
+					}
+					else
+					{
+						gridPoses.Rows[hit.RowIndex].Selected = true;
+					}
 				}
 			}
 		}
@@ -905,6 +912,21 @@ namespace SPNATI_Character_Editor.Activities
 		private void chkRequired_CheckedChanged(object sender, EventArgs e)
 		{
 			PopulatePoseGrid();
+		}
+
+		private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (gridPoses.SelectedRows.Count == 0)
+			{
+				if (gridPoses.SelectedCells.Count > 0)
+				{
+					duplicateToolStripMenuItem.Visible = false;
+					pasteToolStripMenuItem.Enabled = Clipboard.ContainsText();
+					return;
+				}
+			}
+			duplicateToolStripMenuItem.Visible = true;
+			pasteToolStripMenuItem.Enabled = _clipboard != null;
 		}
 	}
 
