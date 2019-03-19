@@ -10,12 +10,14 @@ function PoseSprite(id, src, onload, pose, args) {
     this.pose = pose;
     this.id = id;
     this.player = args.player;
-    this.src = 'opponents/' + src;
+    this.src = this.prevSrc = 'opponents/' + src;
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
     this.scalex = args.scalex || 1;
     this.scaley = args.scaley || 1;
+    this.skewx = args.skewx || 0;
+    this.skewy = args.skewy || 0;
     this.rotation = args.rotation || 0;
     this.alpha = args.alpha;
     this.pivotx = args.pivotx;
@@ -31,7 +33,7 @@ function PoseSprite(id, src, onload, pose, args) {
         if (!this.height) this.height = this.img.naturalHeight;
         if (!this.width) this.width = this.img.naturalWidth;
         
-        onload();
+        onload(this);
         this.draw();
     }.bind(this);
     this.img.src = this.src;
@@ -66,10 +68,14 @@ PoseSprite.prototype.draw = function() {
     });
     
     $(this.img).css({
-      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ")",
+      "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
       'height': this.scaleToDisplay(this.height)+"px",
       'width': this.scaleToDisplay(this.width)+"px"
     });
+    
+    if (this.prevSrc !== this.src) {
+        this.img.src = this.prevSrc = this.src;
+    }
 }
 
 
@@ -137,7 +143,7 @@ PoseAnimation.prototype.interpolate = function (prop, last, next, t, idx) {
 }
 
 PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
-    if (this.interpolation == 'none' && fromFrame.src) {
+    if (fromFrame.src) {
         this.target.src = fromFrame.src;
     }
     
@@ -146,6 +152,8 @@ PoseAnimation.prototype.updateSprite = function (fromFrame, toFrame, t, idx) {
     this.interpolate("rotation", fromFrame, toFrame, t, idx);
     this.interpolate("scalex", fromFrame, toFrame, t, idx);
     this.interpolate("scaley", fromFrame, toFrame, t, idx);
+    this.interpolate("skewx", fromFrame, toFrame, t, idx);
+    this.interpolate("skewy", fromFrame, toFrame, t, idx);
     this.interpolate("alpha", fromFrame, toFrame, t, idx);
     this.target.draw();
 }
@@ -157,9 +165,9 @@ function Pose(poseDef, display) {
     this.display = display;
     this.sprites = {};
     this.totalSprites = 0;
+    this.loaded_sprites = {};
     this.animations = [];
     this.loaded = false;
-    this.n_loaded = 0;
     this.onLoadComplete = null;
     this.lastUpdateTS = null;
     this.active = false;
@@ -199,11 +207,14 @@ Pose.prototype.getHeightScaleFactor = function() {
     return this.display.height() / this.baseHeight;
 }
 
-Pose.prototype.onSpriteLoaded = function() {
-    this.n_loaded++;
-    if (this.n_loaded >= this.totalSprites) {
+Pose.prototype.onSpriteLoaded = function(sprite) {
+    if (this.loaded_sprites[sprite.id]) { return; }
+    
+    this.loaded_sprites[sprite.id] = true;
+    var n_loaded = Object.keys(this.loaded_sprites).length;
+    
+    if (n_loaded >= this.totalSprites && !this.loaded) {
         this.loaded = true;
-        
         if (this.onLoadComplete) { return this.onLoadComplete(); }
     }
 }
@@ -255,6 +266,8 @@ function parseSpriteDefinition ($xml, player) {
         targetObj.scaley = parseFloat(targetObj.scaley, 10);
     }
     
+    targetObj.skewx = parseFloat(targetObj.skewx, 10);
+    targetObj.skewy = parseFloat(targetObj.skewy, 10);
     targetObj.x = parseFloat(targetObj.x, 10);
     targetObj.y = parseFloat(targetObj.y, 10);
     
@@ -266,6 +279,9 @@ function parseSpriteDefinition ($xml, player) {
 function parseKeyframeDefinition($xml) {
     var targetObj = parseSpriteDefinition($xml);
     targetObj.time = parseFloat(targetObj.time) * 1000;
+    if (targetObj.src) {
+        targetObj.src = "opponents/" + targetObj.src;
+    }
     
     return targetObj;
 }
@@ -308,7 +324,7 @@ function PoseDefinition ($xml, player) {
     $xml.find('directive').each(function (i, elem) {
         var directive = parseDirective(elem);
         if (directive.type === 'animation') {
-            this.animations.push(directive);
+            this.addAnimation(directive);
         } else if (directive.type === 'sequence') {
             // Convert the sequence into a set of Animation objects.
             var curDelay = directive.delay;
@@ -336,12 +352,87 @@ function PoseDefinition ($xml, player) {
     this.player = player;
 }
 
+//This is pretty much the same thing as spniEpilogue's addDirectiveToScene
+PoseDefinition.prototype.addAnimation = function (directive) {
+    if (directive.keyframes.length > 1) {
+        //first split the properties into buckets of frame indices where they appear
+        var propertyMap = {};
+        for (var i = 0; i < directive.keyframes.length; i++) {
+            var frame = directive.keyframes[i];
+            for (var j = 0; j < animatedProperties.length; j++) {
+                var property = animatedProperties[j];
+                if (frame.hasOwnProperty(property) && !Number.isNaN(frame[property])) {
+                    if (!propertyMap[property]) {
+                        propertyMap[property] = [];
+                    }
+                    propertyMap[property].push(i);
+                }
+            }
+        }
+
+        //next create directives for each combination of frames
+        var directives = {};
+        for (var prop in propertyMap) {
+            var key = propertyMap[prop].join(',');
+            var workingDirective = directives[key];
+            if (!workingDirective) {
+                //shallow copy the directive
+                workingDirective = {};
+                for (var srcProp in directive) {
+                    if (directive.hasOwnProperty(srcProp)) {
+                        workingDirective[srcProp] = directive[srcProp];
+                    }
+                }
+                workingDirective.keyframes = [];
+                directives[key] = workingDirective;
+                this.animations.push(workingDirective);
+            }
+            var lastStart = 0;
+            for (var i = 0; i < propertyMap[prop].length; i++) {
+                var srcFrame = directive.keyframes[propertyMap[prop][i]];
+                var targetFrame;
+                if (workingDirective.keyframes.length <= i) {
+                    //shallow copy the frame minus the animatable properties
+                    targetFrame = {};
+                    for (var srcProp in srcFrame) {
+                        if (srcFrame.hasOwnProperty(srcProp)) {
+                            targetFrame[srcProp] = srcFrame[srcProp];
+                        }
+                    }
+                    for (var j = 0; j < animatedProperties.length; j++) {
+                        var property = animatedProperties[j];
+                        delete targetFrame[property];
+                    }
+
+                    targetFrame.startTime = lastStart;
+                    workingDirective.keyframes.push(targetFrame);
+                    lastStart = srcFrame.time;
+                }
+                else {
+                    targetFrame = workingDirective.keyframes[i];
+                }
+                targetFrame[prop] = srcFrame[prop];
+            }
+        }
+    }
+    else {
+        this.animations.push(directive);
+    }
+}
+
 PoseDefinition.prototype.getUsedImages = function(stage) {
     var baseFolder = 'opponents/';
     var imageSet = {};
     
     this.sprites.forEach(function (sprite) {
         imageSet[baseFolder+sprite.src] = true;
+    });
+    this.animations.forEach(function (animation) {
+        animation.keyframes.forEach(function (keyframe) {
+            if (keyframe.src) {
+                imageSet[keyframe.src] = true;
+            }
+        });
     });
     
     return Object.keys(imageSet);
@@ -370,9 +461,7 @@ OpponentDisplay.prototype.hideBubble = function () {
     this.bubble.hide();
 }
 
-OpponentDisplay.prototype.clearPose = function () {
-    this.pose = null;
-    this.simpleImage.hide();
+OpponentDisplay.prototype.clearCustomPose = function () {
     this.imageArea.children('.custom-pose').remove();
     if (this.animCallbackID) {
         window.cancelAnimationFrame(this.animCallbackID);
@@ -380,23 +469,44 @@ OpponentDisplay.prototype.clearPose = function () {
     }
 }
 
+OpponentDisplay.prototype.clearSimplePose = function () {
+    this.simpleImage.hide();
+}
+
+OpponentDisplay.prototype.clearPose = function () {
+    this.pose = null;
+    this.clearCustomPose();
+    this.clearSimplePose();
+}
+
 OpponentDisplay.prototype.drawPose = function (pose) {
-    this.clearPose();
-    
     if (typeof(pose) === 'string') {
+        // clear out previously shown custom poses if necessary
+        if (this.pose instanceof Pose) {
+            this.clearCustomPose(); 
+        }
         this.simpleImage.attr('src', pose).show();
     } else if (pose instanceof Pose) {
-        this.pose = pose;
+        if (typeof(this.pose) === 'string') {
+            // clear out previously shown simple poses
+            this.clearSimplePose();
+        } else if (this.pose instanceof Pose) {
+            // Remove any previously shown custom poses too
+            $(this.pose.container).remove();
+        }
+        
         this.imageArea.append(pose.container);
         pose.draw();
-        if (this.pose.animations.length > 0) {
+        if (pose.animations.length > 0) {
             this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
         }
     }
+    
+    this.pose = pose;
 }
 
 OpponentDisplay.prototype.onResize = function () {
-    if (this.pose) {
+    if (this.pose && (this.pose instanceof Pose)) {
         this.pose.draw();
     }
 }
@@ -429,8 +539,7 @@ OpponentDisplay.prototype.update = function(player) {
             this.clearPose();
         }
     } else {
-        this.pose = player.folder + chosenState.image;
-        this.drawPose(this.pose);
+        this.drawPose(player.folder + chosenState.image);
     }
     
     /* update label */
@@ -452,7 +561,7 @@ OpponentDisplay.prototype.update = function(player) {
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {
-    if (!this.pose) return;
+    if (!this.pose || !(this.pose instanceof Pose)) return;
     this.pose.update(timestamp);
     if (this.pose.animations.some(function(a) { return a.looped || !a.isComplete(); })) {
         this.animCallbackID = window.requestAnimationFrame(this.loop.bind(this));
@@ -534,7 +643,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.removeClass("smooth-button-green");
         this.selectButton.addClass("smooth-button-red");
         
-        if (!this.pose) {
+        if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
                 this.bubble.show();
                 this.simpleImage.css('height', player.scale + '%').show();

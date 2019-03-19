@@ -49,6 +49,11 @@ namespace SPNATI_Character_Editor
 			}
 			cboValue.Text = _expression.Value;
 
+			if (Bindings.Contains("AlsoPlaying"))
+			{
+				FillInCharacter();
+			}
+
 			UpdateAutoComplete(true);
 
 			cboExpression.TextChanged += TextValueChanged;
@@ -62,23 +67,28 @@ namespace SPNATI_Character_Editor
 			{
 				if (cboExpression.Text.StartsWith("~_."))
 				{
-					Case data = Data as Case;
-					if (data != null)
-					{
-						string id = data.AlsoPlaying;
-						if (!string.IsNullOrEmpty(id))
-						{
-							string key = CharacterDatabase.GetId(id);
-							string variable = cboExpression.Text;
-							variable = $"~{key}.{variable.Substring(3)}";
-							cboExpression.Text = variable;
-						}
-					}
+					FillInCharacter();
 				}
 			}
 			if (property == "Target" || property == "AlsoPlaying")
 			{
 				UpdateAutoComplete(true);
+			}
+		}
+
+		private void FillInCharacter()
+		{
+			Case data = Data as Case;
+			if (data != null)
+			{
+				string id = data.AlsoPlaying;
+				if (!string.IsNullOrEmpty(id))
+				{
+					string key = CharacterDatabase.GetId(id);
+					string variable = cboExpression.Text;
+					variable = $"~{key}.{variable.Substring(3)}";
+					cboExpression.Text = variable;
+				}
 			}
 		}
 

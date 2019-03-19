@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v3.6 at 5:58:28 AM on February 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v3.7.1 at 8:58:16 PM on March 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v3.6</version>
+    <version>v3.7.1</version>
     <first>Ryuji</first>
     <last>Sakamoto</last>
     <label>Ryuji</label>
@@ -38,7 +38,7 @@
         <tag>persona_5</tag>
         <tag>hero</tag>
         <tag>persona</tag>
-        <tag>ryuji</tag>
+        <tag>pubic_hair</tag>
     </tags>
 
     <start />
@@ -76,7 +76,11 @@
                 <state img="0-thinking.png" marker="justincase">...</state>
             </case>
             <case tag="game_start" alsoPlaying="ann" priority="999">
-                <state img="0-fingerguns.png" marker="annplaying">'Sup, Ann!</state>
+                <state img="0-fingerguns.png" marker="ptplaying">'Sup, Ann!</state>
+            </case>
+            <case tag="game_start" alsoPlaying="futaba" alsoPlayingSayingMarker="persona_table">
+                <state img="0-pumped.png">Woohoo!! Let's rock!!</state>
+                <state img="0-pumped.png">LET'S DO THIS!!</state>
             </case>
             <case tag="game_start" alsoPlaying="futaba" priority="698">
                 <state img="0-cocky.png" marker="futabahasjoinedtheparty">You may be smarter, but can ya beat me at cards Futaba?</state>
@@ -85,10 +89,10 @@
                 <state img="0-fingerguns.png" marker="futabahasjoinedtheparty">Nice of ya to join us, Futaba!</state>
             </case>
             <case tag="game_start" alsoPlaying="haru">
-                <state img="0-cheerful.png">'Sup, Haru!</state>
+                <state img="0-cheerful.png" marker="ptplaying">'Sup, Haru!</state>
             </case>
             <case tag="game_start" alsoPlaying="haru" alsoPlayingSaidMarker="wrongpoker">
-                <state img="0-awkward.png">I... thought you knew.</state>
+                <state img="0-awkward.png" marker="ptplaying">I... thought you knew.</state>
             </case>
             <case tag="game_start" alsoPlaying="haru" totalAlive="3" priority="9999">
                 <state img="0-fingerguns.png" marker="haruonly">♫ Give into temptatiiiiooooooon!! ♫</state>
@@ -111,13 +115,13 @@
                 <condition count="1" filter="futaba" />
                 <state img="0-what.png">Wait, &lt;i&gt;what&lt;/i&gt;?</state>
             </case>
-            <case tag="game_start">
-                <condition count="3" filter="phantom_thieves" />
-                <state img="0-pumped.png">Aww, sweet! Just like the good ol' days, right guys?</state>
-            </case>
             <case tag="game_start" alsoPlaying="haru" priority="9999">
                 <condition count="3" filter="phantom_thieves" />
-                <state img="0-fingerguns.png">Yooo, the gang's all here!</state>
+                <state img="0-fingerguns.png" marker="ptplaying">Yooo, the gang's all here!</state>
+            </case>
+            <case tag="game_start">
+                <test expr="~player~" value="Joker" />
+                <state img="0-sad.png">Damn it... I got excited when I heard Joker was playin' with us. But you ain't our Joker...</state>
             </case>
             <case tag="game_start" totalAlive="2-4">
                 <state img="0-thinking.png">Huh. I thought there'd be more people.</state>
@@ -240,11 +244,6 @@
             <case tag="good_hand" alsoPlaying="velma">
                 <state img="0-thinking.png">You kinda look familiar. Are you a part of that gang who solves mysteries?</state>
                 <state img="0-thinking.png">You look familiar, Velma...</state>
-            </case>
-            <case tag="good_hand" alsoPlaying="wiifitfemale" timeInStage="0-4" totalRounds="0-3">
-                <state img="0-pumped.png">Another fitness trainer? Awesome!</state>
-                <state img="0-cheerful.png">You look like you'd work out a lot! Trust me, I can tell.</state>
-                <state img="0-fingerguns.png">I also happen to be a part-time fitness trainer! Maybe we can exchange tips sometime?</state>
             </case>
             <case tag="good_hand" totalRounds="0-2" notSaidMarker="muricaeyes">
                 <condition count="3" filter="american" />
@@ -556,6 +555,9 @@
             <case tag="hand" alsoPlaying="futaba" notSaidMarker="rockmusic_lover" alsoPlayingSayingMarker="futaba_jukebox">
                 <state img="0-pumped.png" marker="rockmusic_lover">Yo, that'd be &lt;i&gt;awesome!&lt;/i&gt; I hope they do have a jukebox! I could use some rock n' roll!</state>
             </case>
+            <case tag="hand" alsoPlaying="haru" alsoPlayingSayingMarker="yusuke_beach2">
+                <state img="0-thinking.png">He takes it off when goin' in the water, if that counts.</state>
+            </case>
             <case tag="hand" alsoPlaying="kamina" notSaidMarker="kamina_fire">
                 <state img="0-startled.png" marker="kamina_fire">Wait.... &lt;i&gt;Is that cape on fire!?&lt;/i&gt;</state>
                 <state img="0-startled.png" marker="kamina_fire">Woah, you're like a shonen protagonist!</state>
@@ -753,9 +755,9 @@
                 <state img="0-startled.png" marker="lostwithpair">What the--I thought a pair would be enough!</state>
                 <state img="0-startled.png" marker="lostwithpair">I lost with a PAIR? That's bullshit!</state>
             </case>
-            <case tag="must_strip_normal" timeInStage="0-0" priority="115">
+            <case tag="must_strip_normal" timeInStage="0" priority="115">
                 <state img="0-pissed.png">Why do I got to be the first to lose!?</state>
-                <state img="0-pissed.png">No fair!!</state>
+                <state img="0-pissed.png">I'm the first to lose!? No fair, this shit always happens!</state>
             </case>
             <case tag="must_strip_losing">
                 <state img="0-startled.png">Seriously!?</state>
@@ -910,11 +912,17 @@
                 <state img="0-grumpy.png" marker="nayrupossess">Don't think I don't have my eye on you!</state>
             </case>
             <case tag="male_must_strip" filter="hero" targetStage="0" totalRounds="0-5" priority="150">
-                <condition count="1" filter="phantom_thieves" />
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
                 <state img="0-pumped.png">Awesome!! You're a hero?</state>
                 <state img="0-pumped.png">You fight shitty people too?</state>
                 <state img="0-pumped.png">Maybe you should join the Phantom Thieves. We rid the world of shitty people too!</state>
                 <state img="0-pumped.png">Nice to see another vigilante!</state>
+            </case>
+            <case tag="male_must_strip" filter="hero" targetStage="0" totalAlive="4-" totalRounds="0-5" priority="150">
+                <condition count="2-3" filter="phantom_thieves" />
+                <state img="0-fingerguns.png">Nice to see another vigilante! Right guys?</state>
             </case>
             <case tag="male_must_strip" filter="creepy" totalRounds="0-4" notSaidMarker="creepnweirdo">
                 <state img="0-awkward.png" marker="creepnweirdo">&lt;i&gt;He's seriously givin' me the creeps.&lt;/i&gt;</state>
@@ -1026,6 +1034,15 @@
             <case tag="female_must_strip" alsoPlaying="sheena" alsoPlayingStage="0" timeInStage="2-10">
                 <state img="0-cocky.png">Ha! You ain't invincible.</state>
             </case>
+            <case tag="female_must_strip" filter="hero" targetStage="0" totalRounds="0-5" priority="149">
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="ann_takamaki" />
+                <state img="0-pumped.png">Awesome!! You're a hero?</state>
+                <state img="0-pumped.png">You fight shitty people too?</state>
+                <state img="0-pumped.png">Maybe you should join the Phantom Thieves. We rid the world of shitty people too!</state>
+                <state img="0-pumped.png">Nice to see another vigilante!</state>
+            </case>
             <case tag="female_must_strip" filter="cheerful" totalRounds="0-1">
                 <state img="0-cheerful.png">I like your enthusiasm, ~name~!</state>
                 <state img="0-fingerguns.png">At glad you got a positive attitude 'bout this! Let's roll!</state>
@@ -1037,12 +1054,6 @@
             </case>
             <case tag="female_must_strip" filter="gun (6)" notSaidMarker="russianro">
                 <state img="0-what.png" marker="russianro">Who the hell brings a gun to a poker game? Unless we're playin' Russian roulette in the Metaverse... which we ain't.</state>
-            </case>
-            <case tag="female_must_strip" filter="hero" targetStage="0" totalRounds="0-5" priority="149">
-                <state img="0-pumped.png">Awesome!! You're a hero?</state>
-                <state img="0-pumped.png">You fight evil guys too?</state>
-                <state img="0-pumped.png">Maybe you should join the Phantom Thieves. We rid the world of shitty people too!</state>
-                <state img="0-pumped.png">Nice to see another vigilante!</state>
             </case>
             <case tag="female_must_strip" filter="phantom_thieves" targetStage="0" notSaidMarker="matarukaja" priority="555">
                 <state img="0-cocky.png" marker="matarukaja">Looks like &lt;i&gt;you&lt;/i&gt; could'a used a Matarukaja.</state>
@@ -1137,29 +1148,34 @@
                 <state img="0-awkward.png">Jeez, you alright?</state>
                 <state img="0-awkward.png">Nah, I gotcha.</state>
             </case>
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="0-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
+                <state img="0-startled.png">HOW THE HELL DID YOU LOSE!?</state>
+            </case>
             <case tag="female_must_strip" target="haru" targetSaidMarker="apologies">
                 <state img="0-neutral.png">Don't worry 'bout it, Haru.</state>
                 <state img="0-awkward.png">Hey, don't be sorry! This game's mostly luck.</state>
-            </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
-                <state img="0-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
                 <state img="0-pissed.png">The hell is your deal!? She's barely chubby!</state>
                 <state img="0-disgusted.png">For real!? Are you seriously gonna be like that!?</state>
                 <state img="0-threathen.png">Tch. Just ignore her, Haru. &lt;i&gt;Bitch doesn't know who she's talkin' to.&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetStage="0-3">
+            <case tag="female_must_strip" target="haru" targetStage="0-3" notSaidMarker="awkwardmomentbegin">
                 <state img="0-cheerful.png">You can't always win, Haru!</state>
-                <state img="0-fingerguns.png">Whoop whoop! Guess who beat ya!</state>
-                <state img="0-cheerful.png">Don't worry about it!</state>
+                <state img="0-fingerguns.png">Woooo! Guess who beat ya!</state>
+                <state img="0-cheerful.png" marker="awkwardmomentbegin">Don't worry 'bout it! You don't gotta get naked &lt;i&gt;yet!&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="1" alsoPlaying="futaba">
                 <state img="0-thinking.png">That's just Haru's style. She likes 'ta be modest.</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="0-awkward.png">Jeez, you're determined.</state>
-                <state img="0-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="0-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="0-aroused.png">...</state>
+                <state img="0-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="jenetta" totalRounds="0-2">
                 <state img="0-startled.png" marker="maid">Woah, an actual maid is playin' with us!</state>
@@ -1239,11 +1255,11 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="0-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
-                <state img="0-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
-            </case>
             <case tag="female_must_strip" target="wiifitfemale" targetStage="0">
                 <state img="0-pumped.png">Another personal trainer? That's friggin' awesome! We should really exchange tips.</state>
+            </case>
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
+                <state img="0-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
                 <state img="0-pumped.png">AWESOME! What kind?</state>
@@ -1251,6 +1267,13 @@
                 <state img="0-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="0-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="0-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="0-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="0-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="0-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -1771,12 +1794,6 @@
                 <condition count="1" filter="meia" />
                 <state img="0-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="0-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="0-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="0-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="0-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -1809,6 +1826,9 @@
                 <state img="0-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="0-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="0-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="0-fingerguns.png">Let's do this! I ain't holdin' back!</state>
                 <state img="0-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
@@ -1816,13 +1836,18 @@
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="0-awkward.png">Miiiight wanna work on that.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="0-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="0-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="0-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
+            </case>
             <case tag="female_removed_minor" id="0-2" target="futaba" targetStage="4">
                 <state img="0-thinking.png">What's the term for that again? Absolute somethin'?</state>
             </case>
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="0-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="0-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -1939,14 +1964,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="0-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="0-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="0-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="0-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="0-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="0-startled.png">What the--this early!?</state>
@@ -2234,7 +2259,7 @@
                 <state img="0-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="0-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="0-awkward.png">Umm....</state>
-                <state img="0-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="0-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="0-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -2401,11 +2426,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="0-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="0-startled.png">What!? No!! I don't--</state>
                 <state img="0-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="0-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="0-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="0-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -2441,10 +2468,6 @@
             </case>
             <case tag="opponent_lost" filter="smart" targetStatus="not_decent" notSaidMarker="smart_losing">
                 <state img="0-awkward.png" marker="smart_losing">&lt;i&gt;Jeez, didn't think a smart person like ~name~ would be losin' this badly...&lt;/i&gt;</state>
-            </case>
-            <case tag="opponent_lost" saidMarker="insertmarkerhere">
-                <state img="0-cocky.png">I want ya bent over.</state>
-                <state img="0-cocky.png">Don't stop there, ya slut.</state>
             </case>
             <case tag="opponent_lost" target="chihiro" targetStage="5">
                 <state img="0-awkward.png">Hey... Ready to play?</state>
@@ -2604,7 +2627,10 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="0-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" priority="597">
+                <state img="0-what.png">You're pretty enthusiastic 'bout this...</state>
+            </case>
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="0-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -2635,9 +2661,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="0-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="0-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="0-aroused.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="0-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -2663,7 +2692,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="0-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="0-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -2726,8 +2755,9 @@
                 <state img="0-what.png">Woah...</state>
                 <state img="0-aroused.png">...</state>
                 <state img="0-awkward.png">Jeez...</state>
-                <state img="0-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="0-awkward.png">...</state>
+                <state img="0-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="0-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="0-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" filter="sarcastic">
                 <state img="0-cocky.png">So what was that 'bout me being dumb?</state>
@@ -2754,7 +2784,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="0-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="0-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="0-cocky.png">Don't you dare stop.</state>
                 <state img="0-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -2935,9 +2965,6 @@
             <case tag="good_hand" alsoPlaying="futaba" saidMarker="pervyfutaba" notSaidMarker="futabawtf2" alsoPlayingSaidMarker="pervyryuji_sexy" priority="555">
                 <state img="1-thinking.png" marker="futabawtf2">Ohhhhh, okay then!</state>
             </case>
-            <case tag="good_hand" alsoPlaying="haru" alsoPlayingStage="3-4" notSaidMarker="protective" priority="888">
-                <state img="1-pissed.png" marker="protective">(&lt;i&gt;You BETTER give that sweater back, dealer! Or I'll jack up your face beyond repair!&lt;/i&gt;)</state>
-            </case>
             <case tag="good_hand" alsoPlaying="launch" alsoPlayingStage="2-1" notSaidMarker="launchchange">
                 <state img="1-awkward.png" marker="launchchange">I... guess we got a new player now?</state>
                 <state img="1-pissed.png" marker="launchchange">Can SOMEONE explain what the fuck just happened!?</state>
@@ -2969,11 +2996,6 @@
             </case>
             <case tag="good_hand" alsoPlaying="raven" alsoPlayingStage="4">
                 <state img="1-awkward.png">In all honesty, yeah, you'd look really silly.</state>
-            </case>
-            <case tag="good_hand" alsoPlaying="wiifitfemale" timeInStage="0-4" totalRounds="0-3">
-                <state img="1-pumped.png">Another fitness trainer? Awesome!</state>
-                <state img="1-cheerful.png">You look like you'd work out a lot! Trust me, I can tell.</state>
-                <state img="1-fingerguns.png">I also happen to be a part-time fitness trainer! Maybe we can exchange tips sometime?</state>
             </case>
             <case tag="good_hand" totalRounds="0-2" notSaidMarker="muricaeyes">
                 <condition count="3" filter="american" />
@@ -3048,9 +3070,6 @@
             <case tag="okay_hand" alsoPlaying="futaba" saidMarker="pervyfutaba" notSaidMarker="futabawtf1" alsoPlayingSaidMarker="pervyryuji_skull" priority="555">
                 <state img="1-pissed.png" marker="futabawtf1">Stop tryin' to change the damn subject, &lt;i&gt;Oracle&lt;/i&gt;!</state>
                 <state img="1-startled.png" marker="futabawtf1">I never... Y-You can't just... I-I-I'm not--</state>
-            </case>
-            <case tag="okay_hand" alsoPlaying="haru" alsoPlayingStage="3-4" notSaidMarker="protective" priority="888">
-                <state img="1-pissed.png" marker="protective">(&lt;i&gt;You BETTER give that sweater back, dealer! Or I'll jack up your face beyond repair!&lt;/i&gt;)</state>
             </case>
             <case tag="okay_hand" alsoPlaying="jenetta" alsoPlayingStage="0-2" totalRounds="0-2" priority="10">
                 <state img="1-awkward.png" marker="maid">Oh... You're a maid.</state>
@@ -3139,9 +3158,6 @@
             </case>
             <case tag="bad_hand" alsoPlaying="futaba" totalRounds="0-1" notSaidMarker="myhandisbadhelpme">
                 <state img="1-awkward.png" marker="myhandisbadhelpme">Ermm... Futaba? Could we maybe team up here?</state>
-            </case>
-            <case tag="bad_hand" alsoPlaying="haru" alsoPlayingStage="3-4" notSaidMarker="protective" priority="888">
-                <state img="1-threathen.png" marker="protective">(&lt;i&gt;You BETTER give that sweater back, dealer! Or I'll jack up your face beyond repair!&lt;/i&gt;)</state>
             </case>
             <case tag="bad_hand" alsoPlaying="launch" alsoPlayingStage="2" notSaidMarker="launchchange">
                 <state img="1-awkward.png" marker="launchchange">I... guess we got a new player now?</state>
@@ -3748,7 +3764,10 @@
                 <state img="1-awkward.png">Jeez, you alright?</state>
                 <state img="1-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="1-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="1-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -3756,14 +3775,16 @@
                 <state img="1-disgusted.png">For real!? Are you seriously gonna be like that!?</state>
                 <state img="1-threathen.png">Tch. Just ignore her, Haru. &lt;i&gt;Bitch doesn't know who she's talkin' to.&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetStage="0-3">
+            <case tag="female_must_strip" target="haru" targetStage="0-3" notSaidMarker="awkwardmomentbegin">
                 <state img="1-cheerful.png">You can't always win, Haru!</state>
-                <state img="1-fingerguns.png">Whoop whoop! Guess who beat ya!</state>
-                <state img="1-cheerful.png">Don't worry about it!</state>
+                <state img="1-fingerguns.png">Woooo! Guess who beat ya!</state>
+                <state img="1-cheerful.png" marker="awkwardmomentbegin">Don't worry 'bout it! You don't gotta get naked &lt;i&gt;yet!&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="1-awkward.png">Jeez, you're determined.</state>
-                <state img="1-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="1-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="1-aroused.png">...</state>
+                <state img="1-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="jenetta" totalRounds="0-2">
                 <state img="1-startled.png" marker="maid">Woah, an actual maid is playin' with us!</state>
@@ -3834,7 +3855,7 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="1-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="1-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
@@ -3843,6 +3864,13 @@
                 <state img="1-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="1-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="1-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="1-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="1-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="1-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -4352,12 +4380,6 @@
                 <condition count="1" filter="meia" />
                 <state img="1-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="1-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="1-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="1-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="1-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -4390,12 +4412,20 @@
                 <state img="1-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="1-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="1-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="1-fingerguns.png">Let's do this! I ain't holdin' back!</state>
                 <state img="1-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="1-awkward.png">Miiiight wanna work on that.</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="1-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="1-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="1-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
             </case>
             <case tag="female_removed_minor" id="1-2" target="futaba" targetStage="4">
                 <state img="1-thinking.png">What's the term for that again? Absolute somethin'?</state>
@@ -4406,7 +4436,7 @@
             <case tag="female_removed_minor" target="haru" targetStage="3" alsoPlaying="futaba" alsoPlayingStage="0-6">
                 <state img="1-cheerful.png">I bet it's just as good as a hoodie!</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="1-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -4514,14 +4544,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="1-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="1-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="1-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="1-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="1-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="1-startled.png">What the--this early!?</state>
@@ -4812,7 +4842,7 @@
                 <state img="1-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="1-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="1-awkward.png">Umm....</state>
-                <state img="1-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="1-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="1-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -4982,11 +5012,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="1-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="1-startled.png">What!? No!! I don't--</state>
                 <state img="1-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="1-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="1-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="1-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -5177,7 +5209,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="1-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="1-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -5208,9 +5240,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="1-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="1-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="1-aroused.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="1-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -5236,7 +5271,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="1-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="1-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -5293,8 +5328,9 @@
                 <state img="1-what.png">Woah...</state>
                 <state img="1-aroused.png">...</state>
                 <state img="1-awkward.png">Jeez...</state>
-                <state img="1-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="1-awkward.png">...</state>
+                <state img="1-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="1-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="1-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="1-what.png">Woah.</state>
@@ -5318,7 +5354,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="1-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="1-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="1-cocky.png">Don't you dare stop.</state>
                 <state img="1-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -5511,11 +5547,6 @@
             </case>
             <case tag="good_hand" alsoPlaying="raven" alsoPlayingStage="4">
                 <state img="2-awkward.png">In all honesty, yeah, you'd look really silly.</state>
-            </case>
-            <case tag="good_hand" alsoPlaying="wiifitfemale" timeInStage="0-4" totalRounds="0-3">
-                <state img="2-pumped.png">Another fitness trainer? Awesome!</state>
-                <state img="2-cheerful.png">You look like you'd work out a lot! Trust me, I can tell.</state>
-                <state img="2-fingerguns.png">I also happen to be a part-time fitness trainer! Maybe we can exchange tips sometime?</state>
             </case>
             <case tag="good_hand" totalRounds="0-1" notSaidMarker="thisisamurica">
                 <condition count="3" filter="american" />
@@ -5939,7 +5970,7 @@
             </case>
             <case tag="stripping" alsoPlaying="wiifitfemale">
                 <state img="2-strip.png">Jeez, alright! I don't wanna lose too quickly!</state>
-                <state img="2-strip.png">Have you forgotten this is &lt;i&gt;strip&lt;/i&gt; poker, lady? The more clothing, the better.</state>
+                <state img="2-strip.png">Have you forgotten this is &lt;i&gt;strip&lt;/i&gt; poker, Trainer? The more clothing, the better.</state>
             </case>
             <case tag="stripping" totalRounds="0-4">
                 <condition count="1" filter="aggressive" />
@@ -6232,7 +6263,10 @@
                 <state img="2-awkward.png">Jeez, you alright?</state>
                 <state img="2-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="2-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="2-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -6240,14 +6274,16 @@
                 <state img="2-disgusted.png">For real!? Are you seriously gonna be like that!?</state>
                 <state img="2-threathen.png">Tch. Just ignore her, Haru. &lt;i&gt;Bitch doesn't know who she's talkin' to.&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetStage="0-3">
+            <case tag="female_must_strip" target="haru" targetStage="0-3" notSaidMarker="awkwardmomentbegin">
                 <state img="2-cheerful.png">You can't always win, Haru!</state>
-                <state img="2-fingerguns.png">Whoop whoop! Guess who beat ya!</state>
-                <state img="2-cheerful.png">Don't worry about it!</state>
+                <state img="2-fingerguns.png">Woooo! Guess who beat ya!</state>
+                <state img="2-cheerful.png" marker="awkwardmomentbegin">Don't worry 'bout it! You don't gotta get naked &lt;i&gt;yet!&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="2-awkward.png">Jeez, you're determined.</state>
-                <state img="2-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="2-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="2-aroused.png">...</state>
+                <state img="2-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="jolyne">
                 <state img="2-fingerguns.png">That is some &lt;i&gt;sick&lt;/i&gt; hair! Maybe I should've dyed mine multiple colors.</state>
@@ -6310,7 +6346,7 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="2-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="2-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
@@ -6319,6 +6355,13 @@
                 <state img="2-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="2-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="2-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="2-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="2-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="2-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -6819,12 +6862,6 @@
                 <condition count="1" filter="meia" />
                 <state img="2-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="2-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="2-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="2-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="2-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -6857,6 +6894,9 @@
                 <state img="2-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="2-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="2-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="2-fingerguns.png">Let's do this! I ain't holdin' back!</state>
                 <state img="2-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
@@ -6864,13 +6904,18 @@
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="2-awkward.png">Miiiight wanna work on that.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="2-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="2-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="2-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
+            </case>
             <case tag="female_removed_minor" id="2-2" target="futaba" targetStage="4">
                 <state img="2-thinking.png">What's the term for that again? Absolute somethin'?</state>
             </case>
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="2-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="2-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -6975,14 +7020,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="2-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="2-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="2-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="2-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="2-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="2-startled.png">What the--this early!?</state>
@@ -7270,7 +7315,7 @@
                 <state img="2-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="2-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="2-awkward.png">Umm....</state>
-                <state img="2-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="2-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="2-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -7437,11 +7482,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="2-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="2-startled.png">What!? No!! I don't--</state>
                 <state img="2-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="2-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="2-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="2-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -7628,7 +7675,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="2-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="2-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -7659,9 +7706,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="2-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="2-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="2-aroused.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="2-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -7687,7 +7737,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="2-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="2-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -7744,8 +7794,9 @@
                 <state img="2-what.png">Woah...</state>
                 <state img="2-aroused.png">...</state>
                 <state img="2-awkward.png">Jeez...</state>
-                <state img="2-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="2-awkward.png">...</state>
+                <state img="2-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="2-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="2-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="2-what.png">Woah.</state>
@@ -7769,7 +7820,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="2-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="2-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="2-cocky.png">Don't you dare stop.</state>
                 <state img="2-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -7957,11 +8008,6 @@
             </case>
             <case tag="good_hand" alsoPlaying="raven" alsoPlayingStage="4">
                 <state img="3-awkward.png">In all honesty, yeah, you'd look really silly.</state>
-            </case>
-            <case tag="good_hand" alsoPlaying="wiifitfemale" timeInStage="0-4" totalRounds="0-3">
-                <state img="3-pumped.png">Another fitness trainer? Awesome!</state>
-                <state img="3-cheerful.png">You look like you'd work out a lot! Trust me, I can tell.</state>
-                <state img="3-fingerguns.png">I also happen to be a part-time fitness trainer! Maybe we can exchange tips sometime?</state>
             </case>
             <case tag="good_hand" totalRounds="0-1" notSaidMarker="thisisamurica">
                 <condition count="3" filter="american" />
@@ -8340,7 +8386,7 @@
             </case>
             <case tag="stripping" alsoPlaying="wiifitfemale">
                 <state img="3-strip.png">Jeez, alright! I don't wanna lose too quickly!</state>
-                <state img="3-strip.png">Have you forgotten this is &lt;i&gt;strip&lt;/i&gt; poker, lady? The more clothing, the better.</state>
+                <state img="3-strip.png">Have you forgotten this is &lt;i&gt;strip&lt;/i&gt; poker, Trainer? The more clothing, the better.</state>
             </case>
             <case tag="stripping" alsoPlaying="palutena" totalRounds="0-3">
                 <condition count="1" filter="aggressive" />
@@ -8626,7 +8672,10 @@
                 <state img="3-awkward.png">Jeez, you alright?</state>
                 <state img="3-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="3-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="3-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -8634,14 +8683,16 @@
                 <state img="3-disgusted.png">For real!? Are you seriously gonna be like that!?</state>
                 <state img="3-threathen.png">Tch. Just ignore her, Haru. &lt;i&gt;Bitch doesn't know who she's talkin' to.&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetStage="0-3">
+            <case tag="female_must_strip" target="haru" targetStage="0-3" notSaidMarker="awkwardmomentbegin">
                 <state img="3-cheerful.png">You can't always win, Haru!</state>
-                <state img="3-fingerguns.png">Whoop whoop! Guess who beat ya!</state>
-                <state img="3-cheerful.png">Don't worry about it!</state>
+                <state img="3-fingerguns.png">Woooo! Guess who beat ya!</state>
+                <state img="3-cheerful.png" marker="awkwardmomentbegin">Don't worry 'bout it! You don't gotta get naked &lt;i&gt;yet!&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="3-awkward.png">Jeez, you're determined.</state>
-                <state img="3-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="3-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="3-aroused.png">...</state>
+                <state img="3-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="jolyne">
                 <state img="3-fingerguns.png">That is some &lt;i&gt;sick&lt;/i&gt; hair! Maybe I should've dyed mine multiple colors.</state>
@@ -8704,7 +8755,7 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="3-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="3-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
@@ -8713,6 +8764,13 @@
                 <state img="3-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="3-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="3-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="3-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="3-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="3-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -9201,12 +9259,6 @@
                 <condition count="1" filter="meia" />
                 <state img="3-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="3-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="3-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="3-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="3-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -9239,6 +9291,9 @@
                 <state img="3-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="3-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="3-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="3-fingerguns.png">Let's do this! I ain't holdin' back!</state>
                 <state img="3-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
@@ -9246,13 +9301,18 @@
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="3-awkward.png">Miiiight wanna work on that.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="3-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="3-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="3-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
+            </case>
             <case tag="female_removed_minor" id="3-2" target="futaba" targetStage="4">
                 <state img="3-thinking.png">What's the term for that again? Absolute somethin'?</state>
             </case>
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="3-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="3-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -9357,14 +9417,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="3-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="3-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="3-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="3-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="3-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="3-startled.png">What the--this early!?</state>
@@ -9652,7 +9712,7 @@
                 <state img="3-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="3-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="3-awkward.png">Umm....</state>
-                <state img="3-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="3-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="3-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -9818,11 +9878,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="3-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="3-startled.png">What!? No!! I don't--</state>
                 <state img="3-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="3-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="3-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="3-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -10010,7 +10072,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="3-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="3-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -10041,9 +10103,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="3-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="3-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="3-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="3-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -10069,7 +10134,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="3-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="3-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -10126,8 +10191,9 @@
                 <state img="3-what.png">Woah...</state>
                 <state img="3-aroused.png">...</state>
                 <state img="3-awkward.png">Jeez...</state>
-                <state img="3-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="3-awkward.png">...</state>
+                <state img="3-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="3-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="3-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="3-what.png">Woah.</state>
@@ -10151,7 +10217,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="3-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="3-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="3-cocky.png">Don't you dare stop.</state>
                 <state img="3-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -10958,7 +11024,10 @@
                 <state img="4-awkward.png">Jeez, you alright?</state>
                 <state img="4-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="4-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="4-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -10966,14 +11035,16 @@
                 <state img="4-disgusted.png">For real!? Are you seriously gonna be like that!?</state>
                 <state img="4-threathen.png">Tch. Just ignore her, Haru. &lt;i&gt;Bitch doesn't know who she's talkin' to.&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetStage="0-3">
+            <case tag="female_must_strip" target="haru" targetStage="0-3" notSaidMarker="awkwardmomentbegin">
                 <state img="4-cheerful.png">You can't always win, Haru!</state>
-                <state img="4-fingerguns.png">Whoop whoop! Guess who beat ya!</state>
-                <state img="4-cheerful.png">Don't worry about it!</state>
+                <state img="4-fingerguns.png">Woooo! Guess who beat ya!</state>
+                <state img="4-cheerful.png" marker="awkwardmomentbegin">Don't worry 'bout it! You don't gotta get naked &lt;i&gt;yet!&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="4-awkward.png">Jeez, you're determined.</state>
-                <state img="4-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="4-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="4-aroused.png">...</state>
+                <state img="4-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="jolyne">
                 <state img="4-fingerguns.png">That is some &lt;i&gt;sick&lt;/i&gt; hair! Maybe I should've dyed mine multiple colors.</state>
@@ -11033,7 +11104,7 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="4-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="4-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
@@ -11042,6 +11113,13 @@
                 <state img="4-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="4-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="4-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="4-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="4-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="4-cocky.png">Sorry, man. You gotta play better than that.</state>
@@ -11532,12 +11610,6 @@
                 <condition count="1" filter="meia" />
                 <state img="4-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="4-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="4-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="4-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="4-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -11570,6 +11642,9 @@
                 <state img="4-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="4-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="4-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="4-fingerguns.png">Let's do this! I ain't holdin' back!</state>
                 <state img="4-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
@@ -11577,13 +11652,18 @@
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="4-awkward.png">Miiiight wanna work on that.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="4-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="4-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="4-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
+            </case>
             <case tag="female_removed_minor" id="4-2" target="futaba" targetStage="4">
                 <state img="4-thinking.png">What's the term for that again? Absolute somethin'?</state>
             </case>
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="4-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="4-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -11685,14 +11765,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="4-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="4-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="4-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="4-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="4-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="4-startled.png">What the--this early!?</state>
@@ -11980,7 +12060,7 @@
                 <state img="4-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="4-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="4-awkward.png">Umm....</state>
-                <state img="4-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="4-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="4-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -12146,11 +12226,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="4-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="4-startled.png">What!? No!! I don't--</state>
                 <state img="4-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="4-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="4-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="4-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -12332,7 +12414,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="4-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="4-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -12363,9 +12445,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="4-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="4-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="4-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="4-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -12391,7 +12476,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="4-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="4-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -12448,8 +12533,9 @@
                 <state img="4-what.png">Woah...</state>
                 <state img="4-aroused.png">...</state>
                 <state img="4-awkward.png">Jeez...</state>
-                <state img="4-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="4-awkward.png">...</state>
+                <state img="4-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="4-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="4-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="4-what.png">Woah.</state>
@@ -12473,7 +12559,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="4-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="4-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="4-cocky.png">Don't you dare stop.</state>
                 <state img="4-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -13193,7 +13279,10 @@
                 <state img="5-awkward.png">Jeez, you alright?</state>
                 <state img="5-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="5-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="5-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -13203,7 +13292,9 @@
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="5-awkward.png">Jeez, you're determined.</state>
-                <state img="5-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="5-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="5-aroused.png">...</state>
+                <state img="5-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="monika" notSaidMarker="heeviejeebies" priority="555">
                 <state img="5-thinking.png" marker="heeviejeebies">Actually... Yeah, I do feel ya. It gives me the creeps.</state>
@@ -13256,7 +13347,7 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="5-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="5-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
             </case>
             <case tag="female_must_strip" totalRounds="2-4" saidMarker="gun" priority="115">
@@ -13265,6 +13356,13 @@
                 <state img="5-pumped.png">Never handled a gun outside the Metaverse. Feels real great to use that shit!</state>
                 <state img="5-pumped.png" marker="woahtherebuddy">Shootin' down shadows is great and all. But nothin' beats bludgeoning 'em senseless and hearing those skulls CRACK under your weapon!</state>
                 <state img="5-pumped.png">Shootin' down shadows is great and all. But nothin' beats AN ALL-OUT ATTACK!</state>
+            </case>
+            <case tag="tie">
+                <state img="5-startled.png">Wait, what the hell happened!? Did they just...</state>
+            </case>
+            <case tag="tie">
+                <condition count="3-4" filter="phantom_thieves" />
+                <state img="5-stand.png">A tie! Only way we can settle this is by FIGHTIN' TO THE DEATH!</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="5-pumped.png">Make it good!</state>
@@ -13727,12 +13825,6 @@
                 <condition count="1" filter="meia" />
                 <state img="5-cheerful.png">They're just teasin', Futaba.</state>
             </case>
-            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" saidMarker="stand_ready" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="5-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
-                <state img="5-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
-                <state img="5-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
-            </case>
             <case tag="female_removed_minor" filter="dapper_date" targetStage="2" priority="9998">
                 <state img="5-pissed.png">Don't ask why! It's just... something stupid I was trying, okay!?</state>
             </case>
@@ -13763,16 +13855,24 @@
                 <state img="5-cheerful.png">Y-Yeah, just stay for a while! We all friends in here.... maybe.</state>
                 <state img="5-cheerful.png">&lt;i&gt;Thank you, Lyn!&lt;/i&gt;</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="5-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1">
                 <state img="5-cocky.png">&lt;i&gt;Bring it&lt;/i&gt;.</state>
             </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="5-awkward.png">Miiiight wanna work on that.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="kira" priority="9997">
+                <state img="5-stand.png" marker="captainkidd_stand">You are no match for us! COME AND GET SOME!!</state>
+                <state img="5-stand.png" marker="captainkidd_stand">I'm your opponent for tonight! LET'S DO THIS, CAPTAIN KIDD!</state>
+                <state img="5-stand.png" marker="captainkidd_stand">Hell yeah, let's do this! CAPTAIN KIDD!!</state>
+            </case>
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="5-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="5-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko" targetStage="6">
@@ -13875,14 +13975,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="5-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="5-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="5-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="5-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="5-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removing_major" totalRounds="0-5">
                 <state img="5-startled.png">What the--this early!?</state>
@@ -14164,7 +14264,7 @@
                 <state img="5-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="5-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="5-awkward.png">Umm....</state>
-                <state img="5-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="5-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="5-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -14330,11 +14430,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="5-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="5-startled.png">What!? No!! I don't--</state>
                 <state img="5-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="5-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="5-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="5-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -14515,7 +14617,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="5-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="5-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -14546,9 +14648,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="5-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="5-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="5-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="5-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -14574,7 +14679,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="5-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="5-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="hermione" targetStage="9">
@@ -14631,8 +14736,9 @@
                 <state img="5-what.png">Woah...</state>
                 <state img="5-aroused.png">...</state>
                 <state img="5-awkward.png">Jeez...</state>
-                <state img="5-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="5-awkward.png">...</state>
+                <state img="5-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="5-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="5-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="5-what.png">Woah.</state>
@@ -14656,7 +14762,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="5-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="5-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="5-cocky.png">Don't you dare stop.</state>
                 <state img="5-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -15256,7 +15362,10 @@
                 <state img="6-awkward.png">Jeez, you alright?</state>
                 <state img="6-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="6-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="6-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -15266,7 +15375,9 @@
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="6-awkward.png">Jeez, you're determined.</state>
-                <state img="6-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="6-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="6-aroused.png">...</state>
+                <state img="6-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="moon" priority="55">
                 <state img="6-disgusted.png">Christ.</state>
@@ -15306,8 +15417,11 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="6-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="6-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="tie">
+                <state img="6-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="6-pumped.png">Make it good!</state>
@@ -15417,6 +15531,12 @@
             <case tag="female_removing_accessory" alsoPlaying="ryuko" alsoPlayingStage="3">
                 <state img="6-startled.png">WHAT THE--!?</state>
             </case>
+            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
+                <state img="6-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_accessory" filter="weapon" totalRounds="0-7" notSaidMarker="weaponryyy">
                 <state img="6-thinking.png" marker="weaponryyy">&lt;i&gt;Damnit, I could've bought my pipe.&lt;/i&gt;</state>
                 <state img="6-thinking.png" marker="weaponryyy">&lt;i&gt;Damnit, I could've bought my battle hammer.&lt;/i&gt;</state>
@@ -15464,9 +15584,6 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0">
                 <state img="6-awkward.png">...</state>
             </case>
-            <case tag="female_removing_accessory" target="haru" targetStage="0">
-                <state img="6-startled.png">You're JUST starting!?</state>
-            </case>
             <case tag="female_removing_accessory" target="hermione" targetStage="3">
                 <state img="6-pissed.png">You're over here whinin' about your GODDAMN house tie, Hermione!! While I'm over here humiliatin' myself!</state>
             </case>
@@ -15511,9 +15628,6 @@
             </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
                 <state img="6-awkward.png" marker="shimatrackteam">Heh, you'd be a good contender for the track team. They're always lookin' for fast runners.</state>
-            </case>
-            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
-                <state img="6-threathen.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="6-what.png">Wait, why couldn't ya just... taken that off before?</state>
@@ -15572,7 +15686,10 @@
                 <state img="6-neutral.png">Gotcha.</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1">
-                <state img="6-facepalm.png">ARGHHHHH!!</state>
+                <state img="6-facepalm.png">Ugh...</state>
+                <state img="6-startled.png">How is it that you &lt;i&gt;haven't&lt;/i&gt; taken off anythin'!?</state>
+                <state img="6-startled.png">Your &lt;i&gt;first&lt;/i&gt; loss!? Just how good are you at poker!?</state>
+                <state img="6-startled.png">You're JUST starting!?</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="6-disgusted.png">Now that's just cruel.</state>
@@ -15674,14 +15791,17 @@
             <case tag="female_removing_minor" alsoPlaying="haru" saidMarker="woahtherebuddy" notSaidMarker="woahtherebuddy2" priority="117">
                 <state img="6-awkward.png" marker="woahtherebuddy2">Errr--Maybe we should tone that shit down.</state>
             </case>
+            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="futaba" />
+                <state img="6-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="1" priority="620">
                 <state img="6-thinking.png">Seriously, how do girls even walk in high heels? I tried walking in heels and I immediately fell on my face. Ain't fun.</state>
             </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="2">
                 <state img="6-awkward.png">You usually don't dress all fancy like that, Haru... What's the occasion?</state>
-            </case>
-            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
-                <state img="6-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_minor" saidMarker="woahtherebuddy" notSaidMarker="woahtherebuddy2">
                 <state img="6-awkward.png" marker="woahtherebuddy2">Gee, I'm startin' to sound like Haru, aren't I?</state>
@@ -15712,7 +15832,9 @@
                 <state img="6-facepalm.png">You &lt;i&gt;can't&lt;/i&gt; do that shit gracefully!</state>
             </case>
             <case tag="female_removing_minor" target="haru">
-                <state img="6-facepalm.png">&lt;i&gt;Oh come on, Haru!&lt;/i&gt;</state>
+                <state img="6-facepalm.png">&lt;i&gt;Oh, come on!&lt;/i&gt;</state>
+                <state img="6-startled.png">&lt;i&gt;For real!? Haru has some serious luck!&lt;/i&gt;</state>
+                <state img="6-startled.png">Just how good are you at poker!?</state>
             </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5" priority="75">
                 <state img="6-startled.png">I-I had no idea...</state>
@@ -15784,6 +15906,9 @@
             <case tag="female_removed_minor" target="futaba">
                 <state img="6-facepalm.png">I always knew you were a lil' troll.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="6-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="6-awkward.png">Miiiight wanna work on that.</state>
             </case>
@@ -15793,7 +15918,7 @@
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="6-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="6-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko">
@@ -15898,14 +16023,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="6-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="6-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="6-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="6-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="6-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="6-what.png">That's a bold move.</state>
@@ -16181,7 +16306,7 @@
                 <state img="6-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="6-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="6-awkward.png">Umm....</state>
-                <state img="6-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="6-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="6-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -16350,11 +16475,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="6-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="6-startled.png">What!? No!! I don't--</state>
                 <state img="6-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="6-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="6-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="6-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -16531,7 +16658,7 @@
             <case tag="female_must_masturbate" target="haru" alsoPlaying="nayru" alsoPlayingStage="8" saidMarker="nayrupossess" alsoPlayingSaidMarker="v_forfeit">
                 <state img="6-disgusted.png" marker="null_dirtytalk">You take sick pleasure in this shit, I can tell.</state>
             </case>
-            <case tag="female_must_masturbate" target="haru" priority="599">
+            <case tag="female_must_masturbate" target="haru" saidMarker="haruonly" priority="599">
                 <state img="6-what.png">You're pretty enthusiastic 'bout this... (&lt;i&gt;Pssst, hey Haru. C-Can I try something?&lt;/i&gt;)</state>
             </case>
             <case tag="female_must_masturbate" target="moon" priority="895">
@@ -16562,9 +16689,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="6-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="6-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="6-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="6-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -16590,7 +16720,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="6-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="6-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="moon">
@@ -16642,8 +16772,9 @@
                 <state img="6-what.png">Woah...</state>
                 <state img="6-aroused.png">...</state>
                 <state img="6-awkward.png">Jeez...</state>
-                <state img="6-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="6-awkward.png">...</state>
+                <state img="6-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="6-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="6-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" target="amalia">
                 <state img="6-what.png">Woah.</state>
@@ -16667,7 +16798,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="6-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="6-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="6-cocky.png">Don't you dare stop.</state>
                 <state img="6-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -16973,7 +17104,8 @@
                 <state img="7-poststrip.png" marker="ass">Jeez, don't comment on it!</state>
             </case>
             <case tag="stripped" alsoPlaying="haru">
-                <state img="7-embarrassed.png" marker="butt">&lt;i&gt;Pleasedontsayanything!!&lt;/i&gt;</state>
+                <state img="7-embarrassed.png">&lt;i&gt;Pleasedontsayanything!&lt;/i&gt;</state>
+                <state img="7-poststrip.png" marker="ass">&lt;i&gt;Pleasedontsayanything!!&lt;/i&gt;</state>
             </case>
             <case tag="stripped" alsoPlaying="nayru" alsoPlayingNotSaidMarker="null_possess">
                 <state img="7-facepalm.png" marker="nayrupossess">I can't believe I'm naked in front of a demon!</state>
@@ -17132,7 +17264,10 @@
                 <state img="7-awkward.png">Jeez, you alright?</state>
                 <state img="7-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="7-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="7-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="0" alsoPlaying="revy" alsoPlayingStage="0-7">
@@ -17142,7 +17277,9 @@
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="7-awkward.png">Jeez, you're determined.</state>
-                <state img="7-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="7-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="7-aroused.png">...</state>
+                <state img="7-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="moon" priority="55">
                 <state img="7-disgusted.png">Christ.</state>
@@ -17179,8 +17316,11 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="7-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="7-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="tie">
+                <state img="7-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="7-pumped.png">Make it good!</state>
@@ -17293,6 +17433,12 @@
             <case tag="female_removing_accessory" alsoPlaying="ryuko" alsoPlayingStage="3">
                 <state img="7-startled.png">WHAT THE--!?</state>
             </case>
+            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
+                <state img="7-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_accessory" filter="weapon" totalRounds="0-7" notSaidMarker="weaponryyy">
                 <state img="7-thinking.png" marker="weaponryyy">&lt;i&gt;Damnit, I could've bought my pipe.&lt;/i&gt;</state>
                 <state img="7-thinking.png" marker="weaponryyy">&lt;i&gt;Damnit, I could've bought my battle hammer.&lt;/i&gt;</state>
@@ -17340,9 +17486,6 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0">
                 <state img="7-awkward.png">...</state>
             </case>
-            <case tag="female_removing_accessory" target="haru" targetStage="0">
-                <state img="7-startled.png">You're JUST starting!?</state>
-            </case>
             <case tag="female_removing_accessory" target="hermione" targetStage="3">
                 <state img="7-pissed.png">You're over here whinin' about your GODDAMN house tie, Hermione!! While I'm over here humiliatin' myself!</state>
             </case>
@@ -17381,9 +17524,6 @@
             </case>
             <case tag="female_removing_accessory" target="shimakaze" targetStage="1">
                 <state img="7-awkward.png" marker="shimatrackteam">Heh, you'd be a good contender for the track team. They're always lookin' for fast runners.</state>
-            </case>
-            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
-                <state img="7-threathen.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="7-what.png">Wait, why couldn't ya just... taken that off before?</state>
@@ -17442,7 +17582,10 @@
                 <state img="7-neutral.png">Gotcha.</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1">
-                <state img="7-facepalm.png">ARGHHHHH!!</state>
+                <state img="7-facepalm.png">Ugh...</state>
+                <state img="7-startled.png">How is it that you &lt;i&gt;haven't&lt;/i&gt; taken off anythin'!?</state>
+                <state img="7-startled.png">Your &lt;i&gt;first&lt;/i&gt; loss!? Just how good are you at poker!?</state>
+                <state img="7-startled.png">You're JUST starting!?</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="7-disgusted.png">Now that's just cruel.</state>
@@ -17541,14 +17684,17 @@
             <case tag="female_removing_minor" alsoPlaying="haru" saidMarker="woahtherebuddy" notSaidMarker="woahtherebuddy2" priority="117">
                 <state img="7-awkward.png" marker="woahtherebuddy2">Errr--Maybe we should tone that shit down.</state>
             </case>
+            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="futaba" />
+                <state img="7-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="1" priority="620">
                 <state img="7-thinking.png">Seriously, how do girls even walk in high heels? I tried walking in heels and I immediately fell on my face. Ain't fun.</state>
             </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="2">
                 <state img="7-awkward.png">You usually don't dress all fancy like that, Haru... What's the occasion?</state>
-            </case>
-            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
-                <state img="7-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_minor" saidMarker="woahtherebuddy" notSaidMarker="woahtherebuddy2">
                 <state img="7-awkward.png" marker="woahtherebuddy2">Gee, I'm startin' to sound like Haru, aren't I?</state>
@@ -17573,7 +17719,9 @@
                 <state img="7-disgusted.png">Dick move, much?</state>
             </case>
             <case tag="female_removing_minor" target="haru">
-                <state img="7-facepalm.png">&lt;i&gt;Oh come on, Haru!&lt;/i&gt;</state>
+                <state img="7-facepalm.png">&lt;i&gt;Oh, come on!&lt;/i&gt;</state>
+                <state img="7-startled.png">&lt;i&gt;For real!? Haru has some serious luck!&lt;/i&gt;</state>
+                <state img="7-startled.png">Just how good are you at poker!?</state>
             </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5" priority="75">
                 <state img="7-startled.png">I-I had no idea...</state>
@@ -17636,6 +17784,9 @@
             <case tag="female_removed_minor" target="futaba">
                 <state img="7-facepalm.png">I always knew you were a lil' troll.</state>
             </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="7-thinking.png">Zettai ryuokai? Is that what it's called?</state>
+            </case>
             <case tag="female_removed_minor" target="futaba" targetStage="1" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="7-awkward.png">Miiiight wanna work on that.</state>
             </case>
@@ -17645,7 +17796,7 @@
             <case tag="female_removed_minor" target="haru" targetStage="2" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="7-awkward.png">Aww, don't bring yourself down. Even if you're flat, I bet some people find you attractive.</state>
             </case>
-            <case tag="female_removed_minor" target="haru" targetStage="3" priority="888">
+            <case tag="female_removed_minor" target="haru" targetStage="3" targetSaying="sweater" priority="888">
                 <state img="7-threathen.png" marker="protective">(&lt;i&gt;Don't you DARE lose it, dealer! Or you'll have my fists to answer to!&lt;/i&gt;)</state>
             </case>
             <case tag="female_removed_minor" target="kyoko">
@@ -17747,14 +17898,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="7-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="7-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="7-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="7-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="7-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="7-what.png">That's a bold move.</state>
@@ -18019,7 +18170,7 @@
                 <state img="7-awkward.png">Well SOMEONE out there would like that. And I ain't sure what to feel 'bout that.</state>
                 <state img="7-thinking.png">If there was a proper word for mad-happy, Makoto would know it.</state>
                 <state img="7-awkward.png">Umm....</state>
-                <state img="7-awkward.png">It's fine if you have small tits, Futaba. Not like I care...</state>
+                <state img="7-aroused.png">It's fine if you have small tits, Futaba. Not like I care...</state>
             </case>
             <case tag="female_small_chest_is_visible" target="futaba" alsoPlaying="ann">
                 <state img="7-awkward.png">S-Should I stay outta this convo or...?</state>
@@ -18188,11 +18339,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="7-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="7-startled.png">What!? No!! I don't--</state>
                 <state img="7-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="7-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="7-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="7-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -18389,9 +18542,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="7-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="7-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="7-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="7-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -18417,7 +18573,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="7-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="7-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="moon">
@@ -18469,8 +18625,9 @@
                 <state img="7-what.png">Woah...</state>
                 <state img="7-aroused.png">...</state>
                 <state img="7-awkward.png">Jeez...</state>
-                <state img="7-aroused.png">&lt;i&gt;Is it bad that I... want to join her? It could be fun...&lt;/i&gt;</state>
-                <state img="7-awkward.png">...</state>
+                <state img="7-aroused.png">&lt;i&gt;Is it bad that I... want to join? It could be fun...&lt;/i&gt;</state>
+                <state img="7-what.png">Who even invented this friggin' game anyways!?</state>
+                <state img="7-awkward.png">You're... really into it, huh?</state>
             </case>
             <case tag="female_masturbating" filter="villain">
                 <state img="7-startled.png">N-Nuh-uh! I'm NOT gettin' turned on by this!</state>
@@ -18503,7 +18660,7 @@
             <case tag="female_masturbating" target="elizabeth" notSaidMarker="elizabethmasturbation">
                 <state img="7-what.png" marker="elizabethmasturbation">Is that your twin sister, or...?</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="7-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="7-cocky.png">Don't you dare stop.</state>
                 <state img="7-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -18623,7 +18780,6 @@
                 <state img="7-startled.png">I-I have to WHAT!?</state>
                 <state img="7-awkward.png">S-Seriously!?</state>
                 <state img="7-embarrassed.png">A-At least I ain't the first.</state>
-                <state img="7-embarrassed.png">A-At least I ain't the first loser...</state>
             </case>
             <case tag="must_masturbate" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="7-disgusted.png">Alright, now you're just braggin'!</state>
@@ -18754,12 +18910,18 @@
                 <state img="8-awkward.png">Jeez, you alright?</state>
                 <state img="8-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="8-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="8-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
-                <state img="8-awkward.png">Jeez, you're determined.</state>
-                <state img="8-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="8-what.png">Jeez, you're determined... &lt;i&gt;(I'm not complainin'.)&lt;/i&gt;</state>
+                <state img="8-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="8-awkward.png">&lt;i&gt;I feel like a damn pervert for wantin' to see more.&lt;/i&gt;</state>
+                <state img="8-neutral.png">&lt;i&gt;I shouldn't be so excited to see her naked, but...&lt;/i&gt;</state>
+                <state img="8-thinking.png">&lt;i&gt;Should I...? Nah, she'd probaly smack me.&lt;/i&gt;</state>
             </case>
             <case tag="female_must_strip" target="moon" priority="55">
                 <state img="8-disgusted.png">Christ.</state>
@@ -18787,8 +18949,11 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="8-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="8-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="tie">
+                <state img="8-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="8-cheerful.png">Make it good!</state>
@@ -18861,6 +19026,12 @@
             <case tag="female_removing_accessory" alsoPlaying="ryuko" alsoPlayingStage="3">
                 <state img="8-startled.png">WHAT THE--!?</state>
             </case>
+            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
+                <state img="8-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_accessory" target="alice_mgq" targetStage="5">
                 <state img="8-startled.png">Woah!</state>
             </case>
@@ -18896,9 +19067,6 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0">
                 <state img="8-awkward.png">...</state>
             </case>
-            <case tag="female_removing_accessory" target="haru" targetStage="0">
-                <state img="8-startled.png">You're JUST starting!?</state>
-            </case>
             <case tag="female_removing_accessory" target="hermione" targetStage="3">
                 <state img="8-pissed.png">You're over here whinin' about your GODDAMN house tie, Hermione!! While I'm over here humiliatin' myself!</state>
             </case>
@@ -18925,9 +19093,6 @@
             </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="2">
                 <state img="8-cheerful.png">You know what? That's fine. Just fine.</state>
-            </case>
-            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
-                <state img="8-threathen.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="8-what.png">Wait, why couldn't ya just... taken that off before?</state>
@@ -19051,14 +19216,17 @@
                 <state img="8-grumpy.png">Friggin'... whatever.</state>
                 <state img="8-facepalm.png">(&lt;i&gt;sigh&lt;/i&gt;) I'm not doin' so great, aren't I?</state>
             </case>
+            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="futaba" />
+                <state img="8-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="1" priority="620">
                 <state img="8-thinking.png">Seriously, how do girls even walk in high heels? I tried walking in heels and I immediately fell on my face. Ain't fun.</state>
             </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="2">
                 <state img="8-awkward.png">You usually don't dress all fancy like that, Haru... What's the occasion?</state>
-            </case>
-            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
-                <state img="8-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_minor" target="croix" targetStage="4">
                 <state img="8-awkward.png">&lt;i&gt;Even with her tits out, I'm still kinda disappointed.&lt;/i&gt;</state>
@@ -19076,7 +19244,9 @@
                 <state img="8-disgusted.png">Dick move, much?</state>
             </case>
             <case tag="female_removing_minor" target="haru">
-                <state img="8-facepalm.png">&lt;i&gt;Oh come on, Haru!&lt;/i&gt;</state>
+                <state img="8-facepalm.png">&lt;i&gt;Oh, come on!&lt;/i&gt;</state>
+                <state img="8-startled.png">&lt;i&gt;For real!? Haru has some serious luck!&lt;/i&gt;</state>
+                <state img="8-startled.png">Just how good are you at poker!?</state>
             </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5">
                 <state img="8-what.png">Kyoko...</state>
@@ -19137,6 +19307,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba">
                 <state img="8-facepalm.png">I always knew you were a lil' troll.</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="8-thinking.png">Zettai ryuokai? Is that what it's called?</state>
             </case>
             <case tag="female_removed_minor" target="haru">
                 <state img="8-disgusted.png">Do you HAVE to rub it in?</state>
@@ -19235,11 +19408,11 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="8-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="8-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="8-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="8-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="8-what.png">That's a bold move.</state>
@@ -19607,11 +19780,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="8-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="8-startled.png">What!? No!! I don't--</state>
                 <state img="8-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="8-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="8-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="8-what.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -19785,9 +19960,12 @@
                 <state img="8-masturbate.png">Haaaah...</state>
                 <state img="8-awkward.png">I dunno if this just makes things more awkward or less...</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="8-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="8-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" target="ann">
                 <state img="8-awkward.png">Should I, uhh... look away?</state>
@@ -19825,13 +20003,15 @@
                 <state img="8-startled.png">You okay? Holy shit, Shimi speak to me!</state>
             </case>
             <case tag="female_masturbating">
-                <state img="8-masturbate_b.png">&lt;i&gt;So hot...&lt;/i&gt;</state>
+                <state img="8-masturbate_b.png">&lt;i&gt;God, this is so hot...&lt;/i&gt;</state>
                 <state img="8-neutral.png">You're really pretty like that, y'know.</state>
-                <state img="8-masturbate_d.png">I love this game...</state>
-                <state img="8-masturbate_a.png">&lt;i&gt;Oh yes...&lt;/i&gt;</state>
-                <state img="8-masturbate.png">At least w-we're in this together...</state>
-                <state img="8-masturbate_c.png">So hot...</state>
+                <state img="8-masturbate_d.png">&lt;i&gt;This game...&lt;/i&gt;</state>
+                <state img="8-masturbate_a.png">&lt;i&gt;Mmmm...&lt;/i&gt;</state>
+                <state img="8-masturbate_b.png">At least w-we're in this together...</state>
+                <state img="8-masturbate_c.png">So... hot...</state>
                 <state img="8-cheerful.png">This is gonna make things so much easier...</state>
+                <state img="8-masturbate.png">Ffff...</state>
+                <state img="8-masturbate.png">Ahhh...</state>
             </case>
             <case tag="female_masturbating" alsoPlaying="launch">
                 <state img="8-startled.png">Not even &lt;i&gt;I&lt;/i&gt; would try that!</state>
@@ -19874,7 +20054,7 @@
                 <state img="8-what.png">Well this is a thing that's happenin'!</state>
                 <state img="8-awkward.png">At least we're in this together...</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="8-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="8-cocky.png">Don't you dare stop.</state>
                 <state img="8-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -19982,8 +20162,22 @@
                 <state img="8-disgusted.png" marker="futabamasturbatin">Just look away already! I know you ain't into me so why look at me?</state>
                 <state img="8-awkward.png" marker="futabamasturbatin">Are you enjoy this? I sorta assumed you were a lesbian or somethin'.</state>
             </case>
-            <case tag="masturbating" alsoPlaying="haru" alsoPlayingStage="5-9" notSaidMarker="harudirtytalk" alsoPlayingSayingMarker="ryuji_dirtytalkbegin">
+            <case tag="masturbating" alsoPlaying="haru" alsoPlayingStage="5-9" saidMarker="haruonly" alsoPlayingSayingMarker="ryuji_dirtytalkbegin">
                 <state img="8-cocky.png" marker="harudirtytalk">Oh? Tell me, my fair lady.</state>
+            </case>
+            <case tag="masturbating" alsoPlaying="haru" alsoPlayingStage="5-9" timeInStage="2-28" saidMarker="haruonly" priority="10000">
+                <state img="8-cocky.png">Don't keep quiet 'bout your kinks.</state>
+                <state img="8-cocky.png">I wanna hear all the things you wanna do to me.</state>
+                <state img="8-cocky.png">Would you rather I dom ya instead?</state>
+                <state img="8-cocky.png">You're a dirty girl. &lt;i&gt;I love it.&lt;/i&gt;</state>
+                <state img="8-cocky.png">Naughty girl...</state>
+                <state img="8-masturbate_a.png">&lt;i&gt;Oh HELL YEAH.&lt;/i&gt;</state>
+                <state img="8-cheerful.png">Yeah, that's...</state>
+                <state img="8-masturbate_c.png">Don't... stop... talkin'...</state>
+                <state img="8-what.png">&lt;i&gt;Wait, why are we doin' this?&lt;/i&gt;</state>
+                <state img="8-cheerful.png">Haru...</state>
+                <state img="8-masturbate_a.png">(&lt;i&gt;pant&lt;/i&gt;) Just... (&lt;i&gt;pant&lt;/i&gt;) say the word! (&lt;i&gt;pant&lt;/i&gt;)</state>
+                <state img="8-startled.png">&lt;i&gt;Holy fuck, is she serious!?&lt;/i&gt;</state>
             </case>
             <case tag="masturbating" alsoPlaying="monika" alsoPlayingStage="9">
                 <state img="8-cheerful.png">She's lookin' at you, ~player~.</state>
@@ -20012,27 +20206,12 @@
             <case tag="masturbating" alsoPlaying="pit" alsoPlayingStage="0-4" timeInStage="0">
                 <state img="8-pissed.png">I don't need your damn commentary, wise guy!</state>
             </case>
-            <case tag="masturbating" alsoPlaying="pit" alsoPlayingStage="6">
-                <state img="8-neutral.png">Welcome to the boner squad, Pit.</state>
-                <state img="8-neutral.png">'Sup.</state>
-            </case>
-            <case tag="masturbating" alsoPlaying="haru" alsoPlayingStage="5-9" timeInStage="2-28" alsoPlayingNotSaidMarker="null_dirtytalk" priority="10000">
-                <condition count="2" filter="phantom_thieves" />
-                <state img="8-cocky.png">Don't keep quiet 'bout your kinks.</state>
-                <state img="8-cocky.png">I wanna hear all the things you wanna do to me.</state>
-                <state img="8-cocky.png">Would you rather I dom ya instead?</state>
-                <state img="8-cocky.png">You're a dirty girl. &lt;i&gt;I love it.&lt;/i&gt;</state>
-                <state img="8-cocky.png">Naughty girl...</state>
-                <state img="8-masturbate_a.png">&lt;i&gt;Oh HELL YEAH.&lt;/i&gt;</state>
-                <state img="8-cheerful.png">Yeah, that's...</state>
-                <state img="8-masturbate_c.png">Don't... stop... talkin'...</state>
-                <state img="8-what.png">&lt;i&gt;Wait, why are we doin' this?&lt;/i&gt;</state>
-                <state img="8-cheerful.png">Haru...</state>
-                <state img="8-masturbate_a.png">(&lt;i&gt;pant&lt;/i&gt;) Just... (&lt;i&gt;pant&lt;/i&gt;) say the word! (&lt;i&gt;pant&lt;/i&gt;)</state>
-                <state img="8-startled.png">&lt;i&gt;Holy fuck, is she serious!?&lt;/i&gt;</state>
+            <case tag="masturbating" alsoPlaying="pit" alsoPlayingStage="6" notSaidMarker="bonersquad">
+                <state img="8-neutral.png" marker="bonersquad">Welcome to the boner squad, Pit.</state>
             </case>
             <case tag="masturbating" totalAlive="4" priority="151">
-                <condition count="3" filter="phantom_thieves" status="masturbating" />
+                <condition count="1" filter="futaba" status="masturbating" />
+                <condition count="1" filter="haru" status="masturbating" />
                 <state img="8-neutral.png">I... guess we all lost.</state>
                 <state img="8-awkward.png">Are you girls okay with me bein' here?</state>
                 <state img="8-what.png">It's kinda weird bein' the only male Phantom Thief in this game...</state>
@@ -20088,15 +20267,6 @@
                 <state img="8-masturbate_d.png">Ohhhh god, &lt;i&gt;yes!&lt;/i&gt;</state>
                 <state img="8-masturbate_d.png">Nghh--gettin' close!</state>
             </case>
-            <case tag="heavy_masturbating" alsoPlaying="ann">
-                <state img="8-masturbate_c.png">&lt;i&gt;And Ann's watchin'  too!&lt;/i&gt;</state>
-                <state img="8-masturbate_a.png">&lt;i&gt;Oh man, her hand around my cock... Pumpin' me dry....&lt;/i&gt;</state>
-            </case>
-            <case tag="heavy_masturbating" alsoPlaying="ann" alsoPlayingStage="8">
-                <state img="8-cheerful.png">Mmph, s-so hot with you around!</state>
-                <state img="8-masturbate_b.png">Don't stop there, Ann!</state>
-                <state img="8-masturbate_c.png">&lt;i&gt;Don't stop moanin'... Please don't stop moanin'!&lt;/i&gt;</state>
-            </case>
             <case tag="heavy_masturbating" alsoPlaying="futaba" alsoPlayingStage="7">
                 <state img="8-masturbate_a.png">Actually...! Yeah, please continue talkin'!</state>
                 <state img="8-masturbate_b.png">Mmmph, h-how are you doin' Futaba?</state>
@@ -20105,6 +20275,9 @@
                 <state img="8-masturbate.png">Ohhhh... You're doin'... great!</state>
                 <state img="8-masturbate_c.png">Futaba, I...</state>
                 <state img="8-masturbate.png">Yes---&lt;i&gt;ahh&lt;/i&gt;---we're in this together!</state>
+            </case>
+            <case tag="heavy_masturbating" alsoPlaying="haru" alsoPlayingSayingMarker="edging">
+                <state img="8-masturbate.png">N-No, &lt;i&gt;please&lt;/i&gt;...</state>
             </case>
             <case tag="heavy_masturbating" alsoPlaying="pinkie_pie" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
                 <state img="8-masturbate.png">Nnn--shit... f-fuck you!</state>
@@ -20125,6 +20298,8 @@
             </case>
             <case tag="heavy_masturbating">
                 <condition count="4" filter="phantom_thieves" status="masturbating" />
+                <condition count="1" filter="futaba" />
+                <condition count="1" filter="haru" />
                 <state img="8-masturbate_c.png">M-Might wanna move back!</state>
                 <state img="8-masturbate.png">&lt;i&gt;Oh god, oh fuck, she's watchin' me too... Oh GOD---&lt;/i&gt;</state>
                 <state img="8-masturbate_d.png">G-Guys... Guys, I'm close---!</state>
@@ -20136,9 +20311,6 @@
                 <state img="8-finishing.png">Ah fuuuUUUUUCK!!</state>
                 <state img="8-finishing.png">AhhhyesssssYESSS!!</state>
                 <state img="8-finishing.png">AHHHHH!~</state>
-            </case>
-            <case tag="finishing_masturbating" alsoPlaying="haru" alsoPlayingStage="5-8">
-                <state img="8-finishing.png">&lt;i&gt;HARU!&lt;/i&gt;</state>
             </case>
         </stage>
 
@@ -20245,12 +20417,17 @@
                 <state img="9-awkward.png">Jeez, you alright?</state>
                 <state img="9-awkward.png">Nah, I gotcha.</state>
             </case>
-            <case tag="female_must_strip" target="haru" targetSayingMarker="luckgods3">
+            <case tag="female_must_strip" target="haru" oppHand="Three of a Kind">
+                <state img="9-startled.png">HOW THE HELL DID YOU LOSE!? I thought that hand was godly!</state>
+            </case>
+            <case tag="female_must_strip" target="haru" oppHand="Two Pair">
                 <state img="9-startled.png">HOW THE HELL DID YOU LOSE!?</state>
             </case>
             <case tag="female_must_strip" target="haru" targetStage="5-6">
                 <state img="9-awkward.png">Jeez, you're determined.</state>
-                <state img="9-what.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going?</state>
+                <state img="9-startled.png" marker="nobacksies">You &lt;i&gt;sure&lt;/i&gt; you wanna keep going!?</state>
+                <state img="9-aroused.png">...</state>
+                <state img="9-awkward.png">Uhh...</state>
             </case>
             <case tag="female_must_strip" target="moon" priority="55">
                 <state img="9-disgusted.png">Christ.</state>
@@ -20285,8 +20462,11 @@
             <case tag="female_must_strip" target="ryuko" targetStage="4">
                 <state img="9-what.png">Wait, what's happenin'?</state>
             </case>
-            <case tag="female_must_strip" target="wiifitfemale" alsoPlaying="futaba" priority="385">
+            <case tag="female_must_strip" target="wiifitfemale" targetStage="0" alsoPlaying="haru" alsoPlayingSayingMarker="personaltrainer" priority="385">
                 <state img="9-grumpy.png">I'm here too, y'know! Why can't we &lt;i&gt;all&lt;/i&gt; train together!?</state>
+            </case>
+            <case tag="tie">
+                <state img="9-startled.png">Wait, what the hell happened!? Did they just...</state>
             </case>
             <case tag="male_human_must_strip">
                 <state img="9-awkward.png">Tough luck.</state>
@@ -20373,6 +20553,12 @@
             <case tag="female_removing_accessory" alsoPlaying="ryuko" alsoPlayingStage="3">
                 <state img="9-startled.png">WHAT THE--!?</state>
             </case>
+            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="futaba" />
+                <condition count="0" filter="ann_takamaki" />
+                <state img="9-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_accessory" target="alice_mgq" targetStage="5">
                 <state img="9-startled.png">Woah!</state>
             </case>
@@ -20410,9 +20596,6 @@
             <case tag="female_removing_accessory" target="hanako" targetStage="0">
                 <state img="9-awkward.png">...</state>
             </case>
-            <case tag="female_removing_accessory" target="haru" targetStage="0">
-                <state img="9-startled.png">You're JUST starting!?</state>
-            </case>
             <case tag="female_removing_accessory" target="hermione" targetStage="3">
                 <state img="9-pissed.png">You're over here whinin' about your GODDAMN house tie, Hermione!! While I'm over here humiliatin' myself!</state>
             </case>
@@ -20448,9 +20631,6 @@
             </case>
             <case tag="female_removing_accessory" target="pinkie_pie" targetStage="2">
                 <state img="9-cheerful.png">You know what? That's fine. Just fine.</state>
-            </case>
-            <case tag="female_removing_accessory" targetStatus="decent" notSaidMarker="blowmeload" priority="0">
-                <state img="9-threathen.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_accessory" targetStatus="not_decent" priority="9999">
                 <state img="9-what.png">Wait, why couldn't ya just... taken that off before?</state>
@@ -20509,7 +20689,10 @@
                 <state img="9-neutral.png">Gotcha.</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1">
-                <state img="9-facepalm.png">ARGHHHHH!!</state>
+                <state img="9-facepalm.png">Ugh...</state>
+                <state img="9-startled.png">How is it that you &lt;i&gt;haven't&lt;/i&gt; taken off anythin'!?</state>
+                <state img="9-startled.png">Your &lt;i&gt;first&lt;/i&gt; loss!? Just how good are you at poker!?</state>
+                <state img="9-startled.png">You're JUST starting!?</state>
             </case>
             <case tag="female_removed_accessory" target="haru" targetStage="1" alsoPlaying="futaba" alsoPlayingStage="0-4">
                 <state img="9-disgusted.png">Now that's just cruel.</state>
@@ -20590,14 +20773,17 @@
                 <state img="9-grumpy.png">Friggin'... whatever.</state>
                 <state img="9-facepalm.png">(&lt;i&gt;sigh&lt;/i&gt;) I'm not doin' so great, aren't I?</state>
             </case>
+            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
+                <condition count="0" filter="haru" />
+                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="futaba" />
+                <state img="9-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
+            </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="1" priority="620">
                 <state img="9-thinking.png">Seriously, how do girls even walk in high heels? I tried walking in heels and I immediately fell on my face. Ain't fun.</state>
             </case>
             <case tag="female_removing_minor" filter="dapper_date" targetStage="2">
                 <state img="9-awkward.png">You usually don't dress all fancy like that, Haru... What's the occasion?</state>
-            </case>
-            <case tag="female_removing_minor" notSaidMarker="blowmeload" priority="0">
-                <state img="9-pissed.png" marker="blowmeload">Buddy, if you don't stop with that shit, I'm going to BLOW MY LOAD!</state>
             </case>
             <case tag="female_removing_minor" target="aimee" targetStage="1">
                 <state img="9-awkward.png">Uhhh... I see you're ignorin' my advice.</state>
@@ -20619,7 +20805,9 @@
                 <state img="9-disgusted.png">Dick move, much?</state>
             </case>
             <case tag="female_removing_minor" target="haru">
-                <state img="9-facepalm.png">&lt;i&gt;Oh come on, Haru!&lt;/i&gt;</state>
+                <state img="9-facepalm.png">&lt;i&gt;Oh, come on!&lt;/i&gt;</state>
+                <state img="9-startled.png">&lt;i&gt;For real!? Haru has some serious luck!&lt;/i&gt;</state>
+                <state img="9-startled.png">Just how good are you at poker!?</state>
             </case>
             <case tag="female_removing_minor" target="kyoko" targetStage="5" priority="75">
                 <state img="9-startled.png">I-I had no idea...</state>
@@ -20678,6 +20866,9 @@
             </case>
             <case tag="female_removed_minor" target="futaba">
                 <state img="9-facepalm.png">I always knew you were a lil' troll.</state>
+            </case>
+            <case tag="female_removed_minor" target="futaba" targetSaying="zettai ryuokai" priority="111">
+                <state img="9-thinking.png">Zettai ryuokai? Is that what it's called?</state>
             </case>
             <case tag="female_removed_minor" target="haru">
                 <state img="9-disgusted.png">Do you HAVE to rub it in?</state>
@@ -20770,14 +20961,14 @@
             <case tag="female_removing_major" target="ryuko" targetStage="2">
                 <state img="9-startled.png">WHAT THE HELL!?</state>
             </case>
-            <case tag="female_removing_major" target="wiifitfemale" alsoPlaying="futaba">
-                <state img="9-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
-            </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="0">
                 <state img="9-startled.png">Wait a minu---d-don't ya have other clothes to wear!?</state>
             </case>
             <case tag="female_removing_major" target="wiifitfemale" targetStage="1">
                 <state img="9-aroused.png">Y-Yeah... Bet those are pretty comfy.</state>
+            </case>
+            <case tag="female_removing_major" target="wiifitfemale" targetStage="1" alsoPlaying="futaba">
+                <state img="9-cheerful.png">I bet my ass looks &lt;i&gt;great&lt;/i&gt; in yoga pants!</state>
             </case>
             <case tag="female_removed_major">
                 <state img="9-what.png">That's a bold move.</state>
@@ -21195,11 +21386,13 @@
             </case>
             <case tag="female_crotch_is_visible" target="futaba">
                 <state img="9-awkward.png">&lt;i&gt;I ain't gonna admit it out loud, but I'm kinda turned on.&lt;/i&gt;</state>
-                <state img="9-startled.png">What!? No!! I don't--</state>
                 <state img="9-startled.png">Woah, are you TRYING to seduce me?</state>
             </case>
             <case tag="female_crotch_is_visible" target="futaba" alsoPlaying="ann" priority="555">
                 <state img="9-awkward.png">You know I don't bother with that.</state>
+            </case>
+            <case tag="female_crotch_is_visible" target="futaba" targetSaying="imagining me naked">
+                <state img="9-startled.png">What!? No!! I don't--</state>
             </case>
             <case tag="female_crotch_is_visible" target="haru">
                 <state img="9-aroused.png">&lt;i&gt;Daaaaaamn!&lt;/i&gt;</state>
@@ -21391,9 +21584,12 @@
                 <condition count="2" filter="phantom_thieves" />
                 <state img="9-thinking.png" marker="condomanimals">Reminds me of the time Joker tried making a balloon-animal usin' a condom.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4">
+            <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6" totalAlive="4" saidMarker="haruonly">
                 <condition count="3" filter="phantom_thieves" />
                 <state img="9-cocky.png" marker="ryuji_dirtytalkstart">This would actually be hot if ya didn't stammer so much. Lemme try...</state>
+            </case>
+            <case tag="female_start_masturbating" filter="phantom_thieves">
+                <state img="9-what.png">...You ain't backin' out, aren't 'cha?</state>
             </case>
             <case tag="female_start_masturbating" filter="tandem">
                 <state img="9-startled.png">Wait, WHAT!? I-IS THAT ALLOWED!?</state>
@@ -21419,7 +21615,7 @@
             <case tag="female_start_masturbating" target="haru" alsoPlaying="futaba" alsoPlayingStage="6">
                 <state img="9-awkward.png">This would actually be hot... if you didn't stammer that much.</state>
             </case>
-            <case tag="female_start_masturbating" target="haru" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
+            <case tag="female_start_masturbating" target="haru" saidMarker="haruonly" notSaidMarker="null_dirtytalk" targetNotSaidMarker="null_dirtytalk" priority="9999">
                 <state img="9-cocky.png" marker="haru_dirtytalk">Okay... Down on your knees.</state>
             </case>
             <case tag="female_start_masturbating" target="moon">
@@ -21454,6 +21650,12 @@
                 <state img="9-aroused.png">Wow...</state>
                 <state img="9-awkward.png">Damn, ~name~... You're kinda beautiful...</state>
                 <state img="9-aroused.png">&lt;i&gt;Too bad I already came...&lt;/i&gt;</state>
+                <state img="9-what.png">&lt;i&gt;Jeez...&lt;/i&gt;</state>
+                <state img="9-what.png">&lt;i&gt;What am I even doing here!? The hell!&lt;/i&gt;</state>
+                <state img="9-embarrassed.png">Hey, d-don't look at me while you're doing it!</state>
+                <state img="9-thinking.png">So...</state>
+                <state img="9-what.png">Okay, I see what you're doing...</state>
+                <state img="9-awkward.png">&lt;i&gt;Did I sound like that?&lt;/i&gt;</state>
             </case>
             <case tag="female_masturbating" alsoPlaying="launch">
                 <state img="9-startled.png">Not even &lt;i&gt;I&lt;/i&gt; would try that!</state>
@@ -21466,12 +21668,16 @@
                 <state img="9-pissed.png">You lay a hand on her and I'll make sure you'll never move again!</state>
             </case>
             <case tag="female_masturbating" filter="phantom_thieves">
-                <state img="9-awkward.png">...</state>
                 <state img="9-awkward.png">Well shit...</state>
                 <state img="9-aroused.png">&lt;i&gt;Is it bad that I wanna go a second time?&lt;/i&gt;</state>
                 <state img="9-embarrassed.png">H-Hey, don't look at me while you're doing it!</state>
                 <state img="9-grumpy.png">Who even invented this friggin' game anyways!?</state>
-                <state img="9-awkward.png">&lt;i&gt;Jeez, this is my teammate!&lt;/i&gt;</state>
+                <state img="9-what.png">&lt;i&gt;Jeez, this is my teammate!&lt;/i&gt;</state>
+                <state img="9-thinking.png">So...</state>
+                <state img="9-awkward.png">&lt;i&gt;Goddamnit, I don't think I can look her in the eyes after this!&lt;/i&gt;</state>
+                <state img="9-what.png">Okay, I see what you're doing...</state>
+                <state img="9-awkward.png">&lt;i&gt;Shit... And I finished too!&lt;/i&gt;</state>
+                <state img="9-awkward.png">&lt;i&gt;Did I sound like that?&lt;/i&gt;</state>
             </case>
             <case tag="female_masturbating" filter="villain">
                 <state img="9-startled.png">N-Nuh-uh! I'm NOT gettin' turned on by this!</state>
@@ -21517,7 +21723,7 @@
                 <state img="9-aroused.png">Heh... Feels great, doesn't it? Not like you wouldn't know...</state>
                 <state img="9-awkward.png">Umm...</state>
             </case>
-            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="ryuji_dirtytalkstart" priority="10000">
+            <case tag="female_masturbating" target="haru" totalAlive="3" saidMarker="haruonly" priority="10000">
                 <state img="9-what.png">&lt;i&gt;Shit, this is hard.&lt;/i&gt;</state>
                 <state img="9-cocky.png">Don't you dare stop.</state>
                 <state img="9-cocky.png">You own a dog collar, don't 'cha? I'd like to see it 'round your pretty little neck.</state>
@@ -21621,11 +21827,18 @@
                 <state img="9-disgusted.png">Eugh. How many people came on this floor?</state>
                 <state img="9-grumpy.png">What is this place anyways?</state>
                 <state img="9-grumpy.png">Well, I masturbated in front of everyone. You're welcome.</state>
-                <state img="9-embarrassed.png">Does that mean I lost?</state>
+                <state img="9-what.png">Does that mean I lost?</state>
                 <state img="9-aroused.png">&lt;i&gt;I ain't gonna admit it out loud... but that was fun...&lt;/i&gt;</state>
+                <state img="9-embarrassed.png">&lt;i&gt;Did I seriously nut in front of everyone!&lt;/i&gt;</state>
             </case>
             <case tag="finished_masturbating" alsoPlaying="futaba" alsoPlayingStage="6" notSaidMarker="shutuporacle">
                 <state img="9-pissed.png" marker="shutuporacle">S-Shut up, Oracle!</state>
+            </case>
+            <case tag="finished_masturbating" alsoPlaying="haru" alsoPlayingSayingMarker="lap_nap">
+                <state img="9-awkward.png" marker="lapss">Umm, well... I mean, if you want...?</state>
+            </case>
+            <case tag="finished_masturbating" alsoPlaying="haru" alsoPlayingSayingMarker="lap_nap2">
+                <state img="9-thinking.png">Good point.</state>
             </case>
             <case tag="finished_masturbating" alsoPlaying="haru" alsoPlayingStage="0-3">
                 <state img="9-awkward.png">I'm fine, don't worry.</state>
@@ -21663,7 +21876,7 @@
                 <state img="9-disgusted.png">I'm out, man.</state>
                 <state img="9-disgusted.png">The hell kinda poker is this?</state>
             </case>
-            <case tag="game_over_defeat" alsoPlaying="ann" alsoPlayingStage="9">
+            <case tag="game_over_defeat" alsoPlaying="ann_takamaki" alsoPlayingStage="9-0">
                 <state img="9-awkward.png">You okay there, Ann?</state>
                 <state img="9-awkward.png">So, uhhhh.... J-Just forget about it? Wanna come hang out at my place later, Ann?</state>
             </case>
@@ -21675,7 +21888,7 @@
                 <state img="9-aroused.png">I'd say this was a pretty damn great experience for both of us, wouldn't ya say, Oracle?</state>
                 <state img="9-awkward.png">Well, we both lost. B-But you still had fun, right Oracle? You wanna maybe... do it again sometime?</state>
             </case>
-            <case tag="game_over_defeat" alsoPlaying="haru" alsoPlayingStage="9">
+            <case tag="game_over_defeat" alsoPlaying="haru" alsoPlayingStage="9" priority="10000">
                 <state img="9-snuggle.png" marker="snuggling">Thank you for playing with me, Ryuji-kun. (...)</state>
             </case>
             <case tag="game_over_defeat" alsoPlaying="pinkie_pie" alsoPlayingStage="4-6" alsoPlayingSaidMarker="pinka_start" alsoPlayingNotSaidMarker="pinka_end2">
@@ -21687,7 +21900,7 @@
             <case tag="game_over_defeat" filter="perverted" priority="22">
                 <state img="9-facepalm.png">&lt;i&gt;Congratulations.&lt;/i&gt;</state>
             </case>
-            <case tag="game_over_defeat" target="ann" targetStage="0-7">
+            <case tag="game_over_defeat" target="ann_takamaki" targetStage="0-7">
                 <state img="9-grumpy.png">You're never gonna let me live this down, are ya Ann?</state>
                 <state img="9-facepalm.png">Ughhhhhhhh!</state>
             </case>

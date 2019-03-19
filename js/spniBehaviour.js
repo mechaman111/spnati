@@ -702,7 +702,7 @@ Case.prototype.volatileRequirementsMet = function (self, opp) {
     if (this.targetSaying) {
         if (!opp) return false;
         if (!opp.chosenState) return false;
-        if (!opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
+        if (opp.chosenState.rawDialogue.toLowerCase().indexOf(this.targetSaying.toLowerCase()) < 0) return false;
     }
     
     if (this.alsoPlaying && (this.alsoPlayingSayingMarker || this.alsoPlayingSaying)) {

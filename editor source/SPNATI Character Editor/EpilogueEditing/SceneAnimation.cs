@@ -22,7 +22,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public int Iterations;
 
 		public float Elapsed;
-		public float Delay;
 
 		private SceneObject _initialState;
 
@@ -32,10 +31,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			_initialState.Index = 0;
 			AssociatedObject = obj;
 			Looped = directive.Looped;
-			if (!string.IsNullOrEmpty(directive.Delay))
-			{
-				float.TryParse(directive.Delay, NumberStyles.Float, CultureInfo.InvariantCulture, out Delay);
-			}
 			EasingMethod = directive.EasingMethod;
 			TweenMethod = directive.InterpolationMethod;
 			ClampMethod = directive.ClampingMethod;
@@ -62,7 +57,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			get
 			{
-				float life = Elapsed - Delay;
+				float life = Elapsed;
 				if (Looped)
 				{
 					return Iterations > 0 ? life / Duration >= Iterations : false;
@@ -126,7 +121,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			Elapsed += elapsedSec;
 
-			float t = Elapsed - Delay;
+			float t = Elapsed;
 			if (t < 0)
 			{
 				return;
