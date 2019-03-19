@@ -224,8 +224,9 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cmdAdd_Click(object sender, EventArgs e)
 		{
-			_spellchecker.AddWord(txtWord.Text, true);
-			_misspellings.Dequeue();
+			string word = _currentMisspelling.Word;
+			_spellchecker.AddWord(word, true);
+			FilterQueue(m => m.Word != word);
 			GetNextMisspelling();
 		}
 
