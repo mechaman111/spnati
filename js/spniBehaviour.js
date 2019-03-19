@@ -182,7 +182,7 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml) {
+function State($xml, addedTags, removedTags) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
@@ -199,6 +199,9 @@ function State($xml) {
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
     
+    this.addTags = !!addedTags ? addedTags : [];
+    this.removeTags = !!removedTags ? removedTags : [];
+
     if (markerOp) {
         var match = markerOp.match(/^(?:(\+|\-)([\w\-]+)(\*?)|([\w\-]+)(\*?)\s*\=\s*(\-?\w+|~?\w+~))$/);
         var name;
@@ -594,10 +597,24 @@ function Case($xml, stage) {
     this.notSaidMarker =            $xml.attr("notSaidMarker");
     this.customPriority =           parseInt($xml.attr("priority"), 10);
     this.hidden =                   $xml.attr("hidden");
+    this.addTags =                  $xml.attr("addCharacterTags");
+    this.removeTags =               $xml.attr("removeCharacterTags");
+
+    if (this.addTags) {
+        this.addTags = this.addTags.split(',').map(canonicalizeTag);
+    } else {
+        this.addTags = [];
+    }
+
+    if (this.removeTags) {
+        this.removeTags = this.removeTags.split(',').map(canonicalizeTag);
+    } else {
+        this.removeTags = [];
+    }
     
     var states = [];
     $xml.find('state').each(function () {
-        states.push(new State($(this)));
+        states.push(new State($(this), this.addTags, this.removeTags));
     });
     this.states = states;
     
@@ -1228,6 +1245,16 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.size = this.chosenState.setSize;
     }
     
+    if (this.chosenState.removeTags.length > 0 || this.chosenState.addTags.length > 0) {
+        var newBaseTags = this.baseTags.filter(function (t) {
+            return this.chosenState.removeTags.indexOf(t) < 0;
+        });
+        Array.prototype.push.apply(newBaseTags, this.chosenState.addTags);
+
+        this.baseTags = newBaseTags;
+        this.tags = expandTagsList(this.baseTags);
+    }
+
     this.stateCommitted = true;
 }
 
