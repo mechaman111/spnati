@@ -602,14 +602,10 @@ function Case($xml, stage) {
 
     if (this.addTags) {
         this.addTags = this.addTags.split(',').map(canonicalizeTag);
-    } else {
-        this.addTags = [];
     }
 
     if (this.removeTags) {
         this.removeTags = this.removeTags.split(',').map(canonicalizeTag);
-    } else {
-        this.removeTags = [];
     }
     
     var states = [];
