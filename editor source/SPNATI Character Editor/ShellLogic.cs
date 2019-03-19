@@ -260,6 +260,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("Marker Report...", typeof(MarkerReportRecord), menu);
 			shell.AddToolbarItem("Configure Game...", ConfigGame, menu, Keys.None);
 			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);
+			shell.AddToolbarItem("Manage Dictionary...", typeof(DictionaryRecord), menu);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);
@@ -434,6 +435,7 @@ namespace SPNATI_Character_Editor
 
 		public static void Teardown()
 		{
+			SpellChecker.Instance.SaveUserDictionary();
 			Config.Save();
 		}
 

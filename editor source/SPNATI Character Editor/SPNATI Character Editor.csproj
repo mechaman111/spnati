@@ -52,6 +52,10 @@
     <ApplicationIcon>editor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -103,6 +107,12 @@
     <Compile Include="Activities\DialogueEditor.Designer.cs">
       <DependentUpon>DialogueEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\DictionaryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\DictionaryEditor.Designer.cs">
+      <DependentUpon>DictionaryEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\PoseCreator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -126,6 +136,12 @@
     </Compile>
     <Compile Include="Activities\SkinTagEditor.Designer.cs">
       <DependentUpon>SkinTagEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\SpellCheck.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\SpellCheck.Designer.cs">
+      <DependentUpon>SpellCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\DirectiveMarkerControl.cs">
       <SubType>UserControl</SubType>
@@ -438,6 +454,7 @@
     <Compile Include="DataStructures\Scene.cs" />
     <Compile Include="DataStructures\Screen.cs" />
     <Compile Include="DataStructures\Skin.cs" />
+    <Compile Include="DataStructures\SpellChecker.cs" />
     <Compile Include="DataStructures\SpnatiConfig.cs" />
     <Compile Include="DataStructures\Sprite.cs" />
     <Compile Include="DataStructures\Tag.cs" />
@@ -620,6 +637,9 @@
     <EmbeddedResource Include="Activities\DialogueEditor.resx">
       <DependentUpon>DialogueEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Activities\DictionaryEditor.resx">
+      <DependentUpon>DictionaryEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Activities\MarkerEditor.resx">
       <DependentUpon>MarkerEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -649,6 +669,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\SkinTagEditor.resx">
       <DependentUpon>SkinTagEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\SpellCheck.resx">
+      <DependentUpon>SpellCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\TagEditor.resx">
       <DependentUpon>TagEditor.cs</DependentUpon>
@@ -831,6 +854,7 @@
     <EmbeddedResource Include="SettingsSetup.resx">
       <DependentUpon>SettingsSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -881,6 +905,12 @@
     <None Include="Icons\AddLink.png" />
     <None Include="Icons\CollapseAll.png" />
     <None Include="Icons\ExpandAll.png" />
+    <None Include="Resources\en_US.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\en_US.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Help.png" />
     <None Include="Icons\AlignBottom.png" />
     <None Include="Icons\AlignLeft.png" />
@@ -888,6 +918,15 @@
     <None Include="Icons\AlignStretchHorizontal.png" />
     <None Include="Icons\AlignStretchVertical.png" />
     <None Include="Icons\AlignTop.png" />
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\words.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="tag_dictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

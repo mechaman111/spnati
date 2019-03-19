@@ -96,6 +96,7 @@ namespace SPNATI_Character_Editor.Activities
 						if (character != null)
 						{
 							CharacterDatabase.Add(character);
+							SpellChecker.Instance.AddWord(character.Label, false);
 							for (int t = 0; t < character.Tags.Count; t++)
 							{
 								string tag = character.Tags[t].ToLowerInvariant();

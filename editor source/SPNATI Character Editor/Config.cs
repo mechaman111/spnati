@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets the programs %appdata% path
+		/// Gets the program's %appdata% path
 		/// </summary>
 		public static string AppDataDirectory
 		{
