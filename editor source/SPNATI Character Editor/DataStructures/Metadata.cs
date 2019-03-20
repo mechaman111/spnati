@@ -46,6 +46,10 @@ namespace SPNATI_Character_Editor
 		[XmlElement("description")]
 		public string Description;
 
+		[DefaultValue(false)]
+		[XmlElement("crossGender")]
+		public bool CrossGender;
+
 		[XmlElement("scale")]
 		[DefaultValue(100.0f)]
 		public float Scale = 100.0f;

@@ -307,6 +307,8 @@ namespace SPNATI_Character_Editor
 				Stages.Add(new Stage(s));
 			}
 
+			character.Metadata.CrossGender = false;
+
 			//Put each case into the appropriate stage(s)
 			foreach (var workingCase in _workingCases)
 			{
@@ -337,6 +339,11 @@ namespace SPNATI_Character_Editor
 					foreach (var line in workingCase.Lines)
 					{
 						existingCase.Lines.Add(CreateStageSpecificLine(line, s, character));
+
+						if (!string.IsNullOrEmpty(line.Gender))
+						{
+							character.Metadata.CrossGender = true;
+						}
 					}
 				}
 			}

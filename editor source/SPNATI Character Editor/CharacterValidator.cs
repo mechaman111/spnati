@@ -117,7 +117,7 @@ namespace SPNATI_Character_Editor
 
 							if (target.FolderName != "human")
 							{
-								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender && !target.Metadata.CrossGender)
 								{
 									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
 								}

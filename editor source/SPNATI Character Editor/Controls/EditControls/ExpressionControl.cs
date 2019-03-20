@@ -91,10 +91,7 @@ namespace SPNATI_Character_Editor
 		{
 			if (property == "AlsoPlaying")
 			{
-				if (cboExpression.Text.StartsWith("~_."))
-				{
-					FillInCharacter();
-				}
+				FillInCharacter();
 			}
 			if (property == "Target" || property == "AlsoPlaying")
 			{
@@ -104,6 +101,10 @@ namespace SPNATI_Character_Editor
 
 		private void FillInCharacter()
 		{
+			if (!cboExpression.Text.StartsWith("~_."))
+			{
+				return;
+			}
 			Case data = Data as Case;
 			if (data != null)
 			{

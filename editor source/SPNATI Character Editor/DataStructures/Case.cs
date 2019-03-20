@@ -1699,7 +1699,7 @@ namespace SPNATI_Character_Editor
 				return false;
 			}
 
-			if (trigger.Gender == null || trigger.Gender == character.Gender)
+			if (trigger.Gender == null || trigger.Gender == character.Gender || character.Metadata.CrossGender)
 			{
 				return true;
 			}

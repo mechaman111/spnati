@@ -60,7 +60,6 @@ namespace SPNATI_Character_Editor.Controls
 					row.Tag = c;
 					if (_restrictions.HasFlag(WardrobeRestrictions.LayerTypes))
 					{
-						row.Cells["ColPosition"].ReadOnly = true;
 						row.Cells["ColType"].ReadOnly = true;
 					}
 				}
@@ -191,6 +190,16 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				MessageBox.Show("Clothing cannot have an empty name.");
 				e.Cancel = true;
+			}
+			if (e.ColumnIndex == ColPosition.Index && _restrictions.HasFlag(WardrobeRestrictions.LayerTypes))
+			{
+				string type = row.Cells["ColType"].Value?.ToString();
+				string position = row.Cells["ColPosition"].Value?.ToString();
+				if (type == "important" && position != e.FormattedValue?.ToString() && (position == "upper" || position == "lower"))
+				{
+					MessageBox.Show("Cannot change position for an important layer.");
+					e.Cancel = true;
+				}
 			}
 		}
 	}
