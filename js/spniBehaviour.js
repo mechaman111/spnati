@@ -242,6 +242,10 @@ function expandPlayerVariable(split_fn, args, self, target) {
     case 'costume':
         if (!target.alt_costume) return 'default';
         return target.alt_costume.id;
+    case 'size':
+        return target.size;
+    case 'gender':
+        return target.gender;
     default:
         return target.label;
     }
