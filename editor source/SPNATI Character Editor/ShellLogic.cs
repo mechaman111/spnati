@@ -29,13 +29,13 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.AutoTick += Instance_AutoTick;
 
 			_backupTimer.Tick += _backupTimer_Tick;
-			_backupTimer.Interval = new System.TimeSpan(0, 5, 0);
+			_backupTimer.Interval = new TimeSpan(0, 5, 0);
 			_backupTimer.Start();
 
 			Config.LoadMacros<Case>("Case");
 		}
 
-		private static void _backupTimer_Tick(object sender, System.EventArgs e)
+		private static void _backupTimer_Tick(object sender, EventArgs e)
 		{
 			if (!Config.AutoBackupEnabled) { return; }
 			Cursor cursor = Cursor.Current;
