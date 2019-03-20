@@ -56,7 +56,8 @@ function startMasturbation (player) {
     updateAllBehaviours(
         player, 
         PLAYER_START_MASTURBATING,
-        players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING
+        [[players[player].gender == eGender.MALE ? MALE_START_MASTURBATING : FEMALE_START_MASTURBATING,
+         OPPONENT_START_MASTURBATING]]
     );
     
     saveAllTranscriptEntries();
@@ -172,9 +173,12 @@ function tickForfeitTimers () {
     if (masturbatingPlayers.length > 0
         && ((gamePhase == eGamePhase.DEAL && players[HUMAN_PLAYER].out) || gamePhase == eGamePhase.EXCHANGE || gamePhase == eGamePhase.END_LOOP)) {
         var playerToShow = masturbatingPlayers[getRandomNumber(0, masturbatingPlayers.length)]
-        var others_tags = [players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING];
+        var others_tags = [[players[playerToShow].gender == eGender.MALE ? MALE_MASTURBATING : FEMALE_MASTURBATING, OPPONENT_MASTURBATING]];
         if (players[playerToShow].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
-            others_tags.unshift(players[playerToShow].gender == eGender.MALE ? MALE_HEAVY_MASTURBATING : FEMALE_HEAVY_MASTURBATING);
+            others_tags.unshift([
+                players[playerToShow].gender == eGender.MALE ? MALE_HEAVY_MASTURBATING : FEMALE_HEAVY_MASTURBATING,
+                OPPONENT_HEAVY_MASTURBATING
+            ]);
         }
         
         updateAllBehaviours(
@@ -204,7 +208,8 @@ function finishMasturbation (player) {
     updateAllBehaviours(
         player, 
         PLAYER_FINISHED_MASTURBATING,
-        players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING
+        [[players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING,
+         OPPONENT_FINISHED_MASTURBATING]]
     );
 	players[player].timeInStage = 0;
     

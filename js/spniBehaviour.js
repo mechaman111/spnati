@@ -37,6 +37,15 @@ var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
 var OPPONENT_STRIPPED = "opponent_stripped";
 
+var OPPONENT_CHEST_WILL_BE_VISIBLE = "opponent_chest_will_be_visible";
+var OPPONENT_CROTCH_WILL_BE_VISIBLE = "opponent_crotch_will_be_visible";
+var OPPONENT_CHEST_IS_VISIBLE = "opponent_chest_is_visible";
+var OPPONENT_CROTCH_IS_VISIBLE = "opponent_crotch_is_visible";
+var OPPONENT_START_MASTURBATING = "opponent_start_masturbating";
+var OPPONENT_MASTURBATING = "opponent_masturbating";
+var OPPONENT_HEAVY_MASTURBATING = "opponent_heavy_masturbating";
+var OPPONENT_FINISHED_MASTURBATING = "opponent_finished_masturbating";
+
 var PLAYERS_TIED = "tie";
 
 var MALE_HUMAN_MUST_STRIP = "male_human_must_strip";
@@ -55,6 +64,7 @@ var MALE_CHEST_IS_VISIBLE = "male_chest_is_visible";
 var MALE_SMALL_CROTCH_IS_VISIBLE = "male_small_crotch_is_visible";
 var MALE_MEDIUM_CROTCH_IS_VISIBLE = "male_medium_crotch_is_visible";
 var MALE_LARGE_CROTCH_IS_VISIBLE = "male_large_crotch_is_visible";
+var MALE_CROTCH_IS_VISIBLE = "male_crotch_is_visible";
 
 var MALE_MUST_MASTURBATE = "male_must_masturbate";
 var MALE_START_MASTURBATING = "male_start_masturbating";
@@ -77,6 +87,7 @@ var FEMALE_REMOVED_MAJOR = "female_removed_major";
 var FEMALE_SMALL_CHEST_IS_VISIBLE = "female_small_chest_is_visible";
 var FEMALE_MEDIUM_CHEST_IS_VISIBLE = "female_medium_chest_is_visible";
 var FEMALE_LARGE_CHEST_IS_VISIBLE = "female_large_chest_is_visible";
+var FEMALE_CHEST_IS_VISIBLE = "female_chest_is_visible";
 var FEMALE_CROTCH_IS_VISIBLE = "female_crotch_is_visible";
 
 var FEMALE_MUST_MASTURBATE = "female_must_masturbate";
