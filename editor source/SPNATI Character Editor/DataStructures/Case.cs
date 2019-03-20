@@ -1391,6 +1391,10 @@ namespace SPNATI_Character_Editor
 			//First handle tags where the speaker is actively doing something, since these are the easiest to handle
 			if (Tag == "stripping")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_stripping";
+				}
 				int stage = Stages.Min(s => s);
 				string layer = GetLayerType(speaker, stage);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
@@ -1404,6 +1408,10 @@ namespace SPNATI_Character_Editor
 			}
 			else if (Tag == "stripped")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_stripped";
+				}
 				int stage = Stages.Min(s => s);
 				string layer = GetLayerType(speaker, stage - 1);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
@@ -1424,6 +1432,10 @@ namespace SPNATI_Character_Editor
 			}
 			else if (Tag == "must_masturbate_first")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
 				return $"{gender}_must_masturbate";
 			}
 			else if (Tag == "must_masturbate" || Tag == "start_masturbating" || Tag == "masturbating" || Tag == "finished_masturbating")
@@ -1432,6 +1444,10 @@ namespace SPNATI_Character_Editor
 			}
 			else if (Tag.StartsWith("must_strip"))
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
 				return $"{gender}_must_strip";
 			}
 			else if (Tag == "game_over_victory")
