@@ -27,7 +27,9 @@ namespace SPNATI_Character_Editor
 				"~self.slot~",
 				"~self.tag~",
 				"~target.costume~",
+				"~target.gender~",
 				"~target.position~",
+				"~target.size~",
 				"~target.slot~",
 				"~target.tag~",
 				"~weekday~",
@@ -279,11 +281,24 @@ namespace SPNATI_Character_Editor
 						}
 					}
 					break;
+				case "~target.gender~":
+					cboValue.Items.AddRange(new string[] {
+						"female",
+						"male",
+					});
+					break;
 				case "~target.position~":
 					cboValue.Items.AddRange(new string[] {
 						"left",
 						"right",
 						"self",
+					});
+					break;
+				case "~target.size~":
+					cboValue.Items.AddRange(new string[] {
+						"small",
+						"medium",
+						"large",
 					});
 					break;
 				case "~target.slot~":

@@ -546,9 +546,11 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					tableConditions.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 				}
-				tableConditions.AddSpeedButton("Target", "Target Costume", (data) => { return AddVariableTest("~target.costume~", data); });
-				tableConditions.AddSpeedButton("Target", "Target Position", (data) => { return AddVariableTest("~target.position~", data); });
-				tableConditions.AddSpeedButton("Target", "Target Slot", (data) => { return AddVariableTest("~target.slot~", data); });
+				tableConditions.AddSpeedButton("Target", "Costume", (data) => { return AddVariableTest("~target.costume~", data); });
+				tableConditions.AddSpeedButton("Target", "Gender", (data) => { return AddVariableTest("~target.gender~", data); });
+				tableConditions.AddSpeedButton("Target", "Position", (data) => { return AddVariableTest("~target.position~", data); });
+				tableConditions.AddSpeedButton("Target", "Size", (data) => { return AddVariableTest("~target.size~", data); });
+				tableConditions.AddSpeedButton("Target", "Slot", (data) => { return AddVariableTest("~target.slot~", data); });
 			}
 			tableConditions.AddSpeedButton("Also Playing", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
 			tableConditions.AddSpeedButton("Also Playing", "Position", (data) => { return AddVariableTest("~_.position~", data); });

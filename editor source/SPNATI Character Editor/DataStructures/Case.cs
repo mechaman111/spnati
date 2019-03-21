@@ -1391,36 +1391,44 @@ namespace SPNATI_Character_Editor
 			//First handle tags where the speaker is actively doing something, since these are the easiest to handle
 			if (Tag == "stripping")
 			{
-				if (speaker.Metadata.CrossGender)
-				{
-					return "opponent_stripping";
-				}
 				int stage = Stages.Min(s => s);
 				string layer = GetLayerType(speaker, stage);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return "opponent_stripping";
+					}
 					return $"{gender}_removing_{layer}";
 				}
 				else
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return $"opponent_{layer}_will_be_visible";
+					}
 					return $"{gender}_{layer}_will_be_visible";
 				}
 			}
 			else if (Tag == "stripped")
 			{
-				if (speaker.Metadata.CrossGender)
-				{
-					return "opponent_stripped";
-				}
 				int stage = Stages.Min(s => s);
 				string layer = GetLayerType(speaker, stage - 1);
 				if (layer == "major" || layer == "minor" || layer == "accessory")
 				{
+					if (speaker.Metadata.CrossGender)
+					{
+						return "opponent_stripped";
+					}
 					return $"{gender}_removed_{layer}";
 				}
 				else
 				{
-					if (gender == "female" && layer == "chest" || gender == "male" && layer == "crotch")
+					if (speaker.Metadata.CrossGender)
+					{
+						return $"opponent_{layer}_is_visible";
+					}
+					else if (gender == "female" && layer == "chest" || gender == "male" && layer == "crotch")
 					{
 						return $"{gender}_{speaker.Size}_{layer}_is_visible";
 					}
