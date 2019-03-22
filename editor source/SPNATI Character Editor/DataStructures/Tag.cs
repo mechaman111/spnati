@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string Key { get { return Value; } set { Value = value; } }
 		[XmlIgnore]
-		public string Group { get; }
+		public string Group { get; set; }
 
 		[XmlText]
 		public string Value;

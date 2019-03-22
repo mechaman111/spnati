@@ -18,6 +18,7 @@ namespace SPNATI_Character_Editor
 			{
 				foreach (Tag tag in group.Tags)
 				{
+					tag.Group = group.Label;
 					_tags[tag.Value] = tag;
 					if (!string.IsNullOrEmpty(tag.PairedTag))
 					{
