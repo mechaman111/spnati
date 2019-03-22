@@ -174,6 +174,12 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("priority")]
 		public string CustomPriority;
 
+		[XmlAttribute("addCharacterTags")]
+		public string AddCharacterTags;
+
+		[XmlAttribute("removeCharacterTags")]
+		public string RemoveCharacterTags;
+
 		[XmlIgnore]
 		public string TargetStatusType
 		{
@@ -651,6 +657,8 @@ namespace SPNATI_Character_Editor
 				ConsecutiveLosses == other.ConsecutiveLosses &&
 				TargetSaying == other.TargetSaying &&
 				AlsoPlayingSaying == other.AlsoPlayingSaying &&
+				AddCharacterTags == other.AddCharacterTags &&
+				RemoveCharacterTags == other.RemoveCharacterTags &&
 				Hidden == other.Hidden;
 			if (!sameFilters)
 				return false;
@@ -818,6 +826,8 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingSaying ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (CustomPriority ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Hidden ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AddCharacterTags ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (RemoveCharacterTags ?? string.Empty).GetHashCode();
 			foreach (var condition in Conditions)
 			{
 				hash = (hash * 397) ^ (condition.Filter ?? string.Empty).GetHashCode();

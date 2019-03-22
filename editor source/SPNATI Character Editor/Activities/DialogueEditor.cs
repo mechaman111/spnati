@@ -53,8 +53,10 @@ namespace SPNATI_Character_Editor.Activities
 			_editorData = CharacterDatabase.GetEditorData(_character);
 			tableConditions.RecordFilter = FilterTargets;
 			tableConditions.Context = _character;
+			lstAddTags.RecordType = typeof(Tag);
+			lstRemoveTags.RecordType = typeof(Tag);
 			SetupMessageHandlers();
-			grpCase.Enabled = false;
+			panelCase.Enabled = false;
 		}
 
 		/// <summary>
@@ -430,13 +432,13 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_selectedCase == null)
 			{
-				grpCase.Visible = false;
+				panelCase.Visible = false;
 				return;
 			}
 			else
 			{
-				grpCase.Visible = true;
-				grpCase.Enabled = true;
+				panelCase.Visible = true;
+				panelCase.Enabled = true;
 			}
 
 			_populatingCase = true;
@@ -522,11 +524,11 @@ namespace SPNATI_Character_Editor.Activities
 
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 
-			#region Dialogue
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages, _imageLibrary);
 			GetSelectedStages();
-			#endregion
+
+			PopulateTagsTab();			
 
 			_populatingCase = false;
 			HighlightRow(0);
@@ -563,6 +565,16 @@ namespace SPNATI_Character_Editor.Activities
 			Case theCase = data as Case;
 			theCase.Expressions.Add(new ExpressionTest(variable, ""));
 			return "Expressions";
+		}
+
+		private void PopulateTagsTab()
+		{
+			lstAddTags.Clear();
+			lstRemoveTags.Clear();
+			string[] addTags = (_selectedCase.AddCharacterTags ?? "").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+			string[] removeTags = (_selectedCase.RemoveCharacterTags ?? "").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+			lstAddTags.SelectedItems = addTags;
+			lstRemoveTags.SelectedItems = removeTags;
 		}
 
 		private HashSet<int> GetSelectedStages()
@@ -662,6 +674,8 @@ namespace SPNATI_Character_Editor.Activities
 			//Lines
 			gridDialogue.Save();
 
+			SaveTagsTab();
+
 			_character.Behavior.ApplyChanges(_selectedCase);
 
 			return needRegeneration;
@@ -739,6 +753,20 @@ namespace SPNATI_Character_Editor.Activities
 		private void DisplayImage(CharacterImage image)
 		{
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, image);
+		}
+
+		private void SaveTagsTab()
+		{
+			string[] addTags = lstAddTags.SelectedItems;
+			string[] removeTags = lstRemoveTags.SelectedItems;
+			if (addTags.Length > 0)
+			{
+				_selectedCase.AddCharacterTags = string.Join(",", addTags);
+			}
+			if (removeTags.Length > 0)
+			{
+				_selectedCase.RemoveCharacterTags = string.Join(",", removeTags);
+			}
 		}
 
 		private void cmdCallOut_Click(object sender, EventArgs e)
