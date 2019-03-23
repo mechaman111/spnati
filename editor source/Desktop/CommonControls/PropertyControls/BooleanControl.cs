@@ -55,7 +55,15 @@ namespace Desktop.CommonControls.PropertyControls
 					}
 				}
 			}
+		}
 
+		protected override void RemoveHandlers()
+		{
+			chkEnabled.CheckedChanged -= ChkEnabled_CheckedChanged;
+		}
+
+		protected override void AddHandlers()
+		{
 			chkEnabled.CheckedChanged += ChkEnabled_CheckedChanged;
 		}
 

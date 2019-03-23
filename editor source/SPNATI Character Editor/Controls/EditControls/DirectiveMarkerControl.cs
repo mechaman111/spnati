@@ -59,18 +59,16 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				}
 				txtValue.Text = value;
 			}
-
-			AddHandlers();
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			recField.RecordChanged -= RecordChanged;
 			cboOperator.SelectedIndexChanged -= ValueChanged;
 			txtValue.TextChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			recField.RecordChanged += RecordChanged;
 			cboOperator.SelectedIndexChanged += ValueChanged;

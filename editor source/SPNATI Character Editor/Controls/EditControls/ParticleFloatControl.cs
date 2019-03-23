@@ -29,7 +29,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			valTo.DecimalPlaces = valFrom.DecimalPlaces = p.DecimalPlaces;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valFrom.ValueChanged -= val_ValueChanged;
 			valFrom.TextChanged -= val_TextChanged;
@@ -37,7 +37,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			valTo.TextChanged -= val_TextChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valFrom.ValueChanged += val_ValueChanged;
 			valFrom.TextChanged += val_TextChanged;
@@ -84,8 +84,6 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 					valTo.Text = "";
 				}
 			}
-
-			AddHandlers();
 		}
 
 		private void val_ValueChanged(object sender, EventArgs e)

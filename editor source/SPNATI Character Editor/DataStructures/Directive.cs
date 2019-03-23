@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor
 		public string Height;
 
 		#region Textbox properties
-		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Default = true, Options = new string[] { "down", "up", "left", "right" })]
+		[ComboBox(DisplayName = "Arrow", Key = "arrow", GroupOrder = 30, Description = "Speech bubble arrow direction", Options = new string[] { "down", "up", "left", "right" })]
 		[XmlAttribute("arrow")]
 		public string Arrow;
 

@@ -33,16 +33,14 @@ namespace Desktop.CommonControls.PropertyControls
 					_cleared = true;
 				}
 			}
-
-			AddHandlers();
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			txtValue.TextChanged += TxtValue_TextChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			txtValue.TextChanged -= TxtValue_TextChanged;
 		}

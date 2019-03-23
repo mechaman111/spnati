@@ -45,6 +45,8 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public UndoManager UndoManager { get; set; }
+
 		/// <summary>
 		/// Filter for hiding records from the record select
 		/// </summary>
@@ -145,6 +147,11 @@ namespace Desktop.CommonControls
 				_allowMacros = value;
 			}
 		}
+
+		/// <summary>
+		/// When set, switching Data will keep controls around and simply rebind them instead of building the list from scratch. Useful for contexts where the same controls get used for each Data object
+		/// </summary>
+		public bool PreserveControls { get; set; }
 
 		private void PositionControls()
 		{
@@ -279,20 +286,30 @@ namespace Desktop.CommonControls
 			this.SuspendDrawing();
 			try
 			{
+				if (!PreserveControls || Data == null)
+				{
+					foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
+					{
+						foreach (PropertyTableRow row in kvp.Value.Values)
+						{
+							DisposeRow(row);
+						}
+					}
+					_rows.Clear();
+				}
 
+				if (Data == null) { return; }
+
+				HashSet<PropertyRecord> controlsToAdd = new HashSet<PropertyRecord>();
+				HashSet<PropertyRecord> controlsToRemove = new HashSet<PropertyRecord>();
+				HashSet<PropertyRecord> controlsToRebind = new HashSet<PropertyRecord>();
 				foreach (KeyValuePair<string, Dictionary<int, PropertyTableRow>> kvp in _rows)
 				{
 					foreach (PropertyTableRow row in kvp.Value.Values)
 					{
-						DisposeRow(row);
+						controlsToRemove.Add(row.Record);
 					}
 				}
-				_rows.Clear();
-
-				if (Data == null) { return; }
-
-				bool addDefaults = true;
-				List<PropertyEditControl> defaultRows = new List<PropertyEditControl>();
 
 				SortedDictionary<string, List<PropertyRecord>> groups = new SortedDictionary<string, List<PropertyRecord>>();
 				foreach (PropertyRecord editControl in PropertyProvider.GetEditControls(Data.GetType()))
@@ -316,8 +333,6 @@ namespace Desktop.CommonControls
 					{
 						required = RequiredFilter(editControl);
 					}
-					bool isDefault = editControl.Default;
-					bool hasData = true;
 
 					MemberInfo member = editControl.Member;
 					object value = member.GetValue(Data);
@@ -326,16 +341,53 @@ namespace Desktop.CommonControls
 						memberType == typeof(bool) && (bool)value == false ||
 						value == null)
 					{
-						hasData = false;
 						bool favorited = _favoriteRecords.Contains(editControl);
-						if (!favorited && !required && (!addDefaults || !isDefault))
+						if (!favorited && !required)
 						{
-							//skip the field if it has no value and is not favorited, required, or default
+							//skip the field if it has no value and is not favorited or required
 							continue;
 						}
 					}
 
-					bool newlyAdded;
+					if (typeof(IList).IsAssignableFrom(memberType))
+					{
+						//always remove and readd List type controls rather than going down into individual indices
+						controlsToAdd.Add(editControl);
+					}
+					else
+					{
+						if (!controlsToRemove.Contains(editControl))
+						{
+							controlsToAdd.Add(editControl);
+						}
+						else
+						{
+							controlsToRebind.Add(editControl);
+							controlsToRemove.Remove(editControl);
+						}
+					}
+				}
+
+				BuildSpeedMenus(groups);
+
+				//remove any old controls
+				foreach (PropertyRecord record in controlsToRemove)
+				{
+					Dictionary<int, PropertyTableRow> rows = _rows[record.Property];
+					foreach (KeyValuePair<int, PropertyTableRow> kvp in rows)
+					{
+						DisposeRow(kvp.Value);
+					}
+					_rows.Remove(record.Property);
+				}
+
+				bool newlyAdded;
+				//add or rebind the controls
+				foreach (PropertyRecord editControl in controlsToAdd)
+				{
+					MemberInfo member = editControl.Member;
+					object value = member.GetValue(Data);
+					Type memberType = member.GetDataType();
 					if (value != null && typeof(IList).IsAssignableFrom(memberType))
 					{
 						IList list = value as IList;
@@ -350,32 +402,14 @@ namespace Desktop.CommonControls
 					}
 					else
 					{
-						if (!required && hasData)
-						{
-							addDefaults = false;
-
-							//found something not required, so get rid of any default fields added
-							foreach (PropertyEditControl defaultCtl in defaultRows)
-							{
-								PropertyTableRow row = _rows.Get(defaultCtl.Property, defaultCtl.Index);
-								RemoveRow(row);
-							}
-
-							if (isDefault && !hasData)
-							{
-								continue;
-							}
-						}
-
-						PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
-						if (isDefault && !hasData)
-						{
-							defaultRows.Add(ctl);
-						}
+						EditRecord(editControl, -1, out newlyAdded);
 					}
 				}
-
-				BuildSpeedMenus(groups);
+				foreach (PropertyRecord editControl in controlsToRebind)
+				{
+					PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
+					ctl.Rebind(Data, Context);
+				}
 			}
 			finally
 			{
@@ -466,7 +500,7 @@ namespace Desktop.CommonControls
 				ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 				ctl.SetParameters(result.Attribute);
 
-				ctl.SetData(Data, result.Property, index, Context);
+				ctl.SetData(Data, result.Property, index, Context, UndoManager);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)

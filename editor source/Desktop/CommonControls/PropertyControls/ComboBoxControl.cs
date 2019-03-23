@@ -35,12 +35,12 @@ namespace Desktop.CommonControls.PropertyControls
 			values.Add(text);
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			cboItems.SelectedIndexChanged -= cboItems_SelectedIndexChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			cboItems.SelectedIndexChanged += cboItems_SelectedIndexChanged;
 		}
@@ -48,13 +48,6 @@ namespace Desktop.CommonControls.PropertyControls
 		protected override void OnBoundData()
 		{
 			cboItems.SelectedItem = GetValue()?.ToString() ?? "";
-			AddHandlers();
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		public override void Clear()

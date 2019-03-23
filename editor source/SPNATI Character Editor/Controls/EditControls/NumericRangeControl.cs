@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor
 			valTo.Maximum = p.Maximum;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valFrom.ValueChanged += ValueChanged;
 			valTo.ValueChanged += ValueChanged;
@@ -48,7 +48,7 @@ namespace SPNATI_Character_Editor
 			chkUpper.CheckedChanged += ValueChanged;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valFrom.ValueChanged -= ValueChanged;
 			valTo.ValueChanged -= ValueChanged;
@@ -62,7 +62,6 @@ namespace SPNATI_Character_Editor
 			chkUpper.Checked = false;
 			string value = GetValue()?.ToString();
 			ApplyValue(value);
-			AddHandlers();
 		}
 
 		private void ApplyValue(string value)

@@ -72,8 +72,6 @@ namespace SPNATI_Character_Editor
 
 			string value = GetValue()?.ToString();
 			ApplyValue(value);
-
-			AddHandlers();
 		}
 
 		private void ApplyValue(string dataValue)
@@ -102,7 +100,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			recField.RecordChanged -= RecordChanged;
 			cboOperator.SelectedIndexChanged -= ValueChanged;
@@ -110,7 +108,7 @@ namespace SPNATI_Character_Editor
 			chkPerTarget.CheckedChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			recField.RecordChanged += RecordChanged;
 			cboOperator.SelectedIndexChanged += ValueChanged;

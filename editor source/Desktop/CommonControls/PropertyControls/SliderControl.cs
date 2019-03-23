@@ -11,13 +11,13 @@ namespace Desktop.CommonControls.PropertyControls
 			InitializeComponent();
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			slider.ValueChanged -= Slider_ValueChanged;
 			valValue.TextChanged -= Field_ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			slider.ValueChanged += Slider_ValueChanged;
 			valValue.TextChanged += Field_ValueChanged;
@@ -60,14 +60,6 @@ namespace Desktop.CommonControls.PropertyControls
 				slider.Value = 0;
 				valValue.Text = "";
 			}
-
-			AddHandlers();
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		public override void Clear()

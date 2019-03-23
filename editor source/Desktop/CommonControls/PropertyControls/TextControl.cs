@@ -34,13 +34,13 @@ namespace Desktop.CommonControls.PropertyControls
 			values.Add(txtValue.Text);
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			txtValue.TextChanged += txtValue_TextChanged;
 			txtValue.Validating += TxtValue_Validating;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			txtValue.TextChanged -= txtValue_TextChanged;
 			txtValue.Validating -= TxtValue_Validating;
@@ -63,7 +63,6 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 			}
 			txtValue.Text = GetValue()?.ToString();
-			AddHandlers();
 		}
 
 		public override void Clear()

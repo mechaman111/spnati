@@ -69,8 +69,6 @@ namespace SPNATI_Character_Editor
 			recTag.RecordKey = _filter.Filter;
 			chkNot.Checked = _filter.NegateStatus;
 			cboStatus.SelectedValue = _filter.StatusType ?? "";
-
-			AddHandlers();
 		}
 
 		private void SetCount(string range)
@@ -109,7 +107,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			valFrom.ValueChanged -= ValueChanged;
 			valTo.ValueChanged -= ValueChanged;
@@ -121,7 +119,7 @@ namespace SPNATI_Character_Editor
 			chkNot.CheckedChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			valFrom.ValueChanged += ValueChanged;
 			valTo.ValueChanged += ValueChanged;

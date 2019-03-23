@@ -24,14 +24,14 @@ namespace SPNATI_Character_Editor.EditControls
 			valValue.Maximum = attrib.Maximum;
 		}
 
-		private void RemoveHandlers()
+		protected override void RemoveHandlers()
 		{
 			radPct.CheckedChanged -= ValueChanged;
 			radPx.CheckedChanged -= ValueChanged;
 			valValue.TextChanged -= ValueChanged;
 		}
 
-		private void AddHandlers()
+		protected override void AddHandlers()
 		{
 			radPct.CheckedChanged += ValueChanged;
 			radPx.CheckedChanged += ValueChanged;
@@ -102,8 +102,6 @@ namespace SPNATI_Character_Editor.EditControls
 					radPx.Checked = true;
 				}
 			}
-
-			AddHandlers();
 		}
 
 		protected override void OnBindingUpdated(string property)
@@ -142,12 +140,6 @@ namespace SPNATI_Character_Editor.EditControls
 					}
 				}
 			}
-		}
-
-		protected override void OnRebindData()
-		{
-			RemoveHandlers();
-			OnBoundData();
 		}
 
 		private void ValueChanged(object sender, EventArgs e)

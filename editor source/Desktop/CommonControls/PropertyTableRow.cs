@@ -123,6 +123,7 @@ namespace Desktop.CommonControls
 		public void Destroy()
 		{
 			EditControl.PropertyChanged -= EditControl_PropertyChanged;
+			EditControl.Destroy();
 		}
 
 		private void EditControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
