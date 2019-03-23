@@ -701,16 +701,27 @@
             <case tag="game_over_victory" alsoPlaying="sanako">
                 <state img="0-maximumembarrassed.png">I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.</state>
             </case>
-            <case tag="global" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama1" alsoPlayingSaidMarker="nagisa_drama1">
+            <case tag="stripping" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama1" alsoPlayingSaidMarker="nagisa_drama1">
                 <state img="0-strip.png" marker="nagisa_streaming-chan_drama1">Oh, do you love plays and performing too, Streaming-chan?</state>
             </case>
-            <case tag="global" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama1" alsoPlayingSayingMarker="nagisa_drama1">
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_drama1">
                 <test expr="~streamingchan.position~" value="left" />
                 <state img="0-shy.png" marker="nagisa_streaming-chan_drama1">The drama club is actually closed down right now, but I'd like to restart it if I can.</state>
             </case>
-            <case tag="global" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama2" alsoPlayingSayingMarker="nagisa_drama2">
+            <case tag="stripping" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_drama2">
                 <test expr="~streamingchan.position~" value="left" />
-                <state img="0-strip.png" marker="nagisa_streaming-chan_drama2">Oh, right now, Streaming-chan? I-I couldn't. I don't have anything prepared.</state>
+                <state img="0-strip.png" marker="nagisa_streaming-chan_drama2">Oh, right now, Streaming-chan? I'm sorry! I don't have anything prepared.</state>
+            </case>
+            <case tag="must_strip" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_gog1">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="0-thinking.png" marker="nagisa_streaming-chan_gog1">"Girl on girl"? I'm not sure what that is.</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan"  alsoPlayingSayingMarker="nagisa_gog2">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="0-veryembarrassed.png" marker="nagisa_streaming-chan_gog2">W-wait, you mean... <i>that</i>... with a girl? Oh, I... I...</state>
+            </case>
+            <case tag="stripping" alsoPlaying="streaming-chan"  notSaidMarker="nagisa_streaming-chan_gog1" alsoPlayingSaidMarker="nagisa_gog1">
+                <state img="0-strip.png" marker="nagisa_streaming-chan_gog1">"Girl on girl"? I'm not sure what that is, Streaming-chan.</state>
             </case>
         </stage>
 
@@ -1262,12 +1273,19 @@
             <case tag="game_over_victory" alsoPlaying="sanako">
                 <state img="1-maximumembarrassed.png">I'm sorry that I won. I'd still like to be your friend if that's okay, Sanako.</state>
             </case>
-            <case tag="global" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama2" alsoPlayingSaidMarker="nagisa_drama2">
-                <state img="1-singing.png" marker="nagisa_streaming-chan_drama2">Maybe I'll sing you a song when it's my turn again, Streaming-chan.</state>
+            <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama2" alsoPlayingSaidMarker="nagisa_drama2">
+                <state img="1-singing.png" marker="nagisa_streaming-chan_drama2">Maybe I'll sing you a song when it's my turn again.</state>
             </case>
-            <case tag="global" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_drama3" alsoPlayingSayingMarker="nagisa_drama3">
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_drama3">
                 <test expr="~streamingchan.position~" value="left" />
-                <state img="1-shy.png" marker="nagisa_streaming-chan_drama3">Um, maybe I'll sing for you later if I'm feeling a little braver...</state>
+                <state img="1-shy.png" marker="nagisa_streaming-chan_drama3">Um, okay, maybe I'll sing for you when I'm feeling a little braver...</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="nagisa_gog3">
+                <test expr="~streamingchan.position~" value="left" />
+                <state img="1-embarrassed.png" marker="nagisa_streaming-chan_gog3">I don't want to disappoint you, Streaming-chan, but I just couldn't do that!</state>
+            </case>
+            <case tag="stripped" alsoPlaying="streaming-chan" notSaidMarker="nagisa_streaming-chan_gog2" alsoPlayingSaidMarker="nagisa_gog2">
+                <state img="1-shy.png" marker="nagisa_streaming-chan_gog2">I'll have to try it later. I have to focus on my cards right now.</state>
             </case>
         </stage>
 
