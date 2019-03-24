@@ -35,16 +35,19 @@
     <vars />
     <defaultImage>happy</defaultImage>
     <defaultText>I've got a good hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="okay_hand" start="0" end="8" relatedGroup="1" label="Hand=Okay" description="After exchanging, the character has an okay hand" group="1" order="2">
     <vars />
     <defaultImage>calm</defaultImage>
     <defaultText>I've got an okay hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="bad_hand" start="0" end="8" relatedGroup="1" label="Hand=Bad" description="After exchanging, the character has a bad hand" group="1" order="3">
     <vars />
     <defaultImage>sad</defaultImage>
     <defaultText>I've got a bad hand.</defaultText>
+    <generic>hand</generic>
   </trigger>
   <trigger tag="hand" optional="true" start="0" end="8" relatedGroup="1" label="Hand=Any" description="Lines are pulled from here alongside the Good/Okay/Bad lines" group="1" order="4">
     <vars />
@@ -60,16 +63,19 @@
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>They say this when they're winning - they have more clothing items left than other players.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="must_strip_normal" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Normal)" description="The character has lost the hand and must strip" oncePerStage="true" group="2" order="2">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>What the character says when they're in the middle of the group in terms of clothes left.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="must_strip_losing" start="0" end="7" relatedGroup="2" label="Must Strip (Self, Losing)" description="The character has lost the hand, and currently has the least clothes among everybody" oncePerStage="true" group="2" order="3">
     <vars />
     <defaultImage>loss</defaultImage>
     <defaultText>The character has lost a round, and also has the fewest pieces of clothing left.</defaultText>
+    <generic>must_strip</generic>
   </trigger>
   <trigger tag="stripping" start="0" end="7" relatedGroup="2" label="Stripping" description="The character is stripping after losing a round" oncePerStage="true" group="2" order="4">
     <vars>
@@ -162,6 +168,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What they say to a male NPC who has lost a round</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="female_human_must_strip" optional="true" start="0" end="10" label="Must Strip (Player, Female)" hasTarget="true" description="The human female player has lost a round and must remove something" group="3" order="2">
     <vars>
@@ -186,6 +193,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What they say to a female NPC who has lost a round</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="tie" start="0" end="10" label="Absolute tie" hasTarget="false" optional="true" description="Two (or more) players are tied for the worst hand" group="3" order="4">
     <defaultImage>shocked</defaultImage>
@@ -202,6 +210,7 @@
     </bulk>
     <defaultImage>sad</defaultImage>
     <defaultText>A male character is about to remove a small item, with the type "extra".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_accessory" start="0" end="10" relatedGroup="8" label="Removed Accessory (Male)" hasTarget="true" gender="male" description="A male opponent removed a small item that doesn't cover any skin" group="4" order="1">
     <vars>
@@ -214,6 +223,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A male character has just removed that small item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_accessory" start="0" end="10" relatedGroup="8" label="Removing Accessory (Female)" hasTarget="true" gender="female" description="A female opponent is removing a small item that doesn't cover any skin" group="4" order="2">
     <vars>
@@ -226,6 +236,7 @@
     </bulk>
     <defaultImage>sad</defaultImage>
     <defaultText>A female character is about to remove a small item, with the type "extra".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_accessory" start="0" end="10" relatedGroup="8" label="Removed Accessory (Female)" hasTarget="true" gender="female" description="A female opponent removed a small item that doesn't cover any skin" group="4" order="3">
     <vars>
@@ -238,6 +249,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A female character has just removed that small item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="male_removing_minor" start="0" end="10" label="Removing Minor (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is removing non-essential clothing (e.g. socks)" group="5" order="0">
     <vars>
@@ -250,6 +262,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A male character is about to remove a clothing item with the type "minor".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_minor" start="0" end="10" label="Removed Minor (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent has removed non-essential clothing (e.g. socks)" group="5" order="1">
     <vars>
@@ -262,6 +275,7 @@
     </bulk>
     <defaultImage>happy</defaultImage>
     <defaultText>The male character has just removed that minor item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_minor" start="0" end="10" label="Removing Minor (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is removing non-essential clothing (e.g. socks)" group="5" order="2">
     <vars>
@@ -274,6 +288,7 @@
     </bulk>
     <defaultImage>calm</defaultImage>
     <defaultText>A female character is about to remove a clothing item with the type "minor".</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_minor" start="0" end="10" label="Removed Minor (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has removed non-essential clothing (e.g. socks)" group="5" order="3">
     <vars>
@@ -286,6 +301,7 @@
     </bulk>
     <defaultImage>happy</defaultImage>
     <defaultText>The female character has just removed that minor item.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="male_removing_major" start="0" end="10" label="Removing Major (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is likely revealing their underwear (e.g. removing pants)" group="6" order="0">
     <vars>
@@ -298,6 +314,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says before a male loses an item with the "major" type.</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="male_removed_major" start="0" end="10" label="Removed Major (Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent has likely revealed their underwear (e.g. removing a shirt)" group="6" order="1">
     <vars>
@@ -310,6 +327,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says after the major item has been taken off.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="female_removing_major" start="0" end="10" label="Removing Major (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent is likely revealing their underwear (e.g. removing a shirt)" group="6" order="2">
     <vars>
@@ -322,6 +340,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says before a female loses an item with the "major" type.</defaultText>
+    <generic>opponent_stripping</generic>
   </trigger>
   <trigger tag="female_removed_major" start="0" end="10" label="Removed Major (Female)" relatedGroup="8" hasTarget="true" gender="female" description="A female opponent has likely revealed their underwear (e.g. removing a shirt)" group="6" order="3">
     <vars>
@@ -334,6 +353,7 @@
     </bulk>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says after the major item has been taken off.</defaultText>
+    <generic>opponent_stripped</generic>
   </trigger>
   <trigger tag="male_chest_will_be_visible" start="0" end="10" label="Will Be Visible (Chest, Male)" relatedGroup="8" hasTarget="true" gender="male" description="A male opponent is about to reveal his chest" group="7" order="0">
     <vars>
@@ -450,6 +470,7 @@
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a male character has lost a hand while nude, and must masturbate.</defaultText>
+    <generic>opponent_lost</generic>
   </trigger>
   <trigger tag="male_start_masturbating" start="0" end="10" label="Start Masturbating (Male)" hasTarget="true" gender="male" description="A male opponent has started masturbating" group="9" order="1">
     <vars>
@@ -490,6 +511,7 @@
     </vars>
     <defaultImage>interested</defaultImage>
     <defaultText>What the character says when a female character has lost a hand while nude, and must masturbate.</defaultText>
+    <generic>opponent_lostd</generic>
   </trigger>
   <trigger tag="female_start_masturbating" start="0" end="10" label="Start Masturbating (Female)" hasTarget="true" gender="female" description="A female opponent has started masturbating" group="9" order="6">
     <vars>

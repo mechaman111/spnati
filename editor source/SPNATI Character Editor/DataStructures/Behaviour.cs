@@ -202,15 +202,26 @@ namespace SPNATI_Character_Editor
 				if (workingCase.HasFilters)
 					continue; //A filtered case can't possibly be a default
 				string tag = workingCase.Tag;
-				HashSet<int> expectedStages;
-				if (!requiredLineIndex.TryGetValue(tag, out expectedStages))
-					continue; //Tag has already been satisfied (or it's an invalid tag)
-				foreach (int stage in workingCase.Stages)
+				Trigger trigger = TriggerDatabase.GetTrigger(tag);
+				List<string> tags = new List<string>();
+				tags.Add(tag);
+				tags.AddRange(trigger.LinkedTriggers);
+				foreach (string usedTag in tags)
 				{
-					expectedStages.Remove(stage);
+					HashSet<int> expectedStages;
+					if (!requiredLineIndex.TryGetValue(usedTag, out expectedStages))
+					{
+						continue; //Tag has already been satisfied (or it's an invalid tag)
+					}
+					foreach (int stage in workingCase.Stages)
+					{
+						expectedStages.Remove(stage);
+					}
+					if (expectedStages.Count == 0)
+					{
+						requiredLineIndex.Remove(usedTag); //Tag's defaults have all been met
+					}
 				}
-				if (expectedStages.Count == 0)
-					requiredLineIndex.Remove(tag); //Tag's defaults have all been met
 			}
 
 			//Finally, add lines for whatever remains in the index

@@ -47,6 +47,17 @@ namespace SPNATI_Character_Editor
 		public bool HasTarget;
 
 		/// <summary>
+		/// Generic trigger that satisfies this as a default
+		/// </summary>
+		[XmlElement("generic")]
+		public string GenericTrigger;
+
+		/// <summary>
+		/// Triggers that are considered having their default met if this trigger has a default
+		/// </summary>
+		public List<string> LinkedTriggers = new List<string>();
+
+		/// <summary>
 		/// This trigger occurs a maximum of one time per stage for a character
 		/// </summary>
 		[XmlAttribute("oncePerStage")]
@@ -191,6 +202,14 @@ namespace SPNATI_Character_Editor
 				foreach (var group in list.Groups)
 				{
 					AddGroup(group);
+				}
+				foreach (Trigger trigger in _triggers.Values)
+				{
+					if (!string.IsNullOrEmpty(trigger.GenericTrigger))
+					{
+						Trigger generic = GetTrigger(trigger.GenericTrigger);
+						generic.LinkedTriggers.Add(trigger.Tag);
+					}
 				}
 			}
 		}
