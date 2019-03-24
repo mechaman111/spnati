@@ -750,8 +750,9 @@ namespace SPNATI_Character_Editor.Activities
 			return fullPath;
 		}
 
-		private void gridPoses_Scroll(object sender, ScrollEventArgs e)
+		private async void gridPoses_Scroll(object sender, ScrollEventArgs e)
 		{
+			await Task.Delay(100);
 			DoIncrementalLoad();
 		}
 
@@ -761,8 +762,10 @@ namespace SPNATI_Character_Editor.Activities
 		private void DoIncrementalLoad()
 		{
 			bool startedDisplay = false;
-			foreach (DataGridViewRow row in gridPoses.Rows)
+			int start = gridPoses.FirstDisplayedScrollingRowIndex;
+			for (int i = start; i < gridPoses.Rows.Count; i++)
 			{
+				DataGridViewRow row = gridPoses.Rows[i];
 				if (row.Displayed || startedDisplay)
 				{
 					Image current = row.Cells["ColImage"].Value as Image;
