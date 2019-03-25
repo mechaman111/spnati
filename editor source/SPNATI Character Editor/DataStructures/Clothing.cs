@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor
 	[Serializable]
 	public class Clothing
 	{
+		public const int MaxLayers = 8;
 		public const int ExtraStages = 3;
 
 		[XmlAttribute("lowercase")]

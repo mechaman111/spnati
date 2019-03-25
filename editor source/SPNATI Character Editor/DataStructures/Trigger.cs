@@ -1,7 +1,5 @@
-﻿using SPNATI_Character_Editor.Activities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -299,13 +297,13 @@ namespace SPNATI_Character_Editor
 		public static int ToStandardStage(Character character, int stage)
 		{
 			int layers = character.Layers;
-			if (stage == 0 || layers == 8)
+			if (stage == 0 || layers == Clothing.MaxLayers)
 				return stage;
 			return ShiftStage(character, stage);
 		}
 
 		/// <summary>
-		/// Upshifts stages so that it's based off of 8 layers
+		/// Upshifts stages so that it's based off of MaxLayers
 		/// </summary>
 		/// <param name="character"></param>
 		/// <param name="stage"></param>
@@ -313,8 +311,8 @@ namespace SPNATI_Character_Editor
 		public static int ShiftStage(Character character, int stage)
 		{
 			int layers = character.Layers;
-			//Shift forwards so 8 is the final stage before losing
-			int shiftAmount = 8 - layers;
+			//Shift forwards so MaxLayers is the final stage before losing
+			int shiftAmount = Clothing.MaxLayers - layers;
 			return stage + shiftAmount;
 		}
 
