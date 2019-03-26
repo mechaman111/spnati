@@ -867,6 +867,51 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 			return true;
 		}
+
+		public bool AdjustSkew(Point worldPoint, Point downPoint, HoverContext context)
+		{
+			float dx = (worldPoint.X - downPoint.X);
+			float dy = (worldPoint.Y - downPoint.Y);
+			switch (context)
+			{
+				case HoverContext.SkewLeft:
+					dy = -dy;
+					break;
+				case HoverContext.SkewRight:
+					break;
+				case HoverContext.SkewTop:
+					dx = -dx;
+					break;
+			}
+
+			bool changed = false;
+
+			//skew formula: shift = size * tan(radians) / 2
+			//solved for angle: angle = atan(2 * shift / size)
+			if (HoverContext.SkewHorizontal.HasFlag(context))
+			{
+				//skewX
+				float skewX = (float)(Math.Atan(2 * dx / Height) * 180 / Math.PI);
+				if (SkewX != skewX)
+				{
+					changed = true;
+					SkewX = skewX;
+					LinkedFrame.SkewX = skewX.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			else
+			{
+				//skewY
+				float skewY = (float)(Math.Atan(2 * dy / Width) * 180 / Math.PI);
+				if (SkewY != skewY)
+				{
+					changed = true;
+					SkewY = skewY;
+					LinkedFrame.SkewY = skewY.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			return changed;
+		}
 	}
 
 	public enum SceneObjectType

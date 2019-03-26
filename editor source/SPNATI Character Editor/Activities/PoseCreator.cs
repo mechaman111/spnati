@@ -1073,6 +1073,7 @@ namespace SPNATI_Character_Editor.Activities
 					bool allowPivot = _selectedObject.LinkedFrame == null;
 					bool allowRotate = true;
 					bool allowScale = true;
+					bool allowSkew = true;
 
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
@@ -1107,6 +1108,32 @@ namespace SPNATI_Character_Editor.Activities
 							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
 							return locked ? HoverContext.Locked : HoverContext.Rotate;
+						}
+					}
+					if (allowSkew && ModifierKeys.HasFlag(Keys.Shift))
+					{
+						//skewing - grabbing an edge while Shift is held down
+						if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						{
+							if (dl <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewLeft;
+							}
+							else if (dr <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewRight;
+							}
+						}
+						if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							if (dt <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewTop;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewBottom;
+							}
 						}
 					}
 
@@ -1221,6 +1248,10 @@ namespace SPNATI_Character_Editor.Activities
 								case HoverContext.Pivot:
 									canvas.Cursor = Cursors.Cross;
 									break;
+								case HoverContext.SkewTop:
+								case HoverContext.SkewBottom:
+									canvas.Cursor = Cursors.VSplit;
+									break;
 								default:
 									canvas.Cursor = Cursors.Default;
 									break;
@@ -1280,6 +1311,12 @@ namespace SPNATI_Character_Editor.Activities
 											break;
 										case HoverContext.Pivot:
 											_state = CanvasState.MovingPivot;
+											break;
+										case HoverContext.SkewLeft:
+										case HoverContext.SkewRight:
+										case HoverContext.SkewTop:
+										case HoverContext.SkewBottom:
+											_state = CanvasState.Skewing;
 											break;
 									}
 								}
@@ -1347,6 +1384,18 @@ namespace SPNATI_Character_Editor.Activities
 								canvas.Invalidate();
 							}
 							break;
+						case CanvasState.Skewing:
+							foreach (object obj in _selectedObject.AdjustSkew(screenPt, _downPoint, _moveContext))
+							{
+								UpdateNode(obj);
+								if (obj == table.Data)
+								{
+									table.UpdateProperty("SkewX");
+									table.UpdateProperty("SkewY");
+								}
+								canvas.Invalidate();
+							}
+							break;
 						case CanvasState.Panning:
 							int dx = screenPt.X - _lastMouse.X;
 							int dy = screenPt.Y - _lastMouse.Y;
@@ -1376,7 +1425,8 @@ namespace SPNATI_Character_Editor.Activities
 					}
 					_lastMouse = screenPt;
 					if (_moveContext == HoverContext.Rotate || _moveContext == HoverContext.ArrowRight || _moveContext == HoverContext.ArrowLeft ||
-						_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot)
+						_moveContext == HoverContext.ArrowDown || _moveContext == HoverContext.ArrowUp || _moveContext == HoverContext.Pivot ||
+						HoverContext.SkewHorizontal.HasFlag(_moveContext) || HoverContext.SkewVertical.HasFlag(_moveContext))
 					{
 						canvas.Invalidate();
 					}
@@ -1397,6 +1447,7 @@ namespace SPNATI_Character_Editor.Activities
 				case CanvasState.Scaling:
 				case CanvasState.Panning:
 				case CanvasState.MovingPivot:
+				case CanvasState.Skewing:
 					_state = CanvasState.Normal;
 					canvas.Invalidate();
 					break;

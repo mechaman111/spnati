@@ -888,6 +888,7 @@ namespace SPNATI_Character_Editor.Controls
 					bool allowPivot = (_selectedObject.ObjectType == SceneObjectType.Sprite);
 					bool allowRotate = true;
 					bool allowScale = (_selectedObject.ObjectType == SceneObjectType.Sprite);
+					bool allowSkew = (_selectedObject.ObjectType == SceneObjectType.Sprite);
 
 					float dl = Math.Abs(screenPt.X - bounds.X);
 					float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
@@ -925,6 +926,33 @@ namespace SPNATI_Character_Editor.Controls
 							screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
 						{
 							return locked ? HoverContext.Locked : HoverContext.Rotate;
+						}
+					}
+
+					if (allowSkew && ModifierKeys.HasFlag(Keys.Shift))
+					{
+						//skewing - grabbing an edge while Shift is held down
+						if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						{
+							if (dl <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewLeft;
+							}
+							else if (dr <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewRight;
+							}
+						}
+						if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+						{
+							if (dt <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewTop;
+							}
+							else if (db <= SelectionLeeway)
+							{
+								return locked ? HoverContext.Locked : HoverContext.SkewBottom;
+							}
 						}
 					}
 
@@ -1167,6 +1195,14 @@ namespace SPNATI_Character_Editor.Controls
 								case HoverContext.Pivot:
 									canvas.Cursor = Cursors.Cross;
 									break;
+								case HoverContext.SkewTop:
+								case HoverContext.SkewBottom:
+									canvas.Cursor = Cursors.VSplit;
+									break;
+								case HoverContext.SkewLeft:
+								case HoverContext.SkewRight:
+									canvas.Cursor = Cursors.HSplit;
+									break;
 								case HoverContext.Locked:
 									canvas.Cursor = Cursors.No;
 									break;
@@ -1240,6 +1276,12 @@ namespace SPNATI_Character_Editor.Controls
 											break;
 										case HoverContext.Pivot:
 											_state = CanvasState.MovingPivot;
+											break;
+										case HoverContext.SkewLeft:
+										case HoverContext.SkewRight:
+										case HoverContext.SkewTop:
+										case HoverContext.SkewBottom:
+											_state = CanvasState.Skewing;
 											break;
 									}
 								}
@@ -1409,6 +1451,18 @@ namespace SPNATI_Character_Editor.Controls
 								canvas.Invalidate();
 							}
 							break;
+						case CanvasState.Skewing:
+							if (_selectedObject.AdjustSkew(worldPt, _downPoint, _moveContext))
+							{
+								treeScenes.UpdateNode(_selectedObject.LinkedFrame);
+								if (_selectedObject.LinkedFrame == propertyTable.Data)
+								{
+									propertyTable.UpdateProperty("SkewX");
+									propertyTable.UpdateProperty("SkewY");
+								}
+								canvas.Invalidate();
+							}
+							break;
 						case CanvasState.Panning:
 							if (_viewportLocked)
 							{
@@ -1470,6 +1524,7 @@ namespace SPNATI_Character_Editor.Controls
 				case CanvasState.ResizingCamera:
 				case CanvasState.ZoomingCamera:
 				case CanvasState.MovingPivot:
+				case CanvasState.Skewing:
 					_state = CanvasState.Normal;
 					canvas.Invalidate();
 					break;
@@ -2557,12 +2612,18 @@ namespace SPNATI_Character_Editor.Controls
 		Select = 1 << 23,
 		Pivot = 1 << 24,
 		Locked = 1 << 25,
+		SkewLeft = 1 << 26,
+		SkewRight = 1 << 27,
+		SkewTop = 1 << 28,
+		SkewBottom = 1 << 29,
 
 		ScaleVertical = ScaleTop | ScaleBottom,
 		ScaleHorizontal = ScaleLeft | ScaleRight,
 		Object = Drag | SizeLeft | SizeRight | SizeTop | SizeBottom | Rotate |
-			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom,
+			ArrowUp | ArrowDown | ArrowLeft | ArrowRight | Pivot | ScaleLeft | ScaleTop | ScaleRight | ScaleBottom | SkewLeft | SkewRight | SkewTop | SkewBottom,
 		Camera = CameraPan | CameraSizeBottom | CameraSizeLeft | CameraSizeRight | CameraSizeTop | CameraZoomBottomLeft | CameraZoomBottomRight | CameraZoomTopLeft | CameraZoomTopRight,
+		SkewVertical = SkewLeft | SkewRight,
+		SkewHorizontal = SkewTop | SkewBottom,
 	}
 
 	public enum CanvasState
@@ -2573,6 +2634,7 @@ namespace SPNATI_Character_Editor.Controls
 		Scaling,
 		Resizing,
 		Rotating,
+		Skewing,
 		MovingCamera,
 		ResizingCamera,
 		ZoomingCamera,
