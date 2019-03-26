@@ -1456,8 +1456,20 @@ namespace SPNATI_Character_Editor
 				}
 				return $"{gender}_must_masturbate";
 			}
-			else if (Tag == "must_masturbate" || Tag == "start_masturbating" || Tag == "masturbating" || Tag == "finished_masturbating")
+			else if (Tag == "must_masturbate")
 			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return "opponent_lost";
+				}
+				return $"{gender}_must_masturbate";
+			}
+			else if (Tag == "start_masturbating" || Tag == "masturbating" || Tag == "finished_masturbating" || Tag == "heavy_masturbating")
+			{
+				if (speaker.Metadata.CrossGender)
+				{
+					return $"opponent_{Tag}";
+				}
 				return $"{gender}_{Tag}";
 			}
 			else if (Tag.StartsWith("must_strip"))
@@ -1481,6 +1493,10 @@ namespace SPNATI_Character_Editor
 			else if (tag.StartsWith("male_"))
 			{
 				tag = tag.Substring(5);
+			}
+			else if (tag.StartsWith("opponent_"))
+			{
+				tag = tag.Substring(9);
 			}
 
 			if (Target == responder.FolderName)
