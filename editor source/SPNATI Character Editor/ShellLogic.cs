@@ -231,6 +231,7 @@ namespace SPNATI_Character_Editor
 
 			//File
 			ToolStripMenuItem menu = shell.AddToolbarSubmenu("File");
+			shell.AddToolbarItem("New Character...", CreateNewCharacter, menu, Keys.None);
 			shell.AddToolbarItem("Save", Save, menu, Keys.Control | Keys.S);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Import .txt...", ImportCharacter, menu, Keys.Control | Keys.I);
@@ -271,6 +272,17 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("View Help", OpenHelp, menu, Keys.F1);
 			shell.AddToolbarItem("Change Log", OpenChangeLog, menu, Keys.None);
 			shell.AddToolbarItem("About Character Editor...", OpenAbout, menu, Keys.None);
+		}
+
+		private static void CreateNewCharacter()
+		{
+			NewCharacterPrompt prompt = new NewCharacterPrompt();
+			if (prompt.ShowDialog() == DialogResult.OK)
+			{
+				Character character = prompt.Character;
+				MessageBox.Show($"Created {character.FirstName} under folder: opponents/{character.FolderName}");
+				Shell.Instance.LaunchWorkspace(character);
+			}
 		}
 
 		private static void OpenCharacterSelect()
