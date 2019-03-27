@@ -34,6 +34,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			_data = new List<Tuple<Character, double>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
+				HashSet<string> usedNames = new HashSet<string>();
 				Dictionary<string, int> linesPerStage = new Dictionary<string, int>();
 				string folder = Config.GetRootDirectory(c);
 				foreach (string filename in Directory.EnumerateFiles(folder)
@@ -41,6 +42,14 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				{
 					string[] pieces = Path.GetFileNameWithoutExtension(filename).Split('-');
 					string stage = pieces[0];
+					if (pieces.Length > 1)
+					{
+						usedNames.Add(pieces[1]);
+					}
+					else
+					{
+						usedNames.Add(pieces[0]);
+					}
 					int count;
 					if (!linesPerStage.TryGetValue(stage, out count))
 					{
@@ -48,6 +57,23 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					}
 					linesPerStage[stage] = ++count;
 				}
+
+				foreach (Pose pose in c.CustomPoses)
+				{
+					string[] pieces = Path.GetFileNameWithoutExtension(pose.Id).Split('-');
+					string name = pieces.Length > 1 ? pieces[1] : pieces[0];
+					string stage = pieces[0];
+					if (!usedNames.Contains(name))
+					{
+						int count;
+						if (!linesPerStage.TryGetValue(stage, out count))
+						{
+							count = 1;
+						}
+						linesPerStage[stage] = ++count;
+					}
+				}
+
 				if (linesPerStage.Count == 0) continue;
 				//Average the stages
 				double average = linesPerStage.Values.Average();

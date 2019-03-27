@@ -36,8 +36,6 @@ namespace SPNATI_Character_Editor.Activities
 		private SpritePreview _selectedObject = null;
 		private DateTime _lastTick;
 
-		private object _clipboard;
-
 		private bool _populatingPoses;
 
 		private Point _lastMouse;
@@ -486,7 +484,7 @@ namespace SPNATI_Character_Editor.Activities
 			TreeNode node = lstPoses.SelectedNode as TreeNode;
 			if (node != null)
 			{
-				_clipboard = node.Tag;
+				Clipboards.Set<PoseCreator>(node.Tag);
 				RemoveNode(node);
 			}
 		}
@@ -497,15 +495,15 @@ namespace SPNATI_Character_Editor.Activities
 			if (node != null)
 			{
 				ICloneable cloner = node.Tag as ICloneable;
-				_clipboard = cloner?.Clone();
+				Clipboards.Set<PoseCreator>(cloner?.Clone());
 			}
 		}
 
 		private void tsPaste_Click(object sender, EventArgs e)
 		{
 			TreeNode node = lstPoses.SelectedNode as TreeNode;
-			if (_clipboard == null || node == null) { return; }
-			ICloneable cloner = _clipboard as ICloneable;
+			if (!Clipboards.Has<PoseCreator>() || node == null) { return; }
+			ICloneable cloner = Clipboards.Get<PoseCreator, ICloneable>();
 			object obj = cloner.Clone();
 			Pose pastedPose = obj as Pose;
 			Sprite pastedSprite = obj as Sprite;
@@ -551,10 +549,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void tsDuplicate_Click(object sender, EventArgs e)
 		{
-			object clipboard = _clipboard;
+			object clipboard = Clipboards.Get<PoseCreator,object>();
 			tsCopy_Click(sender, e);
 			tsPaste_Click(sender, e);
-			_clipboard = clipboard;
+			Clipboards.Set<PoseCreator>(clipboard);
 		}
 
 		private void lstPoses_ItemDrag(object sender, ItemDragEventArgs e)
