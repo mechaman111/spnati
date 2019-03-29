@@ -91,7 +91,7 @@ namespace SPNATI_Character_Editor.Forms
 
 			if (code.TotalAssets > 1)
 			{
-				panelManual.Visible = true;
+				//panelManual.Visible = true;
 			}
 
 			previewPanel.Invalidate();

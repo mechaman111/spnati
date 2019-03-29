@@ -204,11 +204,12 @@ namespace SPNATI_Character_Editor
 						if (stage < endStage)
 						{
 							DialogueLine stageLine = Behaviour.CreateStageSpecificLine(line, stage, Character);
-							string name = Path.GetFileNameWithoutExtension(stageLine.Image);
-							if (!name.StartsWith("custom:"))
+							if (stageLine.Image.StartsWith("custom:"))
 							{
-								images.Add(name);
+								continue;
 							}
+							string name = Path.GetFileNameWithoutExtension(stageLine.Image);
+							images.Add(name);
 						}
 					}
 				}
