@@ -35,7 +35,7 @@ var CANDY_LIST = [
     "marinette/3-bored.png",
     "marinette/4-excited.png",
     "pit/0-awkward.png",
-    "pit/1-happy.png",
+    "pit/1-calm.png",
     "pit/2-pumped.png",
     "pit/3-shy.png",
     "uravity/0-calm.png",
