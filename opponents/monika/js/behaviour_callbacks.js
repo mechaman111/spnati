@@ -230,7 +230,7 @@ monika.startJointMasturbation = function () {
         players[monika_slot].markers['joint-masturbation'] = 1;
         players[sayori_slot].markers['joint-masturbation'] = 1;
         
-        players[monika_slot].tags.push(canonicalizeTag('tandem'));
+        players[monika_slot].addTag('tandem');
         
         /* Hard reset stage and forfeit timers for Monika. */
         players[monika_slot].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
@@ -268,10 +268,7 @@ monika.endJointMasturbation = function () {
         
         monika.active_effects['joint_masturbation'] = false;
         
-        var pos = players[monika_slot].tags.indexOf(canonicalizeTag('tandem'));
-        if (pos >= 0) {
-            players[monika_slot].tags.splice(pos, 1);
-        }
+        players[monika_slot].removeTag('tandem');
         
         setTimeout(function () {
             /* Put Sayori back in her slot. */

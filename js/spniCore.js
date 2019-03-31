@@ -745,7 +745,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             if (typeof tags !== typeof undefined && tags !== false) {
                 tagsArray = $(tags).find('tag').map(function () {
                     return {
-                        'tag': canonicalizeTag($(this).text());
+                        'tag': canonicalizeTag($(this).text()),
                         'from': $(this).attr('from'),
                         'to': $(this).attr('to'),
                     }

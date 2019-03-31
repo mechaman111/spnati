@@ -614,7 +614,7 @@ function Case($xml, stage) {
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
     this.removeTags =               $xml.attr("removeCharacterTags");
-
+    
     if (this.addTags) {
         this.addTags = this.addTags.split(',').map(canonicalizeTag);
     }
@@ -623,11 +623,10 @@ function Case($xml, stage) {
         this.removeTags = this.removeTags.split(',').map(canonicalizeTag);
     }
     
-    var states = [];
-    $xml.find('state').each(function () {
-        states.push(new State($(this), this.addTags, this.removeTags));
-    });
-    this.states = states;
+    this.states = [];
+    $xml.find('state').each(function (idx, elem) {
+        this.states.push(new State($(elem), this.addTags, this.removeTags));
+    }.bind(this));
     
     var counters = [];
     $xml.find("condition").each(function () {
