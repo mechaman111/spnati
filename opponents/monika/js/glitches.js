@@ -93,8 +93,11 @@ monika.temporaryCharacterGlitch = function(slot, delay, glitchTime, start_y, aff
 
 monika.glitch_pose_transition = function(slot, next_img, delay, glitchTime, start_y, affected_height) {
     var do_glitch = function () {
+        if (monika.active_effects['joint_masturbation']) return;
+        
         monika.glitchCharacter(slot, start_y, affected_height, function (cv) {
             setTimeout(function () {
+                if (monika.active_effects['joint_masturbation']) return;
                 $gameImages[slot-1].attr('src', players[slot].folder+next_img);
             }, glitchTime);
         });
