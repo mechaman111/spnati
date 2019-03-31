@@ -644,6 +644,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             var costumeTags = this.default_costume.tags.slice();
             var tagMods = $xml.find('tags');
             if (tagMods) {
+                var newTags = [];
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
                     var tag = canonicalizeTag(tag);
@@ -651,12 +652,15 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                     var fromStage = $elem.attr('from');
                     var toStage = $elem.attr('to');
 
-                    if (removed.toLowerCase() === 'true') {
-                        costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
-                    } else {
-                        costumeTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
+                    // Remove previous declarations for this tag
+                    costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
+
+                    if (removed.toLowerCase() !== 'true') {
+                        newTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
                     }
                 });
+                
+                Array.prototype.push.apply(costumeTags, newTags);
             }
 
             this.alt_costume.tags = costumeTags;
