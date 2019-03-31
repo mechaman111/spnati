@@ -439,8 +439,6 @@ Player.prototype.updateTags = function () {
         
         if (stage >= from && stage <= to) {
             tags.push(tag);
-        } else {
-            tags = tags.filter(function (t) { t !== tag });
         }
     });
     
