@@ -619,6 +619,7 @@ if(!monika) {
                     monika.glitch_pose_transition(player, current_img, 0, 200);
                 } else {
                     el.one('load', function () {
+                        if (monika.active_effects['joint_masturbation']) return;
                         console.log("[Monika] image loaded, glitching to new pose...");
                         monika.glitch_pose_transition(player, current_img, 0, 200);
                     });

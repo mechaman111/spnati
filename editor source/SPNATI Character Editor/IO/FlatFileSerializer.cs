@@ -175,6 +175,7 @@ namespace SPNATI_Character_Editor
 					{
 						Case stageCase = c.CopyConditions();
 						stageCase.Stages.Add(stage);
+						stageCase.Id = c.Id;
 						foreach (var line in c.Lines)
 						{
 							stageCase.Lines.Add(Behaviour.CreateStageSpecificLine(line, stage, character));
@@ -294,6 +295,10 @@ namespace SPNATI_Character_Editor
 				List<string> code = new List<string>();
 				code.Add(string.Format("{0}{1}", stagePrefix, outputCase.Tag));
 				code.AddRange(GetFilters(outputCase));
+				if (outputCase.Id > 0)
+				{
+					code.Add($"id:{outputCase.Id}");
+				}
 				string caseCode = string.Join(",", code);
 
 				foreach (var line in outputCase.Lines)
@@ -1098,6 +1103,10 @@ namespace SPNATI_Character_Editor
 			{
 				AddTarget(targets[i], lineCase, line);
 			}
+			if (lineCase.Id > 0)
+			{
+				lineCase.StageId = $"{stage}-{lineCase.Id}";
+			}
 
 			//Image and dialogue
 			string[] linePieces = value.Split(new char[] { ',' }, 2);
@@ -1278,6 +1287,13 @@ namespace SPNATI_Character_Editor
 						break;
 					case "set-size":
 						line.Size = value;
+						break;
+					case "id":
+						int id;
+						if (int.TryParse(value, out id))
+						{
+							lineCase.Id = id;
+						}
 						break;
 					default:
 						if (key.StartsWith("count-"))
