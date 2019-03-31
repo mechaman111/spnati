@@ -373,39 +373,8 @@ Player.prototype.resetState = function () {
 
         this.labels = appearance.labels;
         this.folders = appearance.folders;
-        
-        /* Build up a list of tags, starting from the opponent's baseTags list:
-         * - Filter out tags marked to be removed by alt. costumes
-         * - Add tags marked to be added by alt. costumes
-         * - Add the costume ID if necessary
-         * - Add implied tags
-         */
-        this.tags = this.baseTags.slice();
-        if (appearance.tags) {
-            var removed_tags = [];
-            var added_tags = [];
-            
-            appearance.tags.find('tag').each(function (idx, elem) {
-                var $elem = $(elem);
-                var tag = canonicalizeTag($elem.text());
-                var removed = $elem.attr('remove') || '';
-                
-                if (removed.toLowerCase() === 'true') {
-                    removed_tags.push(tag);
-                } else {
-                    added_tags.push(tag);
-                }
-            });
-            
-            this.tags = this.tags.filter(function (tag) { return removed_tags.indexOf(tag) < 0; });
-            Array.prototype.push.apply(this.tags, added_tags);
-        }
-
-        if (appearance.id && this.tags.indexOf(canonicalizeTag(appearance.id)) < 0) {
-            this.tags.push(canonicalizeTag(appearance.id));
-        }
-        
-        this.tags = expandTagsList(this.tags);
+        this.baseTags = appearance.tags.slice();
+        this.tags = expandTagsList(this.baseTags);
 
 		/* Load the player's wardrobe. */
 
@@ -607,7 +576,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             this.alt_costume = {
                 id: $xml.find('id').text(),
                 labels: $xml.find('label'),
-                tags: $xml.find('tags'),
+                tags: [],
                 folder: this.selected_costume,
                 folders: $xml.find('folder'),
                 wardrobe: $xml.find('wardrobe')
@@ -621,6 +590,39 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             }.bind(this));
             
             this.alt_costume.poses = poseDefs;
+
+            /* Construct a set of base tags for this alt costume:
+             * - Filter out tags marked to be removed
+             * - Add tags marked to be added
+             * - Add the costume ID if necessary
+             */
+            var costumeTags = this.default_costume.tags.slice();
+            var tagMods = $xml.find('tags');
+            if (tagMods) {
+                var removed_tags = [];
+                var added_tags = [];
+
+                tagMods.find('tag').each(function (idx, elem) {
+                    var $elem = $(elem);
+                    var tag = canonicalizeTag($elem.text());
+                    var removed = $elem.attr('remove') || '';
+
+                    if (removed.toLowerCase() === 'true') {
+                        removed_tags.push(tag);
+                    } else {
+                        added_tags.push(tag);
+                    }
+                });
+
+                costumeTags = costumeTags.filter(function (tag) { return removed_tags.indexOf(tag) < 0; });
+                Array.prototype.push.apply(costumeTags, added_tags);
+            }
+
+            if (this.alt_costume.id && costumeTags.indexOf(canonicalizeTag(this.alt_costume.id)) < 0) {
+                costumeTags.push(canonicalizeTag(this.alt_costume.id));
+            }
+
+            this.alt_costume.tags = costumeTags;
 
             this.onSelected(individual);
         }.bind(this),
@@ -711,7 +713,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 });
             }
 
-            this.baseTags = tagsArray.map(canonicalizeTag);
+            this.default_costume.tags = tagsArray.map(canonicalizeTag);
+            this.baseTags = this.default_costume.tags.slice();
             this.tags = expandTagsList(this.baseTags);
 
             var targetedLines = {};
