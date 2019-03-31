@@ -71,6 +71,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\DeleteAnimatedPropertyCommand.cs" />
+    <Compile Include="Actions\DeleteKeyframeCommand.cs" />
+    <Compile Include="Actions\DeletePropertyCommand.cs" />
+    <Compile Include="Actions\DeleteWidgetCommand.cs" />
+    <Compile Include="Actions\MoveSpriteStartCommand.cs" />
+    <Compile Include="Actions\PasteKeyframeCommand.cs" />
+    <Compile Include="Actions\ToggleAnimationBreakCommand.cs" />
+    <Compile Include="Actions\TimelineActions\MoveWidgetTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\SelectKeyframeTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\WidgetEndTimelineAction.cs" />
+    <Compile Include="Actions\TimelineActions\WidgetStartTimelineAction.cs" />
     <Compile Include="Activities\AdvancedMetadataEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -142,6 +153,12 @@
     </Compile>
     <Compile Include="Activities\SpellCheck.Designer.cs">
       <DependentUpon>SpellCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\AnimDurationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\AnimDurationControl.Designer.cs">
+      <DependentUpon>AnimDurationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\DirectiveMarkerControl.cs">
       <SubType>UserControl</SubType>
@@ -470,6 +487,8 @@
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
     <Compile Include="DialogueLine.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\AnimatedProperty.cs" />
+    <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
     <Compile Include="EpilogueEditing\DirectiveDefinition.cs" />
     <Compile Include="EpilogueEditing\EpilogueCanvas.cs">
       <SubType>UserControl</SubType>
@@ -477,7 +496,28 @@
     <Compile Include="EpilogueEditing\EpilogueCanvas.Designer.cs">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </Compile>
+    <Compile Include="EpilogueEditing\Interfaces\ILabel.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineAction.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineData.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\ITimelineWidget.cs" />
+    <Compile Include="EpilogueEditing\LiveCanvas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\LiveCanvas.Designer.cs">
+      <DependentUpon>LiveCanvas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EpilogueEditing\LiveImageCache.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveKeyframe.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LivePose.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveSprite.cs" />
     <Compile Include="EpilogueEditing\PoseAnimation.cs" />
+    <Compile Include="EpilogueEditing\PoseEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\PoseEditor.Designer.cs">
+      <DependentUpon>PoseEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EpilogueEditing\PropertyDefinition.cs" />
     <Compile Include="EpilogueEditing\SpritePreview.cs" />
     <Compile Include="EpilogueEditing\PosePreview.cs" />
     <Compile Include="EpilogueEditing\RandomParameter.cs" />
@@ -487,6 +527,13 @@
     <Compile Include="EpilogueEditing\SceneParticle.cs" />
     <Compile Include="EpilogueEditing\ScenePreview.cs" />
     <Compile Include="EpilogueEditing\SceneTransition.cs" />
+    <Compile Include="EpilogueEditing\Widgets\SpriteWidget.cs" />
+    <Compile Include="EpilogueEditing\Timeline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EpilogueEditing\Timeline.Designer.cs">
+      <DependentUpon>Timeline.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileNameSelect.cs">
@@ -494,6 +541,12 @@
     </Compile>
     <Compile Include="FileNameSelect.Designer.cs">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CanvasHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CanvasHelp.Designer.cs">
+      <DependentUpon>CanvasHelp.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ChangeLogReview.cs">
       <SubType>Form</SubType>
@@ -799,6 +852,15 @@
     <EmbeddedResource Include="EpilogueEditing\EpilogueCanvas.resx">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\LiveCanvas.resx">
+      <DependentUpon>LiveCanvas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\PoseEditor.resx">
+      <DependentUpon>PoseEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EpilogueEditing\Timeline.resx">
+      <DependentUpon>Timeline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileNameSelect.resx">
       <DependentUpon>FileNameSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -878,6 +940,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Cursors\hand_closed.cur" />
+    <None Include="Cursors\hand_open.cur" />
     <Content Include="Help\tags.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -933,6 +997,41 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Icons\CopyKeyFrame.png" />
+    <None Include="Icons\Curve_Bounce.png" />
+    <None Include="Icons\Curve_EaseIn.png" />
+    <None Include="Icons\Curve_EaseInCubic.png" />
+    <None Include="Icons\Curve_EaseInOutCubic.png" />
+    <None Include="Icons\Curve_EaseInSin.png" />
+    <None Include="Icons\Curve_EaseOut.png" />
+    <None Include="Icons\Curve_EaseOutCubic.png" />
+    <None Include="Icons\Curve_EaseOutSin.png" />
+    <None Include="Icons\Curve_Elastic.png" />
+    <None Include="Icons\Curve_Linear.png" />
+    <None Include="Icons\Curve_Smooth.png" />
+    <None Include="Icons\EyeClosed.png" />
+    <None Include="Icons\EyeOpen.png" />
+    <None Include="Icons\FirstFrame.png" />
+    <None Include="Icons\LastFrame.png" />
+    <None Include="Icons\Loop.png" />
+    <None Include="Icons\NextFrame.png" />
+    <None Include="Icons\PreviousFrame.png" />
+    <None Include="Icons\Record.png" />
+    <None Include="Icons\Redo.png" />
+    <None Include="Icons\RemoveKeyframe.png" />
+    <None Include="Icons\Tween_Linear.png" />
+    <None Include="Icons\Tween_None.png" />
+    <None Include="Icons\Tween_Spline.png" />
+    <None Include="Icons\Undo.png" />
+    <None Include="Icons\ZoomIn.png" />
+    <None Include="Icons\ZoomOut.png" />
+    <None Include="Icons\Collapse.png" />
+    <None Include="Icons\Expand.png" />
+    <None Include="Icons\TimelinePause.png" />
+    <None Include="Icons\TimelinePlay.png" />
+    <None Include="Icons\SplitKeyframe.png" />
+    <None Include="Icons\TimelinePlayLoops.png" />
+    <None Include="Icons\TimelinePlayOnce.png" />
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

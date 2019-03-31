@@ -1,6 +1,6 @@
 ﻿namespace Desktop
 {
-	public interface IUndoItem
+	public interface ICommand
 	{
 		void Undo();
 		void Do();

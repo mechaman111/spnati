@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.EpilogueEditing;
+using SPNATI_Character_Editor.EpilogueEditor;
 using SPNATI_Character_Editor.Forms;
 using SPNATI_Character_Editor.Properties;
 using System;
@@ -14,8 +15,9 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 210)]
-	[Activity(typeof(Costume), 210)]
+	[Spacer]
+	[Activity(typeof(Character), 810)]
+	[Activity(typeof(Costume), 810)]
 	public partial class PoseCreator : Activity
 	{
 		public const int SelectionLeeway = EpilogueCanvas.SelectionLeeway;
@@ -71,7 +73,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override string Caption
 		{
-			get { return "Pose Maker"; }
+			get { return "Pose Maker (Old)"; }
 		}
 
 		protected override void OnInitialize()
@@ -514,6 +516,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (pastedPose != null)
 			{
 				_character.CustomPoses.Add(pastedPose);
+				_library.Add(pastedPose);
 				pastedNode = AddNode(pastedPose);
 			}
 			else if (pastedSprite != null)
@@ -891,7 +894,7 @@ namespace SPNATI_Character_Editor.Activities
 			_selectedObject = null;
 			_preview = null;
 			if (_currentPose == null) { return; }
-			_preview = new PosePreview(_character, _currentPose, _currentDirective, _currentKeyframe, _currentSprite, _markers);
+			_preview = new PosePreview(_character, _currentPose, _currentDirective, _currentKeyframe, _currentSprite, _markers, false);
 			_lastTick = DateTime.Now;
 			tmrTick.Enabled = _preview.IsAnimated;
 
@@ -1489,6 +1492,34 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				HashSet<string> items = new HashSet<string>();
 				foreach (Sprite sprite in Pose.Sprites)
+				{
+					items.Add(sprite.Id);
+				}
+				return items.ToArray();
+			}
+			return null;
+		}
+	}
+
+	public class LivePoseContext : ICharacterContext, IAutoCompleteList
+	{
+		public LivePose Pose { get; }
+		public ISkin Character { get; }
+		public CharacterContext Context { get; }
+
+		public LivePoseContext(LivePose pose, ISkin character, CharacterContext context)
+		{
+			Pose = pose;
+			Character = character;
+			Context = context;
+		}
+
+		public string[] GetAutoCompleteList(object data)
+		{
+			if (data is PoseDirective)
+			{
+				HashSet<string> items = new HashSet<string>();
+				foreach (LiveSprite sprite in Pose.Sprites)
 				{
 					items.Add(sprite.Id);
 				}

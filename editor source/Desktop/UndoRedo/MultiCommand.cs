@@ -2,9 +2,9 @@
 
 namespace Desktop
 {
-	public class MultiUndoItem : IUndoItem
+	public class MultiCommand : ICommand
 	{
-		private List<IUndoItem> _items = new List<IUndoItem>();
+		private List<ICommand> _items = new List<ICommand>();
 
 		public int Count { get { return _items.Count; } }
 
@@ -24,7 +24,7 @@ namespace Desktop
 		{
 		}
 
-		public IUndoItem Get(int index)
+		public ICommand Get(int index)
 		{
 			if (Count == 0)
 				return null;
@@ -51,7 +51,7 @@ namespace Desktop
 			AfterUndo();
 		}
 
-		public void Record(IUndoItem item)
+		public void Record(ICommand item)
 		{
 			_items.Add(item);
 		}

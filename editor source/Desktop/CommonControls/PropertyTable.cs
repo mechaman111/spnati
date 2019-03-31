@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Desktop.CommonControls
@@ -19,6 +20,8 @@ namespace Desktop.CommonControls
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
 		public event EventHandler<Macro> MacroChanged;
+
+		private int _pendingDataChanges = 0;
 
 		private object _data;
 		/// <summary>
@@ -43,6 +46,38 @@ namespace Desktop.CommonControls
 					AddMacros();
 				}
 			}
+		}
+
+		private object _pendingData;
+		/// <summary>
+		/// Sets the Data object after a brief delay, so that only the last request in that amount of time is honored
+		/// </summary>
+		/// <param name="data"></param>
+		public async void SetDataAsync(object data, object previewData)
+		{
+			_pendingData = data;
+			_pendingDataChanges++;
+			await Task.Delay(1);
+			_pendingDataChanges--;
+			if (_pendingDataChanges == 0)
+			{
+				if (Data != _pendingData)
+				{
+					PreviewData = previewData;
+					Data = _pendingData;
+				}
+			}
+		}
+
+		private object _previewData;
+		/// <summary>
+		/// Secondary data that displays on edit controls that don't have the primary data defined.
+		/// This does not come into effect automatically; Data must be set after setting this.
+		/// </summary>
+		public object PreviewData
+		{
+			get { return _previewData; }
+			set { _previewData = value; }
 		}
 
 		public UndoManager UndoManager { get; set; }
@@ -408,7 +443,7 @@ namespace Desktop.CommonControls
 				foreach (PropertyRecord editControl in controlsToRebind)
 				{
 					PropertyEditControl ctl = EditRecord(editControl, -1, out newlyAdded);
-					ctl.Rebind(Data, Context);
+					ctl.Rebind(Data, PreviewData, Context);
 				}
 			}
 			finally
@@ -500,7 +535,7 @@ namespace Desktop.CommonControls
 				ctl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 				ctl.SetParameters(result.Attribute);
 
-				ctl.SetData(Data, result.Property, index, Context, UndoManager);
+				ctl.SetData(Data, result.Property, index, Context, UndoManager, _previewData);
 
 				row = new PropertyTableRow();
 				if (result.RowHeight > 0)

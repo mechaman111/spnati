@@ -70,6 +70,7 @@ namespace SPNATI_Character_Editor
 		private static void BuildDefinitions()
 		{
 			BuildDirectiveTypes();
+			BuildPropertyTypes();
 		}
 
 		private static void BuildDirectiveTypes()
@@ -185,6 +186,38 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
+		}
+
+		private static void BuildPropertyTypes()
+		{
+			PropertyDefinition property;
+
+			property = new PropertyDefinition("X", "X", typeof(float), 10);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Y", "Y", typeof(float), 15);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Src", "Source", typeof(string), 0);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Alpha", "Opacity", typeof(float), 30);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("ScaleX", "Scale (X)", typeof(float), 40);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("ScaleY", "Scale (Y)", typeof(float), 45);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("Rotation", "Rotation", typeof(float), 50);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("SkewX", "Skew (X)", typeof(float), 60);
+			Definitions.Instance.Add(property);
+
+			property = new PropertyDefinition("SkewY", "Skew (Y)", typeof(float), 65);
+			Definitions.Instance.Add(property);
 		}
 
 		private static bool DoInitialSetup()

@@ -46,6 +46,12 @@
     <Compile Include="CommonControls\DBTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CommonControls\NumericField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\NumericField.Designer.cs">
+      <DependentUpon>NumericField.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\PropertyControls\BooleanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </Compile>
     <Compile Include="CommonControls\PropertyControls\RecordControl.Designer.cs">
       <DependentUpon>RecordControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\PropertyControls\RefreshableListBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="CommonControls\PropertyControls\SliderControl.cs">
       <SubType>UserControl</SubType>
@@ -160,9 +169,11 @@
     <Compile Include="Controls\WorkspaceControl.designer.cs">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataStructures\BindableObject.cs" />
     <Compile Include="DataStructures\Clipboards.cs" />
     <Compile Include="DataStructures\DualKeyDictionary.cs" />
     <Compile Include="DataStructures\DuplicateKeyComparer.cs" />
+    <Compile Include="DataStructures\ObservableDictionary.cs" />
     <Compile Include="DataStructures\PropertyMacro.cs" />
     <Compile Include="DataStructures\PropertyRecord.cs" />
     <Compile Include="Extensions\NativeMethods.cs" />
@@ -197,14 +208,15 @@
     <Compile Include="Providers\IRecordProvider.cs" />
     <Compile Include="Providers\MacroProvider.cs" />
     <Compile Include="Providers\PropertyProvider.cs" />
+    <Compile Include="Serialization\PropertyTypeInfo.cs" />
     <Compile Include="Shell.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Shell.designer.cs">
       <DependentUpon>Shell.cs</DependentUpon>
     </Compile>
-    <Compile Include="UndoRedo\IUndoItem.cs" />
-    <Compile Include="UndoRedo\MultiUndoItem.cs" />
+    <Compile Include="UndoRedo\ICommand.cs" />
+    <Compile Include="UndoRedo\MultiCommand.cs" />
     <Compile Include="UndoRedo\UndoManager.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>

@@ -32,5 +32,11 @@ namespace Desktop
 		{
 			return _clipboards.ContainsKey(typeof(TClipboard));
 		}
+
+		public static bool Contains<TClipboard, TValue>()
+		{
+			object obj = Get<TClipboard, object>();
+			return obj is TValue;
+		}
 	}
 }

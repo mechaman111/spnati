@@ -19,10 +19,10 @@ namespace Desktop
 			}
 		}
 
-		private Stack<IUndoItem> _undoCommands = new Stack<IUndoItem>();
-		private Stack<IUndoItem> _redoCommands = new Stack<IUndoItem>();
+		private Stack<ICommand> _undoCommands = new Stack<ICommand>();
+		private Stack<ICommand> _redoCommands = new Stack<ICommand>();
 
-		private MultiUndoItem _bulkAction = null;
+		private MultiCommand _bulkAction = null;
 		private bool _bulkRecording = false;
 
 		public event Action<UndoAction> CommandApplied;
@@ -47,7 +47,7 @@ namespace Desktop
 		/// Performs and records a command
 		/// </summary>
 		/// <param name="item"></param>
-		public void Commit(IUndoItem item)
+		public void Commit(ICommand item)
 		{
 			item.Do();
 			Record(item);
@@ -57,7 +57,7 @@ namespace Desktop
 		/// Records a command to the history but doesn't perform it
 		/// </summary>
 		/// <param name="item"></param>
-		public void Record(IUndoItem item)
+		public void Record(ICommand item)
 		{
 			if (_bulkRecording)
 			{
@@ -76,7 +76,7 @@ namespace Desktop
 				EndBulkRecord();
 			}
 			_bulkRecording = true;
-			_bulkAction = new MultiUndoItem();
+			_bulkAction = new MultiCommand();
 		}
 
 		public void EndBulkRecord()
@@ -106,14 +106,14 @@ namespace Desktop
 			EndBulkRecord();
 			if (_undoCommands.Count > 0)
 			{
-				IUndoItem item = _undoCommands.Pop();
+				ICommand item = _undoCommands.Pop();
 				item.Undo();
 				_redoCommands.Push(item);
 				OnCommandApplied(UndoAction.Undo);
 			}
 		}
 
-		public IUndoItem Peek()
+		public ICommand Peek()
 		{
 			if (_undoCommands.Count > 0)
 			{
@@ -123,7 +123,7 @@ namespace Desktop
 			return null;
 		}
 
-		public IUndoItem PeekRedo()
+		public ICommand PeekRedo()
 		{
 			if (_redoCommands.Count > 0)
 			{
@@ -138,7 +138,7 @@ namespace Desktop
 			EndBulkRecord();
 			if (_redoCommands.Count > 0)
 			{
-				IUndoItem item = _redoCommands.Pop();
+				ICommand item = _redoCommands.Pop();
 				item.Do();
 				_undoCommands.Push(item);
 				OnCommandApplied(UndoAction.Redo);

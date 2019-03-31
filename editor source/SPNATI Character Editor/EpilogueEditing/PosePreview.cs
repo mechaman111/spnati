@@ -23,7 +23,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float ElapsedTime;
 		public float TotalDuration;
 
-		public PosePreview(ISkin character, Pose pose, PoseDirective selectedDirective, Keyframe selectedKeyframe, Sprite selectedSprite, List<string> markers)
+		public PosePreview(ISkin character, Pose pose, PoseDirective selectedDirective, Keyframe selectedKeyframe, Sprite selectedSprite, List<string> markers, bool allowSparseFrames)
 		{
 			Character = character;
 			Pose = pose;
@@ -77,32 +77,109 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 				if (directive.DirectiveType == "animation")
 				{
-					if (!string.IsNullOrEmpty(directive.Src))
+					if (directive.Keyframes.Count > 1 && allowSparseFrames)
 					{
-						AddImage(directive.Src);
-					}
-					foreach (Keyframe keyframe in directive.Keyframes)
-					{
-						if (!string.IsNullOrEmpty(keyframe.Src))
+						//first split the properties into buckets of frame indices where they appear
+						Dictionary<string, List<int>> propertyMap = new Dictionary<string, List<int>>();
+
+						for (int i = 0; i < directive.Keyframes.Count; i++)
 						{
-							AddImage(keyframe.Src);
+							Keyframe frame = directive.Keyframes[i];
+							MapFrameProperty(i, "X", frame.X, propertyMap);
+							MapFrameProperty(i, "Y", frame.Y, propertyMap);
+							MapFrameProperty(i, "Rotation", frame.Rotation, propertyMap);
+							MapFrameProperty(i, "ScaleX", frame.ScaleX, propertyMap);
+							MapFrameProperty(i, "ScaleY", frame.ScaleY, propertyMap);
+							MapFrameProperty(i, "SkewX", frame.SkewX, propertyMap);
+							MapFrameProperty(i, "SkewY", frame.SkewY, propertyMap);
+							MapFrameProperty(i, "Opacity", frame.Opacity, propertyMap);
+							MapFrameProperty(i, "Src", frame.Src, propertyMap);
 						}
-					}
-					PoseAnimation animation = new PoseAnimation(this, directive);
-					if (SelectedObject != null)
-					{
-						foreach (KeyframePreview kf in animation.Frames)
+
+						//next create animations for each combination of frames
+						Dictionary<string, PoseDirective> directives = new Dictionary<string, PoseDirective>();
+						foreach (KeyValuePair<string, List<int>> kvp in propertyMap)
 						{
-							if (kf.Keyframe == selectedKeyframe)
+							string prop = kvp.Key;
+							string key = string.Join(",", kvp.Value);
+							List<int> indices = kvp.Value;
+							PoseDirective workingDirective;
+							if (!directives.TryGetValue(key, out workingDirective))
 							{
-								SelectedObject.LinkedFramePreview = kf;
-								SelectedObject.LinkedAnimation = animation;
-								break;
+								//shallow copy the directive
+								workingDirective = directive.Clone() as PoseDirective;
+								workingDirective.Keyframes.Clear();
+								directives[key] = workingDirective;
+							}
+
+							for (var i = 0; i < indices.Count; i++)
+							{
+								Keyframe srcFrame = directive.Keyframes[indices[i]];
+								Keyframe targetFrame;
+								if (workingDirective.Keyframes.Count <= i)
+								{
+									//shallow copy the frame minus the animatable properties
+									targetFrame = srcFrame.Clone() as Keyframe;
+									targetFrame.X = null;
+									targetFrame.Y = null;
+									targetFrame.Src = null;
+									targetFrame.Opacity = null;
+									targetFrame.ScaleX = null;
+									targetFrame.ScaleY = null;
+									targetFrame.Rotation = null;
+									targetFrame.SkewX = null;
+									targetFrame.SkewY = null;
+
+									targetFrame.Time = srcFrame.Time;
+									workingDirective.Keyframes.Add(targetFrame);
+								}
+								else
+								{
+									targetFrame = workingDirective.Keyframes[i];
+								}
+								switch (prop)
+								{
+									case "X":
+										targetFrame.X = srcFrame.X;
+										break;
+									case "Y":
+										targetFrame.Y = srcFrame.Y;
+										break;
+									case "Src":
+										targetFrame.Src = srcFrame.Src;
+										break;
+									case "Opacity":
+										targetFrame.Opacity = srcFrame.Opacity;
+										break;
+									case "ScaleX":
+										targetFrame.ScaleX = srcFrame.ScaleX;
+										break;
+									case "ScaleY":
+										targetFrame.ScaleY = srcFrame.ScaleY;
+										break;
+									case "Rotation":
+										targetFrame.Rotation = srcFrame.Rotation;
+										break;
+									case "SkewX":
+										targetFrame.SkewX = srcFrame.SkewX;
+										break;
+									case "SkewY":
+										targetFrame.SkewY = srcFrame.SkewY;
+										break;
+								}
 							}
 						}
+
+						//turn working directives into animations
+						foreach (PoseDirective working in directives.Values)
+						{
+							AddAnimation(selectedKeyframe, working);
+						}
 					}
-					TotalDuration = Math.Max(TotalDuration, animation.Delay + animation.Duration);
-					Animations.Add(animation);
+					else
+					{
+						AddAnimation(selectedKeyframe, directive);
+					}
 				}
 				else
 				{
@@ -131,6 +208,50 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 			}
 
+		}
+
+		private void AddAnimation(Keyframe selectedKeyframe, PoseDirective working)
+		{
+			if (!string.IsNullOrEmpty(working.Src))
+			{
+				AddImage(working.Src);
+			}
+			foreach (Keyframe keyframe in working.Keyframes)
+			{
+				if (!string.IsNullOrEmpty(keyframe.Src))
+				{
+					AddImage(keyframe.Src);
+				}
+			}
+			PoseAnimation animation = new PoseAnimation(this, working);
+			if (SelectedObject != null)
+			{
+				foreach (KeyframePreview kf in animation.Frames)
+				{
+					if (kf.Keyframe == selectedKeyframe)
+					{
+						SelectedObject.LinkedFramePreview = kf;
+						SelectedObject.LinkedAnimation = animation;
+						break;
+					}
+				}
+			}
+			TotalDuration = Math.Max(TotalDuration, animation.Delay + animation.Duration);
+			Animations.Add(animation);
+		}
+
+		private void MapFrameProperty(int frameIndex, string property, string value, Dictionary<string, List<int>> propertyMap)
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				List<int> frameIndices;
+				if (!propertyMap.TryGetValue(property, out frameIndices))
+				{
+					frameIndices = new List<int>();
+					propertyMap[property] = frameIndices;
+				}
+				frameIndices.Add(frameIndex);
+			}
 		}
 
 		public bool IsAnimated

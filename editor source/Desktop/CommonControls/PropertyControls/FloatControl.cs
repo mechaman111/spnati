@@ -37,9 +37,55 @@ namespace Desktop.CommonControls.PropertyControls
 
 		protected override void OnBoundData()
 		{
+			SetPreview();
+			SetField();
+		}
+
+		private void SetPreview()
+		{
+			object data = GetPreviewValue();
+			if (data != null)
+			{
+				if (DataType == typeof(string))
+				{
+					valValue.PlaceholderText = data?.ToString();
+				}
+				if (DataType == typeof(float?))
+				{
+					float? value = (float?)data;
+					if (value.HasValue)
+					{
+						valValue.PlaceholderText = GetPreviewString(value.Value);
+					}
+					else
+					{
+						valValue.PlaceholderText = "";
+					}
+				}
+				else
+				{
+					float value = (float)data;
+					valValue.PlaceholderText = GetPreviewString(value);
+				}
+			}
+		}
+
+		private string GetPreviewString(float value)
+		{
+			string format = "0";
+			if (valValue.DecimalPlaces > 0)
+			{
+				format = $"0.{"".PadLeft(valValue.DecimalPlaces, '0')}";
+			}
+			return value.ToString(format, CultureInfo.InvariantCulture);
+		}
+
+		private bool SetField()
+		{
+			object data = GetValue();
 			if (DataType == typeof(string))
 			{
-				string valueStr = GetValue()?.ToString();
+				string valueStr = data?.ToString();
 				if (string.IsNullOrEmpty(valueStr))
 				{
 					valueStr = _defaultValue;
@@ -50,6 +96,7 @@ namespace Desktop.CommonControls.PropertyControls
 					_cleared = true;
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
 					valValue.Text = "";
+					return false;
 				}
 				else
 				{
@@ -58,34 +105,39 @@ namespace Desktop.CommonControls.PropertyControls
 						value = 0;
 					}
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+					return true;
 				}
 			}
 			else if (DataType == typeof(float?))
 			{
-				float? value = (float?)GetValue();
+				float? value = (float?)data;
 				if (value.HasValue)
 				{
 					valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+					return true;
 				}
 				else
 				{
 					float floatValue;
-					if (!string.IsNullOrEmpty(_defaultValue) && float.TryParse(_defaultValue, NumberStyles.Number, CultureInfo.InvariantCulture, out floatValue))
+					if (!string.IsNullOrEmpty(_defaultValue) && float.TryParse(_defaultValue, NumberStyles.Float, CultureInfo.InvariantCulture, out floatValue))
 					{
 						valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)floatValue));
+						return false;
 					}
 					else
 					{
 						_cleared = true;
 						valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, 0));
 						valValue.Text = "";
+						return false;
 					}
 				}
 			}
 			else
 			{
-				float value = (float)GetValue();
+				float value = (float)data;
 				valValue.Value = Math.Max(valValue.Minimum, Math.Min(valValue.Maximum, (decimal)value));
+				return true;
 			}
 		}
 
@@ -148,7 +200,7 @@ namespace Desktop.CommonControls.PropertyControls
 				//Working around Save() because accessing valValue.Value will cause it to format the decimal places, screwing up the cursor position
 				//since we just barely started typing a number in
 				float value;
-				float.TryParse(text, out value);
+				float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
 				SaveValue(value, text);
 			}
 		}

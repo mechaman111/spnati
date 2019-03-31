@@ -59,6 +59,17 @@ namespace Desktop.CommonControls.PropertyControls
 				_cleared = true;
 				slider.Value = 0;
 				valValue.Text = "";
+
+				string preview = GetPreviewValue()?.ToString();
+				if (!string.IsNullOrEmpty(preview))
+				{
+					int v;
+					if (int.TryParse(preview, out v))
+					{
+						slider.Value = Math.Max(slider.Minimum, Math.Min(slider.Maximum, v));
+					}
+					valValue.PlaceholderText = preview;
+				}
 			}
 		}
 
@@ -75,6 +86,18 @@ namespace Desktop.CommonControls.PropertyControls
 			{
 				int v = (int)valValue.Value;
 				SetValue(slider.Value);
+			}
+			else if (DataType == typeof(float?))
+			{
+				if (_cleared || valValue.Text == "")
+				{
+					SetValue(null);
+				}
+				else
+				{
+					float v = (float)valValue.Value;
+					SetValue((float?)slider.Value);
+				}
 			}
 			else if (DataType == typeof(string))
 			{

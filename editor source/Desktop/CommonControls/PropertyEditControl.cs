@@ -17,6 +17,7 @@ namespace Desktop.CommonControls
 
 		public object Context { get; set; }
 		public object Data { get; set; }
+		public object PreviewData { get; set; }
 		public UndoManager UndoManager { get; set; }
 
 		private MemberInfo _propertyInfo;
@@ -24,6 +25,7 @@ namespace Desktop.CommonControls
 		private HashSet<string> _boundProperties = new HashSet<string>();
 		public List<string> Bindings = new List<string>();
 		private INotifyPropertyChanged _bindableData;
+		private INotifyPropertyChanged _bindablePreviewData;
 		private bool _selfUpdating;
 
 		public Type DataType { get { return _propertyInfo.GetDataType(); } }
@@ -76,6 +78,15 @@ namespace Desktop.CommonControls
 			return _propertyInfo.GetValue(Data);
 		}
 
+		protected object GetPreviewValue()
+		{
+			if (_list != null)
+			{
+				throw new NotImplementedException("Preview data not supported with lists.");
+			}
+			return _propertyInfo.GetValue(PreviewData);
+		}
+
 		protected void SetValue(object value)
 		{
 			object old = null;
@@ -102,16 +113,16 @@ namespace Desktop.CommonControls
 			_selfUpdating = true;
 			if (UndoManager != null)
 			{
-				SetValueCommand command = new SetValueCommand(this, old, value);
+				SetValueCommand command = new SetValueCommand(Data, this, old, value);
 				UndoManager.Commit(command);
 			}
 			else
 			{
-				SetValueDirectly(value);
+				SetValueDirectly(Data, value);
 			}
 			_selfUpdating = false;
 		}
-		internal void SetValueDirectly(object value)
+		internal void SetValueDirectly(object data, object value)
 		{
 			if (_list != null)
 			{
@@ -119,9 +130,12 @@ namespace Desktop.CommonControls
 			}
 			else
 			{
-				_propertyInfo.SetValue(Data, value);
+				_propertyInfo.SetValue(data, value);
 			}
-			NotifyPropertyChanged();
+			if (data == Data)
+			{
+				NotifyPropertyChanged();
+			}
 		}
 
 		protected object GetBindingValue(string property)
@@ -158,9 +172,30 @@ namespace Desktop.CommonControls
 		public void Destroy()
 		{
 			OnDestroy();
+			ClearBindableData();
+		}
+
+		private void ClearBindableData()
+		{
 			if (_bindableData != null)
 			{
 				_bindableData.PropertyChanged -= BindableData_PropertyChanged;
+				_bindableData = null;
+			}
+			if (_bindablePreviewData != null)
+			{
+				_bindablePreviewData.PropertyChanged -= BindableData_PropertyChanged;
+				_bindablePreviewData = null;
+			}
+		}
+
+		private void SetBindableData(object data, ref INotifyPropertyChanged bindableData)
+		{
+			INotifyPropertyChanged bindable = data as INotifyPropertyChanged;
+			if (bindable != null)
+			{
+				bindableData = bindable;
+				bindable.PropertyChanged += BindableData_PropertyChanged;
 			}
 		}
 
@@ -169,13 +204,10 @@ namespace Desktop.CommonControls
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="property"></param>
-		public void SetData(object data, string property, int index, object context, UndoManager undoManager)
+		public void SetData(object data, string property, int index, object context, UndoManager undoManager, object previewData)
 		{
-			_bindableData = data as INotifyPropertyChanged;
-			if (_bindableData != null)
-			{
-				_bindableData.PropertyChanged += BindableData_PropertyChanged;
-			}
+			SetBindableData(data, ref _bindableData);
+			SetBindableData(previewData, ref _bindablePreviewData);
 			UndoManager = undoManager;
 			Context = context;
 			Property = property;
@@ -191,6 +223,7 @@ namespace Desktop.CommonControls
 				}
 			}
 			Data = data;
+			PreviewData = previewData;
 			UpdateBinding(false);
 		}
 
@@ -229,9 +262,13 @@ namespace Desktop.CommonControls
 		{
 		}
 
-		public void Rebind(object data, object context)
+		public void Rebind(object data, object previewData, object context)
 		{
+			ClearBindableData();
 			Data = data;
+			PreviewData = previewData;
+			SetBindableData(data, ref _bindableData);
+			SetBindableData(previewData, ref _bindablePreviewData);
 			Context = context;
 			Rebind();
 		}
@@ -254,14 +291,16 @@ namespace Desktop.CommonControls
 		/// </summary>
 		public virtual void Save() { }
 
-		private class SetValueCommand : IUndoItem
+		private class SetValueCommand : ICommand
 		{
+			private object _data;
 			private object _oldValue;
 			private object _newValue;
 			private PropertyEditControl _ctl;
 
-			public SetValueCommand(PropertyEditControl ctl, object oldValue, object newValue)
+			public SetValueCommand(object data, PropertyEditControl ctl, object oldValue, object newValue)
 			{
+				_data = data;
 				_ctl = ctl;
 				_oldValue = oldValue;
 				_newValue = newValue;
@@ -269,12 +308,12 @@ namespace Desktop.CommonControls
 
 			public void Do()
 			{
-				_ctl.SetValueDirectly(_newValue);
+				_ctl.SetValueDirectly(_data, _newValue);
 			}
 
 			public void Undo()
 			{
-				_ctl.SetValueDirectly(_oldValue);
+				_ctl.SetValueDirectly(_data, _oldValue);
 			}
 		}
 	}
@@ -296,6 +335,7 @@ namespace Desktop.CommonControls
 
 		public static object GetValue(this MemberInfo mi, object obj)
 		{
+			if (obj == null) { return null; }
 			switch (mi.MemberType)
 			{
 				case MemberTypes.Field:
