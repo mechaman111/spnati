@@ -35,7 +35,7 @@ var CANDY_LIST = [
     "gay_spaghetti_chef/0-flipped.png",
     "gay_spaghetti_chef/0-tilted.png",
     "gay_spaghetti_chef/0-calm.png",
-    "kool-aid/0-kool.png",
+    "kool-aid/koolaid.png",
 ];
 
 var clothingChoices = [];
