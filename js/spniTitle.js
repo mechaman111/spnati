@@ -283,7 +283,8 @@ function setPlayerTags () {
     }
     /* applies tags to the player*/
     console.log(playerTagList);
-    players[HUMAN_PLAYER].tags = playerTagList.map(canonicalizeTag);
+    players[HUMAN_PLAYER].baseTags = playerTagList.map(canonicalizeTag);
+    players[HUMAN_PLAYER].updateTags();
 }
 
 /************************************************************
