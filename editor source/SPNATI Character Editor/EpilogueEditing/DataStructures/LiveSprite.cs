@@ -1012,6 +1012,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Time = time;
 
+			inPlayback = true;
 			string easeOverride = (inPlayback ? null : "linear");
 			string interpolationOverride = (inPlayback ? null : "linear");
 			bool? looped = (inPlayback ? null : new bool?(false));

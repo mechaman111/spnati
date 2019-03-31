@@ -106,7 +106,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			KeyframePreview lastLast = (index > 0 ? Frames[index - 1] : fromFrame);
-			KeyframePreview nextNext = index < Frames.Count - 2 ? Frames[index + 1] : toFrame;
+			KeyframePreview nextNext = index < Frames.Count - 1 ? Frames[index + 1] : toFrame;
 			if (!string.IsNullOrEmpty(fromFrame.Keyframe.X))
 			{
 				sprite.X = SceneObject.Interpolate(fromFrame.X, toFrame.X, interpolation, time, lastLast.X, nextNext.X);
