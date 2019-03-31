@@ -293,7 +293,7 @@ function Player (id) {
     this.gender = eGender.MALE;
     this.stamina = 20;
     this.scale = undefined;
-    this.tags = this.baseTags = [canonicalizeTag(id)];
+    this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
 
@@ -374,7 +374,6 @@ Player.prototype.resetState = function () {
         this.labels = appearance.labels;
         this.folders = appearance.folders;
         this.baseTags = appearance.tags.slice();
-        this.tags = expandTagsList(this.baseTags);
 
 		/* Load the player's wardrobe. */
 
@@ -401,8 +400,7 @@ Player.prototype.resetState = function () {
 		this.initClothingStatus();
 	}
 
-	this.updateLabel();
-	this.updateFolder();
+	this.stageChangeUpdate();
 }
 
 Player.prototype.getIntelligence = function () {
@@ -414,6 +412,60 @@ Player.prototype.getIntelligence = function () {
 Player.prototype.updateLabel = function () { }
 Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
+
+/* Compute the Player's tags list from their baseTags list. */
+Player.prototype.updateTags = function () {
+    var tags = [this.id];
+    var stage = this.stage || 0;
+    
+    if (this.alt_costume && this.alt_costume.id) {
+        tags.push(this.alt_costume.id);
+    }
+    
+    this.baseTags.forEach(function (tag_desc) {
+        if (typeof(tag_desc) === 'string') {
+            tags.push(tag_desc);
+            return;
+        }
+        
+        if (!tag_desc.tag) return;
+        
+        var tag = tag_desc.tag;
+        var from = parseInt(tag_desc.from, 10);
+        var to = parseInt(tag_desc.to, 10);
+        
+        if (isNaN(to))   to = Number.POSITIVE_INFINITY;
+        if (isNaN(from)) from = 0;
+        
+        if (stage >= from && stage <= to) {
+            tags.push(tag);
+        } else {
+            tags = tags.filter(function (t) { t !== tag });
+        }
+    });
+    
+    this.tags = expandTagsList(tags);
+}
+
+Player.prototype.stageChangeUpdate = function () {
+    this.updateLabel();
+    this.updateFolder();
+    this.updateTags();
+}
+
+Player.prototype.addTag = function(tag) {
+    this.baseTags.push(canonicalizeTag(tag));
+}
+
+Player.prototype.removeTag = function(tag) {
+    tag = canonicalizeTag(tag);
+    
+    this.baseTags = this.baseTags.filter(function (t) {
+        if (typeof(t) === 'string') { return t !== tag };
+        if (!t.tag) return false;
+        return t.tag !== tag;
+    });
+}
 
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
@@ -453,8 +505,8 @@ function Opponent (id, $metaXml, status, releaseNumber) {
      * including implied tags.
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
-    this.tags = expandTagsList(this.baseTags);
-
+    this.updateTags();
+    
     /* Attempt to preload this opponent's picture for selection. */
     new Image().src = 'opponents/'+id+'/'+this.image;
 
@@ -591,35 +643,22 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             
             this.alt_costume.poses = poseDefs;
 
-            /* Construct a set of base tags for this alt costume:
-             * - Filter out tags marked to be removed
-             * - Add tags marked to be added
-             * - Add the costume ID if necessary
-             */
             var costumeTags = this.default_costume.tags.slice();
             var tagMods = $xml.find('tags');
             if (tagMods) {
-                var removed_tags = [];
-                var added_tags = [];
-
                 tagMods.find('tag').each(function (idx, elem) {
                     var $elem = $(elem);
-                    var tag = canonicalizeTag($elem.text());
+                    var tag = canonicalizeTag(tag);
                     var removed = $elem.attr('remove') || '';
+                    var fromStage = $elem.attr('from');
+                    var toStage = $elem.attr('to');
 
                     if (removed.toLowerCase() === 'true') {
-                        removed_tags.push(tag);
+                        costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
                     } else {
-                        added_tags.push(tag);
+                        costumeTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
                     }
                 });
-
-                costumeTags = costumeTags.filter(function (tag) { return removed_tags.indexOf(tag) < 0; });
-                Array.prototype.push.apply(costumeTags, added_tags);
-            }
-
-            if (this.alt_costume.id && costumeTags.indexOf(canonicalizeTag(this.alt_costume.id)) < 0) {
-                costumeTags.push(canonicalizeTag(this.alt_costume.id));
             }
 
             this.alt_costume.tags = costumeTags;
@@ -635,10 +674,6 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
 Opponent.prototype.unloadAlternateCostume = function () {
     if (!this.alt_costume) {
         return;
-    }
-
-    if (this.alt_costume.tags) {
-        this.tags = expandTagsList(this.baseTags);
     }
     
     this.alt_costume = null;
@@ -706,16 +741,18 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.default_costume.poses = poseDefs;
 
             var tags = $xml.find('tags');
-            var tagsArray = [this.id];
+            var tagsArray = [];
             if (typeof tags !== typeof undefined && tags !== false) {
-                $(tags).find('tag').each(function () {
-                    tagsArray.push($(this).text());
-                });
+                tagsArray = $(tags).find('tag').map(function () {
+                    return {
+                        'tag': canonicalizeTag($(this).text());
+                        'from': $(this).attr('from'),
+                        'to': $(this).attr('to'),
+                    }
+                }).get();
             }
 
-            this.default_costume.tags = tagsArray.map(canonicalizeTag);
-            this.baseTags = this.default_costume.tags.slice();
-            this.tags = expandTagsList(this.baseTags);
+            this.default_costume.tags = tagsArray;
 
             var targetedLines = {};
 

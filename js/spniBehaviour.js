@@ -1257,13 +1257,9 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     }
     
     if (this.chosenState.removeTags.length > 0 || this.chosenState.addTags.length > 0) {
-        var newBaseTags = this.baseTags.filter(function (t) {
-            return this.chosenState.removeTags.indexOf(t) < 0;
-        });
-        Array.prototype.push.apply(newBaseTags, this.chosenState.addTags);
-
-        this.baseTags = newBaseTags;
-        this.tags = expandTagsList(this.baseTags);
+        this.chosenState.removeTags.forEach(this.removeTag.bind(this));
+        this.chosenState.addTags.forEach(this.addTag.bind(this));
+        this.updateTags();
     }
 
     this.stateCommitted = true;

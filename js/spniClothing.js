@@ -488,8 +488,7 @@ function stripAIPlayer (player) {
 
 	players[player].stage++;
 	players[player].timeInStage = -1;
-	players[player].updateLabel();
-	players[player].updateFolder();
+	players[player].stageChangeUpdate();
 
 	/* update behaviour */
     dialogueTrigger.push(OPPONENT_STRIPPED);
