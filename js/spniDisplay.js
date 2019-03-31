@@ -530,7 +530,9 @@ OpponentDisplay.prototype.update = function(player) {
     this.dialogue.html(fixupDialogue(chosenState.dialogue));
     
     /* update image */
-    if (chosenState.image.startsWith('custom:')) {
+    if (!chosenState.image) {
+        this.clearPose();
+    } else if (chosenState.image.startsWith('custom:')) {
         var key = chosenState.image.split(':', 2)[1];
         var poseDef = player.poses[key];
         if (poseDef) {
