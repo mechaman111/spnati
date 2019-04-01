@@ -1,6 +1,5 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
-using Desktop.Providers;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Forms;
 using System;
@@ -537,11 +536,15 @@ namespace SPNATI_Character_Editor.Activities
 		private void AddSpeedButtons()
 		{
 			if (_selectedCase == null) { return; }
+			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			tableConditions.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
 			tableConditions.AddSpeedButton("Game", "Inside/Outside", (data) => { return AddVariableTest("~background.location~", data); });
+			if (caseTrigger.AvailableVariables.Contains("cards"))
+			{
+				tableConditions.AddSpeedButton("Self", "Cards Exchanged", (data) => { return AddVariableTest("~cards~", data); });
+			}
 			tableConditions.AddSpeedButton("Self", "Costume", (data) => { return AddVariableTest("~self.costume~", data); });
 			tableConditions.AddSpeedButton("Self", "Slot", (data) => { return AddVariableTest("~self.slot~", data); });
-			Trigger caseTrigger = TriggerDatabase.GetTrigger(_selectedCase.Tag);
 			if (caseTrigger.HasTarget)
 			{
 				if (caseTrigger.AvailableVariables.Contains("clothing"))

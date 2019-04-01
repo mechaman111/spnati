@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor
 			cboExpression.Items.AddRange(new string[] {
 				"~background~",
 				"~background.location~",
+				"~cards~",
 				"~clothing~",
 				"~clothing.plural~",
 				"~clothing.position~",
@@ -165,6 +166,16 @@ namespace SPNATI_Character_Editor
 			cboValue.Items.Clear();
 			switch (_currentVariable)
 			{
+				case "~cards~":
+					cboValue.Items.AddRange(new string[] {
+						"0",
+						"1",
+						"2",
+						"3",
+						"4",
+						"5",
+					});
+					break;
 				case "~clothing.position~":
 					cboValue.Items.AddRange(new string[] {
 						"upper",
