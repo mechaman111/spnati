@@ -18,7 +18,7 @@ namespace SPNATI_Character_Editor
 			}
 			else if (type == typeof(string))
 			{
-				return lastValue;
+				return t >= 1 ? nextValue : lastValue;
 			}
 			else
 			{

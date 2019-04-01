@@ -22,8 +22,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public int AddIndex;
 		public float X;
 		public float Y;
-		public int Width;
-		public int Height;
+		public int Width = 100;
+		public int Height = 100;
 		public int Z;
 		public float ScaleX;
 		public float ScaleY;
@@ -59,6 +59,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 					{
 						Height = Image.Height;
 					}
+				}
+				else
+				{
+					Width = 100;
+					Height = 100;
 				}
 			}
 			PivotX = SceneObject.ParsePivot(Sprite.PivotX ?? "center", Width);

@@ -21,9 +21,18 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			_data = new List<Tuple<Character, int>>();
 			foreach (Character c in CharacterDatabase.Characters)
 			{
-				if (c.FolderName == "human") { continue; }
+				if (c.FolderName == "human" || c.CustomPoses.Count == 0) { continue; }
 				_data.Add(new Tuple<Character, int>(c, c.CustomPoses.Count));
 			}
+			_data.Sort((d1, d2) =>
+			{
+				int compare = d2.Item2.CompareTo(d1.Item2);
+				if (compare == 0)
+				{
+					compare = d1.Item1.CompareTo(d2.Item1);
+				}
+				return compare;
+			});
 		}
 
 		public List<List<ChartData>> GetSeries(string view)
