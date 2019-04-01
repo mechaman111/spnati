@@ -191,7 +191,7 @@ var interpolationModes = {
     var p0 = index > 0 ? frames[index - 1][prop] : start;
     var p1 = start;
     var p2 = end;
-    var p3 = index < frames.length - 2 ? frames[index + 1][prop] : end;
+    var p3 = index < frames.length - 1 ? frames[index + 1][prop] : end;
 
     if (typeof p0 === "undefined" || isNaN(p0)) {
       p0 = start;
