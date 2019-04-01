@@ -20,10 +20,14 @@ namespace SPNATI_Character_Editor
 				{
 					tag.Group = group.Label;
 					_tags[tag.Value] = tag;
-					if (!string.IsNullOrEmpty(tag.PairedTag))
+					if (!string.IsNullOrEmpty(tag.RawPairings))
 					{
-						List<string> children = _pairedTags.GetOrAddDefault(tag.PairedTag, () => new List<string>());
-						children.Add(tag.Value);
+						string[] pairs = tag.RawPairings.Split(',');
+						foreach (string pair in pairs)
+						{
+							List<string> children = _pairedTags.GetOrAddDefault(pair, () => new List<string>());
+							children.Add(tag.Value);
+						}
 					}
 				}
 			}

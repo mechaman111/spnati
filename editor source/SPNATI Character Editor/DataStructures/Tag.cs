@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -23,7 +24,10 @@ namespace SPNATI_Character_Editor
 		public string Description;
 
 		[XmlAttribute("paired")]
-		public string PairedTag;
+		public string RawPairings;
+
+		[XmlIgnore]
+		public List<string> PairedTags = new List<string>();
 
 		[XmlAttribute("gender")]
 		public string Gender;
