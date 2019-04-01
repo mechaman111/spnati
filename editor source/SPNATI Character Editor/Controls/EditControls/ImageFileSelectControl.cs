@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using Desktop;
+﻿using Desktop;
 using Desktop.CommonControls;
+using System;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
@@ -30,7 +29,13 @@ namespace SPNATI_Character_Editor.Controls
 			openFileDialog1.UseAbsolutePaths = (context.Context == CharacterContext.Pose);
 			_character = context.Character;
 
-			txtValue.Text = GetValue()?.ToString();
+			string value = GetValue()?.ToString();
+
+			txtValue.Text = value;
+			if (string.IsNullOrEmpty(value))
+			{
+				txtValue.PlaceholderText = GetPreviewValue()?.ToString();
+			}
 		}
 
 		private void CmdBrowse_Click(object sender, EventArgs e)
