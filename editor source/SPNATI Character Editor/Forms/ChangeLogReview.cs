@@ -19,7 +19,13 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-			lstVersions.DataSource = Config.VersionHistory;
+			foreach (string version in Config.VersionHistory)
+			{
+				if (!version.EndsWith("a") && !version.EndsWith("b"))
+				{
+					lstVersions.Items.Add(version);
+				}
+			}
 		}
 
 		private void lstVersions_SelectedIndexChanged(object sender, System.EventArgs e)
