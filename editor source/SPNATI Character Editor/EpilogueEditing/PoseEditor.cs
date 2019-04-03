@@ -241,7 +241,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return true;
 		}
 
-		private void canvas_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		private void canvas_Paint(object sender, PaintEventArgs e)
 		{
 			if (_pose == null)
 			{
@@ -265,7 +265,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (kf == null)
 				{
 					float start = selectedWidget.GetStart();
-					if (_time > start && _time <= selectedWidget.GetEnd(timeline.Duration))
+					if (_time > start)
 					{
 						tsAddKeyframe.Enabled = true;
 					}

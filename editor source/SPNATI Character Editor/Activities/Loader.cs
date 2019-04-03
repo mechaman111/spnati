@@ -99,11 +99,12 @@ namespace SPNATI_Character_Editor.Activities
 							SpellChecker.Instance.AddWord(character.Label, false);
 							for (int t = 0; t < character.Tags.Count; t++)
 							{
-								string tag = character.Tags[t].ToLowerInvariant();
+								CharacterTag tag = character.Tags[t];
+								tag.Tag = tag.Tag.ToLowerInvariant();
 								character.Tags[t] = tag;
-								if (!string.IsNullOrEmpty(tag))
+								if (!string.IsNullOrEmpty(tag.Tag))
 								{
-									TagDatabase.AddTag(tag);
+									TagDatabase.AddTag(tag.Tag);
 								}
 							}
 							TagDatabase.AddTag(character.DisplayName, false);

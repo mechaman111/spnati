@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	[Activity(typeof(Character), 5)]
+	[Activity(typeof(Character), 1)]
 	[Activity(typeof(Costume), 5)]
 	public partial class WardrobeEditor : Activity
 	{

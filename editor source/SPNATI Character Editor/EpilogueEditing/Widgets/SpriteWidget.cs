@@ -742,7 +742,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			else if (clipboardData is LiveKeyframe)
 			{
-				args.AllowPaste = Sprite.IsVisible;
+				args.AllowPaste = args.Timeline.CurrentTime >= Sprite.Start;
 			}
 		}
 

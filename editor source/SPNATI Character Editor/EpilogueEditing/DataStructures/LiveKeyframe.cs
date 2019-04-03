@@ -18,7 +18,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveSprite Sprite;
 
-		[Float(DisplayName = "Time", Key = "time", GroupOrder = 0)]
+		[Float(DisplayName = "Time", Key = "time", GroupOrder = 0, Increment = 0.1f)]
 		public float Time
 		{
 			get { return Get<float>(); }

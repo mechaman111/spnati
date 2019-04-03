@@ -36,9 +36,9 @@ namespace SPNATI_Character_Editor
 			lines.Add("timer=" + character.Stamina);
 			lines.Add("");
 			lines.Add("#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.");
-			foreach (string tag in character.Tags)
+			foreach (CharacterTag tag in character.Tags)
 			{
-				lines.Add("tag=" + tag);
+				lines.Add("tag=" + tag.Tag );
 			}
 			lines.Add("");
 			lines.Add("#required for meta.xml");
@@ -771,7 +771,7 @@ namespace SPNATI_Character_Editor
 							character.Stamina = intValue;
 						break;
 					case "tag":
-						character.Tags.Add(value.ToLower());
+						character.Tags.Add(new CharacterTag(value.ToLower()));
 						break;
 					case "pic":
 						character.Metadata.Portrait = value;

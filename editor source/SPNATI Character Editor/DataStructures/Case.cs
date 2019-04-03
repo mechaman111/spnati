@@ -1694,7 +1694,7 @@ namespace SPNATI_Character_Editor
 				{
 					continue;
 				}
-				if (!string.IsNullOrEmpty(c.Filter) && !speaker.Tags.Contains(c.Filter))
+				if (!string.IsNullOrEmpty(c.Filter) && speaker.Tags.Find(t => t.Tag == c.Filter) == null)
 				{
 					continue;
 				}

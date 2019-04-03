@@ -33,11 +33,20 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridTags = new System.Windows.Forms.DataGridView();
 			this.ColTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.toc = new System.Windows.Forms.TreeView();
+			this.mainPane = new System.Windows.Forms.Panel();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.tagGrid = new SPNATI_Character_Editor.Controls.TagGrid();
+			this.tagList = new SPNATI_Character_Editor.Controls.TagList();
 			((System.ComponentModel.ISupportInitialize)(this.gridTags)).BeginInit();
+			this.mainPane.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gridTags
@@ -85,26 +94,14 @@
 			this.ColTag.HeaderText = "Tag";
 			this.ColTag.Name = "ColTag";
 			// 
-			// flowPanel
-			// 
-			this.flowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.flowPanel.AutoScroll = true;
-			this.flowPanel.Location = new System.Drawing.Point(6, 23);
-			this.flowPanel.Name = "flowPanel";
-			this.flowPanel.Size = new System.Drawing.Size(857, 463);
-			this.flowPanel.TabIndex = 105;
-			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(3, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(679, 13);
+			this.label1.Size = new System.Drawing.Size(264, 13);
 			this.label1.TabIndex = 106;
-			this.label1.Text = "Describe your character\'s appearance and personality. Do not tag any physical asp" +
-    "ects that are not immediately visible at the start of the game.";
+			this.label1.Text = "Describe your character\'s appearance and personality.";
 			// 
 			// label2
 			// 
@@ -127,19 +124,91 @@
 			this.label3.TabIndex = 108;
 			this.label3.Text = "Seek mod approval when using a tag not listed above";
 			// 
+			// toc
+			// 
+			this.toc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.toc.BackColor = System.Drawing.SystemColors.Window;
+			this.toc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.toc.HideSelection = false;
+			this.toc.Location = new System.Drawing.Point(0, 0);
+			this.toc.Margin = new System.Windows.Forms.Padding(0);
+			this.toc.Name = "toc";
+			this.toc.Size = new System.Drawing.Size(156, 473);
+			this.toc.TabIndex = 110;
+			this.toc.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.toc_AfterSelect);
+			// 
+			// mainPane
+			// 
+			this.mainPane.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.mainPane.AutoScroll = true;
+			this.mainPane.Controls.Add(this.tagGrid);
+			this.mainPane.Location = new System.Drawing.Point(159, 0);
+			this.mainPane.Margin = new System.Windows.Forms.Padding(0);
+			this.mainPane.Name = "mainPane";
+			this.mainPane.Size = new System.Drawing.Size(514, 473);
+			this.mainPane.TabIndex = 111;
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.splitContainer1.Location = new System.Drawing.Point(3, 16);
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.toc);
+			this.splitContainer1.Panel1.Controls.Add(this.mainPane);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.tagList);
+			this.splitContainer1.Size = new System.Drawing.Size(860, 473);
+			this.splitContainer1.SplitterDistance = 673;
+			this.splitContainer1.TabIndex = 112;
+			// 
+			// tagGrid
+			// 
+			this.tagGrid.AutoSize = true;
+			this.tagGrid.ColumnHeaderHeight = 100;
+			this.tagGrid.Location = new System.Drawing.Point(0, 0);
+			this.tagGrid.Margin = new System.Windows.Forms.Padding(0);
+			this.tagGrid.Name = "tagGrid";
+			this.tagGrid.RowHeaderWidth = 130;
+			this.tagGrid.Size = new System.Drawing.Size(395, 191);
+			this.tagGrid.TabIndex = 109;
+			// 
+			// tagList
+			// 
+			this.tagList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tagList.Location = new System.Drawing.Point(0, 0);
+			this.tagList.Name = "tagList";
+			this.tagList.Size = new System.Drawing.Size(183, 473);
+			this.tagList.TabIndex = 0;
+			// 
 			// TagEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
+			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.flowPanel);
 			this.Controls.Add(this.gridTags);
 			this.Name = "TagEditor";
 			this.Size = new System.Drawing.Size(866, 588);
 			((System.ComponentModel.ISupportInitialize)(this.gridTags)).EndInit();
+			this.mainPane.ResumeLayout(false);
+			this.mainPane.PerformLayout();
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -149,9 +218,13 @@
 
 		private System.Windows.Forms.DataGridView gridTags;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColTag;
-		private System.Windows.Forms.FlowLayoutPanel flowPanel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
+		private Controls.TagGrid tagGrid;
+		private System.Windows.Forms.TreeView toc;
+		private System.Windows.Forms.Panel mainPane;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private Controls.TagList tagList;
 	}
 }

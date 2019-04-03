@@ -29,6 +29,9 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public List<string> PairedTags = new List<string>();
 
+		[XmlIgnore]
+		public List<string> ChildrenTags = new List<string>();
+
 		[XmlAttribute("gender")]
 		public string Gender;
 

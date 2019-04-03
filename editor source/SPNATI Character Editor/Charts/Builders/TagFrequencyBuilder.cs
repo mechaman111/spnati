@@ -41,7 +41,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 					int count = 0;
 					foreach (Character c in CharacterDatabase.Characters)
 					{
-						if (c.Gender == gender && c.Tags.Contains(tag.Value))
+						if (c.Gender == gender && c.Tags.Find(t => t.Tag == tag.Value) != null)
 						{
 							count++;
 						}
