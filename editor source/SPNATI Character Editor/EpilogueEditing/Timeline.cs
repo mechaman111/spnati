@@ -1113,6 +1113,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (e.Button == MouseButtons.Left)
 				{
 					float time = XToTime(e.X + container.HorizontalScroll.Value);
+					if (!ModifierKeys.HasFlag(Keys.Shift))
+					{
+						float inverse = 1 / _tickResolution * 2;
+						time = (float)Math.Round(Math.Round(time * inverse) / inverse, 2);
+					}
 					UpdateAction(time, 0);
 				}
 			}

@@ -889,6 +889,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					time = frame.Time;
 				}
+				if (Math.Abs(_selectedFrame.Time + Sprite.Start - time) < 0.001f)
+				{
+					return false; //can't duplicate into itself
+				}
 
 				PasteKeyframeCommand command = new PasteKeyframeCommand(Sprite, _selectedFrame, time, false);
 				args.History.Commit(command);

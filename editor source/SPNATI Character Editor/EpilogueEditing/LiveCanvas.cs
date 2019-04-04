@@ -107,6 +107,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void UpdatePose()
 		{
+			if (_pose == null) { return; }
 			_pose.UpdateTime(_playing ? _playbackTime : _time, _playing);
 			_selectedObject?.Update(_time, false);
 			canvas.Invalidate();

@@ -254,7 +254,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_playing) { return; }
 			SpriteWidget selectedWidget = timeline.SelectedWidget as SpriteWidget;
 
-			tsAddSprite.Enabled = true;
 			tsRemoveSprite.Enabled = tsAddEndFrame.Enabled = (selectedWidget != null);
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
@@ -343,6 +342,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			canvas.Enabled = enabled;
 			table.Enabled = enabled;
 			tsRemovePose.Enabled = enabled;
+			tsMainMenu.Enabled = enabled;
 			tsCut.Enabled = enabled;
 			tsCopy.Enabled = enabled;
 			tsPaste.Enabled = Clipboards.Has<Pose>();

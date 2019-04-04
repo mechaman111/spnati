@@ -107,6 +107,7 @@
 			// 
 			// tsMainMenu
 			// 
+			this.tsMainMenu.Enabled = false;
 			this.tsMainMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAddSprite,

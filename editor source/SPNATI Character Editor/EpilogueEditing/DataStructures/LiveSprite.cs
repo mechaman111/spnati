@@ -83,8 +83,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
-		[AnimDuration(DisplayName = "Duration", GroupOrder = 8, Description = "Total time to display the sprite when not using Full Length.", Minimum = 0.1f, Maximum = 1000, Increment = 0.1f,
-			BoundProperties = new string[] { "LinkedToEnd", "Keyframes" })]
+		//[AnimDuration(DisplayName = "Duration", GroupOrder = 8, Description = "Total time to display the sprite when not using Full Length.", Minimum = 0.1f, Maximum = 1000, Increment = 0.1f,
+//			BoundProperties = new string[] { "LinkedToEnd", "Keyframes" })]
 		public float Length
 		{
 			get
