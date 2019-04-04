@@ -229,6 +229,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void CleanUp()
 		{
+			EnablePlayback(false);
 			if (Data != null)
 			{
 				Data.WidgetMoved -= Data_WidgetMoved;

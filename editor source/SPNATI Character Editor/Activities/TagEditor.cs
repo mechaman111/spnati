@@ -80,13 +80,6 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				toc.SelectedNode = toc.Nodes[0];
 			}
-
-			//Put any ungrouped tags into the misc grid
-			gridTags.Rows.Clear();
-			foreach (string tag in tags)
-			{
-				gridTags.Rows.Add(tag);
-			}
 		}
 
 		public override void Save()
