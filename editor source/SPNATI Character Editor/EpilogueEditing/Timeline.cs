@@ -224,6 +224,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			ResizeTimeline();
 			UpdateMarker(0);
 			SelectWidget(null, false);
+			AutoZoom();
 		}
 
 		private void CleanUp()
@@ -437,6 +438,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void ResizeTimeline()
 		{
 			float duration = Duration;
+
+			float visibleTime = XToTime(container.Width);
+			duration = Math.Max(visibleTime, duration + 1);
 			int width = Math.Max((int)(PixelsPerSecond * _zoom * duration), container.Width - SystemInformation.VerticalScrollBarWidth);
 			panel.Width = width;
 			int height = Math.Max(TotalRowCount * RowHeight, container.Height - SystemInformation.HorizontalScrollBarHeight);
@@ -615,6 +619,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				g.DrawLine(_penCanvasTickMajor, 0, y, panelHeader.Width, y);
 			}
+			g.DrawLine(_penCanvasTickMajor, panelHeader.Width - 1, 0, panelHeader.Width - 1, panelHeader.Height);
 		}
 
 		private void panel_Paint(object sender, PaintEventArgs e)
@@ -1419,6 +1424,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void ZoomIn()
 		{
 			SetZoom(_zoom + 0.2f);
+		}
+
+		private void AutoZoom()
+		{
+			_zoom = 1;
+			float duration = Duration;
+			float visibleTime = XToTime(container.Width);
+			if (duration > visibleTime)
+			{
+				SetZoom(0.5f);
+			}
+			else
+			{
+				SetZoom(1);
+			}
 		}
 
 		private void SetZoom(float level)

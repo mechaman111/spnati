@@ -41,6 +41,10 @@ namespace SPNATI_Character_Editor.Controls
 		private void CmdBrowse_Click(object sender, EventArgs e)
 		{
 			string filename = txtValue.Text;
+			if (string.IsNullOrEmpty(filename))
+			{
+				filename = GetPreviewValue()?.ToString() ?? "";
+			}
 			filename = filename.Replace("/", "\\");
 
 			if (openFileDialog1.ShowDialog(_character, filename) == DialogResult.OK)

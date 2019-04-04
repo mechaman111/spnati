@@ -119,8 +119,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 				LiveKeyframe kf = Sprite.Keyframes[index];
-				SelectKeyframe(Sprite.Keyframes[index], null, false);
+				SelectKeyframe(kf, null, false);
 				_timeline.CurrentTime = kf.Time + Sprite.Start;
+				SelectFrameDataWithPreview(_timeline.CurrentTime);
 			}
 		}
 
@@ -631,19 +632,24 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				else
 				{
-					LiveKeyframe previewFrame = Sprite.GetInterpolatedFrame(time - Sprite.Start);
-
-					//show whatever keyframe is under the current time, or an interpolated placeholder if there is none
-					LiveKeyframe frame = Sprite.Keyframes.Find(kf => kf.Time == time);
-					if (frame == null)
-					{
-						frame = new LiveKeyframe(time - Sprite.Start);
-						frame.Sprite = Sprite;
-						frame.PropertyChanged += NewFrame_PropertyChanged;
-					}
-					args.Timeline.SelectData(frame, previewFrame);
+					SelectFrameDataWithPreview(time);
 				}
 			}
+		}
+
+		private void SelectFrameDataWithPreview(float time)
+		{
+			LiveKeyframe previewFrame = Sprite.GetInterpolatedFrame(time - Sprite.Start);
+
+			//show whatever keyframe is under the current time, or an interpolated placeholder if there is none
+			LiveKeyframe frame = Sprite.Keyframes.Find(kf => kf.Time == time);
+			if (frame == null)
+			{
+				frame = new LiveKeyframe(time - Sprite.Start);
+				frame.Sprite = Sprite;
+				frame.PropertyChanged += NewFrame_PropertyChanged;
+			}
+			_timeline.SelectData(frame, previewFrame);
 		}
 
 		private void NewFrame_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -53,6 +53,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			InitializeComponent();
 
 			canvas.MouseWheel += Canvas_MouseWheel;
+			canvas.KeyDown += Canvas_KeyDown;
 		}
 
 		private void CleanUp()
@@ -303,6 +304,38 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			g.FillEllipse(Brushes.White, pt.X - 3, pt.Y - 3, 6, 6);
 			g.FillEllipse(Brushes.Black, pt.X - 2, pt.Y - 2, 4, 4);
 		}
+
+
+		private void Canvas_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Down)
+			{
+				MoveSelectedObject(0, 1);
+			}
+			else if (e.KeyCode == Keys.Up)
+			{
+				MoveSelectedObject(0, -1);
+			}
+			else if (e.KeyCode == Keys.Left)
+			{
+				MoveSelectedObject(-1, 0);
+			}
+			else if (e.KeyCode == Keys.Right)
+			{
+				MoveSelectedObject(1, 0);
+			}
+		}
+
+		public void MoveSelectedObject(int x, int y)
+		{
+			if (_selectedObject != null)
+			{
+				_selectedObject.Translate((int)_selectedObject.X + x, (int)_selectedObject.Y + y);
+				canvas.Invalidate();
+				canvas.Update();
+			}
+		}
+
 
 		private void canvas_MouseDown(object sender, MouseEventArgs e)
 		{
