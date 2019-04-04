@@ -45,6 +45,7 @@ namespace SPNATI_Character_Editor.Forms
 		private void cmdDelete_Click(object sender, EventArgs e)
 		{
 			Macro macro = lstMacros.SelectedItem as Macro;
+			if (macro == null) { return; }
 			if (MessageBox.Show("Are you sure you want to delete this macro? This operation cannot be undone.", "Delete Macro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 			{
 				lstMacros.Items.Remove(macro);
@@ -126,6 +127,7 @@ namespace SPNATI_Character_Editor.Forms
 			Macro macro = _provider.Create("New Macro") as Macro;
 			lstMacros.Items.Add(macro);
 			lstMacros.SelectedItem = macro;
+			cmdEdit_Click(sender, e);
 		}
 
 		private void lstMacros_DoubleClick(object sender, EventArgs e)

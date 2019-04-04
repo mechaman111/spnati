@@ -20,9 +20,12 @@ namespace Desktop.Providers
 			int suffix = 0;
 			string prefix = key;
 			Dictionary<string, Macro> macros = _macros[_filterType];
-			while (macros.ContainsKey(key))
+			if (macros != null)
 			{
-				key = prefix + ++suffix;
+				while (macros.ContainsKey(key))
+				{
+					key = prefix + ++suffix;
+				}
 			}
 			Macro macro = new Macro();
 			macro.Name = key;
