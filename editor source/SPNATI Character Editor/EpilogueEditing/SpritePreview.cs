@@ -20,6 +20,8 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public PoseAnimation LinkedAnimation;
 		public Image Image;
 		public int AddIndex;
+		public float Elapsed;
+		public float Delay;
 		public float X;
 		public float Y;
 		public int Width = 100;
@@ -68,6 +70,16 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 			PivotX = SceneObject.ParsePivot(Sprite.PivotX ?? "center", Width);
 			PivotY = SceneObject.ParsePivot(Sprite.PivotY ?? "center", Height);
+
+			if (!string.IsNullOrEmpty(sprite.Delay))
+			{
+				if (float.TryParse(sprite.Delay, out Delay))
+				{
+					Delay *= 1000;
+				}
+			}
+			Elapsed = 0;
+
 			SetInitialParameters();
 		}
 
@@ -94,9 +106,21 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			return Id;
 		}
 
+		public void Update(float dt)
+		{
+			if (Elapsed < Delay)
+			{
+				Elapsed += dt;
+			}
+		}
+
 		public void Draw(Graphics g, int displayWidth, int displayHeight, Point offset)
 		{
 			float alpha = Alpha;
+			if (Elapsed < Delay)
+			{
+				alpha = 0;
+			}
 			if (KeyframeActive)
 			{
 				alpha *= 0.5f;

@@ -100,9 +100,17 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		{
 			if (sprite == null) { return; }
 			string interpolation = Directive.InterpolationMethod ?? "none";
-			if (!string.IsNullOrEmpty(fromFrame.Src))
+			if (!string.IsNullOrEmpty(toFrame.Src) && time >= 1)
+			{
+				sprite.Image = Pose.Images[toFrame.Src];
+				sprite.Width = sprite.Image.Width;
+				sprite.Height = sprite.Image.Height;
+			}
+			else if (!string.IsNullOrEmpty(fromFrame.Src))
 			{
 				sprite.Image = Pose.Images[fromFrame.Src];
+				sprite.Width = sprite.Image.Width;
+				sprite.Height = sprite.Image.Height;
 			}
 
 			KeyframePreview lastLast = (index > 0 ? Frames[index - 1] : fromFrame);

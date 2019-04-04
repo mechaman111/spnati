@@ -341,6 +341,12 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				}
 				return;
 			}
+
+			foreach (SpritePreview sprite in Sprites)
+			{
+				sprite.Update(elapsedMs);
+			}
+
 			for (int i = 0; i < Animations.Count; i++)
 			{
 				Animations[i].Update(elapsedMs);
