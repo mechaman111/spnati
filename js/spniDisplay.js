@@ -530,7 +530,9 @@ OpponentDisplay.prototype.update = function(player) {
     this.dialogue.html(fixupDialogue(chosenState.dialogue));
     
     /* update image */
-    if (chosenState.image.startsWith('custom:')) {
+    if (!chosenState.image) {
+        this.clearPose();
+    } else if (chosenState.image.startsWith('custom:')) {
         var key = chosenState.image.split(':', 2)[1];
         var poseDef = player.poses[key];
         if (poseDef) {
@@ -591,7 +593,10 @@ GameScreenDisplay.prototype.reset = function (player) {
     clearHand(this.slot);
     if (player) {
         this.opponentArea.show();
-        this.imageArea.css('height', player.scale + '%');
+        this.imageArea.css({
+            'height': player.scale + '%',
+            'top': (100 - player.scale) + '%'
+        }).show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -651,7 +656,10 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         } else {
             this.pose.onLoadComplete = function () {
                 this.bubble.show();
-                this.imageArea.css('height', player.scale + '%').show();
+                this.imageArea.css({
+                    'height': player.scale + '%',
+                    'top': (100 - player.scale) + '%'
+                }).show();
             }.bind(this);
         }
     }
@@ -737,7 +745,7 @@ OpponentPickerDisplay.prototype.update = function (opponent) {
     this.layers.attr("src", "img/layers" + opponent.layers + ".png");
 
     this.image.attr('src', opponent.folder + opponent.image);
-    this,image.css('height', opponent.scale + '%');
+    this.image.css('height', opponent.scale + '%');
     this.image.show();
     
     if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {

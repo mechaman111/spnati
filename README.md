@@ -30,7 +30,7 @@ SPNATI is a fan-made project. Every character is made by a player who decided th
 
 **Can I request a character?**
 
-Sure you can! There's a character suggestion thread here: https://www.reddit.com/r/spnati/comments/7qqnsq/discussion_and_suggestion_thread/
+Sure you can! There's a character suggestion thread here: https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/
 
 It won't do anything, but you can request anything you want. Dozens of characters get requested and we'll dutifully add their names to the list. But if you want to see them get made, the best thing to do is to make them yourself.
 
@@ -38,9 +38,7 @@ It won't do anything, but you can request anything you want. Dozens of character
 
 Yes! We'd love you to. It's actually quite easy to make a character, just very time-consuming, and the players who are most interested in a character are usually the ones who are best suited to making them. It does not require any ability to code or make art.
 
-There's a beginner's walkthrough here: https://www.reddit.com/r/spnati/comments/5vsfas/the_beginners_guide_to_making_characters_for/
-
-There's also a more advanced walkthrough here: https://www.reddit.com/r/spnati/comments/4zboc7/how_to_make_a_character/
+There's a walkthrough here: https://old.reddit.com/r/spnati/comments/89g9v8/strip_poker_night_at_the_inventory_development/
 
 **I can't do art. Can I still make a character?**
 
