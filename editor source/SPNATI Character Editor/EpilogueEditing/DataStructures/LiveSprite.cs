@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Desktop;
+using Desktop.CommonControls.PropertyControls;
+using Desktop.DataStructures;
+using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.Controls.EditControls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,12 +11,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
-using Desktop;
-using Desktop.CommonControls.PropertyControls;
-using Desktop.DataStructures;
-using SPNATI_Character_Editor.EditControls;
-using SPNATI_Character_Editor.Controls.EditControls;
-using SPNATI_Character_Editor.Controls;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {

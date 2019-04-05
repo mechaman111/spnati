@@ -134,7 +134,7 @@ namespace SPNATI_Character_Editor
 				for (int i = 0; i < lines.Length; i++)
 				{
 					string line = lines[i];
-					string[] kvp = line.Split('=');
+					string[] kvp = line.Split(new char[] { '=' }, 2);
 					string key = kvp[0].ToLower();
 					string value = kvp[1];
 					Set(key, value);

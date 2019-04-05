@@ -451,7 +451,7 @@ namespace SPNATI_Character_Editor
 			}
 
 			//Move the legacy Start lines into Selected/Game start cases
-			if (_character.StartingLines.Count > 0)
+			if (_character != null && _character.StartingLines.Count > 0)
 			{
 				Case selected = new Case("selected");
 				selected.Stages.Add(0);
@@ -475,6 +475,8 @@ namespace SPNATI_Character_Editor
 
 				_character.StartingLines.Clear();
 			}
+
+			if (_character == null) { return; }
 
 			SortWorking();
 		}

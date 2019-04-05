@@ -82,8 +82,8 @@ namespace SPNATI_Character_Editor
 			{
 				Sprite sprite = new Sprite();
 				sprite.Id = item.Id;
-				sprite.PivotX = (int)Math.Round(item.PivotX * 100, 0) + "%";
-				sprite.PivotY = (int)Math.Round(item.PivotY * 100, 0) + "%";
+				sprite.PivotX = Math.Round(item.PivotX * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
+				sprite.PivotY = Math.Round(item.PivotY * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
 				if (sprite.PivotX == "50%")
 				{
 					sprite.PivotX = null;

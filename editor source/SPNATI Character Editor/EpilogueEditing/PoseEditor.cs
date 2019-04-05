@@ -367,9 +367,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				return;
 			}
-			lstPoses.Items.Remove(_sourcePose);
 			_character.CustomPoses.Remove(_sourcePose);
 			_library.Remove(_sourcePose);
+			lstPoses.Items.Remove(_sourcePose);
 			if (lstPoses.Items.Count > 0)
 			{
 				lstPoses.SelectedIndex = 0;

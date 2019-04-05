@@ -17,6 +17,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private static Brush _keyframeFillSelected;
 		private static Pen _penKeyframe;
 		private static Brush _subrowFill;
+		private static Brush _selectedSubrowFill;
 		private static Brush _repeatFill;
 		private static Dictionary<string, Image> _easeIcons;
 		private static Dictionary<string, Image> _tweenIcons;
@@ -41,6 +42,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			_titleFill = new SolidBrush(Color.FromArgb(153, 197, 255));
 			_subrowFill = new SolidBrush(Color.FromArgb(203, 206, 216));
+			_selectedSubrowFill = new SolidBrush(Color.FromArgb(223, 226, 236));
 			_headerKeyframeFill = new SolidBrush(Color.FromArgb(255, 226, 66));
 			_keyframeFill = new SolidBrush(Color.FromArgb(180, 180, 180));
 			_keyframeFillSelected = new SolidBrush(Color.FromArgb(245, 245, 255));
@@ -225,7 +227,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public Brush GetFillBrush()
 		{
-			return _subrowFill;
+			return _selected ? _selectedSubrowFill : _subrowFill;
 		}
 
 		public void ClearSelection()
