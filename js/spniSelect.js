@@ -629,12 +629,8 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by tag
-        if (tag) {
-            if (!opp.tags || !opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })) {
-                return false;
-            }
+        if (tag && !opp.hasTag(tag)) {
+            return false;
         }
 
         // filter by gender
@@ -790,9 +786,7 @@ function updateSelectableGroups(screen) {
         })) return false;
 
         if (tag && !group.opponents.some(function(opp) {
-            return opp.tags.some(function(t) {
-                return t.toLowerCase() == tag;
-            })
+            return opp.hasTag(tag);
         })) return false;
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)

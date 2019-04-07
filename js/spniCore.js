@@ -466,6 +466,10 @@ Player.prototype.removeTag = function(tag) {
     });
 }
 
+Player.prototype.hasTag = function(tag) {
+    return tag && this.tags && this.tags.indexOf(canonicalizeTag(tag)) >= 0;
+};
+
 /*****************************************************************************
  * Subclass of Player for AI-controlled players.
  ****************************************************************************/
@@ -804,7 +808,7 @@ Player.prototype.getImagesForStage = function (stage) {
         // Skip cases requiring a character that isn't present
         if ((target === undefined || players.some(function(p) { return p.id === target; }))
             && (alsoPlaying === undefined || players.some(function(p) { return p.id === alsoPlaying; }))
-            && (filter === undefined || players.some(function(p) { return p.tags.indexOf(filter) >= 0; })))
+            && (filter === undefined || players.some(function(p) { return p.hasTag(filter); })))
         {
             $(this).children('state').each(function (i, e) {
                 var poseName = $(e).attr('img');

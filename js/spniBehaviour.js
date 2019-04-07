@@ -125,7 +125,7 @@ function fixupTagFormatting(tag) {
  * - Handle all alias conversions
  **********************************************************************/
 function canonicalizeTag(tag) {
-    if (!tag) return '';
+    if (!tag) return undefined;
     
     tag = fixupTagFormatting(tag);
     while (TAG_ALIASES.hasOwnProperty(tag)) {
@@ -329,7 +329,7 @@ function expandPlayerVariable(split_fn, args, self, target) {
             return "marker"; //didn't supply a marker name
         }
     case 'tag':
-        return target.tags.indexOf(canonicalizeTag(split_fn[1])) >= 0 ? 'true' : 'false';
+        return target.hasTag(split_fn[1]) ? 'true' : 'false';
     case 'costume':
         if (!target.alt_costume) return 'default';
         return target.alt_costume.id;
@@ -779,7 +779,7 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     
     // filter
     if (opp && this.filter) {
-        if (opp.tags.indexOf(canonicalizeTag(this.filter)) < 0) {
+        if (!opp.hasTag(this.filter)) {
             return false; // failed "filter" requirement
         }
     }
@@ -906,12 +906,12 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
     // filter counter targets
     if(!this.counters.every(function (ctr) {
         var desiredCount = parseInterval(ctr.attr('count'));
-        var filterTag =    canonicalizeTag(ctr.attr('filter'));
+        var filterTag =    ctr.attr('filter');
         var filterGender = ctr.attr('gender');
         var filterStatus = ctr.attr('status');
         
         var count = players.countTrue(function(p) {
-            return p && (filterTag == undefined || (p.tags && p.tags.indexOf(filterTag) >= 0))
+            return p && (filterTag == undefined || p.hasTag(filterTag))
                 && (filterGender == undefined || (p.gender == filterGender))
                 && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
         });
