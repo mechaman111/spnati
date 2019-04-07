@@ -65,7 +65,7 @@ namespace SPNATI_Character_Editor
 			}
 			else
 			{
-				if (Stages.Count > 0)
+				if (Stages.Count > 1)
 				{
 					List<int> stages = new List<int>();
 					stages.AddRange(Stages);
@@ -94,6 +94,12 @@ namespace SPNATI_Character_Editor
 							list.Add(tag);
 						}
 					}
+				}
+				else if (Stages.Count == 1)
+				{
+					CharacterTag tag = new CharacterTag(Tag);
+					tag.From = tag.To = Stages[0].ToString();
+					list.Add(tag);
 				}
 			}
 			return list;

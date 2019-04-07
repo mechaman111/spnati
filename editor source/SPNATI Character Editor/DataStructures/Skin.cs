@@ -128,6 +128,34 @@ namespace SPNATI_Character_Editor
 		{
 			return Name.CompareTo(other.Name);
 		}
+		
+		/// <summary>
+		/// Links or re-links a character whose link had been broken
+		/// </summary>
+		/// <param name="character"></param>
+		public void LinkCharacter(Character owner)
+		{
+			AlternateSkin skin;
+			if (owner.Metadata.AlternateSkins.Count == 0)
+			{
+				skin = new AlternateSkin();
+				owner.Metadata.AlternateSkins.Add(skin);
+			}
+			else
+			{
+				skin = owner.Metadata.AlternateSkins[0];
+			}
+			SkinLink link = new SkinLink()
+			{
+				Folder = Folder,
+				Name = Key,
+			};
+			skin.Skins.Add(link);
+
+			Character = owner;
+			link.Costume = this;
+			Link = link;
+		}
 
 		public WardrobeRestrictions GetWardrobeRestrictions()
 		{
