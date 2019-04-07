@@ -3,7 +3,9 @@ using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using SPNATI_Character_Editor.Forms;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -23,6 +25,8 @@ namespace SPNATI_Character_Editor.Activities
 		private ISkin _character;
 		private PoseList _poseList = new PoseList();
 		private string _lastPoseFile;
+		private DataGridViewColumn _sortedColumn;
+		private bool _sortAscending;
 
 		private ImageMetadata _clipboard;
 
@@ -930,6 +934,113 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			duplicateToolStripMenuItem.Visible = true;
 			pasteToolStripMenuItem.Enabled = _clipboard != null;
+		}
+
+		private void gridPoses_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			DataGridViewColumn col = gridPoses.Columns[e.ColumnIndex];
+			if (col.SortMode != DataGridViewColumnSortMode.Programmatic)
+			{
+				return;
+			}
+
+			bool ascending = false;
+			if (_sortedColumn == col)
+			{
+				if (_sortAscending)
+				{
+					ascending = false;
+				}
+				else
+				{
+					ascending = true;
+				}
+			}
+			else
+			{
+				ascending = true;
+			}
+
+			DataGridViewColumn secondaryCol = (col == ColStage ? ColPose : ColStage);
+			_sortedColumn = col;
+			_sortAscending = ascending;
+			gridPoses.Sort(new PoseSorter(col, secondaryCol, ascending, (col == ColStage)));
+		}
+
+		private class PoseSorter : IComparer
+		{
+			private DataGridViewColumn _primary;
+			private DataGridViewColumn _secondary;
+			private bool _primaryNumeric;
+			private bool _ascending;
+
+			public PoseSorter(DataGridViewColumn primary, DataGridViewColumn secondary, bool ascending, bool useNumericPrimary)
+			{
+				_primary = primary;
+				_secondary = secondary;
+				_ascending = ascending;
+				_primaryNumeric = useNumericPrimary;
+			}
+
+			public int Compare(object x, object y)
+			{
+				DataGridViewRow row1 = x as DataGridViewRow;
+				DataGridViewRow row2 = y as DataGridViewRow;
+				string primary1 = row1.Cells[_primary.Name].Value?.ToString() ?? "";
+				string primary2 = row2.Cells[_primary.Name].Value?.ToString() ?? "";
+				string secondary1 = row1.Cells[_secondary.Name].Value?.ToString() ?? "";
+				string secondary2 = row2.Cells[_secondary.Name].Value?.ToString() ?? "";
+
+				int val1;
+				int val2;
+				if (_primaryNumeric)
+				{
+					if (!int.TryParse(primary1, out val1))
+					{
+						val1 = -1;
+					}
+					if (!int.TryParse(primary2, out val2))
+					{
+						val2 = -1;
+					}
+				}
+				else
+				{
+					if (!int.TryParse(secondary1, out val1))
+					{
+						val1 = -1;
+					}
+					if (!int.TryParse(secondary2, out val2))
+					{
+						val2 = -1;
+					}
+				}
+				int compare = 0;
+				if (_primaryNumeric)
+				{
+					compare = val1.CompareTo(val2);
+				}
+				else
+				{
+					compare = primary1.CompareTo(primary2);
+				}
+				if (compare == 0)
+				{
+					if (!_primaryNumeric)
+					{
+						compare = val1.CompareTo(val2);
+					}
+					else
+					{
+						compare = secondary1.CompareTo(secondary2);
+					}
+				}
+				if (!_ascending)
+				{
+					compare *= -1;
+				}
+				return compare;
+			}
 		}
 	}
 

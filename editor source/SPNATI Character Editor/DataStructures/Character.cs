@@ -464,6 +464,7 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnAfterDeserialize();
 			}
+			Poses.Sort();
 			foreach (Pose pose in Poses)
 			{
 				pose.OnAfterDeserialize();

@@ -98,6 +98,20 @@ namespace SPNATI_Character_Editor
 				_stages[stage] = list;
 			}
 			list.Add(image);
+			list.Sort((c1, c2) =>
+			{
+				bool custom1 = c1.Name.StartsWith("custom:");
+				bool custom2 = c2.Name.StartsWith("custom:");
+				if (custom1 && !custom2)
+				{
+					return 1;
+				}
+				else if (custom2 && !custom1)
+				{
+					return -1;
+				}
+				return c1.Name.CompareTo(c2.Name);
+			});
 		}
 
 		/// <summary>

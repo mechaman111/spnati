@@ -17,6 +17,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetData(BindableTagList dataSource, Character character)
 		{
+			if (_binding != null)
+			{
+				_binding.TagAdded -= _binding_TagAdded;
+				_binding.TagRemoved -= _binding_TagRemoved;
+				_binding.TagModified -= _binding_TagModified;
+			}
+
 			_binding = dataSource;
 			_character = character;
 			BuildGrid();

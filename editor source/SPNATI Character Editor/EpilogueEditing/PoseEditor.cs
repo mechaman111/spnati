@@ -126,6 +126,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				lstPoses.Items.Add(pose);
 			}
+			lstPoses.Sorted = true;
 
 			if (lstPoses.Items.Count > 0)
 			{
@@ -356,6 +357,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			lstPoses.Items.Add(pose);
 			lstPoses.SelectedItem = pose;
 			_character.CustomPoses.Add(pose);
+			_character.CustomPoses.Sort();
 			_library.Add(pose);
 		}
 

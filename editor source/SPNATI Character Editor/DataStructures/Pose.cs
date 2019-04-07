@@ -12,7 +12,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// Pose composed of sprites and animations
 	/// </summary>
-	public class Pose : ICloneable
+	public class Pose : ICloneable, IComparable<Pose>
 	{
 		[Text(DisplayName = "ID", GroupOrder = 0)]
 		[XmlAttribute("id")]
@@ -265,6 +265,11 @@ namespace SPNATI_Character_Editor
 			}
 
 			var stop = Directives;
+		}
+
+		public int CompareTo(Pose other)
+		{
+			return Id.CompareTo(other.Id);
 		}
 	}
 }

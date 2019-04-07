@@ -10,6 +10,8 @@ namespace SPNATI_Character_Editor.Activities
 	{
 		private Character _character;
 		private BindableTagList _bindings;
+		private bool _pendingWardrobeChange;
+		private bool _initialized;
 
 		public TagEditor()
 		{
@@ -24,11 +26,27 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
+			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 		}
 
 		protected override void OnFirstActivate()
 		{
 			LoadTags();
+			_initialized = true;
+			_pendingWardrobeChange = false;
+		}
+
+		protected override void OnActivate()
+		{
+			if (_pendingWardrobeChange)
+			{
+				PopulateData();
+			}
+		}
+
+		private void OnWardrobeChanged()
+		{
+			_pendingWardrobeChange = true;
 		}
 
 		/// <summary>
@@ -36,29 +54,13 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void LoadTags()
 		{
-			//Filter out grouper tags that aren't directly selectable
 			TagDictionary dictionary = TagDatabase.Dictionary;
-			List<string> tags = new List<string>();
-			foreach (CharacterTag tag in _character.Tags.Where((value) =>
-			{
-				Tag t = dictionary.GetTag(value.Tag);
-				return !dictionary.IsPairedTag(value.Tag) || t != null;
-			}))
-			{
-				tags.Add(tag.Tag);
-			}
-
 			_bindings = new BindableTagList(_character);
 
 			foreach (Tag tag in dictionary.Tags)
 			{
 				_bindings.Add(tag.Value);
 			}
-
-			tagList.SetData(_bindings, _character);
-
-			tagGrid.SetCharacter(_character, _bindings);
-			tagGrid.Visible = false;
 
 			//Fill the tag group
 			string gender = _character.Gender;
@@ -75,11 +77,20 @@ namespace SPNATI_Character_Editor.Activities
 					node.Tag = group;
 				}
 			}
-
+			
+			PopulateData();
 			if (toc.Nodes.Count > 0)
 			{
 				toc.SelectedNode = toc.Nodes[0];
 			}
+		}
+
+		private void PopulateData()
+		{
+			tagList.SetData(_bindings, _character);
+
+			tagGrid.SetCharacter(_character, _bindings);
+			tagGrid.Visible = _initialized;
 		}
 
 		public override void Save()

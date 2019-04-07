@@ -51,10 +51,17 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_character = character;
 			_layerCount = character.Layers + Clothing.ExtraStages;
+			if (_bindings != null)
+			{
+				_bindings.TagAdded -= _bindings_TagAdded;
+				_bindings.TagRemoved -= _bindings_TagAdded;
+				_bindings.TagModified -= _bindings_TagAdded;
+			}
 			_bindings = binding;
 			_bindings.TagAdded += _bindings_TagAdded;
 			_bindings.TagRemoved += _bindings_TagAdded;
 			_bindings.TagModified += _bindings_TagAdded;
+			ResizeGrid();
 		}
 
 		private void _bindings_TagAdded(object sender, BindableTag e)
