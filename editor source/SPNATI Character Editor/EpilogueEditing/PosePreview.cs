@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
@@ -313,16 +314,24 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			});
 		}
 
-		public void Draw(Graphics g, int width, int height, Point offset)
+		public void DrawOld(Graphics g, int width, int height, Point offset)
 		{
 			foreach (SpritePreview sprite in Sprites)
 			{
-				sprite.Draw(g, width, height, offset);
+				sprite.DrawOld(g, width, height, offset);
 			}
 
 			if (SelectedObject != null)
 			{
-				SelectedObject.Draw(g, width, height, offset);
+				SelectedObject.DrawOld(g, width, height, offset);
+			}
+		}
+
+		public void Draw(Graphics g, Matrix sceneTransform)
+		{
+			foreach (SpritePreview sprite in Sprites)
+			{
+				sprite.Draw(g, sceneTransform);
 			}
 		}
 

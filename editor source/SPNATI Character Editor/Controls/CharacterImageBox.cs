@@ -2,8 +2,8 @@
 using Desktop.Messaging;
 using SPNATI_Character_Editor.EpilogueEditing;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -17,6 +17,8 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _animating;
 
 		private DateTime _lastTick;
+
+		public Matrix SceneTransform;
 		
 		public CharacterImageBox()
 		{
@@ -27,6 +29,14 @@ namespace SPNATI_Character_Editor.Controls
 				_mailbox = Shell.Instance.PostOffice.GetMailbox();
 				_mailbox.Subscribe<ImageReplacementArgs>(DesktopMessages.ReplaceImage, OnReplaceImage);
 			}
+		}
+
+		private void UpdateSceneTransform()
+		{
+			SceneTransform = new Matrix();
+			float screenScale = canvas.Height / (_imagePose == null ? 1400 : _imagePose.BaseHeight);
+			SceneTransform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display
+			SceneTransform.Translate(canvas.Width * 0.5f, 0, MatrixOrder.Append); // center horizontally
 		}
 
 		public void Destroy()
@@ -57,6 +67,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				ImageAnimator.StopAnimate(_imageReference, OnFrameChanged);
 			}
+			UpdateSceneTransform();
 			_image = image;
 			_imagePose = null;
 			tmrTick.Stop();
@@ -109,7 +120,7 @@ namespace SPNATI_Character_Editor.Controls
 			Graphics g = e.Graphics;
 			if (_imagePose != null)
 			{
-				_imagePose.Draw(g, canvas.Width, canvas.Height, new Point(0, 0));
+				_imagePose.Draw(g, SceneTransform);
 			}
 			else if (_imageReference != null)
 			{
@@ -137,6 +148,11 @@ namespace SPNATI_Character_Editor.Controls
 
 			_imagePose.Update(elapsedSec);
 			canvas.Invalidate();
+		}
+
+		private void CharacterImageBox_Resize(object sender, EventArgs e)
+		{
+			UpdateSceneTransform();
 		}
 	}
 }

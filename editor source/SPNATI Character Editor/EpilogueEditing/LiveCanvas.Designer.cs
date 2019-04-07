@@ -60,6 +60,7 @@
 			this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
 			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
 			this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
+			this.canvas.Resize += new System.EventHandler(this.canvas_Resize);
 			// 
 			// canvasStrip
 			// 

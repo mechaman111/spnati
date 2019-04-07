@@ -1,14 +1,17 @@
 ﻿using Desktop;
 using SPNATI_Character_Editor.Controls;
+using SPNATI_Character_Editor.EpilogueEditor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Reflection;
 
 namespace SPNATI_Character_Editor.EpilogueEditing
 {
+	//This class is going to be retired with the old PoseMaker, so it's okay to leave it as a mess
 	public class SpritePreview
 	{
 		public string Id;
@@ -37,7 +40,72 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 		public float PivotY;
 		public bool KeyframeActive;
 
+		private string _parentId;
+		public SpritePreview Parent { get; private set; }
+		public string ParentId
+		{
+			get { return _parentId; }
+			set
+			{
+				_parentId = value;
+				Parent = Pose.Sprites.Find(s => s.Id == value);
+			}
+		}
+		public float WorldAlpha
+		{
+			get
+			{
+				float alpha = 1;
+				SpritePreview parent = this;
+				while (parent != null)
+				{
+					alpha *= parent.Alpha / 100.0f;
+					parent = parent.Parent;
+				}
+				return alpha * 100;
+			}
+		}
+
 		public SpritePreview() { }
+
+		public Matrix LocalTransform { get; private set; }
+
+		private void UpdateLocalTransform()
+		{
+			Matrix transform = new Matrix();
+			float pivotX = PivotX;
+			float pivotY = PivotY;
+			transform.Translate(-pivotX, -pivotY, MatrixOrder.Append);
+			transform.Scale(ScaleX, ScaleY, MatrixOrder.Append);
+			transform.Rotate(Rotation, MatrixOrder.Append);
+			transform.Translate(pivotX, pivotY, MatrixOrder.Append);
+
+			transform.Translate(X - (Parent == null ? Width / 2 : 0), Y, MatrixOrder.Append); //local position
+			LocalTransform = transform;
+		}
+
+		public Matrix WorldTransform
+		{
+			get
+			{
+				SpritePreview transform = this;
+				Matrix m = new Matrix();
+				while (transform != null)
+				{
+					m.Multiply(transform.LocalTransform, MatrixOrder.Append);
+
+					if (transform.Parent == this)
+					{
+						transform = null;
+					}
+					else
+					{
+						transform = transform.Parent;
+					}
+				}
+				return m;
+			}
+		}
 
 		public SpritePreview(PosePreview pose, Sprite sprite, int index)
 		{
@@ -46,6 +114,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			Id = sprite.Id;
 			Z = Sprite.Z;
 			AddIndex = index;
+			ParentId = sprite.ParentId;
 			int.TryParse(Sprite.Width, out Width);
 			int.TryParse(Sprite.Height, out Height);
 			if (!string.IsNullOrEmpty(Sprite.Src))
@@ -99,6 +168,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float.TryParse(Sprite.Opacity ?? "100", NumberStyles.Number, CultureInfo.InvariantCulture, out Alpha);
 			float.TryParse(Sprite.SkewX, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewX);
 			float.TryParse(Sprite.SkewY, NumberStyles.Number, CultureInfo.InvariantCulture, out SkewY);
+			UpdateLocalTransform();
 		}
 
 		public override string ToString()
@@ -112,9 +182,57 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				Elapsed += dt;
 			}
+			UpdateLocalTransform();
 		}
 
-		public void Draw(Graphics g, int displayWidth, int displayHeight, Point offset)
+		public void Draw(Graphics g, Matrix sceneTransform)
+		{
+			float alpha = WorldAlpha;
+			if (Image != null && alpha > 0)
+			{
+				int width = Image.Width;
+				int height = Image.Height;
+
+				g.MultiplyTransform(WorldTransform);
+
+				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
+
+				//draw
+				if ((SkewX == 0 || SkewX % 90 != 0) && (SkewY == 0 || SkewY % 90 != 0))
+				{
+					float skewedWidth = Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
+					float skewDistanceX = skewedWidth / 2;
+					float skewedHeight = Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
+					float skewDistanceY = skewedHeight / 2;
+					PointF[] destPts = new PointF[] { new PointF(-skewDistanceX, -skewDistanceY), new PointF(Width - skewDistanceX, skewDistanceY), new PointF(skewDistanceX, Height - skewDistanceY) };
+
+					if (alpha < 100)
+					{
+						float[][] matrixItems = new float[][] {
+						  new float[] { 1, 0, 0, 0, 0 },
+						  new float[] { 0, 1, 0, 0, 0 },
+						  new float[] { 0, 0, 1, 0, 0 },
+						  new float[] { 0, 0, 0, alpha / 100.0f, 0 },
+						  new float[] { 0, 0, 0, 0, 1 }
+						 };
+						ColorMatrix cm = new ColorMatrix(matrixItems);
+						ImageAttributes ia = new ImageAttributes();
+						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel, ia);
+					}
+					else
+					{
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel);
+					}
+				}
+
+				//restore
+				g.ResetTransform();
+			}
+		}
+
+		public void DrawOld(Graphics g, int displayWidth, int displayHeight, Point offset)
 		{
 			float alpha = Alpha;
 			if (Elapsed < Delay)

@@ -295,7 +295,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public int GetHeaderIconCount(int row)
 		{
-			return row == 0 ? 1 : 3;
+			return row == 0 ? 2 : 3;
 		}
 
 		public void DrawHeaderIcon(Graphics g, int rowIndex, int iconIndex, int x, int y, int iconWidth, int highlightedIconIndex)
@@ -303,7 +303,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Image icon = null;
 			if (rowIndex == 0)
 			{
-				icon = Sprite.Hidden ? Properties.Resources.EyeClosed : Properties.Resources.EyeOpen;
+				switch (iconIndex)
+				{
+					case 0:
+						icon = Sprite.Hidden ? Properties.Resources.EyeClosed : Properties.Resources.EyeOpen;
+						break;
+					case 1:
+						if (Sprite.Parent != null)
+						{
+							icon = Sprite.Parent.Image;
+						}
+						else
+						{
+							icon = Properties.Resources.AddLink;
+						}
+						break;
+				}
 			}
 			else
 			{
@@ -415,7 +430,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			g.DrawPolygon(_penKeyframe, pts);
 		}
 
-
 		private int TimeToX(float time, float pps)
 		{
 			return (int)(time * pps);
@@ -482,9 +496,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			else
 			{
-				if (iconIndex == 0)
+				switch (iconIndex)
 				{
-					return "Toggle visibility";
+					case 0:
+						return "Toggle visibility";
+					case 1:
+						return Sprite.Parent == null ? "Unlinked" : $"Linked to: {Sprite.ParentId}";
 				}
 			}
 			return null;
@@ -494,7 +511,46 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (args.Row == 0)
 			{
-				Sprite.Hidden = !Sprite.Hidden;
+				switch (iconIndex)
+				{
+					case 0:
+						Sprite.Hidden = !Sprite.Hidden;
+						break;
+					case 1:
+						List<LiveSprite> sprites = new List<LiveSprite>();
+						foreach (LiveSprite sprite in Sprite.Pose.Sprites)
+						{
+							if (string.IsNullOrEmpty(sprite.Id) || sprite == Sprite)
+							{
+								continue;
+							}
+							//if this is an ancestor of the sprite, disallow it to avoid infinite chains
+							LiveSprite parent = sprite.Parent;
+							bool isAncestor = false;
+							while (parent != null)
+							{
+								if (parent == Sprite)
+								{
+									isAncestor = true;
+									break;
+								}
+								parent = parent.Parent;
+							}
+							if (!isAncestor)
+							{
+								sprites.Add(sprite);
+							}
+						}
+						sprites.Sort();
+						ContextMenuItem[] items = new ContextMenuItem[sprites.Count];
+						for (int i = 0; i < sprites.Count; i++)
+						{
+							LiveSprite sprite = sprites[i];
+							items[i] = new ContextMenuItem(sprite.Id, sprite.Image, SelectParent, sprite.Id, Sprite.Parent == sprite);
+						}
+						args.Timeline.ShowContextMenu(items);
+						break;
+				}
 			}
 			else
 			{
@@ -553,6 +609,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			string ease = tag.Item2;
 			AnimatedProperty prop = Sprite.GetAnimationProperties(property);
 			prop.Ease = ease;
+		}
+
+		private void SelectParent(object sender, EventArgs e)
+		{
+			//TODO: Make this an ICommand
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			string id = item.Tag?.ToString();
+			Sprite.ParentId = id;
 		}
 
 		public void OnClickHeader(WidgetActionArgs args)

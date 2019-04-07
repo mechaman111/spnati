@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
@@ -23,8 +24,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private Point _lastMouse;
 		private Point _canvasOffset = new Point(0, 0);
+		/// <summary>
+		/// Mousedown position in screen space
+		/// </summary>
 		private Point _downPoint = new Point(0, 0);
-		private Point _startDragPosition = new Point(0, 0);
+		/// <summary>
+		/// Object's initial position in local space
+		/// </summary>
+		private PointF _startDragPosition = new Point(0, 0);
+		/// <summary>
+		/// Object's initial rotation angle in local space
+		/// </summary>
+		private float _startDragRotation;
 		private HoverContext _moveContext;
 		private CanvasState _state = CanvasState.Normal;
 
@@ -32,6 +43,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private Pen _penInnerSelection;
 		private Pen _penBoundary;
 		private Pen _penKeyframe;
+		private Brush _brushHandle;
 
 		private const int DefaultZoomIndex = 3;
 		private int _zoomIndex = DefaultZoomIndex;
@@ -46,6 +58,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private LiveSprite _selectedObject;
 		private LiveSprite _selectionSource;
 
+		private Matrix SceneTransform;
+
 		public event EventHandler<CanvasSelectionArgs> ObjectSelected;
 
 		public LiveCanvas()
@@ -54,6 +68,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			canvas.MouseWheel += Canvas_MouseWheel;
 			canvas.KeyDown += Canvas_KeyDown;
+			UpdateSceneTransform();
 		}
 
 		private void CleanUp()
@@ -72,15 +87,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				_pose.PropertyChanged += _pose_PropertyChanged;
 			}
+			UpdateSceneTransform();
 			canvas.Invalidate();
 
 			_penBoundary = new Pen(Color.Gray, 1);
-			_penBoundary.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+			_penBoundary.DashStyle = DashStyle.Dash;
 
-			_penOuterSelection = new Pen(Brushes.White, 1);
-			_penOuterSelection.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDotDot;
+			_brushHandle = new SolidBrush(Color.Black);
+			_penOuterSelection = new Pen(Brushes.White, 3);
+			_penOuterSelection.DashStyle = DashStyle.DashDotDot;
 			_penInnerSelection = new Pen(Brushes.Black, 1);
-			_penInnerSelection.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDotDot;
+			_penInnerSelection.DashStyle = DashStyle.DashDotDot;
 
 			_penKeyframe = new Pen(Color.FromArgb(127, 255, 255, 255));
 			_penKeyframe.Width = 2;
@@ -209,6 +226,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				_selectedObject.PivotY = _selectionSource.PivotY;
 			}
+			else if (e.PropertyName == "ParentId")
+			{
+				_selectedObject.ParentId = _selectionSource.ParentId;
+			}
 		}
 
 		private void Keyframes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -229,6 +250,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			CreateSelectionPreview();
 		}
 
+		private void UpdateSceneTransform()
+		{
+			SceneTransform = new Matrix();
+			float screenScale = canvas.Height * _zoom / (_pose == null ? 1400 : _pose.BaseHeight);
+			SceneTransform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display * zoom
+			SceneTransform.Translate(canvas.Width * 0.5f + _canvasOffset.X, _canvasOffset.Y, MatrixOrder.Append); // center horizontally
+		}
+
 		private void canvas_Paint(object sender, PaintEventArgs e)
 		{
 			if (_pose == null)
@@ -247,10 +276,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//draw the pose
 			foreach (LiveSprite sprite in _pose.DrawingOrder)
 			{
-				sprite.Draw(g, canvas.Width, canvas.Height, _canvasOffset, _zoom, _markers);
+				sprite.Draw(g, SceneTransform, _markers);
 				if (_selectionSource == sprite && _selectedObject != null && _selectedObject.IsVisible && !_selectionSource.Hidden && (_recording || !_playing))
 				{
-					_selectedObject.Draw(g, canvas.Width, canvas.Height, _canvasOffset, _zoom, _markers);
+					_selectedObject.Draw(g, SceneTransform, _markers);
 				}
 			}
 
@@ -265,10 +294,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					Image arrow = Resources.rotate_arrow;
 					Point pt = new Point(_lastMouse.X - arrow.Width / 2, _lastMouse.Y - arrow.Height / 2);
 
-					//rotate to face the object's center
-					PointF center = _selectedObject.ToScreenCenter(canvas.Width, canvas.Height, _canvasOffset, _zoom);
+					//rotate to face the object's pivot
+					PointF center = _selectedObject.ToScreenPt(_selectedObject.PivotX * _selectedObject.Width, _selectedObject.PivotY * _selectedObject.Height, SceneTransform);
 
-					double angle = Math.Atan2(center.Y - pt.Y, center.X - pt.X);
+					double angle = Math.Atan2(center.Y - _lastMouse.Y, center.X - _lastMouse.X);
 					angle = angle * (180 / Math.PI) - 90;
 
 					g.TranslateTransform(_lastMouse.X, _lastMouse.Y);
@@ -287,20 +316,49 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return;
 			}
 
-			RectangleF bounds = sprite.ToAbsScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-			const int SelectionPadding = 0;
-			g.DrawRectangle(_penOuterSelection, bounds.X - 2 - SelectionPadding, bounds.Y - 2 - SelectionPadding, bounds.Width + 4 + SelectionPadding * 2, bounds.Height + 4 + SelectionPadding * 2);
-			g.DrawRectangle(_penInnerSelection, bounds.X - 1 - SelectionPadding, bounds.Y - 1 - SelectionPadding, bounds.Width + 2 + SelectionPadding * 2, bounds.Height + 2 + SelectionPadding * 2);
-
-			//pivot point
-			bounds = sprite.ToUnscaledScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-
-			if (_state == CanvasState.MovingPivot || _moveContext == HoverContext.Pivot)
+			int midX = sprite.Width / 2;
+			int midY = sprite.Height / 2;
+			PointF[] localPts = new PointF[] {
+				new PointF(0,0),
+				new PointF(sprite.Width, 0),
+				new PointF(sprite.Width, sprite.Height),
+				new PointF(0, sprite.Height),
+				new PointF(midX, midY), //index 4: center
+				new PointF(midX, 0), //index 5: top handle
+				new PointF(sprite.Width, midY), //index 6: right handle
+				new PointF(midX, sprite.Height), //index 7: bottom handle
+				new PointF(0, midY), //index 8: left handle
+				new PointF(sprite.PivotX * sprite.Width, sprite.PivotY * sprite.Height), //index 9: pivot
+			};
+			PointF[] boundPts = sprite.ToScreenPt(SceneTransform, localPts);
+			PointF[] outerPts = new PointF[4];
+			for (int i = 0; i < 4; i++)
 			{
-				g.DrawRectangle(_penKeyframe, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+				PointF boundPt = boundPts[i];
+				outerPts[i] = boundPt;
 			}
 
-			PointF pt = new PointF(bounds.X + sprite.PivotX * bounds.Width, bounds.Y + sprite.PivotY * bounds.Height);
+			g.DrawPolygon(_penOuterSelection, outerPts);
+			g.DrawPolygon(_penInnerSelection, outerPts);
+
+
+			//Grab handles
+			for (int i = 5; i <= 8; i++)
+			{
+				PointF handle = boundPts[i];
+				g.FillRectangle(_brushHandle, handle.X - 3, handle.Y - 3, 6, 6);
+			}
+
+			//pivot point
+			if (_state == CanvasState.MovingPivot || _moveContext == HoverContext.Pivot)
+			{
+				g.MultiplyTransform(sprite.UnscaledWorldTransform);
+				g.MultiplyTransform(SceneTransform, MatrixOrder.Append);
+				g.DrawRectangle(_penKeyframe, 0, 0, sprite.Width, sprite.Height);
+				g.ResetTransform();
+			}
+
+			PointF pt = localPts[9];
 			g.FillEllipse(Brushes.White, pt.X - 3, pt.Y - 3, 6, 6);
 			g.FillEllipse(Brushes.Black, pt.X - 2, pt.Y - 2, 4, 4);
 		}
@@ -330,12 +388,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (_selectedObject != null)
 			{
-				_selectedObject.Translate((int)_selectedObject.X + x, (int)_selectedObject.Y + y);
+				PointF worldPt = _selectedObject.ToWorldPt(_selectedObject.X, _selectedObject.Y);
+				worldPt.X += x;
+				worldPt.Y += y;
+				_selectedObject.SetWorldPosition(worldPt);
 				canvas.Invalidate();
 				canvas.Update();
 			}
 		}
-
 
 		private void canvas_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -367,16 +427,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
+		/// <summary>
+		/// Gets the topmost object beneath the given screen coordinate
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="objects"></param>
+		/// <returns></returns>
 		private LiveSprite GetObjectAtPoint(int x, int y, List<LiveSprite> objects)
 		{
 			//search in reverse order because objects are sorted by depth
 			for (int i = objects.Count - 1; i >= 0; i--)
 			{
 				LiveSprite obj = objects[i];
-				if (!obj.IsVisible || obj.Hidden) { continue; }
-				RectangleF bounds = obj.ToAbsScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-				if (bounds.X <= x && x <= bounds.X + bounds.Width &&
-					bounds.Y <= y && y <= bounds.Y + bounds.Height)
+				if (!obj.IsVisible || obj.Hidden || obj.Alpha == 0) { continue; }
+
+				//transform point to local space
+				PointF localPt = obj.ToLocalPt(x, y, SceneTransform);
+				if (localPt.X >= 0 && localPt.X <= obj.Width &&
+					localPt.Y >= 0 && localPt.Y <= obj.Height)
 				{
 					return obj;
 				}
@@ -393,13 +462,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// Gets a contextual action based on where the mouse is relative to objects on screen
 		/// </summary>
 		/// <param name="worldPt"></param>
-		private HoverContext GetContext(Point screenPt)
+		private HoverContext GetContext(PointF screenPt)
 		{
+			LiveSprite objAtPoint = GetObjectAtPoint((int)screenPt.X, (int)screenPt.Y, _pose.DrawingOrder);
+
+
 			if (_selectedObject != null && !_selectionSource.Hidden)
 			{
 				bool locked = false;
 
-				RectangleF bounds = _selectedObject.ToAbsScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
+				//convert the screen pt to the selected object's local space
+				PointF pt = _selectedObject.ToLocalPt(SceneTransform, screenPt)[0];
+				Point localPt = new Point(0, 0);
+				localPt.X = (int)Math.Round(pt.X);
+				localPt.Y = (int)Math.Round(pt.Y);
+
+				PointF[] corners = new PointF[] {
+					new PointF(0, 0),
+					new PointF(_selectedObject.Width, 0),
+					new PointF(_selectedObject.Width, _selectedObject.Height),
+					new PointF(0, _selectedObject.Height),
+					new PointF(_selectedObject.PivotX * _selectedObject.Width, _selectedObject.PivotY * _selectedObject.Height),
+				};
+				_selectedObject.ToScreenPt(SceneTransform, corners);
+				PointF tl = corners[0];
+				PointF tr = corners[1];
+				PointF br = corners[2];
+				PointF bl = corners[3];
+
 				bool visible = _selectedObject.IsVisible;
 				bool allowTranslate = visible;
 				bool allowPivot = visible;
@@ -407,16 +497,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				bool allowScale = visible;
 				bool allowSkew = visible;
 
-				float dl = Math.Abs(screenPt.X - bounds.X);
-				float dr = Math.Abs(screenPt.X - (bounds.X + bounds.Width));
-				float dt = Math.Abs(screenPt.Y - bounds.Y);
-				float db = Math.Abs(screenPt.Y - (bounds.Y + bounds.Height));
+				float dl = screenPt.DistanceFromLineSegment(bl, tl);
+				float dr = screenPt.DistanceFromLineSegment(br, tr);
+				float dt = screenPt.DistanceFromLineSegment(tl, tr);
+				float db = screenPt.DistanceFromLineSegment(bl, br);
 
 				//pivot position
 				if (allowPivot)
 				{
-					RectangleF pivotBounds = _selectedObject.ToUnscaledScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-					PointF pivot = new PointF(pivotBounds.X + _selectedObject.PivotX * pivotBounds.Width, pivotBounds.Y + _selectedObject.PivotY * pivotBounds.Height);
+					PointF pivot = corners[4];
 
 					//pivoting - hovering over the pivot circle
 					float px = Math.Abs(screenPt.X - pivot.X);
@@ -430,14 +519,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (allowRotate)
 				{
 					//rotating - hovering outside a corner
-					if (screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && dt <= RotationLeeway ||
-						screenPt.Y < bounds.Y - SelectionLeeway && screenPt.Y >= bounds.Y - RotationLeeway && dr <= RotationLeeway ||
-						screenPt.X < bounds.X - SelectionLeeway && screenPt.X >= bounds.X - RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dl <= RotationLeeway ||
-						screenPt.X > bounds.X + bounds.Width + SelectionLeeway && screenPt.X <= bounds.X + bounds.Width + RotationLeeway && db <= RotationLeeway ||
-						screenPt.Y > bounds.Y + bounds.Height + SelectionLeeway && screenPt.Y <= bounds.Y + bounds.Height + RotationLeeway && dr <= RotationLeeway)
+					if (localPt.X < -SelectionLeeway && localPt.X >= -RotationLeeway && dt <= RotationLeeway ||
+						localPt.Y < -SelectionLeeway && localPt.Y >= -RotationLeeway && dl <= RotationLeeway ||
+						localPt.X > _selectedObject.Width + SelectionLeeway && localPt.X <= _selectedObject.Width + RotationLeeway && dt <= RotationLeeway ||
+						localPt.Y < -SelectionLeeway && localPt.Y >= -RotationLeeway && dr <= RotationLeeway ||
+						localPt.X < -SelectionLeeway && localPt.X >= -RotationLeeway && db <= RotationLeeway ||
+						localPt.Y > _selectedObject.Height + SelectionLeeway && localPt.Y <= _selectedObject.Height + RotationLeeway && dl <= RotationLeeway ||
+						localPt.X > _selectedObject.Width + SelectionLeeway && localPt.X <= _selectedObject.Width + RotationLeeway && db <= RotationLeeway ||
+						localPt.Y > _selectedObject.Height + SelectionLeeway && localPt.Y <= _selectedObject.Height + RotationLeeway && dr <= RotationLeeway)
 					{
 						return locked ? HoverContext.Locked : HoverContext.Rotate;
 					}
@@ -446,7 +535,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (allowSkew && ModifierKeys.HasFlag(Keys.Shift))
 				{
 					//skewing - grabbing an edge while Shift is held down
-					if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+					if (0 <= localPt.Y && localPt.Y <= _selectedObject.Height)
 					{
 						if (dl <= SelectionLeeway)
 						{
@@ -457,7 +546,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							return locked ? HoverContext.Locked : HoverContext.SkewRight;
 						}
 					}
-					if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+					if (0 <= localPt.X && localPt.X <= _selectedObject.Width)
 					{
 						if (dt <= SelectionLeeway)
 						{
@@ -483,7 +572,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						{
 							return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleLeft;
 						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						else if (0 <= localPt.Y && localPt.Y <= _selectedObject.Height)
 						{
 							return locked ? HoverContext.Locked : HoverContext.ScaleLeft;
 						}
@@ -499,36 +588,40 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						{
 							return locked ? HoverContext.Locked : HoverContext.ScaleBottom | HoverContext.ScaleRight;
 						}
-						else if (bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+						else if (0 <= localPt.Y && localPt.Y <= _selectedObject.Height)
 						{
 							return locked ? HoverContext.Locked : HoverContext.ScaleRight;
 						}
 					}
 
-					if (dt <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+					if (dt <= SelectionLeeway && 0 <= localPt.X && localPt.X <= _selectedObject.Width)
 					{
 						return locked ? HoverContext.Locked : HoverContext.ScaleTop;
 					}
 
-					if (db <= SelectionLeeway && bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width)
+					if (db <= SelectionLeeway && 0 <= localPt.X && localPt.X <= _selectedObject.Width)
 					{
 						return locked ? HoverContext.Locked : HoverContext.ScaleBottom;
 					}
 				}
 
+				if (objAtPoint != null && objAtPoint != _selectedObject && objAtPoint != _selectionSource)
+				{
+					//selecting another object takes priority over translation but nothing else
+					return HoverContext.Select;
+				}
+
 				if (allowTranslate)
 				{
-					if (bounds.X <= screenPt.X && screenPt.X <= bounds.X + bounds.Width &&
-						bounds.Y <= screenPt.Y && screenPt.Y <= bounds.Y + bounds.Height)
+					if (0 <= localPt.X && localPt.X <= _selectedObject.Width &&
+						0 <= localPt.Y && localPt.Y <= _selectedObject.Height)
 					{
 						return HoverContext.Drag;
 					}
 				}
 			}
 
-			//see if we're on top of an object
-			LiveSprite obj = GetObjectAtPoint(screenPt.X, screenPt.Y, _pose.DrawingOrder);
-			if (obj != null)
+			if (objAtPoint != null && objAtPoint != _selectedObject && objAtPoint != _selectionSource)
 			{
 				return HoverContext.Select;
 			}
@@ -600,6 +693,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						case HoverContext.Drag:
 							_startDragPosition = new Point((int)_selectedObject.X, (int)_selectedObject.Y);
+							_startDragPosition = _selectedObject.ToWorldPt(_startDragPosition)[0];
 							_state = CanvasState.MovingObject;
 							break;
 						case HoverContext.ScaleTopLeft:
@@ -610,37 +704,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						case HoverContext.ScaleTop:
 						case HoverContext.ScaleRight:
 						case HoverContext.ScaleBottom:
-							//flip context according to the current scale
-							if (_selectedObject.ScaleX < 0)
-							{
-								if (context.HasFlag(HoverContext.ScaleLeft))
-								{
-									context &= ~HoverContext.ScaleLeft;
-									context |= HoverContext.ScaleRight;
-								}
-								else if (context.HasFlag(HoverContext.ScaleRight))
-								{
-									context &= ~HoverContext.ScaleRight;
-									context |= HoverContext.ScaleLeft;
-								}
-							}
-							if (_selectedObject.ScaleY < 0)
-							{
-								if (context.HasFlag(HoverContext.ScaleTop))
-								{
-									context &= ~HoverContext.ScaleTop;
-									context |= HoverContext.ScaleBottom;
-								}
-								else if (context.HasFlag(HoverContext.ScaleBottom))
-								{
-									context &= ~HoverContext.ScaleBottom;
-									context |= HoverContext.ScaleTop;
-								}
-							}
 							_moveContext = context;
+							Cursor = Timeline.HandClosed;
 							_state = CanvasState.Scaling;
 							break;
 						case HoverContext.Rotate:
+							_startDragRotation = _selectedObject.Rotation;
 							_state = CanvasState.Rotating;
 							break;
 						case HoverContext.Pivot:
@@ -663,22 +732,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				case HoverContext.ScaleTopLeft:
 				case HoverContext.ScaleBottomRight:
-					canvas.Cursor = Cursors.SizeNWSE;
-					break;
 				case HoverContext.ScaleTopRight:
 				case HoverContext.ScaleBottomLeft:
-					canvas.Cursor = Cursors.SizeNESW;
+				case HoverContext.ScaleLeft:
+				case HoverContext.ScaleRight:
+				case HoverContext.ScaleTop:
+				case HoverContext.ScaleBottom:
+					canvas.Cursor = Timeline.HandOpen;
 					break;
 				case HoverContext.Drag:
 					canvas.Cursor = Cursors.SizeAll;
-					break;
-				case HoverContext.ScaleLeft:
-				case HoverContext.ScaleRight:
-					canvas.Cursor = Cursors.SizeWE;
-					break;
-				case HoverContext.ScaleTop:
-				case HoverContext.ScaleBottom:
-					canvas.Cursor = Cursors.SizeNS;
 					break;
 				case HoverContext.Select:
 					canvas.Cursor = Cursors.Hand;
@@ -747,6 +810,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 					_canvasOffset.Y += moveY;
 				}
+				UpdateSceneTransform();
 				canvas.Invalidate();
 				canvas.Update();
 			}
@@ -758,19 +822,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="screenPt"></param>
 		private void TranslateObject(Point screenPt)
 		{
-			//get difference from screen downPoint
-			int offsetX = screenPt.X - _downPoint.X;
-			int offsetY = screenPt.Y - _downPoint.Y;
+			PointF[] pts = new PointF[] {
+				_downPoint,
+				screenPt
+			};
 
-			Rectangle rect = _selectedObject.ToScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
+			//convert to world space
+			pts = _selectedObject.ScreenToWorldPt(SceneTransform, pts);
+			float x = pts[1].X - pts[0].X + _startDragPosition.X;
+			float y = pts[1].Y - pts[0].Y + _startDragPosition.Y;
 
-			//convert this to world space
-			float screenUnitsPerWorldX = rect.Width / (float)_selectedObject.Width / _selectedObject.ScaleX;
-			float screenUnitsPerWorldY = rect.Height / (float)_selectedObject.Height / _selectedObject.ScaleY;
-			int x = (int)(offsetX / screenUnitsPerWorldX + _startDragPosition.X);
-			int y = (int)(offsetY / screenUnitsPerWorldY + _startDragPosition.Y);
-
-			_selectedObject.Translate(x, y);
+			_selectedObject.SetWorldPosition(new PointF(x, y));
 			canvas.Invalidate();
 			canvas.Update();
 		}
@@ -781,24 +843,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="screenPt"></param>
 		private void MovePivot(Point screenPt)
 		{
-			//figure out where new pivot position is in relation to object bounds
-			RectangleF pivotRect = _selectedObject.ToUnscaledScreenRegion(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-			_selectedObject.AdjustPivot(screenPt, pivotRect);
+			_selectedObject.AdjustPivot(screenPt, SceneTransform);
 			canvas.Invalidate();
 			canvas.Update();
 		}
 
 		private void ScaleObject(Point screenPt)
 		{
-			_selectedObject.Scale(screenPt, canvas.Width, canvas.Height, _canvasOffset, _zoom, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift));
+			_selectedObject.Scale(screenPt, SceneTransform, canvas.Width, canvas.Height, _canvasOffset, _zoom, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift));
 			canvas.Invalidate();
 			canvas.Update();
 		}
 
 		private void RotateObject(Point screenPt)
 		{
-			Point center = _selectedObject.ToScreenCenter(canvas.Width, canvas.Height, _canvasOffset, _zoom);
-			_selectedObject.Rotate(screenPt, center);
+			PointF pivot = _selectedObject.ToScreenPt(_selectedObject.PivotX * _selectedObject.Width, _selectedObject.PivotY * _selectedObject.Height, SceneTransform);
+			_selectedObject.Rotate(screenPt, pivot, _downPoint, _startDragRotation);
 			canvas.Invalidate();
 			canvas.Update();
 		}
@@ -850,6 +910,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			tsZoomOut.Enabled = _zoomIndex > 0;
 			_zoom = _zoomLevels[_zoomIndex];
 			tsZoom.Text = $"{_zoom}x";
+			UpdateSceneTransform();
 			canvas.Invalidate();
 		}
 
@@ -879,6 +940,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void tsRecord_Click(object sender, EventArgs e)
 		{
 			_recording = tsRecord.Checked;
+		}
+
+		private void canvas_Resize(object sender, EventArgs e)
+		{
+			UpdateSceneTransform();
 		}
 	}
 

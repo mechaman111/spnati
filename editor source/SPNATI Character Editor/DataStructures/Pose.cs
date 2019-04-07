@@ -93,6 +93,7 @@ namespace SPNATI_Character_Editor
 					sprite.PivotY = null;
 				}
 				sprite.Z = item.Z;
+				sprite.ParentId = item.ParentId;
 				sprite.Marker = item.Marker;
 				Sprites.Add(sprite);
 

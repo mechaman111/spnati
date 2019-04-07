@@ -1396,6 +1396,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void ShowContextMenu(params ContextMenuItem[] items)
 		{
+			tooltip.Hide(panelHeader);
 			contextMenu.Items.Clear();
 			foreach (ContextMenuItem item in items)
 			{

@@ -946,7 +946,7 @@ namespace SPNATI_Character_Editor.Activities
 				g.DrawLine(_penBoundary, canvas.Width / 2 + _canvasOffset.X, 0, canvas.Width / 2 + _canvasOffset.X, canvas.Height);
 
 				//draw the pose
-				_preview.Draw(g, canvas.Width, canvas.Height, _canvasOffset);
+				_preview.DrawOld(g, canvas.Width, canvas.Height, _canvasOffset);
 
 				//selection and gizmos
 				if (_selectedObject != null)

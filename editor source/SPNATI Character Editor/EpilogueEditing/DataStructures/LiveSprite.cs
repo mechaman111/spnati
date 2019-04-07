@@ -8,13 +8,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
-	public class LiveSprite : BindableObject, ILabel
+	public class LiveSprite : BindableObject, ILabel, IComparable<LiveSprite>
 	{
 		public SpriteWidget Widget;
 		public LivePose Pose;
@@ -28,6 +29,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				Set(value);
 				LabelChanged?.Invoke(this, EventArgs.Empty);
+			}
+		}
+
+		public LiveSprite Parent { get; private set; }
+		[Text(DisplayName = "ParentId", Key = "parent", GroupOrder = 2)]
+		public string ParentId
+		{
+			get { return Get<string>(); }
+			set
+			{
+				Set(value);
+				Parent = Pose.Sprites.Find(s => s.Id == value);
 			}
 		}
 
@@ -66,13 +79,29 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float PivotX
 		{
 			get { return Get<float>(); }
-			set { Set(value); }
+			set
+			{
+				if (float.IsNaN(value))
+				{
+					value = 0;
+				}
+				Set(value);
+				UpdateLocalTransform();
+			}
 		}
 		[Float(DisplayName = "Pivot Y", Key = "pivoty", GroupOrder = 20, Description = "Y value of Rotation/scale point of origin as a percentage of the sprite's physical size.", Minimum = -1000, Maximum = 1000, Increment = 0.1f)]
 		public float PivotY
 		{
 			get { return Get<float>(); }
-			set { Set(value); }
+			set
+			{
+				if (float.IsNaN(value))
+				{
+					value = 0;
+				}
+				Set(value);
+				UpdateLocalTransform();
+			}
 		}
 
 		[Float(DisplayName = "Start", Key = "start", GroupOrder = 5, Description = "Starting time to display the sprite.", Minimum = 0, Maximum = 1000, Increment = 0.1f)]
@@ -131,17 +160,298 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		#region Interpolated values based on the current time
-		public float X;
-		public float Y;
 		public Bitmap Image;
-		public int Width;
 		public int Height;
-		public float ScaleX = 1;
-		public float ScaleY = 1;
-		public float SkewX = 0;
-		public float SkewY = 0;
-		public float Rotation = 0;
+		public int Width;
+
+		private float _x;
+		[Float(DisplayName = "X", Minimum = -10000, Maximum = 10000)]
+		public float X
+		{
+			get { return _x; }
+			set { _x = value; UpdateLocalTransform(); }
+		}
+
+		private float _y;
+		[Float(DisplayName = "Y", Minimum = -10000, Maximum = 10000)]
+		public float Y
+		{
+			get { return _y; }
+			set { _y = value; UpdateLocalTransform(); }
+		}
+
+		private float _rotation;
+		[Float(DisplayName = "Rotation", Increment = 5, Minimum = -360, Maximum = 360)]
+		public float Rotation
+		{
+			get { return _rotation; }
+			set { _rotation = value; UpdateLocalTransform(); }
+		}
+
+		private float _scaleX = 1;
+		public float ScaleX
+		{
+			get { return _scaleX; }
+			set
+			{
+				if (value == 0)
+				{
+					value = 0.01f;
+				}
+				_scaleX = value;
+				UpdateLocalTransform();
+			}
+		}
+
+		private float _scaleY = 1;
+		public float ScaleY
+		{
+			get { return _scaleY; }
+			set
+			{
+				if (value == 0)
+				{
+					value = 0.01f;
+				}
+				_scaleY = value;
+				UpdateLocalTransform();
+			}
+		}
+
+		private float _skewX = 0;
+		public float SkewX
+		{
+			get { return _skewX; }
+			set { _skewX = value; }
+		}
+
+		private float _skewY = 0;
+		public float SkewY
+		{
+			get { return _skewY; }
+			set { _skewY = value; }
+		}
+
 		public float Alpha = 100;
+
+		public Matrix LocalTransform { get; private set; }
+
+		private void UpdateLocalTransform()
+		{
+			Matrix transform = new Matrix();
+			float pivotX = PivotX * Width;
+			float pivotY = PivotY * Height;
+			transform.Translate(-pivotX, -pivotY, MatrixOrder.Append);
+			transform.Scale(ScaleX, ScaleY, MatrixOrder.Append);
+			transform.Rotate(Rotation, MatrixOrder.Append);
+			transform.Translate(pivotX, pivotY, MatrixOrder.Append);
+
+			transform.Translate(X - (Parent == null ? Width / 2 : 0), Y, MatrixOrder.Append); //local position
+			LocalTransform = transform;
+		}
+
+		public Matrix WorldTransform
+		{
+			get
+			{
+				LiveSprite transform = this;
+				Matrix m = new Matrix();
+				while (transform != null)
+				{
+					m.Multiply(transform.LocalTransform, MatrixOrder.Append);
+
+					if (transform.Parent == this)
+					{
+						transform = null;
+					}
+					else
+					{
+						transform = transform.Parent;
+					}
+				}
+				return m;
+			}
+		}
+
+		public Matrix UnscaledWorldTransform
+		{
+			get
+			{
+				LiveSprite transform = this;
+				Matrix m = new Matrix();
+				while (transform != null)
+				{
+					Matrix localTransform;
+					if (transform == this)
+					{
+						localTransform = new Matrix();
+						localTransform.Translate(X - (Parent == null ? Width / 2 : 0), Y, MatrixOrder.Append);
+					}
+					else
+					{
+						localTransform = transform.LocalTransform;
+					}
+
+					m.Multiply(localTransform, MatrixOrder.Append);
+
+					if (transform.Parent == this)
+					{
+						transform = null;
+					}
+					else
+					{
+						transform = transform.Parent;
+					}
+				}
+				return m;
+			}
+		}
+
+		/// <summary>
+		/// Converts a point from local space to screen space
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public PointF ToScreenPt(float x, float y, Matrix sceneTransform)
+		{
+			PointF[] pt = new PointF[] { new PointF(x, y) };
+			return ToScreenPt(sceneTransform, pt)[0];
+		}
+
+		/// <summary>
+		/// Converts a point from local space to screen space
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public PointF[] ToScreenPt(Matrix sceneTransform, params PointF[] pts)
+		{
+			Matrix m = new Matrix();
+			m.Multiply(sceneTransform);
+			m.Multiply(WorldTransform);
+			m.TransformPoints(pts);
+			return pts;
+		}
+
+		/// <summary>
+		/// Converts a point from screen spcae to local space
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="sceneTransform"></param>
+		/// <returns></returns>
+		public PointF ToLocalPt(float x, float y, Matrix sceneTransform)
+		{
+			PointF[] pt = new PointF[] { new PointF(x, y) };
+			return ToLocalPt(sceneTransform, pt)[0];
+		}
+
+		/// <summary>
+		/// Converts one or more points in screen space to local space
+		/// </summary>
+		/// <param name="sceneTransform"></param>
+		/// <param name="pts"></param>
+		/// <returns></returns>
+		public PointF[] ToLocalPt(Matrix sceneTransform, params PointF[] pts)
+		{
+			Matrix m = new Matrix();
+			m.Multiply(sceneTransform);
+			m.Multiply(WorldTransform);
+			m.Invert();
+			m.TransformPoints(pts);
+			return pts;
+		}
+
+		/// <summary>
+		/// Converts a point in local space to world space
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public PointF ToWorldPt(float x, float y)
+		{
+			PointF[] pt = new PointF[] { new PointF(x, y) };
+			return ToWorldPt(pt)[0];
+		}
+		/// <summary>
+		/// Converts one or more points in local space to world space
+		/// </summary>
+		/// <param name="sceneTransform"></param>
+		/// <param name="pts"></param>
+		/// <returns></returns>
+		public PointF[] ToWorldPt(params PointF[] pts)
+		{
+			if (Parent == null)
+			{
+				return pts;
+			}
+			Matrix m = new Matrix();
+			m.Multiply(Parent.WorldTransform);
+			m.TransformPoints(pts);
+			return pts;
+		}
+
+		/// <summary>
+		/// Converts one or more points in screen space to world space
+		/// </summary>
+		/// <param name="sceneTransform"></param>
+		/// <param name="pts"></param>
+		/// <returns></returns>
+		public PointF[] ScreenToWorldPt(Matrix sceneTransform, params PointF[] pts)
+		{
+			Matrix m = new Matrix();
+			m.Multiply(sceneTransform);
+			m.Invert();
+			m.TransformPoints(pts);
+			return pts;
+		}
+
+		/// <summary>
+		/// Converts a point from world space to local space
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <returns></returns>
+		public PointF WorldToLocalPt(PointF pt)
+		{
+			PointF[] pts = new PointF[] { pt };
+			Matrix m = new Matrix();
+			m.Multiply(WorldTransform);
+			m.Invert();
+			m.TransformPoints(pts);
+			return pts[0];
+		}
+
+		/// <summary>
+		/// Converts a point from screen space to local unscaled space
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public PointF[] ToLocalUnscaledPt(Matrix sceneTransform, params PointF[] pts)
+		{
+			Matrix m = new Matrix();
+			m.Multiply(sceneTransform);
+			m.Multiply(UnscaledWorldTransform);
+			m.Invert();
+			m.TransformPoints(pts);
+			return pts;
+		}
+
+		public float WorldAlpha
+		{
+			get
+			{
+				float alpha = 1;
+				LiveSprite parent = this;
+				while (parent != null)
+				{
+					alpha *= parent.Alpha / 100.0f;
+					parent = parent.Parent;
+				}
+				return alpha * 100;
+			}
+		}
 		#endregion
 
 		public LiveSprite(LivePose pose, float time) : this()
@@ -163,6 +473,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public LiveSprite(LivePose pose, Sprite sprite, float time) : this()
 		{
 			Pose = pose;
+			ParentId = sprite.ParentId;
 			Length = 0.5f;
 			Id = sprite.Id;
 			Z = sprite.Z;
@@ -225,6 +536,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				kf.Sprite = this;
 				kf.PropertyChanged += Kf_PropertyChanged;
 			}
+			Parent = source.Parent;
+			UpdateLocalTransform();
 		}
 
 		private LiveSprite()
@@ -875,10 +1188,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		#region Point-and-click editing
 		/// <summary>
+		/// Sets the object's local position so that its world position is at the given value
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public void SetWorldPosition(PointF worldPos)
+		{
+			PointF local = Parent == null ? worldPos : Parent.WorldToLocalPt(worldPos);
+			Translate(local.X, local.Y);
+		}
+
+		/// <summary>
 		/// Updates the sprite's position to a new value, updating the underlying data structures too
 		/// </summary>
 		/// <returns>List of objects that were modified</returns>
-		public void Translate(int x, int y)
+		public void Translate(float x, float y)
 		{
 			if (X == x && Y == y)
 			{
@@ -890,12 +1214,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			AddValue<float>(time, "Y", y.ToString());
 		}
 
-		public void AdjustPivot(Point screenPt, RectangleF worldBounds)
+		public void AdjustPivot(PointF screenPt, Matrix sceneTransform)
 		{
-			float xPct = (screenPt.X - worldBounds.X) / worldBounds.Width;
-			float yPct = (screenPt.Y - worldBounds.Y) / worldBounds.Height;
-			float pivotX = xPct;
-			float pivotY = yPct;
+			//convert screen pt to unscaled, unrotated space
+			PointF[] pts = new PointF[] {
+				screenPt,
+				new PointF(0,0),
+				new PointF(Width, Height)
+			};
+			PointF[] localPts = ToLocalUnscaledPt(sceneTransform, pts);
+			PointF localPt = localPts[0];
+			PointF min = localPts[1];
+			PointF max = localPts[2];
+			float width = max.X - min.X;
+			float height = max.Y - min.Y;
+			float xPct = localPt.X / Width;
+			float yPct = localPt.Y / Height;
+
+			//xPct = (screenPt.X - worldBounds.X) / worldBounds.Width;
+			//yPct = (screenPt.Y - worldBounds.Y) / worldBounds.Height;
+			float pivotX = (float)Math.Round(xPct, 2);
+			float pivotY = (float)Math.Round(yPct, 2);
 			if (pivotX == PivotX && pivotY == PivotY)
 			{
 				return;
@@ -904,70 +1243,93 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			PivotY = yPct;
 		}
 
-		public void Scale(Point screenPoint, int displayWidth, int displayHeight, Point offset, float zoom, Point startPoint, HoverContext context, bool locked)
+		public void Scale(Point screenPoint, Matrix sceneTransform, int displayWidth, int displayHeight, Point offset, float zoom, Point startPoint, HoverContext context, bool locked)
 		{
+			float time = GetRelativeTime();
 			bool horizontal = (context & HoverContext.ScaleHorizontal) != 0;
 			bool vertical = (context & HoverContext.ScaleVertical) != 0;
 
-			RectangleF bounds = ToUnscaledScreenRegion(displayWidth, displayHeight, offset, zoom);
-			PointF targetPoint = new PointF(screenPoint.X, screenPoint.Y);
-			PointF sourcePoint = new PointF(bounds.X, bounds.Y); //unscaled point corresponding to the point being dragged
+			//scale is determined by first converting point to local space
+			PointF localPt = ToLocalPt(sceneTransform, screenPoint)[0];
+			PointF pivotPt = new PointF(PivotX * Width, PivotY * Height);
+
+			float scaleX = ScaleX;
+			float scaleY = ScaleY;
+
 			if (context.HasFlag(HoverContext.ScaleRight))
 			{
-				sourcePoint.X += bounds.Width;
+				float scaledDist = Width - pivotPt.X;
+				float distFromPivot = localPt.X - pivotPt.X;
+				float unscaledDist = scaledDist / ScaleX;
+				scaleX = distFromPivot / unscaledDist;
+			}
+			else if (context.HasFlag(HoverContext.ScaleLeft))
+			{
+				float scaledDist = pivotPt.X;
+				float distFromPivot = pivotPt.X - localPt.X;
+				float unscaledDist = scaledDist / ScaleX;
+				scaleX = distFromPivot / unscaledDist;
 			}
 			if (context.HasFlag(HoverContext.ScaleBottom))
 			{
-				sourcePoint.Y += bounds.Height;
+				float scaledDist = Height - pivotPt.Y;
+				float distFromPivot = localPt.Y - pivotPt.Y;
+				float unscaledDist = scaledDist / ScaleY;
+				scaleY = distFromPivot / unscaledDist;
 			}
-
-			PointF pivot = new PointF(bounds.X + PivotX * bounds.Width, bounds.Y + PivotY * bounds.Height);
-			//shift pivot to origin
-
-			sourcePoint.X -= pivot.X;
-			sourcePoint.Y -= pivot.Y;
-
-			targetPoint.X -= pivot.X;
-			targetPoint.Y -= pivot.Y;
-
-			//determine scalar to reach given point
-			float mx = targetPoint.X / sourcePoint.X;
-			float my = targetPoint.Y / sourcePoint.Y;
-
-			if (float.IsInfinity(mx))
+			else if (context.HasFlag(HoverContext.ScaleTop))
 			{
-				mx = 0.001f;
+				float scaledDist = pivotPt.Y;
+				float distFromPivot = pivotPt.Y - localPt.Y;
+				float unscaledDist = scaledDist / ScaleY;
+				scaleY = distFromPivot / unscaledDist;
 			}
-			if (float.IsInfinity(my))
+			if (horizontal && !float.IsInfinity(scaleX))
 			{
-				my = 0.001f;
+				if (scaleX == 0)
+				{
+					scaleX = 0.01f;
+				}
+				scaleX = (float)Math.Round(scaleX, 2);
+				if (scaleX != ScaleX)
+				{
+					AddValue<float>(time, "ScaleX", scaleX.ToString(CultureInfo.InvariantCulture));
+				}
 			}
-
-			float time = GetRelativeTime();
-			if (ScaleX != mx && horizontal)
+			if (vertical && !float.IsInfinity(scaleY))
 			{
-				AddValue<float>(time, "ScaleX", mx.ToString(CultureInfo.InvariantCulture));
-			}
-			if (ScaleY != my && vertical)
-			{
-				AddValue<float>(time, "ScaleY", my.ToString(CultureInfo.InvariantCulture));
+				if (scaleY == 0)
+				{
+					scaleY = 0.01f;
+				}
+				scaleY = (float)Math.Round(scaleY, 2);
+				if (scaleY != ScaleY)
+				{
+					AddValue<float>(time, "ScaleY", scaleY.ToString(CultureInfo.InvariantCulture));
+				}
 			}
 		}
 
-		public void Rotate(Point screenPoint, Point screenCenter)
+		public void Rotate(Point screenPoint, PointF screenPivot, Point downPoint, float initialRotation)
 		{
 			//quick and dirty - just use the angle to look from the point to the center
 
-			double angle = Math.Atan2(screenCenter.Y - screenPoint.Y, screenCenter.X - screenPoint.X);
+			double downAngle = Math.Atan2(screenPivot.Y - downPoint.Y, screenPivot.X - downPoint.X);
+			downAngle = downAngle * (180 / Math.PI) - 90;
+
+			double angle = Math.Atan2(screenPivot.Y - screenPoint.Y, screenPivot.X - screenPoint.X);
 			angle = angle * (180 / Math.PI) - 90;
 
-			if (Rotation == angle)
+			angle -= downAngle;
+			double rotation = Math.Round(initialRotation + angle, 0);
+
+			if (Rotation == rotation)
 			{
 				return;
 			}
 
 			float time = GetRelativeTime();
-			Rotation = (float)angle;
+			Rotation = (float)rotation;
 			AddValue<float>(time, "Rotation", Rotation.ToString(CultureInfo.InvariantCulture));
 		}
 
@@ -1038,50 +1400,39 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			SkewY = GetPropertyValue("SkewY", time, 0f, easeOverride, interpolationOverride, looped);
 		}
 
-		public void Draw(Graphics g, int displayWidth, int displayHeight, Point offset, float zoom, List<string> markers)
+		public void Draw(Graphics g, Matrix sceneTransform, List<string> markers)
 		{
 			if (!IsVisible || Hidden) { return; }
 			if (!string.IsNullOrEmpty(Marker) && !markers.Contains(Marker)) { return; }
 
-			float alpha = Alpha;
+			float alpha = WorldAlpha;
 			if (Image != null && alpha > 0)
 			{
 				int width = Image.Width;
 				int height = Image.Height;
-				Rectangle bounds = ToScreenRegion(displayWidth, displayHeight, offset, zoom);
 
-				float offsetX = bounds.X + PivotX * bounds.Width;
-				float offsetY = bounds.Y + PivotY * bounds.Height;
-				if (float.IsNaN(offsetX))
-				{
-					offsetX = 0;
-				}
-				if (float.IsNaN(offsetY))
-				{
-					offsetY = 0;
-				}
+				g.MultiplyTransform(WorldTransform);
 
-				g.TranslateTransform(offsetX, offsetY);
-				g.RotateTransform(Rotation);
-				g.TranslateTransform(-offsetX, -offsetY);
+				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
+				//draw
 				if ((SkewX == 0 || SkewX % 90 != 0) && (SkewY == 0 || SkewY % 90 != 0))
 				{
-					float skewedWidth = bounds.Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
-					int skewDistanceX = (int)(skewedWidth / 2);
-					float skewedHeight = bounds.Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
-					int skewDistanceY = (int)(skewedHeight / 2);
-					Point[] destPts = new Point[] { new Point(bounds.X - skewDistanceX, bounds.Y - skewDistanceY), new Point(bounds.Right - skewDistanceX, bounds.Y + skewDistanceY), new Point(bounds.X + skewDistanceX, bounds.Bottom - skewDistanceY) };
+					float skewedWidth = Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
+					float skewDistanceX = skewedWidth / 2;
+					float skewedHeight = Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
+					float skewDistanceY = skewedHeight / 2;
+					PointF[] destPts = new PointF[] { new PointF(-skewDistanceX, -skewDistanceY), new PointF(Width - skewDistanceX, skewDistanceY), new PointF(skewDistanceX, Height - skewDistanceY) };
 
 					if (alpha < 100)
 					{
 						float[][] matrixItems = new float[][] {
-							new float[] { 1, 0, 0, 0, 0 },
-							new float[] { 0, 1, 0, 0, 0 },
-							new float[] { 0, 0, 1, 0, 0 },
-							new float[] { 0, 0, 0, alpha / 100.0f, 0 },
-							new float[] { 0, 0, 0, 0, 1 }
-						};
+						  new float[] { 1, 0, 0, 0, 0 },
+						  new float[] { 0, 1, 0, 0, 0 },
+						  new float[] { 0, 0, 1, 0, 0 },
+						  new float[] { 0, 0, 0, alpha / 100.0f, 0 },
+						  new float[] { 0, 0, 0, 0, 1 }
+						 };
 						ColorMatrix cm = new ColorMatrix(matrixItems);
 						ImageAttributes ia = new ImageAttributes();
 						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
@@ -1094,98 +1445,38 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 
+				//restore
 				g.ResetTransform();
 			}
 		}
 
 		/// <summary>
-		/// Converts an object's bounds to screen space, ensuring that the width and height are positive
+		/// Gets the bounding box for an object centered at its screen-space origin using its true width+height as its size with no rotation
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="sprite"></param>
 		/// <returns></returns>
-		public RectangleF ToAbsScreenRegion(int displayWidth, int displayHeight, Point offset, float zoom)
+		public RectangleF GetUnscaledScreenSpaceBoundingBox(Matrix sceneTransform, float displayHeight, float zoom)
 		{
-			RectangleF region = ToScreenRegion(displayWidth, displayHeight, offset, zoom);
-			if (region.Width < 0)
-			{
-				region.X += region.Width;
-				region.Width = -region.Width;
-			}
-			if (region.Height < 0)
-			{
-				region.Y += region.Height;
-				region.Height = -region.Height;
-			}
-			return region;
+			//PointF[] pts = new PointF[] {
+			//	new PointF(0,0),
+			//	new PointF(Width, Height),
+			//};
+			//pts = ToUnscaledScreenPt(sceneTransform, pts);
+			//return new RectangleF(pts[0].X, pts[0].Y, pts[1]
+
+			PointF spriteCenter = ToScreenPt(Width / 2, Height / 2, sceneTransform);
+			float displayScale = displayHeight / Pose.BaseHeight * zoom;
+			PointF scale = new PointF(displayScale, displayScale);
+			float width = Math.Abs((int)Math.Round(Width * scale.X));
+			float height = Math.Abs((int)Math.Round(Height * scale.Y));
+			float left = spriteCenter.X - width / 2;
+			float top = spriteCenter.Y - height / 2;
+			return new RectangleF(left, top, width, height);
 		}
 
-		/// <summary>
-		/// Converts an object's unscaled bounds to screen space
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns></returns>
-		public RectangleF ToUnscaledScreenRegion(int displayWidth, int displayHeight, Point offset, float zoom)
+		public int CompareTo(LiveSprite other)
 		{
-			displayHeight = (int)(displayHeight * zoom);
-			float x = ScaleToDisplay(X, displayHeight);
-			float y = ScaleToDisplay(Y, displayHeight);
-			float width = ScaleToDisplay(Width, displayHeight);
-			float height = ScaleToDisplay(Height, displayHeight);
-			x = (int)(x + displayWidth * 0.5f - width * 0.5f);
-			return new RectangleF(offset.X + x, offset.Y + y, width, height);
-		}
-
-		public Rectangle ToScreenRegion(int displayWidth, int displayHeight, Point offset, float zoom)
-		{
-			displayHeight = (int)(displayHeight * zoom);
-
-			//get unscaled bounds in screen space
-			float x = ScaleToDisplay(X, displayHeight);
-			float y = ScaleToDisplay(Y, displayHeight);
-			float width = ScaleToDisplay(Width, displayHeight);
-			float height = ScaleToDisplay(Height, displayHeight);
-			x = (int)(x + displayWidth * 0.5f - width * 0.5f);
-
-			//translate pivot to origin
-			float pivotX = x + PivotX * width;
-			float pivotY = y + PivotY * height;
-			x -= pivotX;
-			y -= pivotY;
-
-			//apply scaling
-			float right = x + width;
-			x *= ScaleX;
-			right *= ScaleX;
-			width = right - x;
-
-			float bottom = y + height;
-			y *= ScaleY;
-			bottom *= ScaleY;
-			height = bottom - y;
-
-			//translate back
-			x += pivotX;
-			y += pivotY;
-
-			return new Rectangle(offset.X + (int)x, offset.Y + (int)y, (int)width, (int)height);
-		}
-
-		/// <summary>
-		/// Gets the "center" of an object's selection
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns></returns>
-		public Point ToScreenCenter(int displayWidth, int displayHeight, Point offset, float zoom)
-		{
-			RectangleF bounds = ToScreenRegion(displayWidth, displayHeight, offset, zoom);
-			float cx = bounds.X + bounds.Width / 2;
-			float cy = bounds.Y + bounds.Height / 2;
-			return new Point((int)cx, (int)cy);
-		}
-
-		public int ScaleToDisplay(float value, int canvasHeight)
-		{
-			return (int)Math.Floor(value * canvasHeight / Pose.BaseHeight);
+			return Id.CompareTo(other.Id);
 		}
 		#endregion
 	}
