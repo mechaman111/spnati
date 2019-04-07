@@ -4,7 +4,6 @@ namespace SPNATI_Character_Editor.Forms
 {
 	public partial class TagStageSelect : Form
 	{
-		private Character _character;
 		private BindableTag _bindable;
 
 		public TagStageSelect()
@@ -14,7 +13,6 @@ namespace SPNATI_Character_Editor.Forms
 
 		public void SetData(BindableTag tag, Character character)
 		{
-			_character = character;
 			_bindable = tag;
 
 			Tag definition = TagDatabase.GetTag(tag.Tag);

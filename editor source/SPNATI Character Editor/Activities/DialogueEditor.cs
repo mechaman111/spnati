@@ -937,7 +937,7 @@ namespace SPNATI_Character_Editor.Activities
 		}
 		#endregion
 
-		private void tableConditions_MacroChanged(object sender, Macro e)
+		private void tableConditions_MacroChanged(object sender, MacroArgs e)
 		{
 			Config.SaveMacros("Case");
 		}

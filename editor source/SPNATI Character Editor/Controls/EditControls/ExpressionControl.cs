@@ -333,7 +333,6 @@ namespace SPNATI_Character_Editor
 				switch (func)
 				{
 					case "costume":
-						Case data = Data as Case;
 						cboValue.Items.Add("default");
 						if (characterVar != null)
 						{

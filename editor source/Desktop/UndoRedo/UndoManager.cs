@@ -25,13 +25,13 @@ namespace Desktop
 		private MultiCommand _bulkAction = null;
 		private bool _bulkRecording = false;
 
-		public event Action<UndoAction> CommandApplied;
+		public event EventHandler<CommandEventArgs> CommandApplied;
 
 		private void OnCommandApplied(UndoAction action)
 		{
 			if (CommandApplied != null)
 			{
-				CommandApplied(action);
+				CommandApplied?.Invoke(this, new CommandEventArgs(action));
 			}
 		}
 
@@ -143,6 +143,15 @@ namespace Desktop
 				_undoCommands.Push(item);
 				OnCommandApplied(UndoAction.Redo);
 			}
+		}
+	}
+
+	public class CommandEventArgs : EventArgs
+	{
+		public UndoAction Action { get; private set; }
+		public CommandEventArgs(UndoAction action)
+		{
+			Action = action;
 		}
 	}
 

@@ -377,7 +377,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (_playing)
 				{
 					float start, end;
-					float time = Sprite.GetInterpolatedTime(property, Sprite.Time, null, null, null, out start, out end);
+					float time = Sprite.GetInterpolatedTime(property, Sprite.Time, null, null, out start, out end);
 					int right = TimeToX(end + Sprite.Start, pps);
 					int left = TimeToX(start + Sprite.Start, pps);
 					int width = (right - left);
@@ -921,7 +921,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						time = frame.Time;
 					}
 
-					PasteKeyframeCommand command = new PasteKeyframeCommand(Sprite, copiedFrame, time, false);
+					PasteKeyframeCommand command = new PasteKeyframeCommand(Sprite, copiedFrame, time);
 					args.History.Commit(command);
 					_selectedFrame = command.NewKeyframe;
 					_selectedProperties.Clear();
@@ -966,7 +966,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					return false; //can't duplicate into itself
 				}
 
-				PasteKeyframeCommand command = new PasteKeyframeCommand(Sprite, _selectedFrame, time, false);
+				PasteKeyframeCommand command = new PasteKeyframeCommand(Sprite, _selectedFrame, time);
 				args.History.Commit(command);
 				_selectedFrame = command.NewKeyframe;
 				_selectedProperties.Clear();

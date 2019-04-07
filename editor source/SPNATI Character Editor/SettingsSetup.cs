@@ -95,8 +95,6 @@ namespace SPNATI_Character_Editor
 			Brush textBrush;
 			Brush backBrush;
 
-			Rectangle rect = tabsSections.ClientRectangle;
-
 			// Get the item from the collection.
 			TabPage tabPage = tabsSections.TabPages[e.Index];
 

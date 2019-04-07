@@ -267,8 +267,6 @@ namespace SPNATI_Character_Editor
 				//	Directives.Add(directive);
 				//}
 			}
-
-			var stop = Directives;
 		}
 
 		public int CompareTo(Pose other)

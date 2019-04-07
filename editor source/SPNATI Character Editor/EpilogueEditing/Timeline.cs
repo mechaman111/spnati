@@ -184,7 +184,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		private void UndoManager_CommandApplied(UndoAction action)
+		private void UndoManager_CommandApplied(object sender, CommandEventArgs args)
 		{
 			tsUndo.Enabled = CommandHistory.CanUndo();
 			tsRedo.Enabled = CommandHistory.CanRedo();
@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (!_widgets.Contains(_selectedWidget))
 				{
-					SelectWidget(null, false);
+					SelectWidget(null);
 				}
 				else
 				{
@@ -223,7 +223,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			ResizeTimeline();
 			UpdateMarker(0);
-			SelectWidget(null, false);
+			SelectWidget(null);
 			AutoZoom();
 		}
 
@@ -549,7 +549,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Graphics g = e.Graphics;
 			int startY = container.VerticalScroll.Value;
 			int width = panelHeader.Width;
-			int height = panelHeader.Height;
 			g.FillRectangle(_trackFill, 0, 0, panelHeader.Width, panelHeader.Height);
 
 			int y = -startY;
@@ -740,7 +739,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Redraw();
 		}
 
-		private ITimelineWidget GetWidgetUnderCursorInHeader(int x, int y)
+		private ITimelineWidget GetWidgetUnderCursorInHeader(int y)
 		{
 			int row = y / RowHeight; //absolute row
 			int currentRow = 0;
@@ -780,7 +779,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					//clicking any row within the widget
 					if (widget != null)
 					{
-						SelectWidget(widget, false);
+						SelectWidget(widget);
 
 						int track;
 						int r = YToRow(e.Y + startY, out track);
@@ -817,7 +816,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			int y = e.Y + startY;
 
 			//figure out which icon is being hovered over
-			ITimelineWidget widget = GetWidgetUnderCursorInHeader(e.X, y);
+			ITimelineWidget widget = GetWidgetUnderCursorInHeader(y);
 			int row = _headerHoverRow;
 			int icon = _headerHoverIconIndex;
 			if (widget != null)
@@ -843,7 +842,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (e.Button == MouseButtons.None)
 			{
 				ITimelineAction old = _pendingAction;
-				ITimelineWidget widget = GetWidgetUnderCursor(e.X, e.Y);
+				ITimelineWidget widget = GetWidgetUnderCursor(e.Y);
 				if (widget != _pendingWidget && _pendingWidget != null)
 				{
 					_pendingWidget.OnMouseOut();
@@ -878,12 +877,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (e.Button == MouseButtons.Left)
 			{
 				int track;
-				int row = YToRow(e.Y, out track);
-				ITimelineWidget widget = GetWidgetUnderCursor(e.X, e.Y);
+				YToRow(e.Y, out track);
+				ITimelineWidget widget = GetWidgetUnderCursor(e.Y);
 
 				if (_selectedWidget != widget)
 				{
-					SelectWidget(widget, ModifierKeys.HasFlag(Keys.Control));
+					SelectWidget(widget);
 				}
 
 				if (widget != null && _pendingAction != null)
@@ -900,16 +899,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			EndAction();
 		}
 
-		private void SelectWidget(ITimelineWidget widget, bool addToSelection)
+		private void SelectWidget(ITimelineWidget widget)
 		{
 			ApplyWidgetSelection(widget);
-		}
-
-		private void ReselectWidget()
-		{
-			WidgetSelectionArgs args = new WidgetSelectionArgs(this, SelectionType.Reselect, ModifierKeys);
-			_selectedWidget.OnWidgetSelectionChanged(args);
-			UpdateButtons(args);
 		}
 
 		public void ApplyWidgetSelection(ITimelineWidget widget)
@@ -964,12 +956,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// Selects the widget with the provided backing data
 		/// </summary>
 		/// <param name="data"></param>
-		public void SelectWidgetWithData(object data, Keys modifiers)
+		public void SelectWidgetWithData(object data)
 		{
 			ITimelineWidget widget = _widgets.Find(w => w.GetData() == data);
 			if (widget != null)
 			{
-				SelectWidget(widget, modifiers.HasFlag(Keys.Control));
+				SelectWidget(widget);
 			}
 		}
 
@@ -982,10 +974,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			DataSelected?.Invoke(this, new DataSelectionArgs(data, previewData));
 		}
 
-		private ITimelineWidget GetWidgetUnderCursor(int x, int y)
+		private ITimelineWidget GetWidgetUnderCursor(int y)
 		{
 			int track;
-			int row = YToRow(y, out track);
+			YToRow(y, out track);
 			if (track == -1)
 			{
 				return null;
@@ -997,39 +989,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			return null;
 		}
-
-		private Rectangle GetWidgetBounds(ITimelineWidget widget)
-		{
-			float duration = Duration;
-			int startX = TimeToX(widget.GetStart());
-			int row = 0;
-			for (int i = 0; i < _widgets.Count; i++)
-			{
-				ITimelineWidget w = _widgets[i];
-				if (w == null)
-				{
-					row++;
-					continue;
-				}
-				else
-				{
-					if (w == widget)
-					{
-						int startY = row * RowHeight;
-						int length = TimeToX(widget.GetLength(duration));
-						int width = length;
-						int height = widget.GetRowCount() * RowHeight;
-						return new Rectangle(startX, startY, width, height);
-					}
-					else
-					{
-						row += w.GetRowCount();
-					}
-				}
-			}
-			return Rectangle.Empty;
-		}
-
+		
 		private void StartAction(float time, int y)
 		{
 			WidgetActionArgs args = GetWidgetArgs(time, y);
@@ -1289,7 +1249,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (this.ContainsActiveControl())
 			{
-				int track = _selectedWidget != null ? _widgets.IndexOf(_selectedWidget) : -1;
 				WidgetOperationArgs args = GetOperationArgs();
 				if (_selectedWidget != null && _selectedWidget.OnPaste(args))
 				{
@@ -1330,20 +1289,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		private void Timeline_KeyDown(object sender, KeyEventArgs e)
-		{
-
-		}
-
 		private void panel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-		{
-			if (e.KeyCode == Keys.Space)
-			{
-				tsPlay_Click(sender, EventArgs.Empty);
-			}
-		}
-
-		private void Timeline_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
 			if (e.KeyCode == Keys.Space)
 			{
@@ -1358,7 +1304,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			int x = tuple.Item1;
 			int y = tuple.Item2;
 			bool inHeader = tuple.Item3;
-			ITimelineWidget widget = inHeader ? GetWidgetUnderCursorInHeader(x, y) : GetWidgetUnderCursor(x, y);
+			ITimelineWidget widget = inHeader ? GetWidgetUnderCursorInHeader(y) : GetWidgetUnderCursor(y);
 			if (widget != null)
 			{
 				int track;
@@ -1566,9 +1512,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 	public class TimelineDragAction : ITimelineAction
 	{
-		private UndoManager _history;
 		private Timeline _timeline;
-		private float _startTime;
 		private float _currentTime;
 
 		public TimelineDragAction(Timeline timeline)
@@ -1588,8 +1532,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void Start(WidgetActionArgs args)
 		{
-			_history = args.History;
-			_startTime = _timeline.CurrentTime;
 			Update(args);
 		}
 

@@ -6,7 +6,7 @@ namespace Desktop
 	/// <summary>
 	/// Pre-filled property edit control
 	/// </summary>
-	public class Macro : IRecord
+	public sealed class Macro : IRecord
 	{
 		public string Name;
 

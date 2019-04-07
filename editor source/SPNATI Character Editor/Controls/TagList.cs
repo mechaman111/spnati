@@ -169,7 +169,6 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void grid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
 		{
-			DataGridViewCell cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 			if (e.ColumnIndex == 0)
 			{
 				string value = e.FormattedValue?.ToString();

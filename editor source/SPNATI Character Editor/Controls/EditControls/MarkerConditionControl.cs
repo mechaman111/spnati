@@ -160,7 +160,7 @@ namespace SPNATI_Character_Editor
 			Save();
 		}
 
-		private void RecordChanged(object sender, IRecord record)
+		private void RecordChanged(object sender, RecordEventArgs record)
 		{
 			Save();
 		}

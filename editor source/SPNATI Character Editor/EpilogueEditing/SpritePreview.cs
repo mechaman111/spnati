@@ -190,9 +190,6 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float alpha = WorldAlpha;
 			if (Image != null && alpha > 0)
 			{
-				int width = Image.Width;
-				int height = Image.Height;
-
 				g.MultiplyTransform(WorldTransform);
 
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);

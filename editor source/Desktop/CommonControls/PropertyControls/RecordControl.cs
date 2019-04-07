@@ -89,7 +89,7 @@ namespace Desktop.CommonControls.PropertyControls
 			}
 		}
 
-		private void recField_RecordChanged(object sender, IRecord e)
+		private void recField_RecordChanged(object sender, RecordEventArgs e)
 		{
 			Save();
 		}

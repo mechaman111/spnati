@@ -49,7 +49,7 @@
 			this.recAdd.Size = new System.Drawing.Size(138, 20);
 			this.recAdd.TabIndex = 0;
 			this.recAdd.UseAutoComplete = false;
-			this.recAdd.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recAdd_RecordChanged);
+			this.recAdd.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recAdd_RecordChanged);
 			// 
 			// pnlRecords
 			// 

@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor
 			recField.RecordChanged += RecField_RecordChanged;
 		}
 
-		private void RecField_RecordChanged(object sender, IRecord e)
+		private void RecField_RecordChanged(object sender, RecordEventArgs e)
 		{
 			Save();
 		}

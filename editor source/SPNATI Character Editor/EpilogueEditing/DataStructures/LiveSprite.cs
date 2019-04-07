@@ -933,7 +933,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			float start;
 			float end;
-			float t = GetInterpolatedTime(property, time, easeOverride, interpolationOverride, loopOverride, out start, out end);
+			float t = GetInterpolatedTime(property, time, easeOverride, loopOverride, out start, out end);
 			t = start + t * (end - start);
 
 			Type parentType = typeof(LiveKeyframe);
@@ -1026,7 +1026,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="interpolationOverride"></param>
 		/// <param name="start"></param>
 		/// <returns></returns>
-		public float GetInterpolatedTime(string property, float time, string easeOverride, string interpolationOverride, bool? loopOverride, out float start, out float end)
+		public float GetInterpolatedTime(string property, float time, string easeOverride, bool? loopOverride, out float start, out float end)
 		{
 			time -= Start; //use relative time
 			time = Math.Max(0, time);
@@ -1036,7 +1036,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			end = 0;
 			float duration = GetPropertyDuration(property, time, out start, out end);
 
-			Type parentType = typeof(LiveKeyframe);
 			AnimatedProperty propertyAnimation = GetAnimationProperties(property);
 			string ease = easeOverride ?? propertyAnimation.Ease;
 			bool looped = loopOverride.HasValue ? loopOverride.Value : propertyAnimation.Looped;
@@ -1230,16 +1229,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void AdjustPivot(PointF screenPt, Matrix sceneTransform)
 		{
 			PointF[] pts = new PointF[] {
-				screenPt,
-				new PointF(0,0),
-				new PointF(Width, Height)
+				screenPt
 			};
 			PointF[] localPts = ToLocalUnscaledPt(sceneTransform, pts);
 			PointF localPt = localPts[0];
-			PointF min = localPts[1];
-			PointF max = localPts[2];
-			float width = max.X - min.X;
-			float height = max.Y - min.Y;
 			float xPct = localPt.X / Width;
 			float yPct = localPt.Y / Height;
 
@@ -1253,7 +1246,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			PivotY = yPct;
 		}
 
-		public void Scale(Point screenPoint, Matrix sceneTransform, int displayWidth, int displayHeight, Point offset, float zoom, Point startPoint, HoverContext context, bool locked)
+		public void Scale(Point screenPoint, Matrix sceneTransform, HoverContext context)
 		{
 			float time = GetRelativeTime();
 			bool horizontal = (context & HoverContext.ScaleHorizontal) != 0;
@@ -1418,9 +1411,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float alpha = WorldAlpha;
 			if (Image != null && alpha > 0)
 			{
-				int width = Image.Width;
-				int height = Image.Height;
-
 				g.MultiplyTransform(WorldTransform);
 
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);

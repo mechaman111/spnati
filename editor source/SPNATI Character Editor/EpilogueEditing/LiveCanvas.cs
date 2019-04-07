@@ -76,11 +76,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_pose != null)
 			{
 				_pose.PropertyChanged -= _pose_PropertyChanged;
+				_pose = null;
 			}
 		}
 
 		public void SetData(ISkin character, LivePose pose)
 		{
+			CleanUp();
 			_character = character;
 			_pose = pose;
 			if (_pose != null)
@@ -850,7 +852,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void ScaleObject(Point screenPt)
 		{
-			_selectedObject.Scale(screenPt, SceneTransform, canvas.Width, canvas.Height, _canvasOffset, _zoom, _downPoint, _moveContext, ModifierKeys.HasFlag(Keys.Shift));
+			_selectedObject.Scale(screenPt, SceneTransform, _moveContext);
 			canvas.Invalidate();
 			canvas.Update();
 		}

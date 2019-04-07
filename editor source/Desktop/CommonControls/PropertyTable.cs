@@ -19,7 +19,7 @@ namespace Desktop.CommonControls
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler<MacroArgs> EditingMacro;
-		public event EventHandler<Macro> MacroChanged;
+		public event EventHandler<MacroArgs> MacroChanged;
 
 		private int _pendingDataChanges = 0;
 
@@ -264,13 +264,13 @@ namespace Desktop.CommonControls
 			}
 		}
 
-		private void recAdd_RecordChanged(object sender, IRecord record)
+		private void recAdd_RecordChanged(object sender, RecordEventArgs e)
 		{
 			if (Data == null)
 			{
 				return;
 			}
-			PropertyRecord result = record as PropertyRecord;
+			PropertyRecord result = e.Record as PropertyRecord;
 			if (result != null)
 			{
 				AddControl(result);
@@ -594,7 +594,7 @@ namespace Desktop.CommonControls
 				if (form.ShowDialog() == DialogResult.OK)
 				{
 					AddMacros();
-					MacroChanged?.Invoke(this, args.Macro);
+					MacroChanged?.Invoke(this, new MacroArgs(args.Macro, false));
 				}
 				else if (args.IsNew)
 				{

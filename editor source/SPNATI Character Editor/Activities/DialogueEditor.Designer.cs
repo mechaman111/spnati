@@ -283,7 +283,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.tableConditions.UndoManager = null;
 			this.tableConditions.UseAutoComplete = true;
 			this.tableConditions.EditingMacro += new System.EventHandler<Desktop.CommonControls.MacroArgs>(this.tableConditions_EditingMacro);
-			this.tableConditions.MacroChanged += new System.EventHandler<Desktop.Macro>(this.tableConditions_MacroChanged);
+			this.tableConditions.MacroChanged += new System.EventHandler<Desktop.CommonControls.MacroArgs>(this.tableConditions_MacroChanged);
 			// 
 			// tabTags
 			// 

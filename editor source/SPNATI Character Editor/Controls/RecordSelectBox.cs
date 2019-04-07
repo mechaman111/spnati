@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.CommonControls;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -50,7 +51,7 @@ namespace SPNATI_Character_Editor.Controls
 			recField.RecordKey = null;
 		}
 
-		private void recField_RecordChanged(object sender, Desktop.IRecord e)
+		private void recField_RecordChanged(object sender, RecordEventArgs e)
 		{
 			cmdAdd.Enabled = !string.IsNullOrEmpty(recField.RecordKey);
 			cmdAdd_Click(sender, EventArgs.Empty);

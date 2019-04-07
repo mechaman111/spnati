@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -231,7 +232,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private void recTreeTarget_RecordChanged(object sender, IRecord record)
+		private void recTreeTarget_RecordChanged(object sender, RecordEventArgs e)
 		{
 			if (_character == null) { return; }
 			LeaveNode();
@@ -250,7 +251,7 @@ namespace SPNATI_Character_Editor.Controls
 			treeDialogue.ExpandAll();
 		}
 
-		private void recTag_RecordChanged(object sender, IRecord e)
+		private void recTag_RecordChanged(object sender, RecordEventArgs e)
 		{
 			if (_character == null) { return; }
 			LeaveNode();

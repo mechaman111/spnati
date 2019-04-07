@@ -87,7 +87,7 @@
 			this.recField.Size = new System.Drawing.Size(223, 20);
 			this.recField.TabIndex = 4;
 			this.recField.UseAutoComplete = false;
-			this.recField.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recField_RecordChanged);
+			this.recField.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recField_RecordChanged);
 			// 
 			// RecordSelectBox
 			// 

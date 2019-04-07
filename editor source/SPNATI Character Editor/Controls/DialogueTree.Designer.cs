@@ -233,7 +233,7 @@
 			this.recTag.Size = new System.Drawing.Size(262, 20);
 			this.recTag.TabIndex = 44;
 			this.recTag.UseAutoComplete = true;
-			this.recTag.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recTag_RecordChanged);
+			this.recTag.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recTag_RecordChanged);
 			// 
 			// recTreeTarget
 			// 
@@ -250,7 +250,7 @@
 			this.recTreeTarget.Size = new System.Drawing.Size(262, 20);
 			this.recTreeTarget.TabIndex = 43;
 			this.recTreeTarget.UseAutoComplete = true;
-			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.IRecord>(this.recTreeTarget_RecordChanged);
+			this.recTreeTarget.RecordChanged += new System.EventHandler<Desktop.CommonControls.RecordEventArgs>(this.recTreeTarget_RecordChanged);
 			// 
 			// treeDialogue
 			// 

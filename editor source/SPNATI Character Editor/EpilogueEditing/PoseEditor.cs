@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_library = ImageLibrary.Get(_character);
 		}
 
-		private void _history_CommandApplied(UndoAction obj)
+		private void _history_CommandApplied(object sender, CommandEventArgs obj)
 		{
 			UpdateToolbar();
 		}
@@ -70,7 +70,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void Canvas_ObjectSelected(object sender, CanvasSelectionArgs args)
 		{
-			timeline.SelectWidgetWithData(args.Object, args.Modifiers);
+			timeline.SelectWidgetWithData(args.Object);
 		}
 
 		private void Timeline_WidgetSelected(object sender, ITimelineWidget widget)
@@ -242,14 +242,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return true;
 		}
 
-		private void canvas_Paint(object sender, PaintEventArgs e)
-		{
-			if (_pose == null)
-			{
-				return;
-			}
-		}
-
 		private void UpdateToolbar()
 		{
 			if (_playing) { return; }
@@ -329,7 +321,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				LiveKeyframe kf = widget.Sprite.Keyframes[0];
 				kf = sprite.CopyKeyframe(kf, new HashSet<string>());
-				PasteKeyframeCommand command = new PasteKeyframeCommand(sprite, kf, widget.GetEnd(timeline.Duration), true);
+				PasteKeyframeCommand command = new PasteKeyframeCommand(sprite, kf, widget.GetEnd(timeline.Duration));
 				_history.Commit(command);
 				timeline.CurrentTime = command.NewKeyframe.Time;
 			}

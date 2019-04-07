@@ -131,7 +131,7 @@ namespace SPNATI_Character_Editor
 			chkNot.CheckedChanged += ValueChanged;
 		}
 
-		private void RecordChanged(object sender, IRecord record)
+		private void RecordChanged(object sender, RecordEventArgs e)
 		{
 			Save();
 		}

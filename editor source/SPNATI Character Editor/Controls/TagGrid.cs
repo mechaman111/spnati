@@ -140,7 +140,6 @@ namespace SPNATI_Character_Editor.Controls
 				for (int i = 0; i < _layerCount + 1; i++)
 				{
 					string label = i == 0 ? "Select All" : GetLayerName(i - 1);
-					SizeF size = g.MeasureString(label, Font);
 
 					int x = _headerWidth + CellSize * i;
 					g.TranslateTransform(x + 10, _headerHeight - 15); //fudging some numbers empirically to make it line up nice
@@ -157,14 +156,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			StageName stage = _character.LayerToStageName(layer);
 			return stage.DisplayName;
-		}
-
-		private void Selector_MouseMove(object sender, MouseEventArgs e)
-		{
-			Control ctl = sender as Control;
-			Point pt = ctl.PointToScreen(new Point(e.X, e.Y));
-			pt = panel.PointToClient(pt);
-			panel_MouseMove(sender, new MouseEventArgs(e.Button, e.Clicks, pt.X, pt.Y, e.Delta));
 		}
 
 		private void panel_MouseMove(object sender, MouseEventArgs e)
@@ -269,7 +260,6 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			int x = (e.X - _headerWidth) / CellSize;
 			int y = (e.Y - _headerHeight) / CellSize;
-			Point oldPt = _highlightedCell;
 			if (x >= 0 && x < _layerCount + 1 && y >= 0 && y <= _tags.Count)
 			{
 				BindableTag tag = _bindings.Get(_tags[y].Value);

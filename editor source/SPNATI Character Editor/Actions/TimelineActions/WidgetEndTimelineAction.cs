@@ -34,7 +34,6 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 
 		public void Start(WidgetActionArgs args)
 		{
-			int track = args.Track;
 			_history = args.History;
 			_widget = args.Widget;
 			_snap = (int)Math.Round(1 / args.SnapIncrement);
