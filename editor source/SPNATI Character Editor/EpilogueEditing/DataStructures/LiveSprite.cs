@@ -1219,14 +1219,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return;
 			}
 
+			x = (float)Math.Round(x, 0);
+			y = (float)Math.Round(y, 0);
+
 			float time = GetRelativeTime();
-			AddValue<float>(time, "X", x.ToString());
-			AddValue<float>(time, "Y", y.ToString());
+			AddValue<float>(time, "X", x.ToString(CultureInfo.InvariantCulture));
+			AddValue<float>(time, "Y", y.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public void AdjustPivot(PointF screenPt, Matrix sceneTransform)
 		{
-			//convert screen pt to unscaled, unrotated space
 			PointF[] pts = new PointF[] {
 				screenPt,
 				new PointF(0,0),
@@ -1241,8 +1243,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float xPct = localPt.X / Width;
 			float yPct = localPt.Y / Height;
 
-			//xPct = (screenPt.X - worldBounds.X) / worldBounds.Width;
-			//yPct = (screenPt.Y - worldBounds.Y) / worldBounds.Height;
 			float pivotX = (float)Math.Round(xPct, 2);
 			float pivotY = (float)Math.Round(yPct, 2);
 			if (pivotX == PivotX && pivotY == PivotY)

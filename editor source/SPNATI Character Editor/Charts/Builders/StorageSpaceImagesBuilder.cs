@@ -6,13 +6,13 @@ using System.Linq;
 namespace SPNATI_Character_Editor.Charts.Builders
 {
 	[Chart(ChartType.Bar, 15)]
-	public class StorageSpaceBuilder : IChartDataBuilder
+	public class StorageSpaceImagesBuilder : IChartDataBuilder
 	{
 		private List<Tuple<Character, long>> _data;
 
 		public string GetLabel()
 		{
-			return "Folder Size (MB)";
+			return "Folder Size (MB), only images";
 		}
 
 		public void GenerateData()
@@ -25,7 +25,7 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				string folder = Config.GetRootDirectory(c);
 				DirectoryInfo directory = new DirectoryInfo(folder);
 				foreach (FileInfo file in directory.EnumerateFiles()
-					.Where(LinesPerMegabyteBuilder.FilterPaths))
+					.Where(FilterPaths))
 				{
 					count += file.Length;
 				}
@@ -37,6 +37,18 @@ namespace SPNATI_Character_Editor.Charts.Builders
 			{
 				return (t2.Item2).CompareTo(t1.Item2);
 			});
+		}
+
+		private static bool FilterPaths(FileInfo f)
+		{
+			string extension = f.Extension.ToLower();
+			if (extension == ".png" ||
+				extension == ".gif" ||
+				extension == ".jpg")
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public List<List<ChartData>> GetSeries(string view)
