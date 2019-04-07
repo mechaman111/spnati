@@ -169,7 +169,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float X
 		{
 			get { return _x; }
-			set { _x = value; UpdateLocalTransform(); }
+			set { _x = (float)Math.Round(value, 0); UpdateLocalTransform(); }
 		}
 
 		private float _y;
@@ -177,7 +177,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float Y
 		{
 			get { return _y; }
-			set { _y = value; UpdateLocalTransform(); }
+			set { _y = (float)Math.Round(value, 0); UpdateLocalTransform(); }
 		}
 
 		private float _rotation;
@@ -185,7 +185,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float Rotation
 		{
 			get { return _rotation; }
-			set { _rotation = value; UpdateLocalTransform(); }
+			set { _rotation = (float)Math.Round(value, 2); UpdateLocalTransform(); }
 		}
 
 		private float _scaleX = 1;
@@ -194,6 +194,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return _scaleX; }
 			set
 			{
+				value = (float)Math.Round(value, 2);
 				if (value == 0)
 				{
 					value = 0.01f;
@@ -209,6 +210,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return _scaleY; }
 			set
 			{
+				value = (float)Math.Round(value, 2);
 				if (value == 0)
 				{
 					value = 0.01f;
@@ -222,14 +224,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float SkewX
 		{
 			get { return _skewX; }
-			set { _skewX = value; }
+			set
+			{
+				value = (float)Math.Round(value, 2);
+				_skewX = value;
+			}
 		}
 
 		private float _skewY = 0;
 		public float SkewY
 		{
 			get { return _skewY; }
-			set { _skewY = value; }
+			set
+			{
+				value = (float)Math.Round(value, 2);
+				_skewY = value;
+			}
 		}
 
 		public float Alpha = 100;

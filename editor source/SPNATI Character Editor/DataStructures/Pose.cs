@@ -170,12 +170,15 @@ namespace SPNATI_Character_Editor
 										{
 											Id = item.Id,
 											DirectiveType = "animation",
-											Delay = delay.ToString(CultureInfo.InvariantCulture),
 											Looped = settings.Looped,
 											EasingMethod = settings.Ease,
 											InterpolationMethod = settings.Interpolation,
 											Marker = item.Marker,
 										};
+										if (delay > 0)
+										{
+											directive.Delay = delay.ToString(CultureInfo.InvariantCulture);
+										}
 										Directives.Add(directive);
 										directives.Set(delay, settingsKey, directive);
 									}
