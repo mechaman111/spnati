@@ -193,7 +193,8 @@ function expandTagsList(input_tags) {
  *****                  State Object Specification                *****
  **********************************************************************/
 
-function State($xml, addedTags, removedTags) {
+function State($xml, parentCase) {
+    this.parentCase = parentCase;
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
@@ -211,9 +212,6 @@ function State($xml, addedTags, removedTags) {
     this.setGender = $xml.attr('set-gender');
     this.setLabel = $xml.attr('set-label');
     
-    this.addTags = !!addedTags ? addedTags : [];
-    this.removeTags = !!removedTags ? removedTags : [];
-
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
     var markerOp = $xml.attr('marker');
@@ -299,7 +297,7 @@ State.prototype.evaluateMarker = function (self, opp) {
     } else if (this.marker.op === '=') {
         if (typeof(this.marker.val) === 'number') return this.marker.val;
         
-        var val = expandDialogue(this.marker.val, self, opp);
+        var val = expandDialogue(this.marker.val, self, opp, this.parentCase && this.parentCase.variableBindings);
         
         if (!isNaN(parseInt(val, 10))) {
             return parseInt(val, 10);
@@ -321,7 +319,7 @@ State.prototype.applyMarker = function (self, opp) {
 }
 
 State.prototype.expandDialogue = function(self, target) {
-    this.dialogue = expandDialogue(this.rawDialogue, self, target);
+    this.dialogue = expandDialogue(this.rawDialogue, self, target, this.parentCase && this.parentCase.variableBindings);
 }
 
 State.prototype.applyCollectible = function (player) {
@@ -425,7 +423,7 @@ function expandPlayerVariable(split_fn, args, self, target) {
 /************************************************************
  * Expands variables etc. in a line of dialogue.
  ************************************************************/
-function expandDialogue (dialogue, self, target) {
+function expandDialogue (dialogue, self, target, bindings) {
     function substitute(match, variable, fn, args) {
         // If substitution fails, return match unchanged.
         var substitution = match;
@@ -447,7 +445,7 @@ function expandDialogue (dialogue, self, target) {
             case 'clothing':
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
-                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target);
+                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
                     substitution = clothing.plural ? 'plural' : 'single';
                 } else if (fn == 'formal' && args === undefined) {
@@ -461,7 +459,7 @@ function expandDialogue (dialogue, self, target) {
             case 'cards': /* determine how many cards are being swapped */
                 var n = self.hand.tradeIns.countTrue();
                 if (fn == 'ifplural') {
-                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target);
+                    substitution = expandDialogue(args.split('|')[n == 1 ? 1 : 0], self, target, bindings);
                 } else if (fn == 'text' && args === undefined) {
                     substitution = [ 'zero', 'one', 'two', 'three', 'four', 'five' ][n];
                 } else if (fn === undefined) {
@@ -523,13 +521,17 @@ function expandDialogue (dialogue, self, target) {
                 substitution = expandPlayerVariable(fn_parts, args, self, self);
                 break;
             default:
-                /* Find a specific character at the table by ID. */
-                players.some(function (p) {
-                    if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
-                        substitution = expandPlayerVariable(fn_parts, args, self, p);
-                        return true;
-                    }
-                });
+                if (bindings && variable.toLowerCase() in bindings) {
+                    substitution = expandPlayerVariable(fn_parts, args, self, bindings[variable.toLowerCase()]);
+                } else {
+                    /* Find a specific character at the table by ID. */
+                    players.some(function (p) {
+                        if (p.id.replace(/\W/g, '').toLowerCase() === variable.toLowerCase()) {
+                            substitution = expandPlayerVariable(fn_parts, args, self, p);
+                            return true;
+                        }
+                    });
+                }
                 break;
             }
             if (variable[0] == variable[0].toUpperCase()) {
@@ -722,15 +724,19 @@ function Case($xml, stage) {
     
     if (this.addTags) {
         this.addTags = this.addTags.split(',').map(canonicalizeTag);
+    } else {
+        this.addTags = [];
     }
 
     if (this.removeTags) {
         this.removeTags = this.removeTags.split(',').map(canonicalizeTag);
+    } else {
+        this.removeTags = [];
     }
     
     this.states = [];
     $xml.find('state').each(function (idx, elem) {
-        this.states.push(new State($(elem), this.addTags, this.removeTags));
+        this.states.push(new State($(elem), this));
     }.bind(this));
     
     var counters = [];
@@ -785,11 +791,16 @@ function Case($xml, stage) {
     	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
     
     	counters.forEach(function (ctr) {
-    		var filterTag 	 = ctr.attr('filter');
-    		var filterGender = ctr.attr('gender');
-    		var filterStatus = ctr.attr('status');
-    		
-    		this.priority += (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
+            var filterId     = ctr.attr('character');
+            var filterStage  = ctr.attr('stage');
+            var role         = ctr.attr('role');
+            var filterTag    = ctr.attr('filter');
+            var filterGender = ctr.attr('gender');
+            var filterStatus = ctr.attr('status');
+
+            this.priority += (filterId ? (role == "target" ? 300 : 100) : 0)
+                + (filterStage ? (role == "target" ? 80 : 40) : 0)
+                + (filterTag ? 10 : 0) + (filterGender ? 5 : 0) + (filterStatus ? 5 : 0);
     	}.bind(this));
     	
     	// Expression tests (priority = 50 for each)
@@ -867,7 +878,7 @@ Case.prototype.getVolatileDependencies = function (self, opp) {
     return deps;
 }
 
-Case.prototype.basicRequirementsMet = function (self, opp) {
+Case.prototype.basicRequirementsMet = function (self, opp, captures) {
     // stage
     if (this.stage) {
         if (!inInterval(self.stage, this.stage)) {
@@ -1008,55 +1019,6 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
         }
     }
 
-    // filter counter targets
-    if(!this.counters.every(function (ctr) {
-        var desiredCount = parseInterval(ctr.attr('count'));
-        var filterTag =    ctr.attr('filter');
-        var filterGender = ctr.attr('gender');
-        var filterStatus = ctr.attr('status');
-        
-        var count = players.countTrue(function(p) {
-            return p && (filterTag == undefined || p.hasTag(filterTag))
-                && (filterGender == undefined || (p.gender == filterGender))
-                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
-        });
-        
-        return inInterval(count, desiredCount);
-    })) {
-        return false; // failed filter count
-    }
-
-    if (!this.tests.every(function(test) {
-        var expr = expandDialogue(test.attr('expr'), self, opp);
-        var value = test.attr('value');
-		var cmp = test.attr('cmp') || '==';
-		
-        var interval = parseInterval(value);
-		if (interval) {
-			return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
-		}
-		
-		if (!isNaN(Number(expr))) expr = Number(expr);
-		if (!isNaN(Number(value))) value = Number(value);
-		
-		switch (cmp) {
-			case '>':
-				return expr > value;
-			case '>=':
-				return expr >= value;
-			case '<':
-				return expr < value;
-			case '<=':
-				return expr <= value;
-			case '!=':
-				return expr != value;
-			default:
-				return expr == value;
-		}
-    })) {
-        return false;
-    }
-
     // totalRounds
     if (this.totalRounds) {
         if (!inInterval(currentRound, this.totalRounds)) {
@@ -1141,8 +1103,80 @@ Case.prototype.basicRequirementsMet = function (self, opp) {
             return false;
         }
     }
-    
-    return true;
+
+    var counterMatches = [];
+
+    // filter counter targets
+    if (!this.counters.every(function (ctr) {
+        var desiredCount = parseInterval(ctr.attr('count') || "1-");
+        var role         = ctr.attr('role');
+        var variable     = ctr.attr('var');
+        var filterId     = ctr.attr('character');
+        var filterStage  = parseInterval(ctr.attr('stage'));
+        var filterTag =    ctr.attr('filter');
+        var filterGender = ctr.attr('gender');
+        var filterStatus = ctr.attr('status');
+
+        var matches = players.filter(function(p) {
+            return (role === undefined || (role == "target" && p == opp) || (role == "opp" && p != self) || (role == "other" && p != self && p != target))
+                && (filterId === undefined || p.id == filterId)
+                && (filterStage === undefined || inInterval(p.stage, filterStage))
+                && (filterTag == undefined || p.hasTag(filterTag))
+                && (filterGender == undefined || (p.gender == filterGender))
+                && (filterStatus == undefined || checkPlayerStatus(p, filterStatus));
+        });
+
+        if (inInterval(matches.length, desiredCount)) {
+            if (matches.length && variable) {
+                counterMatches.push([ variable, matches ]);
+            }
+            return true;
+        }
+        return false;
+    })) {
+        return false; // failed filter count
+    }
+    var bindingCombinations = getAllBindingCombinations(counterMatches);
+    shuffleArray(bindingCombinations);
+    /* In the trivial case with no condition variables, we get a single binding combination of {}.
+       And with no tests, this.tests.every() trivially returns true. */
+    for (var i = 0; i < bindingCombinations.length; i++) {
+        if (this.tests.every(function(test) {
+            var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
+            var value = test.attr('value');
+            var cmp = test.attr('cmp') || '==';
+
+            var interval = parseInterval(value);
+            if (interval) {
+                return (cmp === '!=') ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
+            }
+
+            if (!isNaN(Number(expr))) expr = Number(expr);
+            if (!isNaN(Number(value))) value = Number(value);
+
+            switch (cmp) {
+            case '>':
+                return expr > value;
+            case '>=':
+                return expr >= value;
+            case '<':
+                return expr < value;
+            case '<=':
+                return expr <= value;
+            case '!=':
+                return expr != value;
+            default:
+                return expr == value;
+            }
+
+            return true;
+        })) {
+            this.variableBindings = bindingCombinations[i];
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**********************************************************************
@@ -1362,9 +1396,9 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.size = this.chosenState.setSize;
     }
     
-    if (this.chosenState.removeTags.length > 0 || this.chosenState.addTags.length > 0) {
-        this.chosenState.removeTags.forEach(this.removeTag.bind(this));
-        this.chosenState.addTags.forEach(this.addTag.bind(this));
+    if (this.chosenState.parentCase && (this.chosenState.parentCase.removeTags.length > 0 || this.chosenState.parentCase.addTags.length > 0)) {
+        this.chosenState.parentCase.removeTags.forEach(this.removeTag.bind(this));
+        this.chosenState.parentCase.addTags.forEach(this.addTag.bind(this));
         this.updateTags();
     }
     
@@ -1451,4 +1485,40 @@ function commitAllBehaviourUpdates () {
             p.commitBehaviourUpdate();
         }
     });
+}
+
+/*
+ * Produces all combinations of variable bindings
+ * Input: an array of pairs of variable name and matching player references
+ * Return value: an array of objects with each variable name bound to a player reference.
+ */
+function getAllBindingCombinations (variableMatches) {
+    if (variableMatches.length > 0) {
+        var ret = [];
+        var cur = variableMatches[0];
+        var variable = cur[0];
+        var matches = cur[1];
+        var rest = getAllBindingCombinations(variableMatches.slice(1));
+
+        for (var i = 0; i < matches.length; i++) {
+            for (var j = 0; j < rest.length; j++) {
+                var bindings = {};
+                for (var key in rest[j]) { // copy properties
+                    bindings[key] = rest[j][key];
+                }
+                bindings[variable] = matches[i];
+                ret.push(bindings);
+            }
+        }
+        return ret;
+    } else return [{}];
+}
+
+function shuffleArray (array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = getRandomNumber(0, i);
+        var tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
 }
