@@ -374,6 +374,7 @@ Player.prototype.resetState = function () {
         this.labels = appearance.labels;
         this.folders = appearance.folders;
         this.baseTags = appearance.tags.slice();
+        this.labelOverridden = false;
 
 		/* Load the player's wardrobe. */
 
