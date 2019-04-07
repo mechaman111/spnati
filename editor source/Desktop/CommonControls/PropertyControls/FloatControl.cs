@@ -68,6 +68,10 @@ namespace Desktop.CommonControls.PropertyControls
 					valValue.PlaceholderText = GetPreviewString(value);
 				}
 			}
+			else
+			{
+				valValue.PlaceholderText = "";
+			}
 		}
 
 		private string GetPreviewString(float value)

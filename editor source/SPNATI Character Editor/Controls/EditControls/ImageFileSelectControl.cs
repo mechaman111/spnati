@@ -31,11 +31,8 @@ namespace SPNATI_Character_Editor.Controls
 
 			string value = GetValue()?.ToString();
 
+			txtValue.PlaceholderText = GetPreviewValue()?.ToString();
 			txtValue.Text = value;
-			if (string.IsNullOrEmpty(value))
-			{
-				txtValue.PlaceholderText = GetPreviewValue()?.ToString();
-			}
 		}
 
 		private void CmdBrowse_Click(object sender, EventArgs e)

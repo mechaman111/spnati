@@ -70,6 +70,10 @@ namespace Desktop.CommonControls.PropertyControls
 					}
 					valValue.PlaceholderText = preview;
 				}
+				else
+				{
+					valValue.PlaceholderText = null;
+				}
 			}
 		}
 
