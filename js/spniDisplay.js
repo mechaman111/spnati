@@ -26,9 +26,12 @@ function PoseSprite(id, src, onload, pose, args) {
     this.width = args.width || 0;
     this.delay = args.delay || 0;
     this.elapsed = 0;
+    this.parentId = args.parent;
     
     this.vehicle = document.createElement('div');
     this.vehicle.id = id;
+    this.pivot = document.createElement('div');
+    this.vehicle.appendChild(this.pivot);
     
     this.img = document.createElement('img');
     this.img.onload = this.img.onerror = function() {
@@ -40,7 +43,7 @@ function PoseSprite(id, src, onload, pose, args) {
     }.bind(this);
     this.img.src = this.src;
     
-    this.vehicle.appendChild(this.img);
+    this.pivot.appendChild(this.img);
     
     if (this.alpha === undefined) {
         this.alpha = 100;
@@ -49,10 +52,17 @@ function PoseSprite(id, src, onload, pose, args) {
     if (this.pivotx || this.pivoty) {
         this.pivotx = this.pivotx || "center";
         this.pivoty = this.pivoty || "center";
-        $(this.img).css("transform-origin", this.pivotx + " " + this.pivoty);
+        $(this.pivot).css("transform-origin", this.pivotx + " " + this.pivoty);
     }
     
     $(this.vehicle).css("z-index", this.z);
+}
+
+PoseSprite.prototype.linkParent = function () {
+    if (this.parentId) {
+        this.parent = this.pose.sprites[this.parentId];
+        this.parent.pivot.appendChild(this.vehicle);
+    }
 }
 
 PoseSprite.prototype.scaleToDisplay = function(x) {
@@ -73,14 +83,20 @@ PoseSprite.prototype.draw = function() {
     if (this.elapsed < this.delay) {
         alpha = 0;
     }
-    $(this.vehicle).css({
-      "position": "absolute",
-      "left": "50%",
-      "transform":  "translateX(-50%) translateX("+this.scaleToDisplay(this.x)+"px) translateY(" + this.scaleToDisplay(this.y) + "px)",
-      "transform-origin": "top left",
-      "opacity": alpha,
-      "height": '100%'
-    });
+    var properties = {
+        "position": "absolute",
+        "left": "50%",
+        "top": "0",
+        "transform": "translateX(-50%) translateX(" + this.scaleToDisplay(this.x) + "px) translateY(" + this.scaleToDisplay(this.y) + "px)",
+        "transform-origin": "top left",
+        "opacity": alpha,
+        "height": '100%',
+    };
+    if (this.parent) {
+        properties.left = 0;
+        properties.transform = "translateX(" + this.scaleToDisplay(this.x) + "px) translateY(" + this.scaleToDisplay(this.y) + "px)";
+    }
+    $(this.vehicle).css(properties);
     
     if (this.prevSrc !== this.src) {
 
@@ -91,11 +107,15 @@ PoseSprite.prototype.draw = function() {
     }
 
 
-    $(this.img).css({
+    $(this.pivot).css({
       "transform": "rotate(" + this.rotation + "deg) scale(" + this.scalex + ", " + this.scaley + ") skew(" + this.skewx + "deg, " + this.skewy + "deg)",
-      'height': this.scaleToDisplay(this.height)+"px",
-      'width': this.scaleToDisplay(this.width)+"px"
     });
+    if (this.img) {
+        $(this.img).css({
+            'height': this.scaleToDisplay(this.height) + "px",
+            'width': this.scaleToDisplay(this.width) + "px"
+        });
+    }
 }
 
 
@@ -213,6 +233,12 @@ function Pose(poseDef, display) {
         
         container.appendChild(sprite.vehicle);
     }.bind(this));
+
+    for (var id in this.sprites) {
+        if (this.sprites.hasOwnProperty(id)) {
+            this.sprites[id].linkParent();
+        }
+    }
     
     poseDef.animations.forEach(function (def) {
         if (def.marker && !checkMarker(def.marker, this.player)) {
