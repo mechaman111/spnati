@@ -186,7 +186,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			}
 
 			SortLayer = ++NextLayer;
-			if (directive.Layer > 0)
+			if (directive.Layer != 0)
 			{
 				Layer = directive.Layer;
 			}
@@ -278,6 +278,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				HeightPct = Image.Height / scene.Height;
 			}
 
+			Layer = -100;
 			Width = WidthPct * scene.Width;
 			Height = HeightPct * scene.Height;
 		}

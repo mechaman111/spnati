@@ -76,7 +76,20 @@ namespace SPNATI_Character_Editor.Controls
 			Enabled = true;
 			PopulateEndingCombo();
 
-			if (_character.Endings.Count > 0)
+			string lastEnding = Config.LastEnding;
+			if (!string.IsNullOrEmpty(lastEnding))
+			{
+				Epilogue ending = _character.Endings.Find(e => e.Title == lastEnding);
+				if (ending != null)
+				{
+					cboEnding.SelectedItem = ending;
+				}
+				else if (_character.Endings.Count > 0)
+				{
+					cboEnding.SelectedIndex = 0;
+				}
+			}
+			else if (_character.Endings.Count > 0)
 			{
 				cboEnding.SelectedIndex = 0;
 			}
@@ -152,6 +165,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void LoadEnding(Epilogue ending)
 		{
 			SaveEnding();
+			Config.LastEnding = ending.Title;
 			_ending = ending;
 			PopulateDataFields();
 			cmdDeleteEnding.Enabled = tabs.Enabled = (ending != null);

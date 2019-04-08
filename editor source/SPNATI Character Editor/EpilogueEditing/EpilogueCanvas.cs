@@ -122,7 +122,7 @@ namespace SPNATI_Character_Editor.Controls
 			_character = character;
 			Enabled = (_epilogue != null);
 			propertyTable.Data = null;
-			treeScenes.SetData(epilogue);
+			treeScenes.SetData(epilogue, _character);
 			BuildScene(false);
 			FitToScreen();
 		}

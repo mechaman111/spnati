@@ -346,6 +346,15 @@ namespace SPNATI_Character_Editor
 				}
 			}
 		}
+
+		/// <summary>
+		/// Last ending that was opened
+		/// </summary>
+		public static string LastEnding
+		{
+			get { return GetString("lastending"); }
+			set { Set("lastending", value); }
+		}
 	}
 
 	public static class Settings

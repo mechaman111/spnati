@@ -7,6 +7,7 @@ namespace SPNATI_Character_Editor.Controls
 {
 	public partial class SceneTree : UserControl
 	{
+		private Character _character;
 		private Epilogue _epilogue;
 		/// <summary>
 		/// mapping of tag to node
@@ -34,8 +35,9 @@ namespace SPNATI_Character_Editor.Controls
 			treeScenes.AfterSelect += TreeScenes_AfterSelect;
 		}
 
-		public void SetData(Epilogue epilogue)
+		public void SetData(Epilogue epilogue, Character character)
 		{
+			_character = character;
 			_epilogue = epilogue;
 			Enabled = (epilogue != null);
 
@@ -598,8 +600,21 @@ namespace SPNATI_Character_Editor.Controls
 			Scene scene = GetSelectedScene();
 			if (scene == null) { return; }
 
+			string src = null;
+			if (type == "sprite")
+			{
+				if (openFileDialog.ShowDialog(_character, "") == DialogResult.OK)
+				{
+					src = openFileDialog.FileName;
+				}
+			}
+
 			Directive dir = new Directive(type);
 			ApplyDefaults(dir);
+			if (src != null)
+			{
+				dir.Src = src;
+			}
 			TreeNode node = new TreeNode(dir.ToString());
 			_nodes[dir] = node;
 			node.Tag = dir;

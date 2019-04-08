@@ -76,12 +76,12 @@ namespace SPNATI_Character_Editor
 		public int Iterations;
 
 		[DefaultValue(0)]
-		[Numeric(DisplayName = "Layer", Key = "layer", GroupOrder = 6, Description = "Sort order layer", Minimum = 0, Maximum = 100)]
+		[Numeric(DisplayName = "Layer", Key = "layer", GroupOrder = 6, Description = "Sort order layer", Minimum = -100, Maximum = 100)]
 		[XmlAttribute("layer")]
 		public int Layer;
 
 		[DefaultValue(0)]
-		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 6, Description = "Sort order layer", Minimum = 0, Maximum = 100)]
+		[Numeric(DisplayName = "Layer", Key = "z", GroupOrder = 6, Description = "Sort order layer", Minimum = -100, Maximum = 100)]
 		[XmlAttribute("z")]
 		public int Z;
 
