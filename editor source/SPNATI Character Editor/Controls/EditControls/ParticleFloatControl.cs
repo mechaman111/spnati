@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Desktop;
 using Desktop.CommonControls;
-using Desktop;
+using System;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls.EditControls
 {

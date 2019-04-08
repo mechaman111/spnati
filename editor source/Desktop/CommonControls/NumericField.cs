@@ -32,7 +32,7 @@ namespace Desktop.CommonControls
 			{
 				valField.Value = value;
 				lblPlaceholder.Visible = false;
-				valField.Text = value.ToString(CultureInfo.InvariantCulture);
+				valField.Text = value.ToString(CultureInfo.CurrentCulture);
 			}
 		}
 
