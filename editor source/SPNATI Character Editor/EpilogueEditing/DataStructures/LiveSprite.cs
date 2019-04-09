@@ -165,7 +165,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public int Width;
 
 		private float _x;
-		[Float(DisplayName = "X", Minimum = -10000, Maximum = 10000)]
 		public float X
 		{
 			get { return _x; }
@@ -173,7 +172,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		private float _y;
-		[Float(DisplayName = "Y", Minimum = -10000, Maximum = 10000)]
 		public float Y
 		{
 			get { return _y; }
@@ -181,7 +179,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		private float _rotation;
-		[Float(DisplayName = "Rotation", Increment = 5, Minimum = -360, Maximum = 360)]
 		public float Rotation
 		{
 			get { return _rotation; }
