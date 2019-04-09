@@ -58,5 +58,10 @@ namespace SPNATI_Character_Editor
 		{
 			return new PointF(p1.X + p2.X, p1.Y + p2.Y);
 		}
+
+		public static float Distance(this PointF p1, PointF p2)
+		{
+			return (float)Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
+		}
 	}
 }

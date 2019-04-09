@@ -419,6 +419,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						SelectObject(obj);
 					}
+					if (obj == null && _selectedObject != null)
+					{
+						PointF worldPt = _selectedObject.ScreenToWorldPt(SceneTransform, _downPoint)[0];
+						SimpleIK ik = new SimpleIK();
+						ik.Solve(_selectedObject, worldPt, SceneTransform);
+					}
 				}
 			}
 			else if (e.Button == MouseButtons.Right)
