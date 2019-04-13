@@ -38,6 +38,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ConvertScreenBased(Character character, Epilogue ending)
 		{
+			ending.Scenes.Clear();
 			foreach (Screen screen in ending.Screens)
 			{
 				string image = screen.Image;
@@ -46,6 +47,10 @@ namespace SPNATI_Character_Editor
 				string sceneHeight = null;
 				if (!string.IsNullOrEmpty(image))
 				{
+					if (string.IsNullOrEmpty(ending.GalleryImage))
+					{
+						ending.GalleryImage = image;
+					}
 					try
 					{
 						Image img = new Bitmap(Path.Combine(Config.GetRootDirectory(character), image));
@@ -91,6 +96,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		private static void ConvertBackgroundSceneBased(Character character, Epilogue ending)
 		{
+			ending.Scenes.Clear();
 			foreach (Background bg in ending.Backgrounds)
 			{
 				string image = bg.Image;
