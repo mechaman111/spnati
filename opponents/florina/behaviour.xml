@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.0.3b at 9:32:24 PM on April 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v4.0.3b at 8:57:40 PM on April 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v4.0.3b</version>
     <first>Florina</first>
@@ -19,14 +19,17 @@
         <tag>fair-skinned</tag>
         <tag>shaved</tag>
         <tag>medium_breasts</tag>
-        <tag>armor</tag>
+        <tag from="0" to="1">armor</tag>
+        <tag from="0" to="3">thigh_highs</tag>
         <tag>innocent</tag>
         <tag>moe</tag>
         <tag>shy</tag>
         <tag>enf</tag>
+        <tag>bisexual</tag>
         <tag>fantasy</tag>
         <tag>video_game</tag>
         <tag>fire_emblem</tag>
+        <tag>fe_blazing_blade</tag>
         <tag>nintendo</tag>
         <tag>fighter</tag>
     </tags>
@@ -129,6 +132,11 @@
             <case tag="selected">
                 <state img="0-calm.png">My name is—! Sorry, let me start again. Come on, deep breath, Florina... My name is Florina! Hi there!</state>
             </case>
+            <case tag="selected">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-calm.png">Hi. I'm... a bunny today. It's a bit embarrassing so try not to stare!</state>
+                <state img="0-embarrassed.png">I'm, erm, Florina. Please don't laugh at this outfit.</state>
+            </case>
             <case tag="opponent_selected" target="lyn">
                 <state img="0-embarrassed.png">L-Lady Lyndis. I'm g-glad you could come with me today...</state>
             </case>
@@ -176,6 +184,11 @@
                 <condition count="3" filter="street_fighter" />
                 <state img="0-calm.png" marker="left_out">Tracks playing against 3 opponents from the same series</state>
             </case>
+            <case tag="game_start">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-happy.png">Well, let's hop to it!</state>
+                <state img="0-happy.png">Time to get hopping!</state>
+            </case>
             <case tag="game_start" totalMales="1-2">
                 <state img="0-shocked.png">Huh? Nobody told me there'd be a m-m-man here!</state>
                 <state img="0-awkward.png">Um... there's a m-man here. I'm, er, &lt;i&gt;really&lt;/i&gt; not good with them...</state>
@@ -219,6 +232,13 @@
             </case>
             <case tag="good_hand" hasHand="Royal Flush">
                 <state img="0-shocked.png">I...I think this is the best hand you can even get! Oh, I'm not supposed to say that, am I?</state>
+            </case>
+            <case tag="good_hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-happy.png">I hopped right into a good hand!</state>
+                <state img="0-happy.png">I hope I can bounce my way to victory.</state>
+                <state img="0-calm.png">This is... definitely not like fighting from atop a pegasus.</state>
+                <state img="0-happy.png">I dodged a bad hand this time!</state>
             </case>
             <case tag="good_hand" timeInStage="11-99">
                 <state img="0-victory.png">Wow, I'm unstoppable today!</state>
@@ -501,7 +521,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="0-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="0-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="0-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -529,6 +549,10 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="0-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="0-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
             </case>
             <case tag="hand" totalExposed="0" saidMarker="remark_started" notSaidMarker="remark_started2">
                 <state img="0-nervous.png" marker="remark_started2">Well, here goes nothing.</state>
@@ -2399,6 +2423,13 @@
             <case tag="good_hand" hasHand="Royal Flush">
                 <state img="1-shocked.png">I...I think this is the best hand you can even get! Oh, I'm not supposed to say that, am I?</state>
             </case>
+            <case tag="good_hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-happy.png">I hopped right into a good hand!</state>
+                <state img="1-happy.png">I hope I can bounce my way to victory.</state>
+                <state img="1-calm.png">This is... definitely not like fighting from atop a pegasus.</state>
+                <state img="1-happy.png">I dodged a bad hand this time!</state>
+            </case>
             <case tag="good_hand" timeInStage="11-99">
                 <state img="1-victory.png">Wow, I'm unstoppable today!</state>
                 <state img="1-victory.png">I don't think I've ever had this sort of luck before.</state>
@@ -2642,7 +2673,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="1-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="1-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="1-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -2670,6 +2701,10 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="1-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="1-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
             </case>
             <case tag="hand" totalExposed="0" saidMarker="remark_started" notSaidMarker="remark_started2">
                 <state img="1-nervous.png" marker="remark_started2">Well, here goes nothing.</state>
@@ -2779,7 +2814,7 @@
             </case>
             <case tag="stripped" saidMarker="first_partial">
                 <state img="1-stripped.png">*Phew*. I know it's j-just a belt, but considering ~marker.first_partial~'s state...</state>
-                <state img="1-stripped.png">For benig just a belt, that was awfully n-nervewracking. I can't stop thinking about what happened to ~marker.first_partial~.</state>
+                <state img="1-stripped.png">For being just a belt, that was awfully n-nervewracking. I can't stop thinking about what happened to ~marker.first_partial~.</state>
             </case>
             <case tag="stripped" saidMarker="fled" priority="900">
                 <state img="1-loss.png">S-sorry! I... I got scared and ran off after taking off my b-belt.</state>
@@ -3221,7 +3256,7 @@
                 <state img="1-happy.png">See? Little things like your ~clothing~ and my belt aren't scary.</state>
                 <state img="1-interested.png">Oh good. I was worried my belt wasn't good enough, but if that's what you're doing then I can rest easy.</state>
                 <state img="1-happy.png">This won't be bad at all if that's all we're doing.</state>
-                <state img="1-happy.png">Two rounds down. Tthis is no big deal after all.</state>
+                <state img="1-happy.png">Two rounds down. Th-this is no big deal after all.</state>
             </case>
             <case tag="male_removing_minor">
                 <state img="1-cover.png">I'm not watching!</state>
@@ -4455,6 +4490,13 @@
             <case tag="good_hand" notSaidMarker="bee">
                 <state img="custom:2-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
             </case>
+            <case tag="good_hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-happy.png">I hopped right into a good hand!</state>
+                <state img="2-happy.png">I hope I can bounce my way to victory.</state>
+                <state img="2-calm.png">This is... definitely not like fighting from atop a pegasus.</state>
+                <state img="2-happy.png">I dodged a bad hand this time!</state>
+            </case>
             <case tag="good_hand" totalAlive="2" totalNaked="4">
                 <state img="2-victory.png">I...I think I'm going to win!</state>
                 <state img="2-interested.png">This...this might be enough to win it all!</state>
@@ -4579,7 +4621,7 @@
                 <state img="2-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSayingMarker="florina_bee">
-                <state img="2-sad.png" marker="bee_lyn">Lyn, h-have you forgetten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
+                <state img="2-sad.png" marker="bee_lyn">Lyn, h-have you forgotten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
             </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="2-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
@@ -4695,7 +4737,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="2-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="2-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="2-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -4723,6 +4765,10 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="2-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="2-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
             </case>
             <case tag="hand" totalExposed="0" saidMarker="remark_started" notSaidMarker="remark_started2">
                 <state img="2-nervous.png" marker="remark_started2">Well, here goes nothing.</state>
@@ -6474,6 +6520,13 @@
             <case tag="good_hand" notSaidMarker="bee">
                 <state img="custom:3-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
             </case>
+            <case tag="good_hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-happy.png">I hopped right into a good hand!</state>
+                <state img="3-happy.png">I hope I can bounce my way to victory.</state>
+                <state img="3-calm.png">This is... definitely not like fighting from atop a pegasus.</state>
+                <state img="3-happy.png">I dodged a bad hand this time!</state>
+            </case>
             <case tag="good_hand" totalAlive="2" totalNaked="4">
                 <state img="3-victory.png">I...I think I'm going to win!</state>
                 <state img="3-interested.png">This...this might be enough to win it all!</state>
@@ -6566,7 +6619,7 @@
                 <state img="3-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSayingMarker="florina_bee">
-                <state img="3-sad.png" marker="bee_lyn">Lyn, h-have you forgetten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
+                <state img="3-sad.png" marker="bee_lyn">Lyn, h-have you forgotten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
             </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="3-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
@@ -6677,7 +6730,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="3-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="3-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="3-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -6705,6 +6758,10 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="3-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="3-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
             </case>
             <case tag="must_strip" consecutiveLosses="3-4" totalRounds="0-5">
                 <state img="3-loss.png">C-can we stop after this round? I think we all know who is going to lose.</state>
@@ -8390,6 +8447,13 @@
             <case tag="good_hand" notSaidMarker="bee">
                 <state img="custom:4-bee" marker="bee">Umm... did anyone else hear a bee fly by?</state>
             </case>
+            <case tag="good_hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-happy.png">I hopped right into a good hand!</state>
+                <state img="4-happy.png">I hope I can bounce my way to victory.</state>
+                <state img="4-calm.png">This is... definitely not like fighting from atop a pegasus.</state>
+                <state img="4-happy.png">I dodged a bad hand this time!</state>
+            </case>
             <case tag="good_hand" timeInStage="6-99">
                 <state img="4-calm.png">I think I'm getting the hang of this now.</state>
                 <state img="4-happy.png">Am I getting better? I haven't lost for a bit.</state>
@@ -8509,7 +8573,7 @@
                 <state img="4-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSayingMarker="florina_bee">
-                <state img="4-sad.png" marker="bee_lyn">Lyn, h-have you forgetten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
+                <state img="4-sad.png" marker="bee_lyn">Lyn, h-have you forgotten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
             </case>
             <case tag="hand" alsoPlaying="mei" alsoPlayingStage="0-2" notSaidMarker="mei_coat">
                 <state img="4-interested.png" marker="mei_coat">I bet that coat is nice and warm, Mei.</state>
@@ -8615,7 +8679,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="4-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="4-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="4-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -8638,6 +8702,10 @@
             <case tag="hand" notSaidMarker="human_reaction" priority="0">
                 <test expr="~player~" value="Mark" />
                 <state img="4-shocked.png" marker="human_reaction">W-wait? Mark?! Are you here to direct us... in &lt;i&gt;stripping&lt;/i&gt;?!</state>
+            </case>
+            <case tag="hand" priority="0">
+                <test expr="~self.costume~" value="florina_easter" />
+                <state img="4-nervous.png">Please stop looking at me. This suit shows t-too much cleavage.</state>
             </case>
             <case tag="must_strip_winning">
                 <state img="4-loss.png">I guess I d-don't have a choice, and well, since I'm w-winning...</state>
@@ -9102,7 +9170,7 @@
                 <state img="4-interested.png">I'm counting on you to bounce back now, okay?</state>
                 <state img="4-happy.png">Let's stick together, okay?</state>
                 <state img="4-calm.png">Nothing wrong with choosing your ~clothing~.</state>
-                <state img="4-awkward.png">It's good to take a break with something small now and agan.</state>
+                <state img="4-awkward.png">It's good to take a break with something small now and again.</state>
             </case>
             <case tag="female_removed_accessory" target="lyn" targetStage="2">
                 <condition count="1" filter="lynbride" />
@@ -10493,7 +10561,7 @@
                 <state img="5-calm.png" marker="launch_nice">So, Launch, do you change whenever you sneeze? If so, I hope you never sneeze again, if that's okay.</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSayingMarker="florina_bee">
-                <state img="5-sad.png" marker="bee_lyn">Lyn, h-have you forgetten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
+                <state img="5-sad.png" marker="bee_lyn">Lyn, h-have you forgotten the first time we met? I was st-stuck in a tree getting swarmed by bees when you rescued me.</state>
             </case>
             <case tag="hand" alsoPlaying="mahiru" notSaidMarker="mahiru_bee">
                 <state img="5-angry.png" marker="mahiru_bee">Mahiru, if that bee picture turns out, shred it. Sorry, I'm just a bit on edge from those little stingers.</state>
@@ -10604,7 +10672,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="5-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="5-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="5-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -12524,7 +12592,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="6-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="6-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="6-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -12745,7 +12813,7 @@
             <case tag="female_must_strip">
                 <state img="6-embarrassed.png">Whew. I scraped by.</state>
                 <state img="6-embarrassed.png">I can keep my underwear... for now...</state>
-                <state img="6-nervous.png">S...sorry! I was so focused on my own wellbeing that I forgot about you!</state>
+                <state img="6-nervous.png">S...sorry! I was so focused on my own well-being that I forgot about you!</state>
                 <state img="6-nervous.png">Oh no! I was too concentrated on winning to realize that meant someone else would l-lose!</state>
                 <state img="6-awkward.png">How much longer can I keep this up?</state>
             </case>
@@ -13458,7 +13526,7 @@
                 <state img="6-awkward.png">Uh, h-how should I even respond? N-normally I'd just run away.</state>
             </case>
             <case tag="male_chest_is_visible" targetLayers="1" targetStatus="not_crotch_visible" saidMarker="rules">
-                <state img="6-loss.png">&lt;i&gt;I'm&lt;/i&gt; going to have to end up like that too, arent I?</state>
+                <state img="6-loss.png">&lt;i&gt;I'm&lt;/i&gt; going to have to end up like that too, aren't I?</state>
                 <state img="6-embarrassed.png">This feels r-really inappropriate for us to be like this. I d-d-don't even know you.</state>
                 <state img="6-embarrassed.png">S-sorry. It's a little unfair to play to our underwear when guys have to t-take off more layers.</state>
                 <state img="6-awkward.png">I've never been so c-close to a man with his shirt off before. Last time around the army I... well, fainted.</state>
@@ -13594,7 +13662,7 @@
                 <state img="6-embarrassed.png">My idol... This is almost as awkward for me as for you, I think.</state>
             </case>
             <case tag="female_chest_will_be_visible" target="catria" saidMarker="underwear_knights">
-                <state img="6-awkward.png">Oh... Well, the Underwear Knights were fun... whlie they lasted... Okay, I'll stop...</state>
+                <state img="6-awkward.png">Oh... Well, the Underwear Knights were fun... while they lasted... Okay, I'll stop...</state>
                 <state img="6-rear.png">Farewell, my fellow Underwear Knight. I won't look, okay?</state>
             </case>
             <case tag="female_chest_will_be_visible" target="catria" saidMarker="underwear_knights" notSaidMarker="rules" priority="350">
@@ -14276,7 +14344,7 @@
             <case tag="good_hand" timeInStage="0" totalRounds="7-9">
                 <state img="7-angry.png" marker="expose_chest">Oh, so now that I'm topless I finally get a good hand?</state>
                 <state img="7-embarrassed.png" marker="expose_chest">Really? Once I lose my bra I finally get a g-good hand?</state>
-                <state img="7-sad.png" marker="expose_chest">C-can I trade again? WIth how things were going, I was ready to throw the game. But now it looks like I'm going to prolong it...</state>
+                <state img="7-sad.png" marker="expose_chest">C-can I trade again? With how things were going, I was ready to throw the game. But now it looks like I'm going to prolong it...</state>
             </case>
             <case tag="good_hand" timeInStage="0-1">
                 <state img="7-embarrassed.png">I'm still t-trying to decide if I should fight it or just get this over with.</state>
@@ -14499,7 +14567,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="7-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="7-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="7-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -14566,7 +14634,7 @@
                 <state img="7-stunned.png" marker="panties_butt">Why do I have to get n-n-naked?</state>
                 <state img="7-loss.png" marker="panties_butt">Does it r-really have to be me first?</state>
                 <state img="7-loss.png" marker="panties_butt">I...I don't want to be the only one n-naked!</state>
-                <state img="7-angry.png" marker="panties_butt">Aren't you satisified yet? I'm at my limits here.</state>
+                <state img="7-angry.png" marker="panties_butt">Aren't you satisfied yet? I'm at my limits here.</state>
                 <state img="7-loss.png" marker="panties_butt">I-I can't do this!</state>
                 <state img="7-loss.png" marker="panties_butt">Please, I already somehow got my b-bra off. I have to go &lt;i&gt;further&lt;/i&gt;?</state>
                 <state img="7-loss.png" marker="panties_butt">N-naked?! R-really?</state>
@@ -15776,7 +15844,7 @@
             </case>
             <case tag="male_masturbating">
                 <state img="7-sad.png">S-so lewd....</state>
-                <state img="7-embarrassed.png">Why can't I look away from that? It's like a pegagus wreck.</state>
+                <state img="7-embarrassed.png">Why can't I look away from that? It's like a pegasus wreck.</state>
                 <state img="7-embarrassed.png">Y-you're not using me, are you?</state>
                 <state img="7-angry.png">Please don't be having dirty thoughts about me.</state>
                 <state img="7-awkward.png">S-so, um, can we play and not, er, watch him?</state>
@@ -16022,7 +16090,7 @@
                 <state img="7-shocked.png">W... wow....I didn't know it could happen that fast.</state>
             </case>
             <case tag="game_over_victory">
-                <state img="7-victory.png">I can't wait to tell my sisters how far I pushed mysel. I even won!</state>
+                <state img="7-victory.png">I can't wait to tell my sisters how far I pushed myself. I even won!</state>
                 <state img="7-happy.png">I-I feel like I can do anything now!</state>
                 <state img="7-happy.png">It's over now! Phew, I didn't have to get &lt;i&gt;completely&lt;/i&gt; naked after all!</state>
             </case>
@@ -16331,7 +16399,7 @@
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="I've shared everything with Florina">
                 <test expr="~lyn.costume~" value="lynbride" />
                 <state img="8-embarrassed.png">Umm... I-I don't know about &lt;i&gt;everything&lt;/i&gt;...</state>
-                <state img="8-embarrassed.png">Lyn, I'm em-embarraseed enough already...</state>
+                <state img="8-embarrassed.png">Lyn, I'm em-embarrassed enough already...</state>
             </case>
             <case tag="hand" alsoPlaying="lyn" alsoPlayingSaying="the best possible friend" priority="0">
                 <test expr="~lyn.costume~" value="lynbride" />
@@ -17457,7 +17525,7 @@
             </case>
             <case tag="male_masturbating">
                 <state img="8-sad.png">S-so lewd....</state>
-                <state img="8-embarrassed.png">Why can't I look away from that? It's like a pegagus wreck.</state>
+                <state img="8-embarrassed.png">Why can't I look away from that? It's like a pegasus wreck.</state>
                 <state img="8-embarrassed.png">Y-you're not using me, are you?</state>
                 <state img="8-angry.png">Please don't be having dirty thoughts about me.</state>
                 <state img="8-awkward.png">S-so, um, can we play and not, er, watch him?</state>
@@ -19642,7 +19710,7 @@
                 <state img="10-gameover.png">Well, this was a...learning...experience today.</state>
                 <state img="10-gameover.png">If you ever want to play again, I'll...um, join you. I think this helped me out.</state>
                 <state img="10-gameover.png">I made it through the whole thing! I'm so proud of myself.</state>
-                <state img="10-gameover.png">Tonight has been the biggest rollercoaster of emotions I've ever had.</state>
+                <state img="10-gameover.png">Tonight has been the biggest roller coaster of emotions I've ever had.</state>
                 <state img="10-gameover.png">I'd be...up to playing again sometime. Now that I know what I'm getting into...</state>
             </case>
             <case tag="game_over_defeat" notSaidMarker="chair" priority="700">
