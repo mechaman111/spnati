@@ -56,6 +56,12 @@ namespace SPNATI_Character_Editor.Activities
 			lstRemoveTags.RecordType = typeof(Tag);
 			SetupMessageHandlers();
 			panelCase.Enabled = false;
+			gridDialogue.TextUpdated += GridDialogue_TextUpdated;
+		}
+
+		private void GridDialogue_TextUpdated(object sender, int e)
+		{
+			DisplayText(gridDialogue.GetLine(e));
 		}
 
 		/// <summary>
@@ -142,6 +148,7 @@ namespace SPNATI_Character_Editor.Activities
 			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.Replace, OnReplace);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
+			SubscribeWorkspace(WorkspaceMessages.SkinChanged, OnSkinChanged);
 			SubscribeDesktop(DesktopMessages.SettingsUpdated, OnSettingsUpdated);
 			SubscribeDesktop(DesktopMessages.MacrosUpdated, OnMacrosUpdated);
 		}
@@ -182,6 +189,13 @@ namespace SPNATI_Character_Editor.Activities
 		private void OnWardrobeChanged()
 		{
 			_pendingWardrobeChange = true;
+		}
+
+		private void OnSkinChanged()
+		{
+			SaveCase();
+			CreateStageCheckboxes();
+			PopulateStageCheckboxes();
 		}
 		#endregion
 
@@ -747,6 +761,14 @@ namespace SPNATI_Character_Editor.Activities
 				img = _imageLibrary.Find(image);
 			}
 			DisplayImage(img);
+
+			string text = gridDialogue.GetLine(index);
+			DisplayText(text);
+		}
+
+		private void DisplayText(string text)
+		{
+			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewText, text);
 		}
 
 		/// <summary>

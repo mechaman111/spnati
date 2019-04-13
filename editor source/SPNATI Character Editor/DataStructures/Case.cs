@@ -44,7 +44,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("hidden")]
 		public string Hidden;
 
-		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true)]
+		[StageSelect(DisplayName = "Target Stage", GroupName = "Target", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true, SkinVariable = "~target.costume~")]
 		[XmlAttribute("targetStage")]
 		public string TargetStage;
 
@@ -64,7 +64,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
-		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false)]
+		[StageSelect(DisplayName = "Also Playing Stage", GroupName = "Also Playing", GroupOrder = 1, Description = "Character in Also Playing is currently within a range of stages", BoundProperties = new string[] { "AlsoPlaying" }, FilterStagesToTarget = false, SkinVariable = "~_.costume~")]
 		[XmlAttribute("alsoPlayingStage")]
 		public string AlsoPlayingStage;
 

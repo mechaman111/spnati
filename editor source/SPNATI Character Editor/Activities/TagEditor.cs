@@ -27,6 +27,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_character = Record as Character;
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
+			SubscribeWorkspace(WorkspaceMessages.SkinChanged, OnSkinChanged);
 		}
 
 		protected override void OnFirstActivate()
@@ -47,6 +48,11 @@ namespace SPNATI_Character_Editor.Activities
 		private void OnWardrobeChanged()
 		{
 			_pendingWardrobeChange = true;
+		}
+
+		private void OnSkinChanged()
+		{
+			tagGrid.Refresh();
 		}
 
 		/// <summary>

@@ -86,11 +86,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				Dictionary<string, int> visitedWords = new Dictionary<string, int>();
 				string text = line.Text;
-				string[] words = text.Split(new string[] { " ", ",", ".", "?", "!", ";", ":", "=", "<i>", "</i>", "*", "\"" }, StringSplitOptions.RemoveEmptyEntries);
+				string[] words = text.Split(new string[] { " ", ",", ".", "?", "!", ";", ":", "=", "<i>", "</i>", "*", "\"", "(", ")", "[", "]", "~", "/", "|" }, StringSplitOptions.RemoveEmptyEntries);
 				for (int wordIndex = 0; wordIndex < words.Length; wordIndex++)
 				{
 					string word = words[wordIndex];
-					if (word.StartsWith("~") || word.EndsWith("~") || word == "-")
+					if (word == "-")
 					{
 						continue;
 					}

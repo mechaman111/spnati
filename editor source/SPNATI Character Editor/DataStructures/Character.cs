@@ -223,12 +223,12 @@ namespace SPNATI_Character_Editor
 		/// <param name="layer"></param>
 		public StageName LayerToStageName(int layer)
 		{
-			return LayerToStageName(layer, false, this);
+			return LayerToStageName(layer, false, CurrentSkin ?? (IWardrobe)this);
 		}
 
 		public StageName LayerToStageName(int layer, bool advancingStage)
 		{
-			return LayerToStageName(layer, advancingStage, this);
+			return LayerToStageName(layer, advancingStage, CurrentSkin ?? (IWardrobe)this);
 		}
 
 		/// <summary>

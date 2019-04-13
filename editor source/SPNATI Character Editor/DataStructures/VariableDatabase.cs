@@ -28,6 +28,11 @@ namespace SPNATI_Character_Editor
 						{
 							_globalVariables.Add(variable);
 						}
+						SpellChecker.Instance.AddWord(variable.Name, false);
+						foreach (VariableFunction func in variable.Functions)
+						{
+							SpellChecker.Instance.AddWord(func.Name, false);
+						}
 					}
 				}
 				finally
