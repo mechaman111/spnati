@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			foreach (string version in Config.VersionHistory)
 			{
-				if (!version.EndsWith("a") && !version.EndsWith("b") || Config.Version.EndsWith("b") || !Config.Version.EndsWith("a"))
+				if (!version.EndsWith("a") && !version.EndsWith("b") || Config.Version.EndsWith("b") || Config.Version.EndsWith("a"))
 				{
 					lstVersions.Items.Add(version);
 				}
