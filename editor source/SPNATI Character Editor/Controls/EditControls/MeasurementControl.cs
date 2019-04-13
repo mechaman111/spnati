@@ -74,6 +74,7 @@ namespace SPNATI_Character_Editor.EditControls
 				radPx.Visible = false;
 				lblPct.Left = valValue.Left + valValue.Width;
 				lblPct.Visible = true;
+				chkCentered.Enabled = true;
 
 				if (Property == "X")
 				{
@@ -93,6 +94,12 @@ namespace SPNATI_Character_Editor.EditControls
 			}
 			else
 			{
+				radPct.Visible = true;
+				radPx.Visible = true;
+				lblPct.Visible = false;
+				chkCentered.Visible = false;
+				chkCentered.Enabled = false;
+				valValue.Enabled = true;
 				if (text != null && text.EndsWith("%"))
 				{
 					radPct.Checked = true;
