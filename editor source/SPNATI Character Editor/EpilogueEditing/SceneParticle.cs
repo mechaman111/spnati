@@ -99,7 +99,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			float dt = elapsedSec;
 
 			float t = Math.Min(1, Elapsed / Duration);
-			t = SceneAnimation.Ease(Ease, t);
+			t = AnimationHelpers.Ease(Ease, t);
 			ScaleX = ScaleXTween.Tween(t);
 			ScaleY = ScaleYTween.Tween(t);
 			SkewX = SkewXTween.Tween(t);

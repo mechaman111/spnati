@@ -57,6 +57,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (!string.IsNullOrEmpty(scene.Zoom))
 			{
 				float.TryParse(scene.Zoom, NumberStyles.Float, CultureInfo.InvariantCulture, out Zoom);
+				if (Zoom == 0)
+				{
+					Zoom = 0.01f;
+				}
 			}
 			if (!string.IsNullOrEmpty(scene.FadeColor))
 			{

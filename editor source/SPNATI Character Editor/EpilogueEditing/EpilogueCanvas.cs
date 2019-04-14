@@ -2383,7 +2383,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				animation.Elapsed = 0;
 			}
-			cmdPlayDirective.ToolTipText = enabled ? "Stop animation" : "Play selection animation";
+			cmdPlayDirective.ToolTipText = enabled ? "Stop animation" : "Play selected animation";
 			cmdPlayDirective.Image = enabled ? Resources.PlaybackPause : Resources.Playback;
 			canvas.Invalidate();
 		}

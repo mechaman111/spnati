@@ -86,6 +86,7 @@ namespace Desktop.CommonControls.PropertyControls
 
 		private bool SetField()
 		{
+			_cleared = false;
 			object data = GetValue();
 			if (DataType == typeof(string))
 			{

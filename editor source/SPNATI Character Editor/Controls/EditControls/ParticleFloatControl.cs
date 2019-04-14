@@ -43,6 +43,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			string value = GetValue()?.ToString();
 			if (string.IsNullOrEmpty(value))
 			{
+				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
+				valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 				valFrom.Text = "";
 				valTo.Text = "";
 			}
@@ -57,6 +59,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				}
 				else
 				{
+					valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
 					valFrom.Text = "";
 				}
 				if (pieces.Length > 1)
@@ -69,11 +72,13 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 					}
 					else
 					{
+						valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 						valTo.Text = "";
 					}
 				}
 				else
 				{
+					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 					valTo.Text = "";
 				}
 			}
@@ -96,8 +101,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 		public override void Clear()
 		{
 			RemoveHandlers();
-			valFrom.Value = 0;
-			valTo.Value = 0;
+			valFrom.Value = Math.Max(0, valFrom.Minimum);
+			valTo.Value = Math.Max(0, valFrom.Minimum);
 			valFrom.Text = "";
 			valTo.Text = "";
 			Save();

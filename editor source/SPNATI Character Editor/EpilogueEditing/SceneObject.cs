@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			get { return _alpha; }
 			set
 			{
-				_alpha = value;
+				_alpha = Math.Max(0, Math.Min(100, value));
 				Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100.0f * 255), Color.Color);
 			}
 		}
@@ -359,6 +359,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			if (!string.IsNullOrEmpty(frame.Zoom))
 			{
 				float.TryParse(frame.Zoom, NumberStyles.Float, CultureInfo.InvariantCulture, out Zoom);
+				if (Zoom == 0)
+				{
+					Zoom = 0.01f;
+				}
 			}
 			if (!string.IsNullOrEmpty(frame.Src) && frame.Src != Src)
 			{
@@ -409,18 +413,51 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public virtual void Interpolate(SceneObject last, SceneObject frame, float time, SceneObject lastLast, SceneObject nextNext)
 		{
-			X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
-			Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
-			ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
-			ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
-			SkewX = Interpolate(last.SkewX, frame.SkewX, frame.Tween, time, lastLast.SkewX, nextNext.SkewX);
-			SkewY = Interpolate(last.SkewY, frame.SkewY, frame.Tween, time, lastLast.SkewY, nextNext.SkewY);
-			Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
-			Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
-			Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
-			Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
-			Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
-			Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.X)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.X)))
+			{
+				X = Interpolate(last.X, frame.X, frame.Tween, time, lastLast.X, nextNext.X);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Y)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Y)))
+			{
+				Y = Interpolate(last.Y, frame.Y, frame.Tween, time, lastLast.Y, nextNext.Y);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.ScaleX)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.ScaleX)))
+			{
+				ScaleX = Interpolate(last.ScaleX, frame.ScaleX, frame.Tween, time, lastLast.ScaleX, nextNext.ScaleX);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.ScaleY)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.ScaleY)))
+			{
+				ScaleY = Interpolate(last.ScaleY, frame.ScaleY, frame.Tween, time, lastLast.ScaleY, nextNext.ScaleY);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.SkewX)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.SkewX)))
+			{
+				SkewX = Interpolate(last.SkewX, frame.SkewX, frame.Tween, time, lastLast.SkewX, nextNext.SkewX);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.SkewY)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.SkewY)))
+			{
+				SkewY = Interpolate(last.SkewY, frame.SkewY, frame.Tween, time, lastLast.SkewY, nextNext.SkewY);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Zoom)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Zoom)))
+			{
+				Zoom = Interpolate(last.Zoom, frame.Zoom, frame.Tween, time, lastLast.Zoom, nextNext.Zoom);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Rotation)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Rotation)))
+			{
+				Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Opacity)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Opacity)))
+			{
+				Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Color)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Color)))
+			{
+				Color.Color = Interpolate(last.Color, frame.Color, frame.Tween, time, lastLast.Color, nextNext.Color);
+				Color.Color = System.Drawing.Color.FromArgb((int)(Alpha / 100 * 255), Color.Color);
+			}
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Rate)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Rate)))
+			{
+				Rate = Interpolate(last.Rate, frame.Rate, frame.Tween, time, lastLast.Rate, nextNext.Rate);
+			}
 			if (!string.IsNullOrEmpty(frame.Src))
 			{
 				string src = "";
