@@ -158,15 +158,15 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("startSkewX")]
 		public string StartSkewX;
 
-		[ParticleFloat(DisplayName = "Start Skew Y", Key = "startSkewY", GroupOrder = 37, Description = "Initial vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[ParticleFloat(DisplayName = "Start Skew Y", Key = "startSkewY", GroupOrder = 36, Description = "Initial vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
 		[XmlAttribute("startSkewY")]
 		public string StartSkewY;
 
-		[ParticleFloat(DisplayName = "End Skew X", Key = "endSkewX", GroupOrder = 24, Description = "Ending horizontal shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[ParticleFloat(DisplayName = "End Skew X", Key = "endSkewX", GroupOrder = 37, Description = "Ending horizontal shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
 		[XmlAttribute("endSkewX")]
 		public string EndSkewX;
 
-		[ParticleFloat(DisplayName = "End Skew Y", Key = "endSkewY", GroupOrder = 25, Description = "Ending vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
+		[ParticleFloat(DisplayName = "End Skew Y", Key = "endSkewY", GroupOrder = 37, Description = "Ending vertical shearing range", Minimum = -89, Maximum = 89, DecimalPlaces = 2)]
 		[XmlAttribute("endSkewY")]
 		public string EndSkewY;
 
